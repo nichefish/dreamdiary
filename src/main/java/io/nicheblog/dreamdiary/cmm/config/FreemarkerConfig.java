@@ -1,0 +1,68 @@
+package io.nicheblog.dreamdiary.cmm.config;
+
+import freemarker.ext.beans.BeansWrapper;
+import freemarker.template.TemplateHashModel;
+import freemarker.template.TemplateModelException;
+import lombok.SneakyThrows;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
+import java.util.*;
+
+/**
+ * FreemarkerConfig
+ * <pre>
+ *  Freemarker 관련 설정 커스터마이즈
+ * </pre>
+ *
+ * @author nichefish
+ */
+@Configuration
+public class FreemarkerConfig
+        implements BeanPostProcessor {
+
+    @SneakyThrows         // or use try / catch (if not using lombok)
+    @Override
+    public Object postProcessAfterInitialization(
+            @NotNull Object bean,
+            @NotNull String beanName
+    ) throws BeansException {
+        if (bean instanceof FreeMarkerConfigurer) {
+            FreeMarkerConfigurer configurer = (FreeMarkerConfigurer) bean;
+            freemarker.template.Configuration configuration = configurer.getConfiguration();
+            BeansWrapper objectWrapper = (BeansWrapper) configuration.getObjectWrapper();
+            // static 변수 임포트
+            configuration.setSharedVariables(this.getSharedVariables(objectWrapper));
+            // 숫자에 콤마 제거!!! (1000 넘어가는 ID에서 개꼬임...)
+            configuration.setNumberFormat("computer");
+            // spring.ftl 자동 임포트 :: TODO : 현재 미작동중
+            Properties settings = new Properties();
+            settings.setProperty("template_exception_handler", "ignore");
+            settings.setProperty("auto_import", "/spring.ftl as spring");
+            configurer.setFreemarkerSettings(settings);
+            // 템플릿 위치 추가
+            List<String> pluginTemplatePaths = new ArrayList<>();
+            pluginTemplatePaths.add(0, "classpath:/templates");
+            pluginTemplatePaths.add(0, "file:templates");
+            String[] paths = pluginTemplatePaths.toArray(new String[0]);
+            configurer.setTemplateLoaderPaths(paths);
+        }
+        return bean;
+    }
+
+    private Map<String, ?> getSharedVariables(BeansWrapper config) throws TemplateModelException {
+        Map<String, Object> sharedVariables = new HashMap<>();
+
+        // Add global variables and Add static support
+        TemplateHashModel statics = config.getStaticModels();
+        sharedVariables.put("Statics", statics);
+        sharedVariables.put("Constant", statics.get("io.nicheblog.dreamdiary.cmm.Constant"));
+        sharedVariables.put("SiteMenu", statics.get("io.nicheblog.dreamdiary.cmm.SiteMenu"));
+        sharedVariables.put("DateUtils", statics.get("io.nicheblog.dreamdiary.cmm.util.DateUtils"));
+
+        return sharedVariables;
+    }
+}
