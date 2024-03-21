@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.cmm.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.cmm.util.EhCacheUtil;
 import io.nicheblog.dreamdiary.cmm.util.MessageUtil;
-import io.nicheblog.dreamdiary.cmm.ActvtyCtgr;
+import io.nicheblog.dreamdiary.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.AjaxResponse;
 import io.nicheblog.dreamdiary.cmm.log.model.LogActvtyParam;
