@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.util;
+package io.nicheblog.dreamdiary.global;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
