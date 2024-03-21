@@ -1,8 +1,7 @@
-package io.nicheblog.dreamdiary.cmm.intrfc.entity;
+package io.nicheblog.dreamdiary.global.intrfc.entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -30,6 +29,5 @@ public class BaseCrudEntity {
      */
     @Builder.Default
     @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("삭제여부")
     private String delYn = "N";
 }

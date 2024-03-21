@@ -1,0 +1,50 @@
+package io.nicheblog.dreamdiary.global.intrfc.entity;
+
+import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+
+/**
+ * BaseAtchEntity
+ * <pre>
+ *  (공통/상속) 첨부파일 정보 포함 Entity
+ *  ※"All classes in the hierarchy must be annotated with @SuperBuilder."
+ * </pre>
+ *
+ * @author nichefish
+ * @extends BaseAuditEntity
+ */
+@MappedSuperclass
+@Getter
+@Setter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+public class BaseAtchEntity
+        extends BaseAuditEntity {
+
+    /**
+     * 첨부파일 ID
+     */
+    @Column(name = "ATCH_FILE_ID")
+    private String atchFileId;
+
+    /**
+     * 첨부파일 정보
+     */
+    @OneToOne
+    @JoinColumn(name = "ATCH_FILE_ID", referencedColumnName = "ATCH_FILE_ID", insertable = false, updatable = false)
+    @NotFound(action = NotFoundAction.IGNORE)
+    private AtchFileEntity atchFileInfo;
+}
+
