@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.util;
+package io.nicheblog.dreamdiary.global.util;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  */
 @UtilityClass
 @Log4j2
-public class MaskingUtil {
+public class MaskingUtils {
 
     /**
      * 한글이름 가운데 글자 마스킹

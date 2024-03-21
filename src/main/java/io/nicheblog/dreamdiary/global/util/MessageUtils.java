@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.util;
+package io.nicheblog.dreamdiary.global.util;
 
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +26,7 @@ import java.util.Locale;
  */
 @Component("MessageUtil")
 @Log4j2
-public class MessageUtil
+public class MessageUtils
         extends ReloadableResourceBundleMessageSource
         implements MessageSource {
 

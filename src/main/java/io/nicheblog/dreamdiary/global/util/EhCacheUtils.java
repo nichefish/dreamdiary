@@ -1,9 +1,8 @@
-package io.nicheblog.dreamdiary.cmm.util;
+package io.nicheblog.dreamdiary.global.util;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.CacheManager;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -11,13 +10,16 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * EhCacheService
- * ehCache 수동 적용 서비스 모듈
+ * EhCacheUtils
+ * <pre>
+ *  ehCache 수동 적용 유틸리티 모듈
+ * </pre>
+ *
  * @author nichefish
  */
 @UtilityClass
 @Log4j2
-public class EhCacheUtil {
+public class EhCacheUtils {
 
     @Resource(name="cacheManager")
     CacheManager cacheManager;
