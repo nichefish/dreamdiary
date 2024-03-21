@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth;
+package io.nicheblog.dreamdiary.global.cmm.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Auth {
+
     MNGR("MNGR", "관리자"),
     USER("USER", "사용자"),
     DEV("DEV", "개발자");
