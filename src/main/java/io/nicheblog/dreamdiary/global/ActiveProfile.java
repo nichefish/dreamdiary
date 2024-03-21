@@ -63,10 +63,6 @@ public final class ActiveProfile {
         return PROFILE_PROD.equals(this.active);
     }
 
-    public Boolean isNotProd() {
-        return !this.isProd();
-    }
-
     public Boolean isTest() {
         return PROFILE_TEST.equals(this.active);
     }

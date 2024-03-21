@@ -23,7 +23,9 @@ public enum ActvtyCtgr {
     API_JANDI("API_잔디"),
     API_KASI("API_특일"),
 
-    LGN("로그인");
+    LGN("로그인"),
+
+    LGN_POLICY("로그인 정책 관리");
 
     private final String desc;
 }
