@@ -25,6 +25,6 @@ public class BaseCrudDto {
     /**
      * 목록 순번
      */
-    private Long rnum;
+    protected Long rnum;
 }
 

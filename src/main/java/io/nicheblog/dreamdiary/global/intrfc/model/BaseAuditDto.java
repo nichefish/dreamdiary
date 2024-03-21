@@ -39,7 +39,7 @@ public class BaseAuditDto
     /**
      * 등록자 정보
      */
-    private AuditorDto mdfusrInfo;
+    protected AuditorDto mdfusrInfo;
 
     /* ----- */
 

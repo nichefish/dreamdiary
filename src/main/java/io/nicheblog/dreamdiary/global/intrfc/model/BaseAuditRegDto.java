@@ -42,7 +42,7 @@ public class BaseAuditRegDto
     /**
      * 등록자 정보
      */
-    private AuditorDto regstrInfo;
+    protected AuditorDto regstrInfo;
 
     /* ----- */
 

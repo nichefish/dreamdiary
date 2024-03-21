@@ -29,5 +29,5 @@ public class BaseCrudEntity {
      */
     @Builder.Default
     @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    private String delYn = "N";
+    protected String delYn = "N";
 }

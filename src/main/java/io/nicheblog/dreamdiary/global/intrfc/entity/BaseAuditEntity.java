@@ -41,7 +41,7 @@ public class BaseAuditEntity
      */
     @LastModifiedBy
     @Column(name = "MDFUSR_ID", length = 20, insertable = false)
-    private String mdfusrId;
+    protected String mdfusrId;
 
     /**
      * 수정일시
@@ -51,7 +51,7 @@ public class BaseAuditEntity
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
     @Column(name = "MDF_DT", insertable = false)
-    private Date mdfDt;
+    protected Date mdfDt;
 
     /**
      * 수정자 정보
@@ -60,6 +60,6 @@ public class BaseAuditEntity
     @JoinColumn(name = "MDFUSR_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
-    private AuditorInfo mdfusrInfo;
+    protected AuditorInfo mdfusrInfo;
 }
 

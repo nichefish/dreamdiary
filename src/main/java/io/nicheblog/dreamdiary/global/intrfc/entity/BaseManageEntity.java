@@ -32,13 +32,13 @@ public class BaseManageEntity
      * 정렬 순서
      */
     @Column(name = "SORT_ORDR", columnDefinition = "INT DEFAULT 0")
-    private Integer sortOrdr;
+    protected Integer sortOrdr;
 
     /**
      * 사용여부
      */
     @Builder.Default
     @Column(name = "USE_YN", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
-    private String useYn = "Y";
+    protected String useYn = "Y";
 }
 

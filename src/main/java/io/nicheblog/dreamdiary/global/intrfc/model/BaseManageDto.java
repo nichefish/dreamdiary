@@ -26,11 +26,11 @@ public class BaseManageDto
     /**
      * 정렬 순서
      */
-    private Integer sortOrdr;
+    protected Integer sortOrdr;
 
     /**
      * 사용여부
      */
     @Builder.Default
-    private String useYn = "Y";
+    protected String useYn = "Y";
 }

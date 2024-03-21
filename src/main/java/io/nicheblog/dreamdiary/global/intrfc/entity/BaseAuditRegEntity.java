@@ -51,7 +51,7 @@ public class BaseAuditRegEntity
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
     @Column(name = "REG_DT", updatable = false)
-    private Date regDt;
+    protected Date regDt;
 
     /**
      * 등록자 정보
@@ -60,6 +60,6 @@ public class BaseAuditRegEntity
     @JoinColumn(name = "REGSTR_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
-    private AuditorInfo regstrInfo;
+    protected AuditorInfo regstrInfo;
 }
 

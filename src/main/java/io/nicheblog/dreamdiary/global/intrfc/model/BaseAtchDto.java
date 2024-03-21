@@ -32,24 +32,24 @@ public class BaseAtchDto
     /**
      * 첨부파일 ID
      */
-    private Integer atchFileId;
+    protected Integer atchFileId;
     /**
      * 첨부파일 정보 (1:N)
      */
-    private AtchFileDto atchFileInfo;
+    protected AtchFileDto atchFileInfo;
     /**
      * 첨부파일 목록
      */
-    private List<AtchFileDtlDto> atchFileList;
+    protected List<AtchFileDtlDto> atchFileList;
     /**
      * 첨부파일 .zip 다운로드 URL
      */
-    private String atchFileZipUrl;
+    protected String atchFileZipUrl;
     /**
      * 첨부파일 .zip 파일명
      */
     @JsonIgnore
-    private String atchFileZipNm;
+    protected String atchFileZipNm;
 
     /* ---- */
 
