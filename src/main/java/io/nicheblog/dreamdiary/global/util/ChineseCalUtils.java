@@ -15,7 +15,7 @@ import java.util.Date;
  * @author nichefish
  */
 @UtilityClass
-public class ChineseCalUtil {
+public class ChineseCalUtils {
 
     /**
      * 양력 날짜를 음력 날짜로 변환
@@ -25,7 +25,7 @@ public class ChineseCalUtil {
         ChineseCalendar chineseCal = new ChineseCalendar();
         Calendar cal = Calendar.getInstance();
 
-        String dateStr = DateUtil.asStr(date, DateUtil.PTN_DATE);
+        String dateStr = DateUtils.asStr(date, DateUtils.PTN_DATE);
         String[] dateStrArr = dateStr.split("-");
 
         // Calendar에 날짜 세팅
@@ -40,7 +40,7 @@ public class ChineseCalUtil {
         int mm = chineseCal.get(chineseCal.MONTH) + 1;
         int dd = chineseCal.get(chineseCal.DAY_OF_MONTH);
 
-        return DateUtil.asDate(String.format("%04d", yyyy) + String.format("%02d", mm) + String.format("%02d", dd));
+        return DateUtils.asDate(String.format("%04d", yyyy) + String.format("%02d", mm) + String.format("%02d", dd));
     }
 
     /**
@@ -50,7 +50,7 @@ public class ChineseCalUtil {
             final Object date,
             final String dtFormat
     ) throws Exception {
-        return DateUtil.asStr(solarToLunar(date), dtFormat);
+        return DateUtils.asStr(solarToLunar(date), dtFormat);
     }
 
     /**
@@ -61,7 +61,7 @@ public class ChineseCalUtil {
         ChineseCalendar chineseCal = new ChineseCalendar();
         Calendar cal = Calendar.getInstance();
 
-        String dateStr = DateUtil.asStr(date, DateUtil.PTN_DATE);
+        String dateStr = DateUtils.asStr(date, DateUtils.PTN_DATE);
         String[] dateStrArr = dateStr.split("-");
 
         // ChineseCalendar에 날짜 세팅
@@ -82,7 +82,7 @@ public class ChineseCalUtil {
             final Object date,
             final String dtFormat
     ) throws Exception {
-        return DateUtil.asStr(lunarToSolar(date), dtFormat);
+        return DateUtils.asStr(lunarToSolar(date), dtFormat);
     }
 
 }

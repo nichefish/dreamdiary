@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.config;
+package io.nicheblog.dreamdiary.global.config;
 
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl;
