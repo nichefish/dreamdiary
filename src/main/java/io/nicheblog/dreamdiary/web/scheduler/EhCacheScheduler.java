@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.cmm.util.EhCacheUtil;
 import io.nicheblog.dreamdiary.cmm.util.MessageUtil;
+import io.nicheblog.dreamdiary.web.SiteActvty;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -41,7 +42,7 @@ public class EhCacheScheduler {
             String resultMsg = MessageUtil.getExceptionMsg(e);
             // 수시로 이루어지므로 실패시에만 로깅한다.
             logParam.setExceptionInfo(MessageUtil.getExceptionNm(e), e.getMessage());
-            logParam.setResult(false, resultMsg, "ehCache");
+            logParam.setResult(false, resultMsg, SiteActvty.CACHE);
             publisher.publishEvent(new LogSysEvent(this, logParam));
         }
     }

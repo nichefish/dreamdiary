@@ -1,0 +1,106 @@
+package io.nicheblog.dreamdiary.web.controller.admin;
+
+import io.nicheblog.dreamdiary.cmm.Constant;
+import io.nicheblog.dreamdiary.cmm.log.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.cmm.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.cmm.util.EhCacheUtil;
+import io.nicheblog.dreamdiary.cmm.util.MessageUtil;
+import io.nicheblog.dreamdiary.web.SiteActvty;
+import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.model.admin.AjaxResponse;
+import io.nicheblog.dreamdiary.cmm.log.model.LogActvtyParam;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+/**
+ * EhCacheController
+ * <pre>
+ *  ehCache 수동 관리 컨트롤러
+ * </pre>
+ *
+ * @author nichefish
+ * @extends BaseControllerImpl
+ */
+@Controller
+@Log4j2
+public class EhCacheController
+        extends BaseControllerImpl {
+
+    // 로그 적재용 작업 카테고리
+    private final SiteActvty actvtyCtgr = SiteActvty.ADMIN;
+
+    /**
+     * 사이트 캐시 조회 (Ajax)
+     * 관리자MNGR만 접근 가능
+     */
+    @RequestMapping(SiteUrl.CACHE_CHCK_AJAX)
+    @Secured(Constant.ROLE_MNGR)
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> chckActiveCachesAjax(
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            // 현재 활성 중인 캐시(name) 목록 조회 :: 성공시 처리완료목록으로 출력
+            List<String> activeCacheList = EhCacheUtil.chckActiveCaches();
+            ajaxResponse.setResultList(activeCacheList);
+            isSuccess = (activeCacheList != null);
+            resultMsg = MessageUtil.getMessage(isSuccess ? MessageUtil.RSLT_SUCCESS : MessageUtil.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtil.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtil.getExceptionNm(e), e.getMessage());
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 사이트 캐시 전체 초기화 (Ajax)
+     * 관리자MNGR만 접근 가능
+     */
+    @RequestMapping(SiteUrl.CACHE_CLEAR_AJAX)
+    @Secured(Constant.ROLE_MNGR)
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> clearCacheAjax(
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            List<String> activeCacheList = EhCacheUtil.chckActiveCaches();
+            ajaxResponse.setResultList(activeCacheList);
+            isSuccess = EhCacheUtil.clearAllCaches();
+            resultMsg = MessageUtil.getMessage(isSuccess ? MessageUtil.RSLT_SUCCESS : MessageUtil.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtil.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtil.getExceptionNm(e), e.getMessage());
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+}

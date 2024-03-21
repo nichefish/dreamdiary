@@ -1,12 +1,13 @@
-package io.nicheblog.dreamdiary.web.model.log.actrvy;
+package io.nicheblog.dreamdiary.cmm.log.model;
 
+import io.nicheblog.dreamdiary.web.SiteActvty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * LogActvtyParamDto
+ * LogActvtyParam
  * <pre>
  *  활동 로그 파라미터 Dto
  *  (화면에서 넘어오는 인자 정리 위한 클래스)
@@ -18,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LogActvtyParamDto {
+public class LogActvtyParam {
 
     /**
      * 성공여부
@@ -56,11 +57,11 @@ public class LogActvtyParamDto {
     /**
      * 생성자
      */
-    public LogActvtyParamDto(final Boolean isSuccess) {
+    public LogActvtyParam(final Boolean isSuccess) {
         this.isSuccess = isSuccess;
     }
 
-    public LogActvtyParamDto(
+    public LogActvtyParam(
             final Boolean isSuccess,
             final String resultMsg
     ) {
@@ -68,10 +69,10 @@ public class LogActvtyParamDto {
         this.resultMsg = resultMsg;
     }
 
-    public LogActvtyParamDto(
+    public LogActvtyParam(
             final Boolean isSuccess,
             final String resultMsg,
-            final String actvtyCtgrCd
+            final SiteActvty actvtyCtgrCd
     ) {
         this(isSuccess, resultMsg);
         this.actvtyCtgrCd = actvtyCtgrCd;
@@ -80,17 +81,17 @@ public class LogActvtyParamDto {
     /**
      * 결과 세팅 함수
      */
-    public LogActvtyParamDto setResult(
+    public LogActvtyParam setResult(
             final boolean isSuccess,
             final String resultMsg,
-            final String actvtyCtgrCd
+            final SiteActvty actvtyCtgrCd
     ) {
         this.setResult(isSuccess, resultMsg);
         this.actvtyCtgrCd = actvtyCtgrCd;
         return this;
     }
 
-    public LogActvtyParamDto setResult(
+    public LogActvtyParam setResult(
             final boolean isSuccess,
             final String resultMsg
     ) {

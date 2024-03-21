@@ -36,8 +36,12 @@ public interface SiteUrl {
     String ADMIN_MAIN = PREFIX_ADMIN + MAIN;
     String ADMIN_TEST_PAGE = PREFIX_ADMIN + "/testPage.do";
 
-
-
+    /**
+     * (공통) 캐시 관리
+     */
+    public static final String PREFIX_CACHE = "/cache";
+    public static final String CACHE_CHCK_AJAX = PREFIX_CACHE + "/chckActiveCachesAjax.do";
+    public static final String CACHE_CLEAR_AJAX = PREFIX_CACHE + "/clearCacheAjax.do";
 
     /**
      * ERROR
