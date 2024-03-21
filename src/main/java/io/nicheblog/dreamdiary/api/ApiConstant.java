@@ -1,7 +1,9 @@
-package io.nicheblog.dreamdiary.cmm;
+package io.nicheblog.dreamdiary.api;
+
+import io.nicheblog.dreamdiary.cmm.auth.Auth;
 
 /**
- * SiteActvty
+ * Constant
  * <pre>
  *  공통으로 사용하는 코드성 데이터 정의
  * </pre>
@@ -10,15 +12,7 @@ package io.nicheblog.dreamdiary.cmm;
  *
  * @author nichefish
  */
-public enum ActvtyCtgr {
+public interface ApiConstant {
 
-    ADMIN,
-    CACHE,
-
-
-    API_JANDI,
-    API_KASI,
-
-    LGN;
-
+    //
 }
