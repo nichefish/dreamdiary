@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.intrfc.repository;
+package io.nicheblog.dreamdiary.global.intrfc.repository;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;

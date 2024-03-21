@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.cmm.intrfc.repository.impl;
+package io.nicheblog.dreamdiary.global.intrfc.repository.impl;
 
-import io.nicheblog.dreamdiary.cmm.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;

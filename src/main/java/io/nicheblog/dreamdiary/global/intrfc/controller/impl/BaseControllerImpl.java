@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.cmm.intrfc.controller.impl;
+package io.nicheblog.dreamdiary.global.intrfc.controller.impl;
 
-import io.nicheblog.dreamdiary.cmm.intrfc.controller.BaseController;
+import io.nicheblog.dreamdiary.global.intrfc.controller.BaseController;
 import org.springframework.context.ApplicationEventPublisher;
 
 import javax.annotation.Resource;

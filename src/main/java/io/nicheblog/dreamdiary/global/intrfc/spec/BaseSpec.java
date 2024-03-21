@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.intrfc.spec;
+package io.nicheblog.dreamdiary.global.intrfc.spec;
 
 import org.springframework.data.jpa.domain.Specification;
 

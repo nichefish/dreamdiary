@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.intrfc.controller;
+package io.nicheblog.dreamdiary.global.intrfc.controller;
 
 /**
  * BaseController
