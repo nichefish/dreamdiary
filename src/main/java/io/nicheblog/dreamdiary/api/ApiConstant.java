@@ -1,7 +1,5 @@
 package io.nicheblog.dreamdiary.api;
 
-import io.nicheblog.dreamdiary.cmm.auth.Auth;
-
 /**
  * Constant
  * <pre>

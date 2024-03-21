@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.cmm.auth.handler;
+package io.nicheblog.dreamdiary.global.auth.handler;
 
-import io.nicheblog.dreamdiary.cmm.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;

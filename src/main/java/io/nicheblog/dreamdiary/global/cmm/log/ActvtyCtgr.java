@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.log;
+package io.nicheblog.dreamdiary.global.cmm.log;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

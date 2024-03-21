@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.cmm.interceptor;
+package io.nicheblog.dreamdiary.global.interceptor;
 
-import io.nicheblog.dreamdiary.cmm.Constant;
+import io.nicheblog.dreamdiary.global.Constant;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.util;
+package io.nicheblog.dreamdiary.global.util;
 
 import lombok.experimental.UtilityClass;
 
