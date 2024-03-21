@@ -108,6 +108,8 @@ dependencies {
     implementation 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
+    implementation group: 'org.eclipse.paho', name: 'mqtt-client', version: '0.4.0'
+
     /** 음력계산 */
     implementation group: 'com.ibm.icu', name: 'icu4j', version: '73.2'
 
