@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.intrfc.mapstruct;
+package io.nicheblog.dreamdiary.global.intrfc.mapstruct;
 
 /**
  * BaseListMapstruct
