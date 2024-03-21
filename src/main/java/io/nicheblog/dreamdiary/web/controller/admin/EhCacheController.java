@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.cmm.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.cmm.util.EhCacheUtil;
 import io.nicheblog.dreamdiary.cmm.util.MessageUtil;
-import io.nicheblog.dreamdiary.web.SiteActvty;
+import io.nicheblog.dreamdiary.cmm.ActvtyCtgr;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.AjaxResponse;
 import io.nicheblog.dreamdiary.cmm.log.model.LogActvtyParam;
@@ -34,7 +34,7 @@ public class EhCacheController
         extends BaseControllerImpl {
 
     // 로그 적재용 작업 카테고리
-    private final SiteActvty actvtyCtgr = SiteActvty.ADMIN;
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;
 
     /**
      * 사이트 캐시 조회 (Ajax)

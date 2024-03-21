@@ -1,7 +1,4 @@
-package io.nicheblog.dreamdiary.web;
-
-import io.nicheblog.dreamdiary.api.ApiConstant;
-import io.nicheblog.dreamdiary.cmm.auth.Auth;
+package io.nicheblog.dreamdiary.cmm;
 
 /**
  * SiteActvty
@@ -13,10 +10,14 @@ import io.nicheblog.dreamdiary.cmm.auth.Auth;
  *
  * @author nichefish
  */
-public enum SiteActvty {
+public enum ActvtyCtgr {
 
     ADMIN,
     CACHE,
+
+
+    API_JANDI,
+    API_KASI,
 
     LGN;
 
