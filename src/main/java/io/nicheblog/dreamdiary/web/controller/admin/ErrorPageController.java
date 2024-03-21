@@ -1,16 +1,14 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
-import io.nicheblog.dreamdiary.cmm.Constant;
-import io.nicheblog.dreamdiary.cmm.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.model.admin.SiteMenuAcsInfo;
-import io.nicheblog.dreamdiary.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**

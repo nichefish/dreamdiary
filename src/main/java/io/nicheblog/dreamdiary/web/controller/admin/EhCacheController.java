@@ -1,14 +1,14 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
-import io.nicheblog.dreamdiary.cmm.Constant;
-import io.nicheblog.dreamdiary.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.cmm.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.cmm.util.EhCacheUtil;
-import io.nicheblog.dreamdiary.cmm.util.MessageUtil;
-import io.nicheblog.dreamdiary.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.AjaxResponse;
-import io.nicheblog.dreamdiary.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,14 +53,14 @@ public class EhCacheController
         String resultMsg = "";
         try {
             // 현재 활성 중인 캐시(name) 목록 조회 :: 성공시 처리완료목록으로 출력
-            List<String> activeCacheList = EhCacheUtil.chckActiveCaches();
+            List<String> activeCacheList = EhCacheUtils.chckActiveCaches();
             ajaxResponse.setResultList(activeCacheList);
             isSuccess = (activeCacheList != null);
-            resultMsg = MessageUtil.getMessage(isSuccess ? MessageUtil.RSLT_SUCCESS : MessageUtil.RSLT_FAILURE);
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtil.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtil.getExceptionNm(e), e.getMessage());
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
@@ -86,14 +86,14 @@ public class EhCacheController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            List<String> activeCacheList = EhCacheUtil.chckActiveCaches();
+            List<String> activeCacheList = EhCacheUtils.chckActiveCaches();
             ajaxResponse.setResultList(activeCacheList);
-            isSuccess = EhCacheUtil.clearAllCaches();
-            resultMsg = MessageUtil.getMessage(isSuccess ? MessageUtil.RSLT_SUCCESS : MessageUtil.RSLT_FAILURE);
+            isSuccess = EhCacheUtils.clearAllCaches();
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtil.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtil.getExceptionNm(e), e.getMessage());
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
