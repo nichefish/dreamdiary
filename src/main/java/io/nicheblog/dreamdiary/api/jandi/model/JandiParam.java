@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.api.jandi.model;
 
+import io.nicheblog.dreamdiary.api.jandi.JandiTopic;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class JandiParam {
      * 대상 토픽 코드
      */
     @Schema(description = "대상 토픽 코드", example = "NOTICE")
-    private String trgetTopic;
+    private JandiTopic trgetTopic;
 
     /**
      * 메세지
