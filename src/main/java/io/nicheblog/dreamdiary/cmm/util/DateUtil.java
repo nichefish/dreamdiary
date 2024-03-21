@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.cmm.util;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 @UtilityClass
 public class DateUtil
-        extends org.apache.commons.lang3.time.DateUtils {
+        extends DateUtils {
 
     private static final TimeZone seoulTZ = TimeZone.getTimeZone("Asia/Seoul");
     private static final Locale lc = new Locale("ko", "KR");
