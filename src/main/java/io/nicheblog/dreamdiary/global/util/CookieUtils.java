@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.util;
+package io.nicheblog.dreamdiary.global.util;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +18,7 @@ import java.util.Arrays;
  * @author nichefish
  */
 @UtilityClass
-public class CookieUtil {
+public class CookieUtils {
 
     @Resource
     private HttpServletRequest request;

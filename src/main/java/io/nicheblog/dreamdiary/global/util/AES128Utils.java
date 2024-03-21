@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global.util;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -23,11 +24,11 @@ import java.util.Base64.Encoder;
  */
 @UtilityClass
 @Log4j2
-public class AES128Util {
+public class AES128Utils {
 
     // 비밀키 선언 16바이트
-    // TODO: 외부 속성값으로 빼기
-    private static final String secretKey = "0123456789abcdef";
+    @Value("${aes128.secret-key:0000000000000000}")
+    private String secretKey;
 
     /**
      * AES 암호화(인코딩)
