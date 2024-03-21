@@ -10,18 +10,42 @@ package io.nicheblog.dreamdiary.web;
  */
 public interface SiteUrl {
 
-    String URL_ROBOT_TXT = "/robot.txt";
-    String URL_ROBOTS_TXT = "/robots.txt";
+    /**
+     * 메인 도메인
+     */
+    String SITE_DOMAIN = "dreamdiary.nicheblog.io";
 
-    String URL_ROOT = "/";
-    String URL_MAIN = "/main.do";
+    String ROBOT_TXT = "/robot.txt";
+    String ROBOTS_TXT = "/robots.txt";
 
+    String ROOT = "/";
+    String MAIN = "/main.do";
+
+    /**
+     * 메인 > 로그인 화면
+     * NO_ASIDE
+     */
+    // URL
+    String PREFIX_AUTH = "/auth";
+    String AUTH_LGN_FORM = PREFIX_AUTH + "/lgnForm.do";
+    String AUTH_LGN_PROC = PREFIX_AUTH + "/lgnProc.do";
+    String AUTH_LGN_PW_CHG_AJAX = PREFIX_AUTH + "/lgnPwChgAjax.do";
+    String AUTH_LGOUT = PREFIX_AUTH + "/lgout.do";
 
     String PREFIX_ADMIN = "/admin";
-    String URL_ADMIN_MAIN = PREFIX_ADMIN + URL_MAIN;
+    String ADMIN_MAIN = PREFIX_ADMIN + MAIN;
+    String ADMIN_TEST_PAGE = PREFIX_ADMIN + "/testPage.do";
 
-    String URL_ADMIN_TEST_PAGE = PREFIX_ADMIN + "/testPage.do";
 
-    String MENU_NM_ADMIN_MAIN = "메인 (관리자)";
 
+
+    /**
+     * ERROR
+     */
+    // URL
+    public static final String PREFIX_ERROR = "/error";
+    public static final String ERROR = "/error";
+    public static final String ERROR_PAGE = PREFIX_ERROR + "/errorPage.do";
+    public static final String ERROR_NOT_FOUND = PREFIX_ERROR + "/notFound.do";
+    public static final String ERROR_ACCESS_DENIED = PREFIX_ERROR + "/accessDenied.do";
 }
