@@ -43,9 +43,9 @@ public interface SiteUrl {
      * ERROR
      */
     // URL
-    public static final String PREFIX_ERROR = "/error";
-    public static final String ERROR = "/error";
-    public static final String ERROR_PAGE = PREFIX_ERROR + "/errorPage.do";
-    public static final String ERROR_NOT_FOUND = PREFIX_ERROR + "/notFound.do";
-    public static final String ERROR_ACCESS_DENIED = PREFIX_ERROR + "/accessDenied.do";
+    String PREFIX_ERROR = "/error";
+    String ERROR = "/error";
+    String ERROR_PAGE = PREFIX_ERROR + "/errorPage.do";
+    String ERROR_NOT_FOUND = PREFIX_ERROR + "/notFound.do";
+    String ERROR_ACCESS_DENIED = PREFIX_ERROR + "/accessDenied.do";
 }
