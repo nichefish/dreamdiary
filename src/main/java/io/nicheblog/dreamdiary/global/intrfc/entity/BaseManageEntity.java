@@ -21,7 +21,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

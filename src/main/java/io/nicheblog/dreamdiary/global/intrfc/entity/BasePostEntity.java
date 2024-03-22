@@ -20,7 +20,7 @@ import javax.persistence.*;
 @IdClass(BasePostKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class BasePostEntity
