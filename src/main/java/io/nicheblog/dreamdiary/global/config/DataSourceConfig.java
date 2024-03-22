@@ -41,7 +41,7 @@ import java.util.HashMap;
 @Configuration
 @PropertySource({"classpath:application.yml"})
 @EnableJpaRepositories(
-        basePackages = { "io.nicheblog.dreamdiary.*.repository" },
+        basePackages = { "io.nicheblog.dreamdiary.**.repository" },
         entityManagerFactoryRef = "entityManagerFactory",
         transactionManagerRef = "transactionManager",
         repositoryBaseClass = BaseRepositoryImpl.class
@@ -71,7 +71,7 @@ public class DataSourceConfig
     public EntityManagerFactory entityManagerFactory(final @Qualifier("primaryDataSource") DataSource dataSource) {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("io.nicheblog.dreamdiary.*.entity");
+        em.setPackagesToScan("io.nicheblog.dreamdiary.**.entity");
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         final HashMap<String, Object> properties = new HashMap<>();
@@ -108,7 +108,7 @@ public class DataSourceConfig
         bean.setMapperLocations(applicationContext.getResources("classpath*:**/mapper/sql/*Mapper.xml"));
         bean.setDataSource(dataSource);
         bean.setVfs(SpringBootVFS.class);
-        bean.setTypeAliasesPackage("io.nicheblog.dreamdiary.model");
+        bean.setTypeAliasesPackage("io.nicheblog.dreamdiary.**.model");
         return bean.getObject();
     }
 

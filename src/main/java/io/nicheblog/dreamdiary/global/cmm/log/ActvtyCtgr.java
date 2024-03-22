@@ -25,7 +25,14 @@ public enum ActvtyCtgr {
 
     LGN("로그인"),
 
-    LGN_POLICY("로그인 정책 관리");
+    TAG("태그"),
+
+    USER("사용자 관리"),
+    USER_MY("내 정보 관리"),
+
+    LGN_POLICY("로그인 정책 관리"),
+
+    FILE("파일");
 
     private final String desc;
 }

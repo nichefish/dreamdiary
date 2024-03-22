@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.cmm.interceptor;
+package io.nicheblog.dreamdiary.global.interceptor;
 
-import io.nicheblog.dreamdiary.cmm.Constant;
-import io.nicheblog.dreamdiary.cmm.util.CookieUtil;
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.util.CookieUtils;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -43,10 +43,10 @@ public class CookieInterceptor
         if (isAjaxRequest) return;
 
         /* 사이드바 접기 쿠키 설정 */
-        String asideMenu = CookieUtil.getCookie(Constant.ASIDE_MENU);
+        String asideMenu = CookieUtils.getCookie(Constant.ASIDE_MENU);
         if (mav != null) mav.addObject(Constant.ASIDE_MENU_MINIMIZED, Constant.ASIDE_MENU_MINIMIZED.equals(asideMenu));
 
         /* 응답 내려갈 때마다 항상 blockUI 클리어 쿠키를 내려준다. */
-        CookieUtil.setResponseSuccessCookie();
+        CookieUtils.setResponseSuccessCookie();
     }
 }
