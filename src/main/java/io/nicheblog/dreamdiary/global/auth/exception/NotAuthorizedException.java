@@ -8,7 +8,7 @@
  * BixSoft is not allowed. Also, it is severely prohibited to register whole or specific
  * part of the source code to any sort of information retrieval system.
  */
-package io.nicheblog.dreamdiary.global.cmm.auth.exception;
+package io.nicheblog.dreamdiary.global.auth.exception;
 
 /**
  * NotAuthorizedException

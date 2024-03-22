@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.handler;
+package io.nicheblog.dreamdiary.global.auth.handler;
 
 import lombok.extern.log4j.Log4j2;
 

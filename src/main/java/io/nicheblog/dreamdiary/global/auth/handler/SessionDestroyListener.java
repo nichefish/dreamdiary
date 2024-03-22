@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.handler;
+package io.nicheblog.dreamdiary.global.auth.handler;
 
-import io.nicheblog.dreamdiary.global.cmm.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.core.Authentication;

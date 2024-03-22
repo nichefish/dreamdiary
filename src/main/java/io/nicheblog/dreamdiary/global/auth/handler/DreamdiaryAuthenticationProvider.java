@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.handler;
+package io.nicheblog.dreamdiary.global.auth.handler;
 
-import io.nicheblog.dreamdiary.global.cmm.auth.exception.*;
-import io.nicheblog.dreamdiary.global.cmm.auth.model.AuthInfo;
-import io.nicheblog.dreamdiary.global.cmm.auth.service.AuthService;
+import io.nicheblog.dreamdiary.global.auth.exception.*;
+import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.exception;
+package io.nicheblog.dreamdiary.global.auth.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

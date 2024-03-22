@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.exception;
+package io.nicheblog.dreamdiary.global.auth.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
@@ -10,17 +10,17 @@ import org.springframework.security.core.AuthenticationException;
  *
  * @author nichefish
  */
-public class AcntDormantException
+public class AcntNotCfException
         extends AuthenticationException {
 
-    public AcntDormantException(
+    public AcntNotCfException(
             final String msg,
             final Throwable cause
     ) {
         super(msg, cause);
     }
 
-    public AcntDormantException(final String msg) {
+    public AcntNotCfException(final String msg) {
         super(msg);
     }
 }

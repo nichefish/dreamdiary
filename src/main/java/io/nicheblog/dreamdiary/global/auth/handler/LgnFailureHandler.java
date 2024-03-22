@@ -1,10 +1,10 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.handler;
+package io.nicheblog.dreamdiary.global.auth.handler;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.auth.exception.AcntDormantException;
-import io.nicheblog.dreamdiary.global.cmm.auth.exception.AcntNeedsPwResetException;
-import io.nicheblog.dreamdiary.global.cmm.auth.exception.DupIdLgnException;
-import io.nicheblog.dreamdiary.global.cmm.auth.service.AuthService;
+import io.nicheblog.dreamdiary.global.auth.exception.AcntDormantException;
+import io.nicheblog.dreamdiary.global.auth.exception.AcntNeedsPwResetException;
+import io.nicheblog.dreamdiary.global.auth.exception.DupIdLgnException;
+import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.cmm.log.service.LogService;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;

@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.util;
+package io.nicheblog.dreamdiary.global.auth.util;
 
-import io.nicheblog.dreamdiary.global.cmm.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;

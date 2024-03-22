@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.service;
+package io.nicheblog.dreamdiary.global.auth.service;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserInfoEntity;
 import io.nicheblog.dreamdiary.web.repository.user.UserInfoRepository;

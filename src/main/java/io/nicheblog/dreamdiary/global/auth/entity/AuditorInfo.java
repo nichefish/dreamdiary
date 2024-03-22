@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.entity;
+package io.nicheblog.dreamdiary.global.auth.entity;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;

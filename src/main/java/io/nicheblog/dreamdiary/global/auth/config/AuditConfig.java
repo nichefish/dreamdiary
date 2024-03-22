@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.config;
+package io.nicheblog.dreamdiary.global.auth.config;
 
-import io.nicheblog.dreamdiary.global.cmm.auth.handler.AuditAwareImpl;
+import io.nicheblog.dreamdiary.global.auth.handler.AuditAwareImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

@@ -1,11 +1,11 @@
-package io.nicheblog.dreamdiary.global.cmm.auth.config;
+package io.nicheblog.dreamdiary.global.auth.config;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.auth.handler.DreamdiaryAuthenticationProvider;
-import io.nicheblog.dreamdiary.global.cmm.auth.handler.LgnFailureHandler;
-import io.nicheblog.dreamdiary.global.cmm.auth.handler.LgnSuccessHandler;
-import io.nicheblog.dreamdiary.global.cmm.auth.handler.LgoutHandler;
-import io.nicheblog.dreamdiary.global.cmm.auth.service.AuthService;
+import io.nicheblog.dreamdiary.global.auth.handler.DreamdiaryAuthenticationProvider;
+import io.nicheblog.dreamdiary.global.auth.handler.LgnFailureHandler;
+import io.nicheblog.dreamdiary.global.auth.handler.LgnSuccessHandler;
+import io.nicheblog.dreamdiary.global.auth.handler.LgoutHandler;
+import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -108,7 +108,7 @@ public class WebSecurityConfig
            //.antMatchers(SiteUrl.ERROR_NOT_FOUND)
            //.antMatchers(SiteUrl.ERROR_ACCESS_DENIED)
            //// 비밀번호 만료시 비밀번호 변경 화면
-           //.antMatchers(SiteUrl.LGN_PW_CHG_AJAX)
+           //.antMatchers(SiteUrl.AUTH_LGN_PW_CHG_AJAX)
            //// 신규계정 신청 화면/기능 전체 접근 (+아이디 중복 체크)
            //.antMatchers(SiteUrl.USER_REQST_REG_FORM)
            //.antMatchers(SiteUrl.USER_REQST_REG_AJAX)
