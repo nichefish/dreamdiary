@@ -1,0 +1,49 @@
+#log4j2 설정 파일 (로컬local)
+
+Configutation:
+    status: info
+
+    Properties:
+        Property:
+            - name: log-format
+              value: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}.%M(%L) - %msg%n"
+
+    Appenders:
+        Console:
+            name: Console_Appender
+            target: SYSTEM_OUT
+            PatternLayout:
+                pattern: ${log-format}
+        File:
+            name: File_Appender
+            fileName: ${log-path}/logfile.log
+            PatternLayout:
+                pattern: ${log-format}
+        RollingFile:
+            - name: RollingFile_Appender
+              fileName: ${log-path}/rollingfile.log
+              filePattern: "E:/Dev/Projects/dreamdiary/log/archive/rollingfile.log.%d{yyyy-MM-dd}.gz"
+              PatternLayout:
+                  pattern: ${log-format}
+              Policies:
+                  SizeBasedTriggeringPolicy:
+                      size: 1GB
+                  TimeBasedTriggeringPolicy:
+                      interval: 1
+                      modulate: true
+
+    Loggers:
+        Root:
+            level: info
+            AppenderRef:
+                - ref: Console_Appender
+                - ref: File_Appender
+                - ref: RollingFile_Appender
+        Logger:
+            - name: kr.go.eseoul.ss.scsc.br
+              additivity: false
+              level: debug
+              AppenderRef:
+                  - ref: Console_Appender
+                  - ref: File_Appender
+                  - ref: RollingFile_Appender

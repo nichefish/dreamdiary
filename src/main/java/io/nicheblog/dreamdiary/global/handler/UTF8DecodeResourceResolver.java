@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.handler;
+package io.nicheblog.dreamdiary.global.handler;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.Resource;

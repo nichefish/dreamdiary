@@ -1,0 +1,18 @@
+config:
+    cache-template:
+        name: "template"
+        expiry:
+            ttl:
+                unit: "days"
+                value: 1
+        resources:
+            heap:
+                unit: "entries"
+                value: 200
+    cache:
+        - alias: "attkDefSetList"
+          uses-template: "template"
+          expiry:
+              ttl:
+                  unit: "seconds"
+                  value: 60

@@ -1,0 +1,33 @@
+#log4j2 설정 파일 (로컬local)
+
+Configutation:
+    status: debug
+
+    Properties:
+        Property:
+            - name: log-path
+              value: "log"
+
+    Appenders:
+        RollingFile:
+            - name: RollingFile_Appender
+              fileName: ${log-path}/rollingfile.log
+              filePattern: "log/archive/rollingfile.log.%d{yyyy-MM-dd}.gz"
+              PatternLayout:
+                  pattern: ${log-format}
+              Policies:
+                  SizeBasedTriggeringPolicy:
+                      size: 1GB
+                  TimeBasedTriggeringPolicy:
+                      interval: 1
+                      modulate: true
+
+    Loggers:
+        Logger:
+            - name: kr.go.eseoul.ss.scsc.br
+              additivity: false
+              level: debug
+              AppenderRef:
+                  - ref: Console_Appender
+                  - ref: File_Appender
+                  - ref: RollingFile_Appender

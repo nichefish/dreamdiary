@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.config;
+package io.nicheblog.dreamdiary.global.config;
 
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -9,9 +9,6 @@ import org.apache.http.ssl.TrustStrategy;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 import javax.net.ssl.SSLContext;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
 /**
@@ -23,7 +20,7 @@ import java.security.cert.X509Certificate;
  * @author nichefish
  */
 public class HttpClientConfig {
-    public static HttpComponentsClientHttpRequestFactory trustRequestFactory() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+    public static HttpComponentsClientHttpRequestFactory trustRequestFactory() throws Exception {
 
         TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
         SSLContext sslContext = SSLContexts.custom()

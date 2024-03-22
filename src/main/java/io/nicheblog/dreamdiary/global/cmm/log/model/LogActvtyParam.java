@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.cmm.log.model;
+package io.nicheblog.dreamdiary.global.cmm.log.model;
 
-import io.nicheblog.dreamdiary.web.SiteActvty;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +22,14 @@ import org.apache.commons.lang3.StringUtils;
 public class LogActvtyParam {
 
     /**
+     * 작업 카테고리
+     */
+    private ActvtyCtgr actvtyCtgr;
+    /**
+     * 액션 구분 코드
+     */
+    private String actionTyCd;
+    /**
      * 성공여부
      */
     private Boolean isSuccess;
@@ -29,20 +37,11 @@ public class LogActvtyParam {
      * 결과 메세지
      */
     private String resultMsg;
-    /**
-     * 작업 카테고리 코드
-     */
-    private String actvtyCtgrCd;
-    /**
-     * 액션 구분 코드
-     */
-    private String actionTyCd;
 
     /**
      * 내용
      */
     private String cn;
-
     /**
      * 익셉션 이름
      */
@@ -72,10 +71,10 @@ public class LogActvtyParam {
     public LogActvtyParam(
             final Boolean isSuccess,
             final String resultMsg,
-            final SiteActvty actvtyCtgrCd
+            final ActvtyCtgr actvtyCtgr
     ) {
         this(isSuccess, resultMsg);
-        this.actvtyCtgrCd = actvtyCtgrCd;
+        this.actvtyCtgr = actvtyCtgr;
     }
 
     /**
@@ -84,10 +83,10 @@ public class LogActvtyParam {
     public LogActvtyParam setResult(
             final boolean isSuccess,
             final String resultMsg,
-            final SiteActvty actvtyCtgrCd
+            final ActvtyCtgr actvtyCtgr
     ) {
         this.setResult(isSuccess, resultMsg);
-        this.actvtyCtgrCd = actvtyCtgrCd;
+        this.actvtyCtgr = actvtyCtgr;
         return this;
     }
 
@@ -120,8 +119,8 @@ public class LogActvtyParam {
 
     public Boolean hasAttr(final String attrNm) {
         switch (attrNm) {
-            case "actvtyCtgrCd":
-                return StringUtils.isNotEmpty(this.actvtyCtgrCd);
+            case "actvtyCtgr":
+                return StringUtils.isNotEmpty(this.actvtyCtgr.name());
         }
         return false;
     }

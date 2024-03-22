@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.util;
+package io.nicheblog.dreamdiary.global.util;
 
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
@@ -24,7 +24,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
  * @author nichefish
  */
 @Log4j2
-public class SeleniumUtil {
+public class SeleniumUtils {
 
     /**
      * chromedriver 반환

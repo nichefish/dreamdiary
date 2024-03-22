@@ -1,10 +1,11 @@
 package io.nicheblog.dreamdiary.web.scheduler;
 
-import io.nicheblog.dreamdiary.cmm.log.event.LogSysEvent;
-import io.nicheblog.dreamdiary.cmm.log.model.LogSysParam;
-import io.nicheblog.dreamdiary.cmm.util.EhCacheUtil;
-import io.nicheblog.dreamdiary.cmm.util.MessageUtil;
-import io.nicheblog.dreamdiary.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
+import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,7 +30,7 @@ public class EhCacheScheduler {
      * 1시간에 한 번씩 전체 캐시 클리어
      * 매시간 00분 실행
      */
-    @Scheduled(cron = "0 0 * * * *", zone = "Asia/Seoul")         // second min hour day month weekday
+    @Scheduled(cron = "0 0 * * * *", zone = Constant.LOC_SEOUL)         // second min hour day month weekday
     public void cacheAllClearSchedule(
             final LogSysParam logParam
         ) {
@@ -37,11 +38,11 @@ public class EhCacheScheduler {
         log.info("cacheAllClearSchedule...");
 
         try {
-            EhCacheUtil.clearAllCaches();
+            EhCacheUtils.clearAllCaches();
         } catch (Exception e) {
-            String resultMsg = MessageUtil.getExceptionMsg(e);
+            String resultMsg = MessageUtils.getExceptionMsg(e);
             // 수시로 이루어지므로 실패시에만 로깅한다.
-            logParam.setExceptionInfo(MessageUtil.getExceptionNm(e), e.getMessage());
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
             logParam.setResult(false, resultMsg, ActvtyCtgr.CACHE);
             publisher.publishEvent(new LogSysEvent(this, logParam));
         }
