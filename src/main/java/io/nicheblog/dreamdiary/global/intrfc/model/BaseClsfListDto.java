@@ -21,8 +21,8 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BasePostListDto
-        extends BaseClsfListDto {
+public class BaseClsfListDto
+        extends BaseAtchDto {
 
     /**
      * 글 번호

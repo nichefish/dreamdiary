@@ -21,8 +21,8 @@ import javax.persistence.MappedSuperclass;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class BasePostDto
-        extends BaseClsfDto {
+public class BaseClsfDto
+        extends BaseAtchDto {
 
     /**
      * 글 번호

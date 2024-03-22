@@ -23,8 +23,8 @@ import javax.persistence.*;
 @SuperBuilder(toBuilder=true)
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class BasePostEntity
-        extends BaseClsfEntity {
+public class BaseClsfEntity
+        extends BaseAtchEntity {
 
     /**
      * 글 번호
