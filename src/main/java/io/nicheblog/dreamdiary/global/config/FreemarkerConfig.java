@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.config;
+package io.nicheblog.dreamdiary.global.config;
 
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateHashModel;
@@ -24,7 +24,7 @@ import java.util.*;
 public class FreemarkerConfig
         implements BeanPostProcessor {
 
-    @SneakyThrows         // or use try / catch (if not using lombok)
+    @SneakyThrows
     @Override
     public Object postProcessAfterInitialization(
             @NotNull Object bean,
@@ -46,6 +46,9 @@ public class FreemarkerConfig
             // 템플릿 위치 추가
             List<String> pluginTemplatePaths = new ArrayList<>();
             pluginTemplatePaths.add(0, "classpath:/templates");
+            pluginTemplatePaths.add(0, "classpath:/static");
+            pluginTemplatePaths.add(0, "classpath:/static/react");
+            pluginTemplatePaths.add(0, "classpath:/react");
             pluginTemplatePaths.add(0, "file:templates");
             String[] paths = pluginTemplatePaths.toArray(new String[0]);
             configurer.setTemplateLoaderPaths(paths);
@@ -59,9 +62,9 @@ public class FreemarkerConfig
         // Add global variables and Add static support
         TemplateHashModel statics = config.getStaticModels();
         sharedVariables.put("Statics", statics);
-        sharedVariables.put("Constant", statics.get("io.nicheblog.dreamdiary.cmm.Constant"));
-        sharedVariables.put("SiteMenu", statics.get("io.nicheblog.dreamdiary.cmm.SiteMenu"));
-        sharedVariables.put("DateUtils", statics.get("io.nicheblog.dreamdiary.cmm.util.DateUtils"));
+        sharedVariables.put("Constant", statics.get("net.sinzi.intranet.cmm.Constant"));
+        sharedVariables.put("SiteMenu", statics.get("net.sinzi.intranet.cmm.SiteMenu"));
+        sharedVariables.put("DateUtil", statics.get("net.sinzi.intranet.cmm.util.DateUtil"));
 
         return sharedVariables;
     }

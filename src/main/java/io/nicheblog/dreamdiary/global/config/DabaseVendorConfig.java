@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.cmm.config;
+package io.nicheblog.dreamdiary.global.config;
 
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.springframework.context.annotation.Bean;
