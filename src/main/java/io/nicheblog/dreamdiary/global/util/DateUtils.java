@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.global.util;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -22,10 +22,10 @@ import java.util.concurrent.TimeUnit;
  * @extends DateUtils
  */
 @UtilityClass
-public class DateUtil
-        extends DateUtils {
+public class DateUtils
+        extends org.apache.commons.lang3.time.DateUtils {
 
-    private static final TimeZone seoulTZ = TimeZone.getTimeZone("Asia/Seoul");
+    private static final TimeZone seoulTZ = TimeZone.getTimeZone(Constant.LOC_SEOUL);
     private static final Locale lc = new Locale("ko", "KR");
 
     public static final String PTN_DATE = "yyyy-MM-dd";
@@ -419,8 +419,8 @@ public class DateUtil
             final Object date1,
             final Object date2
     ) throws Exception {
-        String date1str = asStr(date1, DateUtil.PTN_PDATE);
-        String date2str = asStr(date2, DateUtil.PTN_PDATE);
+        String date1str = asStr(date1, DateUtils.PTN_PDATE);
+        String date2str = asStr(date2, DateUtils.PTN_PDATE);
         return date1str.equals(date2str);
     }
 
@@ -455,7 +455,7 @@ public class DateUtil
             return strToDate(dateStr);
         }
         if (date instanceof Date) return (Date) date;
-        if (date instanceof LocalDate) return Date.from(((LocalDate) date).atStartOfDay(ZoneId.of("Asia/Seoul"))
+        if (date instanceof LocalDate) return Date.from(((LocalDate) date).atStartOfDay(ZoneId.of(Constant.LOC_SEOUL))
                                                                           .toInstant());
         if (date instanceof LocalDateTime) return localDateTimeToDate((LocalDateTime) date);
         return null;
