@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.cmm.handler;
+package io.nicheblog.dreamdiary.global.handler;
 
-import io.nicheblog.dreamdiary.cmm.util.MessageUtil;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.model.admin.AjaxResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -37,7 +37,7 @@ public class ExceptionHandler {
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
-        String resultMsg = MessageUtil.getExceptionMsg(e);
+        String resultMsg = MessageUtils.getExceptionMsg(e);
         ajaxResponse.setAjaxResult(false, resultMsg);
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class ExceptionHandler {
             final Model model
     ) {
 
-        String resultMsg = MessageUtil.getExceptionMsg(e);
+        String resultMsg = MessageUtils.getExceptionMsg(e);
         model.addAttribute("errorMsg", resultMsg);
 
         return "/view/error_page";
