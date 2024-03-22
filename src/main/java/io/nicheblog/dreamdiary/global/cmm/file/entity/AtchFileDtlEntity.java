@@ -24,7 +24,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE ATCH_FILE_DTL SET DEL_YN = 'Y' WHERE ATCH_FILE_DTL_ID = ?")
+@SQLDelete(sql = "UPDATE ATCH_FILE_DTL SET DEL_YN = 'Y' WHERE ATCH_FILE_DTL_NO = ?")
 public class AtchFileDtlEntity
         implements Serializable {
 
@@ -33,14 +33,14 @@ public class AtchFileDtlEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ATCH_FILE_DTL_ID")
-    private Integer atchFileDtlId;
+    @Column(name = "ATCH_FILE_DTL_NO")
+    private Integer atchFileDtlNo;
 
     /**
      * 첨부파일 ID
      */
-    @Column(name = "ATCH_FILE_ID")
-    private Integer atchFileId;
+    @Column(name = "ATCH_FILE_NO")
+    private Integer atchFileNo;
 
     /**
      * 파일 순번

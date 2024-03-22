@@ -34,7 +34,7 @@ public class BaseAtchDto
     /**
      * 첨부파일 ID
      */
-    protected Integer atchFileId;
+    protected Integer atchFileNo;
     /**
      * 첨부파일 정보 (1:N)
      */
@@ -59,14 +59,14 @@ public class BaseAtchDto
      * 첨부파일 존재 여부
      */
     public Boolean getHasAtchFile() {
-        return !(this.getAtchFileId() == null || this.getAtchFileInfo() == null || CollectionUtils.isEmpty(this.getAtchFileInfo().getAtchFileList()));
+        return !(this.getAtchFileNo() == null || this.getAtchFileInfo() == null || CollectionUtils.isEmpty(this.getAtchFileInfo().getAtchFileList()));
     }
 
     /**
      * 첨부파일 목록
      */
     public List<AtchFileDtlDto> getAtchFileList() {
-        if (this.getAtchFileId() == null || this.getAtchFileInfo() == null) return null;
+        if (this.getAtchFileNo() == null || this.getAtchFileInfo() == null) return null;
         return this.getAtchFileInfo()
                    .getAtchFileList();
     }

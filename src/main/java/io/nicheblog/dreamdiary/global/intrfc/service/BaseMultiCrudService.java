@@ -34,8 +34,8 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto, ListDto extends B
     ) throws Exception {
         FileService fileService = this.getFileService();
         // 파일 영역 처리
-        Integer atchFileId = dto.getAtchFileId();
-        dto.setAtchFileId(fileService.uploadFile(request, atchFileId));    // 등록된 파일 마스터ID를 가져온다.
+        Integer atchFileNo = dto.getAtchFileNo();
+        dto.setAtchFileNo(fileService.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
         // 나머지 처리
         return this.regist(dto);
     }
@@ -50,8 +50,8 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto, ListDto extends B
     ) throws Exception {
         FileService fileService = this.getFileService();
         // 파일 영역 처리
-        Integer atchFileId = dto.getAtchFileId();
-        dto.setAtchFileId(fileService.uploadFile(request, atchFileId));    // 등록된 파일 마스터ID를 가져온다.
+        Integer atchFileNo = dto.getAtchFileNo();
+        dto.setAtchFileNo(fileService.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
         // 나머지 처리
         return this.modify(dto, key);
     }

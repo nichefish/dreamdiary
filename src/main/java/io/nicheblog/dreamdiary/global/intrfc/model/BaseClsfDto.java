@@ -47,7 +47,7 @@ public class BaseClsfDto
     /**
      * 첨부파일 ID
      */
-    protected Integer atchFileId;
+    protected Integer atchFileNo;
     /**
      * 첨부파일 정보
      */

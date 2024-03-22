@@ -21,11 +21,11 @@ public class AtchFileDtlDto {
     /**
      * 첨부파일 상세 ID
      */
-    private Integer atchFileDtlId;
+    private Integer atchFileDtlNo;
     /**
      * 첨부파일 ID
      */
-    private Integer atchFileId;
+    private Integer atchFileNo;
     /**
      * 파일 순번
      */

@@ -36,14 +36,14 @@ public class BaseAtchEntity
     /**
      * 첨부파일 ID
      */
-    @Column(name = "ATCH_FILE_ID")
-    protected String atchFileId;
+    @Column(name = "ATCH_FILE_NO")
+    protected String atchFileNo;
 
     /**
      * 첨부파일 정보
      */
     @OneToOne
-    @JoinColumn(name = "ATCH_FILE_ID", referencedColumnName = "ATCH_FILE_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ATCH_FILE_NO", referencedColumnName = "ATCH_FILE_NO", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     protected AtchFileEntity atchFileInfo;
 }

@@ -48,7 +48,7 @@ public class AtchFileController
 
     /**
      * 파일 유무 여부 체크 (Ajax)
-     * 파일ID 이용 (atchFileDtlId)
+     * 파일ID 이용 (atchFileDtlNo)
      * 로그인 사용자만 접근 가능
      */
     @RequestMapping(SiteUrl.FILE_DOWNLOAD_CHK_AJAX)
@@ -82,14 +82,14 @@ public class AtchFileController
 
     /**
      * 파일 목록 정보 조회 (Ajax)
-     * 파일ID 이용 (atchFileId)
+     * 파일ID 이용 (atchFileNo)
      * 비로그인 사용자도 외부에서 접근 가능 (인증 없음)
      */
     @RequestMapping(SiteUrl.FILE_INFO_LIST_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> getFileList(
             final LogActvtyParam logParam,
-            final @RequestParam("atchFileId") @Nullable String atchFileIdStr
+            final @RequestParam("atchFileNo") @Nullable String atchFileNoStr
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -97,8 +97,8 @@ public class AtchFileController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer atchFileId = Integer.parseInt(atchFileIdStr);
-            List<AtchFileDtlDto> fileList = cmmFileService.getFileDtlDtoList(atchFileId);
+            Integer atchFileNo = Integer.parseInt(atchFileNoStr);
+            List<AtchFileDtlDto> fileList = cmmFileService.getFileDtlDtoList(atchFileNo);
             isSuccess = (fileList != null);
             ajaxResponse.setResultList(fileList);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -113,7 +113,7 @@ public class AtchFileController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + atchFileIdStr);
+            logParam.setCn("key: " + atchFileNoStr);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -121,7 +121,7 @@ public class AtchFileController
     }
 
     /**
-     * 파일 다운로드 : 파일ID 이용 (atchFileDtlId)
+     * 파일 다운로드 : 파일ID 이용 (atchFileDtlNo)
      * Ajax로 유무 체크 후 다운로드하므로 항상 파일이 존재한다 가정하고 진행
      * 로그인 사용자만 접근 가능
      */
@@ -129,16 +129,16 @@ public class AtchFileController
     @PreAuthorize("isAuthenticated()")
     public void fileDownload(
             final LogActvtyParam logParam,
-            final @RequestParam("atchFileDtlId") @Nullable String atchFileDtlIdStr
+            final @RequestParam("atchFileDtlNo") @Nullable String atchFileDtlNoStr
     ) throws Exception {
 
         boolean isSuccess = false;
         String resultMsg = "";
         try {
             // 파일 정보 조회
-            assert atchFileDtlIdStr != null;    // dtlId = null일 경우 catch로 바로 넘김
-            Integer atchFileDtlId = Integer.parseInt(atchFileDtlIdStr);
-            AtchFileDtlEntity atchFileDtl = cmmFileService.getFileDtlEntity(atchFileDtlId);
+            assert atchFileDtlNoStr != null;    // dtlId = null일 경우 catch로 바로 넘김
+            Integer atchFileDtlNo = Integer.parseInt(atchFileDtlNoStr);
+            AtchFileDtlEntity atchFileDtl = cmmFileService.getFileDtlEntity(atchFileDtlNo);
             String orgnFileNm = atchFileDtl.getOrgnFileNm();
             // 파일 다운로드 처리 시작
             File file = new File(atchFileDtl.getFileStrePath(), atchFileDtl.getStreFileNm());
@@ -152,7 +152,7 @@ public class AtchFileController
             MessageUtils.alertMessage(resultMsg);
         } finally {
             // 로그 관련 처리
-            logParam.setCn("key: " + atchFileDtlIdStr);
+            logParam.setCn("key: " + atchFileDtlNoStr);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -244,7 +244,7 @@ public class AtchFileController
         try {
             // 파일 영역 처리 후 업로드 정보 받아서 반환
             AtchFileDtlDto atchfileDtl = cmmFileService.uploadDtlFile(request);
-            isSuccess = (atchfileDtl.getAtchFileDtlId() != null);
+            isSuccess = (atchfileDtl.getAtchFileDtlNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             if (isSuccess) ajaxResponse.setResultObj(atchfileDtl);
         } catch (Exception e) {

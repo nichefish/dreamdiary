@@ -22,8 +22,8 @@ public interface AtchFileDtlRepository
     /**
      * 첨부파일 상세 조건 검색
      */
-    Optional<AtchFileDtlEntity> findByAtchFileIdAndAtchFileDtlId(
-            final Integer atchFileId,
+    Optional<AtchFileDtlEntity> findByAtchFileNoAndAtchFileDtlNo(
+            final Integer atchFileNo,
             final Integer atchFildDtlId
     );
 }

@@ -23,7 +23,7 @@ public class AtchFileDto {
     /**
      * 첨부파일 ID
      */
-    private String atchFileId;
+    private String atchFileNo;
     /**
      * 첨부파일 목록
      */

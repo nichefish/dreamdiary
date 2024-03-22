@@ -30,7 +30,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE ATCH_FILE SET DEL_YN = 'Y' WHERE ATCH_FILE_ID = ?")
+@SQLDelete(sql = "UPDATE ATCH_FILE SET DEL_YN = 'Y' WHERE ATCH_FILE_NO = ?")
 public class AtchFileEntity
         implements Serializable {
 
@@ -39,15 +39,15 @@ public class AtchFileEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ATCH_FILE_ID", length = 20)
-    private Integer atchFileId;
+    @Column(name = "ATCH_FILE_NO", length = 20)
+    private Integer atchFileNo;
 
     /**
      * 첨부파일 상세 목록
      */
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "ATCH_FILE_ID")
+    @JoinColumn(name = "ATCH_FILE_NO")
     @Fetch(FetchMode.SELECT)
     @OrderBy("fileSn ASC")
     @NotFound(action = NotFoundAction.IGNORE)
