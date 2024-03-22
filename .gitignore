@@ -4,3 +4,5 @@
 /config/application.yml
 /gradle/
 /src/main/resources/static/metronic/
+/upfile/public/*
+/upfile/secured/*
