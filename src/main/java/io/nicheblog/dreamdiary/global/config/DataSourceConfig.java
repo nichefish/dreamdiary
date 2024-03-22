@@ -1,10 +1,12 @@
-package io.nicheblog.dreamdiary.cmm.config;
+package io.nicheblog.dreamdiary.global.config;
 
-import io.nicheblog.dreamdiary.cmm.intrfc.repository.impl.BaseRepositoryImpl;
+import io.nicheblog.dreamdiary.global.intrfc.repository.impl.BaseRepositoryImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.jetbrains.annotations.NotNull;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -103,11 +105,10 @@ public class DataSourceConfig
     ) throws Exception {
 
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setMapperLocations(
-                // bix5-library에서 Mapper.xml 경로 = / (root)임.
-                // -> mapper/sql/*Mapper.xml 이 형식만 맞으면 다 로딩하도록 설정
-                applicationContext.getResources("classpath*:**/mapper/sql/*Mapper.xml"));
+        bean.setMapperLocations(applicationContext.getResources("classpath*:**/mapper/sql/*Mapper.xml"));
         bean.setDataSource(dataSource);
+        bean.setVfs(SpringBootVFS.class);
+        bean.setTypeAliasesPackage("io.nicheblog.dreamdiary.model");
         return bean.getObject();
     }
 
@@ -118,7 +119,7 @@ public class DataSourceConfig
     }
 
     @Override
-    public void setEnvironment(final Environment environment) {
+    public void setEnvironment(final @NotNull Environment environment) {
         env = environment;
     }
 }

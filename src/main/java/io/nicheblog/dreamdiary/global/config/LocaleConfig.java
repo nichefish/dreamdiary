@@ -1,5 +1,6 @@
-package io.nicheblog.dreamdiary.cmm.config;
+package io.nicheblog.dreamdiary.global.config;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -18,6 +19,6 @@ public class LocaleConfig {
 
     @PostConstruct
     public void init() {
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        TimeZone.setDefault(TimeZone.getTimeZone(Constant.LOC_SEOUL));
     }
 }
