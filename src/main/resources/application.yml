@@ -1,0 +1,94 @@
+#application.yml
+#공통 사용 설정 모음
+
+spring:
+    main:
+        allow-bean-definition-overriding: true
+
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 500MB
+            max-request-size: 500MB
+
+    cache:
+        jcache:
+            config: classpath:ehcache.yml
+
+    freemarker:
+        #template-loader-path: classpath:/templates/
+        template-loader-path: file:templates/
+        suffix: .ftlh
+        expose-request-attributes: true
+        expose-session-attributes: true
+
+    jpa:
+        properties:
+            hibernate:
+                database: mysql
+                database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+                jdbc:
+                    batch_size: 1000
+                    batch_versioned_data: true
+                    order_inserts: true
+                    order_updates: true
+                legacy_limit_handler: true
+                default_batch_fetch_size: 1000
+        open-in-view: true
+
+    jackson:
+        serialization:
+            fail-on-empty-beans: false
+
+    messages:
+        basename: messages/messages
+        encoding: UTF-8
+        use-code-as-default-message: true
+        fallback-to-system-locale: true
+
+    mail:
+        default-encoding: UTF-8
+        host: smart.whoismail.net
+        username: webmaster@bixsoft.net
+        password: _qlrtmthvmxm000
+        port: 587
+        protocol: smtp
+        test-connection: false
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enabled: true
+                    ssl:
+                        trust: smtp.gmail.com
+
+server:
+    servlet:
+        context-path: /
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+
+#OpenAPI Swagger config
+springdoc:
+    paths-to-match:
+        - /api/**
+    default-produces-media-type: application/json
+    show-actuator: true
+    cache:
+        disabled: true
+
+    swagger-ui:
+        path: /api-docs.html
+        disable-swagger-default-url: true
+        display-request-duration: true
+        operations-sorter: alpha
+        tags-sorter: alpha
+
+    api-docs:
+        path: /api-docs
+        #groups:
+        #    enabled: true
+

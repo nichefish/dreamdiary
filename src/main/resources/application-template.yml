@@ -1,0 +1,42 @@
+#application-local.yml
+#prod
+
+#로컬 포트=8080
+server:
+    port: 8080
+
+spring:
+    servlet:
+        multipart:
+            location: upfiles/
+    freemarker:
+        cache: true
+    datasource:
+        primary:
+            driver-class-name: org.mariadb.jdbc.Driver
+            #"rewriteBatchedStatements" is needed for batch insert
+            jdbc-url: jdbc:mariadb://_jdbc-url:port/database-name?useSSL=false&useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
+            username: _id
+            password: _password
+
+    jpa:
+        database: mysql
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        show-sql: true
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+                generate-ddl: true
+                format_sql: true
+                use_sql_comments: true
+
+    sql:
+        init:
+            # mode: always / embedded / never
+            mode: never
+            platform: mariadb
+            continue-on-error: true
+
+
