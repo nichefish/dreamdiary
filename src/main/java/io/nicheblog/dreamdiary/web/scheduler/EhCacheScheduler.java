@@ -31,12 +31,11 @@ public class EhCacheScheduler {
      * 매시간 00분 실행
      */
     @Scheduled(cron = "0 0 * * * *", zone = Constant.LOC_SEOUL)         // second min hour day month weekday
-    public void cacheAllClearSchedule(
-            final LogSysParam logParam
-        ) {
+    public void cacheAllClearSchedule() {
 
         log.info("cacheAllClearSchedule...");
 
+        LogSysParam logParam = new LogSysParam();
         try {
             EhCacheUtils.clearAllCaches();
         } catch (Exception e) {

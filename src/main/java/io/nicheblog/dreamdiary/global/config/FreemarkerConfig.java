@@ -62,10 +62,10 @@ public class FreemarkerConfig
         // Add global variables and Add static support
         TemplateHashModel statics = config.getStaticModels();
         sharedVariables.put("Statics", statics);
-        sharedVariables.put("Constant", statics.get("net.sinzi.intranet.cmm.Constant"));
-        sharedVariables.put("SiteMenu", statics.get("net.sinzi.intranet.cmm.SiteMenu"));
-        sharedVariables.put("DateUtil", statics.get("net.sinzi.intranet.cmm.util.DateUtil"));
-
+        sharedVariables.put("Constant", statics.get("io.nicheblog.dreamdiary.global.Constant"));
+        sharedVariables.put("DateUtils", statics.get("io.nicheblog.dreamdiary.global.util.DateUtils"));
+        sharedVariables.put("SiteUrl", statics.get("io.nicheblog.dreamdiary.web.SiteUrl"));
+        sharedVariables.put("SiteMenu", statics.get("io.nicheblog.dreamdiary.web.SiteMenu"));
         return sharedVariables;
     }
 }
