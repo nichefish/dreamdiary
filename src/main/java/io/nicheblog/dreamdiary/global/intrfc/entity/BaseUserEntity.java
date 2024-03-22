@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.CmmDtlCdEntity;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +24,7 @@ import java.util.Date;
 @MappedSuperclass
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class BaseUserEntity
@@ -66,7 +66,7 @@ public class BaseUserEntity
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
-    private CmmDtlCdEntity authCdInfo;
+    private DtlCdEntity authCdInfo;
 
     /**
      * 잠금여부

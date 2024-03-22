@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.global.intrfc.model;
 
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import lombok.*;
 
 import javax.persistence.MappedSuperclass;

@@ -1,9 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.MappedSuperclass;
 
@@ -19,6 +17,8 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
+@SuperBuilder(toBuilder=true)
+@NoArgsConstructor
 @EqualsAndHashCode
 public class BaseCrudDto {
 

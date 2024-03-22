@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.model;
 import io.nicheblog.dreamdiary.global.cmm.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.global.cmm.auth.util.AuthUtils;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.MappedSuperclass;
 
@@ -18,6 +19,8 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
+@SuperBuilder(toBuilder=true)
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class BaseAuditDto

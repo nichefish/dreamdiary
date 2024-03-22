@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.cmm.auth.entity;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.CmmDtlCdEntity;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -70,7 +70,7 @@ public class AuditorInfo
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
-    private CmmDtlCdEntity authCdInfo;
+    private DtlCdEntity authCdInfo;
 
     /**
      * 프로필 이미지 URL
