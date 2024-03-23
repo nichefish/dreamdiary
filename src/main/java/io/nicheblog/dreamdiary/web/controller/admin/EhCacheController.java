@@ -8,7 +8,7 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.model.admin.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +33,7 @@ import java.util.List;
 public class EhCacheController
         extends BaseControllerImpl {
 
-    // 로그 적재용 작업 카테고리
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;        // 작업 카테고리 (로그 적재용)
 
     /**
      * 사이트 캐시 조회 (Ajax)

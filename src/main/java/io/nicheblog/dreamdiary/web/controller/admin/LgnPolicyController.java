@@ -42,8 +42,8 @@ import java.security.InvalidParameterException;
 public class LgnPolicyController
         extends BaseControllerImpl {
 
-    // 작업 카테고리 (로그 적재용)
-    private final ActvtyCtgr actvtyCtgrCd = ActvtyCtgr.LGN_POLICY;
+    private final ActvtyCtgr actvtyCtgrCd = ActvtyCtgr.LGN_POLICY;      // 작업 카테고리 (로그 적재용)
+
 
     @Resource(name = "lgnPolicyService")
     private LgnPolicyService lgnPolicyService;

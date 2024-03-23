@@ -41,7 +41,7 @@ public class ErrorPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("ERROR"));
 
         // 에러 화면으로 리다이렉트 리다리렉트
-        return "error/error_not_found.ftlh";
+        return "/view/error/error_not_found";
     }
 
     /**
@@ -58,14 +58,14 @@ public class ErrorPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("ERROR"));
 
         // 에러 화면으로 리다이렉트 리다리렉트
-        return "error/error_access_denied.ftlh";
+        return "/view/error/error_access_denied";
     }
 
     /**
      * 에러 화면 (공통)
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @RequestMapping(SiteUrl.ERROR_PAGE)
+    @RequestMapping({ SiteUrl.ERROR, SiteUrl.ERROR_PAGE })
     public String errorPage(
             final LogActvtyParam logParam,
             final ModelMap model
@@ -75,6 +75,6 @@ public class ErrorPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("ERROR"));
 
         // 에러 화면으로 리다이렉트 리다리렉트
-        return "error/error_page.ftlh";
+        return "/view/error/error_page";
     }
 }
