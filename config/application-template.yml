@@ -7,6 +7,10 @@ release-date: 20240215
 #AES128 secret key; 16 chars
 aes128:
     secret-key: "0000000000000000"
+#key used for remember-me library
+remember-me:
+    param: "remember-me"
+    key: "dreamdiary.nicheblog.io"
 
 spring:
     #( local // dev // stg // prod // test )
