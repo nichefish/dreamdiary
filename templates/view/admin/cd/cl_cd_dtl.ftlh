@@ -1,0 +1,341 @@
+<#--
+  -- 분류 코드(CL_CD) > 상세 화면
+  -->
+<#import "/layout/layout.ftlh" as layout >
+<#import "/spring.ftl" as spring />
+
+<@layout.layout>
+
+<script>
+    const Page = function() {
+        return {
+            init: function () {
+                //
+            },
+            /** 수정 화면 이동 */
+            fnMdfForm: function() {
+                const url = "${SiteMenu.URL_CL_CD_DTL_AJAX!}";
+                let ajaxData = { "clCd": $("#clCd").val() };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.result) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    let resultObj = res.resultObj;
+                    resultObj.isMdf = true;
+                    commons.util.handlebarsTemplate(resultObj, "cl_cd_reg", "show");
+                    commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
+                    commons.validate.replaceBlankRegex("#clCdRegForm #clCd");
+                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                });
+            },
+            /** 등록 또는 수정 처리(Ajax) */
+            fnRegAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.save"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    $("#clCdRegForm #regYn").val("N");
+                    const url = "${SiteMenu.URL_CL_CD_MDF_AJAX!}";
+                    let ajaxData = $("#clCdRegForm").serializeArray();
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.result) commons.util.blockUIReload();
+                            });
+                    });
+                });
+            },
+            /** 상세코드 등록 팝업 호출 */
+            fnDtlCdRegForm: function() {
+                commons.util.handlebarsTemplate({ "clCd": $("#clCd").val() }, "dtl_cd_reg", "show");
+                commons.validate.replaceBlankRegex("#dtlCdRegForm dtlCd");
+                commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
+                commons.validate.onlyNum("#dtlCdRegForm sortOrdr");
+                commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
+                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+            },
+            /** 상세코드 등록 (Ajax) */
+            fnDtlCdRegAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.reg"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    $("#clCdRegForm #regYn").val("Y");
+                    const url = "${SiteMenu.URL_DTL_CD_REG_AJAX!}";
+                    let ajaxData = $("#dtlCdRegForm").serializeArray();
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.result) commons.util.blockUIReload();
+                            });
+                    });
+                });
+            },
+            /** 삭제 처리 (ajax) */
+            fnDelAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.del"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${SiteMenu.URL_BOARD_DEF_DEL_AJAX!}";
+                    let ajaxData = { "clCd": $("#clCd").val() };
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.result) Page.fnList();
+                            });
+                    });
+                });
+            },
+            /** 목록 화면 이동 */
+            fnList: function() {
+                const listUrl = "${SiteMenu.URL_CL_CD_LIST!}?isBackToList=Y";
+                commons.util.blockUIReplace(listUrl);
+            },
+            /** 수정 화면 이동 */
+            fnDtlCdMdfForm: function(dtlCd) {
+                const url = "${SiteMenu.URL_DTL_CD_DTL_AJAX!}";
+                let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.result) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    let resultObj = res.resultObj;
+                    resultObj.isMdf = true;
+                    commons.util.handlebarsTemplate(resultObj, "dtl_cd_reg", "show");
+                    commons.validate.replaceBlankRegex("#dtlCdRegForm #dtlCd");
+                    commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
+                    commons.validate.onlyNum("#dtlCdRegForm #sortOrdr");
+                    commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
+                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                });
+            },
+            /** 사용으로 변경 (Ajax) */
+            fnDtlCdUseAjax: function(dtlCd) {
+                event.stopPropagation();
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.use"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = '${SiteMenu.URL_DTL_CD_USE_AJAX!}';
+                    let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.result) commons.util.blockUIReload();
+                            });
+                    });
+                });
+            },
+            /** 미사용으로 변경 (Ajax) */
+            fnDtlCdUnuseAjax: function(dtlCd) {
+                event.stopPropagation();
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.unuse"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = '${SiteMenu.URL_DTL_CD_UNUSE_AJAX!}';
+                    let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.result) commons.util.blockUIReload();
+                            });
+                    });
+                });
+            },
+            /** 삭제 처리 (ajax) */
+            fnDtlCdDelAjax: function(dtlCd) {
+                event.stopPropagation();
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.del"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${SiteMenu.URL_DTL_CD_DEL_AJAX!}";
+                    let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.result) commons.util.blockUIReload();
+                            });
+                    });
+                });
+            },
+        }
+    }();
+</script>
+
+<div class="card post">
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="clCd" id="clCd" value="${clCd.clCd!}" />
+    </form>
+    <!--begin::Question-->
+    <div class="mb-0">
+        <!--begin::Head-->
+        <div class="d-flex align-items-center mb-9">
+            <!--begin::Title-->
+            <div class="col-12">
+                <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
+                    ${clCd.clCd!} (${clCd.clCdNm!})
+                </h1>
+            </div>
+            <!--end::Title-->
+        </div>
+        <!--end::Head-->
+        <!--end::Foot-->
+        <div class="separator separator-dashed border-gray-300 my-8"></div>
+        <!--begin::Question-->
+        <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
+            ${clCd.clCdDc?no_esc}
+        </div>
+        <div class="separator separator-dashed border-gray-300 my-8"></div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
+                onclick="Page.fnMdfForm();"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드 수정 팝업을&#10;호출합니다.">
+            <i class="bi bi-pencil-square"></i>수정
+        </button>
+        <!-- 등록자 또는 관리자가 삭제 가능 -->
+        <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
+                onclick="Page.fnDelAjax();"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드를 삭제합니다.">
+            <i class="bi bi-trash"></i>삭제
+        </button>
+        <button type="button" class="btn btn-sm btn-light"
+                onclick="Page.fnList();"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
+            <i class="bi bi-list"></i>목록
+        </button>
+    </div>
+    <div class="separator separator-dashed border-gray-300 my-8"></div>
+    <div class="card-header border-0 pt-6">
+        <div class="d-flex justify-content-left align-items-center">
+            <h5>상세 코드 목록</h5>
+        </div>
+        <div class="card-title text-end">
+            <div class="d-flex align-items-center position-relative my-1">
+            </div>
+        </div>
+        <div class="card-toolbar">
+            <!--begin::Toolbar-->
+            <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                <button type="button" class="btn btn-sm btn-primary"
+                        onclick="Page.fnDtlCdRegForm();"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 코드 등록 팝업을&#10;호출합니다.">
+                    <i class="fas fa-plus"></i>상세코드 추가
+                </button>
+            </div>
+            <!--end::Toolbar-->
+        </div>
+    </div>
+    <div>
+        <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
+            <!--begin::Table head-->
+            <thead>
+            <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted">
+                <th class="col-1 text-center wb-keepall w-8">번호</th>
+                <th class="col-2 text-center wb-keepall">
+                    <span class="cursor-help"
+                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                          title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드입니다.&#10;(등록 후 수정할 수 없습니다.)">
+                        상세코드
+                    </span>
+                </th>
+                <th class="col-2 text-center wb-keepall">
+                    <span class="cursor-help"
+                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                          title="외부적으로 사용되는&#10;코드 이름입니다.">
+                        상세 코드명
+                    </span>
+                </th>
+                <th class="col-4 text-center wb-keepall">상세코드 설명</th>
+                <th class="col-1 text-center wb-keepall">
+                    <span class="cursor-help"
+                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                          title="표시될 순서를 입력합니다.&#10;순서가 겹칠 경우&#10;내부 로직에 따라 정렬됩니다.">
+                        정렬 순서
+                    </span>
+                </th>
+                <th class="col-1 text-center wb-keepall">
+                    <span class="cursor-help"
+                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                          title="'사용'으로 체크된 코드만&#10;실제 코드 사용시 조회됩니다.">
+                        사용여부
+                    </span>
+                </th>
+                <th class="text-center wb-keepall w-8">-</th>
+            </tr>
+            </thead>
+            <!--end::Table head-->
+            <!--begin::Table body-->
+            <tbody>
+            <#list clCd.dtlCdList![] as dtlCd>
+                <tr class="bg-hover-secondary" onclick="Page.fnDtlCdMdfForm('${dtlCd.dtlCd!}');">
+                    <td class="text-center">
+                        ${dtlCd.rnum!}
+                    </td>
+                    <td class="text-start ps-10 cursor-pointer">
+                        <span class="fw-bold border-bottom">
+                            ${dtlCd.dtlCd!}
+                        </span>
+                    </td>
+                    <td class="text-start ps-10">
+                        <span class="border-bottom">
+                            ${dtlCd.dtlCdNm!}
+                        </span>
+                    </td>
+                    <td class="text-start ps-10">
+                        ${dtlCd.dtlCdDc!}
+                    </td>
+                    <td class="text-center">
+                        ${dtlCd.sortOrdr!}
+                    </td>
+                    <td class="text-center">
+                        <#if (dtlCd.useYn!"Y") == "Y">
+                            <div class="badge badge-success cursor-pointer"
+                                 onclick="Page.fnDtlCdUnuseAjax('${dtlCd.dtlCd!}');"
+                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
+                                <i class="bi bi-check text-light blink-slow"></i>사용
+                            </div>
+                        <#else>
+                            <div class="badge badge-secondary btn-white cursor-pointer"
+                                 onclick="Page.fnDtlCdUseAjax('${dtlCd.dtlCd!}');"
+                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
+                                <i class="bi bi-x blink-slow"></i>미사용
+                            </div>
+                        </#if>
+                    </td>
+                    <td class="text-center">
+                        <div class="badge badge-danger badge-outlined cursor-pointer"
+                             onclick="Page.fnDtlCdDelAjax('${dtlCd.dtlCd!}')"
+                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
+                            <i class="bi bi-trash text-danger fs-7 blink-slow"></i>삭제
+                        </div>
+                    </td>
+                </tr>
+            <#else>
+                <tr>
+                    <td colspan=8" class="text-center"><@spring.message "view.list.empty"/></td>
+                </tr>
+            </#list>
+            <!--end::Table row-->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<#include "/view/admin/cd/cl_cd_reg_modal.ftlh">
+<#include "/view/admin/cd/cl_cd_reg_template.ftlh">
+<#include "/view/admin/cd/dtl_cd_reg_modal.ftlh">
+<#include "/view/admin/cd/dtl_cd_reg_template.ftlh">
+
+</@layout.layout>

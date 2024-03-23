@@ -1,0 +1,66 @@
+<#--
+  -- 분류 코드(CL_CD) > 등록 Template
+  -- @included in : cl_cd_list
+  -->
+<script type="text/x-handlebars-template" id="cl_cd_reg_template">
+    <input type="hidden" class="form-control" name="regYn" id="regYn" value="{{#isMdf}}N{{/isMdf}}">
+    <!--begin::Question-->
+    <div class="mb-0">
+        <!--begin::Head-->
+        <div class="row mb-4">
+            <!--begin::Title-->
+            <div class="col-2 col-form-label">
+                <span class="cursor-help"
+                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                      title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드를&#10;입력합니다.&#10;(등록 후 수정할 수 없습니다.)">
+                    분류코드
+                </span>
+                <em class="text-danger">*</em>
+            </div>
+            <div class="col-10">
+                <input type="text" class="form-control {{#isMdf}}bg-secondary{{/isMdf}}" name="clCd" id="clCd" value="{{clCd}}" {{#isMdf}}readonly{{/isMdf}}
+                    {{#isMdf}}data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="분류코드는 수정할 수 없습니다."{{/isMdf}}>
+            </div>
+            <!--end::Title-->
+        </div>
+        <div class="row mb-4">
+            <!--begin::Title-->
+            <div class="col-2 col-form-label">
+                <span class="cursor-help"
+                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                      title="외부적으로 사용되는&#10;코드 이름을 입력합니다.">
+                    분류코드명
+                </span>
+                <em class="text-danger pe-1">*</em>
+            </div>
+            <div class="col-10">
+                <input type="text" class="form-control" name="clCdNm" value="{{clCdNm}}">
+            </div>
+            <!--end::Title-->
+        </div>
+        <div class="row mb-4">
+            <!--begin::Title-->
+            <div class="col-2 col-form-label">
+                분류코드 설명<em class="text-danger">*</em>
+            </div>
+            <div class="col-10">
+                <textarea class="form-control h-75px" name="clCdDc">{{clCdDc}}</textarea>
+            </div>
+            <!--end::Title-->
+        </div>
+        <div class="row mb-4">
+            <!--begin::Title-->
+            <div class="col-2 col-form-label">
+                사용여부
+            </div>
+            <div class="col-10">
+                <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
+                    <input class="form-check-input ms-3" type="checkbox" value="Y" name="useYn" id="useYn" />
+                    <label class="form-check-label fw-bold ms-3" for="useYn" id="useYnLabel">미사용</label>
+                </div>
+            </div>
+            <!--end::Title-->
+        </div>
+        <!--end::Head-->
+    </div>
+</script>
