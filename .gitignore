@@ -10,5 +10,6 @@
 /src/main/resources/static/metronic/
 /src/main/resources/static/metronic/
 /log/*
+!/log/.logfile_path.md
 /upfile/public/*
 /upfile/secured/*
