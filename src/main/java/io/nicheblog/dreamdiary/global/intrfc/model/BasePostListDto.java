@@ -1,9 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.MappedSuperclass;
 
@@ -20,6 +18,7 @@ import javax.persistence.MappedSuperclass;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 public class BasePostListDto
         extends BaseClsfListDto {
@@ -39,6 +38,7 @@ public class BasePostListDto
     /**
      * 조회수
      */
+    @Builder.Default
     protected Integer postHit = 0;
 
 }

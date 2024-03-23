@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model;
+package io.nicheblog.dreamdiary.web.model.cmm;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Setter;
  * </pre>
  *
  * @author nichefish
- * @extends BaseParamDto
+ * @extends BaseParam
  */
 @Getter
 @Setter

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.admin;
+package io.nicheblog.dreamdiary.web.model.cmm;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

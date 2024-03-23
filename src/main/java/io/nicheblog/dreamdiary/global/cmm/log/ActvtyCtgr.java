@@ -30,6 +30,8 @@ public enum ActvtyCtgr {
     USER("사용자 관리"),
     USER_MY("내 정보 관리"),
 
+    NOTICE("공지사항"),
+
     LGN_POLICY("로그인 정책 관리"),
 
     FILE("파일");

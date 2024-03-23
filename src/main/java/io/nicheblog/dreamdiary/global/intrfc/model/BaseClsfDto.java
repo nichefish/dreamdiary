@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.model;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.MappedSuperclass;
 
@@ -18,6 +19,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -43,6 +45,7 @@ public class BaseClsfDto
     /**
      * 조회수
      */
+    @Builder.Default
     protected Integer postHit = 0;
     /**
      * 첨부파일 ID
@@ -56,10 +59,12 @@ public class BaseClsfDto
     /**
      * 삭제여부
      */
+    @Builder.Default
     protected char delYn = 'N';
     /**
      * 성공여부
      */
+    @Builder.Default
     protected Boolean isSuccess = false;
 
 
