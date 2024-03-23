@@ -14,6 +14,6 @@ public enum Auth {
     USER("USER", "사용자"),
     DEV("DEV", "개발자");
 
-    private final String key;
-    private final String desc;
+    public final String key;
+    public final String desc;
 }

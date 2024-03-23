@@ -16,7 +16,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteMenu.URL_BOARD_COMMENT_REG_AJAX!}";
+                    const url = "${SiteUrl.BOARD_COMMENT_REG_AJAX!}";
                     let ajaxData = $("#commentRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -55,7 +55,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteMenu.URL_BOARD_COMMENT_MDF_AJAX!}";
+                    const url = "${SiteUrl.BOARD_COMMENT_MDF_AJAX!}";
                     let ajaxData = $("#commentMdfForm" + commentNo).serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -72,7 +72,7 @@
                     showCancelButton: true,
                 }).then(function (result) {
                     if (!result.value) return;
-                    const url = "${SiteMenu.URL_BOARD_COMMENT_DEL_AJAX!}";
+                    const url = "${SiteUrl.BOARD_COMMENT_DEL_AJAX!}";
                     let ajaxData = {"commentNo": commentNo};
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })

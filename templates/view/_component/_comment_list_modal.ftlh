@@ -16,7 +16,7 @@
             fnModal: function(postNo, boardCd) {
                 event.stopPropagation();
                 if (boardCd === undefined) boardCd = $("#boardCd").val();
-                const url = "${SiteMenu.URL_BOARD_COMMENT_LIST_AJAX!}";
+                const url = "${SiteUrl.BOARD_COMMENT_LIST_AJAX!}";
                 let ajaxData = { "postNo": postNo, "boardCd": boardCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {

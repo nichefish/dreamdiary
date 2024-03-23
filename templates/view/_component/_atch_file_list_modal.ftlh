@@ -16,7 +16,7 @@
              */
             fnModal: function(atchFileId) {
                 event.stopPropagation();
-                const url = "${SiteMenu.URL_FILE_INFO_LIST_AJAX!}";
+                const url = "${SiteUrl.FILE_INFO_LIST_AJAX!}";
                 let ajaxData = { "atchFileId": atchFileId };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {

@@ -7,7 +7,7 @@
 
 <head>
     <title></title>
-    <base href="">
+    <base href="${SiteUrl.DOMAIN!}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <meta property="og:locale" content="ko_KR" />
@@ -33,7 +33,7 @@
 
     <script type="text/javascript" src="/js/jquery.form.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.validate.min.js?${releaseDate!}"></script>
-    <script type="text/javascript" src="/js/additional-methods.min.js?${releaseDate!}"></script>
+    <script type="text/javascript" src="/js/additional-methods.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.blockUI.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/handlebars.min.js?${releaseDate!}"></script>

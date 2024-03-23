@@ -104,7 +104,6 @@ public class WebSecurityConfig
         web.ignoring()
            // static 디렉터리의 하위 파일 목록은 인증 무시(=항상 통과 )
            .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfiles/public/**")
-           .antMatchers()
            // 에러 페이지
            .antMatchers(SiteUrl.ERROR + "/**")
            //// 비밀번호 만료시 비밀번호 변경 화면
@@ -126,6 +125,7 @@ public class WebSecurityConfig
             .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfiles/public/**")
             .permitAll()
             // API 접근에는 인증 적용하지 않음
+            // TODO: inbound API 쪽에 토큰 인증 적용하기
             .antMatchers("/api/**")
             .permitAll()
             // Swagger
@@ -140,7 +140,7 @@ public class WebSecurityConfig
         http.csrf()
             .disable();
 
-        // 시큐리티에서 post 전송시 뭐시기..
+        // remember-me 관련
         http.rememberMe()
             .key(REMEMBER_ME_KEY)
             .rememberMeParameter(REMEMBER_ME_PARAM)
@@ -175,6 +175,6 @@ public class WebSecurityConfig
 
         // 403(권한없는 주소 접근) 예외처리 핸들링
         http.exceptionHandling()
-            .accessDeniedPage(SiteUrl.AUTH_LGN_FORM);
+            .accessDeniedPage(SiteUrl.ERROR_ACCESS_DENIED);
     }
 }
