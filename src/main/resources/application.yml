@@ -49,7 +49,7 @@ spring:
     mail:
         default-encoding: UTF-8
         host: smart.whoismail.net
-        username: webmaster@bixsoft.net
+        username: webmaster@gmail.com
         password: _qlrtmthvmxm000
         port: 587
         protocol: smtp
