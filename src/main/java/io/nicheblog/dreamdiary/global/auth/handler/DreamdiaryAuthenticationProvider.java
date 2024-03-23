@@ -56,8 +56,6 @@ public class DreamdiaryAuthenticationProvider
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        // 이름 말고 신지메일로도 로그인 가능하도록 처리
-        username = username.replace("@sinzi.net", "");
         AuthInfo authInfo = authService.loadUserByUsername(username);
 
         // 계정 존재여부 체크

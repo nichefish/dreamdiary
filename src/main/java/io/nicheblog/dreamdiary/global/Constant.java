@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global;
 
 import io.nicheblog.dreamdiary.api.ApiConstant;
-import io.nicheblog.dreamdiary.global.cmm.auth.Auth;
+import io.nicheblog.dreamdiary.global.auth.Auth;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -22,11 +22,6 @@ public final class Constant
      * TimeZone
      */
     public static final String LOC_SEOUL = "Asia/Seoul";
-
-    /**
-     * RememberMeParam
-     */
-    public static final String REMEMBER_ME_PARAM = "remember-me";
 
     @AllArgsConstructor
     @Getter
@@ -98,22 +93,6 @@ public final class Constant
     public static final String IS_REG = "isReg";
     public static final String IS_MDF = "isMdf";
     public static final String LIST_URL = "listUrl";
-
-    /* 코드 정보 */
-
-    /* 소속(회사) 코드 */
-    public static final String CMPY_CD = "CMPY_CD";
-
-    @AllArgsConstructor
-    @Getter
-    public enum CMPY {
-        SINZI("신지넷"),
-        BIX("빅스소프트");
-        private final String desc;
-    }
-
-    public static final String CMPY_SINZI = CMPY.SINZI.name();                // 회사:신지넷
-    public static final String CMPY_BIX = CMPY.BIX.name();                    // 회사:빅스소프트
 
     /* 소속(팀) 코드 */
     public static final String TEAM_CD = "TEAM_CD";

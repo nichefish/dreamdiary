@@ -43,7 +43,10 @@ import javax.annotation.Resource;
 public class WebSecurityConfig
         extends WebSecurityConfigurerAdapter {
 
-    private final String rememberMeKey = "sinzi-intranet!@#";
+    @Value("${remember-me.key")
+    private String REMEMBER_ME_KEY;
+    @Value("${remember-me.param")
+    private String REMEMBER_ME_PARAM;
 
     @Resource(name = "authService")
     private AuthService authService;
@@ -100,15 +103,12 @@ public class WebSecurityConfig
 
         web.ignoring()
            // static 디렉터리의 하위 파일 목록은 인증 무시(=항상 통과 )
-           // TODO: /contents랑 /upfiles 둘다 권한 막아야 하는게 맞나???
-           .antMatchers("/css/**", "/js/**", "/img/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**");
+           .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfiles/public/**")
+           .antMatchers()
            // 에러 페이지
-           //.antMatchers(SiteUrl.ERROR)
-           //.antMatchers(SiteUrl.ERROR_PAGE)
-           //.antMatchers(SiteUrl.ERROR_NOT_FOUND)
-           //.antMatchers(SiteUrl.ERROR_ACCESS_DENIED)
+           .antMatchers(SiteUrl.ERROR + "/**")
            //// 비밀번호 만료시 비밀번호 변경 화면
-           //.antMatchers(SiteUrl.AUTH_LGN_PW_CHG_AJAX)
+           .antMatchers(SiteUrl.AUTH_LGN_PW_CHG_AJAX);
            //// 신규계정 신청 화면/기능 전체 접근 (+아이디 중복 체크)
            //.antMatchers(SiteUrl.USER_REQST_REG_FORM)
            //.antMatchers(SiteUrl.USER_REQST_REG_AJAX)
@@ -123,7 +123,7 @@ public class WebSecurityConfig
             .antMatchers(SiteUrl.AUTH_LGN_FORM)
             .permitAll()
             // static resource 전체 접근
-            .antMatchers("/css/**", "/js/**", "/img/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfiles/**")
+            .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfiles/public/**")
             .permitAll()
             // API 접근에는 인증 적용하지 않음
             .antMatchers("/api/**")
@@ -142,8 +142,8 @@ public class WebSecurityConfig
 
         // 시큐리티에서 post 전송시 뭐시기..
         http.rememberMe()
-            .key(rememberMeKey)
-            .rememberMeParameter(Constant.REMEMBER_ME_PARAM)
+            .key(REMEMBER_ME_KEY)
+            .rememberMeParameter(REMEMBER_ME_PARAM)
             .tokenValiditySeconds(86400 * 30)
             .userDetailsService(authService)
             .authenticationSuccessHandler(lgnSuccessHandler);

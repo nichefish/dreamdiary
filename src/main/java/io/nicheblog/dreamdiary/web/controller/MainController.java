@@ -1,10 +1,10 @@
 package io.nicheblog.dreamdiary.web.controller;
 
-import io.nicheblog.dreamdiary.cmm.Constant;
-import io.nicheblog.dreamdiary.cmm.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.cmm.log.model.LogActvtyParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +49,7 @@ public class MainController
         // TODO: 접근 권한 통제
         // TODO: 페이지 생성
         
-        return "/view/main_page";
+        return "view/main/main_page";
     }
 
 
