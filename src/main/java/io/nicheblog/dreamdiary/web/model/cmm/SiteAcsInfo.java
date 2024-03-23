@@ -1,8 +1,12 @@
-package io.nicheblog.dreamdiary.web.model.admin;
+package io.nicheblog.dreamdiary.web.model.cmm;
 
+import io.nicheblog.dreamdiary.web.SiteTopMenu;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+
+import static io.nicheblog.dreamdiary.web.SiteTopMenu.NO_ASIDE;
+
 
 /**
  * SiteMenuAcsInfo
@@ -15,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Getter
 @Setter
-public class SiteMenuAcsInfo {
+public class SiteAcsInfo {
 
     /**
      * 사이드바 메뉴 번호
@@ -23,9 +27,13 @@ public class SiteMenuAcsInfo {
     private String siteMenuNo;
 
     /**
+     * 사이드바 상위 메뉴
+     */
+    private SiteTopMenu siteTopMenu;
+    /**
      * 사이드바 상위 메뉴 번호 (메뉴 활성화용)
      */
-    private String topMenuNo;
+    private String siteTopMenuNo;
 
     /**
      * 사이드바 메뉴 이름 (로깅 및 사이트 헤더 표시용)
@@ -50,17 +58,18 @@ public class SiteMenuAcsInfo {
     /* ----- */
 
     /** constructor */
-    public SiteMenuAcsInfo(String topMenuNo, String siteMenuNo, String siteMenuNm, String url) {
-        this.topMenuNo = topMenuNo;
+    public SiteAcsInfo(SiteTopMenu siteTopMenu, String siteMenuNo, String siteMenuNm, String url) {
+        this.siteTopMenu = siteTopMenu;
+        this.siteTopMenuNo = siteTopMenu.menuNo;
         this.siteMenuNo = siteMenuNo;
         this.siteMenuNm = siteMenuNm;
         this.url = url;
-        // TODO:: 로그인/메인/에러페이지는 사이드바 미노출
-        this.asideAt = false;
+        // 로그인/메인/에러페이지는 사이드바 미노출
+        if (NO_ASIDE.equals(siteTopMenu)) this.asideAt = false;
     }
 
     /** 페이지명 세팅 */
-    public SiteMenuAcsInfo setAcsPageInfo(
+    public SiteAcsInfo setAcsPageInfo(
             final String acsPageNm
     ) {
         this.acsPageNm = acsPageNm;

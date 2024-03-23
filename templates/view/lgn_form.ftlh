@@ -10,8 +10,6 @@
     const Page = function() {
         return {
             init: function () {
-                document.title = "SINZI | 로그인";
-
                 // request에서 불러온 에러 메세지 표시
                 const errorMsgSpan = $("#errorMsgSpan");
                 errorMsgSpan.html("");
@@ -121,7 +119,7 @@
     <form class="form w-100" name="lgnForm" id="lgnForm" novalidate="novalidate" method="post">
         <div class="aside-logo flex-column-auto mb-20" id="kt_aside_logo">
             <div class="d-flex justify-content-center">
-                <img alt="Logo" src="/img/logo/logo_racoon.jpg" class="logo"/>
+                <img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="logo"/>
             </div>
         </div>
         <div class="mb-7">
@@ -147,12 +145,12 @@
             <span id="errorMsgSpan" class="text-danger"></span>
         </div>
         <div class="me-2 float-end">
-            <label class="form-check form-check-custom form-check-solid" for="${Constant.REMEMBER_ME_PARAM!}"
+            <label class="form-check form-check-custom form-check-solid" for="${REMEMBER_ME_PARAM!}"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="현재 브라우저에서&#10;로그인 상태를 유지합니다.">
                 <span class="form-check-label me-2">
                     로그인 유지
                 </span>
-                <input type="checkbox" class="form-check-input" id="${Constant.REMEMBER_ME_PARAM!}" name="${Constant.REMEMBER_ME_PARAM!}">
+                <input type="checkbox" class="form-check-input" id="${REMEMBER_ME_PARAM!}" name="${REMEMBER_ME_PARAM!}">
             </label>
         </div>
         <div class="text-center mb-4 mt-15">

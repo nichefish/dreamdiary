@@ -8,9 +8,9 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.model.admin.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.admin.LgnPolicyDto;
-import io.nicheblog.dreamdiary.web.model.admin.SiteMenuAcsInfo;
+import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -55,7 +55,7 @@ public class LgnPolicyController
     @RequestMapping(SiteUrl.LGN_POLICY_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String lgnPolicyForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteMenuAcsInfo siteMenuAcsInfo,
+            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {

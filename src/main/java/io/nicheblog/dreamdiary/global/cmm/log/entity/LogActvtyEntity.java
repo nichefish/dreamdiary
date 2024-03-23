@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.cmm.log.entity;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;

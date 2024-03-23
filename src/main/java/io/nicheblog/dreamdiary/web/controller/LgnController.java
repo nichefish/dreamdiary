@@ -49,7 +49,7 @@ public class LgnController
     private String REMEMBER_ME_PARAM;
 
     /**
-     * 로그인 화면
+     * 로그인 화면 조회
      */
     @RequestMapping(SiteUrl.AUTH_LGN_FORM)
     public String lgnForm(
@@ -68,6 +68,7 @@ public class LgnController
         // remember-me 관련 파라미터 세팅
         model.addAttribute("REMEMBER_ME_PARAM", REMEMBER_ME_PARAM);
 
+        // TODO: 보안적으로 정리하기
         if ("Y".equals(dupLgnAt)) {
             MessageUtils.alertMessage("중복 로그인 방지에 의해 로그아웃 처리되었습니다.", SiteUrl.AUTH_LGN_FORM);
         }
@@ -77,7 +78,7 @@ public class LgnController
 
     /**
      * 비밀번호 강제 변경 처리 (장기간 비밀번호 미변경시, 또는 비밀번호 리셋시)
-     * 비로그인 사용자도 외부에서 접근 가능
+     * (비로그인 사용자도 외부에서 접근 가능)
      */
     @PostMapping(SiteUrl.AUTH_LGN_PW_CHG_AJAX)
     @ResponseBody

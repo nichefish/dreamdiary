@@ -124,4 +124,14 @@ public interface SiteUrl {
     String NOTICE_REG_PREVIEW_POP = PREFIX_NOTICE + "/noticeRegPreviewPop.do";
 
     String NOTICE_POPUP_LIST_AJAX = PREFIX_NOTICE + "/noticePopupListAjax.do";
+
+
+
+
+
+
+
+
+    String NOTION_HOME = "";
+    String FLSYS_HOME = "";
 }

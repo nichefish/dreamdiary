@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web;
 
-import io.nicheblog.dreamdiary.web.model.cmm.SiteMenuAcsInfo;
+import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 
 /**
  * SiteMenu
@@ -12,10 +12,17 @@ import io.nicheblog.dreamdiary.web.model.cmm.SiteMenuAcsInfo;
  */
 public class SiteMenu {
 
+
+    public static String TOP_MENU_NO_MAIN = SiteTopMenu.MAIN.menuNo;
+    public static String TOP_MENU_NO_NOTICE = SiteTopMenu.NOTICE.menuNo;
+    public static String TOP_MENU_NO_BOARD = SiteTopMenu.BOARD.menuNo;
+    public static String TOP_MENU_NO_SCHDUL = SiteTopMenu.SCHDUL.menuNo;
+
+
     // 상위 메뉴번호 :: 주기능
     public static String MENU_NO_MAIN = "01000000";
     // 메뉴 :: 로그인
-    public static SiteMenuAcsInfo LGN_PAGE = new SiteMenuAcsInfo(
+    public static SiteAcsInfo LGN_PAGE = new SiteAcsInfo(
             SiteTopMenu.NO_ASIDE,
             MENU_NO_MAIN,
             "로그인",
@@ -23,7 +30,7 @@ public class SiteMenu {
     );
 
     // 메뉴 :: 메인
-    public static SiteMenuAcsInfo MAIN_PORTAL = new SiteMenuAcsInfo(
+    public static SiteAcsInfo MAIN_PORTAL = new SiteAcsInfo(
             SiteTopMenu.MAIN,
             MENU_NO_MAIN,
             "메인",
@@ -31,7 +38,7 @@ public class SiteMenu {
     );
 
     // 메뉴 :: 메인(관리자)
-    public static SiteMenuAcsInfo MAIN_ADMIN = new SiteMenuAcsInfo(
+    public static SiteAcsInfo MAIN_ADMIN = new SiteAcsInfo(
             SiteTopMenu.MAIN,
             MENU_NO_MAIN,
             "메인(관리자)",
