@@ -3,12 +3,12 @@ package io.nicheblog.dreamdiary.api.kasi.controller;
 import io.nicheblog.dreamdiary.api.ApiUrl;
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.api.kasi.service.HldyKasiApiService;
-import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.global.util.DateUtil;
-import io.nicheblog.dreamdiary.global.util.MessageUtil;
-import io.nicheblog.dreamdiary.web.model.admin.AjaxResponse;
+import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
@@ -66,17 +66,17 @@ public class HldyKasiApiController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtil.getCurrYearStr();
+            String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYearStr();
             // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
             hldyKasiApiService.delHldyList(yyStr);
             List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);
             ajaxResponse.setResultList(hldyApiList);
             isSuccess = hldyKasiApiService.regHldyList(hldyApiList);
-            resultMsg = MessageUtil.getMessage(isSuccess ? MessageUtil.RSLT_SUCCESS : MessageUtil.RSLT_FAILURE);
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtil.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtil.getExceptionNm(e), e.getMessage());
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리

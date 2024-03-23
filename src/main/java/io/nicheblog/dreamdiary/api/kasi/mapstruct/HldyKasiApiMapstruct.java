@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.api.kasi.mapstruct;
 
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtil;
+import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
@@ -16,7 +16,7 @@ import org.mapstruct.factory.Mappers;
  *
  * @author nichefish
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = { DateUtil.class, StringUtils.class })
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = { DateUtils.class, StringUtils.class })
 public interface HldyKasiApiMapstruct
         extends BaseMapstruct<HldyKasiApiItemDto, SchdulEntity> {
 
@@ -32,11 +32,11 @@ public interface HldyKasiApiMapstruct
      * Dto -> Entity
      */
     @Override
-    @Mapping(target = "boardCd", expression = "java(\"hldyApi\")")
+    // @Mapping(target = "boardCd", expression = "java(\"hldyApi\")")
     @Mapping(target = "schdulNm", expression = "java(dto.getDateName())")
     @Mapping(target = "schdulTyCd", expression = "java(\"HLDY\")")
-    @Mapping(target = "beginDt", expression = "java(DateUtil.asDate(dto.getLocdate()))")
-    @Mapping(target = "endDt", expression = "java(DateUtil.asDate(dto.getLocdate()))")
+    @Mapping(target = "beginDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
+    @Mapping(target = "endDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     SchdulEntity toEntity(final HldyKasiApiItemDto dto) throws Exception;
 
     /**
@@ -44,11 +44,11 @@ public interface HldyKasiApiMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "boardCd", expression = "java(\"hldyApi\")")
+    // @Mapping(target = "boardCd", expression = "java(\"hldyApi\")")
     @Mapping(target = "schdulNm", expression = "java(dto.getDateName())")
     @Mapping(target = "schdulTyCd", expression = "java(\"HLDY\")")
-    @Mapping(target = "beginDt", expression = "java(DateUtil.asDate(dto.getLocdate()))")
-    @Mapping(target = "endDt", expression = "java(DateUtil.asDate(dto.getLocdate()))")
+    @Mapping(target = "beginDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
+    @Mapping(target = "endDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     void updateFromDto(
             final HldyKasiApiItemDto dto,
             final @MappingTarget SchdulEntity entity

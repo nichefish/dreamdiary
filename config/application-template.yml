@@ -12,6 +12,21 @@ remember-me:
     param: "remember-me"
     key: "dreamdiary.nicheblog.io"
 
+#jandi messenger properties
+api:
+    jandi:
+        teamId: "00000000"
+        topics:
+          - name: NOTICE
+            id: "00000000000000000000000000000000"
+          - name: SCHDUL
+            id: "00000000000000000000000000000000"
+          - name: TEST
+            id: "00000000000000000000000000000000"
+    kasi:
+        serviceKey: "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+
+
 spring:
     #( local // dev // stg // prod // test )
     profiles:

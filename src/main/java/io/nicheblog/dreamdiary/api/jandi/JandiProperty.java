@@ -18,7 +18,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Component("jandiProperty")
-@ConfigurationProperties(prefix = "jandi")
+@ConfigurationProperties(prefix = "api.jandi")
 @Getter
 @Setter
 public class JandiProperty {
