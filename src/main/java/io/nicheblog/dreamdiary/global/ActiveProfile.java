@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * ActiveProfile
  * <pre>
- *  현재 활성 중인 프로필 정보를 가져온다. (local / dev / stg / prod)
+ *  현재 활성 중인 프로필 정보를 가져온다. (local / dev / stg / prod / test)
  * </pre>
  *
  * @author nichefish
@@ -20,6 +20,9 @@ import org.springframework.stereotype.Component;
 @Setter
 public final class ActiveProfile {
 
+    /**
+     * 프로필 Enum
+     */
     @RequiredArgsConstructor
     @Getter
     public enum Profile {

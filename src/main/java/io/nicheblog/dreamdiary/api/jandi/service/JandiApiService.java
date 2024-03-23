@@ -2,18 +2,23 @@ package io.nicheblog.dreamdiary.api.jandi.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nicheblog.dreamdiary.api.ApiUrl;
+import io.nicheblog.dreamdiary.api.jandi.JandiProperty;
 import io.nicheblog.dreamdiary.api.jandi.JandiTopic;
-import io.nicheblog.dreamdiary.api.jandi.model.*;
+import io.nicheblog.dreamdiary.api.jandi.model.JandiApiRespnsDto;
+import io.nicheblog.dreamdiary.api.jandi.model.JandiApiSndMsgConnectInfoDto;
+import io.nicheblog.dreamdiary.api.jandi.model.JandiApiSndMsgDto;
+import io.nicheblog.dreamdiary.api.jandi.model.JandiParam;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.JsonRestTemplate;
 import io.nicheblog.dreamdiary.global.config.HttpClientConfig;
-import io.nicheblog.dreamdiary.global.util.JsonRestTemplate;
-import io.nicheblog.dreamdiary.global.util.MessageUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * JandiApiService
@@ -27,45 +32,13 @@ import org.springframework.stereotype.Service;
 @Log4j2
 public class JandiApiService {
 
-    public static String TEAM_JANDI = "/25882573";
-
-
-    /**
-     * JANDI incoming webhook:: 공지사항 URL
-     */
-    public final String URL_JANDI_NOTICE = ApiUrl.JANDI_CONNECT_WH + TEAM_JANDI + "/d0030203b8b6598c9fad707a601b703c";
-    /**
-     * JANDI incoming webhook:: 휴가신청 URL
-     */
-    public final String URL_JANDI_VCATN = ApiUrl.JANDI_CONNECT_WH + TEAM_JANDI + "/646423922d134c103e2ef51658ef1abe";
-    /**
-     * JANDI incoming webhook:: 일정관리 URL
-     */
-    public final String URL_JANDI_SCHDUL = ApiUrl.JANDI_CONNECT_WH + TEAM_JANDI + "/02dd12a3fa93b00b3bfe4b5c9fff5412";
-    /**
-     * JANDI incoming webhook:: 물품구매/경조사비 신청 URL
-     */
-    public final String URL_JANDI_EXPTR_REQST = ApiUrl.JANDI_CONNECT_WH + TEAM_JANDI + "/cd096310c400783aeef27771ed4f95b3";
-    /**
-     * JANDI incoming webhook:: 테스트
-     */
-    public final String URL_JANDI_TEST = ApiUrl.JANDI_CONNECT_WH + TEAM_JANDI + "/a7119b915b0b1e8dd07911ef365e9722";
-
-
-    /* JANDI outgoing webhook (jandi -> intranet) Tokens (현재 미사용중) */
-    /**
-     * 공지사항 TOKEN
-     */
-    public final String TOKEN_NOTICE = "5ecca066b82b213d750db40103e19a91";
-    /**
-     * 휴가신청 TOKEN
-     */
-    public final String TOKEN_VCATN = "2f5917dedc33d6a827475fa9b376a734";
+    @Resource(name = "jandiProperty")
+    private JandiProperty jandiProperty;
 
     /**
      * API:: JANDI:: 잔디로 incoming webhook 전송
      *
-     * @param jandiParam
+     * @param jandiParam 잔디 파라미터
      */
     public Boolean sendMsg(final JandiParam jandiParam) throws Exception {
         JandiTopic topic = jandiParam.getTrgetTopic();
@@ -137,16 +110,8 @@ public class JandiApiService {
      * @param trgetTopic: 메세지 발송 대상 토픽
      */
     public String setRequestUrlParam(final JandiTopic trgetTopic) {
-        switch (trgetTopic) {
-            case NOTICE:
-                return URL_JANDI_NOTICE;
-            case SCHDUL:
-                return URL_JANDI_SCHDUL;
-            case TEST:
-                return URL_JANDI_TEST;
-            default:
-                return null;
-        }
+        final String trgetTopicNm = trgetTopic.name();
+        return ApiUrl.JANDI_CONNECT_WH + "/" + jandiProperty.getTeamId() + "/" + jandiProperty.getId(trgetTopicNm);
     }
 
     /**
@@ -166,44 +131,4 @@ public class JandiApiService {
         return new HttpEntity<JandiApiSndMsgDto>(jandiMsg, headers);
     }
 
-    /**
-     * API:: JANDI outgoing webhook :: 요청 헤더 세팅 (메소드 분리)
-     * // TODO: 성공 메세지 발송
-     *
-     * @param rcvMsg: 잔디에서 수신받은 메세지
-     */
-    public Boolean receiveMsg(final JandiApiRcvMsgDto rcvMsg) {
-
-        Boolean isSuccess = this.insertIntranet(rcvMsg);
-        if (isSuccess) {
-            // TODO: 성공 메세지 발송
-            try {
-                this.sendMsg(JandiTopic.TEST, "성공적으로 등록되었습니다.");
-            } catch (Exception e) {
-                MessageUtil.getExceptionMsg(e);
-            }
-        }
-
-        return isSuccess;
-    }
-
-    /**
-     * API:: JANDI outgoing webhook :: 요청 헤더 세팅 (메소드 분리)
-     *
-     * @param rcvMsg: 잔디에서 수신받은 메세지 (현재 미사용 중)
-     */
-    public Boolean insertIntranet(final JandiApiRcvMsgDto rcvMsg) {
-
-        String rcvToken = rcvMsg.getToken();
-        switch (rcvToken) {
-            case TOKEN_VCATN:
-                log.debug("token:: vac");
-                return true;
-            case TOKEN_NOTICE:
-                log.debug("token:: notice");
-                return true;
-            default:
-                return false;
-        }
-    }
 }
