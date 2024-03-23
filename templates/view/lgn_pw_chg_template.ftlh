@@ -5,7 +5,7 @@
 <script id="lgn_pw_chg_template" type="text/x-handlebars-template">
     <input type="hidden" name="userId" id="lgnUserId" value="{{userId}}">
     <div class="row">      <!--begin::Row-->
-        <div class="col-xl-12 text-red">
+        <div class="col-xl-12 text-danger">
             {{errorMsg}}
         </div>
     </div>

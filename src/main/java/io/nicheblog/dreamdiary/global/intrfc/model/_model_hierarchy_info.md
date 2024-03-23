@@ -1,5 +1,3 @@
-package net.sinzi.intranet.cmm.intrfc.model;
-
 # Model 기본 상속 구조:
 
 ## CmmManageDto
@@ -36,4 +34,4 @@ package net.sinzi.intranet.cmm.intrfc.model;
 
 #### ↓ CmmAtchDto
 
-    -> atchFileId, atchFileInfo
+    -> atchFileNo, atchFileInfo

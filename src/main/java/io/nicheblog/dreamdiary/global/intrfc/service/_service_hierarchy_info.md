@@ -1,5 +1,3 @@
-package net.sinzi.intranet.cmm.intrfc.service;
-
 # Service Interface 기본 상속 구조:
 
 # CmmManageInterface

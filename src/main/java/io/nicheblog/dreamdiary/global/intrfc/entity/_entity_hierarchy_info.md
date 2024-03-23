@@ -1,5 +1,3 @@
-package net.sinzi.intranet.cmm.intrfc.entity;
-
 # Entity 기본 상속 구조:
 
 ## CmmManageEntity
@@ -36,4 +34,4 @@ package net.sinzi.intranet.cmm.intrfc.entity;
 
 #### ↓ CmmAtchEntity
 
-    -> ATCH_FILE_ID, ATCH_FILE_INFO
+    -> ATCH_FILE_NO, ATCH_FILE_INFO

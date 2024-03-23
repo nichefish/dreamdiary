@@ -131,7 +131,7 @@
                     <input type="hidden" name="isDupIdLgnProc" id="isDupIdLgnProc">
                 </#if>
             <div class="h-15px">
-                <span id="userIdSpan" class="text-red"></span>
+                <span id="userIdSpan" class="text-danger"></span>
             </div>
         </div>
         <div>
@@ -140,11 +140,11 @@
             </div>
             <input type="password" name="userPw" id="userPw" class="form-control form-control-lg form-control-solid enter required" autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."/>
             <div class="mb-3 h-15px">
-                <span id="userPwSpan" class="text-red"></span>
+                <span id="userPwSpan" class="text-danger"></span>
             </div>
         </div>
         <div class="text-left">
-            <span id="errorMsgSpan" class="text-red"></span>
+            <span id="errorMsgSpan" class="text-danger"></span>
         </div>
         <div class="me-2 float-end">
             <label class="form-check form-check-custom form-check-solid" for="${Constant.REMEMBER_ME_PARAM!}"
