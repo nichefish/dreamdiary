@@ -15,7 +15,6 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Component("jandiProperty")
 @ConfigurationProperties(prefix = "api.jandi")
