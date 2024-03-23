@@ -36,5 +36,5 @@ public enum ActvtyCtgr {
 
     FILE("파일");
 
-    private final String desc;
+    public final String desc;
 }

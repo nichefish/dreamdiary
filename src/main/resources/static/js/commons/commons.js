@@ -195,9 +195,9 @@ commons.util = (function() {
          * 파일 다운로드
          * (ajax로 파일 존재여부 체크 후 임시 form 만들어서 submit 후 지움)
          */
-        fileDownload: function(atchFileId, atchFileDtlId) {
-            let inputs = "<input type='hidden' name='atchFileId' value='" + atchFileId + "'>";
-            inputs += "<input type='hidden' name='atchFileDtlId' value='" + atchFileDtlId + "'>";
+        fileDownload: function(atchFileNo, atchFileDtlNo) {
+            let inputs = "<input type='hidden' name='atchFileNo' value='" + atchFileNo + "'>";
+            inputs += "<input type='hidden' name='atchFileDtlNo' value='" + atchFileDtlNo + "'>";
             let form = "<form action='/file/fileDownload.do'>" + inputs + "</form>";
             $(form).appendTo('body').submit().remove();
         },

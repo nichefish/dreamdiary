@@ -30,7 +30,7 @@ public final class Constant
         ACTVTY("활동 로그"),
         SYS("시스템 로그");
 
-        private final String desc;
+        public final String desc;
     }
     public static final String LOG_TY_ACTVTY = LogTy.ACTVTY.name();
     public static final String LOG_TY_SYS = LogTy.SYS.name();
@@ -103,8 +103,10 @@ public final class Constant
     @AllArgsConstructor
     @Getter
     public enum EMPLYM {
+
         FREE("프리랜서");
-        private final String desc;
+
+        public final String desc;
     }
 
     public static final String EMPLYM_FREE = EMPLYM.FREE.name();
@@ -134,6 +136,7 @@ public final class Constant
     @AllArgsConstructor
     @Getter
     public enum SCHDUL_TY {
+
         HLDY("공휴일"),
         CEREMONY("행사"),
         TLCMMT("재택근무"),
@@ -142,7 +145,8 @@ public final class Constant
         VCATN("휴가"),
         BRTHDY("생일"),
         ETC("기타");
-        private final String desc;
+
+        public final String desc;
     }
 
     public static final String SCHDUL_TY_HLDY = SCHDUL_TY.HLDY.name();
@@ -160,6 +164,7 @@ public final class Constant
     @AllArgsConstructor
     @Getter
     public enum VCATN {
+
         ANNUAL("연차"),
         AM_HALF("오전반차"),
         PM_HALF("오후반차"),
@@ -167,7 +172,8 @@ public final class Constant
         CTSNN("경조휴가"),
         UNPAID("무급휴가"),
         MNSTR("생리휴가");
-        private final String desc;
+
+        public final String desc;
     }
 
     public static final String VCATN_ANNUAL = VCATN.ANNUAL.name();
@@ -214,11 +220,13 @@ public final class Constant
     @AllArgsConstructor
     @Getter
     public enum MDFABLE {
+
         REGSTR("등록자"),
         MNGR("관리자"),
         USER("사용자"),
         ALL("전체");
-        private final String desc;
+
+        public final String desc;
     }
 
     public static final String MDFABLE_REGSTR = MDFABLE.REGSTR.name();

@@ -23,22 +23,23 @@ public final class ActiveProfile {
     @RequiredArgsConstructor
     @Getter
     public enum Profile {
-        LOCAL("로컬 환경"),
-        DEV("개발 환경"),
-        STG("스테이징 환경"),
-        PROD("운영 환경"),
-        TEST("테스트 환경");
+        LOCAL("local", "로컬 환경"),
+        DEV("dev", "개발 환경"),
+        STG("stg", "스테이징 환경"),
+        PROD("prod", "운영 환경"),
+        TEST("test", "테스트 환경");
 
-        private final String desc;
+        public final String key;
+        public final String desc;
     }
 
     private Profile profile;
 
-    private final String PROFILE_LOCAL = Profile.LOCAL.name().toLowerCase();
-    private final String PROFILE_DEV = Profile.DEV.name().toLowerCase();
-    private final String PROFILE_STG = Profile.STG.name().toLowerCase();
-    private final String PROFILE_PROD = Profile.PROD.name().toLowerCase();
-    private final String PROFILE_TEST = Profile.TEST.name().toLowerCase();
+    private final String PROFILE_LOCAL = Profile.LOCAL.key;
+    private final String PROFILE_DEV = Profile.DEV.key;
+    private final String PROFILE_STG = Profile.STG.key;
+    private final String PROFILE_PROD = Profile.PROD.key;
+    private final String PROFILE_TEST = Profile.TEST.key;
 
     /**
      * 활성화된 프로필 항목

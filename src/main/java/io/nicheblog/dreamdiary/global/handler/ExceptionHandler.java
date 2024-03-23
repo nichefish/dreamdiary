@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.handler;
 
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.model.admin.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

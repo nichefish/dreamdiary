@@ -60,11 +60,11 @@ public class CmmFileService {
      * 파일 업로드
      */
     public AtchFileDtlDto uploadDtlFile(final MultipartHttpServletRequest multiRequest) throws Exception {
-        Integer atchFileId = this.uploadFile(multiRequest);
-        AtchFileDtlEntity atchFileDtlEntity = this.getFileEntity(atchFileId)
+        Integer atchFileNo = this.uploadFile(multiRequest);
+        AtchFileDtlEntity atchFileDtlEntity = this.getFileEntity(atchFileNo)
                                                   .getAtchFileList()
                                                   .get(0);
-        atchFileDtlEntity.setAtchFileId(atchFileId);
+        atchFileDtlEntity.setAtchFileNo(atchFileNo);
         return atchFileDtlMapstruct.toDto(atchFileDtlEntity);
     }
 
@@ -77,14 +77,14 @@ public class CmmFileService {
 
     public Integer uploadFile(
             final MultipartHttpServletRequest multiRequest,
-            final Integer atchFileId
+            final Integer atchFileNo
     ) throws Exception {
 
         // 첨부파일ID 세팅
         AtchFileEntity atchFile;
         List<AtchFileDtlEntity> atchFileList;
-        if (atchFileId != null) {
-            atchFile = atchFileRepository.findById(atchFileId)
+        if (atchFileNo != null) {
+            atchFile = atchFileRepository.findById(atchFileNo)
                                          .orElseGet(AtchFileEntity::new);
         } else {
             atchFile = new AtchFileEntity();
@@ -106,7 +106,7 @@ public class CmmFileService {
         // 추가된(multipart로 요청된) 파일에 대하여 업로드+DB추가
         this.addFile(multiRequest, atchFileList);
         AtchFileEntity rsltEntity = atchFileRepository.save(atchFile);
-        return rsltEntity.getAtchFileId();
+        return rsltEntity.getAtchFileNo();
     }
 
     /**
@@ -170,11 +170,11 @@ public class CmmFileService {
             final MultipartHttpServletRequest multiRequest,
             final List<AtchFileDtlEntity> atchFileList
     ) {
-        Integer atchFileDtlId;
+        Integer atchFileDtlNo;
         String atchCtrl;
         for (AtchFileDtlEntity atchFileDtl : atchFileList) {
-            atchFileDtlId = atchFileDtl.getAtchFileDtlId();
-            atchCtrl = multiRequest.getParameter("atchCtrl" + atchFileDtlId);
+            atchFileDtlNo = atchFileDtl.getAtchFileDtlNo();
+            atchCtrl = multiRequest.getParameter("atchCtrl" + atchFileDtlNo);
             if ("D".equals(atchCtrl)) {
                 atchFileDtl.setDelYn("Y");
             }
@@ -218,18 +218,18 @@ public class CmmFileService {
     }
 
     /**
-     * 첨부파일 정보 조회 (atchFileId) (entity level)
+     * 첨부파일 정보 조회 (atchFileNo) (entity level)
      */
-    public AtchFileEntity getFileEntity(final Integer atchFileId) throws Exception {
-        return atchFileRepository.findById(atchFileId)
+    public AtchFileEntity getFileEntity(final Integer atchFileNo) throws Exception {
+        return atchFileRepository.findById(atchFileNo)
                                  .orElse(null);
     }
 
     /**
-     * 첨부파일 정보 조회 (atchFileId) (dto level)
+     * 첨부파일 정보 조회 (atchFileNo) (dto level)
      */
-    public AtchFileDto getFileDto(final Integer atchFileId) throws Exception {
-        AtchFileEntity fileEntity = this.getFileEntity(atchFileId);
+    public AtchFileDto getFileDto(final Integer atchFileNo) throws Exception {
+        AtchFileEntity fileEntity = this.getFileEntity(atchFileNo);
         if (fileEntity == null) return null;
 
         return atchFileMapstruct.toDto(fileEntity);
@@ -238,8 +238,8 @@ public class CmmFileService {
     /**
      * 첨부파일 상세 목록 조회 (dto level)
      */
-    public List<AtchFileDtlDto> getFileDtlDtoList(final Integer atchFileId) throws Exception {
-        AtchFileDto fileDto = this.getFileDto(atchFileId);
+    public List<AtchFileDtlDto> getFileDtlDtoList(final Integer atchFileNo) throws Exception {
+        AtchFileDto fileDto = this.getFileDto(atchFileNo);
         if (fileDto == null) return null;
         return fileDto.getAtchFileList();
     }
@@ -247,16 +247,16 @@ public class CmmFileService {
     /**
      * 첨부파일 상세 단일 조회 (entity level)
      */
-    public AtchFileDtlEntity getFileDtlEntity(final Integer atchFileDtlId) {
-        return atchFileDtlRepository.findById(atchFileDtlId)
+    public AtchFileDtlEntity getFileDtlEntity(final Integer atchFileDtlNo) {
+        return atchFileDtlRepository.findById(atchFileDtlNo)
                                     .orElse(null);
     }
 
     /**
      * 첨부파일 상세 단일 조회 (dto level)
      */
-    public AtchFileDtlDto getFileDtlDto(final Integer atchFileDtlId) throws Exception {
-        AtchFileDtlEntity fileDtlEntity = this.getFileDtlEntity(atchFileDtlId);
+    public AtchFileDtlDto getFileDtlDto(final Integer atchFileDtlNo) throws Exception {
+        AtchFileDtlEntity fileDtlEntity = this.getFileDtlEntity(atchFileDtlNo);
         return atchFileDtlMapstruct.toDto(fileDtlEntity);
     }
 
@@ -290,8 +290,8 @@ public class CmmFileService {
     public Boolean fileChck(final String fileId) {
         // 1. 파일ID일 경우로 상정 ::
         try {
-            Integer atchFileDtlId = Integer.parseInt(fileId);
-            AtchFileDtlEntity fileDtl = this.getFileDtlEntity(atchFileDtlId);
+            Integer atchFileDtlNo = Integer.parseInt(fileId);
+            AtchFileDtlEntity fileDtl = this.getFileDtlEntity(atchFileDtlNo);
             new File(fileDtl.getFileStrePath(), fileDtl.getStreFileNm());
         } catch (NumberFormatException e) {
             // 2. 에러시 Integer형 ID가 아닌 것으로 판단, 파일명으로 처리

@@ -4,12 +4,9 @@ import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
-import io.nicheblog.dreamdiary.global.cmm.log.entity.LogActvtyEntity;
-import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
