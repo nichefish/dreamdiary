@@ -5,10 +5,10 @@ import io.nicheblog.dreamdiary.api.jandi.model.JandiApiRcvMsgDto;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiApiRespnsDto;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiParam;
 import io.nicheblog.dreamdiary.api.jandi.service.JandiApiService;
-import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.global.util.MessageUtil;
+import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
@@ -62,11 +62,11 @@ public class JandiApiController
         String resultMsg = "";
         try {
             isSuccess = jandiApiService.sendMsg(jandiParam);
-            resultMsg = MessageUtil.getMessage(isSuccess ? MessageUtil.RSLT_SUCCESS : MessageUtil.RSLT_FAILURE);
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtil.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtil.getExceptionNm(e), e.getMessage());
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
         } finally {
             apiResponse.setApiResult(isSuccess, resultMsg);
             // 로그 관련 처리
@@ -97,11 +97,11 @@ public class JandiApiController
         String resultMsg = "";
         try {
             isSuccess = jandiApiService.receiveMsg(rcvMsg);
-            resultMsg = MessageUtil.getMessage(isSuccess ? MessageUtil.RSLT_SUCCESS : MessageUtil.RSLT_FAILURE);
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtil.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtil.getExceptionNm(e), e.getMessage());
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
         } finally {
             apiResponse.setApiResult(isSuccess, resultMsg);
             // 로그 관련 처리

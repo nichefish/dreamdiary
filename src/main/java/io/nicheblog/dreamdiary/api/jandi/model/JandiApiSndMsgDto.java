@@ -27,7 +27,7 @@ public class JandiApiSndMsgDto {
     /**
      * email
      */
-    @Schema(name = "email", description = "같은 내용으로 여러명에게 발송시 컴마(,)로 구분", example = "nichefish@sinzi.net,nichefish2@bixsoft.net")
+    @Schema(name = "email", description = "같은 내용으로 여러명에게 발송시 컴마(,)로 구분", example = "nichefish@gmail.com,nichefish@naver.com")
     @JsonProperty("email")
     private String email;
 

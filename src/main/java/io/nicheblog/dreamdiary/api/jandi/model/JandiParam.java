@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @ToString
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 public class JandiParam {
 
     /**
