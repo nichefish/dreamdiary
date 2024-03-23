@@ -15,8 +15,7 @@
     <link rel="shortcut icon" href="/favicon.ico" />
 
     <!--Fonts(used by all pages) -->
-    <link type="text/css" rel="stylesheet" href="/css/fonts.css?${releaseDate!}" />
-    <link type="text/css" rel="stylesheet" href="/css/fonts-google.css?family=Poppins:300,400,500,600,700" />
+    <link type="text/css" rel="stylesheet" href="/css/fonts.css?family=Poppins:300,400,500,600,700" />
     <!--Gloabl Css Bundle(used by all pages) -->
     <link type="text/css" rel="stylesheet" href="/metronic/assets/css/style.bundle.css?${releaseDate!}" />
     <link type="text/css" rel="stylesheet" href="/metronic/assets/plugins/global/plugins.bundle.css?${releaseDate!}" />

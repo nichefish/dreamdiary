@@ -17,6 +17,7 @@ public class SiteMenu {
     public static String TOP_MENU_NO_NOTICE = SiteTopMenu.NOTICE.menuNo;
     public static String TOP_MENU_NO_BOARD = SiteTopMenu.BOARD.menuNo;
     public static String TOP_MENU_NO_SCHDUL = SiteTopMenu.SCHDUL.menuNo;
+    public static String TOP_MENU_NO_DREAM = SiteTopMenu.DREAM.menuNo;
 
 
     // 상위 메뉴번호 :: 주기능

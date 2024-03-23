@@ -50,7 +50,7 @@ public class WebMvcContextConfig
 
     /**
      * 프로젝트 외부 이미지 연결
-     * 인트라넷 업로드파일 + vod 폴더 통째로 연결 (업로드 링크 위해)
+     * 업로드파일 + vod 폴더 통째로 연결 (업로드 링크 위해)
      **/
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
