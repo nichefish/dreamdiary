@@ -24,7 +24,7 @@
             /** 목록 검색 */
             fnSearch: function() {
                 $("#pageNo").val("");
-                commons.util.blockUISubmit("#listForm", "${SiteMenu.URL_CL_CD_LIST!}?actionTyCd=SEARCH");
+                commons.util.blockUISubmit("#listForm", "${SiteUrl.CL_CD_LIST!}?actionTyCd=SEARCH");
             },
             /** 사용으로 변경 (Ajax) */
             fnUseAjax: function(clCd) {
@@ -34,7 +34,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = '${SiteMenu.URL_CL_CD_USE_AJAX!}';
+                    const url = '${SiteUrl.CL_CD_USE_AJAX!}';
                     let ajaxData = { "clCd": clCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -52,7 +52,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = '${SiteMenu.URL_CL_CD_UNUSE_AJAX!}';
+                    const url = '${SiteUrl.CL_CD_UNUSE_AJAX!}';
                     let ajaxData = { "clCd": clCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -77,12 +77,12 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     $("#clCdRegForm #regYn").val("Y");
-                    const url = "${SiteMenu.URL_CL_CD_REG_AJAX!}";
+                    const url = "${SiteUrl.CL_CD_REG_AJAX!}";
                     let ajaxData = $("#clCdRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReplace("${SiteMenu.URL_CL_CD_LIST!}");
+                                if (res.result) commons.util.blockUIReplace("${SiteUrl.CL_CD_LIST!}");
                             });
                     });
                 });
@@ -91,12 +91,12 @@
             fnDtl: function(clCd) {
                 commons.util.blockUIRequest();
                 $("#procForm #clCd").val(clCd);
-                commons.util.blockUISubmit("#procForm", "${SiteMenu.URL_CL_CD_DTL!}");
+                commons.util.blockUISubmit("#procForm", "${SiteUrl.CL_CD_DTL!}");
             },
             /** 상세 모달 팝업 호출 */
             fnDtlAjax: function(clCd) {
                 event.stopPropagation();
-                const url = "${SiteMenu.URL_CL_CD_DTL_AJAX!}";
+                const url = "${SiteUrl.CL_CD_DTL_AJAX!}";
                 let ajaxData = { "clCd": clCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
@@ -114,7 +114,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteMenu.URL_CL_CD_DEL_AJAX!}";
+                    const url = "${SiteUrl.CL_CD_DEL_AJAX!}";
                     let ajaxData = { "clCd" : clCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -126,11 +126,11 @@
             },
             /** 사이트 관리 페이지로 이동 */
             fnSiteMngList: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteMenu.URL_SITE_MNG!}");
+                commons.util.blockUISubmit("#procForm", "${SiteUrl.SITE_MNG!}");
             },
             /** 코드 관리 페이지로 이동 */
             fnCdList: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteMenu.URL_CL_CD_LIST!}");
+                commons.util.blockUISubmit("#procForm", "${SiteUrl.CL_CD_LIST!}");
             },
         }
     }();

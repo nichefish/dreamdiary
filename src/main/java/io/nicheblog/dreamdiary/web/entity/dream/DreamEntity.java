@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.dream;
 
-import io.nicheblog.dreamdiary.cmm.intrfc.entity.BaseCrudEntity;
-import io.nicheblog.dreamdiary.cmm.util.DateUtil;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
@@ -24,7 +24,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "DREAM")
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -49,7 +49,7 @@ public class DreamEntity
      */
     @Column(name = "DREAMT_DT")
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = DateUtil.PTN_DATE)
+    @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Comment("꿈꾼 날짜")
     private Date dreamtDt;
 

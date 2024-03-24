@@ -14,7 +14,7 @@
             },
             /** 수정 화면 이동 */
             fnMdfForm: function() {
-                const url = "${SiteMenu.URL_CL_CD_DTL_AJAX!}";
+                const url = "${SiteUrl.CL_CD_DTL_AJAX!}";
                 let ajaxData = { "clCd": $("#clCd").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
@@ -37,7 +37,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     $("#clCdRegForm #regYn").val("N");
-                    const url = "${SiteMenu.URL_CL_CD_MDF_AJAX!}";
+                    const url = "${SiteUrl.CL_CD_MDF_AJAX!}";
                     let ajaxData = $("#clCdRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -64,7 +64,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     $("#clCdRegForm #regYn").val("Y");
-                    const url = "${SiteMenu.URL_DTL_CD_REG_AJAX!}";
+                    const url = "${SiteUrl.DTL_CD_REG_AJAX!}";
                     let ajaxData = $("#dtlCdRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -81,7 +81,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteMenu.URL_BOARD_DEF_DEL_AJAX!}";
+                    const url = "${SiteUrl.BOARD_DEF_DEL_AJAX!}";
                     let ajaxData = { "clCd": $("#clCd").val() };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -93,12 +93,12 @@
             },
             /** 목록 화면 이동 */
             fnList: function() {
-                const listUrl = "${SiteMenu.URL_CL_CD_LIST!}?isBackToList=Y";
+                const listUrl = "${SiteUrl.CL_CD_LIST!}?isBackToList=Y";
                 commons.util.blockUIReplace(listUrl);
             },
             /** 수정 화면 이동 */
             fnDtlCdMdfForm: function(dtlCd) {
-                const url = "${SiteMenu.URL_DTL_CD_DTL_AJAX!}";
+                const url = "${SiteUrl.DTL_CD_DTL_AJAX!}";
                 let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
@@ -123,7 +123,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = '${SiteMenu.URL_DTL_CD_USE_AJAX!}';
+                    const url = '${SiteUrl.DTL_CD_USE_AJAX!}';
                     let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -141,7 +141,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = '${SiteMenu.URL_DTL_CD_UNUSE_AJAX!}';
+                    const url = '${SiteUrl.DTL_CD_UNUSE_AJAX!}';
                     let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -159,7 +159,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteMenu.URL_DTL_CD_DEL_AJAX!}";
+                    const url = "${SiteUrl.DTL_CD_DEL_AJAX!}";
                     let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })

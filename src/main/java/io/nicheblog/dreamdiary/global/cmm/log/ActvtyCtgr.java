@@ -25,6 +25,8 @@ public enum ActvtyCtgr {
 
     LGN("로그인"),
 
+    DREAM("꿈 관리"),
+
     TAG("태그"),
 
     USER("사용자 관리"),
