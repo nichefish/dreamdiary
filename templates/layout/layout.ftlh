@@ -40,7 +40,7 @@
                 <!--layout-partial:sidebar/header/topbar/drawer-->
                 <#if asideAt>
                     <#include "/layout/aside/_aside_base.ftlh">
-                    <#include "/layout/header/_base.ftlh">
+                    <#include "/layout/header/_header_base.ftlh">
                     <#include "/layout/toolbar/_toolbar.ftlh">
                     <#include "/layout/topbar/_user_drawer.ftlh">
                 </#if>
