@@ -50,7 +50,7 @@ public class LgnPolicyController
 
     /**
      * 사이트 관리 > 로그인 설정 관리 > 로그인 설정 등록/수정 화면 조회
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.LGN_POLICY_FORM)
     @Secured(Constant.ROLE_MNGR)
@@ -82,7 +82,7 @@ public class LgnPolicyController
             MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -91,7 +91,7 @@ public class LgnPolicyController
 
     /**
      * 사이트 관리 > 로그인 설정 관리 > 로그인 설정 등록/수정 (Ajax)
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.LGN_POLICY_REG_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -118,7 +118,7 @@ public class LgnPolicyController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn(lgnPolicyDto.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

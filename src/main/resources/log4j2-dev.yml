@@ -1,0 +1,25 @@
+#log4j2 설정 파일 (로컬local)
+
+Configutation:
+    status: debug
+
+    Properties:
+        Property:
+            - name: log-path
+              value: "log"
+
+    Loggers:
+        Root:
+            level: info
+            AppenderRef:
+              - ref: Console_Appender
+              - ref: File_Appender
+              - ref: RollingFile_Appender
+        Logger:
+            - name: dreamdiary.nicheblog.io
+              additivity: false
+              level: debug
+              AppenderRef:
+                  - ref: Console_Appender
+                  - ref: File_Appender
+                  - ref: RollingFile_Appender

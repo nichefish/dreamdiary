@@ -18,7 +18,7 @@ Configutation:
             name: File_Appender
             fileName: ${log-path}/logfile.log
             PatternLayout:
-                pattern: ${log-format}
+            pattern: ${log-format}
         RollingFile:
             - name: RollingFile_Appender
               fileName: ${log-path}/rollingfile.log
@@ -40,7 +40,7 @@ Configutation:
                 - ref: File_Appender
                 - ref: RollingFile_Appender
         Logger:
-            - name: kr.go.eseoul.ss.scsc.br
+            - name: dreamdiary.nicheblog.io
               additivity: false
               level: debug
               AppenderRef:

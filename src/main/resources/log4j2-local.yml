@@ -3,31 +3,10 @@
 Configutation:
     status: info
 
-    Properties:
-        Property:
-            - name: log-path
-              value: "E:/Dev/Projects/dreamdiary/log"
-
-    Appenders:
-        RollingFile:
-            - name: RollingFile_Appender
-              fileName: log/rollingfile.log
-              filePattern: "E:/Dev/Projects/dreamdiary/log/archive/rollingfile.log.%d{yyyy-MM-dd}.gz"
-              PatternLayout:
-                  pattern: ${log-format}
-              Policies:
-                  SizeBasedTriggeringPolicy:
-                      size: 1GB
-                  TimeBasedTriggeringPolicy:
-                      interval: 1
-                      modulate: true
-
     Loggers:
         Logger:
-            - name: kr.go.eseoul.ss.scsc.br
+            - name: dreamdiary.nicheblog.io
               additivity: false
               level: debug
               AppenderRef:
                   - ref: Console_Appender
-                  - ref: File_Appender
-                  - ref: RollingFile_Appender

@@ -31,7 +31,7 @@ import java.util.Map;
 public class DreamDayController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.DREAM_INFO_LIST;               // 기본 URL
+    private final String baseUrl = SiteUrl.DREAM_DAY_LIST;               // 기본 URL
     private final ActvtyCtgr actvtyCtgrCd = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
 
 
@@ -39,7 +39,7 @@ public class DreamDayController
      * 꿈 관리 - 목록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.DREAM_INFO_LIST)
+    @GetMapping(SiteUrl.DREAM_DAY_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String dreamList(
             final LogActvtyParam logParam,
@@ -49,7 +49,7 @@ public class DreamDayController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("사용자 목록 조회"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("꿈 목록 조회"));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -79,11 +79,11 @@ public class DreamDayController
             MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/dream/info/dream_info_list";
+        return "/view/dream/day/dream_day_list";
     }
 
 }

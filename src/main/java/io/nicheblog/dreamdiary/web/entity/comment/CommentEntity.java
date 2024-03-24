@@ -1,8 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.comment;
 
-import io.nicheblog.dreamdiary.global.cmm.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

@@ -37,7 +37,7 @@ public class EhCacheController
 
     /**
      * 사이트 캐시 조회 (Ajax)
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.CACHE_CHCK_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -71,7 +71,7 @@ public class EhCacheController
 
     /**
      * 사이트 캐시 전체 초기화 (Ajax)
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.CACHE_CLEAR_AJAX)
     @Secured(Constant.ROLE_MNGR)
