@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.comment;
 
-import io.nicheblog.dreamdiary.global.cmm.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.comment.CommentEntity;
