@@ -40,7 +40,7 @@
         <#else>
             <#include "/layout/aside/_aside_menu_portal.ftlh">
         </#if>
-        <#include "/layout/aside/_footer.ftlh">
+        <#include "/layout/aside/_aside_footer.ftlh">
     </div>
 <!--end::Aside menu-->
 </div>

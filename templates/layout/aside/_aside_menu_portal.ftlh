@@ -56,7 +56,7 @@
             <div class="menu-sub menu-sub-accordion menu-active-bg">
                 <!-- 일정 > 전체 일정 확인 -->
                 <div class="menu-item" id="">
-                    <a class="menu-link" href="">
+                    <a class="menu-link" href="/dream/dreamList.do">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
