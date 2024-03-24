@@ -56,11 +56,11 @@
             <div class="menu-sub menu-sub-accordion menu-active-bg">
                 <!-- 일정 > 전체 일정 확인 -->
                 <div class="menu-item" id="">
-                    <a class="menu-link" href="/dream/dreamList.do">
+                    <a class="menu-link" href="${SiteUrl.DREAM_DAY_LIST!}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
-                        <span class="menu-title">일정</span>
+                        <span class="menu-title">꿈 목록</span>
                     </a>
                 </div>
             </div>

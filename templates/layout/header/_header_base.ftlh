@@ -11,10 +11,10 @@
                 $("button, .btn, .badge").on("click", function() {
                     commons.util.delayBtn(this);
                 });
-                /** 개별 input 유효성검사 */
+                // 개별 input 유효성검사
                 commons.validate.onlyNum(".number");
 
-                /** 사용자/관리자 전환 */
+                // 사용자/관리자 전환
                 $("#userMode").on("change", function() {
                     let mode = $(this).val();
                     if (mode === "${Constant.AUTH_USER!}") location.replace("${SiteUrl.MAIN!}");
@@ -22,8 +22,9 @@
                 });
 
                 /** 현재 접속중인 메뉴 활성화 로직 */
-                if ("${siteMenuNo}" !== "" && $("#${siteMenuNo}") !== undefined) {
-                    $("#${topMenuNo}").addClass("hover");
+                const siteAcsInfoExists = "${topMenuNo}" !== "" && "${siteMenuNo!}" !== "";
+                if (siteAcsInfoExists) {
+                    $("#${topMenuNo!}").addClass("hover");
                     $("#${siteMenuNo}").addClass("hover");
                 }
             },

@@ -36,7 +36,7 @@
     </div>
     <!--end::Brand-->
 
-    <div class="separator mx-5 opacity-50"></div>
+    <div class="separator mx-5 opacity-50 blink-slow"></div>
 
     <!--begin::Aside menu::사용자/관리자에 따라 사이드메뉴 다르게 첨부-->
     <div class="aside-menu flex-column-fluid">

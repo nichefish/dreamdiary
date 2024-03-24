@@ -10,18 +10,6 @@
         <#assign pageNm = (siteAcsInfo.pageNm)!>
         <#assign asideAt = (siteAcsInfo.asideAt)!false>
 
-        <script>
-            $(document).ready(function() {
-                /** 타이틀 설정 */
-                document.title = "dreamdiary | ${siteMenuNm!}";
-
-                /** 메세지 존재시 출력 */
-                <#if message??>
-                Swal.fire("${message!}");
-                </#if>
-            });
-        </script>
-
         <!--begin::Head-->
         <#include "/layout/_head.ftlh">
         <!--end::Head-->
@@ -78,5 +66,17 @@
             <#include "/layout/_notice_popup_template.ftlh">
             <#include "/layout/topbar/_sitemap_modal.ftlh">
         </#if>
+
+        <script>
+            $(document).ready(function() {
+                /** 타이틀 설정 */
+                document.title = "dreamdiary | ${siteMenuNm!}";
+
+                /** 메세지 존재시 출력 */
+                <#if message??>
+                Swal.fire("${message!}");
+                </#if>
+            });
+        </script>
     </html>
 </#macro>

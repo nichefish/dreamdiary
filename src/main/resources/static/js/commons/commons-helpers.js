@@ -42,12 +42,15 @@
    	}
     Handlebars.registerHelper('ifCond', ifCondFunc);
 
-    /** 값 존재여부 체크*/
-    let existsFunc = function(value, options) {
+    /** 값 존재여부 체크 */
+    let existsFunc = function(value) {
         return !commons.util.isEmpty(value);
     }
+    let notExistsFunc = function(value) {
+        return !existsFunc(value);
+    }
     Handlebars.registerHelper("exists", existsFunc);
-    Handlebars.registerHelper("notExists", !existsFunc);
+    Handlebars.registerHelper("notExists", notExistsFunc);
     /** 값 없을시 기본값 반환 */
     Handlebars.registerHelper("ifEmpty", function(value, alt) {
         if (commons.util.isEmpty(value)) return alt;
@@ -72,7 +75,6 @@
         let separator = "//";
         let idx = ynValues.indexOf(separator);
         let yValue = ynValues.substring(0, idx);
-        let nValue = ynValues.substring(idx + 2);
         return (value == yValue);
     }
     Handlebars.registerHelper("trueFalse", truefalseFunc);
@@ -84,8 +86,11 @@
         // 비교결과 반환
         return (value == compareValue);
     }
+    let notEqualsFunc = function(value, compareValue, options) {
+        return !equalsFunc(value, compareValue, options);
+    }
     Handlebars.registerHelper("equals", equalsFunc);
-    Handlebars.registerHelper("notEquals", !equalsFunc);
+    Handlebars.registerHelper("notEquals", notEqualsFunc);
 
     let checkedLabelFunc = function(value, ynLabels, options) {
         let separator = "//";
