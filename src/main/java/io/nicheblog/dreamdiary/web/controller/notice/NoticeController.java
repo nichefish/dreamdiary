@@ -122,7 +122,7 @@ public class NoticeController
             MessageUtils.alertMessage(resultMsg, SiteUrl.MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -163,7 +163,7 @@ public class NoticeController
             MessageUtils.alertMessage(resultMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -199,7 +199,7 @@ public class NoticeController
         } finally {
             // 로그 관련 처리
             logParam.setCn(noticeDto.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -259,7 +259,7 @@ public class NoticeController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn(noticeDto.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -310,7 +310,7 @@ public class NoticeController
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + postKey.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -360,7 +360,7 @@ public class NoticeController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + postKey.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -404,7 +404,7 @@ public class NoticeController
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + postKey.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -438,7 +438,7 @@ public class NoticeController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + postKey.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

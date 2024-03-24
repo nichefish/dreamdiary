@@ -1,0 +1,127 @@
+package io.nicheblog.dreamdiary.web.entity.notice;
+
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
+
+/**
+ * NoticeEntity
+ * <pre>
+ *  공지사항 Entity
+ * </pre>
+ *
+ * @author nichefish
+ * @extends BasePostEntity
+ */
+@Entity
+@Table(name = "NOTICE")
+@IdClass(BaseClsfKey.class)      // 분류코드+상세코드 복합키 적용
+@Getter
+@Setter
+@SuperBuilder
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Where(clause = "DEL_YN='N'")
+@SQLDelete(sql = "UPDATE notice SET DEL_YN = 'Y' WHERE BOARD_CD = ? AND POST_NO = ?")
+public class NoticeEntity
+        extends BasePostEntity
+        implements Serializable {
+
+    /**
+     * 글 번호
+     */
+    @Id
+    @TableGenerator(name = "notice", table = "CMM_SEQ", pkColumnName = "SEQ_NM", valueColumnName = "SEQ_VAL", pkColumnValue = "NOTICE_NO", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "notice")
+    @Column(name = "POST_NO")
+    @Comment("글 번호")
+    private Integer postNo;
+
+    /**
+     * 글분류 코드
+     */
+    @Column(name = "CTGR_CD", length = 20)
+    @Comment("글분류 코드")
+    private String ctgrCd;
+
+    /**
+     * 공지사항 글분류 코드 정보 (복합키 조인)
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'NOTICE_CTGR_CD\'", referencedColumnName = "CL_CD")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
+    })
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("공지사항 글분류 코드 정보")
+    private DtlCdEntity ctgrCdInfo;
+
+    /**
+     * 중요여부
+     */
+    @Builder.Default
+    @Column(name = "IMPRTC_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("중요여부")
+    private String imprtcYn = "N";
+
+    /**
+     * 상단고정여부
+     */
+    @Builder.Default
+    @Column(name = "FXD_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("상단고정여부")
+    private String fxdYn = "N";
+
+    /**
+     * 팝업 노출여부
+     */
+    @Builder.Default
+    @Column(name = "POPUP_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("팝업 노출여부")
+    private String popupYn = "N";
+
+    /**
+     * 수정권한
+     */
+    @Builder.Default
+    @Column(name = "MDFABLE")
+    @Comment("수정권한")
+    private String mdfable = Constant.MDFABLE_REGSTR;
+
+    /**
+     * 게시물 태그 목록
+     */
+    // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    // @JoinColumnsOrFormulas({
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO")),
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD"))
+    // })
+    // @Fetch(FetchMode.SELECT)
+    // @OrderBy("boardTag ASC")
+    // @NotFound(action = NotFoundAction.IGNORE)
+    // @Comment("게시물 태그 목록")
+    // private List<BoardPostTagEntity> tagList;
+
+    /**
+     * 파일시스템 참조 목록
+     */
+    // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    // @JoinColumnsOrFormulas({
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO")),
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD"))
+    // })
+    // @Fetch(FetchMode.SELECT)
+    // @NotFound(action = NotFoundAction.IGNORE)
+    // @Comment("파일시스템 참조 목록")
+    // private List<FlsysRefEntity> flsysRefList;
+}
