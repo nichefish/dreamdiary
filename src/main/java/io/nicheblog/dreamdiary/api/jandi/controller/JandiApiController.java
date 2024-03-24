@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.api.jandi.controller;
 
 import io.nicheblog.dreamdiary.api.ApiUrl;
-import io.nicheblog.dreamdiary.api.jandi.model.JandiApiRcvMsgDto;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiApiRespnsDto;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiParam;
 import io.nicheblog.dreamdiary.api.jandi.service.JandiApiService;
@@ -16,10 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Nullable;
 import javax.annotation.Resource;
 
 /**
@@ -79,35 +76,35 @@ public class JandiApiController
     /**
      * JANDI :: 잔디 메신저로부터 웹훅 메세지 수신
      */
-    @Operation(
-            summary = "잔디 메신저로부터 웹훅 메세지 수신",
-            description = "잔디 메신저로부터 웹훅 메세지를 수신한다."
-    )
-    @PostMapping(ApiUrl.API_JANDI_RCV_MSG)
-    public ResponseEntity<JandiApiRespnsDto> receiveMsg(
-            final @RequestBody @Nullable JandiApiRcvMsgDto rcvMsg,
-            final LogActvtyParam logParam
-    ) {
-
-        JandiApiRespnsDto apiResponse = new JandiApiRespnsDto();
-
-        log.info("requestUrl: {}", request.getRequestURL());
-
-        boolean isSuccess = false;
-        String resultMsg = "";
-        try {
-            isSuccess = jandiApiService.receiveMsg(rcvMsg);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-        } finally {
-            apiResponse.setApiResult(isSuccess, resultMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
-    }
+    // @Operation(
+    //         summary = "잔디 메신저로부터 웹훅 메세지 수신",
+    //         description = "잔디 메신저로부터 웹훅 메세지를 수신한다."
+    // )
+    // @PostMapping(ApiUrl.API_JANDI_RCV_MSG)
+    // public ResponseEntity<JandiApiRespnsDto> receiveMsg(
+    //         final @RequestBody @Nullable JandiApiRcvMsgDto rcvMsg,
+    //         final LogActvtyParam logParam
+    // ) {
+//
+    //     JandiApiRespnsDto apiResponse = new JandiApiRespnsDto();
+//
+    //     log.info("requestUrl: {}", request.getRequestURL());
+//
+    //     boolean isSuccess = false;
+    //     String resultMsg = "";
+    //     try {
+    //         isSuccess = jandiApiService.receiveMsg(rcvMsg);
+    //         resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+    //     } catch (Exception e) {
+    //         isSuccess = false;
+    //         resultMsg = MessageUtils.getExceptionMsg(e);
+    //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+    //     } finally {
+    //         apiResponse.setApiResult(isSuccess, resultMsg);
+    //         // 로그 관련 처리
+    //         logParam.setResult(isSuccess, resultMsg);
+    //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
+    //     }
+    //     return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    // }
 }
