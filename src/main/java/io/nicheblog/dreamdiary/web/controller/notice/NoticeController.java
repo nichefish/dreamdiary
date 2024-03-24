@@ -55,7 +55,7 @@ public class NoticeController
         extends BaseControllerImpl {
 
     private final String baseUrl = SiteUrl.NOTICE_LIST;             // 기본 URL
-    private final ActvtyCtgr actvtyCtgrCd = ActvtyCtgr.NOTICE;      // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.NOTICE;      // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "noticeService")
     private NoticeService noticeService;

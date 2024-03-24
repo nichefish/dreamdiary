@@ -32,7 +32,7 @@ public class DreamDayController
         extends BaseControllerImpl {
 
     private final String baseUrl = SiteUrl.DREAM_DAY_LIST;               // 기본 URL
-    private final ActvtyCtgr actvtyCtgrCd = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
 
 
     /**

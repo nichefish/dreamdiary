@@ -1,0 +1,125 @@
+<#--
+  -- 활동 로그 > 상세 Template
+  -- @included in : log_actvty_list
+  -->
+<script type="text/x-handlebars-template" id="log_actvty_dtl_template">
+    <div class="card mt-4">
+        <!--begin::Question-->
+        <div class="mb-0">
+            <!--begin::Head-->
+            <div class="d-flex align-items-center mb-4">
+                <!--begin::Title-->
+                <div class="col-12">
+                    <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
+                        <span class="vertical-middle">
+                            {{postSj}}
+                        </span>
+                    </h1>
+                </div>
+                <!--end::Title-->
+            </div>
+            <!--end::Head-->
+            <!--begin::Foot-->
+            <div class="d-flex flex-stack flex-wrap mb-3">
+                <!--begin::Author-->
+                <div class="d-flex align-items-center">
+                    <!--begin::Name-->
+                    <div class="d-flex flex-column align-items-start justify-content-center">
+                        <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">{{regstrNm}}</span>
+                        <span class="text-muted fs-7 lh-1">{{regDt}}</span>
+                    </div>
+                    <!--end::Name-->
+                </div>
+                <!--end::Author-->
+                <!--begin::Info-->
+                <div class="d-flex align-items-center py-1">
+                    <a href="#answers" data-kt-scroll-toggle="true"
+                       class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 {{commentCnt}}</a>
+                    <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 {{postHit}}</button>
+                </div>
+                <!--end::Info-->
+            </div>
+            <!--end::Foot-->
+            <div class="separator separator-dashed border-gray-300 my-8"></div>
+            <!--begin::Question-->
+            <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
+                <div class="row mb-4">      <!--begin::Row-->
+                    <div class="col-xl-2 col-4">
+                        <div class="col-form-label text-center fs-6 fw-bold">로그유형</div>
+                    </div>
+                    <div class="col-xl-10 col-8 col-form-label">
+                        logTyCd: {{logTyCd}}   //  actvtyCtgrCd: {{actvtyCtgrNm}}  //  actionTyCd: {{actionTyNm}}
+                    </div>
+                </div>
+                <div class="row mb-4">      <!--begin::Row-->
+                    <div class="col-xl-2 col-4">
+                        <div class="col-form-label text-center fs-6 fw-bold">작업자</div>
+                    </div>
+                    <div class="col-xl-10 col-8 col-form-label">
+                        {{logUserId}}
+                    </div>
+               </div>
+               <div class="row mb-4">      <!--begin::Row-->
+                    <div class="col-xl-2 col-4">
+                        <div class="col-form-label text-center fs-6 fw-bold">작업일시</div>
+                    </div>
+                    <div class="col-xl-10 col-8 col-form-label">
+                        {{logDt}}
+                    </div>
+               </div>
+                <div class="row mb-4">      <!--begin::Row-->
+                    <div class="col-xl-2 col-4">
+                        <div class="col-form-label text-center fs-6 fw-bold">작업 IP</div>
+                    </div>
+                    <div class="col-xl-10 col-8 col-form-label">
+                        {{ipAddr}}
+                    </div>
+                </div>
+               <div class="row mb-4">      <!--begin::Row-->
+                    <div class="col-xl-2 col-4">
+                        <div class="col-form-label text-center fs-6 fw-bold">URL</div>
+                    </div>
+                    <div class="col-xl-10 col-8 col-form-label">
+                        <div>{{url}}</div>
+                        <div>referer: {{referer}}</div>
+                    </div>
+               </div>
+               <div class="row mb-4">      <!--begin::Row-->
+                    <div class="col-xl-2 col-4">
+                        <div class="col-form-label text-center fs-6 fw-bold">파라미터</div>
+                    </div>
+                    <div class="col-xl-10 col-8 col-form-label">
+                        {{param}}
+                    </div>
+               </div>
+                <div class="row mb-4">      <!--begin::Row-->
+                    <div class="col-xl-2 col-4">
+                        <div class="col-form-label text-center fs-6 fw-bold">작업내용</div>
+                    </div>
+                    <div class="col-xl-10 col-8 col-form-label">
+                        {{cn}}
+                    </div>
+                </div>
+                <div class="row mb-4">      <!--begin::Row-->
+                    <div class="col-xl-2 col-4">
+                        <div class="col-form-label text-center fs-6 fw-bold">작업결과</div>
+                    </div>
+                    <div class="col-xl-10 col-8 col-form-label">
+                        <div>{{rslt}}</div>
+                        <div>{{rsltMsg}}</div>
+                    </div>
+                </div>
+                <div class="row mb-4">      <!--begin::Row-->
+                    <div class="col-xl-2 col-4">
+                        <div class="col-form-label text-center fs-6 fw-bold">익셉션</div>
+                    </div>
+                    <div class="col-xl-10 col-8 col-form-label">
+                        <div>{{exceptionNm}}</div>
+                        <div>{{exceptionMsg}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="separator separator-dashed border-gray-300 my-8"></div>
+    </div>
+</script>

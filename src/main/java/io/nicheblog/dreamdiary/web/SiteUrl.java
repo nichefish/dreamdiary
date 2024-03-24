@@ -42,7 +42,10 @@ public interface SiteUrl {
     String PREFIX_DREAM = "/dream";
     String PREFIX_DAY = "/day";
     String PREFIX_DREAM_DAY = PREFIX_DREAM + PREFIX_DAY;
-    String DREAM_INFO_LIST = PREFIX_DREAM_DAY + "/dreamList.do";
+    String DREAM_DAY_LIST = PREFIX_DREAM_DAY + "/dreamDayList.do";
+    String DREAM_DAY_REG_AJAX = PREFIX_DREAM_DAY + "/dreamDayRegAjax.do";
+    String DREAM_DAY_DTL_AJAX = PREFIX_DREAM_DAY + "/dreamDayDtlAjax.do";
+    String DREAM_DAY_MDF_AJAX = PREFIX_DREAM_DAY + "/dreamDayMdfAjax.do";
 
 
     String PREFIX_PIECE = "/piece";
@@ -90,6 +93,25 @@ public interface SiteUrl {
     String PREFIX_LGN_POLICY = "/lgnPolicy";
     String LGN_POLICY_FORM = PREFIX_LGN_POLICY + "/lgnPolicyForm.do";
     String LGN_POLICY_REG_AJAX = PREFIX_LGN_POLICY + "/lgnPolicyRegAjax.do";
+
+    /** 코드 관리 */
+    String PREFIX_CD = "/cd";
+    String CL_CD_LIST = "clCdList.do";
+    String CL_CD_DTL = "clCdDtl.do";
+    String CL_CD_REG_AJAX = "clCdRegAjax.do";
+    String CL_CD_DTL_AJAX = "clCdDtlAjax.do";
+    String CL_CD_MDF_AJAX = "clCdMdfAjax.do";
+    String CL_CD_DEL_AJAX = "clCdDelAjax.do";
+    String CL_CD_USE_AJAX = "clCdUseAjax.do";
+    String CL_CD_UNUSE_AJAX = "clCdUnuseAjax.do";
+
+    String DTL_CD_REG_AJAX = "dtlCdRegAjax.do";
+    String DTL_CD_DTL_AJAX = "dtlCdDtlAjax.do";
+    String DTL_CD_MDF_AJAX = "dtlCdMdfAjax.do";
+    String DTL_CD_LIST_AJAX = "dtlCdListAjax.do";
+    String DTL_CD_USE_AJAX = "dtlCdUseAjax.do";
+    String DTL_CD_UNUSE_AJAX = "dtlCdUnuseAjax.do";
+    String DTL_CD_DEL_AJAX = "dtlCdDelAjax.do";
 
     /**
      * (공통) 파일

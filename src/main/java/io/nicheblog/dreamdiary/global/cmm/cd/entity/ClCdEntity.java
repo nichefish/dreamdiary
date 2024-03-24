@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.entity;
 
+import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManageEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.NotFound;
@@ -9,6 +11,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,17 +70,17 @@ public class ClCdEntity
     /**
      * 상세코드 dto 목록 반환
      */
-    // public List<DtlCd> getDtlCdDtoList() throws Exception {
-    //     if (CollectionUtils.isEmpty(this.dtlCdList)) return null;
-    //     List<DtlCd> dtlCdDtoList = new ArrayList<>();
-    //     long i = 1;
-    //     for (DtlCdEntity dtlCdEntity : this.dtlCdList) {
-    //         DtlCd dto = DtlCdMapstruct.INSTANCE.toDto(dtlCdEntity);
-    //         dto.setRnum(i++);
-    //         dtlCdDtoList.add(dto);
-    //     }
-    //     return dtlCdDtoList;
-    // }
+    public List<DtlCd> getDtlCdDtoList() throws Exception {
+        if (CollectionUtils.isEmpty(this.dtlCdList)) return null;
+        List<DtlCd> dtlCdDtoList = new ArrayList<>();
+        long i = 1;
+        for (DtlCdEntity dtlCdEntity : this.dtlCdList) {
+            DtlCd dto = DtlCdMapstruct.INSTANCE.toDto(dtlCdEntity);
+            dto.setRnum(i++);
+            dtlCdDtoList.add(dto);
+        }
+        return dtlCdDtoList;
+    }
 
     /** 서브엔티티 List 처리를 위한 세터 */
     /**
