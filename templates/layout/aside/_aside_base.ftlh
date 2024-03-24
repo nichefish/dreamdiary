@@ -38,7 +38,7 @@
         <#if isMngr!false && isMngrMode!false>
             <#include "/layout/aside/_aside_menu_admin.ftlh">
         <#else>
-            <#include "/layout/aside/_aside_menu.ftlh">
+            <#include "/layout/aside/_aside_menu_portal.ftlh">
         </#if>
         <#include "/layout/aside/_footer.ftlh">
     </div>
