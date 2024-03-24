@@ -87,7 +87,7 @@
         <div class="d-flex align-items-stretch justify-content-end flex-lg-grow-1">
             <!--begin::Topbar-->
             <div class="d-flex align-items-stretch flex-shrink-0">
-                <#include "/layout/topbar/_base.ftlh">
+                <#include "/layout/topbar/_topbar_base.ftlh">
             </div>
             <!--end::Topbar-->
         </div>

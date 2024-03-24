@@ -27,9 +27,6 @@
     <link type="text/css" rel="stylesheet" href="/css/commons.css?${releaseDate!}" />
     <link type="text/css" rel="stylesheet" href="/css/commons-respns.css?${releaseDate!}" />
     <!--Global Javascript Bundle(used by all pages)-->
-    <script type="text/javascript" src="/metronic/assets/js/scripts.bundle.js?${releaseDate!}"></script>
-    <script type="text/javascript" src="/metronic/assets/plugins/global/plugins.bundle.js?${releaseDate!}"></script>
-
     <script type="text/javascript" src="/js/jquery-3.6.0.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.form.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.validate.min.js?${releaseDate!}"></script>
@@ -37,9 +34,10 @@
     <script type="text/javascript" src="/js/jquery.blockUI.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/handlebars.min.js?${releaseDate!}"></script>
-
     <script type="text/javascript" src="/js/moment.min.js?${releaseDate!}"></script>
-
+    <script type="text/javascript" src="/metronic/assets/js/scripts.bundle.js?${releaseDate!}"></script>
+    <script type="text/javascript" src="/metronic/assets/plugins/global/plugins.bundle.js?${releaseDate!}"></script>
+    <!--Custom Javascript Bundle(used by all pages)-->
     <script type="text/javascript" src="/js/commons/commons.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/commons/commons-validate.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/commons/commons-date.js?${releaseDate!}"></script>
