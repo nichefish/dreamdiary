@@ -38,6 +38,15 @@ public class SiteMenu {
             SiteUrl.MAIN
     );
 
+    // 메뉴 :: 꿈
+    public static String MENU_NO_DREAM = "01000000";
+    public static SiteAcsInfo MAIN_DREAM = new SiteAcsInfo(
+            SiteTopMenu.DREAM,
+            MENU_NO_MAIN,
+            "메인",
+            SiteUrl.MAIN
+    );
+
     // 메뉴 :: 메인(관리자)
     public static SiteAcsInfo MAIN_ADMIN = new SiteAcsInfo(
             SiteTopMenu.MAIN,

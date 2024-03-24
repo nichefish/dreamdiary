@@ -2,7 +2,7 @@
 -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Template
   -- @included in : cl_cd_list
   -->
-<script type="text/x-handlebars-template" id="dream_info_reg_template">
+<script type="text/x-handlebars-template" id="dream_day_reg_template">
     <input type="hidden" name="clCd" value="{{clCd}}">
     <input type="hidden" name="regYn" id="regYn" value="{{#if (notExists dtlCd)}}Y{{/if}}{{#if (exists dtlCd)}}N{{/if}}">
 

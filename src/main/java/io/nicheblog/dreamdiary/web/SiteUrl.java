@@ -21,6 +21,8 @@ public interface SiteUrl {
     String ROOT = "/";
     String MAIN = "/main.do";
 
+    String PREFIX_INFO = "/info";
+
     /**
      * 메인 > 로그인 화면
      * NO_ASIDE
@@ -36,6 +38,15 @@ public interface SiteUrl {
     String ADMIN_MAIN = PREFIX_ADMIN + MAIN;
     String ADMIN_TEST_PAGE = PREFIX_ADMIN + "/testPage.do";
 
+    /** 꿈 관리 */
+    String PREFIX_DREAM = "/dream";
+    String PREFIX_DAY = "/day";
+    String PREFIX_DREAM_DAY = PREFIX_DREAM + PREFIX_DAY;
+    String DREAM_INFO_LIST = PREFIX_DREAM_DAY + "/dreamList.do";
+
+
+    String PREFIX_PIECE = "/piece";
+    String PREFIX_DREAM_PIECE = PREFIX_DREAM + PREFIX_PIECE;
 
     /**
      * 사용자 관리

@@ -2,11 +2,11 @@
   -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Modal
   -- @included in : cl_cd_dtl
   -->
-<div class="modal fade" id="dream_info_reg_modal" tabindex="-1" role="dialog" aria-labelledby="dreamInfoRegModalTitle" aria-hidden="true">
+<div class="modal fade" id="dream_day_reg_modal" tabindex="-1" role="dialog" aria-labelledby="dreamDayRegModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="dreamInfoRegModalLongTitle">[상세코드 등록]</h5>
+                <h5 class="modal-title" id="dreamDayRegModalLongTitle">[상세코드 등록]</h5>
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times"></i>
                 </div>
@@ -14,8 +14,8 @@
             </div>
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
-                    <form name="dreamInfoRegForm" id="dreamInfoRegForm">
-                        <div id="dream_info_reg_div">
+                    <form name="dreamDayRegForm" id="dreamDayRegForm">
+                        <div id="dream_day_reg_div">
                             <!-- contents -->
                         </div>
                     </form>

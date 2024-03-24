@@ -28,10 +28,10 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
-public class DreamController
+public class DreamDayController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.DREAM_LIST;               // 기본 URL
+    private final String baseUrl = SiteUrl.DREAM_INFO_LIST;               // 기본 URL
     private final ActvtyCtgr actvtyCtgrCd = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
 
 
@@ -39,7 +39,7 @@ public class DreamController
      * 꿈 관리 - 목록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.DREAM_LIST)
+    @GetMapping(SiteUrl.DREAM_INFO_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String dreamList(
             final LogActvtyParam logParam,
@@ -83,7 +83,7 @@ public class DreamController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/dream/dream_list";
+        return "/view/dream/info/dream_info_list";
     }
 
 }

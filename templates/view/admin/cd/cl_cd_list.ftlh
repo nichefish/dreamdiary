@@ -62,7 +62,7 @@
                     });
                 });
             },
-            /** 등록 화면 이동 */
+            /** 등록 팝업 호출 */
             fnRegForm: function() {
                 commons.util.handlebarsTemplate({}, "cl_cd_reg", "show");
                 commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");

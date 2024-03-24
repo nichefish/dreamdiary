@@ -38,7 +38,7 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/dream/info/dream_info_reg_modal.ftlh">
-<#include "/view/dream/info/dream_info_reg_template.ftlh">
+<#include "/view/dream/day/dream_day_reg_modal.ftlh">
+<#include "/view/dream/day/dream_day_reg_template.ftlh">
 
 </@layout.layout>

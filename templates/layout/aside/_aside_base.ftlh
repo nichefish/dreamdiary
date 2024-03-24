@@ -8,11 +8,14 @@
      data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
      data-kt-drawer-toggle="#kt_aside_mobile_<#if isMngr!false && isMngrMode!false>admin_</#if>toggle">
     <!--begin::Brand-->
-    <div class="aside-logo flex-column-auto" id="kt_aside_logo" style="margin-top:15px; margin-bottom:10px; margin-left:10px;">
+    <div class="aside-logo flex-column-auto mt-3 mb-1" id="kt_aside_logo">
         <!--begin::Logo-->
-        <a href="${SiteUrl.MAIN!}"
+        <a href="${SiteUrl.MAIN!}" class="d-flex align-items-center"
            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="${SiteUrl.DOMAIN!}">
-            <img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="h-60px w-auto logo"/>
+            <div class="w-25px me-1">
+                <img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="img-thumbnail w-auto logo"/>
+            </div>
+            <div>${SiteUrl.DOMAIN!}</div>
         </a>
         <!--end::Logo-->
         <!--begin::Aside toggler-->
@@ -32,6 +35,8 @@
         <!--end::Aside toggler-->
     </div>
     <!--end::Brand-->
+
+    <div class="separator mx-5 opacity-50"></div>
 
     <!--begin::Aside menu::사용자/관리자에 따라 사이드메뉴 다르게 첨부-->
     <div class="aside-menu flex-column-fluid">
