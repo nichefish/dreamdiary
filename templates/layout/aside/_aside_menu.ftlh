@@ -1,6 +1,6 @@
 <!--
  -- 레이아웃 > 사이드바 메뉴 (사용자)
- -- @included in : aside/_base
+ -- @included in : aside/_aside_base
  -->
 <!--begin::Aside Menu-->
 <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true"
@@ -36,7 +36,7 @@
                 <span class="menu-section text-muted text-uppercase fs-8 ls-1">dream</span>
             </div>
         </div>
-        <!-- 일정 관리 메뉴 시작 -->
+        <!-- 꿈 관리 메뉴 시작 -->
         <#assign isNotTopMenu = (topMenuNo != SiteMenu.TOP_MENU_NO_DREAM!)!>
         <div data-kt-menu-trigger="click" class="menu-item menu-accordion show" id="${SiteMenu.TOP_MENU_NO_DREAM!}">
             <span class="menu-link <#if isNotTopMenu>text-inverse-light</#if>">
@@ -110,4 +110,3 @@
     <!--end::Menu-->
 </div>
 <!--end::Aside Menu-->
-<#include "/layout/aside/_footer.ftlh">

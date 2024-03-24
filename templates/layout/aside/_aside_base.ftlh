@@ -36,10 +36,11 @@
     <!--begin::Aside menu::사용자/관리자에 따라 사이드메뉴 다르게 첨부-->
     <div class="aside-menu flex-column-fluid">
         <#if isMngr!false && isMngrMode!false>
-            <#include "/layout/aside/_menu_admin.ftlh">
+            <#include "/layout/aside/_aside_menu_admin.ftlh">
         <#else>
-            <#include "/layout/aside/_menu.ftlh">
+            <#include "/layout/aside/_aside_menu.ftlh">
         </#if>
+        <#include "/layout/aside/_footer.ftlh">
     </div>
 <!--end::Aside menu-->
 </div>
