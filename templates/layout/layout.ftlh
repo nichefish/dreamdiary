@@ -39,7 +39,7 @@
                 <!--begin::Page-->
                 <!--layout-partial:sidebar/header/topbar/drawer-->
                 <#if asideAt>
-                    <#include "/layout/aside/_base.ftlh">
+                    <#include "/layout/aside/_aside_base.ftlh">
                     <#include "/layout/header/_base.ftlh">
                     <#include "/layout/toolbar/_toolbar.ftlh">
                     <#include "/layout/topbar/_user_drawer.ftlh">
@@ -63,7 +63,7 @@
                         <!--end::Container-->
                     </div>
                     <!--begin::Footer-->
-                    <#include "/layout/footer/_base.ftlh">
+                    <#include "/layout/footer/_footer_base.ftlh">
                     <#--<#include "/layout/_scrolltop.ftlh">-->
                     <!--end::Footer-->
                 </div>

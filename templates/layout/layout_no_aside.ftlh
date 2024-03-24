@@ -55,7 +55,7 @@
                         <!--end::Container-->
                     </div>
                     <!--begin::Footer-->
-                    <#include "/layout/footer/_base.ftlh">
+                    <#include "/layout/footer/_footer_base.ftlh">
                     <#--<#include "/layout/_scrolltop.ftlh">-->
                     <!--end::Footer-->
                 </div>
