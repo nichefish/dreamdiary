@@ -1,23 +1,45 @@
-#log4j2 설정 파일 (로컬local)
+#log4j2 설정 파일 : 개발(dev)
 
 Configutation:
     status: info
 
     Properties:
         Property:
-            - name: log-path
-              value: "log"
+          - name: log-path
+            value: "log"
+          - name: log-format
+            value: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}.%M(%L) - %msg%n"
 
     Appenders:
-        File:
-            name: File_Appender
-            fileName: ${log-path}/logfile.log
+        Console:
+            name: Console_Appender
+            target: SYSTEM_OUT
             PatternLayout:
-            pattern: ${log-format}
+                pattern: ${log-format}
+        File:
+          - name: File_Info_Appender
+            fileName: ${log-path}/logfile-info.log
+            PatternLayout:
+              pattern: ${log-format}
+          - name: File_Warn_Appender
+            fileName: ${log-path}/logfile-warn.log
+            PatternLayout:
+                pattern: ${log-format}
         RollingFile:
-          - name: RollingFile_Appender
-            fileName: ${log-path}/rollingfile.log
-            filePattern: "log/archive/rollingfile.log.%d{yyyy-MM-dd}.gz"
+          - name: RollingFile_Info_Appender
+            fileName: ${log-path}/rollingfile-info.log
+            filePattern: "log/archive/rollingfile-info.log.%d{yyyy-MM-dd}.gz"
+            PatternLayout:
+                pattern: ${log-format}
+            Policies:
+                SizeBasedTriggeringPolicy:
+                    size: 1GB
+                TimeBasedTriggeringPolicy:
+                    interval: 1
+                    modulate: true
+          - name: RollingFile_Warn_Appender
+            fileName: ${log-path}/rollingfile-warn.log
+            filePattern: "log/archive/rollingfile-warn.log.%d{yyyy-MM-dd}.gz"
             PatternLayout:
                 pattern: ${log-format}
             Policies:
@@ -32,13 +54,21 @@ Configutation:
             level: info
             AppenderRef:
               - ref: Console_Appender
-              - ref: File_Appender
-              - ref: RollingFile_Appender
+              - ref: File_Info_Appender
+              - ref: File_Warn_Appender
+                level: warn
+              - ref: RollingFile_Info_Appender
+              - ref: RollingFile_Warn_Appender
+                level: warn
         Logger:
             - name: dreamdiary.nicheblog.io
               additivity: false
-              level: debug
+              level: info
               AppenderRef:
                   - ref: Console_Appender
-                  - ref: File_Appender
-                  - ref: RollingFile_Appender
+                  - ref: File_Info_Appender
+                  - ref: File_Warn_Appender
+                    level: warn
+                  - ref: RollingFile_Info_Appender
+                  - ref: RollingFile_Warn_Appender
+                    level: warn
