@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * CmmClCdEntity
+ * ClCdEntity
  * <pre>
  *  분류코드(clCd) Entity
  *  ※분류코드(cl_cd) = 상위 분류코드. 상세코드(dtl_cd)를 1:N 묶음으로 관리한다.
