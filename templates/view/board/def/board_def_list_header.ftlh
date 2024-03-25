@@ -5,7 +5,7 @@
 <form name="listForm" id="listForm" method="get">
     <div class="row p-0">
         <div class="col-12 d-flex justify-content-end align-items-center buttons">
-            <a href="#" class="btn btn-sm btn-primary mx-1" onclick="Page.regForm();"
+            <a href="javascript:void(0);" class="btn btn-sm btn-primary mx-1" onclick="Page.regModal();"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
                 <i class="fas fa-plus"></i>등록
             </a>

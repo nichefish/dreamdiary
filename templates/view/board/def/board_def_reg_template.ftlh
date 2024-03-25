@@ -6,14 +6,14 @@
     <!--begin::Table body-->
     <tr>
         <td class="text-start px-2 pt-2">
-            <input type="text" class="form-control required" name="boardCd">
+            <input type="text" class="form-control required cddata" name="boardCd">
             <input type="hidden" class="form-control required" name="useYn" value="N">
         </td>
         <td class="text-center pt-2">
             <input type="text" class="form-control required" name="boardNm">
         </td>
         <td class="text-center pt-2">
-            <input type="text" class="form-control" name="ctgrClCd">
+            <input type="text" class="form-control cddata" name="ctgrClCd">
         </td>
         <td class="text-center pt-2">
             <input type="text" class="form-control required number" name="menuNo">

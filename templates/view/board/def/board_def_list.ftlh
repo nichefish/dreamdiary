@@ -22,9 +22,13 @@
                 commons.util.fnSortTable();
             },
             /** 등록 모달 호출 */
-            regForm: function() {
+            regModal: function() {
                 commons.util.handlebarsTemplate({}, "board_def_reg", "show");
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                commons.validate.validateForm("#boardDefRegForm");
+                commons.validate.replaceBlankRegex("#boardDefRegForm .cddata");
+                commons.validate.onlyEngNum("#boardDefRegForm .cddata");
+                commons.validate.toUpperCase("#boardDefRegForm .cddata");
                 commons.validate.onlyNum(".number");
             },
             /** 등록 (ajax) */
@@ -138,7 +142,7 @@
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
               title="사용자 포탈에 표시되는&#10;'일반게시판' 대메뉴 번호입니다.&#10;게시판 메뉴번호 작성시&#10;해당 번호 아래에 둘 것을&#10;권장합니다.">
             ※ 현재 게시판 상위메뉴번호 : </span>
-        <span class="text-noti ls-1 text-decoration-underline">${SiteMenu.TOP_MENU_NO_BOARD_POST!}</span>
+        <span class="text-noti ls-1 text-decoration-underline">${SiteMenu.BOARD.menuNo!}</span>
     </div>
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed mb-3">
         <!--begin::Table head-->
