@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.auth.config;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.handler.DreamdiaryAuthenticationProvider;
 import io.nicheblog.dreamdiary.global.auth.handler.LgnFailureHandler;
 import io.nicheblog.dreamdiary.global.auth.handler.LgnSuccessHandler;
@@ -103,7 +102,7 @@ public class WebSecurityConfig
 
         web.ignoring()
            // static 디렉터리의 하위 파일 목록은 인증 무시(=항상 통과 )
-           .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfiles/public/**")
+           .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/public/**")
            // 에러 페이지
            .antMatchers(SiteUrl.ERROR + "/**")
            //// 비밀번호 만료시 비밀번호 변경 화면

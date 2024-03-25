@@ -31,7 +31,7 @@ public class WebMvcContextConfig
     @Resource(name = "freemarkerInterceptor")
     private FreemarkerInterceptor freemarkerInterceptor;
 
-    private static final List<String> STATIC_RESOURCES_URL_PATTERN = List.of("/css/**", "/js/**", "/img/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfiles/**");
+    private static final List<String> STATIC_RESOURCES_URL_PATTERN = List.of("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/**");
 
     /**
      * Device 정보 resolver
@@ -109,15 +109,21 @@ public class WebMvcContextConfig
         // freemarker interceptor
         // 화면 조회에만 적용, ajax 및 기타 작동에는 적용 안함
         registry.addInterceptor(freemarkerInterceptor)
+                /* 페이지 접근에 대해서만 처리 */
                 .addPathPatterns("/")
-                .addPathPatterns("/**.do")
+                .addPathPatterns("/**/*.do")
+                /* 스태틱 자원 경로의 경우 처리하지 않음 */
                 .excludePathPatterns(STATIC_RESOURCES_URL_PATTERN)
+                /* 로그인 화면 경로 제외 */
                 .excludePathPatterns(SiteUrl.AUTH_LGN_FORM)
+                /* 에러 화면 경로 제외 */
                 .excludePathPatterns(SiteUrl.ERROR)
                 .excludePathPatterns(SiteUrl.ERROR + "/**")
                 .excludePathPatterns(ApiUrl.PREFIX_API + "/**")
-                .excludePathPatterns("/**Download.do")
-                .excludePathPatterns("/**Ajax.do");
+                /* 파일 다운로드의 경우 처리하지 않음 */
+                .excludePathPatterns("/**/*Download.do")
+                /* ajax 호출의 경우 처리하지 않음 */
+                .excludePathPatterns("/**/*Ajax.do");
 
         // device 감지 관련 인터셉터 수동 추가
         registry.addInterceptor(new DeviceResolverHandlerInterceptor());

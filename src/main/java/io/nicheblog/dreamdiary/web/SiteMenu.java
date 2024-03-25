@@ -43,6 +43,14 @@ public class SiteMenu {
             SiteUrl.ADMIN_MAIN
     );
 
+    // 공통화면 :: 내 정보
+    public static SiteAcsInfo USER_MY = new SiteAcsInfo(
+            SiteTopMenu.MAIN,
+            SiteTopMenu.MAIN.menuNo,
+            "내 정보",
+            SiteUrl.USER_MY_DTL
+    );
+
     /* ----- */
 
     // 대메뉴 :: 꿈

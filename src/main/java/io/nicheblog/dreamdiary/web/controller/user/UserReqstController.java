@@ -91,7 +91,7 @@ public class UserReqstController
             MessageUtils.alertMessage(resultMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -139,7 +139,7 @@ public class UserReqstController
     */
 /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 승인 (Ajax)
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      *//*
 
     @PostMapping(SiteUrl.USER_REQST_CF_AJAX)
@@ -165,7 +165,7 @@ public class UserReqstController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -175,7 +175,7 @@ public class UserReqstController
     */
 /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 승인취소 (Ajax)
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      *//*
 
     @PostMapping(SiteUrl.USER_REQST_UNCF_AJAX)
@@ -201,7 +201,7 @@ public class UserReqstController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

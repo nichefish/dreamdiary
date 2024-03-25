@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.List;
+
 import static io.nicheblog.dreamdiary.web.SiteTopMenu.NO_ASIDE;
 
 
@@ -59,18 +61,31 @@ public class SiteAcsInfo {
      */
     private Boolean asideAt = true;
 
+    /**
+     * 하위 메뉴 리스트
+     */
+    private List<SiteAcsInfo> subMenuList;
+
     /* ----- */
 
     /** constructor */
     public SiteAcsInfo(SiteTopMenu siteTopMenu, String siteMenuNo, String siteMenuNm, String url) {
+        this(siteTopMenu, siteMenuNo, siteMenuNm, url, null);
+    }
+    public SiteAcsInfo(SiteTopMenu siteTopMenu, String siteMenuNo, String siteMenuNm, String url, List<SiteAcsInfo> subMenuList) {
         this.topMenu = siteTopMenu;
         this.topMenuNo = siteTopMenu.menuNo;
         this.topMenuNm = siteTopMenu.name();
         this.menuNo = siteMenuNo;
         this.menuNm = siteMenuNm;
         this.url = url;
+        this.subMenuList = subMenuList;
         // 로그인/메인/에러페이지는 사이드바 미노출
         if (NO_ASIDE.equals(siteTopMenu)) this.asideAt = false;
+    }
+
+    public SiteAcsInfo() {
+
     }
 
     /** 페이지명 세팅 */

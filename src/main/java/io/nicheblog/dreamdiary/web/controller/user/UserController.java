@@ -11,9 +11,8 @@ import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
+import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.UserListDto;
 import io.nicheblog.dreamdiary.web.model.user.UserSearchParam;
@@ -51,7 +50,7 @@ public class UserController
         extends BaseControllerImpl {
 
     private final String baseUrl = SiteUrl.USER_LIST;               // 기본 URL
-    private final ActvtyCtgr actvtyCtgrCd = ActvtyCtgr.USER;        // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "userService")
     private UserService userService;
@@ -64,12 +63,11 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 목록 화면 조회
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @GetMapping(SiteUrl.USER_LIST)
     @Secured(Constant.ROLE_MNGR)
     public String userList(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
             final @ModelAttribute("searchParam") UserSearchParam searchParam,
             final @RequestParam Map<String, Object> searchParamMap,
@@ -111,7 +109,7 @@ public class UserController
             MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -120,12 +118,11 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 등록 화면 조회
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.USER_REG_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String userRegForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
@@ -155,7 +152,7 @@ public class UserController
             MessageUtils.alertMessage(resultMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -188,7 +185,7 @@ public class UserController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -197,7 +194,7 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 등록/수정 (Ajax)
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.USER_REG_AJAX, SiteUrl.USER_MDF_AJAX})
     @Secured(Constant.ROLE_MNGR)
@@ -228,7 +225,7 @@ public class UserController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn(userDto.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -237,12 +234,11 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 상세 화면 조회
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.USER_DTL)
     @Secured(Constant.ROLE_MNGR)
     public String userDtl(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final @RequestParam("userNo") String userNoStr,
             final LogActvtyParam logParam,
             final ModelMap model
@@ -269,7 +265,7 @@ public class UserController
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + userNoStr);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -278,12 +274,11 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 수정 화면 조회
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.USER_MDF_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String userMdfForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
             final @RequestParam("userNo") String userNoStr,
             final ModelMap model
@@ -318,7 +313,7 @@ public class UserController
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + userNoStr);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -327,7 +322,7 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 패스워드 초기화
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.USER_PW_RESET_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -352,7 +347,7 @@ public class UserController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
@@ -360,7 +355,7 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 삭제 (Ajax)
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.USER_DEL_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -392,7 +387,7 @@ public class UserController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -401,32 +396,32 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 목록 엑셀 다운로드
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
-    //@RequestMapping(SiteUrl.USER_LIST_XLSX_DOWNLOAD)
-    //@Secured(Constant.ROLE_MNGR)
-    //public void userListXlsxDownload(
-    //        final LogActvtyParam logParam,
-    //        final @ModelAttribute("searchParam") UserSearchParam searchParam,
-    //        final @RequestParam Map<String, Object> searchParamMap
-    //) throws Exception {
-//
-    //    boolean isSuccess = false;
-    //    String resultMsg = "";
-    //    try {
-    //        List<Object> userListXlsx = userService.userListXlsx(searchParamMap);
-    //        xlsxUtils.listXlxsDownload(Constant.USER_INFO, userListXlsx);
-    //        isSuccess = true;
-    //        resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-    //    } catch (Exception e) {
-    //        isSuccess = false;
-    //        resultMsg = MessageUtils.getExceptionMsg(e);
-    //        logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-    //        MessageUtils.alertMessage(resultMsg, baseUrl);
-    //    } finally {
-    //        // 로그 관련 처리
-    //        logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
-    //        publisher.publishEvent(new LogActvtyEvent(this, logParam));
-    //    }
-    //}
+    @RequestMapping(SiteUrl.USER_LIST_XLSX_DOWNLOAD)
+    @Secured(Constant.ROLE_MNGR)
+    public void userListXlsxDownload(
+            final LogActvtyParam logParam,
+            final @ModelAttribute("searchParam") UserSearchParam searchParam,
+            final @RequestParam Map<String, Object> searchParamMap
+    ) throws Exception {
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            // List<Object> userListXlsx = userService.userListXlsx(searchParamMap);
+            // xlsxUtils.listXlxsDownload(Constant.USER_INFO, userListXlsx);
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            MessageUtils.alertMessage(resultMsg, baseUrl);
+        } finally {
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+    }
 }

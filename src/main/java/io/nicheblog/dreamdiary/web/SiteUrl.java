@@ -75,9 +75,8 @@ public interface SiteUrl {
     String USER_MDF_FORM = PREFIX_USER + "/userMdfForm.do";
     String USER_MDF_AJAX = PREFIX_USER + "/userMdfAjax.do";
     String USER_PW_RESET_AJAX = PREFIX_USER + "/userPwResetAjax.do";
-
     String USER_DEL_AJAX = PREFIX_USER + "/userDelAjax.do";
-
+    String USER_LIST_XLSX_DOWNLOAD = PREFIX_USER + "/userListXlsxDownload.do";
 
     String USER_ID_DUP_CHK_AJAX = PREFIX_USER + "/userIdDupChkAjax.do";
 
