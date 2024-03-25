@@ -2,6 +2,8 @@
  -- 레이아웃 > 사이드바 메뉴 (사용자)
  -- @included in : aside/_aside_base
  -->
+<#import "/layout/aside/_aside_menu_template.ftlh" as menu >
+
 <!--begin::Aside Menu-->
 <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true"
      data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto"
@@ -17,19 +19,8 @@
             </div>
         </div>
         <!-- 공지사항 -->
-        <#assign isNotTopMenu = (topMenuNo != SiteMenu.TOP_MENU_NO_NOTICE!)>
-        <div class="menu-item show" id="">
-            <a href="${SiteUrl.NOTICE_LIST}" class="menu-link <#if isNotTopMenu>text-inverse-light</#if>">
-                <span class="menu-icon">
-                    <span class="svg-icon svg-icon-3 svg-icon-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                        </svg>
-                    </span>
-                </span>
-                <span class="menu-title <#if isNotTopMenu>text-inverse-light</#if>">공지사항</span>
-            </a>
-        </div>
+        <@menu.layout siteMenu=SiteMenu.NOTICE />
+
         <!-- 꿈 관리 -->
         <div class="menu-item">
             <div class="menu-content pt-8 pb-2">
@@ -37,8 +28,8 @@
             </div>
         </div>
         <!-- 꿈 관리 메뉴 시작 -->
-        <#assign isNotTopMenu = (topMenuNo != SiteMenu.TOP_MENU_NO_DREAM!)!>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion show" id="${SiteMenu.TOP_MENU_NO_DREAM!}">
+        <#assign isNotTopMenu = (topMenuNo != SiteMenu.DREAM.topMenuNo!)!>
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion show" id="${SiteMenu.DREAM.topMenuNo}">
             <span class="menu-link <#if isNotTopMenu>text-inverse-light</#if>">
                 <span class="menu-icon">
                     <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
