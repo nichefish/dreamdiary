@@ -1,9 +1,10 @@
-package io.nicheblog.dreamdiary.web.spec.notice;
+/*
+package io.nicheblog.dreamdiary.web.spec.board;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.cmm.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
+import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -13,35 +14,37 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+*/
 /**
- * NoticeSpec
+ * BoardPostSpec
  * <pre>
- *  공지사항 목록 검색인자 세팅 Specification
+ *  게시판 게시물 목록 검색인자 세팅 Specification
  * </pre>
  *
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
- */
-@Component("noticeSpec")
-@Log4j2
-public class NoticeSpec
-        implements BaseSpec<NoticeEntity> {
+ *//*
 
-    /**
+@Component("boardPostSpec")
+@Log4j2
+public class BoardPostSpec
+        implements BaseSpec<BoardPostEntity> {
+
+    */
+/**
      * 인자별로 구체적인 검색 조건 세팅
-     */
+     *//*
+
     @Override
     public List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
-            final Root<NoticeEntity> root,
+            final Root<BoardPostEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
 
         List<Predicate> predicate = new ArrayList<>();
-
         // expressions
         Expression<Date> regDtExp = root.get("regDt");
-        Expression<Date> managtDtExp = root.get("managtDt");
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -54,18 +57,13 @@ public class NoticeSpec
                     // 기간 검색
                     predicate.add(builder.lessThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
-                case "managtStartDt":
-                    // 기간 검색
-                    predicate.add(builder.greaterThanOrEqualTo(managtDtExp, DateUtils.asDate(searchParamMap.get(key))));
-                    continue;
                 case "postSj":
                     // 제목 = LIKE 검색
-                    Expression<String> keyExp = root.get(key);
-                    predicate.add(builder.like(keyExp, "%" + searchParamMap.get(key) + "%"));
+                    predicate.add(builder.like(root.get(key), "%" + searchParamMap.get(key) + "%"));
                     continue;
                 case "nickNm":
-                    // 작업자 이름 = 조인 후 LIKE 검색
-                    Join<NoticeEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
+                    // 작성자 이름 = 조인 후 LIKE 검색
+                    Join<BoardPostEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
                     Expression<String> nickNmExp = regstr.get(key);
                     predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
                     continue;
@@ -86,3 +84,4 @@ public class NoticeSpec
         return predicate;
     }
 }
+*/

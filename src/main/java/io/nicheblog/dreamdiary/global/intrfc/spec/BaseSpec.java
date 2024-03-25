@@ -46,8 +46,7 @@ public interface BaseSpec<Entity> {
         for (String key : searchParamMap.keySet()) {
             // default :: 조건 파라미터에 대해 equal 검색
             try {
-                Expression<?> keyExp = root.get(key);
-                predicate.add(builder.equal(keyExp, searchParamMap.get(key)));
+                predicate.add(builder.equal(root.get(key), searchParamMap.get(key)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
