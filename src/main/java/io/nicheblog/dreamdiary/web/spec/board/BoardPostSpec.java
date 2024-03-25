@@ -1,7 +1,6 @@
-/*
 package io.nicheblog.dreamdiary.web.spec.board;
 
-import io.nicheblog.dreamdiary.global.cmm.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
@@ -14,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-*/
 /**
  * BoardPostSpec
  * <pre>
@@ -23,18 +21,15 @@ import java.util.Map;
  *
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
- *//*
-
+ */
 @Component("boardPostSpec")
 @Log4j2
 public class BoardPostSpec
         implements BaseSpec<BoardPostEntity> {
 
-    */
-/**
+    /**
      * 인자별로 구체적인 검색 조건 세팅
-     *//*
-
+     */
     @Override
     public List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
@@ -57,7 +52,7 @@ public class BoardPostSpec
                     // 기간 검색
                     predicate.add(builder.lessThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
-                case "postSj":
+                case "title":
                     // 제목 = LIKE 검색
                     predicate.add(builder.like(root.get(key), "%" + searchParamMap.get(key) + "%"));
                     continue;
@@ -84,4 +79,3 @@ public class BoardPostSpec
         return predicate;
     }
 }
-*/
