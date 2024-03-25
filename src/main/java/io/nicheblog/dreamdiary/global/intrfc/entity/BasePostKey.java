@@ -5,7 +5,7 @@ import lombok.*;
 import java.io.Serializable;
 
 /**
- * BaseClsfKey
+ * BasePostKey
  * <pre>
  *  (공통/상속) 게시판 복합키 Entity (postNo + boardCd)
  * </pre>
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class BaseClsfKey
+public class BasePostKey
         implements Serializable {
 
     /**

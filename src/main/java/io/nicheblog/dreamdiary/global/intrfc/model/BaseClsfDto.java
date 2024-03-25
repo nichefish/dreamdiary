@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -37,7 +37,7 @@ public class BaseClsfDto
     /**
      * 제목
      */
-    protected String postSj;
+    protected String title;
     /**
      * 내용
      */
@@ -46,7 +46,7 @@ public class BaseClsfDto
      * 조회수
      */
     @Builder.Default
-    protected Integer postHit = 0;
+    protected Integer hitCnt = 0;
     /**
      * 첨부파일 ID
      */
@@ -73,8 +73,8 @@ public class BaseClsfDto
     /**
      * 복합키 객체 반환
      */
-    public BaseClsfKey getPostKey() {
-        return new BaseClsfKey(this.getPostNo(), this.getBoardCd());
+    public BasePostKey getPostKey() {
+        return new BasePostKey(this.getPostNo(), this.getBoardCd());
     }
 
 }

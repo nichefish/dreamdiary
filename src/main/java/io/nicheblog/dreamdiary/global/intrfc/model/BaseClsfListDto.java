@@ -34,11 +34,11 @@ public class BaseClsfListDto
     /**
      * 제목
      */
-    protected String postSj;
+    protected String title;
     /**
      * 조회수
      */
     @Builder.Default
-    protected Integer postHit = 0;
+    protected Integer hitCnt = 0;
 
 }
