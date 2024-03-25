@@ -14,14 +14,14 @@
             </div>
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
-                    <form name="dreamDayRegForm" id="dreamDayRegForm">
+                    <form name="dreamDayRegForm" id="dreamDayRegForm" class="form" enctype="multipart/form-data">
                         <div id="dream_day_reg_div">
                             <!-- contents -->
                         </div>
                     </form>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-sm btn-primary me-2"
-                                onclick="Page.fnDtlCdRegAjax();"
+                                onclick="Dream.regAjax();"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
                             <i class="bi bi-pencil-square"></i>저장
                         </button>

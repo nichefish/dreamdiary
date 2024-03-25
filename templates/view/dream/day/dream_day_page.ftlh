@@ -27,6 +27,23 @@
                 commons.validate.replaceBlankRegex("#dreamDayRegForm #clCd");
                 commons.validate.toUpperCase("dreamDayRegForm #clCd");
             },
+            /** 등록 */
+            regAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.reg"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${SiteUrl.DREAM_DAY_REG_AJAX!}";
+                    let ajaxData = new FormData($("#dreamDayRegForm")[0]);
+                    commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.result) commons.util.blockUIReload();;
+                            });
+                    });
+                });
+            },
         }
     }();
 </script>
@@ -37,7 +54,7 @@
         <input type="hidden" name="dreamDayNo" id="dreamDayNo" />
     </form>
     <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/dream/day/dream_day_list_header.ftlh">
+    <#include "/view/dream/day/dream_day_page_header.ftlh">
 
 
 </div>
