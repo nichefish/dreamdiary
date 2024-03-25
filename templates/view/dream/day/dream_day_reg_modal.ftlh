@@ -5,6 +5,7 @@
 <script>
     const DreamDay = (function() {
         return {
+            /** 초기화 로직 */
             init: function () {
                 DreamDay.listAjax();
             },
@@ -46,7 +47,7 @@
                 });
             },
         }
-    })
+    })();
     /** 페이지 초기화시 처리 */
     $(document).ready(function() {
         DreamDay.init();

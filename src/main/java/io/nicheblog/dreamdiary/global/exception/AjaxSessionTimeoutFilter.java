@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth.filter;
+package io.nicheblog.dreamdiary.global.exception;
 
 import io.nicheblog.dreamdiary.global.cmm.log.service.LogService;
 import org.apache.commons.lang3.StringUtils;

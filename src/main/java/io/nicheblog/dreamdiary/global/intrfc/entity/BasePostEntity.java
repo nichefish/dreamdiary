@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global.intrfc.entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
 
@@ -56,6 +57,7 @@ public class BasePostEntity
     @Builder.Default
     @Column(name = "HIT_CNT")
     protected Integer hitCnt = 0;
+
 
     /* ----- */
 

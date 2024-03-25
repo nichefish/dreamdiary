@@ -45,7 +45,6 @@ public class FreemarkerInterceptor
 
     /**
      * postHandle : controller 요청 처리 후 view를 렌더링하기 전에 동작한다.
-     * true = 통과, false = 미통과
      */
     @Override
     public void postHandle(
@@ -57,14 +56,6 @@ public class FreemarkerInterceptor
 
         /* model 정보 없을시 처리하지 않음 */
         if (mav == null) return;
-
-        String requestUri = request.getRequestURI();
-        /* ajax 호출의 경우 처리하지 않음 */
-        boolean isAjaxRequest = requestUri.endsWith("Ajax.do");
-        if (isAjaxRequest) return;
-        /* 페이지 접근 외에 처리하지 않음 */
-        boolean isPageRequest = requestUri.equals(SiteUrl.ROOT) || requestUri.endsWith(".do");
-        if (!isPageRequest) return;
 
         // static 자원들에 releaseDate 세팅
         mav.addObject("releaseDate", releaseDate);
