@@ -70,7 +70,6 @@ public class LogSysSpec
                         predicate.add(builder.equal(root.get(key), searchParamMap.get(key)));
                     } catch (Exception e) {
                         log.info("unable to locate attribute " + key + " while trying root.get(key).");
-                        // e.printStackTrace();
                     }
             }
         }
