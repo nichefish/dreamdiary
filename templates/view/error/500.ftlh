@@ -1,7 +1,7 @@
 <#--
   -- 에러 페이지 : 500 SERVER ERROR
   -->
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_no_aside.ftlh" as layout >
 <#import "/spring.ftl" as spring />
 
 <@layout.layout>

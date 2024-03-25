@@ -58,15 +58,15 @@
             </div>
             <table class="table table-striped my-7 fs-7 fs-6">
                 <tr>
-                    <td class="text-gray-700 w-110px" style="padding-left:10px; font-weight:600;">아이디</td>
+                    <td class="text-gray-700 w-110px fw-bolder" style="padding-left:10px;">아이디</td>
                     <td class="text-gray-600">${(authInfo.userId)!}</td>
                 </tr>
                 <tr>
-                    <td class="text-gray-700 w-110px" style="padding-left:10px; font-weight:600;">현재 IP 주소</td>
+                    <td class="text-gray-700 w-110px fw-bolder" style="padding-left:10px;">현재 IP 주소</td>
                     <td class="text-gray-600">${acsIp!}</td>
                 </tr>
                 <tr>
-                    <td class="text-gray-700 w-110px" style="padding-left:10px; font-weight:600;">계정 권한</td>
+                    <td class="text-gray-700 w-110px font-weight:600;" style="padding-left:10px;">계정 권한</td>
                     <td class="text-gray-600">
                         ${(authInfo.authNm)!}
                         <#if ((authInfo.authCd)! == Constant.AUTH_MNGR)>

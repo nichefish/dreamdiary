@@ -41,7 +41,7 @@
             <div class="menu-sub menu-sub-accordion menu-active-bg">
                 <!-- 일정 > 전체 일정 확인 -->
                 <div class="menu-item" id="">
-                    <a class="menu-link" href="${SiteUrl.DREAM_DAY_LIST!}">
+                    <a class="menu-link" href="${SiteMenu.DREAM.url!}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
