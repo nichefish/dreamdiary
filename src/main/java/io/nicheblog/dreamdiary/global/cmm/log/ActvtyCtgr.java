@@ -28,6 +28,8 @@ public enum ActvtyCtgr {
 
     DREAM("꿈 관리"),
 
+    BOARD_POST("게시판"),
+
     TAG("태그"),
 
     USER("사용자 관리"),
