@@ -22,6 +22,7 @@ public enum ActvtyCtgr {
 
     API_JANDI("API_잔디"),
     API_KASI("API_특일"),
+    API_DREAM("API_꿈 관리"),
 
     LGN("로그인"),
 

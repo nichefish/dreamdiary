@@ -1,0 +1,146 @@
+package io.nicheblog.dreamdiary.api.dream.controller;
+
+import io.nicheblog.dreamdiary.api.ApiUrl;
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.util.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.web.SiteMenu;
+import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.dream.DreamDayDto;
+import io.nicheblog.dreamdiary.web.service.dream.DreamDayService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * DreamController
+ *
+ * @author nichefish
+ * @extends BaseControllerImpl
+ * TODO: 외부 호출시 토큰 인증 추가하기
+ */
+@RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
+@Log4j2
+@Tag(name = "잔디 메신저 API", description = "잔디 메신저 API입니다.")
+public class DreamDayApiController
+        extends BaseControllerImpl {
+
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
+
+    @Resource(name = "dreamDayService")
+    private DreamDayService dreamDayService;
+
+    /**
+     * 꿈 일자 목록 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @Operation(
+            summary = "꿈 일자 목록 조회",
+            description = "꿈 일자 목록을 조회한다."
+    )
+    @GetMapping(value = {ApiUrl.API_DREAM_DAY_LIST_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> dreamDayListAjax(
+            final LogActvtyParam logParam,
+            final ModelMap model
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            Map<String, Object> searchParamMap = new HashMap<>() {{
+                put("popupYn", "Y");
+                put("managtStartDt", DateUtils.getCurrDateAddDay(-7));
+            }};
+            Sort sort = Sort.by(Sort.Direction.ASC, "managtDt");
+            PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
+            Page<DreamDayDto> noticeList = dreamDayService.getListDto(searchParamMap, pageRequest);
+            ajaxResponse.setResultList(noticeList.getContent());
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 꿈 일자 - 등록/수정 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @Operation(
+            summary = "꿈 일자 등록/수정",
+            description = "꿈 일자 정보를 등록/수정한다."
+    )
+    @PostMapping(value = {ApiUrl.API_DREAM_DAY_REG_AJAX, ApiUrl.API_DREAM_DAY_MDF_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> dreamDayRegAjax(
+            final @Valid DreamDayDto userDto,
+            final Integer userNo,
+            final LogActvtyParam logParam,
+            final MultipartHttpServletRequest request,
+            final BindingResult bindingResult
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            boolean isReg = userDto.getDreamDayNo() == null;
+            DreamDayDto result = isReg ? dreamDayService.regist(userDto, request) : dreamDayService.modify(userDto, userNo, request);
+            isSuccess = (result.getDreamDayNo() != null);
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setCn(userDto.toString());
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+}

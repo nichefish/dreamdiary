@@ -15,6 +15,16 @@ public interface ApiUrl {
     String PREFIX_API = "/api";
 
     /**
+     *
+     */
+    String PREFIX_DREAM = "/dream";
+    String PREFIX_API_DREAM = PREFIX_API + PREFIX_DREAM;
+    String API_DREAM_DAY_LIST_AJAX = PREFIX_API_DREAM + "/dreamDayListAjax.do";
+    String API_DREAM_DAY_REG_AJAX = PREFIX_API_DREAM + "/dreamDayRegAjax.do";
+    String API_DREAM_DAY_DTL_AJAX = PREFIX_API_DREAM + "/dreamDayDtlAjax.do";
+    String API_DREAM_DAY_MDF_AJAX = PREFIX_API_DREAM + "/dreamDayMdfAjax.do";
+
+    /**
      * (API) 한국천문연구원 : 특일 정보 조회
      */
     String PREFIX_HLDY = "/hldy";

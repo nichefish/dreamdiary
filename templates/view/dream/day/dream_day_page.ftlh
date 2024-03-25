@@ -14,10 +14,10 @@
             },
         }
     }();
-    const Dream = function() {
+    const DreamDay = function() {
         return {
             init: function () {
-                //
+                DreamDay.listAjax();
             },
             /** 등록 화면 호출 */
             regModal: function() {
@@ -27,6 +27,18 @@
                 commons.validate.replaceBlankRegex("#dreamDayRegForm #clCd");
                 commons.validate.toUpperCase("dreamDayRegForm #clCd");
             },
+            /** 목록 조회 */
+            listAjax: function() {
+                const url = "${ApiUrl.API_DREAM_DAY_LIST_AJAX!}";
+                let ajaxData = {};
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.result) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    commons.util.handlebarsTemplate(res.resultObj, "dream_day_list");
+                });
+            },
             /** 등록 */
             regAjax: function() {
                 Swal.fire({
@@ -34,18 +46,30 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.DREAM_DAY_REG_AJAX!}";
+                    const url = "${ApiUrl.API_DREAM_DAY_REG_AJAX!}";
                     let ajaxData = new FormData($("#dreamDayRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();;
+                                console.log(res.resultList);
+                                // if (res.result) commons.util.blockUIReload();;
                             });
                     });
                 });
             },
         }
     }();
+    const DreamPiece = function() {
+        return {
+            init: function () {
+                //
+            },
+        }
+    }();
+    /** 페이지 초기화시 처리 */
+    $(document).ready(function() {
+        DreamDay.init();
+    });
 </script>
 
 <!--begin::Card-->
@@ -60,6 +84,7 @@
 </div>
 <!--end::Card-->
 
+<#include "/view/dream/day/dream_day_list_template.ftlh">
 <#include "/view/dream/day/dream_day_reg_modal.ftlh">
 <#include "/view/dream/day/dream_day_reg_template.ftlh">
 
