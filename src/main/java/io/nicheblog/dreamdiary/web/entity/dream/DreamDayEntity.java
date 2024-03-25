@@ -56,9 +56,10 @@ public class DreamDayEntity
     private Date dreamtDt;
 
     /** 날짜미상여부 */
+    @Builder.Default
     @Column(name = "DT_UNKNOWN_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("날짜미상여부")
-    private String dtUnknownYn;
+    private String dtUnknownYn = "N";
 
     /** 년도 */
     @Column(name = "YY")
@@ -73,7 +74,7 @@ public class DreamDayEntity
     /**
      * 대략일자 (날짜미상시 해당일자 이후에 표기)
      */
-    @Column(name = "DREAMT_DT")
+    @Column(name = "APRXMMT_DT")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Comment("대략일자 (날짜미상시 해당일자 이후에 표기)")

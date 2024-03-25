@@ -16,15 +16,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * DreamDaySpec
+ * DreamPieceSpec
  * <pre>
- *  꿈 일자 목록 검색인자 세팅 Specification
+ *  꿈 조각 목록 검색인자 세팅 Specification
  * </pre>
  *
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("dreamDaySpec")
+@Component("dreamPieceSpec")
 @Log4j2
 public class DreamPieceSpec
         implements BaseSpec<DreamPieceEntity> {

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.dream;
 
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
@@ -33,7 +34,7 @@ import java.util.Date;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE DREAM_PIECE SET DEL_YN = 'Y' WHERE DREAM_PIECE_NO = ?")
 public class DreamPieceEntity
-        extends BaseCrudEntity
+        extends BaseAtchEntity
         implements Serializable {
 
     /**
