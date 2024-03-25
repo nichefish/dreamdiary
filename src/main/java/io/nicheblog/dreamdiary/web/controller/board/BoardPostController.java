@@ -1,51 +1,35 @@
-/*
 package io.nicheblog.dreamdiary.web.controller.board;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
+import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.model.cmm.SiteMenuAcsInfo;
+import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
+import io.nicheblog.dreamdiary.web.model.board.BoardPostListDto;
+import io.nicheblog.dreamdiary.web.model.board.BoardPostSearchParam;
+import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
+import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
+import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
+import io.nicheblog.dreamdiary.web.service.board.BoardPostService;
 import lombok.extern.log4j.Log4j2;
-import dreamdiary.nicheblog.io.cmm.Constant;
-import dreamdiary.nicheblog.io.cmm.event.LogActvtyEvent;
-import dreamdiary.nicheblog.io.cmm.exception.FailureException;
-import dreamdiary.nicheblog.io.cmm.intrfc.controller.impl.BaseControllerImpl;
-import dreamdiary.nicheblog.io.cmm.util.MessageUtils;
-import dreamdiary.nicheblog.io.web.entity.BasePostKey;
-import dreamdiary.nicheblog.io.web.model.PaginationInfo;
-import dreamdiary.nicheblog.io.web.model.board.*;
-import dreamdiary.nicheblog.io.web.model.user.UserCttpcListDto;
-import dreamdiary.nicheblog.io.web.service.CmmCdService;
-import dreamdiary.nicheblog.io.web.service.CmmService;
-import dreamdiary.nicheblog.io.web.service.NotifyService;
-import dreamdiary.nicheblog.io.web.service.board.*;
-import dreamdiary.nicheblog.io.web.service.user.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.CollectionUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.Nullable;
 import javax.annotation.Resource;
-import javax.validation.Valid;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-*/
 /**
  * BoardPostController
  * <pre>
@@ -54,16 +38,14 @@ import java.util.Map;
  *
  * @author nichefish
  * @extends BaseControllerImpl
- *//*
-
+ */
 @Controller
 @Log4j2
 public class BoardPostController
         extends BaseControllerImpl {
 
     private final String baseUrl = SiteUrl.BOARD_POST_LIST;
-    // 작업 카테고리 (로그 적재용)
-    private final String actvtyCtgrCd = Constant.ACTVTY_BOARD_POST;
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_POST;         // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;
@@ -71,37 +53,34 @@ public class BoardPostController
     @Resource(name = "boardPostService")
     private BoardPostService boardPostService;
 
-    @Resource(name = "boardPostViewerService")
-    private BoardPostViewerService boardPostViewerService;
+    // @Resource(name = "boardPostViewerService")
+    // private BoardPostViewerService boardPostViewerService;
 
-    @Resource(name = "boardPostManagtrService")
-    private BoardPostManagtrService boardPostManagtrService;
+    // @Resource(name = "boardPostManagtrService")
+    // private BoardPostManagtrService boardPostManagtrService;
 
-    @Resource(name = "boardTagService")
-    private BoardTagService boardTagService;
+    // @Resource(name = "boardTagService")
+    // private BoardTagService boardTagService;
 
-    @Resource(name = "cmmCdService")
-    public CmmCdService cmmCdService;
+    @Resource(name = "cdService")
+    public CdService cdService;
 
-    @Resource(name = "notifyService")
-    private NotifyService notifyService;
+    // @Resource(name = "notifyService")
+    // private NotifyService notifyService;
 
-    @Resource(name = "userService")
-    private UserService userService;
+    // @Resource(name = "userService")
+    // private UserService userService;
 
-    @Resource(name = "xlsxUtils")
-    private XlsxUtils xlsxUtils;
+    // @Resource(name = "xlsxUtils")
+    // private XlsxUtils xlsxUtils;
 
-    */
-/**
+    /**
      * 게시판 게시물 목록 조회
      * 사용자USER, 관리자MNGR만 접근 가능
-     *//*
-
+     */
     @GetMapping(SiteUrl.BOARD_POST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostList(
-            final @ModelAttribute(Constant.SITE_MENU) SiteMenuAcsInfo siteMenuAcsInfo,
             final LogActvtyParam logParam,
             final @ModelAttribute("searchParam") BoardPostSearchParam searchParam,
             final @RequestParam Map<String, Object> searchParamMap,
@@ -110,17 +89,17 @@ public class BoardPostController
     ) throws Exception {
 
         model.addAttribute("boardCd", boardCd);
-        */
-/* 사이트 메뉴 설정 *//*
 
+        /* 사이트 메뉴 설정 */
         BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
-        siteMenuAcsInfo.setAcsInfo(boardDef, SiteMenu.PAGE_LIST, request.getRequestURI());
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("목록 조회"));
 
         boolean isSuccess = false;
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = cmmService.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             // "프로젝트 세미나"는 등록일순, 나머지는 최종수정일순 정렬
@@ -129,17 +108,17 @@ public class BoardPostController
             Page<BoardPostListDto> postList = boardPostService.getListDto(listParamMap, pageRequest);
             if (postList != null) model.addAttribute("postList", postList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(postList));
-            model.addAttribute(Constant.POST_CTGR_CD, cmmCdService.getCdListByClCd(boardDef.getCtgrClCd()));
+            model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdListByClCd(boardDef.getCtgrClCd()));
             // 상단 고정 목록 조회
             List<BoardPostListDto> postFxdList = boardPostService.getFxdList(boardCd);
             model.addAttribute("postFxdList", postFxdList);
             // 슬기로운 회사생활 게시판일 경우 직원연락처 목록 조회
-            String currDateStr = DateUtils.getCurrDateStr(DateUtils.PTN_DATE);
-            List<UserCttpcListDto> crtdUserCttpcList = userService.getCrdtUserCttpcList(currDateStr, currDateStr);
-            model.addAttribute("crtdUserCttpcList", crtdUserCttpcList);
+            // String currDateStr = DateUtils.getCurrDateStr(DateUtils.PTN_DATE);
+            // List<UserCttpcListDto> crtdUserCttpcList = userService.getCrdtUserCttpcList(currDateStr, currDateStr);
+            // model.addAttribute("crtdUserCttpcList", crtdUserCttpcList);
             // 태그 전체 목록 조회
-            Page<BoardTagDto> tagList = boardTagService.getListDto(listParamMap, Pageable.unpaged());
-            model.addAttribute("tagList", tagList.getContent());
+            // Page<BoardTagDto> tagList = boardTagService.getListDto(listParamMap, Pageable.unpaged());
+            // model.addAttribute("tagList", tagList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -152,15 +131,14 @@ public class BoardPostController
             MessageUtils.alertMessage(resultMsg, SiteUrl.MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
         return "/view/board/post/board_post_list";
     }
 
-    */
-/**
+    /**
      * 게시판 게시물 등록 화면 조회
      * 사용자USER, 관리자MNGR만 접근 가능
      *//*
@@ -168,7 +146,7 @@ public class BoardPostController
     @RequestMapping(SiteUrl.BOARD_POST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteMenuAcsInfo siteMenuAcsInfo,
+            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteMenuAcsInfo,
             final LogActvtyParam logParam,
             final @RequestParam("boardCd") String boardCd,
             final ModelMap model
@@ -192,7 +170,7 @@ public class BoardPostController
             model.addAttribute(Constant.POST_CTGR_CD, cmmCdService.getCdListByClCd(boardDef.getCtgrClCd()));
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
-            cmmService.setModelFlsysPath(model);
+            CmmUtils.setModelFlsysPath(model);
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -203,7 +181,7 @@ public class BoardPostController
             MessageUtils.alertMessage(resultMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -253,7 +231,7 @@ public class BoardPostController
             logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -315,7 +293,7 @@ public class BoardPostController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn(boardPostDto.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -331,7 +309,7 @@ public class BoardPostController
     @RequestMapping(value = SiteUrl.BOARD_POST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostDtl(
-            final @ModelAttribute(Constant.SITE_MENU) SiteMenuAcsInfo siteMenuAcsInfo,
+            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteMenuAcsInfo,
             final LogActvtyParam logParam,
             final BasePostKey postKey,
             final @RequestParam("boardCd") String boardCd,
@@ -376,7 +354,7 @@ public class BoardPostController
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + postKey.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -428,7 +406,7 @@ public class BoardPostController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + postKey.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -444,7 +422,7 @@ public class BoardPostController
     @RequestMapping(value = SiteUrl.BOARD_POST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostMdfForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteMenuAcsInfo siteMenuAcsInfo,
+            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteMenuAcsInfo,
             final LogActvtyParam logParam,
             final BasePostKey postKey,
             final @RequestParam("boardCd") String boardCd,
@@ -473,7 +451,7 @@ public class BoardPostController
             model.addAttribute(Constant.POST_CTGR_CD, cmmCdService.getCdListByClCd(boardDef.getCtgrClCd()));
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
-            cmmService.setModelFlsysPath(model);
+            CmmUtils.setModelFlsysPath(model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -482,7 +460,7 @@ public class BoardPostController
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + postKey.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -518,7 +496,7 @@ public class BoardPostController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + postKey.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -553,9 +531,9 @@ public class BoardPostController
             MessageUtils.alertMessage(resultMsg, baseUrl + "?boardCd=" + boardCd);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
     }
+    */
 }
-*/

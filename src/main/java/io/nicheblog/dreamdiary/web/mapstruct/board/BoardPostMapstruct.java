@@ -77,7 +77,7 @@ public interface BoardPostMapstruct
      * Dto -> Entity
      */
     @Override
-    @Mapping(target = "tagList", expression = "java(dto.getTagEntityList())")
+    // @Mapping(target = "tagList", expression = "java(dto.getTagEntityList())")
     BoardPostEntity toEntity(final BoardPostDto dto) throws Exception;
 
     /**
@@ -92,7 +92,7 @@ public interface BoardPostMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "tagList", expression = "java(dto.getTagEntityList())")
+    // @Mapping(target = "tagList", expression = "java(dto.getTagEntityList())")
     void updateFromDto(
             final BoardPostDto dto,
             final @MappingTarget BoardPostEntity entity

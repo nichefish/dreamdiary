@@ -3,10 +3,7 @@ package io.nicheblog.dreamdiary.web.model.board;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -44,11 +41,13 @@ public class BoardPostDto
     /**
      * 상단고정여부
      */
+    @Builder.Default
     private String fxdYn = "N";
 
     /**
      * 수정권한
      */
+    @Builder.Default
     private String mdfable = Constant.MDFABLE_REGSTR;
 
     /**
