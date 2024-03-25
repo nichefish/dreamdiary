@@ -14,8 +14,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * DreamEntity
+ * DreamPieceEntity
  * <pre>
+ *  꿈 조각 Entity.
  *  Entity that contains each distinct dream.
  * </pre>
  *
@@ -23,41 +24,45 @@ import java.util.Date;
  * @extends BaseCrudEntity
  */
 @Entity
-@Table(name = "DREAM")
+@Table(name = "DREAM_PIECE")
 @SuperBuilder(toBuilder=true)
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE DREAM SET DEL_YN = 'Y' WHERE DREAM_NO = ?")
-public class DreamEntity
+@SQLDelete(sql = "UPDATE DREAM_PIECE SET DEL_YN = 'Y' WHERE DREAM_PIECE_NO = ?")
+public class DreamPieceEntity
         extends BaseCrudEntity
         implements Serializable {
 
     /**
-     * 꿈 고유 번호 (PK)
+     * 꿈 조각 고유 번호 (PK)
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DREAM_NO")
-    @Comment("꿈 고유 번호")
-    private Integer dreamNo;
+    @Column(name = "DREAM_PIECE_NO")
+    @Comment("꿈 조각 고유 번호")
+    private Integer dreamPieceNo;
 
     /**
-     * 꿈꾼 날짜
+     * 꿈 일자 번호
      */
-    @Column(name = "DREAMT_DT")
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = DateUtils.PTN_DATE)
-    @Comment("꿈꾼 날짜")
-    private Date dreamtDt;
+    @Column(name = "DREAM_DAY_NO")
+    @Comment("꿈 일자 번호")
+    private Integer dreamDayNo;
 
     /**
      * 순번
      */
-    @Column(name = "SORT_ORDR", columnDefinition = "INT DEFAULT 0")
+    @Column(name = "SORT_ORDR", columnDefinition = "INT DEFAULT 1")
     private Integer sortOrdr;
+
+    /**
+     * 내용
+     */
+    @Column(name = "CN")
+    private String cn;
 
     /**
      * 중요여부
@@ -68,8 +73,24 @@ public class DreamEntity
     private String imprtcYn = "N";
 
     /**
-     * 꿈꾼이 (default: 나)
+     * 편집완료여부
      */
-    @Column(name = "DREAMER_NM", length = 64)
-    private String dreamerNm;
+    @Builder.Default
+    @Column(name = "EDIT_COMPT_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("편집완료여부")
+    private String editComptYn = "N";
+
+    /**
+     * 타인 꿈 여부
+     */
+    @Builder.Default
+    @Column(name = "ELSE_DREAM_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("타인 꿈 여부")
+    private String elseDreamYn = "N";
+
+    /**
+     * 꿈꾼이(타인) 이름
+     */
+    @Column(name = "ELSE_DREAMER_NM", length = 64)
+    private String elseDreamerNm;
 }
