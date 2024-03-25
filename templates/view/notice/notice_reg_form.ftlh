@@ -296,7 +296,7 @@
                 <span class="indicator-progress">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
             </button>
-            <a href="#" class="btn btn-light" onclick="Page.fnList(true);"
+            <a href="javascript:void(0);" class="btn btn-light" onclick="Page.fnList(true);"
                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.list"/>">
                 <span class="indicator-label">취소</span>
             </a>
