@@ -6,20 +6,20 @@
     <!--begin::Table body-->
     <tr>
         <td class="text-start px-2 pt-2">
-            <input type="text" class="form-control required cddata" name="boardCd">
+            <input type="text" class="form-control required cddata" name="boardCd" maxlength="16">
             <input type="hidden" class="form-control required" name="useYn" value="N">
         </td>
         <td class="text-center pt-2">
-            <input type="text" class="form-control required" name="boardNm">
+            <input type="text" class="form-control required" name="boardNm" maxlength="32">
         </td>
         <td class="text-center pt-2">
-            <input type="text" class="form-control cddata" name="ctgrClCd">
+            <input type="text" class="form-control cddata" name="ctgrClCd" maxlength="16">
         </td>
         <td class="text-center pt-2">
-            <input type="text" class="form-control required number" name="menuNo">
+            <input type="text" class="form-control required number" name="menuNo" maxlength="8">
         </td>
         <td class="text-center pt-2 pe-2">
-            <input type="text" class="form-control required number" name="sortOrdr">
+            <input type="text" class="form-control required number" name="sortOrdr" maxlength="2">
         </td>
         <td class="text-center px-2">
             -
