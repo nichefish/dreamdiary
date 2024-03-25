@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.api.dream.model;
 
-import io.nicheblog.dreamdiary.web.model.cmm.BaseSearchParam;
 import lombok.*;
 
 /**
@@ -10,7 +9,6 @@ import lombok.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseSearchParam
  */
 @Getter
 @Setter

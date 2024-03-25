@@ -1,20 +1,17 @@
 package io.nicheblog.dreamdiary.api.dream.controller;
 
 import io.nicheblog.dreamdiary.api.ApiUrl;
+import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiDto;
 import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiSearchParam;
+import io.nicheblog.dreamdiary.api.dream.service.DreamDayApiService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.dream.DreamDayDto;
-import io.nicheblog.dreamdiary.web.service.dream.DreamDayService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +21,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +29,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * DreamController
+ * <pre>
+ *  API:: 꿈 일자 API controller
+ * </pre>
  *
  * @author nichefish
  * @extends BaseControllerImpl
@@ -52,8 +50,8 @@ public class DreamDayApiController
 
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "dreamDayService")
-    private DreamDayService dreamDayService;
+    @Resource(name = "dreamDayApiService")
+    private DreamDayApiService dreamDayApiService;
 
     /**
      * 꿈 일자 목록 조회 (Ajax)
@@ -80,8 +78,8 @@ public class DreamDayApiController
             Map<String, Object> searchParamMap = CmmUtils.convertParamToMap(searchParam);
             Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
             PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
-            Page<DreamDayDto> noticeList = dreamDayService.getListDto(searchParamMap, pageRequest);
-            ajaxResponse.setResultList(noticeList.getContent());
+            Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getListDto(searchParamMap, pageRequest);
+            ajaxResponse.setResultList(dreamDayList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -110,7 +108,7 @@ public class DreamDayApiController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dreamDayRegAjax(
-            final @Valid DreamDayDto userDto,
+            final @Valid DreamDayApiDto dreamDay,
             final Integer userNo,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
@@ -123,8 +121,8 @@ public class DreamDayApiController
         String resultMsg = "";
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            boolean isReg = userDto.getDreamDayNo() == null;
-            DreamDayDto result = isReg ? dreamDayService.regist(userDto, request) : dreamDayService.modify(userDto, userNo, request);
+            boolean isReg = dreamDay.getDreamDayNo() == null;
+            DreamDayApiDto result = isReg ? dreamDayApiService.regist(dreamDay, request) : dreamDayApiService.modify(dreamDay, userNo, request);
             isSuccess = (result.getDreamDayNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -134,7 +132,7 @@ public class DreamDayApiController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(userDto.toString());
+            logParam.setCn(dreamDay.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
