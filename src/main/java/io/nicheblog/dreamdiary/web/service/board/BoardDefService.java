@@ -78,4 +78,13 @@ public class BoardDefService
                 .collect(Collectors.toList());
     }
 
+    /**
+     * boardCd로 메뉴 조회
+     * (SiteAcsInfo 반환)
+     */
+    public SiteAcsInfo getBoardMenu(final String boardCd) throws Exception {
+        BoardDefEntity boardDef = this.getDtlEntity(boardCd);
+        return boardDefMapstruct.toMenu(boardDef);
+    }
+
 }
