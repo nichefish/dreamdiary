@@ -158,7 +158,7 @@
                 });
             },
             /** 등록/수정 처리(Ajax) */
-            fnRegAjax: function() {
+            regAjax: function() {
                 const url = "${SiteUrl.USER_REQST_REG_AJAX!}";
                 let ajaxData = new FormData($("#userReqstForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {

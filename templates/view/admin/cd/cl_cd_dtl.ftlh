@@ -30,7 +30,7 @@
                 });
             },
             /** 등록 또는 수정 처리(Ajax) */
-            fnRegAjax: function() {
+            regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.save"/>,
                     showCancelButton: true,
@@ -75,7 +75,7 @@
                 });
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function() {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -206,7 +206,7 @@
         </button>
         <!-- 등록자 또는 관리자가 삭제 가능 -->
         <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
-                onclick="Page.fnDelAjax();"
+                onclick="Page.delAjax();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드를 삭제합니다.">
             <i class="bi bi-trash"></i>삭제
         </button>

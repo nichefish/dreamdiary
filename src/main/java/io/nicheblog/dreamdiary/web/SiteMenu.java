@@ -78,7 +78,6 @@ public class SiteMenu {
             SiteUrl.NOTICE_LIST
     );
 
-
     // 대메뉴 :: 사용자 관리
     public static SiteAcsInfo USER = new SiteAcsInfo(
             SiteTopMenu.USER,
@@ -133,15 +132,6 @@ public class SiteMenu {
 
         /* 사이트 관리 */
 
-        // 소메뉴 :: 게시판 관리
-        String MENU_NO_BOARD_DEF = "01000000";
-        SiteAcsInfo BOARD_DEF = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                MENU_NO_BOARD_DEF,
-                "게시판 관리",
-                SiteUrl.AUTH_LGN_FORM
-        );
-
         // 소메뉴 :: 로그인 정책 관리
         String MENU_NO_LGN_POLICY = "01000000";
         SiteAcsInfo LGN_POLICY = new SiteAcsInfo(
@@ -149,6 +139,24 @@ public class SiteMenu {
                 MENU_NO_LGN_POLICY,
                 "로그인 정책 관리",
                 SiteUrl.LGN_POLICY_FORM
+        );
+
+        // 소메뉴 :: 코드 관리
+        String MENU_NO_CD = "01000000";
+        SiteAcsInfo CD = new SiteAcsInfo(
+                SiteTopMenu.ADMIN,
+                MENU_NO_CD,
+                "코드 관리",
+                SiteUrl.CL_CD_LIST
+        );
+
+        // 소메뉴 :: 게시판 관리
+        String MENU_NO_BOARD_DEF = "01000000";
+        SiteAcsInfo BOARD_DEF = new SiteAcsInfo(
+                SiteTopMenu.ADMIN,
+                MENU_NO_BOARD_DEF,
+                "게시판 관리",
+                SiteUrl.BOARD_DEF_LIST
         );
 
         /* 로그 관리 */

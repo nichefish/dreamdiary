@@ -33,7 +33,7 @@
 
             },
             /** 등록 화면 이동 */
-            fnRegForm: function() {
+            regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.USER_REG_FORM!}");
             },
             /** 상세 화면 이동 */

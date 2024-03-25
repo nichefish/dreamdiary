@@ -53,7 +53,7 @@
             </#if>
         </div>
         <div class="col-lg-3 col-6 d-flex justify-content-end align-items-center mt-2">
-            <a href="javascript:void(0);" class="btn btn-primary mx-3 btn-sm" onclick="Page.fnRegForm();"
+            <a href="javascript:void(0);" class="btn btn-primary mx-3 btn-sm" onclick="Page.regForm();"
                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.reg"/>">
                 <i class="fas fa-plus"></i>등록
             </a>

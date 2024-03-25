@@ -27,7 +27,7 @@
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.CL_CD_LIST!}?actionTyCd=SEARCH");
             },
             /** 사용으로 변경 (Ajax) */
-            fnUseAjax: function(clCd) {
+            useAjax: function(clCd) {
                 event.stopPropagation();
                 Swal.fire({
                     text: <@spring.message "view.cnfm.use"/>,
@@ -45,7 +45,7 @@
                 });
             },
             /** 미사용으로 변경 (Ajax) */
-            fnUnuseAjax: function(clCd) {
+            unuseAjax: function(clCd) {
                 event.stopPropagation();
                 Swal.fire({
                     text: <@spring.message "view.cnfm.unuse"/>,
@@ -63,14 +63,14 @@
                 });
             },
             /** 등록 팝업 호출 */
-            fnRegForm: function() {
+            regForm: function() {
                 commons.util.handlebarsTemplate({}, "cl_cd_reg", "show");
                 commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 commons.validate.replaceBlankRegex("#clCdRegForm #clCd");
                 commons.validate.toUpperCase("#clCdRegForm #clCd");
             },
             /** 등록 또는 수정 처리(Ajax) */
-            fnRegAjax: function() {
+            regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
                     showCancelButton: true,
@@ -107,7 +107,7 @@
                 });
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function(clCd) {
+            delAjax: function(clCd) {
                 event.stopPropagation();
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
@@ -218,14 +218,14 @@
                     <td class="text-center hidden-table">
                         <#if (clCd.useYn!"Y") == "Y">
                             <div class="badge badge-success cursor-pointer"
-                                 onclick="Page.fnUnuseAjax('${clCd.clCd}');"
+                                 onclick="Page.unuseAjax('${clCd.clCd}');"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                  title="클릭하여 사용 상태를&#10;변경합니다.">
                                 <i class="bi bi-check text-light blink-slow"></i>사용
                             </div>
                         <#else>
                             <div class="badge badge-secondary btn-white cursor-pointer"
-                                 onclick="Page.fnUseAjax('${clCd.clCd}');"
+                                 onclick="Page.useAjax('${clCd.clCd}');"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                  title="클릭하여 사용 상태를&#10;변경합니다.">
                                 <i class="bi bi-x blink-slow"></i>미사용
@@ -234,7 +234,7 @@
                     </td>
                     <td class="text-center hidden-table">
                         <div class="badge badge-danger badge-outlined cursor-pointer"
-                             onclick="Page.fnDelAjax('${clCd.clCd}');"
+                             onclick="Page.delAjax('${clCd.clCd}');"
                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                              title="<@spring.message "bs.tooltip.del"/>">
                             <i class="bi bi-trash text-danger fs-7 blink-slow"></i>삭제

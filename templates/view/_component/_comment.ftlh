@@ -66,7 +66,7 @@
                 });
             },
             /** 댓글 삭제 처리 (ajax) */
-            fnDelAjax: function(commentNo) {
+            delAjax: function(commentNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -124,7 +124,7 @@
                                 </span>
                                 </a>
                                 <a href="javascript:void(0);" class="btn btn-sm btn-flex btn-light-danger btn-icon"
-                                   onclick="Comment.fnDelAjax('${comment.commentNo!}');"
+                                   onclick="Comment.delAjax('${comment.commentNo!}');"
                                    data-bs-toggle="tooltip" title="댓글을 삭제합니다." data-bs-dismiss="click">
                                 <span class="svg-icon svg-icon-7">
                                     <i class="fas fa-trash-alt"></i>

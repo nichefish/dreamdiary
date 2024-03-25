@@ -108,22 +108,31 @@ public interface SiteUrl {
 
     /** 코드 관리 */
     String PREFIX_CD = "/cd";
-    String CL_CD_LIST = "clCdList.do";
-    String CL_CD_DTL = "clCdDtl.do";
-    String CL_CD_REG_AJAX = "clCdRegAjax.do";
-    String CL_CD_DTL_AJAX = "clCdDtlAjax.do";
-    String CL_CD_MDF_AJAX = "clCdMdfAjax.do";
-    String CL_CD_DEL_AJAX = "clCdDelAjax.do";
-    String CL_CD_USE_AJAX = "clCdUseAjax.do";
-    String CL_CD_UNUSE_AJAX = "clCdUnuseAjax.do";
+    String CL_CD_LIST = PREFIX_CD + "clCdList.do";
+    String CL_CD_DTL = PREFIX_CD + "clCdDtl.do";
+    String CL_CD_REG_AJAX = PREFIX_CD + "clCdRegAjax.do";
+    String CL_CD_DTL_AJAX = PREFIX_CD + "clCdDtlAjax.do";
+    String CL_CD_MDF_AJAX = PREFIX_CD + "clCdMdfAjax.do";
+    String CL_CD_DEL_AJAX = PREFIX_CD + "clCdDelAjax.do";
+    String CL_CD_USE_AJAX = PREFIX_CD + "clCdUseAjax.do";
+    String CL_CD_UNUSE_AJAX = PREFIX_CD + "clCdUnuseAjax.do";
 
-    String DTL_CD_REG_AJAX = "dtlCdRegAjax.do";
-    String DTL_CD_DTL_AJAX = "dtlCdDtlAjax.do";
-    String DTL_CD_MDF_AJAX = "dtlCdMdfAjax.do";
-    String DTL_CD_LIST_AJAX = "dtlCdListAjax.do";
-    String DTL_CD_USE_AJAX = "dtlCdUseAjax.do";
-    String DTL_CD_UNUSE_AJAX = "dtlCdUnuseAjax.do";
-    String DTL_CD_DEL_AJAX = "dtlCdDelAjax.do";
+    String DTL_CD_REG_AJAX = PREFIX_CD + "dtlCdRegAjax.do";
+    String DTL_CD_DTL_AJAX = PREFIX_CD + "dtlCdDtlAjax.do";
+    String DTL_CD_MDF_AJAX = PREFIX_CD + "dtlCdMdfAjax.do";
+    String DTL_CD_LIST_AJAX = PREFIX_CD + "dtlCdListAjax.do";
+    String DTL_CD_USE_AJAX = PREFIX_CD + "dtlCdUseAjax.do";
+    String DTL_CD_UNUSE_AJAX = PREFIX_CD + "dtlCdUnuseAjax.do";
+    String DTL_CD_DEL_AJAX = PREFIX_CD + "dtlCdDelAjax.do";
+
+    /** 게시판 관리 */
+    String PREFIX_BOARD_DEF = "/boardDef";
+    String BOARD_DEF_LIST = PREFIX_BOARD_DEF + "/boardDefList.do";
+    String BOARD_DEF_REG_AJAX = PREFIX_BOARD_DEF + "/boardDefRegAjax.do";
+    String BOARD_DEF_MDF_ITEM_AJAX = PREFIX_BOARD_DEF + "/boardDefMdfItemAjax.do";
+    String BOARD_DEF_DEL_AJAX = PREFIX_BOARD_DEF + "/boardDefDelAjax.do";
+    String BOARD_DEF_USE_AJAX = PREFIX_BOARD_DEF + "/boardDefUseAjax.do";
+    String BOARD_DEF_UNUSE_AJAX = PREFIX_BOARD_DEF + "/boardDefUnuseAjax.do";
 
     /**
      * (공통) 파일

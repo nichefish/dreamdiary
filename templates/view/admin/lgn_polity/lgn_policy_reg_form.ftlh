@@ -17,7 +17,7 @@
                 $(function(){
                     $("#lgnPolicyForm").validate({
                         submitHandler: function() {
-                            Page.fnRegAjax();
+                            Page.regAjax();
                         },
                         errorPlacement : function(error, element) {
                             commons.validate.errorSpan(error, element);        // 공통 함수로 분리
@@ -38,7 +38,7 @@
                 });
             },
             /** 등록 또는 수정 처리(Ajax) */
-            fnRegAjax: function() {
+            regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.mdf"/>,
                     showCancelButton: true,

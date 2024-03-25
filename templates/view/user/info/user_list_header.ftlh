@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="col-lg-2 col-12 d-flex justify-content-end align-items-center">
-            <a href="javascript:void(0);" class="btn btn-sm btn-primary" onclick="Page.fnRegForm();"
+            <a href="javascript:void(0);" class="btn btn-sm btn-primary" onclick="Page.regForm();"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.reg"/>">
                 <i class="fas fa-plus"></i>계정 등록
             </a>

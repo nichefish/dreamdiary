@@ -17,7 +17,7 @@
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function() {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -190,7 +190,7 @@
         <!-- 등록자 또는 관리자가 삭제 가능 -->
         <#if (post.isRegstr)!false || isMngr>
             <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm"
-                    onclick="Page.fnDelAjax();"
+                    onclick="Page.delAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
                 <i class="bi bi-trash"></i>삭제
             </button>

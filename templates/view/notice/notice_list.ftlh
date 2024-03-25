@@ -37,7 +37,7 @@
                 commons.util.blockUIReplace("${SiteUrl.NOTICE_LIST!}");
             },
             /** 등록 화면 이동 */
-            fnRegForm: function() {
+            regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_REG_FORM!}");
             },
             /** 상세 화면 이동 */
