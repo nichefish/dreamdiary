@@ -2,8 +2,9 @@ package io.nicheblog.dreamdiary.web.entity.notice;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -24,7 +25,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "NOTICE")
-@IdClass(BaseClsfKey.class)      // 분류코드+상세코드 복합키 적용
+@IdClass(BasePostKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
 @SuperBuilder
@@ -36,14 +37,16 @@ public class NoticeEntity
         extends BasePostEntity
         implements Serializable {
 
+    private static final String BOARD_CD = "NOTICE";
+    private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";
+
     /**
      * 글 번호
      */
     @Id
-    @TableGenerator(name = "notice", table = "CMM_SEQ", pkColumnName = "SEQ_NM", valueColumnName = "SEQ_VAL", pkColumnValue = "NOTICE_NO", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "notice")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "POST_NO")
-    @Comment("글 번호")
+    @Comment("공지사항 번호")
     private Integer postNo;
 
     /**
@@ -58,7 +61,7 @@ public class NoticeEntity
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'NOTICE_CTGR_CD\'", referencedColumnName = "CL_CD")),
+            @JoinColumnOrFormula(formula = @JoinFormula(value = CTGR_CL_CD, referencedColumnName = "CL_CD")),
             @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)

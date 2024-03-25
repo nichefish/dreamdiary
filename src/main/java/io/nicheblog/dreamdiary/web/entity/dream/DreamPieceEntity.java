@@ -37,6 +37,9 @@ public class DreamPieceEntity
         extends BaseAtchEntity
         implements Serializable {
 
+    private static final String BOARD_CD = "DREAM_PIECE";
+    private static final String CTGR_CL_CD = "DREAM_PIECE_CTGR_CD";
+
     /**
      * 꿈 조각 고유 번호 (PK)
      */

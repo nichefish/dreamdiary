@@ -37,6 +37,9 @@ public class DreamDayEntity
         extends BaseAtchEntity
         implements Serializable {
 
+    private static final String BOARD_CD = "DREAM_DAY";
+    private static final String CTGR_CL_CD = "DREAM_DAY_CTGR_CD";
+
     /**
      * 꿈 일자 고유 번호 (PK)
      */

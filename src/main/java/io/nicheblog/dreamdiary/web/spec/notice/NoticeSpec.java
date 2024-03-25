@@ -58,7 +58,7 @@ public class NoticeSpec
                     // 기간 검색
                     predicate.add(builder.greaterThanOrEqualTo(managtDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
-                case "postSj":
+                case "title":
                     // 제목 = LIKE 검색
                     Expression<String> keyExp = root.get(key);
                     predicate.add(builder.like(keyExp, "%" + searchParamMap.get(key) + "%"));

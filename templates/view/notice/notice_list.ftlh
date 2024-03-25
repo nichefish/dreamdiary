@@ -101,7 +101,7 @@
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
                                 </#if>
-                                ${post.postSj!}
+                                ${post.title!}
                             </a>
                             <#if (((post.imprtcYn)!"N") == "Y")!false>
                                 <span class="fs-4 blink">&#128680;</span>
@@ -170,7 +170,7 @@
                     </span>
                 </td>
                 <td class="text-center hidden-table">
-                    ${post.postHit!0?string.number}
+                    ${post.hitCnt!0?string.number}
                 </td>
             </tr>
         </#list>
@@ -188,7 +188,7 @@
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-gray">${post.ctgrNm!}</span>
                                 </#if>
-                                ${post.postSj!}
+                                ${post.title!}
                             </a>
                             <#if (((post.imprtcYn)!"N") == "Y")!false>
                                 <span class="fs-4 blink">&#128680;</span>
@@ -261,7 +261,7 @@
                     </span>
                 </td>
                 <td class="text-center hidden-table">
-                    ${post.postHit!0?string.number}
+                    ${post.hitCnt!0?string.number}
                 </td>
             </tr>
         <#else>

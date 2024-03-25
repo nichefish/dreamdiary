@@ -12,12 +12,13 @@ import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
  */
 public class SiteMenu {
 
-
     public static String TOP_MENU_NO_MAIN = SiteTopMenu.MAIN.menuNo;
     public static String TOP_MENU_NO_NOTICE = SiteTopMenu.NOTICE.menuNo;
     public static String TOP_MENU_NO_BOARD = SiteTopMenu.BOARD.menuNo;
     public static String TOP_MENU_NO_SCHDUL = SiteTopMenu.SCHDUL.menuNo;
     public static String TOP_MENU_NO_DREAM = SiteTopMenu.DREAM.menuNo;
+
+    public static String TOP_MENU_NO_USER = SiteTopMenu.USER.menuNo;;
 
 
     // 상위 메뉴번호 :: 주기능

@@ -57,7 +57,7 @@
                     <#if (((post.imprtcYn)!"N") == "Y")!false><span class="badge badge-danger me-2">중요</span></#if>
                     <span class="vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
                         <#if (post.ctgrNm!"") != "">[${post.ctgrNm!}]</#if>
-                        ${post.postSj!}
+                        ${post.title!}
                      </span>
                 </h1>
             </div>
@@ -89,7 +89,7 @@
             <div class="d-flex align-items-center py-1">
                 <a href="#answers" data-kt-scroll-toggle="true"
                    class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${post.commentCnt!}</a>
-                <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.postHit!}</button>
+                <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.hitCnt!}</button>
             </div>
             <!--end::Info-->
         </div>

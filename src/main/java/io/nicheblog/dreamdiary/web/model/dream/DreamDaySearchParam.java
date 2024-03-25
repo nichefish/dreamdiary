@@ -27,7 +27,7 @@ public class DreamDaySearchParam
     /**
      * 제목
      */
-    private String postSj;
+    private String title;
 
 
 }

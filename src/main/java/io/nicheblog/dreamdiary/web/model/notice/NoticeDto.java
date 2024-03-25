@@ -72,7 +72,7 @@ public class NoticeDto
      * 내부 값들 합쳐서 풀 타이틀 반환
      */
     public String getFullTitle() {
-        String title = this.postSj;
+        String title = this.title;
         if (StringUtils.isNotEmpty(this.ctgrNm)) title = "[" + this.ctgrNm + "] " + title;
         if ("Y".equals(this.imprtcYn)) title = "[중요] " + title;
         return title;

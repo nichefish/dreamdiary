@@ -7,7 +7,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -214,7 +214,7 @@ public class NoticeController
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeRegAjax(
             final @Valid NoticeDto noticeDto,
-            final BaseClsfKey key,
+            final BasePostKey key,
             final LogActvtyParam logParam,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
@@ -274,7 +274,7 @@ public class NoticeController
     public String noticeDtl(
             final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
-            final BaseClsfKey postKey,
+            final BasePostKey postKey,
             final ModelMap model
     ) throws Exception {
 
@@ -325,7 +325,7 @@ public class NoticeController
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeDtlAjax(
             final LogActvtyParam logParam,
-            final BaseClsfKey postKey
+            final BasePostKey postKey
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -375,7 +375,7 @@ public class NoticeController
     public String noticeMdfForm(
             final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
-            final BaseClsfKey postKey,
+            final BasePostKey postKey,
             final ModelMap model
     ) throws Exception {
 
@@ -419,7 +419,7 @@ public class NoticeController
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeDelAjax(
             final LogActvtyParam logParam,
-            final BaseClsfKey postKey
+            final BasePostKey postKey
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

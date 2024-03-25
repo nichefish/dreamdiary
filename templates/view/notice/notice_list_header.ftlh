@@ -17,7 +17,7 @@
             </div>
             <div class="position-relative me-md-2 col-lg-2 col-3 searchType">
                 <select name="searchType" id="searchType" class="form-select form-select-solid fw-bolder form-select-sm py-3">
-                    <option value="postSj">제목</option>
+                    <option value="title">제목</option>
                     <option value="nickNm">작성자</option>
                 </select>
             </div>
