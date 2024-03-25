@@ -66,6 +66,8 @@ public class FreemarkerConfig
         sharedVariables.put("DateUtils", statics.get("io.nicheblog.dreamdiary.global.util.DateUtils"));
         sharedVariables.put("SiteUrl", statics.get("io.nicheblog.dreamdiary.web.SiteUrl"));
         sharedVariables.put("SiteMenu", statics.get("io.nicheblog.dreamdiary.web.SiteMenu"));
+        sharedVariables.put("ApiUrl", statics.get("io.nicheblog.dreamdiary.api.ApiUrl"));
+        // TODO: SiteUrl과 ApiUrl 합칠건지?그냥 따로갈건지?
         return sharedVariables;
     }
 }

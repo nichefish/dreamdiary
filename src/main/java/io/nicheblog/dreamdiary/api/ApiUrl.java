@@ -15,7 +15,7 @@ public interface ApiUrl {
     String PREFIX_API = "/api";
 
     /**
-     *
+     * (API) 꿈 관리
      */
     String PREFIX_DREAM = "/dream";
     String PREFIX_API_DREAM = PREFIX_API + PREFIX_DREAM;

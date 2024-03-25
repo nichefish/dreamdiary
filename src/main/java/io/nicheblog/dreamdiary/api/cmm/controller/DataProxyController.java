@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.api.cmm.controller;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.JsonRestTemplate;
 import io.nicheblog.dreamdiary.global.config.HttpClientConfig;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.util.JsonRestTemplate;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;

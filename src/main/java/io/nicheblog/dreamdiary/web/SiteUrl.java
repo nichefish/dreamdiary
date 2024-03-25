@@ -44,9 +44,6 @@ public interface SiteUrl {
     String PREFIX_DREAM_DAY = PREFIX_DREAM + PREFIX_DAY;
     String DREAM_DAY_PAGE = PREFIX_DREAM_DAY + "/dreamDayPage.do";
     String DREAM_DAY_LIST = PREFIX_DREAM_DAY + "/dreamDayList.do";
-    String DREAM_DAY_REG_AJAX = PREFIX_DREAM_DAY + "/dreamDayRegAjax.do";
-    String DREAM_DAY_DTL_AJAX = PREFIX_DREAM_DAY + "/dreamDayDtlAjax.do";
-    String DREAM_DAY_MDF_AJAX = PREFIX_DREAM_DAY + "/dreamDayMdfAjax.do";
 
 
     String PREFIX_PIECE = "/piece";
