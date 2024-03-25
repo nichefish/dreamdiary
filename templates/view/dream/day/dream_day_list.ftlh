@@ -12,10 +12,18 @@
             init: function () {
                 //
             },
+        }
+    }();
+    const Dream = function() {
+        return {
+            init: function () {
+                //
+            },
             /** 등록 화면 호출 */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "dream_day_reg", "show");
                 // commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
+                commons.datepicker.singleDatePicker("#dreamtDt", "yyyy-MM-DD", commons.date.getCurrDateStr("yyyy-MM-dd"));         // datepicker 날짜 검색 init
                 commons.validate.replaceBlankRegex("#dreamDayRegForm #clCd");
                 commons.validate.toUpperCase("dreamDayRegForm #clCd");
             },

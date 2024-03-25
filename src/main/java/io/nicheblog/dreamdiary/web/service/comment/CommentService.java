@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("commentService")
 @Log4j2

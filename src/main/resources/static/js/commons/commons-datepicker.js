@@ -44,9 +44,9 @@ commons.datepicker = (function() {
          * datepicker 공통 형식
          */
         datepicker: function(selectorStr, option, func) {
-            let format = option.locale.format;
-            let $elmt = $(selectorStr);
-            let id = $elmt.attr("id");
+            const format = option.locale.format;
+            const $elmt = $(selectorStr);
+            const id = $elmt.attr("id");
             $elmt.val(option.startDate);
             $elmt.daterangepicker(option, function(start) {
                 $elmt.val(start.format(format));

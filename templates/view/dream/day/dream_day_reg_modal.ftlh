@@ -3,7 +3,7 @@
   -- @included in : cl_cd_dtl
   -->
 <div class="modal fade" id="dream_day_reg_modal" tabindex="-1" role="dialog" aria-labelledby="dreamDayRegModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="dreamDayRegModalLongTitle">[상세코드 등록]</h5>

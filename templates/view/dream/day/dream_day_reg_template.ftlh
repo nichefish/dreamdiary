@@ -6,73 +6,18 @@
     <input type="hidden" name="clCd" value="{{clCd}}">
     <input type="hidden" name="regYn" id="regYn" value="{{#if (notExists dtlCd)}}Y{{/if}}{{#if (exists dtlCd)}}N{{/if}}">
 
-    <div class="row">
-        <div class="col-3 col-form-label text-center">
-            <span class="cursor-help"
-                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                  title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드를&#10;입력합니다.&#10;(등록 후 수정할 수 없습니다.)">
-                    상세코드
-            </span>
-            <em class="text-danger">*</em>
+    <!--begin::Input group-->
+    <div class="row row-cols-lg-2 mb-3">
+        <div class="col-xl-2 col-2">
+            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">날짜</label>
         </div>
-        <div class="col-4">
-            {{#if (exists dtlCd)}}
-            <div class="col-form-label">
-                <span class="text-noti fw-bold ps-1">{{dtlCd}}</span>
-                <input type="hidden" name="dtlCd" value="{{dtlCd}}">
-            </div>
-            {{/if}}
-            {{#if (notExists dtlCd)}}
-                <input type="text" name="dtlCd" id="dtlCd" class="form-control form-control-solid required" value="{{dtlCd}}" maxlength="10">
-            {{/if}}
+        <div class="col-xl-3 col-5">
+            <input class="form-control form-control-solid required" name="dreamtDt" id="dreamtDt" placeholder="꿈꾼 일자" value="{{dreamtDt}}" readonly/>
         </div>
-    </div>
-    <div class="row mb-4">
-        <div class="col-3">
+        <div class="col-xl-2 col-5">
+            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">날짜미상</label>
         </div>
-        <div class="col-9">
-            {{#if (notExists dtlCd)}}
-            <div class="text-noti">※영문 대문자 및 숫자만 가능, 1~20자</div>
-            <div id="dtlCdSpan"></div>
-            {{/if}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-3 col-form-label text-center">
-            <span class="cursor-help"
-                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                  title="외부적으로 사용되는&#10;코드 이름을 입력합니다.">
-                상세 코드명
-            </span>
-            <em class="text-danger">*</em>
-        </div>
-        <div class="col-9">
-            <input type="text" name="dtlCdNm" id="dtlCdNm" class="form-control form-control-solid required" value="{{dtlCdNm}}" maxlength="20">
-        </div>
-    </div>
-    <div class="row mb-4">
-        <div class="col-3"></div>
-        <div class="col-9">
-            <div id="dtlCdNmSpan"></div>
-        </div>
-    </div>
-    <div class="row mb-4">
-        <div class="col-3 col-form-label text-center">
-            상세 코드 설명
-        </div>
-        <div class="col-9">
-            <input type="text" name="dtlCdDc" id="dtlCdDc" class="form-control form-control-solid" value="{{dtlCdDc}}" maxlength="200">
-        </div>
-    </div>
-    <div class="row mb-4">
-        <div class="col-3 col-form-label text-center">
-            <span class="cursor-help"
-                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                  title="'사용'으로 체크된 코드만&#10;실제 코드 사용시 조회됩니다.">
-                사용여부
-            </span>
-        </div>
-        <div class="col-9 text-center d-flex align-items-center">
+        <div class="col-xl-3 col-5 d-flex align-items-center">
             <div class="form-check form-switch form-check-custom form-check-solid">
                 <input class="form-check-input" type="checkbox" value="Y" name="useYn" id="useYn" {{checkedIf (trueFalse useYn "Y//N")}} />
                 <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedStyle (trueFalse useYn "Y//N") "color" "blue//gray"}}>
@@ -80,17 +25,16 @@
                 </label>
             </div>
         </div>
-    </div>
-    <div class="row mb-4">
-        <div class="col-3 col-form-label text-center">
-            <span class="cursor-help"
-                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                  title="표시될 순서를 입력합니다.&#10;순서가 겹칠 경우&#10;내부 로직에 따라 정렬됩니다.">
-                정렬 순서
-            </span>
+        <div class="col-xl-2 col-2 col-form-label"></div>
+        <div class="col-xl-5 col-5">
+            <span id="beginDtSpan"></span>
         </div>
-        <div class="col-3">
-            <input type="text" name="sortOrdr" id="sortOrdr" class="form-control form-control-solid" value="{{sortOrdr}}">
+    </div>
+    <!--begin::Input group-->
+    <div class="row row-cols-lg-2 mb-3">
+        <div class="col-xl-2 col-2">
+            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">꿈 추가</label>
+            <button type="button"><i class="bi bi-plus fs-2"></i></button>
         </div>
     </div>
 </script>
