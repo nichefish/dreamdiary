@@ -28,18 +28,6 @@
                     $("#${siteMenuNo}").addClass("hover");
                 }
             },
-            /** 사이드바 설정 쿠키 저장 */
-            setAsideCookie: function() {
-                <#if Constant??>
-                    let wasMinimizeOn = ($("#kt_body").attr("data-kt-aside-minimize") === "on");
-                    let toMode = !!wasMinimizeOn ? "${Constant.ASIDE_MENU_FIXED!}" : "${Constant.ASIDE_MENU_MINIMIZED!}";
-                    let options = {
-                        path: "/",
-                        expires: commons.date.getCurrDateAddDay(36135)
-                    };
-                    $.cookie("${Constant.ASIDE_MENU!}", toMode, options);
-                </#if>
-            },
             /** 사이트맵 모달 팝업 호출 */
             fnSiteMap: function() {
                 $("#sitemap_modal").modal("show");

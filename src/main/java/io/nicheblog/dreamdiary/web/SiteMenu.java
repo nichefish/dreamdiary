@@ -12,17 +12,6 @@ import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
  */
 public class SiteMenu {
 
-    public static String TOP_MENU_NO_MAIN = SiteTopMenu.MAIN.menuNo;
-    public static String TOP_MENU_NO_NOTICE = SiteTopMenu.NOTICE.menuNo;
-    public static String TOP_MENU_NO_BOARD = SiteTopMenu.BOARD.menuNo;
-    public static String TOP_MENU_NO_SCHDUL = SiteTopMenu.SCHDUL.menuNo;
-    public static String TOP_MENU_NO_DREAM = SiteTopMenu.DREAM.menuNo;
-
-    public static String TOP_MENU_NO_USER = SiteTopMenu.USER.menuNo;;
-
-
-    // 상위 메뉴번호 :: 주기능
-
     // 메뉴 :: 로그인
     public static String MENU_NO_MAIN = "01000000";
     public static SiteAcsInfo LGN_PAGE = new SiteAcsInfo(
@@ -42,20 +31,82 @@ public class SiteMenu {
 
     // 메뉴 :: 꿈
     public static String MENU_NO_DREAM = "01000000";
-    public static SiteAcsInfo MAIN_DREAM = new SiteAcsInfo(
+    public static SiteAcsInfo DREAM = new SiteAcsInfo(
             SiteTopMenu.DREAM,
-            MENU_NO_MAIN,
+            MENU_NO_DREAM,
             "메인",
             SiteUrl.MAIN
     );
 
-    // 메뉴 :: 사용자
+    // 일정
+    public static SiteAcsInfo SCHDUL = new SiteAcsInfo(
+            SiteTopMenu.SCHDUL,
+            MENU_NO_DREAM,
+            "메인",
+            SiteUrl.MAIN
+    );
+
+    // 메뉴 :: 공지사항
+    public static String MENU_NO_NOTICE = "01000000";
+    public static SiteAcsInfo NOTICE = new SiteAcsInfo(
+            SiteTopMenu.NOTICE,
+            MENU_NO_NOTICE,
+            "공지사항",
+            SiteUrl.MAIN
+    );
+
+    // 메뉴 :: 사용자 관리
     public static String MENU_NO_USER = "01000000";
     public static SiteAcsInfo USER = new SiteAcsInfo(
-            SiteTopMenu.NO_ASIDE,
+            SiteTopMenu.USER,
             MENU_NO_USER,
+            "사용자 관리",
+            SiteUrl.AUTH_LGN_FORM
+    );
+
+    // 메뉴 :: 게시판 관리
+    public static String MENU_NO_BOARD_DEF = "01000000";
+    public static SiteAcsInfo BOARD_DEF = new SiteAcsInfo(
+            SiteTopMenu.ADMIN,
+            MENU_NO_BOARD_DEF,
+            "게시판 관리",
+            SiteUrl.AUTH_LGN_FORM
+    );
+
+    // 메뉴 :: 사이트 관리
+    public static String MENU_NO_ADNIN = "01000000";
+    public static SiteAcsInfo ADMIN = new SiteAcsInfo(
+            SiteTopMenu.ADMIN,
+            MENU_NO_ADNIN,
             "로그인",
             SiteUrl.AUTH_LGN_FORM
     );
 
+    // 메뉴 :: 로그인 정책
+    public static String MENU_NO_LGN_POLICY = "01000000";
+    public static SiteAcsInfo LGN_POLICY = new SiteAcsInfo(
+            SiteTopMenu.ADMIN,
+            MENU_NO_LGN_POLICY,
+            "로그인 정책 관리",
+            SiteUrl.AUTH_LGN_FORM
+    );
+
+
+    // 메뉴 :: 활동 로그
+    public static String MENU_NO_LOG_ACTVTY = "01000000";
+    public static SiteAcsInfo LOG_ACTVTY = new SiteAcsInfo(
+            SiteTopMenu.ADMIN,
+            MENU_NO_LOG_ACTVTY,
+            "활동 로그 관리",
+            SiteUrl.AUTH_LGN_FORM
+    );
+
+    // 메뉴 :: 시스템 로그
+    public static String MENU_NO_LOG_SYS = "01000000";
+    public static SiteAcsInfo LOG_SYS = new SiteAcsInfo(
+            SiteTopMenu.ADMIN,
+            MENU_NO_LOG_SYS,
+            "시스템 로그 관리",
+            SiteUrl.AUTH_LGN_FORM
+    );
 }

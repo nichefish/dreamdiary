@@ -4,7 +4,7 @@
  -->
 <!--begin::Aside mobile toggle-->
 <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
-    <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_aside_mobile_<#if isMngr!false && isMngrMode!false>admin_</#if>toggle">
+    <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_aside_mobile_<#if (isMngr!false && isMngrMode!false)>admin_</#if>toggle">
         <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
         <span class="svg-icon svg-icon-2x mt-1">
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

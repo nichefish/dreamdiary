@@ -19,7 +19,7 @@
             </div>
         </div>
         <!-- 공지사항 -->
-        <@menu.layout siteMenu=SiteMenu.NOTICE />
+        <@menu.layout topMenuNo=topMenuNo siteMenu=SiteMenu.NOTICE />
 
         <!-- 꿈 관리 -->
         <div class="menu-item">
@@ -69,8 +69,8 @@
             </div>
         </div>
         <!-- 일정 관리 메뉴 시작 -->
-        <#assign isNotTopMenu = (topMenuNo != SiteMenu.TOP_MENU_NO_SCHDUL!)!>
-        <div data-kt-menu-trigger="click" class="menu-item menu-accordion show" id="${SiteMenu.TOP_MENU_NO_SCHDUL!}">
+        <#assign isNotTopMenu = (topMenuNo != SiteMenu.SCHDUL.topMenuNo!)!>
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion show" id="${SiteMenu.SCHDUL.topMenuNo!}">
             <span class="menu-link <#if isNotTopMenu>text-inverse-light</#if>">
                 <span class="menu-icon">
                     <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->

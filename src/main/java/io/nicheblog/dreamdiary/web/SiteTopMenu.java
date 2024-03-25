@@ -20,7 +20,8 @@ public enum SiteTopMenu {
     BOARD("50000000", "게시판"),
     DREAM("20000000", "꿈 관리"),
     SCHDUL("60000000", "일정"),
-    USER("60000000", "사용자 관리");
+    USER("60000000", "사용자 관리"),
+    ADMIN("90000000", "사이트 관리");
 
 
     public final String menuNo;

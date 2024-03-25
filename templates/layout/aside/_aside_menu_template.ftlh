@@ -1,7 +1,12 @@
 <!--
  -- 레이아웃 > 기본 레이아웃
  -->
-<#macro layout siteMenu>
+<#macro layout topMenuNo siteMenu>
+    <div class="menu-item">
+        <div class="menu-content pb-2">
+            <span class="menu-section text-muted text-uppercase fs-8 ls-1">Notice</span>
+        </div>
+    </div>
     <#assign isNotTopMenu = (topMenuNo != siteMenu.topMenuNo) />
     <div class="menu-item show" id="${siteMenu.menuNo!}">
         <a href="${siteMenu.url!}" class="menu-link <#if isNotTopMenu>text-inverse-light</#if>">

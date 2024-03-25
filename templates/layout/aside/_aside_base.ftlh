@@ -3,6 +3,41 @@
  -- @included in : layout
  -->
 <!--begin::Aside-->
+<#assign topMenuNo = (siteAcsInfo.topMenuNo)!>
+<#assign siteMenuNo = (siteAcsInfo.siteMenuNo)!>
+<script>
+    /** 레이아웃 */
+    let Aside = function() {
+        return {
+            init: function() {
+                /** 현재 접속중인 메뉴 활성화 로직 */
+                const siteAcsInfoExists = "${topMenuNo}" !== "" && "${siteMenuNo!}" !== "";
+                if (siteAcsInfoExists) {
+                    $("#${topMenuNo!}").addClass("hover");
+                    $("#${siteMenuNo}").addClass("hover");
+                }
+            },
+            /** 사이드바 설정 쿠키 저장 */
+            setAsideCookie: function() {
+                <#if Constant??>
+                    const wasMinimizeOn = ($("#kt_body").attr("data-kt-aside-minimize") === "on");
+                    let toMode = !!wasMinimizeOn ? "${Constant.ASIDE_MENU_FIXED!}" : "${Constant.ASIDE_MENU_MINIMIZED!}";
+                    let options = {
+                        path: "/",
+                        expires: commons.date.getCurrDateAddDay(36135)
+                    };
+                    $.cookie("${Constant.ASIDE_MENU!}", toMode, options);
+                </#if>
+            },
+        }
+    }();
+
+    $(document).ready(function() {
+        Aside.init();
+    });
+</script>
+
+
 <div id="kt_aside" class="aside aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside"
      data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
      data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
@@ -21,7 +56,7 @@
         <!--begin::Aside toggler-->
         <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle "
              data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize"
-             onclick="Layout.setAsideCookie();">
+             onclick="Aside.setAsideCookie();">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->
             <span class="svg-icon svg-icon-1 rotate-180"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="사이드바를 고정/해제합니다.&#10;해당 설정은 브라우저 캐시에&#10;저장됩니다.">

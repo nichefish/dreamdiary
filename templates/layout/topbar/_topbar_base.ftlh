@@ -13,9 +13,12 @@
     <#if isDev!false>
         <#include "/layout/topbar/_test_page.ftlh">
     </#if>
-    <!-- <#include "/layout/topbar/_notion.ftlh"> -->
-    <!-- <#include "/layout/topbar/_flsys.ftlh"> -->
-    <!-- <#include "/layout/topbar/_sitemap.ftlh"> -->
+
+    <#if false>
+        <#include "/layout/topbar/_notion.ftlh">
+        <#include "/layout/topbar/_flsys.ftlh">
+        <#include "/layout/topbar/_sitemap.ftlh">
+    </#if>
     <#if isDev!false>
         <#include "/layout/topbar/_search.ftlh">
     </#if>
@@ -25,8 +28,8 @@
         <div class="position-relative w-md-115px me-md-2 ms-2 my-5"
              data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="사용자/관리자 권한별로&#10;화면을 전환합니다.">
             <select name="userMode" id="userMode" class="form-select form-select-solid fs-small fw-bolder form-select-sm opacity-hover">
-                <option value="${(Constant.AUTH_USER)!}" <#if !isMngrMode>selected</#if>>사용자 모드</option>
-                <option value="${(Constant.AUTH_MNGR)!}" <#if isMngrMode>selected</#if>>관리자 모드</option>
+                <option value="${(Constant.AUTH_USER)!}" <#if !(isMngrMode!false)>selected</#if>>사용자 모드</option>
+                <option value="${(Constant.AUTH_MNGR)!}" <#if isMngrMode!false>selected</#if>>관리자 모드</option>
             </select>
         </div>
         <!--end::관리자 선택-->
