@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.api.dream.controller;
 
 import io.nicheblog.dreamdiary.api.ApiUrl;
+import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiSearchParam;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -66,6 +67,7 @@ public class DreamDayApiController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dreamDayListAjax(
+            final DreamDayApiSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) {
@@ -75,11 +77,8 @@ public class DreamDayApiController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Map<String, Object> searchParamMap = new HashMap<>() {{
-                put("popupYn", "Y");
-                put("managtStartDt", DateUtils.getCurrDateAddDay(-7));
-            }};
-            Sort sort = Sort.by(Sort.Direction.ASC, "managtDt");
+            Map<String, Object> searchParamMap = CmmUtils.convertParamToMap(searchParam);
+            Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
             PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
             Page<DreamDayDto> noticeList = dreamDayService.getListDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(noticeList.getContent());
