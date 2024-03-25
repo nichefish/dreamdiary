@@ -74,7 +74,7 @@ public class DreamDayEntity
     /**
      * 대략일자 (날짜미상시 해당일자 이후에 표기)
      */
-    @Column(name = "APRXMMT_DT")
+    @Column(name = "APRXMT_DT")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Comment("대략일자 (날짜미상시 해당일자 이후에 표기)")

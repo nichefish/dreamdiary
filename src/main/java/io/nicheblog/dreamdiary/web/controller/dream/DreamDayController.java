@@ -46,15 +46,13 @@ public class DreamDayController
     private DreamDayService dreamDayService;
 
     /**
-     * 꿈 일자 - 목록 화면 조회
+     * 꿈 일자 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.DREAM_DAY_LIST)
+    @GetMapping(SiteUrl.DREAM_DAY_PAGE)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String dreamDayList(
+    public String dreamDayPage(
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") DreamDaySearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) throws Exception {
 
@@ -64,24 +62,8 @@ public class DreamDayController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
-
-            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            Sort sort = Sort.by(Sort.Direction.ASC, "cfYn")
-                    .and(Sort.by(Sort.Direction.ASC, "lockYn"))
-                    .and(Sort.by(Sort.Direction.DESC, "regDt"));
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, sort, model);
-            // Page<DreamDayListDto> userList = userService.getListDto(listParamMap, pageRequest);
-            // if (userList != null) model.addAttribute("userList", userList.getContent());
-            // model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(userList));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -93,9 +75,8 @@ public class DreamDayController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/dream/day/dream_day_list";
+        return "/view/dream/day/dream_day_page";
     }
-
 
     /**
      * 꿈 일자 - 등록/수정 (Ajax)

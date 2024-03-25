@@ -3,13 +3,13 @@ package io.nicheblog.dreamdiary.web.model.cmm;
 import lombok.*;
 
 /**
- * BasePostSearchParamDto
+ * BasePostSearchParam
  * <pre>
  *  (공통/상속) 게시물 목록 검색 파라미터 Dto
  * </pre>
  *
  * @author nichefish
- * @extends BaseSearchParamDto
+ * @extends BaseSearchParam
  */
 @Getter
 @Setter

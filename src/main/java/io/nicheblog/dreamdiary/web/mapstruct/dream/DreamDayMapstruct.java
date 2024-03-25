@@ -27,6 +27,7 @@ public interface DreamDayMapstruct
      * Entity -> Dto
      */
     @Override
+    @Mapping(target = "dreamtDt", expression = "java(DateUtils.asStr(entity.getDreamtDt(), DateUtils.PTN_DATE))")
     @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
     @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
     @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
@@ -36,6 +37,7 @@ public interface DreamDayMapstruct
      * Entity -> ListDto
      */
     @Override
+    @Mapping(target = "dreamtDt", expression = "java(DateUtils.asStr(entity.getDreamtDt(), DateUtils.PTN_DATE))")
     @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
     @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
     @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
@@ -45,6 +47,7 @@ public interface DreamDayMapstruct
      * Dto -> Entity
      */
     @Override
+    @Mapping(target = "dreamtDt", expression = "java(DateUtils.asDate(dto.getDreamtDt()))")
     DreamDayEntity toEntity(final DreamDayDto dto) throws Exception;
 
     /**

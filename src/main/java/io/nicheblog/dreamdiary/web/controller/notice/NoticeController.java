@@ -82,7 +82,6 @@ public class NoticeController
     @GetMapping(SiteUrl.NOTICE_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeList(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
             final @ModelAttribute("searchParam") NoticeSearchParam searchParam,
             final @RequestParam Map<String, Object> searchParamMap,
