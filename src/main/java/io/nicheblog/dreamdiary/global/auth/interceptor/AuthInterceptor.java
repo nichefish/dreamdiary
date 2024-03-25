@@ -44,8 +44,8 @@ public class AuthInterceptor
     ) {
 
         /* 권한 정보 모델에 추가 */
-        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         if (AuthUtils.isAuthenticated() && mav != null) {
+            AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
             mav.addObject("isMngr", authInfo.getIsMngr());
             mav.addObject("isDev", authInfo.getIsDev());
         }

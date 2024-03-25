@@ -24,21 +24,21 @@ public class SiteAcsInfo {
     /**
      * 사이드바 메뉴 번호
      */
-    private String siteMenuNo;
+    private String menuNo;
 
     /**
      * 사이드바 상위 메뉴
      */
-    private SiteTopMenu siteTopMenu;
+    private SiteTopMenu topMenu;
     /**
      * 사이드바 상위 메뉴 번호 (메뉴 활성화용)
      */
-    private String siteTopMenuNo;
+    private String topMenuNo;
 
     /**
      * 사이드바 메뉴 이름 (로깅 및 사이트 헤더 표시용)
      */
-    private String siteMenuNm;
+    private String menuNm;
 
     /**
      * 접근 화면 이름 (로깅 및 사이트 헤더 표시용)
@@ -59,10 +59,10 @@ public class SiteAcsInfo {
 
     /** constructor */
     public SiteAcsInfo(SiteTopMenu siteTopMenu, String siteMenuNo, String siteMenuNm, String url) {
-        this.siteTopMenu = siteTopMenu;
-        this.siteTopMenuNo = siteTopMenu.menuNo;
-        this.siteMenuNo = siteMenuNo;
-        this.siteMenuNm = siteMenuNm;
+        this.topMenu = siteTopMenu;
+        this.topMenuNo = siteTopMenu.menuNo;
+        this.menuNo = siteMenuNo;
+        this.menuNm = siteMenuNm;
         this.url = url;
         // 로그인/메인/에러페이지는 사이드바 미노출
         if (NO_ASIDE.equals(siteTopMenu)) this.asideAt = false;

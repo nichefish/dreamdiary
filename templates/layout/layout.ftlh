@@ -30,7 +30,7 @@
                     <#include "/layout/aside/_aside_base.ftlh">
                     <#include "/layout/header/_header_base.ftlh">
                     <#include "/layout/toolbar/_toolbar.ftlh">
-                    <#include "/layout/topbar/_user_drawer.ftlh">
+                    <#include "/layout/topbar/_topbar_user_drawer.ftlh">
                 </#if>
 
                 <!--begin::Wrapper-->

@@ -39,7 +39,7 @@
              data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click"
              title="내 정보 팝업을 호출합니다.&#10;&#10;현재 접속 계정:&#10;${(authInfo.nickNm)!}(${(authInfo.userId)!})">
             <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg&ndash;&gt;-->
-            <#if authInfo.proflImgUrl??>
+            <#if (authInfo.proflImgUrl)??>
                 <img src="${authInfo.proflImgUrl!}" class="img-thumbnail p-0 w-100" />
             <#else>
                 <span class="svg-icon svg-icon-1">

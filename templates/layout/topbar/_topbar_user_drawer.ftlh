@@ -14,7 +14,7 @@
             <!--begin::Title-->
             <div class="card-title">
                 <div class="btn btn-icon btn-primary position-relative w-30px h-30px w-md-40px h-md-40px">
-                    <#if authInfo.proflImgUrl??>
+                    <#if (authInfo.proflImgUrl)??>
                         <img src="${authInfo.proflImgUrl!}" class="img-thumbnail p-0 w-100" />
                     <#else>
                         <span class="svg-icon svg-icon-1">
@@ -69,9 +69,9 @@
                     <td class="text-gray-700 w-110px" style="padding-left:10px; font-weight:600;">계정 권한</td>
                     <td class="text-gray-600">
                         ${(authInfo.authNm)!}
-                        <#if (authInfo.authCd! == Constant.AUTH_MNGR)>
+                        <#if ((authInfo.authCd)! == Constant.AUTH_MNGR)>
                             <i class="bi bi-person-lines-fill text-info opacity-75"></i>   <!-- 관리자 -->
-                        <#elseif (authInfo.authCd! == Constant.AUTH_USER)>
+                        <#elseif ((authInfo.authCd)! == Constant.AUTH_USER)>
                             <i class="bi bi-people-fill ms-1"></i>        <!-- 사용자 -->
                         </#if>
                     </td>

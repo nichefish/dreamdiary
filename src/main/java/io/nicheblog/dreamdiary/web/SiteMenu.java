@@ -22,8 +22,9 @@ public class SiteMenu {
 
 
     // 상위 메뉴번호 :: 주기능
-    public static String MENU_NO_MAIN = "01000000";
+
     // 메뉴 :: 로그인
+    public static String MENU_NO_MAIN = "01000000";
     public static SiteAcsInfo LGN_PAGE = new SiteAcsInfo(
             SiteTopMenu.NO_ASIDE,
             MENU_NO_MAIN,
@@ -48,12 +49,13 @@ public class SiteMenu {
             SiteUrl.MAIN
     );
 
-    // 메뉴 :: 메인(관리자)
-    public static SiteAcsInfo MAIN_ADMIN = new SiteAcsInfo(
-            SiteTopMenu.MAIN,
-            MENU_NO_MAIN,
-            "메인(관리자)",
-            SiteUrl.ADMIN_MAIN
+    // 메뉴 :: 사용자
+    public static String MENU_NO_USER = "01000000";
+    public static SiteAcsInfo USER = new SiteAcsInfo(
+            SiteTopMenu.NO_ASIDE,
+            MENU_NO_USER,
+            "로그인",
+            SiteUrl.AUTH_LGN_FORM
     );
 
 }

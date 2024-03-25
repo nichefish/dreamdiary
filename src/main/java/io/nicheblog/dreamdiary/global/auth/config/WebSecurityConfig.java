@@ -32,7 +32,7 @@ import javax.annotation.Resource;
  * <pre>
  *  Spring Security 설정
  * </pre>
- * TODO: deprecated된것 제거하기
+ * TODO: deprecated된것 바꾸기
  *
  * @author nichefish
  */

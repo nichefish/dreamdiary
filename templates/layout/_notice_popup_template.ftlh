@@ -16,7 +16,7 @@
                     <div class="col-12">
                         <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
                             <span class="vertical-middle">
-                                {{postSj}}
+                                {{title}}
                             </span>
                         </h1>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="d-flex align-items-center py-1">
                         <a href="#answers" data-kt-scroll-toggle="true"
                            class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 {{commentCnt}}</a>
-                        <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 {{postHit}}</button>
+                        <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 {{hitCnt}}</button>
                     </div>
                     <!--end::Info-->
                 </div>
