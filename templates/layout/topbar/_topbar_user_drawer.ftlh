@@ -79,9 +79,9 @@
             </table>
             <!--end::게시글 정보-->
             <div class="row">
-                <a href="#" class="btn btn-light btn-light-primary fs-7 mt-2 w-100"
+                <a href="javascript:void(0)" class="btn btn-light btn-light-primary fs-7 mt-2 w-100"
                    onclick="Layout.fnLgout();"
-                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="dreamdiary에서 로그아웃합니다.">
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="로그아웃합니다.">
                     <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr076.svg-->
                     <span class="svg-icon svg-icon-muted svg-icon-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

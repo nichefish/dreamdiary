@@ -17,7 +17,7 @@
                 <div class="row mt-2" id="atchFile${file.atchFileDtlId!}">
                     <div class="col-xl-8 text-sm-start" id="itemContainer${file.atchFileDtlId!}">
                         <i class="fas fa-file-download fs-15 me-3"></i>
-                        <a href="#" onclick="commons.util.fileDownload('${file.atchFileId!}', '${file.atchFileDtlId!}');"
+                        <a href="javascript:void(0);" onclick="commons.util.fileDownload('${file.atchFileId!}', '${file.atchFileDtlId!}');"
                            data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.file.download"/>">
                             ${file.orgnFileNm!} (${file.fileSize!}byte)
                         </a>

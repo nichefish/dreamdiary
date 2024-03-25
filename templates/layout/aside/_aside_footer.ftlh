@@ -6,7 +6,7 @@
 <div class="aside-footer flex-column-auto pb-7 px-6" id="kt_aside_footer">
     <a href="javascript:void(0);" class="btn btn-primary btn-active-light-primary w-100"
        onclick="Layout.fnLgout();"
-       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="dreamdiary에서 로그아웃합니다.">
+       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="로그아웃합니다.">
         <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr076.svg-->
         <span class="svg-icon svg-icon-muted svg-icon-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

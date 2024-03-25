@@ -123,7 +123,7 @@
                                     <i class="fas fa-solid fa-pen"></i>
                                 </span>
                                 </a>
-                                <a href="#" class="btn btn-sm btn-flex btn-light-danger btn-icon"
+                                <a href="javascript:void(0);" class="btn btn-sm btn-flex btn-light-danger btn-icon"
                                    onclick="Comment.fnDelAjax('${comment.commentNo!}');"
                                    data-bs-toggle="tooltip" title="댓글을 삭제합니다." data-bs-dismiss="click">
                                 <span class="svg-icon svg-icon-7">

@@ -74,12 +74,6 @@
     <div class="separator mx-5 opacity-25 blink"></div>
 
     <!--begin::Aside menu::사용자/관리자에 따라 사이드메뉴 다르게 첨부-->
-    <div>
-        <#-- Debug -->
-        ${"isMngr: " + isMngr?string}
-        ${"isMngrMode: " + isMngrMode?string}
-        (isMngr: ${isMngr?string}, isMngrMode: ${isMngrMode?string})
-    </div>
     <div class="aside-menu flex-column-fluid">
         <#if isMngrMode>
             <#include "/layout/aside/_aside_menu_admin.ftlh">

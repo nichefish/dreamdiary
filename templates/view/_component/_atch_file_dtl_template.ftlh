@@ -12,7 +12,7 @@
             <#list (post.atchFileInfo.atchFileList)![] as file>
                 <div class="row my-1">
                     <div class="col-xl-8" id="itemContainer${file.atchFileDtlId!}">
-                        <a href="#" onclick="commons.util.fileDownload('${file.atchFileId!}', '${file.atchFileDtlId!}');"
+                        <a href="javascript:void(0);" onclick="commons.util.fileDownload('${file.atchFileId!}', '${file.atchFileDtlId!}');"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                            title="<@spring.message "bs.tooltip.file.download"/>">
                             <i class="fas fa-file-download fs-15 me-1"></i>
