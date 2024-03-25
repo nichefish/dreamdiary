@@ -36,6 +36,8 @@ public enum ActvtyCtgr {
     NOTICE("공지사항"),
 
     LGN_POLICY("로그인 정책 관리"),
+    CD("코드 관리"),
+    BOARD_DEF("게시판 관리"),
 
     FILE("파일");
 

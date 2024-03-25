@@ -1,4 +1,3 @@
-/*
 package io.nicheblog.dreamdiary.web.spec.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
@@ -12,7 +11,6 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-*/
 /**
  * BoardDefSpec
  * <pre>
@@ -22,17 +20,14 @@ import java.util.List;
  *
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
- *//*
-
+ */
 @Component("boardDefSpec")
 public class BoardDefSpec
         implements BaseSpec<BoardDefEntity> {
 
-    */
-/**
+    /**
      * 조회 후처리:: 정렬 순서 변경
-     *//*
-
+     */
     @Override
     public void postQuery(
             Root<BoardDefEntity> root,
@@ -44,4 +39,3 @@ public class BoardDefSpec
         query.orderBy(orders);
     }
 }
-*/

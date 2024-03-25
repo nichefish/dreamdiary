@@ -1,7 +1,8 @@
-/*
 package io.nicheblog.dreamdiary.web.controller.board;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
@@ -9,13 +10,12 @@ import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefSearchParam;
+import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
 import lombok.extern.log4j.Log4j2;
-import dreamdiary.nicheblog.io.web.model.PaginationInfo;
-import dreamdiary.nicheblog.io.web.model.board.BoardDefDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,6 @@ import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.Map;
 
-*/
 /**
  * BoardDefController
  * <pre>
@@ -41,25 +40,25 @@ import java.util.Map;
  *
  * @author nichefish
  * @extends BaseControllerImpl
- *//*
-
+ */
 @Controller
 @Log4j2
 public class BoardDefController
         extends BaseControllerImpl {
 
     private final String baseUrl = SiteUrl.BOARD_DEF_LIST;
-    private final String actvtyCtgrCd = Constant.ACTVTY_BOARD_DEF;      // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_DEF;         // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;
 
-    */
-/**
-     * 게시판 정의 목록 조회
-     * 관리자MNGR만 접근 가능
-     *//*
+    @Resource(name = "cdService")
+    private CdService cdService;
 
+    /**
+     * 게시판 정의 목록 조회
+     * (관리자MNGR만 접근 가능)
+     */
     @GetMapping(SiteUrl.BOARD_DEF_LIST)
     @Secured({Constant.ROLE_MNGR})
     public String boardDefList(
@@ -69,16 +68,14 @@ public class BoardDefController
             final ModelMap model
     ) throws Exception {
 
-        */
-/* 사이트 메뉴 설정 *//*
-
+        /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("게시판 관리"));
 
         boolean isSuccess = false;
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = cmmService.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "sortOrdr", model);
@@ -102,19 +99,17 @@ public class BoardDefController
             MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
         return "/view/board/def/board_def_list";
     }
 
-    */
-/**
+    /**
      * 게시판 정의 등록 (Ajax)
-     * 관리자MNGR만 접근 가능
-     *//*
-
+     * (관리자MNGR만 접근 가능)
+     */
     @PostMapping(SiteUrl.BOARD_DEF_REG_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
@@ -141,19 +136,17 @@ public class BoardDefController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn(boardDefDto.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    */
-/**
+    /**
      * 게시판 정의 항목 수정 (Ajax)
-     * 관리자MNGR만 접근 가능
-     *//*
-
+     * (관리자MNGR만 접근 가능)
+     */
     @PostMapping(SiteUrl.BOARD_DEF_MDF_ITEM_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
@@ -181,19 +174,17 @@ public class BoardDefController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn(boardDefDto.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    */
-/**
+    /**
      * 게시판 정의 사용 (Ajax)
-     * 관리자MNGR만 접근 가능
-     *//*
-
+     * (관리자MNGR만 접근 가능)
+     */
     @PostMapping(SiteUrl.BOARD_DEF_USE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
@@ -217,19 +208,17 @@ public class BoardDefController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + boardCd);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    */
-/**
+    /**
      * 게시판 정의 미사용 (Ajax)
-     * 관리자MNGR만 접근 가능
-     *//*
-
+     * (관리자MNGR만 접근 가능)
+     */
     @PostMapping(SiteUrl.BOARD_DEF_UNUSE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
@@ -253,19 +242,17 @@ public class BoardDefController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + boardCd);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    */
-/**
+    /**
      * 게시판 정의 삭제 (Ajax)
-     * 관리자MNGR만 접근 가능
-     *//*
-
+     * (관리자MNGR만 접근 가능)
+     */
     @PostMapping(SiteUrl.BOARD_DEF_DEL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
@@ -289,10 +276,10 @@ public class BoardDefController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + boardCd);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgrCd);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
-}*/
+}
