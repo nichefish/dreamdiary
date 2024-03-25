@@ -1,0 +1,24 @@
+-- 게시판 관련 테이블 생성 쿼리 정보를 입력한다.
+-- "JPA CASCADE INSERT에서는 먼저 INSERT 후 나중에 FK값을 업데이트하게 되므로 FK가 NOT_NULL이면 에러가 발생한다."
+-- (=> JPA에서 다른 테이블과 연관성을 갖는 컬럼은 반드시 NULL을 허용해야 한다!) (NOT NULL이면 안된다)
+-- @database : mariadb
+-- @author : nichefish
+
+-- ---------- --
+
+-- 게시판 정의 정보
+CREATE TABLE IF NOT EXISTS BOARD_DEF (
+    BOARD_CD VARCHAR(30) PRIMARY KEY COMMENT '게시판코드',
+    BOARD_NM VARCHAR(120) COMMENT '게시판 이름',
+    CTGR_CL_CD VARCHAR(30) COMMENT '분류 코드',
+    MENU_NO VARCHAR(10) COMMENT '메뉴 번호',
+    -- MANAGE
+    SORT_ORDR INT DEFAULT 0 COMMENT '정렬 순서',
+    USE_YN CHAR(1) DEFAULT 'Y' COMMENT '사용여부',
+    -- AUDIT
+    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
+    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
+    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
+    MDF_DT DATETIME COMMENT '수정일시',
+    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부'
+) COMMENT = '게시판 정의';

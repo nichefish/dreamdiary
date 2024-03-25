@@ -65,6 +65,21 @@ public interface SiteUrl {
     String NOTICE_POPUP_LIST_AJAX = PREFIX_NOTICE + "/noticePopupListAjax.do";
 
     /**
+     * 게시판
+     */
+    String PREFIX_BOARD = "/board";
+    String BOARD_POST_LIST = PREFIX_BOARD + "/boardPostList.do";
+    String BOARD_POST_REG_FORM = PREFIX_BOARD + "/boardPostRegForm.do";
+    String BOARD_POST_REG_AJAX = PREFIX_BOARD + "/boardPostRegAjax.do";
+    String BOARD_POST_DTL = PREFIX_BOARD + "/boardPostDtl.do";
+    String BOARD_POST_DTL_AJAX = PREFIX_BOARD + "/boardPostDtlAjax.do";
+    String BOARD_POST_MDF_FORM = PREFIX_BOARD + "/boardPostMdfForm.do";
+    String BOARD_POST_MDF_AJAX = PREFIX_BOARD + "/boardPostMdfAjax.do";
+    String BOARD_POST_DEL_AJAX = PREFIX_BOARD + "/boardPostDelAjax.do";
+    String BOARD_POST_REG_PREVIEW_POP = PREFIX_BOARD + "/boardPostRegPreviewPop.do";
+
+
+    /**
      * 사용자 관리
      */
     String PREFIX_USER = "/user";

@@ -62,6 +62,16 @@ public class SiteMenu {
             List.of(SubMenu.DREAM_DAY)
     );
 
+    // 대메뉴 :: 게시판
+    public static SiteAcsInfo BOARD = new SiteAcsInfo(
+            SiteTopMenu.BOARD,
+            SiteTopMenu.BOARD.menuNo,
+            "게시판",
+            SiteUrl.BOARD_POST_LIST
+            // TODO: 하위 게시판 목록 불러오기
+    );
+
+
     // 대메뉴 :: 일정
     public static SiteAcsInfo SCHDUL = new SiteAcsInfo(
             SiteTopMenu.SCHDUL,
@@ -91,16 +101,16 @@ public class SiteMenu {
     public static SiteAcsInfo ADMIN = new SiteAcsInfo(
             SiteTopMenu.ADMIN,
             SiteTopMenu.ADMIN.menuNo,
-            "로그인",
+            "사이트 관리",
             SiteUrl.AUTH_LGN_FORM,
-            List.of(SubMenu.LGN_POLICY, SubMenu.BOARD_DEF)
+            List.of(SubMenu.LGN_POLICY, SubMenu.CD, SubMenu.BOARD_DEF)
     );
 
     // 대메뉴 :: 로그 관리
     public static SiteAcsInfo LOG = new SiteAcsInfo(
             SiteTopMenu.ADMIN,
             SiteTopMenu.ADMIN.menuNo,
-            "로그인",
+            "로그 관리",
             SiteUrl.AUTH_LGN_FORM,
             List.of(SubMenu.LOG_ACTVTY, SubMenu.LOG_SYS)
     );
@@ -166,7 +176,7 @@ public class SiteMenu {
         SiteAcsInfo LOG_ACTVTY = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
                 MENU_NO_LOG_ACTVTY,
-                "활동 로그 관리",
+                "활동 로그",
                 SiteUrl.AUTH_LGN_FORM
         );
 
@@ -175,7 +185,7 @@ public class SiteMenu {
         SiteAcsInfo LOG_SYS = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
                 MENU_NO_LOG_SYS,
-                "시스템 로그 관리",
+                "시스템 로그",
                 SiteUrl.AUTH_LGN_FORM
         );
     }
