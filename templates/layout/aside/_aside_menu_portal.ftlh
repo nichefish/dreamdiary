@@ -19,7 +19,7 @@
         <!-- 공지사항 -->
         <#assign isNotTopMenu = (topMenuNo != SiteMenu.TOP_MENU_NO_NOTICE!)>
         <div class="menu-item show" id="">
-            <a href="" class="menu-link <#if isNotTopMenu>text-inverse-light</#if>">
+            <a href="${SiteUrl.NOTICE_LIST}" class="menu-link <#if isNotTopMenu>text-inverse-light</#if>">
                 <span class="menu-icon">
                     <span class="svg-icon svg-icon-3 svg-icon-gray-600">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">

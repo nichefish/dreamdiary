@@ -42,6 +42,7 @@ public interface SiteUrl {
     String PREFIX_DREAM = "/dream";
     String PREFIX_DAY = "/day";
     String PREFIX_DREAM_DAY = PREFIX_DREAM + PREFIX_DAY;
+    String DREAM_DAY_PAGE = PREFIX_DREAM_DAY + "/dreamDayPage.do";
     String DREAM_DAY_LIST = PREFIX_DREAM_DAY + "/dreamDayList.do";
     String DREAM_DAY_REG_AJAX = PREFIX_DREAM_DAY + "/dreamDayRegAjax.do";
     String DREAM_DAY_DTL_AJAX = PREFIX_DREAM_DAY + "/dreamDayDtlAjax.do";
@@ -50,6 +51,21 @@ public interface SiteUrl {
 
     String PREFIX_PIECE = "/piece";
     String PREFIX_DREAM_PIECE = PREFIX_DREAM + PREFIX_PIECE;
+
+    /**
+     * 공지사항
+     */
+    String PREFIX_NOTICE = "/notice";
+    String NOTICE_LIST = PREFIX_NOTICE + "/noticeList.do";
+    String NOTICE_REG_FORM = PREFIX_NOTICE + "/noticeRegForm.do";
+    String NOTICE_REG_AJAX = PREFIX_NOTICE + "/noticeRegAjax.do";
+    String NOTICE_DTL = PREFIX_NOTICE + "/noticeDtl.do";
+    String NOTICE_DTL_AJAX = PREFIX_NOTICE + "/noticeDtlAjax.do";
+    String NOTICE_MDF_FORM = PREFIX_NOTICE + "/noticeMdfForm.do";
+    String NOTICE_MDF_AJAX = PREFIX_NOTICE + "/noticeMdfAjax.do";
+    String NOTICE_DEL_AJAX = PREFIX_NOTICE + "/noticeDelAjax.do";
+    String NOTICE_REG_PREVIEW_POP = PREFIX_NOTICE + "/noticeRegPreviewPop.do";
+    String NOTICE_POPUP_LIST_AJAX = PREFIX_NOTICE + "/noticePopupListAjax.do";
 
     /**
      * 사용자 관리
@@ -143,20 +159,6 @@ public interface SiteUrl {
 
     String USER_REQST_REG_FORM = "";
 
-    String PREFIX_NOTICE = "/notice";
-    String NOTICE_LIST = PREFIX_NOTICE + "/noticeList.do";
-
-    String NOTICE_REG_FORM = PREFIX_NOTICE + "/noticeRegForm.do";
-    String NOTICE_REG_AJAX = PREFIX_NOTICE + "/noticeRegAjax.do";
-    String NOTICE_DTL = PREFIX_NOTICE + "/noticeDtl.do";
-    String NOTICE_DTL_AJAX = PREFIX_NOTICE + "/noticeDtlAjax.do";
-    String NOTICE_MDF_FORM = PREFIX_NOTICE + "/noticeMdfForm.do";
-    String NOTICE_MDF_AJAX = PREFIX_NOTICE + "/noticeMdfAjax.do";
-
-    String NOTICE_DEL_AJAX = PREFIX_NOTICE + "/noticeDelAjax.do";
-    String NOTICE_REG_PREVIEW_POP = PREFIX_NOTICE + "/noticeRegPreviewPop.do";
-
-    String NOTICE_POPUP_LIST_AJAX = PREFIX_NOTICE + "/noticePopupListAjax.do";
 
 
 

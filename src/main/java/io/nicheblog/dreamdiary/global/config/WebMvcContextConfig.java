@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.config;
 
+import io.nicheblog.dreamdiary.global.auth.interceptor.AuthInterceptor;
 import io.nicheblog.dreamdiary.global.handler.UTF8DecodeResourceResolver;
 import io.nicheblog.dreamdiary.global.interceptor.FreemarkerInterceptor;
 import io.nicheblog.dreamdiary.web.SiteUrl;
@@ -26,6 +27,9 @@ import java.util.List;
 @Configuration
 public class WebMvcContextConfig
         implements WebMvcConfigurer {
+
+    @Resource(name = "authInterceptor")
+    private AuthInterceptor authInterceptor;
 
     @Resource(name = "freemarkerInterceptor")
     private FreemarkerInterceptor freemarkerInterceptor;
@@ -105,6 +109,9 @@ public class WebMvcContextConfig
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // auth interceptor
+        registry.addInterceptor(authInterceptor);
+        // freemarker interceptor
         registry.addInterceptor(freemarkerInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(STATIC_RESOURCES_URL_PATTERN)
