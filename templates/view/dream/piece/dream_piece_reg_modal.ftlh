@@ -3,30 +3,18 @@
   -- @included in : cl_cd_dtl
   -->
 <script>
-    const DreamDay = (function() {
+    const DreamPiece = (function() {
         return {
             init: function () {
-                DreamDay.listAjax();
+                //
             },
             /** 등록 화면 호출 */
             regModal: function() {
-                commons.util.handlebarsTemplate({}, "dream_day_reg", "show");
+                commons.util.handlebarsTemplate({}, "dream_piece_reg", "show");
                 // commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 commons.datepicker.singleDatePicker("#dreamtDt", "yyyy-MM-DD", commons.date.getCurrDateStr("yyyy-MM-dd"));         // datepicker 날짜 검색 init
-                commons.validate.replaceBlankRegex("#dreamDayRegForm #clCd");
-                commons.validate.toUpperCase("dreamDayRegForm #clCd");
-            },
-            /** 목록 조회 */
-            listAjax: function() {
-                const url = "${ApiUrl.API_DREAM_DAY_LIST_AJAX!}";
-                let ajaxData = {};
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.resultList, "dream_day_list");
-                });
+                commons.validate.replaceBlankRegex("#dreamPieceRegForm #clCd");
+                commons.validate.toUpperCase("dreamPieceRegForm #clCd");
             },
             /** 등록 */
             regAjax: function() {
@@ -35,8 +23,8 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${ApiUrl.API_DREAM_DAY_REG_AJAX!}";
-                    let ajaxData = new FormData($("#dreamDayRegForm")[0]);
+                    const url = "${ApiUrl.API_DREAM_PIECE_REG_AJAX!}";
+                    let ajaxData = new FormData($("#dreamPieceRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -46,18 +34,18 @@
                 });
             },
         }
-    })
+    })();
     /** 페이지 초기화시 처리 */
     $(document).ready(function() {
-        DreamDay.init();
+        DreamPiece.init();
     });
 </script>
 
-<div class="modal fade" id="dream_day_reg_modal" tabindex="-1" role="dialog" aria-labelledby="dreamDayRegModalTitle" aria-hidden="true">
+<div class="modal fade" id="dream_piece_reg_modal" tabindex="-1" role="dialog" aria-labelledby="dreamPieceRegModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="dreamDayRegModalLongTitle">[상세코드 등록]</h5>
+                <h5 class="modal-title" id="dreamPieceRegModalLongTitle">[상세코드 등록]</h5>
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times"></i>
                 </div>
@@ -65,14 +53,14 @@
             </div>
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
-                    <form name="dreamDayRegForm" id="dreamDayRegForm" class="form" enctype="multipart/form-data">
-                        <div id="dream_day_reg_div">
+                    <form name="dreamPieceRegForm" id="dreamPieceRegForm" class="form" enctype="multipart/form-data">
+                        <div id="dream_piece_reg_div">
                             <!-- contents -->
                         </div>
                     </form>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-sm btn-primary me-2"
-                                onclick="DreamDay.regAjax();"
+                                onclick="DreamPiece.regAjax();"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
                             <i class="bi bi-pencil-square"></i>저장
                         </button>

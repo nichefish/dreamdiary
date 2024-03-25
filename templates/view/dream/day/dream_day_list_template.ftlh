@@ -11,7 +11,7 @@
             <div>
                 <button type="button" class="btn btn-sm btn-primary"
                         onclick="DreamPiece.regModal({{dreamNo}});"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="">
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈 조각 <@spring.message "bs.tooltip.modal.reg"/>">
                     <i class="fas fa-user-circle fs-8 text-white"></i>
                     내 정보
                 </button>
