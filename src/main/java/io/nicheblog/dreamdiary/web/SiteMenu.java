@@ -1,8 +1,14 @@
 package io.nicheblog.dreamdiary.web;
 
+import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
+import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static io.nicheblog.dreamdiary.web.SiteMenu.SubMenu.USER_INFO;
@@ -18,8 +24,16 @@ import static io.nicheblog.dreamdiary.web.SiteMenu.SubMenu.USER_INFO;
 @Component("siteMenu")
 public class SiteMenu {
 
+    @Resource(name = "boardDefService")
+    private BoardDefService boardDefService;
+
+    private static List<SiteAcsInfo> boardDefMenu;
+    @PostConstruct
+    private void initialize() throws Exception {
+        BOARD.setSubMenuList(boardDefService.boardDefMenuList());
+    }
+
     // 공통화면 :: 로그인
-    public static String MENU_NO_MAIN = "01000000";
     public static SiteAcsInfo LGN_PAGE = new SiteAcsInfo(
             SiteTopMenu.NO_ASIDE,
             SiteTopMenu.NO_ASIDE.menuNo,
@@ -68,7 +82,6 @@ public class SiteMenu {
             SiteTopMenu.BOARD.menuNo,
             "게시판",
             SiteUrl.BOARD_POST_LIST
-            // TODO: 하위 게시판 목록 불러오기
     );
 
 

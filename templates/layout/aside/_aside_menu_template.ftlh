@@ -47,7 +47,7 @@
             <span class="menu-title <#if isNotTopMenu>text-inverse-light</#if>">${siteMenu.menuNm!}</span>
             <span class="menu-arrow"></span>
         </span>
-        <#list siteMenu.subMenuList as subMenu>
+        <#list siteMenu.subMenuList![] as subMenu>
             <div class="menu-sub menu-sub-accordion menu-active-bg">
                 <!-- 일정 > 전체 일정 확인 -->
                 <div class="menu-item" id="${subMenu.menuNo!}">

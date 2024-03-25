@@ -28,7 +28,7 @@
                 commons.validate.validateForm("#boardDefRegForm");
                 commons.validate.replaceBlankRegex("#boardDefRegForm .cddata");
                 commons.validate.onlyEngNum("#boardDefRegForm .cddata");
-                commons.validate.toUpperCase("#boardDefRegForm .cddata");
+                // commons.validate.toUpperCase("#boardDefRegForm .cddata");
                 commons.validate.onlyNum(".number");
             },
             /** 등록 (ajax) */

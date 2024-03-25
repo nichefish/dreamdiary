@@ -1,8 +1,13 @@
 package io.nicheblog.dreamdiary.web.mapstruct.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.web.SiteTopMenu;
+import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
+import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -16,7 +21,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {SiteUrl.class, SiteTopMenu.class})
 public interface BoardDefMapstruct
         extends BaseListMapstruct<BoardDefDto, BoardDefDto, BoardDefEntity> {
 
@@ -33,6 +38,15 @@ public interface BoardDefMapstruct
      */
     @Override
     BoardDefEntity toEntity(final BoardDefDto dto) throws Exception;
+    
+    /** 
+     * 메뉴 정보로 변환
+     */
+    @Mapping(target = "topMenu", expression = "java(SiteTopMenu.BOARD)")
+    @Mapping(target = "topMenuNo", expression = "java(SiteTopMenu.BOARD.menuNo)")
+    @Mapping(target = "menuNm", expression = "java(entity.getBoardNm())")
+    @Mapping(target = "url", expression = "java(SiteUrl.BOARD_POST_LIST + \"?boardCd=\" + entity.getBoardCd())")
+    SiteAcsInfo toMenu(final BoardDefEntity entity) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)

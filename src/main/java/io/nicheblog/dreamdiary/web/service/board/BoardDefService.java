@@ -1,15 +1,25 @@
 package io.nicheblog.dreamdiary.web.service.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseManageService;
+import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.board.BoardDefMapstruct;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
+import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.repository.board.BoardDefRepository;
 import io.nicheblog.dreamdiary.web.spec.board.BoardDefSpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * BoardDefService
@@ -46,6 +56,26 @@ public class BoardDefService
     @Override
     public BoardDefMapstruct getMapstruct() {
         return this.boardDefMapstruct;
+    }
+
+    /**
+     * boardDef 목록 메뉴 조회
+     * (SiteAcsInfo 목록 반환)
+     */
+    public List<SiteAcsInfo> boardDefMenuList() throws Exception {
+        Map<String, Object> searchParamMap = new HashMap<>() {{
+            put("useYn", "Y");
+        }};
+        Page<BoardDefEntity> boardDefPage = this.getListEntity(searchParamMap, Pageable.unpaged());
+        return boardDefPage.stream()
+                .map(entity -> {
+                    try {
+                        return boardDefMapstruct.toMenu(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
 }
