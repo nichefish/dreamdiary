@@ -4,11 +4,9 @@
 <#macro layout>
     <!DOCTYPE html>
     <html lang="ko">
-        <#assign topMenuNo = (siteAcsInfo.topMenuNo)!>
-        <#assign siteMenuNo = (siteAcsInfo.siteMenuNo)!>
         <#assign siteMenuNm = (siteAcsInfo.siteMenuNm)!>
         <#assign pageNm = (siteAcsInfo.pageNm)!>
-        <#assign asideAt = (siteAcsInfo.asideAt)!false>
+        <#assign asideAt = (siteAcsInfo.asideAt)!>
 
         <!--begin::Head-->
         <#include "/layout/_head.ftlh">
@@ -29,12 +27,12 @@
                 <#if asideAt>
                     <#include "/layout/aside/_aside_base.ftlh">
                     <#include "/layout/header/_header_base.ftlh">
-                    <#include "/layout/toolbar/_toolbar.ftlh">
+                    <#include "/layout/toolbar/_toolbar_base.ftlh">
                     <#include "/layout/topbar/_topbar_user_drawer.ftlh">
                 </#if>
 
                 <!--begin::Wrapper-->
-                <div class="wrapper d-flex flex-column flex-row-fluid <#if !(isPdf!false)>pt-10 mt-10</#if> h-auto">
+                <div class="wrapper d-flex flex-column flex-row-fluid pt-10 mt-10 h-auto">
                     <div id="kt_post" class="content d-flex flex-column flex-column-fluid">
                         <!--begin::Container-->
                         <div id="kt_content_container" class="container-xxl mw-100">

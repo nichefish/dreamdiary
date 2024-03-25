@@ -1,7 +1,6 @@
 <!--
  -- 레이아웃 > 사이드바 푸터
- -- @included in : aside/_menu
- -- @included in : aside/_menu_admin
+ -- @included in : aside/_aside_base
  -->
 <!--begin::Footer-->
 <div class="aside-footer flex-column-auto pb-7 px-6" id="kt_aside_footer">

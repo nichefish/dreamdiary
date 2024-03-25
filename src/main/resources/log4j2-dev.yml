@@ -1,7 +1,7 @@
 #log4j2 설정 파일 : 개발(dev)
 
 Configutation:
-    status: debug
+    status: info
 
     Properties:
         Property:
@@ -51,7 +51,7 @@ Configutation:
 
     Loggers:
         Root:
-            level: debug
+            level: info
             AppenderRef:
               - ref: Console_Appender
               - ref: File_Info_Appender

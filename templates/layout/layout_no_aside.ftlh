@@ -4,8 +4,6 @@
 <#macro layout>
     <!DOCTYPE html>
     <html lang="ko">
-        <#assign topMenuNo = (siteAcsInfo.topMenuNo)!>
-        <#assign siteMenuNo = (siteAcsInfo.siteMenuNo)!>
         <#assign siteMenuNm = (siteAcsInfo.siteMenuNm)!>
         <#assign pageNm = (siteAcsInfo.pageNm)!>
 
@@ -22,8 +20,6 @@
             <!--begin::Root-->
             <div class="d-flex flex-column flex-root">
                 <!--begin::Page-->
-                <!--layout-partial:sidebar/header/topbar/drawer-->
-                <#include "/layout/toolbar/_toolbar.ftlh">
 
                 <!--begin::Wrapper-->
                 <div class="wrapper d-flex flex-column flex-row-fluid h-auto">

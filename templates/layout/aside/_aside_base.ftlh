@@ -41,7 +41,7 @@
 <div id="kt_aside" class="aside aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside"
      data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
      data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
-     data-kt-drawer-toggle="#kt_aside_mobile_<#if (isMngr!false && isMngrMode!false)>admin_</#if>toggle">
+     data-kt-drawer-toggle="#kt_aside_mobile_<#if isMngrMode>admin_</#if>toggle">
     <!--begin::Brand-->
     <div class="aside-logo flex-column-auto mt-3 mb-1" id="kt_aside_logo">
         <!--begin::Logo-->
@@ -74,13 +74,18 @@
     <div class="separator mx-5 opacity-25 blink"></div>
 
     <!--begin::Aside menu::사용자/관리자에 따라 사이드메뉴 다르게 첨부-->
+    <div>
+        <#-- Debug -->
+        ${"isMngr: " + isMngr?string}
+        ${"isMngrMode: " + isMngrMode?string}
+        (isMngr: ${isMngr?string}, isMngrMode: ${isMngrMode?string})
+    </div>
     <div class="aside-menu flex-column-fluid">
-        (isMngr: ${(isMngr!false)?string}, isMngrMode: ${(isMngrMode!false)?string})
-<#--        <#if (isMngr!false && isMngrMode!false)>
+        <#if isMngrMode>
             <#include "/layout/aside/_aside_menu_admin.ftlh">
-        <#else>-->
+        <#else>
             <#include "/layout/aside/_aside_menu_portal.ftlh">
-<#--        </#if>-->
+        </#if>
         <#include "/layout/aside/_aside_footer.ftlh">
     </div>
 <!--end::Aside menu-->

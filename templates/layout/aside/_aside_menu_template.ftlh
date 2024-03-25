@@ -1,10 +1,12 @@
 <!--
  -- 레이아웃 > 기본 레이아웃
+ -- @included in : aside/_aside_menu_portal
+ -- @included in : aside/_aside_menu_admin
  -->
 <#macro layout topMenuNo siteMenu>
     <div class="menu-item">
         <div class="menu-content pb-2">
-            <span class="menu-section text-muted text-uppercase fs-8 ls-1">Notice</span>
+            <span class="menu-section text-muted text-uppercase fs-8 ls-1">${siteMenu.topMenuNm}</span>
         </div>
     </div>
     <#assign isNotTopMenu = (topMenuNo != siteMenu.topMenuNo) />

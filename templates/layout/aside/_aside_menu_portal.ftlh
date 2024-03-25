@@ -13,12 +13,6 @@
     <div class="menu menu-column menu-title-gray-600 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
          id="#kt_aside_menu" data-kt-menu="true">
         <!-- NOTICE -->
-        <div class="menu-item">
-            <div class="menu-content pb-2">
-                <span class="menu-section text-muted text-uppercase fs-8 ls-1">Notice</span>
-            </div>
-        </div>
-        <!-- 공지사항 -->
         <@menu.layout topMenuNo=topMenuNo siteMenu=SiteMenu.NOTICE />
 
         <!-- 꿈 관리 -->

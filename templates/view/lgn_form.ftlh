@@ -1,7 +1,7 @@
 <#--
   -- 로그인 화면
   -->
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_no_aside.ftlh" as layout >
 <#import "/spring.ftl" as spring />
 
 <@layout.layout>
@@ -115,7 +115,7 @@
 </style>
 
 <!--begin::Root-->
-<div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto my-auto">
+<div class="w-lg-500px bg-body rounded shadow-sm mt-20 p-10 p-lg-15 mx-auto my-auto">
     <form class="form w-100" name="lgnForm" id="lgnForm" novalidate="novalidate" method="post">
         <div class="aside-logo flex-column-auto mb-20" id="kt_aside_logo">
             <div class="d-flex justify-content-center">
