@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.config;
 
+import io.nicheblog.dreamdiary.api.ApiUrl;
 import io.nicheblog.dreamdiary.global.handler.UTF8DecodeResourceResolver;
 import io.nicheblog.dreamdiary.global.interceptor.FreemarkerInterceptor;
 import io.nicheblog.dreamdiary.web.SiteUrl;
@@ -106,11 +107,17 @@ public class WebMvcContextConfig
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // freemarker interceptor
+        // 화면 조회에만 적용, ajax 및 기타 작동에는 적용 안함
         registry.addInterceptor(freemarkerInterceptor)
                 .addPathPatterns("/")
-                .addPathPatterns("/**Ajax.do")
+                .addPathPatterns("/**.do")
                 .excludePathPatterns(STATIC_RESOURCES_URL_PATTERN)
-                .excludePathPatterns(SiteUrl.AUTH_LGN_FORM);
+                .excludePathPatterns(SiteUrl.AUTH_LGN_FORM)
+                .excludePathPatterns(SiteUrl.ERROR)
+                .excludePathPatterns(SiteUrl.ERROR + "/**")
+                .excludePathPatterns(ApiUrl.PREFIX_API + "/**")
+                .excludePathPatterns("/**Download.do")
+                .excludePathPatterns("/**Ajax.do");
 
         // device 감지 관련 인터셉터 수동 추가
         registry.addInterceptor(new DeviceResolverHandlerInterceptor());
