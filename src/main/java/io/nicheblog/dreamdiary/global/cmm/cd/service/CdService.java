@@ -105,15 +105,15 @@ public class CdService {
     /**
      * 공통 > 공통코드CL_CD, 상세코드DTL_CD로 상세코드명 조회
      */
-    // public String getDtlCdNm(
-    //         final String clCd,
-    //         final String dtlCd
-    // ) {
-    //     if (StringUtils.isEmpty(clCd) || StringUtils.isEmpty(dtlCd)) return null;
-    //     DtlCdEntity rsDtlCd = cdRepository.findByClCdAndDtlCd(clCd, dtlCd);
-    //     if (rsDtlCd == null) return null;
-    //     return rsDtlCd.getDtlCdNm();
-    // }
+    public String getDtlCdNm(
+            final String clCd,
+            final String dtlCd
+    ) {
+        if (StringUtils.isEmpty(clCd) || StringUtils.isEmpty(dtlCd)) return null;
+        DtlCdEntity rsDtlCd = cdRepository.findByClCdAndDtlCd(clCd, dtlCd);
+        if (rsDtlCd == null) return null;
+        return rsDtlCd.getDtlCdNm();
+    }
 
     /**
      * 공통 > 공통코드CL_CD, 상세코드DTL_CD로 상세코드 정보 조회
