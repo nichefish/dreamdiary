@@ -1,7 +1,7 @@
 <#--
   -- 에러 페이지 : 403 ACCESS DENIED
   -->
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_no_aside.ftlh" as layout >
 <#import "/spring.ftl" as spring />
 
 <@layout.layout>

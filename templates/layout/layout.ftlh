@@ -8,6 +8,9 @@
         <#assign pageNm = (siteAcsInfo.pageNm)!>
         <#assign asideAt = (siteAcsInfo.asideAt)!>
 
+        <#assign isMngr = isMngr!false>
+        <#assign isMngrMode = isMngrMode!false>
+
         <!--begin::Head-->
         <#include "/layout/_head.ftlh">
         <!--end::Head-->

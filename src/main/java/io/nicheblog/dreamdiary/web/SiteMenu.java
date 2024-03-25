@@ -34,8 +34,8 @@ public class SiteMenu {
     public static SiteAcsInfo DREAM = new SiteAcsInfo(
             SiteTopMenu.DREAM,
             MENU_NO_DREAM,
-            "메인",
-            SiteUrl.MAIN
+            "꿈",
+            SiteUrl.DREAM_DAY_PAGE
     );
 
     // 일정

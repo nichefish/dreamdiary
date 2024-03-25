@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.config;
 
-import io.nicheblog.dreamdiary.global.auth.interceptor.AuthInterceptor;
 import io.nicheblog.dreamdiary.global.handler.UTF8DecodeResourceResolver;
 import io.nicheblog.dreamdiary.global.interceptor.FreemarkerInterceptor;
 import io.nicheblog.dreamdiary.web.SiteUrl;
@@ -27,9 +26,6 @@ import java.util.List;
 @Configuration
 public class WebMvcContextConfig
         implements WebMvcConfigurer {
-
-    @Resource(name = "authInterceptor")
-    private AuthInterceptor authInterceptor;
 
     @Resource(name = "freemarkerInterceptor")
     private FreemarkerInterceptor freemarkerInterceptor;
@@ -109,17 +105,13 @@ public class WebMvcContextConfig
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // auth interceptor
-        registry.addInterceptor(authInterceptor);
         // freemarker interceptor
         registry.addInterceptor(freemarkerInterceptor)
-                .addPathPatterns("/**")
+                .addPathPatterns("/")
+                .addPathPatterns("/**Ajax.do")
                 .excludePathPatterns(STATIC_RESOURCES_URL_PATTERN)
-                .excludePathPatterns(SiteUrl.AUTH_LGN_FORM)
-                // .excludePathPatterns(SiteUrl.USER_ID_DUP_CHCK_AJAX)
-                // .excludePathPatterns(SiteUrl.USER_REQST_REG_FORM)
-                // .excludePathPatterns(SiteUrl.USER_REQST_REG_AJAX)
-                .excludePathPatterns("/api/**");
+                .excludePathPatterns(SiteUrl.AUTH_LGN_FORM);
+
         // device 감지 관련 인터셉터 수동 추가
         registry.addInterceptor(new DeviceResolverHandlerInterceptor());
     }

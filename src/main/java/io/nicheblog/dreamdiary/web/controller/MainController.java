@@ -51,5 +51,25 @@ public class MainController
         return "view/main/main_page";
     }
 
+    /**
+     * 메인 화면 :: 사용자
+     */
+    @RequestMapping(value = {SiteUrl.ADMIN_MAIN})
+    public String adminMainPage(
+            final LogActvtyParam logParam,
+            final ModelMap model
+    ) {
+
+        /* 사이트 메뉴 설정 */
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("메인"));
+
+        // TODO: 접근 권한 통제
+
+        // 관리자페이지 화면 모드 세팅
+        session.setAttribute("userMode", Constant.AUTH_MNGR);
+
+        return "view/main/main_page";
+    }
+
 
 }

@@ -34,6 +34,10 @@ public class SiteAcsInfo {
      * 사이드바 상위 메뉴 번호 (메뉴 활성화용)
      */
     private String topMenuNo;
+    /**
+     * 사이드바 상위 메뉴 이름 (메뉴 표시용)
+     */
+    private String topMenuNm;
 
     /**
      * 사이드바 메뉴 이름 (로깅 및 사이트 헤더 표시용)
@@ -61,6 +65,7 @@ public class SiteAcsInfo {
     public SiteAcsInfo(SiteTopMenu siteTopMenu, String siteMenuNo, String siteMenuNm, String url) {
         this.topMenu = siteTopMenu;
         this.topMenuNo = siteTopMenu.menuNo;
+        this.topMenuNm = siteTopMenu.name();
         this.menuNo = siteMenuNo;
         this.menuNm = siteMenuNm;
         this.url = url;
