@@ -36,7 +36,8 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "dream_day_list");
+                    console.log(res.resultList);
+                    commons.util.handlebarsTemplate(res.resultList, "dream_day_list");
                 });
             },
             /** 등록 */
@@ -51,8 +52,7 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                console.log(res.resultList);
-                                // if (res.result) commons.util.blockUIReload();;
+                                if (res.result) commons.util.blockUIReload();;
                             });
                     });
                 });
@@ -80,7 +80,9 @@
     <!--begin::Card header 검색+헤더 UI -->
     <#include "/view/dream/day/dream_day_page_header.ftlh">
 
-
+    <div class="card-body p-9" id="dream_day_list_div">
+        <!-- handlebars template goes in here -->
+    </div>
 </div>
 <!--end::Card-->
 
