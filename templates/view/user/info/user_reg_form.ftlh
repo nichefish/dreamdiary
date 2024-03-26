@@ -82,7 +82,7 @@
                                 showCancelButton: true,
                             }).then(function(result) {
                                 if (!result.value) return;
-                                Page.fn<#if isReg>Reg</#if><#if isMdf>Mdf</#if>Ajax();
+                                Page.<#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax();
                             });
                         },
                         errorPlacement : function(error, element) {
@@ -134,7 +134,7 @@
                 });
             },
             /** 아이디 중복 체크(Ajax) */
-            fnUserIdDupChckAjax: function() {
+            userIdDupChckAjax: function() {
                 const userIdSpan = $("#userIdSpan");
                 const userId = $("#userId").val();
                 const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
@@ -158,18 +158,18 @@
                 });
             },
             /** 등록/수정 처리(Ajax) */
-            fn<#if isReg>Reg</#if><#if isMdf>Mdf</#if>Ajax: function() {
+            <#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax: function() {
                 const url = "<#if isReg>${SiteUrl.USER_REG_AJAX!}</#if><#if isMdf>${SiteUrl.USER_MDF_AJAX!}</#if>";
                 let ajaxData = new FormData($("#userRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) Page.fnList();
+                            if (res.result) Page.list();
                         });
                 });
             },
             /** 패스워드 초기화 */
-            fnPwResetAjax: function() {
+            pwResetAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.resetPw"/>,
                     showCancelButton: true,
@@ -186,7 +186,7 @@
                 });
             },
             /** 목록 화면 이동 */
-            fnList: function() {
+            list: function() {
                 commons.util.blockUIReplace("${SiteUrl.USER_LIST!}<#if isMdf>?isBackToList=Y</#if>");
             }
         }
@@ -229,7 +229,7 @@
                 </div>
                 <div class="col-xl-2 col-4">
                     <button type="button" class="btn btn-sm btn-secondary required blink" id="idDupChckBtn"
-                            onclick="Page.fnUserIdDupChckAjax();"
+                            onclick="Page.userIdDupChckAjax();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="입력한 아이디에 대한&#10;중복 여부를 확인합니다.">
                         <span class="hidden-table">아이디 </span>중복 확인
                     </button>
@@ -276,7 +276,7 @@
             <#if isMdf>
                 <div class="col-xl-2">
                     <div class="fs-6 fw-bold mb-3 text-start">
-                        <button type="button" class="btn btn-sm btn-secondary" onclick="Page.fnPwResetAjax();"
+                        <button type="button" class="btn btn-sm btn-secondary" onclick="Page.pwResetAjax();"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호를 초기화합니다.&#10;로그인 정책 관리 메뉴에서&#10;초기화 값을 설정할 수&#10;있습니다.">
                             비밀번호 초기화
                         </button>
@@ -419,7 +419,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
                 <i class="bi bi-pencil-square"></i>저장
             </button>
-            <button type="button" class="btn btn-light" onclick="Page.fnList();"
+            <button type="button" class="btn btn-light" onclick="Page.list();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="목록 화면으로 돌아갑니다.">
                 취소
             </button>

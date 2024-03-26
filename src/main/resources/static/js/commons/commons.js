@@ -427,7 +427,7 @@ commons.util = (function() {
         /**
          * 모든 table 헤더에 클릭 이벤트를 설정한다.
          */
-        fnSortTable: function() {
+        sortTable: function() {
             if (typeof Page === 'undefined') { var Page = {}; }
             let tables = document.getElementsByTagName("table");
             for (let i = 0; i < tables.length; ++i) {
@@ -448,7 +448,7 @@ commons.util = (function() {
         /**
          * 특정 테이블 헤더에 해당하는 열을 Sort한다.
          */
-        fnSortTableByIdx: function(tableId, colIdx, sortMode) {
+        sortTableByIdx: function(tableId, colIdx, sortMode) {
             let table = document.getElementById(tableId);
             commons.util.sortTable(table, colIdx, sortMode);
         },
@@ -457,6 +457,7 @@ commons.util = (function() {
          * 테이블(텍스트, 숫자) 정렬 함수
          */
         sortTable: function(table, n, sortMode) {
+            if (table.tBodies === undefined) return;
             let tbody = table.tBodies[0];
             let rows = tbody.getElementsByTagName("tr");
 
@@ -486,6 +487,7 @@ commons.util = (function() {
          * 테이블(추가추가된 input값 :: 텍스트, 숫자) 정렬 함수
          */
         sortReqstTable: function(table, n, sortMode) {
+            if (table.tBodies === undefined) return;
             let tbody = table.tBodies[0];
             let rows = tbody.getElementsByTagName("tr");
 

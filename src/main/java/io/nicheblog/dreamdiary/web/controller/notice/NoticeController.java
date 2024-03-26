@@ -109,8 +109,8 @@ public class NoticeController
             // listParamMap.put("boardCd", "notice");
             // Page<BoardTagDto> tagList = boardTagService.getListDto(listParamMap, Pageable.unpaged());
             // model.addAttribute("tagList", tagList.getContent());
-            // isSuccess = true;
-            // resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
             CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);

@@ -73,7 +73,7 @@
                                     showCancelButton: true,
                                 }).then(function(result) {
                                     if (!result.value) return;
-                                    Page.fn<#if isMdf>Mdf<#else>Reg</#if>Ajax();
+                                    Page.<#if isMdf>mdf<#else>reg</#if>Ajax();
                                 });
                             }
                         },
@@ -85,30 +85,30 @@
                 });
             },
             /** submit */
-            fnSubmit: function() {
+            submit: function() {
                 tinymce.activeEditor.save();
                 Page.submitMode = "submit";
                 $("#noticeRegForm").submit();
             },
             /** 미리보기 팝업 호출 */
-            fnPreview: function() {
+            preview: function() {
                 tinymce.activeEditor.save();
                 Page.submitMode = "preview";
                 $("#noticeRegForm").submit();
             },
             /** 등록/수정 처리(Ajax) */
-            fn<#if isMdf>Mdf<#else>Reg</#if>Ajax: function () {
+            <#if isMdf>mdf<#else>reg</#if>Ajax: function () {
                 let ajaxData = new FormData($("#noticeRegForm")[0]);
                 const url = " <#if isMdf>${SiteUrl.NOTICE_MDF_AJAX!}<#else>${SiteUrl.NOTICE_REG_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) Page.fnList();
+                            if (res.result) Page.list();
                         });
                 }, 'block');
             },
             /** 목록 화면 이동 */
-            fnList: function() {
+            list: function() {
                 const listUrl = "${SiteUrl.NOTICE_LIST!}<#if isMdf>?isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);
             }
@@ -280,7 +280,7 @@
     </form>
     <div class="separator my-8"></div>
     <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-primary mx-2 float-start" onclick="Page.fnPreview();"
+        <button type="button" class="btn btn-primary mx-2 float-start" onclick="Page.preview();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                 title="작성한 내용에 대하여&#10;미리보기 팝업을 호출합니다.">
             <i class="bi bi-pencil-square"></i>
@@ -289,14 +289,14 @@
             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
         <span>
-            <button type="button" class="btn btn-primary mx-2" onclick="Page.fnSubmit();"
+            <button type="button" class="btn btn-primary mx-2" onclick="Page.submit();"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.save"/>">
                 <i class="bi bi-pencil-square"></i>
                 <span class="indicator-label">저장</span>
                 <span class="indicator-progress">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
             </button>
-            <a href="javascript:void(0);" class="btn btn-light" onclick="Page.fnList(true);"
+            <a href="javascript:void(0);" class="btn btn-light" onclick="Page.list(true);"
                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.list"/>">
                 <span class="indicator-label">취소</span>
             </a>

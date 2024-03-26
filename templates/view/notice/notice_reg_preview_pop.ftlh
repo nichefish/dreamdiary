@@ -1,7 +1,8 @@
 <#--
-  -- 공지사항 > 상세 화면
+  -- 공지사항 > 글작성 미리보기 팝업
+  -- (사이드바 없음)
   -->
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_no_aside.ftlh" as layout >
 <#import "/spring.ftl" as spring />
 
 <@layout.layout>

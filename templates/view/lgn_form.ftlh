@@ -1,5 +1,6 @@
 <#--
   -- 로그인 화면
+  -- (사이드바 없음)
   -->
 <#import "/layout/layout_no_aside.ftlh" as layout >
 <#import "/spring.ftl" as spring />

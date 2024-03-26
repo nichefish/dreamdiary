@@ -86,13 +86,13 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) Page.fnList();
+                                if (res.result) Page.list();
                             });
                     });
                 });
             },
             /** 목록 화면 이동 */
-            fnList: function() {
+            list: function() {
                 const listUrl = "${SiteUrl.CL_CD_LIST!}?isBackToList=Y";
                 commons.util.blockUIReplace(listUrl);
             },
@@ -211,7 +211,7 @@
             <i class="bi bi-trash"></i>삭제
         </button>
         <button type="button" class="btn btn-sm btn-light"
-                onclick="Page.fnList();"
+                onclick="Page.list();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
             <i class="bi bi-list"></i>목록
         </button>
