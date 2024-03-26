@@ -4,142 +4,136 @@
 -- @database : mariadb
 -- @author : nichefish
 
--- ---------- --
+-- -----------------------
 
 -- 복합키 요소에 대한 시퀀스 테이블
--- AUTO_INCREMENT가 먹지 않는 복합키 요소에 대하여 사용
-CREATE TABLE IF NOT EXISTS CMM_SEQ (
-    SEQ_ID INT PRIMARY KEY AUTO_INCREMENT COMMENT '시퀀스ID',
-    SEQ_NM VARCHAR(30) COMMENT '시퀀스 이름',
-    SEQ_VAL INT NOT NULL DEFAULT 0 COMMENT '시퀀스 값'
+-- → AUTO_INCREMENT가 먹지 않는 복합키 요소에 대하여 사용
+CREATE TABLE IF NOT EXISTS cmm_sequence (
+    seq_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '시퀀스 ID',
+    seq_nm VARCHAR(30) COMMENT '시퀀스 이름',
+    seq_val INT NOT NULL DEFAULT 0 COMMENT '시퀀스 값'
 ) COMMENT = '복합키 시퀀스';
 
--- ---------- --
+-- -----------------------
 
 -- 분류 코드
-CREATE TABLE IF NOT EXISTS CMM_CL_CD  (
-    CL_CD VARCHAR(20) NOT NULL PRIMARY KEY COMMENT '분류 코드',
-    CL_CD_NM VARCHAR(40) COMMENT '분류 코드명',
-    CL_CD_DC VARCHAR(400) COMMENT '분류 코드 설명',
+CREATE TABLE IF NOT EXISTS cmm_cl_cd  (
+    cl_cd VARCHAR(50) NOT NULL PRIMARY KEY COMMENT '분류코드',
+    cl_cd_nm VARCHAR(50) COMMENT '분류코드 이름',
+    cl_cd_dc VARCHAR(400) COMMENT '분류코드 설명',
     -- MANAGE
-    SORT_ORDR INT DEFAULT 0 COMMENT '정렬 순서',
-    USE_YN CHAR(1) DEFAULT 'Y' COMMENT '사용여부',
+    sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
+    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부',
     -- AUDIT
-    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
-    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
-    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
-    MDF_DT DATETIME COMMENT '수정일시',
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부'
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 ) COMMENT = '분류 코드';
 
 -- 상세 코드
-CREATE TABLE IF NOT EXISTS CMM_DTL_CD (
-    CL_CD VARCHAR(20) COMMENT '분류 코드',
-    DTL_CD VARCHAR(30) COMMENT '상세 코드',
-    DTL_CD_NM VARCHAR(40) COMMENT '상세 코드명',
-    DTL_CD_DC VARCHAR(400) COMMENT '상세 코드 설명',
+CREATE TABLE IF NOT EXISTS cmm_dtl_cd (
+    cl_cd VARCHAR(50) COMMENT '분류코드',
+    dtl_cd VARCHAR(50) COMMENT '상세코드',
+    dtl_cd_nm VARCHAR(40) COMMENT '상세코드 이름',
+    dtl_cd_dc VARCHAR(400) COMMENT '상세코드 설명',
     -- MANAGE
-    SORT_ORDR INT DEFAULT 0 COMMENT '정렬 순서',
-    USE_YN CHAR(1) DEFAULT 'Y' COMMENT '사용여부',
+    sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
+    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부',
     -- AUDIT
-    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
-    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
-    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
-    MDF_DT DATETIME COMMENT '수정일시',
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부',
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부',
     -- CONSTRAINT
-    PRIMARY KEY (CL_CD, DTL_CD)
+    PRIMARY KEY (cl_cd, dtl_cd)
 ) COMMENT = '상세 코드';
 
--- ---------- --
+-- -----------------------
 
 -- 로그인 정책
-CREATE TABLE IF NOT EXISTS LGN_POLICY (
-    LGN_POLICY_NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '로그인 정책 번호',
-    LGN_TRY_LMT INT COMMENT '로그인 정책 번호',
-    PW_CHG_DY INT,
-    LGN_LOCK_DY INT,
-    PW_FOR_RESET VARCHAR(20),
+CREATE TABLE IF NOT EXISTS lgn_policy (
+    lgn_policy_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '로그인 정책 번호',
+    lgn_try_lmt INT COMMENT '로그인 시도 제한 횟수',
+    pw_chg_dy INT COMMENT '패스워드 변경 주기',
+    lgn_lock_dy INT COMMENT '계정 잠금 주기',
+    pw_for_reset VARCHAR(20) COMMENT '리셋할 패스워드',
     -- AUDIT
-    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
-    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
-    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
-    MDF_DT DATETIME COMMENT '수정일시',
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부'
+    regstr_id VARCHAR(20) comment '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 ) COMMENT = '로그인 정책';
 
--- ---------- --
+-- -----------------------
 
 -- 첨부파일
-CREATE TABLE IF NOT EXISTS ATCH_FILE (
-    ATCH_FILE_NO BIGINT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 번호',
+CREATE TABLE IF NOT EXISTS atch_file (
+    atch_file_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 번호',
     -- AUDIT
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 ) COMMENT = '첨부파일';
 
 -- 첨부파일 상세
-CREATE TABLE IF NOT EXISTS ATCH_FILE_DTL (
-    ATCH_FILE_DTL_NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 상세 번호',
-    ATCH_FILE_NO BIGINT COMMENT '첨부파일 번호',
-    FILE_SN INT COMMENT '파일 순번',
-    ORGN_FILE_NM VARCHAR(200) COMMENT '원본파일명',
-    STRE_FILE_NM VARCHAR(200) COMMENT '저장파일명',
-    FILE_EXTN VARCHAR(10) COMMENT '파일 확장자',
-    FILE_STRE_PATH VARCHAR(200) COMMENT '파일 저장 경로',
-    FILE_SIZE INT COMMENT '파일 크기(BYTE)',
-    URL VARCHAR(500) COMMENT '파일 URL',
+CREATE TABLE IF NOT EXISTS atch_file_dtl (
+    atch_file_dtl_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 상세 번호',
+    atch_file_no INT COMMENT '첨부파일 번호',
+    file_sn INT COMMENT '파일 순번',
+    orgn_file_nm VARCHAR(200) COMMENT '원본파일명',
+    stre_file_nm VARCHAR(200) COMMENT '저장파일명',
+    file_extn VARCHAR(10) COMMENT '파일 확장자',
+    file_stre_path VARCHAR(200) COMMENT '파일 저장 경로',
+    file_size INT COMMENT '파일 크기(BYTE)',
+    url VARCHAR(500) COMMENT '파일 URL',
     -- AUDIT
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부',
     -- CONSTRAINT
-    FOREIGN KEY(ATCH_FILE_NO) REFERENCES ATCH_FILE (ATCH_FILE_NO)
+    FOREIGN KEY(atch_file_no) REFERENCES atch_file (atch_file_no)
 ) COMMENT = '첨부파일 상세';
 
--- ---------- --
+-- -----------------------
 
 -- 활동 로그
-CREATE TABLE IF NOT EXISTS LOG_ACTVTY (
-    LOG_ACTVTY_NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    LOG_TY_CD VARCHAR(50),
-    LOG_DT DATETIME,
-    LOG_USER_ID VARCHAR(20),
-    --
-    ACTVTY_CTGR_CD VARCHAR(50),
-    ACTION_TY_CD VARCHAR(50),
-    --
-    URL VARCHAR(400),
-    PARAM VARCHAR(500),
-    CN VARCHAR(400),
-    IP_ADDR VARCHAR(20),
-    REFERER VARCHAR(1000),
-    RSLT CHAR(1),
-    RSLT_MSG VARCHAR(50),
-    EXCEPTION_NM VARCHAR(100),
-    EXCEPTION_MSG VARCHAR(4000)
+CREATE TABLE IF NOT EXISTS log_actvty (
+    log_actvty_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '활동 로그 번호',
+    log_dt DATETIME COMMENT '로그 기록 일시',
+    log_user_id VARCHAR(20) COMMENT '로그 사용자 ID',
+    actvty_ctgr_cd VARCHAR(50) COMMENT '활동 카테고리 코드',
+    action_ty_cd VARCHAR(50) COMMENT '액션 타입 코드',
+    url VARCHAR(400) COMMENT '요청 URL',
+    param VARCHAR(500) COMMENT '요청 파라미터',
+    cn VARCHAR(400) COMMENT '내용',
+    ip_addr VARCHAR(20) COMMENT 'IP 주소',
+    referer VARCHAR(1000) COMMENT '리퍼러 URL',
+    rslt CHAR(1) COMMENT '결과',
+    rslt_msg VARCHAR(50) COMMENT '결과 메시지',
+    exception_nm VARCHAR(100) COMMENT '예외 이름',
+    exception_msg VARCHAR(4000) COMMENT '예외 메시지'
 ) COMMENT = '활동 로그';
 
--- 활동 로그 URL-이름 매칭
-CREATE TABLE IF NOT EXISTS LOG_ACTVTY_URL_NM (
-    LOG_ACTVTY_URL_NM_NO INT AUTO_INCREMENT PRIMARY KEY,
-    URL VARCHAR(200) UNIQUE,
-    URL_NM VARCHAR(200),
+-- 활동 로그 URL명
+CREATE TABLE IF NOT EXISTS log_actvty_url_nm (
+    log_actvty_url_nm_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '활동 로그 URL명 번호',
+    url VARCHAR(200) UNIQUE COMMENT 'URL',
+    url_nm VARCHAR(200) COMMENT 'URL 이름',
     -- AUDIT
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 ) COMMENT = '활동 로그 URL명';
 
 -- 시스템 로그
-CREATE TABLE IF NOT EXISTS LOG_SYS (
-    LOG_SYS_NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    LOG_TY_CD VARCHAR(50),
-    LOG_DT DATETIME,
-    LOG_USER_ID VARCHAR(20),
+CREATE TABLE IF NOT EXISTS log_sys (
+    log_sys_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '시스템 로그 번호',
+    log_dt DATETIME COMMENT '로그 날짜 및 시간',
+    log_user_id VARCHAR(20) COMMENT '로그 기록 사용자 ID',
     --
-    ACTVTY_CTGR_CD VARCHAR(50),
-    ACTION_TY_CD VARCHAR(50),
+    actvty_ctgr_cd VARCHAR(50) COMMENT '활동 카테고리 코드',
     --
-    URL VARCHAR(400),
-    CN VARCHAR(400),
-    RSLT CHAR(1),
-    RSLT_MSG VARCHAR(500),
-    EXCEPTION_NM VARCHAR(100),
-    EXCEPTION_MSG VARCHAR(4000)
+    cn VARCHAR(400) COMMENT '내용',
+    rslt CHAR(1) COMMENT '결과',
+    rslt_msg VARCHAR(500) COMMENT '결과 메시지',
+    exception_nm VARCHAR(100) COMMENT '예외 이름',
+    exception_msg VARCHAR(4000) COMMENT '예외 메시지'
 ) COMMENT = '시스템 로그';
