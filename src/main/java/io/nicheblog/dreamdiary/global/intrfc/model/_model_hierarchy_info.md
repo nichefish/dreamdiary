@@ -1,37 +1,24 @@
 # Model 기본 상속 구조:
 
-## CmmManageDto
+#### ↓ BaseCrudDto :: implements Serializable
+    -> rnum
 
-#### ↓ CmmCrudDto
-
-    -> //
-
-#### ↓ CmmAuditRegDto
-
+#### ↓ BaseAuditRegDto :: extends BaseCrudDto
     -> regstrId, regDt
 
-#### ↓ CmmAuditDto
-
+#### ↓ BaseAuditDto :: extends BaseAuditRegDto
     -> mdfusrId, mdfDt
 
-#### ↓ CmmManageDto
+#### ↓ BaseManageDto :: extends BaseAuditDto
+    -> useYn, sortOrdr
 
-    -> sortOrdr, useYn
-
-## CmmPostDto // CmmPostListDto
-
-#### ↓ CmmCrudDto
-
-    -> //
-
-#### ↓ CmmAuditRegDto
-
-    -> regstrId, regDt
-
-#### ↓ CmmAuditDto
-
-    -> mdfusrId, mdfDt
-
-#### ↓ CmmAtchDto
-
+#### ↓ BaseAtchDto :: extends BaseAuditDto
     -> atchFileNo, atchFileInfo
+
+#### ↓ BaseClsfDto / BaseClsfDto :: extends BaseAtchDto
+    -> postNo, boardCd (composite_key)
+    -> @commentList, @tagList
+
+#### ↓ BasePostDto / BasePostListDto :: extends BaseClsfEntity
+    -> title, cn, ctgrCd,
+    -> @managtrList, @viewerList

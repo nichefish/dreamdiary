@@ -1,37 +1,24 @@
 # Entity 기본 상속 구조:
 
-## CmmManageEntity
+#### ↓ BaseCrudEntity :: implements Serializable
+    - DEL_YN
 
-#### ↓ CmmCrudEntity
-
-    -> DEL_YN
-
-#### ↓ CmmAuditRegEntity
-
+#### ↓ BaseAuditRegEntity :: extends BaseCrudEntity
     -> REGSTR_ID, REG_DT
 
-#### ↓ CmmAuditEntity
-
+#### ↓ BaseAuditEntity :: extends BaseAuditRegEntity
     -> MDFUSR_ID, MDF_DT
 
-#### ↓ CmmManageEntity
-
+#### ↓ BaseManageEntity :: extends BaseAuditEntity
     -> SORT_ORDR, USE_YN
 
-## CmmPostEntity
-
-#### ↓ CmmCrudEntity
-
-    -> DEL_YN
-
-#### ↓ CmmAuditRegEntity
-
-    -> REGSTR_ID, REG_DT
-
-#### ↓ CmmAuditEntity
-
-    -> MDFUSR_ID, MDF_DT
-
-#### ↓ CmmAtchEntity
-
+#### ↓ BaseAtchEntity :: extends BaseAuditEntity
     -> ATCH_FILE_NO, ATCH_FILE_INFO
+
+#### ↓ BaseClsfEntity :: extends BaseAtchEntity
+    -> POST_NO, BOARD_CD (composite_key)
+    -> @commentList, @tagList
+
+#### ↓ BasePostEntity :: extends BaseClsfEntity
+    -> title, cn, ctgrCd,
+    -> @managtrList, @viewerList
