@@ -70,7 +70,6 @@
     <form name="procForm" id="procForm">
         <input type="hidden" name="postNo" id="postNo" value="" />
         <input type="hidden" name="boardCd" id="boardCd" value="notice" />
-        <input type="hidden" name="actvtyCtgrCd" id="actvtyCtgrCd" value="${actvtyCtgrCd!}" />
     </form>
     <#include "/view/notice/notice_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">

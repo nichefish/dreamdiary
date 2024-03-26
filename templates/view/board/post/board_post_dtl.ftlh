@@ -224,7 +224,7 @@
         </button>
     </div>
 
-    <#include "/view/_component/_comment.ftlh">
+    <#include "/view/cmm/comment/_comment.ftlh">
 </div>
 
 </@layout.layout>

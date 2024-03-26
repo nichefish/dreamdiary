@@ -24,7 +24,7 @@
                                 </div>
                             </td>
                             <td class="col-lg-10 col-9 text-start fs-small">
-                                <div class="div-textarea-smp">{{commentCn}}</div>
+                                <div class="div-textarea-smp">{{cn}}</div>
                             </td>
                         </tr>
                     {{/each}}
