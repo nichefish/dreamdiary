@@ -34,7 +34,7 @@
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}");
             },
             /** 목록 검색 */
-            fnSearch: function() {
+            search: function() {
                 $("#pageNo").val("");
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}?actionTyCd=SEARCH");
             },

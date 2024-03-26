@@ -22,7 +22,7 @@
                 commons.util.fnSortTable();
             },
             /** 목록 검색 */
-            fnSearch: function() {
+            search: function() {
                 $("#pageNo").val("");
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.CL_CD_LIST!}?actionTyCd=SEARCH");
             },
@@ -88,13 +88,13 @@
                 });
             },
             /** 상세 화면 이동 */
-            fnDtl: function(clCd) {
+            dtl: function(clCd) {
                 commons.util.blockUIRequest();
                 $("#procForm #clCd").val(clCd);
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.CL_CD_DTL!}");
             },
             /** 상세 모달 팝업 호출 */
-            fnDtlAjax: function(clCd) {
+            dtlAjax: function(clCd) {
                 event.stopPropagation();
                 const url = "${SiteUrl.CL_CD_DTL_AJAX!}";
                 let ajaxData = { "clCd": clCd };
@@ -193,7 +193,7 @@
         <!--begin::Table body-->
         <tbody>
             <#list clCdList![] as clCd>
-                <tr class="bg-hover-secondary" onclick="Page.fnDtl('${clCd.clCd!}');">
+                <tr class="bg-hover-secondary" onclick="Page.dtl('${clCd.clCd!}');">
                     <td class="text-center hidden-table">
                         ${clCd.rnum!}
                     </td>
@@ -201,7 +201,7 @@
                         ${clCd.clCd!}
                         <a class="badge badge-secondary ms-2 p-2 btn-white blank blink-slow float-end"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                            <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.fnDtlAjax('${clCd.clCd!}');"></i>
+                            <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${clCd.clCd!}');"></i>
                         </a>
                     </td>
                     <td class="text-start ps-6">

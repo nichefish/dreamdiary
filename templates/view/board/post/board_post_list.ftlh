@@ -1,5 +1,5 @@
 <#--
-  -- 공지사항 > 목록 화면
+  -- 게시판 > 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
 <#import "/spring.ftl" as spring />
@@ -22,42 +22,43 @@
                 commons.util.fnSortTable();
             },
             /** 목록 검색 */
-            search: function() {
+            search: function () {
                 $("#pageNo").val("");
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.NOTICE_LIST!}?actionTyCd=SEARCH");
+                commons.util.blockUISubmit("#listForm", "${SiteUrl.BOARD_POST_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
             myPapr: function () {
-                const url = "${SiteUrl.NOTICE_LIST!}";
-                let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
+                let boardCd = $("#boardCd").val();
+                const url = "${SiteUrl.BOARD_POST_LIST!}";
+                let param = "?boardCd="+boardCd+"&searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
             /** 전체 목록 조회 */
             resetSearch: function() {
-                commons.util.blockUIReplace("${SiteUrl.NOTICE_LIST!}");
+                commons.util.blockUIReplace("${SiteUrl.BOARD_POST_LIST!}?boardCd="+$("#boardCd").val());
             },
             /** 등록 화면 이동 */
-            regForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_REG_FORM!}");
+            regForm: function () {
+                commons.util.blockUISubmit("#procForm", "${SiteUrl.BOARD_POST_REG_FORM!}");
             },
             /** 상세 화면 이동 */
-            dtl: function(postNo) {
+            dtl: function (postNo) {
                 $("#procForm #postNo").val(postNo);
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_DTL!}");
+                commons.util.blockUISubmit("#procForm", "${SiteUrl.BOARD_POST_DTL!}");
             },
             /** 상세 모달 팝업 호출 */
             dtlAjax: function (postNo) {
                 event.stopPropagation();
-                const url = "${SiteUrl.NOTICE_DTL_AJAX!}";
+                const url = "${SiteUrl.BOARD_POST_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo, "boardCd": $("#boardCd").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "notice_dtl", "show");
+                    commons.util.handlebarsTemplate(res.resultObj, "board_post_dtl", "show");
                 });
-            }
+            },
         }
     }();
 
@@ -69,9 +70,9 @@
 <div class="card post">
     <form name="procForm" id="procForm">
         <input type="hidden" name="postNo" id="postNo" value=""/>
-        <input type="hidden" name="boardCd" id="boardCd" value="notice"/>
+        <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>
     </form>
-    <#include "/view/notice/notice_list_header.ftlh">
+    <#include "/view/board/post/board_post_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>
@@ -81,27 +82,27 @@
                 <th class="col-lg-1 text-center wb-keepall hidden-table">첨부파일</th>
                 <th class="col-lg-2 col-3 text-center wb-keepall">작성자</th>
                 <th class="text-center wb-keepall w-15 hidden-table">등록일</th>
-                <th class="text-center wb-keepall w-10 hidden-table">조회수</th>
+                <th class="text-center wb-keepall w-15 hidden-table">조회수</th>
             </tr>
         </thead>
         <!--end::Table head-->
         <!--begin::Table body-->
         <tbody>
-        <!-- 공지사항 상단고정 목록 -->
-        <#list noticeFxdList![] as post>
-            <tr class="bg-fxd-list bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
+        <!-- 상단고정목록 -->
+        <#list postFxdList![] as post>
+            <tr class="bg-fxd-list bg-hover-secondary" onclick="Page.dtl('${post.postNo!}', '${post.notionPageId!}');">
                 <td class="text-center hidden-table">
                     -
                 </td>
                 <td class="text-start title-fxd <#if post.tagStrList??>pb-4</#if>">
                     <div class="row d-flex align-items-center justify-content-between">
                         <div class="col-xl-8 col-12">
-                            <a href="${SiteUrl.NOTICE_DTL!}?boardCd=notice&postNo=${post.postNo!}"
+                            <a href="${SiteUrl.BOARD_POST_DTL!}?boardCd=${post.boardCd!}&postNo=${post.postNo!}&notionPageId=${post.notionPageId!}"
                                class="title-fxd vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
                                 </#if>
-                                ${post.title!}
+                                ${post.postSj!}
                             </a>
                             <#if (((post.imprtcYn)!"N") == "Y")!false>
                                 <span class="fs-4 blink">&#128680;</span>
@@ -109,15 +110,14 @@
                             <!-- 수정권한 표시 -->
                             <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
                                 <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="관리자 수정 가능"></i>
+                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
                             <#elseif ((post.mdfable!"") == (Constant.MDFABLE_USER)) || ((post.mdfable!"") == (Constant.MDFABLE_ALL))>
                                 <i class="bi bi-people-fill ms-1 blink-slow"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="모든 사용자가 수정 가능"></i>
+                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모든 사용자가 수정 가능"></i>
                             </#if>
                             <#if post.commentCnt gt 0>
-                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
-                                      onclick="CommentList.fnModal('${post.postNo!}');"
-                                      data-bs-toggle="tooltip" data-bs-placement="top" title="댓글 모달 팝업 호출">
+                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
+                                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
                                     [${post.commentCnt!}]
                                 </span>
                             </#if>
@@ -129,14 +129,14 @@
                                     <#list post.tagStrList as tag>
                                         <span class="text-muted pe-1" onclick="Tag.dtlAjax('${tag!}')"
                                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                                              title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
+                                              title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">f
                                             #<span class="border-bottom text-primary fw-lighter opacity-hover">${tag!"-"}</span>
                                         </span>
                                     </#list>
                                 </span>
                             </#if>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                               data-bs-toggle="tooltip" data-bs-placement="top" title="모달 팝업으로 보기">
+                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
                                 <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
@@ -145,7 +145,7 @@
                 <td class="text-center col-form-label hidden-table">
                     <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
                         <a class="badge badge-secondary p-2 btn-white blank blink-slow"
-                           data-bs-toggle="tooltip" data-bs-placement="top" title="첨부파일">
+                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
                             <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileId!}');"></i>
                         </a>
                     <#else>
@@ -170,25 +170,24 @@
                     </span>
                 </td>
                 <td class="text-center hidden-table">
-                    ${post.hitCnt!0?string.number}
+                    ${post.postHit!0?string.number}
                 </td>
             </tr>
         </#list>
-        <!-- 공지사항 목록 -->
-        <#list noticeList![] as post>
-            <tr class="bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
+        <#list postList![] as post>
+            <tr class="bg-hover-secondary" onclick="Page.dtl('${post.postNo!}', '${post.notionPageId!}');">
                 <td class="text-center hidden-table">
                     ${post.rnum!}
                 </td>
                 <td class="text-start <#if post.tagStrList??>pb-4</#if>">
-                    <div class="row d-flex align-items-center justify-content-between">
+                    <div class="row d-flex align-items-center justify-content-between align-items-center">
                         <div class="col-xl-8 col-12">
-                            <a href="${SiteUrl.NOTICE_DTL!}?boardCd=notice&postNo=${post.postNo!}"
+                            <a href="${SiteUrl.BOARD_POST_DTL!}?boardCd=${post.boardCd!}&postNo=${post.postNo!}&notionPageId=${post.notionPageId!}"
                                class="text-dark vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold text-danger</#if>">
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-gray">${post.ctgrNm!}</span>
                                 </#if>
-                                ${post.title!}
+                                ${post.postSj!}
                             </a>
                             <#if (((post.imprtcYn)!"N") == "Y")!false>
                                 <span class="fs-4 blink">&#128680;</span>
@@ -196,15 +195,14 @@
                             <!-- 수정권한 표시 -->
                             <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
                                 <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="관리자 수정 가능"></i>
+                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
                             <#elseif ((post.mdfable!"") == (Constant.MDFABLE_USER)) || ((post.mdfable!"") == (Constant.MDFABLE_ALL))>
                                 <i class="bi bi-people-fill ms-1 blink-slow"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="모든 사용자가 수정 가능"></i>
+                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모든 사용자가 수정 가능"></i>
                             </#if>
                             <#if post.commentCnt gt 0>
-                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
-                                      onclick="CommentList.fnModal('${post.postNo!}');"
-                                      data-bs-toggle="tooltip" data-bs-placement="top" title="댓글 모달 팝업 호출">
+                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
+                                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
                                     [${post.commentCnt!}]
                                 </span>
                             </#if>
@@ -223,9 +221,8 @@
                                 </span>
                             </#if>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                               onclick="Page.dtlAjax('${post.postNo!}');"
-                               data-bs-toggle="tooltip" data-bs-placement="top" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover"></i>
+                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </div>
@@ -233,7 +230,7 @@
                 <td class="text-center col-form-label hidden-table">
                     <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
                         <a class="badge badge-secondary p-2 btn-white blank blink-slow"
-                           data-bs-toggle="tooltip" data-bs-placement="top" title="첨부파일">
+                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
                             <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileId!}');"></i>
                         </a>
                     <#else>
@@ -249,10 +246,8 @@
                     <span class="cursor-help"
                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성자:&#10;${post.regstrNm!"-"}">
                         ${post.managtrNm!"-"}
+                        <#if post.isRegstr!false><span class="badge badge-secondary opacity-75 mx-1 fs-9">나</span></#if>
                     </span>
-                    <#if post.isRegstr!false>
-                        <span class="badge badge-secondary opacity-75 mx-1 fs-9">나</span>
-                    </#if>
                 </td>
                 <td class="text-center hidden-table">
                     <span class="cursor-help"
@@ -261,7 +256,7 @@
                     </span>
                 </td>
                 <td class="text-center hidden-table">
-                    ${post.hitCnt!0?string.number}
+                    ${post.postHit!0?string.number}
                 </td>
             </tr>
         <#else>
@@ -277,8 +272,12 @@
     <!-- pagination::end -->
 </div>
 
-<#include "/view/notice/notice_dtl_modal.ftlh">
-<#include "/view/notice/notice_dtl_template.ftlh">
+<#include "/view/board/post/board_post_dtl_modal.ftlh">
+<#include "/view/board/post/board_post_dtl_template.ftlh">
+<#if boardCd == "cmpyLife">
+    <#include "/view/board/post/board_post_list_crdt_user_cttpc_modal.ftlh">
+    <#include "/view/board/post/board_post_list_extn_phone_modal.ftlh">
+</#if>
 
 <#include "/view/_component/_comment_list_modal.ftlh">
 <#include "/view/_component/_comment_list_template.ftlh">
@@ -287,3 +286,4 @@
 <#include "/view/_component/_atch_file_list_template.ftlh">
 
 </@layout.layout>
+

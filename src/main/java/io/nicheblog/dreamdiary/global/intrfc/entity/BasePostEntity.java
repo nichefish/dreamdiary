@@ -34,9 +34,10 @@ public class BasePostEntity
     protected Integer postNo;
 
     /**
-     * 게시판분류코드
+     * 게시판 분류 코드
+     * 상속받은 클래스에서 실제 매핑 구성
      */
-    @Column(name = "BOARD_CD")
+    @Transient
     protected String boardCd;
 
     /**
@@ -48,8 +49,8 @@ public class BasePostEntity
     /**
      * 내용
      */
-    @Column(name = "POST_CN")
-    protected String postCn;
+    @Column(name = "CN")
+    protected String cn;
 
     /**
      * 조회수
@@ -57,7 +58,6 @@ public class BasePostEntity
     @Builder.Default
     @Column(name = "HIT_CNT")
     protected Integer hitCnt = 0;
-
 
     /* ----- */
 

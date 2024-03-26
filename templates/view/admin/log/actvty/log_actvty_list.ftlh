@@ -30,7 +30,7 @@
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}");
             },
             /** 상세 모달 팝업 호출 */
-            fnDtlAjax: function (logActvtyNo) {
+            dtlAjax: function (logActvtyNo) {
                 event.stopPropagation();
                 const url = "${SiteUrl.LOG_ACTVTY_DTL_AJAX!}";
                 let ajaxData = { "logActvtyNo": logActvtyNo };
@@ -43,7 +43,7 @@
                 });
             },
             /** 목록 검색 */
-            fnSearch: function() {
+            search: function() {
                 $("#pageNo").val("");
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_ACTVTY_LIST!}?actionTyCd=SEARCH");
             },
@@ -122,7 +122,7 @@
         <!--begin::Table body-->
         <tbody class="text-gray-600">
             <#list logActvtyList![] as log>
-                <tr class="cursor-pointer <#if log.isJobUser!false>bg-fxd-list</#if>" onclick="Page.fnDtlAjax('${log.logActvtyNo!}');">
+                <tr class="cursor-pointer <#if log.isJobUser!false>bg-fxd-list</#if>" onclick="Page.dtlAjax('${log.logActvtyNo!}');">
                     <td class="text-center hidden-table">${log.rnum!}</td>
                     <td class="text-center">
                         ${log.logDt!"-"}

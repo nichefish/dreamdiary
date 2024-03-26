@@ -22,7 +22,7 @@
                 commons.util.fnSortTable();
             },
             /** 목록 검색 */
-            fnSearch: function() {
+            search: function() {
                 $("#pageNo").val("");
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.USER_LIST!}?actionTyCd=SEARCH");
             },
@@ -37,7 +37,7 @@
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.USER_REG_FORM!}");
             },
             /** 상세 화면 이동 */
-            fnDtl: function(userNo) {
+            dtl: function(userNo) {
                 $("#procForm #userNo").val(userNo);
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.USER_DTL!}");
             },
@@ -108,7 +108,7 @@
                 <#assign divideCfYn = prevCfYn?? && user.cfYn! != prevCfYn>
                 <#assign divideRetireYn = prevRetireYn?? && user.retireYn! != prevRetireYn>
                 <#assign divide = divideCfYn || divideRetireYn>
-                <tr class="<#if user.isMe!false>bg-light</#if> bg-hover-secondary <#if divide>border-top-5</#if>" onclick="Page.fnDtl(${user.userNo!});">
+                <tr class="<#if user.isMe!false>bg-light</#if> bg-hover-secondary <#if divide>border-top-5</#if>" onclick="Page.dtl(${user.userNo!});">
                     <td class="text-center hidden-table">
                         ${user.rnum}
                     </td>

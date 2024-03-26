@@ -4,14 +4,17 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * NoticeSmpEntity
@@ -23,7 +26,6 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "NOTICE")
-@IdClass(BasePostKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
 @SuperBuilder
@@ -35,14 +37,16 @@ public class NoticeSmpEntity
         extends BasePostEntity
         implements Serializable {
 
+    private static final String BOARD_CD = "NOTICE";
+    private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";
+
     /**
      * 글 번호
      */
     @Id
-    @TableGenerator(name = "notice", table = "CMM_SEQ", pkColumnName = "SEQ_NM", valueColumnName = "SEQ_VAL", pkColumnValue = "NOTICE_NO", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "notice")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "POST_NO")
-    @Comment("글 번호")
+    @Comment("공지사항 번호")
     private Integer postNo;
 
     /**
@@ -57,7 +61,7 @@ public class NoticeSmpEntity
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'NOTICE_CTGR_CD\'", referencedColumnName = "CL_CD")),
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'"+CTGR_CL_CD+"'", referencedColumnName = "CL_CD")),
             @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)
@@ -96,4 +100,18 @@ public class NoticeSmpEntity
     @Column(name = "MDFABLE")
     @Comment("수정권한")
     private String mdfable = Constant.MDFABLE_REGSTR;
+
+    /**
+     * 조치자(작업자)ID
+     */
+    @Column(name = "MANAGTR_ID", length = 20)
+    private String managtrId;
+
+    /**
+     * 조치(작업)일시
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
+    @Column(name = "MANAGT_DT")
+    private Date managtDt;
 }

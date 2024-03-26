@@ -5,13 +5,18 @@ import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
+import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
 import io.nicheblog.dreamdiary.web.model.board.BoardPostListDto;
 import io.nicheblog.dreamdiary.web.model.board.BoardPostSearchParam;
+import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
@@ -19,14 +24,18 @@ import io.nicheblog.dreamdiary.web.service.board.BoardPostService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Map;
 
@@ -141,36 +150,32 @@ public class BoardPostController
     /**
      * 게시판 게시물 등록 화면 조회
      * 사용자USER, 관리자MNGR만 접근 가능
-     *//*
-
+     */
     @RequestMapping(SiteUrl.BOARD_POST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteMenuAcsInfo,
             final LogActvtyParam logParam,
             final @RequestParam("boardCd") String boardCd,
             final ModelMap model
     ) throws Exception {
 
-        */
-/* 게시판 정의 정보 조회 *//*
-
+        /* 게시판 정의 정보 조회 */
         model.addAttribute("boardCd", boardCd);
-        */
-/* 사이트 메뉴 설정 *//*
 
+        /* 사이트 메뉴 설정 */
         BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
-        siteMenuAcsInfo.setAcsInfo(boardDef, SiteMenu.PAGE_REG, request.getRequestURI());
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("상세 조회"));
 
         boolean isSuccess = false;
         String resultMsg = "";
         try {
             model.addAttribute("post", new BoardPostDto());         // 빈 객체 주입 (freemarker error prevention)
             model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
-            model.addAttribute(Constant.POST_CTGR_CD, cmmCdService.getCdListByClCd(boardDef.getCtgrClCd()));
+            model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdListByClCd(boardDef.getCtgrClCd()));
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
-            CmmUtils.setModelFlsysPath(model);
+            // CmmUtils.setModelFlsysPath(model);
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -188,12 +193,10 @@ public class BoardPostController
         return "/view/board/post/board_post_reg_form";
     }
 
-    */
-/**
+    /**
      * 게시판 게시물 등록 전 미리보기 팝업 조회
      * 사용자USER, 관리자MNGR만 접근 가능
-     *//*
-
+     */
     @RequestMapping(SiteUrl.BOARD_POST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegPreviewPop(
@@ -203,24 +206,22 @@ public class BoardPostController
             final ModelMap model
     ) {
 
-        */
-/* 게시판 정의 정보 조회 *//*
-
+        /* 게시판 정의 정보 조회 */
         model.addAttribute("boardCd", boardCd);
 
         boolean isSuccess = false;
         String resultMsg = "";
         try {
             // 태그를 먼저 처리해준다.
-            String tagListStr = boardPostDto.getTagListStr();
-            List<BoardTagDto> tagList = boardTagService.parseTagList(tagListStr);
-            if (!CollectionUtils.isEmpty(tagList)) {
-                List<BoardPostTagDto> postTagList = new ArrayList<>();
-                for (BoardTagDto tag : tagList) {
-                    postTagList.add(new BoardPostTagDto(tag.getBoardTag()));
-                }
-                boardPostDto.setTagList(postTagList);
-            }
+            // String tagListStr = boardPostDto.getTagListStr();
+            // List<BoardTagDto> tagList = boardTagService.parseTagList(tagListStr);
+            // if (!CollectionUtils.isEmpty(tagList)) {
+            //     List<BoardPostTagDto> postTagList = new ArrayList<>();
+            //     for (BoardTagDto tag : tagList) {
+            //         postTagList.add(new BoardPostTagDto(tag.getBoardTag()));
+            //     }
+            //     boardPostDto.setTagList(postTagList);
+            // }
             isSuccess = true;
             // TODO: 파일 정보는? 난해하다...
             model.addAttribute("post", boardPostDto);
@@ -238,12 +239,10 @@ public class BoardPostController
         return "/view/board/post/board_post_reg_preview_pop";
     }
 
-    */
-/**
+    /**
      * 게시판 게시물 등록/수정 (Ajax)
      * 사용자USER, 관리자MNGR만 접근 가능
-     *//*
-
+     */
     @PostMapping(value = {SiteUrl.BOARD_POST_REG_AJAX, SiteUrl.BOARD_POST_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
@@ -251,8 +250,8 @@ public class BoardPostController
             final @Valid BoardPostDto boardPostDto,
             final LogActvtyParam logParam,
             final BasePostKey key,
-            final @RequestParam("jandiYn") @Nullable String jandiYn,
-            final @RequestParam("trgetTopic") @Nullable String trgetTopic,
+            // final @RequestParam("jandiYn") @Nullable String jandiYn,
+            // final @RequestParam("trgetTopic") @Nullable String trgetTopic,
             final MultipartHttpServletRequest request,
             final BindingResult bindingResult
     ) {
@@ -269,22 +268,22 @@ public class BoardPostController
             if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조치자 목록 갱신 :: 메인 로직과 분리
-            try {
-                List<BoardPostManagtrDto> managtrList = result.getManagtrList();
-                if (!boardPostManagtrService.hasAlreadyManagt(managtrList)) {
-                    BoardPostManagtrDto dto = boardPostManagtrService.regPostManagtr(result.getPostKey());
-                    result.addPostManagtr(dto);
-                }
-            } catch (Exception e) {
-                resultMsg = MessageUtils.getExceptionMsg(e);
-                logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-                publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            }
+            // try {
+            //     List<BoardPostManagtrDto> managtrList = result.getManagtrList();
+            //     if (!boardPostManagtrService.hasAlreadyManagt(managtrList)) {
+            //         BoardPostManagtrDto dto = boardPostManagtrService.regPostManagtr(result.getPostKey());
+            //         result.addPostManagtr(dto);
+            //     }
+            // } catch (Exception e) {
+            //     resultMsg = MessageUtils.getExceptionMsg(e);
+            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
+            // }
             // 잔디 메세지 발송 :: 메인 로직과 분리
-            if ("Y".equals(jandiYn)) {
-                String jandiResultMsg = notifyService.notifyBoardPostReg(trgetTopic, result, logParam);
-                resultMsg = resultMsg + "\n" + jandiResultMsg;
-            }
+            // if ("Y".equals(jandiYn)) {
+            //     String jandiResultMsg = notifyService.notifyBoardPostReg(trgetTopic, result, logParam);
+            //     resultMsg = resultMsg + "\n" + jandiResultMsg;
+            // }
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -300,12 +299,10 @@ public class BoardPostController
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    */
-/**
+    /**
      * 게시판 게시물 상세 화면 조회
      * 사용자USER, 관리자MNGR만 접근 가능
-     *//*
-
+     */
     @RequestMapping(value = SiteUrl.BOARD_POST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostDtl(
@@ -316,15 +313,13 @@ public class BoardPostController
             final ModelMap model
     ) throws Exception {
 
-        */
-/* 게시판 정의 정보 조회 *//*
-
+        /* 게시판 정의 정보 조회 */
         model.addAttribute("boardCd", boardCd);
-        */
-/* 사이트 메뉴 설정 *//*
 
+        /* 사이트 메뉴 설정 */
         BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
-        siteMenuAcsInfo.setAcsInfo(boardDef, SiteMenu.PAGE_DTL, request.getRequestURI());
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("상세 조회"));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -332,18 +327,18 @@ public class BoardPostController
             BoardPostDto rsDto = boardPostService.getDtlDto(postKey);
             model.addAttribute("post", rsDto);
             // 열람자 목록 및 조회수 카운트 추가
-            try {
-                List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
-                if (!boardPostViewerService.hasAlreadyView(viewerList)) {
-                    BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
-                    rsDto.addPostViewer(dto);
-                }
-                boardPostService.hitCntUp(postKey);
-            } catch (Exception e) {
-                resultMsg = MessageUtils.getExceptionMsg(e);
-                logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-                publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            }
+            // try {
+            //     List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
+            //     if (!boardPostViewerService.hasAlreadyView(viewerList)) {
+            //         BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
+            //         rsDto.addPostViewer(dto);
+            //     }
+            //     boardPostService.hitCntUp(postKey);
+            // } catch (Exception e) {
+            //     resultMsg = MessageUtils.getExceptionMsg(e);
+            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
+            // }
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -361,12 +356,10 @@ public class BoardPostController
         return "/view/board/post/board_post_dtl";
     }
 
-    */
-/**
+    /**
      * 게시판 게시물 상세 조회 (Ajax)
      * 사용자USER, 관리자MNGR만 접근 가능
-     *//*
-
+     */
     @RequestMapping(SiteUrl.BOARD_POST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
@@ -383,18 +376,18 @@ public class BoardPostController
             // 게시판 정보 조회
             BoardPostDto rsDto = boardPostService.getDtlDto(postKey);
             // 열람자 목록 및 조회수 카운트 추가
-            try {
-                List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
-                if (!boardPostViewerService.hasAlreadyView(viewerList)) {
-                    BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
-                    rsDto.addPostViewer(dto);
-                }
-                boardPostService.hitCntUp(postKey);
-            } catch (Exception e) {
-                resultMsg = MessageUtils.getExceptionMsg(e);
-                logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-                publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            }
+            // try {
+            //     List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
+            //     if (!boardPostViewerService.hasAlreadyView(viewerList)) {
+            //         BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
+            //         rsDto.addPostViewer(dto);
+            //     }
+            //     boardPostService.hitCntUp(postKey);
+            // } catch (Exception e) {
+            //     resultMsg = MessageUtils.getExceptionMsg(e);
+            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
+            // }
             ajaxResponse.setResultObj(rsDto);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -413,12 +406,10 @@ public class BoardPostController
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    */
-/**
+    /**
      * 게시판 게시물 수정 화면 조회
      * 사용자USER, 관리자MNGR만 접근 가능
-     *//*
-
+     */
     @RequestMapping(value = SiteUrl.BOARD_POST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostMdfForm(
@@ -429,15 +420,13 @@ public class BoardPostController
             final ModelMap model
     ) throws Exception {
 
-        */
-/* 게시판 정의 정보 조회 *//*
-
-        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
+        /* 게시판 정의 정보 조회 */
         model.addAttribute("boardCd", boardCd);
-        */
-/* 사이트 메뉴 설정 *//*
 
-        siteMenuAcsInfo.setAcsInfo(boardDef, SiteMenu.PAGE_MDF, request.getRequestURI());
+        /* 사이트 메뉴 설정 */
+        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("수정"));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -448,10 +437,10 @@ public class BoardPostController
             model.addAttribute("post", rsDto);
 
             model.addAttribute(Constant.IS_MDF, true);           // 등록/수정 화면 플래그 세팅
-            model.addAttribute(Constant.POST_CTGR_CD, cmmCdService.getCdListByClCd(boardDef.getCtgrClCd()));
+            model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdListByClCd(boardDef.getCtgrClCd()));
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
-            CmmUtils.setModelFlsysPath(model);
+            // CmmUtils.setModelFlsysPath(model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -467,12 +456,10 @@ public class BoardPostController
         return "/view/board/post/board_post_reg_form";
     }
 
-    */
-/**
+    /**
      * 게시판 게시물 삭제 (Ajax)
      * 사용자USER, 관리자MNGR만 접근 가능
-     *//*
-
+     */
     @PostMapping(SiteUrl.BOARD_POST_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
@@ -502,38 +489,4 @@ public class BoardPostController
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
-
-    */
-/**
-     * 직원 연락처 목록 엑셀 다운로드
-     * 사용자USER, 관리자MNGR만 접근 가능
-     *//*
-
-    @RequestMapping(SiteUrl.CRDT_USER_CTTPC_LIST_XLSX_DOWNLOAD)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public void crdtUserCttpcListXlsxDownload(
-            final LogActvtyParam logParam,
-            final @RequestParam("boardCd") String boardCd
-    ) throws Exception {
-
-        boolean isSuccess = false;
-        String resultMsg = "";
-        try {
-            String currDateStr = DateUtils.getCurrDateStr(DateUtils.PTN_DATE);
-            List<Object> userCttpcXlsxList = userService.getCrdtUserCttpcListXlsx(currDateStr, currDateStr);
-            xlsxUtils.listXlxsDownload(Constant.CRDT_USER_CTTPC, userCttpcXlsxList);
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, baseUrl + "?boardCd=" + boardCd);
-        } finally {
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-    }
-    */
 }

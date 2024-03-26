@@ -1,5 +1,5 @@
 <#--
-  -- 공지사항 > 상세 화면
+  -- 게시판 > 상세 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
 <#import "/spring.ftl" as spring />
@@ -7,7 +7,7 @@
 <@layout.layout>
 
 <script>
-    const Page = (function() {
+    const Page = function() {
         return {
             init: function () {
                 //
@@ -16,7 +16,7 @@
                 window.close();
             }
         }
-    })();
+    }();
 </script>
 
 <div class="card post">
@@ -31,10 +31,9 @@
             <!--begin::Title-->
             <div class="col-12">
                 <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
-                    <#if (((post.imprtcYn)!"N") == "Y")!false><span class="badge badge-danger me-2">중요</span></#if>
-                    <span class="vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
+                    <span class="vertical-middle">
                         <#if (post.ctgrNm!"") != "">[${post.ctgrNm!}]</#if>
-                        ${post.title!}
+                        ${post.postSj!}
                      </span>
                 </h1>
             </div>
@@ -56,7 +55,8 @@
                         ${authInfo.nickNm!"-"}
                     </span>
                     <span class="text-muted fs-7 lh-1">
-                        ${currDateStr!}</span>
+                        ${currDateStr!}
+                    </span>
                 </div>
                 <!--end::Name-->
             </div>
@@ -65,7 +65,7 @@
             <div class="d-flex align-items-center py-1">
                 <a href="#answers" data-kt-scroll-toggle="true"
                    class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${post.commentCnt!}</a>
-                <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.hitCnt!}</button>
+                <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.postHit!}</button>
             </div>
             <!--end::Info-->
         </div>
@@ -77,24 +77,37 @@
         </div>
         <#if (post.atchFileInfo.atchFileList)?has_content>
             <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
-                <div class="col-xl-1">
-                    <div class="fs-6 fw-bold col-form-label px-5">
-                        첨부파일
-                    </div>
+                <div class="col-xl-1 col-form-label fs-6 fw-bold px-5">
+                    첨부파일
                 </div>
                 <div class="col-xl-11 my-3">
                     <#list (post.atchFileInfo.atchFileList)![] as file>
                         <div class="row my-1">
-                            <div class="col-xl-8">
+                            <div class="col-xl-8" id="itemContainer${file.atchFileDtlId!}">
                                 <a href="javascript:void(0);" onclick="commons.util.fileDownload('${file.atchFileId!}', '${file.atchFileDtlId!}');"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.file.download"/>">
+                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                                   title="<@spring.message "bs.tooltip.file.download"/>">
                                     <i class="fas fa-file-download fs-15 me-1"></i>
-                                    ${file.orgnFileNm!}(${file.fileSize!}byte)
-                                </a>
+                                    ${file.orgnFileNm!}(${file.fileSize!}byte)</a>
                             </div>
                         </div>
                     <#else>
                         <span>첨부된 파일이 없습니다.</span>
+                    </#list>
+                </div>
+            </div>
+        </#if>
+        <#if post.tagStrList?has_content>
+            <!--begin::Row-->
+            <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
+                <div class="col-xl-1 col-form-label fs-6 fw-bold px-5">
+                    태그
+                </div>
+                <div class="col-xl-11 text-sm-start" id="tagSpan">
+                    <#list post.tagStrList![] as tag>
+                        <span class="ctgr-span ctgr-gray">
+                            <span class="ps-1">&#35;</span><u class="text-primary fw-normal">${tag}</u>
+                        </span>
                     </#list>
                 </div>
             </div>

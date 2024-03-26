@@ -41,7 +41,7 @@ public class BasePostDto
     /**
      * 내용
      */
-    protected String postCn;
+    protected String Cn;
     /**
      * 조회수
      */

@@ -5,14 +5,17 @@ import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
+import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * NoticeEntity
@@ -25,14 +28,13 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "NOTICE")
-@IdClass(BasePostKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
 @SuperBuilder
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE notice SET DEL_YN = 'Y' WHERE BOARD_CD = ? AND POST_NO = ?")
+@SQLDelete(sql = "UPDATE notice SET DEL_YN = 'Y' WHERE POST_NO = ?")
 public class NoticeEntity
         extends BasePostEntity
         implements Serializable {
@@ -61,7 +63,7 @@ public class NoticeEntity
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = CTGR_CL_CD, referencedColumnName = "CL_CD")),
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'"+CTGR_CL_CD+"'", referencedColumnName = "CL_CD")),
             @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)
@@ -100,6 +102,20 @@ public class NoticeEntity
     @Column(name = "MDFABLE")
     @Comment("수정권한")
     private String mdfable = Constant.MDFABLE_REGSTR;
+
+    /**
+     * 조치자(작업자)ID
+     */
+    @Column(name = "MANAGTR_ID", length = 20)
+    private String managtrId;
+
+    /**
+     * 조치(작업)일시
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
+    @Column(name = "MANAGT_DT")
+    private Date managtDt;
 
     /**
      * 게시물 태그 목록

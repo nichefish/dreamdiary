@@ -52,6 +52,12 @@ public class BoardPostEntity
     private Integer postNo;
 
     /**
+     * 게시판분류코드
+     */
+    @Column(name = "BOARD_CD")
+    protected String boardCd;
+
+    /**
      * 게시판 정의 정보
      */
     @ManyToOne(fetch = FetchType.EAGER)
@@ -99,9 +105,9 @@ public class BoardPostEntity
     /**
      * 노션 페이지 참조 ID :: UUID
      */
-    @Column(name = "NOTION_PAGE_ID")
-    @Comment("노션 페이지 참조 ID :: UUID")
-    private String notionPageId;
+    // @Column(name = "NOTION_PAGE_ID")
+    // @Comment("노션 페이지 참조 ID :: UUID")
+    // private String notionPageId;
 
     /**
      * 게시물 댓글 목록

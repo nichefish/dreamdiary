@@ -47,7 +47,7 @@
             <label class="form-label fw-bolder text-dark"> </label>
         </div>
         <div class="d-flex align-items-center me-md-2">
-            <button type="submit" class="btn btn-sm btn-primary me-5" onclick="Page.fnSearch();">
+            <button type="submit" class="btn btn-sm btn-primary me-5" onclick="Page.search();">
                 <i class="bi bi-search"></i>검색
             </button>
         </div>

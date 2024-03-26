@@ -63,7 +63,7 @@
                 <!--end::Input group-->
             </div>
             <div class="col-lg-2 col-4">
-                <button type="submit" class="btn btn-sm btn-primary" onclick="Page.fnSearch();">
+                <button type="submit" class="btn btn-sm btn-primary" onclick="Page.search();">
                     <i class="bi bi-search"></i>검색
                 </button>
             </div>

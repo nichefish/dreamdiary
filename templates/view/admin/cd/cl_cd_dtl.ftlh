@@ -48,7 +48,7 @@
                 });
             },
             /** 상세코드 등록 팝업 호출 */
-            fnDtlCdRegForm: function() {
+            dtlCdRegForm: function() {
                 commons.util.handlebarsTemplate({ "clCd": $("#clCd").val() }, "dtl_cd_reg", "show");
                 commons.validate.replaceBlankRegex("#dtlCdRegForm dtlCd");
                 commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
@@ -57,7 +57,7 @@
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
             },
             /** 상세코드 등록 (Ajax) */
-            fnDtlCdRegAjax: function() {
+            dtlCdRegAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
                     showCancelButton: true,
@@ -97,7 +97,7 @@
                 commons.util.blockUIReplace(listUrl);
             },
             /** 수정 화면 이동 */
-            fnDtlCdMdfForm: function(dtlCd) {
+            dtlCdMdfForm: function(dtlCd) {
                 const url = "${SiteUrl.DTL_CD_DTL_AJAX!}";
                 let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
@@ -116,7 +116,7 @@
                 });
             },
             /** 사용으로 변경 (Ajax) */
-            fnDtlCdUseAjax: function(dtlCd) {
+            dtlCdUseAjax: function(dtlCd) {
                 event.stopPropagation();
                 Swal.fire({
                     text: <@spring.message "view.cnfm.use"/>,
@@ -134,7 +134,7 @@
                 });
             },
             /** 미사용으로 변경 (Ajax) */
-            fnDtlCdUnuseAjax: function(dtlCd) {
+            dtlCdUnuseAjax: function(dtlCd) {
                 event.stopPropagation();
                 Swal.fire({
                     text: <@spring.message "view.cnfm.unuse"/>,
@@ -152,7 +152,7 @@
                 });
             },
             /** 삭제 처리 (ajax) */
-            fnDtlCdDelAjax: function(dtlCd) {
+            dtlCdDelAjax: function(dtlCd) {
                 event.stopPropagation();
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
@@ -229,7 +229,7 @@
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                 <button type="button" class="btn btn-sm btn-primary"
-                        onclick="Page.fnDtlCdRegForm();"
+                        onclick="Page.dtlCdRegForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 코드 등록 팝업을&#10;호출합니다.">
                     <i class="fas fa-plus"></i>상세코드 추가
                 </button>
@@ -279,7 +279,7 @@
             <!--begin::Table body-->
             <tbody>
             <#list clCd.dtlCdList![] as dtlCd>
-                <tr class="bg-hover-secondary" onclick="Page.fnDtlCdMdfForm('${dtlCd.dtlCd!}');">
+                <tr class="bg-hover-secondary" onclick="Page.dtlCdMdfForm('${dtlCd.dtlCd!}');">
                     <td class="text-center">
                         ${dtlCd.rnum!}
                     </td>
@@ -302,13 +302,13 @@
                     <td class="text-center">
                         <#if (dtlCd.useYn!"Y") == "Y">
                             <div class="badge badge-success cursor-pointer"
-                                 onclick="Page.fnDtlCdUnuseAjax('${dtlCd.dtlCd!}');"
+                                 onclick="Page.dtlCdUnuseAjax('${dtlCd.dtlCd!}');"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
                                 <i class="bi bi-check text-light blink-slow"></i>사용
                             </div>
                         <#else>
                             <div class="badge badge-secondary btn-white cursor-pointer"
-                                 onclick="Page.fnDtlCdUseAjax('${dtlCd.dtlCd!}');"
+                                 onclick="Page.dtlCdUseAjax('${dtlCd.dtlCd!}');"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
                                 <i class="bi bi-x blink-slow"></i>미사용
                             </div>
@@ -316,7 +316,7 @@
                     </td>
                     <td class="text-center">
                         <div class="badge badge-danger badge-outlined cursor-pointer"
-                             onclick="Page.fnDtlCdDelAjax('${dtlCd.dtlCd!}')"
+                             onclick="Page.dtlCdDelAjax('${dtlCd.dtlCd!}')"
                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                             <i class="bi bi-trash text-danger fs-7 blink-slow"></i>삭제
                         </div>

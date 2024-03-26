@@ -1,5 +1,5 @@
 <#--
-  -- 공지사항 > 상세 화면
+  -- 게시판 > 상세 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
 <#import "/spring.ftl" as spring />
@@ -12,18 +12,39 @@
             init: function () {
                 //
             },
+            /**
+             * 노션Notion 모달 페이지 호출
+             */
+            fnNotionModal: function() {
+                let notionPageId = "${post.notionPageId!}";
+                if (notionPageId === "") return;
+
+                const iframe = $('<iframe>', {
+                    src: 'http://115.144.8.81:3000/' + notionPageId,
+                    id: 'myFrame',
+                    frameborder: 0,
+                    scrolling: 'yes',
+                    width: '100%',
+                    height: '700px',
+                    css: {
+                        border: 'none'
+                    }
+                }).appendTo('#notion_page_div');
+
+                $("#notion_page_modal").modal("show");
+            },
             /** 수정 화면 이동 */
             fnMdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_MDF_FORM!}");
+                commons.util.blockUISubmit("#procForm", "${SiteMenu.URL_BOARD_POST_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
-            delAjax: function() {
+            fnDelAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.NOTICE_DEL_AJAX!}";
+                    const url = "${SiteMenu.URL_BOARD_POST_DEL_AJAX!}";
                     let ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -35,9 +56,9 @@
             },
             /** 목록 화면 이동 */
             fnList: function() {
-                const listUrl = "${SiteUrl.NOTICE_LIST!}?isBackToList=Y";
+                const listUrl = "${SiteMenu.URL_BOARD_POST_LIST!}?boardCd=${boardCd!}&isBackToList=Y"
                 commons.util.blockUIReplace(listUrl);
-            }
+            },
         }
     }();
 </script>
@@ -54,10 +75,9 @@
             <!--begin::Title-->
             <div class="col-12">
                 <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
-                    <#if (((post.imprtcYn)!"N") == "Y")!false><span class="badge badge-danger me-2">중요</span></#if>
-                    <span class="vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
+                    <span class="vertical-middle">
                         <#if (post.ctgrNm!"") != "">[${post.ctgrNm!}]</#if>
-                        ${post.title!}
+                        ${post.postSj!}
                      </span>
                 </h1>
             </div>
@@ -89,11 +109,10 @@
             <div class="d-flex align-items-center py-1">
                 <a href="#answers" data-kt-scroll-toggle="true"
                    class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${post.commentCnt!}</a>
-                <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.hitCnt!}</button>
+                <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.postHit!}</button>
             </div>
             <!--end::Info-->
         </div>
-        <!--end::Foot-->
         <#if post.managtrList?? && post.managtrList?size gt 1>
             <div class="separator separator-dashed border-gray-300 mb-8"></div>
             <div class="d-flex flex-stack flex-wrap justify-content-start ">
@@ -113,7 +132,8 @@
                                 </div>
                             </#if>
                             <span class="cursor-help"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최종 작업일시: &#10;${managtr.regDt!}">
+                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                                  title="최종 작업일시: &#10;${managtr.regDt!}">
                                 ${managtr.regstrNm!"-"}
                             </span>
                             <#if managtr?has_next>, </#if>
@@ -124,10 +144,11 @@
                 <!--end::Author-->
             </div>
         </#if>
+        <!--end::Foot-->
         <div class="separator separator-dashed border-gray-300 my-8"></div>
         <!--begin::Question-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-            ${post.cn?no_esc}
+            ${post.postCn?no_esc}
         </div>
 
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
@@ -136,6 +157,8 @@
         <#include "/view/_component/_atch_file_dtl_template.ftlh">
 
         <!-- 파일시스템 참조 표시 영역 -->
+
+        <!-- 노션 참조 표시 영역 -->
 
         <!-- 태그 표시 영역 -->
         <#include "/view/_component/_tag_dtl_template.ftlh">
@@ -161,41 +184,42 @@
         <!-- 수정권한에 따라 수정 권한 부여 -->
         <#if (post.mdfable!"") == (Constant.MDFABLE_REGSTR)>
             <#if post.isRegstr>
-                <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                        onclick="Page.fnMdfForm();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
+                <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                        title="<@spring.message "bs.tooltip.page.mdf"/>">
                     <i class="bi bi-pencil-square"></i>(내 글)수정
                 </button>
             </#if>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_MNGR)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.fnMdfForm();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                    title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(관리자+)수정
             </button>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_USER)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.fnMdfForm();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                    title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_ALL)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.fnMdfForm();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                    title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(전체+)수정
             </button>
         </#if>
         <!-- 등록자 또는 관리자가 삭제 가능 -->
         <#if (post.isRegstr)!false || isMngr>
-            <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm"
-                    onclick="Page.delAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
+            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2" onclick="Page.fnDelAjax();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                    title="<@spring.message "bs.tooltip.del"/>">
                 <i class="bi bi-trash"></i>삭제
             </button>
         </#if>
-        <button type="button" class="btn btn-light btn-sm" onclick="Page.fnList();"
-                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.list"/>">
+        <button type="button" class="btn btn-sm btn-light" onclick="Page.fnList();"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                title="<@spring.message "bs.tooltip.page.list"/>">
             <i class="bi bi-list"></i>목록
         </button>
     </div>

@@ -26,7 +26,7 @@
                 </#if>
             },
             /** 목록 검색 */
-            fnSearch: function() {
+            search: function() {
                 $("#pageNo").val("");
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_SYS_LIST!}?actionTyCd=SEARCH");
             },

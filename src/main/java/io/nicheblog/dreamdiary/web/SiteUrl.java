@@ -68,15 +68,16 @@ public interface SiteUrl {
      * 게시판
      */
     String PREFIX_BOARD = "/board";
-    String BOARD_POST_LIST = PREFIX_BOARD + "/boardPostList.do";
-    String BOARD_POST_REG_FORM = PREFIX_BOARD + "/boardPostRegForm.do";
-    String BOARD_POST_REG_AJAX = PREFIX_BOARD + "/boardPostRegAjax.do";
-    String BOARD_POST_DTL = PREFIX_BOARD + "/boardPostDtl.do";
-    String BOARD_POST_DTL_AJAX = PREFIX_BOARD + "/boardPostDtlAjax.do";
-    String BOARD_POST_MDF_FORM = PREFIX_BOARD + "/boardPostMdfForm.do";
-    String BOARD_POST_MDF_AJAX = PREFIX_BOARD + "/boardPostMdfAjax.do";
-    String BOARD_POST_DEL_AJAX = PREFIX_BOARD + "/boardPostDelAjax.do";
-    String BOARD_POST_REG_PREVIEW_POP = PREFIX_BOARD + "/boardPostRegPreviewPop.do";
+    String PREFIX_BOARD_POST = PREFIX_BOARD + "/post";
+    String BOARD_POST_LIST = PREFIX_BOARD_POST + "/boardPostList.do";
+    String BOARD_POST_REG_FORM = PREFIX_BOARD_POST + "/boardPostRegForm.do";
+    String BOARD_POST_REG_AJAX = PREFIX_BOARD_POST + "/boardPostRegAjax.do";
+    String BOARD_POST_DTL = PREFIX_BOARD_POST + "/boardPostDtl.do";
+    String BOARD_POST_DTL_AJAX = PREFIX_BOARD_POST + "/boardPostDtlAjax.do";
+    String BOARD_POST_MDF_FORM = PREFIX_BOARD_POST + "/boardPostMdfForm.do";
+    String BOARD_POST_MDF_AJAX = PREFIX_BOARD_POST + "/boardPostMdfAjax.do";
+    String BOARD_POST_DEL_AJAX = PREFIX_BOARD_POST + "/boardPostDelAjax.do";
+    String BOARD_POST_REG_PREVIEW_POP = PREFIX_BOARD_POST + "/boardPostRegPreviewPop.do";
 
 
     /**
@@ -178,10 +179,6 @@ public interface SiteUrl {
     /* ---------- */
 
     String USER_REQST_REG_FORM = "";
-
-
-
-
 
 
 
