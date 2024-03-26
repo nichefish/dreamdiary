@@ -1,9 +1,8 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseManageDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -20,10 +19,9 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class BoardDefDto
-        extends BasePostDto {
+        extends BaseManageDto {
 
     /**
      * 목록 순번
@@ -49,14 +47,4 @@ public class BoardDefDto
      * 글분류 분류 코드
      */
     private String ctgrClCd;
-
-    /**
-     * 사용여부
-     */
-    private String useYn;
-
-    /**
-     * 정렬 순서
-     */
-    private Integer sortOrdr;
 }

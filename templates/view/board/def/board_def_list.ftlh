@@ -155,7 +155,7 @@
                 <th class="col-1 text-center wb-keepall w-10">메뉴번호</th>
                 <th class="col-1 text-center wb-keepall w-10">정렬 순서</th>
                 <th class="col-1 text-center wb-keepall w-10">글 갯수</th>
-                <th class="col-1 text-center wb-keepall w-5">사용여부</th>
+                <th class="col-1 text-center wb-keepall w-5">사용 여부</th>
                 <th class="col-1 text-center wb-keepall w-5">-</th>
             </tr>
         </thead>

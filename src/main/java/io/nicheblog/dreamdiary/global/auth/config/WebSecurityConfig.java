@@ -158,7 +158,7 @@ public class WebSecurityConfig
         http.formLogin()
             .loginPage(SiteUrl.AUTH_LGN_FORM)
             .usernameParameter("userId")
-            .passwordParameter("userPw")
+            .passwordParameter("password")
             .loginProcessingUrl(SiteUrl.AUTH_LGN_PROC)
             .defaultSuccessUrl(SiteUrl.MAIN)
             .failureHandler(lgnFailureHandler)
