@@ -110,7 +110,7 @@
         <!--begin::Row-->
         <div class="row d-flex mb-8">
             <div class="col-12">
-                <label class="d-flex align-items-center mb-2" for="postSj">
+                <label class="d-flex align-items-center mb-2" for="title">
                     <span class="text-gray-700 fs-6 fw-bolder">제목</span>
                     <span class="text-gray-500 fs-9">(최대 50자)</span>
                 </label>
@@ -125,8 +125,8 @@
                 </select>
             </div>
             <div class="col-lg-10">
-                <input type="text" class="form-control required" name="postSj" maxlength='50' id="postSj" value="${post.postSj!}"/>
-                <span id="postSjSpan"></span>
+                <input type="text" class="form-control required" name="title" maxlength='50' id="title" value="${post.title!}"/>
+                <span id="titleSpan"></span>
             </div>
         </div>
         <div class="row <#if isMdf>mb-2</#if>">

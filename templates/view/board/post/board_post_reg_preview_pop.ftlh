@@ -1,7 +1,7 @@
 <#--
   -- 게시판 > 상세 화면
   -->
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_no_aside.ftlh" as layout >
 <#import "/spring.ftl" as spring />
 
 <@layout.layout>
@@ -33,7 +33,7 @@
                 <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
                     <span class="vertical-middle">
                         <#if (post.ctgrNm!"") != "">[${post.ctgrNm!}]</#if>
-                        ${post.postSj!}
+                        ${post.title!}
                      </span>
                 </h1>
             </div>

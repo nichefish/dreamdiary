@@ -102,7 +102,7 @@
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
                                 </#if>
-                                ${post.postSj!}
+                                ${post.title!}
                             </a>
                             <#if (((post.imprtcYn)!"N") == "Y")!false>
                                 <span class="fs-4 blink">&#128680;</span>
@@ -187,7 +187,7 @@
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-gray">${post.ctgrNm!}</span>
                                 </#if>
-                                ${post.postSj!}
+                                ${post.title!}
                             </a>
                             <#if (((post.imprtcYn)!"N") == "Y")!false>
                                 <span class="fs-4 blink">&#128680;</span>

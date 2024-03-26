@@ -12,7 +12,7 @@
                 <div class="col-12">
                     <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
                         <span class="vertical-middle">
-                            {{postSj}}
+                            {{title}}
                         </span>
                     </h1>
                 </div>
