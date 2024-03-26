@@ -1,12 +1,11 @@
 package io.nicheblog.dreamdiary.web.spec.user;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.DateParser;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserInfoEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserProflEntity;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,23 +18,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * UserInfoSpec
+ * UserProflSpec
  * <pre>
- *  사용자 정보 목록 검색인자 세팅 Specification
+ *  사용자 프로필 목록 검색인자 세팅 Specification
  * </pre>
  *
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("userInfoSpec")
+@Component("userProflSpec")
 @Log4j2
-public class UserInfoSpec
-        implements BaseSpec<UserInfoEntity> {
+public class UserProflSpec
+        implements BaseSpec<UserProflEntity> {
 
     /**
      * 검색 조건 목록 반환 :: preset된 특정 모드를 반환
      */
-    public Specification<UserInfoEntity> searchWith(
+    public Specification<UserProflEntity> searchWith(
             final String searchMode,
             final String yyStr
     ) {
@@ -57,7 +56,7 @@ public class UserInfoSpec
      */
     public List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
-            final Root<UserInfoEntity> root,
+            final Root<UserProflEntity> root,
             final CriteriaBuilder builder
     ) {
 
@@ -68,7 +67,7 @@ public class UserInfoSpec
             switch (key) {
                 // 작성자 이름 = 조인 후 LIKE 검색
                 case "nickNm":
-                    Join<UserInfoEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);      //  JOIN 타입 명시하기\
+                    Join<UserProflEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);      //  JOIN 타입 명시하기\
                     Expression<String> nickNmExp = regstr.get(key);
                     predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
                     continue;
@@ -92,7 +91,7 @@ public class UserInfoSpec
     public List<Predicate> getCrdtUser(
             final String searchMode,
             final String yyStr,
-            final Root<UserInfoEntity> root,
+            final Root<UserProflEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
         List<Predicate> predicate = new ArrayList<>();
@@ -114,11 +113,11 @@ public class UserInfoSpec
      * 정렬 조건 세팅 ::
      */
     private static List<Order> getOrderByTitleAndEcnyDt(
-            final Root<UserInfoEntity> root,
+            final Root<UserProflEntity> root,
             final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
-        Join<UserInfoEntity, DtlCdEntity> jobTitleCd = root.join("jobTitleCdInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
+        Join<UserProflEntity, DtlCdEntity> jobTitleCd = root.join("jobTitleCdInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
         order.add(builder.desc(jobTitleCd.get("sortOrdr")));
         order.add(builder.asc(root.get("ecnyDt")));
         return order;

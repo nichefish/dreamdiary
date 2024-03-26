@@ -1,12 +1,11 @@
 package io.nicheblog.dreamdiary.web.spec.user;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.DateParser;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserInfoEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserProflEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -81,7 +80,7 @@ public class UserSpec
     ) {
 
         List<Predicate> predicate = new ArrayList<>();
-        Join<UserEntity, UserInfoEntity> userInfo = root.join("userInfo", JoinType.LEFT);
+        Join<UserEntity, UserProflEntity> userInfo = root.join("userInfo", JoinType.LEFT);
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -89,7 +88,7 @@ public class UserSpec
                 // 사용자정보 존재 "hasUserInfo" 체크시 조인결과 있는 목록만 반환
                 case "hasUserInfo":
                     if ((Boolean) searchParamMap.get(key)) {
-                        predicate.add(builder.isNotNull(userInfo.get("userInfoNo")));
+                        predicate.add(builder.isNotNull(userInfo.get("userProflNo")));
                     }
                     continue;
                     // 이름 = LIKE 검색
@@ -97,7 +96,7 @@ public class UserSpec
                     Expression<String> keyExp = root.get(key);
                     predicate.add(builder.like(keyExp, "%" + searchParamMap.get(key) + "%"));
                     continue;
-                    // cmpyCd, jobTitleCd, teamCd = 사용자 정보USER_INFO와 조인해서 equals 처리
+                    // cmpyCd, jobTitleCd, teamCd = 사용자 정보user_profl와 조인해서 equals 처리
                 case "cmpyCd":
                 case "jobTitleCd":
                 case "teamCd":
@@ -126,7 +125,7 @@ public class UserSpec
     ) throws Exception {
         List<Predicate> predicate = new ArrayList<>();
         // JOIN 조건 세팅
-        Join<UserEntity, UserInfoEntity> userInfo = root.join("userInfo", JoinType.INNER);
+        Join<UserEntity, UserProflEntity> userInfo = root.join("userInfo", JoinType.INNER);
         // 2. 기간조건 :: 해당 년도 내에 근무내역이 있음 (입사일 // 퇴사일)
         // 퇴사일 :: 퇴사 안했거나 or 비교일 내에 퇴사했거나
         Date startDay = DateParser.bfDateParse(DateUtils.asDate(startDtStr));
@@ -152,7 +151,7 @@ public class UserSpec
     ) throws Exception {
         List<Predicate> predicate = getCrdtUser(startDtStr, endDtStr, root, builder);
         // JOIN 조건 세팅
-        Join<UserEntity, UserInfoEntity> userInfo = root.join("userInfo", JoinType.INNER);
+        Join<UserEntity, UserProflEntity> userInfo = root.join("userInfo", JoinType.INNER);
         predicate.add(builder.equal(userInfo.get("brthdy"), DateUtils.asDate(startDtStr)));
         return predicate;
     }
@@ -165,8 +164,8 @@ public class UserSpec
             final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
-        Join<UserEntity, UserInfoEntity> userInfo = root.join("userInfo", JoinType.INNER);      //  JOIN 타입 명시하기
-        Join<UserInfoEntity, DtlCdEntity> jobTitleCdInfo = userInfo.join("jobTitleCdInfo", JoinType.INNER);      //  JOIN 타입 명시하기
+        Join<UserEntity, UserProflEntity> userInfo = root.join("userInfo", JoinType.INNER);      //  JOIN 타입 명시하기
+        Join<UserProflEntity, DtlCdEntity> jobTitleCdInfo = userInfo.join("jobTitleCdInfo", JoinType.INNER);      //  JOIN 타입 명시하기
         order.add(builder.desc(jobTitleCdInfo.get("sortOrdr")));
         order.add(builder.asc(userInfo.get("ecnyDt")));
         return order;
