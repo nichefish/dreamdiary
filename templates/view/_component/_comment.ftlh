@@ -27,26 +27,26 @@
                 });
             },
             /** 댓글 수정 폼 생성 */
-            mdfForm: function(commentNo) {
-                $("#commentDtlSpan" + commentNo).hide();
-                let str = $("#commentMdfTemplate").html().replace(/__INDEX__/g, commentNo);
-                $("#commentSpan" + commentNo).append(str);
-                $("#commentMdfCn" + commentNo).html($("#commentCnSpanDiv" + commentNo).html());
-                $("#showMdfBtnDiv" + commentNo).hide();
-                $("#mdfSaveBtnDiv" + commentNo).show();
+            mdfForm: function(postNo) {
+                $("#commentDtlSpan" + postNo).hide();
+                let str = $("#commentMdfTemplate").html().replace(/__INDEX__/g, postNo);
+                $("#commentSpan" + postNo).append(str);
+                $("#commentMdfCn" + postNo).html($("#commentCnSpanDiv" + postNo).html());
+                $("#showMdfBtnDiv" + postNo).hide();
+                $("#mdfSaveBtnDiv" + postNo).show();
                 commons.validate.validateForm("#commentMdfForm", Comment.mdfAjax);
             },
             /** 댓글 수정 폼 닫기 */
-            closeMdfForm: function(commentNo) {
-                $("#commentDtlSpan" + commentNo).show();
-                $("#commentSpan" + commentNo).empty();
-                $("#commentMdfCn" + commentNo).empty();
-                $("#showMdfBtnDiv" + commentNo).show();
-                $("#mdfSaveBtnDiv" + commentNo).hide();
+            closeMdfForm: function(postNo) {
+                $("#commentDtlSpan" + postNo).show();
+                $("#commentSpan" + postNo).empty();
+                $("#commentMdfCn" + postNo).empty();
+                $("#showMdfBtnDiv" + postNo).show();
+                $("#mdfSaveBtnDiv" + postNo).hide();
             },
             /** 댓글 수정 처리 (ajax) */
-            mdfAjax: function(commentNo) {
-                if (commons.util.isEmpty($("#commentMdfCn" + commentNo), "value")) {
+            mdfAjax: function(postNo) {
+                if (commons.util.isEmpty($("#commentMdfCn" + postNo), "value")) {
                     Swal.fire("댓글 내용을 입력해주세요.");
                     return false;
                 }
@@ -56,7 +56,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${SiteUrl.COMMENT_MDF_AJAX!}";
-                    let ajaxData = $("#commentMdfForm" + commentNo).serializeArray();
+                    let ajaxData = $("#commentMdfForm" + postNo).serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -66,14 +66,14 @@
                 });
             },
             /** 댓글 삭제 처리 (ajax) */
-            delAjax: function(commentNo) {
+            delAjax: function(postNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
                 }).then(function (result) {
                     if (!result.value) return;
                     const url = "${SiteUrl.COMMENT_DEL_AJAX!}";
-                    let ajaxData = {"commentNo": commentNo};
+                    let ajaxData = {"postNo": postNo};
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -115,16 +115,16 @@
                     </div>
                     <#if comment.isRegstr!false>
                         <div class="d-flex align-items-center py-1">
-                            <div id="showMdfBtnDiv${comment.commentNo!}">
+                            <div id="showMdfBtnDiv${comment.postNo!}">
                                 <a href="javascript:void(0);" class="btn btn-sm btn-flex btn-light-primary btn-icon mx-1"
-                                   onclick="Comment.mdfForm('${comment.commentNo!}');"
+                                   onclick="Comment.mdfForm('${comment.postNo!}');"
                                    data-bs-toggle="tooltip" title="댓글 수정 폼을 호출합니다." data-bs-dismiss="click">
                                     <span class="svg-icon svg-icon-7">
                                         <i class="fas fa-solid fa-pen"></i>
                                     </span>
                                 </a>
                                 <a href="javascript:void(0);" class="btn btn-sm btn-flex btn-light-danger btn-icon"
-                                   onclick="Comment.delAjax('${comment.commentNo!}');"
+                                   onclick="Comment.delAjax('${comment.postNo!}');"
                                    data-bs-toggle="tooltip" title="댓글을 삭제합니다." data-bs-dismiss="click">
                                 <span class="svg-icon svg-icon-7">
                                     <i class="fas fa-trash-alt"></i>
@@ -135,21 +135,21 @@
                     </#if>
                 </div>
                 <div class="row">
-                    <div class="col-xl-11 fs-5 fw-normal text-gray-800" id="commentSpan${comment.commentNo!}">
-                        <div class="fs-6 col-form-label" id="commentDtlSpan${comment.commentNo!}">
-                            <div class="div-textarea-smp" id="commentCnSpanDiv${comment.commentNo!}">${comment.commentCn!}</div>
+                    <div class="col-xl-11 fs-5 fw-normal text-gray-800" id="commentSpan${comment.postNo!}">
+                        <div class="fs-6 col-form-label" id="commentDtlSpan${comment.postNo!}">
+                            <div class="div-textarea-smp" id="commentCnSpanDiv${comment.postNo!}">${comment.cn!}</div>
                         </div>
                     </div>
                     <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-                    <div class="col-xl-1 text-center fs-5 fw-normal text-gray-800" id="mdfSaveBtnDiv${comment.commentNo!}" style="display:none;">
+                    <div class="col-xl-1 text-center fs-5 fw-normal text-gray-800" id="mdfSaveBtnDiv${comment.postNo!}" style="display:none;">
                         <button type="button" class="btn btn-sm btn-primary me-2 mb-2"
-                                onclick="Comment.mdfAjax('${comment.commentNo!}');"
+                                onclick="Comment.mdfAjax('${comment.postNo!}');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글을 수정합니다.">
                             <i class="bi bi-pencil-square"></i>
                             저장
                         </button>
                         <button type="button" class="btn btn-sm btn-secondary me-2"
-                                onclick="Comment.closeMdfForm('${comment.commentNo!}');"
+                                onclick="Comment.closeMdfForm('${comment.postNo!}');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 수정 영역을 닫습니다.">
                             닫기
                         </button>
@@ -174,7 +174,7 @@
             </div>
             <div class="col-xl-11">
                 <form name="commentRegForm" id="commentRegForm" class="form">
-                    <input type="hidden" name="postNo" id="postNo" />
+                    <input type="hidden" name="postNo" />
                     <input type="hidden" name="refPostNo" value="${post.postNo!}" />
                     <input type="hidden" name="refBoardCd" value="${post.boardCd!}" />
                     <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" >
@@ -202,9 +202,10 @@
 <div class="col-xl-10" id="commentMdfTemplate" hidden>
     <div class="fs-6 fw-bold col-form-label p-0">
         <form name="commentMdfForm" id="commentMdfForm__INDEX__" class="form">
-            <input type="hidden" name="postNo" id="commentNo__INDEX__" value="__INDEX__"/>
+            <input type="hidden" name="postNo" id="postNo__INDEX__" value="__INDEX__"/>
             <input type="hidden" name="refPostNo" value="${post.postNo!}" placeholder="postNo">
             <input type="hidden" name="refBoardCd" value="${post.boardCd!}" placeholder="boardCd"/>
+            <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" >
             <div class="row">
                 <div class="col-12">
                     <textarea name="cn" id="commentMdfCn__INDEX__" class="form-control required w-100" rows="3" maxlength="10000"></textarea>

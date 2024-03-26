@@ -34,26 +34,26 @@ public class BaseUserEntity
      * (로그인) 아이디
      */
     @Column(name = "USER_ID", length = 20, unique = true)
-    private String userId;
+    protected String userId;
 
     /**
      * 비밀번호
      * 암호화된 비밀번호(64bit)를 저장하기 위해 길이=64이다.
      */
     @Column(name = "USER_PW", length = 64)
-    private String userPw;
+    protected String userPw;
 
     /**
      * 이름
      */
     @Column(name = "NICK_NM", length = 50)
-    private String nickNm;
+    protected String nickNm;
 
     /**
      * 권한코드
      */
     @Column(name = "AUTH_CD", length = 20)
-    private String authCd;
+    protected String authCd;
 
     /**
      * 권한코드 정보 (복합키 조인)
@@ -65,53 +65,53 @@ public class BaseUserEntity
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
-    private DtlCdEntity authCdInfo;
+    protected DtlCdEntity authCdInfo;
 
     /**
      * 잠금여부
      */
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
     @Column(name = "LOCK_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    private String lockYn = "N";
+    protected String lockYn = "N";
 
     /**
      * 마지막 로그인 일시
      */
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
     @Column(name = "LST_LGN_DT")
-    private Date lstLgnDt;
+    protected Date lstLgnDt;
 
     /**
      * 로그인 실패 횟수
      */
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
     @Column(name = "LGN_FAIL_CNT", columnDefinition = "INT DEFAULT 0")
-    private Integer lgnFailCnt = 0;
+    protected Integer lgnFailCnt = 0;
 
     /**
      * 패스워드 변경일시
      */
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
     @Column(name = "PW_CHG_DT")
-    private Date pwChgDt;
+    protected Date pwChgDt;
 
     /**
      * 계정 설명 (관리자용)
      */
     @Column(name = "USER_DC", length = 1000)
-    private String userDc;
+    protected String userDc;
 
     /**
      * 패스워드 리셋 필요여부
      */
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
     @Column(name = "NEEDS_PW_RESET", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    private String needsPwReset = "N";
+    protected String needsPwReset = "N";
 
     /**
      * 장기 미로그인 패스 체크 여부
      */
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
     @Column(name = "DORMANT_BYPASS_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    private String dormantBypassYn = "N";
+    protected String dormantBypassYn = "N";
 }

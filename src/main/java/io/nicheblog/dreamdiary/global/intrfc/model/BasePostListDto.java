@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -15,10 +16,10 @@ import javax.persistence.MappedSuperclass;
  * @extends BaseClsfListDto
  */
 @MappedSuperclass
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class BasePostListDto
         extends BaseClsfListDto {
@@ -28,5 +29,17 @@ public class BasePostListDto
      */
     @Builder.Default
     protected Integer hitCnt = 0;
+
+    /**
+     * 중요여부
+     */
+    @Builder.Default
+    protected String imprtcYn = "N";
+
+    /**
+     * 수정권한
+     */
+    @Builder.Default
+    protected String mdfable = Constant.MDFABLE_REGSTR;
 
 }

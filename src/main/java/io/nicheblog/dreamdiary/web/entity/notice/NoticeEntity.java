@@ -35,7 +35,7 @@ public class NoticeEntity
         extends BasePostEntity {
 
     /** 필수: 게시물 코드 */
-    private static final String BOARD_CD = "NOTICE";
+    private static final String BOARD_CD = "notice";
     /** 필수: 글분류 코드 */
     private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";
 

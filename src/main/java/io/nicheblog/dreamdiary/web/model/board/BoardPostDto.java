@@ -23,26 +23,7 @@ import lombok.experimental.SuperBuilder;
 public class BoardPostDto
         extends BasePostDto {
 
-    /**
-     * 글분류 코드
-     */
-    private String ctgrClCd;
 
-    /**
-     * 글분류 코드
-     */
-    private String ctgrCd;
-
-    /**
-     * 글분류 코드 이름
-     */
-    private String ctgrNm;
-
-    /**
-     * 수정권한
-     */
-    @Builder.Default
-    private String mdfable = Constant.MDFABLE_REGSTR;
 
     /**
      * 조치자(작업자)ID
@@ -76,12 +57,6 @@ public class BoardPostDto
      */
     private String managtDtUpdtYn;
 
-    /**
-     * 댓글 목록
-     *//*
-
-    private List<CommentDto> commentList;
-    */
 /**
      * 열람자 목록
      *//*
@@ -132,25 +107,7 @@ public class BoardPostDto
 
 
     */
-/**
-     * hasComment
-     *//*
 
-    public Boolean getHasComment() {
-        return this.getCommentCnt() > 0;
-    }
-
-    */
-/**
-     * hasCtgrNm
-     *//*
-
-    public Boolean getHasCtgrNm() {
-        return StringUtils.isNotEmpty(this.ctgrNm);
-    }
-
-
-    */
 /**
      * 게시물 조회자 목록 추가
      *//*

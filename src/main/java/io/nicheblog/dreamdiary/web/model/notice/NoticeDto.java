@@ -25,11 +25,6 @@ public class NoticeDto
         extends BasePostDto {
 
     /**
-     * 중요여부
-     */
-    @Builder.Default
-    private String imprtcYn = "N";
-    /**
      * 글분류 코드
      */
     private String ctgrCd;

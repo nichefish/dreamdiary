@@ -30,6 +30,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * UserService
@@ -106,8 +107,7 @@ public class UserService
      * 사용자 관리 > 사용자 ID 중복 체크
      */
     public Boolean userIdDupChck(final String userId) {
-        return userRepository.findByUserId(userId)
-                             .isPresent();
+        return userRepository.findByUserId(userId).isPresent();
     }
 
     /**
@@ -165,8 +165,7 @@ public class UserService
         } else {
             rsUserInfoEntity.setDelYn("Y");
         }
-        return userInfoRepository.save(rsUserInfoEntity)
-                                 .getUserInfoNo();
+        return userInfoRepository.save(rsUserInfoEntity).getUserInfoNo();
     }
 
     /**
@@ -377,11 +376,16 @@ public class UserService
     ) throws Exception {
         List<UserListDto> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr)
                                              .getContent();
-        List<UserCttpcListDto> rsCrdtUserCttpcList = new ArrayList<>();
-        for (UserListDto listDto : crdtUserList) {
-            rsCrdtUserCttpcList.add(userMapstruct.toCttpcListDto(listDto));
-        }
-        return rsCrdtUserCttpcList;
+
+        return crdtUserList.stream()
+                .map(listDto -> {
+                    try {
+                        return userMapstruct.toCttpcListDto(listDto);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     /**

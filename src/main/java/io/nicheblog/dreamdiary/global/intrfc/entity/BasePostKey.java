@@ -23,9 +23,9 @@ public class BasePostKey
     /**
      * 글번호
      */
-    private Integer postNo;
+    protected Integer postNo;
     /**
      * 게시판분류코드
      */
-    private String boardCd;
+    protected String boardCd;
 }

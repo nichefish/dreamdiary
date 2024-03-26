@@ -2,6 +2,8 @@ package io.nicheblog.dreamdiary.global.intrfc.entity;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -9,7 +11,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.OrderBy;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * BaseClsfEntity
@@ -65,7 +69,7 @@ public class BaseClsfEntity
      */
     @Column(name = "CTGR_CD", length = 20)
     @Comment("글분류 코드")
-    private String ctgrCd;
+    protected String ctgrCd;
 
     /** 글분류 코드 정보 */
     @ManyToOne(fetch = FetchType.EAGER)
@@ -76,7 +80,7 @@ public class BaseClsfEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("공지사항 글분류 코드 정보")
-    private DtlCdEntity ctgrCdInfo;
+    protected DtlCdEntity ctgrCdInfo;
 
     /**
      * 상단고정여부
@@ -98,7 +102,7 @@ public class BaseClsfEntity
     @OrderBy("regDt ASC")
     @Comment("댓글 목록")
     @NotFound(action = NotFoundAction.IGNORE)
-    private List<CommentEntity> commentList;
+    protected List<CommentEntity> commentList;
 
     /* ----- */
 
@@ -117,5 +121,21 @@ public class BaseClsfEntity
     @PostLoad
     private void onLoad() {
         this.commentCnt = (CollectionUtils.isEmpty(this.commentList)) ? 0 : this.commentList.size();
+    }
+
+    /**
+     * 댓글 :: List<Entity> -> List<Dto> 반환
+     */
+    public List<CommentDto> getCommentDtoList() throws Exception {
+        if (CollectionUtils.isEmpty(this.commentList)) return null;
+        return this.commentList.stream()
+                .map(entity -> {
+                    try {
+                        return CommentMapstruct.INSTANCE.toDto(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 }

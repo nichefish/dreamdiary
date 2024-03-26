@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
@@ -26,12 +27,12 @@ import javax.persistence.Id;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class DreamPieceDto
-        extends BaseAtchDto {
+        extends BaseClsfDto {
 
     /**
      * 꿈 조각 고유 번호 (PK)
      */
-    private Integer dreamPieceNo;
+    private Integer postNo;
 
     /**
      * 꿈 일자 번호
@@ -47,12 +48,6 @@ public class DreamPieceDto
      * 내용
      */
     private String cn;
-
-    /**
-     * 중요여부
-     */
-    @Builder.Default
-    private String imprtcYn = "N";
 
     /**
      * 편집완료여부

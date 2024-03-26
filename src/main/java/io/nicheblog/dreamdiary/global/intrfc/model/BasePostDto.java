@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import lombok.*;
@@ -27,16 +28,22 @@ public class BasePostDto
         extends BaseClsfDto {
 
     /**
-     * 상단고정여부
-     */
-    @Builder.Default
-    private String fxdYn = "N";
-
-    /**
      * 조회수
      */
     @Builder.Default
     protected Integer hitCnt = 0;
+
+    /**
+     * 중요여부
+     */
+    @Builder.Default
+    protected String imprtcYn = "N";
+
+    /**
+     * 수정권한
+     */
+    @Builder.Default
+    protected String mdfable = Constant.MDFABLE_REGSTR;
 
     /* ----- */
 }

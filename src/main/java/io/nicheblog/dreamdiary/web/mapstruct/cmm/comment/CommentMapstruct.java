@@ -28,6 +28,7 @@ public interface CommentMapstruct
      * Entity -> Dto
      */
     @Override
+    @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
     @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
     @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
     @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
@@ -37,6 +38,7 @@ public interface CommentMapstruct
      * Entity -> ListDto
      */
     @Override
+    @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
     @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
     @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
     @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")

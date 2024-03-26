@@ -40,7 +40,7 @@ public class BasePostEntity
     @Builder.Default
     @Column(name = "IMPRTC_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("중요여부")
-    private String imprtcYn = "N";
+    protected String imprtcYn = "N";
 
     /**
      * 수정권한
@@ -48,5 +48,5 @@ public class BasePostEntity
     @Builder.Default
     @Column(name = "MDFABLE")
     @Comment("수정권한")
-    private String mdfable = Constant.MDFABLE_REGSTR;
+    protected String mdfable = Constant.MDFABLE_REGSTR;
 }
