@@ -8,7 +8,8 @@ import javax.persistence.MappedSuperclass;
 /**
  * BaseManageDto
  * <pre>
- *  (공통/상속) 관리용 정보 Dto (정렬 순서, 사용여부 추가)
+ *  (공통/상속) 관리용 정보 Dto (정렬 순서, 사용 여부 추가)
+ *  ※ "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
@@ -29,7 +30,7 @@ public class BaseManageDto
     protected Integer sortOrdr;
 
     /**
-     * 사용여부
+     * 사용 여부
      */
     @Builder.Default
     protected String useYn = "Y";

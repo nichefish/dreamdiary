@@ -11,8 +11,8 @@ import javax.persistence.MappedSuperclass;
 /**
  * BaseManageEntity
  * <pre>
- *  (공통/상속) 관리용 정보 Entity (정렬 순서, 사용여부)
- *  ※"All classes in the hierarchy must be annotated with @SuperBuilder."
+ *  (공통/상속) 관리용 정보 Entity (정렬 순서, 사용 여부)
+ *  ※ "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
@@ -31,14 +31,14 @@ public class BaseManageEntity
     /**
      * 정렬 순서
      */
-    @Column(name = "SORT_ORDR", columnDefinition = "INT DEFAULT 0")
+    @Column(name = "sort_ordr", columnDefinition = "INT DEFAULT 0")
     protected Integer sortOrdr;
 
     /**
-     * 사용여부
+     * 사용 여부
      */
     @Builder.Default
-    @Column(name = "USE_YN", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
+    @Column(name = "use_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
     protected String useYn = "Y";
 }
 

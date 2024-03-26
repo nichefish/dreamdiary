@@ -11,8 +11,7 @@ import java.io.Serializable;
  * BaseCrudEntity
  * <pre>
  *  (공통/상속) 기본 CRUD Entity
- *  ※공통 인터페이스 사용하는 모든 Dto 객체는 해당 객체를 상속한다.
- *  ※"All classes in the hierarchy must be annotated with @SuperBuilder."
+ *  ※ "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
@@ -27,9 +26,9 @@ public class BaseCrudEntity
         implements Serializable {
 
     /**
-     * 삭제여부
+     * 삭제 여부
      */
     @Builder.Default
-    @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "del_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     protected String delYn = "N";
 }

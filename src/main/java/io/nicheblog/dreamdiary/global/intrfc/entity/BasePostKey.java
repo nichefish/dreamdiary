@@ -25,7 +25,7 @@ public class BasePostKey
      */
     protected Integer postNo;
     /**
-     * 게시판분류코드
+     * 게시판 코드
      */
     protected String boardCd;
 }
