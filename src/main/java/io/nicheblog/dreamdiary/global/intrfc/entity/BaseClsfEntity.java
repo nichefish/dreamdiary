@@ -1,16 +1,15 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
-import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
+import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.*;
 import javax.persistence.OrderBy;
+import javax.persistence.*;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * BaseClsfEntity
@@ -32,10 +31,8 @@ import java.util.TimeZone;
 public class BaseClsfEntity
         extends BaseAtchEntity {
 
-    /** 필수: 게시물 코드 */
-    private static final String BOARD_CD = "";
-    /** 필수: 글분류 코드 */
-    private static final String CTGR_CL_CD = "";
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = "DEFAULT_CTGR_CL_CD";
 
     /**
      * 글 번호 (POST_NO, PK)
@@ -46,7 +43,7 @@ public class BaseClsfEntity
 
     /**
      * 게시판 분류 코드
-     * !상속받은 클래스에서 실제 매핑 구성 (@Column(name="BOARD_CD") 또는 private static final String = BOARD_CD)
+     * !상속받은 클래스에서 실제 매핑 구성 (@Column(name="BOARD_CD")
      */
     @Transient
     protected String boardCd;
@@ -70,6 +67,17 @@ public class BaseClsfEntity
     @Comment("글분류 코드")
     private String ctgrCd;
 
+    /** 글분류 코드 정보 */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'"+CTGR_CL_CD+"'", referencedColumnName = "CL_CD")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
+    })
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("공지사항 글분류 코드 정보")
+    private DtlCdEntity ctgrCdInfo;
+
     /**
      * 상단고정여부
      */
@@ -79,18 +87,18 @@ public class BaseClsfEntity
     protected String fxdYn = "N";
 
     /**
-     * 게시물 댓글 목록
+     * 댓글 목록
      */
-    // @OneToMany(fetch = FetchType.EAGER)
-    // @JoinColumnsOrFormulas({
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
-    //         @JoinColumnOrFormula(formula = @JoinFormula(value = BOARD_CD, referencedColumnName = "BOARD_CD"))
-    // })
-    // @Fetch(FetchMode.SELECT)
-    // @OrderBy("regDt ASC")
-    // @Comment(" 목록")
-    // @NotFound(action = NotFoundAction.IGNORE)
-    // private List<CommentEntity> commentList;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(column = @JoinColumn(name = "REF_POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "REF_BOARD_CD", referencedColumnName = "BOARD_CD", insertable = false, updatable = false)),
+    })
+    @Fetch(FetchMode.SELECT)
+    @OrderBy("regDt ASC")
+    @Comment("댓글 목록")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private List<CommentEntity> commentList;
 
     /* ----- */
 
@@ -101,4 +109,13 @@ public class BaseClsfEntity
         return new BasePostKey(this.postNo, this.boardCd);
     }
 
+    /**
+     * 댓글 수
+     */
+    @Transient
+    private Integer commentCnt;
+    @PostLoad
+    private void onLoad() {
+        this.commentCnt = (CollectionUtils.isEmpty(this.commentList)) ? 0 : this.commentList.size();
+    }
 }

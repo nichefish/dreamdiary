@@ -84,8 +84,7 @@ public class BoardDefController
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(boardDefMngList));
             cdService.setModelCdData(Constant.POST_CD, model);
 
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
 
             // 관리자페이지 화면 모드 세팅
             session.setAttribute("userMode", Constant.AUTH_MNGR);

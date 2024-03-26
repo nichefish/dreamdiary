@@ -31,7 +31,6 @@ public interface BoardPostMapstruct
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
     @Mapping(target = "ctgrNm", expression = "java((entity.getCtgrCdInfo() != null) ? entity.getCtgrCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
-    // @Mapping(target = "commentCnt", expression = "java(entity.getCommentList() != null ? entity.getCommentList().size() : 0)")
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
     // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
     @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
@@ -48,7 +47,6 @@ public interface BoardPostMapstruct
     // @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
     // @Mapping(target = "ctgrNm", expression = "java((entity.getCtgrCdInfo() != null) ? entity.getCtgrCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
-    // @Mapping(target = "commentCnt", expression = "java(entity.getCommentList() != null ? entity.getCommentList().size() : 0)")
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
     // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
     // @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
@@ -64,7 +62,6 @@ public interface BoardPostMapstruct
      */
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
     @Mapping(target = "ctgrNm", expression = "java((entity.getCtgrCdInfo() != null) ? entity.getCtgrCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "commentCnt", expression = "java(entity.getCommentList() != null ? entity.getCommentList().size() : 0)")
     @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
     @Mapping(target = "mdfusrNm", expression = "java((entity.getMdfusrInfo() != null) ? entity.getMdfusrInfo().getNickNm() : null)")
     @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")

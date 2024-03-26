@@ -174,8 +174,8 @@
             </div>
             <div class="col-xl-11">
                 <form name="commentRegForm" id="commentRegForm" class="form">
-                    <input type="hidden" name="postNo" id="postNo"/>
-                    <input type="hidden" name="refPostNo" value="${post.postNo!}" ">
+                    <input type="hidden" name="postNo" id="postNo" />
+                    <input type="hidden" name="refPostNo" value="${post.postNo!}" />
                     <input type="hidden" name="refBoardCd" value="${post.boardCd!}" />
                     <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" >
                     <div class="row">

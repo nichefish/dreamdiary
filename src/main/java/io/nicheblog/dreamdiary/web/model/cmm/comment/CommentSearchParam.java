@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
+import io.nicheblog.dreamdiary.web.model.cmm.BaseSearchParam;
 import lombok.*;
 
 /**
@@ -17,8 +18,8 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class CommentSearchParam {
+public class CommentSearchParam
+        extends BaseSearchParam {
 
-    private String actvtyCtgr;
-
+    //
 }

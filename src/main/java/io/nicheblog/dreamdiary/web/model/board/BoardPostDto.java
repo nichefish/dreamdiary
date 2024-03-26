@@ -83,12 +83,6 @@ public class BoardPostDto
     private List<CommentDto> commentList;
     */
 /**
-     * 댓글 갯수
-     *//*
-
-    private Integer commentCnt = 0;
-    */
-/**
      * 열람자 목록
      *//*
 

@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'org.springframework.boot' version '2.7.18'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'dreamdiary.io'
@@ -82,6 +82,10 @@ dependencies {
     // implementation 'junit:junit:4.13.2'
     // testImplementation 'org.testng:testng:7.7.0' /** 일부러 4로 설정 */
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    /** querydsl */
+    implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-apt'
 
     /** IntelliJ 전용 annotation */
     implementation 'org.jetbrains:annotations:16.0.3'

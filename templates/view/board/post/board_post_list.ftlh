@@ -71,6 +71,7 @@
     <form name="procForm" id="procForm">
         <input type="hidden" name="postNo" id="postNo" value=""/>
         <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>
+        <input type="hidden" name="actvtyCtgrCd" id="actvtyCtgrCd" value="${actvtyCtgrCd!}" />
     </form>
     <#include "/view/board/post/board_post_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
@@ -116,7 +117,7 @@
                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모든 사용자가 수정 가능"></i>
                             </#if>
                             <#if post.commentCnt gt 0>
-                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
+                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
                                     [${post.commentCnt!}]
                                 </span>
@@ -201,7 +202,7 @@
                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모든 사용자가 수정 가능"></i>
                             </#if>
                             <#if post.commentCnt gt 0>
-                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
+                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
                                     [${post.commentCnt!}]
                                 </span>

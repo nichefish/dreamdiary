@@ -1,24 +1,22 @@
 package io.nicheblog.dreamdiary.web.entity.board;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * BoardPostEntity
@@ -34,7 +32,7 @@ import java.util.List;
 @IdClass(BasePostKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "DEL_YN='N'")
@@ -54,10 +52,11 @@ public class BoardPostEntity
     private Integer postNo;
 
     /**
-     * 게시판분류코드
+     * 게시판 분류 코드
      */
+    @Id
     @Column(name = "BOARD_CD")
-    protected String boardCd;
+    private String boardCd;
 
     /**
      * 게시판 정의 정보
@@ -87,19 +86,6 @@ public class BoardPostEntity
     // @Column(name = "NOTION_PAGE_ID")
     // @Comment("노션 페이지 참조 ID :: UUID")
     // private String notionPageId;
-
-    /**
-     * 게시물 댓글 목록
-     */
-    // @OneToMany(fetch = FetchType.EAGER)
-    // @JoinColumnsOrFormulas({
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD", insertable = false, updatable = false))
-    // })
-    // @Fetch(FetchMode.SELECT)
-    // @OrderBy("regDt ASC")
-    // @NotFound(action = NotFoundAction.IGNORE)
-    // private List<CommentEntity> commentList;
 
     /**
      * 게시물 열람자 목록
@@ -203,9 +189,9 @@ public class BoardPostEntity
 
     */
 /**
-     * 서브엔티티 List 처리를 위한 Setter (override)
-     * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
-     *//*
+ * 서브엔티티 List 처리를 위한 Setter (override)
+ * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
+ *//*
 
     // public void setCommentList(final List<CommentEntity> commentList) {
     //     if (CollectionUtils.isEmpty(commentList)) return;
@@ -219,8 +205,8 @@ public class BoardPostEntity
 
     */
 /**
-     * 댓글 :: List<Entity> -> List<Dto> 반환
-     *//*
+ * 댓글 :: List<Entity> -> List<Dto> 반환
+ *//*
 
     // public List<CommentDto> getCommentDtoList() throws Exception {
     //     if (CollectionUtils.isEmpty(this.commentList)) return null;
@@ -233,8 +219,8 @@ public class BoardPostEntity
 
     */
 /**
-     * 열람자 :: List<Entity> -> List<Dto> 반환
-     *//*
+ * 열람자 :: List<Entity> -> List<Dto> 반환
+ *//*
 
     // public List<BoardPostViewerDto> getViewerDtoList() throws Exception {
     //     if (CollectionUtils.isEmpty(this.viewerList)) return null;

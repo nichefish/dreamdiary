@@ -1,11 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.notice;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -15,7 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -39,9 +34,9 @@ import java.util.Date;
 public class NoticeEntity
         extends BasePostEntity {
 
-    /** 필수(Override): 게시판 코드 */
+    /** 필수: 게시물 코드 */
     private static final String BOARD_CD = "NOTICE";
-    /** 필수(Override): 글분류 코드 */
+    /** 필수: 글분류 코드 */
     private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";
 
     /**
@@ -54,17 +49,11 @@ public class NoticeEntity
     private Integer postNo;
 
     /**
-     * 공지사항 글분류 코드 정보 (복합키 조인)
+     * 게시판 분류 코드
      */
-    // @ManyToOne(fetch = FetchType.EAGER)
-    // @JoinColumnsOrFormulas({
-    //         @JoinColumnOrFormula(formula = @JoinFormula(value = "'"+CTGR_CL_CD+"'", referencedColumnName = "CL_CD")),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
-    // })
-    // @Fetch(value = FetchMode.JOIN)
-    // @NotFound(action = NotFoundAction.IGNORE)
-    // @Comment("공지사항 글분류 코드 정보")
-    // private DtlCdEntity ctgrCdInfo;
+    @Builder.Default
+    @Column(name = "BOARD_CD")
+    private String boardCd = BOARD_CD;
 
     /**
      * 팝업 노출여부

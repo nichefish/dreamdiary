@@ -18,7 +18,8 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class BaseSearchParam extends BaseParam {
+public class BaseSearchParam
+        extends BaseParam {
 
     /**
      * 페이지 크기

@@ -2,8 +2,6 @@ package io.nicheblog.dreamdiary.web.entity.notice;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
@@ -14,7 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -52,32 +49,11 @@ public class NoticeSmpEntity
     private Integer postNo;
 
     /**
-     * 글분류 코드
-     */
-    @Column(name = "CTGR_CD", length = 20)
-    @Comment("글분류 코드")
-    private String ctgrCd;
-
-    /**
-     * 공지사항 글분류 코드 정보 (복합키 조인)
-     */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "'"+CTGR_CL_CD+"'", referencedColumnName = "CL_CD")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
-    })
-    @Fetch(value = FetchMode.JOIN)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("공지사항 글분류 코드 정보")
-    private DtlCdEntity ctgrCdInfo;
-
-    /**
-     * 중요여부
+     * 게시판 분류 코드
      */
     @Builder.Default
-    @Column(name = "IMPRTC_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("중요여부")
-    private String imprtcYn = "N";
+    @Column(name = "BOARD_CD")
+    private String boardCd = BOARD_CD;
 
     /**
      * 팝업 노출여부
@@ -86,14 +62,6 @@ public class NoticeSmpEntity
     @Column(name = "POPUP_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("팝업 노출여부")
     private String popupYn = "N";
-
-    /**
-     * 수정권한
-     */
-    @Builder.Default
-    @Column(name = "MDFABLE")
-    @Comment("수정권한")
-    private String mdfable = Constant.MDFABLE_REGSTR;
 
     /**
      * 조치자(작업자)ID

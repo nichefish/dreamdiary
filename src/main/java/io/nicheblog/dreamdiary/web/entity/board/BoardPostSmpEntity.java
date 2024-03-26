@@ -14,7 +14,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -52,7 +51,7 @@ public class BoardPostSmpEntity
     private Integer postNo;
 
     /**
-     * 게시판분류코드
+     * 게시판 분류 코드
      */
     @Column(name = "BOARD_CD")
     protected String boardCd;

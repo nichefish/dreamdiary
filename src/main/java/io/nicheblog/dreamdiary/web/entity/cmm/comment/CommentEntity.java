@@ -51,6 +51,13 @@ public class CommentEntity
     private Integer postNo;
 
     /**
+     * 게시판 분류 코드
+     */
+    @Builder.Default
+    @Column(name = "BOARD_CD")
+    private String boardCd = BOARD_CD;
+
+    /**
      * 원글 번호
      */
     @Column(name = "REF_POST_NO")
@@ -63,9 +70,4 @@ public class CommentEntity
     @Column(name = "REF_BOARD_CD")
     @Comment("원글 게시판 코드")
     private String refBoardCd;
-
-    /** Getter Override*/
-    public String getBoardCd() {
-        return BOARD_CD;
-    }
 }

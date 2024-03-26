@@ -74,6 +74,9 @@ public class NoticeController
     @Resource(name = "cdService")
     private CdService cdService;
 
+
+
+
     /**
      * 공지사항 목록 조회
      * 사용자USER, 관리자MNGR만 접근 가능
@@ -111,8 +114,8 @@ public class NoticeController
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
+            model.addAttribute("actvtyCtgrCd", actvtyCtgr.name());          // 댓글 로깅용 활동분류 코드 추가
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -296,7 +299,7 @@ public class NoticeController
             //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
             //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
             // }
-            model.addAttribute("actvtyCtgrCd", actvtyCtgr.name());          // 댓글 세팅용 활동분류 코드
+            model.addAttribute("actvtyCtgrCd", actvtyCtgr.name());          // 댓글 로깅용 활동분류 코드 추가
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

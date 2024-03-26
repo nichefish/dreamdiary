@@ -2,7 +2,6 @@
   -- 댓글 목록 Modal
  -- @included in : 댓글 미리보기 기능이 있는 페이지들
   -->
-
 <script>
     let CommentList = function() {
         return {
@@ -13,11 +12,11 @@
              * 첨부파일 추가추가
              * (reqstItemIdx는 어차피 한 페이지 내에서 고유하므로 따로 처리해줄 필요 없다.)
              */
-            fnModal: function(postNo, boardCd) {
+            modal: function(postNo) {
                 event.stopPropagation();
-                if (boardCd === undefined) boardCd = $("#boardCd").val();
+                $("#procForm #postNo").val(postNo);
                 const url = "${SiteUrl.COMMENT_LIST_AJAX!}";
-                let ajaxData = { "postNo": postNo, "boardCd": boardCd };
+                let ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
