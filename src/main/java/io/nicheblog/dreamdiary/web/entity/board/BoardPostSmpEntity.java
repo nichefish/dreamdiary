@@ -87,14 +87,6 @@ public class BoardPostSmpEntity
     private DtlCdEntity ctgrCdInfo;
 
     /**
-     * 상단고정여부
-     */
-    @Builder.Default
-    @Column(name = "FXD_YN")
-    @Comment("상단고정여부")
-    private String fxdYn = "N";
-
-    /**
      * 수정권한
      */
     @Builder.Default

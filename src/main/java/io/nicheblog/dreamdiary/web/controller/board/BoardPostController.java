@@ -306,7 +306,6 @@ public class BoardPostController
     @RequestMapping(value = SiteUrl.BOARD_POST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostDtl(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteMenuAcsInfo,
             final LogActvtyParam logParam,
             final BasePostKey postKey,
             final @RequestParam("boardCd") String boardCd,
@@ -339,6 +338,7 @@ public class BoardPostController
             //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
             //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
             // }
+            model.addAttribute("actvtyCtgrCd", actvtyCtgr.name());          // 댓글 세팅용 활동분류 코드
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -413,7 +413,6 @@ public class BoardPostController
     @RequestMapping(value = SiteUrl.BOARD_POST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostMdfForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteMenuAcsInfo,
             final LogActvtyParam logParam,
             final BasePostKey postKey,
             final @RequestParam("boardCd") String boardCd,

@@ -54,13 +54,6 @@ public class NoticeEntity
     private Integer postNo;
 
     /**
-     * 글분류 코드
-     */
-    @Column(name = "CTGR_CD", length = 20)
-    @Comment("글분류 코드")
-    private String ctgrCd;
-
-    /**
      * 공지사항 글분류 코드 정보 (복합키 조인)
      */
     // @ManyToOne(fetch = FetchType.EAGER)
@@ -74,36 +67,12 @@ public class NoticeEntity
     // private DtlCdEntity ctgrCdInfo;
 
     /**
-     * 중요여부
-     */
-    @Builder.Default
-    @Column(name = "IMPRTC_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("중요여부")
-    private String imprtcYn = "N";
-
-    /**
-     * 상단고정여부
-     */
-    @Builder.Default
-    @Column(name = "FXD_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("상단고정여부")
-    private String fxdYn = "N";
-
-    /**
      * 팝업 노출여부
      */
     @Builder.Default
     @Column(name = "POPUP_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("팝업 노출여부")
     private String popupYn = "N";
-
-    /**
-     * 수정권한
-     */
-    @Builder.Default
-    @Column(name = "MDFABLE")
-    @Comment("수정권한")
-    private String mdfable = Constant.MDFABLE_REGSTR;
 
     /**
      * 조치자(작업자)ID

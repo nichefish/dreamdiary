@@ -80,14 +80,6 @@ public class NoticeSmpEntity
     private String imprtcYn = "N";
 
     /**
-     * 상단고정여부
-     */
-    @Builder.Default
-    @Column(name = "FXD_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("상단고정여부")
-    private String fxdYn = "N";
-
-    /**
      * 팝업 노출여부
      */
     @Builder.Default

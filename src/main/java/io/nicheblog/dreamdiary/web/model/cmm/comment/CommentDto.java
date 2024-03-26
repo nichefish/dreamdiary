@@ -1,7 +1,8 @@
-package io.nicheblog.dreamdiary.web.model.comment;
+package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -22,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class CommentDto
-        extends BaseAtchDto {
+        extends BaseClsfDto {
 
     /**
      * 목록 순번
@@ -32,19 +33,15 @@ public class CommentDto
     /**
      * 댓글 ID
      */
-    private Integer commentNo;
-    /**
-     * 글 번호
-     */
     private Integer postNo;
     /**
-     * 게시판분류코드
+     * 참조 글 번호
      */
-    private String boardCd;
+    private Integer refPostNo;
     /**
-     * 댓글 내용
+     * 참조 게시판 코드
      */
-    private String commentCn;
+    private String refBoardCd;
 
     /**
      * 성공여부

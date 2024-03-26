@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.comment;
+package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.controller.comment;
+package io.nicheblog.dreamdiary.web.controller.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -10,10 +10,11 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.BaseParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.comment.CommentDto;
-import io.nicheblog.dreamdiary.web.model.comment.CommentSearchParam;
-import io.nicheblog.dreamdiary.web.service.comment.CommentService;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentSearchParam;
+import io.nicheblog.dreamdiary.web.service.cmm.comment.CommentService;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -42,7 +43,6 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
-@Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
 @Log4j2
 public class CommentController
         extends BaseControllerImpl {
@@ -86,6 +86,8 @@ public class CommentController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
+            String actvtyCtgrCd = searchParam.getActvtyCtgr();
+            if (StringUtils.isEmpty(actvtyCtgrCd))
             logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgr()));
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -101,9 +103,9 @@ public class CommentController
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentRegAjax(
             final @Valid CommentDto commentDto,
-            final LogActvtyParam logParam,
+            final @RequestParam("postNo") @Nullable Integer postNo,
             final BaseParam param,
-            final @RequestParam("commentNo") @Nullable Integer commentNo,
+            final LogActvtyParam logParam,
             final BindingResult bindingResult
     ) {
 
@@ -113,9 +115,9 @@ public class CommentController
         String resultMsg = "";
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            boolean isReg = (commentNo == null);
-            CommentDto result = isReg ? commentService.regist(commentDto) : commentService.modify(commentDto, commentNo);
-            isSuccess = (result.getCommentNo() != null);
+            boolean isReg = (postNo == null);
+            CommentDto result = isReg ? commentService.regist(commentDto) : commentService.modify(commentDto, postNo);
+            isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
@@ -125,7 +127,7 @@ public class CommentController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn(commentDto.toString());
-            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(param.getActvtyCtgr()));
+            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(param.getActvtyCtgrCd()));
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -142,7 +144,7 @@ public class CommentController
     public ResponseEntity<AjaxResponse> commentDelAjax(
             final LogActvtyParam logParam,
             final BaseParam param,
-            final @RequestParam("commentNo") String commentNoStr
+            final @RequestParam("postNo") Integer postNo
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -150,8 +152,7 @@ public class CommentController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer commentNo = Integer.parseInt(commentNoStr);
-            isSuccess = commentService.delete(commentNo);
+            isSuccess = commentService.delete(postNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -160,8 +161,8 @@ public class CommentController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + commentNoStr);
-            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(param.getActvtyCtgr()));
+            logParam.setCn("key: " + postNo);
+            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(param.getActvtyCtgrCd()));
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

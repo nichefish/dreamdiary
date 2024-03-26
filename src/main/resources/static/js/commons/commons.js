@@ -457,7 +457,7 @@ commons.util = (function() {
          * 테이블(텍스트, 숫자) 정렬 함수
          */
         sortTable: function(table, n, sortMode) {
-            if (table.tBodies === undefined) return;
+            if (table === undefined || table.tBodies === undefined) return;
             let tbody = table.tBodies[0];
             let rows = tbody.getElementsByTagName("tr");
 
@@ -487,7 +487,7 @@ commons.util = (function() {
          * 테이블(추가추가된 input값 :: 텍스트, 숫자) 정렬 함수
          */
         sortReqstTable: function(table, n, sortMode) {
-            if (table.tBodies === undefined) return;
+            if (table === undefined || table.tBodies === undefined) return;
             let tbody = table.tBodies[0];
             let rows = tbody.getElementsByTagName("tr");
 

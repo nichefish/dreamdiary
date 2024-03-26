@@ -60,7 +60,6 @@ public class UserReqstController
 
     @RequestMapping(value = SiteUrl.USER_REQST_REG_FORM)
     public String userReqstRegForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteMenuAcsInfo siteMenuAcsInfo,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {

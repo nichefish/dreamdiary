@@ -21,7 +21,7 @@ public class BaseParam {
     /**
      * 작업 카테고리 코드
      */
-    private String actvtyCtgr;
+    private String actvtyCtgrCd;
     /**
      * 액션구분 코드
      */

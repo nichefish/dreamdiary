@@ -16,7 +16,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.BOARD_COMMENT_REG_AJAX!}";
+                    const url = "${SiteUrl.COMMENT_REG_AJAX!}";
                     let ajaxData = $("#commentRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -55,7 +55,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.BOARD_COMMENT_MDF_AJAX!}";
+                    const url = "${SiteUrl.COMMENT_MDF_AJAX!}";
                     let ajaxData = $("#commentMdfForm" + commentNo).serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -72,7 +72,7 @@
                     showCancelButton: true,
                 }).then(function (result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.BOARD_COMMENT_DEL_AJAX!}";
+                    const url = "${SiteUrl.COMMENT_DEL_AJAX!}";
                     let ajaxData = {"commentNo": commentNo};
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -119,9 +119,9 @@
                                 <a href="javascript:void(0);" class="btn btn-sm btn-flex btn-light-primary btn-icon mx-1"
                                    onclick="Comment.mdfForm('${comment.commentNo!}');"
                                    data-bs-toggle="tooltip" title="댓글 수정 폼을 호출합니다." data-bs-dismiss="click">
-                                <span class="svg-icon svg-icon-7">
-                                    <i class="fas fa-solid fa-pen"></i>
-                                </span>
+                                    <span class="svg-icon svg-icon-7">
+                                        <i class="fas fa-solid fa-pen"></i>
+                                    </span>
                                 </a>
                                 <a href="javascript:void(0);" class="btn btn-sm btn-flex btn-light-danger btn-icon"
                                    onclick="Comment.delAjax('${comment.commentNo!}');"
@@ -174,12 +174,13 @@
             </div>
             <div class="col-xl-11">
                 <form name="commentRegForm" id="commentRegForm" class="form">
-                    <input type="hidden" name="commentNo" id="commentNo"/>
-                    <input type="hidden" name="postNo" value="${post.postNo!}" placeholder="postNo">
-                    <input type="hidden" name="boardCd" value="${post.boardCd!}" placeholder="boardCd"/>
+                    <input type="hidden" name="postNo" id="postNo"/>
+                    <input type="hidden" name="refPostNo" value="${post.postNo!}" ">
+                    <input type="hidden" name="refBoardCd" value="${post.boardCd!}" />
+                    <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" >
                     <div class="row">
                         <div class="col-xl-11 form-group mb-2">
-                            <textarea name="commentCn" id="commentRegCn" class="form-control required" rows="2" maxlength="10000" placeholder="댓글 작성..." data-kt-autosize="true"
+                            <textarea name="cn" id="commentRegCn" class="form-control required" rows="2" maxlength="10000" placeholder="댓글 작성..." data-kt-autosize="true"
                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 내용을 입력합니다."></textarea>
                             <div id="commentRegCnSpan"></div>
                         </div>
@@ -201,12 +202,12 @@
 <div class="col-xl-10" id="commentMdfTemplate" hidden>
     <div class="fs-6 fw-bold col-form-label p-0">
         <form name="commentMdfForm" id="commentMdfForm__INDEX__" class="form">
-            <input type="hidden" name="commentNo" id="commentNo__INDEX__" value="__INDEX__"/>
-            <input type="hidden" name="postNo" value="${post.postNo!}" placeholder="postNo">
-            <input type="hidden" name="boardCd" value="${post.boardCd!}" placeholder="boardCd"/>
+            <input type="hidden" name="postNo" id="commentNo__INDEX__" value="__INDEX__"/>
+            <input type="hidden" name="refPostNo" value="${post.postNo!}" placeholder="postNo">
+            <input type="hidden" name="refBoardCd" value="${post.boardCd!}" placeholder="boardCd"/>
             <div class="row">
                 <div class="col-12">
-                    <textarea name="commentCn" id="commentMdfCn__INDEX__" class="form-control required w-100" rows="3" maxlength="10000"></textarea>
+                    <textarea name="cn" id="commentMdfCn__INDEX__" class="form-control required w-100" rows="3" maxlength="10000"></textarea>
                     <div id="commentMdfCnSpan__INDEX__"></div>
                 </div>
             </div>

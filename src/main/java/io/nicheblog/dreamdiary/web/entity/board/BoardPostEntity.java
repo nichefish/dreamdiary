@@ -69,13 +69,6 @@ public class BoardPostEntity
     private BoardDefEntity boardDefInfo;
 
     /**
-     * 글분류 코드
-     */
-    @Column(name = "CTGR_CD")
-    @Comment("글분류 상세코드")
-    private String ctgrCd;
-
-    /**
      * 게시판 글분류 코드 정보 (복합키 조인)
      */
     @ManyToOne(fetch = FetchType.EAGER)
@@ -87,22 +80,6 @@ public class BoardPostEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("게시판 글분류 코드 정보")
     private DtlCdEntity ctgrCdInfo;
-
-    /**
-     * 상단고정여부
-     */
-    @Builder.Default
-    @Column(name = "FXD_YN")
-    @Comment("상단고정여부")
-    private String fxdYn = "N";
-
-    /**
-     * 수정권한
-     */
-    @Builder.Default
-    @Column(name = "MDFABLE")
-    @Comment("수정권한")
-    private String mdfable = Constant.MDFABLE_REGSTR;
 
     /**
      * 노션 페이지 참조 ID :: UUID

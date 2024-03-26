@@ -134,7 +134,6 @@ public class NoticeController
     @RequestMapping(SiteUrl.NOTICE_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeRegForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
@@ -213,10 +212,10 @@ public class NoticeController
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeRegAjax(
             final @Valid NoticeDto noticeDto,
-            final Integer key,
-            final LogActvtyParam logParam,
+            final @RequestParam("postNo") @Nullable Integer key,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
+            final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
             final BindingResult bindingResult
     ) {
@@ -227,7 +226,7 @@ public class NoticeController
         String resultMsg = "";
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            boolean isReg = key == null;
+            boolean isReg = (key == null);
             NoticeDto result = isReg ? noticeService.regist(noticeDto, request) : noticeService.modify(noticeDto, key, request);
             isSuccess = (result.getPostNo() != null);
             if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
@@ -271,9 +270,8 @@ public class NoticeController
     @RequestMapping(value = SiteUrl.NOTICE_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeDtl(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
+            final @RequestParam("postNo") Integer key,
             final LogActvtyParam logParam,
-            final Integer key,
             final ModelMap model
     ) throws Exception {
 
@@ -298,6 +296,7 @@ public class NoticeController
             //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
             //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
             // }
+            model.addAttribute("actvtyCtgrCd", actvtyCtgr.name());          // 댓글 세팅용 활동분류 코드
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -323,8 +322,8 @@ public class NoticeController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeDtlAjax(
-            final LogActvtyParam logParam,
-            final Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -372,9 +371,8 @@ public class NoticeController
     @RequestMapping(value = SiteUrl.NOTICE_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeMdfForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
+            final @RequestParam("postNo") Integer key,
             final LogActvtyParam logParam,
-            final Integer key,
             final ModelMap model
     ) throws Exception {
 
@@ -417,8 +415,8 @@ public class NoticeController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeDelAjax(
-            final LogActvtyParam logParam,
-            final Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.repository.comment;
+package io.nicheblog.dreamdiary.web.repository.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
-import io.nicheblog.dreamdiary.web.entity.comment.CommentEntity;
+import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import org.springframework.stereotype.Repository;
 
 /**

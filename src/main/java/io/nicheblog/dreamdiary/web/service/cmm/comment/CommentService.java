@@ -1,12 +1,12 @@
-package io.nicheblog.dreamdiary.web.service.comment;
+package io.nicheblog.dreamdiary.web.service.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
-import io.nicheblog.dreamdiary.web.entity.comment.CommentEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.comment.CommentMapstruct;
-import io.nicheblog.dreamdiary.web.model.comment.CommentDto;
-import io.nicheblog.dreamdiary.web.repository.comment.CommentRepository;
-import io.nicheblog.dreamdiary.web.spec.comment.CommentSpec;
+import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
+import io.nicheblog.dreamdiary.web.repository.cmm.comment.CommentRepository;
+import io.nicheblog.dreamdiary.web.spec.cmm.comment.CommentSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 

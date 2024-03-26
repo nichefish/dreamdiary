@@ -64,7 +64,6 @@ public class UserMyController
     @RequestMapping(SiteUrl.USER_MY_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String myInfoDtl(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {

@@ -1,9 +1,9 @@
-package io.nicheblog.dreamdiary.web.spec.comment;
+package io.nicheblog.dreamdiary.web.spec.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.comment.CommentEntity;
+import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 

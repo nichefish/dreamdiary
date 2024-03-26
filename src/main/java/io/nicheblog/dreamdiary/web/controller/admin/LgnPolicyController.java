@@ -55,7 +55,6 @@ public class LgnPolicyController
     @RequestMapping(SiteUrl.LGN_POLICY_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String lgnPolicyForm(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {

@@ -64,6 +64,21 @@ public class BaseClsfEntity
     protected String cn;
 
     /**
+     * 글분류 코드
+     */
+    @Column(name = "CTGR_CD", length = 20)
+    @Comment("글분류 코드")
+    private String ctgrCd;
+
+    /**
+     * 상단고정여부
+     */
+    @Builder.Default
+    @Column(name = "FXD_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("상단고정여부")
+    protected String fxdYn = "N";
+
+    /**
      * 게시물 댓글 목록
      */
     // @OneToMany(fetch = FetchType.EAGER)
@@ -78,11 +93,6 @@ public class BaseClsfEntity
     // private List<CommentEntity> commentList;
 
     /* ----- */
-
-    /** Getter Override*/
-    public String getBoardCd() {
-        return BOARD_CD;
-    }
 
     /**
      * 복합키 객체 반환

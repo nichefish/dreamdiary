@@ -35,7 +35,7 @@
             },
             /** 수정 화면 이동 */
             fnMdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteMenu.URL_BOARD_POST_MDF_FORM!}");
+                commons.util.blockUISubmit("#procForm", "${SiteUrl.BOARD_POST_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
             fnDelAjax: function() {
@@ -44,7 +44,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteMenu.URL_BOARD_POST_DEL_AJAX!}";
+                    const url = "${SiteUrl.BOARD_POST_DEL_AJAX!}";
                     let ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -56,7 +56,7 @@
             },
             /** 목록 화면 이동 */
             list: function() {
-                const listUrl = "${SiteMenu.URL_BOARD_POST_LIST!}?boardCd=${boardCd!}&isBackToList=Y"
+                const listUrl = "${SiteUrl.BOARD_POST_LIST!}?boardCd=${boardCd!}&isBackToList=Y"
                 commons.util.blockUIReplace(listUrl);
             },
         }
@@ -148,7 +148,7 @@
         <div class="separator separator-dashed border-gray-300 my-8"></div>
         <!--begin::Question-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-            ${post.postCn?no_esc}
+            ${post.cn?no_esc}
         </div>
 
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
