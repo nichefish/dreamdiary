@@ -3,6 +3,8 @@ package io.nicheblog.dreamdiary.web.service.notice;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.notice.NoticeMapstruct;
@@ -28,12 +30,12 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseClsfService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("noticeService")
 @Log4j2
 public class NoticeService
-        implements BasePostService<NoticeDto, NoticeListDto, BasePostKey, NoticeEntity, NoticeRepository, NoticeSpec, NoticeMapstruct, CmmFileService> {
+        implements BaseClsfService<NoticeDto, NoticeListDto, Integer, NoticeEntity, NoticeRepository, NoticeSpec, NoticeMapstruct, CmmFileService> {
 
     @Resource(name = "noticeRepository")
     private NoticeRepository noticeRepository;

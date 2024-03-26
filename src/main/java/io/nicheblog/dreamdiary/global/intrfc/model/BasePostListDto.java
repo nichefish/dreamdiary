@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchDto
+ * @extends BaseClsfListDto
  */
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true)
@@ -23,18 +23,6 @@ import javax.persistence.MappedSuperclass;
 public class BasePostListDto
         extends BaseClsfListDto {
 
-    /**
-     * 글 번호
-     */
-    protected Integer postNo;
-    /**
-     * 게시판분류코드
-     */
-    protected String boardCd;
-    /**
-     * 제목
-     */
-    protected String title;
     /**
      * 조회수
      */

@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -214,7 +213,7 @@ public class NoticeController
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeRegAjax(
             final @Valid NoticeDto noticeDto,
-            final BasePostKey key,
+            final Integer key,
             final LogActvtyParam logParam,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
@@ -228,7 +227,7 @@ public class NoticeController
         String resultMsg = "";
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            boolean isReg = key.getPostNo() == null;
+            boolean isReg = key == null;
             NoticeDto result = isReg ? noticeService.regist(noticeDto, request) : noticeService.modify(noticeDto, key, request);
             isSuccess = (result.getPostNo() != null);
             if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
@@ -274,7 +273,7 @@ public class NoticeController
     public String noticeDtl(
             final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
-            final BasePostKey postKey,
+            final Integer key,
             final ModelMap model
     ) throws Exception {
 
@@ -284,7 +283,7 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            NoticeDto rsDto = noticeService.getDtlDto(postKey);
+            NoticeDto rsDto = noticeService.getDtlDto(key);
             model.addAttribute("post", rsDto);
             // 열람자 목록 및 조회수 카운트 추가 :: 메인 로직과 분리
             // try {
@@ -308,7 +307,7 @@ public class NoticeController
             MessageUtils.alertMessage(resultMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setCn("key: " + postKey.toString());
+            logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -325,7 +324,7 @@ public class NoticeController
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeDtlAjax(
             final LogActvtyParam logParam,
-            final BasePostKey postKey
+            final Integer key
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -334,7 +333,7 @@ public class NoticeController
         String resultMsg = "";
         try {
             // 게시판 정보 조회
-            NoticeDto rsDto = noticeService.getDtlDto(postKey);
+            NoticeDto rsDto = noticeService.getDtlDto(key);
             // 열람자 목록 및 조회수 카운트 추가
             // try {
             //     List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
@@ -358,7 +357,7 @@ public class NoticeController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + postKey.toString());
+            logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -375,7 +374,7 @@ public class NoticeController
     public String noticeMdfForm(
             final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteAcsInfo,
             final LogActvtyParam logParam,
-            final BasePostKey postKey,
+            final Integer key,
             final ModelMap model
     ) throws Exception {
 
@@ -385,7 +384,7 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            NoticeDto rsDto = noticeService.getDtlDto(postKey);
+            NoticeDto rsDto = noticeService.getDtlDto(key);
             model.addAttribute("post", rsDto);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -402,7 +401,7 @@ public class NoticeController
             MessageUtils.alertMessage(resultMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setCn("key: " + postKey.toString());
+            logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -419,7 +418,7 @@ public class NoticeController
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeDelAjax(
             final LogActvtyParam logParam,
-            final BasePostKey postKey
+            final Integer key
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -427,7 +426,7 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = noticeService.delete(postKey);
+            isSuccess = noticeService.delete(key);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -436,7 +435,7 @@ public class NoticeController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + postKey.toString());
+            logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

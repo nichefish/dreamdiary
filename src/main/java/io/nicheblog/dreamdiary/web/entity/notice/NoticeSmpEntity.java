@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.entity.notice;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
@@ -20,7 +21,7 @@ import java.util.Date;
  * NoticeSmpEntity
  * 공지사항 간소화 Entity
  * (NoticeEntity 태그 관련 정보 제거 = 연관관계 순환참조 방지 위함. 나머지는 동일)
- * (BasePostEntity 상속, Serializable 구현)
+ * (BaseClsfEntity 상속)
  *
  * @author nichefish
  */
@@ -34,8 +35,7 @@ import java.util.Date;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE NOTICE SET DEL_YN = 'Y' WHERE BOARD_CD = ? AND POST_NO = ?")
 public class NoticeSmpEntity
-        extends BasePostEntity
-        implements Serializable {
+        extends BaseClsfEntity {
 
     private static final String BOARD_CD = "NOTICE";
     private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";

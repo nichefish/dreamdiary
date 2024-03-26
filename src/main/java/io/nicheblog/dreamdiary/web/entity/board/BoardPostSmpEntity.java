@@ -38,8 +38,7 @@ import java.util.Date;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE BOARD_POST SET DEL_YN = 'Y' WHERE BOARD_CD = ? AND POST_NO = ?")
 public class BoardPostSmpEntity
-        extends BasePostEntity
-        implements Serializable {
+        extends BasePostEntity {
 
     /**
      * 글 번호

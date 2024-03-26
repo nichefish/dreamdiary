@@ -31,8 +31,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @Where(clause = "DEL_YN='N'")
 public class BoardDefEntity
-        extends BaseManageEntity
-        implements Serializable {
+        extends BaseManageEntity {
 
     /**
      * 게시판 코드 (PK)

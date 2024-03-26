@@ -36,8 +36,7 @@ import java.util.List;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE USER_INFO SET DEL_YN = 'Y' WHERE USER_INFO_NO = ?")
 public class UserInfoEntity
-        extends BaseCrudEntity
-        implements Serializable {
+        extends BaseCrudEntity {
 
     /**
      * 사용자 정보 번호 (PK)

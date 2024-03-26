@@ -14,7 +14,7 @@ import javax.persistence.MappedSuperclass;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchDto
+ * @extends BaseClsfDto
  */
 @MappedSuperclass
 @Getter
@@ -27,54 +27,11 @@ public class BasePostDto
         extends BaseClsfDto {
 
     /**
-     * 글 번호
-     */
-    protected Integer postNo;
-    /**
-     * 게시판분류코드
-     */
-    protected String boardCd;
-    /**
-     * 제목
-     */
-    protected String title;
-    /**
-     * 내용
-     */
-    protected String Cn;
-    /**
      * 조회수
      */
     @Builder.Default
     protected Integer hitCnt = 0;
-    /**
-     * 첨부파일 ID
-     */
-    protected Integer atchFileNo;
-    /**
-     * 첨부파일 정보
-     */
-    protected AtchFileDto atchFileInfo;
-
-    /**
-     * 삭제여부
-     */
-    @Builder.Default
-    protected char delYn = 'N';
-    /**
-     * 성공여부
-     */
-    @Builder.Default
-    protected Boolean isSuccess = false;
 
 
     /* ----- */
-
-    /**
-     * 복합키 객체 반환
-     */
-    public BasePostKey getPostKey() {
-        return new BasePostKey(this.getPostNo(), this.getBoardCd());
-    }
-
 }

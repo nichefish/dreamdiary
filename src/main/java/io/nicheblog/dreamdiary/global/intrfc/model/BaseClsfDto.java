@@ -23,7 +23,7 @@ import javax.persistence.MappedSuperclass;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class BaseClsfDto
+public class  BaseClsfDto
         extends BaseAtchDto {
 
     /**
@@ -41,26 +41,7 @@ public class BaseClsfDto
     /**
      * 내용
      */
-    protected String postCn;
-    /**
-     * 조회수
-     */
-    @Builder.Default
-    protected Integer hitCnt = 0;
-    /**
-     * 첨부파일 ID
-     */
-    protected Integer atchFileNo;
-    /**
-     * 첨부파일 정보
-     */
-    protected AtchFileDto atchFileInfo;
-
-    /**
-     * 삭제여부
-     */
-    @Builder.Default
-    protected char delYn = 'N';
+    protected String cn;
     /**
      * 성공여부
      */

@@ -37,7 +37,7 @@
                 commons.validate.validateForm("#commentMdfForm", Comment.mdfAjax);
             },
             /** 댓글 수정 폼 닫기 */
-            fnCloseMdfForm: function(commentNo) {
+            closeMdfForm: function(commentNo) {
                 $("#commentDtlSpan" + commentNo).show();
                 $("#commentSpan" + commentNo).empty();
                 $("#commentMdfCn" + commentNo).empty();
@@ -149,7 +149,7 @@
                             저장
                         </button>
                         <button type="button" class="btn btn-sm btn-secondary me-2"
-                                onclick="Comment.fnCloseMdfForm('${comment.commentNo!}');"
+                                onclick="Comment.closeMdfForm('${comment.commentNo!}');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 수정 영역을 닫습니다.">
                             닫기
                         </button>

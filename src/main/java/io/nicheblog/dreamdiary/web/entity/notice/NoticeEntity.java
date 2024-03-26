@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.entity.notice;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
@@ -36,8 +37,7 @@ import java.util.Date;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE notice SET DEL_YN = 'Y' WHERE POST_NO = ?")
 public class NoticeEntity
-        extends BasePostEntity
-        implements Serializable {
+        extends BaseClsfEntity {
 
     private static final String BOARD_CD = "NOTICE";
     private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";

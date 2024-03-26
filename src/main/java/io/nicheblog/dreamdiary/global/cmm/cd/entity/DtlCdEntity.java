@@ -31,8 +31,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @Where(clause = "DEL_YN='N'")
 public class DtlCdEntity
-        extends BaseManageEntity
-        implements Serializable {
+        extends BaseManageEntity {
 
     /**
      * 상세코드

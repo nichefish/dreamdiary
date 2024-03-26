@@ -5,6 +5,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
 /**
  * BaseCrudEntity
@@ -22,7 +23,8 @@ import javax.persistence.MappedSuperclass;
 @SuperBuilder(toBuilder=true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseCrudEntity {
+public class BaseCrudEntity
+        implements Serializable {
 
     /**
      * 삭제여부

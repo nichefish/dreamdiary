@@ -13,7 +13,7 @@
             init: function () {
                 //
             },
-            fnClose: function() {
+            close: function() {
                 window.close();
             }
         }
@@ -103,7 +103,7 @@
     </div>
     <div class="separator separator-dashed border-gray-300 my-8"></div>
     <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-sm btn-light" onclick="Page.fnClose();"
+        <button type="button" class="btn btn-sm btn-light" onclick="Page.close();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="팝업 창을 닫습니다.">
             <i class="bi bi-list"></i>닫기
         </button>

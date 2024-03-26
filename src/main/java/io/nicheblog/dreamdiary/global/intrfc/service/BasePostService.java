@@ -27,7 +27,7 @@ import java.util.Map;
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BasePostService<Dto extends BasePostDto, ListDto extends BasePostListDto, Key extends BasePostKey, Entity extends BasePostEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>, FileService extends CmmFileService>
-        extends BaseMultiCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct, FileService> {
+        extends BaseClsfService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct, FileService> {
 
     /**
      * default: 상단 고정 항목 목록 조회

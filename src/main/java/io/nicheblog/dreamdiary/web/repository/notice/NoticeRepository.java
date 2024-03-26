@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("noticeRepository")
 public interface NoticeRepository
-        extends BaseRepository<NoticeEntity, BasePostKey> {
+        extends BaseRepository<NoticeEntity, Integer> {
 
     //
 }

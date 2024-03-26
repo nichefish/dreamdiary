@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
 /**
  * BaseCrudDto
@@ -20,7 +21,8 @@ import javax.persistence.MappedSuperclass;
 @SuperBuilder(toBuilder=true)
 @NoArgsConstructor
 @EqualsAndHashCode
-public class BaseCrudDto {
+public class BaseCrudDto
+        implements Serializable {
 
     /**
      * 목록 순번

@@ -28,8 +28,7 @@ import java.util.Date;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class BaseUserEntity
-        extends BaseAtchEntity
-        implements Serializable {
+        extends BaseAtchEntity {
 
     /**
      * (로그인) 아이디

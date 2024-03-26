@@ -34,8 +34,7 @@ import java.util.Date;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE DREAM_DAY SET DEL_YN = 'Y' WHERE DREAM_DAY_NO = ?")
 public class DreamDayEntity
-        extends BaseAtchEntity
-        implements Serializable {
+        extends BaseAtchEntity {
 
     private static final String BOARD_CD = "DREAM_DAY";
     private static final String CTGR_CL_CD = "DREAM_DAY_CTGR_CD";

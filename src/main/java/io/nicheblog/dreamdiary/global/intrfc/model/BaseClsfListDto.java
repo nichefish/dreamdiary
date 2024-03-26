@@ -35,10 +35,5 @@ public class BaseClsfListDto
      * 제목
      */
     protected String title;
-    /**
-     * 조회수
-     */
-    @Builder.Default
-    protected Integer hitCnt = 0;
 
 }
