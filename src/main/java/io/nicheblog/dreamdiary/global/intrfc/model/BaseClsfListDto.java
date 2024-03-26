@@ -36,4 +36,9 @@ public class BaseClsfListDto
      */
     protected String title;
 
+    /**
+     * 댓글 갯수
+     */
+    @Builder.Default
+    private Integer commentCnt = 0;
 }

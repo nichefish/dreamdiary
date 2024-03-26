@@ -19,10 +19,12 @@ import java.util.List;
 
 /**
  * UserInfoEntity
- * 사용자 정보 Entity :: 계정(User) 정보에 귀속됨
- * (BaseAuditEntity 상속, Serializable 구현)
+ * <pre>
+ *  사용자 정보 Entity :: 계정(User) 정보에 귀속됨
+ * </pre>
  *
  * @author nichefish
+ * @extends BaseCrudEntity
  */
 @Entity
 @Table(name = "USER_INFO")

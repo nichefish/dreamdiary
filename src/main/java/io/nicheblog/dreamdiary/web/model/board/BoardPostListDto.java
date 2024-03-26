@@ -52,13 +52,6 @@ public class BoardPostListDto
 
     */
 /**
-     * 댓글 갯수
-     *//*
-
-    private Integer commentCnt = 0;
-
-    */
-/**
      * 조치자(작업자)ID
      */
     private String managtrId;

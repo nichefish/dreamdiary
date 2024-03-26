@@ -23,10 +23,12 @@ import java.util.List;
 
 /**
  * UserEntity
- * 계정 정보 Entity :: 사용자 정보(UserInfo)를 위임 필드로 가짐
- * (BaseAuditEntity 상속, Serializable 구현)
+ * <pre>
+ *  계정 정보 Entity :: 사용자 정보(UserInfo)를 위임 필드로 가짐
+ * </pre>
  *
  * @author nichefish
+ * @extends BaseUserEntity
  */
 @Entity
 @Table(name = "USER")

@@ -40,7 +40,7 @@ public class MessageUtils
     private static HttpServletResponse response;
 
     @PostConstruct
-    private void initialize() {
+    private void init() {
         this.messageSource = source;
         this.response = resp;
     }

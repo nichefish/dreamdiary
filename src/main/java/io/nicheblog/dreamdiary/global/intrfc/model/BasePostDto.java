@@ -27,11 +27,16 @@ public class BasePostDto
         extends BaseClsfDto {
 
     /**
+     * 상단고정여부
+     */
+    @Builder.Default
+    private String fxdYn = "N";
+
+    /**
      * 조회수
      */
     @Builder.Default
     protected Integer hitCnt = 0;
-
 
     /* ----- */
 }

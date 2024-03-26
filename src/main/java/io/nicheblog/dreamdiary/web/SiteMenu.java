@@ -28,8 +28,9 @@ public class SiteMenu {
     private BoardDefService boardDefService;
 
     private static List<SiteAcsInfo> boardDefMenu;
+
     @PostConstruct
-    private void initialize() throws Exception {
+    private void init() throws Exception {
         BOARD.setSubMenuList(boardDefService.boardDefMenuList());
     }
 

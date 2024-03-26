@@ -35,9 +35,11 @@ import java.util.Date;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE NOTICE SET DEL_YN = 'Y' WHERE BOARD_CD = ? AND POST_NO = ?")
 public class NoticeSmpEntity
-        extends BaseClsfEntity {
+        extends BasePostEntity {
 
+    /** 필수(Override): 게시판 코드 */
     private static final String BOARD_CD = "NOTICE";
+    /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";
 
     /**

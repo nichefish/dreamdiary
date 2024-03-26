@@ -39,12 +39,6 @@ public class BoardPostDto
     private String ctgrNm;
 
     /**
-     * 상단고정여부
-     */
-    @Builder.Default
-    private String fxdYn = "N";
-
-    /**
      * 수정권한
      */
     @Builder.Default

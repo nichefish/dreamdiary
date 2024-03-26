@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -48,6 +47,11 @@ public class  BaseClsfDto
     @Builder.Default
     protected Boolean isSuccess = false;
 
+    /**
+     * 댓글 갯수
+     */
+    @Builder.Default
+    private Integer commentCnt = 0;
 
     /* ----- */
 

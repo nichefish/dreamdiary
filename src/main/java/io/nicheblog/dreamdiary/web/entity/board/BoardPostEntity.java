@@ -6,16 +6,19 @@ import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * BoardPostEntity
@@ -119,7 +122,7 @@ public class BoardPostEntity
     // @Fetch(FetchMode.SELECT)
     // @OrderBy("regDt ASC")
     // @NotFound(action = NotFoundAction.IGNORE)
-    // private List<BaseCommentEntity> commentList;
+    // private List<CommentEntity> commentList;
 
     /**
      * 게시물 열람자 목록

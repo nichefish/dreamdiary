@@ -1,12 +1,16 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.*;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+import javax.annotation.PostConstruct;
+import javax.persistence.*;
+import javax.persistence.OrderBy;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * BaseClsfEntity
@@ -27,6 +31,11 @@ import javax.persistence.Transient;
 @RequiredArgsConstructor
 public class BaseClsfEntity
         extends BaseAtchEntity {
+
+    /** 필수: 게시물 코드 */
+    private static final String BOARD_CD = "";
+    /** 필수: 글분류 코드 */
+    private static final String CTGR_CL_CD = "";
 
     /**
      * 글 번호 (POST_NO, PK)
@@ -54,7 +63,26 @@ public class BaseClsfEntity
     @Column(name = "CN")
     protected String cn;
 
+    /**
+     * 게시물 댓글 목록
+     */
+    // @OneToMany(fetch = FetchType.EAGER)
+    // @JoinColumnsOrFormulas({
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
+    //         @JoinColumnOrFormula(formula = @JoinFormula(value = BOARD_CD, referencedColumnName = "BOARD_CD"))
+    // })
+    // @Fetch(FetchMode.SELECT)
+    // @OrderBy("regDt ASC")
+    // @Comment(" 목록")
+    // @NotFound(action = NotFoundAction.IGNORE)
+    // private List<CommentEntity> commentList;
+
     /* ----- */
+
+    /** Getter Override*/
+    public String getBoardCd() {
+        return BOARD_CD;
+    }
 
     /**
      * 복합키 객체 반환

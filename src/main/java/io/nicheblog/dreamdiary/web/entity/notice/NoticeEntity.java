@@ -37,9 +37,11 @@ import java.util.Date;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE notice SET DEL_YN = 'Y' WHERE POST_NO = ?")
 public class NoticeEntity
-        extends BaseClsfEntity {
+        extends BasePostEntity {
 
+    /** 필수(Override): 게시판 코드 */
     private static final String BOARD_CD = "NOTICE";
+    /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";
 
     /**
@@ -61,15 +63,15 @@ public class NoticeEntity
     /**
      * 공지사항 글분류 코드 정보 (복합키 조인)
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "'"+CTGR_CL_CD+"'", referencedColumnName = "CL_CD")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
-    })
-    @Fetch(value = FetchMode.JOIN)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("공지사항 글분류 코드 정보")
-    private DtlCdEntity ctgrCdInfo;
+    // @ManyToOne(fetch = FetchType.EAGER)
+    // @JoinColumnsOrFormulas({
+    //         @JoinColumnOrFormula(formula = @JoinFormula(value = "'"+CTGR_CL_CD+"'", referencedColumnName = "CL_CD")),
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
+    // })
+    // @Fetch(value = FetchMode.JOIN)
+    // @NotFound(action = NotFoundAction.IGNORE)
+    // @Comment("공지사항 글분류 코드 정보")
+    // private DtlCdEntity ctgrCdInfo;
 
     /**
      * 중요여부

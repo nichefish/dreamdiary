@@ -30,11 +30,13 @@ import java.util.List;
 */
 /**
  * UserReqstEntity
- * 사용자 (신규계정) 신청 정보 Entity :: 사용자 정보 Entity를 위임 필드로 가짐
- * 비로그인 상태에서 신청하게 되므로 JPA audit 제외 위해 클래스 분리
- * (BaseAuditEntity 상속, Serializable 구현)
- *
+ * <pre>
+ *  사용자 (신규계정) 신청 정보 Entity :: 사용자 정보 Entity를 위임 필드로 가짐
+ *  비로그인 상태에서 신청하게 되므로 JPA audit 제외 위해 클래스 분리
+ * </pre>
+
  * @author nichefish
+ * @extends BaseAuditEntity
  *//*
 
 @Entity
