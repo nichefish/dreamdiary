@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
@@ -34,9 +35,9 @@ import java.util.Date;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE DREAM_DAY SET DEL_YN = 'Y' WHERE DREAM_DAY_NO = ?")
 public class DreamDayEntity
-        extends BaseAtchEntity {
+        extends BaseClsfEntity {
 
-    private static final String BOARD_CD = "DREAM_DAY";
+    private static final String CONTENT_TYPE = "dream_day";
     private static final String CTGR_CL_CD = "DREAM_DAY_CTGR_CD";
 
     /**
@@ -44,14 +45,21 @@ public class DreamDayEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DREAM_DAY_NO")
+    @Column(name = "post_no")
     @Comment("꿈 일자 고유 번호")
     private Integer dreamDayNo;
 
     /**
+     * 게시판 분류 코드
+     */
+    @Builder.Default
+    @Column(name = "content_type")
+    private String boardCd = CONTENT_TYPE;
+
+    /**
      * 꿈 일자
      */
-    @Column(name = "DREAMT_DT")
+    @Column(name = "dreamt_dt")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Comment("꿈 일자")
@@ -59,24 +67,24 @@ public class DreamDayEntity
 
     /** 날짜미상여부 */
     @Builder.Default
-    @Column(name = "DT_UNKNOWN_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "dt_unknown_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("날짜미상여부")
     private String dtUnknownYn = "N";
 
     /** 년도 */
-    @Column(name = "YY")
+    @Column(name = "yy")
     @Comment("년도")
     private Integer yy;
 
     /** 월 */
-    @Column(name = "MNTH")
+    @Column(name = "mnth")
     @Comment("월")
     private Integer mnth;
 
     /**
      * 대략일자 (날짜미상시 해당일자 이후에 표기)
      */
-    @Column(name = "APRXMT_DT")
+    @Column(name = "aprxmt_dt")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Comment("대략일자 (날짜미상시 해당일자 이후에 표기)")

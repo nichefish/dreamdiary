@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.entity.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -25,18 +27,18 @@ import java.util.Date;
  * @extends BaseCrudEntity
  */
 @Entity
-@Table(name = "DREAM_PIECE")
+@Table(name = "dream_piece")
 @SuperBuilder(toBuilder=true)
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE DREAM_PIECE SET DEL_YN = 'Y' WHERE DREAM_PIECE_NO = ?")
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE dream_piece SET del_yn = 'Y' WHERE dream_piece_no = ?")
 public class DreamPieceEntity
-        extends BaseAtchEntity {
+        extends BasePostEntity {
 
-    private static final String BOARD_CD = "DREAM_PIECE";
+    private static final String CONTENT_TYPE = "dream_piece";
     private static final String CTGR_CL_CD = "DREAM_PIECE_CTGR_CD";
 
     /**
@@ -44,42 +46,35 @@ public class DreamPieceEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DREAM_PIECE_NO")
+    @Column(name = "post_no")
     @Comment("꿈 조각 고유 번호")
-    private Integer dreamPieceNo;
+    private Integer postNo;
+
+    /**
+     * 게시판 분류 코드
+     */
+    @Builder.Default
+    @Column(name = "content_type")
+    private String boardCd = CONTENT_TYPE;
 
     /**
      * 꿈 일자 번호
      */
-    @Column(name = "DREAM_DAY_NO")
+    @Column(name = "dream_day_no")
     @Comment("꿈 일자 번호")
     private Integer dreamDayNo;
 
     /**
      * 순번
      */
-    @Column(name = "SORT_ORDR", columnDefinition = "INT DEFAULT 1")
-    private Integer sortOrdr;
-
-    /**
-     * 내용
-     */
-    @Column(name = "CN")
-    private String cn;
-
-    /**
-     * 중요여부
-     */
-    @Builder.Default
-    @Column(name = "IMPRTC_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("중요여부")
-    private String imprtcYn = "N";
+    @Column(name = "idx", columnDefinition = "INT DEFAULT 1")
+    private Integer idx;
 
     /**
      * 편집완료여부
      */
     @Builder.Default
-    @Column(name = "EDIT_COMPT_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "edit_compt_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("편집완료여부")
     private String editComptYn = "N";
 
@@ -87,13 +82,13 @@ public class DreamPieceEntity
      * 타인 꿈 여부
      */
     @Builder.Default
-    @Column(name = "ELSE_DREAM_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "else_dream_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("타인 꿈 여부")
     private String elseDreamYn = "N";
 
     /**
      * 꿈꾼이(타인) 이름
      */
-    @Column(name = "ELSE_DREAMER_NM", length = 64)
+    @Column(name = "else_dreamer_nm", length = 64)
     private String elseDreamerNm;
 }
