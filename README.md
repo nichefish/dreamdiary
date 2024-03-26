@@ -1,17 +1,23 @@
- ### 개인 프로젝트: dreamdiary
+## 개인 프로젝트: dreamdiary
+
+###
+
+#### 사용 스택: 
 
 * Java 11
 
   * Spring Boot (2.7.18) 
 
-  * Lombok
-
   * Spring Security
 
-  * Mapstruct
+  * Lombok
     
+  * Mapstruct
+
 * Gradle
 
+* MariaDB
+  
 * Spring Data JPA / MyBatis
 
 * Apache Freemarker 
