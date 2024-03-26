@@ -8,9 +8,9 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.model.cmm.BaseParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentParam;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.comment.CommentService;
 import lombok.extern.log4j.Log4j2;
@@ -104,7 +104,7 @@ public class CommentController
     public ResponseEntity<AjaxResponse> commentRegAjax(
             final @Valid CommentDto commentDto,
             final @RequestParam("postNo") @Nullable Integer postNo,
-            final BaseParam param,
+            final CommentParam param,
             final LogActvtyParam logParam,
             final BindingResult bindingResult
     ) {
@@ -143,7 +143,7 @@ public class CommentController
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentDelAjax(
             final LogActvtyParam logParam,
-            final BaseParam param,
+            final CommentParam param,
             final @RequestParam("postNo") Integer postNo
     ) {
 
