@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.dream;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
@@ -37,7 +38,7 @@ import java.util.Date;
 public class DreamDayEntity
         extends BaseClsfEntity {
 
-    private static final String CONTENT_TYPE = "dream_day";
+    private static final String CONTENT_TYPE = ContentType.DREAM_DAY.key;
     private static final String CTGR_CL_CD = "DREAM_DAY_CTGR_CD";
 
     /**
