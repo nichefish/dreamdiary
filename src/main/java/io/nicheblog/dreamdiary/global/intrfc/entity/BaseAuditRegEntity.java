@@ -20,7 +20,7 @@ import java.util.Date;
  * BaseAuditRegEntity
  * <pre>
  *  (공통/상속) Audit 정보 Entity (수정자 없이 등록자만)
- *  ※"All classes in the hierarchy must be annotated with @SuperBuilder."
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
@@ -40,7 +40,7 @@ public class BaseAuditRegEntity
      * 등록자 ID
      */
     @CreatedBy
-    @Column(name = "REGSTR_ID", length = 20, updatable = false)
+    @Column(name = "regstr_id", length = 20, updatable = false)
     protected String regstrId;
 
     /**
@@ -50,14 +50,14 @@ public class BaseAuditRegEntity
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
-    @Column(name = "REG_DT", updatable = false)
+    @Column(name = "reg_dt", updatable = false)
     protected Date regDt;
 
     /**
      * 등록자 정보
      */
     @ManyToOne
-    @JoinColumn(name = "REGSTR_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "regstr_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     protected AuditorInfo regstrInfo;

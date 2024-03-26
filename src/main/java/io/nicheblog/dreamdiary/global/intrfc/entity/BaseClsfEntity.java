@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
  *  (공통/상속) 태그/댓글 속성 Entity
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
- * (BaseAtchEntity 상속)
  *
  * @author nichefish
  * @implements BaseAtchEntity
@@ -47,7 +46,7 @@ public class BaseClsfEntity
 
     /**
      * 게시판 분류 코드
-     * !상속받은 클래스에서 실제 매핑 구성 (@Column(name="BOARD_CD")
+     * !상속받은 클래스에서 실제 매핑 구성 (@Column(name="content_type")
      */
     @Transient
     protected String boardCd;
@@ -55,27 +54,27 @@ public class BaseClsfEntity
     /**
      * 제목
      */
-    @Column(name = "TITLE")
+    @Column(name = "title")
     protected String title;
 
     /**
      * 내용
      */
-    @Column(name = "CN")
+    @Column(name = "cn")
     protected String cn;
 
     /**
      * 글분류 코드
      */
-    @Column(name = "CTGR_CD", length = 20)
+    @Column(name = "ctgr_cd", length = 20)
     @Comment("글분류 코드")
     protected String ctgrCd;
 
     /** 글분류 코드 정보 */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "'"+CTGR_CL_CD+"'", referencedColumnName = "CL_CD")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'"+CTGR_CL_CD+"'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -86,7 +85,7 @@ public class BaseClsfEntity
      * 상단고정여부
      */
     @Builder.Default
-    @Column(name = "FXD_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "fxd_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("상단고정여부")
     protected String fxdYn = "N";
 
@@ -95,8 +94,8 @@ public class BaseClsfEntity
      */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(column = @JoinColumn(name = "REF_POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "REF_BOARD_CD", referencedColumnName = "BOARD_CD", insertable = false, updatable = false)),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no", insertable = false, updatable = false)),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "ref_content_type", referencedColumnName = "content_type", insertable = false, updatable = false)),
     })
     @Fetch(FetchMode.SELECT)
     @OrderBy("regDt ASC")
@@ -126,7 +125,7 @@ public class BaseClsfEntity
     /**
      * 댓글 :: List<Entity> -> List<Dto> 반환
      */
-    public List<CommentDto> getCommentDtoList() throws Exception {
+    public List<CommentDto> getCommentDtoList() {
         if (CollectionUtils.isEmpty(this.commentList)) return null;
         return this.commentList.stream()
                 .map(entity -> {

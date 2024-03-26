@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
  * BaseManageEntity
  * <pre>
  *  (공통/상속) 관리용 정보 Entity (정렬 순서, 사용 여부)
- *  ※ "All classes in the hierarchy must be annotated with @SuperBuilder."
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish

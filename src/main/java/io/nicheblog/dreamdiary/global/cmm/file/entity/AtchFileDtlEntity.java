@@ -1,17 +1,22 @@
 package io.nicheblog.dreamdiary.global.cmm.file.entity;
 
-import lombok.*;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * AtchFileDtlEntity
  * <pre>
  *  첨부파일 상세 Entity
  *  ※첨부파일 상세(atch_file_dtl) = 실제 첨부파일 정보를 담고 있는 객체. 첨부파일(atch_file)에 N:1로 귀속된다.
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
@@ -20,13 +25,13 @@ import java.io.Serializable;
 @Table(name = "ATCH_FILE_DTL")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE ATCH_FILE_DTL SET DEL_YN = 'Y' WHERE ATCH_FILE_DTL_NO = ?")
 public class AtchFileDtlEntity
-        implements Serializable {
+        extends BaseCrudEntity {
 
     /**
      * 첨부파일 상세 ID
@@ -83,11 +88,4 @@ public class AtchFileDtlEntity
      */
     @Column(name = "URL")
     private String url;
-
-    /**
-     * 삭제여부
-     */
-    @Builder.Default
-    @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    private String delYn = "N";
 }

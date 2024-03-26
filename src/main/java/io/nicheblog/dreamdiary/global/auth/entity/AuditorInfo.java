@@ -22,60 +22,45 @@ import java.io.Serializable;
  * @author nichefish
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 @Getter
 @Setter
-@Where(clause = "DEL_YN='N'")
+@Where(clause = "del_yn='N'")
 public class AuditorInfo
         implements Serializable {
 
     /**
-     * 처리자 고유 ID (PK)
+     * Auditor 고유 번호 (PK)
      */
     @Id
-    @Column(name = "USER_NO", length = 20, insertable = false, updatable = false)
+    @Column(name = "user_no", length = 20, insertable = false, updatable = false)
     private Integer userNo;
 
     /**
-     * 처리자 정보 ID
+     * Auditor 프로필 번호
      */
-    @Column(name = "USER_INFO_NO", length = 20, insertable = false, updatable = false)
-    private Integer userInfoNo;
+    @Column(name = "user_profl_no", length = 20, insertable = false, updatable = false)
+    private Integer userProflNo;
 
     /**
-     * 처리자 ID
+     * Auditor ID
      */
-    @Column(name = "USER_ID", length = 20, insertable = false, updatable = false)
+    @Column(name = "user_id", length = 20, insertable = false, updatable = false)
     private String userId;
 
     /**
      * 처리자 이름
      */
-    @Column(name = "NICK_NM", length = 20, insertable = false, updatable = false)
+    @Column(name = "nick_nm", length = 20, insertable = false, updatable = false)
     private String nickNm;
 
-    /**
-     * 권한코드
-     */
-    @Column(name = "AUTH_CD", length = 10)
-    private String authCd;
+    // TODO: 권한정보 조회
 
-    /**
-     * 권한코드 정보 (복합키 조인)
-     */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.AUTH_CD + "\'", referencedColumnName = "CL_CD")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "AUTH_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
-    })
-    @Fetch(value = FetchMode.JOIN)
-    @NotFound(action = NotFoundAction.IGNORE)
-    private DtlCdEntity authCdInfo;
 
     /**
      * 프로필 이미지 URL
      */
-    @Column(name = "PROFL_IMG_URL", length = 1000)
+    @Column(name = "profl_img_url", length = 1000)
     private String proflImgUrl;
 
     /* ----- */
@@ -84,9 +69,7 @@ public class AuditorInfo
      * getter override
      */
     public String getProflImgUrl() {
-        if (StringUtils.isEmpty(this.proflImgUrl)) {
-            return ("/metronic/assets/media/avatar_blank.png");
-        }
+        if (StringUtils.isEmpty(this.proflImgUrl)) return ("/metronic/assets/media/avatar_blank.png");
         return this.proflImgUrl;
     }
 }

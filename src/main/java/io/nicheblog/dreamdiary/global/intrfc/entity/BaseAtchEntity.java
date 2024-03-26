@@ -18,7 +18,7 @@ import javax.persistence.OneToOne;
  * BaseAtchEntity
  * <pre>
  *  (공통/상속) 첨부파일 정보 포함 Entity
- *  ※"All classes in the hierarchy must be annotated with @SuperBuilder."
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
@@ -36,14 +36,14 @@ public class BaseAtchEntity
     /**
      * 첨부파일 ID
      */
-    @Column(name = "ATCH_FILE_NO")
+    @Column(name = "atch_file_no")
     protected String atchFileNo;
 
     /**
      * 첨부파일 정보
      */
     @OneToOne
-    @JoinColumn(name = "ATCH_FILE_NO", referencedColumnName = "ATCH_FILE_NO", insertable = false, updatable = false)
+    @JoinColumn(name = "atch_file_no", referencedColumnName = "atch_file_no", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     protected AtchFileEntity atchFileInfo;
 }

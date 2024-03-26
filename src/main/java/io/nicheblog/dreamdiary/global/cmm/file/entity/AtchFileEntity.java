@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.global.cmm.file.entity;
 
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.annotations.*;
 
@@ -9,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,8 @@ import java.util.List;
  * AtchFileEntity
  * <pre>
  *  첨부파일 Entity
- *  ※첨부파일(atch_file) = 여러 첨부파일을 하나의 단위로 묶어놓은 객체. 첨부파일 상세(atch_file_dtl)를 1:N 묶음으로 관리한다.
+ *  첨부파일(atch_file) = 여러 첨부파일을 하나의 단위로 묶어놓은 객체. 첨부파일 상세(atch_file_dtl)를 1:N 묶음으로 관리한다.
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
@@ -26,20 +28,20 @@ import java.util.List;
 @Table(name = "ATCH_FILE")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE ATCH_FILE SET DEL_YN = 'Y' WHERE ATCH_FILE_NO = ?")
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE atch_file SET del_yn = 'Y' WHERE atch_file_no = ?")
 public class AtchFileEntity
-        implements Serializable {
+        extends BaseCrudEntity {
 
     /**
      * 첨부파일 ID
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ATCH_FILE_NO", length = 20)
+    @Column(name = "atch_file_no", length = 20)
     private Integer atchFileNo;
 
     /**
@@ -47,18 +49,11 @@ public class AtchFileEntity
      */
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "ATCH_FILE_NO")
+    @JoinColumn(name = "atch_file_no")
     @Fetch(FetchMode.SELECT)
     @OrderBy("fileSn ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     private List<AtchFileDtlEntity> atchFileList = new ArrayList<>();
-
-    /**
-     * 삭제여부
-     */
-    @Builder.Default
-    @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    private String delYn = "N";
 
     /* ----- */
 

@@ -13,6 +13,7 @@ import java.util.List;
  * BasePostDto
  * <pre>
  *  (공통/상속) 게시판 Dto
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
@@ -33,7 +34,7 @@ public class  BaseClsfDto
      */
     protected Integer postNo;
     /**
-     * 게시판분류코드
+     * 게시판 코드
      */
     protected String boardCd;
 

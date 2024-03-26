@@ -11,7 +11,7 @@ import java.io.Serializable;
  * BaseCrudEntity
  * <pre>
  *  (공통/상속) 기본 CRUD Entity
- *  ※ "All classes in the hierarchy must be annotated with @SuperBuilder."
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
