@@ -86,9 +86,9 @@ public class CommentController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            String actvtyCtgrCd = searchParam.getActvtyCtgr();
+            String actvtyCtgrCd = searchParam.getActvtyCtgrCd();
             if (StringUtils.isEmpty(actvtyCtgrCd))
-            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgr()));
+            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgrCd()));
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
