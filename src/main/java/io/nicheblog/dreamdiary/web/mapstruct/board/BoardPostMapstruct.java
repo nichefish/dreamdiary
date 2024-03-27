@@ -58,8 +58,9 @@ public interface BoardPostMapstruct
     // BoardPostDto toDto(final BoardPostSmpEntity entity) throws Exception;
 
     /**
-     * Entity -> listDto
+     * Entity -> ListDto
      */
+    @Override
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
     @Mapping(target = "ctgrNm", expression = "java((entity.getCtgrCdInfo() != null) ? entity.getCtgrCdInfo().getDtlCdNm() : null)")
     @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")

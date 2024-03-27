@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author nichefish
  */
-@Getter
+@Getter(AccessLevel.PUBLIC)
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor

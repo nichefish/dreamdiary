@@ -19,6 +19,7 @@ import javax.persistence.MappedSuperclass;
 @Getter(AccessLevel.PUBLIC)
 @Setter
 @SuperBuilder(toBuilder=true)
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class BaseManageDto

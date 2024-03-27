@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class BoardPostDto

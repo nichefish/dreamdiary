@@ -29,8 +29,8 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 public class BoardDefEntity
         extends BaseManageEntity {

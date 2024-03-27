@@ -3,10 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.entity;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 import org.springframework.util.CollectionUtils;
@@ -27,11 +24,11 @@ import java.util.stream.Collectors;
  * @implements BaseAtchEntity
  */
 @MappedSuperclass
-@Getter
+@Getter(AccessLevel.PUBLIC)
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class BaseClsfEntity
         extends BaseAtchEntity {
 

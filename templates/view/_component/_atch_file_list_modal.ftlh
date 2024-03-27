@@ -14,10 +14,10 @@
              * 첨부파일 추가추가
              * (reqstItemIdx는 어차피 한 페이지 내에서 고유하므로 따로 처리해줄 필요 없다.)
              */
-            fnModal: function(atchFileId) {
+            fnModal: function(atchFileNo) {
                 event.stopPropagation();
                 const url = "${SiteUrl.FILE_INFO_LIST_AJAX!}";
-                let ajaxData = { "atchFileId": atchFileId };
+                let ajaxData = { "atchFileNo": atchFileNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

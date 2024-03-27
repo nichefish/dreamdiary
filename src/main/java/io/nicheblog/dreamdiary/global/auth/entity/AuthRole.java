@@ -27,9 +27,9 @@ import java.util.List;
 @Table(name = "auth_role")
 @Getter
 @Setter
-@SuperBuilder
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 public class AuthRole
         extends BaseManageEntity {

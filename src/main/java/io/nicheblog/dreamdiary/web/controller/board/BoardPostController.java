@@ -93,15 +93,15 @@ public class BoardPostController
             final LogActvtyParam logParam,
             final @ModelAttribute("searchParam") BoardPostSearchParam searchParam,
             final @RequestParam Map<String, Object> searchParamMap,
-            final @RequestParam("boardCd") String boardCd,
+            final @RequestParam("contentType") String contentType,
             final ModelMap model
     ) throws Exception {
 
-        model.addAttribute("boardCd", boardCd);
+        model.addAttribute("contentType", contentType);
 
         /* 사이트 메뉴 설정 */
-        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        BoardDefDto boardDef = boardDefService.getDtlDto(contentType);
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(contentType);
         model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("목록 조회"));
 
         boolean isSuccess = false;
@@ -112,14 +112,14 @@ public class BoardPostController
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             // "프로젝트 세미나"는 등록일순, 나머지는 최종수정일순 정렬
-            String sortParam = "pjtSemina".equals(boardCd) ? "regDt" : "managtDt";
+            String sortParam = "pjtSemina".equals(contentType) ? "regDt" : "managtDt";
             PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, sortParam, model);
             Page<BoardPostListDto> postList = boardPostService.getListDto(listParamMap, pageRequest);
             if (postList != null) model.addAttribute("postList", postList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(postList));
             model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdListByClCd(boardDef.getCtgrClCd()));
             // 상단 고정 목록 조회
-            List<BoardPostListDto> postFxdList = boardPostService.getFxdList(boardCd);
+            List<BoardPostListDto> postFxdList = boardPostService.getFxdList(contentType);
             model.addAttribute("postFxdList", postFxdList);
             // 슬기로운 회사생활 게시판일 경우 직원연락처 목록 조회
             // String currDateStr = DateUtils.getCurrDateStr(DateUtils.PTN_DATE);
@@ -155,16 +155,16 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegForm(
             final LogActvtyParam logParam,
-            final @RequestParam("boardCd") String boardCd,
+            final @RequestParam("contentType") String contentType,
             final ModelMap model
     ) throws Exception {
 
         /* 게시판 정의 정보 조회 */
-        model.addAttribute("boardCd", boardCd);
+        model.addAttribute("contentType", contentType);
 
         /* 사이트 메뉴 설정 */
-        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        BoardDefDto boardDef = boardDefService.getDtlDto(contentType);
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(contentType);
         model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("상세 조회"));
 
         boolean isSuccess = false;
@@ -202,12 +202,12 @@ public class BoardPostController
     public String boardPostRegPreviewPop(
             final BoardPostDto boardPostDto,
             final LogActvtyParam logParam,
-            final @RequestParam("boardCd") String boardCd,
+            final @RequestParam("contentType") String contentType,
             final ModelMap model
     ) {
 
         /* 게시판 정의 정보 조회 */
-        model.addAttribute("boardCd", boardCd);
+        model.addAttribute("contentType", contentType);
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -308,16 +308,16 @@ public class BoardPostController
     public String boardPostDtl(
             final LogActvtyParam logParam,
             final BasePostKey postKey,
-            final @RequestParam("boardCd") String boardCd,
+            final @RequestParam("contentType") String contentType,
             final ModelMap model
     ) throws Exception {
 
         /* 게시판 정의 정보 조회 */
-        model.addAttribute("boardCd", boardCd);
+        model.addAttribute("contentType", contentType);
 
         /* 사이트 메뉴 설정 */
-        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        BoardDefDto boardDef = boardDefService.getDtlDto(contentType);
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(contentType);
         model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("상세 조회"));
 
         boolean isSuccess = false;

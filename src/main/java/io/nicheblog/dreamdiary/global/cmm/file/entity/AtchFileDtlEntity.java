@@ -25,9 +25,9 @@ import javax.persistence.*;
 @Table(name = "atch_file_dtl")
 @Getter
 @Setter
-@SuperBuilder
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE atch_file_dtl SET del_yn = 'Y' WHERE atch_file_dtl_no = ?")
 public class AtchFileDtlEntity

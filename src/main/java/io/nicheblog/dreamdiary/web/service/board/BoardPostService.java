@@ -92,9 +92,9 @@ public class BoardPostService
     /**
      * 게시판 > 게시판 상단 고정 목록 조회
      */
-    public List<BoardPostListDto> getFxdList(final String boardCd) throws Exception {
+    public List<BoardPostListDto> getFxdList(final String contentType) throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
-            put("boardCd", boardCd);
+            put("contentType", contentType);
             put("fxdYn", "Y");
         }};
 

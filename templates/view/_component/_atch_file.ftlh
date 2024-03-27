@@ -52,14 +52,14 @@
                 });
             },
             /** 기존 첨부파일 삭제 플래그 세팅 */
-            fnDelExistingFile: function(atchFileDtlId) {
+            fnDelExistingFile: function(atchFileDtlNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    $("#atchCtrl" + atchFileDtlId).val("D");
-                    $("div#itemContainer"+atchFileDtlId).hide();
+                    $("#atchCtrl" + atchFileDtlNo).val("D");
+                    $("div#itemContainer"+atchFileDtlNo).hide();
                 });
             }
         }

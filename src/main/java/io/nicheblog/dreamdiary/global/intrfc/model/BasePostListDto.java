@@ -16,11 +16,11 @@ import javax.persistence.MappedSuperclass;
  * @extends BaseClsfListDto
  */
 @MappedSuperclass
-@Getter
+@Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder
-@EqualsAndHashCode(callSuper = true)
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class BasePostListDto
         extends BaseClsfListDto {
 

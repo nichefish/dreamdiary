@@ -19,11 +19,11 @@ import javax.persistence.MappedSuperclass;
  * @extends BaseAuditEntity
  */
 @MappedSuperclass
-@Getter
+@Getter(AccessLevel.PUBLIC)
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class BaseManageEntity
         extends BaseAuditEntity {

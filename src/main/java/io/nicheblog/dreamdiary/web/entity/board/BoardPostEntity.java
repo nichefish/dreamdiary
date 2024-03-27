@@ -28,15 +28,15 @@ import java.util.Date;
  * @extends BasePostEntity
  */
 @Entity
-@Table(name = "BOARD_POST")
+@Table(name = "board_post")
 @IdClass(BasePostKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
-@SuperBuilder(toBuilder = true)
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE BOARD_POST SET DEL_YN = 'Y' WHERE BOARD_CD = ? AND POST_NO = ?")
+@AllArgsConstructor
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE board_post SET del_yn = 'Y' WHERE content_type = ? AND post_no = ?")
 public class BoardPostEntity
         extends BasePostEntity {
 
@@ -45,9 +45,9 @@ public class BoardPostEntity
      * (복합키 사용, 시퀀스 생성 로직을 위해 재정의)
      */
     @Id
-    @TableGenerator(name = "board_post", table = "CMM_SEQ", pkColumnName = "SEQ_NM", valueColumnName = "SEQ_VAL", pkColumnValue = "POST_NO", initialValue = 1, allocationSize = 1)
+    @TableGenerator(name = "board_post", table = "cmm_sequece", pkColumnName = "SEQ_NM", valueColumnName = "SEQ_VAL", pkColumnValue = "POST_NO", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "board_post")
-    @Column(name = "POST_NO")
+    @Column(name = "post_no")
     @Comment("글번호 (key)")
     private Integer postNo;
 
@@ -55,14 +55,14 @@ public class BoardPostEntity
      * 게시판 분류 코드
      */
     @Id
-    @Column(name = "BOARD_CD")
-    private String boardCd;
+    @Column(name = "content_type")
+    private String contentType;
 
     /**
      * 게시판 정의 정보
      */
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD", insertable = false, updatable = false)
+    @JoinColumn(name = "content_type", referencedColumnName = "board_cd", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("게시판 정의 정보")
     private BoardDefEntity boardDefInfo;
@@ -72,8 +72,8 @@ public class BoardPostEntity
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'POST_CTGR_CD\'", referencedColumnName = "CL_CD")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'POST_CTGR_CD\'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -94,7 +94,7 @@ public class BoardPostEntity
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD", insertable = false, updatable = false))
+            @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type", insertable = false, updatable = false))
     })
     @Fetch(FetchMode.SELECT)
     @OrderBy("regDt DESC")
@@ -105,7 +105,7 @@ public class BoardPostEntity
     /**
      * 조치자(작업자)ID
      */
-    @Column(name = "MANAGTR_ID", length = 20)
+    @Column(name = "managtr_id", length = 20)
     private String managtrId;
 
     /**
@@ -113,14 +113,14 @@ public class BoardPostEntity
      */
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
-    @Column(name = "MANAGT_DT")
+    @Column(name = "managt_dt")
     private Date managtDt;
 
     /**
      * 조치자(작업자) 정보
      */
     @ManyToOne
-    @JoinColumn(name = "MANAGTR_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "managtr_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     private AuditorInfo managtrInfo;
@@ -131,7 +131,7 @@ public class BoardPostEntity
     // @OneToMany(fetch = FetchType.EAGER)
     // @JoinColumnsOrFormulas({
     //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD", insertable = false, updatable = false))
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type", insertable = false, updatable = false))
     // })
     // @Fetch(FetchMode.SELECT)
     // @OrderBy("regDt DESC")
@@ -145,7 +145,7 @@ public class BoardPostEntity
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD"))
+            @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type"))
     })
     @Fetch(FetchMode.SELECT)
     @OrderBy("boardTag ASC")
@@ -161,7 +161,7 @@ public class BoardPostEntity
     // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     // @JoinColumnsOrFormulas({
     //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO")),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD"))
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type"))
     // })
     // @Fetch(FetchMode.SELECT)
     // @NotFound(action = NotFoundAction.IGNORE)

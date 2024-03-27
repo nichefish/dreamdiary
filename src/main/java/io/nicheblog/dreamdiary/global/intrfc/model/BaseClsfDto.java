@@ -20,9 +20,9 @@ import java.util.List;
  * @extends BaseAtchDto
  */
 @MappedSuperclass
-@Getter
+@Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

@@ -1,10 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -25,11 +22,11 @@ import javax.persistence.OneToOne;
  * @extends BaseAuditEntity
  */
 @MappedSuperclass
-@Getter
+@Getter(AccessLevel.PUBLIC)
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class BaseAtchEntity
         extends BaseAuditEntity {
 

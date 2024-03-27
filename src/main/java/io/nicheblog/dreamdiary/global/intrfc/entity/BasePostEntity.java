@@ -19,11 +19,11 @@ import javax.persistence.*;
  * @implements BaseClsfEntity
  */
 @MappedSuperclass
-@Getter
+@Getter(AccessLevel.PUBLIC)
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class BasePostEntity
         extends BaseClsfEntity {
 

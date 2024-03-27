@@ -10,7 +10,7 @@
             <table class="table align-middle table-row-dashed fs-small gy-3 table-fixed hoverTable mb-3">
                 <tbody>
                     {{#each this}}
-                        <tr class="bg-hover-secondary" onclick="commons.util.fileDownload('{{atchFileId}}', '{{atchFileDtlId}}');"
+                        <tr class="bg-hover-secondary" onclick="commons.util.fileDownload('{{atchFileNo}}', '{{atchFileDtlNo}}');"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.download"/>">
                             <td class="col-lg-7 col-8 text-start wb-keepall ps-6">
                                 <a class="badge badge-secondary p-2 btn-white blank blink-slow me-2">

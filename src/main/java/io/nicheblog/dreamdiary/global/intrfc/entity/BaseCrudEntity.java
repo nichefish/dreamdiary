@@ -17,11 +17,11 @@ import java.io.Serializable;
  * @author nichefish
  */
 @MappedSuperclass
-@Getter
+@Getter(AccessLevel.PUBLIC)
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class BaseCrudEntity
         implements Serializable {
 

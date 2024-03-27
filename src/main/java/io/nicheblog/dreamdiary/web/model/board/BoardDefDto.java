@@ -1,9 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseManageDto;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -18,7 +16,9 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class BoardDefDto
         extends BaseManageDto {
