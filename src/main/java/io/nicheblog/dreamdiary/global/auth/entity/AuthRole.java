@@ -6,13 +6,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.*;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * AuthRole
@@ -56,17 +56,17 @@ public class AuthRole
     /**
      * 상위 권한 코드 (null일시 최상위 권한)
      */
-    @Id
     @Column(name = "top_auth_cd", length = 50)
     private String topAuthCd;
 
     /**
-     * 상위 권한 정보
+     * 하위 권한 정보
      */
-    @ManyToOne
-    @JoinColumn(name = "top_auth_cd", referencedColumnName = "auth_cd", insertable = false, updatable = false)
-    @Fetch(value = FetchMode.JOIN)
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "auth_cd", referencedColumnName = "top_auth_cd", insertable = false, updatable = false)
+    @Fetch(value = FetchMode.SELECT)
+    @OrderBy("sortOrdr ASC")
     @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("작업자 정보")
-    private AuthRole topAuth;
+    @Comment("하위 권한 정보")
+    private List<AuthRole> subAuthList;
 }
