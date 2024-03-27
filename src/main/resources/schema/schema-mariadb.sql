@@ -5,29 +5,28 @@
 -- @author : nichefish
 
 -- 공지사항
-CREATE TABLE IF NOT EXISTS NOTICE (
-    POST_NO INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호',
-    BOARD_CD VARCHAR(32) DEFAULT 'NOTICE' COMMENT '게시판 코드',
-    -- CLSF
-    TITLE VARCHAR(200) COMMENT '제목',
-    CN LONGTEXT COMMENT '내용',
-    CTGR_CD VARCHAR(50) COMMENT '글분류코드',
-    FXD_YN CHAR(1) DEFAULT 'N' COMMENT '상단고정여부',
+CREATE TABLE IF NOT EXISTS notice (
+    post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호',
+    board_cd VARCHAR(32) DEFAULT 'NOTICE' COMMENT '게시판 코드',
     -- BOARD
-    HIT_CNT INT DEFAULT 0 COMMENT '조회수',
-    IMPRTC_YN CHAR(1) DEFAULT 'N' COMMENT '중요여부',
-    MDFABLE CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
+    title VARCHAR(200) COMMENT '제목',
+    cn LONGTEXT COMMENT '내용',
+    ctgr_cd VARCHAR(50) COMMENT '글분류코드',
+    fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정여부',
+    hit_cnt INT DEFAULT 0 COMMENT '조회수',
+    imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요여부',
+    mdfable CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
     --
-    POPUP_YN CHAR(1) DEFAULT 'N' COMMENT '팝업여부',
+    popup_yn CHAR(1) DEFAULT 'N' COMMENT '팝업여부',
     -- MANAGT
-    MANAGTR_ID VARCHAR(20) COMMENT '작업자ID',
-    MANAGT_DT DATETIME COMMENT '작업일시',
+    managtr_id VARCHAR(20) COMMENT '작업자ID',
+    managt_dt DATETIME COMMENT '작업일시',
     -- ATCH_FILE
-    ATCH_FILE_NO BIGINT COMMENT '첨부파일 ID',
+    atch_file_no INT COMMENT '첨부파일 ID',
     -- AUDIT
-    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
-    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
-    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
-    MDF_DT DATETIME COMMENT '수정일시',
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부'
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 );
