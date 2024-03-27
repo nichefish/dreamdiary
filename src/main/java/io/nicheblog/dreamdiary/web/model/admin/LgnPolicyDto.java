@@ -1,8 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.admin;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * LgnPolicyDto
@@ -14,6 +12,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class LgnPolicyDto {
 

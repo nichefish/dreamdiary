@@ -18,10 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
@@ -51,7 +48,7 @@ public class LgnController
     /**
      * 로그인 화면 조회
      */
-    @RequestMapping(SiteUrl.AUTH_LGN_FORM)
+    @GetMapping(SiteUrl.AUTH_LGN_FORM)
     public String lgnForm(
             final LogActvtyParam logParam,
             final @RequestParam("dupLgnAt") @Nullable String dupLgnAt,
@@ -74,6 +71,15 @@ public class LgnController
         }
 
         return "/view/lgn_form";
+    }
+
+    /**
+     * GET으로 로그인 처리 페이지 접근시 로그인 화면으로 리다이렉트
+     */
+    @GetMapping(SiteUrl.AUTH_LGN_PROC)
+    public String lgnProcRedirection() {
+
+        return "redirect:" + SiteUrl.AUTH_LGN_FORM;
     }
 
     /**

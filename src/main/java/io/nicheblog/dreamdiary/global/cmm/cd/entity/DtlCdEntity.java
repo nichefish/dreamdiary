@@ -8,7 +8,6 @@ import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * DtlCdEntity
@@ -21,7 +20,7 @@ import java.io.Serializable;
  * @extends BaseManageEntity
  */
 @Entity
-@Table(name = "CMM_DTL_CD")
+@Table(name = "cmm_dtl_cd")
 @IdClass(DtlCdKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
@@ -29,7 +28,7 @@ import java.io.Serializable;
 @ToString
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
+@Where(clause = "del_yn='N'")
 public class DtlCdEntity
         extends BaseManageEntity {
 
@@ -37,34 +36,34 @@ public class DtlCdEntity
      * 상세코드
      */
     @Id
-    @Column(name = "DTL_CD")
+    @Column(name = "dtl_cd")
     private String dtlCd;
 
     /**
      * 공통코드
      */
     @Id
-    @Column(name = "CL_CD")
+    @Column(name = "cl_cd")
     private String clCd;
 
     /**
      * 분류코드 정보
      */
     @ManyToOne
-    @JoinColumn(name = "CL_CD", referencedColumnName = "CL_CD", insertable = false, updatable = false)
+    @JoinColumn(name = "cl_cd", referencedColumnName = "cl_cd", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     private ClCdEntity clCdInfo;
 
     /**
      * 상세코드이름
      */
-    @Column(name = "DTL_CD_NM")
+    @Column(name = "dtl_cd_nm")
     private String dtlCdNm;
 
     /**
      * 상세코드설명
      */
-    @Column(name = "DTL_CD_DC")
+    @Column(name = "dtl_cd_dc")
     private String dtlCdDc;
 
     /* ---- */

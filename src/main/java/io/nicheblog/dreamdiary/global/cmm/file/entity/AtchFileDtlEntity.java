@@ -22,14 +22,14 @@ import javax.persistence.*;
  * @author nichefish
  */
 @Entity
-@Table(name = "ATCH_FILE_DTL")
+@Table(name = "atch_file_dtl")
 @Getter
 @Setter
 @SuperBuilder
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE ATCH_FILE_DTL SET DEL_YN = 'Y' WHERE ATCH_FILE_DTL_NO = ?")
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE atch_file_dtl SET del_yn = 'Y' WHERE atch_file_dtl_no = ?")
 public class AtchFileDtlEntity
         extends BaseCrudEntity {
 

@@ -32,7 +32,7 @@ public interface HldyKasiApiMapstruct
      * Dto -> Entity
      */
     @Override
-    // @Mapping(target = "boardCd", expression = "java(\"hldyApi\")")
+    // @Mapping(target = "contentType", expression = "java(\"hldyApi\")")
     @Mapping(target = "schdulNm", expression = "java(dto.getDateName())")
     @Mapping(target = "schdulTyCd", expression = "java(\"HLDY\")")
     @Mapping(target = "beginDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
@@ -44,7 +44,7 @@ public interface HldyKasiApiMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    // @Mapping(target = "boardCd", expression = "java(\"hldyApi\")")
+    // @Mapping(target = "contentType", expression = "java(\"hldyApi\")")
     @Mapping(target = "schdulNm", expression = "java(dto.getDateName())")
     @Mapping(target = "schdulTyCd", expression = "java(\"HLDY\")")
     @Mapping(target = "beginDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")

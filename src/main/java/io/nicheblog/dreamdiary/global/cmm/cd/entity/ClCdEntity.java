@@ -25,14 +25,14 @@ import java.util.List;
  * @extends BaseManageEntity
  */
 @Entity
-@Table(name = "CMM_CL_CD")
+@Table(name = "cmm_cl_cd")
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
 @ToString
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
+@Where(clause = "del_yn='N'")
 public class ClCdEntity
         extends BaseManageEntity {
 
@@ -40,26 +40,26 @@ public class ClCdEntity
      * 분류코드
      */
     @Id
-    @Column(name = "CL_CD")
+    @Column(name = "cl_cd")
     private String clCd;
 
     /**
      * 분류코드 이름
      */
-    @Column(name = "CL_CD_NM")
+    @Column(name = "cl_cd_nm")
     private String clCdNm;
 
     /**
      * 분류코드 설명
      */
-    @Column(name = "CL_CD_DC")
+    @Column(name = "cl_cd_dc")
     private String clCdDc;
 
     /**
      * 분류코드 정보
      */
     @OneToMany
-    @JoinColumn(name = "CL_CD", referencedColumnName = "CL_CD", insertable = false, updatable = false)
+    @JoinColumn(name = "cl_cd", referencedColumnName = "cl_cd", insertable = false, updatable = false)
     @OrderBy("sortOrdr ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @ToString.Exclude
@@ -82,7 +82,7 @@ public class ClCdEntity
         return dtlCdDtoList;
     }
 
-    /** 서브엔티티 List 처리를 위한 세터 */
+    /** 서브엔티티 List 처리를 위한 Setter */
     /**
      * 한 번 Entity가 생성된 이후부터는 새 List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
      */

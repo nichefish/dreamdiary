@@ -16,12 +16,12 @@
                 errorMsgSpan.html("");
                 <#if errorMsg??>
                     $("#userIdSpan").text("");
-                    $("#userPwSpan").text("");
+                    $("#passwordSpan").text("");
                     errorMsgSpan.html("${errorMsg!}".replace(/&lt;br&gt;/g, '<br/>'));   // 줄바꿈 처리
                 </#if>
 
                 commons.util.enterKey("#userId", Page.fnLgn);       // 엔터키 처리
-                commons.util.enterKey("#userPw", Page.fnLgn);       // 엔터키 처리
+                commons.util.enterKey("#password", Page.fnLgn);       // 엔터키 처리
 
                 <#if isCredentialExpired!false || needsPwReset!false>
                     let data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
@@ -64,7 +64,7 @@
                         if (result.value) {
                             $("#userId").val("${userId!}");
                             $("#isDupIdLgnProc").val("Y");
-                            $("#userPw").attr("disabled", "disabled");
+                            $("#password").attr("disabled", "disabled");
                             Page.fnLgn();
                         } else {
                             $("#isDupIdLgnProc").val("");
@@ -90,7 +90,7 @@
                         $("#lgnPwChgForm")[0].reset();
                         if (res.result) {
                             $("#userId").val(userId);
-                            $("#userPw").val(userPw);
+                            $("#password").val(password);
                             Page.fnLgn();
                         }
                     });
@@ -135,11 +135,11 @@
         </div>
         <div>
             <div class="d-flex flex-stack mb-2">
-                <label class="form-label fw-bolder fs-6 mb-0" for="userPw">비밀번호</label>
+                <label class="form-label fw-bolder fs-6 mb-0" for="password">비밀번호</label>
             </div>
-            <input type="password" name="userPw" id="userPw" class="form-control form-control-lg form-control-solid enter required" autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."/>
+            <input type="password" name="password" id="password" class="form-control form-control-lg form-control-solid enter required" autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."/>
             <div class="mb-3 h-15px">
-                <span id="userPwSpan" class="text-danger"></span>
+                <span id="passwordSpan" class="text-danger"></span>
             </div>
         </div>
         <div class="text-left">

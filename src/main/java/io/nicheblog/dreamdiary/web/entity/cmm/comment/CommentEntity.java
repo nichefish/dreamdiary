@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.entity.cmm.comment;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -25,19 +26,19 @@ import java.util.Date;
  * @extends BaseAuditEntity
  */
 @Entity
-@Table(name = "COMMENT")
+@Table(name = "comment")
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE COMMENT SET DEL_YN = 'Y' WHERE POST_NO = ?")
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE comment SET del_yn = 'Y' WHERE post_no = ?")
 public class CommentEntity
-        extends BaseClsfEntity {
+        extends BasePostEntity {
 
     /** 필수: 게시물 코드 */
-    private static final String BOARD_CD = "comment";
+    private static final String CONTENT_TYPE = "comment";
     /** 필수: 글분류 코드 */
     private static final String CTGR_CL_CD = "COMMENT_CL_CD";
 
@@ -46,7 +47,7 @@ public class CommentEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "POST_NO")
+    @Column(name = "post_no")
     @Comment("댓글 번호 (key)")
     private Integer postNo;
 
@@ -54,20 +55,20 @@ public class CommentEntity
      * 게시판 분류 코드
      */
     @Builder.Default
-    @Column(name = "BOARD_CD")
-    private String boardCd = BOARD_CD;
+    @Column(name = "content_type")
+    private String contentType = CONTENT_TYPE;
 
     /**
      * 원글 번호
      */
-    @Column(name = "REF_POST_NO")
+    @Column(name = "ref_post_no")
     @Comment("원글 번호")
     private Integer refPostNo;
 
     /**
      * 원글 게시판 코드
      */
-    @Column(name = "REF_BOARD_CD")
+    @Column(name = "ref_content_type")
     @Comment("원글 게시판 코드")
     private String refBoardCd;
 }

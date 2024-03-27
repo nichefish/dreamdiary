@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * BasePostKey
  * <pre>
- *  (공통/상속) 게시판 복합키 Entity (postNo + boardCd)
+ *  (공통/상속) 게시판 복합키 Entity (postNo + contentType)
  * </pre>
  *
  * @author nichefish
@@ -27,5 +27,5 @@ public class BasePostKey
     /**
      * 게시판 코드
      */
-    protected String boardCd;
+    protected String contentType;
 }

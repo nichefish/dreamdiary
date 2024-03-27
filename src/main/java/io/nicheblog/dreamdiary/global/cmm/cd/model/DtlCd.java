@@ -44,7 +44,7 @@ public class DtlCd
      */
     private String clCd;
     /**
-     * 사용여부
+     * 사용 여부
      */
     private String useYn;
     /**

@@ -69,7 +69,7 @@
             <span class="cursor-help"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                   title="'사용'으로 체크된 코드만&#10;실제 코드 사용시 조회됩니다.">
-                사용여부
+                사용 여부
             </span>
         </div>
         <div class="col-9 text-center d-flex align-items-center">

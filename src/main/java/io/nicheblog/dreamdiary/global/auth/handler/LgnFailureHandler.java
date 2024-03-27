@@ -70,7 +70,7 @@ public class LgnFailureHandler
         }
         // 비밀번호 불일치
         if (exception instanceof BadCredentialsException) {
-            LgnPolicyEntity rsLgnPolicyEntity = lgnPolicyService.getLgnPolicyDtlEntity();
+            LgnPolicyEntity rsLgnPolicyEntity = lgnPolicyService.getDtlEntity();
             Integer lgnTryLmt = rsLgnPolicyEntity.getLgnTryLmt();
             // 로그인 실패 횟수 처리
             Integer newLgnFailCnt = authService.applyLgnFailCnt(userId);

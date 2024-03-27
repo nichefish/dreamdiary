@@ -23,18 +23,6 @@ public final class Constant
      */
     public static final String LOC_SEOUL = "Asia/Seoul";
 
-    @AllArgsConstructor
-    @Getter
-    public enum LogTy {
-
-        ACTVTY("활동 로그"),
-        SYS("시스템 로그");
-
-        public final String desc;
-    }
-    public static final String LOG_TY_ACTVTY = LogTy.ACTVTY.name();
-    public static final String LOG_TY_SYS = LogTy.SYS.name();
-
     /**
      * 권한
      */
@@ -196,7 +184,7 @@ public final class Constant
     /**
      * 각 메뉴 번호
      */
-    public static final String USER_INFO = "userInfo";              // 계정 관리
+    public static final String USER = "user";              // 계정 관리
     public static final String LGN_POLICY = "lgnPolicy";       // 로그인 관리
     public static final String CRDT_USER_CTTPC = "crdtUserCttpc";   // 직원 연락처
     public static final String LOG_ACTVTY = "logActvty";            // 활동 로그 관리

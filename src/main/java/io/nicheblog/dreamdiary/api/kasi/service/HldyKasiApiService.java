@@ -94,7 +94,7 @@ public class HldyKasiApiService {
         Map<String, Object> searchParamMap = new HashMap() {{
             put("searchStartDt", DateUtils.asDate(yyStr + "-01-01"));
             put("searchEndDt", DateParser.eDateParse(DateUtils.asDate(yyStr + "-12-31")));
-            put("boardCd", "hldyApi");
+            put("contentType", "hldyApi");
         }};
         Page<SchdulEntity> schdulList = schdulService.getListEntity(searchParamMap, Pageable.unpaged());
 

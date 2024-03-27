@@ -52,7 +52,7 @@ public class DtlCdService
      */
     @Override
     public void preRegist(final DtlCd cmmDtlCd) {
-        // 사용여부 체크박스 값 세팅
+        // 사용 여부 체크박스 값 세팅
         if (!"Y".equals(cmmDtlCd.getUseYn())) cmmDtlCd.setUseYn("N");
     }
 
@@ -61,7 +61,7 @@ public class DtlCdService
      */
     @Override
     public void preModify(final DtlCd cmmDtlCd) {
-        // 사용여부 체크박스 값 세팅
+        // 사용 여부 체크박스 값 세팅
         if (!"Y".equals(cmmDtlCd.getUseYn())) cmmDtlCd.setUseYn("N");
     }
 

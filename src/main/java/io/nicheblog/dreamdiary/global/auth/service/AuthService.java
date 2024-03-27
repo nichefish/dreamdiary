@@ -3,8 +3,7 @@ package io.nicheblog.dreamdiary.global.auth.service;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserInfoEntity;
-import io.nicheblog.dreamdiary.web.repository.user.UserInfoRepository;
+import io.nicheblog.dreamdiary.web.repository.user.UserProflRepository;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -35,8 +34,8 @@ public class AuthService
     @Resource(name = "userRepository")
     private UserRepository userRepository;
 
-    @Resource(name = "userInfoRepository")
-    private UserInfoRepository userInfoRepository;
+    @Resource(name = "userProflRepository")
+    private UserProflRepository userProflRepository;
 
     @Resource
     private HttpServletRequest request;
@@ -52,11 +51,11 @@ public class AuthService
         if (rsUserEntityWrapper.isEmpty()) throw new UsernameNotFoundException("사용자 정보를 찾을 수 없습니다.");
         UserEntity rsUserEntity = rsUserEntityWrapper.get();
         // 사용자정보 존재여부 체크
-        Integer userInfoNo = rsUserEntity.getUserInfoNo();
-        if (userInfoNo != null) {
-            UserInfoEntity rsUserInfo = userInfoRepository.findById(userInfoNo).orElse(null);
-            rsUserEntity.setUserInfo(rsUserInfo);
-        }
+        // Integer userProflNo = rsUserEntity.getUserProflNo();
+        // if (userProflNo != null) {
+        //     UserProflEntity rsUserInfo = userProflRepository.findById(userProflNo).orElse(null);
+        //     rsUserEntity.setUserProfl(rsUserInfo);
+        // }
         return new AuthInfo(rsUserEntity);
     }
 
@@ -75,7 +74,7 @@ public class AuthService
         if (RequestContextHolder.getRequestAttributes() == null) return null;
         AuthInfo authInfo = getAuthenticatedUser();
         assert authInfo != null;
-        return (authInfo.getUserInfo() == null) ? null : authInfo.getUserInfo().getUserInfoNo();
+        return (authInfo.getUserProfl() == null) ? null : authInfo.getUserProfl().getUserProflNo();
     }
 
     /**
@@ -87,12 +86,12 @@ public class AuthService
         if (userEntityWrapper.isEmpty()) return 0;
         UserEntity userEntity = userEntityWrapper.get();
         // 로그인 실패횟수 조회해서 세팅
-        Integer currLgnFailCnt = userEntity.getLgnFailCnt();
+        Integer currLgnFailCnt = userEntity.acntStus.getLgnFailCnt();
         Integer newLgnFailCnt = (currLgnFailCnt == null) ? 1 : currLgnFailCnt + 1;
-        userEntity.setLgnFailCnt(newLgnFailCnt);
+        userEntity.acntStus.setLgnFailCnt(newLgnFailCnt);
         // 저장 후 반환된 값 반환
         UserEntity rsltEntity = userRepository.save(userEntity);
-        return rsltEntity.getLgnFailCnt();
+        return rsltEntity.acntStus.getLgnFailCnt();
     }
 
     /**
@@ -103,7 +102,7 @@ public class AuthService
         Optional<UserEntity> userEntityWrapper = userRepository.findByUserId(userId);
         UserEntity userEntity = userEntityWrapper.orElseThrow(NullPointerException::new);
         // 계정 잠금 처리
-        userEntity.setLockYn("Y");
+        userEntity.acntStus.setLockedYn("Y");
         userRepository.save(userEntity);
     }
 
@@ -115,8 +114,8 @@ public class AuthService
         Optional<UserEntity> userEntityWrapper = userRepository.findByUserId(userId);
         UserEntity userEntity = userEntityWrapper.orElseThrow(NullPointerException::new);
         // 최종 로그인 날짜 세팅 및 실패 카운터 0으로 세팅
-        userEntity.setLstLgnDt(new Date());
-        userEntity.setLgnFailCnt(0);
+        userEntity.acntStus.setLstLgnDt(new Date());
+        userEntity.acntStus.setLgnFailCnt(0);
         userRepository.save(userEntity);
     }
 

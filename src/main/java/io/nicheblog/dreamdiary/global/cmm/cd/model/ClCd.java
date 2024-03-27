@@ -47,7 +47,7 @@ public class ClCd
      */
     private String clCdDc;
     /**
-     * 사용여부
+     * 사용 여부
      */
     private String useYn;
 

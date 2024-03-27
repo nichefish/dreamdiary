@@ -37,12 +37,6 @@ public class AuditorInfo
     private Integer userNo;
 
     /**
-     * Auditor 프로필 번호
-     */
-    @Column(name = "user_profl_no", length = 20, insertable = false, updatable = false)
-    private Integer userProflNo;
-
-    /**
      * Auditor ID
      */
     @Column(name = "user_id", length = 20, insertable = false, updatable = false)
@@ -55,7 +49,6 @@ public class AuditorInfo
     private String nickNm;
 
     // TODO: 권한정보 조회
-
 
     /**
      * 프로필 이미지 URL

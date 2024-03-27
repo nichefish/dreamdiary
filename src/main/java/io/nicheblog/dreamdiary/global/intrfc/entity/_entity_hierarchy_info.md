@@ -1,24 +1,24 @@
 # Entity 기본 상속 구조:
 
 #### ↓ BaseCrudEntity :: implements Serializable
-    - DEL_YN
+    -> del_yn
 
 #### ↓ BaseAuditRegEntity :: extends BaseCrudEntity
-    -> REGSTR_ID, REG_DT
+    -> regstr_id reg_dt
 
 #### ↓ BaseAuditEntity :: extends BaseAuditRegEntity
-    -> MDFUSR_ID, MDF_DT
+    -> mdfuse_id, mdf_dt
 
 #### ↓ BaseManageEntity :: extends BaseAuditEntity
-    -> SORT_ORDR, USE_YN
+    -> sort_ordr, use_yn
 
 #### ↓ BaseAtchEntity :: extends BaseAuditEntity
-    -> ATCH_FILE_NO, ATCH_FILE_INFO
+    -> atch_file_no, atch_file_info
 
 #### ↓ BaseClsfEntity :: extends BaseAtchEntity
-    -> POST_NO, BOARD_CD (composite_key)
-    -> @commentList, @tagList
+    -> post_no, content_type (composite_key)
+    -> @comment_list, @tag_list
 
 #### ↓ BasePostEntity :: extends BaseClsfEntity
     -> title, cn, ctgrCd,
-    -> @managtrList, @viewerList
+    -> @managtr_list, @viewer_list

@@ -51,7 +51,7 @@ public class ClCdService
      */
     @Override
     public void preRegist(final ClCd cmmClCd) {
-        // 사용여부 체크박스 값 세팅
+        // 사용 여부 체크박스 값 세팅
         if (!"Y".equals(cmmClCd.getUseYn())) cmmClCd.setUseYn("N");
     }
 
@@ -60,7 +60,7 @@ public class ClCdService
      */
     @Override
     public void preModify(final ClCd cmmClCd) {
-        // 사용여부 체크박스 값 세팅
+        // 사용 여부 체크박스 값 세팅
         if (!"Y".equals(cmmClCd.getUseYn())) cmmClCd.setUseYn("N");
     }
 

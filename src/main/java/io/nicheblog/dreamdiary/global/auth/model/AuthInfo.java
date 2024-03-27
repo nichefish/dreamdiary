@@ -3,9 +3,7 @@ package io.nicheblog.dreamdiary.global.auth.model;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserInfoEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.user.UserInfoMapstruct;
-import io.nicheblog.dreamdiary.web.model.user.UserInfoDto;
+import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +23,7 @@ import java.util.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuthInfo
+ * @implements  UserDetails
  */
 @Getter
 @Setter
@@ -41,11 +39,11 @@ public class AuthInfo
     /**
      * 사용자 정보 ID
      */
-    private Integer userInfoNo;
+    private Integer userProflNo;
     /**
      * 사용자 PW
      */
-    private String userPw;
+    private String password;
     /**
      * 사용자 이름
      */
@@ -65,11 +63,11 @@ public class AuthInfo
     /**
      * 잠금여부
      */
-    private String lockYn;
+    private String lockedYn;
     /**
-     * 접속 IP 사용여부
+     * 접속 IP 사용 여부
      */
-    private String acsIpYn;
+    private String useAcsIpYn;
     /**
      * 접속 IP 목록
      */
@@ -94,7 +92,7 @@ public class AuthInfo
     /**
      * 사용자 정보 통으로 저장 (일단)
      */
-    private UserInfoDto userInfo;
+    private UserProflDto userProfl;
 
     /* ----- */
 
@@ -105,15 +103,21 @@ public class AuthInfo
         if (userEntity != null) {
             this.nickNm = userEntity.getNickNm();
             this.userId = userEntity.getUserId();
-            this.userPw = userEntity.getUserPw();
-            this.authCd = userEntity.getAuthCd();
-            this.authNm = userEntity.getAuthCdInfo()
-                                    .getDtlCdNm();
+            this.password = userEntity.getPassword();
+            // TODO: 권한
             this.proflImgUrl = userEntity.getProflImgUrl();
-            this.cfYn = userEntity.getCfYn();
-            this.lockYn = userEntity.getLockYn();
-            this.acsIpYn = userEntity.getAcsIpYn();
-            if ("Y".equals(this.acsIpYn)) {
+            // 사용자정보 세팅
+            // UserProflEntity userProflEntity = userEntity.getUserProfl();
+            // if (userProflEntity != null && userProflEntity.getUserProflNo() != null) {
+            //     this.userProfl = UserInfoMapstruct.INSTANCE.toDto(userProflEntity);
+            //     this.userProflNo = userProfl.getUserProflNo();
+            // }
+
+            // 계정 상태 세팅
+            this.cfYn = userEntity.acntStus.getCfYn();
+            this.lockedYn = userEntity.acntStus.getLockedYn();
+            this.useAcsIpYn = userEntity.getUseAcsIpYn();
+            if ("Y".equals(this.useAcsIpYn)) {
                 List<UserAcsIpEntity> acsIpInfoList = userEntity.getAcsIpInfoList();
                 if (CollectionUtils.isNotEmpty(acsIpInfoList)) {
                     acsIpList = new ArrayList<>();
@@ -123,21 +127,14 @@ public class AuthInfo
                     this.setAcsIpList(acsIpList);
                 }
             }
-
-            // 사용자정보 세팅
-            UserInfoEntity userInfoEntity = userEntity.getUserInfo();
-            if (userInfoEntity != null && userInfoEntity.getUserInfoNo() != null) {
-                this.userInfo = UserInfoMapstruct.INSTANCE.toDto(userInfoEntity);
-                this.userInfoNo = userInfo.getUserInfoNo();
-            }
             // 최종접속일 또는 등록일
-            this.lstLgnDt = Optional.ofNullable(userEntity.getLstLgnDt())
+            this.lstLgnDt = Optional.ofNullable(userEntity.acntStus.getLstLgnDt())
                                     .orElse(userEntity.getRegDt());
             // 최종비밀번호변경일 또는 등록일
-            this.pwChgDt = Optional.ofNullable(userEntity.getPwChgDt())
+            this.pwChgDt = Optional.ofNullable(userEntity.acntStus.getPwChgDt())
                                    .orElse(userEntity.getRegDt());
             // 패스워드 리셋 필요여부
-            this.needsPwReset = userEntity.getNeedsPwReset();
+            this.needsPwReset = userEntity.acntStus.getNeedsPwReset();
         }
     }
 
@@ -154,15 +151,15 @@ public class AuthInfo
     /**
      * 사용자정보 존재여부 (내부사용자)
      */
-    public Boolean getHasUserInfo() {
-        return this.userInfo != null && this.userInfoNo != null;
+    public Boolean getHasuserProfl() {
+        return this.userProfl != null && this.userProflNo != null;
     }
 
     /**
      * 사용자정보 존재여부 (내부사용자)
      */
     public Boolean getHasEcnyDt() {
-        return this.userInfo != null && this.userInfo.getEcnyDt() != null;
+        return this.userProfl != null && this.userProfl.getEcnyDt() != null;
     }
 
     /**
@@ -216,7 +213,7 @@ public class AuthInfo
 
     @Override
     public String getPassword() {
-        return this.userPw;
+        return this.password;
     }
 
     @Override
@@ -229,7 +226,7 @@ public class AuthInfo
      */
     @Override
     public boolean isAccountNonLocked() {
-        return !"Y".equals(this.getLockYn());
+        return !"Y".equals(this.getLockedYn());
     }
 
     /**

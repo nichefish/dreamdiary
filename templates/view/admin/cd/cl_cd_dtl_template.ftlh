@@ -38,7 +38,7 @@
                         <th class="col-2 text-center wb-keepall">상세코드명</th>
                         <th class="col-4 text-center wb-keepall">상세코드 설명</th>
                         <th class="col-1 text-center wb-keepall">정렬 순서</th>
-                        <th class="col-1 text-center wb-keepall">사용여부</th>
+                        <th class="col-1 text-center wb-keepall">사용 여부</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

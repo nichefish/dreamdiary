@@ -51,7 +51,7 @@
         <div class="row mb-4">
             <!--begin::Title-->
             <div class="col-2 col-form-label">
-                사용여부
+                사용 여부
             </div>
             <div class="col-10">
                 <div class="form-check form-switch mt-2 form-check-custom form-check-solid">

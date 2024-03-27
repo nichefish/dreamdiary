@@ -7,8 +7,10 @@ import io.nicheblog.dreamdiary.web.repository.admin.LgnPolicyRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,9 +34,9 @@ public class LgnPolicyService {
      * Cacheable (key:: default)
      */
     @Cacheable(value = "lgnPolicy")   // 항목이 한 개 고정일 경우 Cache의 key는 불필요하다.
-    public LgnPolicyDto getLgnPolicyDtlDto() throws Exception {
+    public LgnPolicyDto getDtlDto() throws Exception {
         // entity level
-        LgnPolicyEntity rsLgnPolicyEntity = this.getLgnPolicyDtlEntity();
+        LgnPolicyEntity rsLgnPolicyEntity = this.getDtlEntity();
         // Entity -> Dto
         return (rsLgnPolicyEntity != null) ? lgnPolicyMapstruct.toDto(rsLgnPolicyEntity) : null;
     }
@@ -44,8 +46,13 @@ public class LgnPolicyService {
      * Cacheable (key:: default)
      */
     @Cacheable(value = "lgnPolicyEntity")   // 항목이 한 개 고정일 경우 Cache의 key는 불필요하다.
-    public LgnPolicyEntity getLgnPolicyDtlEntity() throws Exception {
+    public LgnPolicyEntity getDtlEntity() throws Exception {
         Optional<LgnPolicyEntity> rsLgnPolicyEntityWrapper = lgnPolicyRepository.findById(1);
+        if (rsLgnPolicyEntityWrapper.isEmpty()) {
+            List<LgnPolicyEntity> scrapAll = lgnPolicyRepository.findAll();
+            if (CollectionUtils.isEmpty(scrapAll)) return null;
+            return scrapAll.get(0);
+        }
         return rsLgnPolicyEntityWrapper.orElse(null);
     }
 
@@ -54,7 +61,7 @@ public class LgnPolicyService {
      * Clears Cache (allEnties)
      */
     @CacheEvict(value = {"lgnPolicyEntity", "lgnPolicy"}, allEntries = true)
-    public Boolean lgnPolicyReg(final LgnPolicyDto LgnPolicyDto) throws Exception {
+    public Boolean regist(final LgnPolicyDto LgnPolicyDto) throws Exception {
         // Dto -> Entity
         LgnPolicyEntity LgnPolicyEntity = lgnPolicyMapstruct.toEntity(LgnPolicyDto);
         // insert/update
