@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public enum SiteTopMenu {
 
     NO_ASIDE("NO_ASIDE", "사이드바 미노출"),
-    LGN("00000000", "사이드바 미노출"),
+    LGN("00000000", "로그인"),
     MAIN("00000000", "메인"),
     NOTICE("10000000", "공지사항"),
     BOARD("50000000", "게시판"),
@@ -25,5 +25,5 @@ public enum SiteTopMenu {
     ADMIN("90000000", "사이트 관리");
 
     public final String menuNo;
-    public final String desc;
+    public final String menuNm;
 }

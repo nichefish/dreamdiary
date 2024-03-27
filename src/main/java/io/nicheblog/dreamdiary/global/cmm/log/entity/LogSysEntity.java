@@ -27,8 +27,8 @@ import java.util.Date;
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class LogSysEntity
         implements Serializable {

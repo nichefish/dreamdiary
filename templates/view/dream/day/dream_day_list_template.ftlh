@@ -5,10 +5,10 @@
 <script type="text/x-handlebars-template" id="dream_day_list_template">
     {{#each this}}
         <div class="row">
-            <div class="d-flex align-items-center">
+            <div class="col d-flex align-items-center">
                 <i class="bi bi-calendar"></i>{{dreamtDt}}
             </div>
-            <div>
+            <div class="col d-flex align-items-center">
                 <button type="button" class="btn btn-sm btn-primary"
                         onclick="DreamPiece.regModal({{dreamNo}});"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈 조각 <@spring.message "bs.tooltip.modal.reg"/>">

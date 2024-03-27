@@ -24,8 +24,16 @@
     <!--begin::Card header 검색+헤더 UI -->
     <#include "/view/dream/day/dream_day_page_header.ftlh">
 
-    <div class="card-body p-9" id="dream_day_list_div">
-        <!-- handlebars template goes in here -->
+    <div class="card-body p-9">
+            <!--end::Table head-->
+            <!--begin::Table body-->
+            <div id="dream_day_list_div">
+                <!-- handlebars template goes in here -->
+            </div>
+        </div>
+        <!-- pagination::begin -->
+        <#include "/view/_component/_pagination.ftlh">
+        <!-- pagination::end -->
     </div>
 </div>
 <!--end::Card-->

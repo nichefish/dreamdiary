@@ -27,6 +27,9 @@ public interface BaseManageService<Dto extends BaseAuditDto, ListDto extends Bas
         Entity e = this.getDtlEntity(key);
         e.setUseYn("Y");
         this.updt(e);
+        // 변경 후처리
+        this.postSetUseStatus();
+
         return true;
     }
 
@@ -37,6 +40,16 @@ public interface BaseManageService<Dto extends BaseAuditDto, ListDto extends Bas
         Entity e = this.getDtlEntity(key);
         e.setUseYn("N");
         this.updt(e);
+        // 변경 후처리
+        this.postSetUseStatus();
+
         return true;
+    }
+
+    /**
+     * default: 사용/미사용 상태로 변경 후처리
+     */
+    default void postSetUseStatus() throws Exception {
+        // 변경 후처리:: 기본 공백, 필요시 각 함수에서 Override
     }
 }

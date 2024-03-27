@@ -24,8 +24,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE user_auth_role SET del_yn = 'Y' WHERE user_auth_role_no = ?")

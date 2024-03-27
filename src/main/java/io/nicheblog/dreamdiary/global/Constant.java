@@ -23,6 +23,10 @@ public final class Constant
      */
     public static final String LOC_SEOUL = "Asia/Seoul";
 
+    public static final String PAGE_LGN = "로그인";
+    public static final String PAGE_MAIN = "메인";
+    public static final String PAGE_LIST = "목록 조회";
+
     /**
      * 권한
      */

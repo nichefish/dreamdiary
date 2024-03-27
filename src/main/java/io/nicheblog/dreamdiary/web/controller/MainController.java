@@ -44,7 +44,7 @@ public class MainController
     ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("메인"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo(Constant.PAGE_MAIN));
 
         /* 세션에 '사용자' 모드로 세팅 */
         session.setAttribute("userMode", Constant.AUTH_USER);
@@ -63,7 +63,7 @@ public class MainController
     ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_ADMIN.setAcsPageInfo("메인"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_ADMIN.setAcsPageInfo(Constant.PAGE_MAIN));
 
         // 관리자페이지 화면 모드 세팅
         session.setAttribute("userMode", Constant.AUTH_MNGR);

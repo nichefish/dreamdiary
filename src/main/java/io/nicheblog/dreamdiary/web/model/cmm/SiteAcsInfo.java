@@ -37,9 +37,13 @@ public class SiteAcsInfo {
      */
     private String topMenuNo;
     /**
-     * 사이드바 상위 메뉴 이름 (메뉴 표시용)
+     * 사이드바 상위 메뉴 이름 (툴바 표시용)
      */
     private String topMenuNm;
+    /**
+     * 사이드바 상위 메뉴 코드 (메뉴 표시용)
+     */
+    private String topMenuCd;
 
     /**
      * 사이드바 메뉴 이름 (로깅 및 사이트 헤더 표시용)
@@ -69,19 +73,20 @@ public class SiteAcsInfo {
     /* ----- */
 
     /** constructor */
-    public SiteAcsInfo(SiteTopMenu siteTopMenu, String siteMenuNo, String siteMenuNm, String url) {
-        this(siteTopMenu, siteMenuNo, siteMenuNm, url, null);
+    public SiteAcsInfo(SiteTopMenu topMenu, String menuNo, String menuNm, String url) {
+        this(topMenu, menuNo, menuNm, url, null);
     }
-    public SiteAcsInfo(SiteTopMenu siteTopMenu, String siteMenuNo, String siteMenuNm, String url, List<SiteAcsInfo> subMenuList) {
-        this.topMenu = siteTopMenu;
-        this.topMenuNo = siteTopMenu.menuNo;
-        this.topMenuNm = siteTopMenu.name();
-        this.menuNo = siteMenuNo;
-        this.menuNm = siteMenuNm;
+    public SiteAcsInfo(SiteTopMenu topMenu, String menuNo, String menuNm, String url, List<SiteAcsInfo> subMenuList) {
+        this.topMenu = topMenu;
+        this.topMenuNo = topMenu.menuNo;
+        this.topMenuNm = topMenu.menuNm;
+        this.topMenuCd = topMenu.name();
+        this.menuNo = menuNo;
+        this.menuNm = menuNm;
         this.url = url;
         this.subMenuList = subMenuList;
         // 로그인/메인/에러페이지는 사이드바 미노출
-        if (NO_ASIDE.equals(siteTopMenu)) this.asideAt = false;
+        if (NO_ASIDE.equals(topMenu)) this.asideAt = false;
     }
 
     public SiteAcsInfo() {

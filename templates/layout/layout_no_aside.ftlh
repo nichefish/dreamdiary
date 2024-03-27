@@ -6,6 +6,7 @@
     <html lang="ko">
         <#assign topMenuNm = (siteAcsInfo.topMenuNm)!>
         <#assign menuNm = (siteAcsInfo.menuNm)!>
+        <#assign acsPageNm = (siteAcsInfo.acsPageNm)!>
 
         <!--begin::Head-->
         <#include "/layout/_head.ftlh">

@@ -58,7 +58,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="dreamDayRegModalLongTitle">[상세코드 등록]</h5>
+                <h5 class="modal-title" id="dreamDayRegModalLongTitle">[꿈 일자 등록]</h5>
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times"></i>
                 </div>

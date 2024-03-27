@@ -223,7 +223,7 @@
     <form name="userReqstForm" id="userReqstForm" class="form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="userNo" value="${user.userNo!}">
         <input type="hidden" name="userProflYn" id="userProflYn" value="<#if (user.userProfl.userProflNo)??>Y<#else>N</#if>">
-        <input type="hidden" name="atchFileId" value="${user.atchFileId!}">
+        <input type="hidden" name="atchFileNo" value="${user.atchFileNo!}">
         <!--begin::Card body-->
         <div class="row">           <!--begin::Row-->
             <div class="col-xl-2">

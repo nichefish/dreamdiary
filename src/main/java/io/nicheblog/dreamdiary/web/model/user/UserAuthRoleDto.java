@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class UserAuthRoleDto

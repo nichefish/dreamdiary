@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)

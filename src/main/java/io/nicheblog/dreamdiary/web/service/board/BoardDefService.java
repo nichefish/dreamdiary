@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseManageService;
-import io.nicheblog.dreamdiary.global.util.CmmUtils;
+import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.board.BoardDefMapstruct;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
@@ -10,7 +10,6 @@ import io.nicheblog.dreamdiary.web.repository.board.BoardDefRepository;
 import io.nicheblog.dreamdiary.web.spec.board.BoardDefSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,6 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -85,6 +83,14 @@ public class BoardDefService
     public SiteAcsInfo getBoardMenu(final String boardCd) throws Exception {
         BoardDefEntity boardDef = this.getDtlEntity(boardCd);
         return boardDefMapstruct.toMenu(boardDef);
+    }
+
+    /**
+     * 사용/미사용 변경 후처리
+     */
+    @Override
+    public void postSetUseStatus() throws Exception {
+        SiteMenu.BOARD.setSubMenuList(this.boardDefMenuList());
     }
 
 }

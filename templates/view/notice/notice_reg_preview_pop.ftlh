@@ -87,7 +87,7 @@
                     <#list (post.atchFileInfo.atchFileList)![] as file>
                         <div class="row my-1">
                             <div class="col-xl-8">
-                                <a href="javascript:void(0);" onclick="commons.util.fileDownload('${file.atchFileId!}', '${file.atchFileDtlId!}');"
+                                <a href="javascript:void(0);" onclick="commons.util.fileDownload('${file.atchFileNo!}', '${file.atchFileDtlNo!}');"
                                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.file.download"/>">
                                     <i class="fas fa-file-download fs-15 me-1"></i>
                                     ${file.orgnFileNm!}(${file.fileSize!}byte)

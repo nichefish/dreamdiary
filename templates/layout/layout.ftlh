@@ -4,8 +4,9 @@
 <#macro layout>
     <!DOCTYPE html>
     <html lang="ko">
-        <#assign siteMenuNm = (siteAcsInfo.siteMenuNm)!>
+        <#assign topMenuNm = (siteAcsInfo.topMenuNm)!>
         <#assign menuNm = (siteAcsInfo.menuNm)!>
+        <#assign acsPageNm = (siteAcsInfo.acsPageNm)!>
         <#assign asideAt = (siteAcsInfo.asideAt)!>
 
         <#assign isMngr = isMngr!false>

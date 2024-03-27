@@ -74,9 +74,6 @@ public class NoticeController
     @Resource(name = "cdService")
     private CdService cdService;
 
-
-
-
     /**
      * 공지사항 목록 조회
      * 사용자USER, 관리자MNGR만 접근 가능
@@ -91,7 +88,7 @@ public class NoticeController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("공지사항 목록 조회"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo(Constant.PAGE_LIST));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -142,7 +139,7 @@ public class NoticeController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("공지사항 등록"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo("공지사항 등록"));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -182,7 +179,7 @@ public class NoticeController
             final ModelMap model
     ) {
 
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("공지사항 미리보기"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo("공지사항 미리보기"));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -279,7 +276,7 @@ public class NoticeController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("공지사항 상세 조회"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo("공지사항 상세 조회"));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -380,7 +377,7 @@ public class NoticeController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("공지사항 수정"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo("공지사항 수정"));
 
         boolean isSuccess = false;
         String resultMsg = "";

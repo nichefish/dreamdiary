@@ -44,7 +44,7 @@ public class DreamDayController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("꿈 목록 조회"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.DREAM.setAcsPageInfo(Constant.PAGE_LIST));
 
         boolean isSuccess = false;
         String resultMsg = "";

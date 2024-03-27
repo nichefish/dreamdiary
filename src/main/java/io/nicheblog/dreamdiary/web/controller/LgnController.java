@@ -56,7 +56,7 @@ public class LgnController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.LGN_PAGE.setAcsPageInfo("로그인"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.LGN_PAGE.setAcsPageInfo(Constant.PAGE_LGN));
 
         // 로그인 상태일 경우 메인 화면으로 리다이렉트
         if (AuthUtils.isAuthenticated()) return "redirect:" + SiteUrl.MAIN;

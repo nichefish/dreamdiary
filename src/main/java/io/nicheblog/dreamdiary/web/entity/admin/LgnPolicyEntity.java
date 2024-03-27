@@ -22,9 +22,9 @@ import javax.persistence.*;
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
-@SuperBuilder
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
 public class LgnPolicyEntity
         extends BaseCrudEntity {

@@ -26,9 +26,9 @@ import java.util.Date;
 @Table(name = "notice")
 @Getter
 @Setter
-@SuperBuilder
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE notice SET del_yn = 'Y' WHERE post_no = ?")
 public class NoticeSmpEntity

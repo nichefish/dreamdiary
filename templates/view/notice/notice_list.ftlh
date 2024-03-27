@@ -146,7 +146,7 @@
                     <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
                         <a class="badge badge-secondary p-2 btn-white blank blink-slow"
                            data-bs-toggle="tooltip" data-bs-placement="top" title="첨부파일">
-                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileId!}');"></i>
+                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileNo!}');"></i>
                         </a>
                     <#else>
                         -
@@ -234,7 +234,7 @@
                     <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
                         <a class="badge badge-secondary p-2 btn-white blank blink-slow"
                            data-bs-toggle="tooltip" data-bs-placement="top" title="첨부파일">
-                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileId!}');"></i>
+                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileNo!}');"></i>
                         </a>
                     <#else>
                         -

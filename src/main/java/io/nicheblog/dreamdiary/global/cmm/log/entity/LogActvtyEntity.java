@@ -32,8 +32,8 @@ import java.util.HashMap;
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class LogActvtyEntity
         implements Serializable {

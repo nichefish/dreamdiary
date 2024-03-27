@@ -14,7 +14,7 @@
             <input class="form-control form-control-solid required" name="dreamtDt" id="dreamtDt" placeholder="꿈꾼 일자" value="{{dreamtDt}}" readonly/>
         </div>
         <div class="col-xl-2 col-5">
-            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">날짜미상</label>
+            <label class="col-form-label text-end fs-6 fw-bold mb-2" for="schdulResn">*날짜미상</label>
         </div>
         <div class="col-xl-3 col-5 d-flex align-items-center">
             <div class="form-check form-switch form-check-custom form-check-solid">
@@ -27,13 +27,6 @@
         <div class="col-xl-2 col-2 col-form-label"></div>
         <div class="col-xl-5 col-5">
             <span id="beginDtSpan"></span>
-        </div>
-    </div>
-    <!--begin::Input group-->
-    <div class="row row-cols-lg-2 mb-3">
-        <div class="col-xl-2 col-2">
-            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">꿈 추가</label>
-            <button type="button"><i class="bi bi-plus fs-2"></i></button>
         </div>
     </div>
 </script>
