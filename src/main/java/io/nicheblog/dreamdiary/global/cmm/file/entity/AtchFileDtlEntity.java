@@ -38,54 +38,54 @@ public class AtchFileDtlEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ATCH_FILE_DTL_NO")
+    @Column(name = "atch_file_dtl_no")
     private Integer atchFileDtlNo;
 
     /**
      * 첨부파일 ID
      */
-    @Column(name = "ATCH_FILE_NO")
+    @Column(name = "atch_file_no")
     private Integer atchFileNo;
 
     /**
      * 파일 순번
      */
-    @Column(name = "FILE_SN")
+    @Column(name = "file_sn")
     private Integer fileSn;
 
     /**
      * 원본파일명
      */
-    @Column(name = "ORGN_FILE_NM", length = 20)
+    @Column(name = "orgn_file_nm", length = 20)
     private String orgnFileNm;
 
     /**
      * 저장파일명
      */
-    @Column(name = "STRE_FILE_NM", length = 20)
+    @Column(name = "stre_file_nm", length = 20)
     private String streFileNm;
 
     /**
      * 파일 확장자
      */
-    @Column(name = "FILE_EXTN", length = 20)
+    @Column(name = "file_extn", length = 20)
     private String fileExtn;
 
     /**
      * 파일 크기
      */
-    @Column(name = "FILE_SIZE")
+    @Column(name = "file_size")
     private Long fileSize;
 
     /**
      * 파일 저장 경로
      */
-    @Column(name = "FILE_STRE_PATH")
+    @Column(name = "file_stre_path")
     private String fileStrePath;
 
     /**
      * URL (상대경로)
      */
-    @Column(name = "URL")
+    @Column(name = "url")
     private String url;
 }

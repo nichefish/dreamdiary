@@ -17,7 +17,7 @@ import java.io.Serializable;
  * 로그 작업URL 한글 매칭 Entity
  */
 @Entity
-@Table(name = "LOG_ACTVTY_URL_NM")
+@Table(name = "log_actvty_url_nm")
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
@@ -32,14 +32,14 @@ public class LogActvtyUrlNmEntity
      * URL (PK)
      */
     @Id
-    @Column(name = "URL", length = 200, updatable = false)
+    @Column(name = "url", length = 200, updatable = false)
     @Comment("URL (key)")
     protected String url;
 
     /**
      * URL 이름
      */
-    @Column(name = "URL_NM", length = 2000)
+    @Column(name = "url_nm", length = 2000)
     @Comment("URL 이름")
     private String urlNm;
 
@@ -47,7 +47,7 @@ public class LogActvtyUrlNmEntity
      * 삭제 여부
      */
     @Builder.Default
-    @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "del_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("삭제 여부")
     private String delYn = "N";
 }

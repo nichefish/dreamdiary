@@ -22,7 +22,7 @@ import java.util.Date;
  * 시스템 로그 Entity
  */
 @Entity
-@Table(name = "LOG_SYS")
+@Table(name = "log_sys")
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
@@ -67,14 +67,14 @@ public class LogSysEntity
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
-    @Column(name = "LOG_DT", updatable = false)
+    @Column(name = "log_dt", updatable = false)
     @Comment("작업일시")
     private Date logDt;
 
     /**
      * 작업 구분 코드 (ex. 게시판, 공지사항, ...) (기능/모듈 단위)
      */
-    @Column(name = "ACTVTY_CTGR_CD", length = 400)
+    @Column(name = "actvty_ctgr_cd", length = 400)
     @Comment("작업 구분 코드")
     private String actvtyCtgrCd;
 
@@ -83,8 +83,8 @@ public class LogSysEntity
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTVTY_CTGR_CD + "\'", referencedColumnName = "CL_CD")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "ACTVTY_CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTVTY_CTGR_CD + "\'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "actvty_ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -94,7 +94,7 @@ public class LogSysEntity
     /**
      * 작업 유형 코드 (조회, 검색, 처리...)
      */
-    @Column(name = "ACTION_TY_CD", length = 50)
+    @Column(name = "action_ty_cd", length = 50)
     @Comment("작업 유형 코드")
     private String actionTyCd;
 
@@ -103,8 +103,8 @@ public class LogSysEntity
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTION_TY_CD + "\'", referencedColumnName = "CL_CD")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "ACTION_TY_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTION_TY_CD + "\'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "action_ty_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -114,42 +114,42 @@ public class LogSysEntity
     /**
      * 작업 URL
      */
-    @Column(name = "URL", length = 400)
+    @Column(name = "url", length = 400)
     @Comment("작업 URL")
     private String url;
 
     /**
      * 작업 내용
      */
-    @Column(name = "CN", length = 400)
+    @Column(name = "cn", length = 400)
     @Comment("작업 내용")
     private String cn;
 
     /**
      * 작업 결과
      */
-    @Column(name = "RSLT")
+    @Column(name = "rslt")
     @Comment("작업 결과")
     private Boolean rslt;
 
     /**
      * 작업 결과 메세지
      */
-    @Column(name = "RSLT_MSG")
+    @Column(name = "rslt_msg")
     @Comment("작업 결과 메세지")
     private String rsltMsg;
 
     /**
      * 익셉션 이름
      */
-    @Column(name = "EXCEPTION_NM")
+    @Column(name = "exception_nm")
     @Comment("익셉션 이름")
     private String exceptionNm;
 
     /**
      * 익셉션 메세지
      */
-    @Column(name = "EXCEPTION_MSG")
+    @Column(name = "exception_msg")
     @Comment("익셉션 메세지")
     private String exceptionMsg;
 

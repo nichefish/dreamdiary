@@ -2,7 +2,9 @@ package io.nicheblog.dreamdiary.global.cmm.cd.model;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -19,6 +21,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class DtlCd
         extends BaseAuditDto {
 

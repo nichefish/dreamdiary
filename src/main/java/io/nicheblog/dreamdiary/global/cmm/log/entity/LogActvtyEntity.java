@@ -27,7 +27,7 @@ import java.util.HashMap;
  * 활동 로그 Entity
  */
 @Entity
-@Table(name = "LOG_ACTVTY")
+@Table(name = "log_actvty")
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
@@ -49,7 +49,7 @@ public class LogActvtyEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LOG_ACTVTY_NO")
+    @Column(name = "log_actvty_no")
     @Comment("로그 고유 ID (key)")
     private Integer logActvtyNo;
 
@@ -57,7 +57,7 @@ public class LogActvtyEntity
      * 작업자 ID
      */
     @CreatedBy
-    @Column(name = "LOG_USER_ID", length = 20)
+    @Column(name = "log_user_id", length = 20)
     @Comment("작업자 ID")
     protected String logUserId;
 
@@ -65,7 +65,7 @@ public class LogActvtyEntity
      * 작업자 정보
      */
     @ManyToOne
-    @JoinColumn(name = "LOG_USER_ID", referencedColumnName = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "log_user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     private AuditorInfo logUserInfo;
@@ -77,14 +77,14 @@ public class LogActvtyEntity
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
-    @Column(name = "LOG_DT", updatable = false)
+    @Column(name = "log_dt", updatable = false)
     @Comment("작업일시")
     private Date logDt;
 
     /**
      * 작업 구분 코드 (ex. 게시판, 공지사항, ...) (기능/모듈 단위)
      */
-    @Column(name = "ACTVTY_CTGR_CD", length = 400)
+    @Column(name = "actvty_ctgr_cd", length = 400)
     @Comment("작업 구분 코드")
     private String actvtyCtgrCd;
 
@@ -93,8 +93,8 @@ public class LogActvtyEntity
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTVTY_CTGR_CD + "\'", referencedColumnName = "CL_CD")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "ACTVTY_CTGR_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTVTY_CTGR_CD + "\'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "actvty_ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -104,7 +104,7 @@ public class LogActvtyEntity
     /**
      * 작업 유형 코드 (조회, 검색, 처리...)
      */
-    @Column(name = "ACTION_TY_CD", length = 50)
+    @Column(name = "action_ty_cd", length = 50)
     @Comment("작업 유형 코드")
     private String actionTyCd;
 
@@ -113,8 +113,8 @@ public class LogActvtyEntity
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTION_TY_CD + "\'", referencedColumnName = "CL_CD")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "ACTION_TY_CD", referencedColumnName = "DTL_CD", insertable = false, updatable = false))
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTION_TY_CD + "\'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "action_ty_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -124,7 +124,7 @@ public class LogActvtyEntity
     /**
      * 작업 URL
      */
-    @Column(name = "URL", length = 400)
+    @Column(name = "url", length = 400)
     @Comment("작업 URL")
     private String url;
 
@@ -132,7 +132,7 @@ public class LogActvtyEntity
      * 작업 URL 정보
      */
     @OneToOne
-    @JoinColumn(name = "URL", referencedColumnName = "URL", insertable = false, updatable = false)
+    @JoinColumn(name = "url", referencedColumnName = "url", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("작업 URL 정보")
@@ -141,56 +141,56 @@ public class LogActvtyEntity
     /**
      * 작업 파라미터
      */
-    @Column(name = "PARAM", length = 1000)
+    @Column(name = "param", length = 1000)
     @Comment("작업 파라미터")
     private String param;
 
     /**
      * 작업 내용
      */
-    @Column(name = "CN", length = 400)
+    @Column(name = "cn", length = 400)
     @Comment("작업 내용")
     private String cn;
 
     /**
      * 리퍼러
      */
-    @Column(name = "REFERER", length = 1000)
+    @Column(name = "referer", length = 1000)
     @Comment("리퍼러")
     private String referer;
 
     /**
      * 작업자 IP
      */
-    @Column(name = "IP_ADDR", length = 20)
+    @Column(name = "ip_addr", length = 20)
     @Comment("작업자 IP")
     private String ipAddr;
 
     /**
      * 작업 결과
      */
-    @Column(name = "RSLT")
+    @Column(name = "rslt")
     @Comment("작업 결과")
     private Boolean rslt;
 
     /**
      * 작업 결과 메세지
      */
-    @Column(name = "RSLT_MSG")
+    @Column(name = "rslt_msg")
     @Comment("작업 결과 메세지")
     private String rsltMsg;
 
     /**
      * 익셉션 이름
      */
-    @Column(name = "EXCEPTION_NM")
+    @Column(name = "exception_nm")
     @Comment("익셉션 이름")
     private String exceptionNm;
 
     /**
      * 익셉션 메세지
      */
-    @Column(name = "EXCEPTION_MSG")
+    @Column(name = "exception_msg")
     @Comment("익셉션 메세지")
     private String exceptionMsg;
 
