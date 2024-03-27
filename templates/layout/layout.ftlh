@@ -5,7 +5,7 @@
     <!DOCTYPE html>
     <html lang="ko">
         <#assign siteMenuNm = (siteAcsInfo.siteMenuNm)!>
-        <#assign pageNm = (siteAcsInfo.pageNm)!>
+        <#assign menuNm = (siteAcsInfo.menuNm)!>
         <#assign asideAt = (siteAcsInfo.asideAt)!>
 
         <#assign isMngr = isMngr!false>
@@ -71,7 +71,7 @@
         <script>
             $(document).ready(function() {
                 /** 타이틀 설정 */
-                document.title = "dreamdiary | ${siteMenuNm!}";
+                document.title = "dreamdiary | ${topMenuNm!}";
 
                 /** 메세지 존재시 출력 */
                 <#if message??>

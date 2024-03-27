@@ -6,7 +6,7 @@
 <#macro noSubMenu topMenuNo siteMenu>
     <div class="menu-item">
         <div class="menu-content mt-6 pb-2">
-            <span class="menu-section text-muted text-uppercase fs-8 ls-1">${siteMenu.topMenuNm}</span>
+            <span class="menu-section text-muted text-uppercase fs-8 ls-1">${siteMenu.topMenuCd}</span>
         </div>
     </div>
     <#assign isNotTopMenu = (topMenuNo != siteMenu.topMenuNo) />
@@ -27,7 +27,7 @@
 <#macro withSubMenu topMenuNo siteMenu>
     <div class="menu-item">
         <div class="menu-content mt-6 pb-2">
-            <span class="menu-section text-muted text-uppercase fs-8 ls-1">${siteMenu.topMenuNm}</span>
+            <span class="menu-section text-muted text-uppercase fs-8 ls-1">${siteMenu.topMenuCd}</span>
         </div>
     </div>
     <!-- 꿈 관리 메뉴 시작 -->

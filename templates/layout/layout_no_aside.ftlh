@@ -4,8 +4,8 @@
 <#macro layout>
     <!DOCTYPE html>
     <html lang="ko">
-        <#assign siteMenuNm = (siteAcsInfo.siteMenuNm)!>
-        <#assign pageNm = (siteAcsInfo.pageNm)!>
+        <#assign topMenuNm = (siteAcsInfo.topMenuNm)!>
+        <#assign menuNm = (siteAcsInfo.menuNm)!>
 
         <!--begin::Head-->
         <#include "/layout/_head.ftlh">
@@ -59,7 +59,7 @@
         <script>
             $(document).ready(function() {
                 /** 타이틀 설정 */
-                document.title = "dreamdiary | ${siteMenuNm!}";
+                document.title = "dreamdiary | ${topMenuNm!}";
 
                 /** 메세지 존재시 출력 */
                 <#if message??>

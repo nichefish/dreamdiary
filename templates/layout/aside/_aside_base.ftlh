@@ -43,7 +43,7 @@
      data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
      data-kt-drawer-toggle="#kt_aside_mobile_<#if isMngrMode>admin_</#if>toggle">
     <!--begin::Brand-->
-    <div class="aside-logo flex-column-auto mt-3 mb-1" id="kt_aside_logo">
+    <div class="aside-logo flex-column-auto mt-20 mb-1" id="kt_aside_logo">
         <!--begin::Logo-->
         <a href="${SiteUrl.MAIN!}" class="d-flex align-items-center"
            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="${SiteUrl.DOMAIN!}">
