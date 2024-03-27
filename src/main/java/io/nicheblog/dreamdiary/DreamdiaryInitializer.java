@@ -101,7 +101,7 @@ public class DreamdiaryInitializer {
         final UserDto systemAcnt = UserDto.builder()
                 .nickNm(Constant.SYSTEM_ACNT_NM)
                 .userId(Constant.SYSTEM_ACNT)
-                .password(passwordEncoder.encode(INIT_TEMP_PW))
+                .password(INIT_TEMP_PW)
                 .auth(List.of(userAuthRole))
                 .regstrId(Constant.SYSTEM_ACNT)
                 .build();

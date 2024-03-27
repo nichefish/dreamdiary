@@ -7,15 +7,13 @@ import io.nicheblog.dreamdiary.global.util.ChineseCalUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserInfoEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserInfoItemEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.user.UserInfoMapstruct;
+import io.nicheblog.dreamdiary.web.mapstruct.user.UserProflMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
 import io.nicheblog.dreamdiary.web.model.user.UserCttpcListDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.UserListDto;
-import io.nicheblog.dreamdiary.web.repository.user.UserInfoRepository;
+import io.nicheblog.dreamdiary.web.repository.user.UserProflRepository;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.spec.user.UserSpec;
@@ -53,7 +51,7 @@ public class UserService
     private CmmFileService cmmFileService;
 
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
-    private final UserInfoMapstruct userInfoMapstruct = UserInfoMapstruct.INSTANCE;
+    private final UserProflMapstruct userProflMapstruct = UserProflMapstruct.INSTANCE;
 
     @Override
     public UserRepository getRepository() {
@@ -75,8 +73,8 @@ public class UserService
         return this.cmmFileService;
     }
 
-    @Resource(name = "userInfoRepository")
-    private UserInfoRepository userInfoRepository;
+    @Resource(name = "userProflRepository")
+    private UserProflRepository userProflRepository;
 
     @Resource(name = "lgnPolicyService")
     private LgnPolicyService lgnPolicyService;
@@ -116,11 +114,11 @@ public class UserService
     @Override
     public UserDto regist(final UserDto userDto) throws Exception {
         // 계정 잠금여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getLockYn())) userDto.setLockYn("N");
+        if (!"Y".equals(userDto.getLockedYn())) userDto.setLockedYn("N");
 
-        // 접속 IP 사용여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpInfoListStr())) {
-            userDto.setAcsIpYn("N");
+        // 접속 IP 사용 여부 체크박스 값 세팅
+        if (!"Y".equals(userDto.getUseAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpInfoListStr())) {
+            userDto.setUseAcsIpYn("N");
         } else {
             // 접속 IP 사용"Y"시 접속 IP 세팅
             String acsIpInfoListStr = userDto.getAcsIpInfoListStr();
@@ -131,9 +129,8 @@ public class UserService
         // Dto -> Entity
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserEntity userEntity = userMapstruct.toEntity(userDto);
-        userEntity.setUserInfoNo(this.userInfoReg(userEntity, userDto));
-        userEntity.setUserPw(passwordEncoder.encode(userDto.getUserPw()));
-        userEntity.setCfYn("Y");
+        userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userEntity.acntStus.setCfYn("Y");
         // insert
         UserEntity rsltEntity = userRepository.save(userEntity);
         UserDto rsltDto = userMapstruct.toDto(rsltEntity);
@@ -148,24 +145,25 @@ public class UserService
             final UserEntity userEntity,
             final UserDto userDto
     ) throws Exception {
-        String userInfoYn = userDto.getUserInfoYn();
-        Integer userInfoNo = userEntity.getUserInfoNo();
-        if ("N".equals(userInfoYn) && userInfoNo == null) {
-            userEntity.setUserInfo(null);
-            return null;
-        }
-        UserInfoEntity rsUserInfoEntity = userEntity.getUserInfo();
-        if (rsUserInfoEntity == null) {
-            rsUserInfoEntity = userInfoRepository.findById(userInfoNo)
-                                                 .orElse(new UserInfoEntity());
-        }
-        if ("Y".equals(userInfoYn)) {
-            userInfoMapstruct.updateFromDto(userDto.getUserInfo(), rsUserInfoEntity);
-            this.sortUserInfoItemList(rsUserInfoEntity);      // 빈값 걸러내기+순번매기기
-        } else {
-            rsUserInfoEntity.setDelYn("Y");
-        }
-        return userInfoRepository.save(rsUserInfoEntity).getUserInfoNo();
+        // String userProflYn = userDto.getUserProflYn();
+        // Integer userProflNo = userEntity.getUserProflNo();
+        // if ("N".equals(userProflYn) && userProflNo == null) {
+        //     userEntity.setUserProfl(null);
+        //     return null;
+        // }
+        // UserProflEntity rsUserProflEntity = userEntity.getUserProfl();
+        // if (rsUserProflEntity == null) {
+        //     rsUserProflEntity = userProflRepository.findById(userProflNo)
+        //                                          .orElse(new UserProflEntity());
+        // }
+        // if ("Y".equals(userProflYn)) {
+        //     userInfoMapstruct.updateFromDto(userDto.getUserProfl(), rsUserProflEntity);
+        //     this.sortUserInfoItemList(rsUserProflEntity);      // 빈값 걸러내기+순번매기기
+        // } else {
+        //     rsUserProflEntity.setDelYn("Y");
+        // }
+        // return userProflRepository.save(rsUserProflEntity).getUserProflNo();
+        return null;
     }
 
     /**
@@ -188,33 +186,33 @@ public class UserService
     /**
      * 사용자 관리 > 사용자 정보 추가정보 정리 (null값 걸러내기 + sorting)
      */
-    public void sortUserInfoItemList(final UserInfoEntity userInfoEntity) {
-        List<UserInfoItemEntity> itemList = userInfoEntity.getItemList();
-        if (CollectionUtils.isEmpty(itemList)) return;
-        List<UserInfoItemEntity> sortedItemList = new ArrayList<>();
-        int sortOrdr = 1;
-        for (UserInfoItemEntity item : itemList) {
-            if (StringUtils.isEmpty(item.getItemNm())) continue;
-            item.setSortOrdr(sortOrdr++);
-            sortedItemList.add(item);
-        }
-        userInfoEntity.setItemList(sortedItemList);
-    }
+    // public void sortUserInfoItemList(final UserProflEntity userProflEntity) {
+    //     List<UserInfoItemEntity> itemList = userProflEntity.getItemList();
+    //     if (CollectionUtils.isEmpty(itemList)) return;
+    //     List<UserInfoItemEntity> sortedItemList = new ArrayList<>();
+    //     int sortOrdr = 1;
+    //     for (UserInfoItemEntity item : itemList) {
+    //         if (StringUtils.isEmpty(item.getItemNm())) continue;
+    //         item.setSortOrdr(sortOrdr++);
+    //         sortedItemList.add(item);
+    //     }
+    //     userProflEntity.setItemList(sortedItemList);
+    // }
 
     /**
      * 사용자 관리 > 사용자 비밀번호 초기화
      */
-    public Boolean userPwReset(final Integer userNo) throws Exception {
+    public Boolean passwordReset(final Integer userNo) throws Exception {
         // Entity 레벨 조회
         UserEntity rsUserEntity = this.getDtlEntity(userNo);
         if (rsUserEntity == null) return false;
         // 로그인 설정 조회 (cachable)
-        LgnPolicyEntity rsLgnPolicyEntity = lgnPolicyService.getLgnPolicyDtlEntity();
+        LgnPolicyEntity rsLgnPolicyEntity = lgnPolicyService.getDtlEntity();
         String pwForReset = rsLgnPolicyEntity.getPwForReset();
         // update
-        rsUserEntity.setUserPw(passwordEncoder.encode(pwForReset));
-        rsUserEntity.setNeedsPwReset("Y");
-        rsUserEntity.setPwChgDt(DateUtils.getCurrDate());
+        rsUserEntity.setPassword(pwForReset);
+        rsUserEntity.acntStus.setNeedsPwReset("Y");
+        rsUserEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
         Integer rsId = userRepository.saveAndFlush(rsUserEntity)
                                      .getUserNo();
         return (rsId != null);
@@ -229,11 +227,11 @@ public class UserService
             final Integer key
     ) throws Exception {
         // 계정 잠금여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getLockYn())) userDto.setLockYn("N");
+        if (!"Y".equals(userDto.getLockedYn())) userDto.setLockedYn("N");
 
-        // 접속 IP 사용여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpInfoListStr())) {
-            userDto.setAcsIpYn("N");
+        // 접속 IP 사용 여부 체크박스 값 세팅
+        if (!"Y".equals(userDto.getUseAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpInfoListStr())) {
+            userDto.setUseAcsIpYn("N");
         } else {
             // 접속 IP 사용"Y"시 접속 IP 세팅
             String acsIpInfoListStr = userDto.getAcsIpInfoListStr();
@@ -246,13 +244,14 @@ public class UserService
         UserEntity userEntity = this.getDtlEntity(userDto.getUserNo());
         userMapstruct.updateFromDto(userDto, userEntity);
         // 잠금 -> 잠금해제시 로그인 실패 횟수 초기화
-        if ("Y".equals(userEntity.getLockYn()) && "N".equals(userDto.getLockYn())) userEntity.setLgnFailCnt(0);
+        boolean isUnlocking = "Y".equals(userEntity.acntStus.getLockedYn()) && "N".equals(userDto.getLockedYn());
+        if (isUnlocking) userEntity.acntStus.setLgnFailCnt(0);
 
-        userEntity.setUserInfoNo(this.userInfoReg(userEntity, userDto));
+        // userEntity.setUserProflNo(this.userInfoReg(userEntity, userDto));
         // 잠금해제 상태로 업데이트시 로그인 실패 횟수 초기화 및 최종 로그인 일자=수정일자로 세팅
-        if ("N".equals(userEntity.getLockYn())) {
-            userEntity.setLgnFailCnt(0);
-            userEntity.setLstLgnDt(DateUtils.getCurrDate());
+        if ("N".equals(userEntity.acntStus.getLockedYn())) {
+            userEntity.acntStus.setLgnFailCnt(0);
+            userEntity.acntStus.setLstLgnDt(DateUtils.getCurrDate());
         }
         // update
         UserEntity rsltEntity = this.updt(userEntity);
@@ -285,11 +284,11 @@ public class UserService
         if (StringUtils.isEmpty(userId)) return false;
         if (Constant.SYSTEM_ACNT.equals(userId) || Constant.DEV_ACNT.equals(userId)) return false;
 
-        LgnPolicyEntity rsEntity = lgnPolicyService.getLgnPolicyDtlEntity();
+        LgnPolicyEntity rsEntity = lgnPolicyService.getDtlEntity();
         Integer lgnLockDy = rsEntity.getLgnLockDy();
 
         UserEntity user = this.getDtlEntity(userId);
-        Date lastLgnDt = user.getLstLgnDt();
+        Date lastLgnDt = user.acntStus.getLstLgnDt();
         if (lastLgnDt == null) lastLgnDt = user.getRegDt();
         Date dormantDt = DateUtils.getDateAddDay(lastLgnDt, lgnLockDy);
         return (dormantDt == null || dormantDt.compareTo(DateUtils.getCurrDate()) < 0);
@@ -298,31 +297,31 @@ public class UserService
     /**
      * 사용자정보 잠금
      */
-    public Boolean userInfoLock(final Integer userInfoNo) throws Exception {
+    public Boolean userInfoLock(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsEntity = this.getDtlEntity(userInfoNo);
+        UserEntity rsEntity = this.getDtlEntity(userProflNo);
         if (rsEntity == null) return false;
-        // lockYn 플래그 업데이트
-        rsEntity.setLockYn("Y");
+        // lockedYn 플래그 업데이트
+        rsEntity.acntStus.setLockedYn("Y");
         Integer rsId = userRepository.saveAndFlush(rsEntity)
-                                     .getUserInfoNo();
+                                     .getUserNo();
         return (rsId != null);
     }
 
     /**
      * 사용자정보 잠금 해제
      */
-    public Boolean userInfoUnlock(final Integer userInfoNo) throws Exception {
+    public Boolean userInfoUnlock(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsEntity = this.getDtlEntity(userInfoNo);
+        UserEntity rsEntity = this.getDtlEntity(userProflNo);
         if (rsEntity == null) return false;
-        // lockYn 플래그 + 최종접속일 업데이트
+        // lockedYn 플래그 + 최종접속일 업데이트
         // TODO: 최종접속일 이거 어찌할꼬...
-        rsEntity.setLockYn("N");
+        rsEntity.acntStus.setLockedYn("N");
         // rsEntity.setDormantYn("N");
-        rsEntity.setLstLgnDt(DateUtils.getCurrDate());
+        rsEntity.acntStus.setLstLgnDt(DateUtils.getCurrDate());
         Integer rsId = userRepository.saveAndFlush(rsEntity)
-                                     .getUserInfoNo();
+                                     .getUserNo();
         return (rsId != null);
     }
 
