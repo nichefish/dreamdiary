@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
+import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -17,15 +18,15 @@ import javax.persistence.*;
  * @author nichefish
  */
 @Entity
-@Table(name = "USER_ACS_IP")
+@Table(name = "user_acs_ip")
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE USER_ACS_IP SET DEL_YN = 'Y' WHERE USER_ACS_IP_NO = ?")
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE user_acs_ip SET del_yn = 'Y' WHERE user_acs_ip_no = ?")
 public class UserAcsIpEntity {
 
     /**
@@ -53,10 +54,10 @@ public class UserAcsIpEntity {
     private String acsIp;
 
     /**
-     * 삭제여부
+     * 삭제 여부
      */
     @Builder.Default
     @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("삭제여부")
+    @Comment("삭제 여부")
     private String delYn = "N";
 }

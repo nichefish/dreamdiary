@@ -1,6 +1,7 @@
-package io.nicheblog.dreamdiary.web.model.user;
+package io.nicheblog.dreamdiary.web.model.user.profl;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.web.model.user.UserInfoItemDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -20,13 +21,13 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class UserInfoDto
+public class UserProflDto
         extends BaseCrudDto {
 
     /**
      * 사용자 정보 고유 ID (PK)
      */
-    private Integer userInfoNo;
+    private Integer userProflNo;
     /**
      * 이름
      */

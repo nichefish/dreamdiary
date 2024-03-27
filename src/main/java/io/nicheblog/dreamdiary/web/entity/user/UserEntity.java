@@ -1,13 +1,12 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,6 +55,13 @@ public class UserEntity
     private String userId;
 
     /**
+     * 비밀번호 :: 암호화된 비밀번호(64bit)를 저장하기 위해 길이=64이다.
+     */
+    @Column(name = "password", length = 64)
+    @Comment("비밀번호")
+    private String password;
+
+    /**
      * 사용자 프로필 정보
      */
     @OneToOne(mappedBy = "user")
@@ -65,18 +70,18 @@ public class UserEntity
     private UserProflEntity userProfl;
 
     /**
-     * 비밀번호 :: 암호화된 비밀번호(64bit)를 저장하기 위해 길이=64이다.
-     */
-    @Column(name = "password", length = 64)
-    @Comment("비밀번호")
-    private String password;
-
-    /**
      * 표시이름 : 사용자 프로필 정보가 없을 때 표시되는 이름
      */
     @Column(name = "nick_nm", length = 50)
     @Comment("표시이름")
     private String nickNm;
+
+    /**
+     * 프로필 이미지 URL
+     */
+    @Column(name = "profl_img_url", length = 1000)
+    @Comment("프로필 이미지 URL")
+    private String proflImgUrl;
 
     /**
      * 접속 IP 사용 여부
@@ -103,13 +108,6 @@ public class UserEntity
     @Column(name = "user_dc", length = 1000)
     @Comment("계정 설명")
     private String userDc;
-
-    /**
-     * 프로필 이미지 URL
-     */
-    @Column(name = "profl_img_url", length = 1000)
-    @Comment("프로필 이미지 URL")
-    private String proflImgUrl;
 
     /**
      * 계정 상태 정보 (위임)

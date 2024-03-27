@@ -24,7 +24,7 @@ public class UserAcsIpDto {
     /**
      * 사용자 고유 ID (FK)
      */
-    private Integer userInfoNo;
+    private Integer userNo;
     /**
      * 접속IP
      */
