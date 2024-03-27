@@ -36,7 +36,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${ApiUrl.API_DREAM_DAY_REG_AJAX!}";
+                    const url = "${SiteUrl.DREAM_DAY_REG_AJAX!}";
                     let ajaxData = new FormData($("#dreamDayRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })

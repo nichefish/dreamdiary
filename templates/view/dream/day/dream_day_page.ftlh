@@ -6,6 +6,9 @@
 
 <@layout.layout>
 
+<script type="text/javascript" src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
+<script type="text/javascript" src="/js/commons/commons-tinymce.js?20230908"></script>
+
 <script>
     const Page = function() {
         return {
@@ -42,6 +45,7 @@
 <#include "/view/dream/day/dream_day_reg_modal.ftlh">
 <#include "/view/dream/day/dream_day_reg_template.ftlh">
 <#include "/view/dream/piece/dream_piece_reg_modal.ftlh">
+<#include "/view/dream/piece/dream_piece_reg_header_template.ftlh">
 <#include "/view/dream/piece/dream_piece_reg_template.ftlh">
 
 </@layout.layout>

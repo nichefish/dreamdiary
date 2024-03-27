@@ -3,7 +3,7 @@
  -- @included in : 댓글 기능이 있는 페이지들
  -->
 <script>
-    let Comment = function() {
+    const Comment = (function() {
         return {
             init: function () {
                 /** jquery :: validation */
@@ -83,7 +83,7 @@
                 });
             }
         }
-    }();
+    })();
 
     $(document).ready(function() {
         Comment.init();

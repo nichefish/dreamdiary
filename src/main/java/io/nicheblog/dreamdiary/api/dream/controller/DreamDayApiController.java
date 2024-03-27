@@ -32,9 +32,9 @@ import java.security.InvalidParameterException;
 import java.util.Map;
 
 /**
- * DreamController
+ * DreamDayApiController
  * <pre>
- *  API:: 꿈 일자 API controller
+ *  API:: 꿈 일자 조회 API controller
  * </pre>
  *
  * @author nichefish
@@ -44,7 +44,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
 @Log4j2
-@Tag(name = "잔디 메신저 API", description = "잔디 메신저 API입니다.")
+@Tag(name = "꿈 일자 API", description = "잔디 메신저 API입니다.")
 public class DreamDayApiController
         extends BaseControllerImpl {
 
@@ -96,48 +96,5 @@ public class DreamDayApiController
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    /**
-     * 꿈 일자 - 등록/수정 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
-     */
-    @Operation(
-            summary = "꿈 일자 등록/수정",
-            description = "꿈 일자 정보를 등록/수정한다."
-    )
-    @PostMapping(value = {ApiUrl.API_DREAM_DAY_REG_AJAX, ApiUrl.API_DREAM_DAY_MDF_AJAX})
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> dreamDayRegAjax(
-            final @Valid DreamDayApiDto dreamDay,
-            final Integer userNo,
-            final LogActvtyParam logParam,
-            final MultipartHttpServletRequest request,
-            final BindingResult bindingResult
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String resultMsg = "";
-        try {
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            boolean isReg = dreamDay.getDreamDayNo() == null;
-            DreamDayApiDto result = isReg ? dreamDayApiService.regist(dreamDay, request) : dreamDayApiService.modify(dreamDay, userNo, request);
-            isSuccess = (result.getDreamDayNo() != null);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
-            // 로그 관련 처리
-            logParam.setCn(dreamDay.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
 
 }

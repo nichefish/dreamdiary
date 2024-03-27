@@ -8,15 +8,15 @@
     <!--begin::Input group-->
     <div class="row row-cols-lg-2 mb-3">
         <div class="col-xl-2 col-2">
-            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="dreamtDt">날짜</label>
+            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="dreamtDt">꿈 일자</label>
         </div>
         <div class="col-xl-3 col-5">
-            <input class="form-control form-control-solid required" name="dreamtDt" id="dreamtDt" placeholder="꿈꾼 일자" value="{{dreamtDt}}" readonly/>
+            <input class="form-control form-control-solid required" name="dreamtDt" id="dreamtDt" placeholder="꿈 일자" value="{{dreamtDt}}" readonly/>
         </div>
         <div class="col-xl-2 col-5">
             <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">날짜미상</label>
         </div>
-        <div class="col-xl-3 col-5 d-flex align-items-center">
+        <div class="col-xl-2 col-5 pt-2">
             <div class="form-check form-switch form-check-custom form-check-solid">
                 <input class="form-check-input" type="checkbox" value="Y" name="useYn" id="useYn" {{checkedIf (trueFalse useYn "Y//N")}} />
                 <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedStyle (trueFalse useYn "Y//N") "color" "blue//gray"}}>
@@ -24,16 +24,15 @@
                 </label>
             </div>
         </div>
+        <div class="col-xl-1 col-1 pt-2">
+            <input class="form-control form-control-solid" name="yy" id="yy" placeholder="년도" value="{{dreamtDt}}" readonly/>
+        </div>
+        <div class="col-xl-1 col-1 pt-2">
+            <input class="form-control form-control-solid" name="mnth" id="mnth" placeholder="월" value="{{dreamtDt}}" readonly/>
+        </div>
         <div class="col-xl-2 col-2 col-form-label"></div>
         <div class="col-xl-5 col-5">
             <span id="beginDtSpan"></span>
-        </div>
-    </div>
-    <!--begin::Input group-->
-    <div class="row row-cols-lg-2 mb-3">
-        <div class="col-xl-2 col-2">
-            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">꿈 추가</label>
-            <button type="button"><i class="bi bi-plus fs-2"></i></button>
         </div>
     </div>
 </script>
