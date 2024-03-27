@@ -39,10 +39,6 @@ public class LogSysParam {
      */
     private Integer logSysNo;
     /**
-     * 로그유형코드
-     */
-    private String logTyCd = Constant.LOG_TY_SYS;
-    /**
      * 작업자 ID
      */
     private String logUserId = Constant.SYSTEM_ACNT;

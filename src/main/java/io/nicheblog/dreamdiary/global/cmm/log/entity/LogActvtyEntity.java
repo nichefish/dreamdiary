@@ -54,16 +54,6 @@ public class LogActvtyEntity
     private Integer logActvtyNo;
 
     /**
-     * 로그유형코드 :
-     * 활동(서비스)로그"ACTVTY" / 시스템로그"SYSTEM"
-     * 별도의 엔티티로 가는 게 맞는건가??
-     */
-    @Builder.Default
-    @Column(name = "LOG_TY_CD", length = 400)
-    @Comment("로그유형코드")
-    private String logTyCd = Constant.LOG_TY_ACTVTY;
-
-    /**
      * 작업자 ID
      */
     @CreatedBy
@@ -75,7 +65,7 @@ public class LogActvtyEntity
      * 작업자 정보
      */
     @ManyToOne
-    @JoinColumn(name = "LOG_USER_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "LOG_USER_ID", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     private AuditorInfo logUserInfo;

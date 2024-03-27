@@ -38,25 +38,15 @@ public class LogSysEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LOG_SYS_NO")
+    @Column(name = "log_sys_no")
     @Comment("로그 고유 번호 (key)")
     private Integer logSysNo;
-
-    /**
-     * 로그유형코드 :
-     * 활동(서비스)로그"ACTVTY" / 시스템로그"SYSTEM"
-     * 별도 엔티티로 가는 게 맞는가??
-     */
-    @Builder.Default
-    @Column(name = "LOG_TY_CD", length = 400)
-    @Comment("로그유형코드")
-    private String logTyCd = Constant.LOG_TY_SYS;
 
     /**
      * 작업자 ID
      */
     @Builder.Default
-    @Column(name = "LOG_USER_ID", length = 20)
+    @Column(name = "log_user_id", length = 20)
     @Comment("작업자 ID")
     protected String logUserId = Constant.SYSTEM_ACNT;
 
@@ -64,7 +54,7 @@ public class LogSysEntity
      * 작업자 정보
      */
     @ManyToOne
-    @JoinColumn(name = "LOG_USER_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "log_user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("작업자 정보")

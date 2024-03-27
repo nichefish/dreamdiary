@@ -3,8 +3,9 @@ package io.nicheblog.dreamdiary.web.mapstruct.user;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.AES128Utils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserInfoEntity;
-import io.nicheblog.dreamdiary.web.model.user.UserInfoDto;
+import io.nicheblog.dreamdiary.web.entity.user.UserStusInfo;
+import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
+import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -19,10 +20,10 @@ import org.mapstruct.factory.Mappers;
  * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, AES128Utils.class})
-public interface UserInfoMapstruct
-        extends BaseMapstruct<UserInfoDto, UserInfoEntity> {
+public interface UserProflMapstruct
+        extends BaseMapstruct<UserProflDto, UserProflEntity> {
 
-    UserInfoMapstruct INSTANCE = Mappers.getMapper(UserInfoMapstruct.class);
+    UserProflMapstruct INSTANCE = Mappers.getMapper(UserProflMapstruct.class);
 
     /**
      * Dto -> Entity
@@ -34,7 +35,7 @@ public interface UserInfoMapstruct
     // @Mapping(target = "brthdy", expression = "java(DateUtils.asDate(dto.getBrthdy()))")
     // @Mapping(target = "email", expression = "java(dto.getEmailId() + \"@\" + dto.getEmailDomain())")
     // @Mapping(target = "acntNo", expression = "java(StringUtils.isNotEmpty(dto.getAcntNo()) ? AES128Utils.encrypt(dto.getAcntNo()) : null)")
-    UserInfoEntity toEntity(final UserInfoDto dto) throws Exception;
+    UserProflEntity toEntity(final UserProflDto dto) throws Exception;
 
     /**
      * Entity -> Dto
@@ -50,7 +51,7 @@ public interface UserInfoMapstruct
     // @Mapping(target = "emailId", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(0, entity.getEmail().indexOf('@')) : null)")
     // @Mapping(target = "emailDomain", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(entity.getEmail().indexOf('@')+1) : null)")
     // @Mapping(target = "acntNo", expression = "java(StringUtils.isNotEmpty(entity.getAcntNo()) ? AES128Utils.decrypt(entity.getAcntNo()) : null)")
-    UserInfoDto toDto(final UserInfoEntity entity) throws Exception;
+    UserProflDto toDto(final UserProflEntity entity) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
@@ -64,7 +65,7 @@ public interface UserInfoMapstruct
     // @Mapping(target = "email", expression = "java(dto.getEmailId() + \"@\" + dto.getEmailDomain())")
     // @Mapping(target = "acntNo", expression = "java(StringUtils.isNotEmpty(dto.getAcntNo()) ? AES128Utils.encrypt(dto.getAcntNo()) : null)")
     void updateFromDto(
-            final UserInfoDto dto,
-            final @MappingTarget UserInfoEntity entity
+            final UserProflDto dto,
+            final @MappingTarget UserProflEntity entity
     ) throws Exception;
 }

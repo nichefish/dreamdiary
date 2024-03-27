@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -20,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class DreamDayDto
-        extends BaseAtchDto {
+        extends BaseClsfDto {
 
     /** 꿈 일자 고유 번호 (PK) */
     private Integer dreamDayNo;

@@ -1,4 +1,7 @@
+-- 공통 코드 데이터 쿼리 정보를 입력한다.
 -- 쿼리 줄바꿈 안됨. 무조건 한 줄에 한 쿼리 단위로 실행된다.
+-- @database : mariadb
+-- @author : nichefish
 
 -- 필수 :: 권한 분류코드 추가
 REPLACE INTO CMM_CL_CD (CL_CD, CL_CD_NM, CL_CD_DC) VALUES ('AUTH_CD', '권한', '사용자 계정 권한 코드');
@@ -48,7 +51,7 @@ REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES 
 
 REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_REQST', '물품구매/경조사비 신청', '물품구매/경조사비 신청', '3');
 
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'USER_INFO', '사용자 관리', '사용자 관리', '4');
+REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'user_profl', '사용자 관리', '사용자 관리', '4');
 REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'USER_MY', '내 정보', '내 정보', '3');
 
 REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'BOARD_DEF', '게시판 정의 관리', '게시판 정의 관리', '4');

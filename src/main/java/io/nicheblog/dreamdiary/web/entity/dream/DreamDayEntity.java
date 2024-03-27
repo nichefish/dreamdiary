@@ -33,7 +33,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
+@Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE DREAM_DAY SET DEL_YN = 'Y' WHERE DREAM_DAY_NO = ?")
 public class DreamDayEntity
         extends BaseClsfEntity {
@@ -55,7 +55,7 @@ public class DreamDayEntity
      */
     @Builder.Default
     @Column(name = "content_type")
-    private String boardCd = CONTENT_TYPE;
+    private String contentType = CONTENT_TYPE;
 
     /**
      * 꿈 일자

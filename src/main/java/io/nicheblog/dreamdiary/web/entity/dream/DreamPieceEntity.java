@@ -56,7 +56,7 @@ public class DreamPieceEntity
      */
     @Builder.Default
     @Column(name = "content_type")
-    private String boardCd = CONTENT_TYPE;
+    private String contentType = CONTENT_TYPE;
 
     /**
      * 꿈 일자 번호

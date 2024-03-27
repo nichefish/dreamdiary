@@ -79,10 +79,10 @@ public class DreamdiaryAuthenticationProvider
         if (userService.isDormant(username)) throw new AcntDormantException("DormantAcntException");
 
         // 잠금여부 체크
-        if ("Y".equals(authInfo.getLockYn())) throw new LockedException("LockedException");
+        if ("Y".equals(authInfo.getLockedYn())) throw new LockedException("LockedException");
 
         // 접속IP 체크
-        if ("Y".equals(authInfo.getAcsIpYn())) {
+        if ("Y".equals(authInfo.getUseAcsIpYn())) {
             List<String> acsIpList = authInfo.getAcsIpList();
             if (CollectionUtils.isNotEmpty(acsIpList)) {
                 String remoteAddr = authService.getUserIpAddr();
@@ -93,7 +93,7 @@ public class DreamdiaryAuthenticationProvider
         }
 
         // 비밀번호 변경기간 만료여부 체크
-        LgnPolicyEntity lgnPolicy = lgnPolicyService.getLgnPolicyDtlEntity();
+        LgnPolicyEntity lgnPolicy = lgnPolicyService.getDtlEntity();
         Integer pwChgDy = lgnPolicy.getPwChgDy();
         Date pwExprDt = DateUtils.getDateAddDay(authInfo.getPwChgDt(), pwChgDy);
         boolean isPwExprd = (pwExprDt == null || pwExprDt.compareTo(DateUtils.getCurrDate()) < 0);

@@ -1,20 +1,27 @@
 package io.nicheblog.dreamdiary;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
+import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.model.admin.LgnPolicyDto;
+import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,6 +39,9 @@ public class DreamdiaryInitializer {
     @Resource(name = "passwordEncoder")
     private PasswordEncoder passwordEncoder;
 
+    @Resource(name = "authService")
+    private AuthService authService;
+
     @Resource(name = "userService")
     private UserService userService;
 
@@ -46,7 +56,7 @@ public class DreamdiaryInitializer {
     /**
      * 최초 실행시 사용자가 공백이므로 관리자 계정 자동 등록 (PW 암호화)
      */
-    public void chkSystemAcnt() {
+    public void chkSystemAcnt() throws Exception {
 
         LogSysParam logParam = new LogSysParam();
 
@@ -54,15 +64,15 @@ public class DreamdiaryInitializer {
         boolean systemAcntExists = false;
         String resultMsg = "";
         try {
-            // 시스템계정 존재여부 체크
-            UserDto rsSystemAccountInfo = userService.getDtlDto(Constant.SYSTEM_ACNT);
-            if (rsSystemAccountInfo != null) {
+            try {
+                // 시스템계정 존재여부 체크
+                authService.loadUserByUsername(Constant.SYSTEM_ACNT);
                 systemAcntExists = true;
-                return;
+            } catch (UsernameNotFoundException e) {
+                // 시스템계정 부재시 등록:: 메소드 분리
+                isSuccess = this.regSystemAcnt();
+                resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             }
-            // 시스템계정 등록:: 메소드 분리
-            isSuccess = this.regSystemAcnt();
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -80,10 +90,19 @@ public class DreamdiaryInitializer {
      * 임의의 고정 패스워드로 생성되었으므로 최초설치 후 직접 비밀번호를 변경해 주어야 한다.
      */
     public boolean regSystemAcnt() throws Exception {
+
+        final AuthRole authRoleMngr = authService.getAuthRole(Constant.AUTH_MNGR);
+
+        final UserAuthRoleDto userAuthRole = UserAuthRoleDto.builder()
+                .authCd(Constant.AUTH_MNGR)
+                .role(authRoleMngr)
+                .build();
+
         final UserDto systemAcnt = UserDto.builder()
                 .nickNm(Constant.SYSTEM_ACNT_NM)
                 .userId(Constant.SYSTEM_ACNT)
                 .password(passwordEncoder.encode(INIT_TEMP_PW))
+                .auth(List.of(userAuthRole))
                 .regstrId(Constant.SYSTEM_ACNT)
                 .build();
 

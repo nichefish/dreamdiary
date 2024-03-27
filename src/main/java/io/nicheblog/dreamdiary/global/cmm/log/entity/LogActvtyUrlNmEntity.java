@@ -24,7 +24,7 @@ import java.io.Serializable;
 @SuperBuilder(toBuilder=true)
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
+@Where(clause = "del_yn='N'")
 public class LogActvtyUrlNmEntity
         implements Serializable {
 
@@ -44,10 +44,10 @@ public class LogActvtyUrlNmEntity
     private String urlNm;
 
     /**
-     * 삭제여부
+     * 삭제 여부
      */
     @Builder.Default
     @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("삭제여부")
+    @Comment("삭제 여부")
     private String delYn = "N";
 }
