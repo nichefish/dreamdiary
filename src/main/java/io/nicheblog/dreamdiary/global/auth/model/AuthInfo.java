@@ -1,8 +1,12 @@
 package io.nicheblog.dreamdiary.global.auth.model;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
+import io.nicheblog.dreamdiary.global.auth.mapstruct.AuthRoleMapstruct;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,6 +19,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * AuthInfo
@@ -37,25 +42,27 @@ public class AuthInfo
      */
     private String userId;
     /**
-     * 사용자 정보 ID
-     */
-    private Integer userProflNo;
-    /**
      * 사용자 PW
      */
     private String password;
+    /**
+     * 권한 목록
+     */
+    private List<AuthRoleDto> authList;
+
     /**
      * 사용자 이름
      */
     private String nickNm;
     /**
-     * 권한코드
+     * 사용자 정보 ID
      */
-    private String authCd;
+    private Integer userProflNo;
     /**
-     * 권한이름
+     * 프로필 이미지 URL
      */
-    private String authNm;
+    private String proflImgUrl;
+
     /**
      * 승인여부
      */
@@ -84,10 +91,6 @@ public class AuthInfo
      * 패스워드 리셋 필요여부
      */
     private String needsPwReset;
-    /**
-     * 프로필 이미지 URL
-     */
-    private String proflImgUrl;
 
     /**
      * 사용자 정보 통으로 저장 (일단)
@@ -101,12 +104,25 @@ public class AuthInfo
      */
     public AuthInfo(final UserEntity userEntity) throws Exception {
         if (userEntity != null) {
-            this.nickNm = userEntity.getNickNm();
             this.userId = userEntity.getUserId();
             this.password = userEntity.getPassword();
             // TODO: 권한
+            List<UserAuthRoleEntity> authList = userEntity.getAuthList();
+            this.authList = authList.stream()
+                    .map(entity -> {
+                        try {
+                            // TODO: 하위권한 체크
+                            return AuthRoleMapstruct.INSTANCE.toDto(entity.getRoleInfo());
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .collect(Collectors.toList());
+
+            this.nickNm = userEntity.getNickNm();
             this.proflImgUrl = userEntity.getProflImgUrl();
-            // 사용자정보 세팅
+
+            // 사용자 프로필 정보 세팅
             // UserProflEntity userProflEntity = userEntity.getUserProfl();
             // if (userProflEntity != null && userProflEntity.getUserProflNo() != null) {
             //     this.userProfl = UserInfoMapstruct.INSTANCE.toDto(userProflEntity);
@@ -181,24 +197,15 @@ public class AuthInfo
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> auth = new ArrayList<>();
-
-        String authCd = this.getAuthCd();
-        if (Constant.AUTH_MNGR.equals(authCd)) {
-            auth.add(new SimpleGrantedAuthority(Constant.ROLE_MNGR));
-            auth.add(new SimpleGrantedAuthority(Constant.ROLE_USER));
-        } else if (Constant.AUTH_USER.equals(authCd)) {
-            auth.add(new SimpleGrantedAuthority(Constant.ROLE_USER));
-        }
-
-        // 개발계정 권한 부여
-        if (Constant.DEV_ACNT.equals(this.userId)) {
-            auth.add(new SimpleGrantedAuthority(Constant.ROLE_DEV));
-            auth.add(new SimpleGrantedAuthority(Constant.ROLE_MNGR));
-            auth.add(new SimpleGrantedAuthority(Constant.ROLE_USER));
-        }
-
-        return auth;
+        return this.authList.stream()
+                .map(entity -> {
+                    try {
+                        return new SimpleGrantedAuthority(entity.getAuthCd());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     /**

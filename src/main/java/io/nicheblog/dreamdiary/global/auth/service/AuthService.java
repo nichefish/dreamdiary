@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.global.auth.service;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global.auth.repository.AuthRoleRepository;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.repository.user.UserProflRepository;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
@@ -34,8 +36,8 @@ public class AuthService
     @Resource(name = "userRepository")
     private UserRepository userRepository;
 
-    @Resource(name = "userProflRepository")
-    private UserProflRepository userProflRepository;
+    @Resource(name = "authRoleRepository")
+    private AuthRoleRepository authRoleRepository;
 
     @Resource
     private HttpServletRequest request;
@@ -50,7 +52,8 @@ public class AuthService
         Optional<UserEntity> rsUserEntityWrapper = userRepository.findByUserId(userId);
         if (rsUserEntityWrapper.isEmpty()) throw new UsernameNotFoundException("사용자 정보를 찾을 수 없습니다.");
         UserEntity rsUserEntity = rsUserEntityWrapper.get();
-        // 사용자정보 존재여부 체크
+
+        // TODO: 사용자정보 존재여부 체크
         // Integer userProflNo = rsUserEntity.getUserProflNo();
         // if (userProflNo != null) {
         //     UserProflEntity rsUserInfo = userProflRepository.findById(userProflNo).orElse(null);
@@ -136,6 +139,14 @@ public class AuthService
         }
         log.info("ipAddr > {}: {}", ipType, ipAddr);
         return ipAddr;
+    }
+
+    /**
+     * 권한 정보 조회
+     * TODO: 사이트 커지면 역할 분리해야 함
+     */
+    public AuthRole getAuthRole(String authCd) {
+        return authRoleRepository.findById(authCd).orElse(null);
     }
 
 }
