@@ -176,7 +176,7 @@
                 <form name="commentRegForm" id="commentRegForm" class="form">
                     <input type="hidden" name="postNo" />
                     <input type="hidden" name="refPostNo" value="${post.postNo!}" />
-                    <input type="hidden" name="refBoardCd" value="${post.boardCd!}" />
+                    <input type="hidden" name="refContentType" value="${post.boardCd!}" />
                     <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" >
                     <div class="row">
                         <div class="col-xl-11 form-group mb-2">
@@ -204,7 +204,7 @@
         <form name="commentMdfForm" id="commentMdfForm__INDEX__" class="form">
             <input type="hidden" name="postNo" id="postNo__INDEX__" value="__INDEX__"/>
             <input type="hidden" name="refPostNo" value="${post.postNo!}" placeholder="postNo">
-            <input type="hidden" name="refBoardCd" value="${post.boardCd!}" placeholder="boardCd"/>
+            <input type="hidden" name="refContentType" value="${post.boardCd!}" placeholder="boardCd"/>
             <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" >
             <div class="row">
                 <div class="col-12">
