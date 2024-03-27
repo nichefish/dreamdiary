@@ -41,20 +41,12 @@ public class UserAuthRoleEntity {
     private Integer userAuthRoleNo;
 
     /**
-     * 사용자 번호
-     */
-    @Column(name = "user_no")
-    @Comment("사용자 번호")
-    private Integer userNo;
-
-    /**
-     * 사용자 정보 매핑
+     * 사용자 정보
      */
     @ManyToOne
     @JoinColumn(name = "user_no", referencedColumnName = "user_no", insertable = false, updatable = false)
-    @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("작업자 정보")
+    @Comment("사용자 정보")
     private UserEntity user;
 
     /**

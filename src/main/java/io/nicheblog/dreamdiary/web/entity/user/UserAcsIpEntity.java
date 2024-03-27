@@ -34,7 +34,7 @@ public class UserAcsIpEntity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ACS_IP_NO")
+    @Column(name = "user_acs_ip_no")
     @Comment("사용자 정보 접속가능 IP 번호")
     private Integer userAcsIpNo;
 
@@ -42,14 +42,14 @@ public class UserAcsIpEntity {
      * 사용자 정보
      */
     @ManyToOne
-    @JoinColumn(name = "USER_NO", referencedColumnName = "USER_NO")
+    @JoinColumn(name = "user_no", referencedColumnName = "user_no")
     @Comment("사용자 정보")
     private UserEntity user;
 
     /**
      * 접속가능 IP
      */
-    @Column(name = "ACS_IP", length = 20)
+    @Column(name = "acs_ip", length = 20)
     @Comment("접속가능 IP")
     private String acsIp;
 
@@ -57,7 +57,7 @@ public class UserAcsIpEntity {
      * 삭제 여부
      */
     @Builder.Default
-    @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "del_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("삭제 여부")
     private String delYn = "N";
 }
