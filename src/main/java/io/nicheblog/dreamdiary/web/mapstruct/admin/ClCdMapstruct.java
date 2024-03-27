@@ -32,8 +32,9 @@ public interface ClCdMapstruct
     ClCd toDto(final ClCdEntity entity) throws Exception;
 
     /**
-     * Entity -> listDto
+     * Entity -> ListDto
      */
+    @Override
     ClCd toListDto(final ClCdEntity entity) throws Exception;
 
     /**

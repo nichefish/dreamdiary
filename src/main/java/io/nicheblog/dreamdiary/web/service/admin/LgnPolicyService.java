@@ -47,13 +47,13 @@ public class LgnPolicyService {
      */
     @Cacheable(value = "lgnPolicyEntity")   // 항목이 한 개 고정일 경우 Cache의 key는 불필요하다.
     public LgnPolicyEntity getDtlEntity() throws Exception {
-        Optional<LgnPolicyEntity> rsLgnPolicyEntityWrapper = lgnPolicyRepository.findById(1);
-        if (rsLgnPolicyEntityWrapper.isEmpty()) {
+        Optional<LgnPolicyEntity> rsWrapper = lgnPolicyRepository.findById(1);
+        if (rsWrapper.isEmpty()) {
             List<LgnPolicyEntity> scrapAll = lgnPolicyRepository.findAll();
             if (CollectionUtils.isEmpty(scrapAll)) return null;
             return scrapAll.get(0);
         }
-        return rsLgnPolicyEntityWrapper.orElse(null);
+        return rsWrapper.orElse(null);
     }
 
     /**
@@ -63,9 +63,9 @@ public class LgnPolicyService {
     @CacheEvict(value = {"lgnPolicyEntity", "lgnPolicy"}, allEntries = true)
     public Boolean regist(final LgnPolicyDto LgnPolicyDto) throws Exception {
         // Dto -> Entity
-        LgnPolicyEntity LgnPolicyEntity = lgnPolicyMapstruct.toEntity(LgnPolicyDto);
+        LgnPolicyEntity lgnPolicy = lgnPolicyMapstruct.toEntity(LgnPolicyDto);
         // insert/update
-        Integer rsId = lgnPolicyRepository.save(LgnPolicyEntity)
+        Integer rsId = lgnPolicyRepository.save(lgnPolicy)
                                           .getLgnPolicyNo();
         return (rsId != null);
     }

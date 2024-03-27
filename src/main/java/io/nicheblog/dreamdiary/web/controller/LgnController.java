@@ -48,7 +48,7 @@ public class LgnController
     /**
      * 로그인 화면 조회
      */
-    @GetMapping(SiteUrl.AUTH_LGN_FORM)
+    @RequestMapping(SiteUrl.AUTH_LGN_FORM)
     public String lgnForm(
             final LogActvtyParam logParam,
             final @RequestParam("dupLgnAt") @Nullable String dupLgnAt,

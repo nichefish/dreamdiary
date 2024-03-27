@@ -19,10 +19,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -52,7 +49,7 @@ public class LgnPolicyController
      * 사이트 관리 > 로그인 설정 관리 > 로그인 설정 등록/수정 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.LGN_POLICY_FORM)
+    @GetMapping(SiteUrl.LGN_POLICY_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String lgnPolicyForm(
             final LogActvtyParam logParam,

@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * ErrorPageController
@@ -31,7 +31,7 @@ public class ErrorPageController
      * 에러 화면 (404 NOT FOUND)
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @RequestMapping(SiteUrl.ERROR_NOT_FOUND)
+    @GetMapping(SiteUrl.ERROR_NOT_FOUND)
     public String errorNotFound(
             final LogActvtyParam logParam,
             final ModelMap model
@@ -48,7 +48,7 @@ public class ErrorPageController
      * 에러 화면 (비인가 접근)
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @RequestMapping(SiteUrl.ERROR_ACCESS_DENIED)
+    @GetMapping(SiteUrl.ERROR_ACCESS_DENIED)
     public String errorAccessDenied(
             final LogActvtyParam logParam,
             final ModelMap model
@@ -65,7 +65,7 @@ public class ErrorPageController
      * 에러 화면 (공통)
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @RequestMapping({ SiteUrl.ERROR, SiteUrl.ERROR_PAGE })
+    @GetMapping({ SiteUrl.ERROR, SiteUrl.ERROR_PAGE })
     public String errorPage(
             final LogActvtyParam logParam,
             final ModelMap model

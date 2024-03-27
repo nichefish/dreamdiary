@@ -29,8 +29,9 @@ public interface DtlCdMapstruct
     DtlCd toDto(final DtlCdEntity entity) throws Exception;
 
     /**
-     * Entity -> listDto
+     * Entity -> ListDto
      */
+    @Override
     DtlCd toListDto(final DtlCdEntity entity) throws Exception;
 
     /**

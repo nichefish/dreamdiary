@@ -58,7 +58,7 @@ public class LgnFailureHandler
             final HttpServletRequest request,
             final HttpServletResponse response,
             final AuthenticationException exception
-    ) throws IOException, ServletException {
+    ) {
 
         request.removeAttribute("userId");
         request.removeAttribute("needsPwReset");
