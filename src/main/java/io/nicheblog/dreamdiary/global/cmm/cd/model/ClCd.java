@@ -28,9 +28,9 @@ import java.util.List;
  */
 @Getter
 @Setter
-@SuperBuilder
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
+@AllArgsConstructor
 public class ClCd
         extends BaseAuditDto {
 

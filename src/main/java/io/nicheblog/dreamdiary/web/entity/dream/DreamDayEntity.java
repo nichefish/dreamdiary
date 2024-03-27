@@ -27,12 +27,12 @@ import java.util.Date;
  * @extends BaseCrudEntity
  */
 @Entity
-@Table(name = "DREAM_DAY")
-@SuperBuilder(toBuilder=true)
+@Table(name = "dream_day")
 @Getter
 @Setter
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE DREAM_DAY SET DEL_YN = 'Y' WHERE DREAM_DAY_NO = ?")
 public class DreamDayEntity

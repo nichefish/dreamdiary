@@ -22,7 +22,7 @@ import javax.persistence.Id;
  */
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)

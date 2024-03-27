@@ -29,9 +29,9 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
-@ToString
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
+@ToString
 @Where(clause = "del_yn='N'")
 public class ClCdEntity
         extends BaseManageEntity {

@@ -179,9 +179,11 @@ public interface SiteUrl {
     /* ---------- */
 
     String USER_REQST_REG_FORM = "";
+    String USER_REQST_CF_AJAX = "";
+    String USER_REQST_UNCF_AJAX = "";
 
 
-
+    String SITE_ADMIN = "";
 
 
     String NOTION_HOME = "";

@@ -27,12 +27,16 @@ public class SiteMenu {
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;
 
-    private static List<SiteAcsInfo> boardDefMenu;
-
     @PostConstruct
     private void init() throws Exception {
         BOARD.setSubMenuList(boardDefService.boardDefMenuList());
     }
+
+    /** 게시판 메뉴 갱신 로직 */
+    public void refreshBoardMenu(List<SiteAcsInfo> boardDefMenuList) {
+        BOARD.setSubMenuList(boardDefMenuList);
+    }
+
 
     // 공통화면 :: 로그인
     public static SiteAcsInfo LGN_PAGE = new SiteAcsInfo(

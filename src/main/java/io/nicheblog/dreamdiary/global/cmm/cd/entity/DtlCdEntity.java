@@ -25,9 +25,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
-@ToString
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
+@ToString
 @Where(clause = "del_yn='N'")
 public class DtlCdEntity
         extends BaseManageEntity {

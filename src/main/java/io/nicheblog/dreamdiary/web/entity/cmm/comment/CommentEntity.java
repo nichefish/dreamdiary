@@ -30,8 +30,8 @@ import java.util.Date;
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE comment SET del_yn = 'Y' WHERE post_no = ?")
 public class CommentEntity

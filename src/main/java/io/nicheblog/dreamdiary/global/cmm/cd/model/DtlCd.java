@@ -20,9 +20,9 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @Setter
-@SuperBuilder
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
+@AllArgsConstructor
 public class DtlCd
         extends BaseAuditDto {
 

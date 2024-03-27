@@ -29,11 +29,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "dream_piece")
-@SuperBuilder(toBuilder=true)
 @Getter
 @Setter
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE dream_piece SET del_yn = 'Y' WHERE dream_piece_no = ?")
 public class DreamPieceEntity

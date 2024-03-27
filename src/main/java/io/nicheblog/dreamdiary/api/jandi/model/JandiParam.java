@@ -18,9 +18,9 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @Setter
+@SuperBuilder(toBuilder=true)
 @NoArgsConstructor
 @ToString
-@SuperBuilder(toBuilder=true)
 public class JandiParam {
 
     /**
