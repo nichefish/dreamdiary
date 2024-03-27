@@ -2,18 +2,18 @@ package io.nicheblog.dreamdiary.web.entity.user;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,10 +66,15 @@ public class UserEntity
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "user_no")
-    @OrderBy("role.sortOrdr ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 권한 정보")
-    private List<UserAuthRoleEntity> auth;
+    private List<UserAuthRoleEntity> authList;
+
+    /**
+     * 접속가능 IP 정보 (위임)
+     */
+    @Embedded
+    public UserAcsIpInfo acsIpInfo;
 
     /**
      * 사용자 프로필 정보
@@ -94,25 +99,6 @@ public class UserEntity
     private String proflImgUrl;
 
     /**
-     * 접속 IP 사용 여부
-     */
-    @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
-    @Column(name = "use_acs_ip_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("접속 IP 사용 여부")
-    private String useAcsIpYn = "N";
-
-    /**
-     * 접속 IP 정보
-     */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "user_no")
-    @Fetch(FetchMode.SELECT)
-    @OrderBy("acsIp ASC")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("접속 IP 정보")
-    private List<UserAcsIpEntity> acsIpInfoList;
-
-    /**
      * 계정 설명 (관리자용)
      */
     @Column(name = "user_dc", length = 1000)
@@ -135,31 +121,5 @@ public class UserEntity
             return ("/metronic/assets/media/avatar_blank.png");
         }
         return this.proflImgUrl;
-    }
-
-    /**
-     * 서브엔티티 List 처리를 위한 Setter (override)
-     * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
-     */
-    public void setAcsIpInfoList(final List<UserAcsIpEntity> acsIpInfoList) {
-        if (CollectionUtils.isEmpty(acsIpInfoList)) return;
-        if (this.acsIpInfoList == null) {
-            this.acsIpInfoList = acsIpInfoList;
-        } else {
-            this.acsIpInfoList.clear();
-            this.acsIpInfoList.addAll(acsIpInfoList);
-        }
-    }
-
-    /**
-     * 접속가능IP 목록을 문자열로 변환하여 반환
-     */
-    public String getAcsIpInfoListStr() {
-        if (this.acsIpInfoList == null) return null;
-        List<String> acsIpInfoList = new ArrayList<>();
-        for (UserAcsIpEntity ip : this.getAcsIpInfoList()) {
-            acsIpInfoList.add(ip.getAcsIp());
-        }
-        return StringUtils.join(acsIpInfoList, ", ");
     }
 }

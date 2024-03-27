@@ -38,6 +38,7 @@ public class LgoutHandler
         LogActvtyParam logParam = new LogActvtyParam(true);
         publisher.publishEvent(new LogActvtyEvent(this, logParam));
         // 중복 로그인 관리용 arrayList에서 로그인 아이디 제거
-        DupIdLgnManager.removeKey(((AuthInfo) authentication.getPrincipal()).getUserId());   // 중복로그인 방지 키 제거
+        if (authentication == null || authentication.getPrincipal() == null) return;
+        DupIdLgnManager.removeKey(((AuthInfo) authentication.getPrincipal()).getUserId());
     }
 }

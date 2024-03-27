@@ -100,61 +100,6 @@ public class AuthInfo
     /* ----- */
 
     /**
-     * 생성자
-     */
-    public AuthInfo(final UserEntity userEntity) throws Exception {
-        if (userEntity != null) {
-            this.userId = userEntity.getUserId();
-            this.password = userEntity.getPassword();
-            // TODO: 권한
-            List<UserAuthRoleEntity> authList = userEntity.getAuthList();
-            this.authList = authList.stream()
-                    .map(entity -> {
-                        try {
-                            // TODO: 하위권한 체크
-                            return AuthRoleMapstruct.INSTANCE.toDto(entity.getRoleInfo());
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .collect(Collectors.toList());
-
-            this.nickNm = userEntity.getNickNm();
-            this.proflImgUrl = userEntity.getProflImgUrl();
-
-            // 사용자 프로필 정보 세팅
-            // UserProflEntity userProflEntity = userEntity.getUserProfl();
-            // if (userProflEntity != null && userProflEntity.getUserProflNo() != null) {
-            //     this.userProfl = UserInfoMapstruct.INSTANCE.toDto(userProflEntity);
-            //     this.userProflNo = userProfl.getUserProflNo();
-            // }
-
-            // 계정 상태 세팅
-            this.cfYn = userEntity.acntStus.getCfYn();
-            this.lockedYn = userEntity.acntStus.getLockedYn();
-            this.useAcsIpYn = userEntity.getUseAcsIpYn();
-            if ("Y".equals(this.useAcsIpYn)) {
-                List<UserAcsIpEntity> acsIpInfoList = userEntity.getAcsIpInfoList();
-                if (CollectionUtils.isNotEmpty(acsIpInfoList)) {
-                    acsIpList = new ArrayList<>();
-                    for (UserAcsIpEntity acsIp : acsIpInfoList) {
-                        acsIpList.add(acsIp.getAcsIp());
-                    }
-                    this.setAcsIpList(acsIpList);
-                }
-            }
-            // 최종접속일 또는 등록일
-            this.lstLgnDt = Optional.ofNullable(userEntity.acntStus.getLstLgnDt())
-                                    .orElse(userEntity.getRegDt());
-            // 최종비밀번호변경일 또는 등록일
-            this.pwChgDt = Optional.ofNullable(userEntity.acntStus.getPwChgDt())
-                                   .orElse(userEntity.getRegDt());
-            // 패스워드 리셋 필요여부
-            this.needsPwReset = userEntity.acntStus.getNeedsPwReset();
-        }
-    }
-
-    /**
      * getter override
      */
     public String getProflImgUrl() {
@@ -200,7 +145,7 @@ public class AuthInfo
         return this.authList.stream()
                 .map(entity -> {
                     try {
-                        return new SimpleGrantedAuthority(entity.getAuthCd());
+                        return new SimpleGrantedAuthority("ROLE_" + entity.getAuthCd());
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

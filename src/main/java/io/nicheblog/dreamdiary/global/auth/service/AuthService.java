@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global.auth.service;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
+import io.nicheblog.dreamdiary.global.auth.mapstruct.AuthInfoMapstruct;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.repository.AuthRoleRepository;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
@@ -49,9 +50,9 @@ public class AuthService
     @SneakyThrows
     @Override
     public AuthInfo loadUserByUsername(final String userId) throws UsernameNotFoundException {
-        Optional<UserEntity> rsUserEntityWrapper = userRepository.findByUserId(userId);
-        if (rsUserEntityWrapper.isEmpty()) throw new UsernameNotFoundException("사용자 정보를 찾을 수 없습니다.");
-        UserEntity rsUserEntity = rsUserEntityWrapper.get();
+        Optional<UserEntity> rsWrapper = userRepository.findByUserId(userId);
+        if (rsWrapper.isEmpty()) throw new UsernameNotFoundException("사용자 정보를 찾을 수 없습니다.");
+        UserEntity rsUser = rsWrapper.get();
 
         // TODO: 사용자정보 존재여부 체크
         // Integer userProflNo = rsUserEntity.getUserProflNo();
@@ -59,7 +60,10 @@ public class AuthService
         //     UserProflEntity rsUserInfo = userProflRepository.findById(userProflNo).orElse(null);
         //     rsUserEntity.setUserProfl(rsUserInfo);
         // }
-        return new AuthInfo(rsUserEntity);
+
+        return AuthInfoMapstruct.INSTANCE.toDto(rsUser);
+
+        // return new AuthInfo(rsUserEntity);
     }
 
     /**
