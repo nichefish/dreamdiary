@@ -62,6 +62,15 @@ public class UserEntity
     private String password;
 
     /**
+     * 권한 정보
+     */
+    @OneToMany(mappedBy = "user")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("사용자 프로필 정보")
+    private List<UserAuthRoleEntity> auth;
+
+
+    /**
      * 사용자 프로필 정보
      */
     @OneToOne(mappedBy = "user")

@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
+import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -46,11 +48,31 @@ public class UserAuthRoleEntity {
     private Integer userNo;
 
     /**
+     * 사용자 정보 매핑
+     */
+    @ManyToOne
+    @JoinColumn(name = "user_no", referencedColumnName = "user_no", insertable = false, updatable = false)
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("작업자 정보")
+    private UserEntity user;
+
+    /**
      * 권한 코드
      */
     @Column(name = "auth_cd")
     @Comment("권한 코드")
     private String authCd;
+
+    /**
+     * 권한 정보 매핑
+     */
+    @ManyToOne
+    @JoinColumn(name = "auth_cd", referencedColumnName = "auth_cd", insertable = false, updatable = false)
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("작업자 정보")
+    private AuthRole role;
 
     /**
      * 삭제 여부

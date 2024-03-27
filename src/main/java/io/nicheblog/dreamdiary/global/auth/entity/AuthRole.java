@@ -7,11 +7,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -60,4 +59,14 @@ public class AuthRole
     @Id
     @Column(name = "top_auth_cd", length = 50)
     private String topAuthCd;
+
+    /**
+     * 상위 권한 정보
+     */
+    @ManyToOne
+    @JoinColumn(name = "top_auth_cd", referencedColumnName = "auth_cd", insertable = false, updatable = false)
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("작업자 정보")
+    private AuthRole topAuth;
 }
