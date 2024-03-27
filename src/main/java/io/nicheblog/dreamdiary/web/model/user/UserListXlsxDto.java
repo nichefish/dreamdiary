@@ -40,11 +40,11 @@ public class UserListXlsxDto {
     /**
      * 잠금여부
      */
-    private String lockYn;
+    private String lockedYn;
     /**
      * 접속 IP 정보 (String)
      */
-    private String acsIpInfoListStr;
+    private String acsIpListStr;
     /**
      * 등록자 ID
      */

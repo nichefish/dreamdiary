@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
+import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -18,7 +19,7 @@ import java.io.Serializable;
  * @author nichefish
  */
 @Entity
-@Table(name = "USER_INFO_ITEM")
+@Table(name = "user_profl_ITEM")
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
@@ -26,8 +27,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString(callSuper = true)
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE USER_INFO_ITEM SET DEL_YN = 'Y' WHERE USER_INFO_ITEM_NO = ?")
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE user_profl_ITEM SET DEL_YN = 'Y' WHERE user_profl_ITEM_NO = ?")
 public class UserInfoItemEntity
         implements Serializable {
 
@@ -36,7 +37,7 @@ public class UserInfoItemEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_INFO_ITEM_NO")
+    @Column(name = "user_profl_ITEM_NO")
     @Comment("사용자 정보 항목 번호 (key)")
     private Integer userInfoItemNo;
 
@@ -44,10 +45,10 @@ public class UserInfoItemEntity
      * 사용자 정보
      */
     @ManyToOne
-    @JoinColumn(name = "USER_INFO_NO", referencedColumnName = "USER_INFO_NO")
+    @JoinColumn(name = "user_profl_no", referencedColumnName = "user_profl_no")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 정보")
-    private UserInfoEntity userInfo;
+    private UserProflEntity userInfo;
 
     /**
      * 이름
@@ -78,11 +79,11 @@ public class UserInfoItemEntity
     private Integer sortOrdr;
 
     /**
-     * 삭제여부
+     * 삭제 여부
      */
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
     @Column(name = "DEL_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("삭제여부")
+    @Comment("삭제 여부")
     private String delYn = "N";
 
 }

@@ -7,73 +7,68 @@
 -- ---------- --
 
 -- 게시판 정의 정보 :: BaseManagtEntity 상속
-CREATE TABLE IF NOT EXISTS BOARD_DEF (
-    BOARD_CD VARCHAR(30) PRIMARY KEY COMMENT '게시판코드',
-    BOARD_NM VARCHAR(120) COMMENT '게시판 이름',
-    CTGR_CL_CD VARCHAR(30) COMMENT '분류 코드',
-    MENU_NO VARCHAR(10) COMMENT '메뉴 번호',
+CREATE TABLE IF NOT EXISTS board_def (
+    board_cd VARCHAR(30) PRIMARY KEY COMMENT '게시판코드',
+    board_nm VARCHAR(120) COMMENT '게시판 이름',
+    ctgr_cl_cd VARCHAR(30) COMMENT '분류 코드',
+    menu_no VARCHAR(10) COMMENT '메뉴 번호',
     -- MANAGE
-    SORT_ORDR INT DEFAULT 0 COMMENT '정렬 순서',
-    USE_YN CHAR(1) DEFAULT 'Y' COMMENT '사용여부',
+    sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
+    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부',
     -- AUDIT
-    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
-    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
-    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
-    MDF_DT DATETIME COMMENT '수정일시',
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부'
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 ) COMMENT = '게시판 정의';
 
 -- ---------- --
 
 -- 게시판 게시물 :: BaseClsfEntity 상속
-CREATE TABLE IF NOT EXISTS BOARD_POST(
-    POST_NO BIGINT COMMENT '글 번호',
-    BOARD_CD VARCHAR(30) COMMENT '게시판 코드',
-    -- CLSF
-    TITLE VARCHAR(200) COMMENT '제목',
-    CN VARCHAR(500) COMMENT '내용',
-    CTGR_CD VARCHAR(50) COMMENT '글분류코드',
-    FXD_YN CHAR(1) DEFAULT 'N' COMMENT '상단고정여부',
-    -- BOARD
-    HIT_CNT INT DEFAULT 0 COMMENT '조회수',
-    IMPRTC_YN CHAR(1) DEFAULT 'N' COMMENT '중요여부',
-    MDFABLE CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
+CREATE TABLE IF NOT EXISTS board_post(
+    post_no INT COMMENT '글 번호',
+    content_type VARCHAR(30) COMMENT '게시판 코드',
+    -- POST
+    title VARCHAR(200) COMMENT '제목',
+    cn VARCHAR(500) COMMENT '내용',
+    ctgr_cd VARCHAR(50) COMMENT '글분류코드',
+    fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정여부',
+    hit_cnt INT DEFAULT 0 COMMENT '조회수',
+    imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요여부',
+    mdfable CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
     -- MANAGT
-    MANAGTR_ID VARCHAR(20) COMMENT '작업자ID',
-    MANAGT_DT DATETIME COMMENT '작업일시',
+    managtr_id VARCHAR(20) COMMENT '작업자ID',
+    managt_dt DATETIME COMMENT '작업일시',
     -- ATCH_FILE
-    ATCH_FILE_NO BIGINT COMMENT '첨부파일 번호',
+    atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
-    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
-    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
-    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
-    MDF_DT DATETIME COMMENT '수정일시',
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부',
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부',
     -- CONSTRAINT
-    PRIMARY KEY (POST_NO, BOARD_CD)
+    PRIMARY KEY (post_no, content_type)
 ) COMMENT = '게시판 게시물';
 
 -- ---------- --
 
 -- (공통) 댓글 :: BaseClsfEntity 상속
-CREATE TABLE IF NOT EXISTS COMMENT(
-    POST_NO BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '댓글 번호',
-    BOARD_CD VARCHAR(32) DEFAULT 'COMMENT' COMMENT '게시판 코드',
-    REF_POST_NO BIGINT COMMENT '참초 글번호',
-    REF_BOARD_CD VARCHAR(30) COMMENT '참조 게시판 코드',
-    -- CLSF
-    TITLE VARCHAR(200) COMMENT '제목',
-    CN VARCHAR(500) COMMENT '내용',
-    CTGR_CD VARCHAR(50) COMMENT '글분류코드',
-    FXD_YN CHAR(1) DEFAULT 'N' COMMENT '상단고정여부',
+CREATE TABLE IF NOT EXISTS comment (
+    post_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '댓글 번호',
+    content_type VARCHAR(32) DEFAULT 'comment' COMMENT '게시판 코드',
+    ref_post_no INT COMMENT '참초 글번호',
+    ref_content_type VARCHAR(30) COMMENT '참조 게시판 코드',
+    cn LONGTEXT COMMENT '내용',
     -- ATCH_FILE
-    ATCH_FILE_NO BIGINT COMMENT '첨부파일 번호',
+    atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
-    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
-    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
-    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
-    MDF_DT DATETIME COMMENT '수정일시',
-    DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제여부'
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 ) COMMENT = '게시판 댓글';
 
 

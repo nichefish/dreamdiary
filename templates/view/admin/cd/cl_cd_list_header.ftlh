@@ -34,7 +34,7 @@
         </div>
         <div class="col-lg-6 col-12 d-flex justify-content-end align-items-center buttons">
             <a href="javascript:void(0);" class="btn btn-sm btn-primary mx-3"
-               onclick="Page.regForm();"
+               onclick="Page.regModal();"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
                 <i class="fas fa-plus"></i>등록
             </a>

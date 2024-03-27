@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.repository.user;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
-import io.nicheblog.dreamdiary.web.entity.user.UserProflEntity;
+import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import org.springframework.stereotype.Repository;
 
 /**

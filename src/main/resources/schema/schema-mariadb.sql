@@ -4,7 +4,9 @@
 -- @database : mariadb
 -- @author : nichefish
 
--- 공지사항
+-- -----------------------
+
+-- 공지사항 :: BasePostEntity 상속
 CREATE TABLE IF NOT EXISTS notice (
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호',
     board_cd VARCHAR(32) DEFAULT 'NOTICE' COMMENT '게시판 코드',

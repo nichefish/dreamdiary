@@ -117,13 +117,13 @@ public class UserService
         if (!"Y".equals(userDto.getLockedYn())) userDto.setLockedYn("N");
 
         // 접속 IP 사용 여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getUseAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpInfoListStr())) {
+        if (!"Y".equals(userDto.getUseAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpListStr())) {
             userDto.setUseAcsIpYn("N");
         } else {
             // 접속 IP 사용"Y"시 접속 IP 세팅
-            String acsIpInfoListStr = userDto.getAcsIpInfoListStr();
-            List<UserAcsIpDto> acsIpInfoList = this.parseAcsIpListInfo(acsIpInfoListStr);
-            userDto.setAcsIpInfoList(acsIpInfoList);
+            String acsIpListStr = userDto.getAcsIpListStr();
+            List<UserAcsIpDto> acsIpList = this.parseAcsIpListInfo(acsIpListStr);
+            userDto.setAcsIpList(acsIpList);
         }
 
         // Dto -> Entity
@@ -171,16 +171,16 @@ public class UserService
      * Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜.
      * 문자열을 JSON Array로 변환하여 직접 DTO에 세팅한다.
      */
-    public List<UserAcsIpDto> parseAcsIpListInfo(final String acsIpInfoListStr) {
-        JSONArray jArray = new JSONArray(acsIpInfoListStr);
-        List<UserAcsIpDto> acsIpInfoList = new ArrayList<>();
+    public List<UserAcsIpDto> parseAcsIpListInfo(final String acsIpListStr) {
+        JSONArray jArray = new JSONArray(acsIpListStr);
+        List<UserAcsIpDto> acsIpList = new ArrayList<>();
         for (int i = 0; i < jArray.length(); i++) {
             JSONObject json = jArray.getJSONObject(i);
             UserAcsIpDto acsIp = new UserAcsIpDto();
             acsIp.setAcsIp(json.getString("value"));
-            acsIpInfoList.add(acsIp);
+            acsIpList.add(acsIp);
         }
-        return acsIpInfoList;
+        return acsIpList;
     }
 
     /**
@@ -230,13 +230,13 @@ public class UserService
         if (!"Y".equals(userDto.getLockedYn())) userDto.setLockedYn("N");
 
         // 접속 IP 사용 여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getUseAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpInfoListStr())) {
+        if (!"Y".equals(userDto.getUseAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpListStr())) {
             userDto.setUseAcsIpYn("N");
         } else {
             // 접속 IP 사용"Y"시 접속 IP 세팅
-            String acsIpInfoListStr = userDto.getAcsIpInfoListStr();
-            List<UserAcsIpDto> acsIpInfoList = this.parseAcsIpListInfo(acsIpInfoListStr);
-            userDto.setAcsIpInfoList(acsIpInfoList);
+            String acsIpListStr = userDto.getAcsIpListStr();
+            List<UserAcsIpDto> acsIpList = this.parseAcsIpListInfo(acsIpListStr);
+            userDto.setAcsIpList(acsIpList);
         }
 
         // update entity from dto :: (null로 넘어오는 password 미처리 위해)
@@ -271,7 +271,7 @@ public class UserService
     //     List<Object> rsUserListXlxsDtoList = new ArrayList<>();
     //     for (UserEntity entity : userEntityList) {
     //         UserListXlsxDto dto = userMapstruct.toListXlsxDto(entity);
-    //         dto.setAcsIpInfoListStr(entity.getAcsIpInfoListStr());
+    //         dto.setAcsIpListStr(entity.getAcsIpListStr());
     //         rsUserListXlxsDtoList.add(dto);
     //     }
     //     return rsUserListXlxsDtoList;

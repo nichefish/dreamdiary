@@ -93,7 +93,7 @@ public class UserListDto
      * 직원정보 존재여부
      */
     @Builder.Default
-    private String userInfoYn = "N";
+    private String userProflYn = "N";
     /**
      * 퇴사여부
      */
@@ -107,7 +107,7 @@ public class UserListDto
      * 잠금여부
      */
     @Builder.Default
-    private String lockYn = "N";
+    private String lockedYn = "N";
 
     /**
      * 계정 설명 (관리자용)
@@ -140,7 +140,7 @@ public class UserListDto
      * 잠금여부
      */
     public Boolean getIsLocked() {
-        return "Y".equals(this.lockYn);
+        return "Y".equals(this.lockedYn);
     }
 
     /**

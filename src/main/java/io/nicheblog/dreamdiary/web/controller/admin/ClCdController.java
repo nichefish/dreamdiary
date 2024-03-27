@@ -102,7 +102,7 @@ public class ClCdController
      * 분류 코드(CL_CD) 관리 (useYn=N 포함) 상세 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.CL_CD_DTL)
+    @GetMapping(SiteUrl.CL_CD_DTL)
     @Secured({Constant.ROLE_MNGR})
     public String clCdDtl(
             final LogActvtyParam logParam,

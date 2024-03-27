@@ -4,17 +4,18 @@
 -- @database : mariadb
 -- @author : nichefish
 
+-- -----------------------
+
 -- 사용자 계정 정보
 CREATE TABLE IF NOT EXISTS user (
     user_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 고유 번호',
     -- ACCOUNT_BASIC_INFO
-    login_id VARCHAR(20) COMMENT '로그인 ID',
+    user_id VARCHAR(20) COMMENT '로그인 ID',
     password VARCHAR(64) COMMENT '비밀번호',
-    -- USER_INFO
+    -- user_profl
     nick_nm VARCHAR(50) COMMENT '사용자 표시이름',
     profl_img_url VARCHAR(256) COMMENT '프로필 이미지 경로',
-    user_desc VARCHAR(4000) COMMENT '사용자 설명 (관리자용)',
-    user_info_no INT COMMENT '사용자 정보 (세부정보 위임)',
+    user_dc VARCHAR(4000) COMMENT '사용자 설명 (관리자용)',
     -- ACCOUNT_STATUS
     locked_yn CHAR(1) DEFAULT 'N' COMMENT '잠금 여부',
     use_acs_ip_yn CHAR(1) DEFAULT 'N' COMMENT '접속IP 사용 여부',
@@ -135,18 +136,18 @@ CREATE TABLE user_auth_role (
 -- TODO: 그룹과 팀...
 
 -- -- TODO: 사용자 정보 - 팀
--- CREATE TABLE IF NOT EXISTS USER_INFO_TEAM (
---     USER_INFO_TEAM_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
---     USER_INFO_NO INT,
+-- CREATE TABLE IF NOT EXISTS user_profl_TEAM (
+--     user_profl_TEAM_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--     user_profl_no INT,
 --     TEAM_CD VARCHAR(30),
 --     -- AUDIT
 --     DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 -- );
 --
 -- -- TODO: 사용자 정보 - 기타항목
--- CREATE TABLE IF NOT EXISTS USER_INFO_ITEM (
---     USER_INFO_ITEM_NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
---     USER_INFO_NO INT,
+-- CREATE TABLE IF NOT EXISTS user_profl_ITEM (
+--     user_profl_ITEM_NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--     user_profl_no INT,
 --     ITEM_NM VARCHAR(100),
 --     ITEM_CN VARCHAR(200),
 --     ITEM_DC VARCHAR(2000),

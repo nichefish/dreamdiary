@@ -48,7 +48,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString(exclude = {"userInfo"}, callSuper = true)
-@Where(clause = "DEL_YN='N'")
+@Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE USER SET DEL_YN = 'Y' WHERE USER_NO = ?")
 public class UserReqstEntity
         extends BaseAuditEntity {
@@ -65,32 +65,12 @@ public class UserReqstEntity
     private Integer userNo;
 
     */
-/**
-     * 사용자 정보 번호 (위임)
-     *//*
 
-    @Column(name = "USER_INFO_NO")
-    @Comment("사용자 정보 번호")
-    private Integer userInfoNo;
-
-    */
-/**
-     * 사용자 정보
-     *//*
-
-    @OneToOne
-    @JoinColumn(name = "USER_INFO_NO", referencedColumnName = "USER_INFO_NO", insertable = false, updatable = false)
-    @Fetch(FetchMode.SELECT)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("사용자 정보")
-    private UserInfoEntity userInfo;
-
-    */
-/**
+    /**
      * 사용자 아이디
      *//*
 
-    @Column(name = "USER_ID", length = 20, unique = true)
+    @Column(name = "user_id", length = 20, unique = true)
     @Comment("사용자 아이디")
     private String userId;
 
@@ -100,9 +80,9 @@ public class UserReqstEntity
      *//*
 
     // 암호화된 비밀번호(64bit)를 저장하기 위해 길이=64이다.
-    @Column(name = "USER_PW", length = 64)
+    @Column(name = "PASSWORD", length = 64)
     @Comment("비밀번호")
-    private String userPw;
+    private String password;
 
     */
 /**
@@ -155,19 +135,19 @@ public class UserReqstEntity
      *//*
 
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
-    @Column(name = "LOCK_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "locked_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("잠금여부")
-    private String lockYn = "N";
+    private String lockedYn = "N";
 
     */
 /**
-     * 접속 IP 사용여부
+     * 접속 IP 사용 여부
      *//*
 
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
-    @Column(name = "ACS_IP_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("접속 IP 사용여부")
-    private String acsIpYn = "N";
+    @Column(name = "use_acs_ip_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("접속 IP 사용 여부")
+    private String useAcsIpYn = "N";
 
     */
 /**
@@ -180,7 +160,7 @@ public class UserReqstEntity
     @OrderBy("acsIp ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("접속 IP 정보")
-    private List<UserAcsIpEntity> acsIpInfoList;
+    private List<UserAcsIpEntity> acsIpList;
 
     */
 /**
@@ -316,7 +296,7 @@ public class UserReqstEntity
      *//*
 
     @ManyToOne
-    @JoinColumn(name = "REGSTR_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "REGSTR_ID", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("등록자 정보")
@@ -355,13 +335,13 @@ public class UserReqstEntity
      * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
      *//*
 
-    public void setAcsIpInfoList(final List<UserAcsIpEntity> acsIpInfoList) {
-        if (CollectionUtils.isEmpty(acsIpInfoList)) return;
-        if (this.acsIpInfoList == null) {
-            this.acsIpInfoList = acsIpInfoList;
+    public void setAcsIpList(final List<UserAcsIpEntity> acsIpList) {
+        if (CollectionUtils.isEmpty(acsIpList)) return;
+        if (this.acsIpList == null) {
+            this.acsIpList = acsIpList;
         } else {
-            this.acsIpInfoList.clear();
-            this.acsIpInfoList.addAll(acsIpInfoList);
+            this.acsIpList.clear();
+            this.acsIpList.addAll(acsIpList);
         }
     }
 
@@ -370,12 +350,12 @@ public class UserReqstEntity
      * 접속가능IP 목록을 문자열로 변환하여 반환
      *//*
 
-    public String getAcsIpInfoListStr() {
-        if (this.acsIpInfoList == null) return null;
-        List<String> acsIpInfoList = new ArrayList<>();
-        for (UserAcsIpEntity ip : this.getAcsIpInfoList()) {
-            acsIpInfoList.add(ip.getAcsIp());
+    public String getAcsIpListStr() {
+        if (this.acsIpList == null) return null;
+        List<String> acsIpList = new ArrayList<>();
+        for (UserAcsIpEntity ip : this.getAcsIpList()) {
+            acsIpList.add(ip.getAcsIp());
         }
-        return StringUtils.join(acsIpInfoList, ", ");
+        return StringUtils.join(acsIpList, ", ");
     }
 }*/

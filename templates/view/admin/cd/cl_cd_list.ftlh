@@ -63,7 +63,7 @@
                 });
             },
             /** 등록 팝업 호출 */
-            regForm: function() {
+            regModal: function() {
                 commons.util.handlebarsTemplate({}, "cl_cd_reg", "show");
                 commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 commons.validate.replaceBlankRegex("#clCdRegForm #clCd");
@@ -125,11 +125,11 @@
                 });
             },
             /** 사이트 관리 페이지로 이동 */
-            fnSiteMngList: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.SITE_MNG!}");
+            siteMngList: function() {
+                commons.util.blockUISubmit("#procForm", "${SiteUrl.SITE_ADMIN!}");
             },
             /** 코드 관리 페이지로 이동 */
-            fnCdList: function() {
+            cdList: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.CL_CD_LIST!}");
             },
         }
@@ -147,7 +147,7 @@
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
         <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.fnSiteMngList();">
+            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.siteMngList();">
                 <span class="nav-icon">
                     <i class="bi bi-sort-down-alt"></i>
                 </span>

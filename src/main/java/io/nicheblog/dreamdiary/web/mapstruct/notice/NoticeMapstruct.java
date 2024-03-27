@@ -40,7 +40,7 @@ public interface NoticeMapstruct
     NoticeDto toDto(final NoticeEntity entity) throws Exception;
 
     /**
-     * Entity -> listDto
+     * Entity -> ListDto
      */
     @Override
     // @Mapping(target = "ctgrNm", expression = "java((entity.getCtgrCdInfo() != null) ? entity.getCtgrCdInfo().getDtlCdNm() : null)")

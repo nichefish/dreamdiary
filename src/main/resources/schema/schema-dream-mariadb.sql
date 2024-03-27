@@ -4,43 +4,53 @@
 -- @database : mariadb
 -- @author : nichefish
 
+-- -----------------------
+
 -- 꿈 일자
-CREATE TABLE DREAM_DAY (
-    DREAM_DAY_NO BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 일자 고유 번호',
-    DREAMT_DT DATE COMMENT '꿈 일자',
-    -- 날짜미상시 처리용
-    DT_UNKNOWN_YN CHAR(1) DEFAULT 'N' COMMENT '날짜미상여부',
-    YY INT COMMENT '년도',
-    MNTH INT COMMENT '월',
-    APRXMT_DT DATE COMMENT '대략일자 (날짜미상시 해당일자 이후에 표기)',
+CREATE TABLE IF NOT EXISTS dream_day (
+    post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 일자 번호',
+    content_type VARCHAR(32) DEFAULT 'dream_day' COMMENT '게시판 코드',
+    dreamt_dt DATE COMMENT '꿈 일자',
+    dt_unknown_yn CHAR(1) DEFAULT 'N' COMMENT '날짜미상여부',
+    yy INT COMMENT '년도',
+    mnth INT COMMENT '월',
+    aprxmt_dt DATE COMMENT '대략일자 (날짜미상시 해당일자 이후에 표기)',
     -- ATCH_FILE
-    ATCH_FILE_NO INT COMMENT '첨부파일 번호',
+    atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
-    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
-    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
-    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
-    MDF_DT DATETIME COMMENT '수정일시',
-    DEL_YN CHAR(1) DEFAULT 'N',
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N',
     -- CONSTRAINT
-    INDEX (DREAMT_DT)
+    INDEX (dreamt_dt)
 ) COMMENT = '꿈 일자';
 
 -- 꿈 조각
-CREATE TABLE DREAM_PIECE (
-    DREAM_PIECE_NO BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈조각 고유 번호',
-    DREAM_DAY_NO BIGINT COMMENT '꿈일자 번호',
-    SORT_ORDR INT DEFAULT 1 COMMENT '꿈조각 순번',
-    CN LONGTEXT COMMENT '내용',
-    IMPRTC_YN CHAR(1) DEFAULT "N" COMMENT '중요여부',
-    EDIT_COMPT_YN CHAR(1) DEFAULT 'N' COMMENT '편집완료여부',
-    ELSE_DREAM_YN CHAR(1) DEFAULT 'N' COMMENT '타인 꿈 여부',
-    ELSE_DREAMER_NM VARCHAR(64) COMMENT '꿈꾼이 이름',
+CREATE TABLE IF NOT EXISTS dream_piece (
+    post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 조각 번호',
+    content_type VARCHAR(32) DEFAULT 'dream_day' COMMENT '게시판 코드',
+    dream_day_no INT COMMENT '꿈 일자 번호',
+    idx INT DEFAULT 1 COMMENT '꿈 조각 인덱스',
+    -- post
+    title VARCHAR(200) COMMENT '제목',
+    cn LONGTEXT COMMENT '내용',
+    ctgr_cd VARCHAR(50) COMMENT '글분류코드',
+    fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정여부',
+    hit_cnt INT DEFAULT 0 COMMENT '조회수',
+    imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요여부',
+    mdfable CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
+    --
+    edit_compt_yn CHAR(1) DEFAULT 'N' COMMENT '편집완료여부',
+    else_dream_yn CHAR(1) DEFAULT 'N' COMMENT '타인 꿈 여부',
+    else_dreamer_nm VARCHAR(64) COMMENT '꿈꾼이 이름',
     -- ATCH_FILE
-    ATCH_FILE_NO INT COMMENT '첨부파일 번호',
+    atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
-    REGSTR_ID VARCHAR(20) COMMENT '등록자ID',
-    REG_DT DATETIME DEFAULT NOW() COMMENT '등록일시',
-    MDFUSR_ID VARCHAR(20) COMMENT '수정자ID',
-    MDF_DT DATETIME COMMENT '수정일시',
-    DEL_YN CHAR(1) DEFAULT 'N'
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N'
 ) COMMENT = '꿈 조각';

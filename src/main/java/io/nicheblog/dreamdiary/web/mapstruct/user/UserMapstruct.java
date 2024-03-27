@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.mapstruct.user;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpInfo;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusInfo;
 import io.nicheblog.dreamdiary.web.model.user.UserCttpcListDto;
@@ -21,7 +22,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusInfo.class, UserProflMapstruct.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusInfo.class, UserAcsIpInfo.class, UserProflMapstruct.class})
 public interface UserMapstruct
         extends BaseListMapstruct<UserDto, UserListDto, UserEntity> {
 
@@ -32,6 +33,7 @@ public interface UserMapstruct
      */
     @Override
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
+    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpInfo(dto))")
     @Mapping(target = "acntStus", expression = "java(new UserStusInfo(dto))")
     UserEntity toEntity(final UserDto dto) throws Exception;
 

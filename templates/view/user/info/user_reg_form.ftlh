@@ -17,7 +17,7 @@
                 commons.validate.toLowerCase("#userId");       // 자동 대문자->소문자처리
 
                 <#if isMdf>
-                    commons.util.chckboxLabel("lockYn", "잠김//해제", "red//gray");  // 계정잠금여부 클릭시 글씨 변경
+                    commons.util.chckboxLabel("lockedYn", "잠김//해제", "red//gray");  // 계정잠금여부 클릭시 글씨 변경
                 </#if>
 
                 // 권한 유효성검사 바꿀때마다 지우기
@@ -38,19 +38,19 @@
                     });
                 </#if>
 
-                // 접속IP 사용여부 클릭시 글씨 변경 + 입력창 토글 :: 메소드 분리
-                commons.util.chckboxLabel("acsIpYn", "사용//미사용", "blue//gray", function(){
+                // 접속IP 사용 여부 클릭시 글씨 변경 + 입력창 토글 :: 메소드 분리
+                commons.util.chckboxLabel("useAcsIpYn", "사용//미사용", "blue//gray", function(){
                     $("#acsIpListSpan").show()
                 }, function(){
                     $("#acsIpListSpan").hide()
                 });
 
                 // 접속IP tagify
-                const acsIpInput = document.querySelector("#acsIpInfoListStr");
+                const acsIpInput = document.querySelector("#acsIpListStr");
                 <#if isMdf>
-                    <#if user.acsIpInfoList?has_content>
+                    <#if user.acsIpList?has_content>
                         let tagifyStr = "";
-                        <#list user.acsIpInfoList![] as acsIpInfo>
+                        <#list user.acsIpList![] as acsIpInfo>
                             tagifyStr += "${acsIpInfo.acsIp},";
                         </#list>
                         tagifyStr.replace(/,$/, '');     // 마지막에 쉼표가 있을 경우 제거
@@ -73,7 +73,7 @@
                 $(function(){
                     $("#userRegForm").validate({
                         submitHandler: function() {
-                            if ($("#acsIpYn").is(":checked") && $("#acsIpInfoListStr").val() === "") {
+                            if ($("#useAcsIpYn").is(":checked") && $("#acsIpListStr").val() === "") {
                                 Swal.fire("접속 IP는 최소 한 개 이상 입력해야 합니다.");
                                 return false;
                             }
@@ -91,20 +91,20 @@
                         ignore: [],         // hidden 필드도 검증하기 위함
                         rules: {
                             authCd: { required:true },
-                            nickNm: { required:function() {return $("#userInfoYn").val() === "N"}, maxlength:20 },
+                            nickNm: { required:function() {return $("#userProflYn").val() === "N"}, maxlength:20 },
                             <#if isReg>
                                 userId: { required:true, minlength:4, maxlength:16 },
                                 isIdDupChckValid: { dupChckValid:true },
-                                userPw: { required:true, minlength:9, maxlength:20, regex:commons.validate.pwRegex },
-                                userPwCf: { equalTo:"#userPw", maxlength:20 },
+                                password: { required:true, minlength:9, maxlength:20, regex:commons.validate.pwRegex },
+                                passwordCf: { equalTo:"#password", maxlength:20 },
                             </#if>
-                            "userInfo.userNm": { required:function() {return $("#userInfoYn").val() === "Y"}, maxlength:20 },
-                            "userInfo.cmpyCd": { required:function() {return $("#userInfoYn").val() === "Y"} },
-                            "userInfo.teamCd": { required:function() {return $("#userInfoYn").val() === "Y"} },
-                            "userInfo.emplymCd": { required:function() {return $("#userInfoYn").val() === "Y"} },
-                            "userInfo.cttpc": { required:function() {return $("#userInfoYn").val() === "Y"}, minlength:11, maxlength:20 },
-                            "userInfo.emailId": { required:function() {return $("#userInfoYn").val() === "Y"}, maxlength:20 },
-                            "userInfo.emailDomain": { required:function() {return $("#userInfoYn").val() === "Y"}, maxlength:20 },
+                            "userProfl.userNm": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
+                            "userProfl.cmpyCd": { required:function() {return $("#userProflYn").val() === "Y"} },
+                            "userProfl.teamCd": { required:function() {return $("#userProflYn").val() === "Y"} },
+                            "userInfo.emplymCd": { required:function() {return $("#userProflYn").val() === "Y"} },
+                            "userInfo.cttpc": { required:function() {return $("#userProflYn").val() === "Y"}, minlength:11, maxlength:20 },
+                            "userInfo.emailId": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
+                            "userInfo.emailDomain": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
                         },
                         messages: {
                             authCd: { required:"권한은 필수 항목입니다." },
@@ -112,8 +112,8 @@
                             <#if isReg>
                                 userId: { required:"아이디는 필수 항목입니다.", minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
                                 isIdDupChckValid: { dupChckValid:"아이디 중복 체크는 필수 항목입니다." },
-                                userPw: { required:"비밀번호는 필수 항목입니다.", minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
-                                userPwCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
+                                password: { required:"비밀번호는 필수 항목입니다.", minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
+                                passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
                             </#if>
                             "userInfo.userNm": { required:"이름은 필수 항목입니다.", maxlength:"이름은 {0}자 이하로 입력해야 합니다." },
                             "userInfo.cmpyCd": { required:"소속회사는 필수 항목입니다." },
@@ -209,18 +209,20 @@
         <input type="hidden" name="userNo" value="${user.userNo!}">
         <input type="hidden" name="proflImgUrl" value="${user.proflImgUrl!}">
         <#if user.userInfo??>
-            <input type="hidden" name="userInfoNo" value="${user.userInfo.userInfoNo!}">
+            <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
         </#if>
     </form>
     <!--begin::Form-->
     <form name="userRegForm" id="userRegForm" class="form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="userNo" value="${user.userNo!}">
-        <input type="hidden" name="userInfoYn" id="userInfoYn" value="<#if (user.userInfo.userInfoNo)??>Y<#else>N</#if>">
+        <input type="hidden" name="userProflYn" id="userProflYn" value="<#if (user.userInfo.userProflNo)??>Y<#else>N</#if>">
         <input type="hidden" name="atchFileId" value="${user.atchFileId!}">
         <!--begin::Card body-->
         <div class="row">           <!--begin::Row-->
             <div class="col-xl-2">
-                <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-end required"><label for="userId">아이디</label></div>
+                <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-end required">
+                    <label for="userId">아이디</label>
+                </div>
             </div>
             <#if isReg>
                 <div class="col-xl-2 col-8">
@@ -255,20 +257,20 @@
         <div class="row">           <!--begin::Row-->
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-end  required">
-                    <label for="userPw">비밀번호</label>
+                    <label for="password">비밀번호</label>
                 </div>
             </div>
             <#if isReg>
                 <div class="col-xl-2">
-                    <input type="password" class="form-control form-control-solid no-space" name="userPw" id="userPw" autocomplete="off" />
+                    <input type="password" class="form-control form-control-solid no-space" name="password" id="password" autocomplete="off" />
                 </div>
                 <div class="col-xl-2">
                     <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-end required">
-                        <label for="userPwCf">비밀번호 확인</label>
+                        <label for="passwordCf">비밀번호 확인</label>
                     </div>
                 </div>
                 <div class="col-xl-2">
-                    <input type="password" class="form-control form-control-solid no-space" name="userPwCf" id="userPwCf" autocomplete="off" />
+                    <input type="password" class="form-control form-control-solid no-space" name="passwordCf" id="passwordCf" autocomplete="off" />
                 </div>
                 <div class="col-xl-4">
                 </div>
@@ -297,10 +299,10 @@
         <div class="row mb-4">      <!-- errorMsgSpan -->
             <div class="col-xl-2"></div>
             <div class="col-xl-4">
-                <div id="userPwSpan"></div>
+                <div id="passwordSpan"></div>
             </div>
             <div class="col-xl-6">
-                <div id="userPwCfSpan"></div>
+                <div id="passwordCfSpan"></div>
             </div>
         </div>
         <div class="row">           <!--begin::Row-->
@@ -358,8 +360,8 @@
                 </div>
                 <div class="col-xl-9">
                     <div class="form-check form-switch form-check-custom form-check-solid mt-2">
-                        <input class="form-check-input" type="checkbox" value="Y" name="lockYn" id="lockYn" <#if user.isLocked!false>checked="checked"</#if> />
-                        <label class="form-check-label fw-bold ms-3" for="lockYn" id="lockYnLabel" style="color:<#if user.isLocked!false>red<#else>gray</#if>;"><#if user.isLocked!false>잠김<#else>해제</#if></label>
+                        <input class="form-check-input" type="checkbox" value="Y" name="lockedYn" id="lockedYn" <#if user.isLocked!false>checked="checked"</#if> />
+                        <label class="form-check-label fw-bold ms-3" for="lockedYn" id="lockedYnLabel" style="color:<#if user.isLocked!false>red<#else>gray</#if>;"><#if user.isLocked!false>잠김<#else>해제</#if></label>
                     </div>
                 </div>
             </div>
@@ -367,7 +369,7 @@
         <div class="row">           <!--begin::Row-->
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-start ">
-                    <label for="acsIpInfoListStr" class="cursor-help"
+                    <label for="acsIpListStr" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="특정 IP에서만&#10;접속 가능하도록 설정합니다.">
                         접속 IP
                     </label>
@@ -375,8 +377,8 @@
             </div>
             <div class="col-xl-2">
                 <div class="form-check form-switch form-check-custom form-check-solid mt-2">
-                    <input class="form-check-input" type="checkbox" value="Y" name="acsIpYn" id="acsIpYn" <#if user.isAcsIpY!false>checked="checked"</#if> />
-                    <label class="form-check-label fw-bold ms-3" for="acsIpYn" id="acsIpYnLabel" style="color:<#if user.isAcsIpY!false>blue<#else>gray</#if>;"><#if !user.isAcsIpY!false>미</#if>사용</label>
+                    <input class="form-check-input" type="checkbox" value="Y" name="useAcsIpYn" id="useAcsIpYn" <#if user.isAcsIpY!false>checked="checked"</#if> />
+                    <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:<#if user.isAcsIpY!false>blue<#else>gray</#if>;"><#if !user.isAcsIpY!false>미</#if>사용</label>
                 </div>
             </div>
         </div>
@@ -385,7 +387,7 @@
             <div class="col-xl-6">
                 <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
                 <div id="acsIpListSpan" class="mb-0" style="display:none;">
-                    <input name="acsIpInfoListStr" id="acsIpInfoListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
+                    <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
                     <div class="form-text">(※최대 5개)</div>
                 </div>
             </div>
@@ -393,7 +395,7 @@
         <div class="row mb-4">      <!-- errorMsgSpan -->
             <div class="col-xl-2"></div>
             <div class="col-xl-10">
-                <span id="acsIpInfoListStrSpan"></span>
+                <span id="acsIpListStrSpan"></span>
             </div>
         </div>
         <div class="row">           <!--begin::Row-->

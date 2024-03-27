@@ -57,10 +57,10 @@ public class UserMyService {
         UserEntity userEntity = userService.getDtlEntity(userId);
 
         // password 일치여부 체크
-        if (!passwordEncoder.matches(currPw, userEntity.getUserPw())) throw new BadCredentialsException(MessageUtils.PW_MISMATCH);
-        userEntity.setUserPw(passwordEncoder.encode(newPw));
-        userEntity.setNeedsPwReset("N");
-        userEntity.setPwChgDt(DateUtils.getCurrDate());
+        if (!passwordEncoder.matches(currPw, userEntity.getPassword())) throw new BadCredentialsException(MessageUtils.PW_MISMATCH);
+        userEntity.setPassword(passwordEncoder.encode(newPw));
+        userEntity.acntStus.setNeedsPwReset("N");
+        userEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
         Integer rsId = userRepository.saveAndFlush(userEntity)
                                      .getUserNo();
         return (rsId != null);
@@ -78,7 +78,7 @@ public class UserMyService {
         UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
         if (rsUserEntity == null) return false;
         // 1. 내 비밀번호가 맞는지부터 확인
-        if (!passwordEncoder.matches(currPw, rsUserEntity.getUserPw())) {
+        if (!passwordEncoder.matches(currPw, rsUserEntity.getPassword())) {
             throw new BadCredentialsException(MessageUtils.PW_MISMATCH);
         }
         return true;
@@ -96,13 +96,13 @@ public class UserMyService {
         UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
         if (rsUserEntity == null) return false;
         // 1. 내 비밀번호가 맞는지부터 확인
-        if (!passwordEncoder.matches(currPw, rsUserEntity.getUserPw())) {
+        if (!passwordEncoder.matches(currPw, rsUserEntity.getPassword())) {
             throw new BadCredentialsException(MessageUtils.PW_MISMATCH);
         }
         // 2. 맞으면 비밀번호 업데이트
-        rsUserEntity.setUserPw(passwordEncoder.encode(newPw));
-        rsUserEntity.setNeedsPwReset("N");
-        rsUserEntity.setPwChgDt(DateUtils.getCurrDate());
+        rsUserEntity.setPassword(passwordEncoder.encode(newPw));
+        rsUserEntity.acntStus.setNeedsPwReset("N");
+        rsUserEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
         Integer rsId = userRepository.saveAndFlush(rsUserEntity)
                                      .getUserNo();
         return (rsId != null);

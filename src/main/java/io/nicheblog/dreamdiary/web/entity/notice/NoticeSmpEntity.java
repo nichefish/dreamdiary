@@ -23,19 +23,19 @@ import java.util.Date;
  * @author nichefish
  */
 @Entity
-@Table(name = "NOTICE")
+@Table(name = "notice")
 @Getter
 @Setter
 @SuperBuilder
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE NOTICE SET DEL_YN = 'Y' WHERE BOARD_CD = ? AND POST_NO = ?")
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE notice SET del_yn = 'Y' WHERE post_no = ?")
 public class NoticeSmpEntity
         extends BasePostEntity {
 
     /** 필수(Override): 게시판 코드 */
-    private static final String BOARD_CD = "NOTICE";
+    private static final String CONTENT_TYPE = "notice";
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";
 
@@ -44,7 +44,7 @@ public class NoticeSmpEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "POST_NO")
+    @Column(name = "post_no")
     @Comment("공지사항 번호")
     private Integer postNo;
 
@@ -52,21 +52,21 @@ public class NoticeSmpEntity
      * 게시판 분류 코드
      */
     @Builder.Default
-    @Column(name = "BOARD_CD")
-    private String boardCd = BOARD_CD;
+    @Column(name = "content_type")
+    private String contentType = CONTENT_TYPE;
 
     /**
      * 팝업 노출여부
      */
     @Builder.Default
-    @Column(name = "POPUP_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "popup_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("팝업 노출여부")
     private String popupYn = "N";
 
     /**
      * 조치자(작업자)ID
      */
-    @Column(name = "MANAGTR_ID", length = 20)
+    @Column(name = "managtr_id", length = 20)
     private String managtrId;
 
     /**
@@ -74,6 +74,6 @@ public class NoticeSmpEntity
      */
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
-    @Column(name = "MANAGT_DT")
+    @Column(name = "managt_dt")
     private Date managtDt;
 }

@@ -23,19 +23,19 @@ import java.util.Date;
  * @extends BasePostEntity
  */
 @Entity
-@Table(name = "NOTICE")
+@Table(name = "notice")
 @Getter
 @Setter
 @SuperBuilder
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE notice SET DEL_YN = 'Y' WHERE POST_NO = ?")
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE notice SET del_yn = 'Y' WHERE post_no = ?")
 public class NoticeEntity
         extends BasePostEntity {
 
     /** 필수: 게시물 코드 */
-    private static final String BOARD_CD = "notice";
+    private static final String CONTENT_TYPE = "notice";
     /** 필수: 글분류 코드 */
     private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";
 
@@ -44,7 +44,7 @@ public class NoticeEntity
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "POST_NO")
+    @Column(name = "post_no")
     @Comment("공지사항 번호")
     private Integer postNo;
 
@@ -52,21 +52,21 @@ public class NoticeEntity
      * 게시판 분류 코드
      */
     @Builder.Default
-    @Column(name = "BOARD_CD")
-    private String boardCd = BOARD_CD;
+    @Column(name = "content_type")
+    private String boardCd = CONTENT_TYPE;
 
     /**
      * 팝업 노출여부
      */
     @Builder.Default
-    @Column(name = "POPUP_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "popup_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("팝업 노출여부")
     private String popupYn = "N";
 
     /**
      * 조치자(작업자)ID
      */
-    @Column(name = "MANAGTR_ID", length = 20)
+    @Column(name = "managtr_id", length = 20)
     private String managtrId;
 
     /**
@@ -74,7 +74,7 @@ public class NoticeEntity
      */
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
-    @Column(name = "MANAGT_DT")
+    @Column(name = "managt_dt")
     private Date managtDt;
 
     /**
@@ -82,8 +82,8 @@ public class NoticeEntity
      */
     // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     // @JoinColumnsOrFormulas({
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO")),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD"))
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "post_no", referencedColumnName = "post_no")),
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type"))
     // })
     // @Fetch(FetchMode.SELECT)
     // @OrderBy("boardTag ASC")
@@ -96,8 +96,8 @@ public class NoticeEntity
      */
     // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     // @JoinColumnsOrFormulas({
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO")),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "BOARD_CD", referencedColumnName = "BOARD_CD"))
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "post_no", referencedColumnName = "post_no")),
+    //         @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type"))
     // })
     // @Fetch(FetchMode.SELECT)
     // @NotFound(action = NotFoundAction.IGNORE)

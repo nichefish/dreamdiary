@@ -64,7 +64,7 @@ public class UserAuthRoleEntity {
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("작업자 정보")
-    private AuthRole role;
+    private AuthRole roleInfo;
 
     /**
      * 삭제 여부

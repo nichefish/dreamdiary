@@ -68,9 +68,9 @@ public class UserController
     @GetMapping(SiteUrl.USER_LIST)
     @Secured(Constant.ROLE_MNGR)
     public String userList(
-            final LogActvtyParam logParam,
             final @ModelAttribute("searchParam") UserSearchParam searchParam,
             final @RequestParam Map<String, Object> searchParamMap,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -84,8 +84,8 @@ public class UserController
             Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            Sort sort = Sort.by(Sort.Direction.ASC, "cfYn")
-                            .and(Sort.by(Sort.Direction.ASC, "lockYn"))
+            Sort sort = Sort.by(Sort.Direction.ASC, "acntStus.cfYn")
+                            .and(Sort.by(Sort.Direction.ASC, "acntStus.lockedYn"))
                             .and(Sort.by(Sort.Direction.DESC, "regDt"));
             PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, sort, model);
             Page<UserListDto> userList = userService.getListDto(listParamMap, pageRequest);
@@ -326,7 +326,7 @@ public class UserController
     @PostMapping(SiteUrl.USER_PW_RESET_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
-    public ResponseEntity<AjaxResponse> userPwResetAjax(
+    public ResponseEntity<AjaxResponse> passwordResetAjax(
             final LogActvtyParam logParam,
             final @RequestParam("userNo") String userNoStr
     ) {
@@ -337,7 +337,7 @@ public class UserController
         String resultMsg = "";
         try {
             Integer userNo = Integer.parseInt(userNoStr);
-            isSuccess = userService.userPwReset(userNo);
+            isSuccess = userService.passwordReset(userNo);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS_PW_RESET : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
@@ -409,7 +409,7 @@ public class UserController
         String resultMsg = "";
         try {
             // List<Object> userListXlsx = userService.userListXlsx(searchParamMap);
-            // xlsxUtils.listXlxsDownload(Constant.USER_INFO, userListXlsx);
+            // xlsxUtils.listXlxsDownload(Constant.user_profl, userListXlsx);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

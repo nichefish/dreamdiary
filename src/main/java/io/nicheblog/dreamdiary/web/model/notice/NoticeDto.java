@@ -57,7 +57,7 @@ public class NoticeDto
     /* ----- */
 
     /**
-     * 게시판분류코드 Getter (override)
+     * 게시판 코드 Getter (override)
      */
     public String getBoardCd() {
         return "notice";

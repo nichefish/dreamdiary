@@ -2,9 +2,15 @@ package io.nicheblog.dreamdiary.web.model.user;
 
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
+import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
+import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -35,37 +41,35 @@ public class UserDto
     /**
      * 비밀번호
      */
-    private String userPw;
+    private String password;
     /**
-     * 권한코드
-     */
-    private String authCd;
-    /**
-     * 권한이름
-     */
-    private String authNm;
-    /**
-     * 이름
+     * 표시이름
      */
     private String nickNm;
+    /**
+     * 프로필 이미지 URL
+     */
+    private String proflImgUrl;
+
     /**
      * 잠금여부
      */
     @Builder.Default
-    private String lockYn = "N";
+    private String lockedYn = "N";
+
     /**
-     * 접속 IP 사용여부
+     * 접속 IP 사용 여부
      */
     @Builder.Default
-    private String acsIpYn = "N";
+    private String useAcsIpYn = "N";
     /**
      * 접속 IP 정보 (String)
      */
-    private String acsIpInfoListStr;
+    private String acsIpListStr;
     /**
      * 접속 IP 목록
      */
-    private List<UserAcsIpDto> acsIpInfoList;
+    private List<UserAcsIpDto> acsIpList;
 
     /**
      * 퇴사여부
@@ -83,25 +87,20 @@ public class UserDto
     private String userDc;
 
     /**
-     * 사용자 정보 (위임)
-     */
-    private UserInfoDto userInfo;
-    /**
      * 등록/수정시 사용자 정보 저장할지 말지 화면에서 넘겨받는 임시필드
      */
     @Builder.Default
-    private String userInfoYn = "N";
+    private String userProflYn = "N";
+    /**
+     * 사용자 정보 (위임)
+     */
+    private UserProflDto userProfl;
 
     /**
-     * 성공여부
+     * 사용자 권한 정보
      */
-    @Builder.Default
-    public Boolean isSuccess = false;
+    private List<UserAuthRoleDto> auth;
 
-    /**
-     * 프로필 이미지 URL
-     */
-    private String proflImgUrl;
     /**
      * 본인신청여부
      */
@@ -110,34 +109,35 @@ public class UserDto
      * 승인여부
      */
     private String cfYn;
+
+    /**
+     * 성공여부
+     */
+    @Builder.Default
+    public Boolean isSuccess = false;
+    
     /* ----- */
 
     /**
-     * 접속IP 사용여부 Y
+     * 접속IP 사용 여부 채크
      */
     public Boolean getIsAcsIpY() {
-        return "Y".equals(this.acsIpYn);
+        return "Y".equals(this.useAcsIpYn);
     }
 
-    ;
-
     /**
-     * 나
+     * 내 정보 여부 채크
      */
     public Boolean getIsMe() {
         return (AuthUtils.isRegstr(this.userId));       // 인자로 넘긴 ID와 세션의 사용자 ID 비교
     }
 
-    /**
-     * 잠금여부
-     */
+    /** 잠금여부 채크 */
     public Boolean getIsLocked() {
-        return "Y".equals(this.lockYn);
+        return "Y".equals(this.lockedYn);
     }
 
-    /**
-     * 승인여부
-     */
+    /** 승인여부 채크 */
     public Boolean getIsCf() {
         return "Y".equals(this.cfYn);
     }

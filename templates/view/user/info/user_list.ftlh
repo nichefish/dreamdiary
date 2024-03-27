@@ -121,7 +121,7 @@
                             </#if>
                             <span class="pe-1">${user.userNm!"-"} (${user.userId!"-"})</span>
                         </a>
-                        <#if (user.userInfoYn!"Y") == "N">
+                        <#if (user.userProflYn!"Y") == "N">
                             <i class="bi bi-person-dash vertical-middle text-muted"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원정보가 없습니다.&#10;(접속은 가능하지만&#10;일부 기능이 제한됩니다.)"></i>
                         <#elseif (user.retireYn!"N") == "Y">

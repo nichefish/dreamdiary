@@ -6,7 +6,7 @@
     const UserInfo = function() {
         return {
             init: function () {
-                <#if (user.userInfo.itemList)?has_content>
+                <#if (user.userProfl.itemList)?has_content>
                     UserInfo.fnAddUserInfoItemMdfList();      // 기존 항목에 대하여 행 쭈루룩 추가
                 </#if>
 
@@ -18,12 +18,12 @@
 
                 <#if isMdf>
                     // 수정화면:: 이메일 selectbox 세팅
-                    let emailDomain = "${(user.userInfo.emailDomain)!}";
+                    let emailDomain = "${(user.userProfl.emailDomain)!}";
                     $("#emailDomainSelect option").each(function(idx, elmt) {
                         if (elmt.value === emailDomain) $(elmt).attr("selected", "selected");
                     });
 
-                    <#if (user.userInfo.jobTitleCd)! == "STAFF">
+                    <#if (user.userProfl.jobTitleCd)! == "STAFF">
                         $("#apntcYnDiv").show();"이름은 필수 항목입니다."
                     </#if>
                 </#if>
@@ -44,11 +44,11 @@
                 commons.util.chckboxLabel("retireYn", "퇴사//해당없음", "red//gray", function() {$(".retireDtDiv").show();}, function() {$(".retireDtDiv").hide();});
 
                 commons.datepicker.singleDatePicker("#ecnyDt", "yyyy-MM-DD");
-                $("#ecnyDt").val("${(user.userInfo.ecnyDt)!}");
+                $("#ecnyDt").val("${(user.userProfl.ecnyDt)!}");
                 commons.datepicker.singleDatePicker("#retireDt", "yyyy-MM-DD");
-                $("#retireDt").val("${(user.userInfo.retireDt)!}");
+                $("#retireDt").val("${(user.userProfl.retireDt)!}");
                 commons.datepicker.singleDatePicker("#brthdy", "yyyy-MM-DD");
-                $("#brthdy").val("${(user.userInfo.brthdy)!}");
+                $("#brthdy").val("${(user.userProfl.brthdy)!}");
 
                 $.validator.addMethod("dupChck", function(value) {
                     return (value === "Y");
@@ -57,8 +57,8 @@
             /** 직원정보 창 토글 */
             fnEnableUserInfo: function() {
                 $("#nickNm").attr("readonly", true).val("").attr("placeholder", "직원명을 아래에 입력해주세요.");
-                $("#userInfoDiv").show();
-                $("#userInfoYn").val("Y");
+                $("#userProflDiv").show();
+                $("#userProflYn").val("Y");
                 $("#nickNmShowDiv").hide();
                 $("#nickNmSpan").empty();
                 $("#user_info_disable_div").show();
@@ -67,8 +67,8 @@
             /** 직원정보 창 토글 */
             fnDisableUserInfo: function() {
                 $("#nickNm").removeAttr("readonly").removeAttr("placeholder");
-                $("#userInfoDiv").hide();
-                $("#userInfoYn").val("N");
+                $("#userProflDiv").hide();
+                $("#userProflYn").val("N");
                 $("#nickNmShowDiv").show();
                 $("#user_info_disable_div").hide();
                 $("#user_info_enable_div").show();
@@ -77,8 +77,8 @@
              * 사용자 정보 추가항목 영역 새로 추가
              */
             fnAddUserInfoItem: function () {
-                let reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=userInfoItem", "userInfoItem");		// elmt, selector, elmtId
-                let tableTmpl = "<div class='row my-5 my-lg-0' id='itemContainer"+reqstItemIdx+"'>" + $("#userInfoItemTemplate").html() + "</div>";
+                let reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=userProflItem", "userProflItem");		// elmt, selector, elmtId
+                let tableTmpl = "<div class='row my-5 my-lg-0' id='itemContainer"+reqstItemIdx+"'>" + $("#userProflItemTemplate").html() + "</div>";
                 let str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
                 $("#userItemListDiv").append(str);
             },
@@ -86,17 +86,17 @@
              * 사용자 정보 추가항목 영역 기존 정보 목록 추가
              */
             fnAddUserInfoItemMdfList: function() {
-                <#if user.userInfo?? && user.userInfo.itemList?has_content>
+                <#if user.userProfl?? && user.userProfl.itemList?has_content>
                     let reqstItemIdx, tableTmpl, str;
-                    <#list user.userInfo.itemList![] as item>
-                        reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=userInfoItem", "userInfoItem");		// elmt, selector, elmtId
+                    <#list user.userProfl.itemList![] as item>
+                        reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=userProflItem", "userProflItem");		// elmt, selector, elmtId
 
-                        tableTmpl = "<div class='row my-5 my-lg-0' id='itemContainer"+reqstItemIdx+"'>" + $("#userInfoItemTemplate").html() + "</div>";
+                        tableTmpl = "<div class='row my-5 my-lg-0' id='itemContainer"+reqstItemIdx+"'>" + $("#userProflItemTemplate").html() + "</div>";
 
                         str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
 
                         $("#userItemListDiv").append(str);
-                        $("#userInfoItemNo"+reqstItemIdx).val("${item.userInfoItemNo}");
+                        $("#userProflItemNo"+reqstItemIdx).val("${item.userProflItemNo}");
                         $("#itemNm"+reqstItemIdx).val(`${item.itemNm}`);
                         $("#itemCn"+reqstItemIdx).val(`${item.itemCn}`);
                         $("#itemDc"+reqstItemIdx).val(`${item.itemDc}`);
@@ -120,7 +120,7 @@
     });
 </script>
 <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-<div id="userInfoDiv" <#if !(user.userInfo)??>style="display:none;"</#if>>
+<div id="userProflDiv" <#if !(user.userInfo)??>style="display:none;"</#if>>
     <!--begin::Menu separator-->
     <div class="separator my-10"></div>
     <!--end::Menu separator-->

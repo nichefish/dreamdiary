@@ -43,8 +43,8 @@ public class UserReqstService {
 
     @Resource(name = "userRepository")
     private UserRepository userRepository;
-    @Resource(name = "userInfoRepository")
-    private UserInfoRepository userInfoRepository;
+    @Resource(name = "userProflRepository")
+    private UserInfoRepository userProflRepository;
     @Resource(name = "userReqstRepository")
     private UserReqstRepository userReqstRepository;
 
@@ -62,25 +62,25 @@ public class UserReqstService {
     ) throws Exception {
         // 파일 영역 처리
         // 계정 잠금여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getLockYn())) userDto.setLockYn("N");
+        if (!"Y".equals(userDto.getLockedYn())) userDto.setLockedYn("N");
 
-        // 접속 IP 사용여부 체크박스 값 세팅
+        // 접속 IP 사용 여부 체크박스 값 세팅
         if (!"Y".equals(userDto.getAcsIpYn())) {
             userDto.setAcsIpYn("N");
         } else {
             // 접속 IP 사용"Y"시 접속 IP 세팅
-            String acsIpInfoListStr = userDto.getAcsIpInfoListStr();
-            List<UserAcsIpDto> acsIpInfoList = userService.parseAcsIpListInfo(acsIpInfoListStr);
-            userDto.setAcsIpInfoList(acsIpInfoList);
+            String acsIpListStr = userDto.getAcsIpListStr();
+            List<UserAcsIpDto> acsIpList = userService.parseAcsIpListInfo(acsIpListStr);
+            userDto.setAcsIpList(acsIpList);
         }
         // Dto -> Entity
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserReqstEntity userReqstEntity = userMapstruct.toReqstEntity(userDto);
-        userReqstEntity.setUserInfoNo(this.userInfoReg(userReqstEntity, userDto));
-        userReqstEntity.setUserPw(passwordEncoder.encode(userDto.getUserPw()));
+        userReqstEntity.setUserProflNo(this.userInfoReg(userReqstEntity, userDto));
+        userReqstEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userReqstEntity.setReqstYn("Y");
         userReqstEntity.setCfYn("N");
-        userReqstEntity.setLockYn("Y");
+        userReqstEntity.setLockedYn("Y");
         // insert
         UserReqstEntity rsltEntity = userReqstRepository.save(userReqstEntity);
         return userMapstruct.toDto(rsltEntity);
@@ -95,23 +95,23 @@ public class UserReqstService {
             final UserReqstEntity userEntity,
             final UserDto userDto
     ) throws Exception {
-        String userInfoYn = userDto.getUserInfoYn();
-        Integer userInfoNo = userEntity.getUserInfoNo();
-        if ("N".equals(userInfoYn) && userInfoNo == null) {
-            userEntity.setUserInfo(null);
+        String userProflYn = userDto.getUserProflYn();
+        Integer userProflNo = userEntity.getUserProflNo();
+        if ("N".equals(userProflYn) && userProflNo == null) {
+            userEntity.setUserProfl(null);
             return null;
         }
-        UserInfoEntity rsUserInfoEntity = userEntity.getUserInfo();
-        if (rsUserInfoEntity == null) rsUserInfoEntity = userInfoRepository.findById(userInfoNo)
+        UserInfoEntity rsUserInfoEntity = userEntity.getUserProfl();
+        if (rsUserInfoEntity == null) rsUserInfoEntity = userProflRepository.findById(userProflNo)
                                                                            .orElse(new UserInfoEntity());
-        if ("Y".equals(userInfoYn)) {
-            userInfoMapstruct.updateFromDto(userDto.getUserInfo(), rsUserInfoEntity);
+        if ("Y".equals(userProflYn)) {
+            userInfoMapstruct.updateFromDto(userDto.getUserProfl(), rsUserInfoEntity);
             this.sortUserInfoItemList(rsUserInfoEntity);      // 빈값 걸러내기+순번매기기
         } else {
             rsUserInfoEntity.setDelYn("Y");
         }
-        return userInfoRepository.save(rsUserInfoEntity)
-                                 .getUserInfoNo();
+        return userProflRepository.save(rsUserInfoEntity)
+                                 .getUserProflNo();
     }
 
     */
@@ -137,13 +137,13 @@ public class UserReqstService {
      * 사용자정보 승인
      *//*
 
-    public Boolean cfReqst(final Integer userInfoNo) throws Exception {
+    public Boolean cfReqst(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsEntity = userService.getDtlEntity(userInfoNo);
+        UserEntity rsEntity = userService.getDtlEntity(userProflNo);
         if (rsEntity == null) return false;
-        // lockYn 플래그 업데이트
+        // lockedYn 플래그 업데이트
         rsEntity.setCfYn("Y");
-        rsEntity.setLockYn("N");
+        rsEntity.setLockedYn("N");
         Integer rsId = userRepository.saveAndFlush(rsEntity)
                                      .getUserNo();
         return (rsId != null);
@@ -154,13 +154,13 @@ public class UserReqstService {
      * 사용자정보 승인취소
      *//*
 
-    public Boolean uncfReqst(final Integer userInfoNo) throws Exception {
+    public Boolean uncfReqst(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsEntity = userService.getDtlEntity(userInfoNo);
+        UserEntity rsEntity = userService.getDtlEntity(userProflNo);
         if (rsEntity == null) return false;
-        // lockYn 플래그 업데이트
+        // lockedYn 플래그 업데이트
         rsEntity.setCfYn("N");
-        rsEntity.setLockYn("Y");
+        rsEntity.setLockedYn("Y");
         Integer rsId = userRepository.saveAndFlush(rsEntity)
                                      .getUserNo();
         return (rsId != null);

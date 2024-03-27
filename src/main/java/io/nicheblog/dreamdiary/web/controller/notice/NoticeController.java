@@ -108,7 +108,7 @@ public class NoticeController
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
             cdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
             // 태그 전체 목록 조회
-            // listParamMap.put("boardCd", "notice");
+            // listParamMap.put("contentType", "notice");
             // Page<BoardTagDto> tagList = boardTagService.getListDto(listParamMap, Pageable.unpaged());
             // model.addAttribute("tagList", tagList.getContent());
             isSuccess = true;

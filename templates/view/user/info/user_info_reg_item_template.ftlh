@@ -2,7 +2,7 @@
   -- 사용자 관리 > 계정 및 권한 관리 > 등록 > 사용자 정보 기타항목 추가추가 Template
   -- @included in : user_reg_form
   -->
-<div id="userInfoItemTemplate" hidden>
+<div id="userProflItemTemplate" hidden>
     <span id="userInfoItem__INDEX__"></span>
     <input type="hidden" class="form-control form-control-solid" name="itemList[__INDEX__].userInfoItemNo" id="userInfoItemNo__INDEX__" />
     <div class="col-xl-2 col-6">

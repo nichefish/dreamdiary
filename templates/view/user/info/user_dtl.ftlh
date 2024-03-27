@@ -75,7 +75,7 @@
 <form name="procForm" id="procForm">
     <input type="hidden" name="userNo" value="${user.userNo!}">
     <#if user.userInfo??>
-        <input type="hidden" name="userInfoNo" value="${user.userInfo.userInfoNo!}">
+        <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
     </#if>
 </form>
 
@@ -181,7 +181,7 @@
         <div class="row mb-4">      <!--begin::Row-->
             <div class="col-xl-2 col-4 col-form-label">
                 <div class="text-center fs-6 fw-bold ">
-                    <label for="acsIpInfoListStr">접속IP</label>
+                    <label for="acsIpListStr">접속IP</label>
                 </div>
             </div>
             <div class="col-xl-2 col-4 d-flex align-items-center">
@@ -193,8 +193,8 @@
             </div>
             <div class="col-xl-6 col-4 col-form-label">
                 <div class="form-check form-switch form-check-custom form-check-solid">
-                    <#if user.isAcsIpY && user.acsIpInfoList??>
-                        <#list user.acsIpInfoList![] as item>
+                    <#if user.isAcsIpY && user.acsIpList??>
+                        <#list user.acsIpList![] as item>
                             <span class="div-textarea div-height-1 me-4">${item.acsIp}</span>
                         </#list>
                     </#if>
