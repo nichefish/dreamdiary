@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import static io.nicheblog.dreamdiary.web.SiteMenu.SubMenu.USER_INFO;
+import static io.nicheblog.dreamdiary.web.SiteMenu.SubMenu.user_profl;
 
 /**
  * SiteMenu
@@ -108,7 +108,7 @@ public class SiteMenu {
             SiteTopMenu.USER.menuNo,
             "사용자 관리",
             SiteUrl.AUTH_LGN_FORM,
-            List.of(USER_INFO)
+            List.of(user_profl)
     );
 
     // 대메뉴 :: 사이트 관리
@@ -147,7 +147,7 @@ public class SiteMenu {
 
         // 소메뉴 :: 사용자 정보
         String MENU_NO_USER = "01000000";
-        SiteAcsInfo USER_INFO = new SiteAcsInfo(
+        SiteAcsInfo user_profl = new SiteAcsInfo(
                 SiteTopMenu.USER,
                 MENU_NO_USER,
                 "사용자 관리",
