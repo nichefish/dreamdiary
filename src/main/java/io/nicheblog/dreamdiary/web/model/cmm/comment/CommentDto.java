@@ -9,8 +9,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * CommentDto
  * <pre>
- *  게시판 댓글 Dto
- *  ※게시판 댓글(board_comment) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  댓글 Dto
  * </pre>
  *
  * @author nichefish
@@ -41,7 +40,7 @@ public class CommentDto
     /**
      * 참조 게시판 코드
      */
-    private String refBoardCd;
+    private String refContentType;
 
     /**
      * 성공여부

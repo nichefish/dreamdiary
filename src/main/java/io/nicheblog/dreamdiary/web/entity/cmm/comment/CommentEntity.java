@@ -35,7 +35,7 @@ import java.util.Date;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE comment SET del_yn = 'Y' WHERE post_no = ?")
 public class CommentEntity
-        extends BasePostEntity {
+        extends BaseClsfEntity {
 
     /** 필수: 게시물 코드 */
     private static final String CONTENT_TYPE = "comment";
@@ -70,5 +70,5 @@ public class CommentEntity
      */
     @Column(name = "ref_content_type")
     @Comment("원글 게시판 코드")
-    private String refBoardCd;
+    private String refContentType;
 }
