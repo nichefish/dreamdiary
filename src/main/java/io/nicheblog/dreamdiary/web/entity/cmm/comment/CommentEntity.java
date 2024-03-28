@@ -1,19 +1,13 @@
 package io.nicheblog.dreamdiary.web.entity.cmm.comment;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * CommentEntity

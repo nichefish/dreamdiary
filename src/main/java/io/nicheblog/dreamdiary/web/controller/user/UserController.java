@@ -99,8 +99,6 @@ public class UserController
             cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
 
             CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -138,9 +136,6 @@ public class UserController
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
             cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
-
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -254,8 +249,6 @@ public class UserController
             model.addAttribute("user", rsUserDto);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -301,9 +294,6 @@ public class UserController
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
             cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
-
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

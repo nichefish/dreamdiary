@@ -1,21 +1,14 @@
 package io.nicheblog.dreamdiary.web.entity.dream;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * DreamPieceEntity

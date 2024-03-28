@@ -2,10 +2,7 @@ package io.nicheblog.dreamdiary.web.service.notice;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
-import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.notice.NoticeMapstruct;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;

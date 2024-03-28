@@ -1,14 +1,9 @@
 package io.nicheblog.dreamdiary.global.auth.model;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManageEntity;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.*;
 import java.util.List;
 
 /**

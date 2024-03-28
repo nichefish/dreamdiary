@@ -2,15 +2,10 @@ package io.nicheblog.dreamdiary.web.model.user;
 
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
-import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**

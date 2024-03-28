@@ -38,7 +38,7 @@ public class ErrorPageController
     ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("ERROR"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.ERROR.setAcsPageInfo("ERROR"));
 
         // 에러 화면으로 리다이렉트 리다리렉트
         return "/view/error/error_not_found";
@@ -55,7 +55,7 @@ public class ErrorPageController
     ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("ERROR"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.ERROR.setAcsPageInfo("ERROR"));
 
         // 에러 화면으로 리다이렉트 리다리렉트
         return "/view/error/error_access_denied";
@@ -72,7 +72,7 @@ public class ErrorPageController
     ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("ERROR"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.ERROR.setAcsPageInfo("ERROR"));
 
         // 에러 화면으로 리다이렉트 리다리렉트
         return "/view/error/error_page";

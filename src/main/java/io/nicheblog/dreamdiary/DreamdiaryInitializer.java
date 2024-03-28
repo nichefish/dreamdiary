@@ -2,13 +2,10 @@ package io.nicheblog.dreamdiary;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
-import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.model.admin.LgnPolicyDto;
 import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
@@ -22,7 +19,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * DreamdiaryInitializer

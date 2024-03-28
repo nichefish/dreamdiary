@@ -120,8 +120,6 @@ public class LogService {
         if (!activeProfile.isProd()) return;
 
         LogSysEntity logActvty = logMapstruct.toEntity(logParam);
-        // 작업 url
-        logActvty.setUrl(request.getServletPath());
 
         log.info("isSuccess: {}, resultMsg: {}", logParam.getIsSuccess(), logParam.getResultMsg());
         logSysRepository.save(logActvty);

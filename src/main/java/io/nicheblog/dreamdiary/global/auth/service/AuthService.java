@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.global.auth.mapstruct.AuthInfoMapstruct;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.repository.AuthRoleRepository;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.repository.user.UserProflRepository;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;

@@ -86,9 +86,6 @@ public class BoardDefController
 
             CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
 
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
-
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

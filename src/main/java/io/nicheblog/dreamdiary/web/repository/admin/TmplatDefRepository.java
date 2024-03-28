@@ -1,0 +1,20 @@
+package io.nicheblog.dreamdiary.web.repository.admin;
+
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.web.entity.admin.TmplatDefEntity;
+import org.springframework.stereotype.Repository;
+
+/**
+ * TmplatDefRepository
+ * <pre>
+ *  입력내용 템플릿 관리 Repository
+ * </pre>
+ *
+ * @author nichefish
+ */
+@Repository("tmplatDefRepository")
+public interface TmplatDefRepository
+        extends BaseRepository<TmplatDefEntity, Integer> {
+
+    //
+}

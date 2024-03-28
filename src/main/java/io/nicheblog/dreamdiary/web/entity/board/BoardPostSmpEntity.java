@@ -1,12 +1,13 @@
 package io.nicheblog.dreamdiary.web.entity.board;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;

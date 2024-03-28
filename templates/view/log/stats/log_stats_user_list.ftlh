@@ -118,7 +118,7 @@
                     <td class="text-start ps-10 hidden-table">
                         <span class="fw-bold">${user.userNm!"-"}</span>
                         <span class="ms-1">(${user.userId!})</span>
-                        <#if (user.userInfoYn!"Y") == "N">
+                        <#if (user.userProflYn!"Y") == "N">
                             <i class="bi bi-person-dash vertical-middle text-muted"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원정보가 없습니다."></i>
                         <#elseif (user.retireYn!"N") == "Y">

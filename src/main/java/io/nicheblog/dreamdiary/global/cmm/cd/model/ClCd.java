@@ -1,16 +1,13 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.model;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.cmm.cd.mapstruct.CdMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
-import io.nicheblog.dreamdiary.web.mapstruct.admin.ClCdMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.checkerframework.checker.units.qual.N;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;

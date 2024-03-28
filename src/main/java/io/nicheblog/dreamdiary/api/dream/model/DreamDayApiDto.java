@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.api.dream.model;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
 import lombok.*;

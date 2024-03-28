@@ -1,16 +1,10 @@
 package io.nicheblog.dreamdiary.web.model.dream;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * DreamPieceDto

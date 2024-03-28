@@ -92,33 +92,6 @@ public class LogSysEntity
     private DtlCdEntity actvtyCtgrInfo;
 
     /**
-     * 작업 유형 코드 (조회, 검색, 처리...)
-     */
-    @Column(name = "action_ty_cd", length = 50)
-    @Comment("작업 유형 코드")
-    private String actionTyCd;
-
-    /**
-     * 작업 유형 코드 정보 (복합키 조인)
-     */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTION_TY_CD + "\'", referencedColumnName = "cl_cd")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "action_ty_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
-    })
-    @Fetch(value = FetchMode.JOIN)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("작업 유형 코드 정보")
-    private DtlCdEntity actionTyInfo;
-
-    /**
-     * 작업 URL
-     */
-    @Column(name = "url", length = 400)
-    @Comment("작업 URL")
-    private String url;
-
-    /**
      * 작업 내용
      */
     @Column(name = "cn", length = 400)

@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -23,8 +22,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE user_acs_ip SET del_yn = 'Y' WHERE user_acs_ip_no = ?")
 public class UserAcsIpEntity {

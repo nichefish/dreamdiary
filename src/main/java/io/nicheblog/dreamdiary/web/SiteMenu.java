@@ -56,10 +56,18 @@ public class SiteMenu {
 
     // 공통화면 :: 메인 (관리자)
     public static SiteAcsInfo ADMIN_MAIN = new SiteAcsInfo(
-            SiteTopMenu.MAIN,
+            SiteTopMenu.ADMIN_MAIN,
             TOP_MENU_IDX,
             "메인",
             SiteUrl.ADMIN_MAIN
+    );
+
+    // 공통화면 :: 에러
+    public static SiteAcsInfo ERROR = new SiteAcsInfo(
+            SiteTopMenu.ERROR,
+            TOP_MENU_IDX,
+            "ERROR",
+            SiteUrl.ERROR
     );
 
     // 공통화면 :: 내 정보
@@ -115,11 +123,13 @@ public class SiteMenu {
             TOP_MENU_IDX,
             "사이트 관리",
             SiteUrl.AUTH_LGN_FORM,
-            List.of(SubMenu.LGN_POLICY, SubMenu.MENU, SubMenu.CD, SubMenu.BOARD_DEF)
+            List.of(SubMenu.LGN_POLICY, SubMenu.MENU, SubMenu.BOARD_DEF, SubMenu.TMPLAT, SubMenu.POPUP, SubMenu.CD)
     );
     public static SiteAcsInfo LGN_POLICY = SubMenu.LGN_POLICY;
     public static SiteAcsInfo MENU = SubMenu.MENU;
     public static SiteAcsInfo BOARD_DEF = SubMenu.BOARD_DEF;
+    public static SiteAcsInfo TMPLAT = SubMenu.TMPLAT;
+    public static SiteAcsInfo POPUP = SubMenu.POPUP;
     public static SiteAcsInfo CD = SubMenu.CD;
 
     // 대메뉴 :: 로그 관리
@@ -168,11 +178,12 @@ public class SiteMenu {
         );
 
         /* 사이트 관리 */
-
         String MENU_IDX_LGN_POLICY = "01";
         String MENU_IDX_MENU = "02";
         String MENU_IDX_BOARD_DEF = "03";
-        String MENU_IDX_CD = "04";
+        String MENU_IDX_TMPLAT = "04";
+        String MENU_IDX_POPUP = "05";
+        String MENU_IDX_CD = "06";
 
         // 소메뉴 :: 로그인 정책 관리
         SiteAcsInfo LGN_POLICY = new SiteAcsInfo(
@@ -195,6 +206,20 @@ public class SiteMenu {
                 "게시판 관리",
                 SiteUrl.BOARD_DEF_LIST
         );
+        // 소메뉴 :: 템플릿 관리
+        SiteAcsInfo TMPLAT = new SiteAcsInfo(
+                SiteTopMenu.ADMIN,
+                MENU_IDX_TMPLAT,
+                "템플릿 관리",
+                SiteUrl.TMPLAT_DEF_LIST
+        );
+        // 소메뉴 :: 팝업 관리
+        SiteAcsInfo POPUP = new SiteAcsInfo(
+                SiteTopMenu.ADMIN,
+                MENU_IDX_POPUP,
+                "팝업 관리",
+                SiteUrl.POPUP_LIST
+        );
         // 소메뉴 :: 코드 관리
         SiteAcsInfo CD = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
@@ -209,17 +234,17 @@ public class SiteMenu {
 
         // 소메뉴 :: 활동 로그
         SiteAcsInfo LOG_ACTVTY = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
+                SiteTopMenu.LOG,
                 MENU_IDX_LOG_ACTVTY,
                 "활동 로그",
-                SiteUrl.AUTH_LGN_FORM
+                SiteUrl.LOG_ACTVTY_LIST
         );
         // 소메뉴 :: 시스템 로그
         SiteAcsInfo LOG_SYS = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
+                SiteTopMenu.LOG,
                 MENU_IDX_LOG_SYS,
                 "시스템 로그",
-                SiteUrl.AUTH_LGN_FORM
+                SiteUrl.LOG_SYS_LIST
         );
     }
 

@@ -1,16 +1,9 @@
 package io.nicheblog.dreamdiary.web.model.dream;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
-import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.*;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import java.util.List;
 
 /**

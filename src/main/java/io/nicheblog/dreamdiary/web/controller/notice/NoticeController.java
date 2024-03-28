@@ -14,7 +14,6 @@ import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
-import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeListDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;

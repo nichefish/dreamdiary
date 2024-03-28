@@ -18,6 +18,7 @@ public enum SiteTopMenu {
     // COMMON
     NO_ASIDE("00", "NO_ASIDE", "사이드바 미노출", false),
     LGN("00", "0000", "로그인", false),
+    ERROR("00", "0000", "ERROR", false),
     // PORTAL
     MAIN("00", "0000", "메인", false),
     NOTICE("01", "0100", "공지사항", false),

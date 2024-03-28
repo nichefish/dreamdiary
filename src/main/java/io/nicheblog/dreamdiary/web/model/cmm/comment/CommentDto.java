@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

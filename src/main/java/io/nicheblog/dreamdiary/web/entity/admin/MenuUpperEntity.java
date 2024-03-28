@@ -27,9 +27,9 @@ import javax.persistence.*;
 @Table(name = "menu")
 @Getter
 @Setter
-@SuperBuilder
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE menu SET del_yn = 'Y' WHERE menu_id = ?")
 public class MenuUpperEntity

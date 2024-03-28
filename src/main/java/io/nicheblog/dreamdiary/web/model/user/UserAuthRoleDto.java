@@ -1,16 +1,18 @@
 package io.nicheblog.dreamdiary.web.model.user;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Comment;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * UserDto

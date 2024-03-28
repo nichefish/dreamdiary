@@ -1,10 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -58,6 +55,7 @@ public class TmplatDefDto
     /**
      * 기본설정 여부
      */
+    @Builder.Default
     private String defaultYn = "N";
     /**
      * 정렬 순서
@@ -66,5 +64,6 @@ public class TmplatDefDto
     /**
      * 사용여부
      */
+    @Builder.Default
     private String useYn = "N";
 }

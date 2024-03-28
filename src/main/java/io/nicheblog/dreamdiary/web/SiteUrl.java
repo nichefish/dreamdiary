@@ -21,8 +21,6 @@ public interface SiteUrl {
     String ROOT = "/";
     String MAIN = "/main.do";
 
-    String PREFIX_INFO = "/info";
-
     /**
      * 메인 > 로그인 화면
      * NO_ASIDE
@@ -143,6 +141,12 @@ public interface SiteUrl {
     String BOARD_DEF_DEL_AJAX = PREFIX_BOARD_DEF + "/boardDefDelAjax.do";
     String BOARD_DEF_USE_AJAX = PREFIX_BOARD_DEF + "/boardDefUseAjax.do";
     String BOARD_DEF_UNUSE_AJAX = PREFIX_BOARD_DEF + "/boardDefUnuseAjax.do";
+
+    /** 템플릿 관리 (TODO) */
+    String TMPLAT_DEF_LIST = "";
+
+    /** 팝업 관리 (TODO) */
+    String POPUP_LIST = "";
 
     /** 코드 관리 */
     String PREFIX_CD = "/cd";

@@ -1,24 +1,19 @@
 package io.nicheblog.dreamdiary.global.auth.model;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
-import io.nicheblog.dreamdiary.global.auth.mapstruct.AuthRoleMapstruct;
-import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**

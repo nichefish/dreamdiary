@@ -1,15 +1,9 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpInfo;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserStusInfo;
-import io.nicheblog.dreamdiary.web.model.user.UserCttpcListDto;
-import io.nicheblog.dreamdiary.web.model.user.UserCttpcListXlsxDto;
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
-import io.nicheblog.dreamdiary.web.model.user.UserListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;

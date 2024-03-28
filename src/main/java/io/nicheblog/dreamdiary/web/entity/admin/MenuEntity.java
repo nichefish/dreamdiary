@@ -32,10 +32,10 @@ import java.util.List;
 @Table(name = "menu")
 @Getter
 @Setter
-@SuperBuilder
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
+@AllArgsConstructor
+@Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE menu SET del_yn = 'Y' WHERE menu_id = ?")
 public class MenuEntity
         extends BaseManageEntity {

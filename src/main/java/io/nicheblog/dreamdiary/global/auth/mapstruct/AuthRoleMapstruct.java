@@ -2,9 +2,6 @@ package io.nicheblog.dreamdiary.global.auth.mapstruct;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
 import io.nicheblog.dreamdiary.global.auth.model.AuthRoleDto;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
-import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;

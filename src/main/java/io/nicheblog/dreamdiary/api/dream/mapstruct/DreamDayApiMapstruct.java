@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
-import io.nicheblog.dreamdiary.web.model.dream.DreamDayDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;

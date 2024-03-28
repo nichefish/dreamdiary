@@ -1,16 +1,12 @@
 package io.nicheblog.dreamdiary.global.auth.mapstruct;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
-import io.nicheblog.dreamdiary.global.auth.model.AuthRoleDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-
-import java.util.Optional;
 
 /**
  * AuthRoleMapstruct

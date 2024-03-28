@@ -1,15 +1,14 @@
 package io.nicheblog.dreamdiary.global.auth.entity;
 
-import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Where;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.*;
 import java.io.Serializable;
 
 /**

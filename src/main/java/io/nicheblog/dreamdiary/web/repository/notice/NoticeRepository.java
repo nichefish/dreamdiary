@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.repository.notice;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import org.springframework.stereotype.Repository;

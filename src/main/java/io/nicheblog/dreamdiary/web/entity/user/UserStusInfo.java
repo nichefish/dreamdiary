@@ -3,7 +3,6 @@ package io.nicheblog.dreamdiary.web.entity.user;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import lombok.*;
-import org.checkerframework.checker.units.qual.A;
 import org.hibernate.annotations.Comment;
 import org.springframework.format.annotation.DateTimeFormat;
 

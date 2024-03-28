@@ -2,25 +2,20 @@ package io.nicheblog.dreamdiary.web.entity.dream;
 
 import io.nicheblog.dreamdiary.api.dream.mapstruct.DreamPieceApiMapstruct;
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
 import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.util.CollectionUtils;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
