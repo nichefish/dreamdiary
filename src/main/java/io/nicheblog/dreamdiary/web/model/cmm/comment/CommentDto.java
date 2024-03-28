@@ -5,9 +5,6 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.json.JSONPropertyName;
-
-import javax.persistence.Column;
 
 /**
  * CommentDto

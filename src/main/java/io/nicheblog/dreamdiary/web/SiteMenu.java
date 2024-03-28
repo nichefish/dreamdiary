@@ -40,7 +40,7 @@ public class SiteMenu {
 
     // 공통화면 :: 로그인
     public static SiteAcsInfo LGN_PAGE = new SiteAcsInfo(
-            SiteTopMenu.NO_ASIDE,
+            SiteTopMenu.LGN,
             TOP_MENU_IDX,
             "로그인",
             SiteUrl.AUTH_LGN_FORM

@@ -55,6 +55,7 @@ public class BoardPostSpec
                 case "boardCd":
                     // boardCd를 contentType으로 이용
                     predicate.add(builder.equal(root.get("contentType"), searchParamMap.get(key)));
+                    continue;
                 case "title":
                     // 제목 = LIKE 검색
                     predicate.add(builder.like(root.get(key), "%" + searchParamMap.get(key) + "%"));

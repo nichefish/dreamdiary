@@ -191,7 +191,7 @@
         </div>
 
         <!-- #include:: component:: 첨부파일 추가추가 영역 -->
-        <#include "/view/_component/_atch_file_reg_template.ftlh">
+        <#include "/view/_component/atch_file/atch_file_reg_area.ftlh">
 
         <!-- #include:: component:: 파일시스템 참조 -->
 
@@ -264,7 +264,7 @@
 </div>
 
 <!-- #include:: component:: 첨부파일 추가 영역 template-->
-<#include "/view/_component/_atch_file.ftlh">
+<#include "/view/_component/atch_file/_atch_file_area.ftlh">
 <!-- #include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 

@@ -2,8 +2,8 @@ package io.nicheblog.dreamdiary.web.entity.board;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

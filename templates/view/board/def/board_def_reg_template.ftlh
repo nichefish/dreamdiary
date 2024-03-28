@@ -5,12 +5,12 @@
 <script type="text/x-handlebars-template" id="board_def_reg_template">
     <!--begin::Table body-->
     <tr>
+        <td class="text-center pt-2">
+            <input type="text" class="form-control required" name="boardNm" maxlength="32">
+        </td>
         <td class="text-start px-2 pt-2">
             <input type="text" class="form-control required cddata" name="boardCd" maxlength="16">
             <input type="hidden" class="form-control required" name="useYn" value="N">
-        </td>
-        <td class="text-center pt-2">
-            <input type="text" class="form-control required" name="boardNm" maxlength="32">
         </td>
         <td class="text-center pt-2">
             <input type="text" class="form-control cddata" name="ctgrClCd" maxlength="16">

@@ -9,12 +9,12 @@
             <!--begin::Table body-->
             <tbody>
                 <tr class="bg-hover-secondary">
+                    <td class="col-2 text-start col-form-label">
+                        {{mdfItemNm}} :
+                    </td>
                     <td class="col-2 text-start">
                         <b class="border-bottom">{{boardCd}}</b>
                         <input type="hidden" name="boardCd" value="{{boardCd}}">
-                    </td>
-                    <td class="col-2 text-start col-form-label">
-                        {{mdfItemNm}} :
                     </td>
                     <td class="col-4 text-start">
                         <div class="d-flex align-items-center">

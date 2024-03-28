@@ -171,7 +171,7 @@
     </div>
 
     <#assign post = tmplat>
-    <#include "/view/_component/_comment.ftlh">
+    <#include "/view/_component/comment/_comment_area.ftlh">
 </div>
 
 </@layout.layout>

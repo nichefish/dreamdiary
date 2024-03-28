@@ -279,11 +279,11 @@
     <#include "/view/board/post/board_post_list_extn_phone_modal.ftlh">
 </#if>
 
-<#include "/view/_component/_comment_list_modal.ftlh">
-<#include "/view/_component/_comment_list_template.ftlh">
+<#include "/view/_component/comment/_comment_list_modal.ftlh">
+<#include "/view/_component/comment/_comment_list_template.ftlh">
 
-<#include "/view/_component/_atch_file_list_modal.ftlh">
-<#include "/view/_component/_atch_file_list_template.ftlh">
+<#include "/view/_component/atch_file/_atch_file_list_modal.ftlh">
+<#include "/view/_component/atch_file/_atch_file_list_template.ftlh">
 
 </@layout.layout>
 

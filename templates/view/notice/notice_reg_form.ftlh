@@ -234,13 +234,13 @@
         </div>
 
         <!-- #include:: component:: 첨부파일 추가추가 영역 -->
-        <#include "/view/_component/_atch_file_reg_template.ftlh">
+        <#include "/view/_component/atch_file/atch_file_reg_area.ftlh">
 
         <!-- #include:: component:: 파일시스템 참조 -->
-        <#include "/view/_component/_flsys_reg_template.ftlh">
+        <#include "/view/_component/flsys/_flsys_reg_area.ftlh">
 
         <!-- #include:: component:: 태그 태그 -->
-        <#include "/view/_component/_tag_reg_template.ftlh">
+        <#include "/view/_component/tag/_tag_reg_area.ftlh">
 
         <div class="separator my-8"></div>
         <div class="row h-50px">
@@ -305,7 +305,7 @@
 </div>
 
 <!-- #include:: component:: 첨부파일 추가 영역 template-->
-<#include "/view/_component/_atch_file.ftlh">
+<#include "/view/_component/atch_file/_atch_file_area.ftlh">
 <!-- #include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 

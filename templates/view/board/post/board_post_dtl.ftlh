@@ -154,14 +154,14 @@
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
 
         <!-- #include: 첨부파일 표시 영역 -->
-        <#include "/view/_component/_atch_file_dtl_template.ftlh">
+        <#include "/view/_component/atch_file/_atch_file_dtl_area.ftlh">
 
         <!-- 파일시스템 참조 표시 영역 -->
 
         <!-- 노션 참조 표시 영역 -->
 
         <!-- 태그 표시 영역 -->
-        <#include "/view/_component/_tag_dtl_template.ftlh">
+        <#include "/view/_component/tag/_tag_dtl_area.ftlh">
     </div>
     <div class="separator separator-dashed border-gray-300 my-8"></div>
     <#if isMngr>
@@ -224,7 +224,7 @@
         </button>
     </div>
 
-    <#include "/view/_component/_comment.ftlh">
+    <#include "/view/_component/comment/_comment_area.ftlh">
 </div>
 
 </@layout.layout>

@@ -149,8 +149,8 @@
         <thead>
             <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 text-muted">
                 <th class="col-1 text-center wb-keepall w-5 hidden-table">번호</th>
-                <th class="col-lg-1 col-6 text-center wb-keepall">게시판 코드</th>
                 <th class="col-lg-2 col-2 text-center wb-keepall">게시판 이름</th>
+                <th class="col-lg-1 col-6 text-center wb-keepall">게시판 코드</th>
                 <th class="col-2 text-center wb-keepall w-15">글분류코드</th>
                 <th class="col-1 text-center wb-keepall w-10">메뉴번호</th>
                 <th class="col-1 text-center wb-keepall w-10">정렬 순서</th>
@@ -167,20 +167,20 @@
                 <td class="text-center hidden-table">
                     ${boardDef.rnum!}
                 </td>
-                <td class="text-start ps-10">
-                    <b class="cursor-help"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                       title="해당 게시판에 등록된 게시물이 있을 경우, 게시판 코드 변경은 권장되지 않습니다.">
-                        ${boardDef.boardCd!}
-                    </b>
-                </td>
                 <td class="text-start ps-15">
-                    ${boardDef.boardNm!}
+                    <b>${boardDef.boardNm!}</b>
                     <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard mt-4"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                        title="항목 수정 팝업을 호출합니다.">
                         <i class="bi bi-pencil-square fs-5 text-noti" onclick="Page.mdfItemForm('${boardDef.boardCd!}', 'boardNm', '게시판 이름', '${boardDef.boardNm!}');"></i>
                     </a>
+                </td>
+                <td class="text-start ps-15">
+                    <b class="cursor-help"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                       title="해당 게시판에 등록된 게시물이 있을 경우, 게시판 코드는 변경 불가능합니다.">
+                        ${boardDef.boardCd!}
+                    </b>
                 </td>
                 <td class="text-start ps-10 hidden-table">
                     ${boardDef.ctgrClCd!}

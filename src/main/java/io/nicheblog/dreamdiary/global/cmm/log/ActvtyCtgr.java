@@ -45,6 +45,9 @@ public enum ActvtyCtgr {
 
     LOG_ACTVTY("활동 로그"),
     LOG_SYS("시스템 로그"),
+    LOG_STATS("로그 통계"),
+
+    JANDI("잔디"),
 
     FILE("파일"),
     FLSYS("파일 시스템");

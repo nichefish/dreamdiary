@@ -82,5 +82,5 @@
     </#if>
 
     <!-- #include:: component:: 태그 클릭 필터링 -->
-    <#include "/view/_component/_tag_list_header.ftlh">
+    <#include "/view/_component/tag/_tag_list_header.ftlh">
 </form>

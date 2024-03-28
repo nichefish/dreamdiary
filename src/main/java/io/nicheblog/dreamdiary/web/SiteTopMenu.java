@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public enum SiteTopMenu {
 
     // COMMON
-    NO_ASIDE("00", "NO_ASIDE", "사이드바 미노출", false),
+    NO_ASIDE("00", "NO_ASIDE", "-", false),
     LGN("00", "0000", "로그인", false),
     ERROR("00", "0000", "ERROR", false),
     // PORTAL
