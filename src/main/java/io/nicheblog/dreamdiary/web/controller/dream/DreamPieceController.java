@@ -6,19 +6,16 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.dream.DreamDayDto;
-import io.nicheblog.dreamdiary.web.service.dream.DreamDayService;
+import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.service.dream.DreamPieceService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,70 +27,36 @@ import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
 /**
- * DreamDayController
+ * DreamPieceController
  * <pre>
- *  꿈 일자 Controller
+ *  꿈 조각 Controller
  * </pre>
  *
  * @author nichefish
  * @extends BaseControllerImpl
  */
 @Controller
-public class DreamDayController
+public class DreamPieceController
         extends BaseControllerImpl {
 
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "dreamDayService")
-    private DreamDayService dreamDayService;
+    @Resource(name = "dreamPieceService")
+    private DreamPieceService dreamPieceService;
 
     /**
-     * 꿈 일자 화면 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
-     */
-    @GetMapping(SiteUrl.DREAM_DAY_PAGE)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String dreamDayPage(
-            final LogActvtyParam logParam,
-            final ModelMap model
-    ) throws Exception {
-
-        /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.DREAM.setAcsPageInfo(Constant.PAGE_LIST));
-
-        boolean isSuccess = false;
-        String resultMsg = "";
-        try {
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
-        } finally {
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return "/view/dream/day/dream_day_page";
-    }
-
-
-    /**
-     * 꿈 일자 등록/수정 처리 (Ajax)
+     * 꿈 조각 등록/수정 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @Operation(
-            summary = "꿈 일자 등록/수정",
-            description = "꿈 일자 정보를 등록/수정한다."
+            summary = "꿈 조각 등록/수정",
+            description = "꿈 조각 정보를 등록/수정한다."
     )
-    @PostMapping(value = {SiteUrl.DREAM_DAY_REG_AJAX, SiteUrl.DREAM_DAY_MDF_AJAX})
+    @PostMapping(value = {SiteUrl.DREAM_PIECE_REG_AJAX, SiteUrl.DREAM_PIECE_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> dreamDayRegAjax(
-            final @Valid DreamDayDto dreamDay,
+    public ResponseEntity<AjaxResponse> dreamPieceRegAjax(
+            final @Valid DreamPieceDto dreamPiece,
             final @RequestParam("postNo") @Nullable Integer postNo,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
@@ -106,9 +69,9 @@ public class DreamDayController
         String resultMsg = "";
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            boolean isReg = dreamDay.getDreamDayNo() == null;
-            DreamDayDto result = isReg ? dreamDayService.regist(dreamDay, request) : dreamDayService.modify(dreamDay, postNo, request);
-            isSuccess = (result.getDreamDayNo() != null);
+            boolean isReg = dreamPiece.getPostNo() == null;
+            DreamPieceDto result = isReg ? dreamPieceService.regist(dreamPiece, request) : dreamPieceService.modify(dreamPiece, postNo, request);
+            isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
@@ -117,7 +80,7 @@ public class DreamDayController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(dreamDay.toString());
+            logParam.setCn(dreamPiece.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

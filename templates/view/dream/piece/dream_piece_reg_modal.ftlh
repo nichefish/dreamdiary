@@ -10,8 +10,8 @@
                 commons.validate.validateForm("#dreamPieceRegForm", DreamPiece.regAjax);
             },
             /** 꿈 조각 등록 모달 팝업 호출 */
-            regModal: function(dreamNo, dreamtDt) {
-                let obj = { "dreamNo": dreamNo, "dreamtDt": dreamtDt };
+            regModal: function(dreamDayNo, dreamtDt) {
+                let obj = { "dreamDayNo": dreamDayNo, "dreamtDt": dreamtDt };
                 commons.util.handlebarsTemplate(obj, "dream_piece_reg_header");
                 commons.util.handlebarsTemplate(obj, "dream_piece_reg", "show");
 
@@ -33,7 +33,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${ApiUrl.API_DREAM_PIECE_REG_AJAX!}";
+                    const url = "${SiteUrl.DREAM_PIECE_REG_AJAX!}";
                     let ajaxData = new FormData($("#dreamPieceRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })

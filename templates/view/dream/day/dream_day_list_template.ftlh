@@ -7,7 +7,7 @@
         <div class="row dreamday">
             <div class="row dreamday-header">
                 <div class="col-1 d-flex align-items-center">
-                    <i class="bi bi-calendar"></i>{{dreamtDt}}
+                    <i class="bi bi-calendar"></i> {{dreamtDt}}
                 </div>
                 <div class="col d-flex align-items-center">
                     <button type="button" class="btn btn-sm btn-primary"

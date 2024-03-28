@@ -38,16 +38,25 @@ public interface SiteUrl {
     String ADMIN_MAIN = PREFIX_ADMIN + MAIN;
     String ADMIN_TEST_PAGE = PREFIX_ADMIN + "/testPage.do";
 
-    /** 꿈 관리 */
+    /** 꿈 일자 */
     String PREFIX_DREAM = "/dream";
     String PREFIX_DAY = "/day";
     String PREFIX_DREAM_DAY = PREFIX_DREAM + PREFIX_DAY;
     String DREAM_DAY_PAGE = PREFIX_DREAM_DAY + "/dreamDayPage.do";
     String DREAM_DAY_LIST = PREFIX_DREAM_DAY + "/dreamDayList.do";
 
+    String DREAM_DAY_REG_AJAX = PREFIX_DREAM_DAY + "/dreamDayRegAjax.do";
+    String DREAM_DAY_MDF_AJAX = PREFIX_DREAM_DAY + "/dreamDayMdfAjax.do";
 
+    /** 꿈 조각 */
     String PREFIX_PIECE = "/piece";
     String PREFIX_DREAM_PIECE = PREFIX_DREAM + PREFIX_PIECE;
+    String DREAM_PIECE_REG_AJAX = PREFIX_DREAM_PIECE + "/dreamPieceRegAjax.do";
+    String DREAM_PIECE_MDF_AJAX = PREFIX_DREAM_PIECE + "/dreamPieceMdfAjax.do";
+
+
+
+
 
     /**
      * 공지사항

@@ -1,8 +1,12 @@
 package io.nicheblog.dreamdiary.api.dream.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
+import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 /**
  * DreamDayApiDto
@@ -20,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class DreamDayApiDto
-        extends BaseAtchDto {
+        extends BaseClsfDto {
 
     /** 꿈 일자 고유 번호 (PK) */
     private Integer dreamDayNo;
@@ -40,4 +44,7 @@ public class DreamDayApiDto
 
     /** 대략일자 (날짜미상시 해당일자 이후에 표기) */
     private String aprxmtDt;
+
+    /** 꿈 조각 목록 */
+    private List<DreamPieceDto> dreamPieceList;
 }

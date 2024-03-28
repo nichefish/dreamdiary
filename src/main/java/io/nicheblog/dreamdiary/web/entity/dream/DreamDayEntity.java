@@ -1,20 +1,29 @@
 package io.nicheblog.dreamdiary.web.entity.dream;
 
+import io.nicheblog.dreamdiary.api.dream.mapstruct.DreamPieceApiMapstruct;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
+import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * DreamDayEntity
@@ -90,4 +99,43 @@ public class DreamDayEntity
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Comment("대략일자 (날짜미상시 해당일자 이후에 표기)")
     private Date aprxmtDt;
+
+    /**
+     * 꿈 조각 목록
+     */
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dream_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.SELECT)
+    @OrderBy("idx ASC")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("댓글 목록")
+    private List<DreamPieceEntity> dreamPieceList;
+
+    /** ----- */
+
+    public List<DreamPieceDto> getDreamPieceDtoList() {
+        if (CollectionUtils.isEmpty(this.dreamPieceList)) return null;
+        return this.dreamPieceList.stream()
+                .map(entity -> {
+                    try {
+                        return DreamPieceMapstruct.INSTANCE.toDto(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<DreamPieceDto> getDreamPieceApiDtoList() {
+        if (CollectionUtils.isEmpty(this.dreamPieceList)) return null;
+        return this.dreamPieceList.stream()
+                .map(entity -> {
+                    try {
+                        return DreamPieceApiMapstruct.INSTANCE.toDto(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 }
