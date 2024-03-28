@@ -33,16 +33,16 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * CmmFileService
+ * FileService
  * <pre>
  *  공통 > 파일 처리 서비스 모듈
  * </pre>
  *
  * @author nichefish
  */
-@Service("cmmFileService")
+@Service("fileService")
 @Log4j2
-public class CmmFileService {
+public class FileService {
 
     AtchFileMapstruct atchFileMapstruct = AtchFileMapstruct.INSTANCE;
     AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;

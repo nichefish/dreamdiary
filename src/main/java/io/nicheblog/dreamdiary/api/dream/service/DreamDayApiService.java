@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.api.dream.service;
 
 import io.nicheblog.dreamdiary.api.dream.mapstruct.DreamDayApiMapstruct;
 import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiDto;
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
 import io.nicheblog.dreamdiary.web.repository.dream.DreamDayRepository;
@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 @Service("dreamDayApiService")
 @Log4j2
 public class DreamDayApiService
-        implements BaseMultiCrudService<DreamDayApiDto, DreamDayApiDto, Integer, DreamDayEntity, DreamDayRepository, DreamDaySpec, DreamDayApiMapstruct, CmmFileService> {
+        implements BaseMultiCrudService<DreamDayApiDto, DreamDayApiDto, Integer, DreamDayEntity, DreamDayRepository, DreamDaySpec, DreamDayApiMapstruct, FileService> {
 
     private final DreamDayApiMapstruct dreamDayMapstruct = DreamDayApiMapstruct.INSTANCE;
 
@@ -32,8 +32,8 @@ public class DreamDayApiService
     private DreamDayRepository dreamDayRepository;
     @Resource(name = "dreamDaySpec")
     private DreamDaySpec dreamDaySpec;
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
+    @Resource(name = "fileService")
+    private FileService fileService;
 
     @Override
     public DreamDayRepository getRepository() {
@@ -51,7 +51,7 @@ public class DreamDayApiService
     }
 
     @Override
-    public CmmFileService getFileService() {
-        return this.cmmFileService;
+    public FileService getFileService() {
+        return this.fileService;
     }
 }

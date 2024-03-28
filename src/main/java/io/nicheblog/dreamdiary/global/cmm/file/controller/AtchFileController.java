@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.global.cmm.file.controller;
 
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -41,8 +41,8 @@ import java.util.List;
 public class AtchFileController
         extends BaseControllerImpl {
 
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
+    @Resource(name = "fileService")
+    private FileService fileService;
 
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FILE;
 
@@ -64,7 +64,7 @@ public class AtchFileController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = cmmFileService.fileChck(fileId);
+            isSuccess = fileService.fileChck(fileId);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
@@ -98,7 +98,7 @@ public class AtchFileController
         String resultMsg = "";
         try {
             Integer atchFileNo = Integer.parseInt(atchFileNoStr);
-            List<AtchFileDtlDto> fileList = cmmFileService.getFileDtlDtoList(atchFileNo);
+            List<AtchFileDtlDto> fileList = fileService.getFileDtlDtoList(atchFileNo);
             isSuccess = (fileList != null);
             ajaxResponse.setResultList(fileList);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -138,11 +138,11 @@ public class AtchFileController
             // 파일 정보 조회
             assert atchFileDtlNoStr != null;    // dtlId = null일 경우 catch로 바로 넘김
             Integer atchFileDtlNo = Integer.parseInt(atchFileDtlNoStr);
-            AtchFileDtlEntity atchFileDtl = cmmFileService.getFileDtlEntity(atchFileDtlNo);
+            AtchFileDtlEntity atchFileDtl = fileService.getFileDtlEntity(atchFileDtlNo);
             String orgnFileNm = atchFileDtl.getOrgnFileNm();
             // 파일 다운로드 처리 시작
             File file = new File(atchFileDtl.getFileStrePath(), atchFileDtl.getStreFileNm());
-            cmmFileService.downloadFile(file, orgnFileNm);
+            fileService.downloadFile(file, orgnFileNm);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -178,7 +178,7 @@ public class AtchFileController
             if ("ceremony".equals(dirName)) dir = "시무식";
             File file = new File("vod-storage/" + dir + "/" + fileName);
             log.debug("file: {}", file);
-            cmmFileService.downloadFile(file, fileName);
+            fileService.downloadFile(file, fileName);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -210,7 +210,7 @@ public class AtchFileController
         try {
             File file = new File("content/" + fileName);
             log.debug("file: {}", file);
-            cmmFileService.downloadFile(file, fileName);
+            fileService.downloadFile(file, fileName);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -243,7 +243,7 @@ public class AtchFileController
         String resultMsg = "";
         try {
             // 파일 영역 처리 후 업로드 정보 받아서 반환
-            AtchFileDtlDto atchfileDtl = cmmFileService.uploadDtlFile(request);
+            AtchFileDtlDto atchfileDtl = fileService.uploadDtlFile(request);
             isSuccess = (atchfileDtl.getAtchFileDtlNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             if (isSuccess) ajaxResponse.setResultObj(atchfileDtl);

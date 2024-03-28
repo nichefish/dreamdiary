@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
@@ -19,11 +18,11 @@ import java.io.Serializable;
  * @author nichefish
  * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-public interface BaseMultiCrudService<Dto extends BaseAtchDto, ListDto extends BaseAtchDto, Key extends Serializable, Entity extends BaseAtchEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>, FileService extends CmmFileService>
+public interface BaseMultiCrudService<Dto extends BaseAtchDto, ListDto extends BaseAtchDto, Key extends Serializable, Entity extends BaseAtchEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>, FileService extends io.nicheblog.dreamdiary.global.cmm.file.service.FileService>
         extends BaseCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     // Resource : repository
-    FileService getFileService();
+    io.nicheblog.dreamdiary.global.cmm.file.service.FileService getFileService();
 
     /**
      * default: 게시물 등록 (Multipart)
@@ -32,7 +31,7 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto, ListDto extends B
             final Dto dto,
             final MultipartHttpServletRequest request
     ) throws Exception {
-        FileService fileService = this.getFileService();
+        io.nicheblog.dreamdiary.global.cmm.file.service.FileService fileService = this.getFileService();
         // 파일 영역 처리
         Integer atchFileNo = dto.getAtchFileNo();
         dto.setAtchFileNo(fileService.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
@@ -48,7 +47,7 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto, ListDto extends B
             final Key key,
             final MultipartHttpServletRequest request
     ) throws Exception {
-        FileService fileService = this.getFileService();
+        io.nicheblog.dreamdiary.global.cmm.file.service.FileService fileService = this.getFileService();
         // 파일 영역 처리
         Integer atchFileNo = dto.getAtchFileNo();
         dto.setAtchFileNo(fileService.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.

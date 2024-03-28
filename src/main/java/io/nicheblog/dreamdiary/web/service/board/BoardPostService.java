@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.board;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
@@ -35,14 +35,14 @@ import java.util.Map;
 @Service("boardPostService")
 @Log4j2
 public class BoardPostService
-        implements BasePostService<BoardPostDto, BoardPostListDto, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct, CmmFileService> {
+        implements BasePostService<BoardPostDto, BoardPostListDto, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct, FileService> {
 
     @Resource(name = "boardPostRepository")
     private BoardPostRepository boardPostRepository;
     @Resource(name = "boardPostSpec")
     private BoardPostSpec boardPostSpec;
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
+    @Resource(name = "fileService")
+    private FileService fileService;
 
     private final BoardPostMapstruct postMapstruct = BoardPostMapstruct.INSTANCE;
 
@@ -67,8 +67,8 @@ public class BoardPostService
     }
 
     @Override
-    public CmmFileService getFileService() {
-        return this.cmmFileService;
+    public FileService getFileService() {
+        return this.fileService;
     }
 
     /**

@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.PopupMapstruct;
@@ -22,14 +22,14 @@ import javax.annotation.Resource;
  */
 @Service("popupService")
 public class PopupService
-        implements BaseMultiCrudService<PopupDto, PopupDto, Integer, PopupEntity, PopupRepository, PopupSpec, PopupMapstruct, CmmFileService> {
+        implements BaseMultiCrudService<PopupDto, PopupDto, Integer, PopupEntity, PopupRepository, PopupSpec, PopupMapstruct, FileService> {
 
     @Resource(name = "popupRepository")
     private PopupRepository popupRepository;
     @Resource(name = "popupSpec")
     private PopupSpec popupSpec;
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
+    @Resource(name = "fileService")
+    private FileService fileService;
 
     private final PopupMapstruct popupMapstruct = PopupMapstruct.INSTANCE;
 
@@ -44,8 +44,8 @@ public class PopupService
     }
 
     @Override
-    public CmmFileService getFileService() {
-        return this.cmmFileService;
+    public FileService getFileService() {
+        return this.fileService;
     }
 
     @Override

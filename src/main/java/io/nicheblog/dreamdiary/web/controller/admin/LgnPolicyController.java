@@ -42,7 +42,6 @@ public class LgnPolicyController
 
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LGN_POLICY;      // 작업 카테고리 (로그 적재용)
 
-
     @Resource(name = "lgnPolicyService")
     private LgnPolicyService lgnPolicyService;
 
