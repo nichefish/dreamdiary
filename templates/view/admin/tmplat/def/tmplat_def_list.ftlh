@@ -148,7 +148,7 @@
                     ${tmplat.regDt!}
                 </td>
                 <td class="text-center hidden-table">
-                    ${tmplat.postHit!0?string.number}
+                    ${tmplat.hitCnt!0?string.number}
                 </td>
             </tr>
         </#list>
@@ -195,7 +195,7 @@
                     ${tmplat.regDt!}
                 </td>
                 <td class="text-center hidden-table">
-                    ${tmplat.postHit!0?string.number}
+                    ${tmplat.hitCnt!0?string.number}
                 </td>
             </tr>
         <#else>

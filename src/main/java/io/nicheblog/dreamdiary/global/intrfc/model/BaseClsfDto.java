@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 import java.util.List;
 
 /**
- * BasePostDto
+ * BaseClsfDto
  * <pre>
  *  (공통/상속) 게시판 Dto
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
@@ -26,7 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class  BaseClsfDto
+public class BaseClsfDto
         extends BaseAtchDto {
 
     /**
@@ -36,7 +36,7 @@ public class  BaseClsfDto
     /**
      * 게시판 코드
      */
-    protected String boardCd;
+    protected String contentType;
 
     /**
      * 제목
@@ -86,8 +86,8 @@ public class  BaseClsfDto
     /**
      * 복합키 객체 반환
      */
-    public BasePostKey getPostKey() {
-        return new BasePostKey(this.getPostNo(), this.getBoardCd());
+    public BaseClsfKey getPostKey() {
+        return new BaseClsfKey(this.postNo, this.contentType);
     }
 
     /**

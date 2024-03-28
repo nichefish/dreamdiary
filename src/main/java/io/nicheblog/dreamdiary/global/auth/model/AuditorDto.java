@@ -29,7 +29,7 @@ public class AuditorDto
     /**
      * 처리자 이름
      */
-    private String userNm;
+    private String nickNm;
     /**
      * 권한코드
      */

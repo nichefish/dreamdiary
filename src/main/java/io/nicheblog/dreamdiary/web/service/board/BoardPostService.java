@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.service.board;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
@@ -35,7 +35,7 @@ import java.util.Map;
 @Service("boardPostService")
 @Log4j2
 public class BoardPostService
-        implements BasePostService<BoardPostDto, BoardPostListDto, BasePostKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct, CmmFileService> {
+        implements BasePostService<BoardPostDto, BoardPostListDto, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct, CmmFileService> {
 
     @Resource(name = "boardPostRepository")
     private BoardPostRepository boardPostRepository;
@@ -113,7 +113,7 @@ public class BoardPostService
      * 게시판 > 게시판 조회 (dto level)
      */
     @Override
-    public BoardPostDto getDtlDto(final BasePostKey key) throws Exception {
+    public BoardPostDto getDtlDto(final BaseClsfKey key) throws Exception {
         BoardPostEntity rsBoardPostEntity = this.getDtlEntity(key);       // Entity 레벨 조회
         BoardPostDto rsDto = postMapstruct.toDto(rsBoardPostEntity);
         String ctgrNm = cdService.getDtlCdNm(rsDto.getCtgrClCd(), rsDto.getCtgrCd());

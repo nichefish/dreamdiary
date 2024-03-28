@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -52,7 +52,7 @@ public class CommentDto
     /**
      * 복합키 객체 반환
      */
-    public BasePostKey getPostKey() {
-        return new BasePostKey(this.getPostNo(), this.getBoardCd());
+    public BaseClsfKey getPostKey() {
+        return new BaseClsfKey(this.postNo, this.contentType);
     }
 }

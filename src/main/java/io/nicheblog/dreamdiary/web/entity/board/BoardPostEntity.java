@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.web.entity.board;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +29,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "board_post")
-@IdClass(BasePostKey.class)      // 분류코드+상세코드 복합키 적용
+@IdClass(BaseClsfKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
@@ -45,7 +45,7 @@ public class BoardPostEntity
      * (복합키 사용, 시퀀스 생성 로직을 위해 재정의)
      */
     @Id
-    @TableGenerator(name = "board_post", table = "cmm_sequece", pkColumnName = "SEQ_NM", valueColumnName = "SEQ_VAL", pkColumnValue = "POST_NO", initialValue = 1, allocationSize = 1)
+    @TableGenerator(name = "board_post", table = "cmm_sequence", pkColumnName = "SEQ_NM", valueColumnName = "SEQ_VAL", pkColumnValue = "POST_NO", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "board_post")
     @Column(name = "post_no")
     @Comment("글번호 (key)")

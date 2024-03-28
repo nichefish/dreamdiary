@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import org.springframework.stereotype.Repository;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("boardPostRepository")
 public interface BoardPostRepository
-        extends BaseRepository<BoardPostEntity, BasePostKey> {
+        extends BaseRepository<BoardPostEntity, BaseClsfKey> {
     //
 }

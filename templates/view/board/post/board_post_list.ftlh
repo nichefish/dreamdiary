@@ -146,7 +146,7 @@
                     <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
                         <a class="badge badge-secondary p-2 btn-white blank blink-slow"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
-                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileNo!}');"></i>
+                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.modal('${post.atchFileNo!}');"></i>
                         </a>
                     <#else>
                         -
@@ -170,7 +170,7 @@
                     </span>
                 </td>
                 <td class="text-center hidden-table">
-                    ${post.postHit!0?string.number}
+                    ${post.hitCnt!0?string.number}
                 </td>
             </tr>
         </#list>
@@ -231,7 +231,7 @@
                     <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
                         <a class="badge badge-secondary p-2 btn-white blank blink-slow"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
-                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileNo!}');"></i>
+                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.modal('${post.atchFileNo!}');"></i>
                         </a>
                     <#else>
                         -
@@ -256,7 +256,7 @@
                     </span>
                 </td>
                 <td class="text-center hidden-table">
-                    ${post.postHit!0?string.number}
+                    ${post.hitCnt!0?string.number}
                 </td>
             </tr>
         <#else>

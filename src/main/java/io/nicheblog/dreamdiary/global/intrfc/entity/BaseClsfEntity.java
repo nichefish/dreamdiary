@@ -65,8 +65,8 @@ public class BaseClsfEntity
     /**
      * 복합키 객체 반환
      */
-    protected BasePostKey getPostKey() {
-        return new BasePostKey(this.postNo, this.contentType);
+    protected BaseClsfKey getPostKey() {
+        return new BaseClsfKey(this.postNo, this.contentType);
     }
 
     /**

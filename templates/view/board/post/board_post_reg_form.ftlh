@@ -106,7 +106,7 @@
         <input type="hidden" name="postNo" value="${post.postNo!}">
         <input type="hidden" name="boardCd" id="boardCd" value="<#if isMdf>${post.boardCd!}<#else>${boardCd!}</#if>">
         <input type="hidden" name="atchFileNo" value="${post.atchFileNo!}">
-        <input type="hidden" name="postHit" value="${post.postHit!0?string.number}">
+        <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
         <!--begin::Row-->
         <div class="row d-flex mb-8">
             <div class="col-12">
