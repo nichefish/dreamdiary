@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.comment;
 
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
@@ -18,9 +19,9 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface CommentMapstruct
-        extends BaseListMapstruct<CommentDto, CommentDto, CommentEntity> {
+        extends BaseAuditListMapstruct<CommentDto, CommentDto, CommentEntity> {
 
     CommentMapstruct INSTANCE = Mappers.getMapper(CommentMapstruct.class);
 
@@ -29,9 +30,6 @@ public interface CommentMapstruct
      */
     @Override
     @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
-    @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
     CommentDto toDto(final CommentEntity entity) throws Exception;
 
     /**
@@ -39,9 +37,6 @@ public interface CommentMapstruct
      */
     @Override
     @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
-    @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
     CommentDto toListDto(final CommentEntity entity) throws Exception;
 
     /**

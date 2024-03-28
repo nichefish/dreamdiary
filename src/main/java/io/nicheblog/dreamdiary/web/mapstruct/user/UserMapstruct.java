@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpInfo;
@@ -22,11 +23,46 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusInfo.class, UserAcsIpInfo.class, UserProflMapstruct.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusInfo.class, UserAcsIpInfo.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserMapstruct
-        extends BaseListMapstruct<UserDto, UserListDto, UserEntity> {
+        extends BaseAuditListMapstruct<UserDto, UserListDto, UserEntity> {
 
     UserMapstruct INSTANCE = Mappers.getMapper(UserMapstruct.class);
+
+
+    /**
+     * Entity -> Dto
+     */
+    @Override
+    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
+    // @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
+    // @Mapping(target = "authNm", expression = "java(entity.getAuthCdInfo() != null ? entity.getAuthCdInfo().getDtlCdNm() : null)")
+    UserDto toDto(final UserEntity entity) throws Exception;
+
+    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
+    // @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
+    // @Mapping(target = "authNm", expression = "java(entity.getAuthCdInfo() != null ? entity.getAuthCdInfo().getDtlCdNm() : null)")
+    // UserDto toDto(final UserReqstEntity entity) throws Exception;
+
+    /**
+     * Entity -> ListDto
+     */
+    @Override
+    // @Mapping(target = "authNm", expression = "java((entity.getAuthCdInfo() != null) ? entity.getAuthCdInfo().getDtlCdNm() : null)")
+    // @Mapping(target = "userNm", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getUserNm() : entity.getNickNm())")
+    // @Mapping(target = "jobTitleNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getJobTitleCd())) ? entity.getUserProfl().getJobTitleCdInfo().getDtlCdNm() : null)")
+    // @Mapping(target = "apntcYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getApntcYn() : null)")
+    // @Mapping(target = "cmpyNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getCmpyCd())) ? entity.getUserProfl().getCmpyCdInfo().getDtlCdNm() : null)")
+    // @Mapping(target = "teamNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getTeamCd())) ? entity.getUserProfl().getTeamCdInfo().getDtlCdNm() : null)")
+    // @Mapping(target = "emplymNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getEmplymCd())) ? entity.getUserProfl().getEmplymCdInfo().getDtlCdNm() : null)")
+    // @Mapping(target = "ecnyDt", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getEcnyDt(), DateUtils.PTN_DATE) : null)")
+    // @Mapping(target = "cttpc", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getCttpc() : null)")
+    // @Mapping(target = "email", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getEmail() : null)")
+    // @Mapping(target = "brthdy", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getBrthdy(), DateUtils.PTN_DATE) : null)")
+    // @Mapping(target = "lunarYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getLunarYn() : null)")
+    // @Mapping(target = "userProflYn", expression = "java(entity.getUserProfl() != null ? \"Y\" : \"N\")")
+    // @Mapping(target = "retireYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getRetireYn() : null)")
+    UserListDto toListDto(final UserEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
@@ -42,44 +78,6 @@ public interface UserMapstruct
      */
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
     // UserReqstEntity toReqstEntity(final UserDto dto) throws Exception;
-
-    /**
-     * Entity -> Dto
-     */
-    @Override
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
-    // @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
-    // @Mapping(target = "authNm", expression = "java(entity.getAuthCdInfo() != null ? entity.getAuthCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    UserDto toDto(final UserEntity entity) throws Exception;
-
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
-    // @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
-    // @Mapping(target = "authNm", expression = "java(entity.getAuthCdInfo() != null ? entity.getAuthCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    // UserDto toDto(final UserReqstEntity entity) throws Exception;
-
-    /**
-     * Entity -> ListDto
-     */
-    @Override
-    // @Mapping(target = "authNm", expression = "java((entity.getAuthCdInfo() != null) ? entity.getAuthCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    // @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    // @Mapping(target = "userNm", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getUserNm() : entity.getNickNm())")
-    // @Mapping(target = "jobTitleNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getJobTitleCd())) ? entity.getUserProfl().getJobTitleCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "apntcYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getApntcYn() : null)")
-    // @Mapping(target = "cmpyNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getCmpyCd())) ? entity.getUserProfl().getCmpyCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "teamNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getTeamCd())) ? entity.getUserProfl().getTeamCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "emplymNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getEmplymCd())) ? entity.getUserProfl().getEmplymCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "ecnyDt", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getEcnyDt(), DateUtils.PTN_DATE) : null)")
-    // @Mapping(target = "cttpc", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getCttpc() : null)")
-    // @Mapping(target = "email", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getEmail() : null)")
-    // @Mapping(target = "brthdy", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getBrthdy(), DateUtils.PTN_DATE) : null)")
-    // @Mapping(target = "lunarYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getLunarYn() : null)")
-    // @Mapping(target = "userProflYn", expression = "java(entity.getUserProfl() != null ? \"Y\" : \"N\")")
-    // @Mapping(target = "retireYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getRetireYn() : null)")
-    UserListDto toListDto(final UserEntity entity) throws Exception;
 
     /**
      * Entity -> ListXlsxDto

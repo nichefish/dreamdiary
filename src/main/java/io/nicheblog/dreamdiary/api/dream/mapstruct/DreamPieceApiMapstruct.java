@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.api.dream.mapstruct;
 
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
@@ -17,9 +18,9 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface DreamPieceApiMapstruct
-        extends BaseListMapstruct<DreamPieceDto, DreamPieceDto, DreamPieceEntity> {
+        extends BaseAuditListMapstruct<DreamPieceDto, DreamPieceDto, DreamPieceEntity> {
 
     DreamPieceApiMapstruct INSTANCE = Mappers.getMapper(DreamPieceApiMapstruct.class);
 
@@ -27,18 +28,12 @@ public interface DreamPieceApiMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
     DreamPieceDto toDto(final DreamPieceEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
-    @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
     DreamPieceDto toListDto(final DreamPieceEntity entity) throws Exception;
 
     /**

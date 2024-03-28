@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.api.dream.mapstruct;
 
 import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiDto;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
@@ -17,9 +18,9 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface DreamDayApiMapstruct
-        extends BaseListMapstruct<DreamDayApiDto, DreamDayApiDto, DreamDayEntity> {
+        extends BaseAuditListMapstruct<DreamDayApiDto, DreamDayApiDto, DreamDayEntity> {
 
     DreamDayApiMapstruct INSTANCE = Mappers.getMapper(DreamDayApiMapstruct.class);
 
@@ -28,9 +29,6 @@ public interface DreamDayApiMapstruct
      */
     @Override
     @Mapping(target = "dreamtDt", expression = "java(DateUtils.asStr(entity.getDreamtDt(), DateUtils.PTN_DATE))")
-    @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
     DreamDayApiDto toDto(final DreamDayEntity entity) throws Exception;
 
     /**
@@ -38,9 +36,6 @@ public interface DreamDayApiMapstruct
      */
     @Override
     @Mapping(target = "dreamtDt", expression = "java(DateUtils.asStr(entity.getDreamtDt(), DateUtils.PTN_DATE))")
-    @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
     DreamDayApiDto toListDto(final DreamDayEntity entity) throws Exception;
 
     /**
