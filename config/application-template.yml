@@ -12,6 +12,9 @@ remember-me:
     param: "remember-me"
     key: "dreamdiary.nicheblog.io"
 
+external-path:
+  -
+
 #jandi messenger properties
 api:
     jandi:

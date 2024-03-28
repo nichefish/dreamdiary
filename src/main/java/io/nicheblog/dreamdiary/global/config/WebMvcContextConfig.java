@@ -55,32 +55,19 @@ public class WebMvcContextConfig
      **/
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
         // 파일 업로드 경로
-        String upfileContextPath = "/upfiles/**";
-        String upfileResourcePath = "file:/webapps/intranet/upfiles/";
+        String upfileContextPath = "/upfile/**";
+        String upfileResourcePath = "upfile/";
         registry.addResourceHandler(upfileContextPath)
                 .addResourceLocations(upfileResourcePath)
                 .resourceChain(true)
                 .addResolver(new UTF8DecodeResourceResolver());
         // workspace 경로
-        String workspaceContextPath = "/workspace/**";
-        String workspaceResourcePath = "file:/webapps/intranet/workspace/";
+        String workspaceContextPath = "/flsys/**";
+        String workspaceResourcePath = "flsys/";
         registry.addResourceHandler(workspaceContextPath)
                 .addResourceLocations(workspaceResourcePath)
-                .resourceChain(true)
-                .addResolver(new UTF8DecodeResourceResolver());
-        // storage 경로
-        String storageContextPath = "/storage/**";
-        String storageResourcePath = "file:/webapps/intranet/storage/";
-        registry.addResourceHandler(storageContextPath)
-                .addResourceLocations(storageResourcePath)
-                .resourceChain(true)
-                .addResolver(new UTF8DecodeResourceResolver());
-        // vod-storage 경로
-        String vodContextPath = "/vod-storage/**";
-        String vodResourcePath = "file:/webapps/intranet/vod-storage/";
-        registry.addResourceHandler(vodContextPath)
-                .addResourceLocations(vodResourcePath)
                 .resourceChain(true)
                 .addResolver(new UTF8DecodeResourceResolver());
         // react 경로 = 기본경로에 추가로 동작하도록

@@ -121,7 +121,7 @@ public class WebSecurityConfig
             .antMatchers(SiteUrl.AUTH_LGN_FORM)
             .permitAll()
             // static resource 전체 접근
-            .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfiles/public/**")
+            .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/public/**")
             .permitAll()
             // API 접근에는 인증 적용하지 않음
             // TODO: inbound API 쪽에 토큰 인증 적용하기

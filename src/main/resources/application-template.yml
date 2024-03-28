@@ -8,7 +8,7 @@ server:
 spring:
     servlet:
         multipart:
-            location: upfiles/
+            location: upfile/
     freemarker:
         cache: true
     datasource:

@@ -117,10 +117,10 @@ public class CmmFileService {
             final List<AtchFileDtlEntity> atchFileList
     ) throws Exception {
 
-        String path = "upfiles/";
+        String path = "upfile/";
         File file = new File(path);
         if (!file.exists()) if (!file.mkdirs()) throw new Exception("폴더 생성에 실패했습니다.");
-        path = "upfiles/" + DateUtils.getCurrDateStr(DateUtils.PTN_DATE) + "/";
+        path = "upfile/" + DateUtils.getCurrDateStr(DateUtils.PTN_DATE) + "/";
         file = new File(path);
         if (!file.exists()) if (!file.mkdirs()) throw new Exception("폴더 생성에 실패했습니다.");
 

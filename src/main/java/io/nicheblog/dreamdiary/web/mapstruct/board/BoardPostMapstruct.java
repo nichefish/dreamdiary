@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.board;
 
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
@@ -19,9 +20,9 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface BoardPostMapstruct
-        extends BaseListMapstruct<BoardPostDto, BoardPostListDto, BoardPostEntity> {
+        extends BaseAuditListMapstruct<BoardPostDto, BoardPostListDto, BoardPostEntity> {
 
     BoardPostMapstruct INSTANCE = Mappers.getMapper(BoardPostMapstruct.class);
 
@@ -34,10 +35,6 @@ public interface BoardPostMapstruct
     @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
     // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
-    @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    @Mapping(target = "mdfusrNm", expression = "java((entity.getMdfusrInfo() != null) ? entity.getMdfusrInfo().getNickNm() : null)")
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
     @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
     @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostDto toDto(final BoardPostEntity entity) throws Exception;
@@ -51,10 +48,6 @@ public interface BoardPostMapstruct
     @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
     // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
-    @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    @Mapping(target = "mdfusrNm", expression = "java((entity.getMdfusrInfo() != null) ? entity.getMdfusrInfo().getNickNm() : null)")
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
     @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
     @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostDto toDto(final BoardPostSmpEntity entity) throws Exception;
@@ -66,10 +59,6 @@ public interface BoardPostMapstruct
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
     @Mapping(target = "ctgrNm", expression = "java((entity.getCtgrCdInfo() != null) ? entity.getCtgrCdInfo().getDtlCdNm() : null)")
-    @Mapping(target = "regstrNm", expression = "java((entity.getRegstrInfo() != null) ? entity.getRegstrInfo().getNickNm() : null)")
-    @Mapping(target = "mdfusrNm", expression = "java((entity.getMdfusrInfo() != null) ? entity.getMdfusrInfo().getNickNm() : null)")
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
-    @Mapping(target = "mdfDt", expression = "java(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME))")
     @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
     @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostListDto toListDto(final BoardPostEntity entity) throws Exception;
