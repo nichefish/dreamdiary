@@ -1,7 +1,6 @@
 <!--
  -- 레이아웃 > 툴바
  -- @included in : layout
- -- TODO: 현재 선택된 메뉴가 띄워지게
  -->
 <!--begin::Toolbar-->
 <div class="toolbar" id="kt_toolbar m-0 p-0">

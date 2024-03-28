@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.notice;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
@@ -34,9 +35,9 @@ public class NoticeEntity
         extends BasePostEntity {
 
     /** 필수: 게시물 코드 */
-    private static final String CONTENT_TYPE = "notice";
-    /** 필수: 글분류 코드 */
-    private static final String CTGR_CL_CD = "NOTICE_CTGR_CD";
+    private static final String CONTENT_TYPE = ContentType.NOTICE.key;
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
 
     /**
      * 글 번호
@@ -52,7 +53,7 @@ public class NoticeEntity
      */
     @Builder.Default
     @Column(name = "content_type")
-    private String boardCd = CONTENT_TYPE;
+    private String contentType = CONTENT_TYPE;
 
     /**
      * 팝업 노출여부

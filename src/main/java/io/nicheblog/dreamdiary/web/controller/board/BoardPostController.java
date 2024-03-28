@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -88,10 +87,10 @@ public class BoardPostController
     @GetMapping(SiteUrl.BOARD_POST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostList(
-            final LogActvtyParam logParam,
             final @ModelAttribute("searchParam") BoardPostSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final @RequestParam("boardCd") String boardCd,
+            final @RequestParam Map<String, Object> searchParamMap,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -146,8 +145,8 @@ public class BoardPostController
     @RequestMapping(SiteUrl.BOARD_POST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegForm(
-            final LogActvtyParam logParam,
             final @RequestParam("boardCd") String boardCd,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -157,7 +156,7 @@ public class BoardPostController
         /* 사이트 메뉴 설정 */
         BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
         SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
-        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("상세 조회"));
+        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo(Constant.PAGE_REG));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -193,8 +192,8 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegPreviewPop(
             final BoardPostDto boardPostDto,
-            final LogActvtyParam logParam,
             final @RequestParam("boardCd") String boardCd,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) {
 
@@ -240,8 +239,8 @@ public class BoardPostController
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostRegAjax(
             final @Valid BoardPostDto boardPostDto,
-            final LogActvtyParam logParam,
             final BoardPostKey key,
+            final LogActvtyParam logParam,
             // final @RequestParam("jandiYn") @Nullable String jandiYn,
             // final @RequestParam("trgetTopic") @Nullable String trgetTopic,
             final MultipartHttpServletRequest request,
@@ -298,24 +297,23 @@ public class BoardPostController
     @RequestMapping(value = SiteUrl.BOARD_POST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostDtl(
+            final BoardPostKey postKey,
+            final @RequestParam("boardCd") String boardCd,
             final LogActvtyParam logParam,
-            final BaseClsfKey postKey,
-            final @RequestParam("contentType") String contentType,
             final ModelMap model
     ) throws Exception {
 
         /* 게시판 정의 정보 조회 */
-        model.addAttribute("contentType", contentType);
+        model.addAttribute("boardCd", boardCd);
 
         /* 사이트 메뉴 설정 */
-        BoardDefDto boardDef = boardDefService.getDtlDto(contentType);
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(contentType);
-        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("상세 조회"));
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo(Constant.PAGE_DTL));
 
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            BoardPostDto rsDto = boardPostService.getDtlDto(postKey);
+            BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
             model.addAttribute("post", rsDto);
             // 열람자 목록 및 조회수 카운트 추가
             // try {
@@ -356,8 +354,8 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostDtlAjax(
-            final LogActvtyParam logParam,
-            final BaseClsfKey postKey
+            final BoardPostKey postKey,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -366,7 +364,7 @@ public class BoardPostController
         String resultMsg = "";
         try {
             // 게시판 정보 조회
-            BoardPostDto rsDto = boardPostService.getDtlDto(postKey);
+            BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
             // 열람자 목록 및 조회수 카운트 추가
             // try {
             //     List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
@@ -405,9 +403,9 @@ public class BoardPostController
     @RequestMapping(value = SiteUrl.BOARD_POST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostMdfForm(
-            final LogActvtyParam logParam,
-            final BaseClsfKey postKey,
+            final BoardPostKey postKey,
             final @RequestParam("boardCd") String boardCd,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -417,12 +415,12 @@ public class BoardPostController
         /* 사이트 메뉴 설정 */
         BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
         SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
-        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("수정"));
+        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo(Constant.PAGE_MDF));
 
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            BoardPostDto rsDto = boardPostService.getDtlDto(postKey);
+            BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
             isSuccess = rsDto.getPostNo() != null;
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             model.addAttribute("post", rsDto);
@@ -455,8 +453,8 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostDelAjax(
-            final LogActvtyParam logParam,
-            final BaseClsfKey postKey
+            final BoardPostKey postKey,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -464,7 +462,7 @@ public class BoardPostController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = boardPostService.delete(postKey);
+            isSuccess = boardPostService.delete(postKey.getClsfKey());
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

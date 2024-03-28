@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.notice;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,6 +22,19 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 public class NoticeListDto
         extends BasePostListDto {
+
+    /** 필수: 게시물 코드 */
+    private static final String CONTENT_TYPE = ContentType.NOTICE.key;
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
+
+    /**
+     * 게시판 코드
+     */
+    @Builder.Default
+    protected String contentType = CONTENT_TYPE;
+
+    /* ----- */
 
     /**
      * 글분류 코드

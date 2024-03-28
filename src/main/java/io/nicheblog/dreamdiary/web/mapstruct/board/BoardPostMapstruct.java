@@ -30,6 +30,7 @@ public interface BoardPostMapstruct
      * Entity -> Dto
      */
     @Override
+    @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
     @Mapping(target = "ctgrNm", expression = "java((entity.getCtgrCdInfo() != null) ? entity.getCtgrCdInfo().getDtlCdNm() : null)")
     @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")

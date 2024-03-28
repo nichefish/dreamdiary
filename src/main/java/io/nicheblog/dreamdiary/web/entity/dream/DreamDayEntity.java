@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE DREAM_DAY SET DEL_YN = 'Y' WHERE DREAM_DAY_NO = ?")
+@SQLDelete(sql = "UPDATE dream_day SET del_yn = 'Y' WHERE post_no = ?")
 public class DreamDayEntity
         extends BaseClsfEntity {
 

@@ -175,7 +175,7 @@
             </div>
             <div class="col-lg-1 col-3 d-flex align-items-center">
                 <label class="text-gray-700 fs-6 fw-bolder cursor-help"
-                       data-bs-toggle="tooltip" data-bs-placement="top" title="해당 글은 인트라넷 접속시&#10;화면에 팝업으로 표출됩니다.">
+                       data-bs-toggle="tooltip" data-bs-placement="top" title="해당 글은 사이트 접속시&#10;화면에 팝업으로 표출됩니다.">
                     팝업공지 여부
                 </label>
             </div>

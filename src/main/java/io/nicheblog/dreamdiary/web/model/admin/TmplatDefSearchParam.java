@@ -4,13 +4,13 @@ import io.nicheblog.dreamdiary.web.model.cmm.BaseSearchParam;
 import lombok.*;
 
 /**
- * TmplatDefSearchParamDto
+ * TmplatDefSearchParam
  * <pre>
  *  템플릿 정의 목록 검색 파라미터 Dto
  * </pre>
  *
  * @author nichefish
- * @extends BaseSearchParamDto
+ * @extends BaseSearchParam
  */
 @Getter
 @Setter

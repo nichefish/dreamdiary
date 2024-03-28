@@ -6,10 +6,11 @@
 
 -- -----------------------
 
--- 꿈 일자
+-- 꿈 일자 (dream_day)
+-- @extends: BaseClsfEntity
 CREATE TABLE IF NOT EXISTS dream_day (
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 일자 번호',
-    content_type VARCHAR(32) DEFAULT 'dream_day' COMMENT '게시판 코드',
+    content_type VARCHAR(32) DEFAULT 'dream_day' COMMENT '컨텐츠 타입',
     dreamt_dt DATE COMMENT '꿈 일자',
     dt_unknown_yn CHAR(1) DEFAULT 'N' COMMENT '날짜미상여부',
     yy INT COMMENT '년도',
@@ -27,13 +28,17 @@ CREATE TABLE IF NOT EXISTS dream_day (
     INDEX (dreamt_dt)
 ) COMMENT = '꿈 일자';
 
--- 꿈 조각
+-- 꿈 조각 (dream_piece)
+-- @extends: BasePostEntity
 CREATE TABLE IF NOT EXISTS dream_piece (
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 조각 번호',
-    content_type VARCHAR(32) DEFAULT 'dream_day' COMMENT '게시판 코드',
+    content_type VARCHAR(32) DEFAULT 'dream_day' COMMENT '컨텐츠 타입',
     dream_day_no INT COMMENT '꿈 일자 번호',
     idx INT DEFAULT 1 COMMENT '꿈 조각 인덱스',
-    -- post
+    edit_compt_yn CHAR(1) DEFAULT 'N' COMMENT '편집완료여부',
+    else_dream_yn CHAR(1) DEFAULT 'N' COMMENT '타인 꿈 여부',
+    else_dreamer_nm VARCHAR(64) COMMENT '꿈꾼이 이름',
+    -- POST
     title VARCHAR(200) COMMENT '제목',
     cn LONGTEXT COMMENT '내용',
     ctgr_cd VARCHAR(50) COMMENT '글분류코드',
@@ -41,10 +46,6 @@ CREATE TABLE IF NOT EXISTS dream_piece (
     hit_cnt INT DEFAULT 0 COMMENT '조회수',
     imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요여부',
     mdfable CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
-    --
-    edit_compt_yn CHAR(1) DEFAULT 'N' COMMENT '편집완료여부',
-    else_dream_yn CHAR(1) DEFAULT 'N' COMMENT '타인 꿈 여부',
-    else_dreamer_nm VARCHAR(64) COMMENT '꿈꾼이 이름',
     -- ATCH_FILE
     atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT

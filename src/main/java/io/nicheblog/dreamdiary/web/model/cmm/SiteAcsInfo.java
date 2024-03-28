@@ -11,7 +11,7 @@ import static io.nicheblog.dreamdiary.web.SiteTopMenu.NO_ASIDE;
 
 
 /**
- * SiteMenuAcsInfo
+ * SiteAcsInfo
  * <pre>
  *  메뉴 및 화면 정보 Dto
  * </pre>

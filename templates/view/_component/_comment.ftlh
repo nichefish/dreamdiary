@@ -73,7 +73,7 @@
                 }).then(function (result) {
                     if (!result.value) return;
                     const url = "${SiteUrl.COMMENT_DEL_AJAX!}";
-                    let ajaxData = {"postNo": postNo};
+                    let ajaxData = { "postNo": postNo, "actvtyCtgrCd": "${actvtyCtgrCd!}" };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -176,7 +176,7 @@
                 <form name="commentRegForm" id="commentRegForm" class="form">
                     <input type="hidden" name="postNo" />
                     <input type="hidden" name="refPostNo" value="${post.postNo!}" />
-                    <input type="hidden" name="refContentType" value="${post.boardCd!}" />
+                    <input type="hidden" name="refContentType" value="${post.contentType!}" />
                     <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" >
                     <div class="row">
                         <div class="col-xl-11 form-group mb-2">

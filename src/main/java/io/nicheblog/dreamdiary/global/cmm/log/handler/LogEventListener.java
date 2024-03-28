@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * LogEventListener
+ * LogActvtyEventListener
  * <pre>
  *  로그 이벤트 처리 핸들러
  * </pre>

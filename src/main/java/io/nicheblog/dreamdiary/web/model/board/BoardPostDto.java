@@ -29,10 +29,10 @@ public class BoardPostDto
         extends BasePostDto {
 
     /**
-     * 게시판 코드 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType
+     * 컨텐츠 타입 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType
      */
     @JsonProperty("contentType")
-    protected String boardCd;
+    private String boardCd;
 
     /**
      * 조치자(작업자)ID
@@ -103,11 +103,7 @@ public class BoardPostDto
 
     /* ----- */
 
-    public String getBoardCd() {
-        return this.contentType;
-    }
-
-/**
+    /**
      * 내부 값들 합쳐서 풀 타이틀 반환
      *//*
 

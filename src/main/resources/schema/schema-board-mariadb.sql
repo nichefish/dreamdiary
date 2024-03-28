@@ -1,4 +1,4 @@
--- 게시판 관련 테이블 생성 쿼리 정보를 입력한다.
+-- 일반게시판 관련 테이블 생성 쿼리 정보를 입력한다.
 -- "JPA CASCADE INSERT에서는 먼저 INSERT 후 나중에 FK값을 업데이트하게 되므로 FK가 NOT_NULL이면 에러가 발생한다."
 -- (=> JPA에서 다른 테이블과 연관성을 갖는 컬럼은 반드시 NULL을 허용해야 한다!) (NOT NULL이면 안된다)
 -- @database : mariadb
@@ -6,7 +6,8 @@
 
 -- ---------- --
 
--- 게시판 정의 정보 :: BaseManagtEntity 상속
+-- 일반게시판 정의 (board_def)
+-- @extends: BaseManagtEntity 상속
 CREATE TABLE IF NOT EXISTS board_def (
     board_cd VARCHAR(30) PRIMARY KEY COMMENT '게시판코드',
     board_nm VARCHAR(120) COMMENT '게시판 이름',
@@ -25,7 +26,8 @@ CREATE TABLE IF NOT EXISTS board_def (
 
 -- ---------- --
 
--- 게시판 게시물 :: BaseClsfEntity 상속
+-- 일반게시판 게시물 (board_post)
+-- @extends: BasePostEntity
 CREATE TABLE IF NOT EXISTS board_post(
     post_no INT COMMENT '글 번호',
     content_type VARCHAR(30) COMMENT '게시판 코드',
@@ -54,7 +56,8 @@ CREATE TABLE IF NOT EXISTS board_post(
 
 -- ---------- --
 
--- (공통) 댓글 :: BaseClsfEntity 상속
+-- 댓글 (comment)
+-- @extends: BaseClsfEntity
 CREATE TABLE IF NOT EXISTS comment (
     post_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '댓글 번호',
     content_type VARCHAR(32) DEFAULT 'comment' COMMENT '게시판 코드',

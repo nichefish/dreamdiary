@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ContentType {
 
+    DEFAULT("default", "기본"),
     NOTICE("notice", "공지사항"),
     COMMENT("comment", "댓글"),
     DREAM_DAY("dream_day", "꿈 일자"),

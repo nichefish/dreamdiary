@@ -34,8 +34,7 @@ import java.util.Map;
 /**
  * CommentController
  * <pre>
- *  게시판 댓글 컨트롤러
- *  ※게시판 댓글(board_comment) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  댓글 컨트롤러
  * </pre>
  *
  * @author nichefish
@@ -50,7 +49,7 @@ public class CommentController
     private CommentService commentService;
 
     /**
-     * 게시판 댓글 목록 조회 (Ajax)
+     * 댓글 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.COMMENT_LIST_AJAX)
@@ -92,7 +91,7 @@ public class CommentController
     }
 
     /**
-     * 게시판 댓글 등록/수정 (Ajax)
+     * 댓글 등록/수정 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.COMMENT_REG_AJAX, SiteUrl.COMMENT_MDF_AJAX})
@@ -132,7 +131,7 @@ public class CommentController
     }
 
     /**
-     * 게시판 댓글 삭제 (Ajax)
+     * 댓글 삭제 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.COMMENT_DEL_AJAX)

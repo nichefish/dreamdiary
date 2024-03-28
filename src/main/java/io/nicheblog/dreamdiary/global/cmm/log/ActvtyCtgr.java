@@ -40,12 +40,14 @@ public enum ActvtyCtgr {
     LGN_POLICY("로그인 정책 관리"),
     MENU("메뉴 관리"),
     BOARD_DEF("게시판 관리"),
+    TMPLAT("템플릿 관리"),
     CD("코드 관리"),
 
     LOG_ACTVTY("활동 로그"),
     LOG_SYS("시스템 로그"),
 
-    FILE("파일");
+    FILE("파일"),
+    FLSYS("파일 시스템");
 
     public final String desc;
 }

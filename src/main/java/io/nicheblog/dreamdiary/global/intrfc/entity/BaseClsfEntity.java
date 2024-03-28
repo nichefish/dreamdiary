@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
@@ -31,6 +32,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BaseClsfEntity
         extends BaseAtchEntity {
+
+    /** 필수: 게시물 코드 */
+    protected static final String CONTENT_TYPE = ContentType.DEFAULT.name();
 
     /**
      * 글 번호 (POST_NO, PK)

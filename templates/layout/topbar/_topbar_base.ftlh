@@ -16,9 +16,9 @@
 
     <#if false>
         <#include "/layout/topbar/_notion.ftlh">
-        <#include "/layout/topbar/_flsys.ftlh">
         <#include "/layout/topbar/_sitemap.ftlh">
     </#if>
+    <#include "/layout/topbar/_topbar_flsys.ftlh">
     <#if isDev!false>
         <#include "/layout/topbar/_search.ftlh">
     </#if>

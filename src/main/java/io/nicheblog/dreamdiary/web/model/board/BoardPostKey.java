@@ -27,7 +27,7 @@ public class BoardPostKey
      */
     private Integer postNo;
     /**
-     * 게시판 코드
+     * 게시판 코드 (=컨텐츠 타입)
      */
     private String boardCd;
 

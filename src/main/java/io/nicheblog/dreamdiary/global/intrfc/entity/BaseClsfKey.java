@@ -25,7 +25,7 @@ public class BaseClsfKey
      */
     protected Integer postNo;
     /**
-     * 게시판 코드
+     * 컨텐츠 타입
      */
     protected String contentType;
 }

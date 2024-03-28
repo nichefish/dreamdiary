@@ -114,8 +114,8 @@ public class BoardPostService
      */
     @Override
     public BoardPostDto getDtlDto(final BaseClsfKey key) throws Exception {
-        BoardPostEntity rsBoardPostEntity = this.getDtlEntity(key);       // Entity 레벨 조회
-        BoardPostDto rsDto = postMapstruct.toDto(rsBoardPostEntity);
+        BoardPostEntity rsEntity = this.getDtlEntity(key);       // Entity 레벨 조회
+        BoardPostDto rsDto = postMapstruct.toDto(rsEntity);
         String ctgrNm = cdService.getDtlCdNm(rsDto.getCtgrClCd(), rsDto.getCtgrCd());
         rsDto.setCtgrNm(ctgrNm);
         return rsDto;
@@ -124,31 +124,29 @@ public class BoardPostService
     /**
      * 게시판 > 게시판 등록 전처리
      */
-    // @Override
-    // public void preRegist(final BoardPostDto boardPostDto) throws Exception {
-    //     // 태그를 먼저 처리해준다. :: 메소드 분리
-    //     tagService.processTagList(boardPostDto);
-    // }
+    @Override
+    public void preRegist(final BoardPostDto boardPostDto) throws Exception {
+        // 태그를 먼저 처리해준다. :: 메소드 분리
+        // tagService.processTagList(boardPostDto);
+    }
 
     /**
      * 게시판 > 게시판 수정 전처리
-     *//*
+     */
     @Override
     public void preModify(final BoardPostDto boardPostDto) throws Exception {
         // 태그를 먼저 처리해준다. :: 메소드 분리
-        tagService.processTagList(boardPostDto);
+        // tagService.processTagList(boardPostDto);
     }
 
-    */
     /**
      * 게시판 > 게시판 삭제
-     *//*
-
+     */
     @Override
     public void preDelete(BoardPostEntity entity) {
         // 게시물 태그 삭제 처리
-        List<BoardPostTagEntity> tagList = entity.getTagList();
-        for (BoardPostTagEntity e : tagList) e.setDelYn("Y");
-        entity.setTagList(tagList);
-    }*/
+        // List<BoardPostTagEntity> tagList = entity.getTagList();
+        // for (BoardPostTagEntity e : tagList) e.setDelYn("Y");
+        // entity.setTagList(tagList);
+    }
 }

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.cmm.comment;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -32,9 +33,9 @@ public class CommentEntity
         extends BaseClsfEntity {
 
     /** 필수: 게시물 코드 */
-    private static final String CONTENT_TYPE = "comment";
-    /** 필수: 글분류 코드 */
-    private static final String CTGR_CL_CD = "COMMENT_CL_CD";
+    private static final String CONTENT_TYPE = ContentType.COMMENT.key;
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
 
     /**
      * 댓글 번호 (PK)
@@ -60,9 +61,15 @@ public class CommentEntity
     private Integer refPostNo;
 
     /**
-     * 원글 게시판 코드
+     * 원글 컨텐츠 타입
      */
     @Column(name = "ref_content_type")
-    @Comment("원글 게시판 코드")
+    @Comment("원글 컨텐츠 타입")
     private String refContentType;
+
+    /**
+     * 내용
+     */
+    @Column(name = "cn")
+    protected String cn;
 }

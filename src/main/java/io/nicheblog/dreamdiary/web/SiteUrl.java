@@ -143,7 +143,14 @@ public interface SiteUrl {
     String BOARD_DEF_UNUSE_AJAX = PREFIX_BOARD_DEF + "/boardDefUnuseAjax.do";
 
     /** 템플릿 관리 (TODO) */
-    String TMPLAT_DEF_LIST = "";
+    String PREFIX_TMPLAT = "/templat";
+    String TMPLAT_DEF_LIST = PREFIX_TMPLAT + "/tmplatDefList.do";
+    String TMPLAT_DEF_REG_AJAX = PREFIX_TMPLAT + "/tmplatDefRegAjaxdo";
+    String TMPLAT_DEF_MDF_AJAX = PREFIX_TMPLAT + "/tmplatDefMdfAjax.do";
+    String TMPLAT_DEF_DEL_AJAX = PREFIX_TMPLAT + "/tmplatDefDelAjax.do";
+
+    String TMPLAT_REG_AJAX = PREFIX_TMPLAT + "/tmplatRegAjax.do";
+
 
     /** 팝업 관리 (TODO) */
     String POPUP_LIST = "";
@@ -189,6 +196,22 @@ public interface SiteUrl {
     String LOG_STATS_USER_LIST = "";
 
     /**
+     * 파일시스템
+     */
+    String PREFIX_FLSYS = "/flsys";
+    String FLSYS_HOME = PREFIX_FLSYS + "/flsysHome.do";
+    String FLSYS_LIST_AJAX = PREFIX_FLSYS + "/flsysListAjax.do";
+    String FLSYS_FILE_DOWNLOAD = PREFIX_FLSYS + "/flsysFileDownload.do";
+    String FLSYS_OPEN_IN_EXPLORER_AJAX = PREFIX_FLSYS + "/flsysOpenInExplorerAjax.do";
+    String FLSYS_FILE_EXEC_AJAX = PREFIX_FLSYS + "/flsysFileExecAjax.do";
+
+    String FLSYS_META_REG_AJAX = PREFIX_FLSYS + "flsysMetaRegAjax.do";
+    String FLSYS_META_DTL_AJAX = PREFIX_FLSYS + "flsysMetaDtlAjax.do";
+    String FLSYS_META_MDF_AJAX = PREFIX_FLSYS + "flsysMetaMdfAjax.do";
+    String FLSYS_META_DEL_AJAX = PREFIX_FLSYS + "flsysMetaDelAjax.do";
+
+
+    /**
      * (공통) 파일
      */
     String PREFIX_FILE = "/file";
@@ -225,6 +248,5 @@ public interface SiteUrl {
 
 
     String NOTION_HOME = "";
-    String FLSYS_HOME = "";
 
 }

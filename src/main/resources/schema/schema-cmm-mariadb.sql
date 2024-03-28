@@ -6,8 +6,8 @@
 
 -- -----------------------
 
--- 복합키 요소에 대한 시퀀스 테이블
--- → AUTO_INCREMENT가 먹지 않는 복합키 요소에 대하여 사용
+-- 시퀀스 (cmm_sequenc)
+-- 복합키 요소에 대한 시퀀스 :: AUTO_INCREMENT가 먹지 않는 복합키 요소에 대하여 사용
 CREATE TABLE IF NOT EXISTS cmm_sequence (
     seq_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '시퀀스 ID',
     seq_nm VARCHAR(30) COMMENT '시퀀스 이름',
@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS cmm_sequence (
 
 -- -----------------------
 
--- 분류 코드
+-- 분류 코드 (cmm_cl_cd)
+-- @extends: BaseManageEntity
 CREATE TABLE IF NOT EXISTS cmm_cl_cd  (
     cl_cd VARCHAR(50) NOT NULL PRIMARY KEY COMMENT '분류코드',
     cl_cd_nm VARCHAR(50) COMMENT '분류코드 이름',
@@ -32,7 +33,8 @@ CREATE TABLE IF NOT EXISTS cmm_cl_cd  (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 ) COMMENT = '분류 코드';
 
--- 상세 코드
+-- 상세 코드 (cmm_dtl_cd)
+-- @extends: BaseManageEntity
 CREATE TABLE IF NOT EXISTS cmm_dtl_cd (
     cl_cd VARCHAR(50) COMMENT '분류코드',
     dtl_cd VARCHAR(50) COMMENT '상세코드',
@@ -54,6 +56,7 @@ CREATE TABLE IF NOT EXISTS cmm_dtl_cd (
 -- -----------------------
 
 -- 로그인 정책
+-- @extends: BaseAuditEntity
 CREATE TABLE IF NOT EXISTS lgn_policy (
     lgn_policy_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '로그인 정책 번호',
     lgn_try_lmt INT COMMENT '로그인 시도 제한 횟수',
@@ -71,6 +74,7 @@ CREATE TABLE IF NOT EXISTS lgn_policy (
 -- -----------------------
 
 -- 첨부파일
+-- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS atch_file (
     atch_file_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 번호',
     -- AUDIT
@@ -78,6 +82,7 @@ CREATE TABLE IF NOT EXISTS atch_file (
 ) COMMENT = '첨부파일';
 
 -- 첨부파일 상세
+-- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS atch_file_dtl (
     atch_file_dtl_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 상세 번호',
     atch_file_no INT COMMENT '첨부파일 번호',
