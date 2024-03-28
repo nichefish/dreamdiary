@@ -69,8 +69,6 @@ public class LgnPolicyController
             model.addAttribute("lgnPolicy", rsUserLgnPolicDto);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

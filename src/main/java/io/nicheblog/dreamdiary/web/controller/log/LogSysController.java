@@ -80,8 +80,6 @@ public class LogSysController
 
             // 검색 파라미터 다시 모델에 추가
             CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -101,7 +99,7 @@ public class LogSysController
      * 활동 로그 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.LOG_ACTVTY_DTL_AJAX)
+    @RequestMapping(SiteUrl.LOG_SYS_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> logActvtyDtlAjax(

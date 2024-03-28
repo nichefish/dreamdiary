@@ -115,7 +115,7 @@ public class SiteMenu {
             TOP_MENU_IDX,
             "사이트 관리",
             SiteUrl.AUTH_LGN_FORM,
-            List.of(SubMenu.LGN_POLICY, SubMenu.CD, SubMenu.BOARD_DEF)
+            List.of(SubMenu.LGN_POLICY, SubMenu.MENU, SubMenu.CD, SubMenu.BOARD_DEF)
     );
     public static SiteAcsInfo LGN_POLICY = SubMenu.LGN_POLICY;
     public static SiteAcsInfo MENU = SubMenu.MENU;

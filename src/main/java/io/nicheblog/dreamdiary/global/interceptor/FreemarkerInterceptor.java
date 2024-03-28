@@ -3,12 +3,16 @@ package io.nicheblog.dreamdiary.global.interceptor;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -71,12 +75,11 @@ public class FreemarkerInterceptor
             mav.addObject("isMngr", isMngr);
             mav.addObject("isDev", authInfo.getIsDev());
 
-            /* 사용자모드(사용자/관리자) 부재시 기본 사용자로 세팅 */
-            String userMode = (String) session.getAttribute("userMode");
-            if (StringUtils.isEmpty(userMode)) userMode = Constant.AUTH_USER;
+            /* 메뉴접근 정보 읽어서 관리자/사용자 모드 세션에 세팅 */
+            SiteAcsInfo acsInfo = (SiteAcsInfo) mav.getModel().get(Constant.SITE_MENU);
+            String userMode = acsInfo != null && acsInfo.getIsMngrMenu() ? Constant.AUTH_MNGR : Constant.AUTH_USER;
             session.setAttribute("userMode", userMode);
-            Boolean isMngrMode = Constant.AUTH_MNGR.equals(userMode);
-            mav.addObject("isMngrMode", isMngrMode);
+            mav.addObject("isMngrMode", Constant.AUTH_MNGR.equals(userMode));
         }
         /* 게시판 목록 조회 */
         // Map<String, Object> searchParamMap = new HashMap<>() {{

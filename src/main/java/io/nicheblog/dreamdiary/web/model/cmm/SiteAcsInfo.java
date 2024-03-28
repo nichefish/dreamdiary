@@ -61,6 +61,10 @@ public class SiteAcsInfo {
     private String url;
 
     /**
+     * 관리자메뉴 여부
+     */
+    private Boolean isMngrMenu = false;
+    /**
      * 사이드메뉴 표시 여부
      */
     private Boolean asideAt = true;
@@ -81,6 +85,7 @@ public class SiteAcsInfo {
         this.topMenuNo = topMenu.menuNo;
         this.topMenuNm = topMenu.menuNm;
         this.topMenuCd = topMenu.name();
+        this.isMngrMenu = topMenu.isMngrMenu;
         this.menuNo = topMenu.idx + menuIdx;
         this.menuNm = menuNm;
         this.url = url;

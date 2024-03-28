@@ -129,15 +129,11 @@ public interface SiteUrl {
     /** 메뉴 관리 */
     String PREFIX_MENU = "/menu";
     String MENU_LIST = PREFIX_MENU + "/menuList.do";
+    String MENU_MAIN_LIST_AJAX = PREFIX_MENU + "/menuMainListAjax.do";
     String MENU_REG_AJAX = PREFIX_MENU + "/menuList.do";
     String MENU_DTL_AJAX = PREFIX_MENU + "/menuDtlAjax.do";
     String MENU_MDF_AJAX = PREFIX_MENU + "/menuMdfAjax.do";
     String MENU_DEL_AJAX = PREFIX_MENU + "/menuDelAjax.do";
-
-
-
-
-
 
     /** 게시판 관리 */
     String PREFIX_BOARD_DEF = "/boardDef";
@@ -175,6 +171,7 @@ public interface SiteUrl {
     String PREFIX_LOG_ACTVTY = PREFIX_LOG + PREFIX_ACTVTY;
     String LOG_ACTVTY_LIST = PREFIX_LOG_ACTVTY + "/logActvtyList.do";
     String LOG_ACTVTY_DTL_AJAX = PREFIX_LOG_ACTVTY + "/logActvtyDtlAjax.do";
+    String LOG_ACTVTY_LIST_XLSX_DOWNLOAD = "";
 
     /**
      * 시스템 로그 조회
@@ -222,4 +219,5 @@ public interface SiteUrl {
 
     String NOTION_HOME = "";
     String FLSYS_HOME = "";
+
 }

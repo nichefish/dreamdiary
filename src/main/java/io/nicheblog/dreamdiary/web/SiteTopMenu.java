@@ -16,19 +16,20 @@ import lombok.RequiredArgsConstructor;
 public enum SiteTopMenu {
 
     // COMMON
-    NO_ASIDE("00", "NO_ASIDE", "사이드바 미노출"),
-    LGN("00", "0000", "로그인"),
-    MAIN("00", "0000", "메인"),
+    NO_ASIDE("00", "NO_ASIDE", "사이드바 미노출", false),
+    LGN("00", "0000", "로그인", false),
+    MAIN("00", "0000", "메인", false),
     // PORTAL
-    NOTICE("01", "0100", "공지사항"),
-    DREAM("02", "0200", "꿈 관리"),
-    BOARD("03", "0300", "게시판"),
-    SCHDUL("04", "0400", "일정"),
+    NOTICE("01", "0100", "공지사항", false),
+    DREAM("02", "0200", "꿈 관리", false),
+    BOARD("03", "0300", "게시판", false),
+    SCHDUL("04", "0400", "일정", false),
     // ADMIN
-    USER("01", "0100", "사용자 관리"),
-    ADMIN("02", "0200", "사이트 관리");
+    USER("01", "0100", "사용자 관리", true),
+    ADMIN("02", "0200", "사이트 관리", true);
 
     public final String idx;
     public final String menuNo;
     public final String menuNm;
+    public final Boolean isMngrMenu;
 }

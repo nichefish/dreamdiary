@@ -82,8 +82,6 @@ public class ClCdController
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -120,8 +118,6 @@ public class ClCdController
             model.addAttribute("clCd", cmmClCd);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

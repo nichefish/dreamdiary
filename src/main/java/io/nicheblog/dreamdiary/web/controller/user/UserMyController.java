@@ -59,7 +59,7 @@ public class UserMyController
 
     /**
      * 내 정보 (상세) 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.USER_MY_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -114,7 +114,7 @@ public class UserMyController
 
     /**
      * 프로필 이미지 변경
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.USER_MY_REMOVE_PROFL_IMG_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -145,7 +145,7 @@ public class UserMyController
 
     /**
      * 프로필 이미지 삭제
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.USER_MY_UPLOAD_PROFL_IMG_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -178,7 +178,7 @@ public class UserMyController
 
     /**
      * 내 비밀번호 확인 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.USER_MY_PW_CF_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -211,7 +211,7 @@ public class UserMyController
 
     /**
      * 내 비밀번호 변경 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.USER_MY_PW_CHG_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

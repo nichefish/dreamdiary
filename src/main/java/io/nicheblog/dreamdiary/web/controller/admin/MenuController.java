@@ -5,14 +5,19 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
+import io.nicheblog.dreamdiary.web.model.admin.MenuListDto;
 import io.nicheblog.dreamdiary.web.model.admin.MenuSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.MenuService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -151,6 +156,46 @@ public class MenuController
             logParam.setCn("key: " + menuIdStr);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+
+    /**
+     * 메뉴 관리 (메인) 목록 조회 (Ajax)
+     * (사용자USER, )관리자MNGR만 접근 가능)
+     */
+    @RequestMapping(SiteUrl.MENU_MAIN_LIST_AJAX)
+    @Secured({Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> menuListAjax(
+            final LogActvtyParam logParam,
+            final @ModelAttribute("searchParam") MenuSearchParam searchParam,
+            final @RequestParam Map<String, Object> searchParamMap,
+            final ModelMap model
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            // 팝업공지 목록 조회
+            Sort sort = Sort.by(Sort.Direction.ASC, "sortOrdr");
+            PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
+            Page<MenuListDto> menuList = menuService.getMainMenuList(searchParamMap, pageRequest);
+            ajaxResponse.setResultList(menuList.getContent());
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 반복적으로 호출되므로 실패(Exception)시 외에는 로그 적재하지 않음
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
