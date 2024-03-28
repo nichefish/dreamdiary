@@ -57,7 +57,7 @@ public class LgnPolicyController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("로그인 정책 관리"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.LGN_POLICY.setAcsPageInfo("로그인 정책 관리"));
 
         boolean isSuccess = false;
         String resultMsg = "";
