@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.spec.admin;
+package io.nicheblog.dreamdiary.web.spec.log;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.cmm.log.entity.LogActvtyEntity;
+import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.extern.log4j.Log4j2;
@@ -14,18 +14,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * LogActvtySpec
+ * LogSysSpec
  * <pre>
- *  활동 로그 목록 검색인자 세팅 Specification
+ *  시스템 로그 목록 검색인자 세팅 Specification
  * </pre>
  *
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("logActvtySpec")
+@Component("logSysSpec")
 @Log4j2
-public class LogActvtySpec
-        implements BaseSpec<LogActvtyEntity> {
+public class LogSysSpec
+        implements BaseSpec<LogSysEntity> {
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
@@ -33,7 +33,7 @@ public class LogActvtySpec
     @Override
     public List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
-            final Root<LogActvtyEntity> root,
+            final Root<LogSysEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
 
@@ -54,13 +54,14 @@ public class LogActvtySpec
                     continue;
                 case "nickNm":
                     // 작업자 이름 = 조인 후 LIKE 검색
-                    Join<LogActvtyEntity, AuditorInfo> regstr = root.join("logUserInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
+                    Join<LogSysEntity, AuditorInfo> regstr = root.join("logUserInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
                     Expression<String> nickNmExp = regstr.get(key);
                     predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
                     continue;
                 case "rslt":
                     // 작업결과 :: true / false 검색
-                    Expression<Boolean> keyBoolExp = root.get(key);
+                    Expression<Boolean> keyBoolExp = root.get(key)
+                                                         .as(Boolean.class);
                     predicate.add("true".equals(searchParamMap.get(key)) ? builder.isTrue(keyBoolExp) : builder.isFalse(keyBoolExp));
                     continue;
                 default:
