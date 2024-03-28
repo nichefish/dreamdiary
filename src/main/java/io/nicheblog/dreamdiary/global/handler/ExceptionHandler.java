@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author nichefish
  */
-@Controller
 @ControllerAdvice
 @Log4j2
 public class ExceptionHandler {

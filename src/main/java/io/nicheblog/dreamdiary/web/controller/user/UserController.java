@@ -75,7 +75,7 @@ public class UserController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo(Constant.PAGE_LIST));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_INFO.setAcsPageInfo(Constant.PAGE_LIST));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -127,7 +127,7 @@ public class UserController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("사용자 등록"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_INFO.setAcsPageInfo("사용자 등록"));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -244,7 +244,7 @@ public class UserController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("사용자 상세 조회"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_INFO.setAcsPageInfo("사용자 상세 조회"));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -284,7 +284,7 @@ public class UserController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("사용자 수정"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_INFO.setAcsPageInfo("사용자 수정"));
 
         boolean isSuccess = false;
         String resultMsg = "";

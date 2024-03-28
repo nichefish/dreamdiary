@@ -31,8 +31,8 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
-@AllArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE user SET del_yn = 'Y' WHERE user_no = ?")
 public class UserEntity

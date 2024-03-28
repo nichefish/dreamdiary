@@ -8,8 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 
-import static io.nicheblog.dreamdiary.web.SiteMenu.SubMenu.user_profl;
-
 /**
  * SiteMenu
  * <pre>
@@ -90,12 +88,14 @@ public class SiteMenu {
             SiteUrl.DREAM_DAY_PAGE,
             List.of(SubMenu.DREAM_DAY, SubMenu.DREAM_DAY_CAL)
     );
+    public static SiteAcsInfo DREAM_DAY = SubMenu.DREAM_DAY;
+    public static SiteAcsInfo DREAM_DAY_CAL = SubMenu.DREAM_DAY_CAL;
 
     // 대메뉴 :: 게시판
     public static SiteAcsInfo BOARD = new SiteAcsInfo(
             SiteTopMenu.BOARD,
             TOP_MENU_IDX,
-            "게시판",
+            "일반게시판",
             SiteUrl.BOARD_POST_LIST
     );
 
@@ -105,8 +105,9 @@ public class SiteMenu {
             TOP_MENU_IDX,
             "사용자 관리",
             SiteUrl.AUTH_LGN_FORM,
-            List.of(user_profl)
+            List.of(SubMenu.USER_INFO)
     );
+    public static SiteAcsInfo USER_INFO = SubMenu.USER_INFO;
 
     // 대메뉴 :: 사이트 관리
     public static SiteAcsInfo ADMIN = new SiteAcsInfo(
@@ -116,6 +117,9 @@ public class SiteMenu {
             SiteUrl.AUTH_LGN_FORM,
             List.of(SubMenu.LGN_POLICY, SubMenu.CD, SubMenu.BOARD_DEF)
     );
+    public static SiteAcsInfo LGN_POLICY = SubMenu.LGN_POLICY;
+    public static SiteAcsInfo CD = SubMenu.CD;
+    public static SiteAcsInfo BOARD_DEF = SubMenu.BOARD_DEF;
 
     // 대메뉴 :: 로그 관리
     public static SiteAcsInfo LOG = new SiteAcsInfo(
@@ -125,6 +129,8 @@ public class SiteMenu {
             SiteUrl.AUTH_LGN_FORM,
             List.of(SubMenu.LOG_ACTVTY, SubMenu.LOG_SYS)
     );
+    public static SiteAcsInfo LOG_ACTVTY = SubMenu.LOG_ACTVTY;
+    public static SiteAcsInfo LOG_SYS = SubMenu.LOG_SYS;
 
     /**
      * 서브메뉴 정보
@@ -154,10 +160,10 @@ public class SiteMenu {
         String MENU_IDX_USER = "01";
 
         // 소메뉴 :: 사용자 정보
-        SiteAcsInfo user_profl = new SiteAcsInfo(
+        SiteAcsInfo USER_INFO = new SiteAcsInfo(
                 SiteTopMenu.USER,
                 MENU_IDX_USER,
-                "사용자 관리",
+                "계정 관리",
                 SiteUrl.USER_LIST
         );
 

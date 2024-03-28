@@ -1,13 +1,11 @@
 package io.nicheblog.dreamdiary.web.mapstruct.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteTopMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -44,6 +42,8 @@ public interface BoardDefMapstruct
      */
     @Mapping(target = "topMenu", expression = "java(SiteTopMenu.BOARD)")
     @Mapping(target = "topMenuNo", expression = "java(SiteTopMenu.BOARD.menuNo)")
+    @Mapping(target = "topMenuNm", expression = "java(SiteTopMenu.BOARD.menuNm)")
+    @Mapping(target = "topMenuCd", expression = "java(SiteTopMenu.BOARD.name())")
     @Mapping(target = "menuNm", expression = "java(entity.getBoardNm())")
     @Mapping(target = "url", expression = "java(SiteUrl.BOARD_POST_LIST + \"?boardCd=\" + entity.getBoardCd())")
     SiteAcsInfo toMenu(final BoardDefEntity entity) throws Exception;

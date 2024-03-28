@@ -69,7 +69,7 @@ public class BoardDefController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("게시판 관리"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.BOARD_DEF.setAcsPageInfo("게시판 관리"));
 
         boolean isSuccess = false;
         String resultMsg = "";

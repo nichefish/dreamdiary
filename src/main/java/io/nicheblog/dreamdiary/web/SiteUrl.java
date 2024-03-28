@@ -156,6 +156,23 @@ public interface SiteUrl {
     String BOARD_DEF_UNUSE_AJAX = PREFIX_BOARD_DEF + "/boardDefUnuseAjax.do";
 
     /**
+     * 활동 로그 조회
+     */
+    String PREFIX_LOG = "/log";
+    String PREFIX_ACTVTY = "/actvty";
+    String PREFIX_LOG_ACTVTY = PREFIX_LOG + PREFIX_ACTVTY;
+    String LOG_ACTVTY_LIST = PREFIX_LOG_ACTVTY + "/logActvtyList.do";
+    String LOG_ACTVTY_DTL_AJAX = PREFIX_LOG_ACTVTY + "/logActvtyDtlAjax.do";
+
+    /**
+     * 시스템 로그 조회
+     */
+    String PREFIX_SYS = "/sys";
+    String PREFIX_LOG_SYS = PREFIX_LOG + PREFIX_SYS;
+    String LOG_SYS_LIST = PREFIX_LOG_SYS + "/logSysList.do";
+    String LOG_SYS_DTL_AJAX = PREFIX_LOG_SYS + "/logSysDtlAjax.do";
+
+    /**
      * (공통) 파일
      */
     String PREFIX_FILE = "/file";

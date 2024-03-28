@@ -41,6 +41,9 @@ public enum ActvtyCtgr {
     CD("코드 관리"),
     BOARD_DEF("게시판 관리"),
 
+    LOG_ACTVTY("활동 로그"),
+    LOG_SYS("시스템 로그"),
+
     FILE("파일");
 
     public final String desc;

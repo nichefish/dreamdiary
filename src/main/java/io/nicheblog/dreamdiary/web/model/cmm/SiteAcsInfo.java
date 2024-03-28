@@ -100,4 +100,10 @@ public class SiteAcsInfo {
         this.acsPageNm = acsPageNm;
         return this;
     }
+
+    /** 메인메뉴 여부 체크 */
+    public Boolean getIsTopMenu() {
+        log.info(this.menuNo);
+        return this.menuNo.equals(this.topMenuNo);
+    }
 }

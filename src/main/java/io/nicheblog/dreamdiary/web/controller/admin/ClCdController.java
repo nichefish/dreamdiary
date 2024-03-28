@@ -65,7 +65,7 @@ public class ClCdController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("로그인 정책 관리"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.CD.setAcsPageInfo("로그인 정책 관리"));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -111,7 +111,7 @@ public class ClCdController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("로그인 정책 관리"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.CD.setAcsPageInfo("로그인 정책 관리"));
 
         boolean isSuccess = false;
         String resultMsg = "";
