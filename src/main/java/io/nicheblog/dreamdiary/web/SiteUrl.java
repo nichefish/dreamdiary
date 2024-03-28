@@ -54,10 +54,6 @@ public interface SiteUrl {
     String DREAM_PIECE_REG_AJAX = PREFIX_DREAM_PIECE + "/dreamPieceRegAjax.do";
     String DREAM_PIECE_MDF_AJAX = PREFIX_DREAM_PIECE + "/dreamPieceMdfAjax.do";
 
-
-
-
-
     /**
      * 공지사항
      */

@@ -124,14 +124,6 @@
                     });
                 });
             },
-            /** 사이트 관리 페이지로 이동 */
-            siteMngList: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.SITE_ADMIN!}");
-            },
-            /** 코드 관리 페이지로 이동 */
-            cdList: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.CL_CD_LIST!}");
-            },
         }
     }();
 
@@ -144,33 +136,6 @@
     <form name="procForm" id="procForm" method="get">
         <input type="hidden" id="clCd" name="clCd" />
     </form>
-    <!--begin::Tab -->
-    <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
-        <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.siteMngList();">
-                <span class="nav-icon">
-                    <i class="bi bi-sort-down-alt"></i>
-                </span>
-                <span class="nav-text">사이트 관리</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.fnLogStatsUserList();">
-                <span class="nav-icon">
-                    <i class="bi bi-people"></i>
-                </span>
-                <span class="nav-text">코드 관리</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.fnLogStatsUserList();">
-                <span class="nav-icon">
-                    <i class="bi bi-grid-1x2"></i>
-                </span>
-                <span class="nav-text">기능별</span>
-            </a>
-        </li>
-    </ul>
 
     <!--begin::Card header 검색+헤더 UI -->
     <#include "/view/admin/cd/cl_cd_list_header.ftlh">

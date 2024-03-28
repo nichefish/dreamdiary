@@ -73,15 +73,15 @@ public class SiteAcsInfo {
     /* ----- */
 
     /** constructor */
-    public SiteAcsInfo(SiteTopMenu topMenu, String menuNo, String menuNm, String url) {
-        this(topMenu, menuNo, menuNm, url, null);
+    public SiteAcsInfo(SiteTopMenu topMenu, String menuIdx, String menuNm, String url) {
+        this(topMenu, menuIdx, menuNm, url, null);
     }
-    public SiteAcsInfo(SiteTopMenu topMenu, String menuNo, String menuNm, String url, List<SiteAcsInfo> subMenuList) {
+    public SiteAcsInfo(SiteTopMenu topMenu, String menuIdx, String menuNm, String url, List<SiteAcsInfo> subMenuList) {
         this.topMenu = topMenu;
         this.topMenuNo = topMenu.menuNo;
         this.topMenuNm = topMenu.menuNm;
         this.topMenuCd = topMenu.name();
-        this.menuNo = menuNo;
+        this.menuNo = topMenu.idx + menuIdx;
         this.menuNm = menuNm;
         this.url = url;
         this.subMenuList = subMenuList;
