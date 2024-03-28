@@ -44,45 +44,33 @@ public class DreamPieceEntity
     @Comment("꿈 조각 고유 번호")
     private Integer postNo;
 
-    /**
-     * 게시판 분류 코드
-     */
+    /** 게시판 분류 코드 */
     @Builder.Default
     @Column(name = "content_type")
     private String contentType = CONTENT_TYPE;
 
-    /**
-     * 꿈 일자 번호
-     */
+    /** 꿈 일자 번호  */
     @Column(name = "dream_day_no")
     @Comment("꿈 일자 번호")
     private Integer dreamDayNo;
 
-    /**
-     * 순번
-     */
+    /** 순번 */
     @Column(name = "idx", columnDefinition = "INT DEFAULT 1")
     private Integer idx;
 
-    /**
-     * 편집완료여부
-     */
+    /** 편집완료 여부 */
     @Builder.Default
     @Column(name = "edit_compt_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("편집완료여부")
+    @Comment("편집완료 여부")
     private String editComptYn = "N";
 
-    /**
-     * 타인 꿈 여부
-     */
+    /** 타인 꿈 여부 */
     @Builder.Default
     @Column(name = "else_dream_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("타인 꿈 여부")
     private String elseDreamYn = "N";
 
-    /**
-     * 꿈꾼이(타인) 이름
-     */
+    /** 꿈꾼이(타인) 이름 */
     @Column(name = "else_dreamer_nm", length = 64)
     private String elseDreamerNm;
 }
