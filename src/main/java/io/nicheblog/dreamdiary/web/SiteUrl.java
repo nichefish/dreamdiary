@@ -181,6 +181,9 @@ public interface SiteUrl {
     String LOG_SYS_LIST = PREFIX_LOG_SYS + "/logSysList.do";
     String LOG_SYS_DTL_AJAX = PREFIX_LOG_SYS + "/logSysDtlAjax.do";
 
+    /** 로그 통계 조회 (TODO) */
+    String LOG_STATS_USER_LIST = "";
+
     /**
      * (공통) 파일
      */
