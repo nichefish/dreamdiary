@@ -59,7 +59,7 @@ public class DreamDayController
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.DREAM.setAcsPageInfo(Constant.PAGE_LIST));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.SubMenu.DREAM_DAY.setAcsPageInfo(Constant.PAGE_LIST));
 
         boolean isSuccess = false;
         String resultMsg = "";

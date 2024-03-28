@@ -57,7 +57,7 @@ public class SiteMenu {
     );
 
     // 공통화면 :: 메인 (관리자)
-    public static SiteAcsInfo MAIN_ADMIN = new SiteAcsInfo(
+    public static SiteAcsInfo ADMIN_MAIN = new SiteAcsInfo(
             SiteTopMenu.MAIN,
             TOP_MENU_IDX,
             "메인",
