@@ -32,14 +32,15 @@ public enum ActvtyCtgr {
 
     TAG("태그"),
 
+    NOTICE("공지사항"),
+
     USER("사용자 관리"),
     USER_MY("내 정보 관리"),
 
-    NOTICE("공지사항"),
-
     LGN_POLICY("로그인 정책 관리"),
-    CD("코드 관리"),
+    MENU("메뉴 관리"),
     BOARD_DEF("게시판 관리"),
+    CD("코드 관리"),
 
     LOG_ACTVTY("활동 로그"),
     LOG_SYS("시스템 로그"),

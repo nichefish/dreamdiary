@@ -85,7 +85,7 @@ public class BoardPostController
 
     /**
      * 게시판 게시물 목록 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @GetMapping(SiteUrl.BOARD_POST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -143,7 +143,7 @@ public class BoardPostController
 
     /**
      * 게시판 게시물 등록 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.BOARD_POST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -189,7 +189,7 @@ public class BoardPostController
 
     /**
      * 게시판 게시물 등록 전 미리보기 팝업 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.BOARD_POST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -235,7 +235,7 @@ public class BoardPostController
 
     /**
      * 게시판 게시물 등록/수정 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.BOARD_POST_REG_AJAX, SiteUrl.BOARD_POST_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -295,7 +295,7 @@ public class BoardPostController
 
     /**
      * 게시판 게시물 상세 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(value = SiteUrl.BOARD_POST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -352,7 +352,7 @@ public class BoardPostController
 
     /**
      * 게시판 게시물 상세 조회 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.BOARD_POST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -402,7 +402,7 @@ public class BoardPostController
 
     /**
      * 게시판 게시물 수정 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(value = SiteUrl.BOARD_POST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -451,7 +451,7 @@ public class BoardPostController
 
     /**
      * 게시판 게시물 삭제 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.BOARD_POST_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

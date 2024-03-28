@@ -118,8 +118,9 @@ public class SiteMenu {
             List.of(SubMenu.LGN_POLICY, SubMenu.CD, SubMenu.BOARD_DEF)
     );
     public static SiteAcsInfo LGN_POLICY = SubMenu.LGN_POLICY;
-    public static SiteAcsInfo CD = SubMenu.CD;
+    public static SiteAcsInfo MENU = SubMenu.MENU;
     public static SiteAcsInfo BOARD_DEF = SubMenu.BOARD_DEF;
+    public static SiteAcsInfo CD = SubMenu.CD;
 
     // 대메뉴 :: 로그 관리
     public static SiteAcsInfo LOG = new SiteAcsInfo(
@@ -147,8 +148,7 @@ public class SiteMenu {
                 "꿈 일자",
                 SiteUrl.DREAM_DAY_PAGE
         );
-
-        // 소메뉴 :: 꿈 일자
+        // 소메뉴 :: 꿈 달력
         SiteAcsInfo DREAM_DAY_CAL = new SiteAcsInfo(
                 SiteTopMenu.DREAM,
                 MENU_IDX_DREAM_CAL,
@@ -170,8 +170,9 @@ public class SiteMenu {
         /* 사이트 관리 */
 
         String MENU_IDX_LGN_POLICY = "01";
-        String MENU_IDX_CD = "01";
-        String MENU_IDX_BOARD_DEF = "02";
+        String MENU_IDX_MENU = "02";
+        String MENU_IDX_BOARD_DEF = "03";
+        String MENU_IDX_CD = "04";
 
         // 소메뉴 :: 로그인 정책 관리
         SiteAcsInfo LGN_POLICY = new SiteAcsInfo(
@@ -180,22 +181,26 @@ public class SiteMenu {
                 "로그인 정책 관리",
                 SiteUrl.LGN_POLICY_FORM
         );
-
-
-        // 소메뉴 :: 코드 관리
-        SiteAcsInfo CD = new SiteAcsInfo(
+        // 소메뉴 :: 메뉴 관리
+        SiteAcsInfo MENU = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
-                MENU_IDX_CD,
-                "코드 관리",
-                SiteUrl.CL_CD_LIST
+                MENU_IDX_MENU,
+                "메뉴 관리",
+                SiteUrl.MENU_LIST
         );
-
         // 소메뉴 :: 게시판 관리
         SiteAcsInfo BOARD_DEF = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
                 MENU_IDX_BOARD_DEF,
                 "게시판 관리",
                 SiteUrl.BOARD_DEF_LIST
+        );
+        // 소메뉴 :: 코드 관리
+        SiteAcsInfo CD = new SiteAcsInfo(
+                SiteTopMenu.ADMIN,
+                MENU_IDX_CD,
+                "코드 관리",
+                SiteUrl.CL_CD_LIST
         );
 
         /* 로그 관리 */
@@ -209,7 +214,6 @@ public class SiteMenu {
                 "활동 로그",
                 SiteUrl.AUTH_LGN_FORM
         );
-
         // 소메뉴 :: 시스템 로그
         SiteAcsInfo LOG_SYS = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,

@@ -76,7 +76,7 @@ public class NoticeController
 
     /**
      * 공지사항 목록 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @GetMapping(SiteUrl.NOTICE_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -129,7 +129,7 @@ public class NoticeController
 
     /**
      * 공지사항 등록 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.NOTICE_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -169,7 +169,7 @@ public class NoticeController
 
     /**
      * 공지사항 등록 전 미리보기 팝업 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.NOTICE_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -205,7 +205,7 @@ public class NoticeController
 
     /**
      * 공지사항 등록/수정 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.NOTICE_REG_AJAX, SiteUrl.NOTICE_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -265,7 +265,7 @@ public class NoticeController
 
     /**
      * 공지사항 상세 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(value = SiteUrl.NOTICE_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -316,7 +316,7 @@ public class NoticeController
 
     /**
      * 공지사항 상세 조회 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.NOTICE_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -366,7 +366,7 @@ public class NoticeController
 
     /**
      * 공지사항 수정 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(value = SiteUrl.NOTICE_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -409,7 +409,7 @@ public class NoticeController
 
     /**
      * 공지사항 삭제 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.NOTICE_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

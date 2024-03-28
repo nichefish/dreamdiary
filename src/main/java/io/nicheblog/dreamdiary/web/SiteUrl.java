@@ -84,7 +84,6 @@ public interface SiteUrl {
     String BOARD_POST_DEL_AJAX = PREFIX_BOARD_POST + "/boardPostDelAjax.do";
     String BOARD_POST_REG_PREVIEW_POP = PREFIX_BOARD_POST + "/boardPostRegPreviewPop.do";
 
-
     /**
      * 사용자 관리
      */
@@ -127,6 +126,28 @@ public interface SiteUrl {
     String LGN_POLICY_FORM = PREFIX_LGN_POLICY + "/lgnPolicyForm.do";
     String LGN_POLICY_REG_AJAX = PREFIX_LGN_POLICY + "/lgnPolicyRegAjax.do";
 
+    /** 메뉴 관리 */
+    String PREFIX_MENU = "/menu";
+    String MENU_LIST = PREFIX_MENU + "/menuList.do";
+    String MENU_REG_AJAX = PREFIX_MENU + "/menuList.do";
+    String MENU_DTL_AJAX = PREFIX_MENU + "/menuDtlAjax.do";
+    String MENU_MDF_AJAX = PREFIX_MENU + "/menuMdfAjax.do";
+    String MENU_DEL_AJAX = PREFIX_MENU + "/menuDelAjax.do";
+
+
+
+
+
+
+    /** 게시판 관리 */
+    String PREFIX_BOARD_DEF = "/boardDef";
+    String BOARD_DEF_LIST = PREFIX_BOARD_DEF + "/boardDefList.do";
+    String BOARD_DEF_REG_AJAX = PREFIX_BOARD_DEF + "/boardDefRegAjax.do";
+    String BOARD_DEF_MDF_ITEM_AJAX = PREFIX_BOARD_DEF + "/boardDefMdfItemAjax.do";
+    String BOARD_DEF_DEL_AJAX = PREFIX_BOARD_DEF + "/boardDefDelAjax.do";
+    String BOARD_DEF_USE_AJAX = PREFIX_BOARD_DEF + "/boardDefUseAjax.do";
+    String BOARD_DEF_UNUSE_AJAX = PREFIX_BOARD_DEF + "/boardDefUnuseAjax.do";
+
     /** 코드 관리 */
     String PREFIX_CD = "/cd";
     String CL_CD_LIST = PREFIX_CD + "clCdList.do";
@@ -145,16 +166,7 @@ public interface SiteUrl {
     String DTL_CD_USE_AJAX = PREFIX_CD + "dtlCdUseAjax.do";
     String DTL_CD_UNUSE_AJAX = PREFIX_CD + "dtlCdUnuseAjax.do";
     String DTL_CD_DEL_AJAX = PREFIX_CD + "dtlCdDelAjax.do";
-
-    /** 게시판 관리 */
-    String PREFIX_BOARD_DEF = "/boardDef";
-    String BOARD_DEF_LIST = PREFIX_BOARD_DEF + "/boardDefList.do";
-    String BOARD_DEF_REG_AJAX = PREFIX_BOARD_DEF + "/boardDefRegAjax.do";
-    String BOARD_DEF_MDF_ITEM_AJAX = PREFIX_BOARD_DEF + "/boardDefMdfItemAjax.do";
-    String BOARD_DEF_DEL_AJAX = PREFIX_BOARD_DEF + "/boardDefDelAjax.do";
-    String BOARD_DEF_USE_AJAX = PREFIX_BOARD_DEF + "/boardDefUseAjax.do";
-    String BOARD_DEF_UNUSE_AJAX = PREFIX_BOARD_DEF + "/boardDefUnuseAjax.do";
-
+    
     /**
      * 활동 로그 조회
      */
