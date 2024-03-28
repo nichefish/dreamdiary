@@ -19,9 +19,9 @@
                 </div>
             </div>
             <div class="row dreampieces">
-                {{#each dreamPieces}}
+                {{#each dreamPieceList}}
                     <div class="row dreampiece">
-                        <div>!!!!</div>
+                        <div># {{idx}}</div><div>{{{cn}}}</div>
                     </div>
                 {{else}}
                     <div class="row dreampiece">

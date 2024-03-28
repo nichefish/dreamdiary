@@ -1,5 +1,11 @@
-/* pdf 출력용 */
-#pdfBody{
+/**
+ * pdf 출력용 css 내용을 정의한다.
+ * @auther : nichefish
+ */
+
+/** ----------------------- */
+
+#pdf-body{
     width:1280px;
     background-color: #FFFFFF;
     * {
@@ -38,9 +44,9 @@
             }
         }
     }
-    .rptCover {
+    .rpt-cover {
         text-align: center;
-        .rptTitle{
+        .rpt-title{
             font-size: 50px;
             margin-top: 540px;
             padding: 30px 165px;
@@ -48,16 +54,16 @@
             display: inline-block;
             width:1032px;
         }
-        .rptDate{
+        .rpt-date{
             margin-top: 350px;
             font-size: 45px;
         }
-        .rptFooter{
+        .rpt-footer{
             font-size: 40px;
             margin-top: 250px;
         }
     }
-    .rptHeader {
+    .rpt-header {
         .right {
             float: right;
             color: red;

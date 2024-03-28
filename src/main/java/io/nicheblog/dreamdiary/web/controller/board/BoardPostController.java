@@ -93,16 +93,16 @@ public class BoardPostController
             final LogActvtyParam logParam,
             final @ModelAttribute("searchParam") BoardPostSearchParam searchParam,
             final @RequestParam Map<String, Object> searchParamMap,
-            final @RequestParam("contentType") String contentType,
+            final @RequestParam("boardCd") String boardCd,
             final ModelMap model
     ) throws Exception {
 
-        model.addAttribute("contentType", contentType);
+        model.addAttribute("boardCd", boardCd);
 
         /* 사이트 메뉴 설정 */
-        BoardDefDto boardDef = boardDefService.getDtlDto(contentType);
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(contentType);
-        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("목록 조회"));
+        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo(Constant.PAGE_LIST));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -111,20 +111,14 @@ public class BoardPostController
             Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            // "프로젝트 세미나"는 등록일순, 나머지는 최종수정일순 정렬
-            String sortParam = "pjtSemina".equals(contentType) ? "regDt" : "managtDt";
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, sortParam, model);
+            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managtDt", model);
             Page<BoardPostListDto> postList = boardPostService.getListDto(listParamMap, pageRequest);
             if (postList != null) model.addAttribute("postList", postList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(postList));
             model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdListByClCd(boardDef.getCtgrClCd()));
             // 상단 고정 목록 조회
-            List<BoardPostListDto> postFxdList = boardPostService.getFxdList(contentType);
+            List<BoardPostListDto> postFxdList = boardPostService.getFxdList(boardCd);
             model.addAttribute("postFxdList", postFxdList);
-            // 슬기로운 회사생활 게시판일 경우 직원연락처 목록 조회
-            // String currDateStr = DateUtils.getCurrDateStr(DateUtils.PTN_DATE);
-            // List<UserCttpcListDto> crtdUserCttpcList = userService.getCrdtUserCttpcList(currDateStr, currDateStr);
-            // model.addAttribute("crtdUserCttpcList", crtdUserCttpcList);
             // 태그 전체 목록 조회
             // Page<BoardTagDto> tagList = boardTagService.getListDto(listParamMap, Pageable.unpaged());
             // model.addAttribute("tagList", tagList.getContent());

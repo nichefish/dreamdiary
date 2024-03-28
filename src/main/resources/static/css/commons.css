@@ -1,4 +1,9 @@
 @charset "UTF-8";
+/**
+ * 사이트 공통 css 내용을 정의한다.
+ * @auther : nichefish
+ */
+/** ----------------------- */
 /** 레이아웃:: 사이드바 접었을 시 로고 표시 안함 */
 [data-kt-aside-minimize=on] .aside:not(:hover) .aside-logo a div,
 [data-kt-aside-minimize=on] .aside:not(:hover) .aside-footer {

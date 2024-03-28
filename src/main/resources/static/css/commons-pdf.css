@@ -1,49 +1,53 @@
 @charset "UTF-8";
-/* pdf 출력용 */
-#pdfBody {
+/**
+ * pdf 출력용 css 내용을 정의한다.
+ * @auther : nichefish
+ */
+/** ----------------------- */
+#pdf-body {
   width: 1280px;
   background-color: #FFFFFF;
 }
-#pdfBody * {
+#pdf-body * {
   font-family: Malgun Gothic, serif;
 }
-#pdfBody table {
+#pdf-body table {
   border: 1px solid #000000;
 }
-#pdfBody table th {
-  border: 1px solid #000000;
-  padding: 5px;
-  vertical-align: middle;
-}
-#pdfBody table td {
+#pdf-body table th {
   border: 1px solid #000000;
   padding: 5px;
   vertical-align: middle;
 }
-#pdfBody table .tbl-header {
+#pdf-body table td {
+  border: 1px solid #000000;
+  padding: 5px;
+  vertical-align: middle;
+}
+#pdf-body table .tbl-header {
   text-align: center;
   background-color: #eeeeee;
   font-weight: 400;
 }
-#pdfBody .page {
+#pdf-body .page {
   width: 100%;
   font-size: 22px;
   color: #000000;
 }
-#pdfBody .page .subTitle {
+#pdf-body .page .subTitle {
   font-size: 25px;
   margin-bottom: 10px;
 }
-#pdfBody .page section {
+#pdf-body .page section {
   margin-bottom: 60px;
 }
-#pdfBody .page section table {
+#pdf-body .page section table {
   width: 100%;
 }
-#pdfBody .rptCover {
+#pdf-body .rpt-cover {
   text-align: center;
 }
-#pdfBody .rptCover .rptTitle {
+#pdf-body .rpt-cover .rpt-title {
   font-size: 50px;
   margin-top: 540px;
   padding: 30px 165px;
@@ -51,15 +55,15 @@
   display: inline-block;
   width: 1032px;
 }
-#pdfBody .rptCover .rptDate {
+#pdf-body .rpt-cover .rpt-date {
   margin-top: 350px;
   font-size: 45px;
 }
-#pdfBody .rptCover .rptFooter {
+#pdf-body .rpt-cover .rpt-footer {
   font-size: 40px;
   margin-top: 250px;
 }
-#pdfBody .rptHeader .right {
+#pdf-body .rpt-header .right {
   float: right;
   color: red;
   padding: 5px;
