@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.notice;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
@@ -18,9 +18,9 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface NoticeMapstruct
-        extends BaseListMapstruct<NoticeDto, NoticeListDto, NoticeEntity> {
+        extends BaseAuditListMapstruct<NoticeDto, NoticeListDto,NoticeEntity> {
 
     NoticeMapstruct INSTANCE = Mappers.getMapper(NoticeMapstruct.class);
 
@@ -66,4 +66,7 @@ public interface NoticeMapstruct
             final NoticeDto dto,
             final @MappingTarget NoticeEntity entity
     ) throws Exception;
+
+
+
 }

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import lombok.EqualsAndHashCode;
@@ -8,10 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.annotation.PostConstruct;
+
 /**
  * BoardPostDto
  * <pre>
- *  게시판 게시물 Dto
+ *  일반게시판 게시물 Dto
  * </pre>
  *
  * @author nichefish
@@ -25,7 +28,11 @@ import lombok.experimental.SuperBuilder;
 public class BoardPostDto
         extends BasePostDto {
 
-
+    /**
+     * 게시판 코드 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType
+     */
+    @JsonProperty("contentType")
+    protected String boardCd;
 
     /**
      * 조치자(작업자)ID
@@ -93,10 +100,13 @@ public class BoardPostDto
     // private List<FlsysRefDto> flsysRefList;
 
     */
-/* ----- *//*
 
+    /* ----- */
 
-    */
+    public String getBoardCd() {
+        return this.contentType;
+    }
+
 /**
      * 내부 값들 합쳐서 풀 타이틀 반환
      *//*

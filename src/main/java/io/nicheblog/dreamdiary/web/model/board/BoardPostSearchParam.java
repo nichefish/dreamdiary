@@ -6,7 +6,7 @@ import lombok.*;
 /**
  * BoardPostSearchParam
  * <pre>
- *  게시판 게시물 검색 파라미터 Dto
+ *  일반게시판 게시물 검색 파라미터 Dto
  * </pre>
  *
  * @author nichefish

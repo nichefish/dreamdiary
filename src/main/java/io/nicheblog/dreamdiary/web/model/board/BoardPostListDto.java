@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
@@ -9,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * BoardPostListDto
  * <pre>
- *  게시판 게시물 목록 조회 Dto
+ *  일반게시판 게시물 목록 조회 Dto
  * </pre>
  *
  * @author nichefish
@@ -24,25 +25,15 @@ public class BoardPostListDto
         extends BasePostListDto {
 
     /**
+     * 게시판 코드 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType
+     */
+    @JsonProperty("contentType")
+    protected String boardCd;
+
+    /**
      * 글분류 분류코드
      */
     private String ctgrClCd;
-
-    /**
-     * 글분류 코드
-     */
-    private String ctgrCd;
-
-    /**
-     * 글분류 코드 이름
-     */
-    private String ctgrNm;
-
-    /**
-     * 수정권한
-     */
-    @Builder.Default
-    private String mdfable = Constant.MDFABLE_REGSTR;
 
     /**
      * 노션 페이지 참조 ID :: UUID

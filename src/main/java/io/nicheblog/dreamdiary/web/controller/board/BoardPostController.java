@@ -7,15 +7,12 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
-import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
-import io.nicheblog.dreamdiary.web.model.board.BoardPostListDto;
-import io.nicheblog.dreamdiary.web.model.board.BoardPostSearchParam;
+import io.nicheblog.dreamdiary.web.model.board.*;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
@@ -43,6 +40,7 @@ import java.util.Map;
  * BoardPostController
  * <pre>
  *  게시판 게시물 컨트롤러
+ *  화면단에선 boardCd, 어플리케이션 단에선 contentType으로 사용
  * </pre>
  *
  * @author nichefish
@@ -149,16 +147,16 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegForm(
             final LogActvtyParam logParam,
-            final @RequestParam("contentType") String contentType,
+            final @RequestParam("boardCd") String boardCd,
             final ModelMap model
     ) throws Exception {
 
         /* 게시판 정의 정보 조회 */
-        model.addAttribute("contentType", contentType);
+        model.addAttribute("boardCd", boardCd);
 
         /* 사이트 메뉴 설정 */
-        BoardDefDto boardDef = boardDefService.getDtlDto(contentType);
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(contentType);
+        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
+        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
         model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo("상세 조회"));
 
         boolean isSuccess = false;
@@ -196,12 +194,12 @@ public class BoardPostController
     public String boardPostRegPreviewPop(
             final BoardPostDto boardPostDto,
             final LogActvtyParam logParam,
-            final @RequestParam("contentType") String contentType,
+            final @RequestParam("boardCd") String boardCd,
             final ModelMap model
     ) {
 
         /* 게시판 정의 정보 조회 */
-        model.addAttribute("contentType", contentType);
+        model.addAttribute("boardCd", boardCd);
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -243,7 +241,7 @@ public class BoardPostController
     public ResponseEntity<AjaxResponse> boardPostRegAjax(
             final @Valid BoardPostDto boardPostDto,
             final LogActvtyParam logParam,
-            final BasePostKey key,
+            final BoardPostKey key,
             // final @RequestParam("jandiYn") @Nullable String jandiYn,
             // final @RequestParam("trgetTopic") @Nullable String trgetTopic,
             final MultipartHttpServletRequest request,
@@ -257,7 +255,7 @@ public class BoardPostController
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = key.getPostNo() == null;
-            BoardPostDto result = isReg ? boardPostService.regist(boardPostDto, request) : boardPostService.modify(boardPostDto, key, request);
+            BoardPostDto result = isReg ? boardPostService.regist(boardPostDto, request) : boardPostService.modify(boardPostDto, key.getClsfKey(), request);
             isSuccess = (result.getPostNo() != null);
             if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -301,7 +299,7 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostDtl(
             final LogActvtyParam logParam,
-            final BasePostKey postKey,
+            final BaseClsfKey postKey,
             final @RequestParam("contentType") String contentType,
             final ModelMap model
     ) throws Exception {
@@ -359,7 +357,7 @@ public class BoardPostController
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostDtlAjax(
             final LogActvtyParam logParam,
-            final BasePostKey postKey
+            final BaseClsfKey postKey
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -408,7 +406,7 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostMdfForm(
             final LogActvtyParam logParam,
-            final BasePostKey postKey,
+            final BaseClsfKey postKey,
             final @RequestParam("boardCd") String boardCd,
             final ModelMap model
     ) throws Exception {
@@ -458,7 +456,7 @@ public class BoardPostController
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostDelAjax(
             final LogActvtyParam logParam,
-            final BasePostKey postKey
+            final BaseClsfKey postKey
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
