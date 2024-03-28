@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.api.dream.model;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -8,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Column;
 
 /**
- * DreamPieceDto
+ * DreamPieceApiDto
  * <pre>
  *  꿈 일자 Dto
  * </pre>
@@ -22,7 +21,7 @@ import javax.persistence.Column;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class DreamPieceDto
+public class DreamPieceApiDto
         extends BasePostDto {
 
     /**

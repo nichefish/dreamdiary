@@ -23,14 +23,6 @@ public interface ApiUrl {
     String PREFIX_DAY = "/day";
     String PREFIX_API_DREAM_DAY = PREFIX_API_DREAM + PREFIX_DAY;
     String API_DREAM_DAY_LIST_AJAX = PREFIX_API_DREAM_DAY + "/dreamDayListAjax.do";
-    String API_DREAM_DAY_REG_AJAX = PREFIX_API_DREAM_DAY + "/dreamDayRegAjax.do";
-    String API_DREAM_DAY_DTL_AJAX = PREFIX_API_DREAM_DAY + "/dreamDayDtlAjax.do";
-    String API_DREAM_DAY_MDF_AJAX = PREFIX_API_DREAM_DAY + "/dreamDayMdfAjax.do";
-
-    String PREFIX_PIECE = "/piece";
-    String PREFIX_API_DREAM_PIECE = PREFIX_API_DREAM + PREFIX_PIECE;
-    String API_DREAM_PIECE_REG_AJAX = PREFIX_API_DREAM_PIECE + "/dreamDayRegAjax.do";
-    String API_DREAM_PIECE_MDF_AJAX = PREFIX_API_DREAM_PIECE + "/dreamDayMdfAjax.do";
 
     /**
      * (API) 한국천문연구원 : 특일 정보 조회

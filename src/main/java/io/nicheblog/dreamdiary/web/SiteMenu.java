@@ -1,14 +1,11 @@
 package io.nicheblog.dreamdiary.web;
 
-import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static io.nicheblog.dreamdiary.web.SiteMenu.SubMenu.user_profl;
