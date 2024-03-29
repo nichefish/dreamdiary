@@ -1,22 +1,18 @@
 package io.nicheblog.dreamdiary.web.entity.board;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseEnhcPostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * BoardPostEntity
@@ -38,7 +34,7 @@ import java.util.Date;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE board_post SET del_yn = 'Y' WHERE content_type = ? AND post_no = ?")
 public class BoardPostEntity
-        extends BaseEnhcPostEntity {
+        extends BasePostEntity {
 
     /** 글 번호 :: 복합키 사용, 시퀀스 생성 로직을 위해 재정의 */
     @Id
@@ -48,10 +44,12 @@ public class BoardPostEntity
     @Comment("글번호 (key)")
     private Integer postNo;
 
-    /** 컨텐츠 타입 */
+    /** 컨텐츠 타입 :: Override */
     @Id
     @Column(name = "content_type")
     private String contentType;
+
+    /* ----- */
 
     /** 게시판 정의 정보 */
     @ManyToOne(fetch = FetchType.EAGER)
@@ -75,7 +73,12 @@ public class BoardPostEntity
     // @NotFound(action = NotFoundAction.IGNORE)
     // @Comment("파일시스템 참조 목록")
     // private List<FlsysRefEntity> flsysRefList;
-
     */
+
+    /* ----- */
+
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentEmbed comment;
 }
 

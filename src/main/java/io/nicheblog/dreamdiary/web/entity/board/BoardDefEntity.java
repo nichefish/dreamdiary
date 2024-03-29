@@ -51,8 +51,8 @@ public class BoardDefEntity
     @Comment("메뉴번호")
     private String menuNo;
 
-    /** 글분류 분류 코드 */
+    /** 게시판 글분류 코드 */
     @Column(name = "ctgr_cl_cd")
-    @Comment("글분류 분류코드")
+    @Comment("게시판 글분류 코드")
     private String ctgrClCd;
 }
