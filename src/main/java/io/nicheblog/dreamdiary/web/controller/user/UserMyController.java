@@ -93,7 +93,7 @@ public class UserMyController
             //     model.addAttribute("vcatnStats", vcatnStatsDtl);
             //     // 올해 사용 휴가 목록 조회
             //     Map<String, Object> searchParamMap = new HashMap<>() {{
-            //         put("searchStartDt", statsYy.getBeginDt());
+            //         put("searchStartDt", statsYy.getBgnDt());
             //         put("searchEndDt", statsYy.getEndDt());
             //         put("regstrId", lgnUserId);
             //     }};

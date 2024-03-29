@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.ChineseCalUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
@@ -41,14 +41,14 @@ import java.util.stream.Collectors;
  */
 @Service("userService")
 public class UserService
-        implements BaseMultiCrudService<UserDto, UserListDto, Integer, UserEntity, UserRepository, UserSpec, UserMapstruct, CmmFileService> {
+        implements BaseMultiCrudService<UserDto, UserListDto, Integer, UserEntity, UserRepository, UserSpec, UserMapstruct, FileService> {
 
     @Resource(name = "userRepository")
     private UserRepository userRepository;
     @Resource(name = "userSpec")
     private UserSpec userSpec;
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
+    @Resource(name = "fileService")
+    private FileService fileService;
 
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
     private final UserProflMapstruct userProflMapstruct = UserProflMapstruct.INSTANCE;
@@ -69,8 +69,8 @@ public class UserService
     }
 
     @Override
-    public CmmFileService getFileService() {
-        return this.cmmFileService;
+    public FileService getFileService() {
+        return this.fileService;
     }
 
     @Resource(name = "userProflRepository")
@@ -295,7 +295,7 @@ public class UserService
     }
 
     /**
-     * 사용자정보 잠금
+     * 사용자 정보 잠금
      */
     public Boolean userInfoLock(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
@@ -309,7 +309,7 @@ public class UserService
     }
 
     /**
-     * 사용자정보 잠금 해제
+     * 사용자 정보 잠금 해제
      */
     public Boolean userInfoUnlock(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
@@ -326,7 +326,7 @@ public class UserService
     }
 
     /**
-     * 사용자정보UserInfo가 있는 계정 목록 조회
+     * 사용자 정보UserInfo가 있는 계정 목록 조회
      * TODO: 어디어디 쓰지?
      */
     public Page<UserListDto> getInfoUserList(final Pageable pageable) throws Exception {
