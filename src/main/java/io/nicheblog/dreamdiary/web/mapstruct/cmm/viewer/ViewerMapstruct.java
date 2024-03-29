@@ -35,7 +35,6 @@ public interface ViewerMapstruct
      * Dto -> Entity
      */
     @Override
-    @Mapping(target = "postNo", expression = "java(StringUtils.isNotEmpty(dto.getPostNo()) ? Integer.parseInt(dto.getPostNo()) : null)")
     ViewerEntity toEntity(final ViewerDto dto) throws Exception;
 
     /**
