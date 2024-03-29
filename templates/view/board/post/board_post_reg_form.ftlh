@@ -24,7 +24,7 @@
 
                 commons.validate.noSpaces(".no-space");        // 공백 자동 제거
 
-                // 상단고정여부 클릭시 글씨 변경
+                // 상단고정 여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("fxdYn", "고정//해제", "blue//gray");
                 // 수정일자변경여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("managtDtUpdtYn", "변경//미변경", "blue//gray");
