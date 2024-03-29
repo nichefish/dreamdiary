@@ -3,7 +3,6 @@ package io.nicheblog.dreamdiary.web.model.vcatn.papr;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +33,7 @@ public class VcatnPaprListDto
     private String cfYn;
 
     /** 휴가 일정 리스트 */
-    private List<VcatnSchdulDto> vcatnSchdulList;
+    private List<VcatnSchdulDto> schdulList;
 
     /* ----- */
 

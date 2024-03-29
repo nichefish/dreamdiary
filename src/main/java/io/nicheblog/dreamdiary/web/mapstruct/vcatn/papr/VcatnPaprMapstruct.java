@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.mapstruct.vcatn;
+package io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
@@ -27,7 +27,7 @@ public interface VcatnPaprMapstruct
     /**
      * Entity -> Dto
      */
-    @Mapping(target = "vcatnSchdulList", expression = "java(entity.getVcatnSchdulDtoList())")
+    @Mapping(target = "schdulList", expression = "java(entity.getVcatnSchdulDtoList())")
     @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
     VcatnPaprDto toDto(final VcatnPaprEntity entity) throws Exception;
@@ -35,13 +35,13 @@ public interface VcatnPaprMapstruct
     /**
      * Entity -> listDto
      */
-    @Mapping(target = "vcatnSchdulList", expression = "java(entity.getVcatnSchdulDtoList())")
+    @Mapping(target = "schdulList", expression = "java(entity.getVcatnSchdulDtoList())")
     VcatnPaprListDto toListDto(final VcatnPaprEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
-    @Mapping(target = "vcatnSchdulList", expression = "java(dto.getVcatnSchdulEntityList())")
+    @Mapping(target = "schdulList", expression = "java(dto.getSchdulEntityList())")
     @Mapping(target = "cfYn", expression = "java((dto.getCfYn() != null) ? dto.getCfYn() : \"N\")")
     VcatnPaprEntity toEntity(final VcatnPaprDto dto) throws Exception;
 
@@ -49,7 +49,7 @@ public interface VcatnPaprMapstruct
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
      */
     @Override
-    @Mapping(target = "vcatnSchdulList", expression = "java(dto.getVcatnSchdulEntityList())")
+    @Mapping(target = "schdulList", expression = "java(dto.getSchdulEntityList())")
     @Mapping(target = "cfYn", expression = "java((dto.getCfYn() != null) ? dto.getCfYn() : \"N\")")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(

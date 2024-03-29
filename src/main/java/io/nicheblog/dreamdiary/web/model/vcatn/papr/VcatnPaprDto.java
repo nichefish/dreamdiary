@@ -5,8 +5,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.vcatn.VcatnSchdulMapstruct;
-import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
+import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnSchdulMapstruct;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -37,24 +36,24 @@ public class VcatnPaprDto
     private String cfYn;
 
     /** 휴가 일정 리스트 */
-    private List<VcatnSchdulDto> vcatnSchdulList;
+    private List<VcatnSchdulDto> schdulList;
 
     /* ----- */
 
     /** sublist 변환 */
-    public List<VcatnSchdulEntity> getVcatnSchdulEntityList() throws Exception {
-        if (CollectionUtils.isEmpty(this.vcatnSchdulList)) return null;
+    public List<VcatnSchdulEntity> getSchdulEntityList() throws Exception {
+        if (CollectionUtils.isEmpty(this.schdulList)) return null;
         List<VcatnSchdulEntity> vcatnSchdulEntityList = new ArrayList<>();
-        for (VcatnSchdulDto vcatnSchdulDto : this.vcatnSchdulList) {
+        for (VcatnSchdulDto vcatnSchdulDto : this.schdulList) {
             String vcatnCd = vcatnSchdulDto.getVcatnCd();
             if (Constant.VCATN_AM_HALF.equals(vcatnCd)) {
-                vcatnSchdulDto.setBeginDt(vcatnSchdulDto.getBeginDt() + " 09:00:00");
+                vcatnSchdulDto.setBgnDt(vcatnSchdulDto.getBgnDt() + " 09:00:00");
                 vcatnSchdulDto.setEndDt(vcatnSchdulDto.getEndDt() + " 14:00:00");
             } else if (Constant.VCATN_PM_HALF.equals(vcatnCd)) {
-                vcatnSchdulDto.setBeginDt(vcatnSchdulDto.getBeginDt() + " 14:00:00");
+                vcatnSchdulDto.setBgnDt(vcatnSchdulDto.getBgnDt() + " 14:00:00");
                 vcatnSchdulDto.setEndDt(vcatnSchdulDto.getEndDt() + " 18:00:00");
             } else {
-                vcatnSchdulDto.setBeginDt(vcatnSchdulDto.getBeginDt() + " 01:00:00");
+                vcatnSchdulDto.setBgnDt(vcatnSchdulDto.getBgnDt() + " 01:00:00");
                 vcatnSchdulDto.setEndDt(vcatnSchdulDto.getEndDt() + " 23:59:59");
             }
             VcatnSchdulEntity entity = VcatnSchdulMapstruct.INSTANCE.toEntity(vcatnSchdulDto);

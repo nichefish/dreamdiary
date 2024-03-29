@@ -7,10 +7,10 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.vcatn.VcatnPaprMapstruct;
-import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
+import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnPaprMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
+import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnSchdulDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnPaprRepository;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnPaprSpec;
@@ -93,11 +93,11 @@ public class VcatnPaprService
      */
     public void setVcatnPaprSj(final VcatnPaprDto vcatnPaprDto) {
         String newSj = "";
-        List<VcatnSchdulDto> vcatnSchdulList = vcatnPaprDto.getVcatnSchdulList();
-        for (VcatnSchdulDto vcatn : vcatnSchdulList) {
+        List<VcatnSchdulDto> schdulList = vcatnPaprDto.getSchdulList();
+        for (VcatnSchdulDto vcatn : schdulList) {
             String vcatnCd = vcatn.getVcatnCd();
             String vcatnNm = cmmCdService.getDtlCdNm(Constant.VCATN_CD, vcatnCd);
-            String period = vcatn.getBeginDt();
+            String period = vcatn.getBgnDt();
             if (!Constant.VCATN_AM_HALF.equals(vcatnCd) && !Constant.VCATN_PM_HALF.equals(vcatnCd)) {
                 period = period + "~" + vcatn.getEndDt();
             }
@@ -128,7 +128,7 @@ public class VcatnPaprService
     @Override
     public void preDelete(final VcatnPaprEntity entity) {
         // 휴가계획서 상세항목 삭제 처리
-        List<VcatnSchdulEntity> vcatnSchdulEntity = entity.getVcatnSchdulList();
+        List<VcatnSchdulEntity> vcatnSchdulEntity = entity.getSchdulList();
         for (VcatnSchdulEntity vcatnSchdul : vcatnSchdulEntity) {
             vcatnSchdul.setDelYn("Y");
         }
