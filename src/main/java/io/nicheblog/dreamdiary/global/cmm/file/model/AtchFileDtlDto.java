@@ -18,40 +18,23 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AtchFileDtlDto {
 
-    /**
-     * 첨부파일 상세 ID
-     */
+    /** 첨부파일 상세 번호 (PK) */
     private Integer atchFileDtlNo;
-    /**
-     * 첨부파일 ID
-     */
+    /** 첨부파일 번호 */
     private Integer atchFileNo;
-    /**
-     * 파일 순번
-     */
+
+    /** 파일 순번 */
     private String fileSn;
-    /**
-     * 원본파일명
-     */
+    /** 원본파일명 */
     private String orgnFileNm;
-    /**
-     * 저장파일명
-     */
+    /** 저장파일명 */
     private String streFileNm;
-    /**
-     * 파일 확장자
-     */
+    /** 파일 확장자 */
     private String fileExtn;
-    /**
-     * 파일 크기
-     */
+    /** 파일 크기 */
     private Long fileSize;
-    /**
-     * 파일 경로
-     */
+    /** 파일 경로 */
     private String fileStrePath;
-    /**
-     * URL (상대경로)
-     */
+    /**  URL (상대경로) */
     private String url;
 }

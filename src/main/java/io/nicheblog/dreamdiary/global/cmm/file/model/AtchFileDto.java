@@ -20,12 +20,9 @@ import java.util.List;
 @NoArgsConstructor
 public class AtchFileDto {
 
-    /**
-     * 첨부파일 ID
-     */
+    /** 첨부파일 번호 (PK) */
     private String atchFileNo;
-    /**
-     * 첨부파일 목록
-     */
+
+    /** 첨부파일 목록 */
     List<AtchFileDtlDto> atchFileList;
 }

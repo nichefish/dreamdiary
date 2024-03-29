@@ -33,59 +33,41 @@ import javax.persistence.*;
 public class AtchFileDtlEntity
         extends BaseCrudEntity {
 
-    /**
-     * 첨부파일 상세 ID
-     */
+    /** 첨부파일 상세 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "atch_file_dtl_no")
     private Integer atchFileDtlNo;
 
-    /**
-     * 첨부파일 ID
-     */
+    /** 첨부파일 번호 */
     @Column(name = "atch_file_no")
     private Integer atchFileNo;
 
-    /**
-     * 파일 순번
-     */
+    /** 파일 순번 */
     @Column(name = "file_sn")
     private Integer fileSn;
 
-    /**
-     * 원본파일명
-     */
+    /** 원본파일명 */
     @Column(name = "orgn_file_nm", length = 20)
     private String orgnFileNm;
 
-    /**
-     * 저장파일명
-     */
+    /** 저장파일명 */
     @Column(name = "stre_file_nm", length = 20)
     private String streFileNm;
 
-    /**
-     * 파일 확장자
-     */
+    /** 파일 확장자 */
     @Column(name = "file_extn", length = 20)
     private String fileExtn;
 
-    /**
-     * 파일 크기
-     */
+    /** 파일 크기 */
     @Column(name = "file_size")
     private Long fileSize;
 
-    /**
-     * 파일 저장 경로
-     */
+    /** 파일 저장 경로 */
     @Column(name = "file_stre_path")
     private String fileStrePath;
 
-    /**
-     * URL (상대경로)
-     */
+    /** URL (상대경로) */
     @Column(name = "url")
     private String url;
 }

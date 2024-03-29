@@ -92,15 +92,14 @@ public final class Constant
     public static final String EMPLYM_CD = "EMPLYM_CD";
 
     @AllArgsConstructor
-    @Getter
-    public enum EMPLYM {
+    public enum Emplym {
 
         FREE("프리랜서");
 
         public final String desc;
     }
 
-    public static final String EMPLYM_FREE = EMPLYM.FREE.name();
+    public static final String EMPLYM_FREE = Emplym.FREE.name();
 
 
     public static final String JOB_TITLE_CD = "JOB_TITLE_CD";       // 직급 코드
@@ -116,7 +115,7 @@ public final class Constant
     public static final String YY_CD = "YY_CD";                 // 사용자 권한 코드
     public static final String MNTH_CD = "MNTH_CD";                 // 사용자 권한 코드
 
-    public static final String EXPTR_TY_CD = "EXPTR_TY_CD";         // 지출구분 코드
+    public static final String EXPTR_CD = "EXPTR_CD";         // 지출구분 코드
 
     public static final String ACTVTY_CTGR_CD = "ACTVTY_CTGR_CD";     // 작업 카테고리 코드
     public static final String ACTION_TY_CD = "ACTION_TY_CD";         // 액션 유형 코드
@@ -125,8 +124,7 @@ public final class Constant
     public static final String SCHDUL_TY_CD = "SCHDUL_TY_CD";       // 일정 구분 코드
 
     @AllArgsConstructor
-    @Getter
-    public enum SCHDUL_TY {
+    public enum SchdulTy {
 
         HLDY("공휴일"),
         CEREMONY("행사"),
@@ -140,21 +138,20 @@ public final class Constant
         public final String desc;
     }
 
-    public static final String SCHDUL_TY_HLDY = SCHDUL_TY.HLDY.name();
-    public static final String SCHDUL_TY_CEREMONY = SCHDUL_TY.CEREMONY.name();
-    public static final String SCHDUL_TY_TLCMMT = SCHDUL_TY.TLCMMT.name();
-    public static final String SCHDUL_TY_OUTDT = SCHDUL_TY.OUTDT.name();
-    public static final String SCHDUL_TY_INDT = SCHDUL_TY.INDT.name();
-    public static final String SCHDUL_TY_VCATN = SCHDUL_TY.VCATN.name();
-    public static final String SCHDUL_TY_BRTHDY = SCHDUL_TY.BRTHDY.name();
-    public static final String SCHDUL_TY_ETC = SCHDUL_TY.ETC.name();
+    public static final String SCHDUL_TY_HLDY = SchdulTy.HLDY.name();
+    public static final String SCHDUL_TY_CEREMONY = SchdulTy.CEREMONY.name();
+    public static final String SCHDUL_TY_TLCMMT = SchdulTy.TLCMMT.name();
+    public static final String SCHDUL_TY_OUTDT = SchdulTy.OUTDT.name();
+    public static final String SCHDUL_TY_INDT = SchdulTy.INDT.name();
+    public static final String SCHDUL_TY_VCATN = SchdulTy.VCATN.name();
+    public static final String SCHDUL_TY_BRTHDY = SchdulTy.BRTHDY.name();
+    public static final String SCHDUL_TY_ETC = SchdulTy.ETC.name();
 
     /* 휴가 분류 코드 */
     public static final String VCATN_CD = "VCATN_CD";
 
     @AllArgsConstructor
-    @Getter
-    public enum VCATN {
+    public enum Vcatn {
 
         ANNUAL("연차"),
         AM_HALF("오전반차"),
@@ -167,13 +164,13 @@ public final class Constant
         public final String desc;
     }
 
-    public static final String VCATN_ANNUAL = VCATN.ANNUAL.name();
-    public static final String VCATN_AM_HALF = VCATN.AM_HALF.name();
-    public static final String VCATN_PM_HALF = VCATN.PM_HALF.name();
-    public static final String VCATN_PBLEN = VCATN.PBLEN.name();
-    public static final String VCATN_CTSNN = VCATN.CTSNN.name();
-    public static final String VCATN_UNPAID = VCATN.UNPAID.name();
-    public static final String VCATN_MNSTR = VCATN.MNSTR.name();
+    public static final String VCATN_ANNUAL = Vcatn.ANNUAL.name();
+    public static final String VCATN_AM_HALF = Vcatn.AM_HALF.name();
+    public static final String VCATN_PM_HALF = Vcatn.PM_HALF.name();
+    public static final String VCATN_PBLEN = Vcatn.PBLEN.name();
+    public static final String VCATN_CTSNN = Vcatn.CTSNN.name();
+    public static final String VCATN_UNPAID = Vcatn.UNPAID.name();
+    public static final String VCATN_MNSTR = Vcatn.MNSTR.name();
 
     /**
      * 활동 구분 코드 (로그)
@@ -192,9 +189,9 @@ public final class Constant
     public static final String CRDT_USER_CTTPC = "crdtUserCttpc";   // 직원 연락처
     public static final String LOG_ACTVTY = "logActvty";            // 활동 로그 관리
     public static final String LOG_SYS = "logSys";                  // 활동 로그 관리
-    public static final String EXPTR_PRSNL_PAPR = "exptrIndvd";          // 개인경비지출서
-    public static final String EXPTR_PRSNL_RPT = "exptrIndvdRpt";
-    public static final String EXPTR_PRSNL_RPT_ITEM = "exptrIndvdRptItem";
+    public static final String EXPTR_PRSNL_PAPR = "exptrPrsnl";          // 개인경비지출서
+    public static final String EXPTR_PRSNL_RPT = "exptrPrsnlRpt";
+    public static final String EXPTR_PRSNL_RPT_ITEM = "exptrPrsnlRptItem";
     public static final String VCATN_STATS = "vcatnStats";          // 휴가계획서
     public static final String VCATN_DY = "vcatnDy";                // 휴가사용일자
 
@@ -209,8 +206,7 @@ public final class Constant
     public static final String MDFABLE_CD = "MDFABLE_CD";
 
     @AllArgsConstructor
-    @Getter
-    public enum MDFABLE {
+    public enum Mdfable {
 
         REGSTR("등록자"),
         MNGR("관리자"),
@@ -220,10 +216,10 @@ public final class Constant
         public final String desc;
     }
 
-    public static final String MDFABLE_REGSTR = MDFABLE.REGSTR.name();
-    public static final String MDFABLE_MNGR = MDFABLE.MNGR.name();
-    public static final String MDFABLE_USER = MDFABLE.USER.name();
-    public static final String MDFABLE_ALL = MDFABLE.ALL.name();
+    public static final String MDFABLE_REGSTR = Mdfable.REGSTR.name();
+    public static final String MDFABLE_MNGR = Mdfable.MNGR.name();
+    public static final String MDFABLE_USER = Mdfable.USER.name();
+    public static final String MDFABLE_ALL = Mdfable.ALL.name();
 
     /**
      * PREFIX / SUFFIX
@@ -234,11 +230,23 @@ public final class Constant
     /**
      * UTM 파라미터
      */
-    public static final String UTM_SOURCE = "utm_source";
-    public static final String UTM_MEDIUM = "utm_medium";
-    public static final String UTM_CAMPAIGN = "utm_campaign";
-    public static final String UTM_TERM = "utm_term";
-    public static final String UTM_CONTENT = "utm_content";
+    @AllArgsConstructor
+    public enum UtmParam {
+
+        UTM_SOURCE("utm_source", "등록자"),
+        UTM_MEDIUM("utm_medium", "관리자"),
+        UTM_CAMPAIGN("utm_campaign", "사용자"),
+        UTM_TERM("utm_term", "사용자"),
+        UTM_CONTENT( "utm_content", "전체");
+
+        public final String key;
+        public final String desc;
+    }
+    public static final String UTM_SOURCE = UtmParam.UTM_SOURCE.key;
+    public static final String UTM_MEDIUM = UtmParam.UTM_MEDIUM.key;
+    public static final String UTM_CAMPAIGN = UtmParam.UTM_CAMPAIGN.key;
+    public static final String UTM_TERM = UtmParam.UTM_TERM.key;
+    public static final String UTM_CONTENT = UtmParam.UTM_CONTENT.key;
 
     public static final String BS_PRIMARY = "primary";
     public static final String BS_PRIMARY_700 = "primary-700";
@@ -257,10 +265,10 @@ public final class Constant
     public static final String CMPY_CD = "CMPY_CD";
 
     @AllArgsConstructor
-    @Getter
     public enum CMPY {
         AA("aa"),
         BB("bb");
-        private final String desc;
+
+        public final String desc;
     }
 }
