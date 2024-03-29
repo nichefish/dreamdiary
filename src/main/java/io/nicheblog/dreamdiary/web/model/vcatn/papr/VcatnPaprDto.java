@@ -1,14 +1,18 @@
-package io.nicheblog.dreamdiary.web.model.vcatn;
+package io.nicheblog.dreamdiary.web.model.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.web.entity.vcatn.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
+import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
 
+import javax.persistence.Embedded;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,14 +64,13 @@ public class VcatnPaprDto
         return vcatnSchdulEntityList;
     }
 
-    /* ----- 댓글 모듈 ----- */
+    /* ----- */
 
-    /** 댓글 목록 */
-    private List<CommentDto> commentList;
-    /** 댓글 갯수 */
-    @Builder.Default
-    private Integer commentCnt = 0;
-    /** 댓글 존재 여부 */
-    @Builder.Default
-    private Boolean hasComment = false;
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentCmpstn comment;
+
+    /** 조치 정보 모듈 (위임) */
+    @Embedded
+    public ManagtEmbed managt;
 }

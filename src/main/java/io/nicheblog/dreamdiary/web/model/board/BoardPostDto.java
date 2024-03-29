@@ -1,11 +1,17 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseEnhcPostDto;
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
+import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Embedded;
 import java.util.List;
 
 /**
@@ -23,18 +29,19 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class BoardPostDto
-        extends BaseEnhcPostDto {
+        extends BasePostDto {
 
     /** 컨텐츠 타입 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType */
     @JsonProperty("contentType")
     private String boardCd;
+
+    /* ----- */
 
     /** 노션 페이지 참조 ID :: UUID */
     // private String notionPageId;
 
     /** 파일시스템 참조 목록 */
     // private List<FlsysRefDto> flsysRefList;
-
 
     /* ----- */
 
@@ -55,29 +62,13 @@ public class BoardPostDto
     //     viewerList.add(viewer);
     // }
 
-    /**
-     * 게시물 조치자 목록 추가
-     */
-    // public void addPostManagtr(final BoardPostManagtrDto managtr) {
-    //     if (this.managtrList == null) this.managtrList = new ArrayList<>();
-    //     managtrList.add(managtr);
-    // }
+    /* ----- */
 
-    /**
-     * 처리(조치)자 여부
-     */
-    //public Boolean getIsManagtr() {
-    //    return (AuthUtils.isRegstr(this.managtrId));
-    //}
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentCmpstn comment;
 
-    /* ----- 댓글 모듈 ----- */
-
-    /** 댓글 목록 */
-    private List<CommentDto> commentList;
-    /** 댓글 갯수 */
-    @Builder.Default
-    private Integer commentCnt = 0;
-    /** 댓글 존재 여부 */
-    @Builder.Default
-    private Boolean hasComment = false;
+    /** 조치 정보 모듈 (위임) */
+    @Embedded
+    public ManagtEmbed managt;
 }

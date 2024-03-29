@@ -2,7 +2,9 @@ package io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.CmmStus;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
@@ -10,6 +12,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.Embedded;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +20,7 @@ import java.util.Objects;
  * ExptrPrsnlListDto
  * <pre>
  *  경비 관리 > 경비지출서 > 경비지출서 목록 조회 Dto
- *  ※ 경비지출서(exptr_prsnl) = 경비지출서. 경비지출항목(exptr_prsnl_item)을 1:N으로 관리한다.
+ *  ※ 경비지출서(exptr_prsnl_papr) = 경비지출서. 경비지출항목(exptr_prsnl_item)을 1:N으로 관리한다.
  * </pre>
  *
  * @author nichefish
@@ -120,14 +123,13 @@ public class ExptrPrsnlPaprListDto
         }
     }
 
-    /* ----- 댓글 모듈 ----- */
+    /* ----- */
 
-    /** 댓글 목록 */
-    private List<CommentDto> commentList;
-    /** 댓글 갯수 */
-    @Builder.Default
-    private Integer commentCnt = 0;
-    /** 댓글 존재 여부 */
-    @Builder.Default
-    private Boolean hasComment = false;
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentCmpstn comment;
+
+    /** 조치 정보 모듈 (위임) */
+    @Embedded
+    public ManagtEmbed managt;
 }
