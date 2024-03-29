@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -27,8 +26,19 @@ import javax.persistence.*;
 public class BasePostEntity
         extends BaseClsfEntity {
 
-    /** 필수(Override): 글분류 코드 */
+    /**
+     * 필수(Override): 글분류 코드
+     * !상속받은 클래스에서 재정의하기
+     */
     private static final String CTGR_CL_CD = "DEFAULT_CTGR_CL_CD";
+
+    /** 제목 */
+    @Column(name = "title")
+    protected String title;
+
+    /** 내용 */
+    @Column(name = "cn")
+    protected String cn;
 
     /** 글분류 코드 */
     @Column(name = "ctgr_cd", length = 20)
@@ -46,20 +56,20 @@ public class BasePostEntity
     @Comment("공지사항 글분류 코드 정보")
     protected DtlCdEntity ctgrCdInfo;
 
+    /** 중요 여부 */
+    @Builder.Default
+    @Column(name = "imprtc_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("중요 여부")
+    protected String imprtcYn = "N";
+
+    /** 상단고정 여부 */
+    @Builder.Default
+    @Column(name = "fxd_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("상단고정 여부")
+    protected String fxdYn = "N";
+
     /** 조회수 */
     @Builder.Default
     @Column(name = "HIT_CNT")
     protected Integer hitCnt = 0;
-
-    /** 상단고정여부 */
-    @Builder.Default
-    @Column(name = "fxd_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("상단고정여부")
-    protected String fxdYn = "N";
-
-    /** 중요 여부 */
-    @Builder.Default
-    @Column(name = "IMPRTC_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("중요 여부")
-    protected String imprtcYn = "N";
 }

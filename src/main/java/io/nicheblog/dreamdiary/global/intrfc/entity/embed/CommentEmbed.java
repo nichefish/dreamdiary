@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * UserAcsIpInfo
+ * CommentEmbed
  * <pre>
- *  사용자user에서 계정 상태 관련 정보 분리
+ *  댓글 관련 정보 위임
  * </pre>
  *
  * @author nichefish
@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 @Getter(AccessLevel.PUBLIC)
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class CommentEmbed {
 
     /** 댓글 목록 */
