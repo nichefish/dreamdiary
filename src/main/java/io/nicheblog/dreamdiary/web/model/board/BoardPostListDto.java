@@ -3,11 +3,11 @@ package io.nicheblog.dreamdiary.web.model.board;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 /**
  * BoardPostListDto
@@ -43,7 +43,8 @@ public class BoardPostListDto
     /*
     private String notionPageId;
 
-    */
+    /* ----- */
+
 /**
      * 조치자(작업자)ID
      */
@@ -115,5 +116,16 @@ public class BoardPostListDto
         return tagStrList;
     }
     */
+
+    /* ----- 댓글 모듈 ----- */
+
+    /** 댓글 목록 */
+    private List<CommentDto> commentList;
+    /** 댓글 갯수 */
+    @Builder.Default
+    private Integer commentCnt = 0;
+    /** 댓글 존재 여부 */
+    @Builder.Default
+    private Boolean hasComment = false;
 }
 

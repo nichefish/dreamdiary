@@ -50,7 +50,7 @@ public class UserController
         extends BaseControllerImpl {
 
     private final String baseUrl = SiteUrl.USER_LIST;               // 기본 URL
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER;        // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER_REQST;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "userService")
     private UserService userService;

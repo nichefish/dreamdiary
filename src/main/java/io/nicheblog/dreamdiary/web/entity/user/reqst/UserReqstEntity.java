@@ -1,13 +1,15 @@
-package io.nicheblog.dreamdiary.web.entity.user;
+package io.nicheblog.dreamdiary.web.entity.user.reqst;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
+import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.*;
 
 import javax.persistence.CascadeType;
@@ -17,13 +19,14 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * UserEntity
+ * UserReqstEntity
  * <pre>
- *  계정 정보 Entity :: 사용자 정보(UserInfo)를 위임 필드로 가짐
+ *  사용자 (신규계정) 신청 정보 Entity :: 사용자 정보 Entity를 위임 필드로 가짐
+ *  비로그인 상태에서 신청하게 되므로 JPA audit 제외 위해 클래스 분리
  * </pre>
- *
+
  * @author nichefish
- * @extends BaseUserEntity
+ * @extends BaseAuditEntity
  */
 @Entity
 @Table(name = "user")
@@ -35,8 +38,8 @@ import java.util.List;
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE user SET del_yn = 'Y' WHERE user_no = ?")
-public class UserEntity
-        extends BaseAtchEntity {
+public class UserReqstEntity
+        extends BaseAuditEntity {
 
     /** 사용자 번호 (PK) */
     @Id
@@ -51,7 +54,7 @@ public class UserEntity
     private String userId;
 
     /** 비밀번호 :: 암호화된 비밀번호(64bit)를 저장하기 위해 길이=64이다. */
-    @Column(name = "password", length = 64)
+    @Column(name = "PASSWORD", length = 64)
     @Comment("비밀번호")
     private String password;
 
@@ -66,8 +69,8 @@ public class UserEntity
     @Embedded
     public UserAcsIpEmbed acsIpInfo;
 
-    /** 표시이름 : 사용자 프로필 정보가 없을 때 표시되는 이름 */
-    @Column(name = "nick_nm", length = 50)
+    /** 표시이름 :: 사용자 정보가 없을때 표시되는 이름 */
+    @Column(name = "NICK_NM", length = 50)
     @Comment("표시이름")
     private String nickNm;
 
@@ -91,15 +94,4 @@ public class UserEntity
     @Embedded
     public UserStusEmbed acntStus;
 
-    /* ----- */
-
-    /**
-     * getter override
-     */
-    public String getProflImgUrl() {
-        if (StringUtils.isEmpty(this.proflImgUrl)) {
-            return ("/metronic/assets/media/avatar_blank.png");
-        }
-        return this.proflImgUrl;
-    }
 }

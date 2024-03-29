@@ -1,11 +1,9 @@
-/*
 package io.nicheblog.dreamdiary.web.repository.user;
 
-import dreamdiary.nicheblog.io.cmm.intrfc.repository.BaseRepository;
-import dreamdiary.nicheblog.io.web.entity.user.UserReqstEntity;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.web.entity.user.reqst.UserReqstEntity;
 import org.springframework.stereotype.Repository;
 
-*/
 /**
  * UserReqstRepository
  * <pre>
@@ -13,10 +11,10 @@ import org.springframework.stereotype.Repository;
  * </pre>
  *
  * @author nichefish
- *//*
+ */
 
 @Repository("userReqstRepository")
 public interface UserReqstRepository
         extends BaseRepository<UserReqstEntity, Integer> {
     //
-}*/
+}

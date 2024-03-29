@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.cmm;
 
+import io.nicheblog.dreamdiary.web.AcsPageNm;
 import io.nicheblog.dreamdiary.web.SiteTopMenu;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,7 +44,7 @@ public class SiteAcsInfo {
     /**
      * 사이드바 상위 메뉴 코드 (메뉴 표시용)
      */
-    private String topMenuCd;
+    private String topMenuLabel;
 
     /**
      * 사이드바 메뉴 이름 (로깅 및 사이트 헤더 표시용)
@@ -84,7 +85,7 @@ public class SiteAcsInfo {
         this.topMenu = topMenu;
         this.topMenuNo = topMenu.menuNo;
         this.topMenuNm = topMenu.menuNm;
-        this.topMenuCd = topMenu.name();
+        this.topMenuLabel = topMenu.label;
         this.isMngrMenu = topMenu.isMngrMenu;
         this.menuNo = topMenu.idx + menuIdx;
         this.menuNm = menuNm;
@@ -98,11 +99,17 @@ public class SiteAcsInfo {
 
     }
 
-    /** 페이지명 세팅 */
+    /** 페이지명 세팅 (for breadcrumb) */
     public SiteAcsInfo setAcsPageInfo(
             final String acsPageNm
     ) {
         this.acsPageNm = acsPageNm;
+        return this;
+    }
+    public SiteAcsInfo setAcsPageInfo(
+            final AcsPageNm acsPageNm
+    ) {
+        this.acsPageNm = acsPageNm.pageNm;
         return this;
     }
 

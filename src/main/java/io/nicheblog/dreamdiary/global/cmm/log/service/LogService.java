@@ -65,16 +65,11 @@ public class LogService {
         if (!activeProfile.isProd()) return;
 
         LogActvtyEntity logActvty = logMapstruct.toEntity(logParam);
-        // 작업 url
-        logActvty.setUrl(request.getServletPath());
-        // 작업 파라미터
-        logActvty.setParam(request.getQueryString());
-        // 리퍼러
-        logActvty.setReferer(request.getHeader(Constant.REFERER));
-        // 작업 IP
-        logActvty.setIpAddr(authService.getUserIpAddr());
-        // 작업 내용
-        logActvty.setCn(logCn);
+        logActvty.setUrl(request.getServletPath());         // 작업 url
+        logActvty.setParam(request.getQueryString());       // 작업 파라미터
+        logActvty.setReferer(request.getHeader(Constant.REFERER));      // 리퍼러
+        logActvty.setIpAddr(authService.getUserIpAddr());       // 작업 IP
+        logActvty.setCn(logCn);     // 작업 내용
 
         log.info("isSuccess: {}, resultMsg: {}", logParam.getIsSuccess(), logParam.getResultMsg());
         logActvtyRepository.save(logActvty);
@@ -91,7 +86,7 @@ public class LogService {
         // 로컬 또는 개발 접속은 로그 남기지 않음
         if (!activeProfile.isProd()) return;
 
-        // 막상 분리해놓고 보니 차이가 없네? 일단 분리 상태 유지하기
+        // TODO: 막상 분리해놓고 보니 차이가 없네? 일단 분리 상태 유지하기
         this.regLogActvty(logParam);
     }
 
@@ -110,17 +105,12 @@ public class LogService {
 
         LogActvtyEntity logActvty = new LogActvtyEntity();
         logActvty.setLogUserId(userId);
-        // 작업 url
-        logActvty.setUrl(request.getServletPath());
-        // 작업 파라미터
-        logActvty.setParam(request.getQueryString());
-        // 리퍼러
-        logActvty.setReferer(request.getHeader(Constant.REFERER));
-        // 작업 IP
-        logActvty.setIpAddr(authService.getUserIpAddr());
-        // 작업 내용
-        logActvty.setRslt(isSuccess);
-        logActvty.setRsltMsg(resultMsg);
+        logActvty.setUrl(request.getServletPath());     // 작업 url
+        logActvty.setParam(request.getQueryString());       // 작업 파라미터
+        logActvty.setReferer(request.getHeader(Constant.REFERER));  // 리퍼러
+        logActvty.setIpAddr(authService.getUserIpAddr());       // 작업 IP
+        logActvty.setRslt(isSuccess);               // 작업 결과
+        logActvty.setRsltMsg(resultMsg);            // 작업 결과 메세지
         logActvtyRepository.save(logActvty);
 
         log.info("isSuccess: {}, resultMsg: {}", isSuccess, resultMsg);

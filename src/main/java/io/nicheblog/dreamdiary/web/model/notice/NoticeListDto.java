@@ -2,8 +2,11 @@ package io.nicheblog.dreamdiary.web.model.notice;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 /**
  * NoticeListDto
@@ -23,13 +26,15 @@ public class NoticeListDto
         extends BasePostListDto {
 
     /** 필수: 컨텐츠 타입 */
-    private static final String CONTENT_TYPE = ContentType.NOTICE.key;
+    private static final ContentType CONTENT_TYPE = ContentType.NOTICE;
     /** 필수(Override): 글분류 코드 */
-    private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    protected String contentType = CONTENT_TYPE;
+    protected String contentType = CONTENT_TYPE.key;
+
+    /* ----- */
 
     /** 팝업공지 여부 */
     @Builder.Default
@@ -50,4 +55,15 @@ public class NoticeListDto
     //     }
     //     return a.toString();
     // }
+
+    /* ----- 댓글 모듈 ----- */
+
+    /** 댓글 목록 */
+    private List<CommentDto> commentList;
+    /** 댓글 갯수 */
+    @Builder.Default
+    private Integer commentCnt = 0;
+    /** 댓글 존재 여부 */
+    @Builder.Default
+    private Boolean hasComment = false;
 }

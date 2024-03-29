@@ -85,7 +85,7 @@ public class UserSpec
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
-                // 사용자정보 존재 "hasUserProfl" 체크시 조인결과 있는 목록만 반환
+                // 사용자 정보 존재 "hasUserProfl" 체크시 조인결과 있는 목록만 반환
                 case "hasUserProfl":
                     if ((Boolean) searchParamMap.get(key)) {
                         predicate.add(builder.isNotNull(userProfl.get("userProflNo")));

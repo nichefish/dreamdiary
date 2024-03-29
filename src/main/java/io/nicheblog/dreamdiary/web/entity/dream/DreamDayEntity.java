@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.api.dream.mapstruct.DreamPieceApiMapstruct;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
 import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
 import lombok.*;
@@ -42,8 +43,10 @@ import java.util.stream.Collectors;
 public class DreamDayEntity
         extends BaseClsfEntity {
 
-    private static final String CONTENT_TYPE = ContentType.DREAM_DAY.key;
-    private static final String CTGR_CL_CD = "DREAM_DAY_CTGR_CD";
+    /** 필수: 컨텐츠 타입 */
+    private static final ContentType CONTENT_TYPE = ContentType.DREAM_DAY;
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 꿈 일자 고유 번호 (PK) */
     @Id
@@ -55,7 +58,9 @@ public class DreamDayEntity
     /** 컨텐츠 타입 */
     @Builder.Default
     @Column(name = "content_type")
-    private String contentType = CONTENT_TYPE;
+    private String contentType = CONTENT_TYPE.key;
+
+    /* ----- */
 
     /** 꿈 일자 */
     @Column(name = "dreamt_dt")
@@ -123,4 +128,10 @@ public class DreamDayEntity
                 })
                 .collect(Collectors.toList());
     }
+
+    /* ----- */
+
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentEmbed comment;
 }

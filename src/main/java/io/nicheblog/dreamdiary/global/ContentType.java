@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
  * @author nichefish
  */
 @RequiredArgsConstructor
-@Getter
 public enum ContentType {
 
     DEFAULT("default", "기본"),
@@ -24,7 +22,9 @@ public enum ContentType {
     VCATN_PAPR("vcatn_papr", "휴가계획서"),
 
     EXPTR_PRSNL_PAPR("exptr_prsnl_papr", "경비지출서"),
-    EXPTR_REQST("exptr_reqst", "물품구매/경조사비 신청");
+    EXPTR_REQST("exptr_reqst", "물품구매/경조사비 신청"),
+
+    FLSYS_META("flsys_meta", "파일시스템 메타");
 
     public final String key;
     public final String desc;

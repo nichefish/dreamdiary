@@ -1,13 +1,12 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseEnhcPostDto;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 /**
  * BoardPostDto
@@ -24,152 +23,61 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class BoardPostDto
-        extends BasePostDto {
+        extends BaseEnhcPostDto {
 
-    /**
-     * 컨텐츠 타입 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType
-     */
+    /** 컨텐츠 타입 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType */
     @JsonProperty("contentType")
     private String boardCd;
 
-    /**
-     * 조치자(작업자)ID
-     */
-    private String managtrId;
-
-    /**
-     * 조치자(작업자)이름
-     */
-    private String managtrNm;
-
-    /**
-     * 조치일시
-     */
-    private String managtDt;
-
-    /**
-     * 조치자 정보
-     */
-    private AuditorDto managtrInfo;
-
-    /**
-     * 게시물 조치자 목록
-     *//*
-
-    private List<BoardPostManagtrDto> managtrList;
-    */
-
-    /**
-     * (수정시) 조치일자 변경하지 않음 변수
-     */
-    private String managtDtUpdtYn;
-
-/**
-     * 열람자 목록
-     *//*
-
-    private List<BoardPostViewerDto> viewerList;
-    */
-/**
-     * 게시물 태그 목록
-     *//*
-
-    private List<BoardPostTagDto> tagList;
-    */
-/**
-     * 태그 정보 (String)
-     *//*
-
-    @JsonIgnore
-    private String tagListStr;
-
-    */
-/**
-     * 노션 페이지 참조 ID :: UUID
-     *//*
-
+    /** 노션 페이지 참조 ID :: UUID */
     // private String notionPageId;
 
-    */
-/**
-     * 파일시스템 참조 목록
-     *//*
-
+    /** 파일시스템 참조 목록 */
     // private List<FlsysRefDto> flsysRefList;
 
-    */
 
     /* ----- */
 
     /**
      * 내부 값들 합쳐서 풀 타이틀 반환
-     *//*
+     */
+    // public String getFullTitle() {
+    //     String title = this.title;
+    //     if (StringUtils.isNotEmpty(this.ctgrNm)) title = "[" + this.ctgrNm + "] " + title;
+    //     return title;
+    // }
 
-    public String getFullTitle() {
-        String title = this.title;
-        if (StringUtils.isNotEmpty(this.ctgrNm)) title = "[" + this.ctgrNm + "] " + title;
-        return title;
-    }
-
-
-    */
-
-/**
+    /**
      * 게시물 조회자 목록 추가
-     *//*
+     */
+    // public void addPostViewer(final BoardPostViewerDto viewer) {
+    //     if (this.viewerList == null) this.viewerList = new ArrayList<>();
+    //     viewerList.add(viewer);
+    // }
 
-    public void addPostViewer(final BoardPostViewerDto viewer) {
-        if (this.viewerList == null) this.viewerList = new ArrayList<>();
-        viewerList.add(viewer);
-    }
+    /**
+     * 게시물 조치자 목록 추가
+     */
+    // public void addPostManagtr(final BoardPostManagtrDto managtr) {
+    //     if (this.managtrList == null) this.managtrList = new ArrayList<>();
+    //     managtrList.add(managtr);
+    // }
 
-    */
-/**
-     * 게시물 조회자 목록 추가
-     *//*
-
-    public void addPostManagtr(final BoardPostManagtrDto managtr) {
-        if (this.managtrList == null) this.managtrList = new ArrayList<>();
-        managtrList.add(managtr);
-    }
-
-    */
-/**
+    /**
      * 처리(조치)자 여부
-     *//*
+     */
+    //public Boolean getIsManagtr() {
+    //    return (AuthUtils.isRegstr(this.managtrId));
+    //}
 
-    public Boolean getIsManagtr() {
-        return (AuthUtils.isRegstr(this.managtrId));
-    }
+    /* ----- 댓글 모듈 ----- */
 
-    */
-/**
-     * 태그 목록 (dto) -> 태그 목록 (entity)
-     *//*
-
-    public List<BoardPostTagEntity> getTagEntityList() throws Exception {
-        if (CollectionUtils.isEmpty(this.tagList)) return null;
-        List<BoardPostTagEntity> tagEntityList = new ArrayList<>();
-        for (BoardPostTagDto tag : this.tagList) {
-            BoardPostTagEntity entity = BoardPostTagMapstruct.INSTANCE.toEntity(tag);
-            tagEntityList.add(entity);
-        }
-        return tagEntityList;
-    }
-
-    */
-/**
-     * 태그 문자열 목록 반환
-     *//*
-
-    public List<String> getTagStrList() {
-        if (CollectionUtils.isEmpty(this.tagList)) return null;
-        List<String> tagStrList = new ArrayList<>();
-        for (BoardPostTagDto tag : this.tagList) {
-            if (StringUtils.isEmpty(tag.getBoardTag())) continue;
-            tagStrList.add(tag.getBoardTag());
-        }
-        return tagStrList;
-    }
-*/
+    /** 댓글 목록 */
+    private List<CommentDto> commentList;
+    /** 댓글 갯수 */
+    @Builder.Default
+    private Integer commentCnt = 0;
+    /** 댓글 존재 여부 */
+    @Builder.Default
+    private Boolean hasComment = false;
 }

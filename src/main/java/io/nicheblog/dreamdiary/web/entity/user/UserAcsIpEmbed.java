@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * UserAcsIpInfo
  * <pre>
- *  사용자user에서 계정 상태 관련 정보 분리
+ *  사용자user에서 계정 상태 관련 정보 위임
  * </pre>
  *
  * @author nichefish
@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserAcsIpInfo {
+@AllArgsConstructor
+public class UserAcsIpEmbed {
 
     /**
      * 접속 IP 사용 여부
@@ -52,7 +52,7 @@ public class UserAcsIpInfo {
     /* ----- */
 
     /** 생성자 */
-    public UserAcsIpInfo(UserDto dto) {
+    public UserAcsIpEmbed(UserDto dto) {
         this();
         this.useAcsIpYn = dto.getUseAcsIpYn();
         if (!CollectionUtils.isEmpty(dto.getAcsIpList())) {

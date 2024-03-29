@@ -24,7 +24,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserStusInfo {
+public class UserStusEmbed {
 
     /**
      * 잠금여부
@@ -92,7 +92,7 @@ public class UserStusInfo {
     /* ----- */
 
     /** 생성자 */
-    public UserStusInfo(UserDto dto) {
+    public UserStusEmbed(UserDto dto) {
         this();
         this.reqstYn = dto.getReqstYn();
         this.cfYn = dto.getCfYn();

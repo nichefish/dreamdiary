@@ -2,9 +2,9 @@ package io.nicheblog.dreamdiary.web.mapstruct.user;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpInfo;
+import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserStusInfo;
+import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.model.user.UserCttpcListDto;
 import io.nicheblog.dreamdiary.web.model.user.UserCttpcListXlsxDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
@@ -22,12 +22,11 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusInfo.class, UserAcsIpInfo.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, UserAcsIpEmbed.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserMapstruct
         extends BaseAuditListMapstruct<UserDto, UserListDto, UserEntity> {
 
     UserMapstruct INSTANCE = Mappers.getMapper(UserMapstruct.class);
-
 
     /**
      * Entity -> Dto
@@ -71,12 +70,6 @@ public interface UserMapstruct
     @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpInfo(dto))")
     @Mapping(target = "acntStus", expression = "java(new UserStusInfo(dto))")
     UserEntity toEntity(final UserDto dto) throws Exception;
-
-    /**
-     * Dto -> Entity
-     */
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
-    // UserReqstEntity toReqstEntity(final UserDto dto) throws Exception;
 
     /**
      * Entity -> ListXlsxDto

@@ -11,8 +11,8 @@ import org.mapstruct.factory.Mappers;
 /**
  * CommentMapstruct
  * <pre>
- *  게시판 댓글 MapStruct 기반 Mapper 인터페이스
- *  ※게시판 댓글(board_comment) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  일반게시판 댓글 MapStruct 기반 Mapper 인터페이스
+ *  ※일반게시판 댓글(board_comment) = 일반게시판 게시물(board_post)에 1:N으로 귀속된다.
  * </pre>
  *
  * @author nichefish
@@ -28,14 +28,14 @@ public interface CommentMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
+    @Mapping(target = "commentList", expression = "java(entity.comment.getCommentDtoList())")       // 댓글 모듈
     CommentDto toDto(final CommentEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
-    @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
+    @Mapping(target = "commentList", expression = "java(entity.comment.getCommentDtoList())")       // 댓글 모듈
     CommentDto toListDto(final CommentEntity entity) throws Exception;
 
     /**

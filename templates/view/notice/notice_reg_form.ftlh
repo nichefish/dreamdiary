@@ -39,7 +39,7 @@
 
                 // 중요 여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
-                // 상단고정여부 클릭시 글씨 변경
+                // 상단고정 여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("fxdYn", "고정//해제", "blue//gray");
                 // 팝업공지여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("popupYn", "노출//해당없음", "blue//gray");
