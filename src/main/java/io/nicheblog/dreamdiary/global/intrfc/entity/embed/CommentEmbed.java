@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.user;
+package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
@@ -30,8 +30,8 @@ public class CommentEmbed {
 
     @PostLoad
     private void onLoad() {
-        this.commentCnt = (CollectionUtils.isEmpty(this.commentList)) ? 0 : this.commentList.size();
-        this.hasComment = this.commentCnt > 0;
+        this.cnt = (CollectionUtils.isEmpty(this.list)) ? 0 : this.list.size();
+        this.hasComment = this.cnt > 0;
     }
 
     /** 댓글 목록 */
@@ -44,11 +44,11 @@ public class CommentEmbed {
     @OrderBy("regDt ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("댓글 목록")
-    private List<CommentEntity> commentList;
+    private List<CommentEntity> list;
 
     /** 댓글 수 */
     @Transient
-    private Integer commentCnt;
+    private Integer cnt;
 
     /** 댓글 존재 여부 */
     @Transient
@@ -59,9 +59,9 @@ public class CommentEmbed {
     /**
      * 댓글 :: List<Entity> -> List<Dto> 반환
      */
-    public List<CommentDto> getCommentDtoList() {
-        if (CollectionUtils.isEmpty(this.commentList)) return null;
-        return this.commentList.stream()
+    public List<CommentDto> getDtoList() {
+        if (CollectionUtils.isEmpty(this.list)) return null;
+        return this.list.stream()
                 .map(entity -> {
                     try {
                         return CommentMapstruct.INSTANCE.toDto(entity);

@@ -2,11 +2,8 @@ package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
-import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.managtr.ManagtrMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import io.nicheblog.dreamdiary.web.model.cmm.managtr.ManagtrDto;
 import lombok.*;
 import org.springframework.util.CollectionUtils;

@@ -4,11 +4,8 @@ import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
-import org.hibernate.annotations.*;
 import org.springframework.util.CollectionUtils;
 
-import javax.persistence.OrderBy;
-import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,10 +25,10 @@ import java.util.stream.Collectors;
 public class CommentCmpstn {
 
     /** 댓글 목록 */
-    private List<CommentDto> commentList;
+    private List<CommentDto> list;
     /** 댓글 갯수 */
     @Builder.Default
-    private Integer commentCnt = 0;
+    private Integer cnt = 0;
     /** 댓글 존재 여부 */
     @Builder.Default
     private Boolean hasComment = false;
@@ -41,9 +38,9 @@ public class CommentCmpstn {
     /**
      * 댓글 :: List<Dto> -> List<Entity> 반환
      */
-    public List<CommentEntity> getCommentEntityList() {
-        if (CollectionUtils.isEmpty(this.commentList)) return null;
-        return this.commentList.stream()
+    public List<CommentEntity> getEntityList() {
+        if (CollectionUtils.isEmpty(this.list)) return null;
+        return this.list.stream()
                 .map(dto -> {
                     try {
                         return CommentMapstruct.INSTANCE.toEntity(dto);
