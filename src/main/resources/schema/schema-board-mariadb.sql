@@ -9,7 +9,7 @@
 -- 일반게시판 정의 (board_def)
 -- @extends: BaseManageEntity
 CREATE TABLE IF NOT EXISTS board_def (
-    board_cd VARCHAR(30) PRIMARY KEY COMMENT '게시판코드',
+    board_cd VARCHAR(30) PRIMARY KEY COMMENT '게시판 코드 (PK)',
     board_nm VARCHAR(120) COMMENT '게시판 이름',
     ctgr_cl_cd VARCHAR(30) COMMENT '분류 코드',
     menu_no VARCHAR(10) COMMENT '메뉴 번호',
@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS board_def (
 -- @Uses: ManagtEmbed, CommentEmbed
 CREATE TABLE IF NOT EXISTS board_post(
     -- CLSF
-    post_no INT COMMENT '글 번호',
-    content_type VARCHAR(30) COMMENT '게시판 코드',
+    post_no INT COMMENT '글 번호 (PK)',
+    content_type VARCHAR(30) COMMENT '게시판 코드 (PK)',
     -- POST
     title VARCHAR(200) COMMENT '제목',
     cn VARCHAR(500) COMMENT '내용',
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS board_post(
 -- @Uses: CommentEmbed
 CREATE TABLE IF NOT EXISTS comment (
     -- CLSF
-    post_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '댓글 번호',
+    post_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '댓글 번호 (PK)',
     content_type VARCHAR(32) DEFAULT 'comment' COMMENT '게시판 코드',
     --
     ref_post_no INT COMMENT '참초 글번호',
@@ -79,6 +79,30 @@ CREATE TABLE IF NOT EXISTS comment (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
 ) COMMENT = '게시판 댓글';
 
+-- ---------- --
 
+-- 조치자 (managtr)
+CREATE TABLE IF NOT EXISTS managtr (
+    managtr_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '조치자 번호 (PK)',
+    ref_post_no INT COMMENT '참조 글 번호',
+    ref_content_type VARCHAR(30) COMMENT '참조 컨텐츠 타입',
+    -- AUDIT
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
+) COMMENT = '작업자';
 
+-- ---------- --
+
+-- 열람자 (viewer)
+CREATE TABLE IF NOT EXISTS viewer (
+    post_viewer_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '열람자 번호 (PK)',
+    ref_post_no INT COMMENT '참조 글 번호',
+    ref_content_type VARCHAR(30) COMMENT '참조 컨텐츠 타입',
+    -- AUDIT
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
+) COMMENT = '열람자';
+-- 조치자 (managtr)
 
