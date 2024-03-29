@@ -2,8 +2,8 @@ package io.nicheblog.dreamdiary.web.entity.vcatn;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
-import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
 import lombok.*;

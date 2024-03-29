@@ -3,9 +3,11 @@ package io.nicheblog.dreamdiary.web.model.vcatn.papr;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Embedded;
@@ -28,10 +30,10 @@ import java.util.List;
 public class VcatnPaprListDto
         extends BasePostListDto {
 
-    /* 확인 여부*/
+    /** 확인 여부 */
     private String cfYn;
 
-    /* 휴가 추가 리스트*/
+    /** 휴가 일정 리스트 */
     private List<VcatnSchdulDto> vcatnSchdulList;
 
     /* ----- */

@@ -34,7 +34,7 @@ public interface BoardPostMapstruct
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
     @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
-    // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
+    // @Mapping(target = "managtrList", expression = "java(entity.getDtoList())")
     // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostDto toDto(final BoardPostEntity entity) throws Exception;
 
@@ -44,7 +44,7 @@ public interface BoardPostMapstruct
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
-    // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
+    // @Mapping(target = "managtrList", expression = "java(entity.getDtoList())")
     // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostDto toDto(final BoardPostSmpEntity entity) throws Exception;
 

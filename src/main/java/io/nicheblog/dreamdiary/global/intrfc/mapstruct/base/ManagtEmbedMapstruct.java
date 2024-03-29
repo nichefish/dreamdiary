@@ -27,14 +27,14 @@ public interface ManagtEmbedMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
+    @Mapping(target = "managtrList", expression = "java(entity.getDtoList())")
     ManagtCmpstn toDto(final ManagtEmbed entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
-    @Mapping(target = "managtrList", expression = "java(dto.getManagtrEntityList())")
+    @Mapping(target = "managtrList", expression = "java(dto.getEntityList())")
     ManagtEmbed toEntity(final ManagtCmpstn dto) throws Exception;
 
     /**

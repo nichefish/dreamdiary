@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.web.entity.vcatn.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.VcatnSchdulMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -34,10 +33,10 @@ import java.util.List;
 public class VcatnPaprDto
         extends BasePostDto {
 
-    /* 확인 여부*/
+    /** 확인 여부 */
     private String cfYn;
 
-    /* 휴가 추가 리스트*/
+    /** 휴가 일정 리스트 */
     private List<VcatnSchdulDto> vcatnSchdulList;
 
     /* ----- */
