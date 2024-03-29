@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -41,6 +42,11 @@ public class LgnPolicyController
         extends BaseControllerImpl {
 
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LGN_POLICY;      // 작업 카테고리 (로그 적재용)
+
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
 
     @Resource(name = "lgnPolicyService")
     private LgnPolicyService lgnPolicyService;
