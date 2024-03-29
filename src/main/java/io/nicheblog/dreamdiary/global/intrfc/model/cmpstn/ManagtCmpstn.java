@@ -43,7 +43,7 @@ public class ManagtCmpstn {
     /** 처리(조치)자 여부 */
     private Boolean isManagtr;
     /** 게시물 조치자 목록 */
-    private List<ManagtrDto> managtrList;
+    private List<ManagtrDto> list;
 
     /** (수정시) 조치일자 변경하지 않음 변수 */
     private String managtDtUpdtYn;
@@ -54,15 +54,15 @@ public class ManagtCmpstn {
      * 게시물 조치자 목록 추가
      */
     public void addManagtr(final ManagtrDto managtr) {
-        if (this.managtrList == null) this.managtrList = new ArrayList<>();
-        managtrList.add(managtr);
+        if (this.list == null) this.list = new ArrayList<>();
+        list.add(managtr);
     }
     /**
      * 댓글 :: List<Dto> -> List<Entity> 반환
      */
-    public List<ManagtrEntity> getManagtrEntityList() {
-        if (CollectionUtils.isEmpty(this.managtrList)) return null;
-        return this.managtrList.stream()
+    public List<ManagtrEntity> getEntityList() {
+        if (CollectionUtils.isEmpty(this.list)) return null;
+        return this.list.stream()
                 .map(dto -> {
                     try {
                         return ManagtrMapstruct.INSTANCE.toEntity(dto);

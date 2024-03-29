@@ -14,9 +14,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.OrderBy;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * CommentEmbed
@@ -79,19 +79,23 @@ public class ManagtEmbed {
     @Fetch(FetchMode.SELECT)
     @OrderBy("regDt DESC")
     @NotFound(action = NotFoundAction.IGNORE)
-    private List<ManagtrEntity> managtrList;
+    private List<ManagtrEntity> list;
 
     /* ----- */
 
     /**
      * 조치자 :: List<Entity> -> List<Dto> 반환
      */
-    public List<ManagtrDto> getManagtrDtoList() throws Exception {
-        if (CollectionUtils.isEmpty(this.managtrList)) return null;
-        List<ManagtrDto> dtoList = new ArrayList<>();
-        for (ManagtrEntity entity : this.managtrList) {
-            dtoList.add(ManagtrMapstruct.INSTANCE.toDto(entity));
-        }
-        return dtoList;
+    public List<ManagtrDto> getDtoList() throws Exception {
+        if (CollectionUtils.isEmpty(this.list)) return null;
+        return this.list.stream()
+                .map(entity -> {
+                    try {
+                        return ManagtrMapstruct.INSTANCE.toDto(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 }
