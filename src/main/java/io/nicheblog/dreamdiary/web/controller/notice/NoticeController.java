@@ -55,6 +55,11 @@ public class NoticeController
     private final String baseUrl = SiteUrl.NOTICE_LIST;             // 기본 URL
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.NOTICE;      // 작업 카테고리 (로그 적재용)
 
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
+
     @Resource(name = "noticeService")
     private NoticeService noticeService;
 
@@ -98,7 +103,7 @@ public class NoticeController
             // 상단 고정 목록 조회
             model.addAttribute("noticeFxdList", noticeService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managtDt", model);
+            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managt.managtDt", model);
             Page<NoticeListDto> noticeList = noticeService.getListDto(listParamMap, pageRequest);
             if (noticeList != null) model.addAttribute("noticeList", noticeList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
@@ -110,8 +115,8 @@ public class NoticeController
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
-            model.addAttribute("actvtyCtgrCd", actvtyCtgr.name());          // 댓글 로깅용 활동분류 코드 추가
+            // 검색 파라미터 다시 모델에 추가
+            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -295,7 +300,6 @@ public class NoticeController
             //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
             //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
             // }
-            model.addAttribute("actvtyCtgrCd", actvtyCtgr.name());          // 댓글 로깅용 활동분류 코드 추가
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

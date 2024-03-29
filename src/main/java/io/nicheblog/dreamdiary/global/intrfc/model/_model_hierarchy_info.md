@@ -16,12 +16,8 @@
     -> atchFileNo, atchFileInfo
 
 #### ↓ BaseClsfDto / BaseClsfDto :: extends BaseAtchDto
-    -> postNo, contentType(composite_key), title, cn
+    -> postNo, contentType(composite_key), 
     -> @commentList, @tagList
 
 #### ↓ BasePostDto / BasePostListDto :: extends BaseAtchDto
-    -> ctgrCd, fxdYn, hitCnt, imprtcYn
-
-#### ↓ BaseEhncPostDto / BaseEnhcPostListDto :: extends BasePostDto / BasePostListDto
-    -> managtr_id, managt_dt
-    -> @managtr_list, @viewer_list
+    -> title, cn, ctgrCd, fxdYn, hitCnt, imprtcYn

@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.web.model.notice;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
@@ -67,4 +69,22 @@ public class NoticeDto
     /** 댓글 존재 여부 */
     @Builder.Default
     private Boolean hasComment = false;
+
+    /* ----- 조치 모듈 ----- */
+
+    /** 수정권한 */
+    @Builder.Default
+    protected String mdfable = Constant.MDFABLE_REGSTR;
+    /** 조치자(작업자)ID */
+    private String managtrId;
+    /** 조치자(작업자)이름 */
+    private String managtrNm;
+    /** 조치자 정보 */
+    private AuditorDto managtrInfo;
+    /** 게시물 조치자 목록 */
+    // private List<BoardPostManagtrDto> managtrList;
+    /** 열람자 목록 */
+    // private List<BoardPostViewerDto> viewerList;
+    /** (수정시) 조치일자 변경하지 않음 변수 */
+    private String managtDtUpdtYn;
 }
