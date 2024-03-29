@@ -30,21 +30,15 @@ public class BasePostEntity
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = "DEFAULT_CTGR_CL_CD";
 
-    /**
-     * 제목
-     */
+    /** 제목 */
     @Column(name = "title")
     protected String title;
 
-    /**
-     * 내용
-     */
+    /** 내용 */
     @Column(name = "cn")
     protected String cn;
 
-    /**
-     * 글분류 코드
-     */
+    /** 글분류 코드 */
     @Column(name = "ctgr_cd", length = 20)
     @Comment("글분류 코드")
     protected String ctgrCd;
@@ -60,32 +54,24 @@ public class BasePostEntity
     @Comment("공지사항 글분류 코드 정보")
     protected DtlCdEntity ctgrCdInfo;
 
-    /**
-     * 상단고정여부
-     */
+    /** 상단고정여부 */
     @Builder.Default
     @Column(name = "fxd_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("상단고정여부")
     protected String fxdYn = "N";
 
-    /**
-     * 조회수
-     */
+    /** 조회수 */
     @Builder.Default
     @Column(name = "HIT_CNT")
     protected Integer hitCnt = 0;
 
-    /**
-     * 중요여부
-     */
+    /** 중요 여부 */
     @Builder.Default
     @Column(name = "IMPRTC_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("중요여부")
+    @Comment("중요 여부")
     protected String imprtcYn = "N";
 
-    /**
-     * 수정권한
-     */
+    /** 수정권한 */
     @Builder.Default
     @Column(name = "MDFABLE")
     @Comment("수정권한")

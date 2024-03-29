@@ -29,55 +29,18 @@ import java.util.List;
 public class BaseClsfDto
         extends BaseAtchDto {
 
-    /**
-     * 글 번호
-     */
+    /** 글 번호 */
     protected Integer postNo;
-    /**
-     * 컨텐츠 타입
-     */
+    /** 컨텐츠 타입 */
     protected String contentType;
 
-    /**
-     * 제목
-     */
-    protected String title;
-    /**
-     * 내용
-     */
-    protected String cn;
-
-    /**
-     * 글분류 코드
-     */
-    protected String ctgrClCd;
-    /**
-     * 글분류 코드
-     */
-    protected String ctgrCd;
-    /**
-     * 글분류 코드 이름
-     */
-    protected String ctgrNm;
-
-    /**
-     * 상단고정여부
-     */
-    @Builder.Default
-    protected String fxdYn = "N";
-    /**
-     * 성공여부
-     */
+    /** 성공여부 */
     @Builder.Default
     protected Boolean isSuccess = false;
 
-    /**
-     * 댓글 목록
-     */
+    /** 댓글 목록 */
     protected List<CommentDto> commentList;
-    /**
-     * 댓글 갯수
-     */
+    /** 댓글 갯수 */
     @Builder.Default
     protected Integer commentCnt = 0;
 
@@ -86,15 +49,8 @@ public class BaseClsfDto
     /**
      * 복합키 객체 반환
      */
-    public BaseClsfKey getPostKey() {
+    public BaseClsfKey getClsfKey() {
         return new BaseClsfKey(this.postNo, this.contentType);
-    }
-
-    /**
-     * hasCtgrNm
-     */
-    public Boolean getHasCtgrNm() {
-        return StringUtils.isNotEmpty(this.ctgrNm);
     }
 
     /**

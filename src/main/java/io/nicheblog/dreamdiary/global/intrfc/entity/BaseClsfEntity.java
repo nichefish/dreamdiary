@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class BaseClsfEntity
         extends BaseAtchEntity {
 
-    /** 필수: 게시물 코드 */
+    /** 필수: 컨텐츠 타입 */
     protected static final String CONTENT_TYPE = ContentType.DEFAULT.name();
 
     /**
@@ -50,9 +50,7 @@ public class BaseClsfEntity
     @Transient
     protected String contentType;
 
-    /**
-     * 댓글 목록
-     */
+    /** 댓글 목록 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(column = @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no", insertable = false, updatable = false)),
@@ -69,7 +67,7 @@ public class BaseClsfEntity
     /**
      * 복합키 객체 반환
      */
-    protected BaseClsfKey getPostKey() {
+    protected BaseClsfKey getClsfKey() {
         return new BaseClsfKey(this.postNo, this.contentType);
     }
 
