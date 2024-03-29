@@ -22,14 +22,10 @@ import java.util.List;
 @Setter
 public class JandiProperty {
 
-    /**
-     * 팀 고유 id
-     */
+    /** 팀 고유 id */
     private String teamId;
 
-    /**
-     * 토픽 정보 목록
-     */
+    /** 토픽 정보 목록 */
     private List<Topic> topics;
 
     /* ----- */
@@ -41,14 +37,10 @@ public class JandiProperty {
     @Setter
     public static class Topic {
 
-        /**
-         * 토픽 이름 (구분용)
-         */
+        /** 토픽 이름 (구분용) */
         private String name;
-        /**
-         * incoming webhook id
-         * TODO: outgoing webhook 추가되면 이름 바꿔야함
-         */
+
+        /** incoming webhook id (TODO: outgoing webhook 추가되면 이름 바꿔야함) */
         private String id;
     }
 

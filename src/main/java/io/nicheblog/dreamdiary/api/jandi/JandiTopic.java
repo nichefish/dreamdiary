@@ -1,13 +1,16 @@
 package io.nicheblog.dreamdiary.api.jandi;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
- * 잔디 토픽 Enum
+ * JandiTopic
+ * <pre>
+ *  잔디 토픽 Enum
+ * </pre>
+ *
+ * @author nichefish
  */
 @AllArgsConstructor
-@Getter
 public enum JandiTopic {
     NOTICE,
     SCHDUL,
