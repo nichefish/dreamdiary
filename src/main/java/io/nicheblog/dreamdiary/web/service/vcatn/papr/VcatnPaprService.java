@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.service.vcatn;
+package io.nicheblog.dreamdiary.web.service.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
@@ -7,20 +7,24 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnPaprMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnSchdulDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnPaprRepository;
+import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnPaprSpec;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * VcatnPaprService
@@ -76,7 +80,7 @@ public class VcatnPaprService
     @Override
     public void preRegist(final VcatnPaprDto vcatnPaprDto) {
         // 제목 자동 처리
-        this.setVcatnPaprSj(vcatnPaprDto);
+        vcatnPaprDto.setTitle(this.generateTitle(vcatnPaprDto));
     }
 
     /**
@@ -85,28 +89,32 @@ public class VcatnPaprService
     @Override
     public void preModify(final VcatnPaprDto vcatnPaprDto) {
         // 제목 자동 처리
-        this.setVcatnPaprSj(vcatnPaprDto);
+        vcatnPaprDto.setTitle(this.generateTitle(vcatnPaprDto));
     }
 
     /**
-     * 제목 미입력시 자동 입력 :: 메소드 분리
+     * 제목 자동 처리 :: 메소드 분리
      */
-    public void setVcatnPaprSj(final VcatnPaprDto vcatnPaprDto) {
-        String newSj = "";
+    public String generateTitle(final VcatnPaprDto vcatnPaprDto) {
         List<VcatnSchdulDto> schdulList = vcatnPaprDto.getSchdulList();
-        for (VcatnSchdulDto vcatn : schdulList) {
-            String vcatnCd = vcatn.getVcatnCd();
-            String vcatnNm = cmmCdService.getDtlCdNm(Constant.VCATN_CD, vcatnCd);
-            String period = vcatn.getBgnDt();
-            if (!Constant.VCATN_AM_HALF.equals(vcatnCd) && !Constant.VCATN_PM_HALF.equals(vcatnCd)) {
-                period = period + "~" + vcatn.getEndDt();
-            }
-            String vcatnSj = "(" + vcatnNm + ")" + period;
-            if (StringUtils.isNotEmpty(newSj)) newSj += ", ";
-            newSj += vcatnSj;
-        }
-        log.info("newSj {}", newSj);
-        vcatnPaprDto.setTitle(newSj);
+        if (CollectionUtils.isEmpty(schdulList)) return "휴가계획서 (날짜없음)";
+        return schdulList.stream()
+                .map(vcatn -> {
+                    String vcatnCd = vcatn.getVcatnCd();
+                    String vcatnNm = cmmCdService.getDtlCdNm(Constant.VCATN_CD, vcatnCd);
+                    String period = vcatn.getBgnDt();
+                    String endDt = vcatn.getEndDt();
+                    try {
+                        boolean isSameDay = DateUtils.isSameDay(period, endDt) || (endDt == null);
+                        if (!isSameDay) {
+                            period += "~" + endDt;
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    return "(" + vcatnNm + ")" + period;
+                })
+                .collect(Collectors.joining(", "));
     }
 
     /**
