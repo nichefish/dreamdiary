@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.repository.vcatn;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
-import io.nicheblog.dreamdiary.web.entity.vcatn.VcatnStatsYyEntity;
+import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsYyEntity;
 import org.springframework.stereotype.Repository;
 
 /**
