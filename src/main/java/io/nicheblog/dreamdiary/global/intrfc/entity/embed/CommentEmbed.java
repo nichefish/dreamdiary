@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @author nichefish
  */
 @Embeddable
-@Getter(AccessLevel.PUBLIC)
+@Getter
 @Setter
 @Builder
 @NoArgsConstructor

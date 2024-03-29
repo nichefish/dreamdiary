@@ -2,9 +2,11 @@ package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Embedded;
 import java.util.List;
 
 /**
@@ -48,14 +50,10 @@ public class CommentDto
     @Builder.Default
     protected Boolean isSuccess = false;
 
-    /* ----- 댓글 모듈 ----- */
+    /* ----- */
 
-    /** 댓글 목록 */
-    private List<CommentDto> commentList;
-    /** 댓글 갯수 */
-    @Builder.Default
-    private Integer commentCnt = 0;
-    /** 댓글 존재 여부 */
-    @Builder.Default
-    private Boolean hasComment = false;
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentCmpstn comment;
+
 }

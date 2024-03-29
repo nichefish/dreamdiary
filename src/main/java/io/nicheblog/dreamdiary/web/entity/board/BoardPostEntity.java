@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.entity.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -80,5 +81,9 @@ public class BoardPostEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
+
+    /** 조치 정보 모듈 (위임) */
+    @Embedded
+    public ManagtEmbed managt;
 }
 

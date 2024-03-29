@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
-import io.nicheblog.dreamdiary.web.model.cmm.BaseParam;
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import lombok.*;
 
 /**

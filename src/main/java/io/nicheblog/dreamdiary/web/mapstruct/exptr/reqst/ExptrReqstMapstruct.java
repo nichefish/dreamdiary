@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.exptr.reqst;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
@@ -18,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class})
 public interface ExptrReqstMapstruct
         extends BaseAuditListMapstruct<ExptrReqstDto, ExptrReqstListDto, ExptrReqstEntity> {
 
@@ -28,16 +29,15 @@ public interface ExptrReqstMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "commentList", expression = "java(entity.comment.getCommentDtoList())")       // 댓글 모듈
+    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
-    // @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
     // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     ExptrReqstDto toDto(final ExptrReqstEntity entity) throws Exception;
 
     /**
      * Entity -> listDto
      */
-    // @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
+    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
     // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     ExptrReqstListDto toListDto(final ExptrReqstEntity entity) throws Exception;
 

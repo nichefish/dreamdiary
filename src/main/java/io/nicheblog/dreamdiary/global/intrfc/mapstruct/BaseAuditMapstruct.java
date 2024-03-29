@@ -20,8 +20,6 @@ public interface BaseAuditMapstruct<Dto extends BaseAuditDto, Entity extends Bas
     @AfterMapping
     default void mapAuditFields(final Entity entity, final @MappingTarget Dto dto) throws Exception {
         // 공통 필드 매핑 로직
-        dto.setRegstrNm(entity.getRegstrInfo() != null ? entity.getRegstrInfo().getNickNm() : null);
-        dto.setMdfusrNm(entity.getMdfusrInfo() != null ? entity.getMdfusrInfo().getNickNm() : null);
         dto.setRegDt(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME));
         dto.setMdfDt(DateUtils.asStr(entity.getMdfDt(), DateUtils.PTN_DATETIME));
     }

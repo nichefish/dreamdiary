@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
-import io.nicheblog.dreamdiary.web.model.cmm.BasePostSearchParam;
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
 
 /**
