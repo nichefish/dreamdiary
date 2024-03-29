@@ -2,10 +2,7 @@ package io.nicheblog.dreamdiary.global.intrfc.entity;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -27,7 +24,7 @@ import java.util.Date;
  * @extends BaseAuditRegEntity
  */
 @MappedSuperclass
-@Getter
+@Getter(AccessLevel.PUBLIC)
 @Setter
 @SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor

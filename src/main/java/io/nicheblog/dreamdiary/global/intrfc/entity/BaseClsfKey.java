@@ -22,6 +22,7 @@ public class BaseClsfKey
 
     /** 글번호 */
     protected Integer postNo;
+
     /** 컨텐츠 타입 */
     protected String contentType;
 }
