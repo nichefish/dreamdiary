@@ -2,6 +2,8 @@ package io.nicheblog.dreamdiary.web.entity.vcatn;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
+import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
 import lombok.*;
@@ -39,9 +41,9 @@ public class VcatnPaprEntity
         extends BasePostEntity {
 
     /** 필수: 컨텐츠 타입 */
-    private static final String CONTENT_TYPE = ContentType.VCATN_PAPR.key;
+    private static final ContentType CONTENT_TYPE = ContentType.VCATN_PAPR;
     /** 필수(Override): 글분류 코드 */
-    private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 글 번호 */
     @Id
@@ -54,7 +56,9 @@ public class VcatnPaprEntity
     @Builder.Default
     @Column(name = "content_type")
     @Comment("컨텐츠 타입")
-    private String contentType = CONTENT_TYPE;
+    private String contentType = CONTENT_TYPE.key;
+
+    /* ----- */
 
     /** 휴가 일정 목록 */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
@@ -98,4 +102,14 @@ public class VcatnPaprEntity
             this.vcatnSchdulList.addAll(itemList);
         }
     }
+
+    /* ----- */
+
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentEmbed comment;
+
+    /** 조치 정보 모듈 (위임) */
+    @Embedded
+    public ManagtEmbed managt;
 }

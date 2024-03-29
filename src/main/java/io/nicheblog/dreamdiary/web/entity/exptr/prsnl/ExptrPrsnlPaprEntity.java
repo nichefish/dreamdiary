@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.entity.exptr.prsnl;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlItemDto;
@@ -117,4 +118,8 @@ public class ExptrPrsnlPaprEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
+
+    /** 조치 정보 모듈 (위임) */
+    @Embedded
+    public ManagtEmbed managt;
 }

@@ -1,7 +1,8 @@
 package io.nicheblog.dreamdiary.web.entity.notice;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManagtEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +31,7 @@ import javax.persistence.*;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE notice SET del_yn = 'Y' WHERE post_no = ?")
 public class NoticeEntity
-        extends BaseManagtEntity {
+        extends BasePostEntity {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.NOTICE;
@@ -73,4 +74,9 @@ public class NoticeEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
+
+    /** 조치 정보 모듈 (위임) */
+    @Embedded
+    public ManagtEmbed managt;
 }
+
