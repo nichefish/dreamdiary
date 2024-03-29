@@ -7,7 +7,7 @@
 -- ---------- --
 
 -- 일반게시판 정의 (board_def)
--- @extends: BaseManagtEntity 상속
+-- @extends: BaseManageEntity
 CREATE TABLE IF NOT EXISTS board_def (
     board_cd VARCHAR(30) PRIMARY KEY COMMENT '게시판코드',
     board_nm VARCHAR(120) COMMENT '게시판 이름',
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS board_def (
 -- ---------- --
 
 -- 일반게시판 게시물 (board_post)
--- @extends: BasePostEntity
+-- @extends: BaseManagtEntity
 -- @Uses: ManagtEmbed, CommentEmbed
 CREATE TABLE IF NOT EXISTS board_post(
     -- CLSF
