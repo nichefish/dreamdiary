@@ -1,5 +1,6 @@
-package io.nicheblog.dreamdiary.web.model.cmm;
+package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,30 +22,22 @@ import lombok.Setter;
 public class BaseSearchParam
         extends BaseParam {
 
-    /**
-     * 페이지 크기
-     */
+    /** 페이지 크기 */
     private Integer pageSize;
-    /**
-     * 페이지 번호
-     */
+    /** 페이지 번호 */
     private Integer pageNo;
 
-    /**
-     * 검색 유형 (검색 키워드와 한 세트)
-     */
+    /** 검색 유형 (검색 키워드와 한 세트) */
     private String searchType;
-    /**
-     * 검색 키워드 (검색 유형과 한 세트)
-     */
+    /** 검색 키워드 (검색 유형과 한 세트) */
     private String searchKeyword;
 
-    /**
-     * 등록자 ID
-     */
+    /** 등록자 ID */
     private String regstrId;
-    /**
-     * 조치자 ID
-     */
+    /** 등록자 이름 */
+    private String regstrNm;
+    /** 조치자 ID */
     private String managtrId;
+    /** 조치자 이름 */
+    private String managtrNm;
 }

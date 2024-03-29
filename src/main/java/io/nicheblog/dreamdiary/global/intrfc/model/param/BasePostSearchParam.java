@@ -1,5 +1,6 @@
-package io.nicheblog.dreamdiary.web.model.cmm;
+package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 
 /**
@@ -19,15 +20,15 @@ import lombok.*;
 public class BasePostSearchParam
         extends BaseSearchParam {
 
-    /**
-     * 글분류 코드
-     */
-    private String ctgrCd;
 
-    /**
-     * 제목
-     */
+    /** 제목 */
     private String title;
-
-
+    /** 내용 */
+    private String cn;
+    /** 글분류 코드 */
+    private String ctgrCd;
+    /** 중요 여부 */
+    private String imprtcYn;
+    /** 상단고정 여부 */
+    private String fxdYn;
 }

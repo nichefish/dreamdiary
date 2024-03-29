@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.cmm;
+package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import lombok.Getter;
@@ -26,10 +26,7 @@ public class BaseParam {
     /** 액션구분 코드 */
     private String actionTyCd;
 
-    /**
-     * 수정/상세에서 목록 화면으로 돌아옴 구분 코드
-     * ( Y/N )
-     */
+    /** 수정/상세에서 목록 화면으로 돌아옴 구분 코드 ( Y/N ) */
     private String isBackToList;
 
     // TODO: UTM 파라미터...
