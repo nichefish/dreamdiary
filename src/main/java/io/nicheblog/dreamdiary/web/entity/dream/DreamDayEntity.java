@@ -3,8 +3,8 @@ package io.nicheblog.dreamdiary.web.entity.dream;
 import io.nicheblog.dreamdiary.api.dream.mapstruct.DreamPieceApiMapstruct;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
 import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
 import lombok.*;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 @Table(name = "dream_day")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
@@ -52,7 +52,7 @@ public class DreamDayEntity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_no")
-    @Comment("꿈 일자 고유 번호")
+    @Comment("꿈 일자 고유 번호 (PK)")
     private Integer dreamDayNo;
 
     /** 컨텐츠 타입 */
@@ -101,7 +101,7 @@ public class DreamDayEntity
     @Comment("댓글 목록")
     private List<DreamPieceEntity> dreamPieceList;
 
-    /** ----- */
+    /* ----- */
 
     public List<DreamPieceDto> getDreamPieceDtoList() {
         if (CollectionUtils.isEmpty(this.dreamPieceList)) return null;
@@ -131,7 +131,9 @@ public class DreamDayEntity
 
     /* ----- */
 
-    /** 댓글 정보 모듈 (위임) */
+    /**
+     * 댓글 정보 모듈 (위임)
+     */
     @Embedded
     public CommentEmbed comment;
 }

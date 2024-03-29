@@ -93,8 +93,8 @@
 <div class="separator separator-dashed mt-8"></div>
 <div id="commentArea">
     <a id="answers" data-kt-scroll-offset="{default: 100, lg: 125}"></a>
-    <h2 class="fw-bolder text-gray-900 my-8 mx-5">댓글(${post.commentCnt!})</h2>
-    <#list post.commentList![] as comment>
+    <h2 class="fw-bolder text-gray-900 my-8 mx-5">댓글(${post.comment.cnt!})</h2>
+    <#list post.comment.list![] as comment>
         <div class="border rounded p-2 p-lg-6 mx-8 mb-3">
             <div class="mb-0">
                 <div class="d-flex flex-stack flex-wrap mb-5">

@@ -41,7 +41,7 @@ public class NoticeSpec
 
         // expressions
         Expression<Date> regDtExp = root.get("regDt");
-        Expression<Date> managtDtExp = root.get("managtDt");
+        Expression<Date> managtDtExp = root.get("managt").get("managtDt");
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {

@@ -112,7 +112,7 @@ public class BoardPostController
             Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managtDt", model);
+            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managt.managtDt", model);
             Page<BoardPostListDto> postList = boardPostService.getListDto(listParamMap, pageRequest);
             if (postList != null) model.addAttribute("postList", postList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(postList));

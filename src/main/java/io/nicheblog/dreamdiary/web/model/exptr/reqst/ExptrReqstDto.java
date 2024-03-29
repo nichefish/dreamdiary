@@ -1,18 +1,14 @@
 package io.nicheblog.dreamdiary.web.model.exptr.reqst;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Embedded;
-import java.util.List;
 
 /**
  * ExptrReqstDto

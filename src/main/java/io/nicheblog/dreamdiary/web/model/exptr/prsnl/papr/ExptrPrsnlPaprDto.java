@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;

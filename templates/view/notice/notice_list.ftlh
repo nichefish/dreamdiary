@@ -113,11 +113,11 @@
                                 <i class="bi bi-people-fill ms-1 blink-slow"
                                    data-bs-toggle="tooltip" data-bs-placement="top" title="모든 사용자가 수정 가능"></i>
                             </#if>
-                            <#if post.commentCnt gt 0>
+                            <#if post.comment.cnt gt 0>
                                 <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
                                       onclick="CommentList.modal('${post.postNo!}');"
                                       data-bs-toggle="tooltip" data-bs-placement="top" title="댓글 모달 팝업 호출">
-                                    [${post.commentCnt!}]
+                                    [${post.comment.cnt!}]
                                 </span>
                             </#if>
                         </div>
@@ -200,11 +200,11 @@
                                 <i class="bi bi-people-fill ms-1 blink-slow"
                                    data-bs-toggle="tooltip" data-bs-placement="top" title="모든 사용자가 수정 가능"></i>
                             </#if>
-                            <#if post.commentCnt gt 0>
+                            <#if post.comment.cnt gt 0>
                                 <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
                                       onclick="CommentList.modal('${post.postNo!}');"
                                       data-bs-toggle="tooltip" data-bs-placement="top" title="댓글 모달 팝업 호출">
-                                    [${post.commentCnt!}]
+                                    [${post.comment.cnt!}]
                                 </span>
                             </#if>
                         </div>

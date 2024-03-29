@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.CmmStus;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.util.CollectionUtils;

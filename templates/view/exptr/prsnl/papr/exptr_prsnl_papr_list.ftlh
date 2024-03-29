@@ -143,10 +143,10 @@
                     <a href="${SiteUrl.EXPTR_PRSNL_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
                         ${post.title!"-"}
                     </a>
-                    <#if post.commentCnt gt 0>
+                    <#if post.comment.cnt gt 0>
                         <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                            [${post.commentCnt!}]
+                            [${post.comment.cnt!}]
                         </span>
                     </#if>
                 </td>

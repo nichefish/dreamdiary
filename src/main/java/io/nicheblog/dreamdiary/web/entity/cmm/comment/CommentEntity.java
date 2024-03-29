@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.entity.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
-import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;

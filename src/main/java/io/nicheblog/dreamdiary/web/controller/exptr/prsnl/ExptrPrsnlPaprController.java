@@ -101,7 +101,7 @@ public class ExptrPrsnlPaprController
             Sort sort = Sort.by(Sort.Direction.DESC, "yy")
                             .and(Sort.by(Sort.Direction.DESC, "mnth"))
                             .and(Sort.by(Sort.Direction.ASC, "cfYn"));
-                            //.and(Sort.by(Sort.Direction.DESC, "managtDt"))
+                            //.and(Sort.by(Sort.Direction.DESC, "managt.managtDt"))
             PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, sort, model);
             Page<ExptrPrsnlPaprListDto> exptrIndvdList = exptrPrsnlPaprService.getListDto(listParamMap, pageRequest);
             if (exptrIndvdList != null) model.addAttribute("exptrIndvdList", exptrIndvdList.getContent());

@@ -109,10 +109,10 @@
                                 <#if (((post.imprtcYn)!"N") == "Y")!false>
                                     <span class="fs-1">&#128680;</span>
                                 </#if>
-                                <#if post.commentCnt gt 0>
+                                <#if post.comment.cnt gt 0>
                                     <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                        [${post.commentCnt!}]
+                                        [${post.comment.cnt!}]
                                     </span>
                                 </#if>
                                 <!-- 수정권한 표시 -->
@@ -190,10 +190,10 @@
                                 <#if (((post.imprtcYn)!"N") == "Y")!false>
                                     <span class="fs-1">&#128680;</span>
                                 </#if>
-                                <#if post.commentCnt gt 0>
+                                <#if post.comment.cnt gt 0>
                                     <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                        [${post.commentCnt!}]
+                                        [${post.comment.cnt!}]
                                     </span>
                                 </#if>
                                 <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>

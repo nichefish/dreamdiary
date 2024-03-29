@@ -11,7 +11,6 @@ import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.model.admin.TmplatTxtDto;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
@@ -100,7 +99,7 @@ public class ExptrReqstController
             model.addAttribute("exptrReqstFxdList", exptrReqstFxdList);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "regDt", model);
-            // PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managtDt", model);
+            // PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managt.managtDt", model);
             Page<ExptrReqstListDto> exptrReqstList = exptrReqstService.getListDto(listParamMap, pageRequest);
             if (exptrReqstList != null) model.addAttribute("exptrReqstList", exptrReqstList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrReqstList));

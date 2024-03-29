@@ -1,18 +1,16 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Embedded;
-import java.util.List;
 
 /**
  * BoardPostDto

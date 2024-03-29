@@ -7,7 +7,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Embedded;
-import java.util.List;
 
 /**
  * CommentDto

@@ -465,7 +465,7 @@ public class NoticeController
                 put("popupYn", "Y");
                 put("managtStartDt", DateUtils.getCurrDateAddDay(-7));
             }};
-            Sort sort = Sort.by(Sort.Direction.ASC, "managtDt");
+            Sort sort = Sort.by(Sort.Direction.ASC, "managt.managtDt");
             PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
             Page<NoticeListDto> noticeList = noticeService.getListDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(noticeList.getContent());

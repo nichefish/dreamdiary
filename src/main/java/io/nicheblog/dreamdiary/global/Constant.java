@@ -29,6 +29,9 @@ public final class Constant
     public static final String PAGE_REG = "등록";
     public static final String PAGE_DTL = "상세 조회";
     public static final String PAGE_MDF = "수정";
+    public static final String PAGE_POP = "팝업";
+    public static final String PAGE_STATS = "통계 조회";
+    public static final String PAGE_CAL = "달력 조회";
 
     /**
      * 권한
@@ -71,13 +74,6 @@ public final class Constant
     public static final String ASIDE_MENU = "aside_menu";
     public static final String ASIDE_MENU_FIXED = "aside_fixed";
     public static final String ASIDE_MENU_MINIMIZED = "aside_minimized";
-
-
-
-
-
-
-
 
     /**
      * Page Static Strings
@@ -196,9 +192,9 @@ public final class Constant
     public static final String CRDT_USER_CTTPC = "crdtUserCttpc";   // 직원 연락처
     public static final String LOG_ACTVTY = "logActvty";            // 활동 로그 관리
     public static final String LOG_SYS = "logSys";                  // 활동 로그 관리
-    public static final String EXPTR_INDVD_PAPR = "exptrIndvd";          // 개인경비지출서
-    public static final String EXPTR_INDVD_RPT = "exptrIndvdRpt";
-    public static final String EXPTR_INDVD_RPT_ITEM = "exptrIndvdRptItem";
+    public static final String EXPTR_PRSNL_PAPR = "exptrIndvd";          // 개인경비지출서
+    public static final String EXPTR_PRSNL_RPT = "exptrIndvdRpt";
+    public static final String EXPTR_PRSNL_RPT_ITEM = "exptrIndvdRptItem";
     public static final String VCATN_STATS = "vcatnStats";          // 휴가계획서
     public static final String VCATN_DY = "vcatnDy";                // 휴가사용일자
 
@@ -254,4 +250,17 @@ public final class Constant
     public static final String BS_WARNING = "warning";
     public static final String BS_DARK = "dark";
     public static final String BS_MUTED = "muted";
+
+    /* 코드 정보 */
+
+    /* 소속(회사) 코드 */
+    public static final String CMPY_CD = "CMPY_CD";
+
+    @AllArgsConstructor
+    @Getter
+    public enum CMPY {
+        AA("aa"),
+        BB("bb");
+        private final String desc;
+    }
 }
