@@ -28,6 +28,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CommentEmbed {
 
+    @PostLoad
+    private void onLoad() {
+        this.commentCnt = (CollectionUtils.isEmpty(this.commentList)) ? 0 : this.commentList.size();
+        this.hasComment = this.commentCnt > 0;
+    }
+
     /** 댓글 목록 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
@@ -47,12 +53,6 @@ public class CommentEmbed {
     /** 댓글 존재 여부 */
     @Transient
     private Boolean hasComment;
-
-    @PostLoad
-    private void onLoad() {
-        this.commentCnt = (CollectionUtils.isEmpty(this.commentList)) ? 0 : this.commentList.size();
-        this.hasComment = this.commentCnt > 0;
-    }
 
     /* ----- */
 

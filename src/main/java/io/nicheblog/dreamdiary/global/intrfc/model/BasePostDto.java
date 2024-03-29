@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.global.intrfc.model;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.MappedSuperclass;
 

@@ -3,9 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.entity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.*;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 
