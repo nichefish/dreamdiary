@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.board;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
@@ -40,10 +39,7 @@ import java.util.Date;
 public class BoardPostEntity
         extends BasePostEntity {
 
-    /**
-     * 글 번호
-     * (복합키 사용, 시퀀스 생성 로직을 위해 재정의)
-     */
+    /** 글 번호 :: 복합키 사용, 시퀀스 생성 로직을 위해 재정의 */
     @Id
     @TableGenerator(name = "board_post", table = "cmm_sequence", pkColumnName = "SEQ_NM", valueColumnName = "SEQ_VAL", pkColumnValue = "POST_NO", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "board_post")
@@ -51,45 +47,24 @@ public class BoardPostEntity
     @Comment("글번호 (key)")
     private Integer postNo;
 
-    /**
-     * 게시판 분류 코드
-     */
+    /** 컨텐츠 타입 */
     @Id
     @Column(name = "content_type")
     private String contentType;
 
-    /**
-     * 게시판 정의 정보
-     */
+    /** 게시판 정의 정보 */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "content_type", referencedColumnName = "board_cd", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("게시판 정의 정보")
     private BoardDefEntity boardDefInfo;
 
-    /**
-     * 게시판 글분류 코드 정보 (복합키 조인)
-     */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'POST_CTGR_CD\'", referencedColumnName = "cl_cd")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
-    })
-    @Fetch(value = FetchMode.JOIN)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("게시판 글분류 코드 정보")
-    private DtlCdEntity ctgrCdInfo;
-
-    /**
-     * 노션 페이지 참조 ID :: UUID
-     */
+    /** 노션 페이지 참조 ID :: UUID */
     // @Column(name = "NOTION_PAGE_ID")
     // @Comment("노션 페이지 참조 ID :: UUID")
     // private String notionPageId;
 
-    /**
-     * 게시물 열람자 목록
-     */
+    /** 게시물 열람자 목록 */
     /*
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
@@ -102,32 +77,24 @@ public class BoardPostEntity
     private List<BoardPostViewerEntity> viewerList;
     */
 
-    /**
-     * 조치자(작업자)ID
-     */
+    /** 조치자(작업자)ID */
     @Column(name = "managtr_id", length = 20)
     private String managtrId;
 
-    /**
-     * 조치(작업)일시
-     */
+    /** 조치(작업)일시 */
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
     @Column(name = "managt_dt")
     private Date managtDt;
 
-    /**
-     * 조치자(작업자) 정보
-     */
+    /** 조치자(작업자) 정보 */
     @ManyToOne
     @JoinColumn(name = "managtr_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     private AuditorInfo managtrInfo;
 
-    /**
-     * 게시물 조치자 목록
-     */
+    /** 게시물 조치자 목록 */
     // @OneToMany(fetch = FetchType.EAGER)
     // @JoinColumnsOrFormulas({
     //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
@@ -138,26 +105,7 @@ public class BoardPostEntity
     // @NotFound(action = NotFoundAction.IGNORE)
     // private List<BoardPostManagtrEntity> managtrList;
 
-    /**
-     * 게시물 태그 목록
-     */
-    /*
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type"))
-    })
-    @Fetch(FetchMode.SELECT)
-    @OrderBy("boardTag ASC")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("게시물 태그 목록")
-    private List<BoardPostTagEntity> tagList;
-    */
-
-    /**
-     * 파일시스템 참조 목록
-     *//*
-
+    /** 파일시스템 참조 목록 *//*
     // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     // @JoinColumnsOrFormulas({
     //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO")),
@@ -172,52 +120,6 @@ public class BoardPostEntity
 
     /* ----- */
 
-    /**
-     * 서브엔티티 List 처리를 위한 세터
-     * -> 한 번 Entity가 생성된 이후부터는 새 List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
-     *//*
-
-    public void setTagList(final List<BoardPostTagEntity> tagList) {
-        if (CollectionUtils.isEmpty(tagList)) return;
-        if (this.tagList == null) {
-            this.tagList = tagList;
-        } else {
-            this.tagList.clear();
-            this.tagList.addAll(tagList);
-        }
-    }
-
-    */
-/**
- * 서브엔티티 List 처리를 위한 Setter (override)
- * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
- *//*
-
-    // public void setCommentList(final List<CommentEntity> commentList) {
-    //     if (CollectionUtils.isEmpty(commentList)) return;
-    //     if (this.commentList == null) {
-    //         this.commentList = commentList;
-    //     } else {
-    //         this.commentList.clear();
-    //         this.commentList.addAll(commentList);
-    //     }
-    // }
-
-    */
-/**
- * 댓글 :: List<Entity> -> List<Dto> 반환
- *//*
-
-    // public List<CommentDto> getCommentDtoList() throws Exception {
-    //     if (CollectionUtils.isEmpty(this.commentList)) return null;
-    //     List<CommentDto> dtoList = new ArrayList<>();
-    //     for (CommentEntity entity : this.commentList) {
-    //         dtoList.add(CommentMapstruct.INSTANCE.toDto(entity));
-    //     }
-    //     return dtoList;
-    // }
-
-    */
 /**
  * 열람자 :: List<Entity> -> List<Dto> 반환
  *//*

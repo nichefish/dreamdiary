@@ -43,7 +43,7 @@ public interface BoardDefMapstruct
     @Mapping(target = "topMenu", expression = "java(SiteTopMenu.BOARD)")
     @Mapping(target = "topMenuNo", expression = "java(SiteTopMenu.BOARD.menuNo)")
     @Mapping(target = "topMenuNm", expression = "java(SiteTopMenu.BOARD.menuNm)")
-    @Mapping(target = "topMenuCd", expression = "java(SiteTopMenu.BOARD.name())")
+    @Mapping(target = "topMenuLabel", expression = "java(SiteTopMenu.BOARD.label)")
     @Mapping(target = "menuNm", expression = "java(entity.getBoardNm())")
     @Mapping(target = "url", expression = "java(SiteUrl.BOARD_POST_LIST + \"?boardCd=\" + entity.getBoardCd())")
     SiteAcsInfo toMenu(final BoardDefEntity entity) throws Exception;
