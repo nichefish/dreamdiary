@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

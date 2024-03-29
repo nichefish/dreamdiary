@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 
 /**
@@ -19,7 +18,6 @@ import lombok.*;
 @ToString(callSuper = true)
 public class BasePostSearchParam
         extends BaseSearchParam {
-
 
     /** 제목 */
     private String title;
