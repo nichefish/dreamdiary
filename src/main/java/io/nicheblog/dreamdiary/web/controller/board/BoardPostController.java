@@ -52,6 +52,10 @@ public class BoardPostController
 
     private final String baseUrl = SiteUrl.BOARD_POST_LIST;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_POST;         // 작업 카테고리 (로그 적재용)
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
 
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;
@@ -123,7 +127,6 @@ public class BoardPostController
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
-            model.addAttribute("actvtyCtgrCd", actvtyCtgr.name());          // 댓글 로깅용 활동분류 코드 추가
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -328,7 +331,6 @@ public class BoardPostController
             //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
             //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
             // }
-            model.addAttribute("actvtyCtgrCd", actvtyCtgr.name());          // 댓글 로깅용 활동분류 코드 추가
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

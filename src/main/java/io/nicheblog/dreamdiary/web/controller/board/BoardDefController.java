@@ -49,6 +49,11 @@ public class BoardDefController
     private final String baseUrl = SiteUrl.BOARD_DEF_LIST;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_DEF;         // 작업 카테고리 (로그 적재용)
 
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
+
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;
 
