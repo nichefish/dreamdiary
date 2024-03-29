@@ -49,7 +49,7 @@
             dtlAjax: function (postNo) {
                 event.stopPropagation();
                 const url = "${SiteUrl.NOTICE_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo, "boardCd": $("#boardCd").val() };
+                let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -69,7 +69,6 @@
 <div class="card post">
     <form name="procForm" id="procForm">
         <input type="hidden" name="postNo" id="postNo" value="" />
-        <input type="hidden" name="boardCd" id="boardCd" value="notice" />
     </form>
     <#include "/view/notice/notice_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
@@ -96,7 +95,7 @@
                 <td class="text-start title-fxd <#if post.tagStrList??>pb-4</#if>">
                     <div class="row d-flex align-items-center justify-content-between">
                         <div class="col-xl-8 col-12">
-                            <a href="${SiteUrl.NOTICE_DTL!}?boardCd=notice&postNo=${post.postNo!}"
+                            <a href="${SiteUrl.NOTICE_DTL!}?postNo=${post.postNo!}"
                                class="title-fxd vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
@@ -183,7 +182,7 @@
                 <td class="text-start <#if post.tagStrList??>pb-4</#if>">
                     <div class="row d-flex align-items-center justify-content-between">
                         <div class="col-xl-8 col-12">
-                            <a href="${SiteUrl.NOTICE_DTL!}?boardCd=notice&postNo=${post.postNo!}"
+                            <a href="${SiteUrl.NOTICE_DTL!}?postNo=${post.postNo!}"
                                class="text-dark vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold text-danger</#if>">
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-gray">${post.ctgrNm!}</span>

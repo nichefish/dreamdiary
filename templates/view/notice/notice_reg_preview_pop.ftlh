@@ -23,7 +23,6 @@
 <div class="card post">
     <form name="procForm" id="procForm">
         <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-        <input type="hidden" name="boardCd" id="boardCd" value="${post.boardCd!}" />
     </form>
     <!--begin::Question-->
     <div class="mb-0">

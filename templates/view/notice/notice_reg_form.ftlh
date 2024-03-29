@@ -124,7 +124,6 @@
     <!--begin:Form-->
     <form name="noticeRegForm" id="noticeRegForm" class="form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="postNo" value="${post.postNo!}">
-        <input type="hidden" name="boardCd" value="${post.boardCd!}">
         <input type="hidden" name="atchFileNo" value="${post.atchFileNo!}">
         <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
         <!--begin::Row-->

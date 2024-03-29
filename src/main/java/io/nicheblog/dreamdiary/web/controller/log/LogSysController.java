@@ -44,6 +44,11 @@ public class LogSysController
     private final String baseUrl = SiteUrl.LOG_SYS_LIST;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_SYS;        // 작업 카테고리 (로그 적재용)
 
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
+
     @Resource(name = "logSysService")
     private LogSysService logSysService;
 

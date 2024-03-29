@@ -45,6 +45,11 @@ public class LogActvtyController
     private final String baseUrl = SiteUrl.LOG_ACTVTY_LIST;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_ACTVTY;        // 작업 카테고리 (로그 적재용)
 
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
+
     // @Resource(name = "xlsxUtils")
     // private XlsxUtils xlsxUtils;
 

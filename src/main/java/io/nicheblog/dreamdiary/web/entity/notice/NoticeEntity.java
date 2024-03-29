@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.notice;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManagtEntity;
 import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +30,7 @@ import javax.persistence.*;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE notice SET del_yn = 'Y' WHERE post_no = ?")
 public class NoticeEntity
-        extends BasePostEntity {
+        extends BaseManagtEntity {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.NOTICE;
@@ -56,7 +56,6 @@ public class NoticeEntity
     @Column(name = "popup_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("팝업 노출여부")
     private String popupYn = "N";
-
 
     /** 파일시스템 참조 목록 */
     // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)

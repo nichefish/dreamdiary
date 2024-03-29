@@ -43,6 +43,11 @@ public class LogStatsController
     private final String baseUrl = SiteUrl.LOG_STATS_USER_LIST;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_STATS;        // 작업 카테고리 (로그 적재용)
 
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
+
     @Resource(name = "logStatsUserService")
     private LogStatsUserService logStatsUserService;
 

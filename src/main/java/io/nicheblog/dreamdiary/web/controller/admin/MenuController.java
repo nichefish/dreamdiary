@@ -51,6 +51,11 @@ public class MenuController
 
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.MENU;        // 작업 카테고리 (로그 적재용)
 
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
+
     @Resource(name = "menuService")
     private MenuService menuService;
 
