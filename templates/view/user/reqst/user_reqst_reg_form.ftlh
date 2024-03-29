@@ -432,6 +432,6 @@
 
 <#include "/view/user/info/user_info_reg_item_template.ftlh">       <!-- 기타정보 추가추가 영역 template-->
 <!-- #include:: component:: 첨부파일 추가 영역 template-->
-<#include "/view/_component/_atch_file.ftlh">
+<#include "/view/_component/atch_file/_atch_file_area.ftlh">
 
 </@layout.layout_without_aside>

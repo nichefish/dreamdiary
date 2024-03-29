@@ -335,7 +335,7 @@
                     <div class="col-xl-3 col-12">
                         <div class="fs-6 fw-bold text-center">
                             ${vcatnYy.statsYy!}년 연차 사용 현황<br />
-                            (${vcatnYy.beginDt!} ~ ${vcatnYy.endDt!})
+                            (${vcatnYy.bgnDt!} ~ ${vcatnYy.endDt!})
                         </div>
                     </div>
                     <div class="col-xl-1 col-sm-4 col-form-label"

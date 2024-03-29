@@ -22,8 +22,8 @@
                                         <#list vcatnList.vcatnSchdulList![] as schdul>
                                             <span class="pe-4">
                                                 <span class="ctgr-span ctgr-gray">${schdul.vcatnNm!}</span>
-                                                ${schdul.beginDt!}
-                                                <#if schdul.endDt?? && schdul.beginDt != schdul.endDt>~ ${schdul.endDt!}</#if>
+                                                ${schdul.bgnDt!}
+                                                <#if schdul.endDt?? && schdul.bgnDt != schdul.endDt>~ ${schdul.endDt!}</#if>
                                             </span>
                                         </#list>
                                     </td>

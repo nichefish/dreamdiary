@@ -1,18 +1,21 @@
-/*
 package io.nicheblog.dreamdiary.web.controller.user;
 
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
+import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.user.UserDto;
+import io.nicheblog.dreamdiary.web.model.user.UserReqstDto;
+import io.nicheblog.dreamdiary.web.service.log.LogActvtyService;
+import io.nicheblog.dreamdiary.web.service.user.UserReqstService;
 import lombok.extern.log4j.Log4j2;
-import dreamdiary.nicheblog.io.cmm.Constant;
-import dreamdiary.nicheblog.io.cmm.event.LogActvtyEvent;
-import dreamdiary.nicheblog.io.cmm.intrfc.controller.impl.BaseControllerImpl;
-import dreamdiary.nicheblog.io.cmm.util.MessageUtils;
-import dreamdiary.nicheblog.io.web.model.user.UserDto;
-import dreamdiary.nicheblog.io.web.model.user.UserInfoDto;
-import dreamdiary.nicheblog.io.web.service.CmmService;
-import dreamdiary.nicheblog.io.web.service.log.LogActvtyService;
-import dreamdiary.nicheblog.io.web.service.user.UserReqstService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -26,7 +29,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
-*/
 /**
  * UserReqstController
  * <pre>
@@ -36,15 +38,19 @@ import java.security.InvalidParameterException;
  *
  * @author nichefish
  * @extends BaseControllerImpl
- *//*
-
+ */
 @Controller
 @Log4j2
 public class UserReqstController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.LGN_FORM;                    // 기본 URL
-    private final String actvtyCtgrCd = Constant.ACTVTY_USER_REQST;     // 작업 카테고리 (로그 적재용)
+    private final String baseUrl = SiteUrl.AUTH_LGN_FORM;                    // 기본 URL
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER;        // 작업 카테고리 (로그 적재용)
+
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
 
     @Resource(name = "userReqstService")
     private UserReqstService userReqstService;
@@ -52,22 +58,21 @@ public class UserReqstController
     @Resource(name = "logActvtyService")
     private LogActvtyService logActvtyService;
 
-    */
-/**
+    @Resource(name = "cdService")
+    private CdService cdService;
+
+    /**
      * 계정 정보 신청 화면 조회
      * 비로그인 사용자도 외부에서 접근 가능
-     *//*
-
+     */
     @RequestMapping(value = SiteUrl.USER_REQST_REG_FORM)
     public String userReqstRegForm(
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
-        */
-/* 사이트 메뉴 설정 *//*
-
-        siteMenuAcsInfo.setAcsInfo(SiteMenu.MENU_USER_REQST, SiteMenu.PAGE_REG, request.getRequestURI());
+        /* 사이트 메뉴 설정 */
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_REQST.setAcsPageInfo(Constant.PAGE_REG));
 
         boolean isSuccess = false;
         String resultMsg = "";
@@ -94,22 +99,20 @@ public class UserReqstController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-
-        model.addAttribute("userInfo", new UserInfoDto());      // 빈 객체 주입 (muatache error prevention)
+        // model.addAttribute("userInfo", new UserInfoDto());      // 빈 객체 주입 (muatache error prevention)
 
         return "view/user/reqst/user_reqst_reg_form";
     }
 
-    */
-/**
+    /**
      * 계정 정보 신청 (Ajax)
      * 비로그인 사용자도 외부에서 접근 가능
-     *//*
-
+     */
     @PostMapping(value = {SiteUrl.USER_REQST_REG_AJAX})
     @ResponseBody
     public ResponseEntity<AjaxResponse> userReqstRegAjax(
-            final @Valid UserDto userDto,
+            final @Valid UserReqstDto userReqst,
+            final @RequestParam("userId") String userId,
             final LogActvtyParam logParam,
             final BindingResult bindingResult,
             final MultipartHttpServletRequest request
@@ -121,26 +124,26 @@ public class UserReqstController
         String resultMsg = "";
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            UserDto rsDto = userReqstService.userReqstReg(userDto, request);
+            UserReqstDto rsDto = userReqstService.regist(userReqst, request);
             isSuccess = (rsDto.getUserNo() != null);
             resultMsg = isSuccess ? "신규계정이 성공적으로 신청되었습니다." : "신규계정 신청에 실패했습니다.";
         } catch (Exception e) {
             resultMsg = MessageUtils.getExceptionMsg(e);
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
-            logActvtyService.logLgnFailReg(userDto.getUserId(), resultMsg, isSuccess);
-            log.info("{} / isSuccess: {}, resultMsg: {}", request.getRequestURI(), isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
+            // logActvtyService.regLogAnonActvty(userDto.getUserId(), resultMsg, isSuccess);
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    */
-/**
+    /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 승인 (Ajax)
      * (관리자MNGR만 접근 가능)
-     *//*
-
+     */
     @PostMapping(SiteUrl.USER_REQST_CF_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
@@ -155,7 +158,7 @@ public class UserReqstController
         String resultMsg = "";
         try {
             Integer userNo = Integer.parseInt(userNoStr);
-            isSuccess = userReqstService.cfReqst(userNo);
+            isSuccess = userReqstService.cf(userNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -171,12 +174,10 @@ public class UserReqstController
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    */
-/**
+    /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 승인취소 (Ajax)
      * (관리자MNGR만 접근 가능)
-     *//*
-
+     */
     @PostMapping(SiteUrl.USER_REQST_UNCF_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
@@ -191,7 +192,7 @@ public class UserReqstController
         String resultMsg = "";
         try {
             Integer userNo = Integer.parseInt(userNoStr);
-            isSuccess = userReqstService.uncfReqst(userNo);
+            isSuccess = userReqstService.uncf(userNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -207,4 +208,3 @@ public class UserReqstController
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 }
-*/
