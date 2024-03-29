@@ -1,10 +1,12 @@
 package io.nicheblog.dreamdiary.web.entity.exptr.prsnl;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
+import io.nicheblog.dreamdiary.web.model.cmm.CmmStus;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlItemDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -18,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * ExptrPrsnlPaprEntity
@@ -39,6 +43,54 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE exptr_prsnl SET del_yn = 'Y' WHERE post_no = ?")
 public class ExptrPrsnlPaprEntity
         extends BasePostEntity {
+
+    @PostLoad
+    private void onLoad() {
+        if (CollectionUtils.isEmpty(this.itemList)) return;
+
+        AtomicInteger itemCnt = new AtomicInteger();
+        AtomicInteger totAmt = new AtomicInteger();
+        AtomicInteger atchRciptCnt = new AtomicInteger();
+        AtomicInteger orgnlRciptCnt = new AtomicInteger();
+        AtomicInteger orgnlRciptNotNeededCnt = new AtomicInteger();
+
+        itemList.stream()
+                .filter(item -> !"Y".equals(item.getRjectYn())) // 거부된 아이템 제외
+                .forEach(item -> {
+                    itemCnt.incrementAndGet(); // 아이템 카운트 증가
+                    totAmt.addAndGet(item.getExptrAmt()); // 총액에 아이템 금액 추가
+
+                    if (item.getAtchFileDtlInfo() != null) atchRciptCnt.incrementAndGet(); // 첨부 파일이 있는 경우 카운트 증가
+                    if ("Y".equals(item.getOrgnlRciptYn())) orgnlRciptCnt.incrementAndGet(); // 원본 영수증이 있는 경우 카운트 증가
+                    if ("X".equals(item.getOrgnlRciptYn())) orgnlRciptNotNeededCnt.incrementAndGet(); // 원본 영수증이 필요 없는 경우 카운트 증가
+                });
+
+        this.itemCnt = itemCnt.get();
+        this.totAmt = totAmt.get();
+        this.atchRciptCnt = atchRciptCnt.get();
+        this.orgnlRciptCnt = orgnlRciptCnt.get();
+        this.orgnlRciptNotNeededCnt = orgnlRciptNotNeededCnt.get();
+
+        // 영수증 첨부상태 세팅
+        if (this.atchRciptCnt == 0) {
+            this.setAtchRciptStus(new CmmStus("미제출", Constant.BS_DANGER, "bi bi-x"));
+        } else if (this.atchRciptCnt < this.itemCnt) {
+            this.setAtchRciptStus(new CmmStus("일부제출", Constant.BS_WARNING, "bi bi-caret-up"));
+        } else if (this.atchRciptCnt.equals(this.itemCnt)) {
+            this.setAtchRciptStus(new CmmStus("제출완료", Constant.BS_PRIMARY, "bi bi-circle fs-8"));
+        }
+
+        // 원본영수증 제출상태 세팅
+        boolean hasExptr = this.itemCnt > 0;
+        boolean allOrgnlRciptNotNeeded = hasExptr && Objects.equals(this.orgnlRciptNotNeededCnt, this.itemCnt);
+        if (hasExptr && this.orgnlRciptCnt == 0 && !allOrgnlRciptNotNeeded) {
+            this.setOrgnlRciptStus(new CmmStus("미제출", Constant.BS_DANGER, "bi bi-x"));
+        } else if (this.orgnlRciptCnt + this.orgnlRciptNotNeededCnt < this.itemCnt) {
+            this.setOrgnlRciptStus(new CmmStus("일부제출", Constant.BS_WARNING, "bi bi-caret-up"));
+        } else if (this.orgnlRciptCnt + this.orgnlRciptNotNeededCnt == this.itemCnt) {
+            this.setOrgnlRciptStus(new CmmStus("제출완료", Constant.BS_PRIMARY, "bi bi-circle fs-8"));
+        }
+    }
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.EXPTR_PRSNL_PAPR;
@@ -84,6 +136,39 @@ public class ExptrPrsnlPaprEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("경비지출 항목 목록")
     private List<ExptrPrsnlItemEntity> itemList;
+
+    /** 항목 건수 */
+    @Transient
+    @Builder.Default
+    private Integer itemCnt = 0;
+
+    /** 영수증 첨부 건수 */
+    @Transient
+    @Builder.Default
+    private Integer atchRciptCnt = 0;
+
+    /** 영수증 제출 건수 */
+    @Transient
+    @Builder.Default
+    private Integer orgnlRciptCnt = 0;
+
+    /** 영수증 불필요 건수 */
+    @Transient
+    @Builder.Default
+    private Integer orgnlRciptNotNeededCnt = 0;
+
+    /** 항목 건수 */
+    @Transient
+    @Builder.Default
+    private Integer totAmt = 0;
+
+    /** 영수증 스캔본 첨부 상태 */
+    @Transient
+    private CmmStus atchRciptStus;
+
+    /** 영수증 원본 제출 상태 */
+    @Transient
+    private CmmStus orgnlRciptStus;
 
     /* ----- */
 

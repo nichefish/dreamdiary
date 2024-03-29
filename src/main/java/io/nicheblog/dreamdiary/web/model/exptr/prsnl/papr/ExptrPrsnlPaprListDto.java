@@ -77,53 +77,6 @@ public class ExptrPrsnlPaprListDto
 
     /* ----- */
 
-    /**
-     * 외부에서 itemList 주입받아서 숫자들 init
-     */
-    public void initStus(final List<ExptrPrsnlItemEntity> itemList) {
-        if (CollectionUtils.isEmpty(itemList)) return;
-        int totAmt = 0;
-        int itemCnt = 0;
-        int atchRciptCnt = 0;
-        int orgnlRciptCnt = 0;
-        int orgnlRciptNotNeededCnt = 0;
-        for (ExptrPrsnlItemEntity item : itemList) {
-            if ("Y".equals(item.getRjectYn())) continue;
-            itemCnt++;
-            totAmt += item.getExptrAmt();
-            if (item.getAtchFileDtlInfo() != null) atchRciptCnt++;
-            if ("Y".equals(item.getOrgnlRciptYn())) orgnlRciptCnt++;
-            if ("X".equals(item.getOrgnlRciptYn())) orgnlRciptNotNeededCnt++;
-        }
-        this.itemCnt = itemCnt;
-        this.totAmt = totAmt;
-        this.atchRciptCnt = atchRciptCnt;
-        this.orgnlRciptCnt = orgnlRciptCnt;
-        this.orgnlRciptNotNeededCnt = orgnlRciptNotNeededCnt;
-
-        // 영수증 첨부상태 세팅
-        if (this.atchRciptCnt == 0) {
-            this.setAtchRciptStus(new CmmStus("미제출", Constant.BS_DANGER, "bi bi-x"));
-        } else if (this.atchRciptCnt < this.itemCnt) {
-            this.setAtchRciptStus(new CmmStus("일부제출", Constant.BS_WARNING, "bi bi-caret-up"));
-        } else if (this.atchRciptCnt.equals(this.itemCnt)) {
-            this.setAtchRciptStus(new CmmStus("제출완료", Constant.BS_PRIMARY, "bi bi-circle fs-8"));
-        }
-
-        // 원본영수증 제출상태 세팅
-        boolean hasExptr = this.itemCnt > 0;
-        boolean allOrgnlRciptNotNeeded = hasExptr && Objects.equals(this.orgnlRciptNotNeededCnt, this.itemCnt);
-        if (hasExptr && this.orgnlRciptCnt == 0 && !allOrgnlRciptNotNeeded) {
-            this.setOrgnlRciptStus(new CmmStus("미제출", Constant.BS_DANGER, "bi bi-x"));
-        } else if (this.orgnlRciptCnt + this.orgnlRciptNotNeededCnt < this.itemCnt) {
-            this.setOrgnlRciptStus(new CmmStus("일부제출", Constant.BS_WARNING, "bi bi-caret-up"));
-        } else if (this.orgnlRciptCnt + this.orgnlRciptNotNeededCnt == this.itemCnt) {
-            this.setOrgnlRciptStus(new CmmStus("제출완료", Constant.BS_PRIMARY, "bi bi-circle fs-8"));
-        }
-    }
-
-    /* ----- */
-
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentCmpstn comment;

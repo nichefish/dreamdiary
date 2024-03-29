@@ -80,7 +80,6 @@ public class ExptrPrsnlPaprService
         for (ExptrPrsnlPaprEntity entity : entityPage.getContent()) {
             ExptrPrsnlPaprListDto listDto = exptrPrsnlPaprMapstruct.toListDto(entity);
             List<ExptrPrsnlItemEntity> itemList = entity.getItemList();
-            listDto.initStus(itemList);      // itemList 받아서 액수 및 영수증 관련 cnt 초기화
             listDto.setRnum(CmmUtils.getPageRnum(entityPage, i));
             dtoList.add(listDto);
             i++;
