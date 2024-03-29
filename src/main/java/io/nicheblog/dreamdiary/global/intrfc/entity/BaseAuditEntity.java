@@ -52,5 +52,9 @@ public class BaseAuditEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     protected AuditorInfo mdfusrInfo;
+
+    /** 수정자 이름 */
+    @Transient
+    protected String mdfusrNm;
 }
 

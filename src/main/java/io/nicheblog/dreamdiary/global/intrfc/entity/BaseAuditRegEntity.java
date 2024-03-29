@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -52,5 +53,9 @@ public class BaseAuditRegEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     protected AuditorInfo regstrInfo;
+
+    @Transient
+    /** 등록자 이름 */
+    protected String regstrNm;
 }
 
