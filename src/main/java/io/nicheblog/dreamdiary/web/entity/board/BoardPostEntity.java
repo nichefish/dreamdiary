@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.entity.board;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseEnhcPostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,7 @@ import java.util.Date;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE board_post SET del_yn = 'Y' WHERE content_type = ? AND post_no = ?")
 public class BoardPostEntity
-        extends BasePostEntity {
+        extends BaseEnhcPostEntity {
 
     /** 글 번호 :: 복합키 사용, 시퀀스 생성 로직을 위해 재정의 */
     @Id
@@ -64,47 +65,6 @@ public class BoardPostEntity
     // @Comment("노션 페이지 참조 ID :: UUID")
     // private String notionPageId;
 
-    /** 게시물 열람자 목록 */
-    /*
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type", insertable = false, updatable = false))
-    })
-    @Fetch(FetchMode.SELECT)
-    @OrderBy("regDt DESC")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private List<BoardPostViewerEntity> viewerList;
-    */
-
-    /** 조치자(작업자)ID */
-    @Column(name = "managtr_id", length = 20)
-    private String managtrId;
-
-    /** 조치(작업)일시 */
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
-    @Column(name = "managt_dt")
-    private Date managtDt;
-
-    /** 조치자(작업자) 정보 */
-    @ManyToOne
-    @JoinColumn(name = "managtr_id", referencedColumnName = "user_id", insertable = false, updatable = false)
-    @Fetch(value = FetchMode.JOIN)
-    @NotFound(action = NotFoundAction.IGNORE)
-    private AuditorInfo managtrInfo;
-
-    /** 게시물 조치자 목록 */
-    // @OneToMany(fetch = FetchType.EAGER)
-    // @JoinColumnsOrFormulas({
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type", insertable = false, updatable = false))
-    // })
-    // @Fetch(FetchMode.SELECT)
-    // @OrderBy("regDt DESC")
-    // @NotFound(action = NotFoundAction.IGNORE)
-    // private List<BoardPostManagtrEntity> managtrList;
-
     /** 파일시스템 참조 목록 *//*
     // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     // @JoinColumnsOrFormulas({
@@ -117,33 +77,5 @@ public class BoardPostEntity
     // private List<FlsysRefEntity> flsysRefList;
 
     */
-
-    /* ----- */
-
-/**
- * 열람자 :: List<Entity> -> List<Dto> 반환
- *//*
-
-    // public List<BoardPostViewerDto> getViewerDtoList() throws Exception {
-    //     if (CollectionUtils.isEmpty(this.viewerList)) return null;
-    //     List<BoardPostViewerDto> dtoList = new ArrayList<>();
-    //     for (BoardPostViewerEntity entity : this.viewerList) {
-    //         dtoList.add(BoardPostViewerMapstruct.INSTANCE.toDto(entity));
-    //     }
-    //     return dtoList;
-    // }
-
-    */
-    /**
-     * 조치자 :: List<Entity> -> List<Dto> 반환
-     */
-    // public List<BoardPostManagtrDto> getManagtrDtoList() throws Exception {
-    //     if (CollectionUtils.isEmpty(this.managtrList)) return null;
-    //     List<BoardPostManagtrDto> dtoList = new ArrayList<>();
-    //     for (BoardPostManagtrEntity entity : this.managtrList) {
-    //         dtoList.add(BoardPostManagtrMapstruct.INSTANCE.toDto(entity));
-    //     }
-    //     return dtoList;
-    // }
 }
 

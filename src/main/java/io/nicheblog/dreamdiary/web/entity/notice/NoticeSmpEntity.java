@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.notice;
 
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseEnhcPostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
@@ -31,7 +32,7 @@ import java.util.Date;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE notice SET del_yn = 'Y' WHERE post_no = ?")
 public class NoticeSmpEntity
-        extends BasePostEntity {
+        extends BaseEnhcPostEntity {
 
     /** 필수: 컨텐츠 타입 */
     private static final String CONTENT_TYPE = ContentType.NOTICE.key;
@@ -55,14 +56,4 @@ public class NoticeSmpEntity
     @Column(name = "popup_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("팝업 노출여부")
     private String popupYn = "N";
-
-    /** 조치자(작업자)ID */
-    @Column(name = "managtr_id", length = 20)
-    private String managtrId;
-
-    /** 조치(작업)일시 */
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
-    @Column(name = "managt_dt")
-    private Date managtDt;
 }
