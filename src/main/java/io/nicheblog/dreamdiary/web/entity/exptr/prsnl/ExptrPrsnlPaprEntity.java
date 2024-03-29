@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.web.entity.user.CommentEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.ExptrPrsnlItemDto;
+import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlItemDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -68,12 +68,6 @@ public class ExptrPrsnlPaprEntity
     @Column(name = "mnth")
     @Comment("월")
     private Integer mnth;
-
-    /** 완료 여부 */
-    @Builder.Default
-    @Column(name = "compt_yn")
-    @Comment("완료 여부")
-    private String comptYn = "N";
 
     /** 확인 여부 */
     @Builder.Default
