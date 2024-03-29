@@ -1,0 +1,180 @@
+package io.nicheblog.dreamdiary.web.controller.vcatn;
+
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.web.SiteMenu;
+import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsDto;
+import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsTotalDto;
+import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
+import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
+import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsService;
+import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Nullable;
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * VcatnStatsController
+ * <pre>
+ *  휴가관리 > 년도별 휴가관리 컨트롤러
+ * </pre>
+ *
+ * @author nichefish
+ * @extends BaseControllerImpl
+ */
+@Controller
+@Log4j2
+public class VcatnStatsController
+        extends BaseControllerImpl {
+
+    // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_STATS;      // 작업 카테고리 (로그 적재용)
+
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
+
+    @Resource(name = "vcatnPaprService")
+    private VcatnPaprService vcatnPaprService;
+
+    @Resource(name = "vcatnStatsService")
+    private VcatnStatsService vcatnStatsService;
+
+    @Resource(name = "vcatnStatsYyService")
+    private VcatnStatsYyService vcatnStatsYyService;
+
+    // @Resource(name = "xlsxUtils")
+    // private XlsxUtils xlsxUtils;
+
+    /**
+     * 휴가관리 > 년도별 휴가관리 > 목록 조회
+     * 관리자MNGR만 접근 가능
+     */
+    @RequestMapping(SiteUrl.VCATN_STATS_YY)
+    @Secured(Constant.ROLE_MNGR)
+    public String vcatnStatsList(
+            final LogActvtyParam logParam,
+            final @RequestParam("statsYy") @Nullable String yyStrParam,
+            final ModelMap model
+    ) throws IOException {
+
+        /* 사이트 메뉴 설정 */
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.VCATN_STATS.setAcsPageInfo(Constant.PAGE_CAL));
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            VcatnStatsYyDto statsYy = null;
+            String yyStr = yyStrParam;
+            if (StringUtils.isEmpty(yyStrParam)) {
+                statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
+                yyStr = statsYy.getStatsYy();
+            }
+            if (statsYy == null) statsYy = vcatnStatsYyService.getVcatnYyDtDto(yyStr);
+            // 휴가계획서 최저년도~올해년도 목록 조회
+            model.addAttribute("yyList", vcatnPaprService.getVcatnYyList());
+            // 휴가계획서 년도 정보 조회 (시작일자~종료일자)
+            model.addAttribute("vcatnYy", statsYy);
+            // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
+            List<VcatnStatsDto> statsList = vcatnStatsService.getVcatnStatsList(statsYy);
+            model.addAttribute("statsList", statsList);
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            // 관리자페이지 화면 모드 세팅
+            session.setAttribute("userMode", Constant.AUTH_MNGR);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
+        } finally {
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return "/view/vcatn/stats/vcatn_stats";
+    }
+
+    /**
+     * 휴가관리 > 년도별 휴가관리 > 업데이트 (Ajax)
+     * 관리자MNGR만 접근 가능
+     */
+    @PostMapping(SiteUrl.VCATN_STATS_YY_UPDT_AJAX)
+    @Secured(Constant.ROLE_MNGR)
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> vcatnStatsUpdtAjax(
+            final VcatnStatsTotalDto vcatnStatsTotal,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            isSuccess = vcatnStatsService.regStatsTotal(vcatnStatsTotal);
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setCn(vcatnStatsTotal.toString());
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 휴가관리 > 년도별 휴가관리 > 목록 엑셀 다운로드
+     * 관리자MNGR만 접근 가능
+     */
+    // @RequestMapping(SiteUrl.VCATN_STATS_YY_XLSX_DOWNLOAD)
+    // @Secured(Constant.ROLE_MNGR)
+    // public void vcatnStatsXlsxDownload(
+    //         final LogActvtyParam logParam,
+    //         final @RequestParam("statsYy") String yyStr
+    // ) throws Exception {
+//
+    //     boolean isSuccess = false;
+    //     String resultMsg = "";
+    //     try {
+    //         VcatnStatsYyDto statsYy = StringUtils.isNotEmpty(yyStr) ? vcatnStatsYyService.getVcatnYyDtDto(yyStr) : vcatnStatsYyService.getCurrVcatnYyDt();
+    //         // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
+    //         List<Object> statsObjList = vcatnStatsService.getVcatnStatsListXlsx(statsYy);
+    //         xlsxUtils.listXlxsDownload(Constant.VCATN_STATS, statsObjList);
+    //         isSuccess = true;
+    //         resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+    //     } catch (Exception e) {
+    //         isSuccess = false;
+    //         resultMsg = MessageUtils.getExceptionMsg(e);
+    //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+    //         MessageUtils.alertMessage(resultMsg, SiteUrl.VCATN_STATS_YY);
+    //     } finally {
+    //         // 로그 관련 처리
+    //         logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+    //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
+    //     }
+    // }
+}
