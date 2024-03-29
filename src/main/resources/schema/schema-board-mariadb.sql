@@ -28,18 +28,20 @@ CREATE TABLE IF NOT EXISTS board_def (
 
 -- 일반게시판 게시물 (board_post)
 -- @extends: BasePostEntity
+-- @Uses: ManagtEmbed, CommentEmbed
 CREATE TABLE IF NOT EXISTS board_post(
+    -- CLSF
     post_no INT COMMENT '글 번호',
     content_type VARCHAR(30) COMMENT '게시판 코드',
     -- POST
     title VARCHAR(200) COMMENT '제목',
     cn VARCHAR(500) COMMENT '내용',
     ctgr_cd VARCHAR(50) COMMENT '글분류코드',
-    fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정여부',
+    imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요 여부',
+    fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정 여부',
     hit_cnt INT DEFAULT 0 COMMENT '조회수',
-    imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요여부',
+    -- MANAGT (module)
     mdfable CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
-    -- MANAGT
     managtr_id VARCHAR(20) COMMENT '작업자ID',
     managt_dt DATETIME COMMENT '작업일시',
     -- ATCH_FILE
@@ -58,9 +60,12 @@ CREATE TABLE IF NOT EXISTS board_post(
 
 -- 댓글 (comment)
 -- @extends: BaseClsfEntity
+-- @Uses: CommentEmbed
 CREATE TABLE IF NOT EXISTS comment (
+    -- CLSF
     post_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '댓글 번호',
     content_type VARCHAR(32) DEFAULT 'comment' COMMENT '게시판 코드',
+    --
     ref_post_no INT COMMENT '참초 글번호',
     ref_content_type VARCHAR(30) COMMENT '참조 게시판 코드',
     cn LONGTEXT COMMENT '내용',
