@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.cmm;
 
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,13 +19,11 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 public class BaseParam {
 
-    /**
-     * 작업 카테고리 코드
-     */
+    /** 작업 카테고리 코드 */
     private String actvtyCtgrCd;
-    /**
-     * 액션구분 코드
-     */
+    /** 작업 카테고리 */
+    private ActvtyCtgr actvtyCtgr;
+    /** 액션구분 코드 */
     private String actionTyCd;
 
     /**
@@ -47,4 +46,14 @@ public class BaseParam {
         if (StringUtils.isEmpty(actionTyCd)) return false;
         return actionTyCd.equals(this.actionTyCd);
     }
+
+    /* ----- */
+
+    /** Getter :: 작업 카테고리 조회 */
+    public ActvtyCtgr getActvtyCtgr() {
+        if (this.actvtyCtgr != null) return this.actvtyCtgr;
+        if (StringUtils.isEmpty(this.actvtyCtgrCd)) return ActvtyCtgr.DEFAULT;
+        return ActvtyCtgr.valueOf(this.actvtyCtgrCd.toUpperCase());
+    }
+
 }
