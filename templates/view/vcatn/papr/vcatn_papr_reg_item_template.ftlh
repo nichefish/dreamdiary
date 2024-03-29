@@ -5,7 +5,7 @@
 <div id="vcatn_reg_item_template" hidden>
     <span id="vcatnItemId__INDEX__"></span>
     <input type="hidden" name="vcatnSchdulNo" value="">
-    <input type="hidden" class="form-control form-control-solid" name="vcatnSchdulList[__INDEX__].vcatnSchdulNo" id="vcatnSchdulNo__INDEX__" value=""/>
+    <input type="hidden" class="form-control form-control-solid" name="schdulList[__INDEX__].vcatnSchdulNo" id="vcatnSchdulNo__INDEX__" value=""/>
     <div class="row pt-2 pb-0 border-0 justify-content-end div-height-1">
         <div class="btn btn-sm btn-icon btn-active-color-primary mx-5" onclick="Page.delSpan(__INDEX__);">
             <span class="svg-icon svg-icon-1 align-center">
@@ -20,7 +20,7 @@
         <div class="row g-9">
             <div class="col-md-2" id="vcatnCdSelectDiv__INDEX__">
                 <label class="required fs-6 fw-bold mb-2">휴가분류</label>
-                <select class="form-select form-select-solid w-180px required" onchange="Page.fnDelEndDt(__INDEX__)" name="vcatnSchdulList[__INDEX__].vcatnCd" id="vcatnCd__INDEX__" data-hide-search="true">
+                <select class="form-select form-select-solid w-180px required" onchange="Page.fnDelEndDt(__INDEX__)" name="schdulList[__INDEX__].vcatnCd" id="vcatnCd__INDEX__" data-hide-search="true">
                     <option value="">휴가 분류</option>
                     <#list VCATN_CD![] as vcatnCd>
                         <option value="${vcatnCd.dtlCd!}" id="${vcatnCd.dtlCd!}">[${vcatnCd.dtlCdNm!}]</option>
@@ -51,8 +51,8 @@
                                         </svg>
                                     </span>
                                     <input class="form-control form-control-solid ps-12 required w-100"
-                                           placeholder="휴가 시작일" name="vcatnSchdulList[__INDEX__].beginDt"
-                                           id="beginDt__INDEX__" autocomplete="off" onchange="Page.fnDelEndDt(__INDEX__)" readonly />
+                                           placeholder="휴가 시작일" name="schdulList[__INDEX__].bgnDt"
+                                           id="bgnDt__INDEX__" autocomplete="off" onchange="Page.fnDelEndDt(__INDEX__)" readonly />
                                 </div>
                             </td>
                             <td class="text-center">
@@ -75,7 +75,7 @@
                                                   fill="black"/>
                                         </svg>
                                     </span>
-                                    <input name="vcatnSchdulList[__INDEX__].endDt" id="endDt__INDEX__" autocomplete="off"
+                                    <input name="schdulList[__INDEX__].endDt" id="endDt__INDEX__" autocomplete="off"
                                            class="form-control form-control-solid ps-12 required w-100"
                                            placeholder="휴가 종료일" readonly onchange="Page.fnDelEndDt(__INDEX__)" />
                                 </div>
@@ -83,7 +83,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <div id="beginDt__INDEX__Span"></div>
+                                <div id="bgnDt__INDEX__Span"></div>
                             </td>
                             <td></td>
                             <td>
@@ -96,7 +96,7 @@
 
             <div class="col-md-5">
                 <label class="fs-6 fw-bold mb-2" for="vcatnResn__INDEX__">사유</label>
-                <textarea name="vcatnSchdulList[__INDEX__].vcatnResn" id="vcatnResn__INDEX__"
+                <textarea name="schdulList[__INDEX__].vcatnResn" id="vcatnResn__INDEX__"
                           class="form-control form-control-solid" rows="2"  maxlength="500" placeholder="내용을 입력하세요"></textarea>
             </div>
         </div>

@@ -98,18 +98,18 @@
                             <span>
                                 <a href="${SiteUrl.VCATN_PAPR_DTL!}?postNo=${post.postNo!}" class="title-fxd">
                                     <span class="pe-4">(작성예시)</span>
-                                    <#list post.vcatnSchdulList![] as schdul>
+                                    <#list post.schdulList![] as schdul>
                                         <span class="pe-4">
                                             <span class="ctgr-span ctgr-imprtc">${schdul.vcatnNm!}</span>
-                                            ${schdul.beginDt!}
-                                            <#if schdul.endDt?? && schdul.beginDt != schdul.endDt>~ ${schdul.endDt!}</#if>
+                                            ${schdul.bgnDt!}
+                                            <#if schdul.endDt?? && schdul.bgnDt != schdul.endDt>~ ${schdul.endDt!}</#if>
                                         </span>
                                     </#list>
                                 </a>
-                                <#if post.commentCnt gt 0>
+                                <#if post.comment.cnt gt 0>
                                     <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                        [${post.commentCnt!}]
+                                        [${post.comment.cnt!}]
                                     </span>
                                 </#if>
                             </span>
@@ -166,18 +166,18 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <span>
                                 <a href="${SiteUrl.VCATN_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
-                                    <#list post.vcatnSchdulList as schdul>
+                                    <#list post.schdulList as schdul>
                                         <span class="pe-4">
                                             <span class="ctgr-span ctgr-gray">${schdul.vcatnNm!}</span>
-                                            ${schdul.beginDt!}
-                                            <#if schdul.endDt?? && schdul.beginDt != schdul.endDt>~ ${schdul.endDt!}</#if>
+                                            ${schdul.bgnDt!}
+                                            <#if schdul.endDt?? && schdul.bgnDt != schdul.endDt>~ ${schdul.endDt!}</#if>
                                         </span>
                                     </#list>
                                 </a>
-                                <#if post.commentCnt gt 0>
+                                <#if post.comment.cnt gt 0>
                                     <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                        [${post.commentCnt!}]
+                                        [${post.comment.cnt!}]
                                     </span>
                                 </#if>
                             </span>

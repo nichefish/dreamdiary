@@ -54,7 +54,7 @@
                     /** 휴가 추가 폼 기본 뿌리기 */
                     Page.addVcatnInfoRegItem();
                 <#elseif isMdf>
-                    <#if (post.vcatnSchdulList)?has_content>
+                    <#if (post.schdulList)?has_content>
                         Page.addVcatnInfoItemList();      // 기존 항목에 대하여 행 쭈루룩 추가
                     </#if>
                 </#if>
@@ -65,7 +65,7 @@
                 if (result === "AM_HALF" || result === "PM_HALF") {
                     $("#lineDiv"+idx).css("visibility", "hidden");
                     $("#endDtDiv"+idx).css("visibility", "hidden");
-                    $("#endDt"+idx).val($("#beginDt"+idx).val());
+                    $("#endDt"+idx).val($("#bgnDt"+idx).val());
                     $("#endDt"+idx+"Span").empty().css("visibility", "hidden");
                 } else {
                     $("#lineDiv"+idx).css("visibility", "visible");
@@ -108,13 +108,13 @@
                 let tableTmpl = "<div class='card shadow-sm mb-5' style='width:100%' id='itemContainer" + reqstItemIdx + "'>" + $("#vcatn_reg_item_template").html() + "</div>";
                 let str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
                 $("#vcatnListDiv").append(str);
-                commons.datepicker.singleDatePicker("#beginDt"+reqstItemIdx, "yyyy-MM-DD", null, function() {
+                commons.datepicker.singleDatePicker("#bgnDt"+reqstItemIdx, "yyyy-MM-DD", null, function() {
                     Page.fnDelEndDt(reqstItemIdx);
-                    Page.fnNoBefore("#beginDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                    Page.fnNoBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
                 });
                 commons.datepicker.singleDatePicker("#endDt"+reqstItemIdx, "yyyy-MM-DD", null, function() {
                     if ($("#endDt"+reqstItemIdx).val() !== "") {
-                        Page.fnNoBefore("#beginDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                        Page.fnNoBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
                     }
                 });
             },
@@ -122,9 +122,9 @@
              * 사용자 정보 추가항목 영역 기존 정보 목록 추가
              */
             addVcatnInfoItemList: function() {
-                <#if vcatn?? && (post.vcatnSchdulList)?has_content>
+                <#if vcatn?? && (post.schdulList)?has_content>
                 let reqstItemIdx, tableTmpl, str, vcatnCdSelectDiv;
-                <#list post.vcatnSchdulList![] as item>
+                <#list post.schdulList![] as item>
                 reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=vcatnItemId", "vcatnItemId");		// elmt, selector, elmtId
                 tableTmpl = "<div class='row shadow-sm' id='itemContainer" + reqstItemIdx + "'>" + $("#vcatn_reg_item_template").html() + "</div>";
                 str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
@@ -141,13 +141,13 @@
                 if ('${item.vcatnCd}' == "AM_HALF" || '${item.vcatnCd}' == "PM_HALF") {
                     Page.fnDelEndDt(reqstItemIdx);
                 }
-                commons.datepicker.singleDatePicker("#beginDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.beginDt)}", function() {
+                commons.datepicker.singleDatePicker("#bgnDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.bgnDt)}", function() {
                     Page.fnDelEndDt(reqstItemIdx);
-                    Page.fnNoBefore("#beginDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                    Page.fnNoBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
                 });
                 commons.datepicker.singleDatePicker("#endDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.endDt)}", function() {
                     if ($("#endDt"+reqstItemIdx).val() !== "") {
-                        Page.fnNoBefore("#beginDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                        Page.fnNoBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
                     }
                 });
                 </#list>
