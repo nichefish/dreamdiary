@@ -24,7 +24,6 @@ public final class ActiveProfile {
      * 프로필 Enum
      */
     @RequiredArgsConstructor
-    @Getter
     public enum Profile {
         LOCAL("local", "로컬 환경"),
         DEV("dev", "개발 환경"),

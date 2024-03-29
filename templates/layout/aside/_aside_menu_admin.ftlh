@@ -16,6 +16,12 @@
         <!-- USER -->
         <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.USER />
 
+        <!-- VCATN -->
+        <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.VCATN_ADMIN />
+
+        <!-- EXPTR -->
+        <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.EXPTR_ADMIN />
+
         <!-- SITE -->
         <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.ADMIN />
 
