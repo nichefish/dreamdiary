@@ -30,7 +30,7 @@
         </div>
         <div class="col-xl-2 col-2 col-form-label"></div>
         <div class="col-xl-5 col-5">
-            <span id="beginDtSpan"></span>
+            <span id="bgnDtSpan"></span>
         </div>
     </div>
 </script>

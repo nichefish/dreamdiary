@@ -24,13 +24,13 @@ CREATE TABLE IF NOT EXISTS cmm_cl_cd  (
     cl_cd_dc VARCHAR(400) COMMENT '분류코드 설명',
     -- MANAGE
     sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
-    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부',
+    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
     -- AUDIT
     regstr_id VARCHAR(20) COMMENT '등록자 ID',
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '분류 코드';
 
 -- 상세 코드 (cmm_dtl_cd)
@@ -42,13 +42,13 @@ CREATE TABLE IF NOT EXISTS cmm_dtl_cd (
     dtl_cd_dc VARCHAR(400) COMMENT '상세코드 설명',
     -- MANAGE
     sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
-    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부',
+    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
     -- AUDIT
     regstr_id VARCHAR(20) COMMENT '등록자 ID',
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     PRIMARY KEY (cl_cd, dtl_cd)
 ) COMMENT = '상세 코드';
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS cmm_dtl_cd (
 -- 로그인 정책
 -- @extends: BaseAuditEntity
 CREATE TABLE IF NOT EXISTS lgn_policy (
-    lgn_policy_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '로그인 정책 번호',
+    lgn_policy_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '로그인 정책 번호 (PK)',
     lgn_try_lmt INT COMMENT '로그인 시도 제한 횟수',
     pw_chg_dy INT COMMENT '패스워드 변경 주기',
     lgn_lock_dy INT COMMENT '계정 잠금 주기',
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS lgn_policy (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '로그인 정책';
 
 -- -----------------------
@@ -76,15 +76,15 @@ CREATE TABLE IF NOT EXISTS lgn_policy (
 -- 첨부파일
 -- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS atch_file (
-    atch_file_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 번호',
+    atch_file_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 번호 (PK)',
     -- AUDIT
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '첨부파일';
 
 -- 첨부파일 상세
 -- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS atch_file_dtl (
-    atch_file_dtl_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 상세 번호',
+    atch_file_dtl_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '첨부파일 상세 번호 (PK)',
     atch_file_no INT COMMENT '첨부파일 번호',
     file_sn INT COMMENT '파일 순번',
     orgn_file_nm VARCHAR(200) COMMENT '원본파일명',
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS atch_file_dtl (
     file_size INT COMMENT '파일 크기(BYTE)',
     url VARCHAR(500) COMMENT '파일 URL',
     -- AUDIT
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     FOREIGN KEY(atch_file_no) REFERENCES atch_file (atch_file_no)
 ) COMMENT = '첨부파일 상세';
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS atch_file_dtl (
 
 -- 활동 로그
 CREATE TABLE IF NOT EXISTS log_actvty (
-    log_actvty_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '활동 로그 번호',
+    log_actvty_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '활동 로그 번호 (PK)',
     log_dt DATETIME COMMENT '로그 기록 일시',
     log_user_id VARCHAR(20) COMMENT '로그 사용자 ID',
     actvty_ctgr_cd VARCHAR(50) COMMENT '활동 카테고리 코드',
@@ -121,16 +121,16 @@ CREATE TABLE IF NOT EXISTS log_actvty (
 
 -- 활동 로그 URL명
 CREATE TABLE IF NOT EXISTS log_actvty_url_nm (
-    log_actvty_url_nm_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '활동 로그 URL명 번호',
+    log_actvty_url_nm_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '활동 로그 URL명 번호 (PK)',
     url VARCHAR(200) UNIQUE COMMENT 'URL',
     url_nm VARCHAR(200) COMMENT 'URL 이름',
     -- AUDIT
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '활동 로그 URL명';
 
 -- 시스템 로그
 CREATE TABLE IF NOT EXISTS log_sys (
-    log_sys_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '시스템 로그 번호',
+    log_sys_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '시스템 로그 번호 (PK)',
     log_dt DATETIME COMMENT '로그 날짜 및 시간',
     log_user_id VARCHAR(20) COMMENT '로그 기록 사용자 ID',
     --
