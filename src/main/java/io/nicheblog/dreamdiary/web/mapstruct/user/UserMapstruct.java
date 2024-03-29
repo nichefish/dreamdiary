@@ -67,8 +67,8 @@ public interface UserMapstruct
      */
     @Override
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
-    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpInfo(dto))")
-    @Mapping(target = "acntStus", expression = "java(new UserStusInfo(dto))")
+    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpEmbed(dto))")
+    @Mapping(target = "acntStus", expression = "java(new UserStusEmbed(dto))")
     UserEntity toEntity(final UserDto dto) throws Exception;
 
     /**

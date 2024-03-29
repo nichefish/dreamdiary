@@ -33,6 +33,11 @@ import java.util.Date;
 public class ExptrPrsnlItemEntity
         extends BaseCrudEntity {
 
+    @PostLoad
+    private void onLoad() {
+        if (this.exptrTyCdInfo != null) this.exptrTyNm = this.exptrTyCdInfo.getDtlCdNm();
+    }
+
     /** 경비지출서(개인경비 취합) 개별내용 번호 */
     @Id
     @Column(name = "exptr_prsnl_item_no")
@@ -72,6 +77,10 @@ public class ExptrPrsnlItemEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("지출구분코드 정보")
     private DtlCdEntity exptrTyCdInfo;
+
+    /** 지출구분명 */
+    @Transient
+    private String exptrTyNm;
 
     /** 지출내용 */
     @Column(name = "exptr_cn")

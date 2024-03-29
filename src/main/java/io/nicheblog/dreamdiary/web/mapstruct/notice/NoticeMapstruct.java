@@ -28,8 +28,8 @@ public interface NoticeMapstruct
      * Entity -> Dto
      */
     @Override
-    // @Mapping(target = "ctgrNm", expression = "java((entity.getCtgrCdInfo() != null) ? entity.getCtgrCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "commentList", expression = "java(entity.getCommentDtoList())")
+    @Mapping(target = "commentList", expression = "java(entity.comment.getCommentDtoList())")       // 댓글 모듈
+    @Mapping(target = "commentCnt", expression = "java(entity.comment.getCommentCnt())")            // 댓글 모듈
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
     // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
     // @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
@@ -40,7 +40,6 @@ public interface NoticeMapstruct
      * Entity -> ListDto
      */
     @Override
-    // @Mapping(target = "ctgrNm", expression = "java((entity.getCtgrCdInfo() != null) ? entity.getCtgrCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
     // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     NoticeListDto toListDto(final NoticeEntity entity) throws Exception;

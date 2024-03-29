@@ -34,8 +34,8 @@ public interface BoardPostMapstruct
     @Mapping(target = "commentList", expression = "java(entity.comment.getCommentDtoList())")       // 댓글 모듈
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
     // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
-    @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
-    @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
+    // @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
+    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostDto toDto(final BoardPostEntity entity) throws Exception;
 
     /**
@@ -45,8 +45,8 @@ public interface BoardPostMapstruct
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
     // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
-    @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
-    @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
+    // @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
+    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostDto toDto(final BoardPostSmpEntity entity) throws Exception;
 
     /**
@@ -55,8 +55,8 @@ public interface BoardPostMapstruct
     @Override
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
-    @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
+    // @Mapping(target = "managtrNm", expression = "java((entity.getManagtrInfo() != null) ? entity.getManagtrInfo().getNickNm() : null)")
+    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostListDto toListDto(final BoardPostEntity entity) throws Exception;
 
     /**
