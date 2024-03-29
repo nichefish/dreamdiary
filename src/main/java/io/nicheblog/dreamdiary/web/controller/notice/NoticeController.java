@@ -234,7 +234,7 @@ public class NoticeController
             // try {
             //     List<BoardPostManagtrDto> managtrList = result.getManagtrList();
             //     if (!boardPostManagtrService.hasAlreadyManagt(managtrList)) {
-            //         BoardPostManagtrDto dto = boardPostManagtrService.regPostManagtr(result.getPostKey());
+            //         BoardPostManagtrDto dto = boardPostManagtrService.regPostManagtr(result.getClsfKey());
             //         result.addPostManagtr(dto);
             //     }
             // } catch (Exception e) {

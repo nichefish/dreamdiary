@@ -37,7 +37,7 @@
 
                 commons.validate.noSpaces(".no-space");        // 공백 자동 제거
 
-                // 중요여부 클릭시 글씨 변경
+                // 중요 여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                 // 상단고정여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("fxdYn", "고정//해제", "blue//gray");

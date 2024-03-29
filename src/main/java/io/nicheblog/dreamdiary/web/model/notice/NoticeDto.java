@@ -25,57 +25,25 @@ import org.apache.commons.lang3.StringUtils;
 public class NoticeDto
         extends BasePostDto {
 
-    /** 필수: 게시물 코드 */
+    /** 필수: 컨텐츠 타입 */
     private static final String CONTENT_TYPE = ContentType.NOTICE.key;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
 
-    /**
-     * 게시판 코드
-     */
+    /** 컨텐츠 타입 */
     @Builder.Default
     protected String contentType = CONTENT_TYPE;
 
     /* ----- */
 
-    /**
-     * 글분류 코드
-     */
-    private String ctgrCd;
-    /**
-     * 글분류 코드 이름
-     */
-    private String ctgrNm;
-    /**
-     * 상단고정여부
-     */
-    @Builder.Default
-    private String fxdYn = "N";
-    /**
-     * 로그인 페이지 노출여부
-     */
+    /** 팝업공지 여부 */
     @Builder.Default
     private String popupYn = "N";
 
-    /**
-     * 수정권한
-     */
-    @Builder.Default
-    private String mdfable = Constant.MDFABLE_REGSTR;
-
-    /**
-     * 파일시스템 참조 목록
-     */
+    /** 파일시스템 참조 목록 */
     // private List<FlsysRefDto> flsysRefList;
 
     /* ----- */
-
-    /**
-     * 게시판 코드 Getter (override)
-     */
-    public String getBoardCd() {
-        return "notice";
-    }
 
     /**
      * 내부 값들 합쳐서 풀 타이틀 반환

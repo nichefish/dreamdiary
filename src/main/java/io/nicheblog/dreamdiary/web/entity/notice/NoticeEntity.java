@@ -34,66 +34,40 @@ import java.util.Date;
 public class NoticeEntity
         extends BasePostEntity {
 
-    /** 필수: 게시물 코드 */
+    /** 필수: 컨텐츠 타입 */
     private static final String CONTENT_TYPE = ContentType.NOTICE.key;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
 
-    /**
-     * 글 번호
-     */
+    /** 글 번호 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_no")
     @Comment("공지사항 번호")
     private Integer postNo;
 
-    /**
-     * 게시판 분류 코드
-     */
+    /** 컨텐츠 타입 */
     @Builder.Default
     @Column(name = "content_type")
     private String contentType = CONTENT_TYPE;
 
-    /**
-     * 팝업 노출여부
-     */
+    /** 팝업 노출여부 */
     @Builder.Default
     @Column(name = "popup_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("팝업 노출여부")
     private String popupYn = "N";
 
-    /**
-     * 조치자(작업자)ID
-     */
+    /** 조치자(작업자)ID */
     @Column(name = "managtr_id", length = 20)
     private String managtrId;
 
-    /**
-     * 조치(작업)일시
-     */
+    /** 조치(작업)일시 */
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
     @Column(name = "managt_dt")
     private Date managtDt;
 
-    /**
-     * 게시물 태그 목록
-     */
-    // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    // @JoinColumnsOrFormulas({
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "post_no", referencedColumnName = "post_no")),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type"))
-    // })
-    // @Fetch(FetchMode.SELECT)
-    // @OrderBy("boardTag ASC")
-    // @NotFound(action = NotFoundAction.IGNORE)
-    // @Comment("게시물 태그 목록")
-    // private List<BoardPostTagEntity> tagList;
-
-    /**
-     * 파일시스템 참조 목록
-     */
+    /** 파일시스템 참조 목록 */
     // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     // @JoinColumnsOrFormulas({
     //         @JoinColumnOrFormula(column = @JoinColumn(name = "post_no", referencedColumnName = "post_no")),

@@ -23,28 +23,15 @@ import lombok.experimental.SuperBuilder;
 public class BoardDefDto
         extends BaseManageDto {
 
-    /**
-     * 목록 순번
-     */
-    private Long rnum;
-
-    /**
-     * 게시판 코드
-     */
+    /** 게시판 코드 */
     private String boardCd;
 
-    /**
-     * 게시판 이름
-     */
+    /** 게시판 이름 */
     private String boardNm;
 
-    /**
-     * 메뉴번호
-     */
+    /** 메뉴번호 */
     private String menuNo;
 
-    /**
-     * 글분류 분류 코드
-     */
+    /** 글분류 분류 코드 */
     private String ctgrClCd;
 }

@@ -24,52 +24,33 @@ import lombok.experimental.SuperBuilder;
 public class CommentDto
         extends BaseClsfDto {
 
-    /** 필수: 게시물 코드 */
-    private static final String CONTENT_TYPE = ContentType.COMMENT.key;
+    /** 필수: 컨텐츠 타입 */
+    protected static final String CONTENT_TYPE = ContentType.COMMENT.key;
     /** 필수(Override): 글분류 코드 */
-    private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
+    protected static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
 
-    /**
-     * 게시판 코드
-     */
+    /** 컨텐츠 타입 */
     @Builder.Default
     protected String contentType = CONTENT_TYPE;
 
-    /**
-     * 목록 순번
-     */
-    private Long rnum;
+    /** 원글 번호 */
+    protected Integer refPostNo;
+    /** 원글 컨텐츠 타입 */
+    protected String refContentType;
 
-    /**
-     * 댓글 ID
-     */
-    private Integer postNo;
-    /**
-     * 참조 글 번호
-     */
-    private Integer refPostNo;
-    /**
-     * 참조 게시판 코드
-     */
-    private String refContentType;
-
-    /**
-     * 내용
-     */
+    /** 내용 */
     protected String cn;
 
-    /**
-     * 성공여부
-     */
+    /** 성공여부 */
     @Builder.Default
-    Boolean isSuccess = false;
+    protected Boolean isSuccess = false;
 
     /* ---- */
 
     /**
      * 복합키 객체 반환
      */
-    public BaseClsfKey getPostKey() {
+    public BaseClsfKey getClsfKey() {
         return new BaseClsfKey(this.postNo, this.contentType);
     }
 }

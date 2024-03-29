@@ -35,31 +35,23 @@ import javax.persistence.Table;
 public class BoardDefEntity
         extends BaseManageEntity {
 
-    /**
-     * 게시판 코드 (PK)
-     */
+    /** 게시판 코드 (PK) */
     @Id
     @Column(name = "board_cd")
-    @Comment("게시판 코드 (key)")
+    @Comment("게시판 코드 (PK)")
     private String boardCd;
 
-    /**
-     * 게시판 이름
-     */
+    /** 게시판 이름 */
     @Column(name = "board_nm")
     @Comment("게시판 이름")
     private String boardNm;
 
-    /**
-     * 메뉴번호
-     */
+    /** 메뉴번호 */
     @Column(name = "menu_no")
     @Comment("메뉴번호")
     private String menuNo;
 
-    /**
-     * 글분류 분류 코드
-     */
+    /** 글분류 분류 코드 */
     @Column(name = "ctgr_cl_cd")
     @Comment("글분류 분류코드")
     private String ctgrClCd;

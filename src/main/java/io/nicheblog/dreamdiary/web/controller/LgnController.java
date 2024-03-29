@@ -106,10 +106,9 @@ public class LgnController
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
         } finally {
+            // 로그 관련 처리
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            // logActvtyService.logLgnFailReg(pwChgParam.getUserId(), resultMsg, isSuccess);
-            log.info("{} / isSuccess: {}, resultMsg: {}", request.getRequestURI(), isSuccess, resultMsg);
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);

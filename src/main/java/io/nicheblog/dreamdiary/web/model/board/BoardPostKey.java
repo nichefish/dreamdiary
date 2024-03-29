@@ -22,16 +22,12 @@ import java.io.Serializable;
 public class BoardPostKey
         implements Serializable {
 
-    /**
-     * 글번호
-     */
+    /** 글번호 */
     private Integer postNo;
-    /**
-     * 게시판 코드 (=컨텐츠 타입)
-     */
+    /** * 게시판 코드 (=컨텐츠 타입) */
     private String boardCd;
 
-    /** ----- */
+    /* ----- */
 
     /**
      * BoardPostKey -> BaseClsfKey 변환 

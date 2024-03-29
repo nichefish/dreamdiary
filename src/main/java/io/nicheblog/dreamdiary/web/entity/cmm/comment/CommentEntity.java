@@ -32,44 +32,34 @@ import javax.persistence.*;
 public class CommentEntity
         extends BaseClsfEntity {
 
-    /** 필수: 게시물 코드 */
+    /** 필수: 컨텐츠 타입 */
     private static final String CONTENT_TYPE = ContentType.COMMENT.key;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
 
-    /**
-     * 댓글 번호 (PK)
-     */
+    /** 댓글 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_no")
     @Comment("댓글 번호 (key)")
     private Integer postNo;
 
-    /**
-     * 게시판 분류 코드
-     */
+    /** 컨텐츠 타입 */
     @Builder.Default
     @Column(name = "content_type")
     private String contentType = CONTENT_TYPE;
 
-    /**
-     * 원글 번호
-     */
+    /** 원글 번호 */
     @Column(name = "ref_post_no")
     @Comment("원글 번호")
     private Integer refPostNo;
 
-    /**
-     * 원글 컨텐츠 타입
-     */
+    /** 원글 컨텐츠 타입 */
     @Column(name = "ref_content_type")
     @Comment("원글 컨텐츠 타입")
     private String refContentType;
 
-    /**
-     * 내용
-     */
+    /** 내용 */
     @Column(name = "cn")
     protected String cn;
 }
