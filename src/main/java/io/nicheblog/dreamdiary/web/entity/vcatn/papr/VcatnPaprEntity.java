@@ -4,8 +4,8 @@ import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
-import io.nicheblog.dreamdiary.web.mapstruct.vcatn.VcatnSchdulMapstruct;
-import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
+import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnSchdulMapstruct;
+import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnSchdulDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -64,10 +64,10 @@ public class VcatnPaprEntity
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumnOrFormula(column = @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no"))
     @Fetch(FetchMode.SELECT)
-    @OrderBy("beginDt ASC")
+    @OrderBy("bgnDt ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("휴가 일정 목록")
-    private List<VcatnSchdulEntity> vcatnSchdulList;
+    private List<VcatnSchdulEntity> schdulList;
 
     /** 확인 여부 */
     @Builder.Default
@@ -82,7 +82,7 @@ public class VcatnPaprEntity
      */
     public List<VcatnSchdulDto> getVcatnSchdulDtoList() throws Exception {
         List<VcatnSchdulDto> vcatnSchdulDtoList = new ArrayList<>();
-        for (VcatnSchdulEntity entity : this.vcatnSchdulList) {
+        for (VcatnSchdulEntity entity : this.schdulList) {
             VcatnSchdulDto dto = VcatnSchdulMapstruct.INSTANCE.toDto(entity);
             vcatnSchdulDtoList.add(dto);
         }
@@ -93,13 +93,13 @@ public class VcatnPaprEntity
      * 서브엔티티 List 처리를 위한 Setter (override)
      * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
      */
-    public void setVcatnSchdulList(final List<VcatnSchdulEntity> itemList) {
+    public void setSchdulList(final List<VcatnSchdulEntity> itemList) {
         if (CollectionUtils.isEmpty(itemList)) return;
-        if (this.vcatnSchdulList == null) {
-            this.vcatnSchdulList = itemList;
+        if (this.schdulList == null) {
+            this.schdulList = itemList;
         } else {
-            this.vcatnSchdulList.clear();
-            this.vcatnSchdulList.addAll(itemList);
+            this.schdulList.clear();
+            this.schdulList.addAll(itemList);
         }
     }
 
