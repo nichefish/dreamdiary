@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.web.service.user;
 import io.nicheblog.dreamdiary.global.auth.model.PwChgParam;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
@@ -29,8 +29,8 @@ public class UserMyService {
     @Resource(name = "userService")
     private UserService userService;
 
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
+    @Resource(name = "fileService")
+    private FileService fileService;
 
     @Resource(name = "userRepository")
     private UserRepository userRepository;
@@ -113,7 +113,7 @@ public class UserMyService {
      */
     public boolean uploadProflImg(final MultipartHttpServletRequest request) throws Exception {
         // 파일 영역 처리 후 업로드 정보 받아서 반환
-        AtchFileDtlDto atchfileDtl = cmmFileService.uploadDtlFile(request);
+        AtchFileDtlDto atchfileDtl = fileService.uploadDtlFile(request);
         // 프로필 url 업데이트
         String url = atchfileDtl.getUrl();
         String lgnUserId = AuthUtils.getLgnUserId();

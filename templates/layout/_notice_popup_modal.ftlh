@@ -36,7 +36,7 @@
                 }
                 const url = "${SiteUrl.NOTICE_DTL_AJAX!}";
                 let obj = NoticePopup.popupList[NoticePopup.popupIdx];
-                let ajaxData = { "postNo": obj.postNo, "boardCd": obj.boardCd };
+                let ajaxData = { "postNo": obj.postNo };
                 commons.util.blockUISyncAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -50,7 +50,7 @@
             hasNoticeCookie: function() {
                 let obj = NoticePopup.popupList[NoticePopup.popupIdx];
                 if (obj === undefined) return false;
-                let popupCookie = $.cookie("notice_popup__postno_" + obj.postNo + "_boardcd_" + obj.boardCd);
+                let popupCookie = $.cookie("notice_popup__postno_" + obj.postNo);
                 return (popupCookie !== undefined);
             },
             /** 팝업 닫기 버튼 */
@@ -68,8 +68,7 @@
                 let isChecked = $("#noticePopupCookieChk").prop("checked");
                 if (isChecked) {
                     let postNo = $("#noticePopupPostNo").val();
-                    let boardCd = $("#noticePopupBoardCd").val();
-                    let cookieNm = "notice_popup__postno_" + postNo + "_boardcd_" + boardCd;
+                    let cookieNm = "notice_popup__postno_" + postNo;
                     // 선택지에 따라 시간 별도 세팅
                     let selectedTime = $("#noticePopupCookieTime").val();
                     let cookieOptions = {};

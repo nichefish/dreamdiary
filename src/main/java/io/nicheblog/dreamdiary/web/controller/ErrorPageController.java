@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.controller;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.web.AcsPageNm;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import lombok.extern.log4j.Log4j2;
@@ -38,8 +39,8 @@ public class ErrorPageController
     ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.ERROR.setAcsPageInfo("ERROR"));
-
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.ERROR.setAcsPageInfo(AcsPageNm.ERROR));
+        ;
         // 에러 화면으로 리다이렉트 리다리렉트
         return "/view/error/error_not_found";
     }
@@ -55,7 +56,7 @@ public class ErrorPageController
     ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.ERROR.setAcsPageInfo("ERROR"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.ERROR.setAcsPageInfo(AcsPageNm.ERROR));
 
         // 에러 화면으로 리다이렉트 리다리렉트
         return "/view/error/error_access_denied";
@@ -72,7 +73,7 @@ public class ErrorPageController
     ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.ERROR.setAcsPageInfo("ERROR"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.ERROR.setAcsPageInfo(AcsPageNm.ERROR));
 
         // 에러 화면으로 리다이렉트 리다리렉트
         return "/view/error/error_page";

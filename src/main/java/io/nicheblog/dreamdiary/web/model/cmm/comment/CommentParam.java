@@ -21,6 +21,5 @@ import lombok.*;
 public class CommentParam
         extends BaseParam {
 
-    private String actvtyCtgr;
-
+    //
 }

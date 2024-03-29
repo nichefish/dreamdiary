@@ -37,7 +37,7 @@
 
 <form name="procForm" id="commentProcForm">
     <input type="hidden" name="refPostNo" id="refPostNo" value="" />
-    <input type="hidden" name="refContentType" value="${boardCd!}" />
+    <input type="hidden" name="refContentType" value="${contentType!}" />
     <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" />
 </form>
 <div class="modal fade" id="comment_list_modal" tabindex="-1" role="dialog" aria-labelledby="tagModalTitle" aria-hidden="true">

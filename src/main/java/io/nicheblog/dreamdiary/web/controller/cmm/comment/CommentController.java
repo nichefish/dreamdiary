@@ -122,8 +122,7 @@ public class CommentController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(commentDto.toString());
-            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(param.getActvtyCtgrCd()));
+            logParam.setResult(isSuccess, resultMsg, param.getActvtyCtgr());
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -158,7 +157,7 @@ public class CommentController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(param.getActvtyCtgrCd()));
+            logParam.setResult(isSuccess, resultMsg, param.getActvtyCtgr());
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

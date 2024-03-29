@@ -11,7 +11,6 @@
                 <!--begin::Head-->
                 <div class="d-flex align-items-center mb-4">
                     <input type="hidden" name="postNo" id="noticePopupPostNo" value="{{postNo}}">
-                    <input type="hidden" name="boardCd" id="noticePopupBoardCd" value="{{boardCd}}">
                     <!--begin::Title-->
                     <div class="col-12">
                         <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">

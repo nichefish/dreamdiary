@@ -1,10 +1,11 @@
 package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 /**
  * CommentDto
@@ -33,6 +34,8 @@ public class CommentDto
     @Builder.Default
     protected String contentType = CONTENT_TYPE;
 
+    /* ----- */
+
     /** 원글 번호 */
     protected Integer refPostNo;
     /** 원글 컨텐츠 타입 */
@@ -45,12 +48,14 @@ public class CommentDto
     @Builder.Default
     protected Boolean isSuccess = false;
 
-    /* ---- */
+    /* ----- 댓글 모듈 ----- */
 
-    /**
-     * 복합키 객체 반환
-     */
-    public BaseClsfKey getClsfKey() {
-        return new BaseClsfKey(this.postNo, this.contentType);
-    }
+    /** 댓글 목록 */
+    private List<CommentDto> commentList;
+    /** 댓글 갯수 */
+    @Builder.Default
+    private Integer commentCnt = 0;
+    /** 댓글 존재 여부 */
+    @Builder.Default
+    private Boolean hasComment = false;
 }
