@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -31,30 +30,23 @@ public class BasePostListDto
     /** 내용 */
     protected String cn;
 
-    /** 글분류 분류코드 */
+    /** 글분류 코드 */
     protected String ctgrClCd;
     /** 글분류 코드 */
     protected String ctgrCd;
     /** 글분류 코드 이름 */
     protected String ctgrNm;
+    /** 글분류 존재 여부 */
+    @Builder.Default
+    protected Boolean hasCtgrNm = false;
 
-    /** 상단고정여부 */
+    /** 중요 여부 */
+    @Builder.Default
+    protected String imprtcYn = "N";
+    /** 상단고정 여부 */
     @Builder.Default
     protected String fxdYn = "N";
     /** 조회수 */
     @Builder.Default
     protected Integer hitCnt = 0;
-    /** 중요 여부 */
-    @Builder.Default
-    protected String imprtcYn = "N";
-
-    /* ----- */
-
-    /**
-     * hasCtgrNm
-     */
-    public Boolean getHasCtgrNm() {
-        return StringUtils.isNotEmpty(this.ctgrNm);
-    }
-
 }
