@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.service.exptr.prsnl;
+package io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
@@ -91,7 +91,7 @@ public class ExptrPrsnlPaprService
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 기존(이전달, 이번달) 정보 존재여부 조회
      */
-    public Map<String, Object> exptrIndvdExistingChck() throws Exception {
+    public Map<String, Object> exptrPrsnlExistingChck() throws Exception {
         String userId = Objects.requireNonNull(AuthUtils.getAuthenticatedUser())
                                .getUserId();
         Map<String, Object> resultMap = new HashMap<>();
@@ -110,7 +110,7 @@ public class ExptrPrsnlPaprService
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 기존(이전달, 이번달) 정보 존재여부 조회
      */
-    public BasePostDto exptrIndvdYyMnthChck(
+    public BasePostDto exptrPrsnlYyMnthChck(
             final Integer yy,
             final Integer mnth
     ) throws Exception {

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.service.exptr.prsnl;
+package io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
@@ -44,7 +44,7 @@ public class ExptrPrsnlItemService {
     /**
      * 경비 관리 > 경비지출서 > 해당 지출내역에 대하여 영수증 원본 제출여부 업데이트
      */
-    public Boolean exptrIndvdStatsOrgnlRcipt(
+    public Boolean exptrPrsnlStatsOrgnlRcipt(
             final Integer key,
             final Integer exptrPrsnlItemNo,
             String orgnlRciptYn

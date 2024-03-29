@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.controller.exptr.prsnl;
+package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
@@ -17,7 +17,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprListDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprSearchParam;
-import io.nicheblog.dreamdiary.web.service.exptr.prsnl.ExptrPrsnlPaprService;
+import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -81,7 +81,7 @@ public class ExptrPrsnlPaprController
      */
     @GetMapping(SiteUrl.EXPTR_PRSNL_PAPR_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String exptrIndvdList(
+    public String exptrPrsnlList(
             final LogActvtyParam logParam,
             final @ModelAttribute("searchParam") ExptrPrsnlPaprSearchParam searchParam,
             final @RequestParam Map<String, Object> searchParamMap,
@@ -103,9 +103,9 @@ public class ExptrPrsnlPaprController
                             .and(Sort.by(Sort.Direction.ASC, "cfYn"));
                             //.and(Sort.by(Sort.Direction.DESC, "managt.managtDt"))
             PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, sort, model);
-            Page<ExptrPrsnlPaprListDto> exptrIndvdList = exptrPrsnlPaprService.getListDto(listParamMap, pageRequest);
-            if (exptrIndvdList != null) model.addAttribute("exptrIndvdList", exptrIndvdList.getContent());
-            model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrIndvdList));
+            Page<ExptrPrsnlPaprListDto> exptrPrsnlList = exptrPrsnlPaprService.getListDto(listParamMap, pageRequest);
+            if (exptrPrsnlList != null) model.addAttribute("exptrPrsnlList", exptrPrsnlList.getContent());
+            model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrPrsnlList));
             cdService.setModelCdData(Constant.YY_CD, model);
             cdService.setModelCdData(Constant.MNTH_CD, model);
             isSuccess = true;
@@ -135,7 +135,7 @@ public class ExptrPrsnlPaprController
     @PostMapping(value = SiteUrl.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> exptrIndvdExistingChckAjax(
+    public ResponseEntity<AjaxResponse> exptrPrsnlExistingChckAjax(
             final LogActvtyParam logParam
     ) {
 
@@ -144,8 +144,45 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Map<String, Object> resultMap = exptrPrsnlPaprService.exptrIndvdExistingChck();
+            Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
             ajaxResponse.setResultMap((HashMap<String, Object>) resultMap);
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 경비 관리 > 경비지출서 > 경비지출서 년도/월에 기존 작성중인 정보 있는지 조회
+     * 사용자USER, 관리자MNGR만 접근 가능
+     */
+    @PostMapping(value = SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> exptrPrsnlYyMnthChckAjax(
+            final LogActvtyParam logParam,
+            final @RequestParam("yy") String yyStr,
+            final @RequestParam("mnth") String mnthStr
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            Integer yy = Integer.parseInt(yyStr);
+            Integer mnth = Integer.parseInt(mnthStr);
+            BasePostDto resultObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -168,7 +205,7 @@ public class ExptrPrsnlPaprController
      */
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String exptrIndvdRegForm(
+    public String exptrPrsnlRegForm(
             final LogActvtyParam logParam,
             final @RequestParam("prevYn") @Nullable String prevYn,
             final ModelMap model
@@ -190,7 +227,7 @@ public class ExptrPrsnlPaprController
             model.addAttribute("currMnth", currYyMnth[1]);
             if (StringUtils.isNotEmpty(prevYn)) model.addAttribute("prevYn", prevYn);           // 등록화면에서 체크 후 이전달 등록화면으로 보낼 떄 플래그
             model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
-            cdService.setModelCdData(Constant.EXPTR_TY_CD, model);
+            cdService.setModelCdData(Constant.EXPTR_CD, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -206,52 +243,15 @@ public class ExptrPrsnlPaprController
     }
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 년도/월에 기존 작성중인 정보 있는지 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
-     */
-    @PostMapping(value = SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> exptrIndvdYyMnthChckAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("yy") String yyStr,
-            final @RequestParam("mnth") String mnthStr
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String resultMsg = "";
-        try {
-            Integer yy = Integer.parseInt(yyStr);
-            Integer mnth = Integer.parseInt(mnthStr);
-            BasePostDto resultObj = exptrPrsnlPaprService.exptrIndvdYyMnthChck(yy, mnth);
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
-
-    /**
      * 경비 관리 > 경비지출서 > 경비지출서 등록/수정 (Ajax)
      * 사용자USER, 관리자MNGR만 접근 가능
      */
     @PostMapping(value = {SiteUrl.EXPTR_PRSNL_PAPR_REG_AJAX, SiteUrl.EXPTR_PRSNL_PAPR_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> exptrIndvdRegAjax(
+    public ResponseEntity<AjaxResponse> exptrPrsnlRegAjax(
             final @Valid ExptrPrsnlPaprDto exptrPrsnlPaprDto,
-            final @RequestParam("postNo") Integer key,
+            final @RequestParam("postNo") @Nullable Integer key,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
             final BindingResult bindingResult
@@ -288,7 +288,7 @@ public class ExptrPrsnlPaprController
      */
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String exptrIndvdDtl(
+    public String exptrPrsnlDtl(
             final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
             final ModelMap model
@@ -338,7 +338,7 @@ public class ExptrPrsnlPaprController
      */
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_PDF_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String exptrIndvdPdfPop(
+    public String exptrPrsnlPdfPop(
             final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
             final ModelMap model
@@ -376,7 +376,7 @@ public class ExptrPrsnlPaprController
      */
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String exptrIndvdMdfForm(
+    public String exptrPrsnlMdfForm(
             final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
             final @RequestParam("mngrYn") @Nullable String mngrYn,
@@ -401,7 +401,7 @@ public class ExptrPrsnlPaprController
             model.addAttribute("currYy", currYyMnth[0]);
             model.addAttribute("prevMnth", prevYyMnth[1] + 1);
             model.addAttribute("currMnth", currYyMnth[1] + 1);
-            cdService.setModelCdData(Constant.EXPTR_TY_CD, model);
+            cdService.setModelCdData(Constant.EXPTR_CD, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -424,7 +424,7 @@ public class ExptrPrsnlPaprController
     @PostMapping(SiteUrl.EXPTR_PRSNL_PAPR_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> exptrIndvdDelAjax(
+    public ResponseEntity<AjaxResponse> exptrPrsnlDelAjax(
             final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key
     ) {
@@ -457,7 +457,7 @@ public class ExptrPrsnlPaprController
      */
     // @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
     // @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    // public void exptrIndvdStatsRciptPdfDownload(
+    // public void exptrPrsnlStatsRciptPdfDownload(
     //         final LogActvtyParam logParam,
     //         final @RequestParam("postNo") Integer key
     // ) throws Exception {

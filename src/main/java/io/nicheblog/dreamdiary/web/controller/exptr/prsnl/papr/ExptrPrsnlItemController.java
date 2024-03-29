@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.controller.exptr.prsnl;
+package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
@@ -11,8 +11,8 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
-import io.nicheblog.dreamdiary.web.service.exptr.prsnl.ExptrPrsnlItemService;
-import io.nicheblog.dreamdiary.web.service.exptr.prsnl.ExptrPrsnlPaprService;
+import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlItemService;
+import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -138,7 +138,7 @@ public class ExptrPrsnlItemController
     @PostMapping(SiteUrl.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> exptrIndvdStatsOrgnlRcipt(
+    public ResponseEntity<AjaxResponse> exptrPrsnlStatsOrgnlRcipt(
             final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
             final @RequestParam("exptrPrsnlItemNo") String exptrPrsnlItemNoStr,
@@ -151,7 +151,7 @@ public class ExptrPrsnlItemController
         String resultMsg = "";
         try {
             Integer exptrPrsnlItemNo = Integer.parseInt(exptrPrsnlItemNoStr);
-            isSuccess = exptrPrsnlItemService.exptrIndvdStatsOrgnlRcipt(key, exptrPrsnlItemNo, orgnlRciptYn);
+            isSuccess = exptrPrsnlItemService.exptrPrsnlStatsOrgnlRcipt(key, exptrPrsnlItemNo, orgnlRciptYn);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;

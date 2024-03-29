@@ -3,11 +3,11 @@
   -- @included in : exptr_indvd_papr_list_header
   -- @included in : exptr_indvd_papr_reg_form
   -->
-<div class="modal fade" id="exptr_indvd_rule_modal" tabindex="-1" role="dialog" aria-labelledby="exptrIndvdRuleModalTitle" aria-hidden="true">
+<div class="modal fade" id="exptr_indvd_rule_modal" tabindex="-1" role="dialog" aria-labelledby="exptrPrsnlRuleModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exptrIndvdRuleModalLongTitle">[경비지출서 작성 안내]</h5>
+                <h5 class="modal-title" id="exptrPrsnlRuleModalLongTitle">[경비지출서 작성 안내]</h5>
                 <!--begin::Close-->
                 <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times"></i>

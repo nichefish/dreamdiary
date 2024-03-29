@@ -33,7 +33,7 @@ public class ExptrPrsnlItemDto
     /** 지출일자 */
     private String exptrDt;
     /** 지출구분코드 */
-    private String exptrTyCd;
+    private String exptrCd;
     /** 지출구분코드명 */
     private String exptrTyNm;
     /** 지출내용 */
@@ -50,7 +50,7 @@ public class ExptrPrsnlItemDto
     @Builder.Default
     private String orgnlRciptYn = "N";
 
-    /** 반려여부 */
+    /** 반려 여부 */
     @Builder.Default
     private String rjectYn = "N";
     /** 반려사유 */

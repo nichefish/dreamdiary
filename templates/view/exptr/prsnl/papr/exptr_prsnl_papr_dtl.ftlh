@@ -10,11 +10,11 @@
     const Page = function() {
         return {
             init: function () {
-                Page.fnEmptyListToggle();        // 추가추가 개수 0개인지 체크
+                Page.emptyListToggle();        // 추가추가 개수 0개인지 체크
                 $("#totAmt").text(commons.util.getReqstItemTotSum("id^=exptrAmtSpan").toLocaleString());
             },
             /** 관리 페이지로 이동 */
-            fnStatsPage: function() {
+            statsPage: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_STATS_DTL!}");
             },
             /** 수정 화면 이동 */
@@ -33,13 +33,13 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) Page.fnList();
+                                if (res.result) Page.list();
                             });
                     });
                 });
             },
             /** 추가추가 개수 0개인지 체크 */
-            fnEmptyListToggle: function() {
+            emptyListToggle: function() {
                 if ($("#exptr_prsnl_item_reg_div tr").length == 0) {
                     $("#empty_list_div").show();
                 } else {
@@ -53,7 +53,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_PRSNL_STATS_ORGNL_RCIPT_AJAX!}";
+                    const url = "${SiteUrl.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX!}";
                     let ajaxData = { "postNo": '${post.postNo!}', "exptrPrsnlItemNo": exptrPrsnlItemNo, "orgnlRciptYn": orgnlRciptYn };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -82,7 +82,7 @@
                 });
             },
             /** 목록 화면 이동 */
-            fnList: function() {
+            list: function() {
                 const listUrl = "${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}?isBackToList=Y";
                 commons.util.blockUIReplace(listUrl);
             }
@@ -298,7 +298,7 @@
                             <span class="text-muted me-10">
                                 미취합<i class="bi bi-dash text-muted"></i>
                             </span>
-                            <button class="btn btn-sm btn-primary" onclick="Page.fnStatsPage();"
+                            <button class="btn btn-sm btn-primary" onclick="Page.statsPage();"
                                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="경비지출서 관리자 페이지로&#10;이동합니다.">
                                 관리 페이지로 이동
                             </button>
@@ -330,7 +330,7 @@
                     <i class="bi bi-trash"></i>삭제
                 </button>
             </#if>
-            <button type="button" class="btn btn-sm btn-light" onclick="Page.fnList();"
+            <button type="button" class="btn btn-sm btn-light" onclick="Page.list();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
                 <i class="bi bi-list"></i>목록
             </button>

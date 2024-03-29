@@ -21,12 +21,12 @@
 
                 Page.itemIdx = ${(post.itemList![])?size};
                 <#if isReg>
-                    Page.fnSetTitle();
+                    Page.setTitle();
                 <#elseif isMdf>
-                    Page.fnAddExptrPrsnlItemList();
-                    Page.fnEmptyItemListToggle();        // 추가추가 개수 0개인지 체크
+                    Page.addExptrPrsnlItemList();
+                    Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
                     commons.util.addComma(".num");
-                    Page.fnSetTotAmt();
+                    Page.setTotAmt();
 
                     // 수정일자변경여부 클릭시 글씨 변경
                     commons.util.chckboxLabel("managtDtUpdtYn", "변경//미변경", "blue//gray");
@@ -34,7 +34,7 @@
 
                 /** jquery :: validation */
                 $(function () {
-                    $("#exptrIndvdRegForm").validate({
+                    $("#exptrPrsnlRegForm").validate({
                         submitHandler: function () {
                             Swal.fire({
                                 text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
@@ -55,13 +55,13 @@
                 });
             },
             /** 제목 자동설정 */
-            fnSetTitle: function() {
+            setTitle: function() {
                 let yy = $("#yy").val();
                 let mnth = $("#mnth").val();
                 $("#title").val(yy + "년 " + mnth + "월 경비지출서");
             },
             /** 년도/월 등록 가능한지 검사 */
-            fnValidateYyMnth: function() {
+            validateYyMnth: function() {
                 const url = "${SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
                 let ajaxData = {"yy": $("#yy").val(), "mnth": $("#mnth").val()};
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
@@ -82,7 +82,7 @@
                 });
             },
             /** 추가추가 개수 0개인지 체크 */
-            fnEmptyItemListToggle: function() {
+            emptyItemListToggle: function() {
                 if ($("#exptr_prsnl_item_reg_div tr").length === 0) {
                     $("#empty_list_div").show();
                 } else {
@@ -92,7 +92,7 @@
             /**
              * 지출항목 등록 영역 새로 추가
              */
-            fnAddExptrPrsnlItem: function() {
+            addExptrPrsnlItem: function() {
                 let reqstItemIdx = Page.itemIdx++;
                 commons.util.handlebarsAppend({ "rnum": reqstItemIdx }, "exptr_prsnl_item_reg");
 
@@ -103,9 +103,9 @@
                     let yy = $("#yy").val();
                     let mnth = $("#mnth").val();
                     let exptrDt = $("#exptrDt"+reqstItemIdx);
-                    let mnthStartDay = commons.date.dateToStr(new Date(yy, mnth - 1, 1));
+                    let mnthBgnDay = commons.date.dateToStr(new Date(yy, mnth - 1, 1));
                     let mnthEndDay = commons.date.dateToStr(new Date(yy, mnth, 0));
-                    if (!commons.date.getDateWithinChk(exptrDt.val(), mnthStartDay, mnthEndDay)) {
+                    if (!commons.date.getDateWithinChk(exptrDt.val(), mnthBgnDay, mnthEndDay)) {
                         Swal.fire("날짜가 신청 범위를 벗어났습니다. (" + mnth + "월)");
                         exptrDt.val("");
                         return false;
@@ -118,12 +118,12 @@
                 });
                 commons.util.addComma(".num");
 
-                Page.fnEmptyItemListToggle();        // 추가추가 개수 0개인지 체크
+                Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
             },
             /**
              * 사용자 정보 추가항목 수정 영역 기존 정보 목록 추가
              */
-            fnAddExptrPrsnlItemList: function() {
+            addExptrPrsnlItemList: function() {
                 // TODO: API 응답 JSON으로 받아와서 handlebars로 그려버리기
                 const url = "${SiteUrl.EXPTR_PRSNL_ITEM_LIST_AJAX!}";
                 let ajaxData = $("#procForm").serializeArray();
@@ -161,7 +161,7 @@
                     // }(divTable, 0));
 
                     commons.validate.onlyNumAndComma(".num");
-                    Page.fnEmptyItemListToggle();        // 추가추가 개수 0개인지 체크
+                    Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
                 });
             },
             /** 영수증 이미지 삭제 */
@@ -179,8 +179,8 @@
                     $("#delYn" + idx).val("Y");
                     $("#itemContainer" + idx).hide();
                 }
-                Page.fnEmptyItemListToggle();        // 추가추가 개수 0개인지 체크
-                Page.fnSetTotAmt();
+                Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
+                Page.setTotAmt();
             },
             /** 등록/수정 처리(Ajax) */
             fn<#if isReg>Reg</#if><#if isMdf>Mdf</#if>Ajax: function() {
@@ -189,7 +189,7 @@
                     let index = $(item).attr("id").replace("exptrAmt", "");
                     $("input[name='itemList["+index+"].exptrAmt']").val($(item).val().replace(/,/gi, ""));
                 });
-                let ajaxData = new FormData($("#exptrIndvdRegForm")[0]);
+                let ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
                 const url = "<#if isReg>${SiteUrl.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf>${SiteUrl.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
@@ -198,23 +198,23 @@
                             if ($("#mngrYn").val() === "Y") {
                                 commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS!}")
                             } else
-                                Page.fnList();
+                                Page.list();
                         });
                 });
             },
             /**
              * 사용자 정보 추가항목 영역 합계 구하기
              */
-            fnSetTotAmt: function() {
+            setTotAmt: function() {
                 $("#totAmt").val(commons.util.getReqstItemTotSum("id^=exptrAmt").toLocaleString());
             },
             /** 목록 화면 이동 */
-            fnList: function() {
+            list: function() {
                 const listUrl = "${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}?isBackToList=Y";
                 commons.util.blockUIReplace(listUrl);
             },
             /** 이전 화면 이동 */
-            fnStats: function() {
+            stats: function() {
                 commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS!}");
             }
         }
@@ -242,7 +242,7 @@
         <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
     </form>
     <!--begin:Form-->
-    <form name="exptrIndvdRegForm" id="exptrIndvdRegForm" class="form">
+    <form name="exptrPrsnlRegForm" id="exptrPrsnlRegForm" class="form">
         <input type="hidden" name="postNo" value="${post.postNo!}">
         <input type="hidden" name="mngrYn" id="mngrYn" value="${mngrYn!}">
         <input type="hidden" name="title" id="title" value="${post.title!}">
@@ -254,7 +254,7 @@
             <div class="d-flex justify-content-left align-items-center">
                 <#if isReg>
                     <div class="position-relative min-w-125px me-md-2">
-                        <select name="yy" id="yy" class="form-select form-select-solid" onchange="Page.fnSetTitle(); Page.fnValidateYyMnth();">
+                        <select name="yy" id="yy" class="form-select form-select-solid" onchange="Page.setTitle(); Page.validateYyMnth();">
                             <#if (prevYy)! != (currYy)!>
                                 <option value="${((prevYy!0)?c)?string}"<#if isPrevMnthY> selected="selected"</#if>>
                                     ${((prevYy!0)?c)?string}년
@@ -266,7 +266,7 @@
                         </select>
                     </div>
                     <div class="position-relative me-md-2">
-                        <select name="mnth" id="mnth" class="form-select form-select-solid" onchange="Page.fnSetTitle(); Page.fnValidateYyMnth();">
+                        <select name="mnth" id="mnth" class="form-select form-select-solid" onchange="Page.setTitle(); Page.validateYyMnth();">
                             <option value="${((prevMnth!0)?c)?string}"<#if isPrevMnthY> selected="selected"</#if>>
                                 ${prevMnth!}월
                             </option>
@@ -295,7 +295,7 @@
             <div class="card-toolbar">
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.fnAddExptrPrsnlItem();"
+                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.addExptrPrsnlItem();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="지출내역 행을 추가합니다.">
                         <i class="fas fa-plus"></i>지출내역 추가
                     </button>
@@ -368,7 +368,7 @@
         <!-- 추가추가 -->
     </form>
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-primary mx-2" onclick="commons.util.submit('#exptrIndvdRegForm');"
+        <button type="button" class="btn btn-primary mx-2" onclick="commons.util.submit('#exptrPrsnlRegForm');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
             <i class="bi bi-pencil-square"></i>
             <span class="indicator-label">저장</span>
@@ -378,12 +378,12 @@
             </span>
         </button>
         <#if mngrYn! == "Y">
-            <button type="button" class="btn btn-light" onclick="Page.fnStats();"
+            <button type="button" class="btn btn-light" onclick="Page.stats();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.prev"/>">
                 <i class="bi bi-list"></i>뒤로가기
             </button>
         <#else>
-            <button type="button" class="btn btn-light" onclick="Page.fnList();"
+            <button type="button" class="btn btn-light" onclick="Page.list();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
                 <i class="bi bi-list"></i>취소
             </button>

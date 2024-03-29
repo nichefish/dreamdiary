@@ -132,7 +132,7 @@
         <!--end::Table head-->
         <!--begin::Table body-->
         <tbody>
-        <#list exptrIndvdList![] as post>
+        <#list exptrPrsnlList![] as post>
             <!-- 년도 또는 월이 넘어가면 구분 간격 표시 -->
             <#assign divideYy = listYy?? && (post.yy?number lt listYy)>
             <#assign divideMnth = listMnth?? && (post.mnth?number lt listMnth)>

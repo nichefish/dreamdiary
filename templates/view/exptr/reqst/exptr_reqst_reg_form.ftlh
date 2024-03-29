@@ -86,12 +86,12 @@
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) Page.fnList();
+                            if (res.result) Page.list();
                         });
                 });
             },
             /** 목록 화면 이동 */
-            fnList: function() {
+            list: function() {
                 const listUrl = "${SiteUrl.EXPTR_REQST_LIST!}<#if isMdf>?isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);
             }
@@ -266,7 +266,7 @@
                 <span class="indicator-progress">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
             </button>
-            <a href="javascript:void(0);" class="btn btn-light" onclick="Page.fnList();"
+            <a href="javascript:void(0);" class="btn btn-light" onclick="Page.list();"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
                 <span class="indicator-label">취소</span>
             </a>

@@ -2,7 +2,7 @@
   -- 경비 > 경비지출서 > 상세 팝업 (출력용)
   -- @included in : exptr_indvd_papr_dtl
   -->
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_no_aside.ftlh" as layout >
 <#import "/spring.ftl" as spring />
 
 <@layout.layout>
@@ -11,16 +11,16 @@
     const Page = function() {
         return {
             init: function () {
-                Page.fnEmptyListToggle();        // 추가추가 개수 0개인지 체크
+                Page.emptyListToggle();        // 추가추가 개수 0개인지 체크
                 $("#totAmt").text(commons.util.getReqstItemTotSum("id^=exptrAmtSpan").toLocaleString());
             },
             /** 인쇄 */
-            fnPrint: function() {
+            print: function() {
                 window.print();
                 window.close();
             },
             /** 추가추가 개수 0개인지 체크 */
-            fnEmptyListToggle: function() {
+            emptyListToggle: function() {
                 if ($("#exptr_prsnl_item_reg_div tr").length === 0) {
                     $("#empty_list_div").show();
                 } else {
@@ -75,7 +75,7 @@
                 <!--end::Author-->
                 <!--begin::Info-->
                 <div class="d-flex align-items-center py-1">
-                    <button type="button" class="btn btn-sm btn-primary px-4 me-2" onclick="Page.fnPrint();">
+                    <button type="button" class="btn btn-sm btn-primary px-4 me-2" onclick="Page.print();">
                         <i class="bi bi-printer"></i>출력
                     </button>
                 </div>

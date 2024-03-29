@@ -35,7 +35,7 @@ public class ExptrPrsnlItemEntity
 
     @PostLoad
     private void onLoad() {
-        if (this.exptrTyCdInfo != null) this.exptrTyNm = this.exptrTyCdInfo.getDtlCdNm();
+        if (this.exptrCdInfo != null) this.exptrTyNm = this.exptrCdInfo.getDtlCdNm();
     }
 
     /** 경비지출서(개인경비 취합) 개별내용 번호 */
@@ -55,7 +55,7 @@ public class ExptrPrsnlItemEntity
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("개인경비 취합 정보")
-    private ExptrPrsnlPaprEntity exptrIndvdInfo;
+    private ExptrPrsnlPaprEntity exptrPrsnlInfo;
 
     /** 지출일자 */
     @Column(name = "exptr_dt")
@@ -63,37 +63,37 @@ public class ExptrPrsnlItemEntity
     private Date exptrDt;
 
     /** 지출구분코드 */
-    @Column(name = "exptr_ty_cd", length = 20)
+    @Column(name = "exptr_cd", length = 20)
     @Comment("지출구분코드")
-    private String exptrTyCd;
+    private String exptrCd;
 
     /** 지출구분코드 정보 */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.EXPTR_TY_CD + "\'", referencedColumnName = "cl_cd")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "exptr_ty_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.EXPTR_CD + "\'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "exptr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("지출구분코드 정보")
-    private DtlCdEntity exptrTyCdInfo;
+    private DtlCdEntity exptrCdInfo;
 
     /** 지출구분명 */
     @Transient
     private String exptrTyNm;
-
-    /** 지출내용 */
-    @Column(name = "exptr_cn")
-    @Comment("지출내용")
-    private String exptrCn;
 
     /** 지출금액 */
     @Column(name = "exptr_amt")
     @Comment("지출금액")
     private Integer exptrAmt;
 
+    /** 지출내용 */
+    @Column(name = "cn")
+    @Comment("지출내용")
+    private String exptrCn;
+
     /** 비고 */
-    @Column(name = "exptr_rm")
+    @Column(name = "rm")
     @Comment("비고")
     private String exptrRm;
 
@@ -115,10 +115,10 @@ public class ExptrPrsnlItemEntity
     @Comment("영수증 실물제출 여부")
     private String orgnlRciptYn = "N";
 
-    /** 반려여부 */
+    /** 반려 여부 */
     @Builder.Default
     @Column(name = "rject_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
-    @Comment("반려여부")
+    @Comment("반려 여부")
     private String rjectYn = "N";
 
     /** 반려사유 */
