@@ -3,7 +3,7 @@
 #### ↓ BaseCrudEntity :: implements Serializable
     -> del_yn
 
- #### ↓ BaseAuditRegEntity :: extends BaseCrudEntity
+#### ↓ BaseAuditRegEntity :: extends BaseCrudEntity
     -> regstr_id reg_dt
 
 #### ↓ BaseAuditEntity :: extends BaseAuditRegEntity
@@ -16,11 +16,11 @@
     -> atch_file_no, atch_file_info
 
 #### ↓ BaseClsfEntity :: extends BaseAtchEntity
-    -> post_no, content_type (composite_key), title, cn
-    -> @comment_list, @tag_list
+    -> post_no, content_type (composite_key)
+    -> @tag_list
 
 #### ↓ BasePostEntity :: extends BaseClsfEntity
-    -> ctgr_cd, hit_cnt, fxd_yn, imprtc_yn
+    -> title, cn, ctgr_cd, imprtc_yn, fxd_yn, hit_cnt
 
 #### ↓ BaseEhncPostEntity :: extends BasePostEntity
     -> managtr_id, managt_dt
