@@ -3,7 +3,9 @@ package io.nicheblog.dreamdiary.global.intrfc.entity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.*;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 
@@ -25,6 +27,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class BasePostEntity
         extends BaseClsfEntity {
+
+    @PostLoad
+    private void onLoad() {
+        this.hasCtgrNm = this.getCtgrCdInfo() != null;
+        if (this.hasCtgrNm) this.ctgrNm = this.getCtgrCdInfo().getDtlCdNm();
+    }
 
     /**
      * 필수(Override): 글분류 코드
@@ -56,6 +64,16 @@ public class BasePostEntity
     @Comment("공지사항 글분류 코드 정보")
     protected DtlCdEntity ctgrCdInfo;
 
+    /** 글분류 코드 이름 */
+    @Transient
+    protected String ctgrNm;
+
+    /** 글분류 코드 존재여부 */
+    @Transient
+    protected Boolean hasCtgrNm;
+
+    /* ----- */
+
     /** 중요 여부 */
     @Builder.Default
     @Column(name = "imprtc_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
@@ -70,6 +88,6 @@ public class BasePostEntity
 
     /** 조회수 */
     @Builder.Default
-    @Column(name = "HIT_CNT")
+    @Column(name = "hit_cnt")
     protected Integer hitCnt = 0;
 }

@@ -48,7 +48,7 @@ public class BaseClsfEntity
     /**
      * 복합키 객체 반환
      */
-    protected BaseClsfKey getClsfKey() {
+    public BaseClsfKey getClsfKey() {
         return new BaseClsfKey(this.postNo, this.contentType);
     }
 }
