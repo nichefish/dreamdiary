@@ -13,7 +13,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * BasePostEntity
+ * BaseEnhcPostEntity
  * <pre>
  *  (공통/상속) 향상된 게시판 속성 Entity
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
@@ -77,7 +77,6 @@ public class BaseEnhcPostEntity
     // @OrderBy("regDt DESC")
     // @NotFound(action = NotFoundAction.IGNORE)
     // private List<BoardPostManagtrEntity> managtrList;
-
 
     /* ----- */
 

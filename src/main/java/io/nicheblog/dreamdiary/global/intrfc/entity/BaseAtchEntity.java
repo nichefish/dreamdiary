@@ -30,15 +30,11 @@ import javax.persistence.OneToOne;
 public class BaseAtchEntity
         extends BaseAuditEntity {
 
-    /**
-     * 첨부파일 ID
-     */
+    /** 첨부파일 번호 */
     @Column(name = "atch_file_no")
     protected String atchFileNo;
 
-    /**
-     * 첨부파일 정보
-     */
+    /** 첨부파일 정보 */
     @OneToOne
     @JoinColumn(name = "atch_file_no", referencedColumnName = "atch_file_no", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)

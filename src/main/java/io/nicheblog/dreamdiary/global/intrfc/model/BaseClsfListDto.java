@@ -32,6 +32,11 @@ public class BaseClsfListDto
     /** 컨텐츠 타입 */
     protected String boardCd;
 
+    /** 제목 */
+    protected String title;
+    /** 내용 */
+    protected String cn;
+
     /** 댓글 목록 */
     protected List<CommentDto> commentList;
     /** 댓글 갯수 */

@@ -31,25 +31,15 @@ import java.util.List;
 public class BaseAtchDto
         extends BaseAuditDto {
 
-    /**
-     * 첨부파일 ID
-     */
+    /** 첨부파일 번호 */
     protected Integer atchFileNo;
-    /**
-     * 첨부파일 정보 (1:N)
-     */
+    /** 첨부파일 정보 (1:N) */
     protected AtchFileDto atchFileInfo;
-    /**
-     * 첨부파일 목록
-     */
+    /** 첨부파일 목록 */
     protected List<AtchFileDtlDto> atchFileList;
-    /**
-     * 첨부파일 .zip 다운로드 URL
-     */
+    /** 첨부파일 .zip 다운로드 URL */
     protected String atchFileZipUrl;
-    /**
-     * 첨부파일 .zip 파일명
-     */
+    /** 첨부파일 .zip 파일명 */
     @JsonIgnore
     protected String atchFileZipNm;
 

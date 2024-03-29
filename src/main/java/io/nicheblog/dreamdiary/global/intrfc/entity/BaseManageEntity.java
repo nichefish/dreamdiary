@@ -28,15 +28,11 @@ import javax.persistence.MappedSuperclass;
 public class BaseManageEntity
         extends BaseAuditEntity {
 
-    /**
-     * 정렬 순서
-     */
+    /** 정렬 순서 */
     @Column(name = "sort_ordr", columnDefinition = "INT DEFAULT 0")
     protected Integer sortOrdr;
 
-    /**
-     * 사용 여부
-     */
+    /** 사용 여부 */
     @Builder.Default
     @Column(name = "use_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
     protected String useYn = "Y";

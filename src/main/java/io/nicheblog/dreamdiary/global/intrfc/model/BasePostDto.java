@@ -11,6 +11,7 @@ import javax.persistence.MappedSuperclass;
  * BasePostDto
  * <pre>
  *  (공통/상속) 게시판 Dto
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
@@ -25,11 +26,6 @@ import javax.persistence.MappedSuperclass;
 @ToString(callSuper = true)
 public class BasePostDto
         extends BaseClsfDto {
-
-    /** 제목 */
-    protected String title;
-    /** 내용 */
-    protected String cn;
 
     /** 글분류 코드 */
     protected String ctgrClCd;
@@ -47,9 +43,6 @@ public class BasePostDto
     /** 중요 여부 */
     @Builder.Default
     protected String imprtcYn = "N";
-    /** 수정권한 */
-    @Builder.Default
-    protected String mdfable = Constant.MDFABLE_REGSTR;
 
     /* ----- */
 

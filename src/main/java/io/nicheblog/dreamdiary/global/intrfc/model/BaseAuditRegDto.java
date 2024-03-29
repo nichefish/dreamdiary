@@ -26,22 +26,14 @@ import javax.persistence.MappedSuperclass;
 public class BaseAuditRegDto
         extends BaseCrudDto {
 
-    /**
-     * 등록자 ID
-     */
+    /** 등록자 ID */
     protected String regstrId;
-    /**
-     * 등록자 이름
-     */
+    /** 등록자 이름 */
     protected String regstrNm;
-    /**
-     * 등록일시
-     */
+    /** 등록일시 */
     protected String regDt;
 
-    /**
-     * 등록자 정보
-     */
+    /** 등록자 정보 */
     protected AuditorDto regstrInfo;
 
     /* ----- */

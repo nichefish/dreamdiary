@@ -25,14 +25,10 @@ import javax.persistence.MappedSuperclass;
 public class BaseManageDto
         extends BaseAuditDto {
 
-    /**
-     * 정렬 순서
-     */
+    /** 정렬 순서 */
     protected Integer sortOrdr;
 
-    /**
-     * 사용 여부
-     */
+    /** 사용 여부 */
     @Builder.Default
     protected String useYn = "Y";
 }

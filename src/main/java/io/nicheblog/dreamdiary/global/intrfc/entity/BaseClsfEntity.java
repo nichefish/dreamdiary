@@ -50,6 +50,14 @@ public class BaseClsfEntity
     @Transient
     protected String contentType;
 
+    /** 제목 */
+    @Column(name = "title")
+    protected String title;
+
+    /** 내용 */
+    @Column(name = "cn")
+    protected String cn;
+
     /** 댓글 목록 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({

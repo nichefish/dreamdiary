@@ -20,12 +20,8 @@ import java.io.Serializable;
 public class BaseClsfKey
         implements Serializable {
 
-    /**
-     * 글번호
-     */
+    /** 글번호 */
     protected Integer postNo;
-    /**
-     * 컨텐츠 타입
-     */
+    /** 컨텐츠 타입 */
     protected String contentType;
 }

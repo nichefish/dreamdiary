@@ -25,9 +25,7 @@ import java.io.Serializable;
 public class BaseCrudEntity
         implements Serializable {
 
-    /**
-     * 삭제 여부
-     */
+    /** 삭제 여부 */
     @Builder.Default
     @Column(name = "del_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     protected String delYn = "N";

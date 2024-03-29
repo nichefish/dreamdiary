@@ -33,16 +33,12 @@ import java.util.Date;
 public class BaseAuditRegEntity
         extends BaseCrudEntity {
 
-    /**
-     * 등록자 ID
-     */
+    /** 등록자 ID */
     @CreatedBy
     @Column(name = "regstr_id", length = 20, updatable = false)
     protected String regstrId;
 
-    /**
-     * 등록일시
-     */
+    /** 등록일시 */
     @CreatedDate
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,9 +46,7 @@ public class BaseAuditRegEntity
     @Column(name = "reg_dt", updatable = false)
     protected Date regDt;
 
-    /**
-     * 등록자 정보
-     */
+    /** 등록자 정보 */
     @ManyToOne
     @JoinColumn(name = "regstr_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)

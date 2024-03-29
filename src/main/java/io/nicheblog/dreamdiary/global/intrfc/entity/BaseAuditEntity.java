@@ -36,16 +36,12 @@ import java.util.Date;
 public class BaseAuditEntity
         extends BaseAuditRegEntity {
 
-    /**
-     * 수정자 ID
-     */
+    /** 수정자 ID */
     @LastModifiedBy
     @Column(name = "mdfusr_id", length = 20, insertable = false)
     protected String mdfusrId;
 
-    /**
-     * 수정일시
-     */
+    /** 수정일시 */
     @LastModifiedDate
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,9 +49,7 @@ public class BaseAuditEntity
     @Column(name = "mdf_dt", insertable = false)
     protected Date mdfDt;
 
-    /**
-     * 수정자 정보
-     */
+    /** 수정자 정보 */
     @ManyToOne
     @JoinColumn(name = "mdfusr_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
