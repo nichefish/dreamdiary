@@ -52,6 +52,11 @@ public class TmplatDefController
     private final String baseUrl = SiteUrl.TMPLAT_DEF_LIST;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.TMPLAT;        // 작업 카테고리 (로그 적재용)
 
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
+
     @Resource(name = "tmplatDefService")
     private TmplatDefService tmplatDefService;
 
