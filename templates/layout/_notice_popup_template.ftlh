@@ -47,7 +47,7 @@
                 <div class="separator separator-dashed border-gray-300 my-8"></div>
                 <!--begin::Question-->
                 <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-                    {{{postCn}}}
+                    {{{cn}}}
                 </div>
                 {{#atchFileInfo}}
                     <div class="d-flex flex-stack flex-wrap mb-3 bg-light">

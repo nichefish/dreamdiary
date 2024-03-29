@@ -32,64 +32,36 @@ import java.util.stream.Collectors;
 public class AuthInfo
         implements UserDetails {
 
-    /**
-     * 사용자 ID
-     */
+    /** 사용자 ID */
     private String userId;
-    /**
-     * 사용자 PW
-     */
+    /** 사용자 PW */
     private String password;
-    /**
-     * 권한 목록
-     */
+    /** 권한 목록 */
     private List<AuthRoleDto> authList;
 
-    /**
-     * 사용자 이름
-     */
+    /** * 사용자 이름 */
     private String nickNm;
-    /**
-     * 사용자 정보 ID
-     */
+    /** 사용자 정보 ID */
     private Integer userProflNo;
-    /**
-     * 프로필 이미지 URL
-     */
+    /** 프로필 이미지 URL */
     private String proflImgUrl;
 
-    /**
-     * 승인여부
-     */
+    /** 승인여부 */
     private String cfYn;
-    /**
-     * 잠금여부
-     */
+    /** 잠금여부 */
     private String lockedYn;
-    /**
-     * 접속 IP 사용 여부
-     */
+    /** 접속 IP 사용 여부 */
     private String useAcsIpYn;
-    /**
-     * 접속 IP 목록
-     */
+    /** 접속 IP 목록 */
     private List<String> acsIpList;
-    /**
-     * 최종접속일시
-     */
+    /** 최종접속일시 */
     private Date lstLgnDt;
-    /**
-     * 최종비밀번호변경일시
-     */
+    /** 최종비밀번호변경일시 */
     private Date pwChgDt;
-    /**
-     * 패스워드 리셋 필요여부
-     */
+    /** 패스워드 리셋 필요여부 */
     private String needsPwReset;
 
-    /**
-     * 사용자 정보 통으로 저장 (일단)
-     */
+    /** 사용자 정보 통으로 저장 (일단) */
     private UserProflDto userProfl;
 
     /* ----- */
@@ -105,14 +77,14 @@ public class AuthInfo
     }
 
     /**
-     * 사용자정보 존재여부 (내부사용자)
+     * 사용자 정보 존재여부 (내부사용자)
      */
     public Boolean getHasuserProfl() {
         return this.userProfl != null && this.userProflNo != null;
     }
 
     /**
-     * 사용자정보 존재여부 (내부사용자)
+     * 사용자 정보 존재여부 (내부사용자)
      */
     public Boolean getHasEcnyDt() {
         return this.userProfl != null && this.userProfl.getEcnyDt() != null;

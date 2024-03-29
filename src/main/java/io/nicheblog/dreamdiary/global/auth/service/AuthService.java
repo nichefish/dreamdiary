@@ -43,7 +43,7 @@ public class AuthService
     private HttpServletRequest request;
 
     /**
-     * userId로 계정 + 사용자정보 조회
+     * userId로 계정 + 사용자 정보 조회
      * 로그인 등 인증시 Spring Security에서 사용. Spring Security용 사용자 인터페이스(UserDetails) 반환
      */
     @SneakyThrows
@@ -53,7 +53,7 @@ public class AuthService
         if (rsWrapper.isEmpty()) throw new UsernameNotFoundException("사용자 정보를 찾을 수 없습니다.");
         UserEntity rsUser = rsWrapper.get();
 
-        // TODO: 사용자정보 존재여부 체크
+        // TODO: 사용자 정보 존재여부 체크
         // Integer userProflNo = rsUserEntity.getUserProflNo();
         // if (userProflNo != null) {
         //     UserProflEntity rsUserInfo = userProflRepository.findById(userProflNo).orElse(null);

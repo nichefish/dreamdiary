@@ -29,6 +29,7 @@ public interface LogMapstruct {
      * Param -> Entity
      */
     @Mapping(target = "rslt", source = "isSuccess")
+    @Mapping(target = "logUserId", source = "userId")
     LogActvtyEntity toEntity(final LogActvtyParam dto) throws Exception;
 
     @Mapping(target = "rslt", source = "isSuccess")

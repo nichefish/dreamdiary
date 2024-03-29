@@ -84,7 +84,22 @@ public class LogService {
      * 활동 로그 등록 (비로그인 상태)
      */
     @SneakyThrows
-    public void logLgnFailReg(
+    public void regLogAnonActvty(
+            final LogActvtyParam logParam
+    ) {
+
+        // 로컬 또는 개발 접속은 로그 남기지 않음
+        if (!activeProfile.isProd()) return;
+
+        // 막상 분리해놓고 보니 차이가 없네? 일단 분리 상태 유지하기
+        this.regLogActvty(logParam);
+    }
+
+    /**
+     * 활동 로그 등록 (비로그인 상태)
+     */
+    @SneakyThrows
+    public void regLogAnonActvty(
             final String userId,
             final String resultMsg,
             boolean isSuccess

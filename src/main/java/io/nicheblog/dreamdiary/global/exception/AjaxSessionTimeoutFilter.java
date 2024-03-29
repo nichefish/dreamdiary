@@ -1,7 +1,11 @@
 package io.nicheblog.dreamdiary.global.exception;
 
-import io.nicheblog.dreamdiary.global.cmm.log.service.LogService;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
+import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
@@ -24,10 +28,10 @@ import java.io.IOException;
 public class AjaxSessionTimeoutFilter
         implements Filter {
 
-    @Resource(name = "logService")
-    private LogService logActvtyService;
-
     public FilterConfig filterConfig;
+
+    @Resource
+    protected ApplicationEventPublisher publisher;
 
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
@@ -42,15 +46,20 @@ public class AjaxSessionTimeoutFilter
     ) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+
         if (isAjaxRequest(req)) {
             try {
                 chain.doFilter(req, res);
             } catch (AuthenticationException e) {
                 res.sendError(HttpServletResponse.SC_UNAUTHORIZED);     // 401
-                logActvtyService.logLgnFailReg("", "", false);        // 접근 실패 로그 저장
+                // 로그 관련 처리
+                LogActvtyParam logParam = new LogActvtyParam(false, MessageUtils.getExceptionMsg(e), ActvtyCtgr.DEFAULT);
+                publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
             } catch (AccessDeniedException e) {
                 res.sendError(HttpServletResponse.SC_FORBIDDEN);        // 403
-                logActvtyService.logLgnFailReg("", "", false);        // 접근 실패 로그 저장
+                // 로그 관련 처리
+                LogActvtyParam logParam = new LogActvtyParam(false, MessageUtils.getExceptionMsg(e), ActvtyCtgr.DEFAULT);
+                publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
             }
         } else {
             chain.doFilter(req, res);

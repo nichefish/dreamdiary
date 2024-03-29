@@ -17,6 +17,9 @@ import lombok.Getter;
 @Getter
 public enum ActvtyCtgr {
 
+    // DEFAULT
+    DEFAULT("DEFAULT"),
+
     // API
     API_JANDI("API_잔디"),
     API_KASI("API_특일"),
@@ -32,10 +35,22 @@ public enum ActvtyCtgr {
     DREAM("꿈 관리"),
     BOARD_POST("게시판"),
 
+    VCATN_PAPR("휴가계획서"),
+    VCATN_DY("휴가사용일자"),
+    VCATN_STATS("년도별 휴가관리"),
+
+    EXPTR_PRSNL_PAPR("경비지출서"),
+    EXPTR_PRSNL_RPT("월간지출내역"),
+    EXPTR_PRSNL_STATS("경비지출누적집계"),
+    EXPTR_REQST("물품구매/경조사비 신청"),
+    
+    PRJCT("프로젝트 관리"),
+
     TAG("태그"),
 
     USER("사용자 관리"),
     USER_MY("내 정보 관리"),
+    USER_REQST("신규계정 신청"),
 
     // MANAGE
     LGN_POLICY("로그인 정책 관리"),
@@ -52,12 +67,8 @@ public enum ActvtyCtgr {
     FLSYS("파일 시스템"),
 
     // DEPRECATED
-
-
-    CODEMIRROR("코드미러"),
     SCHDUL("일정 관리"),
-    NOTION("노션"),
-    EXPTR_INDVD_PAPR("경비지출서");
+    NOTION("노션");
 
     public final String desc;
 }

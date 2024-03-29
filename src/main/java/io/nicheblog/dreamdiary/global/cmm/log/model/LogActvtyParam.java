@@ -21,34 +21,23 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 public class LogActvtyParam {
 
-    /**
-     * 작업 카테고리
-     */
+    /** 작업 카테고리 */
     private ActvtyCtgr actvtyCtgr;
-    /**
-     * 액션 구분 코드
-     */
+    /** 액션 구분 코드 */
     private String actionTyCd;
-    /**
-     * 성공여부
-     */
+    /** 성공여부 */
     private Boolean isSuccess;
-    /**
-     * 결과 메세지
-     */
+    /** 결과 메세지 */
     private String resultMsg;
 
-    /**
-     * 내용
-     */
+    /** 사용자 ID */
+    private String userId;
+
+    /** 내용 */
     private String cn;
-    /**
-     * 익셉션 이름
-     */
+    /** 익셉션 이름 */
     private String exceptionNm;
-    /**
-     * 익셉션 메세지
-     */
+    /** 익셉션 메세지 */
     private String exceptionMsg;
 
     /* ----- */
@@ -75,6 +64,16 @@ public class LogActvtyParam {
     ) {
         this(isSuccess, resultMsg);
         this.actvtyCtgr = actvtyCtgr;
+    }
+
+    public LogActvtyParam(
+            final String userId,
+            final Boolean isSuccess,
+            final String resultMsg,
+            final ActvtyCtgr actvtyCtgr
+    ) {
+        this(isSuccess, resultMsg, actvtyCtgr);
+        this.userId = userId;
     }
 
     /**

@@ -5,13 +5,16 @@ import io.nicheblog.dreamdiary.global.auth.exception.AcntDormantException;
 import io.nicheblog.dreamdiary.global.auth.exception.AcntNeedsPwResetException;
 import io.nicheblog.dreamdiary.global.auth.exception.DupIdLgnException;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
-import io.nicheblog.dreamdiary.global.cmm.log.service.LogService;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
+import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -44,8 +47,8 @@ public class LgnFailureHandler
     @Resource(name = "lgnPolicyService")
     private LgnPolicyService lgnPolicyService;
 
-    @Resource(name = "logService")
-    private LogService logService;
+    @Resource
+    protected ApplicationEventPublisher publisher;
 
     /**
      * 로그인 실패시 상황별 분기 처리
@@ -64,8 +67,10 @@ public class LgnFailureHandler
         String errorMsg = this.getLgnFailureMsg(exception);
         // 존재하지 않는 계정 제외하고 로그인 실패 로그 저장
         if (!(exception instanceof InternalAuthenticationServiceException) && !(exception instanceof DupIdLgnException)) {
-            logService.logLgnFailReg(userId, errorMsg, false);        // 로그인 실패 로그 저장
+            LogActvtyParam logParam = new LogActvtyParam(userId, false, errorMsg, ActvtyCtgr.USER);
+            publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
         }
+        ;
         // 비밀번호 불일치
         if (exception instanceof BadCredentialsException) {
             LgnPolicyEntity rsLgnPolicyEntity = lgnPolicyService.getDtlEntity();

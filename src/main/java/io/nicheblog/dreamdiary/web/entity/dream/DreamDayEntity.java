@@ -45,25 +45,19 @@ public class DreamDayEntity
     private static final String CONTENT_TYPE = ContentType.DREAM_DAY.key;
     private static final String CTGR_CL_CD = "DREAM_DAY_CTGR_CD";
 
-    /**
-     * 꿈 일자 고유 번호 (PK)
-     */
+    /** 꿈 일자 고유 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_no")
     @Comment("꿈 일자 고유 번호")
     private Integer dreamDayNo;
 
-    /**
-     * 게시판 분류 코드
-     */
+    /** 컨텐츠 타입 */
     @Builder.Default
     @Column(name = "content_type")
     private String contentType = CONTENT_TYPE;
 
-    /**
-     * 꿈 일자
-     */
+    /** 꿈 일자 */
     @Column(name = "dreamt_dt")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
@@ -86,18 +80,14 @@ public class DreamDayEntity
     @Comment("월")
     private Integer mnth;
 
-    /**
-     * 대략일자 (날짜미상시 해당일자 이후에 표기)
-     */
+    /** 대략일자 (날짜미상시 해당일자 이후에 표기) */
     @Column(name = "aprxmt_dt")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Comment("대략일자 (날짜미상시 해당일자 이후에 표기)")
     private Date aprxmtDt;
 
-    /**
-     * 꿈 조각 목록
-     */
+    /** 꿈 조각 목록 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "dream_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
     @Fetch(FetchMode.SELECT)

@@ -20,14 +20,10 @@ import lombok.*;
 public class LogStatsSearchParam
         extends BaseSearchParam {
 
-    /**
-     * 글분류 코드
-     */
+    /** 글분류 코드 */
     private String ctgrCd;
-    /**
-     * 제목
-     */
-    private String postSj;
+    /** 제목 */
+    private String title;
 
 
 }

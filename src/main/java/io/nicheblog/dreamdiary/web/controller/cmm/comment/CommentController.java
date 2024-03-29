@@ -140,7 +140,7 @@ public class CommentController
     public ResponseEntity<AjaxResponse> commentDelAjax(
             final LogActvtyParam logParam,
             final CommentParam param,
-            final @RequestParam("postNo") Integer postNo
+            final @RequestParam("postNo") Integer key
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -148,7 +148,7 @@ public class CommentController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = commentService.delete(postNo);
+            isSuccess = commentService.delete(key);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -157,7 +157,7 @@ public class CommentController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + postNo);
+            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(param.getActvtyCtgrCd()));
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
