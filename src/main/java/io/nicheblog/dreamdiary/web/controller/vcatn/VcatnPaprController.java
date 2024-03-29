@@ -16,7 +16,7 @@ import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprParam;
 import io.nicheblog.dreamdiary.web.service.cmm.NotifyService;
-import io.nicheblog.dreamdiary.web.service.vcatn.VcatnPaprService;
+import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

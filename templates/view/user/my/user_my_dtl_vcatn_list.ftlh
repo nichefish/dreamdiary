@@ -19,7 +19,7 @@
                             <#list vcatnPaprList![] as vcatnList>
                                 <tr>
                                     <td class="text-start">
-                                        <#list vcatnList.vcatnSchdulList![] as schdul>
+                                        <#list vcatnList.schdulList![] as schdul>
                                             <span class="pe-4">
                                                 <span class="ctgr-span ctgr-gray">${schdul.vcatnNm!}</span>
                                                 ${schdul.bgnDt!}
