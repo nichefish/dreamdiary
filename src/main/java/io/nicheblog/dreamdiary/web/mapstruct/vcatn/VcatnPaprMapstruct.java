@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.web.mapstruct.vcatn;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.vcatn.VcatnPaprEntity;
+import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
 import org.apache.commons.lang3.StringUtils;

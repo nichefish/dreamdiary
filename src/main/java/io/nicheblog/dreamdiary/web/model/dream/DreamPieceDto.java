@@ -1,10 +1,12 @@
 package io.nicheblog.dreamdiary.web.model.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 
 /**
  * DreamPieceDto
@@ -51,4 +53,10 @@ public class DreamPieceDto
     /** 꿈꾼이(타인) 이름 */
     @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
+
+    /* ----- */
+
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentCmpstn comment;
 }

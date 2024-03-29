@@ -31,7 +31,7 @@ public interface NoticeMapstruct
     @Override
     @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
-    // @Mapping(target = "managtrList", expression = "java(entity.getManagtrDtoList())")
+    // @Mapping(target = "managtrList", expression = "java(entity.getDtoList())")
     // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     NoticeDto toDto(final NoticeEntity entity) throws Exception;
 

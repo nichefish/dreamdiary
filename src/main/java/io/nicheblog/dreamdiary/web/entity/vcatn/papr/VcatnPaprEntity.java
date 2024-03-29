@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.vcatn;
+package io.nicheblog.dreamdiary.web.entity.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;

@@ -1,9 +1,11 @@
 package io.nicheblog.dreamdiary.web.model.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Embedded;
 import java.util.List;
 
 /**
@@ -49,4 +51,10 @@ public class DreamDayDto
 
     /** 꿈 조각 목록 */
     private List<DreamPieceDto> dreamPieceList;
+
+    /* ----- */
+
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentCmpstn comment;
 }

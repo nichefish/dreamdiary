@@ -54,5 +54,4 @@ public class CommentDto
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentCmpstn comment;
-
 }

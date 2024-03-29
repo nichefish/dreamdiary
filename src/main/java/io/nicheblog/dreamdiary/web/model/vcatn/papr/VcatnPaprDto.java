@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.web.entity.vcatn.VcatnSchdulEntity;
+import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.VcatnSchdulDto;
 import lombok.*;

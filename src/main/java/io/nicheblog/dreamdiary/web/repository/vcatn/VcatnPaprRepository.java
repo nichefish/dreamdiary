@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.repository.vcatn;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
-import io.nicheblog.dreamdiary.web.entity.vcatn.VcatnPaprEntity;
+import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
