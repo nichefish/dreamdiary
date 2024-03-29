@@ -21,6 +21,12 @@
 
         <!-- BOARD -->
         <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.BOARD />
+
+        <!-- SCHDUL -->
+        <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.SCHDUL />
+
+        <!-- EXPTR -->
+        <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.EXPTR />
     </div>
     <!--end::Menu-->
 </div>

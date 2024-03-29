@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.global.cmm.log;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * ActvtyCtgr
@@ -14,7 +13,6 @@ import lombok.Getter;
  * @author nichefish
  */
 @AllArgsConstructor
-@Getter
 public enum ActvtyCtgr {
 
     // DEFAULT

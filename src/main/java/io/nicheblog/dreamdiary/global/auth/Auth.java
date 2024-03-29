@@ -1,13 +1,11 @@
 package io.nicheblog.dreamdiary.global.auth;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * 권한 Enum
  */
 @AllArgsConstructor
-@Getter
 public enum Auth {
 
     MNGR("MNGR", "관리자"),
