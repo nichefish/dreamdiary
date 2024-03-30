@@ -1,87 +1,89 @@
 package io.nicheblog.dreamdiary.web.entity.schdul;
 
-import io.nicheblog.dreamdiary.cmm.intrfc.entity.BaseCrudEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * SchdulEntity
- * 일정 Entity
- * (BaseAuditEntity 상속, Serializable 구현)
+ * <pre>
+ *  일정 Entity
+ * </pre>
  *
  * @author nichefish
+ * @extends BaseCrudEntity
  */
 @Entity
-@Table(name = "SCHDUL")
-@SuperBuilder
+@Table(name = "schdul")
 @Getter
 @Setter
-@AllArgsConstructor
+@SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE SCHDUL SET DEL_YN = 'Y' WHERE SCHDUL_NO = ?")
+@AllArgsConstructor
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE schdul SET del_yn = 'Y' WHERE schdul_no = ?")
 public class SchdulEntity
-        extends BaseCrudEntity
-        implements Serializable {
+        extends BaseClsfEntity {
 
-    /**
-     * 일정 번호
-     */
+    /** 필수: 컨텐츠 타입 */
+    private static final ContentType CONTENT_TYPE = ContentType.SCHDUL;
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CD";
+
+    /** 글 번호 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SCHDUL_NO")
-    @Comment("일정 번호")
-    private Integer schdulNo;
+    @Column(name = "post_no")
+    @Comment("공지사항 번호")
+    private Integer postNo;
 
-    /**
-     * 일정분류코드
-     */
-    @Column(name = "SCHDUL_TY_CD")
+    /** 컨텐츠 타입 */
+    @Builder.Default
+    @Column(name = "content_type")
+    private String contentType = CONTENT_TYPE.key;
+
+    /* ----- */
+
+    /** 일정 이름 */
+    @Column(name = "title")
+    @Comment("일정 이름")
+    private String title;
+
+    /** 내용 */
+    @Column(name = "cn")
+    @Comment("내용")
+    private String cn;
+
+    /** 일정 코드 */
+    @Column(name = "schdul_cd")
     @Comment("일정분류코드")
-    private String schdulTyCd;
+    private String schdulCd;
 
-    /**
-     * 일정분류명
-     */
-    @Column(name = "SCHDUL_NM")
-    @Comment("일정(분류)명")
-    private String schdulNm;
+    /** 시작일 */
+    @Column(name = "bgn_dt")
+    @Comment("시작일")
+    private Date bgnDt;
 
-    /**
-     * 일정 시작일
-     */
-    @Column(name = "BEGIN_DT")
-    @Comment("일정 시작일")
-    private Date beginDt;
-
-    /**
-     * 일정 종료일
-     */
-    @Column(name = "END_DT")
-    @Comment("일정 종료일")
+    /** 일정 종료일 */
+    @Column(name = "end_dt")
+    @Comment("종료일")
     private Date endDt;
 
-    /**
-     * 일정 사유
-     */
-    @Column(name = "SCHDUL_RESN")
-    @Comment("일정 사유")
-    private String schdulResn;
+    /** 일정 비고 */
+    @Column(name = "rm")
+    @Comment("비고")
+    private String rm;
 
-    /**
-     * 일정 비고
-     */
-    @Column(name = "SCHDUL_RM")
-    @Comment("일정 비고")
-    private String schdulRm;
+    /** 개인일정 여부 (Y/N) */
+    @Builder.Default
+    @Column(name = "prvt_yn")
+    @Comment("개인일정 여부 (Y/N)")
+    private String prvtYn = "N";
 }
