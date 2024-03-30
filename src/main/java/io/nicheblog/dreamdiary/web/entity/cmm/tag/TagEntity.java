@@ -54,7 +54,7 @@ public class TagEntity
     private String tagNm;
 
     /** 컨텐츠 태그 */
-    @OneToMany(mappedBy = "tagEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
     private List<ContentTagEntity> contentTagList;
 
     /** 태그 크기 (=컨텐츠 개수) */

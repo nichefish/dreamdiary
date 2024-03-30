@@ -1,10 +1,5 @@
 package io.nicheblog.dreamdiary.web;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 /**
  * WebSiteMenu
  * <pre>
@@ -91,6 +86,10 @@ public interface SiteUrl {
     String COMMENT_REG_AJAX = Prefix.COMMENT + "/commentRegAjax.do";
     String COMMENT_MDF_AJAX = Prefix.COMMENT + "/commentMdfAjax.do";
     String COMMENT_DEL_AJAX = Prefix.COMMENT + "/commentDelAjax.do";
+
+    /** 태그 */
+    String TAG_LIST_AJAX = Prefix.TAG + "/tagListAjax.do";
+    String TAG_DTL_AJAX = Prefix.TAG + "/tagDtlAjax.do";
 
     /** 로그인 정책 관리 */
     String LGN_POLICY_FORM = Prefix.LGN_POLICY + "/lgnPolicyForm.do";
@@ -307,6 +306,7 @@ public interface SiteUrl {
         String PRJCT = "/project";
 
         String COMMENT = "/comment";
+        String TAG = "/tag";
 
         String LGN_POLICY = "/lgnPolicy";
 
