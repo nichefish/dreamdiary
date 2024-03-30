@@ -69,7 +69,7 @@ public class VcatnPaprEntity
     @Comment("휴가 일정 목록")
     private List<VcatnSchdulEntity> schdulList;
 
-    /** 확인 여부 */
+    /** 확인 여부 (Y/N) */
     @Builder.Default
     @Column(name = "cf_yn")
     @Comment("휴가계획서 확인 여부")

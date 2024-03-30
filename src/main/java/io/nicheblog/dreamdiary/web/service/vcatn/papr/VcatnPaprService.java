@@ -78,7 +78,7 @@ public class VcatnPaprService
     @Override
     public void preRegist(final VcatnPaprDto vcatnPaprDto) {
         // 제목 자동 처리
-        vcatnPaprDto.setTitle(this.generateTitle(vcatnPaprDto));
+        vcatnPaprDto.setTitle(this.initTitle(vcatnPaprDto));
     }
 
     /**
@@ -87,13 +87,13 @@ public class VcatnPaprService
     @Override
     public void preModify(final VcatnPaprDto vcatnPaprDto) {
         // 제목 자동 처리
-        vcatnPaprDto.setTitle(this.generateTitle(vcatnPaprDto));
+        vcatnPaprDto.setTitle(this.initTitle(vcatnPaprDto));
     }
 
     /**
      * 제목 자동 처리 :: 메소드 분리
      */
-    public String generateTitle(final VcatnPaprDto vcatnPaprDto) {
+    public String initTitle(final VcatnPaprDto vcatnPaprDto) {
         List<VcatnSchdulDto> schdulList = vcatnPaprDto.getSchdulList();
         if (CollectionUtils.isEmpty(schdulList)) return "휴가계획서 (날짜없음)";
         return schdulList.stream()

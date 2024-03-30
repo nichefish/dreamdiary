@@ -32,7 +32,7 @@ import java.util.List;
 public class VcatnPaprDto
         extends BasePostDto {
 
-    /** 확인 여부 */
+    /** 확인 여부 (Y/N) */
     private String cfYn;
 
     /** 휴가 일정 리스트 */

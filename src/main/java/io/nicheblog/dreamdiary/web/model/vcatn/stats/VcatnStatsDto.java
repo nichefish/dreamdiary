@@ -35,7 +35,7 @@ public class VcatnStatsDto {
     /** 기본연차 */
     @Builder.Default
     private Integer bsYryc = 0;
-    /** 신입여부 */
+    /** 신입 여부 */
     @Builder.Default
     private Boolean isNewbie = false;
     /** 신입연차 */
