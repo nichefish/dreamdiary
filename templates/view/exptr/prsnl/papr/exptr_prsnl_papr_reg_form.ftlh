@@ -196,7 +196,7 @@
                         .then(function() {
                             if (!res.result) return;
                             if ($("#mngrYn").val() === "Y") {
-                                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS!}")
+                                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS_PAGE!}")
                             } else
                                 Page.list();
                         });
@@ -215,7 +215,7 @@
             },
             /** 이전 화면 이동 */
             stats: function() {
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS!}");
+                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS_PAGE!}");
             }
         }
     }();
