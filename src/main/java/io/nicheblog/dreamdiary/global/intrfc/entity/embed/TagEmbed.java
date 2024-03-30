@@ -31,16 +31,16 @@ public class TagEmbed {
 
     @PostLoad
     private void onLoad() {
-        this.tagListStr = this.generateTagListStr();
-        this.tagStrList = this.generateTagStrList();
+        this.tagListStr = this.initTagListStr();
+        this.tagStrList = this.initTagStrList();
     }
-    private String generateTagListStr() {
+    private String initTagListStr() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()
                 .map(contentTag -> contentTag.getTag().getTagNm())
                 .collect(Collectors.joining(","));
     }
-    private List<String> generateTagStrList() {
+    private List<String> initTagStrList() {
          if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()
                 .map(ContentTagEntity::getTag)

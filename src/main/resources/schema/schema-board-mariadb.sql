@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS comment (
     post_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '댓글 번호 (PK)',
     content_type VARCHAR(32) DEFAULT 'comment' COMMENT '게시판 코드',
     --
-    ref_post_no INT COMMENT '참초 글번호',
-    ref_content_type VARCHAR(30) COMMENT '참조 게시판 코드',
+    ref_post_no INT COMMENT '참초 글 번호',
+    ref_content_type VARCHAR(30) COMMENT '참조 컨텐츠 타입',
     cn LONGTEXT COMMENT '내용',
     -- ATCH_FILE
     atch_file_no INT COMMENT '첨부파일 번호',

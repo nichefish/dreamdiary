@@ -39,7 +39,7 @@ public class NoticeDto
 
     /* ----- */
 
-    /** 팝업공지 여부 */
+    /** 팝업공지 여부 (Y/N) */
     @Builder.Default
     private String popupYn = "N";
 

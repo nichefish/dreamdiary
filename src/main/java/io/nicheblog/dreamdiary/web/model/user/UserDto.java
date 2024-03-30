@@ -25,60 +25,36 @@ import java.util.List;
 public class UserDto
         extends BaseAtchDto {
 
-    /**
-     * 사용자 고유 ID (PK)
-     */
+    /** 사용자 고유 번호 (PK) */
     private Integer userNo;
-    /**
-     * 아이디
-     */
+    /** 아이디 */
     private String userId;
-    /**
-     * 비밀번호
-     */
+    /** 비밀번호 */
     private String password;
-    /**
-     * 표시이름
-     */
+    /** 표시이름 */
     private String nickNm;
-    /**
-     * 프로필 이미지 URL
-     */
+    /** 프로필 이미지 URL */
     private String proflImgUrl;
 
-    /**
-     * 잠금여부
-     */
+    /** 잠금여부 */
     @Builder.Default
     private String lockedYn = "N";
 
-    /**
-     * 접속 IP 사용 여부
-     */
+    /** 접속 IP 사용 여부 */
     @Builder.Default
     private String useAcsIpYn = "N";
-    /**
-     * 접속 IP 정보 (String)
-     */
+    /** 접속 IP 정보 (String) */
     private String acsIpListStr;
-    /**
-     * 접속 IP 목록
-     */
+    /** 접속 IP 목록 */
     private List<UserAcsIpDto> acsIpList;
 
-    /**
-     * 퇴사여부
-     */
+    /** 퇴사여부 */
     @Builder.Default
     private String retireYn = "N";
-    /**
-     * 퇴사일
-     */
+    /** 퇴사일 */
     private String retireDt;
 
-    /**
-     * 계정 설명 (관리자용)
-     */
+    /** 계정 설명 (관리자용) */
     private String userDc;
 
     /**
@@ -86,30 +62,16 @@ public class UserDto
      */
     @Builder.Default
     private String userProflYn = "N";
-    /**
-     * 사용자 정보 (위임)
-     */
+    /** 사용자 정보 (위임) */
     private UserProflDto userProfl;
 
-    /**
-     * 사용자 권한 정보
-     */
+    /** 사용자 권한 정보 */
     private List<UserAuthRoleDto> auth;
 
-    /**
-     * 본인신청여부
-     */
+    /** 본인신청여부 */
     private String reqstYn;
-    /**
-     * 승인여부
-     */
+    /** 승인여부 */
     private String cfYn;
-
-    /**
-     * 성공여부
-     */
-    @Builder.Default
-    public Boolean isSuccess = false;
     
     /* ----- */
 

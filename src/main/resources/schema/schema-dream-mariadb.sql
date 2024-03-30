@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS dream_day (
 CREATE TABLE IF NOT EXISTS dream_piece (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 조각 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'dream_day' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'dream_piece' COMMENT '컨텐츠 타입',
     --
     dream_day_no INT COMMENT '꿈 일자 번호',
     idx INT DEFAULT 1 COMMENT '꿈 조각 인덱스',

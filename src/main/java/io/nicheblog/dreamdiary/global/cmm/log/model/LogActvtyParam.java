@@ -25,7 +25,7 @@ public class LogActvtyParam {
     private ActvtyCtgr actvtyCtgr;
     /** 액션 구분 코드 */
     private String actionTyCd;
-    /** 성공여부 */
+    /** 성공 여부 */
     private Boolean isSuccess;
     /** 결과 메세지 */
     private String resultMsg;

@@ -52,7 +52,7 @@ public class NoticeEntity
 
     /* ----- */
 
-    /** 팝업 노출여부 */
+    /** 팝업 노출 여부 (Y/N) */
     @Builder.Default
     @Column(name = "popup_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("팝업 노출여부")
