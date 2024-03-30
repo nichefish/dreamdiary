@@ -87,7 +87,7 @@ public class WebSecurityConfig
     }
 
     /**
-     * 사이트 URL 경로에 대한 인증을 설정한다.
+     * 웹사이트 URL 경로에 대한 인증을 설정한다.
      */
     @Configuration
     public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
@@ -102,12 +102,12 @@ public class WebSecurityConfig
                     .antMatchers("/robots.txt")
                     // 에러 페이지
                     .antMatchers(SiteUrl.ERROR + "/**")
-                    //// 비밀번호 만료시 비밀번호 변경 화면
-                    .antMatchers(SiteUrl.AUTH_LGN_PW_CHG_AJAX);
-            //// 신규계정 신청 화면/기능 전체 접근 (+아이디 중복 체크)
-            //.antMatchers(SiteUrl.USER_REQST_REG_FORM)
-            //.antMatchers(SiteUrl.USER_REQST_REG_AJAX)
-            //.antMatchers(SiteUrl.USER_ID_DUP_CHCK_AJAX);
+                    // 비밀번호 만료시 비밀번호 변경 화면
+                    .antMatchers(SiteUrl.AUTH_LGN_PW_CHG_AJAX)
+                    // 신규계정 신청 화면/기능 전체 접근 (+아이디 중복 체크)
+                    .antMatchers(SiteUrl.USER_REQST_REG_FORM)
+                    .antMatchers(SiteUrl.USER_REQST_REG_AJAX)
+                    .antMatchers(SiteUrl.USER_ID_DUP_CHK_AJAX);
         }
 
         @Override
