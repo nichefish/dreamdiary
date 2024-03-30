@@ -3,7 +3,6 @@ package io.nicheblog.dreamdiary.web.mapstruct.cmm.tag;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
-import org.apache.commons.collections4.CollectionUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 

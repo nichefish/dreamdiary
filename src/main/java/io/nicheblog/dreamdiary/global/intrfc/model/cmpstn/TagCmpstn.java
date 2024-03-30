@@ -4,11 +4,15 @@ import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.springframework.util.CollectionUtils;
 
-import javax.persistence.Transient;
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * TagCmpstn
@@ -25,12 +29,25 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class TagCmpstn {
 
+    @PostConstruct
+    private void init() {
+        if (this.tagStrList == null) this.tagStrList = this.parseTagList();
+    }
+    /** Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜. */
+    private List<String> parseTagList() {
+        if (StringUtils.isEmpty(this.tagListStr)) return new ArrayList<>();
+        JSONArray jArray = new JSONArray(tagListStr);
+        return IntStream.range(0, jArray.length())
+                .mapToObj(jArray::getJSONObject)
+                .map(json -> json.getString("value"))
+                .collect(Collectors.toList());
+    }
+
     /** 컨텐츠 태그 목록 */
     private List<ContentTagDto> list;
 
     /** 컨텐츠 태그 문자열 목록 */
-    private List<String> tagStrlist;
-
+    private List<String> tagStrList;
     /** 컨텐츠 태그 문자열 (','로 구분) */
     private String tagListStr;
 

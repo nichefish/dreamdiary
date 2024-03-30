@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
@@ -11,7 +10,6 @@ import org.hibernate.annotations.*;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +32,7 @@ public class TagEmbed {
     @PostLoad
     private void onLoad() {
         this.tagListStr = this.generateTagListStr();
-        this.tagStrlist = this.generateTagStrList();
+        this.tagStrList = this.generateTagStrList();
     }
     private String generateTagListStr() {
         if (CollectionUtils.isEmpty(this.list)) return null;
@@ -64,7 +62,7 @@ public class TagEmbed {
 
     /** 컨텐츠 태그 문자열 목록 */
     @Transient
-    private List<String> tagStrlist;
+    private List<String> tagStrList;
 
     /** 컨텐츠 태그 문자열 (','로 구분) */
     @Transient
