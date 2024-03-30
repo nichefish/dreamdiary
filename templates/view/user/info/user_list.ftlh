@@ -26,12 +26,6 @@
                 $("#pageNo").val("");
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.USER_LIST!}?actionTyCd=SEARCH");
             },
-            fnCrdtUserList: function() {
-
-            },
-            fnCrdtUserList: function() {
-
-            },
             /** 등록 화면 이동 */
             regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.USER_REG_FORM!}");
@@ -42,7 +36,7 @@
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.USER_DTL!}");
             },
             /** 엑셀 다운로드 */
-            fnXlsxDownload: function() {
+            xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,

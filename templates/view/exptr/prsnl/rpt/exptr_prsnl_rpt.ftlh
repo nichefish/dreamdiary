@@ -12,7 +12,7 @@
             init: function () {
                 // 모든 table 헤더에 클릭 이벤트를 설정한다.
                 Page.sortMode = "FORWARD";
-                commons.util.fnSortTable();
+                commons.util.sortTable();
             },
             /** 조회 년도 변경 */
             statsYyMnth: function() {
@@ -21,7 +21,7 @@
                 commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_RPT_ITEMS}?statsYy="+statsYy+"&statsMnth="+statsMnth);
             },
             /** 엑셀 다운로드 */
-            fnXlsxDownload: function() {
+            xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -78,7 +78,7 @@
         <div class="card-toolbar">
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.fnXlsxDownload();"
+                <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.xlsxDownload();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
                     <i class="fas fa-download fs-7"></i>다운로드
                 </button>

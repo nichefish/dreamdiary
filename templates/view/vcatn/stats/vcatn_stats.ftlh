@@ -11,7 +11,7 @@
         return {
             init: function () {
                 <#list statsList![] as stats>
-                    Page.fnTotYryc("${stats?counter}");
+                    Page.totYryc("${stats?counter}");
                 </#list>
 
                 // 숫자와 점 제외하곤 입력불가
@@ -19,14 +19,14 @@
 
                 // 모든 table 헤더에 클릭 이벤트를 설정한다.
                 Page.sortMode = "FORWARD";
-                commons.util.fnSortTable();
+                commons.util.sortTable();
             },
             /** 조회년도 변경 */
-            fnChgYy: function(obj) {
+            chgYy: function(obj) {
                 commons.util.blockUIReplace("${SiteUrl.VCATN_STATS_YY!}?statsYy=" + $(obj).val());
             },
             /** 연자 숫자 계산 */
-            fnTotYryc: function(idx) {
+            totYryc: function(idx) {
                 // 근속년수에 따라 근속추가연차 계산
                 const cnwkYryc = Math.floor(commons.util.toNumber("#cnwkYy"+idx) / 2);
                 $("#cnwkYryc"+idx).val(cnwkYryc);
@@ -42,7 +42,7 @@
                 $("#remndrYryc"+idx+"Span").text(remndrYryc);
             },
             /** 정보 업데이트 (저장) */
-            fnUpdt: function() {
+            updt: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.mdf"/>,
                     showCancelButton: true,
@@ -59,7 +59,7 @@
                 });
             },
             /** 엑셀 다운로드 */
-            fnXlsxDownload: function() {
+            xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -86,7 +86,7 @@
             <div class="d-flex align-items-center">
                 <div class="position-relative w-md-100px me-md-2"
                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
-                    <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy" data-hide-search="true" onchange="Page.fnChgYy(this);">
+                    <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy" data-hide-search="true" onchange="Page.chgYy(this);">
                         <#list yyList![] as yy>
                             <option value="${yy.statsYy!}" <#if yy.statsYy == vcatnYy.statsYy>selected="selected"</#if>>${yy.statsYy!}</option>
                         </#list>
@@ -107,7 +107,7 @@
             <div class="card-toolbar">
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.fnXlsxDownload();"
+                    <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.xlsxDownload();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
                         <i class="fas fa-download fs-7"></i>다운로드
                     </button>
@@ -192,25 +192,25 @@
                             <input type="hidden" id="newbieYryc${stats?counter}" value="${stats.newbieYryc!0}" maxlength="3" readonly>
                         </td>
                         <td class="w-100px text-center">
-                            <input type="hidden" class="w-50px" name="statsList[${stats?counter}].cnwkYryc" id="cnwkYryc${stats?counter}" value="${stats.cnwkYryc!0}" maxlength="3" onchange="Page.fnTotYryc('${stats?counter}');">
+                            <input type="hidden" class="w-50px" name="statsList[${stats?counter}].cnwkYryc" id="cnwkYryc${stats?counter}" value="${stats.cnwkYryc!0}" maxlength="3" onchange="Page.totYryc('${stats?counter}');">
                             <span id="cnwkYryc${stats?counter}Span"></span>
                         </td>
                         <td class="w-100px text-center">
-                            <input type="text" class="w-50px num" name="statsList[${stats?counter}].prjctYryc" id="prjctYryc${stats?counter}" value="${stats.prjctYryc!0}" maxlength="3" onchange="Page.fnTotYryc('${stats?counter}');">
+                            <input type="text" class="w-50px num" name="statsList[${stats?counter}].prjctYryc" id="prjctYryc${stats?counter}" value="${stats.prjctYryc!0}" maxlength="3" onchange="Page.totYryc('${stats?counter}');">
                         </td>
                         <td class="w-100px text-center">
-                            <input type="text" class="w-50px num" name="statsList[${stats?counter}].refreshYryc" id="refreshYryc${stats?counter}" value="${stats.refreshYryc!0}" maxlength="3" onchange="Page.fnTotYryc('${stats?counter}');">
+                            <input type="text" class="w-50px num" name="statsList[${stats?counter}].refreshYryc" id="refreshYryc${stats?counter}" value="${stats.refreshYryc!0}" maxlength="3" onchange="Page.totYryc('${stats?counter}');">
                         </td>
                         <td class="text-center">
-                            <input type="hidden" class="w-50px" name="statsList[${stats?counter}].totYryc" id="totYryc${stats?counter}" value="${stats.totYryc!0}" onchange="Page.fnTotYryc('${stats?counter}');">
+                            <input type="hidden" class="w-50px" name="statsList[${stats?counter}].totYryc" id="totYryc${stats?counter}" value="${stats.totYryc!0}" onchange="Page.totYryc('${stats?counter}');">
                             <span id="totYryc${stats?counter}Span">${stats.totYryc!0}</span>
                         </td>
                         <td class="text-center">
-                            <input type="hidden" class="w-50px" name="statsList[${stats?counter}].exhsYryc" id="exhsYryc${stats?counter}" value="${stats.exhsYryc!0}" onchange="Page.fnTotYryc('${stats?counter}');">
+                            <input type="hidden" class="w-50px" name="statsList[${stats?counter}].exhsYryc" id="exhsYryc${stats?counter}" value="${stats.exhsYryc!0}" onchange="Page.totYryc('${stats?counter}');">
                             <span id="exhsYryc${stats?counter}Span">${stats.exhsYryc!0}</span>
                         </td>
                         <td class="text-center">
-                            <input type="hidden" class="w-50px" name="statsList[${stats?counter}].remndrYryc" id="remndrYryc${stats?counter}" value="${stats.remndrYryc!0}" onchange="Page.fnTotYryc('${stats?counter}');">
+                            <input type="hidden" class="w-50px" name="statsList[${stats?counter}].remndrYryc" id="remndrYryc${stats?counter}" value="${stats.remndrYryc!0}" onchange="Page.totYryc('${stats?counter}');">
                             <span id="remndrYryc${stats?counter}Span">${stats.remndrYryc!0}</span>
                         </td>
                     </tr>
@@ -220,7 +220,7 @@
     </form>
 
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-primary me-2" onclick="Page.fnUpdt();">
+        <button type="button" class="btn btn-primary me-2" onclick="Page.updt();">
             <i class="bi bi-pencil-square"></i>저장
         </button>
     </div>

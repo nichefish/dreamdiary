@@ -26,18 +26,18 @@
                 }
             },
             /** PDF 인쇄 화면 출력 */
-            fnPdfPop: function() {
+            pdfPop: function() {
                 const url = "${SiteUrl.EXPTR_PRSNL_PAPR_PDF_POP!}?postNo="+$("#postNo").val();
                 const popupNm = '경비지출서 팝업';
                 const options = 'width=1280,height=1440,top=0,left=270';
                 commons.util.popup(url, popupNm, options);
             },
             /** 수정 화면 이동 */
-            fnMdfForm: function() {
+            mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
             },
             /** 영수증 원본 제출 체크 */
-            fnOrgnlRciptAjax: function(exptrPrsnlItemNo, orgnlRciptYn) {
+            orgnlRciptAjax: function(exptrPrsnlItemNo, orgnlRciptYn) {
                 Swal.fire({
                     text: "영수증 원본 제출상태를 변경하시겠습니까?",
                     showCancelButton: true,
@@ -54,12 +54,12 @@
                 });
             },
             /** 지출항목 반려 팝업 호출 */
-            fnRjectModal: function(idx) {
+            rjectModal: function(idx) {
                 $("#modal_idx").val(idx);
                 $("#modal_rject_resn").modal("show");
             },
             /** 취합완료 처리 (Ajax) */
-            fnComptAjax: function() {
+            cfAjax: function() {
                 Swal.fire({
                     html: <@spring.message "view.cnfm.stacnt"/>,
                     showCancelButton: true,
@@ -76,7 +76,7 @@
                 });
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function() {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -108,7 +108,7 @@
                 });
             },
             /** 지출항목 반려 처리 (Ajax) */
-            fnRjectAjax: function(idx, rjectYn) {
+            rjectAjax: function(idx, rjectYn) {
                 $("#exptrPrsnlItemNo").val($("#exptrPrsnlItemNo"+idx).val());
                 $("#rjectYn").val(rjectYn);
                 if (rjectYn === "Y") $("#rjectResn").val($("#rjectResnShow").val());
@@ -169,7 +169,7 @@
                 <!--begin::Info-->
                 <div class="d-flex align-items-center py-1">
                     <button type="button" class="btn btn-sm btn-primary px-4 me-2"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="출력용 팝업을 호출합니다." onclick="Page.fnPdfPop();">
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="출력용 팝업을 호출합니다." onclick="Page.pdfPop();">
                         <i class="bi bi-printer"></i>출력
                     </button>
                     <a href="#answers" data-kt-scroll-toggle="true" class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">
@@ -246,7 +246,7 @@
                                     <input type="hidden" id="exptrPrsnlItemNo${exptr?index}" value="${exptr.exptrPrsnlItemNo!}">
                                     <input type="hidden" id="orgnlRciptYn${exptr?index}" value="${(exptr.orgnlRciptYn)!"N"}">
                                     <span id="orgnlRciptYn${exptr?index}Span" class="text-${exptr.orgnlRciptClass!"muted"} cursor-pointer"
-                                          onclick="Page.fnOrgnlRciptAjax('${exptr.exptrPrsnlItemNo}', '<#if (exptr.orgnlRciptYn!"N") == "N">Y<#else>N</#if>');"
+                                          onclick="Page.orgnlRciptAjax('${exptr.exptrPrsnlItemNo}', '<#if (exptr.orgnlRciptYn!"N") == "N">Y<#else>N</#if>');"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                           title="영수증 원본 제출여부를&#10;변경합니다.">
                                         <#if (exptr.orgnlRciptYn!"N") == "Y">
@@ -259,7 +259,7 @@
                                     </span>
                                     <#if (exptr.orgnlRciptYn!"N") == "N">
                                         <span class="badge badge-sm badge-light badge-active-primary badge-outlined opacity-50 fs-7 ms-2 cursor-pointer"
-                                              onclick="Page.fnOrgnlRciptAjax('${exptr.exptrPrsnlItemNo}', 'X');"
+                                              onclick="Page.orgnlRciptAjax('${exptr.exptrPrsnlItemNo}', 'X');"
                                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                               title="영수증 원본이 없는 경우&#10;체크합니다.&#10;(ex.전자거래)">
                                            <i class="bi bi-credit-card opacity-hover"></i>
@@ -270,7 +270,7 @@
                                 <td>
                                     <#if ((exptr.rjectYn!"N") == "N" && (post.cfYn!"N") != "Y")>
                                         <label class="badge badge-secondary cursor-pointer rject"
-                                               onclick="Page.fnRjectModal('${exptr?index}', 'Y');"
+                                               onclick="Page.rjectModal('${exptr?index}', 'Y');"
                                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 지출건에 대한 경비지급을 반려합니다.">
                                             반려하기
                                         </label>
@@ -282,7 +282,7 @@
                                     <td class="py-2"></td>
                                     <td colspan="6" class="py-2">반려사유: ${exptr.rjectResn!}</td>
                                     <td class="py-2">
-                                        <label class="badge badge-secondary cursor-pointer rject" onclick="fnRjectAjax('${exptr?index}', 'N');">반려취소</label>
+                                        <label class="badge badge-secondary cursor-pointer rject" onclick="rjectAjax('${exptr?index}', 'N');">반려취소</label>
                                     </td>
                                 </tr>
                             </#if>
@@ -321,16 +321,16 @@
 
         <div class="card-footer d-flex justify-content-end py-6 px-9">
             <#if (post.cfYn!"N") != "Y">
-                <button type="button" class="btn btn-sm btn-primary me-2" onclick="Page.fnComptAjax();"
+                <button type="button" class="btn btn-sm btn-primary me-2" onclick="Page.cfAjax();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="경비지출서를 취합 처리합니다.&#10;취합 처리 후에는&#10;관리자만 수정할 수 있습니다.">
                     취합처리
                 </button>
             </#if>
-            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>수정
             </button>
-            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2" onclick="Page.fnDelAjax();"
+            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2" onclick="Page.delAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                 <i class="bi bi-trash"></i>삭제
             </button>

@@ -11,10 +11,10 @@
         return {
             init: function () {
                 commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", null, function () {
-                    Page.fnNoBefore("#bgnDt", "#endDt");
+                    Page.noBefore("#bgnDt", "#endDt");
                 });
                 commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD", null, function () {
-                    if ($("#endDt").val() !== "") Page.fnNoBefore("#bgnDt", "#endDt");
+                    if ($("#endDt").val() !== "") Page.noBefore("#bgnDt", "#endDt");
                 });
 
                 /** jquery validation */
@@ -27,7 +27,7 @@
                                 showCancelButton: true,
                             }).then(function(result) {
                                 if (!result.value) return;
-                                Page.fnRegAjax();
+                                Page.regAjax();
                             });
                         },
                         errorPlacement: function(error, element) {
@@ -38,10 +38,10 @@
 
                 // 모든 table 헤더에 클릭 이벤트를 설정한다.
                 Page.sortMode = "FORWARD";
-                commons.util.fnSortTable();
+                commons.util.sortTable();
             },
             /** 조회년도 변경 */
-            fnChgYy: function(obj) {
+            chgYy: function(obj) {
                 commons.util.blockUIReplace("${SiteUrl.VCATN_DY_LIST!}?statsYy=" + $(obj).val());
             },
             /** 등록 팝업 호출 */
@@ -50,7 +50,7 @@
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
             },
             /** 등록 또는 수정 처리(Ajax) */
-            fnRegAjax: function() {
+            regAjax: function() {
                 let ajaxData = new FormData($("#vcantDyRegForm")[0]);
                 let isReg = ($("#vcatnSchdulNo").val() === "");
                 const url = isReg ? '${SiteUrl.VCATN_DY_REG_AJAX!}' : '${SiteUrl.VCATN_DY_MDF_AJAX!}';
@@ -62,7 +62,7 @@
                 });
             },
             /** 유효성검사:: 시작일 이전 날짜 선택 불가하게 막기 */
-            fnNoBefore: function(beginSelectorStr, endSelectorStr) {
+            noBefore: function(beginSelectorStr, endSelectorStr) {
                 let result = commons.date.dateCompare(beginSelectorStr, endSelectorStr);
                 let select = $("#vcatnCd").children('option:selected').val();
                 if (select === "AM_HALF" || select === "PM_HALF") {
@@ -73,7 +73,7 @@
                 }
             },
             /** 반차 선택 시 종료일 안보이게 막기 */
-            fnDelEndDt: function() {
+            delEndDt: function() {
                 let selected = $("#vcatnCd").children('option:selected').val();
                 if (selected === "AM_HALF" || selected === "PM_HALF") {
                     $("#endDtDiv").attr("style", "display:none !important");        // 강제로 !important 적용
@@ -84,7 +84,7 @@
                 }
             },
             /** 수정 팝업 호출 (ajax) */
-            fnMdfFormPop: function(vcatnSchdulNo) {
+            mdfFormPop: function(vcatnSchdulNo) {
                 $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
                 const url = "${SiteUrl.VCATN_DY_DTL_AJAX!}";
                 let ajaxData = $("#procForm").serializeArray();
@@ -103,7 +103,7 @@
                 });
             },
             /** 엑셀 다운로드 */
-            fnXlsxDownload: function() {
+            xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -114,7 +114,7 @@
                 });
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function(vcatnSchdulNo) {
+            delAjax: function(vcatnSchdulNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -147,7 +147,7 @@
             <div class="d-flex align-items-center">
                 <div class="position-relative w-md-100px me-md-2"
                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
-                    <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy" data-hide-search="true" onchange="Page.fnChgYy(this);">
+                    <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy" data-hide-search="true" onchange="Page.chgYy(this);">
                         <#list yyList![] as yy>
                             <option value="${yy.statsYy!}"<#if yy.statsYy == vcatnYy.statsYy>selected="selected"</#if>>${yy.statsYy!}</option>
                         </#list>
@@ -172,7 +172,7 @@
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
                     <i class="fas fa-plus"></i>등록
                 </button>
-                <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.fnXlsxDownload();"
+                <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.xlsxDownload();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
                     <i class="fas fa-download fs-7"></i>다운로드
                 </button>
@@ -210,8 +210,8 @@
                     <td class="text-center">${vcatn.vcatnRm!}</td>
                     <td class="text-center">
                         <#if (vcatn.vcatnSchdulNo?? && vcatn.userId??)>
-                            <button type="button" class="badge badge-primary" onclick="Page.fnMdfFormPop('${vcatn.vcatnSchdulNo!}');">수정</button>
-                            <button type="button" class="badge badge-primary" onclick="Page.fnDelAjax('${vcatn.vcatnSchdulNo!}');">삭제</button>
+                            <button type="button" class="badge badge-primary" onclick="Page.mdfFormPop('${vcatn.vcatnSchdulNo!}');">수정</button>
+                            <button type="button" class="badge badge-primary" onclick="Page.delAjax('${vcatn.vcatnSchdulNo!}');">삭제</button>
                         </#if>
                     </td>
                 </tr>

@@ -10,11 +10,11 @@
     const Page = function() {
         return {
             /** 수정 화면 이동 */
-            fnMdfForm: function() {
+            mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.USER_MDF_FORM!}");
             },
             /** 승인 처리 (ajax) */
-            fnCfAjax: function() {
+            cfAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.cf"/>,
                     showCancelButton: true,
@@ -31,7 +31,7 @@
                 });
             },
             /** 승인취소 처리 (ajax) */
-            fnUncfAjax: function() {
+            uncfAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.uncf"/>,
                     showCancelButton: true,
@@ -100,11 +100,11 @@
             </div>
             <div class="col-xl-2 col-8 col-form-label">
                 <#if user.isCf!true>
-                    <div class="btn btn-sm btn-danger" onclick="Page.fnUncfAjax();">
+                    <div class="btn btn-sm btn-danger" onclick="Page.uncfAjax();">
                         승인 취소
                     </div>
                 <#else>
-                    <div class="btn btn-sm btn-secondary" onclick="Page.fnCfAjax();">
+                    <div class="btn btn-sm btn-secondary" onclick="Page.cfAjax();">
                         승인 처리
                     </div>
                 </#if>
@@ -318,7 +318,7 @@
     <!--end::Card body-->
     <!--begin::Card footer-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+        <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
             수정
         </button>

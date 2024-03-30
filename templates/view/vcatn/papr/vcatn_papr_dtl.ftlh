@@ -13,7 +13,7 @@
                 commons.validate.noSpaces(".no-space");        // 공백 자동 제거
             },
             /** 관리자 확인 여부 변경 (Ajax) */
-            fnCfAjax: function() {
+            cfAjax: function() {
                 const url = "${SiteUrl.VCATN_PAPR_CF_AJAX!}";
                 let ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
@@ -24,11 +24,11 @@
                 });
             },
             /** 수정 화면 이동 */
-            fnMdfForm: function() {
+            mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.VCATN_PAPR_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function() {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -163,7 +163,7 @@
                         <span class="text-muted me-10">
                             미확인<i class="bi bi-dash text-muted"></i>
                         </span>
-                        <button class="btn btn-sm btn-primary" onclick="Page.fnCfAjax();">확인하기</button>
+                        <button class="btn btn-sm btn-primary" onclick="Page.cfAjax();">확인하기</button>
                     <#else>
                         <button class="btn btn-sm btn-success" disabled>
                             확인완료<i class="bi bi-check success"></i>
@@ -178,13 +178,13 @@
     <div class="d-flex mt-10 justify-content-end">
         <!-- 등록자: 수정,삭제 가능, 관리자: 삭제 가능, 확인 시: 삭제만 가능 -->
         <#if post.isRegstr!false && (post.cfYn)! == "N">
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.fnMdfForm();"
+            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>수정
             </button>
         </#if>
         <#if (post.isRegstr)!false || isMngr>
-            <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm" onclick="Page.fnDelAjax();"
+            <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm" onclick="Page.delAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                 <i class="bi bi-trash"></i>삭제
             </button>

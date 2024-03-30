@@ -45,7 +45,7 @@
                             <div class="col-form-label text-center fs-6 fw-bold"><label for="vcatnCd">휴가구분</label></div>
                         </div>
                         <div class="col-xl-9 text-start">
-                            <select name="vcatnCd" id="vcatnCd" class="form-select form-select-solid" onchange="Page.fnDelEndDt();" >
+                            <select name="vcatnCd" id="vcatnCd" class="form-select form-select-solid" onchange="Page.delEndDt();" >
                                 <option value="">--선택--</option>
                                 <#list VCATN_CD![] as vcatnCd>
                                     <option value="${vcatnCd.dtlCd!}" id="${vcatnCd.dtlCd!}">${vcatnCd.dtlCdNm!}</option>

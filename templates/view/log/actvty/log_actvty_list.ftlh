@@ -26,7 +26,7 @@
                 </#if>
             },
             /** 사용자별 로그 페이지로 이동 */
-            fnLogStatsUserList: function() {
+            logStatsUserList: function() {
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}");
             },
             /** 상세 모달 팝업 호출 */
@@ -48,7 +48,7 @@
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_ACTVTY_LIST!}?actionTyCd=SEARCH");
             },
             /** 엑셀 다운로드 */
-            fnXlsxDownload: function() {
+            xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -84,7 +84,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.fnLogStatsUserList();">
+            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.logStatsUserList();">
                 <span class="nav-icon">
                     <i class="bi bi-people"></i>
                 </span>
@@ -92,7 +92,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.fnLogStatsUserList();">
+            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.logStatsUserList();">
                 <span class="nav-icon">
                     <i class="bi bi-grid-1x2"></i>
                 </span>

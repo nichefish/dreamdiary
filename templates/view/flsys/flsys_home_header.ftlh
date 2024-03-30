@@ -15,7 +15,7 @@
                 });
             },
             /** 탭 활성화 */
-            fnFlsysModal: function(filePath) {
+            flsysModal: function(filePath) {
                 $("#flsys_home_modal").modal("show");
                 Flsys.flsysListAjax(filePath);
             },
@@ -47,7 +47,7 @@
                 Flsys.flsysListAjax(Flsys.currPath);
             },
             /** 탐색기로 열기 */
-            fnOpenInExplorer: function(filePath, objectTy) {
+            openInExplorer: function(filePath, objectTy) {
                 const url = "${SiteUrl.FLSYS_OPEN_IN_EXPLORER_AJAX!}";
                 let ajaxData = { "filePath": filePath, "objectTy": objectTy };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
@@ -59,7 +59,7 @@
                 });
             },
             /** vod 재생 */
-            fnFileDownload: function(filePath) {
+            fileDownload: function(filePath) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -71,18 +71,18 @@
                 });
             },
             /** vod 재생 */
-            fnPlayVod: function(filePath) {
+            playVod: function(filePath) {
                 let obj = { "filePath": filePath };
                 commons.util.handlebarsTemplate(obj, "flsys_file_vod", "show");
             },
             /** 파일 참조 추가 */
-            fnAddRef: function(filePath) {
+            addRef: function(filePath) {
                 let obj = { "filePath": filePath, "refCnt": Flsys.refCnt++ }
                 commons.util.handlebarsAppend(obj, "flsys_ref");
                 $(".modal").modal("hide");
             },
             /** 기존 첨부파일 삭제 플래그 세팅 */
-            fnDelRef: function(obj) {
+            delRef: function(obj) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -92,7 +92,7 @@
                 });
             },
             /** 실행하기 */
-            fnFileExec: function(filePath) {
+            fileExec: function(filePath) {
                 const url = "${SiteUrl.FLSYS_FILE_EXEC_AJAX!}";
                 let ajaxData = { "filePath": filePath };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
@@ -170,7 +170,7 @@
     <div class="card-toolbar">
         <!--begin::Toolbar&ndash;&gt;
 &lt;#&ndash;        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-            <button type="button" class="btn btn-sm btn-light-primary" style="margin-left:auto;" onclick="Page.fnXlsxDownload();"
+            <button type="button" class="btn btn-sm btn-light-primary" style="margin-left:auto;" onclick="Page.xlsxDownload();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
                 <i class="fas fa-download fs-7"></i>다운로드
             </button>

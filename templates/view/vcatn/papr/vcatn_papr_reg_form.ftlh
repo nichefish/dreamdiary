@@ -41,7 +41,7 @@
                                 showCancelButton: true,
                             }).then(function(result) {
                                 if (!result.value) return;
-                                Page.fn<#if isReg>Reg</#if><#if isMdf>Mdf</#if>Ajax();
+                                Page.<#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax();
                             });
                         },
                         errorPlacement: function (error, element) {
@@ -60,7 +60,7 @@
                 </#if>
             },
             /** 반차 선택 시 종료일 안보이게 */
-            fnDelEndDt: function(idx) {
+            delEndDt: function(idx) {
                 let result = $("#vcatnCd" + idx).children('option:selected').val();
                 if (result === "AM_HALF" || result === "PM_HALF") {
                     $("#lineDiv"+idx).css("visibility", "hidden");
@@ -74,7 +74,7 @@
                 }
             },
             /** 시작일 이전 날짜 선택 불가 */
-            fnNoBefore: function(beginSelectorStr, endSelectorStr, idx) {
+            noBefore: function(beginSelectorStr, endSelectorStr, idx) {
                 let result = commons.date.dateCompare(beginSelectorStr, endSelectorStr);
                 let selected = $("#vcatnCd" + idx).children('option:selected').val();
                 if (selected === "AM_HALF" || selected === "PM_HALF") {
@@ -85,7 +85,7 @@
                 }
             },
             /** 등록/수정 처리(Ajax) */
-            fn<#if isReg>Reg</#if><#if isMdf>Mdf</#if>Ajax: function() {
+            <#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax: function() {
                 const url = "<#if isReg>${SiteUrl.VCATN_PAPR_REG_AJAX!}</#if><#if isMdf>${SiteUrl.VCATN_PAPR_MDF_AJAX!}</#if>";
                 let ajaxData = new FormData($("#vcatnPaprForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
@@ -109,12 +109,12 @@
                 let str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
                 $("#vcatnListDiv").append(str);
                 commons.datepicker.singleDatePicker("#bgnDt"+reqstItemIdx, "yyyy-MM-DD", null, function() {
-                    Page.fnDelEndDt(reqstItemIdx);
-                    Page.fnNoBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                    Page.delEndDt(reqstItemIdx);
+                    Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
                 });
                 commons.datepicker.singleDatePicker("#endDt"+reqstItemIdx, "yyyy-MM-DD", null, function() {
                     if ($("#endDt"+reqstItemIdx).val() !== "") {
-                        Page.fnNoBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                        Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
                     }
                 });
             },
@@ -139,15 +139,15 @@
                 });
                 //반차일 경우 selectbox 안보이게
                 if ('${item.vcatnCd}' == "AM_HALF" || '${item.vcatnCd}' == "PM_HALF") {
-                    Page.fnDelEndDt(reqstItemIdx);
+                    Page.delEndDt(reqstItemIdx);
                 }
                 commons.datepicker.singleDatePicker("#bgnDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.bgnDt)}", function() {
-                    Page.fnDelEndDt(reqstItemIdx);
-                    Page.fnNoBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                    Page.delEndDt(reqstItemIdx);
+                    Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
                 });
                 commons.datepicker.singleDatePicker("#endDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.endDt)}", function() {
                     if ($("#endDt"+reqstItemIdx).val() !== "") {
-                        Page.fnNoBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                        Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
                     }
                 });
                 </#list>

@@ -10,7 +10,7 @@
                 $(function () {
                     $("#flsysMetaRegForm").validate({
                         submitHandler: function () {
-                            Meta.fnRegAjax();
+                            Meta.regAjax();
                         },
                         errorPlacement: function (error, element) {
                             commons.validate.errorSpan(error, element);        // 공통 함수로 분리
@@ -19,7 +19,7 @@
                 });
             },
             /** 등록 모달 조회 */
-            fnRegForm: function(filePath) {
+            regForm: function(filePath) {
                 let obj = { "filePath": filePath, "upperFilePath": Flsys.currPath };
                 commons.util.handlebarsTemplate(obj, "flsys_meta_reg", "show");
 
@@ -39,7 +39,7 @@
                 });
             },
             /** 메타정보 등록 (Ajax) */
-            fnRegAjax: function() {
+            regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
                     showCancelButton: true,
@@ -56,7 +56,7 @@
                 });
             },
             /** 메타정보 상세 조회 (Ajax) */
-            fnDtlAjax: function(postNo) {
+            dtlAjax: function(postNo) {
                 const url = "${SiteUrl.FLSYS_META_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
@@ -69,7 +69,7 @@
                 });
             },
             /** 등록 모달 조회 */
-            fnMdfForm: function(postNo) {
+            mdfForm: function(postNo) {
                 const url = "${SiteUrl.FLSYS_META_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
@@ -108,7 +108,7 @@
                 });
             },
             /** 메타정보 삭제 (Ajax) */
-            fnDelAjax: function(postNo) {
+            delAjax: function(postNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

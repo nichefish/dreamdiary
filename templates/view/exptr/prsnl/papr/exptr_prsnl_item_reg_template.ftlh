@@ -89,7 +89,7 @@
                     </a>
                 </span>
                 <span id="rciptDel{{rnum}}">
-                    <a href="javascript:void(0);" class="fs-8" id="rciptDelBtn{{rnum}}" onclick="Page.fnRciptDel({{rnum}})">삭제</a>
+                    <a href="javascript:void(0);" class="fs-8" id="rciptDelBtn{{rnum}}" onclick="Page.rciptDel({{rnum}})">삭제</a>
                 </span>
             {{/unless}}
             <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].atchFileDtlId" id="atchFileDtlId{{rnum}}" value="{{atchFileDtlId}}"/>
@@ -104,7 +104,7 @@
                 <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].refPostNo" value="{{refPostNo}}"/>
                 <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].rjectYn" id="rjectYn{{rnum}}" value="{{ifEmpty rjectYn 'N'}}"/>
             {{/if}}
-            <a href="javascript:void(0);" class="btn btn-bg-light btn-active-color-primary p-0" id="delExptrPrsnlItemBtn{{rnum}}" onclick="Page.fnDelExptrPrsnlItemSpan({{rnum}});">
+            <a href="javascript:void(0);" class="btn btn-bg-light btn-active-color-primary p-0" id="delExptrPrsnlItemBtn{{rnum}}" onclick="Page.delExptrPrsnlItemSpan({{rnum}});">
                 <span class="svg-icon svg-icon-muted svg-icon-2hx m-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="black"></rect>

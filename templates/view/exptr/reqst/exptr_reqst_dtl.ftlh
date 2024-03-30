@@ -13,11 +13,11 @@
                 //
             },
             /** 수정 화면 이동 */
-            fnMdfForm: function() {
+            mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_REQST_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function() {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -34,7 +34,7 @@
                 });
             },
             /** 관리자 확인 여부 변경 (Ajax) */
-            fnCfAjax: function() {
+            cfAjax: function() {
                 Swal.fire({
                     text: "완료 처리하시겠습니까?",
                     showCancelButton: true,
@@ -162,7 +162,7 @@
                         <span class="text-muted me-10">
                             미처리<i class="bi bi-dash text-muted"></i>
                         </span>
-                        <button class="btn btn-sm btn-primary" onclick="Page.fnCfAjax();">처리완료하기</button>
+                        <button class="btn btn-sm btn-primary" onclick="Page.cfAjax();">처리완료하기</button>
                         <button class="btn btn-sm btn-secondary ms-4" onclick="Page.fnDismissAjax();">취소(기각) 처리하기</button>
                     <#elseif post.cfYn == "X">
                         <button class="btn btn-sm btn-secondary" disabled>
@@ -187,30 +187,30 @@
         <!-- 수정권한에 따라 수정 권한 부여 -->
         <#if post.cfYn == "N" && (post.mdfable!"") == (Constant.MDFABLE_REGSTR)>
             <#if post.isRegstr>
-                <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+                <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                     <i class="bi bi-pencil-square"></i>(내 글)수정
                 </button>
             </#if>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_MNGR)>
-            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(관리자+)수정
             </button>
         <#elseif post.cfYn == "N" && (post.mdfable!"") == (Constant.MDFABLE_USER)>
-            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
         <#elseif post.cfYn == "N" && (post.mdfable!"") == (Constant.MDFABLE_ALL)>
-            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(전체+)수정
             </button>
         </#if>
         <!-- 등록자+관리자만 삭제 가능 -->
         <#if (post.isRegstr)!false || isMngr>
-            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2" onclick="Page.fnDelAjax();"
+            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2" onclick="Page.delAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                 <i class="bi bi-trash"></i>삭제
             </button>

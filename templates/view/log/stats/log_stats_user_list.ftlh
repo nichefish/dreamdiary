@@ -26,11 +26,11 @@
                 </#if>
             },
             /** 전체 로그 페이지로 이동 */
-            fnLogActvtyList: function() {
+            logActvtyList: function() {
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_ACTVTY_LIST!}");
             },
             /** 전체 로그 페이지로 이동 */
-            fnLogStatsUserList: function() {
+            logStatsUserList: function() {
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}");
             },
             /** 목록 검색 */
@@ -39,7 +39,7 @@
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}?actionTyCd=SEARCH");
             },
             /** 엑셀 다운로드 */
-            fnXlsxDownload: function() {
+            xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -67,7 +67,7 @@
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
         <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.fnLogActvtyList();">
+            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.logActvtyList();">
                 <span class="nav-icon">
                     <i class="bi bi-sort-down-alt"></i>
                 </span>
@@ -84,7 +84,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3"
-               onclick="Page.fnLogStatsUserList();">
+               onclick="Page.logStatsUserList();">
                 <span class="nav-icon">
                     <i class="bi bi-grid-1x2"></i>
                 </span>

@@ -165,14 +165,14 @@
                 });
             },
             /** 영수증 이미지 삭제 */
-            fnRciptDel: function(idx) {
+            rciptDel: function(idx) {
                 $("#rciptFile" + idx).empty();
                 $("#rciptRegBtn" + idx).show();
                 $("#rciptDel" + idx).hide();
                 $("#atchFileDtlId" + idx).val("");
             },
             /** 추가항목 영역 삭제 */
-            fnDelExptrPrsnlItemSpan: function(idx) {
+            delExptrPrsnlItemSpan: function(idx) {
                 if ($("#exptrPrsnlItemNo" + idx).val() === "") {
                     $("#itemContainer" + idx).remove();
                 } else {
@@ -183,7 +183,7 @@
                 Page.setTotAmt();
             },
             /** 등록/수정 처리(Ajax) */
-            fn<#if isReg>Reg</#if><#if isMdf>Mdf</#if>Ajax: function() {
+            <#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax: function() {
                 // DTO에서 integer로 받으므로 콤마 처리되어 있던 값 수동으로 처리
                 $("input[name$='.exptrAmtStr']").each(function(idx, item) {
                     let index = $(item).attr("id").replace("exptrAmt", "");

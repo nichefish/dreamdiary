@@ -20,7 +20,7 @@
         <div class="row g-9">
             <div class="col-md-2" id="vcatnCdSelectDiv__INDEX__">
                 <label class="required fs-6 fw-bold mb-2">휴가분류</label>
-                <select class="form-select form-select-solid w-180px required" onchange="Page.fnDelEndDt(__INDEX__)" name="schdulList[__INDEX__].vcatnCd" id="vcatnCd__INDEX__" data-hide-search="true">
+                <select class="form-select form-select-solid w-180px required" onchange="Page.delEndDt(__INDEX__)" name="schdulList[__INDEX__].vcatnCd" id="vcatnCd__INDEX__" data-hide-search="true">
                     <option value="">휴가 분류</option>
                     <#list VCATN_CD![] as vcatnCd>
                         <option value="${vcatnCd.dtlCd!}" id="${vcatnCd.dtlCd!}">[${vcatnCd.dtlCdNm!}]</option>
@@ -52,7 +52,7 @@
                                     </span>
                                     <input class="form-control form-control-solid ps-12 required w-100"
                                            placeholder="휴가 시작일" name="schdulList[__INDEX__].bgnDt"
-                                           id="bgnDt__INDEX__" autocomplete="off" onchange="Page.fnDelEndDt(__INDEX__)" readonly />
+                                           id="bgnDt__INDEX__" autocomplete="off" onchange="Page.delEndDt(__INDEX__)" readonly />
                                 </div>
                             </td>
                             <td class="text-center">
@@ -77,7 +77,7 @@
                                     </span>
                                     <input name="schdulList[__INDEX__].endDt" id="endDt__INDEX__" autocomplete="off"
                                            class="form-control form-control-solid ps-12 required w-100"
-                                           placeholder="휴가 종료일" readonly onchange="Page.fnDelEndDt(__INDEX__)" />
+                                           placeholder="휴가 종료일" readonly onchange="Page.delEndDt(__INDEX__)" />
                                 </div>
                             </td>
                         </tr>

@@ -30,7 +30,7 @@
                         <span class="me-6 fs-7">
                                 <span class="pe-1 text-muted"><i class="bi bi-tags"></i></span>
                             {{#meta.tagList}}
-                                <span class="text-muted pe-1" onclick="Tag.fnDtlAjax('{{.}}')"
+                                <span class="text-muted pe-1" onclick="Tag.dtlAjax('{{.}}')"
                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                       title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
                                         # <span class="border-bottom text-primary fw-lighter opacity-hover">{{boardTag}}</span>
@@ -40,13 +40,13 @@
                     {{/if}}
                     {{#hasMeta}}
                         <a class="badge badge-secondary badge-outlined btn-white blank blink-slow float-end ms-6 px-2"
-                           onclick="Meta.fnDtlAjax('{{meta.postNo}}');"
+                           onclick="Meta.dtlAjax('{{meta.postNo}}');"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메타 정보 조회">
                             <i class="bi bi-stickies text-noti opacity-hover" style="color:#ed7000 !important;"></i>
                         </a>
                     {{/hasMeta}}
                     {{^hasMeta}}
-                        <a class="badge badge-sm badge-light-primary cursor-pointer ms-6 px-2 opacity-50" onclick="Meta.fnRegForm('{{filePath}}');"
+                        <a class="badge badge-sm badge-light-primary cursor-pointer ms-6 px-2 opacity-50" onclick="Meta.regForm('{{filePath}}');"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메타 정보 등록 팝업을&#10;호출합니다.">
                             <i class="bi bi-plus"></i>
                         </a>
@@ -71,20 +71,20 @@
                     <!-- icons -->
                     <span>
                         <a class="badge badge-light-primary badge-outlined btn-white blank blink-slow float-end mx-1 px-2"
-                           onclick="Flsys.fnFileDownload('{{filePath}}', 'FILE');"
+                           onclick="Flsys.fileDownload('{{filePath}}', 'FILE');"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="파일 다운로드">
                             <i class="bi bi-download fs-9 text-primary opacity-hover"></i>
                         </a>
                         {{#isVod}}
                             <a class="badge badge-primary badge-outlined blink-slow float-end mx-1 px-2"
-                               onclick="Flsys.fnPlayVod('{{filePath}}', 'FILE');"
+                               onclick="Flsys.playVod('{{filePath}}', 'FILE');"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="VOD 재생 모달 팝업을&#10;호출합니다.">
                             <i class="bi bi bi-camera-reels-fill fs-9 opacity-hover"></i>
                         </a>
                         {{/isVod}}
                         {{#if (equals ../mode "modal")}}
                             <a class="badge badge-light-primary badge-outlined btn-white blank blink-slow float-end mx-1 px-2"
-                               onclick="Flsys.fnAddRef('{{filePath}}', 'FILE');"
+                               onclick="Flsys.addRef('{{filePath}}', 'FILE');"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="파일 참조 추가">
                                 <i class="bi bi-arrow-down-square-fill fs-9 text-primary opacity-hover"></i>
                             </a>
@@ -97,7 +97,7 @@
                         <span class="me-6 fs-7">
                                 <span class="pe-1 text-muted"><i class="bi bi-tags"></i></span>
                             {{#meta.tagList}}
-                                <span class="text-muted pe-1" onclick="Tag.fnDtlAjax('{{.}}')"
+                                <span class="text-muted pe-1" onclick="Tag.dtlAjax('{{.}}')"
                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                       title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
                                         # <span class="border-bottom text-primary fw-lighter opacity-hover">{{boardTag}}</span>
@@ -107,14 +107,14 @@
                     {{/if}}
                     {{#hasMeta}}
                         <a class="badge badge-secondary badge-outlined btn-white blank blink-slow float-end ms-6 px-2"
-                           onclick="Meta.fnDtlAjax('{{meta.postNo}}');"
+                           onclick="Meta.dtlAjax('{{meta.postNo}}');"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메타 정보 조회">
                             <i class="bi bi-stickies text-noti opacity-hover"></i>
                         </a>
                     {{/hasMeta}}
                     {{^hasMeta}}
                         <a class="badge badge-sm badge-light-primary opacity-hover cursor-pointer ms-6 px-2 opacity-50"
-                           onclick="Meta.fnRegForm('{{filePath}}');"
+                           onclick="Meta.regForm('{{filePath}}');"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메타 정보 등록 팝업을&#10;호출합니다.">
                             <i class="bi bi-plus"></i>
                         </a>

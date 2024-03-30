@@ -56,7 +56,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.fnLogStatsUserList();">
+            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.logStatsUserList();">
                 <span class="nav-icon">
                     <i class="bi bi-people"></i>
                 </span>
@@ -64,7 +64,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.fnLogStatsUserList();">
+            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.logStatsUserList();">
                 <span class="nav-icon">
                     <i class="bi bi-grid-1x2"></i>
                 </span>

@@ -18,11 +18,11 @@
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_STATS_DTL!}");
             },
             /** 수정 화면 이동 */
-            fnMdfForm: function() {
+            mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function() {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -47,7 +47,7 @@
                 }
             },
             /** 영수증 원본 제출 체크 */
-            fnOrgnlRciptAjax: function(exptrPrsnlItemNo, orgnlRciptYn) {
+            orgnlRciptAjax: function(exptrPrsnlItemNo, orgnlRciptYn) {
                 Swal.fire({
                     text: "영수증 원본 제출상태를 변경하시겠습니까?",
                     showCancelButton: true,
@@ -64,7 +64,7 @@
                 });
             },
             /** PDF 인쇄 화면 출력 */
-            fnPdfPop: function() {
+            pdfPop: function() {
                 const url = "${SiteUrl.EXPTR_PRSNL_PAPR_PDF_POP!}?postNo="+$("#postNo").val();
                 const popupNm = '경비지출서 팝업';
                 const options = 'width=1280,height=1440,top=0,left=270';
@@ -144,7 +144,7 @@
                 <!--begin::Info-->
                 <div class="d-flex align-items-center py-1">
                     <button type="button" class="btn btn-sm btn-primary px-4 me-2"
-                            onclick="Page.fnPdfPop();"
+                            onclick="Page.pdfPop();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="출력용 팝업을 호출합니다." >
                         <i class="bi bi-printer"></i>출력
                     </button>
@@ -227,7 +227,7 @@
                                 <td class="text-start w-12">
                                     <span class="text-${exptr.orgnlRciptClass!"muted"} fw-normal <#if (post.isRegstr!false) || (isMngr)>cursor-pointer</#if>"
                                         <#if (post.isRegstr!false) || (isMngr)>
-                                          onclick="Page.fnOrgnlRciptAjax('${exptr.exptrPrsnlItemNo}', '<#if (exptr.orgnlRciptYn!"N") == "N">Y<#else>N</#if>');"
+                                          onclick="Page.orgnlRciptAjax('${exptr.exptrPrsnlItemNo}', '<#if (exptr.orgnlRciptYn!"N") == "N">Y<#else>N</#if>');"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="영수증 원본 제출여부를&#10;변경합니다."
                                         </#if>>
                                         <#if (exptr.orgnlRciptYn!"N") == "Y">
@@ -240,7 +240,7 @@
                                     </span>
                                     <#if ((post.isRegstr!false) || (isMngr)) && (exptr.orgnlRciptYn!"N") == "N">
                                         <span class="badge badge-sm badge-light badge-active-primary badge-outlined opacity-50 ms-2 cursor-pointer"
-                                              onclick="Page.fnOrgnlRciptAjax('${exptr.exptrPrsnlItemNo}', 'X');"
+                                              onclick="Page.orgnlRciptAjax('${exptr.exptrPrsnlItemNo}', 'X');"
                                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                               title="영수증 원본이 없는 경우&#10;체크합니다.&#10;(ex.전자거래)">
                                            <i class="bi bi-credit-card opacity-hover"></i>
@@ -318,14 +318,14 @@
             <!-- 등록자만 수정 가능, 등록자+관리자도 삭제 가능 -->
             <#if (post.isRegstr!false && (post.cfYn!"N") != "Y")>
                 <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                        onclick="Page.fnMdfForm();"
+                        onclick="Page.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                     수정
                 </button>
             </#if>
             <#if (((post.isRegstr)!false || isMngr) && (post.cfYn!"N") != "Y")>
                 <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
-                        onclick="Page.fnDelAjax();"
+                        onclick="Page.delAjax();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                     <i class="bi bi-trash"></i>삭제
                 </button>

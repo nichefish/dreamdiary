@@ -68,19 +68,19 @@
                 });
             },
             /** submit */
-            fnSubmit: function() {
+            submit: function() {
                 tinymce.activeEditor.save();
                 Page.submitMode = "submit";
                 $("#exptrReqstRegForm").submit();
             },
             /** 미리보기 팝업 호출 */
-            fnPreview: function() {
+            preview: function() {
                 tinymce.activeEditor.save();
                 Page.submitMode = "preview";
                 $("#exptrReqstRegForm").submit();
             },
             /** 등록/수정 처리(Ajax) */
-            fn<#if isReg>Reg</#if><#if isMdf>Mdf</#if>Ajax: function() {
+            <#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax: function() {
                 let ajaxData = new FormData($("#exptrReqstRegForm")[0]);
                 const url = "<#if isReg>${SiteUrl.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf>${SiteUrl.EXPTR_REQST_MDF_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
@@ -251,7 +251,7 @@
     </form>
     <div class="separator my-8"></div>
     <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-primary mx-2 float-start" onclick="Page.fnPreview();"
+        <button type="button" class="btn btn-primary mx-2 float-start" onclick="Page.preview();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작성한 내용에 대하여&#10;미리보기 팝업을 호출합니다.">
             <i class="bi bi-pencil-square"></i>
             <span class="indicator-label">미리보기</span>
@@ -259,7 +259,7 @@
             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
         <span>
-            <button type="button" class="btn btn-primary mx-2" onclick="Page.fnSubmit();"
+            <button type="button" class="btn btn-primary mx-2" onclick="Page.submit();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
                 <i class="bi bi-pencil-square"></i>
                 <span class="indicator-label">저장</span>

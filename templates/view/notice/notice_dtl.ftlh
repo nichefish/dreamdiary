@@ -13,7 +13,7 @@
                 //
             },
             /** 수정 화면 이동 */
-            fnMdfForm: function() {
+            mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
@@ -161,26 +161,26 @@
         <#if (post.mdfable!"") == (Constant.MDFABLE_REGSTR)>
             <#if post.isRegstr>
                 <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                        onclick="Page.fnMdfForm();"
+                        onclick="Page.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                     <i class="bi bi-pencil-square"></i>(내 글)수정
                 </button>
             </#if>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_MNGR)>
             <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.fnMdfForm();"
+                    onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(관리자+)수정
             </button>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_USER)>
             <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.fnMdfForm();"
+                    onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_ALL)>
             <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.fnMdfForm();"
+                    onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(전체+)수정
             </button>

@@ -11,7 +11,7 @@
             <label class="fs-6 fw-bold mb-2">제목</label>
         </div>
         <div class="col-xl-7 col-6 col-form-label">
-            {{postSj}}
+            {{title}}
         </div>
     </div>
     {{#if (exists tagList)}}
