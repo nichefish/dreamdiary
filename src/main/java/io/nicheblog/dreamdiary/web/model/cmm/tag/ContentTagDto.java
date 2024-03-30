@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -23,6 +24,7 @@ import javax.persistence.*;
  */
 @Getter
 @Setter
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class ContentTagDto
@@ -40,16 +42,4 @@ public class ContentTagDto
 
     /** 태그 정보 */
     private TagDto tag;
-
-    /* ----- */
-
-    /**
-     * 태그 크기 (글 갯수)
-     */
-    // public Integer getTagSize() {
-    //     boolean isPostTag = !CollectionUtils.isEmpty(this.postList);
-    //     boolean isNoticeTag = !CollectionUtils.isEmpty(this.noticeList);
-    //     if (!isPostTag && !isNoticeTag) return 0;
-    //     return isPostTag ? this.postList.size() : this.noticeList.size();
-    // }
 }
