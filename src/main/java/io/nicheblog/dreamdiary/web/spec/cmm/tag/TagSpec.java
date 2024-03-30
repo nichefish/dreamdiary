@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.spec.tag;
+package io.nicheblog.dreamdiary.web.spec.cmm.tag;
 
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
-import io.nicheblog.dreamdiary.web.entity.tag.TagEntity;
+import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -55,7 +55,7 @@ public class TagSpec
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
-                // case "boardCd":
+                // case "contentType":
                 //     Join<BoardTagEntity, BoardPostTagEntity> postTag = root.join("postTagList", JoinType.LEFT);      //  JOIN 타입 명시하기
                 //     predicate.add(builder.equal(postTag.get(key), searchParamMap.get(key)));
                 //     continue;
