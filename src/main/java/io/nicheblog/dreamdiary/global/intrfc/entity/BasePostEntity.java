@@ -26,12 +26,6 @@ import javax.persistence.*;
 public class BasePostEntity
         extends BaseClsfEntity {
 
-    @PostLoad
-    private void onLoad() {
-        this.hasCtgrNm = this.getCtgrCdInfo() != null;
-        if (this.hasCtgrNm) this.ctgrNm = this.getCtgrCdInfo().getDtlCdNm();
-    }
-
     /**
      * 필수(Override): 글분류 코드
      * !상속받은 클래스에서 재정의하기
@@ -66,19 +60,19 @@ public class BasePostEntity
     @Transient
     protected String ctgrNm;
 
-    /** 글분류 코드 존재여부 */
+    /** 글분류 코드 존재 여부 */
     @Transient
     protected Boolean hasCtgrNm;
 
     /* ----- */
 
-    /** 중요 여부 */
+    /** 중요 여부 (Y/N) */
     @Builder.Default
     @Column(name = "imprtc_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("중요 여부")
     protected String imprtcYn = "N";
 
-    /** 상단고정 여부 */
+    /** 상단고정 여부 (Y/N) */
     @Builder.Default
     @Column(name = "fxd_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("상단고정 여부")

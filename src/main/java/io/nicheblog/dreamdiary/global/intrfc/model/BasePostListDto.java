@@ -39,10 +39,10 @@ public class BasePostListDto
     @Builder.Default
     protected Boolean hasCtgrNm = false;
 
-    /** 중요 여부 */
+    /** 중요 여부 (Y/N) */
     @Builder.Default
     protected String imprtcYn = "N";
-    /** 상단고정 여부 */
+    /** 상단고정 여부 (Y/N) */
     @Builder.Default
     protected String fxdYn = "N";
     /** 조회수 */

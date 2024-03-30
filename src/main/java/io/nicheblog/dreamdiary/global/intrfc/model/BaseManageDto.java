@@ -28,7 +28,7 @@ public class BaseManageDto
     /** 정렬 순서 */
     protected Integer sortOrdr;
 
-    /** 사용 여부 */
+    /** 사용 여부 (Y/N) */
     @Builder.Default
     protected String useYn = "Y";
 }
