@@ -26,27 +26,19 @@ import lombok.experimental.SuperBuilder;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BaseApiRespns {
 
-    /**
-     * result
-     */
+    /** result */
     @JsonProperty("result")
     private Boolean result;
 
-    /**
-     * code
-     */
+    /** code */
     @JsonProperty("code")
     private Integer code;
 
-    /**
-     * status
-     */
+    /** status */
     @JsonProperty("status")
     private Integer status;
 
-    /**
-     * message
-     */
+    /** message */
     @JsonProperty("message")
     private String message;
 
