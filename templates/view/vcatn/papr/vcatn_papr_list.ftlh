@@ -2,7 +2,6 @@
   -- 휴가계획서 > 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 
