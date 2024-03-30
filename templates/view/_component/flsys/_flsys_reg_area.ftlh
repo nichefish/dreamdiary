@@ -13,7 +13,7 @@
             <span class="text-gray-500 fs-9 mx-2">※ 파일 서버에 있는 파일에 대한 참조 정보를 추가합니다.</span>
         </label>
         <div class="btn btn-sm btn-light-primary"
-             onclick="Flsys.fnFlsysModal('${HOME_WORKSPACE_PROJECT!}');"
+             onclick="Flsys.flsysModal('${HOME_WORKSPACE_PROJECT!}');"
              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="파일 시스템 모달 팝업을&#10;호출합니다.">
                     <span class="svg-icon svg-icon-muted svg-icon-1hx">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +34,7 @@
         {{filePath}}
         <input type="hidden" name="flsysRefList[{{refCnt}}].filePath" value="{{filePath}}">
         <button type="button" class="badge badge-light btn-primary badge-outlined mx-2"
-                onclick="Flsys.fnDelRef(this);"
+                onclick="Flsys.delRef(this);"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.del"/>">
             삭제
         </button>

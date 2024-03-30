@@ -3,9 +3,9 @@
   -- @included in : log_sys_list_header
   -->
 <script>
-    let Flsys = function() {
+    const Flsys = function() {
         return {
-            currPath: "${HOME_WORKSPACE_PROJECT!}",
+            currPath: "${Constant.HOME_FLSYS!}",
             refCnt: 0,
             /** 현재 경로 저장 */
             init: function (mode) {

@@ -194,12 +194,7 @@ public final class Constant
     public static final String VCATN_STATS = "vcatnStats";          // 휴가계획서
     public static final String VCATN_DY = "vcatnDy";                // 휴가사용일자
 
-    public static final String HOME_WORKSPACE = "workspace";
-    public static final String HOME_WORKSPACE_PROJECT = "workspace/프로젝트용";
-    public static final String HOME_STORAGE = "storage";
-    public static final String HOME_VOD_STORAGE = "vod-storage";
-
-    public static final String FILE_SVR_IP_ADDR = "192.168.10.21";
+    public static final String HOME_FLSYS = "flsys";
 
     /* 수정 권한 코드 */
     public static final String MDFABLE_CD = "MDFABLE_CD";
