@@ -41,6 +41,7 @@ public class FreemarkerConfig
             Properties settings = new Properties();
             settings.setProperty("template_exception_handler", "ignore");
             settings.setProperty("auto_import", "/lib/spring.ftl as spring");
+            settings.setProperty("auto_import", "/lib/function.ftl as function");
             configurer.setFreemarkerSettings(settings);
             // 템플릿 위치 추가
             List<String> pluginTemplatePaths = new ArrayList<>();
