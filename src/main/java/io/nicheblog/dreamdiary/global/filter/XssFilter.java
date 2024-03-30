@@ -1,0 +1,37 @@
+package io.nicheblog.dreamdiary.global.filter;
+
+import org.springframework.stereotype.Component;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
+/**
+ * XssFilter
+ * <pre>
+ *  Xss 방지 위해 request 전처리 (escaping)
+ * </pre>
+ *
+ * @author nichefish
+ */
+@Component("xssFilter")
+public class XssFilter implements Filter {
+
+    public FilterConfig filterConfig;
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        this.filterConfig = filterConfig;
+    }
+
+    /** Request에 XssRequestWrappper 적용 */
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        chain.doFilter(new XssRequestWrapper((HttpServletRequest) req), res);
+    }
+
+    @Override
+    public void destroy() {
+        this.filterConfig = null;
+    }
+}
