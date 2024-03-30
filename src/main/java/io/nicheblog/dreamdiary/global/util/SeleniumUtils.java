@@ -33,7 +33,7 @@ public class SeleniumUtils {
 
         // chromeDriver 로드
         URL resourceUrl = getClass().getClassLoader()
-                                    .getResource("selenium/chromedriver.exe");
+                                    .getResource("local/selenium/chromedriver.exe");
         if (resourceUrl == null) {
             log.info("resourceUrl is null.");
             return null;
