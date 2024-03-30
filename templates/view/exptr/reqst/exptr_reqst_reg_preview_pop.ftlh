@@ -2,7 +2,6 @@
   -- 경비 > 물품구매/경조사비 신청 > 상세 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 

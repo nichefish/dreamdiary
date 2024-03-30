@@ -2,7 +2,6 @@
   -- 경비 관리 > 월간지출내역 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 

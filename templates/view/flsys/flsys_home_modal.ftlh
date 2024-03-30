@@ -2,7 +2,7 @@
   -- 활동 로그 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
+
 <script>
     $(document).ready(function() {
         Flsys.init("modal");

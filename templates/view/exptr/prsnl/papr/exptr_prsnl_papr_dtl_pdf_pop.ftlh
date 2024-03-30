@@ -3,7 +3,6 @@
   -- @included in : exptr_prsnl_papr_dtl
   -->
 <#import "/layout/layout_no_aside.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 

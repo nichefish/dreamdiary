@@ -2,7 +2,6 @@
   -- 게시판 > 상세 화면
   -->
 <#import "/layout/layout_no_aside.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 

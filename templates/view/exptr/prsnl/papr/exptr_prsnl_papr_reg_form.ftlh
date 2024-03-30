@@ -3,7 +3,6 @@
   -- TODO: Handlebars로 교체하기
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <#assign isReg = isReg!false>
 <#assign isMdf = isMdf!false>

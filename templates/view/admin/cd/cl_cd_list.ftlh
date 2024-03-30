@@ -2,7 +2,6 @@
   -- 분류 코드(CL_CD) > 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 
