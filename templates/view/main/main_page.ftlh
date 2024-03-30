@@ -2,7 +2,6 @@
   -- 로그인 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 
