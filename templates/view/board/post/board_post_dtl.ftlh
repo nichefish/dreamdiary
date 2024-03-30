@@ -34,11 +34,11 @@
                 $("#notion_page_modal").modal("show");
             },
             /** 수정 화면 이동 */
-            fnMdfForm: function() {
+            mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.BOARD_POST_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function() {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -184,26 +184,26 @@
         <!-- 수정권한에 따라 수정 권한 부여 -->
         <#if (post.mdfable!"") == (Constant.MDFABLE_REGSTR)>
             <#if post.isRegstr>
-                <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+                <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                         title="<@spring.message "bs.tooltip.page.mdf"/>">
                     <i class="bi bi-pencil-square"></i>(내 글)수정
                 </button>
             </#if>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_MNGR)>
-            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                     title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(관리자+)수정
             </button>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_USER)>
-            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                     title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
         <#elseif (post.mdfable!"") == (Constant.MDFABLE_ALL)>
-            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.fnMdfForm();"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                     title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(전체+)수정
@@ -211,7 +211,7 @@
         </#if>
         <!-- 등록자 또는 관리자가 삭제 가능 -->
         <#if (post.isRegstr)!false || isMngr>
-            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2" onclick="Page.fnDelAjax();"
+            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2" onclick="Page.delAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                     title="<@spring.message "bs.tooltip.del"/>">
                 <i class="bi bi-trash"></i>삭제

@@ -13,7 +13,7 @@
                 //
             },
             /** 수정 화면 이동 */
-            fnMdfForm: function() {
+            mdfForm: function() {
                 const url = "${SiteUrl.CL_CD_DTL_AJAX!}";
                 let ajaxData = { "clCd": $("#clCd").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
@@ -200,7 +200,7 @@
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                onclick="Page.fnMdfForm();"
+                onclick="Page.mdfForm();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드 수정 팝업을&#10;호출합니다.">
             <i class="bi bi-pencil-square"></i>수정
         </button>
