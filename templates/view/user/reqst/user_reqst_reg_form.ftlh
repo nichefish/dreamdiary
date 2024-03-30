@@ -2,7 +2,6 @@
   -- 사용자 관리 > 계정 및 권한 관리 > 등록 화면
   -->
 <#import "/layout/layout_without_aside.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout_without_aside>
 

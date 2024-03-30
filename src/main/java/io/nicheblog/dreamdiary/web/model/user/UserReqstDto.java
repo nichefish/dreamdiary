@@ -36,11 +36,11 @@ public class UserReqstDto
     /** 프로필 이미지 URL */
     private String proflImgUrl;
 
-    /** 잠금여부 */
+    /** 잠금 여부 (Y/N) */
     @Builder.Default
     private String lockedYn = "N";
 
-    /** 접속 IP 사용 여부 */
+    /** 접속 IP 사용 여부 (Y/N) */
     @Builder.Default
     private String useAcsIpYn = "N";
     /** 접속 IP 정보 (String) */
@@ -48,7 +48,7 @@ public class UserReqstDto
     /** 접속 IP 목록 */
     private List<UserAcsIpDto> acsIpList;
 
-    /** 퇴사여부 */
+    /** 퇴사 여부 (Y/N) */
     @Builder.Default
     private String retireYn = "N";
     /** 퇴사일 */
@@ -66,14 +66,10 @@ public class UserReqstDto
     /** 사용자 권한 정보 */
     private List<UserAuthRoleDto> auth;
 
-    /** 본인신청여부 */
+    /** 본인신청 여부 (Y/N) */
     private String reqstYn;
-    /** 승인여부 */
+    /** 승인여부 (Y/N) */
     private String cfYn;
-
-    /** 성공여부 */
-    @Builder.Default
-    public Boolean isSuccess = false;
     
     /* ----- */
 

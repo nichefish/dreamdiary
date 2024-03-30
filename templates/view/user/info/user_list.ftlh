@@ -2,7 +2,6 @@
   -- 사용자 관리 > 계정 및 권한 관리 > 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 
