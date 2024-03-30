@@ -43,14 +43,10 @@ public class BaseAtchDto
     @JsonIgnore
     protected String atchFileZipNm;
 
-    /* ---- */
+    /** 첨부파일 존재 여부 */
+    protected Boolean hasAtchFile;
 
-    /**
-     * 첨부파일 존재 여부
-     */
-    public Boolean getHasAtchFile() {
-        return !(this.getAtchFileNo() == null || this.getAtchFileInfo() == null || CollectionUtils.isEmpty(this.getAtchFileInfo().getAtchFileList()));
-    }
+    /* ---- */
 
     /**
      * 첨부파일 목록
