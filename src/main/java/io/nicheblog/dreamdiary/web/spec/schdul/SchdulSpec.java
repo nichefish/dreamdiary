@@ -37,7 +37,7 @@ public class SchdulSpec
             CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
-        order.add(builder.desc(root.get("beginDt")));
+        order.add(builder.desc(root.get("bgnDt")));
         query.orderBy(order);
     }
 
@@ -55,7 +55,7 @@ public class SchdulSpec
         // Join<SchdulEntity, SchdulPrtcpntEntity> prtcpntList;
         // expressions
         Expression<Date> endDtExp = root.get("endDt");
-        Expression<Date> beginDtExp = root.get("beginDt");
+        Expression<Date> bgnDtExp = root.get("bgnDt");
         Expression<String> prvtYnExp = root.get("prvtYn");
         Expression<String> schdulTyCdExp = root.get("schdulTyCd");
 
@@ -68,7 +68,7 @@ public class SchdulSpec
                     continue;
                 case "searchEndDt":
                     // 기간 검색
-                    predicate.add(builder.lessThanOrEqualTo(beginDtExp, DateUtils.asDate(searchParamMap.get(key))));
+                    predicate.add(builder.lessThanOrEqualTo(bgnDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "getHldyCeremonyOnly":
                     // 휴일/공휴일, 행사 조회

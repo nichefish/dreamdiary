@@ -3,7 +3,6 @@ package io.nicheblog.dreamdiary.global;
 import io.nicheblog.dreamdiary.api.ApiConstant;
 import io.nicheblog.dreamdiary.global.auth.Auth;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * Constant

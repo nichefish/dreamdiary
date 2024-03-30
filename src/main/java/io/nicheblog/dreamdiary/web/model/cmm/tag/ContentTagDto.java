@@ -1,17 +1,11 @@
 package io.nicheblog.dreamdiary.web.model.cmm.tag;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
-import javax.persistence.*;
 
 /**
  * ContentTagDto

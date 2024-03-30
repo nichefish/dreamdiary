@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnPaprMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
@@ -17,7 +16,6 @@ import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnPaprRepository;
 import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnPaprSpec;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 

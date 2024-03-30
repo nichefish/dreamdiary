@@ -1,17 +1,13 @@
 package io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt;
 
-import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.CmmStus;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * ExptrPrsnlRptSmDto
