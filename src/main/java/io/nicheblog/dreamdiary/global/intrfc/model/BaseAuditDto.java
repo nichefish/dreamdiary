@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
 import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

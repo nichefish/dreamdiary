@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.MappedSuperclass;
 import java.util.List;

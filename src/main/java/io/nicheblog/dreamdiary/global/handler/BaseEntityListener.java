@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.handler;
 
-import io.nicheblog.dreamdiary.global.auth.Auth;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
