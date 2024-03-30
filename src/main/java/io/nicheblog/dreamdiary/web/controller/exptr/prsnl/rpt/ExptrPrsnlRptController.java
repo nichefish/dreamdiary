@@ -123,7 +123,7 @@ public class ExptrPrsnlRptController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/prsnl/rpt/exptr_indvd_rpt";
+        return "/view/exptr/prsnl/rpt/exptr_prsnl_rpt";
     }
 
     /**

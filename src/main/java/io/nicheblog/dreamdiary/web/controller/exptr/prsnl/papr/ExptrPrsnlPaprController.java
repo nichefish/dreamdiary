@@ -475,7 +475,7 @@ public class ExptrPrsnlPaprController
     //         isSuccess = false;
     //         resultMsg = MessageUtils.getExceptionMsg(e);
     //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-    //         MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS);
+    //         MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
     //     } finally {
     //         // 로그 관련 처리
     //         logParam.setCn("key: " + key);

@@ -11,11 +11,11 @@
 -- @Uses: CommentEmbed
 CREATE TABLE IF NOT EXISTS dream_day (
     -- CLSF
-    post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 일자 번호',
+    post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 일자 번호 (PK)',
     content_type VARCHAR(32) DEFAULT 'dream_day' COMMENT '컨텐츠 타입',
     --
     dreamt_dt DATE COMMENT '꿈 일자',
-    dt_unknown_yn CHAR(1) DEFAULT 'N' COMMENT '날짜미상여부',
+    dt_unknown_yn CHAR(1) DEFAULT 'N' COMMENT '날짜미상 여부 (Y/N)',
     yy INT COMMENT '년도',
     mnth INT COMMENT '월',
     aprxmt_dt DATE COMMENT '대략일자 (날짜미상시 해당일자 이후에 표기)',
@@ -36,21 +36,21 @@ CREATE TABLE IF NOT EXISTS dream_day (
 -- @Uses: CommentEmbed
 CREATE TABLE IF NOT EXISTS dream_piece (
     -- CLSF
-    post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 조각 번호',
+    post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '꿈 조각 번호 (PK)',
     content_type VARCHAR(32) DEFAULT 'dream_day' COMMENT '컨텐츠 타입',
     --
     dream_day_no INT COMMENT '꿈 일자 번호',
     idx INT DEFAULT 1 COMMENT '꿈 조각 인덱스',
-    edit_compt_yn CHAR(1) DEFAULT 'N' COMMENT '편집완료 여부',
-    else_dream_yn CHAR(1) DEFAULT 'N' COMMENT '타인 꿈 여부',
+    edit_compt_yn CHAR(1) DEFAULT 'N' COMMENT '편집완료 여부 (Y/N)',
+    else_dream_yn CHAR(1) DEFAULT 'N' COMMENT '타인 꿈 여부 (Y/N)',
     else_dreamer_nm VARCHAR(64) COMMENT '꿈꾼이 이름',
     -- POST
     title VARCHAR(200) COMMENT '제목',
     cn LONGTEXT COMMENT '내용',
-    ctgr_cd VARCHAR(50) COMMENT '글분류코드',
-    fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정 여부',
+    ctgr_cd VARCHAR(50) COMMENT '글 분류 코드',
+    fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정 여부 (Y/N)',
     hit_cnt INT DEFAULT 0 COMMENT '조회수',
-    imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요 여부',
+    imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요 여부 (Y/N)',
     mdfable CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
     -- ATCH_FILE
     atch_file_no INT COMMENT '첨부파일 번호',

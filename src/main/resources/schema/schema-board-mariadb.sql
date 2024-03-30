@@ -81,6 +81,33 @@ CREATE TABLE IF NOT EXISTS comment (
 
 -- ---------- --
 
+-- 태그 (tag)
+-- @extends: BaseCrudEntity
+CREATE TABLE IF NOT EXISTS tag (
+    tag_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '태그 번호 (PK)',
+    tag_nm VARCHAR(64) UNIQUE COMMENT '태그',
+    -- AUDIT
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    INDEX (tag_nm)
+) COMMENT = '태그';
+
+
+-- 컨텐츠 태그 (content_tag)
+-- @extends: BaseCrudEntity
+CREATE TABLE IF NOT EXISTS content_tag (
+    content_tag_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '컨텐츠 태그 번호 (PK)',
+    ref_tag_no INT COMMENT '참조 태그 번호',
+    ref_post_no INT COMMENT '참조 글 번호',
+    ref_content_type VARCHAR(30) COMMENT '참조 컨텐츠 타입',
+    -- AUDIT
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    FOREIGN KEY (ref_tag_no) REFERENCES tag(tag_no)
+) COMMENT = '컨텐츠 태그';
+
+-- ---------- --
+
 -- 조치자 (managtr)
 CREATE TABLE IF NOT EXISTS managtr (
     managtr_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '조치자 번호 (PK)',

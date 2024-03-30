@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS notice (
     managtr_id VARCHAR(20) COMMENT '작업자 ID',
     managt_dt DATETIME COMMENT '작업일시',
     -- ATCH_FILE
-    atch_file_no INT COMMENT '첨부파일 ID',
+    atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
     regstr_id VARCHAR(20) COMMENT '등록자 ID',
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS vcatn_papr (
     managtr_id VARCHAR(20) COMMENT '작업자 ID',
     managt_dt DATETIME COMMENT '작업일시',
     -- ATCH_FILE
-    atch_file_no INT COMMENT '첨부파일 ID',
+    atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
     regstr_id VARCHAR(20) COMMENT '등록자 ID',
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
@@ -68,7 +68,8 @@ CREATE TABLE IF NOT EXISTS vcatn_papr (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '휴가계획서';
 
--- 휴가 일정
+-- 휴가 일정 (vcatn_schdul)
+-- @extends: BaseCrudEntity
 -- 휴가계획서(vcatn_papr)에 1:N으로 귀속된다.
 CREATE TABLE IF NOT EXISTS vcatn_schdul (
     vcatn_schdul_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '휴가 일정 번호 (PK)',
@@ -82,6 +83,60 @@ CREATE TABLE IF NOT EXISTS vcatn_schdul (
     -- AUDIT
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '휴가일정';
+
+-- 휴가사용가능일자 (vcatn_stats)
+CREATE TABLE IF NOT EXISTS vcatn_stats (
+    stats_yy CHAR(4) COMMENT '휴가 년도 (PK)',
+    user_id VARCHAR(20) COMMENT '사용자 ID (PK)',
+    cnwk_yy INT COMMENT '사용자 ID (PK)',
+    bs_yryc INT COMMENT '사용자 ID (PK)',
+    cnwk_yryc INT COMMENT '사용자 ID (PK)',
+    prjct_yryc INT COMMENT '사용자 ID (PK)',
+    refresh_yryc INT COMMENT '사용자 ID (PK)',
+    -- CONSTRAINT
+    PRIMARY KEY (stats_yy, user_id)
+) COMMENT = '휴가사용가능일자';
+
+-- 휴가집계기간 (vcatn_stats_yy)
+CREATE TABLE IF NOT EXISTS vcatn_stats_yy (
+    stats_yy CHAR(4) PRIMARY KEY COMMENT '휴가 년도 (PK)',
+    bgn_dt DATE COMMENT '시작일자',
+    end_dt DATE COMMENT '종료일자'
+) COMMENT = '휴가집계기간';
+
+-- ---------- --
+
+-- 일정
+-- @extends: BaseClsfEntity
+CREATE TABLE IF NOT EXISTS schdul (
+    -- CLSF
+    post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
+    content_type VARCHAR(32) DEFAULT 'schdul' COMMENT '컨텐츠 타입',
+    --
+    schdul_cd VARCHAR(30),
+    schdul_nm VARCHAR(500),
+    bgn_dt DATETIME,
+    end_dt DATETIME,
+    schdul_resn VARCHAR(500),
+    schdul_rm VARCHAR(500),
+    prvt_yn CHAR(1) DEFAULT 'N',
+    -- AUDIT
+    regstr_id VARCHAR(20) COMMENT '등록자ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
+) COMMENT = '일정';
+
+CREATE TABLE IF NOT EXISTS schdul_prtcpnt (
+    schdul_prtcpnt_no INT PRIMARY KEY AUTO_INCREMENT,
+    schdul_no INT,
+    user_id VARCHAR(30),
+    -- AUDIT
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    FOREIGN KEY(schdul_no) REFERENCES schdul (schdul_no)
+) COMMENT = '일정참가자';
 
 -- ---------- --
 
@@ -108,7 +163,8 @@ CREATE TABLE IF NOT EXISTS exptr_prsnl_papr (
     managtr_id VARCHAR(20) COMMENT '작업자 ID',
     managt_dt DATETIME COMMENT '작업일시',
     -- ATCH_FILE
-    atch_file_no INT COMMENT '첨부파일 ID',
+    rcipt_file_no INT COMMENT '영수증 파일 묶음 번호',
+    atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
     regstr_id VARCHAR(20) COMMENT '등록자 ID',
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
@@ -120,17 +176,17 @@ CREATE TABLE IF NOT EXISTS exptr_prsnl_papr (
 -- 경비지출 항목 (exptr_prsnl_item)
 -- 경비지출서(exptr_prsnl_papr)에 1:N으로 귀속된다.
 CREATE TABLE IF NOT EXISTS EXPTR_PRSNL_ITEM (
-    exptr_prsnl_item_no INT AUTO_INCREMENT PRIMARY KEY,
-    ref_post_no INT,
-    exptr_dt DATE,
-    exptr_cd VARCHAR(30),
-    exptr_amt INT,
-    cn varchar(500),
-    rm VARCHAR(500),
-    rject_yn CHAR(1) DEFAULT 'N',
-    rject_resn VARCHAR(500),
+    exptr_prsnl_item_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '경비지출 항목 번호 (PK)',
+    ref_post_no INT COMMENT '참조 글 번호',
+    exptr_dt DATE COMMENT '지출일시',
+    exptr_cd VARCHAR(30) COMMENT '지출 코드',
+    exptr_amt INT COMMENT '지출 금액',
+    cn varchar(500) COMMENT '내용',
+    rm VARCHAR(500) COMMENT '비고',
+    rject_yn CHAR(1) DEFAULT 'N' COMMENT '반려 여부 (Y/N)' ,
+    rject_resn VARCHAR(500) COMMENT '반려사유',
     -- ATCH_FILE
-    atch_file_dtl_no INT COMMENT '영수증 파일 ID',
+    atch_file_dtl_no INT COMMENT '영수증 파일 번호',
     orgnl_rcipt_yn CHAR(1) DEFAULT 'N',
     -- AUDIT
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
@@ -159,7 +215,7 @@ CREATE TABLE IF NOT EXISTS exptr_reqst(
     managtr_id VARCHAR(20) COMMENT '작업자 ID',
     managt_dt DATETIME COMMENT '작업일시',
     -- ATCH_FILE
-    atch_file_no INT COMMENT '첨부파일 ID',
+    atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
     regstr_id VARCHAR(20) COMMENT '등록자 ID',
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',

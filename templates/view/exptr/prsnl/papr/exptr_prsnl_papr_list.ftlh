@@ -41,7 +41,7 @@
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_REG_FORM!}");
             },
             /** 상세 화면 이동 */
-            fnDtl: function (postNo) {
+            dtl: function (postNo) {
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_DTL!}");
             },
@@ -137,7 +137,7 @@
             <#assign divideYy = listYy?? && (post.yy?number lt listYy)>
             <#assign divideMnth = listMnth?? && (post.mnth?number lt listMnth)>
             <tr class="bg-hover-secondary<#if post.isRegstr!false> bg-fxd-list</#if> <#if divideYy || divideMnth>border-top-5</#if>"
-                onclick="Page.fnDtl('${post.postNo!}')">
+                onclick="Page.dtl('${post.postNo!}')">
                 <td class="text-center hidden-table">${post.rnum!}</td>
                 <td class="text-start" role="button">
                     <a href="${SiteUrl.EXPTR_PRSNL_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
@@ -156,7 +156,7 @@
                             <img src="${(post.managtrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
                         </div>
                     </#if>
-                    <span role="button" onclick="Page.fnDtl('${post.postNo!}');">
+                    <span role="button" onclick="Page.dtl('${post.postNo!}');">
                         ${post.regstrNm!"-"}
                     </span>
                     <#if post.isRegstr!false>
