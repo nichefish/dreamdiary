@@ -22,31 +22,31 @@
                 commons.util.fnSortTable();
             },
             /** 목록 검색 */
-            fnSearch: function () {
+            search: function () {
                 $("#pageNo").val("");
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.VCATN_PAPR_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
-            fnMyPapr: function () {
+            myPapr: function () {
                 const url = "${SiteUrl.VCATN_PAPR_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
             /** 전체 목록 조회 */
-            fnResetSearch: function() {
+            resetSearch: function() {
                 commons.util.blockUIReplace("${SiteUrl.VCATN_PAPR_LIST!}");
             },
             /** 등록 화면 이동 */
-            fnRegForm: function () {
+            regForm: function () {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.VCATN_PAPR_REG_FORM!}");
             },
             /** 상세 화면 이동 */
-            fnDtl: function (postNo) {
+            dtl: function (postNo) {
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.VCATN_PAPR_DTL!}");
             },
             /** 상세 모달 팝업 호출 */
-            fnDtlAjax: function (postNo) {
+            dtlAjax: function (postNo) {
                 event.stopPropagation();
                 const url = "${SiteUrl.VCATN_PAPR_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
@@ -89,7 +89,7 @@
         <tbody class="cursor-pointer">
             <!-- 공지사항 상단고정 목록 -->
             <#list vcatnPaprFxdList![] as post>
-                <tr class="bg-fxd-list <#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary" onclick="Page.fnDtl('${post.postNo!}');">
+                <tr class="bg-fxd-list <#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
                     <td class="text-center hidden-table">
                         ${post.rnum!"-"}
                     </td>
@@ -115,7 +115,7 @@
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.fnDtlAjax('${post.postNo!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </td>
@@ -158,7 +158,7 @@
                 </tr>
             </#list>
             <#list vcatnPaprList![] as post>
-                <tr class="<#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary" onclick="Page.fnDtl('${post.postNo!}');">
+                <tr class="<#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
                     <td class="text-center hidden-table">
                         ${post.rnum!}
                     </td>
@@ -183,7 +183,7 @@
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.fnDtlAjax('${post.postNo!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </td>
