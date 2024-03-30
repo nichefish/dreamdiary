@@ -35,7 +35,7 @@ public interface HldyKasiApiMapstruct
     // @Mapping(target = "contentType", expression = "java(\"hldyApi\")")
     @Mapping(target = "schdulNm", expression = "java(dto.getDateName())")
     @Mapping(target = "schdulTyCd", expression = "java(\"HLDY\")")
-    @Mapping(target = "beginDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
+    @Mapping(target = "bgnDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     @Mapping(target = "endDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     SchdulEntity toEntity(final HldyKasiApiItemDto dto) throws Exception;
 
@@ -47,7 +47,7 @@ public interface HldyKasiApiMapstruct
     // @Mapping(target = "contentType", expression = "java(\"hldyApi\")")
     @Mapping(target = "schdulNm", expression = "java(dto.getDateName())")
     @Mapping(target = "schdulTyCd", expression = "java(\"HLDY\")")
-    @Mapping(target = "beginDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
+    @Mapping(target = "bgnDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     @Mapping(target = "endDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     void updateFromDto(
             final HldyKasiApiItemDto dto,
