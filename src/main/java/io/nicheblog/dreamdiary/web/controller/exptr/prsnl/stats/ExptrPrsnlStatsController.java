@@ -64,7 +64,7 @@ public class ExptrPrsnlStatsController
      * 경비 관리 > 경비지출누적집계 > 년도별 경비지출누적집계 화면 조회
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(SiteUrl.EXPTR_PRSNL_STATS)
+    @RequestMapping(SiteUrl.EXPTR_PRSNL_STATS_PAGE)
     @Secured(Constant.ROLE_MNGR)
     public String exptrPrsnlStats(
             final LogActvtyParam logParam,
@@ -100,7 +100,7 @@ public class ExptrPrsnlStatsController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/prsnl/stats/exptr_indvd_stats";
+        return "/view/exptr/prsnl/stats/exptr_prsnl_stats_page";
     }
 
     /**
@@ -144,7 +144,7 @@ public class ExptrPrsnlStatsController
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS);
+            MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + key);
@@ -152,14 +152,14 @@ public class ExptrPrsnlStatsController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/prsnl/stats/exptr_indvd_stats_dtl";
+        return "/view/exptr/prsnl/stats/exptr_prsnl_stats_dtl";
     }
 
     /**
      * 경비 관리 > 경비지출누적집계 > 경비지출서 취합완료 처리 (Ajax)
      * 관리자MNGR만 접근 가능
      */
-    @PostMapping(SiteUrl.EXPTR_PRSNL_STATS_COMPT_AJAX)
+    @PostMapping(SiteUrl.EXPTR_PRSNL_STATS_CF_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlStatsComptAjax(
@@ -211,7 +211,7 @@ public class ExptrPrsnlStatsController
     //         isSuccess = false;
     //         resultMsg = MessageUtils.getExceptionMsg(e);
     //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-    //         MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS);
+    //         MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
     //     } finally {
     //         // 로그 관련 처리
     //         logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
