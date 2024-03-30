@@ -14,7 +14,7 @@ import org.hibernate.annotations.NotFoundAction;
 import javax.persistence.*;
 
 /**
- * TagDto
+ * ContentTagDto
  * <pre>
  *  태그 Dto
  * </pre>
