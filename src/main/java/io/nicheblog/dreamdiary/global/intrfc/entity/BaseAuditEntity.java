@@ -56,5 +56,9 @@ public class BaseAuditEntity
     /** 수정자 이름 */
     @Transient
     protected String mdfusrNm;
+
+    /** 수정자 여부 */
+    @Transient
+    protected Boolean isMdfusr;
 }
 

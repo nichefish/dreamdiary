@@ -33,15 +33,9 @@ public class BaseAuditDto
     /** 수정일시 */
     protected String mdfDt;
 
-    /** 등록자 정보 */
+    /** 수정자 정보 */
     protected AuditorDto mdfusrInfo;
 
-    /* ----- */
-
-    /**
-     * 등록자 여부
-     */
-    public Boolean getIsMdfusr() {
-        return (AuthUtils.isMdfusr(this.mdfusrId));
-    }
+    /** 수정자 여부 */
+    protected Boolean isMdfUser;
 }

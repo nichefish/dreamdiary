@@ -36,19 +36,14 @@ public class BaseAuditRegDto
     /** 등록자 정보 */
     protected AuditorDto regstrInfo;
 
+    /** 수정자 여부 */
+    protected Boolean isMdfUser;
+
+    /** 처리성공여부 = 서비스 레벨에서 결과값 반환시 사용 */
+    @Builder.Default
+    protected Boolean isSuccess = false;
+
     /* ----- */
-
-    /**
-     * 처리성공여부 = 서비스 레벨에서 결과값 반환시 사용
-     */
-    protected Boolean isSuccess;
-
-    /**
-     * 등록자 여부
-     */
-    public Boolean getIsRegstr() {
-        return (AuthUtils.isRegstr(this.regstrId));
-    }
 
     /**
      * 마스킹 처리한 사용자ID 반환

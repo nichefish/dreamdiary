@@ -53,8 +53,12 @@ public class BaseAuditRegEntity
     @NotFound(action = NotFoundAction.IGNORE)
     protected AuditorInfo regstrInfo;
 
-    @Transient
     /** 등록자 이름 */
+    @Transient
     protected String regstrNm;
+
+    /** 등록자 여부 */
+    @Transient
+    protected Boolean isRegstr;
 }
 
