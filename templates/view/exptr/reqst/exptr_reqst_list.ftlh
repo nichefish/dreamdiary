@@ -22,32 +22,32 @@
                 commons.util.fnSortTable();
             },
             /** 목록 검색 */
-            fnSearch: function () {
+            search: function () {
                 $("#pageNo").val("");
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.EXPTR_REQST_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
-            fnMyPapr: function () {
+            myPapr: function () {
                 const url = "${SiteUrl.EXPTR_REQST_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
             /** 전체 목록 조회 */
-            fnResetSearch: function() {
+            resetSearch: function() {
                 commons.util.blockUIReplace("${SiteUrl.EXPTR_REQST_LIST!}");
             },
             /** 등록 화면 이동 */
-            fnRegForm: function () {
+            regForm: function () {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_REQST_REG_FORM!}");
             },
             /** 상세 화면 이동 */
-            fnDtl: function (postNo) {
+            dtl: function (postNo) {
                 commons.util.blockUIRequest();
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_REQST_DTL!}");
             },
             /** 상세 모달 팝업 호출 */
-            fnDtlAjax: function (postNo) {
+            dtlAjax: function (postNo) {
                 event.stopPropagation();
                 const url = "${SiteUrl.EXPTR_REQST_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
@@ -92,7 +92,7 @@
         <!--begin::Table body-->
         <tbody>
             <#list exptrReqstFxdList![] as post>
-                <tr class="bg-fxd-list bg-hover-secondary" onclick="Page.fnDtl('${post.postNo!}');">
+                <tr class="bg-fxd-list bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
                     <td class="text-center hidden-table">
                         -
                     </td>
@@ -123,7 +123,7 @@
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.fnDtlAjax('${post.postNo!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </td>
@@ -173,7 +173,7 @@
                 </tr>
             </#list>
             <#list exptrReqstList![] as post>
-                <tr class="bg-hover-secondary" onclick="Page.fnDtl('${post.postNo!}');">
+                <tr class="bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
                     <td class="text-center hidden-table">
                         ${post.rnum!}
                     </td>
@@ -203,7 +203,7 @@
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.fnDtlAjax('${post.postNo!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </td>

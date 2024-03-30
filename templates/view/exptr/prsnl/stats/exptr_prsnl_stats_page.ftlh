@@ -22,7 +22,7 @@
             /** 조회 년도 변경 */
             statsYy: function() {
                 let statsYy = $("#statsYy option:selected").val();
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS}?statsYy="+statsYy);
+                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS_PAGE}?statsYy="+statsYy);
             },
             /** 상세 화면 이동 */
             statsDtl: function(postNo) {

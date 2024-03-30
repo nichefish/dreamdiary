@@ -57,7 +57,7 @@ public class ContentTagEntity
 
     /** 태그 정보 */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ref_tag_no", referencedColumnName = "tag_no")
+    @JoinColumn(name = "ref_tag_no", referencedColumnName = "tag_no", updatable = false, insertable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     private TagEntity tag;
 
