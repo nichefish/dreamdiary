@@ -16,17 +16,19 @@
         <!-- USER -->
         <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.USER />
 
-        <!-- VCATN -->
-        <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.VCATN_ADMIN />
-
-        <!-- EXPTR -->
-        <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.EXPTR_ADMIN />
-
         <!-- SITE -->
         <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.ADMIN />
 
         <!-- LOG -->
         <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.LOG />
+
+        <div class="separator mx-5 mt-8 mb-3 opacity-25 blink"></div>
+
+        <!-- VCATN -->
+        <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.VCATN_ADMIN />
+
+        <!-- EXPTR -->
+        <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.EXPTR_ADMIN />
 
     </div>
     <!--end::Menu-->

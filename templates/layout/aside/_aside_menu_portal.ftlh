@@ -22,6 +22,8 @@
         <!-- BOARD -->
         <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.BOARD />
 
+        <div class="separator mx-5 mt-8 mb-3 opacity-25 blink"></div>
+
         <!-- SCHDUL -->
         <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.SCHDUL />
 
