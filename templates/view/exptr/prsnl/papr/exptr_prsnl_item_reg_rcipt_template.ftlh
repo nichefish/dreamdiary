@@ -1,7 +1,7 @@
 <#--
   -- 경비 > 경비지출서 > 영수증 Template
-  -- @included in : exptr_indvd_papr_reg_form
-  -- @included in : exptr_indvd_papr_dtl
+  -- @included in : exptr_prsnl_papr_reg_form
+  -- @included in : exptr_prsnl_papr_dtl
   -->
 <script>
     let Rcipt = function() {
@@ -9,7 +9,7 @@
             /**
              * 영수증 이미지 첨부 (등록/수정)
              */
-            fnUploadRegAjax: function(idx) {
+            uploadRegAjax: function(idx) {
                 let fileInput = $("#atchFile0");
                 fileInput.click();
                 fileInput.on("change", function() {
@@ -39,7 +39,7 @@
             /**
              * 영수증 이미지 첨부 (상세)
              */
-            fnUploadDtlAjax: function(exptrPrsnlItemNo) {
+            uploadDtlAjax: function(exptrPrsnlItemNo) {
                 let fileInput = $("#atchFile0");
                 fileInput.click();
                 fileInput.on("change", function () {

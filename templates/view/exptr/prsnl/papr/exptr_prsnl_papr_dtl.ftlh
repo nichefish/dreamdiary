@@ -71,7 +71,7 @@
                 commons.util.popup(url, popupNm, options);
             },
             /** 개별 영수증 PDF 취합 다운로드 */
-            fnPdfDownload: function() {
+            pdfDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -171,7 +171,7 @@
                             <th colspan="2" class="min-w-175px text-center wb-keepall w-20">
                                 영수증
                                 <a href="javascript:void(0);" class="badge badge-primary mx-1"
-                                   onclick="Page.fnPdfDownload();"
+                                   onclick="Page.pdfDownload();"
                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="영수증 사본 이미지 묶음을&#10;PDF 파일로 다운로드합니다.">
                                     <i class="bi bi-file-earmark-pdf text-light pe-1"></i>PDF 다운로드
                                 </a>
@@ -216,7 +216,7 @@
                                         <#if (post.isRegstr!false) || (isMngr)>
                                             <span class="text-danger">(업로드<i class="bi bi-x text-danger"></i>)</span>
                                             <span class="badge badge-primary ms-1 p-2 text-danger cursor-pointer blink-slow fs-4"
-                                                  onclick="Rcipt.fnUploadDtlAjax('${exptr.exptrPrsnlItemNo!}')">
+                                                  onclick="Rcipt.uploadDtlAjax('${exptr.exptrPrsnlItemNo!}')">
                                                 <i class="bi bi-cloud-arrow-up"></i>
                                             </span>
                                         <#else>

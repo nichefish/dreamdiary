@@ -1,6 +1,6 @@
 <#--
   -- 경비 > 경비지출서 > 등록/수정 Template
-  -- @included in : exptr_indvd_papr_reg_form, exptr_indvd_papr_dtl_form
+  -- @included in : exptr_prsnl_papr_reg_form, exptr_prsnl_papr_dtl_form
   -->
 <script id="exptr_prsnl_item_reg_template" type="text/x-handlebars-template">
     <tr id="itemContainer{{rnum}}" {{#if (equals rjectYn "Y")}}class="bg-light-danger"{{/if}}>
@@ -69,7 +69,7 @@
         </td>
         <td class="text-center">
             {{#unless (exists atchFileDtlId)}}
-                <a href="javascript:void(0);" class="text-hover-primary fs-8" id="rciptRegBtn{{rnum}}" onclick="Rcipt.fnUploadRegAjax('{{rnum}}')">
+                <a href="javascript:void(0);" class="text-hover-primary fs-8" id="rciptRegBtn{{rnum}}" onclick="Rcipt.uploadRegAjax('{{rnum}}')">
                     <span class="svg-icon svg-icon-muted svg-icon-2hx">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM16 13H13V10C13 9.4 12.6 9 12 9C11.4 9 11 9.4 11 10V13H8C7.4 13 7 13.4 7 14C7 14.6 7.4 15 8 15H11V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18V15H16C16.6 15 17 14.6 17 14C17 13.4 16.6 13 16 13Z" fill="black"/>

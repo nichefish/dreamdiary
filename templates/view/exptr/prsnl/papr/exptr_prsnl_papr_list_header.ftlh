@@ -1,6 +1,6 @@
 <#--
   -- 경비 > 경비지출서 > 목록 검색 영역 Header
-  -- @included in : exptr_indvd_papr_list
+  -- @included in : exptr_prsnl_papr_list
   -->
 <form name="listForm" id="listForm" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${pageNo!}">
@@ -45,27 +45,27 @@
             </div>
         </div>
         <div class="col-lg-3 col-12 d-flex align-items-center mt-2">
-            <button type="submit" class="btn btn-sm btn-primary" onclick="Page.fnSearch();">
+            <button type="submit" class="btn btn-sm btn-primary" onclick="Page.search();">
                 <i class="bi bi-search"></i>검색
             </button>
             <#if MY_PAPR??>
-                <div class="btn btn-sm btn-secondary btn-outlined ms-2 ps-2 pe-3 cursor-pointer" style="background-color:rgba(64,64,64,0.2) !important" onclick="Page.fnResetSearch();"
+                <div class="btn btn-sm btn-secondary btn-outlined ms-2 ps-2 pe-3 cursor-pointer" style="background-color:rgba(64,64,64,0.2) !important" onclick="Page.resetSearch();"
                      data-bs-toggle="tooltip" data-bs-placement="top" title="전체 글을 조회합니다.">
                     <i class="bi bi-list"></i>전체 글 보기
                 </div>
             <#else>
-                <div class="btn btn-sm btn-light-primary btn-outlined ms-2 ps-2 pe-3 cursor-pointer" onclick="Page.fnMyPapr();"
+                <div class="btn btn-sm btn-light-primary btn-outlined ms-2 ps-2 pe-3 cursor-pointer" onclick="Page.myPapr();"
                      data-bs-toggle="tooltip" data-bs-placement="top" title="내가 작성한 글만 조회합니다.">
                     <i class="bi bi-check"></i>내 글 보기
                 </div>
             </#if>
         </div>
         <div class="col-lg-3 col-12 d-flex justify-content-end align-items-center mt-2">
-            <a href="javascript:void(0);" class="btn btn-sm btn-primary mx-3" onclick="Page.fnExistingChck();"
+            <a href="javascript:void(0);" class="btn btn-sm btn-primary mx-3" onclick="Page.existingChck();"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.reg"/>">
                 <i class="fas fa-plus"></i>등록
             </a>
-            <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#exptr_indvd_rule_modal').modal('show');"
+            <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#exptr_prsnl_rule_modal').modal('show');"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작성 안내 팝업을 호출합니다.">
                 <i class="fas fa-info-circle"></i>작성 안내
             </button>

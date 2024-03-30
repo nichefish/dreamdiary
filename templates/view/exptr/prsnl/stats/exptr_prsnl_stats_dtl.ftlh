@@ -65,7 +65,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_PRSNL_STATS_COMPT_AJAX!}";
+                    const url = "${SiteUrl.EXPTR_PRSNL_STATS_CF_AJAX!}";
                     let ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -94,10 +94,10 @@
             },
             /** 목록 화면 이동 */
             stats: function() {
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS!}");
+                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS_PAGE!}");
             },
             /** PDF 다운로드 */
-            fnPdfDownload: function() {
+            pdfDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -196,7 +196,7 @@
                             <th class="min-w-200px text-center wb-keepall">인원 및 비고</th>
                             <th colspan="2" class="min-w-175px text-center wb-keepall w-20">
                                 영수증
-                                <a href="javascript:void(0);" class="badge badge-primary card mt-4 mx-1" onclick="Page.fnPdfDownload();"
+                                <a href="javascript:void(0);" class="badge badge-primary card mt-4 mx-1" onclick="Page.pdfDownload();"
                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="영수증 사본 이미지 묶음을&#10;PDF 파일로 다운로드합니다.">
                                     <i class="bi bi-file-earmark-pdf text-light pe-1"></i>PDF 다운로드
                                 </a>
@@ -355,6 +355,6 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/exptr/prsnl/stats/exptr_indvd_stats_dtl_rject_resn_modal.ftlh">
+<#include "/view/exptr/prsnl/stats/exptr_prsnl_stats_dtl_rject_resn_modal.ftlh">
 
 </@layout.layout>

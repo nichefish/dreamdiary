@@ -111,7 +111,7 @@
                         return false;
                     }
                     // 날짜 변경시 순으로 자동 정렬
-                    let divTable = document.getElementById('exptr_indvd_table');
+                    let divTable = document.getElementById('exptr_prsnl_table');
                     (function (divTable, n) {
                         commons.util.sortReqstTable(divTable, 0, "FORWARD");
                     }(divTable, 0));
@@ -155,7 +155,7 @@
                     });
 
                     // // 날짜순으로 자동 정렬
-                    // let divTable = document.getElementById('exptr_indvd_table');
+                    // let divTable = document.getElementById('exptr_prsnl_table');
                     // (function (table, n) {
                     //     commons.util.sortReqstTable(table, n, "FORWARD");
                     // }(divTable, 0));
@@ -228,7 +228,7 @@
 <!--begin::Row-->
 <div class="row">
     <div class="col-12 d-flex justify-content-end align-items-center mt-4">
-        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1" onclick="$('#exptr_indvd_rule_modal').modal('show');"
+        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1" onclick="$('#exptr_prsnl_rule_modal').modal('show');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작성 안내 팝업을 호출합니다.">
             <i class="fas fa-info-circle"></i>작성 안내
         </button>
@@ -323,7 +323,7 @@
         <div class="separator separator-dashed border-gray-300 my-8"></div>
         <!--end::Separator-->
         <div class="table-responsive">
-            <table class="table align-middle fs-6 gy-5 hoverTable" id="exptr_indvd_table">
+            <table class="table align-middle fs-6 gy-5 hoverTable" id="exptr_prsnl_table">
                 <thead>
                     <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted border-bottom">
                         <th class="col-xl-2 col-2 min-w-125px max-w-125px text-center wb-keepall">날짜</th>

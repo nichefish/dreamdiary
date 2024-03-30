@@ -22,22 +22,22 @@
                 commons.util.fnSortTable();
             },
             /** 목록 검색 */
-            fnSearch: function () {
+            search: function () {
                 $("#pageNo").val("");
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
-            fnMyPapr: function () {
+            myPapr: function () {
                 const url = "${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
             /** 전체 목록 조회 */
-            fnResetSearch: function() {
+            resetSearch: function() {
                 commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}");
             },
             /** 등록 화면 이동 */
-            fnRegForm: function () {
+            regForm: function () {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_REG_FORM!}");
             },
             /** 상세 화면 이동 */
@@ -47,7 +47,7 @@
             },
             /** 등록 전 점검 (Ajax) */
             // TODO: 로직 더 단순화할 수 있을 것 같은데???
-            fnExistingChck: function() {
+            existingChck: function() {
                 $("#prevYn").val("N");
                 const url = "${SiteUrl.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX!}";
                 commons.util.blockUIAjax(url, 'post', "", function(res) {
@@ -58,7 +58,7 @@
                     const prevMnthCompt = (prevMnth !== undefined && prevMnth.cfYn === "Y");
                     const currMnthCompt = (currMnth !== undefined && currMnth.cfYn === "Y");
                     if (prevMnthCompt && currMnthCompt) {
-                        alert("<@spring.message 'view.post.indvd.alreadyCompt'/>");
+                        alert("<@spring.message 'view.post.prsnl.alreadyCompt'/>");
                         return false;
                     } else {
                         const prevMnthOngoing = (prevMnth !== undefined && prevMnth.cfYn !== "Y");
@@ -81,7 +81,7 @@
                         // TODO: 이쪽 로직 쫌 정리하자
                         if (prevMnth == undefined || currMnth == undefined) {
                             if (prevMnth == undefined && currMnth != undefined) $("#prevYn").val("Y");
-                            Page.fnRegForm();
+                            Page.regForm();
                         } else {
                             alert("경비지출서는 각 월당 한 개만 작성할 수 있습니다.");
                         }
@@ -89,7 +89,7 @@
                 });
             },
             /** 개별 영수증 PDF 취합 다운로드 */
-            fnPdfDownload: function(postNo) {
+            pdfDownload: function(postNo) {
                 event.stopPropagation();
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
@@ -184,7 +184,7 @@
                 <td class="text-center col-form-label hidden-table">
                     <a class="badge badge-secondary p-2 btn-white blank blink-slow"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
-                        <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="Page.fnPdfDownload('${post.postNo}');"></i>
+                        <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="Page.pdfDownload('${post.postNo}');"></i>
                     </a>
                 </td>
                 <td class="text-center hidden-table">
