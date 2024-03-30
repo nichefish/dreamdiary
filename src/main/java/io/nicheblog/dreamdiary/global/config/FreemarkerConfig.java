@@ -38,10 +38,9 @@ public class FreemarkerConfig
             configuration.setSharedVariables(this.getSharedVariables(objectWrapper));
             // 숫자에 콤마 제거!!! (1000 넘어가는 ID에서 개꼬임...)
             configuration.setNumberFormat("computer");
-            // spring.ftl 자동 임포트 :: TODO : 현재 미작동중
             Properties settings = new Properties();
             settings.setProperty("template_exception_handler", "ignore");
-            settings.setProperty("auto_import", "/spring.ftl as spring");
+            settings.setProperty("auto_import", "/lib/spring.ftl as spring");
             configurer.setFreemarkerSettings(settings);
             // 템플릿 위치 추가
             List<String> pluginTemplatePaths = new ArrayList<>();
