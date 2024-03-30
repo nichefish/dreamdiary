@@ -19,6 +19,8 @@ spring:
         #template-loader-path: classpath:/templates/
         template-loader-path: file:templates/
         suffix: .ftlh
+        content-type: text/html; charset=utf-8
+        request-context-attribute: rc
         expose-request-attributes: true
         expose-session-attributes: true
 
