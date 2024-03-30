@@ -48,7 +48,7 @@ public class ExptrPrsnlPaprDto
     private String yy;
     /** 월 */
     private String mnth;
-    /** 확인 여부 */
+    /** 확인 여부 (Y/N) */
     private String cfYn;
 
     /** 개별 지출내역 목록 */

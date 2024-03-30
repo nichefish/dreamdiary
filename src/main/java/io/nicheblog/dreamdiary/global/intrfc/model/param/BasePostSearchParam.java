@@ -25,8 +25,8 @@ public class BasePostSearchParam
     private String cn;
     /** 글분류 코드 */
     private String ctgrCd;
-    /** 중요 여부 */
+    /** 중요 여부 (Y/N) */
     private String imprtcYn;
-    /** 상단고정 여부 */
+    /** 상단고정 여부 (Y/N) */
     private String fxdYn;
 }

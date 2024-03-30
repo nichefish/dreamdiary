@@ -31,7 +31,7 @@ public class DreamDayApiDto
     /** 꿈 일자 */
     private String dreamtDt;
 
-    /** 날짜미상여부 */
+    /** 날짜미상여부 (Y/N) */
     @Builder.Default
     private String dtUnknownYn = "N";
 

@@ -61,13 +61,13 @@ public class DreamPieceEntity
     @Column(name = "idx", columnDefinition = "INT DEFAULT 1")
     private Integer idx;
 
-    /** 편집완료 여부 */
+    /** 편집완료 여부 (Y/N) */
     @Builder.Default
     @Column(name = "edit_compt_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("편집완료 여부")
     private String editComptYn = "N";
 
-    /** 타인 꿈 여부 */
+    /** 타인 꿈 여부 (Y/N) */
     @Builder.Default
     @Column(name = "else_dream_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("타인 꿈 여부")

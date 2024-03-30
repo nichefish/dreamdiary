@@ -109,13 +109,13 @@ public class ExptrPrsnlItemEntity
     @Comment("첨부파일(상세) 정보")
     private AtchFileDtlEntity atchFileDtlInfo;
 
-    /** 영수증 실물제출 여부 */
+    /** 영수증 실물제출 여부 (Y/N) */
     @Builder.Default
     @Column(name = "orgnl_rcipt_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
     @Comment("영수증 실물제출 여부")
     private String orgnlRciptYn = "N";
 
-    /** 반려 여부 */
+    /** 반려 여부 (Y/N) */
     @Builder.Default
     @Column(name = "rject_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
     @Comment("반려 여부")

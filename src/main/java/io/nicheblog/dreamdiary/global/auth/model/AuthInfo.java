@@ -46,11 +46,11 @@ public class AuthInfo
     /** 프로필 이미지 URL */
     private String proflImgUrl;
 
-    /** 승인여부 */
+    /** 승인 여부 (Y/N) */
     private String cfYn;
-    /** 잠금여부 */
+    /** 잠금 여부 (Y/N) */
     private String lockedYn;
-    /** 접속 IP 사용 여부 */
+    /** 접속 IP 사용 여부 (Y/N) */
     private String useAcsIpYn;
     /** 접속 IP 목록 */
     private List<String> acsIpList;
@@ -58,7 +58,7 @@ public class AuthInfo
     private Date lstLgnDt;
     /** 최종비밀번호변경일시 */
     private Date pwChgDt;
-    /** 패스워드 리셋 필요여부 */
+    /** 패스워드 리셋 필요 여부 (Y/N) */
     private String needsPwReset;
 
     /** 사용자 정보 통으로 저장 (일단) */

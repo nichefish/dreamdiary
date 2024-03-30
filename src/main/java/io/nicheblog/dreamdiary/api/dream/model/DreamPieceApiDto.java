@@ -40,11 +40,11 @@ public class DreamPieceApiDto
     /** 내용 */
     private String cn;
 
-    /** 편집완료 여부 */
+    /** 편집완료 여부 (Y/N) */
     @Builder.Default
     private String editComptYn = "N";
 
-    /** 타인 꿈 여부 */
+    /** 타인 꿈 여부 (Y/N) */
     @Builder.Default
     private String elseDreamYn = "N";
 

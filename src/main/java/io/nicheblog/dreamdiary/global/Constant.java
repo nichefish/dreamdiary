@@ -120,7 +120,7 @@ public final class Constant
     public static final String ACTION_TY_CD = "ACTION_TY_CD";         // 액션 유형 코드
 
     /* 일정 분류 코드 */
-    public static final String SCHDUL_TY_CD = "SCHDUL_TY_CD";       // 일정 구분 코드
+    public static final String SCHDUL_CD = "SCHDUL_CD";       // 일정 구분 코드
 
     @AllArgsConstructor
     public enum SchdulTy {

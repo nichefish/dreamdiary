@@ -20,6 +20,7 @@ public enum ContentType {
     DREAM_PIECE("dream_piece", "꿈 조각"),
 
     VCATN_PAPR("vcatn_papr", "휴가계획서"),
+    SCHDUL("schdul", "일정"),
 
     EXPTR_PRSNL_PAPR("exptr_prsnl_papr", "경비지출서"),
     EXPTR_REQST("exptr_reqst", "물품구매/경조사비 신청"),

@@ -46,11 +46,11 @@ public class ExptrPrsnlItemDto
 
     /** 첨부파일(상세) 번호 */
     private String atchFileDtlNo;
-    /** 영수증실물여부 */
+    /** 영수증 실물제출 여부 (Y/N) */
     @Builder.Default
     private String orgnlRciptYn = "N";
 
-    /** 반려 여부 */
+    /** 반려 여부 (Y/N) */
     @Builder.Default
     private String rjectYn = "N";
     /** 반려사유 */

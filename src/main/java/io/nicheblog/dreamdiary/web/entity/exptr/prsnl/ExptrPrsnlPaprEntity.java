@@ -122,7 +122,7 @@ public class ExptrPrsnlPaprEntity
     @Comment("월")
     private Integer mnth;
 
-    /** 확인 여부 */
+    /** 확인 여부 (Y/N) */
     @Builder.Default
     @Column(name = "cf_yn")
     @Comment("확인 여부")

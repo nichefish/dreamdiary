@@ -53,7 +53,7 @@ public class ExptrReqstEntity
 
     /* ----- */
 
-    /** 처리 여부 */
+    /** 처리 여부 (Y/N) */
     @Builder.Default
     @Column(name = "cf_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("처리 여부")

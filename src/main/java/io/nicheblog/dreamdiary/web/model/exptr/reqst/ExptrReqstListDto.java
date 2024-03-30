@@ -37,7 +37,7 @@ public class ExptrReqstListDto
 
     /* ----- */
 
-    /** 처리 여부 */
+    /** 처리 여부 (Y/N) */
     @Builder.Default
     private String cfYn = "N";
 

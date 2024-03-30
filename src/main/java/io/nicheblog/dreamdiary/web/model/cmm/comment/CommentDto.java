@@ -45,10 +45,6 @@ public class CommentDto
     /** 내용 */
     protected String cn;
 
-    /** 성공여부 */
-    @Builder.Default
-    protected Boolean isSuccess = false;
-
     /* ----- */
 
     /** 댓글 정보 모듈 (위임) */

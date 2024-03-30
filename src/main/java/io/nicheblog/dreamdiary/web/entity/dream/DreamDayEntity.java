@@ -69,7 +69,7 @@ public class DreamDayEntity
     @Comment("꿈 일자")
     private Date dreamtDt;
 
-    /** 날짜미상여부 */
+    /** 날짜미상 여부 (Y/N) */
     @Builder.Default
     @Column(name = "dt_unknown_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("날짜미상여부")
