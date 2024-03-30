@@ -17,7 +17,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {CollectionUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {})
 public interface TagMapstruct
         extends BaseListMapstruct<TagDto, TagDto, TagEntity> {
 
@@ -29,6 +29,10 @@ public interface TagMapstruct
     @Override
     @Mapping(target = "contentTagList", expression = "java(entity.getContentTagDtoList())")
     TagDto toDto(final TagEntity entity) throws Exception;
+
+    @Override
+    @Mapping(target = "contentTagList", expression = "java(entity.getContentTagDtoList())")
+    TagDto toListDto(final TagEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
