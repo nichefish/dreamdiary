@@ -7,9 +7,9 @@ import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 /**
- * BoardPostMapstruct
+ * CommentEmbedMapstruct
  * <pre>
- *  일반게시판 게시물 MapStruct 기반 Mapper 인터페이스
+ *  댓글 모듈 MapStruct 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish
