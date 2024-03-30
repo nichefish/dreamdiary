@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -47,6 +48,17 @@ public class WebMvcContextConfig
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(deviceHandlerMethodArgumentResolver());
+    }
+
+    /**
+     * 모든 /api/** 경로에 대하여 CORS 허용 설정 추가
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedMethods("GET", "POST")
+                .allowedOrigins("*")
+                .allowedHeaders("*");
     }
 
     /**
