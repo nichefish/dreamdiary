@@ -8,6 +8,8 @@ import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
 import io.nicheblog.dreamdiary.global.cmm.file.repository.AtchFileDtlRepository;
 import io.nicheblog.dreamdiary.global.cmm.file.repository.AtchFileRepository;
+import io.nicheblog.dreamdiary.global.cmm.file.spec.AtchFileSpec;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.extern.log4j.Log4j2;
@@ -33,26 +35,41 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * FileService
+ * AtchFileService
  * <pre>
  *  공통 > 파일 처리 서비스 모듈
+ *  TODO: DB단 관리하는 서비스와 실제 파일을 처리하는 유틸리티 분리
  * </pre>
  *
  * @author nichefish
  */
 @Service("atchFileService")
 @Log4j2
-public class AtchFileService {
+public class AtchFileService
+        implements BaseCrudService<AtchFileDto, AtchFileDto, Integer, AtchFileEntity, AtchFileRepository, AtchFileSpec, AtchFileMapstruct> {
 
     AtchFileMapstruct atchFileMapstruct = AtchFileMapstruct.INSTANCE;
     AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;
 
+    @Override
+    public AtchFileRepository getRepository() {
+        return this.atchFileRepository;
+    }
+    @Override
+    public AtchFileSpec getSpec() {
+        return this.atchFileSpec;
+    }
+    @Override
+    public AtchFileMapstruct getMapstruct() {
+        return this.atchFileMapstruct;
+    }
+
     @Resource(name = "atchFileRepository")
     private AtchFileRepository atchFileRepository;
-
     @Resource(name = "atchFileDtlRepository")
     private AtchFileDtlRepository atchFileDtlRepository;
-
+    @Resource(name = "atchFileSpec")
+    private AtchFileSpec atchFileSpec;
     @Resource
     private HttpServletResponse response;
 
@@ -264,7 +281,7 @@ public class AtchFileService {
     public AtchFileEntity regist(AtchFileEntity atchFile) {
         return atchFileRepository.save(atchFile);
     }
-    
+
     /**
      * 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
      */
@@ -309,5 +326,6 @@ public class AtchFileService {
         }
         return true;
     }
+
 
 }

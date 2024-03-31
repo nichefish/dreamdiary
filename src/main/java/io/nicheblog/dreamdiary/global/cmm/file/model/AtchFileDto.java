@@ -1,8 +1,10 @@
 package io.nicheblog.dreamdiary.global.cmm.file.model;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -17,8 +19,10 @@ import java.util.List;
  */
 @Getter
 @Setter
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-public class AtchFileDto {
+public class AtchFileDto
+        extends BaseCrudDto {
 
     /** 첨부파일 번호 (PK) */
     private String atchFileNo;

@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global.cmm.file.mapstruct;
 
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileEntity;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -18,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AtchFileMapstruct
-        extends BaseMapstruct<AtchFileDto, AtchFileEntity> {
+        extends BaseMapstruct<AtchFileDto, AtchFileEntity>, BaseListMapstruct<AtchFileDto, AtchFileDto, AtchFileEntity> {
 
     AtchFileMapstruct INSTANCE = Mappers.getMapper(AtchFileMapstruct.class);
 
