@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.board;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
@@ -35,21 +35,19 @@ import java.util.Map;
 @Service("boardPostService")
 @Log4j2
 public class BoardPostService
-        implements BasePostService<BoardPostDto, BoardPostListDto, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct, FileService> {
+        implements BasePostService<BoardPostDto, BoardPostListDto, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct, AtchFileService> {
 
     @Resource(name = "boardPostRepository")
     private BoardPostRepository boardPostRepository;
     @Resource(name = "boardPostSpec")
     private BoardPostSpec boardPostSpec;
-    @Resource(name = "fileService")
-    private FileService fileService;
+    @Resource(name = "atchFileService")
+    private AtchFileService atchFileService;
 
     private final BoardPostMapstruct postMapstruct = BoardPostMapstruct.INSTANCE;
 
     @Resource(name = "cdService")
     public CdService cdService;
-    // @Resource(name = "boardTagService")
-    // private TagService tagService;
 
     @Override
     public BoardPostRepository getRepository() {
@@ -67,8 +65,8 @@ public class BoardPostService
     }
 
     @Override
-    public FileService getFileService() {
-        return this.fileService;
+    public AtchFileService getFileService() {
+        return this.atchFileService;
     }
 
     /**

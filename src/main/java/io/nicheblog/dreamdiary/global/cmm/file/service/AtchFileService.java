@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.global.cmm.file.repository.AtchFileRepository;
 import io.nicheblog.dreamdiary.global.cmm.file.spec.AtchFileSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.FileUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MapUtils;
@@ -213,7 +214,7 @@ public class AtchFileService
         OutputStream os;
         InputStream is = new FileInputStream(file);
 
-        this.setRespnsHeader(fileNm);       // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
+        FileUtils.setRespnsHeader(fileNm);       // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
         response.setHeader("Content-Length", String.valueOf(file.length()));        // 파일 크기 설정
 
         // 응답으로 파일 전송
@@ -280,30 +281,6 @@ public class AtchFileService
     /** 첨부파일 저장 */
     public AtchFileEntity regist(AtchFileEntity atchFile) {
         return atchFileRepository.save(atchFile);
-    }
-
-    /**
-     * 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
-     */
-    public void setRespnsHeader(final String fileNm) throws Exception {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-
-        String client = request.getHeader("User-Agent");
-        // 브라우저가 IE일 경우 별도 처리
-        if (client.contains("MSIE")) {
-            response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileNm, StandardCharsets.UTF_8));
-        } else if (client.contains("rv:11.0")) {
-            response.setHeader(
-                    "Content-Disposition",
-                    "attachment; filename=" + URLEncoder.encode(fileNm, StandardCharsets.UTF_8)
-                                                        .replaceAll("\\+", "\\ ") + ";"
-            );
-        } else {
-            // 한글 파일명 처리
-            String korFileNm = new String(fileNm.getBytes("euc-kr"), StandardCharsets.ISO_8859_1);
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + korFileNm + "\"");
-            response.setHeader("Content-type", "application/octet-stream; charset=euc-kr");
-        }
     }
 
     /**
