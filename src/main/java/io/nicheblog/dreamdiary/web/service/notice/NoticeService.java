@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.notice;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.notice.NoticeMapstruct;
@@ -32,14 +32,14 @@ import java.util.Map;
 @Service("noticeService")
 @Log4j2
 public class NoticeService
-        implements BasePostService<NoticeDto, NoticeListDto, Integer, NoticeEntity, NoticeRepository, NoticeSpec, NoticeMapstruct, FileService> {
+        implements BasePostService<NoticeDto, NoticeListDto, Integer, NoticeEntity, NoticeRepository, NoticeSpec, NoticeMapstruct, AtchFileService> {
 
     @Resource(name = "noticeRepository")
     private NoticeRepository noticeRepository;
     @Resource(name = "noticeSpec")
     private NoticeSpec noticeSpec;
-    @Resource(name = "fileService")
-    private FileService fileService;
+    @Resource(name = "atchFileService")
+    private AtchFileService atchFileService;
 
     private final NoticeMapstruct noticeMapstruct = NoticeMapstruct.INSTANCE;
 
@@ -59,8 +59,8 @@ public class NoticeService
     }
 
     @Override
-    public FileService getFileService() {
-        return this.fileService;
+    public AtchFileService getFileService() {
+        return this.atchFileService;
     }
 
     // @Resource(name = "boardTagService")

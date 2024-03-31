@@ -24,7 +24,7 @@ import java.util.Locale;
  *
  * @author nichefish
  */
-@Component("messageUtil")
+@Component("messageUtils")
 @Log4j2
 public class MessageUtils
         extends ReloadableResourceBundleMessageSource
@@ -41,8 +41,8 @@ public class MessageUtils
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
-        this.messageSource = source;
-        this.response = resp;
+        messageSource = source;
+        response = resp;
     }
 
     public static final String RSLT_SUCCESS = "common.result.success";

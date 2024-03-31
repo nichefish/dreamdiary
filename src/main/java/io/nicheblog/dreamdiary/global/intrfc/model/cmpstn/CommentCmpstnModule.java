@@ -6,6 +6,7 @@ package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
  * @author nichefish
  */
 public interface CommentCmpstnModule {
+
     /** Getter */
     CommentCmpstn getComment();
 

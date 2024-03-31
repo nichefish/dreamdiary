@@ -42,8 +42,8 @@ public class PdfBoxUtils {
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
-        this.fileService = atchFileService;
-        this.response = resp;
+        fileService = atchFileService;
+        response = resp;
     }
 
     /**
@@ -103,7 +103,7 @@ public class PdfBoxUtils {
             }
 
             // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
-            fileService.setRespnsHeader(fileNm);
+            FileUtils.setRespnsHeader(fileNm);
             CookieUtils.setFileDownloadSuccessCookie();
 
             File pdfFile = new File(pdfPath, fileNm);
