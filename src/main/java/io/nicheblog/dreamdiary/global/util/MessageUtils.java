@@ -24,7 +24,7 @@ import java.util.Locale;
  *
  * @author nichefish
  */
-@Component("MessageUtil")
+@Component("messageUtil")
 @Log4j2
 public class MessageUtils
         extends ReloadableResourceBundleMessageSource

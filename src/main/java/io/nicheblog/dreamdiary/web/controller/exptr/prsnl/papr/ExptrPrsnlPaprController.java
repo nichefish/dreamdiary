@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
+import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -10,6 +11,7 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.util.PdfBoxUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
@@ -37,6 +39,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,9 +74,6 @@ public class ExptrPrsnlPaprController
 
     // @Resource(name = "boardPostViewerService")
     // private BoardPostViewerService boardPostViewerService;
-
-    // @Resource(name = "pdfBoxUtils")
-    // private PdfBoxUtils pdfBoxUtils;
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 목록 조회
@@ -455,32 +455,32 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 영수증 이미지파일 묶음 PDF 다운로드
      * 사용자USER, 관리자MNGR만 접근 가능
      */
-    // @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
-    // @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    // public void exptrPrsnlStatsRciptPdfDownload(
-    //         final LogActvtyParam logParam,
-    //         final @RequestParam("postNo") Integer key
-    // ) throws Exception {
-//
-    //     boolean isSuccess = false;
-    //     String resultMsg = "";
-    //     try {
-    //         ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-    //         String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DateUtils.PTN_PDATETIME) + ".pdf";
-    //         List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
-    //         pdfBoxUtils.cmbnPdfDonwload(fileNm, fileList);
-    //         isSuccess = true;
-    //         resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-    //     } catch (Exception e) {
-    //         isSuccess = false;
-    //         resultMsg = MessageUtils.getExceptionMsg(e);
-    //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-    //         MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
-    //     } finally {
-    //         // 로그 관련 처리
-    //         logParam.setCn("key: " + key);
-    //         logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
-    //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
-    //     }
-    // }
+    @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    public void exptrPrsnlStatsRciptPdfDownload(
+            final LogActvtyParam logParam,
+            final @RequestParam("postNo") Integer key
+    ) throws Exception {
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+            String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DateUtils.PTN_PDATETIME) + ".pdf";
+            List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
+            PdfBoxUtils.imgCmbnPdfDonwload(fileNm, fileList);
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
+        } finally {
+            // 로그 관련 처리
+            logParam.setCn("key: " + key);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+    }
 }
