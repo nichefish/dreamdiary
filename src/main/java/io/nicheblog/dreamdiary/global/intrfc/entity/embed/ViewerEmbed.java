@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * ViewerEmbed
  * <pre>
- *  열람자Viewer 관련 정보 위임
+ *  컨텐츠 열람자 관련 정보 위임
  * </pre>
  *
  * @author nichefish
@@ -26,14 +26,13 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-// @AllArgsConstructor
 public class ViewerEmbed {
 
-    /** 게시물 열람자 목록 */
+    /** 컨텐츠 열람자 목록 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO", insertable = false, updatable = false)),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type", insertable = false, updatable = false))
+            @JoinColumnOrFormula(column = @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no", insertable = false, updatable = false)),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "ref_content_type", referencedColumnName = "content_type", insertable = false, updatable = false))
     })
     @Fetch(FetchMode.SELECT)
     @OrderBy("regDt DESC")

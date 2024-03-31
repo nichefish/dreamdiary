@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * ViewerCmpstn
  * <pre>
- *  열람자 관련 정보 위임
+ *  컨텐츠 열람자 관련 정보 위임
  * </pre>
  *
  * @author nichefish
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ViewerCmpstn {
 
-    /** 게시물 열람자 목록 */
+    /** 컨텐츠 열람자 목록 */
     private List<ViewerDto> list;
 
     /* ----- */

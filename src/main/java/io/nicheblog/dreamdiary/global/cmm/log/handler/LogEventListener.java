@@ -13,7 +13,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * LogActvtyEventListener
+ * LogEventListener
  * <pre>
  *  로그 이벤트 처리 핸들러
  *  내부에 LogWorkerRunnable 구현 (Queue 처리)

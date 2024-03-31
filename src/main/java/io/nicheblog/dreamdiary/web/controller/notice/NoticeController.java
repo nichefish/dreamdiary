@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
@@ -80,9 +81,6 @@ public class NoticeController
 
     @Resource(name = "noticeService")
     private NoticeService noticeService;
-
-    // @Resource(name = "boardPostViewerService")
-    // private BoardPostViewerService boardPostViewerService;
 //
     // @Resource(name = "boardPostManagtrService")
     // private BoardPostManagtrService boardPostManagtrService;
@@ -305,19 +303,10 @@ public class NoticeController
         try {
             NoticeDto rsDto = noticeService.getDtlDto(key);
             model.addAttribute("post", rsDto);
-            // 열람자 목록 및 조회수 카운트 추가 :: 메인 로직과 분리
-            // try {
-            //     List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
-            //     if (!boardPostViewerService.hasAlreadyView(viewerList)) {
-            //         BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
-            //         rsDto.addPostViewer(dto);
-            //     }
-            //     noticeService.hitCntUp(postKey);
-            // } catch (Exception e) {
-            //     logParam.setResult(false, MessageUtils.getExceptionMsg(e));
-            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            // }
+            // 조회수 카운트 추가
+            noticeService.hitCntUp(key);
+            // 열람자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -354,20 +343,11 @@ public class NoticeController
         try {
             // 게시판 정보 조회
             NoticeDto rsDto = noticeService.getDtlDto(key);
-            // 열람자 목록 및 조회수 카운트 추가
-            // try {
-            //     List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
-            //     if (!boardPostViewerService.hasAlreadyView(viewerList)) {
-            //         BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
-            //         rsDto.addPostViewer(dto);
-            //     }
-            //     noticeService.hitCntUp(postKey);
-            // } catch (Exception e) {
-            //     logParam.setResult(false, MessageUtils.getExceptionMsg(e));
-            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            // }
             ajaxResponse.setResultObj(rsDto);
+            // 조회수 카운트 추가
+            noticeService.hitCntUp(key);
+            // 열람자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

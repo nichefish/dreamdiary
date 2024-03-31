@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
@@ -66,9 +67,6 @@ public class VcatnPaprController
 
     @Resource(name = "cdService")
     private CdService cdService;
-
-    // @Resource(name = "boardPostViewerService")
-    // private BoardPostViewerService boardPostViewerService;
 
     /**
      * 일정  > 휴가 계획서 > 휴가 계획서 목록
@@ -290,21 +288,12 @@ public class VcatnPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            VcatnPaprDto rsVcatnPaprDto = vcatnPaprService.getDtlDto(key);
-            model.addAttribute("post", rsVcatnPaprDto);
-            // 열람자 목록 및 조회수 카운트 추가 :: 메인 로직과 분리
-            // try {
-            //     List<BoardPostViewerDto> viewerList = rsVcatnPaprDto.getViewerList();
-            //     if (!boardPostViewerService.hasAlreadyView(viewerList)) {
-            //         BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
-            //         rsVcatnPaprDto.addPostViewer(dto);
-            //     }
-            //     vcatnPaprService.hitCntUp(postKey);
-            // } catch (Exception e) {
-            //     resultMsg = MessageUtils.getExceptionMsg(e);
-            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            // }
+            VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
+            model.addAttribute("post", rsDto);
+            // 조회수 카운트 추가
+            vcatnPaprService.hitCntUp(key);
+            // 열람자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -338,24 +327,14 @@ public class VcatnPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 게시판 정보 조회
-            VcatnPaprDto rsVcatnPaprDto = vcatnPaprService.getDtlDto(key);
-            // 열람자 목록 및 조회수 카운트 추가
-            // try {
-            //     List<BoardPostViewerDto> viewerList = rsVcatnPaprDto.getViewerList();
-            //     if (!boardPostViewerService.hasAlreadyView(viewerList)) {
-            //         BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
-            //         rsVcatnPaprDto.addPostViewer(dto);
-            //     }
-            //     vcatnPaprService.hitCntUp(postKey);
-            // } catch (Exception e) {
-            //     resultMsg = MessageUtils.getExceptionMsg(e);
-            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            // }
+            VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
+            ajaxResponse.setResultObj(rsDto);
+            // 조회수 카운트 추가
+            vcatnPaprService.hitCntUp(key);
+            // 열람자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            ajaxResponse.setResultObj(rsVcatnPaprDto);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

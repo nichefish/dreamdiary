@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.board.*;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
@@ -62,9 +63,6 @@ public class BoardPostController
 
     @Resource(name = "boardPostService")
     private BoardPostService boardPostService;
-
-    // @Resource(name = "boardPostViewerService")
-    // private BoardPostViewerService boardPostViewerService;
 
     // @Resource(name = "boardPostManagtrService")
     // private BoardPostManagtrService boardPostManagtrService;
@@ -318,19 +316,10 @@ public class BoardPostController
         try {
             BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
             model.addAttribute("post", rsDto);
-            // 열람자 목록 및 조회수 카운트 추가
-            // try {
-            //     List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
-            //     if (!boardPostViewerService.hasAlreadyView(viewerList)) {
-            //         BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
-            //         rsDto.addPostViewer(dto);
-            //     }
-            //     boardPostService.hitCntUp(postKey);
-            // } catch (Exception e) {
-            //     resultMsg = MessageUtils.getExceptionMsg(e);
-            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            // }
+            // 조회수 카운트 추가
+            boardPostService.hitCntUp(postKey.getClsfKey());
+            // 열람자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -367,20 +356,11 @@ public class BoardPostController
         try {
             // 게시판 정보 조회
             BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
-            // 열람자 목록 및 조회수 카운트 추가
-            // try {
-            //     List<BoardPostViewerDto> viewerList = rsDto.getViewerList();
-            //     if (!boardPostViewerService.hasAlreadyView(viewerList)) {
-            //         BoardPostViewerDto dto = boardPostViewerService.regPostViewer(postKey);
-            //         rsDto.addPostViewer(dto);
-            //     }
-            //     boardPostService.hitCntUp(postKey);
-            // } catch (Exception e) {
-            //     resultMsg = MessageUtils.getExceptionMsg(e);
-            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            // }
             ajaxResponse.setResultObj(rsDto);
+            // 조회수 카운트 추가
+            boardPostService.hitCntUp(postKey.getClsfKey());
+            // 열람자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

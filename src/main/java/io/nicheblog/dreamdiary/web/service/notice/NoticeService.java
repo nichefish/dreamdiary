@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.service.notice;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.notice.NoticeMapstruct;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
@@ -32,7 +32,7 @@ import java.util.Map;
 @Service("noticeService")
 @Log4j2
 public class NoticeService
-        implements BaseClsfService<NoticeDto, NoticeListDto, Integer, NoticeEntity, NoticeRepository, NoticeSpec, NoticeMapstruct, FileService> {
+        implements BasePostService<NoticeDto, NoticeListDto, Integer, NoticeEntity, NoticeRepository, NoticeSpec, NoticeMapstruct, FileService> {
 
     @Resource(name = "noticeRepository")
     private NoticeRepository noticeRepository;
