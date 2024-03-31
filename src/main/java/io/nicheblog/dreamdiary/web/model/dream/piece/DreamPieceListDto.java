@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.web.model.dream;
+package io.nicheblog.dreamdiary.web.model.dream.piece;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
@@ -18,7 +18,8 @@ import javax.persistence.Embedded;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditDto
+ * @extends BasePostDto
+ * @implements CommentCmpstnModule, TagCmpstnModule
  */
 @Getter
 @Setter
@@ -26,8 +27,8 @@ import javax.persistence.Embedded;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class DreamPieceDto
-        extends BasePostDto
+public class DreamPieceListDto
+        extends BasePostListDto
         implements CommentCmpstnModule, TagCmpstnModule {
 
     /** 꿈 조각 고유 번호 (PK) */

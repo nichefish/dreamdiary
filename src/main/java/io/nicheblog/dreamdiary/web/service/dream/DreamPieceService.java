@@ -1,9 +1,10 @@
 package io.nicheblog.dreamdiary.web.service.dream;
 
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
-import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceListDto;
 import io.nicheblog.dreamdiary.web.repository.dream.DreamPieceRepository;
 import io.nicheblog.dreamdiary.web.spec.dream.DreamPieceSpec;
 import lombok.extern.log4j.Log4j2;
@@ -23,7 +24,7 @@ import javax.annotation.Resource;
 @Service("dreamPieceService")
 @Log4j2
 public class DreamPieceService
-        implements BaseMultiCrudService<DreamPieceDto, DreamPieceDto, Integer, DreamPieceEntity, DreamPieceRepository, DreamPieceSpec, DreamPieceMapstruct> {
+        implements BaseClsfService<DreamPieceDto, DreamPieceListDto, Integer, DreamPieceEntity, DreamPieceRepository, DreamPieceSpec, DreamPieceMapstruct> {
 
     private final DreamPieceMapstruct dreamPieceMapstruct = DreamPieceMapstruct.INSTANCE;
 

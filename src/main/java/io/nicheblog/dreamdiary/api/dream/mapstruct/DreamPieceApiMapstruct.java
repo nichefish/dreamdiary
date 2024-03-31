@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.api.dream.mapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
-import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;

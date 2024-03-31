@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.dream;
+package io.nicheblog.dreamdiary.web.model.dream.day;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;

@@ -9,7 +9,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
-import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;

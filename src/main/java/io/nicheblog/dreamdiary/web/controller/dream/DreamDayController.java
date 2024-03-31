@@ -9,7 +9,7 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.dream.DreamDayDto;
+import io.nicheblog.dreamdiary.web.model.dream.day.DreamDayDto;
 import io.nicheblog.dreamdiary.web.service.dream.DreamDayService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;

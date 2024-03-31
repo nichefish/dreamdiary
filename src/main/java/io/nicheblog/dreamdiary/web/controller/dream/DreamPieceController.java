@@ -8,7 +8,7 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
 import io.nicheblog.dreamdiary.web.service.dream.DreamPieceService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;

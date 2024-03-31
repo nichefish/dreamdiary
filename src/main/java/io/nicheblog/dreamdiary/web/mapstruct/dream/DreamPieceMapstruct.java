@@ -1,8 +1,10 @@
 package io.nicheblog.dreamdiary.web.mapstruct.dream;
 
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
-import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -18,7 +20,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface DreamPieceMapstruct
-        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<DreamPieceDto, DreamPieceDto, DreamPieceEntity> {
+        extends BaseClsfListMapstruct<DreamPieceDto, DreamPieceListDto, DreamPieceEntity> {
 
     DreamPieceMapstruct INSTANCE = Mappers.getMapper(DreamPieceMapstruct.class);
 
@@ -32,7 +34,7 @@ public interface DreamPieceMapstruct
      * Entity -> ListDto
      */
     @Override
-    DreamPieceDto toListDto(final DreamPieceEntity entity) throws Exception;
+    DreamPieceListDto toListDto(final DreamPieceEntity entity) throws Exception;
 
     /**
      * Dto -> Entity

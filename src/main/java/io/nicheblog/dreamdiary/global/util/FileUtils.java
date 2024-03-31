@@ -130,7 +130,7 @@ public class FileUtils {
 
         try {
             AtchFileEntity rslt = getUploadedFile(multiRequest, atchFileNo);
-            assert rslt != null;
+            if (rslt == null) return null;
             return rslt.getAtchFileNo();
         } catch (Exception e) {
             MessageUtils.alertMessage("파일 업로드에 실패했습니다.");

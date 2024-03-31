@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.api.dream.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
-import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditDto
+ * @extends BaseClsfDto
  */
 @Getter
 @Setter
