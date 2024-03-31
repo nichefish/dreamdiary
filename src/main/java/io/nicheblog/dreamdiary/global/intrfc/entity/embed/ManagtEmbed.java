@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.managtr.ManagtrMapstruct;
+import io.nicheblog.dreamdiary.web.mapstruct.cmm.managt.ManagtrMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.managtr.ManagtrDto;
 import lombok.*;
 import org.hibernate.annotations.*;

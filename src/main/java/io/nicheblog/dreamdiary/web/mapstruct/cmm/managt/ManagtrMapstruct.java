@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.mapstruct.cmm.managtr;
+package io.nicheblog.dreamdiary.web.mapstruct.cmm.managt;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
  * ManagtrMapstruct
  * <pre>
  *  일반게시판 게시물 작업자 MapStruct 기반 Mapper 인터페이스
- *  게시물 게시물 작업자(board_post_managtr) = 일반게시판 수정이력자. 일반게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  게시물 게시물 작업자(managtr) = 일반게시판 수정이력자. 일반게시판 게시물(board_post)에 1:N으로 귀속된다.
  * </pre>
  *
  * @author nichefish

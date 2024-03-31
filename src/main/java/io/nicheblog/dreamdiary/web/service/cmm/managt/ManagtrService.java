@@ -1,62 +1,55 @@
-/*
-package io.nicheblog.dreamdiary.web.service.board;
+package io.nicheblog.dreamdiary.web.service.cmm.managt;
 
+import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
+import io.nicheblog.dreamdiary.web.repository.cmm.managt.ManagtrRepository;
+import io.nicheblog.dreamdiary.web.spec.cmm.managtr.ManagtrSpec;
 import lombok.extern.log4j.Log4j2;
-import dreamdiary.nicheblog.io.cmm.util.BaseAuthUtils;
-import dreamdiary.nicheblog.io.web.entity.BasePostKey;
-import dreamdiary.nicheblog.io.web.entity.board.BoardPostManagtrEntity;
-import dreamdiary.nicheblog.io.web.mapstruct.board.BoardPostManagtrMapstruct;
-import dreamdiary.nicheblog.io.web.model.board.BoardPostManagtrDto;
-import dreamdiary.nicheblog.io.web.repository.board.BoardPostManagtrRepository;
+import org.apache.commons.collections4.map.HashedMap;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Map;
 
-*/
 /**
- * BoardPostManagtrService
+ * ManagtrService
  * <pre>
- *  게시판 게시물 작업자 서비스 모듈
- *  게시물 게시물 작업자(board_post_managtr) = 게시판 수정이력자. 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  조치자 서비스 모듈
  * </pre>
  *
  * @author nichefish
- *//*
-
-@Service("boardPostManagtrService")
+ */
+@Service("managtrService")
 @Log4j2
-public class BoardPostManagtrService {
+public class ManagtrService {
 
-    private final BoardPostManagtrMapstruct postManagtrMapstruct = BoardPostManagtrMapstruct.INSTANCE;
+    @Resource(name = "managtrRepository")
+    private ManagtrRepository managtrRepository;
+    @Resource(name = "managtrSpec")
+    private ManagtrSpec managtrSpec;
 
-    @Resource(name = "boardPostManagtrRepository")
-    private BoardPostManagtrRepository boardPostManagtrRepository;
-
-    */
-/**
-     * 게시물 열람자 존재여부 체크
-     *//*
-
-    public Boolean hasAlreadyManagt(final List<BoardPostManagtrDto> managtrList) {
-        if (CollectionUtils.isEmpty(managtrList)) return false;
-        String lgnUserId = BaseAuthUtils.getLgnUserId();
-        for (BoardPostManagtrDto managtr : managtrList) {
-            if (lgnUserId.equals(managtr.getRegstrId())) return true;
-        }
-        return false;
+    /**
+     * 게시물 열람자 존재여부 (기 방문여부) 체크
+     */
+    public Boolean hasAlreadyVisited(final BaseClsfKey key) {
+        Map<String, Object> searchParamMap = new HashedMap<>() {{
+            put("regstrId", AuthUtils.getLgnUserId());
+            put("refPostNo", key.getPostNo());
+            put("refContentType", key.getContentType());
+        }};
+        Page<ManagtrEntity> managtrList = managtrRepository.findAll(managtrSpec.searchWith(searchParamMap), Pageable.unpaged());
+        return managtrList.getSize() > 0;
     }
 
-    */
-/**
+    /**
      * 게시물 열람자 등록
-     *//*
-
-    public BoardPostManagtrDto regPostManagtr(final BasePostKey key) throws Exception {
-        // Dto -> Entity
-        BoardPostManagtrEntity rsltEntity = boardPostManagtrRepository.save(new BoardPostManagtrEntity(key));
-        boardPostManagtrRepository.refresh(rsltEntity);
-        return postManagtrMapstruct.toDto(rsltEntity);
+     */
+    public void addManagtr(final BaseClsfKey key) {
+        if (this.hasAlreadyVisited(key)) return;
+        ManagtrEntity managtr = new ManagtrEntity(key);
+        managtrRepository.save(managtr);
     }
-}*/
+}

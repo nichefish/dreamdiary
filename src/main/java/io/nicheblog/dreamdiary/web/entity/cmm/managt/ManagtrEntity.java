@@ -30,7 +30,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE board_post_managtr SET del_yn = 'Y' WHEREmanagtr_no = ?")
+@SQLDelete(sql = "UPDATE managtr SET del_yn = 'Y' WHERE managtr_no = ?")
 public class ManagtrEntity
         extends BaseAuditRegEntity {
 
