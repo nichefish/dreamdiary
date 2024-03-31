@@ -29,4 +29,6 @@ public class AtchFileDto
 
     /** 첨부파일 목록 */
     List<AtchFileDtlDto> atchFileList;
+
+
 }

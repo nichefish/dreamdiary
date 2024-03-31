@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * DateUtil
+ * DateUtils
  * <pre>
  *  날짜 연산 관련 로직 처리 유틸리티 모듈
  *  기존 apache 함수도 다 쓰기 위해 commons.lang3.time.DateUtils 상속

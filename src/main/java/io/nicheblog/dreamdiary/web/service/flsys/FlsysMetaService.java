@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.service.flsys;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.flsys.FlsysMetaEntity;
@@ -25,14 +24,12 @@ import javax.annotation.Resource;
 @Service("flsysMetaService")
 @Log4j2
 public class FlsysMetaService
-        implements BaseMultiCrudService<FlsysMetaDto, FlsysMetaDto, BaseClsfKey, FlsysMetaEntity, FlsysMetaRepository, FlsysMetaSpec, FlsysMetaMapstruct, CmmFileService> {
+        implements BaseMultiCrudService<FlsysMetaDto, FlsysMetaDto, BaseClsfKey, FlsysMetaEntity, FlsysMetaRepository, FlsysMetaSpec, FlsysMetaMapstruct> {
 
     @Resource(name = "flsysMetaRepository")
     private FlsysMetaRepository flsysMetaRepository;
     @Resource(name = "flsysMetaSpec")
     private FlsysMetaSpec flsysMetaSpec;
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
 
     private final FlsysMetaMapstruct flsysMetaMapstruct = FlsysMetaMapstruct.INSTANCE;
 
@@ -50,14 +47,6 @@ public class FlsysMetaService
     public FlsysMetaMapstruct getMapstruct() {
         return this.flsysMetaMapstruct;
     }
-
-    @Override
-    public CmmFileService getFileService() {
-        return this.cmmFileService;
-    }
-
-    // @Resource(name = "boardTagService")
-    // private BoardTagService boardTagService;
 
     /**
      * 파일시스템 메타 등록 전처리

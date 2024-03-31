@@ -82,12 +82,10 @@ public class FileUtils {
         return true;
     }
 
-
     public static AtchFileEntity getUploadedFile(
             final MultipartHttpServletRequest multiRequest
     ) throws Exception {
         return getUploadedFile(multiRequest, null);
-
     }
     public static AtchFileEntity getUploadedFile(
             final MultipartHttpServletRequest multiRequest,
@@ -114,8 +112,9 @@ public class FileUtils {
             atchFileList = atchFileService.delFile(multiRequest, atchFileList);
         }
         // 추가된(multipart로 요청된) 파일에 대하여 업로드+DB추가
-        atchFileList = atchFileService.addFile(multiRequest, atchFileList);
+        atchFileList = atchFileDtlService.addFiles(multiRequest, atchFileList);
         atchFile.setAtchFileList(atchFileList);
+        log.info(atchFile);
         return atchFileService.updt(atchFile);
     }
 
