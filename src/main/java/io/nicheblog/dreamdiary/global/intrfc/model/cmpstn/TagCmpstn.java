@@ -31,7 +31,7 @@ public class TagCmpstn
         implements Serializable {
 
     /** Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜. */
-    public List<String> parseTagList() {
+    public List<String> getParsedTagList() {
         if (StringUtils.isEmpty(this.tagListStr)) return new ArrayList<>();
         JSONArray jArray = new JSONArray(tagListStr);
         return IntStream.range(0, jArray.length())

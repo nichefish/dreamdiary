@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.cmm.tag;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
@@ -14,7 +15,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,10 +56,26 @@ public class TagService
         return this.tagMapstruct;
     }
 
-    public List<TagEntity> procTagList(TagEmbed tagEmbed) {
-        List<String> tagStrList = tagEmbed.getTagStrList();
-        if (CollectionUtils.isEmpty(tagStrList)) return new ArrayList<>();
-        // 1, 마스터 태그 처리
+    /**
+     * 컨텐츠 태그 처리
+     */
+    public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) {
+        List<String> tagStrList = tagCmpstn.getParsedTagList();
+        if (CollectionUtils.isEmpty(tagStrList)) return;
+        // 1, 마스터 태그 처리 (메소드 분리)
+        List<TagEntity> rsList = this.masterTagProc(tagStrList);
+
+        // 2. 글번호 + 태그번호를 받아서 컨텐츠 태그를 처리해준다.
+        List<ContentTagEntity> contentTagList = rsList.stream()
+                .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
+                .collect(Collectors.toList());
+        this.procContentTagList(contentTagList);
+    }
+
+    /**
+     * 마스터 태그 처리:: 메소드 분리
+     */
+    List<TagEntity> masterTagProc(List<String> tagStrList) {
         List<TagEntity> tagEntityList = tagStrList.stream()
                 .distinct() // 중복된 태그 문자열 제거
                 .map(tagStr -> tagRepository.findByTagNm(tagStr)
@@ -71,7 +87,6 @@ public class TagService
     public void procContentTagList(List<ContentTagEntity> contentTagList) {
         contentTagRepository.saveAllAndFlush(contentTagList);
     }
-
 
     /**
      * 게시판 태그 목록 Page<Entity>->Page<Dto> 변환
@@ -85,11 +100,4 @@ public class TagService
     //    }
     //    return new PageImpl<>(dtoList, entityPage.getPageable(), entityPage.getTotalElements());
     //}
-
-    /**
-     * 게시판 > 게시판 등록/수정 전처리 :: 메소드 분리
-     */
-    // public void processTagList(final BasePostDto postDto) throws Exception {
-
-    // }
 }

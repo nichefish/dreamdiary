@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.PopupMapstruct;
@@ -22,14 +21,12 @@ import javax.annotation.Resource;
  */
 @Service("popupService")
 public class PopupService
-        implements BaseMultiCrudService<PopupDto, PopupDto, Integer, PopupEntity, PopupRepository, PopupSpec, PopupMapstruct, FileService> {
+        implements BaseMultiCrudService<PopupDto, PopupDto, Integer, PopupEntity, PopupRepository, PopupSpec, PopupMapstruct> {
 
     @Resource(name = "popupRepository")
     private PopupRepository popupRepository;
     @Resource(name = "popupSpec")
     private PopupSpec popupSpec;
-    @Resource(name = "fileService")
-    private FileService fileService;
 
     private final PopupMapstruct popupMapstruct = PopupMapstruct.INSTANCE;
 
@@ -44,11 +41,6 @@ public class PopupService
     }
 
     @Override
-    public FileService getFileService() {
-        return this.fileService;
-    }
-
-    @Override
     public PopupMapstruct getMapstruct() {
         return this.popupMapstruct;
     }
@@ -58,7 +50,7 @@ public class PopupService
      */
     // public Page<PopupDto> getActivePopupList() throws Exception {
     //     Page<PopupEntity> entityPage = popupRepository.findAll(popupSpec.getActives(), Pageable.unpaged());
-//
+
     //     // Page<Entity> -> Page<Dto>
     //     return this.pageEntityToDto(entityPage);
     // }

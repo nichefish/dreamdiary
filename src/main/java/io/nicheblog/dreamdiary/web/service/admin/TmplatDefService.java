@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatDefEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.TmplatDefMapstruct;
@@ -24,14 +23,12 @@ import javax.annotation.Resource;
 @Service("tmplatDefService")
 @Log4j2
 public class TmplatDefService
-        implements BaseMultiCrudService<TmplatDefDto, TmplatDefDto, Integer, TmplatDefEntity, TmplatDefRepository, TmplatDefSpec, TmplatDefMapstruct, CmmFileService> {
+        implements BaseMultiCrudService<TmplatDefDto, TmplatDefDto, Integer, TmplatDefEntity, TmplatDefRepository, TmplatDefSpec, TmplatDefMapstruct> {
 
     @Resource(name = "tmplatDefRepository")
     private TmplatDefRepository tmplatDefRepository;
     @Resource(name = "tmplatDefSpec")
     private TmplatDefSpec tmplatDefSpec;
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
 
     private final TmplatDefMapstruct tmplatDefMapstruct = TmplatDefMapstruct.INSTANCE;
 
@@ -49,10 +46,4 @@ public class TmplatDefService
     public TmplatDefMapstruct getMapstruct() {
         return this.tmplatDefMapstruct;
     }
-
-    @Override
-    public CmmFileService getFileService() {
-        return this.cmmFileService;
-    }
-
 }

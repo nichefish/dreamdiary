@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import io.nicheblog.dreamdiary.web.model.admin.PopupDto;
@@ -19,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface PopupMapstruct
-        extends BaseAuditListMapstruct<PopupDto, PopupDto, PopupEntity> {
+        extends BaseListMapstruct<PopupDto, PopupDto, PopupEntity> {
 
     PopupMapstruct INSTANCE = Mappers.getMapper(PopupMapstruct.class);
 

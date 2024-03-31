@@ -40,29 +40,19 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
         Mapstruct mapstruct = this.getMapstruct();
         Entity entity = mapstruct.toEntity(dto);
 
-        // 등록 중간처리
-        this.midRegist(entity);
-
         // insert
         Entity rslt = this.updt(entity);
 
         // 등록 후처리
-        this.postRegist(dto, entity);
+        this.postRegist(rslt);
 
         return mapstruct.toDto(rslt);
     }
 
     /**
-     * default: 게시물 등록 중간처리 (entity level, entity 변환 후 처리)
-     */
-    default void midRegist(final Entity entity) throws Exception {
-        // 등록 중간처리:: 기본 공백, 필요시 각 함수에서 Override
-    }
-
-    /**
      * default: 게시물 등록 후처리 (entity level, entity 변환 후 처리)
      */
-    default void postRegist(final Dto dto, final Entity entity) throws Exception {
+    default void postRegist(final Entity rslt) throws Exception {
         // 등록 후처리:: 기본 공백, 필요시 각 함수에서 Override
     }
 
@@ -93,12 +83,12 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
 
         // update
         Repository repository = this.getRepository();
-        Entity rsltEntity = repository.saveAndFlush(entity);
+        Entity rslt = repository.saveAndFlush(entity);
 
         // 수정 후처리
-        this.postModify(entity);
+        this.postModify(rslt);
 
-        return mapstruct.toDto(rsltEntity);
+        return mapstruct.toDto(rslt);
     }
 
     /**
@@ -111,7 +101,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
     /**
      * default: 게시물 수정 후처리 (entity level, entity 변환 후 처리)
      */
-    default void postModify(final Entity entity) throws Exception {
+    default void postModify(final Entity rslt) throws Exception {
         // 수정 후처리:: 기본 공백, 필요시 각 함수에서 Override
     }
 

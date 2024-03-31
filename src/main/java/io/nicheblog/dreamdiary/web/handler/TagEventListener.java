@@ -1,8 +1,6 @@
 package io.nicheblog.dreamdiary.web.handler;
 
-import io.nicheblog.dreamdiary.web.event.ManagtrAddEvent;
 import io.nicheblog.dreamdiary.web.event.TagEvent;
-import io.nicheblog.dreamdiary.web.service.cmm.managt.ManagtrService;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.ChineseCalUtils;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
@@ -41,14 +40,12 @@ import java.util.stream.Collectors;
  */
 @Service("userService")
 public class UserService
-        implements BaseMultiCrudService<UserDto, UserListDto, Integer, UserEntity, UserRepository, UserSpec, UserMapstruct, FileService> {
+        implements BaseMultiCrudService<UserDto, UserListDto, Integer, UserEntity, UserRepository, UserSpec, UserMapstruct> {
 
     @Resource(name = "userRepository")
     private UserRepository userRepository;
     @Resource(name = "userSpec")
     private UserSpec userSpec;
-    @Resource(name = "fileService")
-    private FileService fileService;
 
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
     private final UserProflMapstruct userProflMapstruct = UserProflMapstruct.INSTANCE;
@@ -66,11 +63,6 @@ public class UserService
     @Override
     public UserMapstruct getMapstruct() {
         return this.userMapstruct;
-    }
-
-    @Override
-    public FileService getFileService() {
-        return this.fileService;
     }
 
     @Resource(name = "userProflRepository")
