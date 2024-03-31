@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.cmm.file.entity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.annotations.*;
 
@@ -25,7 +26,7 @@ import java.util.List;
  * @author nichefish
  */
 @Entity
-@Table(name = "ATCH_FILE")
+@Table(name = "atch_file")
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)
@@ -33,6 +34,7 @@ import java.util.List;
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE atch_file SET del_yn = 'Y' WHERE atch_file_no = ?")
+@Log4j2
 public class AtchFileEntity
         extends BaseCrudEntity {
 
@@ -64,6 +66,9 @@ public class AtchFileEntity
         } else {
             this.atchFileList.clear();
             this.atchFileList.addAll(atchFileList);
+            log.info("param size: {}", atchFileList.size());
+            log.info("property size: {}", this.atchFileList.size());
+            log.info("!!!");
         }
     }
 

@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -62,11 +63,10 @@ public class AtchFileDtlService
         return this.getListDto(paramMap, Pageable.unpaged()).getContent();
     }
 
-
     /**
      * 메소드 분리 :: 추가된 파일에 대하여 업로드 및 정보 DB에 등록
      */
-    public List<AtchFileDtlEntity> addFiles(
+    public void addFiles(
             final MultipartHttpServletRequest multiRequest,
             final List<AtchFileDtlEntity> atchFileList
     ) throws Exception {
@@ -112,6 +112,21 @@ public class AtchFileDtlService
             fileEntity.setUrl("/" + path + replaceFileNm);
             atchFileList.add(fileEntity);
         }
-        return atchFileList;
+    }
+
+    /**
+     * 메소드 분리 :: 삭제된 파일에 대하여 DB 삭제 플래그 세팅
+     */
+    public void delFile(
+            final MultipartHttpServletRequest multiRequest,
+            final List<AtchFileDtlEntity> atchFileList
+    ) {
+        if (CollectionUtils.isEmpty(atchFileList)) return;
+        atchFileList.stream()
+                .peek(atchFileDtl -> {
+                    String atchCtrl = multiRequest.getParameter("atchCtrl" + atchFileDtl.getAtchFileDtlNo());
+                    if ("D".equals(atchCtrl)) atchFileDtl.setDelYn("Y");
+                    // TODO: 실제 파일 삭제?
+                });
     }
 }

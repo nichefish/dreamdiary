@@ -75,7 +75,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
      * default: 게시물 수정 (entity level)
      */
     @Transactional
-    default Entity updt(final Entity e) throws Exception {
+    default Entity updt(final Entity e) {
         Repository repository = this.getRepository();
         Entity rslt = repository.save(e);
         try {
@@ -90,7 +90,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
     /**
      * default: 게시물 삭제 전처리
      */
-    default void preDelete(final Entity e) throws Exception {
+    default void preDelete(final Entity e) {
         // 기본 공백, 필요시 각 함수에서 Override
     }
 

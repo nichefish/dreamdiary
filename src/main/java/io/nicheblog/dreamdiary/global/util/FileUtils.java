@@ -109,12 +109,10 @@ public class FileUtils {
             // 추가된(multipart로 요청된) 파일도 없고 기존 파일도 없으면 리턴
             if (isAtchFileListEmpty) return null;
             // 삭제된(del 플래그가 전달된) 파일에 대하여 DB삭제플래그 세팅(atchCtrl="D") (메소드 분리)
-            atchFileList = atchFileService.delFile(multiRequest, atchFileList);
+            atchFileDtlService.delFile(multiRequest, atchFileList);
         }
         // 추가된(multipart로 요청된) 파일에 대하여 업로드+DB추가
-        atchFileList = atchFileDtlService.addFiles(multiRequest, atchFileList);
-        atchFile.setAtchFileList(atchFileList);
-        log.info(atchFile);
+        atchFileDtlService.addFiles(multiRequest, atchFileList);
         return atchFileService.updt(atchFile);
     }
 
