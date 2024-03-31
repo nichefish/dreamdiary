@@ -1,42 +1,24 @@
 package io.nicheblog.dreamdiary.global.util;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
-import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileEntity;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileDtlService;
 import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
-import io.nicheblog.dreamdiary.global.validator.CmmRegex;
-import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.units.qual.C;
-import org.springframework.context.MessageSource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.Objects;
 
 /**
  * FileUtils
@@ -52,25 +34,79 @@ public class FileUtils {
 
     @Resource(name = "atchFileService")
     private AtchFileService fileService;
+    @Resource(name = "atchFileDtlService")
+    private AtchFileDtlService fileDtlService;
     @Resource
     private HttpServletResponse resp;
 
     private static AtchFileService atchFileService;
+    private static AtchFileDtlService atchFileDtlService;
     private static HttpServletResponse response;
 
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
         atchFileService = fileService;
+        atchFileDtlService = fileDtlService;
         response = resp;
     }
 
+    /**
+     * 파일 유무 체크
+     */
+    public Boolean fileChck(final String fileId) {
+        // 1. 파일ID일 경우로 상정 ::
+        try {
+            Integer atchFileDtlNo = Integer.parseInt(fileId);
+            AtchFileDtlEntity fileDtl = fileDtlService.getDtlEntity(atchFileDtlNo);
+            new File(fileDtl.getFileStrePath(), fileDtl.getStreFileNm());
+        } catch (NumberFormatException e) {
+            // 2. 에러시 Integer형 ID가 아닌 것으로 판단, 파일명으로 처리
+            log.info(MessageUtils.getExceptionMsg(e));
+            new File("content/" + fileId);
+            return true;
+        } catch (Exception e) {
+            log.info(MessageUtils.getExceptionMsg(e));
+            return false;
+        }
+        return true;
+    }
 
+    /**
+     * 메소드 분리 :: 파일 다운로드
+     */
+    public static void downloadFile(final File file) throws Exception {
+        String fileName = file.getName();
+        downloadFile(file, fileName);
+    }
 
+    public static void downloadFile(
+            final File file,
+            final String fileNm
+    ) throws Exception {
+        OutputStream os;
+        InputStream is = new FileInputStream(file);
 
+        FileUtils.setRespnsHeader(fileNm);       // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
+        response.setHeader("Content-Length", String.valueOf(file.length()));        // 파일 크기 설정
 
-
-
+        // 응답으로 파일 전송
+        os = response.getOutputStream();
+        byte[] buffer = new byte[2048];
+        int bytesRead, bytesBufferd = 0;
+        while ((bytesRead = is.read(buffer)) > -1) {
+            os.write(buffer, 0, bytesRead);
+            bytesBufferd += bytesRead;
+            if (bytesBufferd > 2048 * 1024) {       // 2MB마다 flush
+                bytesBufferd = 0;
+                os.flush();
+            }
+        }
+        os.flush();
+        // 전송 끝 + 스트림 닫음
+        is.close();
+        os.close();
+    }
 
     /**
      * 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)

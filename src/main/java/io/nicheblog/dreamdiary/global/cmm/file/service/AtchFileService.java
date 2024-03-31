@@ -6,31 +6,20 @@ import io.nicheblog.dreamdiary.global.cmm.file.mapstruct.AtchFileDtlMapstruct;
 import io.nicheblog.dreamdiary.global.cmm.file.mapstruct.AtchFileMapstruct;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
-import io.nicheblog.dreamdiary.global.cmm.file.repository.AtchFileDtlRepository;
 import io.nicheblog.dreamdiary.global.cmm.file.repository.AtchFileRepository;
 import io.nicheblog.dreamdiary.global.cmm.file.spec.AtchFileSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
-import io.nicheblog.dreamdiary.global.util.FileUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -52,6 +41,14 @@ public class AtchFileService
     AtchFileMapstruct atchFileMapstruct = AtchFileMapstruct.INSTANCE;
     AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;
 
+    @Resource(name = "atchFileRepository")
+    private AtchFileRepository atchFileRepository;
+    @Resource(name = "atchFileSpec")
+    private AtchFileSpec atchFileSpec;
+
+    @Resource(name = "atchFileDtlService")
+    private AtchFileDtlService atchFileDtlService;
+
     @Override
     public AtchFileRepository getRepository() {
         return this.atchFileRepository;
@@ -65,21 +62,13 @@ public class AtchFileService
         return this.atchFileMapstruct;
     }
 
-    @Resource(name = "atchFileRepository")
-    private AtchFileRepository atchFileRepository;
-    @Resource(name = "atchFileDtlRepository")
-    private AtchFileDtlRepository atchFileDtlRepository;
-    @Resource(name = "atchFileSpec")
-    private AtchFileSpec atchFileSpec;
-    @Resource
-    private HttpServletResponse response;
 
     /**
      * 파일 업로드
      */
     public AtchFileDtlDto uploadDtlFile(final MultipartHttpServletRequest multiRequest) throws Exception {
         Integer atchFileNo = this.uploadFile(multiRequest);
-        AtchFileDtlEntity atchFileDtlEntity = this.getFileEntity(atchFileNo)
+        AtchFileDtlEntity atchFileDtlEntity = this.getDtlEntity(atchFileNo)
                                                   .getAtchFileList()
                                                   .get(0);
         atchFileDtlEntity.setAtchFileNo(atchFileNo);
@@ -193,94 +182,8 @@ public class AtchFileService
         for (AtchFileDtlEntity atchFileDtl : atchFileList) {
             atchFileDtlNo = atchFileDtl.getAtchFileDtlNo();
             atchCtrl = multiRequest.getParameter("atchCtrl" + atchFileDtlNo);
-            if ("D".equals(atchCtrl)) {
-                atchFileDtl.setDelYn("Y");
-            }
+            if ("D".equals(atchCtrl)) atchFileDtl.setDelYn("Y");
         }
-    }
-
-    /**
-     * 메소드 분리 :: 파일 다운로드
-     */
-    public void downloadFile(final File file) throws Exception {
-        String fileName = file.getName();
-        downloadFile(file, fileName);
-    }
-
-    public void downloadFile(
-            final File file,
-            final String fileNm
-    ) throws Exception {
-        OutputStream os;
-        InputStream is = new FileInputStream(file);
-
-        FileUtils.setRespnsHeader(fileNm);       // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
-        response.setHeader("Content-Length", String.valueOf(file.length()));        // 파일 크기 설정
-
-        // 응답으로 파일 전송
-        os = response.getOutputStream();
-        byte[] buffer = new byte[2048];
-        int bytesRead, bytesBufferd = 0;
-        while ((bytesRead = is.read(buffer)) > -1) {
-            os.write(buffer, 0, bytesRead);
-            bytesBufferd += bytesRead;
-            if (bytesBufferd > 2048 * 1024) {       // 2MB마다 flush
-                bytesBufferd = 0;
-                os.flush();
-            }
-        }
-        os.flush();
-        // 전송 끝 + 스트림 닫음
-        is.close();
-        os.close();
-    }
-
-    /**
-     * 첨부파일 정보 조회 (atchFileNo) (entity level)
-     */
-    public AtchFileEntity getFileEntity(final Integer atchFileNo) throws Exception {
-        return atchFileRepository.findById(atchFileNo)
-                                 .orElse(null);
-    }
-
-    /**
-     * 첨부파일 정보 조회 (atchFileNo) (dto level)
-     */
-    public AtchFileDto getFileDto(final Integer atchFileNo) throws Exception {
-        AtchFileEntity fileEntity = this.getFileEntity(atchFileNo);
-        if (fileEntity == null) return null;
-
-        return atchFileMapstruct.toDto(fileEntity);
-    }
-
-    /**
-     * 첨부파일 상세 목록 조회 (dto level)
-     */
-    public List<AtchFileDtlDto> getFileDtlDtoList(final Integer atchFileNo) throws Exception {
-        AtchFileDto fileDto = this.getFileDto(atchFileNo);
-        if (fileDto == null) return null;
-        return fileDto.getAtchFileList();
-    }
-
-    /**
-     * 첨부파일 상세 단일 조회 (entity level)
-     */
-    public AtchFileDtlEntity getFileDtlEntity(final Integer atchFileDtlNo) {
-        return atchFileDtlRepository.findById(atchFileDtlNo)
-                                    .orElse(null);
-    }
-
-    /**
-     * 첨부파일 상세 단일 조회 (dto level)
-     */
-    public AtchFileDtlDto getFileDtlDto(final Integer atchFileDtlNo) throws Exception {
-        AtchFileDtlEntity fileDtlEntity = this.getFileDtlEntity(atchFileDtlNo);
-        return atchFileDtlMapstruct.toDto(fileDtlEntity);
-    }
-
-    /** 첨부파일 저장 */
-    public AtchFileEntity regist(AtchFileEntity atchFile) {
-        return atchFileRepository.save(atchFile);
     }
 
     /**
@@ -290,7 +193,7 @@ public class AtchFileService
         // 1. 파일ID일 경우로 상정 ::
         try {
             Integer atchFileDtlNo = Integer.parseInt(fileId);
-            AtchFileDtlEntity fileDtl = this.getFileDtlEntity(atchFileDtlNo);
+            AtchFileDtlEntity fileDtl = atchFileDtlService.getDtlEntity(atchFileDtlNo);
             new File(fileDtl.getFileStrePath(), fileDtl.getStreFileNm());
         } catch (NumberFormatException e) {
             // 2. 에러시 Integer형 ID가 아닌 것으로 판단, 파일명으로 처리
