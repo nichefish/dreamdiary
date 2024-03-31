@@ -8,10 +8,9 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 /**
- * BaseAuthUtils
+ * AuthUtils
  * <pre>
  *  Spring Security:: 인증 및 권한 처리 관련 서비스 모듈
- *  Spring Security 컨텍스트 내에서 인증정보 이용시 해당 객체 상속하여 구현
  * </pre>
  *
  * @author nichefish

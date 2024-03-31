@@ -36,9 +36,5 @@ public class BaseAtchEntity
     @JoinColumn(name = "atch_file_no", referencedColumnName = "atch_file_no", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     protected AtchFileEntity atchFileInfo;
-
-    /** 첨부파일 존재 여부 */
-    @Transient
-    protected Boolean hasAtchFile;
 }
 

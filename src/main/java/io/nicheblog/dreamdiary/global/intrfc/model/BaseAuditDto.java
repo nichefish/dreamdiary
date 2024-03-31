@@ -36,5 +36,5 @@ public class BaseAuditDto
     protected AuditorDto mdfusrInfo;
 
     /** 수정자 여부 */
-    protected Boolean isMdfUser;
+    protected Boolean isMdfusr;
 }

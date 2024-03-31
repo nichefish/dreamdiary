@@ -34,8 +34,6 @@ public class BaseAtchDto
     protected Integer atchFileNo;
     /** 첨부파일 정보 (1:N) */
     protected AtchFileDto atchFileInfo;
-    /** 첨부파일 목록 */
-    protected List<AtchFileDtlDto> atchFileList;
     /** 첨부파일 .zip 다운로드 URL */
     protected String atchFileZipUrl;
     /** 첨부파일 .zip 파일명 */

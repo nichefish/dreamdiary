@@ -26,7 +26,7 @@ public interface BaseClsfListMapstruct<Dto extends BaseClsfDto, ListDto extends 
         extends BaseListMapstruct<Dto, ListDto, Entity> {
 
     @AfterMapping
-    default void mapClsfFields(final Entity entity, final @MappingTarget ListDto dto) throws Exception {
+    default void mapClsfListFields(final Entity entity, final @MappingTarget ListDto dto) throws Exception {
 
         // 댓글 :: 공통 필드 매핑 로직
         boolean usesCommentModule = (entity instanceof CommentEmbedModule && dto instanceof CommentCmpstnModule);
