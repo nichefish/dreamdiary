@@ -54,11 +54,11 @@ public class FileUtils {
     /**
      * 파일 유무 체크
      */
-    public Boolean fileChck(final String fileId) {
+    public static Boolean fileChck(final String fileId) {
         // 1. 파일ID일 경우로 상정 ::
         try {
             Integer atchFileDtlNo = Integer.parseInt(fileId);
-            AtchFileDtlEntity fileDtl = fileDtlService.getDtlEntity(atchFileDtlNo);
+            AtchFileDtlEntity fileDtl = atchFileDtlService.getDtlEntity(atchFileDtlNo);
             new File(fileDtl.getFileStrePath(), fileDtl.getStreFileNm());
         } catch (NumberFormatException e) {
             // 2. 에러시 Integer형 ID가 아닌 것으로 판단, 파일명으로 처리

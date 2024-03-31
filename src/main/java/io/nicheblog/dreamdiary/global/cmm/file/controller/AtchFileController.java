@@ -68,7 +68,7 @@ public class AtchFileController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = atchFileService.fileChck(fileId);
+            isSuccess = FileUtils.fileChck(fileId);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;

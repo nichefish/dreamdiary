@@ -62,7 +62,6 @@ public class AtchFileService
         return this.atchFileMapstruct;
     }
 
-
     /**
      * 파일 업로드
      */
@@ -185,27 +184,5 @@ public class AtchFileService
             if ("D".equals(atchCtrl)) atchFileDtl.setDelYn("Y");
         }
     }
-
-    /**
-     * 파일 유무 체크
-     */
-    public Boolean fileChck(final String fileId) {
-        // 1. 파일ID일 경우로 상정 ::
-        try {
-            Integer atchFileDtlNo = Integer.parseInt(fileId);
-            AtchFileDtlEntity fileDtl = atchFileDtlService.getDtlEntity(atchFileDtlNo);
-            new File(fileDtl.getFileStrePath(), fileDtl.getStreFileNm());
-        } catch (NumberFormatException e) {
-            // 2. 에러시 Integer형 ID가 아닌 것으로 판단, 파일명으로 처리
-            log.info(MessageUtils.getExceptionMsg(e));
-            new File("content/" + fileId);
-            return true;
-        } catch (Exception e) {
-            log.info(MessageUtils.getExceptionMsg(e));
-            return false;
-        }
-        return true;
-    }
-
 
 }
