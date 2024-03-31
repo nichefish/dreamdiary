@@ -23,7 +23,7 @@ import javax.persistence.*;
  * @extends BaseCrudEntity
  */
 @Entity
-@Table(name = "tag")
+@Table(name = "content_tag")
 @Getter
 @Setter
 @SuperBuilder(toBuilder=true)

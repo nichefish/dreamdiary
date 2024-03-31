@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * BoardPostController
  * <pre>
- *  게시판 게시물 컨트롤러
+ *  일반게시판 게시물 컨트롤러
  *  화면단에선 boardCd, 어플리케이션 단에선 contentType으로 사용
  * </pre>
  *
@@ -83,7 +83,7 @@ public class BoardPostController
     // private XlsxUtils xlsxUtils;
 
     /**
-     * 게시판 게시물 목록 조회
+     * 일반게시판 게시물 목록 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @GetMapping(SiteUrl.BOARD_POST_LIST)
@@ -140,7 +140,7 @@ public class BoardPostController
     }
 
     /**
-     * 게시판 게시물 등록 화면 조회
+     * 일반게시판 게시물 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.BOARD_POST_REG_FORM)
@@ -186,7 +186,7 @@ public class BoardPostController
     }
 
     /**
-     * 게시판 게시물 등록 전 미리보기 팝업 조회
+     * 일반게시판 게시물 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.BOARD_POST_REG_PREVIEW_POP)
@@ -232,7 +232,7 @@ public class BoardPostController
     }
 
     /**
-     * 게시판 게시물 등록/수정 (Ajax)
+     * 일반게시판 게시물 등록/수정 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.BOARD_POST_REG_AJAX, SiteUrl.BOARD_POST_MDF_AJAX})
@@ -292,7 +292,7 @@ public class BoardPostController
     }
 
     /**
-     * 게시판 게시물 상세 화면 조회
+     * 일반게시판 게시물 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(value = SiteUrl.BOARD_POST_DTL)
@@ -338,7 +338,7 @@ public class BoardPostController
     }
 
     /**
-     * 게시판 게시물 상세 조회 (Ajax)
+     * 일반게시판 게시물 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.BOARD_POST_DTL_AJAX)
@@ -379,7 +379,7 @@ public class BoardPostController
     }
 
     /**
-     * 게시판 게시물 수정 화면 조회
+     * 일반게시판 게시물 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(value = SiteUrl.BOARD_POST_MDF_FORM)
@@ -428,7 +428,7 @@ public class BoardPostController
     }
 
     /**
-     * 게시판 게시물 삭제 (Ajax)
+     * 일반게시판 게시물 삭제 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.BOARD_POST_DEL_AJAX)

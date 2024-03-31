@@ -18,7 +18,7 @@ import javax.persistence.*;
 /**
  * BoardPostEntity
  * <pre>
- *  게시판 게시물 Entity
+ *  일반게시판 게시물 Entity
  * </pre>
  *
  * @author nichefish

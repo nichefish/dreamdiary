@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * BoardPostSpec
  * <pre>
- *  게시판 게시물 목록 검색인자 세팅 Specification
+ *  일반게시판 게시물 목록 검색인자 세팅 Specification
  * </pre>
  *
  * @author nichefish

@@ -181,7 +181,7 @@
     </#if>
     <div class="d-flex justify-content-end">
         <!-- 수정권한에 따라 수정 권한 부여 -->
-        <#if (post.mdfable!"") == (Constant.MDFABLE_REGSTR)>
+        <#if (post.managt.mdfable!"") == (Constant.MDFABLE_REGSTR)>
             <#if post.isRegstr>
                 <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
@@ -189,19 +189,19 @@
                     <i class="bi bi-pencil-square"></i>(내 글)수정
                 </button>
             </#if>
-        <#elseif (post.mdfable!"") == (Constant.MDFABLE_MNGR)>
+        <#elseif (post.managt.mdfable!"") == (Constant.MDFABLE_MNGR)>
             <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                     title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(관리자+)수정
             </button>
-        <#elseif (post.mdfable!"") == (Constant.MDFABLE_USER)>
+        <#elseif (post.managt.mdfable!"") == (Constant.MDFABLE_USER)>
             <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                     title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
-        <#elseif (post.mdfable!"") == (Constant.MDFABLE_ALL)>
+        <#elseif (post.managt.mdfable!"") == (Constant.MDFABLE_ALL)>
             <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                     title="<@spring.message "bs.tooltip.page.mdf"/>">

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * BoardPostRepository
  * <pre>
- *  게시판 게시물 Repository 인터페이스
+ *  일반게시판 게시물 Repository 인터페이스
  * </pre>
  *
  * @author nichefish

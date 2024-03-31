@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * BoardPostService
  * <pre>
- *  게시판 게시물 서비스 모듈
+ *  일반게시판 게시물 서비스 모듈
  * </pre>
  *
  * @author nichefish

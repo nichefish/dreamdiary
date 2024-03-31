@@ -115,7 +115,7 @@
                                     </span>
                                 </#if>
                                 <!-- 수정권한 표시 -->
-                                <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
+                                <#if ((post.managt.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
                                     <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
                                 </#if>
@@ -195,7 +195,7 @@
                                         [${post.comment.cnt!}]
                                     </span>
                                 </#if>
-                                <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
+                                <#if ((post.managt.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
                                     <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
                                 </#if>
