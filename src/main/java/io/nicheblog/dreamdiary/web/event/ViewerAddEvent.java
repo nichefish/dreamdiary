@@ -18,8 +18,6 @@ public class ViewerAddEvent
 
     /** 컨텐츠 복합키 */
     private final BaseClsfKey clsfKey;
-    /** 사용자 ID */
-    private final String userId;
 
     /* ----- */
 
@@ -28,10 +26,8 @@ public class ViewerAddEvent
      */
     public ViewerAddEvent(
             final Object source,
-            final BaseClsfKey clsfKey,
-            final String userId) {
+            final BaseClsfKey clsfKey) {
         super(source);
         this.clsfKey = clsfKey;
-        this.userId = userId;
     }
 }

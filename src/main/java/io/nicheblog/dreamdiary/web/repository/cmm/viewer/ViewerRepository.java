@@ -1,20 +1,25 @@
 package io.nicheblog.dreamdiary.web.repository.cmm.viewer;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.viewer.ViewerEntity;
+import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsYyEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 /**
- * BoardPostViewerRepository
+ * ViewerRepository
  * <pre>
- *  게시판 게시물 열람자 Repository 인터페이스
- *  ※게시판 게시물 열람자(board_post_viewer) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  컨텐츠 열람자 Repository 인터페이스
  * </pre>
  *
  * @author nichefish
  */
-@Repository("boardPostViewerRepository")
+@Repository("viewerRepository")
 public interface ViewerRepository
         extends BaseRepository<ViewerEntity, Integer> {
 
+    //
 }

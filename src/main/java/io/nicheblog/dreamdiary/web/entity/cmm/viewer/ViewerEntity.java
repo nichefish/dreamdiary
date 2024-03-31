@@ -14,7 +14,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 /**
- * BoardPostViewerEntity
+ * ViewerEntity
  * <pre>
  *  게시판 게시물 열람자 Entity
  *  ※게시판 게시물 열람자(board_post_viewer) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
@@ -38,7 +38,7 @@ public class ViewerEntity
     /** 열람자 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "POST_VIEWER_NO")
+    @Column(name = "viewer_no")
     @Comment("게시물 열람자 번호 (PK)")
     private Integer postViewerNo;
 
