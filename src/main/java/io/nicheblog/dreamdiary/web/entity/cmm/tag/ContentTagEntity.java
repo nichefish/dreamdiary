@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.cmm.tag;
 
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -62,6 +63,15 @@ public class ContentTagEntity
     private TagEntity tag;
 
     /* ----- */
+
+    /**
+     * 생성자
+     */
+    public ContentTagEntity(Integer refTagNo, BaseClsfKey clsfKey) {
+        this.refTagNo = refTagNo;
+        this.refPostNo = clsfKey.getPostNo();
+        this.refContentType = clsfKey.getContentType();
+    }
 
     /**
      * entityList -> dtoList

@@ -4,8 +4,6 @@ import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 /**
  * AtchFileDtlRepository
  * <pre>

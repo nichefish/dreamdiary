@@ -17,7 +17,7 @@ import java.io.Serializable;
  * </pre>
  *
  * @author nichefish
- * @implements BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @extends BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>>
         extends BaseReadonlyService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
@@ -36,12 +36,34 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
         // 등록 전처리
         this.preRegist(dto);
 
-        Mapstruct mapstruct = this.getMapstruct();
         // Dto -> Entity
+        Mapstruct mapstruct = this.getMapstruct();
         Entity entity = mapstruct.toEntity(dto);
+
+        // 등록 중간처리
+        this.midRegist(entity);
+
         // insert
         Entity rslt = this.updt(entity);
+
+        // 등록 후처리
+        this.postRegist(dto, entity);
+
         return mapstruct.toDto(rslt);
+    }
+
+    /**
+     * default: 게시물 등록 중간처리 (entity level, entity 변환 후 처리)
+     */
+    default void midRegist(final Entity entity) throws Exception {
+        // 등록 중간처리:: 기본 공백, 필요시 각 함수에서 Override
+    }
+
+    /**
+     * default: 게시물 등록 후처리 (entity level, entity 변환 후 처리)
+     */
+    default void postRegist(final Dto dto, final Entity entity) throws Exception {
+        // 등록 후처리:: 기본 공백, 필요시 각 함수에서 Override
     }
 
     /**
@@ -61,14 +83,36 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
         // 수정 전처리
         this.preModify(dto);
 
-        Mapstruct mapstruct = this.getMapstruct();
         // Entity 레벨 조회
+        Mapstruct mapstruct = this.getMapstruct();
         Entity entity = this.getDtlEntity(key);
         mapstruct.updateFromDto(dto, entity);
+
+        // 수정 중간처리
+        this.midModify(entity);
+
         // update
         Repository repository = this.getRepository();
         Entity rsltEntity = repository.saveAndFlush(entity);
+
+        // 수정 후처리
+        this.postModify(entity);
+
         return mapstruct.toDto(rsltEntity);
+    }
+
+    /**
+     * default: 게시물 수정 중간처리 (entity level, entity 변환 후 처리)
+     */
+    default void midModify(final Entity entity) {
+        // 수정 중간처리:: 기본 공백, 필요시 각 함수에서 Override
+    }
+
+    /**
+     * default: 게시물 수정 후처리 (entity level, entity 변환 후 처리)
+     */
+    default void postModify(final Entity entity) throws Exception {
+        // 수정 후처리:: 기본 공백, 필요시 각 함수에서 Override
     }
 
     /**

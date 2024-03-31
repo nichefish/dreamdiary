@@ -16,43 +16,11 @@ import java.io.Serializable;
  * </pre>
  *
  * @author nichefish
- * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @extends BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BaseClsfService<Dto extends BaseClsfDto, ListDto extends BaseClsfListDto, Key extends Serializable, Entity extends BaseClsfEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>>
         extends BaseMultiCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
-    /**
-     * default: 항목 등록 (Multipart)
-     * managt(최종수정자) 정보 포함하도록 재정의
-     */
-    @Override
-    default Dto regist(final Dto dto) throws Exception {
-        this.preRegist(dto);
-
-        Mapstruct mapstruct = this.getMapstruct();
-        // Dto -> Entity
-        Entity entity = mapstruct.toEntity(dto);
-        // insert
-        Entity rslt = this.updt(entity);
-        return mapstruct.toDto(rslt);
-    }
-
-    /**
-     * default: 항목 수정 (Multipart)
-     * managt(최종수정자) 정보 포함하도록 재정의
-     */
-    @Override
-    default Dto modify(final Dto dto, final Key key) throws Exception {
-        this.preModify(dto);
-
-        Mapstruct mapstruct = this.getMapstruct();
-        // Entity 레벨 조회
-        Entity entity = this.getDtlEntity(key);
-        mapstruct.updateFromDto(dto, entity);
-        // update
-        Repository repository = this.getRepository();
-        Entity rsltEntity = repository.saveAndFlush(entity);
-        return mapstruct.toDto(rsltEntity);
-    }
+    //
 
 }

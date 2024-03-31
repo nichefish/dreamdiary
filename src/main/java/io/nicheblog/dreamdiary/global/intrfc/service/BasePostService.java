@@ -23,7 +23,7 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @extends BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BasePostService<Dto extends BasePostDto, ListDto extends BasePostListDto, Key extends Serializable, Entity extends BasePostEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>>
         extends BaseClsfService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
@@ -38,51 +38,6 @@ public interface BasePostService<Dto extends BasePostDto, ListDto extends BasePo
         }};
         Page<ListDto> dtoPage = this.getListDto(searchParamMap, Pageable.unpaged());
         return dtoPage.getContent();
-    }
-
-    /**
-     * default: 항목 등록 (Multipart)
-     * managt(최종수정자) 정보 포함하도록 재정의
-     */
-    @Override
-    default Dto regist(final Dto dto) throws Exception {
-        this.preRegist(dto);
-
-        Mapstruct mapstruct = this.getMapstruct();
-        // Dto -> Entity
-        Entity entity = mapstruct.toEntity(dto);
-        // managt
-        // entity.setManagtrId(AuthUtils.getLgnUserId());
-        // entity.setManagtDt(DateUtils.getCurrDate());
-        // insert
-        Entity rslt = this.updt(entity);
-        return mapstruct.toDto(rslt);
-    }
-
-    /**
-     * default: 항목 수정 (Multipart)
-     * managt(최종수정자) 정보 포함하도록 재정의
-     */
-    @Override
-    default Dto modify(
-            final Dto dto,
-            final Key key
-    ) throws Exception {
-        this.preModify(dto);
-
-        Mapstruct mapstruct = this.getMapstruct();
-        // Entity 레벨 조회
-        Entity entity = this.getDtlEntity(key);
-        mapstruct.updateFromDto(dto, entity);
-        // managt
-        // if ("Y".equals(dto.getManagtDtUpdtYn())) {
-        //     entity.setManagtrId(AuthUtils.getLgnUserId());
-        //     entity.setManagtDt(DateUtils.getCurrDate());
-        // }
-        // update
-        Repository repository = this.getRepository();
-        Entity rsltEntity = repository.saveAndFlush(entity);
-        return mapstruct.toDto(rsltEntity);
     }
 
     /**
