@@ -36,17 +36,15 @@ public class FreemarkerConfig
             BeansWrapper objectWrapper = (BeansWrapper) configuration.getObjectWrapper();
             // static 변수 임포트
             configuration.setSharedVariables(this.getSharedVariables(objectWrapper));
-            // 숫자에 콤마 제거!!! (1000 넘어가는 ID에서 개꼬임...)
+            // 숫자에 콤마 제거!!! (1000 넘어가는 ID(PK)에서 개꼬임...)
+            configuration.addAutoImport("spring", "/lib/spring.ftl");
+            // configuration.addAutoImport("function", "/lib/function.ftl");
             configuration.setNumberFormat("computer");
             Properties settings = new Properties();
             settings.setProperty("template_exception_handler", "ignore");
-            settings.setProperty("auto_import", "/lib/spring.ftl as spring");
-            settings.setProperty("auto_import", "/lib/function.ftl as function");
             configurer.setFreemarkerSettings(settings);
             // 템플릿 위치 추가
             List<String> pluginTemplatePaths = new ArrayList<>();
-            pluginTemplatePaths.add(0, "classpath:/templates");
-            pluginTemplatePaths.add(0, "classpath:/static");
             pluginTemplatePaths.add(0, "classpath:/static/react");
             pluginTemplatePaths.add(0, "classpath:/react");
             pluginTemplatePaths.add(0, "file:templates");
@@ -67,7 +65,6 @@ public class FreemarkerConfig
         sharedVariables.put("SiteUrl", statics.get("io.nicheblog.dreamdiary.web.SiteUrl"));
         sharedVariables.put("SiteMenu", statics.get("io.nicheblog.dreamdiary.web.SiteMenu"));
         sharedVariables.put("ApiUrl", statics.get("io.nicheblog.dreamdiary.api.ApiUrl"));
-        // TODO: SiteUrl과 ApiUrl 합칠건지?그냥 따로갈건지?
         return sharedVariables;
     }
 }

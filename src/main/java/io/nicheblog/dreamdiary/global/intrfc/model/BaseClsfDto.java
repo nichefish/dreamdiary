@@ -37,7 +37,7 @@ public class BaseClsfDto
      * 복합키 객체 반환
      */
     public BaseClsfKey getClsfKey() {
-        return new BaseClsfKey(this.postNo, this.contentType);
+        return new BaseClsfKey(this.getPostNo(), this.getContentType());
     }
 
 }

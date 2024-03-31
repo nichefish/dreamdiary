@@ -36,9 +36,9 @@ public class ViewerService {
      */
     public Boolean hasAlreadyVisited(final BaseClsfKey key) {
         Map<String, Object> searchParamMap = new HashedMap<>() {{
-            put("userId", AuthUtils.getLgnUserId());
-            put("postNo", key.getPostNo());
-            put("contentType", key.getContentType());
+            put("regstrId", AuthUtils.getLgnUserId());
+            put("refPostNo", key.getPostNo());
+            put("refContentType", key.getContentType());
         }};
         Page<ViewerEntity> viewerList = viewerRepository.findAll(viewerSpec.searchWith(searchParamMap), Pageable.unpaged());
         return viewerList.getSize() > 0;
@@ -49,6 +49,7 @@ public class ViewerService {
      */
     public void addViewer(final BaseClsfKey key) {
         if (this.hasAlreadyVisited(key)) return;
-        viewerRepository.save(new ViewerEntity(key));
+        ViewerEntity viewer = new ViewerEntity(key);
+        viewerRepository.save(viewer);
     }
 }

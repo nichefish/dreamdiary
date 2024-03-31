@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.controller.impl;
 
 import io.nicheblog.dreamdiary.global.intrfc.controller.BaseController;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationEventPublisher;
 
 import javax.annotation.Resource;
@@ -29,4 +30,7 @@ public class BaseControllerImpl
 
     @Resource
     protected ApplicationEventPublisher publisher;
+
+    @Resource
+    private CacheManager cacheManager;
 }

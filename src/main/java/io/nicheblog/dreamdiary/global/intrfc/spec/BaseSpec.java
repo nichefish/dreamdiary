@@ -51,7 +51,7 @@ public interface BaseSpec<Entity> {
             try {
                 predicate.add(builder.equal(root.get(key), searchParamMap.get(key)));
             } catch (Exception e) {
-                e.printStackTrace();
+                // log.info("unable to locate attribute " + key + " while trying root.get(key).");
             }
         }
         return predicate;
