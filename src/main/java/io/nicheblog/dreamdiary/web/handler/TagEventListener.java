@@ -1,32 +1,34 @@
 package io.nicheblog.dreamdiary.web.handler;
 
 import io.nicheblog.dreamdiary.web.event.ManagtrAddEvent;
+import io.nicheblog.dreamdiary.web.event.TagEvent;
 import io.nicheblog.dreamdiary.web.service.cmm.managt.ManagtrService;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
 /**
- * ManagtrEventListener
+ * TagEventListener
  * <pre>
- *  컨탠츠 열람자 이벤트 처리 핸들러
+ *  태그 관련 이벤트 처리 핸들러
  * </pre>
  *
  * @author nichefish
  */
-@Component("managtrEventListener")
-public class ManagtrEventListener {
+@Component("tagEventListener")
+public class TagEventListener {
 
     @Resource
-    private ManagtrService managtrService;
+    private TagService tagService;
 
     /**
-     * 조치자 추가
+     * 태그 처리
      */
     @EventListener
-    public void handleManagtrAddEvent(ManagtrAddEvent managtrAddEvent) {
+    public void handleTagAddEvent(TagEvent tagEvent) {
         // 활동 로그 (로그인) 로깅 처리
-        managtrService.addManagtr(managtrAddEvent.getClsfKey());
+        tagService.procTags(tagEvent.getClsfKey(), tagEvent.getTagCmpstn());
     }
 }

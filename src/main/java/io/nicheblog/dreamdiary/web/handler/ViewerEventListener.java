@@ -22,7 +22,7 @@ public class ViewerEventListener {
     private ViewerService viewerService;
 
     /**
-     * 현재 인증(로그인) 상태인 등록/수정자 반환
+     * 열람자 추가
      */
     @EventListener
     public void handleViewerAddEvent(ViewerAddEvent viewerAddEvent) {

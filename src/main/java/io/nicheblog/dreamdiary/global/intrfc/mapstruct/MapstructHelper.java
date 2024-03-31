@@ -11,9 +11,9 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfListDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 
 /**
- * FileUtils
+ * MapstructHelper
  * <pre>
- *  파일 서비스에서 (서비스 인터페이스에서 쓰는) 파일 업로드 부분만 유틸리티 클래스로 분리
+ *  Mapstruct에서 쓰는 공통 로직 분리
  * </pre>
  *
  * @author nichefish
