@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.event.ManagtrAddEvent;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
@@ -252,7 +253,7 @@ public class NoticeController
             if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조치자 추가 :: 메인 로직과 분리
-            publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
+            publisher.publishEvent(new ManagtrAddEvent(this, result.getClsfKey()));
             // 잔디 메세지 발송 :: 메인 로직과 분리
             // if ("Y".equals(jandiYn)) {
             //     String jandiResultMsg = notifyService.notifyNoticeReg(trgetTopic, result, logParam);

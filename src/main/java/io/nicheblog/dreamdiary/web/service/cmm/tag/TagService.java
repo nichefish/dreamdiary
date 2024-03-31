@@ -1,15 +1,22 @@
 package io.nicheblog.dreamdiary.web.service.cmm.tag;
 
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
+import io.nicheblog.dreamdiary.web.repository.cmm.tag.ContentTagRepository;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.TagRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.TagSpec;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * TagService
@@ -29,6 +36,8 @@ public class TagService
 
     @Resource(name = "tagRepository")
     private TagRepository tagRepository;
+    @Resource(name = "contentTagRepository")
+    private ContentTagRepository contentTagRepository;
     @Resource(name = "tagSpec")
     private TagSpec tagSpec;
 
@@ -47,6 +56,23 @@ public class TagService
         return this.tagMapstruct;
     }
 
+    public List<TagEntity> procTagList(TagEmbed tagEmbed) {
+        List<String> tagStrList = tagEmbed.getTagStrList();
+        if (CollectionUtils.isEmpty(tagStrList)) return new ArrayList<>();
+        // 1, 마스터 태그 처리
+        List<TagEntity> tagEntityList = tagStrList.stream()
+                .distinct() // 중복된 태그 문자열 제거
+                .map(tagStr -> tagRepository.findByTagNm(tagStr)
+                        .orElseGet(() -> new TagEntity(tagStr))) // 데이터베이스에서 태그 조회, 없으면 새 객체 생성
+                .collect(Collectors.toList());
+        return tagRepository.saveAllAndFlush(tagEntityList);
+    }
+
+    public void procContentTagList(List<ContentTagEntity> contentTagList) {
+        contentTagRepository.saveAllAndFlush(contentTagList);
+    }
+
+
     /**
      * 게시판 태그 목록 Page<Entity>->Page<Dto> 변환
      */
@@ -64,30 +90,6 @@ public class TagService
      * 게시판 > 게시판 등록/수정 전처리 :: 메소드 분리
      */
     // public void processTagList(final BasePostDto postDto) throws Exception {
-    //     // 태그를 먼저 처리해준다.
-    //     List<String> tagStrList = postDto.getTagStrList();
-    //     if (CollectionUtils.isEmpty(tagList)) return;
-    //     this.regPostList(tagList);
-    //     List<ContentTagDto> postTagList = new ArrayList<>();
-    //     for (TagDto tag : tagList) {
-    //         postTagList.add(new ContentTagDto(tag.getTag()));
-    //     }
-    //     postDto.setTagList(postTagList);
-    // }
 
-    /**
-     * 게시판 > 게시판 태그 목록 등록
-     */
-    // public Boolean regPostList(final List<TagDto> tagDtoList) throws Exception {
-    //     List<TagEntity> tagEntityList = new ArrayList<>();
-    //     for (TagDto tag : tagDtoList) {
-    //         // Dto -> Entity
-    //         TagEntity tagEntity = tagMapstruct.toEntity(tag);
-    //         tagEntityList.add(tagEntity);
-    //     }
-    //     // insert
-    //     if (!CollectionUtils.isEmpty(tagEntityList)) tagRepository.saveAll(tagEntityList);
-    //     return true;
     // }
-
 }
