@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.util;
 
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * PdfBoxUtils
  * <pre>
- *  Image -> PDF 관련 처리 모듈
+ *  Image -> PDF 관련 처리 유틸리티 모듈
  * </pre>
  *
  * @author nichefish
@@ -31,18 +31,18 @@ import java.util.List;
 @Log4j2
 public class PdfBoxUtils {
 
-    @Resource(name = "fileService")
-    private FileService flService;
-
+    @Resource(name = "atchFileService")
+    private AtchFileService atchFileService;
     @Resource
     private HttpServletResponse resp;
 
-    private static FileService fileService;
+    private static AtchFileService fileService;
     private static HttpServletResponse response;
 
+    /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
-        this.fileService = flService;
+        this.fileService = atchFileService;
         this.response = resp;
     }
 

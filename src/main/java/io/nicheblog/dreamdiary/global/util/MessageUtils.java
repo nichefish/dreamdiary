@@ -32,13 +32,13 @@ public class MessageUtils
 
     @Resource(name = "messageSource")
     private MessageSource source;
-
     @Resource
     private HttpServletResponse resp;
 
     private static MessageSource messageSource;
     private static HttpServletResponse response;
 
+    /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
         this.messageSource = source;
