@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ViewerEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnSchdulDto;
 import lombok.*;
@@ -112,4 +113,8 @@ public class VcatnPaprEntity
     /** 조치 정보 모듈 (위임) */
     @Embedded
     public ManagtEmbed managt;
+
+    /** 열람자 정보 모듈 (위임) */
+    @Embedded
+    public ViewerEmbed viewer;
 }

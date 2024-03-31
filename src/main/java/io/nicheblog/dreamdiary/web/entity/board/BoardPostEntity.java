@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ViewerEmbed;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class BoardPostEntity
 
     /** 글 번호 :: 복합키 사용, 시퀀스 생성 로직을 위해 재정의 */
     @Id
-    @TableGenerator(name = "board_post", table = "cmm_sequence", pkColumnName = "SEQ_NM", valueColumnName = "SEQ_VAL", pkColumnValue = "POST_NO", initialValue = 1, allocationSize = 1)
+    @TableGenerator(name = "board_post", table = "cmm_sequence", pkColumnName = "seq_nm", valueColumnName = "seq_val", pkColumnValue = "post_no", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "board_post")
     @Column(name = "post_no")
     @Comment("글번호 (key)")
@@ -85,5 +86,9 @@ public class BoardPostEntity
     /** 조치 정보 모듈 (위임) */
     @Embedded
     public ManagtEmbed managt;
+
+    /** 열람자 정보 모듈 (위임) */
+    @Embedded
+    public ViewerEmbed viewer;
 }
 

@@ -1,9 +1,10 @@
 package io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ViewerCmpstn;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
 import lombok.*;
@@ -104,5 +105,9 @@ public class ExptrPrsnlPaprDto
 
     /** 조치 정보 모듈 (위임) */
     @Embedded
-    public ManagtEmbed managt;
+    public ManagtCmpstn managt;
+
+    /** 열람자 정보 모듈 (위임) */
+    @Embedded
+    public ViewerCmpstn viewer;
 }

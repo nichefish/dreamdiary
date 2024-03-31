@@ -1,12 +1,14 @@
 package io.nicheblog.dreamdiary.web.model.flsys;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Embedded;
 import java.io.Serializable;
 
 /**
@@ -38,6 +40,7 @@ public class FlsysMetaDto
      * 상위파일절대경로
      */
     private String upperFilePath;
+
     /* ----- */
 
     /**
@@ -50,4 +53,10 @@ public class FlsysMetaDto
     public String getBoardCd() {
         return "flsysMeta";
     }
+
+    /* ----- */
+
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentCmpstn comment;
 }

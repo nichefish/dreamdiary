@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +47,6 @@ public class BoardPostListDto
 
     /** 조치 정보 모듈 (위임) */
     @Embedded
-    public ManagtEmbed managt;
+    public ManagtCmpstn managt;
 }
 

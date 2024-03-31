@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.web.model.exptr.reqst;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -49,5 +49,5 @@ public class ExptrReqstListDto
 
     /** 조치 정보 모듈 (위임) */
     @Embedded
-    public ManagtEmbed managt;
+    public ManagtCmpstn managt;
 }

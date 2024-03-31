@@ -1,9 +1,10 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ViewerCmpstn;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,14 +53,6 @@ public class BoardPostDto
     //     return title;
     // }
 
-    /**
-     * 게시물 조회자 목록 추가
-     */
-    // public void addPostViewer(final BoardPostViewerDto viewer) {
-    //     if (this.viewerList == null) this.viewerList = new ArrayList<>();
-    //     viewerList.add(viewer);
-    // }
-
     /* ----- */
 
     /** 댓글 정보 모듈 (위임) */
@@ -68,5 +61,9 @@ public class BoardPostDto
 
     /** 조치 정보 모듈 (위임) */
     @Embedded
-    public ManagtEmbed managt;
+    public ManagtCmpstn managt;
+
+    /** 열람자 정보 모듈 (위임) */
+    @Embedded
+    public ViewerCmpstn viewer;
 }

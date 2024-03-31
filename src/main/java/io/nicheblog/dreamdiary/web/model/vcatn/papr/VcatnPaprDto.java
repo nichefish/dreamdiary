@@ -1,9 +1,10 @@
 package io.nicheblog.dreamdiary.web.model.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ViewerCmpstn;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnSchdulMapstruct;
 import lombok.*;
@@ -70,5 +71,9 @@ public class VcatnPaprDto
 
     /** 조치 정보 모듈 (위임) */
     @Embedded
-    public ManagtEmbed managt;
+    public ManagtCmpstn managt;
+
+    /** 열람자 정보 모듈 (위임) */
+    @Embedded
+    public ViewerCmpstn viewer;
 }

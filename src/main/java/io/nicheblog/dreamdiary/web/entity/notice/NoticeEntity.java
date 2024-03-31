@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ViewerEmbed;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
@@ -78,5 +79,9 @@ public class NoticeEntity
     /** 조치 정보 모듈 (위임) */
     @Embedded
     public ManagtEmbed managt;
+
+    /** 열람자 정보 모듈 (위임) */
+    @Embedded
+    public ViewerEmbed viewer;
 }
 
