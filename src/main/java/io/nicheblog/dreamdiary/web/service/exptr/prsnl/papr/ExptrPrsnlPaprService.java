@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.cmm.file.mapstruct.AtchFileDtlMapstruct;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.CmmUtils;
@@ -38,14 +38,14 @@ import java.util.*;
 @Service("exptrPrsnlService")
 @Log4j2
 public class ExptrPrsnlPaprService
-        implements BasePostService<ExptrPrsnlPaprDto, ExptrPrsnlPaprListDto, Integer, ExptrPrsnlPaprEntity, ExptrPrsnlPaprRepository, ExptrPrsnlPaprSpec, ExptrPrsnlPaprMapstruct, FileService> {
+        implements BasePostService<ExptrPrsnlPaprDto, ExptrPrsnlPaprListDto, Integer, ExptrPrsnlPaprEntity, ExptrPrsnlPaprRepository, ExptrPrsnlPaprSpec, ExptrPrsnlPaprMapstruct, AtchFileService> {
 
     @Resource(name = "exptrPrsnlPaprRepository")
     private ExptrPrsnlPaprRepository exptrPrsnlPaprRepository;
     @Resource(name = "exptrPrsnlSpec")
     private ExptrPrsnlPaprSpec exptrPrsnlPaprSpec;
-    @Resource(name = "fileService")
-    private FileService fileService;
+    @Resource(name = "atchFileService")
+    private AtchFileService atchFileService;
 
     private final ExptrPrsnlPaprMapstruct exptrPrsnlPaprMapstruct = ExptrPrsnlPaprMapstruct.INSTANCE;
     private final AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;
@@ -66,8 +66,8 @@ public class ExptrPrsnlPaprService
     }
 
     @Override
-    public FileService getFileService() {
-        return this.fileService;
+    public AtchFileService getFileService() {
+        return this.atchFileService;
     }
 
     /**

@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.dream;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamDayMapstruct;
@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 @Service("dreamDayService")
 @Log4j2
 public class DreamDayService
-        implements BaseMultiCrudService<DreamDayDto, DreamDayDto, Integer, DreamDayEntity, DreamDayRepository, DreamDaySpec, DreamDayMapstruct, FileService> {
+        implements BaseMultiCrudService<DreamDayDto, DreamDayDto, Integer, DreamDayEntity, DreamDayRepository, DreamDaySpec, DreamDayMapstruct, AtchFileService> {
 
     private final DreamDayMapstruct dreamDayMapstruct = DreamDayMapstruct.INSTANCE;
 
@@ -32,8 +32,8 @@ public class DreamDayService
     private DreamDayRepository dreamDayRepository;
     @Resource(name = "dreamDaySpec")
     private DreamDaySpec dreamDaySpec;
-    @Resource(name = "fileService")
-    private FileService fileService;
+    @Resource(name = "atchFileService")
+    private AtchFileService atchFileService;
 
     @Override
     public DreamDayRepository getRepository() {
@@ -51,7 +51,7 @@ public class DreamDayService
     }
 
     @Override
-    public FileService getFileService() {
-        return this.fileService;
+    public AtchFileService getFileService() {
+        return this.atchFileService;
     }
 }

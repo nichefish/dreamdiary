@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.cmm.comment;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
@@ -26,7 +26,7 @@ import javax.annotation.Resource;
 @Service("commentService")
 @Log4j2
 public class CommentService
-        implements BaseMultiCrudService<CommentDto, CommentListDto, Integer, CommentEntity, CommentRepository, CommentSpec, CommentMapstruct, FileService> {
+        implements BaseMultiCrudService<CommentDto, CommentListDto, Integer, CommentEntity, CommentRepository, CommentSpec, CommentMapstruct, AtchFileService> {
 
     private final CommentMapstruct commentMapstruct = CommentMapstruct.INSTANCE;
 
@@ -34,8 +34,8 @@ public class CommentService
     private CommentRepository commentRepository;
     @Resource(name = "commentSpec")
     private CommentSpec commentSpec;
-    @Resource(name = "fileService")
-    private FileService fileService;
+    @Resource(name = "atchFileService")
+    private AtchFileService atchFileService;
 
     @Override
     public CommentRepository getRepository() {
@@ -53,7 +53,7 @@ public class CommentService
     }
 
     @Override
-    public FileService getFileService() {
-        return this.fileService;
+    public AtchFileService getFileService() {
+        return this.atchFileService;
     }
 }

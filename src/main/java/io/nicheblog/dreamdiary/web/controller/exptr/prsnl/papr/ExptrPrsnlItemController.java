@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -43,8 +43,8 @@ public class ExptrPrsnlItemController
 
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "fileService")
-    private FileService fileService;
+    @Resource(name = "atchFileService")
+    private AtchFileService atchFileService;
 
     @Resource(name = "exptrPrsnlService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;
@@ -108,7 +108,7 @@ public class ExptrPrsnlItemController
         String resultMsg = "";
         try {
             // 파일 영역 처리 후 업로드 정보 받아서 반환
-            AtchFileDtlDto atchfileDtl = fileService.uploadDtlFile(request);
+            AtchFileDtlDto atchfileDtl = atchFileService.uploadDtlFile(request);
             Integer atchFileDtlNo = atchfileDtl.getAtchFileDtlNo();
             isSuccess = (atchFileDtlNo != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

@@ -181,7 +181,7 @@ public class ExptrReqstController
         String resultMsg = "";
         try {
             isSuccess = true;
-            // TODO: 파일 정보는? 난해하다...
+            // TODO: 파일 정보는? 하려면 불필요하게 난해하다...
             model.addAttribute("post", exptrReqstDto);
             model.addAttribute("currDateStr", DateUtils.getCurrDateStr(DateUtils.PTN_DATETIME));
         } catch (Exception e) {

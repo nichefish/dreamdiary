@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.flsys;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -53,8 +53,8 @@ public class FlsysController
     @Resource(name = "flsysService")
     public FlsysService flsysService;
 
-    @Resource(name = "fileService")
-    private FileService fileService;
+    @Resource(name = "atchFileService")
+    private AtchFileService atchFileService;
 
     /**
      * 파일시스템 화면 조회
@@ -150,7 +150,7 @@ public class FlsysController
             FlsysCmmDto file = flsysService.getFlsysByPath(filePath);
             // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
             CookieUtils.setFileDownloadSuccessCookie();
-            fileService.downloadFile(file.getFile());
+            atchFileService.downloadFile(file.getFile());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
