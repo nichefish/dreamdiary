@@ -24,6 +24,9 @@ spring:
         expose-request-attributes: true
         expose-session-attributes: true
 
+    mustache:
+        check-template-location: false
+
     jpa:
         properties:
             hibernate:
