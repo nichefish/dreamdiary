@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
@@ -18,8 +19,8 @@ import java.io.Serializable;
  * @author nichefish
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-public interface BaseClsfService<Dto extends BaseClsfDto, ListDto extends BaseClsfListDto, Key extends Serializable, Entity extends BaseClsfEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>, FileService extends io.nicheblog.dreamdiary.global.cmm.file.service.FileService>
-        extends BaseMultiCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct, io.nicheblog.dreamdiary.global.cmm.file.service.FileService> {
+public interface BaseClsfService<Dto extends BaseClsfDto, ListDto extends BaseClsfListDto, Key extends Serializable, Entity extends BaseClsfEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>, FileService extends AtchFileService>
+        extends BaseMultiCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct, AtchFileService> {
 
     /**
      * default: 항목 등록 (Multipart)
@@ -32,7 +33,6 @@ public interface BaseClsfService<Dto extends BaseClsfDto, ListDto extends BaseCl
         Mapstruct mapstruct = this.getMapstruct();
         // Dto -> Entity
         Entity entity = mapstruct.toEntity(dto);
-        // TODO: comment and tag
         // insert
         Entity rslt = this.updt(entity);
         return mapstruct.toDto(rslt);
@@ -43,17 +43,13 @@ public interface BaseClsfService<Dto extends BaseClsfDto, ListDto extends BaseCl
      * managt(최종수정자) 정보 포함하도록 재정의
      */
     @Override
-    default Dto modify(
-            final Dto dto,
-            final Key key
-    ) throws Exception {
+    default Dto modify(final Dto dto, final Key key) throws Exception {
         this.preModify(dto);
 
         Mapstruct mapstruct = this.getMapstruct();
         // Entity 레벨 조회
         Entity entity = this.getDtlEntity(key);
         mapstruct.updateFromDto(dto, entity);
-        // TODO: comment and tag
         // update
         Repository repository = this.getRepository();
         Entity rsltEntity = repository.save(entity);

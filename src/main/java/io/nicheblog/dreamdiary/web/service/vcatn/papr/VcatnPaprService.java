@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.service.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
@@ -36,14 +36,14 @@ import java.util.stream.Collectors;
 @Service("vcatnPaprService")
 @Log4j2
 public class VcatnPaprService
-        implements BasePostService<VcatnPaprDto, VcatnPaprListDto, Integer, VcatnPaprEntity, VcatnPaprRepository, VcatnPaprSpec, VcatnPaprMapstruct, FileService> {
+        implements BasePostService<VcatnPaprDto, VcatnPaprListDto, Integer, VcatnPaprEntity, VcatnPaprRepository, VcatnPaprSpec, VcatnPaprMapstruct, AtchFileService> {
 
     @Resource(name = "vcatnPaprRepository")
     private VcatnPaprRepository vcatnPaprRepository;
     @Resource(name = "vcatnPaprSpec")
     private VcatnPaprSpec vcatnPaprSpec;
-    @Resource(name = "fileService")
-    private FileService fileService;
+    @Resource(name = "atchFileService")
+    private AtchFileService atchFileService;
 
     private final VcatnPaprMapstruct vcatnPaprMapstruct = VcatnPaprMapstruct.INSTANCE;
 
@@ -68,8 +68,8 @@ public class VcatnPaprService
     }
 
     @Override
-    public FileService getFileService() {
-        return this.fileService;
+    public AtchFileService getFileService() {
+        return this.atchFileService;
     }
 
     /**

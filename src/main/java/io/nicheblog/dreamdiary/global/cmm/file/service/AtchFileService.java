@@ -40,9 +40,9 @@ import java.util.*;
  *
  * @author nichefish
  */
-@Service("fileService")
+@Service("atchFileService")
 @Log4j2
-public class FileService {
+public class AtchFileService {
 
     AtchFileMapstruct atchFileMapstruct = AtchFileMapstruct.INSTANCE;
     AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;
@@ -260,6 +260,11 @@ public class FileService {
         return atchFileDtlMapstruct.toDto(fileDtlEntity);
     }
 
+    /** 첨부파일 저장 */
+    public AtchFileEntity regist(AtchFileEntity atchFile) {
+        return atchFileRepository.save(atchFile);
+    }
+    
     /**
      * 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
      */
@@ -304,4 +309,5 @@ public class FileService {
         }
         return true;
     }
+
 }
