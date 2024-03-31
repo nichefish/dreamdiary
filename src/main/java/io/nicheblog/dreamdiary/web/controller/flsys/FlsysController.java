@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.flsys;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
+import io.nicheblog.dreamdiary.global.cmm.file.service.FileService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
-import java.io.File;
 
 /**
  * FlsysController
@@ -46,11 +45,16 @@ public class FlsysController
     private final String baseUrl = SiteUrl.FLSYS_HOME;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FLSYS;        // 작업 카테고리 (로그 적재용)
 
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
+
     @Resource(name = "flsysService")
     public FlsysService flsysService;
 
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
+    @Resource(name = "fileService")
+    private FileService fileService;
 
     /**
      * 파일시스템 화면 조회
@@ -72,14 +76,11 @@ public class FlsysController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            String filePath = !StringUtils.isEmpty(filePathParam) ? filePathParam : Constant.HOME_WORKSPACE_PROJECT;
+            String filePath = !StringUtils.isEmpty(filePathParam) ? filePathParam : Constant.HOME_FLSYS;
             FlsysCmmDto file = flsysService.getFlsysByPath(filePath);
             model.addAttribute("file", file);
-            // cmmService.setModelFlsysPath(model);
-
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            //
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -111,14 +112,12 @@ public class FlsysController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            if (!filePath.startsWith(Constant.HOME_WORKSPACE) && !filePath.startsWith(Constant.HOME_STORAGE) && !filePath.startsWith(Constant.HOME_VOD_STORAGE)) {
-                throw new IllegalArgumentException("허용되지 않은 경로입니다.");
-            }
+            if (!filePath.startsWith(Constant.HOME_FLSYS)) throw new IllegalArgumentException("허용되지 않은 경로입니다.");
             FlsysCmmDto file = flsysService.getFlsysByPath(filePath);
             ajaxResponse.setResultObj(file);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
+            } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
@@ -146,14 +145,12 @@ public class FlsysController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            if (!filePath.startsWith(Constant.HOME_WORKSPACE) && !filePath.startsWith(Constant.HOME_STORAGE) && !filePath.startsWith(Constant.HOME_VOD_STORAGE)) {
-                throw new IllegalArgumentException("허용되지 않은 경로입니다.");
-            }
+            if (!filePath.startsWith(Constant.HOME_FLSYS)) throw new IllegalArgumentException("허용되지 않은 경로입니다.");
 
             FlsysCmmDto file = flsysService.getFlsysByPath(filePath);
             // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
             CookieUtils.setFileDownloadSuccessCookie();
-            cmmFileService.downloadFile(file.getFile());
+            fileService.downloadFile(file.getFile());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -166,90 +163,5 @@ public class FlsysController
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
-    }
-
-    /**
-     * 파일시스템 폴더 탐색기로 열기 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
-     */
-    @PostMapping(value = SiteUrl.FLSYS_OPEN_IN_EXPLORER_AJAX)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> flsysOpenInExplorer(
-            final LogActvtyParam logParam,
-            final @RequestParam("filePath") String filePath,
-            final @RequestParam("objectTy") String objectTy
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String resultMsg = "";
-        try {
-            if (!filePath.startsWith(Constant.HOME_WORKSPACE) && !filePath.startsWith(Constant.HOME_STORAGE) && !filePath.startsWith(Constant.HOME_VOD_STORAGE)) {
-                throw new IllegalArgumentException("허용되지 않은 경로입니다.");
-            }
-            String absFilePath = "\\\\" + Constant.FILE_SVR_IP_ADDR + "\\" + filePath.replace("/", "\\");
-            boolean isFile = "FILE".equals(objectTy);
-            String cmd = "explorer.exe " + (isFile ? "/select, " : "") + absFilePath;
-            Runtime.getRuntime()
-                   .exec(cmd);
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
-
-    /**
-     * 파일시스템 파일 실행 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
-     */
-    @PostMapping(value = SiteUrl.FLSYS_FILE_EXEC_AJAX)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> flsysFileExec(
-            final LogActvtyParam logParam,
-            final @RequestParam("filePath") String filePath
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String resultMsg = "";
-        try {
-            if (!filePath.startsWith(Constant.HOME_WORKSPACE) && !filePath.startsWith(Constant.HOME_STORAGE) && !filePath.startsWith(Constant.HOME_VOD_STORAGE)) {
-                throw new IllegalArgumentException("허용되지 않은 경로입니다.");
-            }
-            String absFilePath = "\\\\" + Constant.FILE_SVR_IP_ADDR + "\\" + filePath.replace("/", "\\");
-            String[] cmds = {absFilePath};
-            int index = absFilePath.lastIndexOf("\\");
-            String path = absFilePath.substring(0, index);
-            Runtime.getRuntime()
-                   .exec(cmds[0], null, new File(path));
-            // explorer.exe /select,"C:\Folder\subfolder\file.txt"
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 }
