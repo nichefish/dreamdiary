@@ -246,7 +246,7 @@
         <input type="hidden" name="mngrYn" id="mngrYn" value="${mngrYn!}">
         <input type="hidden" name="title" id="title" value="${post.title!}">
         <input type="hidden" name="atchFileId" value="${post.atchFileId!}">
-        <input type="hidden" name="postHit" value="${post.postHit!0?string.number}">
+        <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
         <input type="hidden" name="cfYn" value="${post.cfYn!"N"}">
 
         <div class="card-header border-0 pt-6">

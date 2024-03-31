@@ -150,7 +150,7 @@
                     <a href="#answers" data-kt-scroll-toggle="true" class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">
                         댓글 ${post.comment.cnt!0}
                     </a>
-                    <button type="button" class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.postHit!0?string.number}</button>
+                    <button type="button" class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.hitCnt!0?string.number}</button>
                 </div>
                 <!--end::Info-->
             </div>

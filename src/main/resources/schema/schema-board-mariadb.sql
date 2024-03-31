@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS managtr (
 
 -- 열람자 (viewer)
 CREATE TABLE IF NOT EXISTS viewer (
-    post_viewer_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '열람자 번호 (PK)',
+    viewer_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '열람자 번호 (PK)',
     ref_post_no INT COMMENT '참조 글 번호',
     ref_content_type VARCHAR(30) COMMENT '참조 컨텐츠 타입',
     -- AUDIT

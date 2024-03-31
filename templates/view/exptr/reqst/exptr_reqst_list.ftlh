@@ -154,7 +154,7 @@
                         </span>
                     </td>
                     <td class="text-center hidden-table">
-                        ${post.postHit!0?string.number}
+                        ${post.hitCnt!0?string.number}
                     </td>
                     <td class="text-center hidden-table">
                         <#if post.cfYn! == "Y">
@@ -235,7 +235,7 @@
                         </span>
                     </td>
                     <td class="text-center hidden-table">
-                        ${post.postHit!0?string.number}
+                        ${post.hitCnt!0?string.number}
                     </td>
                     <td class="text-center hidden-table">
                         <#if post.cfYn! == "Y">

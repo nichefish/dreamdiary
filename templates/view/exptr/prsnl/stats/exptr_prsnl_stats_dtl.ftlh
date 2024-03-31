@@ -175,7 +175,7 @@
                         댓글 ${post.comment.cnt!}
                     </a>
                     <button class="btn btn-sm btn-light px-4 me-2 disabled">
-                        조회수 ${post.postHit!}
+                        조회수 ${post.hitCnt!}
                     </button>
                 </div>
                 <!--end::Info-->
