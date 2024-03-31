@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.mapstruct.notice;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
@@ -21,7 +20,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface NoticeMapstruct
-        extends BaseAuditListMapstruct<NoticeDto, NoticeListDto,NoticeEntity> {
+        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<NoticeDto, NoticeListDto, NoticeEntity> {
 
     NoticeMapstruct INSTANCE = Mappers.getMapper(NoticeMapstruct.class);
 

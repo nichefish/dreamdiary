@@ -14,8 +14,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * LogWorker
  * <pre>
- *  로그 처리 Worker
- *  LogWorkerRunnable 구현 (Queue 처리)
+ *  로그 처리 Worker :: LogWorkerRunnable 구현 (Queue 처리)
  * </pre>
  *
  * @author nichefish

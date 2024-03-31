@@ -2,6 +2,9 @@ package io.nicheblog.dreamdiary.web.model.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -24,7 +27,8 @@ import javax.persistence.Embedded;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class DreamPieceDto
-        extends BasePostDto {
+        extends BasePostDto
+        implements CommentCmpstnModule, TagCmpstnModule {
 
     /** 꿈 조각 고유 번호 (PK) */
     private Integer postNo;
@@ -59,4 +63,8 @@ public class DreamPieceDto
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentCmpstn comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagCmpstn tag;
 }

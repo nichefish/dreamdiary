@@ -3,9 +3,7 @@ package io.nicheblog.dreamdiary.web.entity.exptr.prsnl;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ViewerEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.CmmStus;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlItemDto;
@@ -43,7 +41,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE exptr_prsnl SET del_yn = 'Y' WHERE post_no = ?")
 public class ExptrPrsnlPaprEntity
-        extends BasePostEntity {
+        extends BasePostEntity
+        implements CommentEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {
 
     @PostLoad
     private void onLoad() {
@@ -204,6 +203,10 @@ public class ExptrPrsnlPaprEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagEmbed tag;
 
     /** 조치 정보 모듈 (위임) */
     @Embedded

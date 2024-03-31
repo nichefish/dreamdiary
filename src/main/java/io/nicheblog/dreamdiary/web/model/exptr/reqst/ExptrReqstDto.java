@@ -2,9 +2,7 @@ package io.nicheblog.dreamdiary.web.model.exptr.reqst;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ViewerCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +24,8 @@ import javax.persistence.Embedded;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class ExptrReqstDto
-        extends BasePostDto {
+        extends BasePostDto
+        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.EXPTR_REQST;
@@ -59,6 +58,10 @@ public class ExptrReqstDto
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentCmpstn comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagCmpstn tag;
 
     /** 조치 정보 모듈 (위임) */
     @Embedded

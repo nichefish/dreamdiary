@@ -1,10 +1,12 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbedModule;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ViewerEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ViewerCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +30,8 @@ import javax.persistence.Embedded;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class BoardPostDto
-        extends BasePostDto {
+        extends BasePostDto
+        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 컨텐츠 타입 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType */
     @JsonProperty("contentType")
@@ -58,6 +61,10 @@ public class BoardPostDto
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentCmpstn comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagCmpstn tag;
 
     /** 조치 정보 모듈 (위임) */
     @Embedded

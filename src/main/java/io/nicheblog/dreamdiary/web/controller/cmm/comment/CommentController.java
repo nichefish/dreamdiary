@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentListDto;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentParam;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.comment.CommentService;
@@ -69,7 +70,7 @@ public class CommentController
         try {
             Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
             PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
-            Page<CommentDto> commentList = commentService.getListDto(searchParamMap, pageRequest);
+            Page<CommentListDto> commentList = commentService.getListDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(commentList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

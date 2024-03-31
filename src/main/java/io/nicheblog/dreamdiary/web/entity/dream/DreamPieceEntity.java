@@ -3,6 +3,9 @@ package io.nicheblog.dreamdiary.web.entity.dream;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
@@ -31,7 +34,8 @@ import javax.persistence.*;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE dream_piece SET del_yn = 'Y' WHERE dream_piece_no = ?")
 public class DreamPieceEntity
-        extends BasePostEntity {
+        extends BasePostEntity
+        implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.DREAM_PIECE;
@@ -82,4 +86,8 @@ public class DreamPieceEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagEmbed tag;
 }

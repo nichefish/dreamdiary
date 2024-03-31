@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.mapstruct.exptr.reqst;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
@@ -21,7 +20,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class})
 public interface ExptrReqstMapstruct
-        extends BaseAuditListMapstruct<ExptrReqstDto, ExptrReqstListDto, ExptrReqstEntity> {
+        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<ExptrReqstDto, ExptrReqstListDto, ExptrReqstEntity> {
 
     ExptrReqstMapstruct INSTANCE = Mappers.getMapper(ExptrReqstMapstruct.class);
 

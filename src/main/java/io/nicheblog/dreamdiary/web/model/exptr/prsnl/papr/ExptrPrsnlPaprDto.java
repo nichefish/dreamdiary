@@ -2,9 +2,7 @@ package io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ViewerCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
 import lombok.*;
@@ -32,7 +30,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class ExptrPrsnlPaprDto
-        extends BasePostDto {
+        extends BasePostDto
+        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.EXPTR_PRSNL_PAPR;
@@ -102,6 +101,10 @@ public class ExptrPrsnlPaprDto
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentCmpstn comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagCmpstn tag;
 
     /** 조치 정보 모듈 (위임) */
     @Embedded

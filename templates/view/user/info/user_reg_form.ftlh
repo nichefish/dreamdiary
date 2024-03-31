@@ -141,7 +141,7 @@
                     userIdSpan.text("아이디가 형식에 맞지 않습니다.\n(영문소문자 (+숫자 포함 가능) 4~16자)").css("color", "red");
                     return false;
                 }
-                const url = "${SiteUrl.USER_ID_DUP_CHCK_AJAX!}";
+                const url = "${SiteUrl.USER_ID_DUP_CHK_AJAX!}";
                 let ajaxData = { "userId": userId };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     userIdSpan.text(res.message);

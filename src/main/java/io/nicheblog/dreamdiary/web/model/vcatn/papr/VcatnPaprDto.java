@@ -2,9 +2,7 @@ package io.nicheblog.dreamdiary.web.model.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ViewerCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnSchdulMapstruct;
 import lombok.*;
@@ -31,7 +29,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 public class VcatnPaprDto
-        extends BasePostDto {
+        extends BasePostDto
+        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 확인 여부 (Y/N) */
     private String cfYn;
@@ -68,6 +67,10 @@ public class VcatnPaprDto
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentCmpstn comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagCmpstn tag;
 
     /** 조치 정보 모듈 (위임) */
     @Embedded

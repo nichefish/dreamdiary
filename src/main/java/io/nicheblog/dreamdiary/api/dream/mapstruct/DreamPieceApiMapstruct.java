@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.api.dream.mapstruct;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
 import io.nicheblog.dreamdiary.web.model.dream.DreamPieceDto;
@@ -19,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface DreamPieceApiMapstruct
-        extends BaseAuditListMapstruct<DreamPieceDto, DreamPieceDto, DreamPieceEntity> {
+        extends BaseListMapstruct<DreamPieceDto, DreamPieceDto, DreamPieceEntity> {
 
     DreamPieceApiMapstruct INSTANCE = Mappers.getMapper(DreamPieceApiMapstruct.class);
 

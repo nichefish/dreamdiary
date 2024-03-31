@@ -6,10 +6,10 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.BaseParam;
 import io.nicheblog.dreamdiary.web.model.flsys.FlsysMetaDto;
 import io.nicheblog.dreamdiary.web.service.flsys.FlsysMetaService;
 import lombok.extern.log4j.Log4j2;
@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,6 +44,11 @@ public class FlsysMetaController
 
     private final String baseUrl = SiteUrl.FLSYS_HOME;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FLSYS;        // 작업 카테고리 (로그 적재용)
+
+    @ModelAttribute("actvtyCtgrCd")
+    public String addActvtyCtgrCd() {
+        return actvtyCtgr.name();
+    }
 
     @Resource(name = "flsysMetaService")
     public FlsysMetaService flsysMetaService;

@@ -2,9 +2,7 @@ package io.nicheblog.dreamdiary.web.entity.exptr.reqst;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ViewerEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
@@ -32,7 +30,8 @@ import javax.persistence.*;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE exptr_reqst SET del_yn = 'Y' WHERE post_no = ?")
 public class ExptrReqstEntity
-        extends BasePostEntity {
+        extends BasePostEntity
+        implements CommentEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.EXPTR_REQST;
@@ -65,6 +64,10 @@ public class ExptrReqstEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagEmbed tag;
 
     /** 조치 정보 모듈 (위임) */
     @Embedded

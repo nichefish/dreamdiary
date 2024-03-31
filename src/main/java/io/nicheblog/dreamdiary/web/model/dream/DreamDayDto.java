@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -24,7 +24,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class DreamDayDto
-        extends BaseClsfDto {
+        extends BaseClsfDto
+        implements CommentCmpstnModule, TagCmpstnModule {
 
     /** 꿈 일자 고유 번호 (PK) */
     private Integer dreamDayNo;
@@ -57,4 +58,8 @@ public class DreamDayDto
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentCmpstn comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagCmpstn tag;
 }

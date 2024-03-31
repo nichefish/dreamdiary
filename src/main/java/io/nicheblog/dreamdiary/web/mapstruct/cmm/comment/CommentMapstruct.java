@@ -1,10 +1,10 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.comment;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
+import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -21,7 +21,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface CommentMapstruct
-        extends BaseAuditListMapstruct<CommentDto, CommentDto, CommentEntity> {
+        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<CommentDto, CommentListDto, CommentEntity> {
 
     CommentMapstruct INSTANCE = Mappers.getMapper(CommentMapstruct.class);
 
@@ -29,15 +29,13 @@ public interface CommentMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
     CommentDto toDto(final CommentEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
-    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
-    CommentDto toListDto(final CommentEntity entity) throws Exception;
+    CommentListDto toListDto(final CommentEntity entity) throws Exception;
 
     /**
      * Dto -> Entity

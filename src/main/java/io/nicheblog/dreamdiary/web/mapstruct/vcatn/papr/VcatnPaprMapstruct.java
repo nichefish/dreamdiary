@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
@@ -20,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class})
 public interface VcatnPaprMapstruct
-        extends BaseAuditListMapstruct<VcatnPaprDto, VcatnPaprListDto, VcatnPaprEntity> {
+        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<VcatnPaprDto, VcatnPaprListDto, VcatnPaprEntity> {
 
     VcatnPaprMapstruct INSTANCE = Mappers.getMapper(VcatnPaprMapstruct.class);
 

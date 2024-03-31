@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.mapstruct.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.ManagtEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.TagEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.ViewerEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostSmpEntity;
@@ -20,9 +22,9 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class, ViewerEmbedMapstruct.class, ManagtEmbedMapstruct.class, TagEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface BoardPostMapstruct
-        extends BaseAuditListMapstruct<BoardPostDto, BoardPostListDto, BoardPostEntity> {
+        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<BoardPostDto, BoardPostListDto, BoardPostEntity> {
 
     BoardPostMapstruct INSTANCE = Mappers.getMapper(BoardPostMapstruct.class);
 
@@ -32,10 +34,6 @@ public interface BoardPostMapstruct
     @Override
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
-    // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
-    // @Mapping(target = "managtrList", expression = "java(entity.getDtoList())")
-    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostDto toDto(final BoardPostEntity entity) throws Exception;
 
     /**
@@ -43,9 +41,6 @@ public interface BoardPostMapstruct
      */
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
-    // @Mapping(target = "managtrList", expression = "java(entity.getDtoList())")
-    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostDto toDto(final BoardPostSmpEntity entity) throws Exception;
 
     /**
@@ -54,8 +49,6 @@ public interface BoardPostMapstruct
     @Override
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
-    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     BoardPostListDto toListDto(final BoardPostEntity entity) throws Exception;
 
     /**

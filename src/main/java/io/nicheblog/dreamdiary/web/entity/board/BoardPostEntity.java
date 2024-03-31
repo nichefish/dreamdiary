@@ -2,15 +2,14 @@ package io.nicheblog.dreamdiary.web.entity.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ViewerEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
+import org.springframework.web.servlet.View;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -36,7 +35,8 @@ import javax.persistence.*;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE board_post SET del_yn = 'Y' WHERE content_type = ? AND post_no = ?")
 public class BoardPostEntity
-        extends BasePostEntity {
+        extends BasePostEntity
+        implements CommentEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {
 
     /** 글 번호 :: 복합키 사용, 시퀀스 생성 로직을 위해 재정의 */
     @Id
@@ -82,6 +82,10 @@ public class BoardPostEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
+
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagEmbed tag;
 
     /** 조치 정보 모듈 (위임) */
     @Embedded
