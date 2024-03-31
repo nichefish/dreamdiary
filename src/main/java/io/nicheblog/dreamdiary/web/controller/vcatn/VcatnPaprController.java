@@ -179,6 +179,8 @@ public class VcatnPaprController
             VcatnPaprDto result = isReg ? vcatnPaprService.regist(vcatnPaprDto, request) : vcatnPaprService.modify(vcatnPaprDto, key, request);
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            // 조치자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
             // 잔디 메세지 발송 :: 메인 로직과 분리
             // if (isSuccess && "Y".equals(jandiYn)) {
             //     String jandiResultMsg = notifyService.notifyVcatnPaprReg(trgetTopic, result, logParam);

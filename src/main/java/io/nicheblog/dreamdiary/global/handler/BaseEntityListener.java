@@ -19,10 +19,5 @@ import javax.persistence.PostLoad;
  * @author nichefish
  */
 public class BaseEntityListener {
-
-    /** BasePostEntity */
-    @PostLoad
-    private void onPostLoad(BasePostEntity entity) {
-        //
-    }
+    //
 }

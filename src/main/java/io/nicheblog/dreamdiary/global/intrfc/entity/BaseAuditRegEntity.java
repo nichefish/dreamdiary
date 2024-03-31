@@ -30,7 +30,7 @@ import java.util.Date;
 @SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-@EntityListeners({AuditingEntityListener.class, BaseEntityListener.class})
+@EntityListeners({AuditingEntityListener.class})
 public class BaseAuditRegEntity
         extends BaseCrudEntity {
 

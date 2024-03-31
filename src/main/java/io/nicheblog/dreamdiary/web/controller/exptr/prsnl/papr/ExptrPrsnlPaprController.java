@@ -263,6 +263,8 @@ public class ExptrPrsnlPaprController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = key == null;
             ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPaprDto, request) : exptrPrsnlPaprService.modify(exptrPrsnlPaprDto, key, request);
+            // 조치자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {

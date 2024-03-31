@@ -36,7 +36,8 @@ public class BaseAuditRegDto
     protected AuditorDto regstrInfo;
 
     /** 등록자 여부 */
-    protected Boolean isRegstr;
+    @Builder.Default
+    protected Boolean isRegstr = false;
 
     /** 처리성공여부 = 서비스 레벨에서 결과값 반환시 사용 */
     @Builder.Default

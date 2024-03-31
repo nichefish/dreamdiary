@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.model.cmm;
 import io.nicheblog.dreamdiary.web.AcsPageNm;
 import io.nicheblog.dreamdiary.web.SiteTopMenu;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
@@ -22,6 +23,7 @@ import static io.nicheblog.dreamdiary.web.SiteTopMenu.NO_ASIDE;
 @Log4j2
 @Getter
 @Setter
+@NoArgsConstructor
 public class SiteAcsInfo {
 
     /**
@@ -95,27 +97,18 @@ public class SiteAcsInfo {
         if (NO_ASIDE.equals(topMenu)) this.asideAt = false;
     }
 
-    public SiteAcsInfo() {
-
-    }
-
     /** 페이지명 세팅 (for breadcrumb) */
-    public SiteAcsInfo setAcsPageInfo(
-            final String acsPageNm
-    ) {
+    public SiteAcsInfo setAcsPageInfo(final String acsPageNm) {
         this.acsPageNm = acsPageNm;
         return this;
     }
-    public SiteAcsInfo setAcsPageInfo(
-            final AcsPageNm acsPageNm
-    ) {
+    public SiteAcsInfo setAcsPageInfo(final AcsPageNm acsPageNm) {
         this.acsPageNm = acsPageNm.pageNm;
         return this;
     }
 
     /** 메인메뉴 여부 체크 */
     public Boolean getIsTopMenu() {
-        log.info(this.menuNo);
         return this.menuNo.equals(this.topMenuNo);
     }
 }
