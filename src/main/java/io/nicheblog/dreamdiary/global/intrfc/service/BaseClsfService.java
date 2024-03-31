@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
@@ -19,8 +18,8 @@ import java.io.Serializable;
  * @author nichefish
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-public interface BaseClsfService<Dto extends BaseClsfDto, ListDto extends BaseClsfListDto, Key extends Serializable, Entity extends BaseClsfEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>, FileService extends AtchFileService>
-        extends BaseMultiCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct, AtchFileService> {
+public interface BaseClsfService<Dto extends BaseClsfDto, ListDto extends BaseClsfListDto, Key extends Serializable, Entity extends BaseClsfEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>>
+        extends BaseMultiCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**
      * default: 항목 등록 (Multipart)

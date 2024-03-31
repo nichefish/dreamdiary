@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.global.cmm.file.entity;
 
+import io.nicheblog.dreamdiary.global.cmm.file.mapstruct.AtchFileDtlMapstruct;
+import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -70,4 +72,10 @@ public class AtchFileDtlEntity
     /** URL (상대경로) */
     @Column(name = "url")
     private String url;
+
+    /* ----- */
+
+    public AtchFileDtlDto asDto() throws Exception {
+        return AtchFileDtlMapstruct.INSTANCE.toDto(this);
+    }
 }

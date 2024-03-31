@@ -217,7 +217,7 @@ public class VcatnPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            VcatnPaprDto result = vcatnPaprService.vcatnCf(key);
+            VcatnPaprDto result = vcatnPaprService.cf(key);
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {

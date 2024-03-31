@@ -107,7 +107,7 @@ public class PdfBoxUtils {
             CookieUtils.setFileDownloadSuccessCookie();
 
             File pdfFile = new File(pdfPath, fileNm);
-            fileService.downloadFile(pdfFile, fileNm);
+            FileUtils.downloadFile(pdfFile, fileNm);
         } catch (Exception e) {
             String resultMsg = MessageUtils.getExceptionMsg(e);
             MessageUtils.alertMessage(resultMsg);

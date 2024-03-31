@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.web.service.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
@@ -36,14 +35,12 @@ import java.util.stream.Collectors;
 @Service("vcatnPaprService")
 @Log4j2
 public class VcatnPaprService
-        implements BasePostService<VcatnPaprDto, VcatnPaprListDto, Integer, VcatnPaprEntity, VcatnPaprRepository, VcatnPaprSpec, VcatnPaprMapstruct, AtchFileService> {
+        implements BasePostService<VcatnPaprDto, VcatnPaprListDto, Integer, VcatnPaprEntity, VcatnPaprRepository, VcatnPaprSpec, VcatnPaprMapstruct> {
 
     @Resource(name = "vcatnPaprRepository")
     private VcatnPaprRepository vcatnPaprRepository;
     @Resource(name = "vcatnPaprSpec")
     private VcatnPaprSpec vcatnPaprSpec;
-    @Resource(name = "atchFileService")
-    private AtchFileService atchFileService;
 
     private final VcatnPaprMapstruct vcatnPaprMapstruct = VcatnPaprMapstruct.INSTANCE;
 
@@ -65,11 +62,6 @@ public class VcatnPaprService
     @Override
     public VcatnPaprMapstruct getMapstruct() {
         return this.vcatnPaprMapstruct;
-    }
-
-    @Override
-    public AtchFileService getFileService() {
-        return this.atchFileService;
     }
 
     /**
@@ -118,7 +110,7 @@ public class VcatnPaprService
     /**
      * 일정 > 휴가계획서 > 휴가계획서 상세보기 > 확인 여부 변경(Ajax)
      */
-    public VcatnPaprDto vcatnCf(final Integer key) throws Exception {
+    public VcatnPaprDto cf(final Integer key) throws Exception {
         VcatnPaprEntity vcatnPaprEntity = this.getDtlEntity(key);
         vcatnPaprEntity.setCfYn("Y");
         // update

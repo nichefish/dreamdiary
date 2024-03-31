@@ -35,7 +35,7 @@ import java.util.Map;
 @Service("boardPostService")
 @Log4j2
 public class BoardPostService
-        implements BasePostService<BoardPostDto, BoardPostListDto, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct, AtchFileService> {
+        implements BasePostService<BoardPostDto, BoardPostListDto, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct> {
 
     @Resource(name = "boardPostRepository")
     private BoardPostRepository boardPostRepository;
@@ -62,11 +62,6 @@ public class BoardPostService
     @Override
     public BoardPostMapstruct getMapstruct() {
         return this.postMapstruct;
-    }
-
-    @Override
-    public AtchFileService getFileService() {
-        return this.atchFileService;
     }
 
     /**

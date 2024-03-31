@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
-import org.springframework.web.servlet.View;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

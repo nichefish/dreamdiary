@@ -25,7 +25,7 @@ public class AtchFileDto
         extends BaseCrudDto {
 
     /** 첨부파일 번호 (PK) */
-    private String atchFileNo;
+    private Integer atchFileNo;
 
     /** 첨부파일 목록 */
     List<AtchFileDtlDto> atchFileList;

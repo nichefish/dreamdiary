@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.util.FileUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
@@ -108,7 +109,7 @@ public class ExptrPrsnlItemController
         String resultMsg = "";
         try {
             // 파일 영역 처리 후 업로드 정보 받아서 반환
-            AtchFileDtlDto atchfileDtl = atchFileService.uploadDtlFile(request);
+            AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
             Integer atchFileDtlNo = atchfileDtl.getAtchFileDtlNo();
             isSuccess = (atchFileDtlNo != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

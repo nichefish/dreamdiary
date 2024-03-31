@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.api.dream.service;
 
 import io.nicheblog.dreamdiary.api.dream.mapstruct.DreamDayApiMapstruct;
 import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiDto;
-import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
 import io.nicheblog.dreamdiary.web.repository.dream.DreamDayRepository;
@@ -24,7 +23,7 @@ import javax.annotation.Resource;
 @Service("dreamDayApiService")
 @Log4j2
 public class DreamDayApiService
-        implements BaseMultiCrudService<DreamDayApiDto, DreamDayApiDto, Integer, DreamDayEntity, DreamDayRepository, DreamDaySpec, DreamDayApiMapstruct, AtchFileService> {
+        implements BaseMultiCrudService<DreamDayApiDto, DreamDayApiDto, Integer, DreamDayEntity, DreamDayRepository, DreamDaySpec, DreamDayApiMapstruct> {
 
     private final DreamDayApiMapstruct dreamDayMapstruct = DreamDayApiMapstruct.INSTANCE;
 
@@ -32,8 +31,6 @@ public class DreamDayApiService
     private DreamDayRepository dreamDayRepository;
     @Resource(name = "dreamDaySpec")
     private DreamDaySpec dreamDaySpec;
-    @Resource(name = "atchFileService")
-    private AtchFileService atchFileService;
 
     @Override
     public DreamDayRepository getRepository() {
@@ -48,10 +45,5 @@ public class DreamDayApiService
     @Override
     public DreamDaySpec getSpec() {
         return this.dreamDaySpec;
-    }
-
-    @Override
-    public AtchFileService getFileService() {
-        return this.atchFileService;
     }
 }

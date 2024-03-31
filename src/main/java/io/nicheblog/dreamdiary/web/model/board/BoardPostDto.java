@@ -1,10 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbedModule;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ViewerEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.EqualsAndHashCode;

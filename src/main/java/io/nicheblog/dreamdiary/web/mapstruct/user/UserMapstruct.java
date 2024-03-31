@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseAuditListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
@@ -24,7 +24,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, UserAcsIpEmbed.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserMapstruct
-        extends BaseAuditListMapstruct<UserDto, UserListDto, UserEntity> {
+        extends BaseListMapstruct<UserDto, UserListDto, UserEntity> {
 
     UserMapstruct INSTANCE = Mappers.getMapper(UserMapstruct.class);
 

@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.service.exptr.reqst;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.reqst.ExptrReqstMapstruct;
@@ -25,14 +24,12 @@ import javax.annotation.Resource;
 @Service("exptrReqstService")
 @Log4j2
 public class ExptrReqstService
-        implements BasePostService<ExptrReqstDto, ExptrReqstListDto, Integer, ExptrReqstEntity, ExptrReqstRepository, ExptrReqstSpec, ExptrReqstMapstruct, AtchFileService> {
+        implements BasePostService<ExptrReqstDto, ExptrReqstListDto, Integer, ExptrReqstEntity, ExptrReqstRepository, ExptrReqstSpec, ExptrReqstMapstruct> {
 
     @Resource(name = "exptrReqstRepository")
     private ExptrReqstRepository exptrReqstRepository;
     @Resource(name = "exptrReqstSpec")
     public ExptrReqstSpec exptrReqstSpec;
-    @Resource(name = "atchFileService")
-    private AtchFileService atchFileService;
 
     private final ExptrReqstMapstruct exptrReqstMapstruct = ExptrReqstMapstruct.INSTANCE;
 
@@ -49,11 +46,6 @@ public class ExptrReqstService
     @Override
     public ExptrReqstMapstruct getMapstruct() {
         return this.exptrReqstMapstruct;
-    }
-
-    @Override
-    public AtchFileService getFileService() {
-        return this.atchFileService;
     }
 
     /**

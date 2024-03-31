@@ -9,7 +9,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Embedded;
-import java.io.Serializable;
 
 /**
  * FlsysMetaDto

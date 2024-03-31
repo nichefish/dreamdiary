@@ -66,4 +66,5 @@ public class AtchFileEntity
             this.atchFileList.addAll(atchFileList);
         }
     }
+
 }

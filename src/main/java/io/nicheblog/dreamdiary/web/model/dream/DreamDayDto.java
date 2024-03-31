@@ -1,7 +1,10 @@
 package io.nicheblog.dreamdiary.web.model.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
