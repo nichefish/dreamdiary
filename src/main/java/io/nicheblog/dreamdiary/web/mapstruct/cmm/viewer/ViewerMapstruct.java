@@ -11,8 +11,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * ViewerMapstruct
  * <pre>
- *  일반게시판 게시물 열람자 MapStruct 기반 Mapper 인터페이스
- *  일반게시판 게시물 열람자(Viewer) = 일반게시판 게시물()에 1:N으로 귀속된다.
+ *  컨텐츠 게시물 열람자 MapStruct 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish
