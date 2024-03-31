@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.handler.BaseEntityListener;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,7 +30,7 @@ import java.util.Date;
 @SuperBuilder(toBuilder=true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, BaseEntityListener.class})
 public class BaseAuditRegEntity
         extends BaseCrudEntity {
 
@@ -52,13 +53,5 @@ public class BaseAuditRegEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     protected AuditorInfo regstrInfo;
-
-    /** 등록자 이름 */
-    @Transient
-    protected String regstrNm;
-
-    /** 등록자 여부 */
-    @Transient
-    protected Boolean isRegstr;
 }
 

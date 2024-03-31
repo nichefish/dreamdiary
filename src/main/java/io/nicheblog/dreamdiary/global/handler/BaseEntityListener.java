@@ -10,45 +10,19 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.PostLoad;
 
 /**
- * AuditEntityListener
+ * BaseEntityListener
  * <pre>
  *  엔티티 로딩 후 일괄 처리 로직
+ *  :: 클래스당 한 개의 이벤트 리스너밖에 적용되지 않기 때문에 적용 보류
  * </pre>
  *
  * @author nichefish
  */
 public class BaseEntityListener {
 
-    /** BaseAuditRegEntity */
-    @PostLoad
-    public void onPostLoad(BaseAuditRegEntity entity) {
-        // 작성자 이름
-        if (entity.getRegstrInfo() != null) entity.setRegstrNm(entity.getRegstrInfo().getNickNm());
-        // 작성자 여부
-        entity.setIsRegstr(AuthUtils.isRegstr(entity.getRegstrId()));
-    }
-
-    /** BaseAuditEntity */
-    @PostLoad
-    public void onPostLoad(BaseAuditEntity entity) {
-        // 수정자 이름
-        if (entity.getMdfusrInfo() != null) entity.setMdfusrNm(entity.getMdfusrInfo().getNickNm());
-        // 수정자 여부
-        entity.setIsMdfusr(AuthUtils.isMdfusr(entity.getMdfusrId()));
-    }
-
-    /** BaseAtchEntity */
-    @PostLoad
-    public void onPostLoad(BaseAtchEntity entity) {
-        // 첨부파일 존재 여부
-        entity.setHasAtchFile(!(entity.getAtchFileNo() == null || entity.getAtchFileInfo() == null || CollectionUtils.isEmpty(entity.getAtchFileInfo().getAtchFileList())));
-    }
-
     /** BasePostEntity */
     @PostLoad
     private void onPostLoad(BasePostEntity entity) {
-        // 글분류 이름
-        entity.setHasCtgrNm(entity.getCtgrCdInfo() != null);
-        if (entity.getHasCtgrNm()) entity.setCtgrNm(entity.getCtgrCdInfo().getDtlCdNm());
+        //
     }
 }

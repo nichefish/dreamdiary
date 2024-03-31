@@ -56,14 +56,6 @@ public class BasePostEntity
     @Comment("공지사항 글분류 코드 정보")
     protected DtlCdEntity ctgrCdInfo;
 
-    /** 글분류 코드 이름 */
-    @Transient
-    protected String ctgrNm;
-
-    /** 글분류 코드 존재 여부 */
-    @Transient
-    protected Boolean hasCtgrNm;
-
     /* ----- */
 
     /** 중요 여부 (Y/N) */
