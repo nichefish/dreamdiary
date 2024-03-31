@@ -6,17 +6,11 @@
     let Tags = function() {
         return {
             init: function () {
-                /** tagify */
                 // 게시물 태그 tagify
                 let boardTagInput = document.querySelector("#tagListStr");
                 <#if (isMdf!false)>
-                    <#if post.tagStrList?has_content>
-                        let tagifyStr = "";
-                            <#list post.tagStrList as tag>
-                                tagifyStr += "${tag},";
-                            </#list>
-                        tagifyStr.replace(/,$/, '');     // 마지막에 쉼표가 있을 경우 제거
-                        boardTagInput.value = tagifyStr;
+                    <#if post.tag??>
+                        boardTagInput.value = "${post.tag.tagListStr!}";
                     </#if>
                 </#if>
                 new Tagify(boardTagInput, {
@@ -45,10 +39,10 @@
     <div id="board_tag_list_div">
         <label class="mb-2">
             <span class="text-gray-700 fs-6 fw-bolder">태그</span>
-            <span class="text-gray-500 fs-9 mx-2">※ 태그는 최대 5개, 50자까지 추가 가능합니다.</span>
+            <span class="text-gray-500 fs-9 mx-2">※ 태그는 최대 10개, 50자까지 추가 가능합니다.</span>
         </label>
     </div>
     <div class="col-xl-12 text-sm-start" id="tagSpan">
-        <input name="tagListStr" id="tagListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
+        <input name="tag.tagListStr" id="tagListStr" class="form-control form-control-solid no-space" autocomplete="off" value="<#if post.tag??>${post.tag.tagListStr!}</#if>"/>
     </div>
 </div>
