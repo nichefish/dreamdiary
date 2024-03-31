@@ -1,8 +1,7 @@
 <#--
-  -- 공지사항 > 글작성 미리보기 팝업
-  -- (사이드바 없음)
+  -- 경비 > 물품구매/경조사비 신청 > 상세 화면
   -->
-<#import "/layout/layout_no_aside.ftlh" as layout >
+<#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout>
 
@@ -55,18 +54,12 @@
                         ${authInfo.nickNm!"-"}
                     </span>
                     <span class="text-muted fs-7 lh-1">
-                        ${currDateStr!}</span>
+                        ${currDateStr!}
+                    </span>
                 </div>
                 <!--end::Name-->
             </div>
             <!--end::Author-->
-            <!--begin::Info-->
-            <div class="d-flex align-items-center py-1">
-                <a href="#answers" data-kt-scroll-toggle="true"
-                   class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${post.comment.cnt!}</a>
-                <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.hitCnt!}</button>
-            </div>
-            <!--end::Info-->
         </div>
         <!--end::Foot-->
         <div class="separator separator-dashed border-gray-300 my-8"></div>
@@ -85,8 +78,8 @@
                     <#list (post.atchFileInfo.atchFileList)![] as file>
                         <div class="row my-1">
                             <div class="col-xl-8">
-                                <a href="javascript:void(0);" onclick="commons.util.fileDownload('${file.atchFileNo!}', '${file.atchFileDtlNo!}');"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.file.download"/>">
+                                <a href="javascript:void(0);" onclick="commons.util.fileDownload('${file.atchFileId!}', '${file.atchFileDtlId!}');"
+                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.download"/>">
                                     <i class="fas fa-file-download fs-15 me-1"></i>
                                     ${file.orgnFileNm!}(${file.fileSize!}byte)
                                 </a>

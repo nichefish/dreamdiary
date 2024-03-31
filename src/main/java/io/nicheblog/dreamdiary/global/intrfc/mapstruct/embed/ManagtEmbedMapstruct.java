@@ -1,41 +1,41 @@
-package io.nicheblog.dreamdiary.global.intrfc.mapstruct.base;
+package io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstn;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 /**
- * TagEmbedMapstruct
+ * ManagtEmbedMapstruct
  * <pre>
- *  태그 모듈 MapStruct 기반 Mapper 인터페이스
+ *  조치 모듈 MapStruct 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish
  * @extends BaseListMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
-public interface TagEmbedMapstruct
-        extends BaseMapstruct<TagCmpstn, TagEmbed> {
+public interface ManagtEmbedMapstruct
+        extends BaseMapstruct<ManagtCmpstn, ManagtEmbed> {
 
-    TagEmbedMapstruct INSTANCE = Mappers.getMapper(TagEmbedMapstruct.class);
+    ManagtEmbedMapstruct INSTANCE = Mappers.getMapper(ManagtEmbedMapstruct.class);
 
     /**
      * Entity -> Dto
      */
     @Override
     @Mapping(target = "list", expression = "java(entity.getDtoList())")
-    TagCmpstn toDto(final TagEmbed entity) throws Exception;
+    ManagtCmpstn toDto(final ManagtEmbed entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
     @Mapping(target = "list", expression = "java(dto.getEntityList())")
-    TagEmbed toEntity(final TagCmpstn dto) throws Exception;
+    ManagtEmbed toEntity(final ManagtCmpstn dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
@@ -43,7 +43,7 @@ public interface TagEmbedMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(
-            final TagCmpstn dto,
-            final @MappingTarget TagEmbed entity
+            final ManagtCmpstn dto,
+            final @MappingTarget ManagtEmbed entity
     ) throws Exception;
 }

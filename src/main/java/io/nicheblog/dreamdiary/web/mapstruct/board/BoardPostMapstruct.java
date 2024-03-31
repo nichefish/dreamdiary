@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.web.mapstruct.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.ManagtEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.TagEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.ViewerEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ManagtEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.TagEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ViewerEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostSmpEntity;

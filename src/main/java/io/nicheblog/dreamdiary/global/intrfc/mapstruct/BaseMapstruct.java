@@ -86,7 +86,7 @@ public interface BaseMapstruct<Dto, Entity> {
             Boolean hasAtchFile = !(baseEntity.getAtchFileNo() == null || baseEntity.getAtchFileInfo() == null || CollectionUtils.isEmpty(baseEntity.getAtchFileInfo().getAtchFileList()));
             ((BaseAtchDto) dto).setHasAtchFile(hasAtchFile);
         }
-        // CLSF :: ...
+        // CLSF :: BaseClsfMapstruct쪽에 정의
         // POST :: 공통 필드 매핑 로직
         if (entity instanceof BasePostEntity && dto instanceof BasePostDto) {
             BasePostEntity baseEntity = ((BasePostEntity) entity);

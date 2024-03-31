@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
@@ -30,9 +30,6 @@ public interface ExptrPrsnlPaprMapstruct
      */
     @Override
     @Mapping(target = "itemList", expression = "java(entity.getItemDtoList())")
-    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
-    // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
-    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
     ExptrPrsnlPaprDto toDto(final ExptrPrsnlPaprEntity entity) throws Exception;
 
     /**

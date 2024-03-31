@@ -2,6 +2,7 @@
   -- 휴가계획서 > 상세 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
+<#import "/view/_component/_dtl_btn_area.ftlh" as dtlBtn >
 
 <@layout.layout>
 
@@ -174,7 +175,9 @@
         </div>
         <div class="separator separator-dashed border-gray-300 my-8"></div>
     </#if>
-    <div class="d-flex mt-10 justify-content-end">
+
+    <!-- 버튼 영역 -->
+    <div class="d-flex justify-content-end">
         <!-- 등록자: 수정,삭제 가능, 관리자: 삭제 가능, 확인 시: 삭제만 가능 -->
         <#if post.isRegstr!false && (post.cfYn)! == "N">
             <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
@@ -193,6 +196,8 @@
             <i class="bi bi-list"></i>목록
         </button>
     </div>
+
+    <!-- 댓글 영역 -->
     <#include "/view/_component/comment/_comment_area.ftlh">
 </div>
 

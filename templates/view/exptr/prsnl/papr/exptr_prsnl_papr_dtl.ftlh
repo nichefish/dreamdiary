@@ -2,6 +2,7 @@
   -- 경비 > 경비지출서 상세 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
+<#import "/view/_component/_dtl_btn_area.ftlh" as dtlBtn >
 
 <@layout.layout>
 
@@ -313,6 +314,8 @@
         </#if>
 
         <div class="separator separator-dashed border-gray-300 my-8"></div>
+
+        <!-- 버튼 영역 -->
         <div class="d-flex mt-10 justify-content-end">
             <!-- 등록자만 수정 가능, 등록자+관리자도 삭제 가능 -->
             <#if (post.isRegstr!false && (post.cfYn!"N") != "Y")>
@@ -335,7 +338,8 @@
             </button>
         </div>
 
-        <#include "/view/_component/comment/_comment_area.ftlh"> <!-- 댓글 영역 -->
+        <!-- 댓글 영역 -->
+        <#include "/view/_component/comment/_comment_area.ftlh">
     </div>
 </div>
 

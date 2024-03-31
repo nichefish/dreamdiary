@@ -164,7 +164,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 년도/월에 기존 작성중인 정보 있는지 조회
      * 사용자USER, 관리자MNGR만 접근 가능
      */
-    @PostMapping(value = SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX)
+    @GetMapping(value = SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlYyMnthChckAjax(

@@ -2,6 +2,7 @@
   -- 공지사항 > 상세 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
+<#import "/view/_component/_dtl_btn_area.ftlh" as dtlBtn >
 
 <@layout.layout>
 
@@ -155,49 +156,13 @@
         <!--begin::Card footer-->
         <div class="separator separator-dashed border-gray-300 my-8"></div>
     </#if>
+
+    <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
-        <!-- 수정권한에 따라 수정 권한 부여 -->
-        <#if (post.managt.mdfable!"") == (Constant.MDFABLE_REGSTR)>
-            <#if post.isRegstr>
-                <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                        onclick="Page.mdfForm();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
-                    <i class="bi bi-pencil-square"></i>(내 글)수정
-                </button>
-            </#if>
-        <#elseif (post.managt.mdfable!"") == (Constant.MDFABLE_MNGR)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.mdfForm();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
-                <i class="bi bi-pencil-square"></i>(관리자+)수정
-            </button>
-        <#elseif (post.managt.mdfable!"") == (Constant.MDFABLE_USER)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.mdfForm();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
-                <i class="bi bi-pencil-square"></i>(사용자+)수정
-            </button>
-        <#elseif (post.managt.mdfable!"") == (Constant.MDFABLE_ALL)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.mdfForm();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
-                <i class="bi bi-pencil-square"></i>(전체+)수정
-            </button>
-        </#if>
-        <!-- 등록자 또는 관리자가 삭제 가능 -->
-        <#if (post.isRegstr)!false || isMngr>
-            <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm"
-                    onclick="Page.delAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
-                <i class="bi bi-trash"></i>삭제
-            </button>
-        </#if>
-        <button type="button" class="btn btn-light btn-sm" onclick="Page.list();"
-                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.list"/>">
-            <i class="bi bi-list"></i>목록
-        </button>
+        <@dtlBtn.managtBtn post isMngr />
     </div>
 
+    <!-- 댓글 영역 -->
     <#include "/view/_component/comment/_comment_area.ftlh">
 </div>
 

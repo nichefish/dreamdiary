@@ -2,6 +2,7 @@
   -- 휴가계획서 > 등록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
+<#import "/view/_component/_reg_btn_area.ftlh" as regBtn >
 
 <script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?20230918"></script>
@@ -93,6 +94,10 @@
                             if (res.result) Page.list();
                         });
                 });
+            },
+            /** submit */
+            submit: function() {
+                $("#vcatnPaprRegForm").submit();
             },
             /** 목록 화면 이동 */
             list: function() {
@@ -240,20 +245,12 @@
                 </div>
             </div>
         </div>
+
         <div class="separator my-8 w-"></div>
-        <div class="d-flex flex-stack justify-content-end">
-            <button type="button" class="btn btn-primary mx-2" onclick="commons.util.submit('#vcatnPaprForm');"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                <i class="bi bi-pencil-square"></i>
-                <span class="indicator-label">저장</span>
-                <span class="indicator-progress">Please wait...
-				    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                </span>
-            </button>
-            <a href="javascript:void(0);" class="btn btn-light" onclick="Page.list();"
-               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
-                <span class="indicator-label">취소</span>
-            </a>
+
+        <!-- 버튼 영역 -->
+        <div class="d-flex justify-content-between">
+            <@regBtn.postBtn "Page" />
         </div>
     </form>
     <!--end:Form-->

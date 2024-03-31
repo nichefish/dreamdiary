@@ -350,7 +350,8 @@
 
 <!--begin::Card-->
 <div class="card">
-    <#include "/view/_component/comment/_comment_area.ftlh">            <!-- 댓글 영역 -->
+    <!-- 댓글 영역 -->
+    <#include "/view/_component/comment/_comment_area.ftlh">
 </div>
 <!--end::Card-->
 

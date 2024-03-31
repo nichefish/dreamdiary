@@ -15,12 +15,12 @@
     <link rel="shortcut icon" href="/favicon.ico" />
 
     <!--Fonts(used by all pages) -->
-    <link type="text/css" rel="stylesheet" href="/css/fonts.css?family=Poppins:300,400,500,600,700" />
+    <link type="text/css" rel="stylesheet" href="/css/font.css?family=Poppins:300,400,500,600,700" />
     <!--Gloabl Css Bundle(used by all pages) -->
     <link type="text/css" rel="stylesheet" href="/metronic/assets/css/style.bundle.css?${releaseDate!}" />
     <link type="text/css" rel="stylesheet" href="/metronic/assets/plugins/global/plugins.bundle.css?${releaseDate!}" />
-    <link type="text/css" rel="stylesheet" href="/css/fontawesome.css?${releaseDate!}" />
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap-icons.min.css?${releaseDate!}" />
+    <link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/fontawesome.css?${releaseDate!}" />
+    <link type="text/css" rel="stylesheet" href="/lib/bootstrap-icon/bootstrap-icons.css?${releaseDate!}" />
 
     <link type="text/css" rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css?${releaseDate!}" />
     <link type="text/css" rel="stylesheet" href="/metronic/assets/css/style.bundle.css?${releaseDate!}" />

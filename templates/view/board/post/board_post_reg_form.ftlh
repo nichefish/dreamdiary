@@ -4,6 +4,7 @@
   -->
 <!DOCTYPE html>
 <#import "/layout/layout.ftlh" as layout >
+<#import "/view/_component/_reg_btn_area.ftlh" as regBtn >
 
 <script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?20230918"></script>
@@ -190,7 +191,7 @@
         </div>
 
         <!-- #include:: component:: 첨부파일 추가추가 영역 -->
-        <#include "/view/_component/atch_file/atch_file_reg_area.ftlh">
+        <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
 
         <!-- #include:: component:: 파일시스템 참조 -->
 
@@ -233,32 +234,13 @@
             </div>
         </div>
     </form>
+
     <div class="separator my-8"></div>
+
+    <!-- 버튼 영역 -->
     <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-primary mx-2 float-start"
-                onclick="Page.preview();"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                title="작성한 내용에 대하여&#10;미리보기 팝업을 호출합니다.">
-            <i class="bi bi-pencil-square"></i>
-            <span class="indicator-label">미리보기</span>
-            <span class="indicator-progress">Please wait...
-            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-        </button>
-        <span>
-            <button type="button" class="btn btn-primary mx-2"
-                    onclick="Page.submit();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                <i class="bi bi-pencil-square"></i>
-                <span class="indicator-label">저장</span>
-                <span class="indicator-progress">Please wait...
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-            </button>
-            <a href="javascript:void(0);" class="btn btn-light"
-               onclick="Page.list();"
-               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
-                <span class="indicator-label">취소</span>
-            </a>
-        </span>
+        <@regBtn.previewBtn "Page" />
+        <@regBtn.postBtn "Page" />
     </div>
 </div>
 

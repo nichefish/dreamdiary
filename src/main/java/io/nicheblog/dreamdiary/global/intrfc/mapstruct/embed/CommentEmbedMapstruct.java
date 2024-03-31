@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.intrfc.mapstruct.base;
+package io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;

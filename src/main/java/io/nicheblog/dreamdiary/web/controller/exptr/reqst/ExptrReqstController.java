@@ -194,7 +194,7 @@ public class ExptrReqstController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/reqst/exptr_reqst_reg_preview_pop";
+        return "/view/exptr/reqst/exptr_reqst_preview_pop";
     }
 
     /**

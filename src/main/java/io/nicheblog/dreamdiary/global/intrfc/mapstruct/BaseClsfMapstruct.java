@@ -2,10 +2,10 @@ package io.nicheblog.dreamdiary.global.intrfc.mapstruct;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.CommentEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.ManagtEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.TagEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.base.ViewerEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ManagtEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.TagEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ViewerEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import org.mapstruct.AfterMapping;

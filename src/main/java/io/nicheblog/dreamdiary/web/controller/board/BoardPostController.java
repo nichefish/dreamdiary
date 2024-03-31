@@ -228,7 +228,7 @@ public class BoardPostController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/board/post/board_post_reg_preview_pop";
+        return "/view/board/post/board_post_preview_pop";
     }
 
     /**
@@ -259,18 +259,8 @@ public class BoardPostController
             isSuccess = (result.getPostNo() != null);
             if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 조치자 목록 갱신 :: 메인 로직과 분리
-            // try {
-            //     List<BoardPostManagtrDto> managtrList = result.getManagtrList();
-            //     if (!boardPostManagtrService.hasAlreadyManagt(managtrList)) {
-            //         BoardPostManagtrDto dto = boardPostManagtrService.regPostManagtr(result.getClsfKey());
-            //         result.addPostManagtr(dto);
-            //     }
-            // } catch (Exception e) {
-            //     resultMsg = MessageUtils.getExceptionMsg(e);
-            //     logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            //     publisher.publishEvent(new LogActvtyEvent(this, logParam));
-            // }
+            // 조치자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
             // 잔디 메세지 발송 :: 메인 로직과 분리
             // if ("Y".equals(jandiYn)) {
             //     String jandiResultMsg = notifyService.notifyBoardPostReg(trgetTopic, result, logParam);

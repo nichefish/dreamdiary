@@ -43,10 +43,9 @@ public interface VcatnSchdulMapstruct
      */
     // 달력에선 종료일자에 시간 데이터(23:59:59)를 붙여줘야 한다.
     // 하루짜리 이벤트일 때만 allDay=true를 붙여준다.
-    @Mapping(target = "prtcpnt", expression = "java((entity.getVcatnPaprInfo() != null && entity.getVcatnPaprInfo().getRegstrInfo() != null) ? entity.getVcatnPaprInfo().getRegstrInfo().getNickNm() : entity.getUserInfo() != null ? entity.getUserInfo().getNickNm() : null)")
-    // @Mapping(target="schdulNm", expression="java((entity.getSchdulTyCdInfo() != null) ? entity.getSchdulTyCdInfo().getDtlCdNm() : schdulNm)")
-    // @Mapping(target="display", expression="java(\"hldy\".equals(entity.getSchdulTyCd()) ? \"background\" : null)")
-    // @Mapping(target="color", expression="java(\"hldy\".equals(entity.getSchdulTyCd()) ? \"red\" : null)")
+    // @Mapping(target="title", expression="java((entity.getSchdulCdInfo() != null) ? entity.getSchdulCdInfo().getDtlCdNm() : schdulNm)")
+    // @Mapping(target="display", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"background\" : null)")
+    // @Mapping(target="color", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"red\" : null)")
     @Mapping(target = "bgnDt", expression = "java(DateUtils.asStr(entity.getBgnDt(), DateUtils.PTN_DATE))")
     @Mapping(target = "endDt", expression = "java(DateUtils.asStr(entity.getEndDt(), DateUtils.PTN_ZDATETIME))")
     @Mapping(target = "allDay", expression = "java(entity.getEndDt() == null ? true : DateUtils.isSameDay(entity.getBgnDt(), entity.getEndDt()) ? true : false)")
@@ -57,10 +56,9 @@ public interface VcatnSchdulMapstruct
      */
     // 달력에선 종료일자에 시간 데이터(23:59:59)를 붙여줘야 한다.
     // 하루짜리 이벤트일 때만 allDay=true를 붙여준다.
-    @Mapping(target = "prtcpnt", expression = "java(dto.getUserNm())")
-    @Mapping(target = "schdulNm", expression = "java(StringUtils.isNotEmpty(dto.getUserNm()) ? dto.getUserNm() + \" \" + dto.getVcatnNm() : dto.getVcatnNm())")
-    // @Mapping(target="display", expression="java(\"hldy\".equals(entity.getSchdulTyCd()) ? \"background\" : null)")
-    // @Mapping(target="color", expression="java(\"hldy\".equals(entity.getSchdulTyCd()) ? \"red\" : null)")
+    @Mapping(target = "title", expression = "java(StringUtils.isNotEmpty(dto.getUserNm()) ? dto.getUserNm() + \" \" + dto.getVcatnNm() : dto.getVcatnNm())")
+    // @Mapping(target="display", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"background\" : null)")
+    // @Mapping(target="color", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"red\" : null)")
     @Mapping(target = "endDt", expression = "java(StringUtils.isNotEmpty(dto.getEndDt()) ? dto.getEndDt() + \"T23:59:59\" : null)")
     @Mapping(target = "allDay", expression = "java(StringUtils.isEmpty(dto.getEndDt()) ? true : DateUtils.isSameDay(dto.getBgnDt(), dto.getEndDt()) ? true : false)")
     SchdulCalDto toCalDto(final VcatnSchdulDto dto) throws Exception;

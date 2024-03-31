@@ -220,7 +220,7 @@ public class NoticeController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/notice/notice_reg_preview_pop";
+        return "/view/notice/notice_preview_pop";
     }
 
     /**

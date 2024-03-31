@@ -3,6 +3,7 @@
   -- TODO: Handlebars로 교체하기
   -->
 <#import "/layout/layout.ftlh" as layout >
+<#import "/view/_component/_reg_btn_area.ftlh" as regBtn >
 
 <#assign isReg = isReg!false>
 <#assign isMdf = isMdf!false>
@@ -63,7 +64,7 @@
             validateYyMnth: function() {
                 const url = "${SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
                 let ajaxData = {"yy": $("#yy").val(), "mnth": $("#mnth").val()};
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     let resultObj = res.resultObj;
                     if (resultObj === undefined) return;
                     if (resultObj.cfYn === "Y") {
