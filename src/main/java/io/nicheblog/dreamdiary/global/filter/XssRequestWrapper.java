@@ -34,6 +34,7 @@ public class XssRequestWrapper
         String parameter = this.cleanXSS(parameterParam);
 
         String[] values = super.getParameterValues(parameter);
+        if (values == null) return null;
         return Arrays.stream(values)
                 .map(this::cleanXSS)
                 .toArray(String[]::new);
@@ -47,6 +48,7 @@ public class XssRequestWrapper
         String parameter = this.cleanXSS(parameterParam);
 
         String value = super.getParameter(parameter);
+        if (StringUtils.isEmpty(value)) return null;
         return this.cleanXSS(value);
     }
 
@@ -56,6 +58,7 @@ public class XssRequestWrapper
     @Override
     public Map<String, String[]> getParameterMap() {
         Map<String, String[]> originalMap = super.getParameterMap();
+        if (originalMap == null) return null;
         return originalMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         entry -> cleanXSS(entry.getKey()), // 키에 대한 XSS 처리
@@ -71,6 +74,7 @@ public class XssRequestWrapper
     @Override
     public String getHeader(final String name) {
         String value = super.getHeader(name);
+        if (StringUtils.isEmpty(value)) return null;
         return this.cleanXSS(value);
     }
 
