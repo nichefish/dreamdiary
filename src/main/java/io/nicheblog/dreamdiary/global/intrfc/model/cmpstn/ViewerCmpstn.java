@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.viewer.ViewerDto;
 import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,8 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ViewerCmpstn {
+public class ViewerCmpstn
+        implements Serializable {
 
     /** 컨텐츠 열람자 목록 */
     private List<ViewerDto> list;

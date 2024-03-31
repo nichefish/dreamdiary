@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.OrderBy;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +33,8 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ManagtEmbed {
+public class ManagtEmbed
+        implements Serializable {
 
     @PostLoad
     private void onLoad() {

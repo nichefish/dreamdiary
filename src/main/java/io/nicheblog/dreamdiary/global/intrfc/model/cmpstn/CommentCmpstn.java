@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
 import org.springframework.util.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,8 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentCmpstn {
+public class CommentCmpstn
+        implements Serializable {
 
     /** 댓글 목록 */
     private List<CommentDto> list;

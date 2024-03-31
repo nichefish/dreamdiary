@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.managtr.ManagtrDto;
 import lombok.*;
 import org.springframework.util.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +26,8 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ManagtCmpstn {
+public class ManagtCmpstn
+        implements Serializable {
 
     /** 수정권한 */
     @Builder.Default

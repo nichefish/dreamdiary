@@ -1,15 +1,14 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import lombok.*;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.*;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,27 +26,8 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TagEmbed {
-
-    @PostLoad
-    private void onLoad() {
-        this.tagListStr = this.initTagListStr();
-        this.tagStrList = this.initTagStrList();
-    }
-    private String initTagListStr() {
-        if (CollectionUtils.isEmpty(this.list)) return null;
-        return this.list.stream()
-                .map(contentTag -> contentTag.getTag().getTagNm())
-                .collect(Collectors.joining(","));
-    }
-    private List<String> initTagStrList() {
-         if (CollectionUtils.isEmpty(this.list)) return null;
-        return this.list.stream()
-                .map(ContentTagEntity::getTag)
-                .filter(tag -> tag != null && StringUtils.isNotEmpty(tag.getTagNm()))
-                .map(TagEntity::getTagNm)
-                .collect(Collectors.toList());
-    }
+public class TagEmbed
+        implements Serializable {
 
     /** 컨텐츠 태그 목록 */
     @OneToMany(fetch = FetchType.EAGER)
