@@ -14,10 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * BoardTagSpec
+ * TagSpec
  * <pre>
- *  게시판 태그 목록 검색인자 세팅 Specification
- *  ※게시판 태그(board_tag) = 게시판별 태그 정보. 게시판 게시물 태그(board_post_tag)와 1:N으로 연관된다.
+ *  태그 목록 검색인자 세팅 Specification
  * </pre>
  *
  * @author nichefish

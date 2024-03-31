@@ -14,8 +14,7 @@ import javax.annotation.Resource;
 /**
  * TagService
  * <pre>
- *  게시판 태그 서비스 모듈
- *  ※게시판 태그(board_tag) = 게시판별 태그 정보. 게시판 게시물 태그(board_post_tag)와 1:N으로 연관된다.
+ *  태그 서비스 모듈
  * </pre>
  *
  * @author nichefish

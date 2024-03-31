@@ -16,8 +16,8 @@ import javax.persistence.*;
 /**
  * ViewerEntity
  * <pre>
- *  게시판 게시물 열람자 Entity
- *  ※게시판 게시물 열람자(board_post_viewer) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  일반게시판 게시물 열람자 Entity
+ *  ※일반게시판 게시물 열람자(board_post_viewer) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
  * </pre>
  *
  * @author nichefish
