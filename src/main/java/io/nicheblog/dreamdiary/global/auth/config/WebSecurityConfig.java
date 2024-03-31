@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -39,8 +38,7 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Log4j2
-public class WebSecurityConfig
-        extends GlobalMethodSecurityConfiguration {
+public class WebSecurityConfig {
 
     @Value("${remember-me.key")
     private String REMEMBER_ME_KEY;
@@ -96,6 +94,8 @@ public class WebSecurityConfig
         public void configure(WebSecurity web) throws Exception {
 
             web.ignoring()
+                    // 로그인 화면 인증 무시
+                    .antMatchers(SiteUrl.AUTH_LGN_FORM)
                     // static 디렉터리의 하위 파일 목록은 인증 무시(=항상 통과 )
                     .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/public/**")
                     .antMatchers("/favicon.ico")
