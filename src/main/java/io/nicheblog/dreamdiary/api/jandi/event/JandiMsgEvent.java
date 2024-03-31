@@ -24,8 +24,8 @@ public class JandiMsgEvent
      * 생성자
      */
     public JandiMsgEvent(
-            Object source,
-            JandiParam jandiMsg
+            final Object source,
+            final JandiParam jandiMsg
     ) {
         super(source);
         this.jandiMsg = jandiMsg;

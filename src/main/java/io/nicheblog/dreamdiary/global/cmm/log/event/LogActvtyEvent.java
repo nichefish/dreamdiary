@@ -24,8 +24,8 @@ public class LogActvtyEvent
      * 생성자
      */
     public LogActvtyEvent(
-            Object source,
-            LogActvtyParam log
+            final Object source,
+            final LogActvtyParam log
     ) {
         super(source);
         this.log = log;
