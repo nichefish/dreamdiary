@@ -81,7 +81,7 @@ public interface BasePostService<Dto extends BasePostDto, ListDto extends BasePo
         // }
         // update
         Repository repository = this.getRepository();
-        Entity rsltEntity = repository.save(entity);
+        Entity rsltEntity = repository.saveAndFlush(entity);
         return mapstruct.toDto(rsltEntity);
     }
 

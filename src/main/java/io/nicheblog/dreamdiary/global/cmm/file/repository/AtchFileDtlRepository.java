@@ -19,11 +19,5 @@ import java.util.Optional;
 public interface AtchFileDtlRepository
         extends BaseRepository<AtchFileDtlEntity, Integer> {
 
-    /**
-     * 첨부파일 상세 조건 검색
-     */
-    Optional<AtchFileDtlEntity> findByAtchFileNoAndAtchFileDtlNo(
-            final Integer atchFileNo,
-            final Integer atchFildDtlId
-    );
+    //
 }

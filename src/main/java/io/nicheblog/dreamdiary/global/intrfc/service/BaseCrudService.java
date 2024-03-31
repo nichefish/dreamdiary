@@ -67,7 +67,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
         mapstruct.updateFromDto(dto, entity);
         // update
         Repository repository = this.getRepository();
-        Entity rsltEntity = repository.save(entity);
+        Entity rsltEntity = repository.saveAndFlush(entity);
         return mapstruct.toDto(rsltEntity);
     }
 
@@ -77,7 +77,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
     @Transactional
     default Entity updt(final Entity e) {
         Repository repository = this.getRepository();
-        Entity rslt = repository.save(e);
+        Entity rslt = repository.saveAndFlush(e);
         try {
             repository.refresh(rslt);
         } catch (EntityNotFoundException ex) {

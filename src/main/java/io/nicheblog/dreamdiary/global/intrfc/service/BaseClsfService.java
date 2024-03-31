@@ -51,7 +51,7 @@ public interface BaseClsfService<Dto extends BaseClsfDto, ListDto extends BaseCl
         mapstruct.updateFromDto(dto, entity);
         // update
         Repository repository = this.getRepository();
-        Entity rsltEntity = repository.save(entity);
+        Entity rsltEntity = repository.saveAndFlush(entity);
         return mapstruct.toDto(rsltEntity);
     }
 

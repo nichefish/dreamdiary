@@ -113,6 +113,7 @@ public class FileUtils {
         }
         // 추가된(multipart로 요청된) 파일에 대하여 업로드+DB추가
         atchFileDtlService.addFiles(multiRequest, atchFileList);
+        atchFile.cascade();
         return atchFileService.updt(atchFile);
     }
 

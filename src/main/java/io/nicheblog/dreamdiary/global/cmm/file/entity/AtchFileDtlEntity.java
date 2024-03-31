@@ -41,9 +41,10 @@ public class AtchFileDtlEntity
     @Column(name = "atch_file_dtl_no")
     private Integer atchFileDtlNo;
 
-    /** 첨부파일 번호 */
-    @Column(name = "atch_file_no")
-    private Integer atchFileNo;
+    /** 첨부파일 정보 */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "atch_file_no", insertable = false, updatable = false)
+    private AtchFileEntity atchFileInfo;
 
     /** 파일 순번 */
     @Column(name = "file_sn")

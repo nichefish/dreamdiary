@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * AtchFileEntity
@@ -34,7 +35,6 @@ import java.util.List;
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE atch_file SET del_yn = 'Y' WHERE atch_file_no = ?")
-@Log4j2
 public class AtchFileEntity
         extends BaseCrudEntity {
 
@@ -66,10 +66,13 @@ public class AtchFileEntity
         } else {
             this.atchFileList.clear();
             this.atchFileList.addAll(atchFileList);
-            log.info("param size: {}", atchFileList.size());
-            log.info("property size: {}", this.atchFileList.size());
-            log.info("!!!");
         }
+    }
+
+    /** cascade 처리 위한 임시조치 */
+    public void cascade() {
+        Optional.ofNullable(this.atchFileList)
+                .ifPresent(list -> list.forEach(dtlFile -> dtlFile.setAtchFileInfo(this)));
     }
 
 }
