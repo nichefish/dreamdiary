@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.api.kasi.mapstruct;
 
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;

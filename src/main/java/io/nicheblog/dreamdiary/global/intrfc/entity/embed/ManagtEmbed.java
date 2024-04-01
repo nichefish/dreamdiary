@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.managt.ManagtrMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.managtr.ManagtrDto;

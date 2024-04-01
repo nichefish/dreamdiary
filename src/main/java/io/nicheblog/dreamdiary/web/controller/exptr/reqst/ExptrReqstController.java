@@ -6,9 +6,9 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.util.CmmUtils;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
@@ -90,7 +90,7 @@ public class ExptrReqstController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
 
             // 상단 고정 목록 조회
             List<ExptrReqstListDto> exptrReqstFxdList = exptrReqstService.getFxdList();
@@ -106,7 +106,7 @@ public class ExptrReqstController
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
-            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.Param.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.managt;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.managtr.ManagtrDto;
 import org.apache.commons.lang3.StringUtils;

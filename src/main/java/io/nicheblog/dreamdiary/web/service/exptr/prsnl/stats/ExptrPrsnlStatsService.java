@@ -1,8 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.exptr.prsnl.stats;
 
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlPaprMapstruct;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprListDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.stats.ExptrPrsnlStatsDto;
 import io.nicheblog.dreamdiary.web.model.user.UserListDto;
@@ -33,8 +32,6 @@ import java.util.Map;
 @Service("exptrPrsnlStatsService")
 @Log4j2
 public class ExptrPrsnlStatsService {
-
-    private final ExptrPrsnlPaprMapstruct exptrPrsnlPaprMapstruct = ExptrPrsnlPaprMapstruct.INSTANCE;
 
     @Resource(name = "exptrPrsnlService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;

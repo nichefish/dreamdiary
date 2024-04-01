@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.entity.LogActvtyEntity;
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
