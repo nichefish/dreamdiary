@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
@@ -205,7 +206,7 @@ public class NoticeController
         String resultMsg = "";
         try {
             model.addAttribute("post", noticeDto);
-            model.addAttribute("currDateStr", DateUtils.getCurrDateStr(DateUtils.PTN_DATETIME));
+            model.addAttribute("currDateStr", DateUtils.getCurrDateStr(DatePtn.DATETIME));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

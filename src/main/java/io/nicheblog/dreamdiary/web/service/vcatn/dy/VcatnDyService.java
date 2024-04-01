@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.service.vcatn.dy;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnSchdulMapstruct;
@@ -122,7 +123,7 @@ public class VcatnDyService
                     vcatnDy.setVcatnSchdulNo(Integer.toString(vcatn.getVcatnSchdulNo()));
                     vcatnDy.setRm(vcatn.getRm());
                 }
-                vcatnDy.setVcatnDy(DateUtils.asStr(keyDt, DateUtils.PTN_DATE));
+                vcatnDy.setVcatnDy(DateUtils.asStr(keyDt, DatePtn.DATE));
                 vcatnDy.setVcatnExprDy(exhrDy);
                 rsDyDtoList.add(vcatnDy);
                 keyDt = DateUtils.getDateAddDay(keyDt, 1);

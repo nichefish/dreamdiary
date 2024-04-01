@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlItemDto;
@@ -20,7 +21,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class})
 public interface ExptrPrsnlItemMapstruct
         extends BaseMapstruct<ExptrPrsnlItemDto, ExptrPrsnlItemEntity> {
 
@@ -30,14 +31,14 @@ public interface ExptrPrsnlItemMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "exptrDt", expression = "java(DateUtils.asStr(entity.getExptrDt(), DateUtils.PTN_DATE))")
+    @Mapping(target = "exptrDt", expression = "java(DateUtils.asStr(entity.getExptrDt(), DatePtn.DATE))")
     @Mapping(target = "atchFileDtlNo", expression = "java(entity.getAtchFileDtlNo() != null ? Integer.toString(entity.getAtchFileDtlNo()) : null)")
     ExptrPrsnlItemDto toDto(final ExptrPrsnlItemEntity entity) throws Exception;
 
     /**
      * Entity -> RptItemDto
      */
-    @Mapping(target = "exptrDt", expression = "java(DateUtils.asStr(entity.getExptrDt(), DateUtils.PTN_DATE))")
+    @Mapping(target = "exptrDt", expression = "java(DateUtils.asStr(entity.getExptrDt(), DatePtn.DATE))")
     @Mapping(target = "atchFileDtlNo", expression = "java(entity.getAtchFileDtlNo() != null ? Integer.toString(entity.getAtchFileDtlNo()) : null)")
     ExptrPrsnlRptItemDto toRptItemDto(final ExptrPrsnlItemEntity entity) throws Exception;
 

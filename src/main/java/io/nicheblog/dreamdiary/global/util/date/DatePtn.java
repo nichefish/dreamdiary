@@ -29,5 +29,5 @@ public enum DatePtn {
     BRTHDY("MM월 dd일", new SimpleDateFormat("MM월 dd일"));
 
     public final String pattern;
-    public final SimpleDateFormat format;
+    public final SimpleDateFormat df;
 }

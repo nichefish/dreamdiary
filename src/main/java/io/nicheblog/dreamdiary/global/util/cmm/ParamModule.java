@@ -19,6 +19,7 @@ import java.util.Map;
  * ParamModule
  * <pre>
  *  공통, 기본 기능 처리 유틸리티 모듈
+ *  (!package-private class)
  * </pre>
  * TODO:: 필요별로 유틸 분리하고 필요하면 새로 만들기
  *

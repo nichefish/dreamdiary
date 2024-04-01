@@ -30,14 +30,14 @@ public interface ExptrReqstMapstruct
     @Override
     @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
     // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
-    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
+    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DatePtn.DATETIME))")
     ExptrReqstDto toDto(final ExptrReqstEntity entity) throws Exception;
 
     /**
      * Entity -> listDto
      */
     @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
-    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DateUtils.PTN_DATETIME))")
+    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DatePtn.DATETIME))")
     ExptrReqstListDto toListDto(final ExptrReqstEntity entity) throws Exception;
 
     /**

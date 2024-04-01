@@ -1,14 +1,16 @@
 package io.nicheblog.dreamdiary.global.util.date;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,37 +32,8 @@ public class DateUtils
     /** 음력 관련 메소드 위임 */
     public static class ChineseCal extends ChineseCalModule {}
 
-    /**
-     * ContentType
-     * <pre>
-     *  ClsfEntity를 상속받은 클래스들이 사용하는 컨텐츠 타입 정보
-     * </pre>
-     *
-     * @author nichefish
-     */
-    @RequiredArgsConstructor
-    public enum PTN {
-
-        DATE("yyyy-MM-dd", new SimpleDateFormat("yyyy-MM-dd")),
-        DATEDY("yyyy.MM.dd '('EEE')'", new SimpleDateFormat("yyyy.MM.dd '('EEE')'")),
-        DATETIME("yyyy-MM-dd HH:mm:ss", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")),
-        LDATETIME("yyyyy-MM-dd HH:mm:ss", new SimpleDateFormat("yyyyy-MM-dd HH:mm:ss")),      // 머신러닝측 날짜포맷 실수?커버위해 작성
-        PDATE("yyyyMMdd", new SimpleDateFormat("yyyyMMdd")),
-        PDATETIME("yyyyMMddHHmmss", new SimpleDateFormat("yyyyMMddHHmmss")),
-        MDATETIME("yyyyMMddHHmm", new SimpleDateFormat("yyyyMMddHHmm")),
-        ZDATETIME("yyyy-MM-dd'T'HH:mm:ss", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")),
-        DATETIMES("yyyy-MM-dd HH:mm:ss.S", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S")),
-        SDATE("yyyy/MM/dd", new SimpleDateFormat("yyyy/MM/dd")),
-        SDATETIME("yyyy/MM/dd HH:mm:ss", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")),
-        BRTHDY("MM월 dd일", new SimpleDateFormat("MM월 dd일"));
-
-        public final String pattern;
-        public final SimpleDateFormat format;
-    }
-
     public static final String PTN_DATE = "yyyy-MM-dd";
     public static final String PTN_DATETIME = "yyyy-MM-dd HH:mm:ss";
-    public static final String PTN_PDATE = "yyyyMMdd";
 
     public static final SimpleDateFormat DF_DATE = new SimpleDateFormat(PTN_DATE, Constant.LC_KO);
 
@@ -83,16 +56,6 @@ public class DateUtils
     }
 
     /**
-     * 날짜 또는 문자열을 받아서 문자열String로 일괄 반환
-     * (Date, 문자열, LocalDateTime)
-     */
-    public static String asStr(final Object date, final String dtFormat) throws Exception {
-        if (date == null) return null;
-        Date asDate = asDate(date);
-        return Parser.dateToStr(asDate, dtFormat);
-    }
-
-    /**
      * 날짜 또는 문자열을 받아서 LocalDate로 일괄 반환
      * (Date, 문자열, LocalDateTime)
      */
@@ -109,6 +72,16 @@ public class DateUtils
         return LocalDateTime.ofInstant(asDate.toInstant(), ZoneId.systemDefault());
     }
 
+    /**
+     * 날짜 또는 문자열을 받아서 문자열String로 일괄 반환
+     * @param date (Date, LocalDateTime, 문자열)
+     * @param ptn (DatePtn enum)
+     */
+    public static String asStr(final Object date, final DatePtn ptn) throws Exception {
+        if (date == null) return null;
+        Date asDate = asDate(date);
+        return Parser.dateToStr(asDate, ptn);
+    }
 
     /* ----- */
 
@@ -136,10 +109,10 @@ public class DateUtils
 
     /**
      * 현재 날짜 문자열String 반환
+     * @param ptn (DatePtn enum)
      */
-    public static String getCurrDateStr(final String dtFormat) throws Exception {
-        SimpleDateFormat df = dtFormat != null ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DF_DATE;
-        return df.format(getCurrDate());
+    public static String getCurrDateStr(final DatePtn ptn) throws Exception {
+        return ptn.df.format(getCurrDate());
     }
 
     /**
@@ -242,9 +215,8 @@ public class DateUtils
     /**
      * 어제 날짜 문자열String 반환
      */
-    public static String getPrevDateStr(final String dtFormat) throws Exception {
-        SimpleDateFormat df = dtFormat != null ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DF_DATE;
-        return df.format(getPrevDate());
+    public static String getPrevDateStr(final DatePtn ptn) throws Exception {
+        return ptn.df.format(getPrevDate());
     }
 
     /**
@@ -257,9 +229,8 @@ public class DateUtils
     /**
      * 내일 날짜 문자열String 반환
      */
-    public static String getNextDateStr(final String dtFormat) throws Exception {
-        SimpleDateFormat df = dtFormat != null ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DF_DATE;
-        return df.format(getNextDate());
+    public static String getNextDateStr(final DatePtn ptn) throws Exception {
+        return ptn.df.format(getNextDate());
     }
 
     /**
@@ -274,14 +245,11 @@ public class DateUtils
      * 현재 날짜Date에 기간(일자) 더해서 문자열String로 반환
      */
     public static String getCurrDateAddDayStr(final int dayCnt) throws Exception {
-        return getCurrDateAddDayStr(dayCnt, PTN_DATETIME);
+        return getCurrDateAddDayStr(dayCnt, DatePtn.DATETIME);
     }
 
-    public static String getCurrDateAddDayStr(
-            final int dayCnt,
-            final String dtFormat
-    ) throws Exception {
-        return Parser.dateToStr(getCurrDateAddDay(dayCnt), dtFormat);
+    public static String getCurrDateAddDayStr(final int dayCnt, final DatePtn ptn) throws Exception {
+        return Parser.dateToStr(getCurrDateAddDay(dayCnt), ptn);
     }
 
     /**
@@ -302,21 +270,14 @@ public class DateUtils
     /**
      * 날짜Date에 기간(일자) 더해서 문자열String로 반환
      */
-    public static String getDateAddDayStr(
-            final Object date,
-            final String dtFormat,
-            final int dayCnt
-    ) throws Exception {
-        return Parser.dateToStr(getDateAddDay(date, dayCnt), dtFormat);
+    public static String getDateAddDayStr(final Object date, final DatePtn ptn, final int dayCnt) throws Exception {
+        return Parser.dateToStr(getDateAddDay(date, dayCnt), ptn);
     }
 
     /**
      * 날짜Date에 기간(년도) 더해서 날짜Date로 반환
      */
-    public static Date getDateAddYy(
-            final Object date,
-            final int yyCnt
-    ) throws Exception {
+    public static Date getDateAddYy(final Object date, final int yyCnt) throws Exception {
         Date asDate = asDate(date);
         if (asDate == null) return null;
         Calendar cal = Calendar.getInstance();
@@ -328,21 +289,14 @@ public class DateUtils
     /**
      * 날짜Date에 기간(년도) 더해서 문자열로 반환
      */
-    public static String getDateAddYyStr(
-            final Object date,
-            final String dtFormat,
-            final int yyCnt
-    ) throws Exception {
-        return Parser.dateToStr(getDateAddYy(date, yyCnt), dtFormat);
+    public static String getDateAddYyStr(final Object date, final DatePtn ptn, final int yyCnt) throws Exception {
+        return Parser.dateToStr(getDateAddYy(date, yyCnt), ptn);
     }
 
     /**
      * 날짜Date에 기간(분) 더해서 날짜Date로 반환
      */
-    public static Date addMinutes(
-            final Object date,
-            final int minCnt
-    ) throws Exception {
+    public static Date addMinutes(final Object date, final int minCnt) throws Exception {
         Date asDate = asDate(date);
         if (asDate == null) return null;
         Calendar cal = Calendar.getInstance();
@@ -444,8 +398,8 @@ public class DateUtils
             final Object date1,
             final Object date2
     ) throws Exception {
-        String date1str = DateUtils.asStr(date1, DateUtils.PTN_PDATE);
-        String date2str = DateUtils.asStr(date2, DateUtils.PTN_PDATE);
+        String date1str = DateUtils.asStr(date1, DatePtn.PDATE);
+        String date2str = DateUtils.asStr(date2, DatePtn.PDATE);
         return date1str.equals(date2str);
     }
 

@@ -23,7 +23,7 @@ class ChineseCalModule {
         ChineseCalendar chineseCal = new ChineseCalendar();
         Calendar cal = Calendar.getInstance();
 
-        String dateStr = DateUtils.asStr(date, DateUtils.PTN_DATE);
+        String dateStr = DateUtils.asStr(date, DatePtn.DATE);
         String[] dateStrArr = dateStr.split("-");
 
         // Calendar에 날짜 세팅
@@ -46,9 +46,9 @@ class ChineseCalModule {
      */
     public static String solToLunStr(
             final Object date,
-            final String dtFormat
+            final DatePtn ptn
     ) throws Exception {
-        return DateUtils.asStr(solToLunar(date), dtFormat);
+        return DateUtils.asStr(solToLunar(date), ptn);
     }
 
     /**
@@ -59,7 +59,7 @@ class ChineseCalModule {
         ChineseCalendar chineseCal = new ChineseCalendar();
         Calendar cal = Calendar.getInstance();
 
-        String dateStr = DateUtils.asStr(date, DateUtils.PTN_DATE);
+        String dateStr = DateUtils.asStr(date, DatePtn.DATE);
         String[] dateStrArr = dateStr.split("-");
 
         // ChineseCalendar에 날짜 세팅
@@ -78,9 +78,9 @@ class ChineseCalModule {
      */
     public static String lunToSolStr(
             final Object date,
-            final String dtFormat
+            final DatePtn ptn
     ) throws Exception {
-        return DateUtils.asStr(lunToSol(date), dtFormat);
+        return DateUtils.asStr(lunToSol(date), ptn);
     }
 
 }

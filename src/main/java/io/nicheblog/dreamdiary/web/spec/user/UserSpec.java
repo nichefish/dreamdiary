@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.spec.user;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
@@ -56,8 +57,8 @@ public class UserSpec
         return (root, query, builder) -> {
             List<Predicate> predicate = new ArrayList<>();
             try {
-                String startDtStr = DateUtils.getCurrDateStr(DateUtils.PTN_DATE);
-                String endDtStr = DateUtils.getNextDateStr(DateUtils.PTN_DATE);
+                String startDtStr = DateUtils.getCurrDateStr(DatePtn.DATE);
+                String endDtStr = DateUtils.getNextDateStr(DatePtn.DATE);
                 predicate = getCrdtBrthdyUser(startDtStr, endDtStr, root, builder);
                 List<Order> order = getOrderByTitleAndEcnyDt(root, builder);
                 query.orderBy(order);

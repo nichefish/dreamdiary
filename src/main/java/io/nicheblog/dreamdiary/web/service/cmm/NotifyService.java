@@ -229,9 +229,9 @@ public class NotifyService {
                 String msg = "오늘은 " + user.getUserNm() + "님의 생일입니다.";
                 boolean isLunar = "Y".equals(user.getLunarYn());
                 String brthdyStr = user.getBrthdy();
-                if (isLunar) brthdyStr = DateUtils.ChineseCal.solToLunStr(brthdyStr, DateUtils.PTN_DATE);
+                if (isLunar) brthdyStr = DateUtils.ChineseCal.solToLunStr(brthdyStr, DatePtn.DATE);
                 // url
-                String url = DateUtils.asStr(brthdyStr, DatePtn.BRTHDY.pattern) + (isLunar ? "음력" : "");
+                String url = DateUtils.asStr(brthdyStr, DatePtn.BRTHDY) + (isLunar ? "음력" : "");
                 // 메세지 발송
                 isSuccess = jandiApiService.sendMsg(trgetTopic, msg, title, url);
                 jandiResultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_JANDI_SUCCESS : MessageUtils.RSLT_JANDI_FAILURE);

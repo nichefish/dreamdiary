@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditRegDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.MappingTarget;
@@ -46,7 +47,7 @@ public interface BaseListMapstruct<Dto, ListDto, Entity>
                 // 작성자 이름
                 ((BaseAuditRegDto) dto).setRegstrNm(baseEntity.getRegstrInfo().getNickNm());
                 // 작성일사
-                ((BaseAuditRegDto) dto).setRegDt(DateUtils.asStr(baseEntity.getRegDt(), DateUtils.PTN_DATETIME));
+                ((BaseAuditRegDto) dto).setRegDt(DateUtils.asStr(baseEntity.getRegDt(), DatePtn.DATETIME));
                 // 작성자 여부
                 ((BaseAuditRegDto) dto).setIsRegstr(AuthUtils.isRegstr(baseEntity.getRegstrId()));
             }
@@ -59,7 +60,7 @@ public interface BaseListMapstruct<Dto, ListDto, Entity>
                 // 수정자 이름
                 ((BaseAuditDto) dto).setMdfusrNm(baseEntity.getMdfusrInfo().getNickNm());
                 // 수정일시
-                ((BaseAuditDto) dto).setMdfDt(DateUtils.asStr(baseEntity.getMdfDt(), DateUtils.PTN_DATETIME));
+                ((BaseAuditDto) dto).setMdfDt(DateUtils.asStr(baseEntity.getMdfDt(), DatePtn.DATETIME));
                 // 수정자 여부
                 ((BaseAuditDto) dto).setIsMdfusr(AuthUtils.isMdfusr(baseEntity.getMdfusrId()));
             }

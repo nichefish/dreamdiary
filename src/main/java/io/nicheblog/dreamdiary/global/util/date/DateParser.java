@@ -1,9 +1,7 @@
 package io.nicheblog.dreamdiary.global.util.date;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import org.apache.commons.lang3.StringUtils;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -14,6 +12,7 @@ import java.util.Date;
  * DateParser
  * <pre>
  *  날짜 정보 관련 처리 유틸리티 모듈
+ *  (!package-private class)
  * </pre>
  *
  * @author nichefish
@@ -34,12 +33,9 @@ public class DateParser {
     /**
      * 해당날짜의 시작시간 문자열 반환 (ex: "2021-09-15 00:00:00")
      */
-    public static String sDateParseStr(
-            final Object paramDate,
-            final String dtFormat
-    ) throws Exception {
+    public static String sDateParseStr(final Object paramDate, final DatePtn ptn) throws Exception {
         Date sDate = sDateParse(paramDate);
-        return dateToStr(sDate, dtFormat);
+        return dateToStr(sDate, ptn);
     }
 
     /**
@@ -47,7 +43,7 @@ public class DateParser {
      */
     public static String sDateParseStr(final Object paramDate) throws Exception {
         Date sDate = sDateParse(paramDate);
-        return dateToStr(sDate, DateUtils.PTN_DATETIME);
+        return dateToStr(sDate, DatePtn.DATE);
     }
 
     /**
@@ -56,20 +52,8 @@ public class DateParser {
     public static Date eDateParse(final Object paramDate) throws Exception {
         Date searchDate = DateUtils.asDate(paramDate);
         if (searchDate == null) return null;
-        LocalDateTime endOfDay = DateUtils.asLocalDateTime(searchDate)
-                                          .with(LocalTime.MAX);
+        LocalDateTime endOfDay = DateUtils.asLocalDateTime(searchDate).with(LocalTime.MAX);
         return localDateTimeToDate(endOfDay);
-    }
-
-    /**
-     * 해당날짜의 끝 시간 문자열 반환 (ex: "2021-09-15 23:59:59")
-     */
-    public static String eDateParseStr(
-            final Object paramDate,
-            final String dtFormat
-    ) throws Exception {
-        Date eDate = eDateParse(paramDate);
-        return dateToStr(eDate, dtFormat);
     }
 
     /**
@@ -77,9 +61,12 @@ public class DateParser {
      */
     public static String eDateParseStr(final Object paramDate) throws Exception {
         Date eDate = eDateParse(paramDate);
-        return dateToStr(eDate, DateUtils.PTN_DATETIME);
+        return dateToStr(eDate, DatePtn.DATETIME);
     }
-
+    public static String eDateParseStr(final Object paramDate, final DatePtn ptn) throws Exception {
+        Date eDate = eDateParse(paramDate);
+        return dateToStr(eDate, ptn);
+    }
     /**
      * 해당날짜의 24시간 전 반환
      */
@@ -88,8 +75,7 @@ public class DateParser {
         if (searchDate == null) return null;
         searchDate = DateUtils.getDateAddDay(searchDate, -1);
         if (searchDate == null) return null;
-        LocalDateTime endOfDay = DateUtils.asLocalDateTime(searchDate)
-                                          .with(LocalTime.MAX);
+        LocalDateTime endOfDay = DateUtils.asLocalDateTime(searchDate).with(LocalTime.MAX);
         return localDateTimeToDate(endOfDay);
     }
 
@@ -97,14 +83,14 @@ public class DateParser {
 
     /**
      * 날짜Date를 문자열String로 변환
+     * @param: DatePtn (enum)
      */
-    public static String dateToStr(
-            final Date date,
-            final String dtFormat
-    ) {
+    /**
+     * 날짜Date를 문자열String로 변환
+     */
+    public static String dateToStr(final Date date, final DatePtn ptn) {
         if (date == null) return "";
-        SimpleDateFormat df = (dtFormat != null) ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DatePtn.DATETIME.format;
-        return df.format(date);
+        return ptn.df.format(date);
     }
 
     /**
@@ -125,15 +111,11 @@ public class DateParser {
      * 문자열String을 날짜Date로 변환
      * 패턴을 받아서 특정 패턴으로만 해석한다.
      */
-    public static Date strToDate(
-            final String dateStrParam,
-            final String dtFormat
-    ) throws Exception {
+    public static Date strToDate(final String dateStrParam, final DatePtn ptn) throws Exception {
         if (StringUtils.isEmpty(dateStrParam)) return null;
         // microsecond 포함/미포함이 섞여서 넘어오는 문제 해결 위해 microsecond 미사용 처리
         String dateStr = (dateStrParam.length() > 20) ? dateStrParam.substring(0, 19) : dateStrParam;
-        SimpleDateFormat df = (dtFormat != null) ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DatePtn.DATETIME.format;
-        return df.parse(dateStr);
+        return ptn.df.parse(dateStr);
     }
 
     /**

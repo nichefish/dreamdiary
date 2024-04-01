@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.vcatn.stats;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsYyEntity;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
@@ -16,7 +17,7 @@ import org.mapstruct.factory.Mappers;
  *
  * @author nichefish
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class})
 public interface VcatnStatsYyMapstruct
         extends BaseMapstruct<VcatnStatsYyDto, VcatnStatsYyEntity> {
 
@@ -25,8 +26,8 @@ public interface VcatnStatsYyMapstruct
     /**
      * Entity -> Dto
      */
-    @Mapping(target = "bgnDt", expression = "java(entity.getBgnDt() != null ? DateUtils.asStr(entity.getBgnDt(), DateUtils.PTN_DATE) : null)")
-    @Mapping(target = "endDt", expression = "java(entity.getEndDt() != null ? DateUtils.asStr(entity.getEndDt(), DateUtils.PTN_DATE) : null)")
+    @Mapping(target = "bgnDt", expression = "java(entity.getBgnDt() != null ? DateUtils.asStr(entity.getBgnDt(), DatePtn.DATE) : null)")
+    @Mapping(target = "endDt", expression = "java(entity.getEndDt() != null ? DateUtils.asStr(entity.getEndDt(), DatePtn.DATE) : null)")
     VcatnStatsYyDto toDto(final VcatnStatsYyEntity entity) throws Exception;
 
     /**

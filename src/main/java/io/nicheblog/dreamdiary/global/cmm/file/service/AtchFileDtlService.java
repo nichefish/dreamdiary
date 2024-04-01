@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.file.repository.AtchFileDtlRepository;
 import io.nicheblog.dreamdiary.global.cmm.file.spec.AtchFileDtlSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
@@ -74,7 +75,7 @@ public class AtchFileDtlService
         String path = "upfile/";
         File file = new File(path);
         if (!file.exists()) if (!file.mkdirs()) throw new Exception("폴더 생성에 실패했습니다.");
-        path = "upfile/" + DateUtils.getCurrDateStr(DateUtils.PTN_DATE) + "/";
+        path = "upfile/" + DateUtils.getCurrDateStr(DatePtn.DATE) + "/";
         file = new File(path);
         if (!file.exists()) if (!file.mkdirs()) throw new Exception("폴더 생성에 실패했습니다.");
 
@@ -89,7 +90,7 @@ public class AtchFileDtlService
             }
             // String fileIdx = fileInputNm.replace("atchFile", "");        // TODO: 파일 순번이 중요한 시점이 올수도 있다.
             orgnFileNm = Optional.ofNullable(multipartFile.getOriginalFilename())
-                    .orElse(DateUtils.getCurrDateStr(DateUtils.PTN_DATE));
+                    .orElse(DateUtils.getCurrDateStr(DatePtn.DATE));
             orgnFileExtn = orgnFileNm.substring(orgnFileNm.lastIndexOf('.') + 1);
             replaceFileNm = System.nanoTime() + "." + orgnFileExtn;
             // 실제 파일 저장

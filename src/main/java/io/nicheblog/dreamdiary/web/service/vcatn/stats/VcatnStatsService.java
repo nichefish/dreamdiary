@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.vcatn.stats;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsEntity;
@@ -145,7 +146,7 @@ public class VcatnStatsService {
         Map<String, Object> searchParamMap = vcatnStatsYyService.getVcatnYyDtMap(statsYy);
         Date statsYyBgnDt = DateUtils.asDate(searchParamMap.get("searchStartDt"));
         Date statsYyEndDt = DateUtils.asDate(searchParamMap.get("searchEndDt"));
-        dto.setStatsDt(DateUtils.getDateAddDayStr(statsYyBgnDt, DateUtils.PTN_DATE, -1));
+        dto.setStatsDt(DateUtils.getDateAddDayStr(statsYyBgnDt, DatePtn.DATE, -1));
         searchParamMap.put("userId", userId);
         Page<VcatnSchdulEntity> vcatnEntityList = vcatnDyService.getListEntity(searchParamMap, Pageable.unpaged());
         double totVcatnDy = 0.0;

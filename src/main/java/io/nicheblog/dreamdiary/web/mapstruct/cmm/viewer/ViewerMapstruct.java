@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.viewer;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.viewer.ViewerEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.viewer.ViewerDto;
@@ -17,7 +18,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class})
 public interface ViewerMapstruct
         extends BaseMapstruct<ViewerDto, ViewerEntity> {
 
@@ -27,7 +28,7 @@ public interface ViewerMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
+    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DatePtn.DATETIME))")
     ViewerDto toDto(final ViewerEntity entity) throws Exception;
 
     /**

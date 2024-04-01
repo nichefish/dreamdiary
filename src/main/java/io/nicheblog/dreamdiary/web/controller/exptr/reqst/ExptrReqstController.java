@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
@@ -180,7 +181,7 @@ public class ExptrReqstController
         try {
             isSuccess = true;
             model.addAttribute("post", exptrReqstDto);
-            model.addAttribute("currDateStr", DateUtils.getCurrDateStr(DateUtils.PTN_DATETIME));
+            model.addAttribute("currDateStr", DateUtils.getCurrDateStr(DatePtn.DATETIME));
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

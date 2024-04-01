@@ -457,7 +457,7 @@ public class ExptrPrsnlPaprController
         String resultMsg = "";
         try {
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME.pattern) + ".pdf";
+            String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";
             List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
             PdfBoxUtils.imgCmbnPdfDonwload(fileNm, fileList);
             isSuccess = true;

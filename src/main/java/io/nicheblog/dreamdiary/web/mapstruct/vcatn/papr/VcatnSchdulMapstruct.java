@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulCalDto;
@@ -19,7 +20,7 @@ import org.mapstruct.factory.Mappers;
  *
  * @author nichefish
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class})
 public interface VcatnSchdulMapstruct
         extends BaseListMapstruct<VcatnSchdulDto, VcatnDyDto, VcatnSchdulEntity> {
 
@@ -29,8 +30,8 @@ public interface VcatnSchdulMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "bgnDt", expression = "java(DateUtils.asStr(entity.getBgnDt(), DateUtils.PTN_DATE))")
-    @Mapping(target = "endDt", expression = "java(DateUtils.asStr(entity.getEndDt(), DateUtils.PTN_DATE))")
+    @Mapping(target = "bgnDt", expression = "java(DateUtils.asStr(entity.getBgnDt(), DatePtn.DATE))")
+    @Mapping(target = "endDt", expression = "java(DateUtils.asStr(entity.getEndDt(), DatePtn.DATE))")
     VcatnSchdulDto toDto(final VcatnSchdulEntity entity) throws Exception;
 
     /**
@@ -46,8 +47,8 @@ public interface VcatnSchdulMapstruct
     // @Mapping(target="title", expression="java((entity.getSchdulCdInfo() != null) ? entity.getSchdulCdInfo().getDtlCdNm() : schdulNm)")
     // @Mapping(target="display", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"background\" : null)")
     // @Mapping(target="color", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"red\" : null)")
-    @Mapping(target = "bgnDt", expression = "java(DateUtils.asStr(entity.getBgnDt(), DateUtils.PTN_DATE))")
-    @Mapping(target = "endDt", expression = "java(DateUtils.asStr(entity.getEndDt(), DateUtils.PTN_ZDATETIME))")
+    @Mapping(target = "bgnDt", expression = "java(DateUtils.asStr(entity.getBgnDt(), DatePtn.DATE))")
+    @Mapping(target = "endDt", expression = "java(DateUtils.asStr(entity.getEndDt(), DatePtn.ZDATETIME))")
     @Mapping(target = "allDay", expression = "java(entity.getEndDt() == null ? true : DateUtils.isSameDay(entity.getBgnDt(), entity.getEndDt()) ? true : false)")
     SchdulCalDto toCalDto(final VcatnSchdulEntity entity) throws Exception;
 
