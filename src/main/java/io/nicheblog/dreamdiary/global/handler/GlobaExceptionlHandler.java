@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -21,14 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @ControllerAdvice
 @Log4j2
-public class ExceptionHandler {
+public class GlobaExceptionlHandler {
 
     /**
      * 권한 관련 (접근불가) 처리
      *
      * @return JSON message
      */
-    @org.springframework.web.bind.annotation.ExceptionHandler(AccessDeniedException.class)
+    @ExceptionHandler(AccessDeniedException.class)
     @ResponseBody
     public ResponseEntity<AjaxResponse> accessDenied(
             final AccessDeniedException e
@@ -46,7 +47,7 @@ public class ExceptionHandler {
      *
      * @return errorPage
      */
-    @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     public String exception(
             final Exception e,
             final Model model
