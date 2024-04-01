@@ -58,10 +58,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value=""/>
-        <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>
-    </form>
     <#include "/view/board/post/board_post_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
@@ -260,14 +256,16 @@
     <!-- pagination::begin -->
     <#include "/view/_component/_pagination.ftlh">
     <!-- pagination::end -->
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" value=""/>
+        <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>
+    </form>
+
 </div>
 
 <#include "/view/board/post/board_post_dtl_modal.ftlh">
 <#include "/view/board/post/board_post_dtl_template.ftlh">
-<#if boardCd == "cmpyLife">
-    <#include "/view/board/post/board_post_list_crdt_user_cttpc_modal.ftlh">
-    <#include "/view/board/post/board_post_list_extn_phone_modal.ftlh">
-</#if>
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
 <#include "/view/_component/comment/_comment_list_template.ftlh">

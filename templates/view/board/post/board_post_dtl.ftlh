@@ -64,10 +64,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-        <input type="hidden" name="boardCd" id="boardCd" value="${post.boardCd!}" />
-    </form>
     <!--begin::Question-->
     <div class="mb-0">
         <!--begin::Head-->
@@ -188,6 +184,11 @@
 
     <!-- 댓글 영역 -->
     <#include "/view/_component/comment/_comment_area.ftlh">
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+        <input type="hidden" name="boardCd" id="boardCd" value="${post.boardCd!}" />
+    </form>
 </div>
 
 </@layout.layout>

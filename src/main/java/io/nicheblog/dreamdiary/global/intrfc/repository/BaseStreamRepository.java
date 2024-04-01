@@ -22,7 +22,7 @@ public interface BaseStreamRepository<T, ID extends Serializable> {
      */
     Stream<T> streamAllBy(Specification<T> searchWith);
 
-    /** 공격탐지내역 엑셀 다운로드용 Stream 조회 */
+    /** 엑셀 다운로드용 Stream 조회 */
     /*@QueryHints(value=@QueryHint(name="org.hibernate.readOnly", value="true"))
     public Stream<Entity> streamAllBy(Specification<Entity> searchWith) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();

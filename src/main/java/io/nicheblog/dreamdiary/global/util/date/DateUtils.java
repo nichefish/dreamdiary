@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.util.date;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +30,8 @@ public class DateUtils
 
     /** 날짜 파싱 관련 메소드 위임 */
     public static class Parser extends DateParser {}
+    public Parser Parser = new Parser();
+
     /** 음력 관련 메소드 위임 */
     public static class ChineseCal extends ChineseCalModule {}
 

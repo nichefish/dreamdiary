@@ -19,10 +19,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-        <input type="hidden" name="boardCd" id="boardCd" value="${post.boardCd!}" />
-    </form>
     <!--begin::Question-->
     <div class="mb-0">
         <!--begin::Head-->
@@ -112,6 +108,11 @@
             <i class="bi bi-list"></i>닫기
         </button>
     </div>
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+        <input type="hidden" name="boardCd" id="boardCd" value="${post.boardCd!}" />
+    </form>
 </div>
 
 </@layout.layout>

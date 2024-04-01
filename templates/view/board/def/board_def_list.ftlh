@@ -122,10 +122,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value=""/>
-        <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>
-    </form>
     <#include "/view/board/def/board_def_list_header.ftlh">
     <div class="mb-5 fs-5 fw-bold">
         <span class="opacity-75 me-5 cursor-help"
@@ -260,6 +256,11 @@
         <!--end::Table row-->
         </tbody>
     </table>
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" value=""/>
+        <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>
+    </form>
 </div>
 
 <#include "/view/board/def/board_def_mdf_item_modal.ftlh">
