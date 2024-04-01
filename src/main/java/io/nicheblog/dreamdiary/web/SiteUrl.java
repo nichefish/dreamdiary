@@ -249,7 +249,8 @@ public interface SiteUrl {
     String VCATN_STATS_YY_UPDT_AJAX = "/vcatnStatsYyUpdtAjax.do";
     String VCATN_STATS_YY_XLSX_DOWNLOAD = "/vcatnStatsXlsxDownload.do";
 
-    String SITE_ADMIN = "/admin";
+    String ADMIN_PAGE = "/admin";
+    String ADMIN_TEST = "/admin/test";
     String NOTION_HOME = "/notionHome.do";
 
     String USER_REQST_REG_FORM = Prefix.USER_REQST + "/userReqstRegForm.do";
