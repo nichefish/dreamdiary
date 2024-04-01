@@ -1,28 +1,33 @@
 package io.nicheblog.dreamdiary.web.controller.notice;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.util.CmmUtils;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.TagEvent;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
+import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
+import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeListDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.notice.NoticeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,10 +66,14 @@ public class NoticeController
     public String addActvtyCtgrCd() {
         return actvtyCtgr.name();
     }
+    @ModelAttribute(Constant.LIST_URL)
+    public String addListUrl() {
+        return baseUrl;
+    }
 
     // @InitBinder
     // public void initBinder(WebDataBinder binder) {
-    //     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    //     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     //     binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     //     binder.registerCustomEditor(Map.class, new PropertyEditorSupport() {
     //         @Override
@@ -81,6 +90,9 @@ public class NoticeController
     @Resource(name = "cdService")
     private CdService cdService;
 
+    @Resource(name = "tagService")
+    private TagService tagService;
+
     /**
      * 공지사항 목록 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
@@ -88,9 +100,8 @@ public class NoticeController
     @GetMapping(SiteUrl.NOTICE_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeList(
+            @ModelAttribute("searchParam") NoticeSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") NoticeSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) throws Exception {
 
@@ -100,26 +111,28 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            // 상세/수정 화면에서 목록 화면 복귀시 :: 세션에 목록 검색 인자 저장해둔 거 있는지 체크
+            if (searchParam.isBackToList()) searchParam = (NoticeSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 상단 고정 목록 조회
             model.addAttribute("noticeFxdList", noticeService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managt.managtDt", model);
-            Page<NoticeListDto> noticeList = noticeService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            Page<NoticeListDto> noticeList = noticeService.getListDto(searchParam, pageRequest);
             if (noticeList != null) model.addAttribute("noticeList", noticeList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
             cdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
+
             // 태그 전체 목록 조회
-            // listParamMap.put("contentType", "notice");
-            // Page<BoardTagDto> tagList = boardTagService.getListDto(listParamMap, Pageable.unpaged());
-            // model.addAttribute("tagList", tagList.getContent());
+            TagSearchParam tagSeachParam = new TagSearchParam();
+            tagSeachParam.setContentType(ContentType.NOTICE.key);
+            Page<TagDto> tagList = tagService.getListDto(tagSeachParam, Pageable.unpaged());
+            model.addAttribute("tagList", tagList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
-            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -191,7 +204,6 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // TODO: 파일 정보는? 하려면 불필요하게 난해하다...
             model.addAttribute("post", noticeDto);
             model.addAttribute("currDateStr", DateUtils.getCurrDateStr(DateUtils.PTN_DATETIME));
             isSuccess = true;
@@ -427,6 +439,7 @@ public class NoticeController
     @RequestMapping(SiteUrl.NOTICE_POPUP_LIST_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticePopupListAjax(
+            final NoticeSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) {
@@ -442,7 +455,7 @@ public class NoticeController
                 put("managtStartDt", DateUtils.getCurrDateAddDay(-7));
             }};
             Sort sort = Sort.by(Sort.Direction.ASC, "managt.managtDt");
-            PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             Page<NoticeListDto> noticeList = noticeService.getListDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(noticeList.getContent());
             isSuccess = true;

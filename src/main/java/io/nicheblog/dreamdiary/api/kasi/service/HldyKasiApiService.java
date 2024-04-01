@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.api.kasi.mapstruct.HldyKasiApiMapstruct;
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiRespDto;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.global.util.date.DateParser;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
 import io.nicheblog.dreamdiary.web.repository.schdul.SchdulRepository;
@@ -93,7 +92,7 @@ public class HldyKasiApiService {
     public void delHldyList(final String yyStr) throws Exception {
         Map<String, Object> searchParamMap = new HashMap() {{
             put("searchStartDt", DateUtils.asDate(yyStr + "-01-01"));
-            put("searchEndDt", DateParser.eDateParse(DateUtils.asDate(yyStr + "-12-31")));
+            put("searchEndDt", DateUtils.Parser.eDateParse(DateUtils.asDate(yyStr + "-12-31")));
             put("contentType", "hldyApi");
         }};
         Page<SchdulEntity> schdulList = schdulService.getListEntity(searchParamMap, Pageable.unpaged());

@@ -71,7 +71,7 @@ public class ExptrReqstController
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 목록 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @GetMapping(SiteUrl.EXPTR_REQST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -121,7 +121,7 @@ public class ExptrReqstController
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 등록 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.EXPTR_REQST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -163,7 +163,7 @@ public class ExptrReqstController
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 등록 전 미리보기 팝업 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.EXPTR_REQST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -196,7 +196,7 @@ public class ExptrReqstController
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 등록/수정 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.EXPTR_REQST_REG_AJAX, SiteUrl.EXPTR_REQST_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -245,7 +245,7 @@ public class ExptrReqstController
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 상세 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(value = SiteUrl.EXPTR_REQST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -286,7 +286,7 @@ public class ExptrReqstController
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 상세 조회 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.EXPTR_REQST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -327,7 +327,7 @@ public class ExptrReqstController
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 수정 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(value = SiteUrl.EXPTR_REQST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -369,7 +369,7 @@ public class ExptrReqstController
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 삭제 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.EXPTR_REQST_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

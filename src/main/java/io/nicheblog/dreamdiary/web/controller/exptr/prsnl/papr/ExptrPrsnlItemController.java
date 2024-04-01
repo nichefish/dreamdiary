@@ -55,7 +55,7 @@ public class ExptrPrsnlItemController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출내역 목록 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @GetMapping(SiteUrl.EXPTR_PRSNL_ITEM_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -92,7 +92,7 @@ public class ExptrPrsnlItemController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 개별항목 영수증 업로드 및 업데이트
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = SiteUrl.EXPTR_PRSNL_ITEM_RCIPT_UPLOAD_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -134,7 +134,7 @@ public class ExptrPrsnlItemController
 
     /**
      * 경비 관리 > 경비지출누적집계 > 경비지출서 해당 지출내역에 대하여 영수증 원본 제출여부 업데이트
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

@@ -1,9 +1,13 @@
 package io.nicheblog.dreamdiary.global.util.date;
 
-import lombok.experimental.UtilityClass;
+import io.nicheblog.dreamdiary.global.Constant;
+import org.apache.commons.lang3.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -14,67 +18,66 @@ import java.util.Date;
  *
  * @author nichefish
  */
-@UtilityClass
 public class DateParser {
 
     /**
-     * 해당날짜의 시작시간(ex:2021-09-15 00:00:00) 반환
+     * 해당날짜의 시작시간 반환 (ex: 2021-09-15 00:00:00)
      */
     public static Date sDateParse(final Object paramDate) throws Exception {
         Date searchDate = DateUtils.asDate(paramDate);
         if (searchDate == null) return null;
         LocalDateTime startOfDay = DateUtils.asLocalDateTime(searchDate)
                                             .with(LocalTime.MIN);
-        return DateUtils.localDateTimeToDate(startOfDay);
+        return localDateTimeToDate(startOfDay);
     }
 
     /**
-     * 해당날짜의 시작시간(ex:2021-09-15 00:00:00) 문자열 반환
+     * 해당날짜의 시작시간 문자열 반환 (ex: "2021-09-15 00:00:00")
      */
     public static String sDateParseStr(
             final Object paramDate,
             final String dtFormat
     ) throws Exception {
         Date sDate = sDateParse(paramDate);
-        return DateUtils.dateToStr(sDate, dtFormat);
+        return dateToStr(sDate, dtFormat);
     }
 
     /**
-     * 해당날짜의 시작시간(ex:2021-09-15 00:00:00) 문자열 반환
+     * 해당날짜의 시작시간 문자열 반환 (ex: "2021-09-15 00:00:00")
      */
     public static String sDateParseStr(final Object paramDate) throws Exception {
         Date sDate = sDateParse(paramDate);
-        return DateUtils.dateToStr(sDate, DateUtils.PTN_DATETIME);
+        return dateToStr(sDate, DateUtils.PTN_DATETIME);
     }
 
     /**
-     * 해당날짜의 끝 시간(ex:2021-09-15 23:59:59) 반환
+     * 해당날짜의 끝 시간 반환 (ex: 2021-09-15 23:59:59)
      */
     public static Date eDateParse(final Object paramDate) throws Exception {
         Date searchDate = DateUtils.asDate(paramDate);
         if (searchDate == null) return null;
         LocalDateTime endOfDay = DateUtils.asLocalDateTime(searchDate)
                                           .with(LocalTime.MAX);
-        return DateUtils.localDateTimeToDate(endOfDay);
+        return localDateTimeToDate(endOfDay);
     }
 
     /**
-     * 해당날짜의 끝 시간(ex:2021-09-15 23:59:59) 문자열 반환
+     * 해당날짜의 끝 시간 문자열 반환 (ex: "2021-09-15 23:59:59")
      */
     public static String eDateParseStr(
             final Object paramDate,
             final String dtFormat
     ) throws Exception {
         Date eDate = eDateParse(paramDate);
-        return DateUtils.dateToStr(eDate, dtFormat);
+        return dateToStr(eDate, dtFormat);
     }
 
     /**
-     * 해당날짜의 끝 시간(ex:2021-09-15 23:59:59) 문자열 반환
+     * 해당날짜의 끝 시간 문자열 반환 (ex: "2021-09-15 23:59:59")
      */
     public static String eDateParseStr(final Object paramDate) throws Exception {
         Date eDate = eDateParse(paramDate);
-        return DateUtils.dateToStr(eDate, DateUtils.PTN_DATETIME);
+        return dateToStr(eDate, DateUtils.PTN_DATETIME);
     }
 
     /**
@@ -87,6 +90,58 @@ public class DateParser {
         if (searchDate == null) return null;
         LocalDateTime endOfDay = DateUtils.asLocalDateTime(searchDate)
                                           .with(LocalTime.MAX);
-        return DateUtils.localDateTimeToDate(endOfDay);
+        return localDateTimeToDate(endOfDay);
     }
+
+    /* ----- */
+
+    /**
+     * 날짜Date를 문자열String로 변환
+     */
+    public static String dateToStr(
+            final Date date,
+            final String dtFormat
+    ) {
+        if (date == null) return "";
+        SimpleDateFormat df = (dtFormat != null) ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DatePtn.DATETIME.format;
+        return df.format(date);
+    }
+
+    /**
+     * 문자열String을 날짜Date로 변환
+     * 패턴을 별도로 받지 않고 정의된 패턴을 전부 체크한다.
+     */
+    public static Date strToDate(final String dateStrParam) throws Exception {
+        if (StringUtils.isEmpty(dateStrParam)) return null;
+        String[] parsePatterns = Arrays.stream(DatePtn.values())
+                .map(datePtn -> datePtn.pattern)
+                .toArray(String[]::new);
+        // microsecond 포함/미포함이 섞여서 넘어오는 문제 해결 위해 microsecond 미사용 처리
+        String dateStr = (dateStrParam.length() > 20) ? dateStrParam.substring(0, 19) : dateStrParam;
+        return DateUtils.parseDateStrictly(dateStr, parsePatterns);
+    }
+
+    /**
+     * 문자열String을 날짜Date로 변환
+     * 패턴을 받아서 특정 패턴으로만 해석한다.
+     */
+    public static Date strToDate(
+            final String dateStrParam,
+            final String dtFormat
+    ) throws Exception {
+        if (StringUtils.isEmpty(dateStrParam)) return null;
+        // microsecond 포함/미포함이 섞여서 넘어오는 문제 해결 위해 microsecond 미사용 처리
+        String dateStr = (dateStrParam.length() > 20) ? dateStrParam.substring(0, 19) : dateStrParam;
+        SimpleDateFormat df = (dtFormat != null) ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DatePtn.DATETIME.format;
+        return df.parse(dateStr);
+    }
+
+    /**
+     * LocalDateTime을 Date로 변환
+     */
+    public static Date localDateTimeToDate(final LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
+
 }

@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.PdfBoxUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
@@ -75,7 +76,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 목록 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @GetMapping(SiteUrl.EXPTR_PRSNL_PAPR_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -127,7 +128,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 기존 작성중인 정보 존재여부 체크
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = SiteUrl.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -161,7 +162,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 년도/월에 기존 작성중인 정보 있는지 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @GetMapping(value = SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -198,7 +199,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 등록 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -241,7 +242,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 등록/수정 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.EXPTR_PRSNL_PAPR_REG_AJAX, SiteUrl.EXPTR_PRSNL_PAPR_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -283,7 +284,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 상세 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -324,7 +325,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 출력 팝업 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_PDF_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -362,7 +363,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 수정 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -409,7 +410,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 삭제 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.EXPTR_PRSNL_PAPR_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -443,7 +444,7 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 영수증 이미지파일 묶음 PDF 다운로드
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -456,7 +457,7 @@ public class ExptrPrsnlPaprController
         String resultMsg = "";
         try {
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DateUtils.PTN_PDATETIME) + ".pdf";
+            String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME.pattern) + ".pdf";
             List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
             PdfBoxUtils.imgCmbnPdfDonwload(fileNm, fileList);
             isSuccess = true;

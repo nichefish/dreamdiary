@@ -20,6 +20,6 @@ import lombok.*;
 public class TagSearchParam
         extends BaseSearchParam {
 
-    //
-
+    /** 컨텐츠 타입 */
+    private String contentType;
 }

@@ -3,8 +3,7 @@ package io.nicheblog.dreamdiary.web.spec.user;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
-import io.nicheblog.dreamdiary.global.util.DateParser;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -100,7 +99,7 @@ public class UserProflSpec
             Expression<String> cmpyCdExp = root.get("cmpyCd");
             Expression<Date> retireDtExp = root.get("retireDt");
             // 2. 기간조건 :: 해당 년도 내에 근무내역이 있음 (입사일은 당연히 있다고 간주, 퇴사일만 체크)
-            Date firstDay = DateParser.bfDateParse(DateUtils.asDate(yyStr + "0101"));
+            Date firstDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(yyStr + "0101"));
             Predicate notRetired = builder.isNull(retireDtExp);
             Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(retireDtExp, firstDay);
             predicate.add(builder.or(notRetired, retiredAfterFirstDay));

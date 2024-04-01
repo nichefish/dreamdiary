@@ -54,8 +54,8 @@ public class TagController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> tagListAjax(
+            @ModelAttribute("searchParam") TagSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") TagSearchParam searchParam,
             final @RequestParam Map<String, Object> searchParamMap
     ) {
 

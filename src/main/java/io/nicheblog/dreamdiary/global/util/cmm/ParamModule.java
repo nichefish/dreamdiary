@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.global.util.cmm;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
-import io.nicheblog.dreamdiary.global.util.date.DateParser;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
@@ -117,7 +116,7 @@ class ParamModule {
                 String searchEndDtStr = (String) searchParamMap.get("searchEndDt");
                 if (searchStartDtStr.equals(searchEndDtStr)) {
                     Date searchEndDt = DateUtils.asDate(searchEndDtStr);
-                    searchParamMap.put("searchEndDt", DateParser.eDateParseStr(searchEndDt));
+                    searchParamMap.put("searchEndDt", DateUtils.Parser.eDateParseStr(searchEndDt));
                 }
             }
         }
@@ -133,7 +132,7 @@ class ParamModule {
                 if (key.endsWith("Dt")) filteredSearchKey.put(key, DateUtils.asDate(value));
                 // searchEndDt 문자열 :: 끝에 강제로 23:59:59 붙여줌 (yyyy-MM-dd까지만 받기때문)
                 if (key.equals("searchEndDt")) {
-                    filteredSearchKey.put(key, DateParser.eDateParse(value));
+                    filteredSearchKey.put(key, DateUtils.Parser.eDateParse(value));
                     continue;
                 }
                 // searchType + searchKeyword 매칭 (인덱스마다 자동 설정) (ex.searchType1 <- searchKeyword1)

@@ -58,7 +58,7 @@ public class FlsysController
 
     /**
      * 파일시스템 화면 조회
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.FLSYS_HOME)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -96,7 +96,7 @@ public class FlsysController
 
     /**
      * 파일시스템 정보 조회 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = SiteUrl.FLSYS_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -132,7 +132,7 @@ public class FlsysController
 
     /**
      * 파일 시스템 파일 다운로드
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.FLSYS_FILE_DOWNLOAD)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

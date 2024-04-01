@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.web.spec.user;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
-import io.nicheblog.dreamdiary.global.util.date.DateParser;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
@@ -128,12 +127,12 @@ public class UserSpec
         Join<UserEntity, UserProflEntity> userProfl = root.join("userProfl", JoinType.INNER);
         // 2. 기간조건 :: 해당 년도 내에 근무내역이 있음 (입사일 // 퇴사일)
         // 퇴사일 :: 퇴사 안했거나 or 비교일 내에 퇴사했거나
-        Date startDay = DateParser.bfDateParse(DateUtils.asDate(startDtStr));
+        Date startDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(startDtStr));
         Predicate notRetired = builder.isNull(userProfl.get("retireDt"));
         Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(userProfl.get("retireDt"), startDay);
         predicate.add(builder.or(notRetired, retiredAfterFirstDay));
         // 입사일 :: 비교일보다 전에 입사
-        Date endDay = DateParser.bfDateParse(DateUtils.asDate(endDtStr));
+        Date endDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(endDtStr));
         Predicate hasEcnyDt = builder.isNotNull(userProfl.get("ecnyDt"));
         Predicate enteredBeforeEndDay = builder.lessThanOrEqualTo(userProfl.get("ecnyDt"), endDay);
         predicate.add(builder.and(hasEcnyDt, enteredBeforeEndDay));
