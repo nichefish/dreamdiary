@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulCalDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.dy.VcatnDyDto;

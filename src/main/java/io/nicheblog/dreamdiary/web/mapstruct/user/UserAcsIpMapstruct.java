@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
 import org.apache.commons.lang3.StringUtils;

@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.util.crypto;
 
-import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 

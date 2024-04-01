@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.web.service.vcatn.stats;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.util.DateParser;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateParser;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsEntity;
 import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsKey;

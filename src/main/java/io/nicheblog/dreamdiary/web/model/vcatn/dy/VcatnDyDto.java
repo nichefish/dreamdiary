@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.vcatn.dy;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
