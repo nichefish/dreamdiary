@@ -96,12 +96,7 @@
                             <!-- 목록 수정권한 표시 -->
                             <@component.mdfable post />
                             <!-- 목록 댓글 표시 -->
-                            <#if post.comment.cnt gt 0>
-                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
-                                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                    [${post.comment.cnt!}]
-                                </span>
-                            </#if>
+                            <@component.list_comment post />
                         </div>
                         <div class="col-xl-4 col-12 d-flex justify-content-end align-items-center">
                             <#if post.tagStrList??>
@@ -134,15 +129,8 @@
                     </#if>
                 </td>
                 <td class="text-center col-form-label">
-                    <#if (post.managtrInfo.proflImgUrl)??>
-                        <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
-                            <img src="${(post.managtrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
-                        </div>
-                    </#if>
-                    <span class="cursor-help"
-                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성자:&#10;${post.regstrNm!"-"}">
-                        ${post.managtrNm!"-"}
-                    </span>
+                    <!-- 목록 최종수정자 표시 -->
+                    <@component.list_managtr post />
                 </td>
                 <td class="text-center hidden-table">
                     <span class="cursor-help"
@@ -176,12 +164,7 @@
                             <!-- 목록 수정권한 표시 -->
                             <@component.mdfable post />
                             <!-- 목록 댓글 표시 -->
-                            <#if post.comment.cnt gt 0>
-                                <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
-                                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                    [${post.comment.cnt!}]
-                                </span>
-                            </#if>
+                            <@component.list_comment post />
                         </div>
                         <div class="col-xl-4 col-12 d-flex justify-content-end align-items-center">
                             <#if post.tagStrList??>
@@ -214,16 +197,8 @@
                     </#if>
                 </td>
                 <td class="text-center col-form-label">
-                    <#if (post.managtrInfo.proflImgUrl)??>
-                        <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
-                            <img src="${(post.managtrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
-                        </div>
-                    </#if>
-                    <span class="cursor-help"
-                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성자:&#10;${post.regstrNm!"-"}">
-                        ${post.managtrNm!"-"}
-                        <#if post.isRegstr!false><span class="badge badge-secondary opacity-75 mx-1 fs-9">나</span></#if>
-                    </span>
+                    <!-- 목록 최종수정자 표시 -->
+                    <@component.list_managtr post />
                 </td>
                 <td class="text-center hidden-table">
                     <span class="cursor-help"

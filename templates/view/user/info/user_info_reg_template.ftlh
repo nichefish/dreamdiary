@@ -55,7 +55,7 @@
                 });
             },
             /** 직원정보 창 토글 */
-            fnEnableUserInfo: function() {
+            enableUserInfo: function() {
                 $("#nickNm").attr("readonly", true).val("").attr("placeholder", "직원명을 아래에 입력해주세요.");
                 $("#userProflDiv").show();
                 $("#userProflYn").val("Y");
@@ -451,7 +451,7 @@
     <div class="col-lg-2 text-lg-center">
         <button type="button" class="btn btn-sm btn-primary blink"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="입사인원에 대하여&#10;세부 직원 정보를 추가합니다."
-                onclick="UserInfo.fnEnableUserInfo();">
+                onclick="UserInfo.enableUserInfo();">
             직원정보 추가+
         </button>
     </div>

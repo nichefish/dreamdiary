@@ -96,17 +96,10 @@
                                 <#if (((post.imprtcYn)!"N") == "Y")!false>
                                     <span class="fs-1">&#128680;</span>
                                 </#if>
-                                <#if post.comment.cnt gt 0>
-                                    <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
-                                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                        [${post.comment.cnt!}]
-                                    </span>
-                                </#if>
-                                <!-- 수정권한 표시 -->
-                                <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
-                                    <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
-                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
-                                </#if>
+                                <!-- 목록 수정권한 표시 -->
+                                <@component.mdfable post />
+                                <!-- 목록 댓글 표시 -->
+                                <@component.list_comment post />
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
@@ -177,16 +170,10 @@
                                 <#if (((post.imprtcYn)!"N") == "Y")!false>
                                     <span class="fs-1">&#128680;</span>
                                 </#if>
-                                <#if post.comment.cnt gt 0>
-                                    <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
-                                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                        [${post.comment.cnt!}]
-                                    </span>
-                                </#if>
-                                <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
-                                    <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
-                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
-                                </#if>
+                                <!-- 목록 수정권한 표시 -->
+                                <@component.mdfable post />
+                                <!-- 목록 댓글 표시 -->
+                                <@component.list_comment post />
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
@@ -205,16 +192,8 @@
                         </#if>
                     </td>
                     <td class="text-center col-form-label">
-                        <#if (post.managtrInfo.proflImgUrl)??>
-                            <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
-                                <img src="${(post.managtrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
-                            </div>
-                        </#if>
-                        <span class="cursor-help"
-                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성자:&#10;${post.regstrNm!"-"}">
-                            ${post.managtrNm!"-"}
-                            <#if post.isRegstr!false><span class="badge badge-secondary opacity-75 mx-1 fs-9">나</span></#if>
-                        </span>
+                        <!-- 목록 최종수정자 표시 -->
+                        <@component.list_managtr post />
                     </td>
                     <td class="text-center hidden-table">
                         <span class="cursor-help"
