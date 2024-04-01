@@ -32,15 +32,10 @@ import java.util.List;
 @Log4j2
 public class DreamdiaryInitializer {
 
-    @Resource(name = "passwordEncoder")
-    private PasswordEncoder passwordEncoder;
-
     @Resource(name = "authService")
     private AuthService authService;
-
     @Resource(name = "userService")
     private UserService userService;
-
     @Resource(name = "lgnPolicyService")
     private LgnPolicyService lgnPolicyService;
 

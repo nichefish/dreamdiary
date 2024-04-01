@@ -31,7 +31,6 @@ public class DreamdiaryApplication
 
     @Resource(name = "activeProfile")
     private ActiveProfile activeProfile;
-
     @Resource(name = "dreamdiaryInitializer")
     private DreamdiaryInitializer initializer;
 
