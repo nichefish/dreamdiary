@@ -60,7 +60,7 @@ public class ContentTagEntity
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ref_tag_no", referencedColumnName = "tag_no", updatable = false, insertable = false)
     @NotFound(action = NotFoundAction.IGNORE)
-    private TagEntity tag;
+    private TagSmpEntity tag;
 
     /* ----- */
 

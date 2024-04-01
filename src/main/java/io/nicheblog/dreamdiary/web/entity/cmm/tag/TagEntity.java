@@ -71,14 +71,6 @@ public class TagEntity
     }
 
     /**
-     * 컨텐츠 태그 추가
-     */
-    public void addContentTag(ContentTagEntity contentTag) {
-        this.contentTagList.add(contentTag);
-        contentTag.setTag(this);
-    }
-
-    /**
      * entityList -> dtoList
      */
     public List<ContentTagDto> getContentTagDtoList() throws Exception {

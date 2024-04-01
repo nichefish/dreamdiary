@@ -34,7 +34,7 @@ public interface ContentTagMapstruct
      * Dto -> Entity
      */
     @Override
-    @Mapping(target = "tag", expression = "java(TagMapstruct.INSTANCE.toEntity(dto.getTag()))")
+    // @Mapping(target = "tag", expression = "java(TagMapstruct.INSTANCE.toEntity(dto.getTag()))")
     ContentTagEntity toEntity(final ContentTagDto dto) throws Exception;
 
     /**

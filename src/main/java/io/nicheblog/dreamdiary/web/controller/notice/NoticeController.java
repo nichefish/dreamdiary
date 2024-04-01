@@ -21,7 +21,6 @@ import io.nicheblog.dreamdiary.web.model.notice.NoticeListDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
 import io.nicheblog.dreamdiary.web.service.notice.NoticeService;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -31,17 +30,13 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.beans.PropertyEditorSupport;
 import java.security.InvalidParameterException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,30 +62,21 @@ public class NoticeController
         return actvtyCtgr.name();
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-        binder.registerCustomEditor(Map.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String value) {
-                if( value == null || "".equals(value)) { setValue(null); }
-                else { setValue(value); }
-            }
-        });
-    }
+    // @InitBinder
+    // public void initBinder(WebDataBinder binder) {
+    //     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    //     binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    //     binder.registerCustomEditor(Map.class, new PropertyEditorSupport() {
+    //         @Override
+    //         public void setAsText(String value) {
+    //             if( value == null || "".equals(value)) { setValue(null); }
+    //             else { setValue(value); }
+    //         }
+    //     });
+    // }
 
     @Resource(name = "noticeService")
     private NoticeService noticeService;
-//
-    // @Resource(name = "boardPostManagtrService")
-    // private BoardPostManagtrService boardPostManagtrService;
-//
-    // @Resource(name = "boardTagService")
-    // private BoardTagService boardTagService;
-//
-    // @Resource(name = "notifyService")
-    // private NotifyService notifyService;
 
     @Resource(name = "cdService")
     private CdService cdService;

@@ -54,6 +54,22 @@ public class TagCmpstn
     /* ----- */
 
     /**
+     * getter
+     */
+    public String getTagListStr() {
+        if (CollectionUtils.isEmpty(this.list)) return null;
+        return this.list.stream()
+                .map(tag -> tag.getTag().getTagNm())
+                .collect(Collectors.joining(","));
+    }
+    public List<String> getTagStrList() {
+        if (CollectionUtils.isEmpty(this.list)) return null;
+        return this.list.stream()
+                .map(tag -> tag.getTag().getTagNm())
+                .collect(Collectors.toList());
+    }
+
+    /**
      * 태그 :: List<Dto> -> List<Entity> 반환
      */
     public List<ContentTagEntity> getEntityList() {

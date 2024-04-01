@@ -131,5 +131,4 @@ CREATE TABLE IF NOT EXISTS viewer (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '열람자';
--- 조치자 (managtr)
 
