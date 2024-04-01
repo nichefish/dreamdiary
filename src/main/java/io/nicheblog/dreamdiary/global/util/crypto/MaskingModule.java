@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * MaskingUtils
+ * MaskingModule
  * <pre>
  *  마스킹 처리 유틸리티 모듈
  * </pre>
@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * @author nichefish
  */
 @Log4j2
-public class MaskingUtils {
+class MaskingModule {
 
     /**
      * 한글이름 가운데 글자 마스킹

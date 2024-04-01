@@ -20,6 +20,7 @@ public interface SiteUrl {
     /** 메인 */
     String ROOT = "/";
     String MAIN = "/main.do";
+    String REACT_MAIN = "/react/main.do";
 
     /** 로그인 관련 */
     String AUTH_LGN_FORM = Prefix.AUTH + "/lgnForm.do";

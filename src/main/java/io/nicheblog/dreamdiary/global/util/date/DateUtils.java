@@ -25,6 +25,9 @@ import java.util.concurrent.TimeUnit;
 public class DateUtils
         extends org.apache.commons.lang3.time.DateUtils {
 
+    /** 음력 관련 메소드 위임 */
+    public static class ChineseCal extends ChineseCalModule {}
+
     private static final TimeZone seoulTZ = TimeZone.getTimeZone(Constant.LOC_SEOUL);
     private static final Locale lc = new Locale("ko", "KR");
 

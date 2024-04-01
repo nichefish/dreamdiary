@@ -1,7 +1,6 @@
-package io.nicheblog.dreamdiary.global.util;
+package io.nicheblog.dreamdiary.global.util.date;
 
 import com.ibm.icu.util.ChineseCalendar;
-import lombok.experimental.UtilityClass;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,13 +13,12 @@ import java.util.Date;
  *
  * @author nichefish
  */
-@UtilityClass
-public class ChineseCalUtils {
+class ChineseCalModule {
 
     /**
      * 양력 날짜를 음력 날짜로 변환
      */
-    public static Date solarToLunar(final Object date) throws Exception {
+    public static Date solToLunar(final Object date) throws Exception {
 
         ChineseCalendar chineseCal = new ChineseCalendar();
         Calendar cal = Calendar.getInstance();
@@ -46,17 +44,17 @@ public class ChineseCalUtils {
     /**
      * 양력 날짜를 음력 날짜 문자열로 변환
      */
-    public static String solarToLunarStr(
+    public static String solToLunStr(
             final Object date,
             final String dtFormat
     ) throws Exception {
-        return DateUtils.asStr(solarToLunar(date), dtFormat);
+        return DateUtils.asStr(solToLunar(date), dtFormat);
     }
 
     /**
      * 음력 날짜를 양력 날짜로 변환
      */
-    public static Date lunarToSolar(final Object date) throws Exception {
+    public static Date lunToSol(final Object date) throws Exception {
 
         ChineseCalendar chineseCal = new ChineseCalendar();
         Calendar cal = Calendar.getInstance();
@@ -78,11 +76,11 @@ public class ChineseCalUtils {
     /**
      * 음력 날짜를 양력 날짜 문자열로 변환
      */
-    public static String lunarToSolarStr(
+    public static String lunToSolStr(
             final Object date,
             final String dtFormat
     ) throws Exception {
-        return DateUtils.asStr(lunarToSolar(date), dtFormat);
+        return DateUtils.asStr(lunToSol(date), dtFormat);
     }
 
 }
