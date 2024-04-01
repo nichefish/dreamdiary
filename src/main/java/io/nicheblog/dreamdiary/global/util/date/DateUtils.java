@@ -255,10 +255,7 @@ public class DateUtils
     /**
      * 날짜Date에 기간(일자) 더해서 날짜Date로 반환
      */
-    public static Date getDateAddDay(
-            final Object date,
-            final int dayCnt
-    ) throws Exception {
+    public static Date getDateAddDay(final Object date, final int dayCnt) throws Exception {
         Date asDate = asDate(date);
         if (asDate == null) return null;
         Calendar cal = Calendar.getInstance();
@@ -308,11 +305,7 @@ public class DateUtils
     /**
      * 두 날짜 사이의 차이 반환
      */
-    public static Long getDateDiff(
-            final Object fromDate,
-            final Object toDate,
-            final TimeUnit timeUnit
-    ) throws Exception {
+    public static Long getDateDiff(final Object fromDate, final Object toDate, final TimeUnit timeUnit) throws Exception {
         Date asFromDate = asDate(fromDate);
         Date asToDate = asDate(toDate);
         if (asFromDate == null || asToDate == null) return null;

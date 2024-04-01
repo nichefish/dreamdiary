@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @ControllerAdvice
 @Log4j2
-public class GlobaExceptionlHandler {
+public class GlobalExceptionlHandler {
 
     /**
      * 권한 관련 (접근불가) 처리
