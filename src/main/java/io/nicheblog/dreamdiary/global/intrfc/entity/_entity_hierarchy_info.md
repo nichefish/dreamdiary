@@ -16,12 +16,7 @@
     -> atch_file_no, atch_file_info
 
 #### ↓ BaseClsfEntity :: extends BaseAtchEntity
-    -> post_no, content_type (composite_key)
-    -> @tag_list
+    -> post_no, content_type
 
 #### ↓ BasePostEntity :: extends BaseClsfEntity
     -> title, cn, ctgr_cd, imprtc_yn, fxd_yn, hit_cnt
-
-#### ↓ BaseEhncPostEntity :: extends BasePostEntity
-    -> managtr_id, managt_dt
-    -> @managtr_list, @viewer_list
