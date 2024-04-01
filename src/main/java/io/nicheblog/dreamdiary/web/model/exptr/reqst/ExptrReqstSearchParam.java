@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.exptr.reqst;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
 
@@ -20,5 +21,6 @@ import lombok.*;
 public class ExptrReqstSearchParam
         extends BasePostSearchParam {
 
-    //
+    /** 컨텐츠 타입 */
+    private String contentType = ContentType.EXPTR_REQST.key;
 }

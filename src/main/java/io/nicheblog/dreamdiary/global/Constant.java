@@ -71,8 +71,8 @@ public final class Constant
      * 쿠키
      */
     public static final String ASIDE_MENU = "aside_menu";
-    public static final String ASIDE_MENU_FIXED = "aside_fixed";
-    public static final String ASIDE_MENU_MINIMIZED = "aside_minimized";
+    public static final String ASIDE_FIXED = "aside_fixed";
+    public static final String ASIDE_MINIMIZED = "aside_minimized";
 
     /**
      * Page Static Strings

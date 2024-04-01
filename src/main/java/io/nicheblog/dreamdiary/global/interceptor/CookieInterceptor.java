@@ -44,7 +44,8 @@ public class CookieInterceptor
 
         /* 사이드바 접기 쿠키 설정 */
         String asideMenu = CookieUtils.getCookie(Constant.ASIDE_MENU);
-        if (mav != null) mav.addObject(Constant.ASIDE_MENU_MINIMIZED, Constant.ASIDE_MENU_MINIMIZED.equals(asideMenu));
+        boolean isMinimized = Constant.ASIDE_MINIMIZED.equals(asideMenu);
+        if (mav != null) mav.addObject(Constant.ASIDE_MENU, isMinimized);
 
         /* 응답 내려갈 때마다 항상 blockUI 클리어 쿠키를 내려준다. */
         CookieUtils.setResponseSuccessCookie();

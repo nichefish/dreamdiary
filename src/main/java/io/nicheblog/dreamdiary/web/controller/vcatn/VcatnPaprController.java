@@ -15,7 +15,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprParam;
+import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.NotifyService;
 import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
 import lombok.extern.log4j.Log4j2;
@@ -76,7 +76,7 @@ public class VcatnPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprList(
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") VcatnPaprParam searchParam,
+            final @ModelAttribute("searchParam") VcatnPaprSearchParam searchParam,
             final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) throws Exception {
