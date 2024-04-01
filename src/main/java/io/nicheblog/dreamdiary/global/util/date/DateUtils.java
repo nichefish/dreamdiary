@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.global.util.date;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -25,78 +25,101 @@ import java.util.concurrent.TimeUnit;
 public class DateUtils
         extends org.apache.commons.lang3.time.DateUtils {
 
+    /** 날짜 파싱 관련 메소드 위임 */
+    public static class Parser extends DateParser {}
+    /** 날짜 체크 관련 메소드 위임 */
+    public static class Checker extends DateChecker {}
+
     /** 음력 관련 메소드 위임 */
     public static class ChineseCal extends ChineseCalModule {}
 
-    private static final TimeZone seoulTZ = TimeZone.getTimeZone(Constant.LOC_SEOUL);
-    private static final Locale lc = new Locale("ko", "KR");
+    /**
+     * ContentType
+     * <pre>
+     *  ClsfEntity를 상속받은 클래스들이 사용하는 컨텐츠 타입 정보
+     * </pre>
+     *
+     * @author nichefish
+     */
+    @RequiredArgsConstructor
+    public enum PTN {
+
+        DATE("yyyy-MM-dd", new SimpleDateFormat("yyyy-MM-dd")),
+        DATEDY("yyyy.MM.dd '('EEE')'", new SimpleDateFormat("yyyy.MM.dd '('EEE')'")),
+        DATETIME("yyyy-MM-dd HH:mm:ss", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")),
+        LDATETIME("yyyyy-MM-dd HH:mm:ss", new SimpleDateFormat("yyyyy-MM-dd HH:mm:ss")),      // 머신러닝측 날짜포맷 실수?커버위해 작성
+        PDATE("yyyyMMdd", new SimpleDateFormat("yyyyMMdd")),
+        PDATETIME("yyyyMMddHHmmss", new SimpleDateFormat("yyyyMMddHHmmss")),
+        MDATETIME("yyyyMMddHHmm", new SimpleDateFormat("yyyyMMddHHmm")),
+        ZDATETIME("yyyy-MM-dd'T'HH:mm:ss", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")),
+        DATETIMES("yyyy-MM-dd HH:mm:ss.S", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S")),
+        SDATE("yyyy/MM/dd", new SimpleDateFormat("yyyy/MM/dd")),
+        SDATETIME("yyyy/MM/dd HH:mm:ss", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")),
+        BRTHDY("MM월 dd일", new SimpleDateFormat("MM월 dd일"));
+
+        public final String pattern;
+        public final SimpleDateFormat format;
+    }
 
     public static final String PTN_DATE = "yyyy-MM-dd";
-    public static final String PTN_DATEDY = "yyyy.MM.dd '('EEE')'";
     public static final String PTN_DATETIME = "yyyy-MM-dd HH:mm:ss";
-    public static final String PTN_LDATETIME = "yyyyy-MM-dd HH:mm:ss";      // 머신러닝측 날짜포맷 실수?커버위해 작성
     public static final String PTN_PDATE = "yyyyMMdd";
-    public static final String PTN_PDATETIME = "yyyyMMddHHmmss";
-    public static final String PTN_MDATETIME = "yyyyMMddHHmm";
-    public static final String PTN_ZDATETIME = "yyyy-MM-dd'T'HH:mm:ss";
-    public static final String PTN_DATETIMES = "yyyy-MM-dd HH:mm:ss.S";
-    public static final String PTN_SDATE = "yyyy/MM/dd";
-    public static final String PTN_SDATETIME = "yyyy/MM/dd HH:mm:ss";
-    public static final String PTN_BRTHDY = "MM월 dd일";
 
-    public static final String[] parsePattern = new String[]{PTN_DATE, PTN_DATEDY, PTN_DATETIME, PTN_LDATETIME, PTN_PDATE, PTN_PDATETIME, PTN_MDATETIME, PTN_ZDATETIME, PTN_DATETIMES, PTN_SDATE, PTN_SDATETIME, PTN_BRTHDY};
-
-    public static final SimpleDateFormat dfDate = new SimpleDateFormat(PTN_DATE, lc);
-    public static final SimpleDateFormat dfDatetime = new SimpleDateFormat(PTN_DATETIME, lc);
-    public static final SimpleDateFormat dfPdate = new SimpleDateFormat(PTN_PDATE, lc);
-    public static final SimpleDateFormat dfPdatetime = new SimpleDateFormat(PTN_PDATETIME, lc);
-    public static final SimpleDateFormat dfZdatetime = new SimpleDateFormat(PTN_ZDATETIME, lc);
-    public static final SimpleDateFormat dfMdatetime = new SimpleDateFormat(PTN_MDATETIME, lc);
-    public static final SimpleDateFormat dfDateDy = new SimpleDateFormat(PTN_DATEDY, lc);
-    public static final SimpleDateFormat dfSdate = new SimpleDateFormat(PTN_SDATE, lc);
-    public static final SimpleDateFormat dfSdatetime = new SimpleDateFormat(PTN_SDATETIME, lc);
+    public static final SimpleDateFormat DF_DATE = new SimpleDateFormat(PTN_DATE, Constant.LC_KO);
 
     /**
-     * 날짜Date를 문자열String로 변환
+     * 날짜 또는 문자열을 받아서 날짜Date로 일괄 반환
+     * (Date, 문자열, LocalDateTime)
      */
-    public static String dateToStr(
-            final Date date,
-            final String dtFormat
-    ) {
-        if (date == null) return "";
-        SimpleDateFormat df = (dtFormat != null) ? new SimpleDateFormat(dtFormat, lc) : dfDatetime;
-        return df.format(date);
+    public static Date asDate(final Object date) throws Exception {
+        if (date == null) return null;
+        if (date instanceof String) {
+            String dateStrParam = date.toString();
+            String dateStr = (dateStrParam.length() > 20) ? dateStrParam.substring(0, 19) : dateStrParam;
+            return Parser.strToDate(dateStr);
+        }
+        if (date instanceof Date) return (Date) date;
+        if (date instanceof LocalDate) return Date.from(((LocalDate) date).atStartOfDay(ZoneId.of(Constant.LOC_SEOUL))
+                .toInstant());
+        if (date instanceof LocalDateTime) return Parser.localDateTimeToDate((LocalDateTime) date);
+        return null;
     }
 
     /**
-     * 문자열String을 날짜Date로 변환 :: 정의된 패턴 전부 체크
+     * 날짜 또는 문자열을 받아서 문자열String로 일괄 반환
+     * (Date, 문자열, LocalDateTime)
      */
-    public static Date strToDate(final String dateStrParam) throws Exception {
-        if (StringUtils.isEmpty(dateStrParam)) return null;
-        // microsecond 포함/미포함이 섞여서 넘어오는 문제 해결 위해 microsecond 미사용 처리
-        String dateStr = (dateStrParam.length() > 20) ? dateStrParam.substring(0, 19) : dateStrParam;
-        return parseDateStrictly(dateStr, parsePattern);
+    public static String asStr(final Object date, final String dtFormat) throws Exception {
+        if (date == null) return null;
+        Date asDate = asDate(date);
+        return Parser.dateToStr(asDate, dtFormat);
     }
 
     /**
-     * 문자열String을 날짜Date로 변환
+     * 날짜 또는 문자열을 받아서 LocalDate로 일괄 반환
+     * (Date, 문자열, LocalDateTime)
      */
-    public static Date strToDate(
-            final String dateStrParam,
-            final String dtFormat
-    ) throws Exception {
-        if (StringUtils.isEmpty(dateStrParam)) return null;
-        // microsecond 포함/미포함이 섞여서 넘어오는 문제 해결 위해 microsecond 미사용 처리
-        String dateStr = (dateStrParam.length() > 20) ? dateStrParam.substring(0, 19) : dateStrParam;
-        SimpleDateFormat df = (dtFormat != null) ? new SimpleDateFormat(dtFormat, lc) : dfDatetime;
-        return df.parse(dateStr);
+    public static LocalDate asLocalDate(final Object date) throws Exception {
+        return LocalDate.from(asLocalDateTime(date));
     }
+
+    /**
+     * 날짜 또는 문자열을 받아서 LocalDateTime으로 일괄 반환
+     * (Date, 문자열, LocalDateTime)
+     */
+    public static LocalDateTime asLocalDateTime(final Object date) throws Exception {
+        Date asDate = asDate(date);
+        return LocalDateTime.ofInstant(asDate.toInstant(), ZoneId.systemDefault());
+    }
+
+
+    /* ----- */
 
     /**
      * 현재 날짜Date 반환
      */
-    public static Date getCurrDate() throws Exception {
-        Calendar today = Calendar.getInstance(seoulTZ, lc);
+    public static Date getCurrDate() {
+        Calendar today = Calendar.getInstance(Constant.TZ_SEOUL, Constant.LC_KO);
         return new Date(today.getTimeInMillis());
     }
 
@@ -118,15 +141,15 @@ public class DateUtils
      * 현재 날짜 문자열String 반환
      */
     public static String getCurrDateStr(final String dtFormat) throws Exception {
-        if (dtFormat == null) return dfDate.format(getCurrDate());
-        return new SimpleDateFormat(dtFormat, lc).format(getCurrDate());
+        SimpleDateFormat df = dtFormat != null ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DF_DATE;
+        return df.format(getCurrDate());
     }
 
     /**
      * 현재 년도"yyyy"(int) 반환
      */
     public static Integer getCurrYear() throws Exception {
-        return Calendar.getInstance(seoulTZ, lc)
+        return Calendar.getInstance(Constant.TZ_SEOUL, Constant.LC_KO)
                        .get(Calendar.YEAR);
     }
 
@@ -141,12 +164,12 @@ public class DateUtils
      * 현재 월"MM" 인덱스 반환 (1월=0)
      */
     public static Integer getCurrMnthIdx() throws Exception {
-        return Calendar.getInstance(seoulTZ, lc)
+        return Calendar.getInstance(Constant.TZ_SEOUL, Constant.LC_KO)
                        .get(Calendar.MONTH);
     }
 
     public static Integer getCurrMnth() throws Exception {
-        return Calendar.getInstance(seoulTZ, lc)
+        return Calendar.getInstance(Constant.TZ_SEOUL, Constant.LC_KO)
                        .get(Calendar.MONTH) + 1;
     }
 
@@ -178,7 +201,7 @@ public class DateUtils
      * 현재 년도"yyyy"/월"MM" 세트 반환 (인덱스 대신 실제 월로 반환 = 1월=0 -> 1로 변환)
      */
     public static Integer[] getCurrYyMnth() throws Exception {
-        return new Integer[]{getCurrYear(), Calendar.getInstance(seoulTZ, lc)
+        return new Integer[]{getCurrYear(), Calendar.getInstance(Constant.TZ_SEOUL, Constant.LC_KO)
                                                     .get(Calendar.MONTH) + 1};
     }
 
@@ -223,8 +246,8 @@ public class DateUtils
      * 어제 날짜 문자열String 반환
      */
     public static String getPrevDateStr(final String dtFormat) throws Exception {
-        if (dtFormat == null) return dfDate.format(getPrevDate());
-        return new SimpleDateFormat(dtFormat, lc).format(getPrevDate());
+        SimpleDateFormat df = dtFormat != null ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DF_DATE;
+        return df.format(getPrevDate());
     }
 
     /**
@@ -238,15 +261,15 @@ public class DateUtils
      * 내일 날짜 문자열String 반환
      */
     public static String getNextDateStr(final String dtFormat) throws Exception {
-        if (dtFormat == null) return dfDate.format(getNextDate());
-        return new SimpleDateFormat(dtFormat, lc).format(getNextDate());
+        SimpleDateFormat df = dtFormat != null ? new SimpleDateFormat(dtFormat, Constant.LC_KO) : DF_DATE;
+        return df.format(getNextDate());
     }
 
     /**
      * 현재 날짜Date에 기간(일자) 더해서 날짜Date로 반환
      */
     public static Date getCurrDateAddDay(final int dayCnt) throws Exception {
-        Calendar today = new GregorianCalendar(seoulTZ, lc);
+        Calendar today = new GregorianCalendar(Constant.TZ_SEOUL, Constant.LC_KO);
         return getDateAddDay(today.getTime(), dayCnt);
     }
 
@@ -261,7 +284,7 @@ public class DateUtils
             final int dayCnt,
             final String dtFormat
     ) throws Exception {
-        return dateToStr(getCurrDateAddDay(dayCnt), dtFormat);
+        return Parser.dateToStr(getCurrDateAddDay(dayCnt), dtFormat);
     }
 
     /**
@@ -287,7 +310,7 @@ public class DateUtils
             final String dtFormat,
             final int dayCnt
     ) throws Exception {
-        return dateToStr(getDateAddDay(date, dayCnt), dtFormat);
+        return Parser.dateToStr(getDateAddDay(date, dayCnt), dtFormat);
     }
 
     /**
@@ -313,7 +336,7 @@ public class DateUtils
             final String dtFormat,
             final int yyCnt
     ) throws Exception {
-        return dateToStr(getDateAddYy(date, yyCnt), dtFormat);
+        return Parser.dateToStr(getDateAddYy(date, yyCnt), dtFormat);
     }
 
     /**
@@ -329,29 +352,6 @@ public class DateUtils
         cal.setTime(asDate);
         cal.add(Calendar.MINUTE, minCnt);        // 일자 더하기
         return cal.getTime();
-    }
-
-    /**
-     * Date를 LocalDateTime으로 변환
-     */
-    public static LocalDateTime asLocalDateTime(final Object date) throws Exception {
-        Date asDate = asDate(date);
-        return LocalDateTime.ofInstant(asDate.toInstant(), ZoneId.systemDefault());
-    }
-
-    /**
-     * Date를 LocalDate로 변환
-     */
-    public static LocalDate asLocalDate(final Object date) throws Exception {
-        return LocalDate.from(asLocalDateTime(date));
-    }
-
-    /**
-     * LocalDateTime을 Date로 변환
-     */
-    public static Date localDateTimeToDate(final LocalDateTime localDateTime) {
-        return Date.from(localDateTime.atZone(ZoneId.systemDefault())
-                                      .toInstant());
     }
 
     /**
@@ -408,26 +408,6 @@ public class DateUtils
     }
 
     /**
-     * 날짜 받아서 주말여부 반환
-     */
-    public static Boolean isWeekend(final Object date) throws Exception {
-        return Arrays.asList(1, 7)
-                     .contains(getDayOfWeek(date));
-    }
-
-    /**
-     * 두 날짜를 받아서 같은날짜 여부 반환
-     */
-    public static boolean isSameDay(
-            final Object date1,
-            final Object date2
-    ) throws Exception {
-        String date1str = asStr(date1, DateUtils.PTN_PDATE);
-        String date2str = asStr(date2, DateUtils.PTN_PDATE);
-        return date1str.equals(date2str);
-    }
-
-    /**
      * 해당 주의 월요일 구하기
      */
     public static Date getFirstDayOfWeek(final Object date) throws Exception {
@@ -444,49 +424,6 @@ public class DateUtils
         calendar.setTime(currDate);
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         return calendar.getTime();
-    }
-
-    /**
-     * 날짜 또는 문자열을 받아서 날짜Date로 일괄 반환
-     * Date, 문자열, LocalDateTime
-     */
-    public static Date asDate(final Object date) throws Exception {
-        if (date == null) return null;
-        if (date instanceof String) {
-            String dateStrParam = date.toString();
-            String dateStr = (dateStrParam.length() > 20) ? dateStrParam.substring(0, 19) : dateStrParam;
-            return strToDate(dateStr);
-        }
-        if (date instanceof Date) return (Date) date;
-        if (date instanceof LocalDate) return Date.from(((LocalDate) date).atStartOfDay(ZoneId.of(Constant.LOC_SEOUL))
-                                                                          .toInstant());
-        if (date instanceof LocalDateTime) return localDateTimeToDate((LocalDateTime) date);
-        return null;
-    }
-
-    /**
-     * 날짜 또는 문자열을 받아서 문자열로 일괄 반환
-     * Date, 문자열, LocalDateTime
-     */
-    public static String asStr(
-            final Object date,
-            final String dtFormat
-    ) throws Exception {
-        if (date == null) return null;
-        Date asDate = asDate(date);
-        return dateToStr(asDate, dtFormat);
-    }
-
-    /**
-     * 문자열이 날짜형식인지 체크
-     */
-    public static Boolean isDateStr(final String dateStr) {
-        try {
-            asDate(dateStr);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 
 }
