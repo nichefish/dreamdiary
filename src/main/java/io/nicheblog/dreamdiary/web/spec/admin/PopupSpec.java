@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.spec.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
