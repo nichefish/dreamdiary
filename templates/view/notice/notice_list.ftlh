@@ -56,10 +56,10 @@
     });
 </script>
 
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="" />
+</form>
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="" />
-    </form>
     <#include "/view/notice/notice_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
@@ -68,8 +68,8 @@
                 <th class="text-center wb-keepall w-10 hidden-table">번호</th>
                 <th class="col-lg-8 col-9 text-center wb-keepall">제목</th>
                 <th class="col-lg-1 text-center wb-keepall hidden-table">첨부파일</th>
-                <th class="col-lg-2 col-3 text-center wb-keepall">작성자</th>
-                <th class="text-center wb-keepall w-15 hidden-table">등록일</th>
+                <th class="col-lg-2 col-3 text-center wb-keepall">최종수정자</th>
+                <th class="text-center wb-keepall w-15 hidden-table">최종수정일</th>
                 <th class="text-center wb-keepall w-10 hidden-table">조회수</th>
             </tr>
         </thead>
@@ -95,15 +95,10 @@
                             <#if (((post.imprtcYn)!"N") == "Y")!false>
                                 <span class="fs-4 blink">&#128680;</span>
                             </#if>
-                            <!-- 수정권한 표시 -->
-                            <#if ((post.managt.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
-                                <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="관리자 수정 가능"></i>
-                            <#elseif ((post.managt.mdfable!"") == (Constant.MDFABLE_USER)) || ((post.managt.mdfable!"") == (Constant.MDFABLE_ALL))>
-                                <i class="bi bi-people-fill ms-1 blink-slow"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="모든 사용자가 수정 가능"></i>
-                            </#if>
-                            <#if post.comment.cnt gt 0>
+                            <!-- 목록 수정권한 표시 -->
+                            <@component.mdfable post />
+                            <!-- 목록 댓글 표시 -->
+                            <#if post.comment?? && post.comment.cnt gt 0>
                                 <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
                                       onclick="CommentList.modal('${post.postNo!}');"
                                       data-bs-toggle="tooltip" data-bs-placement="top" title="댓글 모달 팝업 호출">
@@ -149,13 +144,13 @@
                     </#if>
                     <span class="cursor-help"
                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성자:&#10;${post.regstrNm!"-"}">
-                        ${post.managtrNm!"-"}
+                        ${post.managt.managtrNm!"-"}
                     </span>
                 </td>
                 <td class="text-center hidden-table">
                     <span class="cursor-help"
                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성일:&#10;${post.regDt!"-"}">
-                        ${post.managtDt!}
+                        ${post.managt.managtDt!}
                     </span>
                 </td>
                 <td class="text-center hidden-table">
@@ -182,14 +177,9 @@
                             <#if (((post.imprtcYn)!"N") == "Y")!false>
                                 <span class="fs-4 blink">&#128680;</span>
                             </#if>
-                            <!-- 수정권한 표시 -->
-                            <#if ((post.managt.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
-                                <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="관리자 수정 가능"></i>
-                            <#elseif ((post.managt.mdfable!"") == (Constant.MDFABLE_USER)) || ((post.managt.mdfable!"") == (Constant.MDFABLE_ALL))>
-                                <i class="bi bi-people-fill ms-1 blink-slow"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" title="모든 사용자가 수정 가능"></i>
-                            </#if>
+                            <!-- 목록 수정권한 표시 -->
+                            <@component.mdfable post />
+                            <!-- 목록 댓글 표시 -->
                             <#if post.comment.cnt gt 0>
                                 <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
                                       onclick="CommentList.modal('${post.postNo!}');"
@@ -237,7 +227,7 @@
                     </#if>
                     <span class="cursor-help"
                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성자:&#10;${post.regstrNm!"-"}">
-                        ${post.managtrNm!"-"}
+                        ${post.managt.managtrNm!"-"}
                     </span>
                     <#if post.isRegstr!false>
                         <span class="badge badge-secondary opacity-75 mx-1 fs-9">나</span>
@@ -246,7 +236,7 @@
                 <td class="text-center hidden-table">
                     <span class="cursor-help"
                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성일:&#10;${post.regDt!"-"}">
-                        ${post.managtDt!}
+                        ${post.managt.managtDt!}
                     </span>
                 </td>
                 <td class="text-center hidden-table">

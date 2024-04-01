@@ -18,7 +18,7 @@
     </span>
     <span class="datepicker">
         <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline" name="${searchNm}" id="${searchNm}"
-               placeholder="Pick date" value="${searchParam[searchNm]!initDt}" />
+               placeholder="Pick date" value="${param[searchNm]!initDt}" />
     </span>
 </#macro>
 
@@ -37,6 +37,6 @@
     </span>
     <span class="datepicker">
         <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline" name="${searchNm}" id="${searchNm}"
-               placeholder="Pick date" value="${searchParam[searchNm]!initDt}" />
+               placeholder="Pick date" value="${param[searchNm]!initDt}" />
     </span>
 </#macro>

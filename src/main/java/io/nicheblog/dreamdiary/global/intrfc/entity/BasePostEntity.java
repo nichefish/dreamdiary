@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -74,4 +75,10 @@ public class BasePostEntity
     @Builder.Default
     @Column(name = "hit_cnt")
     protected Integer hitCnt = 0;
+
+    /** 수정권한 */
+    @Builder.Default
+    @Column(name = "mdfable")
+    @Comment("수정권한")
+    private String mdfable = Constant.MDFABLE_REGSTR;
 }

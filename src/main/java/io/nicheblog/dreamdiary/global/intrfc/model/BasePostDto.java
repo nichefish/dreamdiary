@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -49,4 +50,11 @@ public class BasePostDto
     /** 조회수 */
     @Builder.Default
     protected Integer hitCnt = 0;
+
+    /** 수정권한 */
+    @Builder.Default
+    private String mdfable = Constant.MDFABLE_REGSTR;
+    /** 수정 가능 여부 */
+    @Builder.Default
+    private Boolean isMdfable = false;
 }

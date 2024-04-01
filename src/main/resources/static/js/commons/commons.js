@@ -527,15 +527,16 @@ commons.util = (function() {
             let separator = "//";
             let cnIdx = ynCn.indexOf(separator);
             let colorIdx = ynColor.indexOf(separator);
+            let yesStr = ynCn.substring(0, cnIdx);
+            let yesColor = ynColor.substring(0, colorIdx);
+            let noStr = ynCn.substring(cnIdx + 2);
+            let noColor = ynColor.substring(colorIdx + 2);
+            $("#"+attrId+"Label").text(noStr).css("color", noColor);
             $chckboxElmt.on("click", function () {
                 if ($chckboxElmt.is(":checked")) {
-                    let yesStr = ynCn.substring(0, cnIdx);
-                    let yesColor = ynColor.substring(0, colorIdx);
                     $("#"+attrId+"Label").text(yesStr).css("color", yesColor);
                     if (commons.util.isNotEmpty(yFunc)) yFunc();
                 } else {
-                    let noStr = ynCn.substring(cnIdx + 2);
-                    let noColor = ynColor.substring(colorIdx + 2);
                     $("#"+attrId+"Label").text(noStr).css("color", noColor);
                     if (commons.util.isNotEmpty(nFunc)) nFunc();
                 }

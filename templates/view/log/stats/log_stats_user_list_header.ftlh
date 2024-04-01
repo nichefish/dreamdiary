@@ -8,15 +8,11 @@
         <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
         <!-- datePicker -->
         <div class="position-relative">
-            <span class="menu-icon me-md-2 vertical-middle">
-                <label for="searchStartDt"><i class="bi clCdServicecalendar3 fs-2 cursor-pointer"></i></label>
-            </span>
-            <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline" name="searchStartDt" id="searchStartDt" placeholder="Pick date" readonly/>
-            <span class="me-md-2">~</span>
-            <span class="menu-icon me-md-2 vertical-middle">
-                <label for="searchEndDt"><i class="bi clCdServicecalendar3 fs-2 cursor-pointer"></i></label>
-            </span>
-            <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline" name="searchEndDt" id="searchEndDt" placeholder="Pick date" readonly/>
+            <!-- datepicker -->
+            <div class="position-relative me-md-3">
+                <@component.datepicker searchParam "searchStartDt" "" />
+                <@component.datepicker searchParam "searchEndDt" DateUtils.Parser.eDateParseStr(DateUtils.getCurrDate()) />
+            </div>
         </div>
         <div class="position-relative w-md-1250px me-md-2">
             <!--begin::Select-->

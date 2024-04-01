@@ -71,13 +71,6 @@
     }();
 </script>
 
-<form name="procForm" id="procForm">
-    <input type="hidden" name="userNo" value="${user.userNo!}">
-    <#if user.userInfo??>
-        <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
-    </#if>
-</form>
-
 <div class="card post">
     <!--begin::Card body-->
     <div class="card-body p-9">
@@ -333,6 +326,13 @@
         </button>
     </div>
     <!--end::Card footer-->
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="userNo" value="${user.userNo!}">
+        <#if user.userInfo??>
+            <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
+        </#if>
+    </form>
 </div>
 <!--end::Card-->
 

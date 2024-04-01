@@ -1,13 +1,15 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.managt.ManagtrMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.managtr.ManagtrDto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.CollectionUtils;
@@ -31,7 +33,6 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class ManagtEmbed
         implements Serializable {
@@ -41,12 +42,6 @@ public class ManagtEmbed
         this.isManagtr = AuthUtils.isRegstr(this.managtrId);
         if (this.managtrInfo != null) this.managtrNm = this.managtrInfo.getNickNm();
     }
-
-    /** 수정권한 */
-    @Builder.Default
-    @Column(name = "mdfable")
-    @Comment("수정권한")
-    private String mdfable = Constant.MDFABLE_REGSTR;
 
     /** 조치자(작업자)ID */
     @Column(name = "managtr_id", length = 20)
@@ -84,6 +79,15 @@ public class ManagtEmbed
     private List<ManagtrEntity> list;
 
     /* ----- */
+
+    /** 생성자 */
+    public ManagtEmbed() {
+        this.managtrId = AuthUtils.getLgnUserId();
+    }
+    public ManagtEmbed(Boolean updtManagtDt) {
+        this();
+        if (updtManagtDt) this.managtDt = DateUtils.getCurrDate();
+    }
 
     /**
      * 조치자 :: List<Entity> -> List<Dto> 반환

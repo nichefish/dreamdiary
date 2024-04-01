@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.managt.ManagtrMapstruct;
@@ -29,13 +28,6 @@ import java.util.stream.Collectors;
 public class ManagtCmpstn
         implements Serializable {
 
-    /** 수정권한 */
-    @Builder.Default
-    private String mdfable = Constant.MDFABLE_REGSTR;
-    /** 수정 가능 여부 */
-    @Builder.Default
-    private Boolean isMdfable = false;
-
     /** 조치자(작업자)ID */
     private String managtrId;
     /** 조치자(작업자)이름 */
@@ -44,11 +36,11 @@ public class ManagtCmpstn
     private AuditorDto managtrInfo;
     /** 처리(조치)자 여부 */
     private Boolean isManagtr;
+    /** 조치(작업)일시 */
+    private String managtDt;
+
     /** 게시물 조치자 목록 */
     private List<ManagtrDto> list;
-
-    /** (수정시) 조치일자 변경하지 않음 변수 */
-    private String managtDtUpdtYn;
 
     /* ----- */
 
@@ -59,6 +51,7 @@ public class ManagtCmpstn
         if (this.list == null) this.list = new ArrayList<>();
         list.add(managtr);
     }
+
     /**
      * 댓글 :: List<Dto> -> List<Entity> 반환
      */

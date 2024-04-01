@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.event.ManagtrAddEvent;
 import io.nicheblog.dreamdiary.web.event.TagEvent;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
@@ -71,19 +72,6 @@ public class NoticeController
     public String addListUrl() {
         return baseUrl;
     }
-
-    // @InitBinder
-    // public void initBinder(WebDataBinder binder) {
-    //     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    //     binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-    //     binder.registerCustomEditor(Map.class, new PropertyEditorSupport() {
-    //         @Override
-    //         public void setAsText(String value) {
-    //             if( value == null || "".equals(value)) { setValue(null); }
-    //             else { setValue(value); }
-    //         }
-    //     });
-    // }
 
     @Resource(name = "noticeService")
     private NoticeService noticeService;
@@ -253,7 +241,8 @@ public class NoticeController
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 태그 처리 :: 메인 로직과 분리
             publisher.publishEvent(new TagEvent(this, result.getClsfKey(), noticeDto.tag));
-            // TODO: 조치자 추가 :: 메인 로직과 분리
+            // 조치자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ManagtrAddEvent(this, result.getClsfKey()));
             // 잔디 메세지 발송 :: 메인 로직과 분리
             // if ("Y".equals(jandiYn)) {
             //     String jandiResultMsg = notifyService.notifyNoticeReg(trgetTopic, result, logParam);

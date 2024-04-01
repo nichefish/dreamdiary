@@ -155,10 +155,7 @@
                 </label>
             </div>
             <div class="col-lg-2 col-9 d-flex align-items-center">
-                <div class="form-check form-switch form-check-custom form-check-solid">
-                    <input class="form-check-input ms-3" type="checkbox" value="Y" name="imprtcYn" id="imprtcYn" <#if (((post.imprtcYn)!"N") == "Y")!false>checked="checked"</#if> />
-                    <label class="form-check-label fw-bold ms-3" for="imprtcYn" id="imprtcYnLabel" style="color:<#if (((post.imprtcYn)!"N") == "Y")!false>red<#else>gray</#if>;"><#if ((post.imprtcYn)! == "Y")!false>중요<#else>해당없음</#if></label>
-                </div>
+                <@component.checkbox post "imprtcYn" "중요//해당없음", "red//gray" />
             </div>
             <div class="col-lg-1 col-3 d-flex align-items-center">
                 <label class="text-gray-700 fs-6 fw-bolder cursor-help"
@@ -194,7 +191,7 @@
             <div class="col-lg-2 col-9 d-flex align-items-center">
                 <select name="mdfable" id="mdfable" class="form-select form-select-solid">
                     <#list MDFABLE_CD![] as mdfable>
-                        <option value="${mdfable.dtlCd!}" id="${mdfable.dtlCd!}" <#if (post.managt.mdfable!"REGSTR") == (mdfable.dtlCd)>selected="selected"</#if>>[${mdfable.dtlCdNm!}]</option>
+                        <option value="${mdfable.dtlCd!}" id="${mdfable.dtlCd!}" <#if (post.mdfable!"REGSTR") == (mdfable.dtlCd)>selected="selected"</#if>>[${mdfable.dtlCdNm!}]</option>
                     </#list>
                 </select>
             </div>

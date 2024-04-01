@@ -31,6 +31,10 @@ public class BaseClsfDto
     /** 컨텐츠 타입 */
     protected String contentType;
 
+    /** (수정시) 조치일자 변경하지 않음 변수 */
+    @Builder.Default
+    private String managtDtUpdtYn = "N";
+
     /* ----- */
 
     /**

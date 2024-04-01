@@ -132,12 +132,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="userNo" value="${user.userNo!}">
-        <#if user.userInfo??>
-            <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
-        </#if>
-    </form>
     <!--begin::Form-->
     <form class="form">
         <input type="hidden" name="userNo" value="${user.userNo!}">
@@ -364,6 +358,12 @@
 </div>
 <!--end::Card-->
 
+<form name="procForm" id="procForm">
+    <input type="hidden" name="userNo" value="${user.userNo!}">
+    <#if user.userInfo??>
+        <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
+    </#if>
+</form>
 <div id="tinymceImageTemplate" hidden>
     <form name="profllImgForm" id="profllImgForm" class="form" enctype="multipart/form-data">
         <input type="file" class="file" name="atchFile0" id="atchFile0" onchange="return false;" accept=".png, .jpg, .jpeg"/>

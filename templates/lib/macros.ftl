@@ -6,3 +6,6 @@
   -->
 
 <#include "/view/_component/_datepicker_area.ftlh">
+<#include "/view/_component/_checkbox_toggle_area.ftlh">
+
+<#include "/view/_component/_list_mdfable_area.ftlh">

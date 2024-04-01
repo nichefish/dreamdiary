@@ -153,7 +153,7 @@
             <div class="col-lg-2 col-9 d-flex align-items-center">
                 <select name="mdfable" id="mdfable" class="form-select form-select-solid">
                     <#list MDFABLE_CD![] as mdfable>
-                        <option value="${mdfable.dtlCd!}" id="${mdfable.dtlCd!}"<#if (post.managt.mdfable!"REGSTR") == (mdfable.dtlCd)> selected="selected"</#if>>[${mdfable.dtlCdNm!}]</option>
+                        <option value="${mdfable.dtlCd!}" id="${mdfable.dtlCd!}"<#if (post.mdfable!"REGSTR") == (mdfable.dtlCd)> selected="selected"</#if>>[${mdfable.dtlCdNm!}]</option>
                     </#list>
                 </select>
             </div>
