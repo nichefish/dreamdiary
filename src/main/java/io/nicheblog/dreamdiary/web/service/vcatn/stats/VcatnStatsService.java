@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.vcatn.stats;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.util.date.DateParser;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsEntity;
@@ -160,14 +159,14 @@ public class VcatnStatsService {
             double exhrDy = isHalf ? 0.5 : Constant.VCATN_ANNUAL.equals(vcatnTy) ? 1 : 0;
 
             // 휴가 시작일자/종료일자 산정 : 2월 28일 전- 또는 3월 1일 후 식으로 경계에 걸쳐있는 경우를 따진다. (딱 경계까지만 일수 계산하기)
-            Date vcatnBgnDt = DateParser.sDateParse(vcatn.getBgnDt());
-            Date vcatnEndDt = DateParser.sDateParse(vcatn.getEndDt());
+            Date vcatnBgnDt = DateUtils.Parser.sDateParse(vcatn.getBgnDt());
+            Date vcatnEndDt = DateUtils.Parser.sDateParse(vcatn.getEndDt());
             assert vcatnBgnDt != null;
             if (vcatnBgnDt.compareTo(statsYyBgnDt) < 0) vcatnBgnDt = statsYyBgnDt;
             vcatnEndDt = (vcatnEndDt == null) ? vcatnBgnDt : (vcatnEndDt.compareTo(statsYyEndDt) > 0) ? statsYyEndDt : vcatnEndDt;
 
             // 날짜 훑으면서 공휴일 또는 주말여부 체크
-            Date keyDt = DateParser.sDateParse(vcatnBgnDt);
+            Date keyDt = DateUtils.Parser.sDateParse(vcatnBgnDt);
             while (keyDt.compareTo(vcatnEndDt) <= 0) {
                 if (schdulService.isHldyOrWeekend(keyDt)) {
                     keyDt = DateUtils.getDateAddDay(keyDt, 1);
