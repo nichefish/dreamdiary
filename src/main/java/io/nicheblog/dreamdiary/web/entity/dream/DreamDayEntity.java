@@ -7,7 +7,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
 import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
 import lombok.*;

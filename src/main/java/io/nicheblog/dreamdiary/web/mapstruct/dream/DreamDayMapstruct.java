@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.dream;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfListMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
 import io.nicheblog.dreamdiary.web.model.dream.day.DreamDayDto;
 import io.nicheblog.dreamdiary.web.model.dream.day.DreamDayListDto;

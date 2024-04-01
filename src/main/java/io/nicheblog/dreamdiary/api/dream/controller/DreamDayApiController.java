@@ -9,7 +9,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.util.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -74,7 +74,7 @@ public class DreamDayApiController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Map<String, Object> searchParamMap = CmmUtils.convertParamToMap(searchParam);
+            Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
             Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
             PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
             Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getListDto(searchParamMap, pageRequest);

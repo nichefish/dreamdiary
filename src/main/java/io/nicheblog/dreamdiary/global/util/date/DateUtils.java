@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.util;
+package io.nicheblog.dreamdiary.global.util.date;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import lombok.experimental.UtilityClass;

@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstru
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ManagtEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.TagEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ViewerEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostSmpEntity;
 import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;

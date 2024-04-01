@@ -1,10 +1,9 @@
 package io.nicheblog.dreamdiary.web.service.board;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
-import io.nicheblog.dreamdiary.global.util.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.board.BoardPostMapstruct;
 import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
@@ -41,8 +40,6 @@ public class BoardPostService
     private BoardPostRepository boardPostRepository;
     @Resource(name = "boardPostSpec")
     private BoardPostSpec boardPostSpec;
-    @Resource(name = "atchFileService")
-    private AtchFileService atchFileService;
 
     private final BoardPostMapstruct postMapstruct = BoardPostMapstruct.INSTANCE;
 
