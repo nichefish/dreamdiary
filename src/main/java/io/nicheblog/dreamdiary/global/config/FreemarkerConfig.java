@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.config;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModelException;
+import io.nicheblog.dreamdiary.global.Constant;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
@@ -26,19 +27,26 @@ public class FreemarkerConfig
 
     @SneakyThrows
     @Override
-    public Object postProcessAfterInitialization(
-            @NotNull Object bean,
-            @NotNull String beanName
-    ) throws BeansException {
+    public Object postProcessAfterInitialization(@NotNull Object bean, @NotNull String beanName) throws BeansException {
         if (bean instanceof FreeMarkerConfigurer) {
             FreeMarkerConfigurer configurer = (FreeMarkerConfigurer) bean;
             freemarker.template.Configuration configuration = configurer.getConfiguration();
             BeansWrapper objectWrapper = (BeansWrapper) configuration.getObjectWrapper();
+            // 인코딩 설정
+            configuration.setDefaultEncoding("UTF-8");
+            // Locale, TimeZone 설정
+            configuration.setLocale(Constant.LC_KO);
+            configuration.setTimeZone(Constant.TZ_SEOUL);
+            // 날짜 포맷 설정
+            configuration.setDateTimeFormat("yyyy-MM-dd HH:mm:ss");
+            configuration.setDateFormat("yyyy-MM-dd");
+            configuration.setTimeFormat("HH:mm:ss");
             // static 변수 임포트
             configuration.setSharedVariables(this.getSharedVariables(objectWrapper));
             // 숫자에 콤마 제거!!! (1000 넘어가는 ID(PK)에서 개꼬임...)
-            configuration.addAutoImport("spring", "/lib/spring.ftl");
-            // configuration.addAutoImport("function", "/lib/function.ftl");
+            configuration.addAutoImport("spring", "lib/spring.ftl");
+            configuration.addAutoImport("fn", "lib/functions.ftl");
+            configuration.addAutoImport("component", "lib/macros.ftl");
             configuration.setNumberFormat("computer");
             Properties settings = new Properties();
             settings.setProperty("template_exception_handler", "ignore");

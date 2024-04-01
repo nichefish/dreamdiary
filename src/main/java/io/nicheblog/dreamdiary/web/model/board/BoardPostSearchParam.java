@@ -20,7 +20,5 @@ import lombok.*;
 public class BoardPostSearchParam
         extends BasePostSearchParam {
 
-    /** 컨텐츠 타입 */
-    private String contentType;
-
+    //
 }

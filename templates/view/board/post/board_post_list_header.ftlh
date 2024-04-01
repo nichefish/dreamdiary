@@ -4,24 +4,31 @@
   -->
 <form name="listForm" id="listForm" method="get">
     <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>      <!-- 게시판 검색에선 꼭 있어야 한다. -->
-    <input type="hidden" name="pageNo" id="pageNo" value="${pageNo!}">
-    <input type="hidden" name="pageSize" id="pageSize" value="${pageSize!}">
-    <div class="row <#if boardCd == "cmpyLife">mb-4<#else>mb-8</#if> p-0">
-        <div class="col-lg-5 col-12 align-items-center d-flex mt-2">
+    <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
+    <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
+    <!-- header starts -->
+    <div class="row mb-8 p-0">
+        <!-- search-param starts -->
+        <div class="col-lg-10 col-12 d-flex align-items-center mt-2">
+            <!-- datepicker -->
+            <div class="position-relative me-md-3">
+                <@component.datepicker searchParam "searchStartDt" "" />
+                <@component.datepicker searchParam "searchEndDt" "" />
+            </div>
             <#if POST_CTGR_CD??>
                 <div class="position-relative me-md-2 col-lg-2 col-4 searchType">
                     <select name="ctgrCd" id="ctgrCd" class="form-select form-select-solid fw-bolder form-select-sm py-3">
                         <option value="">글머리</option>
                         <#list POST_CTGR_CD![] as ctgr>
-                            <option value="${ctgr.dtlCd!}" id="${ctgr.dtlCd!}">[${ctgr.dtlCdNm!}]</option>
+                            <option value="${ctgr.dtlCd!}" label="[${ctgr.dtlCdNm!}]" ${fn.selected(searchParam.ctgrCd!, ctgr.dtlCd!)} />
                         </#list>
                     </select>
                 </div>
             </#if>
             <div class="position-relative me-md-2 col-lg-2 col-3 searchType">
                 <select name="searchType" id="searchType" class="form-select form-select-solid fw-bolder form-select-sm py-3">
-                    <option value="title">제목</option>
-                    <option value="nickNm">작성자</option>
+                    <option value="title" label="제목" ${fn.selected(searchParam.searchType!, "제목")} />
+                    <option value="nickNm" label="작성자" ${fn.selected(searchParam.searchType!, "작성자")} />
                 </select>
             </div>
             <div class="position-relative me-md-2 col-lg-8 col-4 searchType">
@@ -33,11 +40,10 @@
                     </svg>
                 </span>
                 <!--end::Svg Icon-->
-                <input type="text" class="form-control form-control-solid ps-10 form-control-sm py-3" name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30"/>
+                <input type="text" class="form-control form-control-solid ps-10 form-control-sm py-3"
+                       name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30" value="${searchParam.searchKeyword!}" />
                 <!--end::Input group-->
             </div>
-        </div>
-        <div class="col-lg-4 col-12 align-items-center d-flex mt-2">
             <button type="submit" class="btn btn-sm btn-primary" onclick="Page.search();">
                 <i class="bi bi-search"></i>검색
             </button>
@@ -53,7 +59,7 @@
                 </div>
             </#if>
         </div>
-        <div class="col-lg-3 col-12 d-flex justify-content-end align-items-center mt-2">
+        <div class="col-lg-2 col-12 d-flex justify-content-end align-items-center mt-2">
             <a href="javascript:void(0);" class="btn btn-sm btn-primary mx-1" onclick="Page.regForm();"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.reg"/>">
                 <i class="fas fa-plus"></i>등록
@@ -66,20 +72,6 @@
             </#if>
         </div>
     </div>
-
-    <#if boardCd == "cmpyLife">
-        <hr class="my-6 text-muted" />
-        <div class="mb-6 ms-4">
-            <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#crdt_user_cttpc_modal').modal('show');"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원 연락처 팝업을 호출합니다.">
-                <i class="bi bi-telephone"></i>직원 연락처
-            </button>
-            <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#extn_phone_modal').modal('show');"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내선전화 관련 안내 팝업을&#10;호출합니다.">
-                <i class="bi bi-telephone"></i>내선전화 관련
-            </button>
-        </div>
-    </#if>
 
     <!-- #include:: component:: 태그 클릭 필터링 -->
     <#include "/view/_component/tag/_tag_list_header.ftlh">

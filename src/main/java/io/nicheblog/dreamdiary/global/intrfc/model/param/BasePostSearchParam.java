@@ -9,7 +9,7 @@ import lombok.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseSearchParam
+ * @extends BaseClsfSearchParam
  */
 @Getter
 @Setter
@@ -17,16 +17,16 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class BasePostSearchParam
-        extends BaseSearchParam {
+        extends BaseClsfSearchParam {
 
     /** 제목 */
-    private String title;
+    protected String title;
     /** 내용 */
-    private String cn;
+    protected String cn;
     /** 글분류 코드 */
-    private String ctgrCd;
+    protected String ctgrCd;
     /** 중요 여부 (Y/N) */
-    private String imprtcYn;
+    protected String imprtcYn;
     /** 상단고정 여부 (Y/N) */
-    private String fxdYn;
+    protected String fxdYn;
 }

@@ -9,16 +9,7 @@
     const Page = function() {
         return {
             init: function () {
-                /** 검색인자 세팅 */
-                <#if searchParamMap?has_content >
-                    <#list searchParamMap?keys as key>
-                        $("#${key!}").val("${searchParamMap[key]!}");
-                    </#list>
-                </#if>
-
-                // 모든 table 헤더에 클릭 이벤트를 설정한다.
-                Page.sortMode = "FORWARD";
-                commons.util.sortTable();
+                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
             },
             /** 등록 모달 호출 */
             regModal: function() {

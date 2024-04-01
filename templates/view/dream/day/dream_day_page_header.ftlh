@@ -3,8 +3,8 @@
   -- @included in : cl_cd_list
   -->
 <form name="listForm" id="listForm" method="get">
-    <input type="hidden" name="pageNo" id="pageNo" value="${pageNo!}">
-    <input type="hidden" name="pageSize" id="pageSize" value="${pageSize!}">
+    <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
+    <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
     <div class="row mb-8 p-0">
         <div class="col-lg-6 col-12 align-items-center d-flex my-2">
             <div class="position-relative me-md-2 col-lg-2 col-4 searchType">

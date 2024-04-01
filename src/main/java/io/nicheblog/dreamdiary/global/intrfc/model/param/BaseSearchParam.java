@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
  * BaseSearchParam
  * <pre>
@@ -16,27 +18,47 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class BaseSearchParam
         extends BaseParam {
 
-    /** 페이지 크기 */
-    private Integer pageSize;
-    /** 페이지 번호 */
-    private Integer pageNo;
+    public static final Integer DEFAULT_PAGE_NO = 1;
+    public static final Integer DEFAULT_PAGE_SIZE = 10;
+
+    /** 페이지 번호 (기본값 : 1) */
+    protected Integer pageNo = 1;
+    /** 페이지 크기 (기본값 : 10) */
+    protected Integer pageSize = 10;
 
     /** 검색 유형 (검색 키워드와 한 세트) */
-    private String searchType;
+    protected String searchType;
     /** 검색 키워드 (검색 유형과 한 세트) */
-    private String searchKeyword;
+    protected String searchKeyword;
+
+    /** 검색 시작일자 */
+    protected String searchStartDt;
+    /** 검색 종료일자 */
+    protected String searchEndDt;
 
     /** 등록자 ID */
-    private String regstrId;
+    protected String regstrId;
     /** 등록자 이름 */
-    private String regstrNm;
+    protected String regstrNm;
     /** 조치자 ID */
-    private String managtrId;
+    protected String managtrId;
     /** 조치자 이름 */
-    private String managtrNm;
+    protected String managtrNm;
+
+    /* ----- */
+
+    public Integer getPageNo() {
+        if (this.pageNo == null) this.pageNo = DEFAULT_PAGE_NO;
+        return this.pageNo;
+    }
+    public Integer getPageSize() {
+        if (this.pageSize == null) this.pageSize = DEFAULT_PAGE_SIZE;
+        return this.pageSize;
+    }
+
 }

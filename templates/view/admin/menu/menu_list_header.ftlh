@@ -5,8 +5,8 @@
 <form name="listForm" id="listForm" method="get">
     <div class="row mb-8 p-0">
         <div class="col-lg-9 col-12 d-flex align-items-center mt-2">
-            <input type="hidden" name="pageNo" id="pageNo" value="${pageNo!}">
-            <input type="hidden" name="pageSize" id="pageSize" value="${pageSize!}">
+            <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
+            <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
             <!-- datePicker -->
             <div class="position-relative">
                 <span class="menu-icon me-md-2 vertical-middle">
@@ -18,14 +18,6 @@
                     <label for="searchEndDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>
                 </span>
                 <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline" name="searchEndDt" id="searchEndDt" placeholder="Pick date" readonly/>
-            </div>
-            <div class="position-relative w-md-1250px me-md-2">
-                <!--begin::Select-->
-                <select name="rslt" id="rslt" class="form-select form-select-solid fs-7 fw-bolder me-md-2 w-125px" data-hide-search="true">
-                    <option value="">작업결과</option>
-                    <option value="true" id="true">성공</option>
-                    <option value="false" id="false">실패</option>
-                </select>
             </div>
             <div class="position-relative w-md-100px me-md-2">
                 <select name="searchType" id="searchType" class="form-select form-select-solid fs-7 fw-bolder">

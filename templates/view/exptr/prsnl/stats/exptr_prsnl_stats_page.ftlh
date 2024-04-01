@@ -14,9 +14,7 @@
                     $("#mnthSumSpan"+i).text(commons.util.getReqstItemTotSum("id^=mnth"+i+"__").toLocaleString());
                 }
 
-                // 모든 table 헤더에 클릭 이벤트를 설정한다.
-                Page.sortMode = "FORWARD";
-                commons.util.sortTable();
+                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
             },
             /** 조회 년도 변경 */
             statsYy: function() {
@@ -59,7 +57,7 @@
                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
                     <select name="statsYy" id="statsYy" class="form-select form-select-solid" onchange="Page.statsYy();">
                         <#list yyList![] as yy>
-                            <option value="${yy}"<#if statsYy?string == yy> selected="selected"</#if>>${yy}년</option>
+                            <option value="${yy}" label="${yy}년" ${fn.selected(statsYy!, yy)} />
                         </#list>
                     </select>
                 </div>

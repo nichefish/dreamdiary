@@ -9,16 +9,13 @@
     const Page = function() {
         return {
             init: function () {
+
                 <#list statsList![] as stats>
                     Page.totYryc("${stats?counter}");
                 </#list>
 
-                // 숫자와 점 제외하곤 입력불가
-                commons.validate.onlyNumAndDot(".num");
-
-                // 모든 table 헤더에 클릭 이벤트를 설정한다.
-                Page.sortMode = "FORWARD";
-                commons.util.sortTable();
+                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
+                commons.validate.onlyNumAndDot(".num");     // 숫자와 점 제외하곤 입력불가
             },
             /** 조회년도 변경 */
             chgYy: function(obj) {

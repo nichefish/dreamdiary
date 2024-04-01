@@ -3,14 +3,14 @@
   -- @included in : vcatn_papr_list
   -->
 <form name="listForm" id="listForm" method="get">
-    <input type="hidden" name="pageNo" id="pageNo" value="${pageNo!}">
-    <input type="hidden" name="pageSize" id="pageSize" value="${pageSize!}">
+    <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
+    <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
     <div class="row mb-8 p-0">
         <div class="col-lg-4 col-12 d-flex align-items-center mt-2">
             <div class="position-relative me-md-2 col-3 searchType">
                 <select name="searchType" id="searchType" class="form-select form-select-solid fw-bolder form-select-sm py-3">
-                    <option value="title">제목</option>
-                    <option value="nickNm">작성자</option>
+                    <option value="title" label="제목" ${fn.selected(searchParam.searchType!, "title")} />
+                    <option value="nickNm" label="작성자" ${fn.selected(searchParam.searchType!, "nickNm")} />
                 </select>
             </div>
             <div class="position-relative me-md-2 col-lg-9 col-8 searchType">
@@ -22,7 +22,8 @@
                     </svg>
                 </span>
                 <!--end::Svg Icon-->
-                <input type="text" class="form-control form-control-solid ps-10 form-control-sm py-3" name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30" />
+                <input type="text" class="form-control form-control-solid ps-10 form-control-sm py-3" name="searchKeyword" id="searchKeyword"
+                       placeholder="검색.." maxlength="30" value="${searchParam.searchKeyword!}" />
                 <!--end::Input group-->
             </div>
         </div>

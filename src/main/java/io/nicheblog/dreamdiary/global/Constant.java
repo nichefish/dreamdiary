@@ -25,7 +25,7 @@ public final class Constant
      */
     public static final String LOC_SEOUL = "Asia/Seoul";
     public static final TimeZone TZ_SEOUL = TimeZone.getTimeZone(Constant.LOC_SEOUL);
-    public static final Locale LC_KO = new Locale("ko", "KR");
+    public static final Locale LC_KO = Locale.KOREA;
 
     public static final String PAGE_LGN = "로그인";
     public static final String PAGE_MAIN = "메인";

@@ -16,6 +16,8 @@
                     if ($("#endDt").val() !== "") Page.noBefore("#bgnDt", "#endDt");
                 });
 
+                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
+
                 /** jquery validation */
                 $(function () {
                     $("#vcantDyRegForm").validate({
@@ -34,10 +36,6 @@
                         }
                     });
                 });
-
-                // 모든 table 헤더에 클릭 이벤트를 설정한다.
-                Page.sortMode = "FORWARD";
-                commons.util.sortTable();
             },
             /** 조회년도 변경 */
             chgYy: function(obj) {

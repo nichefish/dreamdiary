@@ -3,15 +3,15 @@
   -- @included in : cl_cd_list
   -->
 <form name="listForm" id="listForm" method="get">
-    <input type="hidden" name="pageNo" id="pageNo" value="${pageNo!}">
-    <input type="hidden" name="pageSize" id="pageSize" value="${pageSize!}">
+    <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
+    <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
     <div class="row mb-8 p-0">
         <div class="col-lg-6 col-12 align-items-center d-flex my-2">
             <div class="position-relative me-md-2 col-lg-2 col-4 searchType">
                 <select name="searchType" id="searchType" class="form-select form-select-solid fw-bolder form-select-sm py-3">
-                    <option value="clCd">분류코드</option>
-                    <option value="clCdNm">분류코드명</option>
-                    <option value="clCdDc">분류코드 설명</option>
+                    <option value="clCd" ${fn.selected(searchParam.searchType!, "clCd")}>분류코드</option>
+                    <option value="clCdNm" ${fn.selected(searchParam.searchType!, "clCdNm")}>분류코드명</option>
+                    <option value="clCdDc" ${fn.selected(searchParam.searchType!, "clCdDc")}>분류코드 설명</option>
                 </select>
             </div>
             <div class="position-relative me-md-2 col-lg-4 col-6 searchType">

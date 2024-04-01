@@ -4,32 +4,34 @@
   -->
 <form name="listForm" id="listForm" method="get">
     <div class="d-flex align-items-center">
-        <input type="hidden" name="pageNo" id="pageNo" value="${pageNo!}">
-        <input type="hidden" name="pageSize" id="pageSize" value="${pageSize!}">
+        <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
+        <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
         <!-- datePicker -->
         <div class="position-relative">
             <span class="menu-icon me-md-2 vertical-middle">
                 <label for="searchStartDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>
             </span>
-            <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline" name="searchStartDt" id="searchStartDt" placeholder="Pick date" readonly/>
+            <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline"
+                   name="searchStartDt" id="searchStartDt" placeholder="Pick date" value="${searchParam.searchStartDt!}" readonly/>
             <span class="me-md-2">~</span>
             <span class="menu-icon me-md-2 vertical-middle">
                 <label for="searchEndDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>
             </span>
-            <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline" name="searchEndDt" id="searchEndDt" placeholder="Pick date" readonly/>
+            <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline"
+                   name="searchEndDt" id="searchEndDt" placeholder="Pick date" value="${searchParam.searchEndDt!}" readonly/>
         </div>
         <div class="position-relative w-md-1250px me-md-2">
             <!--begin::Select-->
             <select name="rslt" id="rslt" class="form-select form-select-solid fs-7 fw-bolder me-md-2 w-125px" data-hide-search="true">
                 <option value="">작업결과</option>
-                <option value="true" id="true">성공</option>
-                <option value="false" id="false">실패</option>
+                <option value="true" label="성공" ${fn.selected(searchParam.rslt!, "true")} />
+                <option value="false" label="실패" ${fn.selected(searchParam.rslt!, "false")} />
             </select>
         </div>
         <div class="position-relative w-md-100px me-md-2">
             <select name="searchType" id="searchType" class="form-select form-select-solid fs-7 fw-bolder">
-                <option value="nickNm">이름</option>
-                <option value="logUserId">아이디</option>
+                <option value="nickNm" label="이름" ${fn.selected(searchParam.searchType!, "nickNm")} />
+                <option value="logUserId" label="아이디" ${fn.selected(searchParam.searchType!, "logUserId")} />
             </select>
         </div>
         <div class="position-relative w-md-200px me-md-2">
@@ -41,7 +43,8 @@
                 </svg>
             </span>
             <!--end::Svg Icon-->
-            <input type="text" class="form-control form-control-solid fs-7 ps-10" name="searchKeyword" id="searchKeyword" placeholder="검색" maxlength="16" />
+            <input type="text" class="form-control form-control-solid fs-7 ps-10" name="searchKeyword" id="searchKeyword"
+                   placeholder="검색" maxlength="16" value="${searchParam.searchKeyword!}" />
         </div>
         <div class="card-title me-md-2">
             <label class="form-label fw-bolder text-dark"> </label>

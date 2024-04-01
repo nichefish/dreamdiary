@@ -2,7 +2,6 @@
   -- 활동 로그 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 
@@ -21,12 +20,12 @@
             colorArray: ['#185ADB','#FFC107','#00ADB5','#7952B3','#FFD93D','#4D96FF','#8479E1','#332FD0','#9254C8','#E15FED','#6EDCD9','#4D77FF','#5463FF','#533E85','#FFD32D','#008E89','#03045E','#1C658C','#E15FED','#A97155'],
             menuContainer: "#total_menu_board",
             init: function () {
-                Page.fnUpdt();
+                Page.updt();
             },
             /**
              * 트리 구조 데이터 리로드 및 새로 그리기
              */
-            fnUpdt: function() {
+            updt: function() {
                 // 메인 메뉴 그리기
                 const url = "${SiteUrl.MENU_MAIN_LIST_AJAX!}";
                 commons.util.blockUIAjax(url, 'get', null, function(res) {
@@ -38,14 +37,14 @@
                     if (!Array.isArray(mainMenuList) || mainMenuList.length < 1) return;
                     mainMenuList.forEach(function(mainMenu) {
                         commons.util.handlebarsAppend(mainMenu, "menu_main_card");
-                        Page.fnDrawSubMenu(mainMenu);
+                        Page.drawSubMenu(mainMenu);
                     });
                 });
             },
             /**
              * 서브메뉴 처리 :: 자기 자신을 그리고 각각의 서브메뉴에 대해서 재귀호출
              */
-            fnDrawSubMenu: function(upperMenu) {
+            drawSubMenu: function(upperMenu) {
                 console.log("upperMenu: ", upperMenu);
                 // 서브메뉴 돌면서 재귀호출
                 let subMenuList = upperMenu.subMenuList;
@@ -54,13 +53,13 @@
                 let menuId = upperMenu.menuId;
                 subMenuList.forEach(function(subMenu) {
                     commons.util.handlebarsAppendTo(subMenu, "menu_sub", "menu_sub_"+menuId);
-                    Page.fnDrawSubMenu(subMenu);
+                    Page.drawSubMenu(subMenu);
                 });
             },
-            // fnDrawSubMenu: function(treeSelector, rslt, idx) {
+            // drawSubMenu: function(treeSelector, rslt, idx) {
             //     let menuId = rslt.menuId, menuNm = rslt.menuNm, menuTyCd = rslt.menuTyCd;
             //     commons.util.handlebarsAppend(rslt, "menu_sub");
-            //     Page.fnDrawSubMenu();
+            //     Page.drawSubMenu();
             //     let isDir = rslt.dir;
             //     let subMenuContainer = upperElmtSelector + " > ul.sub-menu-list";
             //     $(subMenuContainer).append(menuTemplateHtml);
@@ -84,11 +83,11 @@
             },
             /** 목록 검색 */
             search: function() {
-                $("#pageNo").val("");
+                $("#pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_ACTVTY_LIST!}?actionTyCd=SEARCH");
             },
             /** 엑셀 다운로드 */
-            fnXlsxDownload: function() {
+            xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -121,7 +120,7 @@
                 $("#menuRegForm #menu_icon_div").html(iconHtml);
             },
             /** 사용자별 로그 페이지로 이동 */
-            fnMdfForm: function(menuId) {
+            mdfForm: function(menuId) {
                 const url = "${SiteUrl.MENU_DTL_AJAX!}";
                 let ajaxData = { "menuId": menuId };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {

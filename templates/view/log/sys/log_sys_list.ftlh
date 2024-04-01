@@ -9,24 +9,15 @@
     const Page = function() {
         return {
             init: function () {
-                // 모든 table 헤더에 클릭 이벤트를 설정한다.
-                Page.sortMode = "FORWARD";
-                commons.util.sortTable();
+                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
 
                 /** dateRangePicker init */
                 commons.datepicker.singleDatePicker("#searchStartDt", "yyyy-MM-DD");
                 commons.datepicker.singleDatePicker("#searchEndDt", "yyyy-MM-DD", commons.date.getCurrDateStr() + " 23:59:59");
-
-                /** 검색인자 세팅 */
-                <#if searchParamMap?has_content >
-                    <#list searchParamMap?keys as key>
-                        $("#${key!}").val("${searchParamMap[key]!}");
-                    </#list>
-                </#if>
             },
             /** 목록 검색 */
             search: function() {
-                $("#pageNo").val("");
+                $("#pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_SYS_LIST!}?actionTyCd=SEARCH");
             },
         }

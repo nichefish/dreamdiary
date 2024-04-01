@@ -427,7 +427,7 @@ commons.util = (function() {
         /**
          * 모든 table 헤더에 클릭 이벤트를 설정한다.
          */
-        sortTable: function() {
+        initSortTable: function() {
             if (typeof Page === 'undefined') { var Page = {}; }
             let tables = document.getElementsByTagName("table");
             for (let i = 0; i < tables.length; ++i) {
@@ -436,8 +436,8 @@ commons.util = (function() {
                     // 지역 유효범위에 생성할 중첩 함수
                     (function (table, n) {
                         headers[j].onclick = function () {
-                            commons.util.sortTable(table, n, Page.sortMode);
-                            Page.sortMode = (Page.sortMode === "FORWARD") ? "REVERSE" : "FORWARD";
+                            commons.util.sortTable(table, n, Page.tableSortMode);
+                            Page.tableSortMode = (Page.tableSortMode === "REVERSE") ? "FORWARD" : "REVERSE";
                         };
                     }
                     (tables[i], j));

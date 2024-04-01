@@ -8,7 +8,7 @@
             <div class="d-flex align-items-center justify-content-between fw-bold"
                  id="{{menuId}}" type="{{menuTyCd}}" data-index="{{sortOrdr}}">
                 <div class="d-flex align-items-center">
-                    <h2 class="mx-2 mb-0 cursor-pointer" onclick="Menu.fnMdfForm('{{menuId}}');"
+                    <h2 class="mx-2 mb-0 cursor-pointer" onclick="Menu.mdfForm('{{menuId}}');"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
                         {{menuNm}}
                         <i class="{{icon}} fs-3 ms-1"></i>

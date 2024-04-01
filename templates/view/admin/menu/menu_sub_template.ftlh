@@ -6,7 +6,7 @@
     <div class="list-unstyled" style="{{borderColor}}"
         id="{{menuId}}" type="{{menuTyCd}}" data-index="{{sortOrdr}}">
         <div class="d-flex align-items-center justify-content-between rounded">
-            <div class="d-flex justify-content-between" onclick="Menu.fnMdfForm('{{menuId}}');"
+            <div class="d-flex justify-content-between" onclick="Menu.mdfForm('{{menuId}}');"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
                 <span class="{{#if isUnderMain}}text-primary fw-bolder fs-6{{else}}menu-title-gray-600{{/if}} cursor-pointer">
                     {{#if (exists icon)}}

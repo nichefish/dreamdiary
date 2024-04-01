@@ -20,14 +20,14 @@ import org.apache.commons.lang3.StringUtils;
 public class BaseParam {
 
     /** 작업 카테고리 코드 */
-    private String actvtyCtgrCd;
+    protected String actvtyCtgrCd;
     /** 작업 카테고리 */
-    private ActvtyCtgr actvtyCtgr;
+    protected ActvtyCtgr actvtyCtgr;
     /** 액션구분 코드 */
-    private String actionTyCd;
+    protected String actionTyCd;
 
     /** 수정/상세에서 목록 화면으로 돌아옴 구분 코드 ( Y/N ) */
-    private String isBackToList;
+    protected String isBackToList;
 
     // TODO: UTM 파라미터...
 
