@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.global.auth.mapstruct;
 import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
 import io.nicheblog.dreamdiary.global.auth.model.AuthRoleDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
