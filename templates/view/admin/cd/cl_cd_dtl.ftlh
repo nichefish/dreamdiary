@@ -173,9 +173,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="clCd" id="clCd" value="${clCd.clCd!}" />
-    </form>
     <!--begin::Question-->
     <div class="mb-0">
         <!--begin::Head-->
@@ -330,6 +327,10 @@
             </tbody>
         </table>
     </div>
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="clCd" id="clCd" value="${clCd.clCd!}" />
+    </form>
 </div>
 
 <#include "/view/admin/cd/cl_cd_reg_modal.ftlh">

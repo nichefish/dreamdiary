@@ -20,9 +20,6 @@
 
 <!--begin::Card-->
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="dreamDayNo" id="dreamDayNo" />
-    </form>
     <!--begin::Card header 검색+헤더 UI -->
     <#include "/view/dream/day/dream_day_page_header.ftlh">
 
@@ -37,6 +34,10 @@
         <#include "/view/_component/_pagination.ftlh">
         <!-- pagination::end -->
     </div>
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="dreamDayNo" id="dreamDayNo" />
+    </form>
 </div>
 <!--end::Card-->
 
