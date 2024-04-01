@@ -37,10 +37,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value=""/>
-        <input type="hidden" name="prevYn" id="prevYn" value="N"/>
-    </form>
     <div class="card-header border-0 pt-6">
         <form name="listForm" id="listForm" method="get">
             <div class="d-flex align-items-center">
@@ -231,6 +227,11 @@
             </table>
         </div>
     </div>
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" value=""/>
+        <input type="hidden" name="prevYn" id="prevYn" value="N"/>
+    </form>
 </div>
 
 </@layout.layout>

@@ -238,9 +238,6 @@
 
 <!-- class 속성이 덮어씌워지지 않아서 스타일 지정 -->
 <div class="card post" style="margin-top:15px !important;">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
-    </form>
     <!--begin:Form-->
     <form name="exptrPrsnlRegForm" id="exptrPrsnlRegForm" class="form">
         <input type="hidden" name="postNo" value="${post.postNo!}">
@@ -390,6 +387,10 @@
         </#if>
     </div>
     <!--end::Card footer-->
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
+    </form>
 </div>
 <!--end::Card-->
 

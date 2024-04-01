@@ -100,10 +100,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value=""/>
-        <input type="hidden" name="prevYn" id="prevYn" value="N"/>
-    </form>
     <#include "/view/exptr/prsnl/papr/exptr_prsnl_papr_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
@@ -198,9 +194,15 @@
         <!--end::Table row-->
         </tbody>
     </table>
+
     <!-- pagination::begin -->
     <#include "/view/_component/_pagination.ftlh">
     <!-- pagination::end -->
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" value=""/>
+        <input type="hidden" name="prevYn" id="prevYn" value="N"/>
+    </form>
 </div>
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">

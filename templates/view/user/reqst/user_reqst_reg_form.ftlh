@@ -211,13 +211,6 @@
 </style>
 
 <div class="card post" style="margin-top:1rem !important">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="userNo" value="${user.userNo!}">
-        <input type="hidden" name="proflImgUrl" value="${user.proflImgUrl!}">
-        <#if user.userProfl??>
-            <input type="hidden" name="userProflNo" value="${user.userProfl.userProflNo!}">
-        </#if>
-    </form>
     <!--begin::Form-->
     <form name="userReqstForm" id="userReqstForm" class="form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="userNo" value="${user.userNo!}">
@@ -296,7 +289,7 @@
             <div class="col-xl-2">
             </div>
             <div class="col-xl-10">
-                <div class="form-text">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
+                <div class="form-text text-noti">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
             </div>
         </div>
         <div class="row mb-4">      <!-- errorMsgSpan -->
@@ -427,6 +420,14 @@
         </div>
     </form>
     <!--end:Form-->
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="userNo" value="${user.userNo!}">
+        <input type="hidden" name="proflImgUrl" value="${user.proflImgUrl!}">
+        <#if user.userProfl??>
+            <input type="hidden" name="userProflNo" value="${user.userProfl.userProflNo!}">
+        </#if>
+    </form>
 </div>
 
 <#include "/view/user/info/user_info_reg_item_template.ftlh">       <!-- 기타정보 추가추가 영역 template-->

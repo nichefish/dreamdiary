@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-xl-9 text-start">
                             <input type="password" name="newPw" id="newPw" class="form-control required" maxlength="20">
-                            <div class="fs-8 form-text">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
+                            <div class="fs-8 text-noti form-text text-noti">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
                             <div id="newPwSpan"></div>
                         </div>
                     </div>

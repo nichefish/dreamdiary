@@ -129,14 +129,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-        <input type="hidden" name="exptrPrsnlItemNo" id="exptrPrsnlItemNo" />
-        <input type="hidden" name="orgnlRciptYn" id="orgnlRciptYn" />
-        <input type="hidden" name="rjectYn" id="rjectYn" />
-        <input type="hidden" name="rjectResn" id="rjectResn" />
-        <input type="hidden" name="mngrYn" value="Y">
-    </form>
     <!--begin::Card body-->
     <div class="mb-0">
         <!--begin::Form-->
@@ -341,6 +333,15 @@
         <!--end::Card footer-->
     </div>
     <!--end:Form-->
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+        <input type="hidden" name="exptrPrsnlItemNo" id="exptrPrsnlItemNo" />
+        <input type="hidden" name="orgnlRciptYn" id="orgnlRciptYn" />
+        <input type="hidden" name="rjectYn" id="rjectYn" />
+        <input type="hidden" name="rjectResn" id="rjectResn" />
+        <input type="hidden" name="mngrYn" value="Y">
+    </form>
 </div>
 <!--end::Card-->
 

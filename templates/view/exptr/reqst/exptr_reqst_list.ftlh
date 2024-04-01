@@ -58,9 +58,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" />
-    </form>
     <!--begin::Card header 검색+헤더 UI -->
     <#include "/view/exptr/reqst/exptr_reqst_list_header.ftlh">
     <!--end::Card header-->
@@ -106,7 +103,7 @@
                                     </span>
                                 </#if>
                                 <!-- 수정권한 표시 -->
-                                <#if ((post.managt.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
+                                <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
                                     <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
                                 </#if>
@@ -186,7 +183,7 @@
                                         [${post.comment.cnt!}]
                                     </span>
                                 </#if>
-                                <#if ((post.managt.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
+                                <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
                                     <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
                                 </#if>
@@ -257,6 +254,10 @@
     <!-- pagination::begin -->
     <#include "/view/_component/_pagination.ftlh">
     <!-- pagination::end -->
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" />
+    </form>
 </div>
 
 <#include "/view/exptr/reqst/exptr_reqst_dtl_modal.ftlh">

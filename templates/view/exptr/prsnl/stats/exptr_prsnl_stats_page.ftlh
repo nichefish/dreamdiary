@@ -46,9 +46,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" />
-    </form>
     <!--begin::Card header 검색+헤더 UI -->
     <div class="card-header border-0 pt-6">
         <form name="listForm" id="listForm" method="get">
@@ -163,6 +160,10 @@
         <!-- pagination::begin -->
         <!-- pagination::end -->
     </div>
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" />
+    </form>
 </div>
 
 </@layout.layout>

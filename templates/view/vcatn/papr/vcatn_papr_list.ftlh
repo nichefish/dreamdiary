@@ -57,9 +57,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" />
-    </form>
     <#include "/view/vcatn/papr/vcatn_papr_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
@@ -222,6 +219,10 @@
         </tbody>
     </table>
     <#include "/view/_component/_pagination.ftlh">
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" />
+    </form>
 </div>
 <!--end::post-->
 

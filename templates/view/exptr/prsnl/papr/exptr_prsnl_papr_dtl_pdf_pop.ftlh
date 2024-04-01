@@ -35,9 +35,6 @@
 </script>
 
 <div class="card post page">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
-    </form>
     <!--begin::Question-->
     <div class="mb-0">
         <!--begin::Head-->
@@ -141,6 +138,10 @@
             </table>
         </form>
     </div>
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
+    </form>
 </div>
 
 </@layout.layout>

@@ -204,15 +204,36 @@
 </style>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="userNo" value="${user.userNo!}">
-        <input type="hidden" name="proflImgUrl" value="${user.proflImgUrl!}">
-        <#if user.userInfo??>
-            <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
-        </#if>
-    </form>
+    <!--begin::Tab -->
+    <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
+        <li class="nav-item">
+            <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1">
+                <span class="nav-icon">
+                    <i class="bi bi-sort-down-alt"></i>
+                </span>
+                <span class="nav-text">전체 로그</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.logStatsUserList();">
+                <span class="nav-icon">
+                    <i class="bi bi-people"></i>
+                </span>
+                <span class="nav-text">사용자별</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.logStatsUserList();">
+                <span class="nav-icon">
+                    <i class="bi bi-grid-1x2"></i>
+                </span>
+                <span class="nav-text">기능별</span>
+            </a>
+        </li>
+    </ul>
+    <!--end: Tab-->
     <!--begin::Form-->
-    <form name="userRegForm" id="userRegForm" class="form" method="post" enctype="multipart/form-data">
+    <form name="userRegForm" id="userRegForm" class="form mt-10" method="post" enctype="multipart/form-data">
         <input type="hidden" name="userNo" value="${user.userNo!}">
         <input type="hidden" name="userProflYn" id="userProflYn" value="<#if (user.userInfo.userProflNo)??>Y<#else>N</#if>">
         <input type="hidden" name="atchFileNo" value="${user.atchFileNo!}">
@@ -292,7 +313,7 @@
             <div class="col-xl-2">
             </div>
             <div class="col-xl-10">
-                <div class="form-text">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
+                <div class="form-text text-noti">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
             </div>
         </div>
         <div class="row mb-4">      <!-- errorMsgSpan -->
@@ -317,7 +338,7 @@
                 <select name="authCd" id="authCd" class="form-select form-select-solid">
                     <option value="">--선택--</option>
                     <#list AUTH_CD![] as auth>
-                        <option value="${auth.dtlCd!}" id="${auth.dtlCd!}"<#if isMdf && auth.dtlCd == user.authCd> selected="selected"</#if>>${auth.dtlCdNm!}</option>
+                        <option value="${auth.dtlCd!}" id="${auth.dtlCd!}"<#if isMdf && auth.dtlCd! == user.authCd!> selected="selected"</#if>>${auth.dtlCdNm!}</option>
                     </#list>
                 </select>
             </div>
@@ -427,6 +448,14 @@
         </div>
     </form>
     <!--end:Form-->
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="userNo" value="${user.userNo!}">
+        <input type="hidden" name="proflImgUrl" value="${user.proflImgUrl!}">
+        <#if user.userInfo??>
+            <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
+        </#if>
+    </form>
 </div>
 
 <#include "/view/user/info/user_info_reg_item_template.ftlh">       <!-- 기타정보 추가추가 영역 template-->

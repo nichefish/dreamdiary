@@ -45,9 +45,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="userNo" id="userNo" />
-    </form>
     <!--begin::Card header 검색+헤더 UI -->
     <#include "/view/user/info/user_list_header.ftlh">
     <!--begin::Tab -->
@@ -172,6 +169,10 @@
     <!-- pagination::begin -->
     <#include "/view/_component/_pagination.ftlh">
     <!-- pagination::end -->
+
+    <form name="procForm" id="procForm">
+        <input type="hidden" name="userNo" id="userNo" />
+    </form>
 </div>
 
 </@layout.layout>

@@ -10,10 +10,6 @@
         return {
             init: function () {
                 commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
-
-                /** dateRangePicker init */
-                commons.datepicker.singleDatePicker("#searchStartDt", "yyyy-MM-DD");
-                commons.datepicker.singleDatePicker("#searchEndDt", "yyyy-MM-DD", commons.date.getCurrDateStr() + " 23:59:59");
             },
             /** 사용자별 로그 페이지로 이동 */
             logStatsUserList: function() {
