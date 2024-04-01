@@ -32,5 +32,5 @@ public class BaseControllerImpl
     protected ApplicationEventPublisher publisher;
 
     @Resource
-    private CacheManager cacheManager;
+    protected CacheManager cacheManager;
 }
