@@ -6,7 +6,7 @@
     <!--end::Notifications-->
     <div class="btn btn-icon btn-active-light-primary blink position-relative w-30px h-30px w-md-40px h-md-40px"
          data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="사이트맵 팝업을 호출합니다."
-         onclick="Layout.fnSiteMap();">
+         onclick="Layout.siteMapModal();">
         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
         <span class="svg-primary svg-icon svg-icon-1">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

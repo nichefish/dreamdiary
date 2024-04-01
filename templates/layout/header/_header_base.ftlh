@@ -29,15 +29,15 @@
                 }
             },
             /** 사이트맵 모달 팝업 호출 */
-            fnSiteMap: function() {
+            siteMapModal: function() {
                 $("#sitemap_modal").modal("show");
             },
             /** 내 정보 상세 페이지 이동 */
-            fnMyInfoDtl: function () {
+            myInfoDtl: function () {
                 location.replace("${SiteUrl.USER_MY_DTL!}");
             },
             /** 로그아웃 처림 */
-            fnLgout: function() {
+            lgout: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.lgout"/>,
                     showCancelButton: true,

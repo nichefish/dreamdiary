@@ -63,7 +63,7 @@
         <#if false>
             <#include "/layout/_notice_popup_modal.ftlh">
             <#include "/layout/_notice_popup_template.ftlh">
-            <#include "/layout/topbar/_sitemap_modal.ftlh">
+            <#include "/layout/topbar/_topbar_sitemap_modal.ftlh">
         </#if>
 
         <script>

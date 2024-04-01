@@ -5,7 +5,7 @@
 <!--begin::Footer-->
 <div class="aside-footer flex-column-auto pb-7 px-6" id="kt_aside_footer">
     <a href="javascript:void(0);" class="btn btn-primary btn-active-light-primary w-100"
-       onclick="Layout.fnLgout();"
+       onclick="Layout.lgout();"
        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="로그아웃합니다.">
         <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr076.svg-->
         <span class="svg-icon svg-icon-muted svg-icon-2">

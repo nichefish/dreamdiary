@@ -50,7 +50,7 @@
             <div class="d-flex align-items-center">
                 <span class="h2 pt-2" style="padding-right: 10px;">${(authInfo.nickNm)!}</span>
                 <button type="button" class="badge badge-primary"
-                        onclick="Layout.fnMyInfoDtl();"
+                        onclick="Layout.myInfoDtl();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내 정보 화면으로 이동합니다.">
                     <i class="fas fa-user-circle fs-8 text-white"></i>
                     내 정보
@@ -80,7 +80,7 @@
             <!--end::게시글 정보-->
             <div class="row">
                 <a href="javascript:void(0)" class="btn btn-light btn-light-primary fs-7 mt-2 w-100"
-                   onclick="Layout.fnLgout();"
+                   onclick="Layout.lgout();"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="로그아웃합니다.">
                     <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr076.svg-->
                     <span class="svg-icon svg-icon-muted svg-icon-2">
