@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
-import java.util.Map;
 
 /**
  * CommentController
@@ -57,8 +56,7 @@ public class CommentController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentListAjax(
-            final @ModelAttribute("searchParam") CommentSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
+            @ModelAttribute("searchParam") CommentSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) {
@@ -69,8 +67,8 @@ public class CommentController
         String resultMsg = "";
         try {
             Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
-            PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
-            Page<CommentListDto> commentList = commentService.getListDto(searchParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            Page<CommentListDto> commentList = commentService.getListDto(searchParam, pageRequest);
             ajaxResponse.setResultList(commentList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

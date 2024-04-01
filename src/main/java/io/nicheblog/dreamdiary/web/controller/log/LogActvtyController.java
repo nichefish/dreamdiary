@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * LogActvtyController
@@ -42,7 +41,6 @@ import java.util.Map;
 public class LogActvtyController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.LOG_ACTVTY_LIST;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_ACTVTY;        // 작업 카테고리 (로그 적재용)
 
     @ModelAttribute("actvtyCtgrCd")
@@ -63,8 +61,7 @@ public class LogActvtyController
     @GetMapping(SiteUrl.LOG_ACTVTY_LIST)
     @Secured(Constant.ROLE_MNGR)
     public String logActvtyList(
-            final @ModelAttribute("searchParam") LogActvtySearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
+            @ModelAttribute("searchParam") LogActvtySearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws IOException {
@@ -77,18 +74,19 @@ public class LogActvtyController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            String baseUrl = SiteUrl.LOG_ACTVTY_LIST;
+            searchParam = (LogActvtySearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "logDt", model);
-            Page<LogActvtyDto> logActvtyList = logActvtyService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
+            Page<LogActvtyDto> logActvtyList = logActvtyService.getListDto(searchParam, pageRequest);
             if (logActvtyList != null) model.addAttribute("logActvtyList", logActvtyList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(logActvtyList));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -111,8 +109,8 @@ public class LogActvtyController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> logActvtyDtlAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("logActvtyNo") Integer logActvtyNo
+            final @RequestParam("logActvtyNo") Integer logActvtyNo,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -146,8 +144,8 @@ public class LogActvtyController
     // @RequestMapping(SiteUrl.LOG_ACTVTY_LIST_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)
     // public void logActvtyListXlsxDownload(
+    //         @ModelAttribute("searchParam") LogActvtySearchParam searchParam,
     //         final LogActvtyParam logParam,
-    //         final @ModelAttribute("searchParam") LogActvtySearchParam searchParam,
     //         final @RequestParam Map<String, Object> searchParamMap
     // ) throws Exception {
 //

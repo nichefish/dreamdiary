@@ -34,7 +34,6 @@ import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
-import java.util.Map;
 
 /**
  * VcatnPaprController
@@ -75,9 +74,8 @@ public class VcatnPaprController
     @GetMapping(SiteUrl.VCATN_PAPR_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprList(
+            @ModelAttribute("searchParam") VcatnPaprSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") VcatnPaprSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) throws Exception {
 
@@ -88,20 +86,20 @@ public class VcatnPaprController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            searchParam = (VcatnPaprSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 상단 고정 목록 조회
             model.addAttribute("vcatnPaprFxdList", vcatnPaprService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managt.managtDt", model);
-            Page<VcatnPaprListDto> vcatnPaprList = vcatnPaprService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            Page<VcatnPaprListDto> vcatnPaprList = vcatnPaprService.getListDto(searchParam, pageRequest);
             if (vcatnPaprList != null) model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(vcatnPaprList));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -162,9 +160,9 @@ public class VcatnPaprController
     public ResponseEntity<AjaxResponse> vcatnPaprRegAjax(
             final @Valid VcatnPaprDto vcatnPaprDto,
             final @RequestParam("postNo") @Nullable Integer key,
-            final LogActvtyParam logParam,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
+            final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
             final BindingResult bindingResult
     ) {
@@ -208,8 +206,8 @@ public class VcatnPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprCfAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("postNo") Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -240,8 +238,8 @@ public class VcatnPaprController
     @RequestMapping(SiteUrl.VCATN_PAPR_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprMdfForm(
-            final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -279,8 +277,8 @@ public class VcatnPaprController
     @RequestMapping(SiteUrl.VCATN_PAPR_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprDtl(
-            final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -320,8 +318,8 @@ public class VcatnPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprDtlAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("postNo") Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -359,8 +357,8 @@ public class VcatnPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprDelAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("postNo") Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

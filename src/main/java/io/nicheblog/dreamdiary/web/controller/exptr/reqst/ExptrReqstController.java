@@ -38,7 +38,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * ExptrReqstController
@@ -77,9 +76,8 @@ public class ExptrReqstController
     @GetMapping(SiteUrl.EXPTR_REQST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstList(
+            @ModelAttribute("searchParam") ExptrReqstSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") ExptrReqstSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) throws IOException {
 
@@ -90,15 +88,15 @@ public class ExptrReqstController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            searchParam = (ExptrReqstSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 상단 고정 목록 조회
             List<ExptrReqstListDto> exptrReqstFxdList = exptrReqstService.getFxdList();
             model.addAttribute("exptrReqstFxdList", exptrReqstFxdList);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "regDt", model);
-            // PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managt.managtDt", model);
-            Page<ExptrReqstListDto> exptrReqstList = exptrReqstService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "regDt", model);
+            // PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            Page<ExptrReqstListDto> exptrReqstList = exptrReqstService.getListDto(searchParam, pageRequest);
             if (exptrReqstList != null) model.addAttribute("exptrReqstList", exptrReqstList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrReqstList));
             cdService.setModelCdData(Constant.EXPTR_REQST_CTGR_CD, model);
@@ -106,7 +104,7 @@ public class ExptrReqstController
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -181,7 +179,6 @@ public class ExptrReqstController
         String resultMsg = "";
         try {
             isSuccess = true;
-            // TODO: 파일 정보는? 하려면 불필요하게 난해하다...
             model.addAttribute("post", exptrReqstDto);
             model.addAttribute("currDateStr", DateUtils.getCurrDateStr(DateUtils.PTN_DATETIME));
         } catch (Exception e) {
@@ -207,9 +204,9 @@ public class ExptrReqstController
     public ResponseEntity<AjaxResponse> exptrReqstRegAjax(
             final @Valid ExptrReqstDto exptrReqstDto,
             final @RequestParam("postNo") @Nullable Integer key,
-            final LogActvtyParam logParam,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
+            final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
             final BindingResult bindingResult
     ) {
@@ -253,8 +250,8 @@ public class ExptrReqstController
     @RequestMapping(value = SiteUrl.EXPTR_REQST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstDtl(
-            final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -295,8 +292,8 @@ public class ExptrReqstController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> postDtlAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("postNo") Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -335,8 +332,8 @@ public class ExptrReqstController
     @RequestMapping(value = SiteUrl.EXPTR_REQST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstMdfForm(
-            final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -378,8 +375,8 @@ public class ExptrReqstController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrReqstDelAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("postNo") Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -446,8 +443,8 @@ public class ExptrReqstController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrReqstDismissAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("postNo") Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

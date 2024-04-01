@@ -7,8 +7,8 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
@@ -30,10 +30,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
-import java.util.Map;
 
 /**
  * UserInfoController
@@ -73,8 +73,7 @@ public class UserController
     @GetMapping(SiteUrl.USER_LIST)
     @Secured(Constant.ROLE_MNGR)
     public String userList(
-            final @ModelAttribute("searchParam") UserSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
+            @ModelAttribute("searchParam") UserSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
@@ -86,14 +85,14 @@ public class UserController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            searchParam = (UserSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.ASC, "acntStus.cfYn")
                             .and(Sort.by(Sort.Direction.ASC, "acntStus.lockedYn"))
                             .and(Sort.by(Sort.Direction.DESC, "regDt"));
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, sort, model);
-            Page<UserListDto> userList = userService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            Page<UserListDto> userList = userService.getListDto(searchParam, pageRequest);
             if (userList != null) model.addAttribute("userList", userList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(userList));
             isSuccess = true;
@@ -103,7 +102,7 @@ public class UserController
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
             cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
 
-            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -165,8 +164,8 @@ public class UserController
     @PostMapping(SiteUrl.USER_ID_DUP_CHK_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userIdDupChckAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("userId") String userId
+            final @RequestParam("userId") String userId,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -200,7 +199,7 @@ public class UserController
     @ResponseBody
     public ResponseEntity<AjaxResponse> userRegAjax(
             final @Valid UserDto userDto,
-            final Integer userNo,
+            final @RequestParam("userNo") @Nullable Integer userNo,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
             final BindingResult bindingResult
@@ -238,7 +237,7 @@ public class UserController
     @RequestMapping(SiteUrl.USER_DTL)
     @Secured(Constant.ROLE_MNGR)
     public String userDtl(
-            final @RequestParam("userNo") String userNoStr,
+            final @RequestParam("userNo") Integer userNo,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
@@ -249,7 +248,6 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer userNo = Integer.parseInt(userNoStr);
             UserDto rsUserDto = userService.getDtlDto(userNo);
             model.addAttribute("user", rsUserDto);
             isSuccess = true;
@@ -261,7 +259,7 @@ public class UserController
             MessageUtils.alertMessage(resultMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setCn("key: " + userNoStr);
+            logParam.setCn("key: " + userNo);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -276,8 +274,8 @@ public class UserController
     @RequestMapping(SiteUrl.USER_MDF_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String userMdfForm(
+            final @RequestParam("userNo") Integer userNo,
             final LogActvtyParam logParam,
-            final @RequestParam("userNo") String userNoStr,
             final ModelMap model
     ) throws Exception {
 
@@ -287,7 +285,6 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer userNo = Integer.parseInt(userNoStr);
             UserDto rsUserDto = userService.getDtlDto(userNo);
             model.addAttribute("user", rsUserDto);
 
@@ -306,7 +303,7 @@ public class UserController
             MessageUtils.alertMessage(resultMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setCn("key: " + userNoStr);
+            logParam.setCn("key: " + userNo);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -322,8 +319,8 @@ public class UserController
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> passwordResetAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("userNo") String userNoStr
+            final @RequestParam("userNo") Integer userNo,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -331,7 +328,6 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer userNo = Integer.parseInt(userNoStr);
             isSuccess = userService.passwordReset(userNo);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS_PW_RESET : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -355,8 +351,8 @@ public class UserController
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userDelAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("userNo") String userNoStr
+            final @RequestParam("userNo") Integer userNo,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -364,7 +360,6 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer userNo = Integer.parseInt(userNoStr);
             UserDto rsUserDto = userService.getDtlDto(userNo);
             // 내 정보인지 비교
             if (AuthUtils.isMyInfo(rsUserDto.getUserId())) {
@@ -395,9 +390,8 @@ public class UserController
     @RequestMapping(SiteUrl.USER_LIST_XLSX_DOWNLOAD)
     @Secured(Constant.ROLE_MNGR)
     public void userListXlsxDownload(
-            final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") UserSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap
+            @ModelAttribute("searchParam") UserSearchParam searchParam,
+            final LogActvtyParam logParam
     ) throws Exception {
 
         boolean isSuccess = false;

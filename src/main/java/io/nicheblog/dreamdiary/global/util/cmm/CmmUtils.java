@@ -3,23 +3,15 @@ package io.nicheblog.dreamdiary.global.util.cmm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
-import io.nicheblog.dreamdiary.global.util.CookieUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.global.validator.CmmRegex;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -41,22 +33,6 @@ public class CmmUtils {
     /** 파라피터 관련 메소드 분리 및 합성 */
     public static class Param extends ParamModule {}
 
-    /** 쿠키 관련 메소드 분리 및 합성 */
-    public static class Cookie extends CookieUtils {}
-
-    public void streSearchParam(
-            final String listUrl,
-            final BaseSearchParam searchParam
-    ) {
-
-        ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = servletRequestAttribute.getRequest().getSession(true);
-        // 세션?에 목록 검색 인자 저장
-        session.setAttribute("prevSearchMap", searchParam);
-        session.setAttribute("prevListUrl", listUrl);
-    }
-
-
     /**
      * 공통 > Object -> Map으로 변환
      */
@@ -64,35 +40,6 @@ public class CmmUtils {
         if (searchParam == null) return new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
         return mapper.convertValue(searchParam, HashMap.class);
-    }
-
-    /**
-     * 공통 > pageSize, pageNo로 페이징 요청 정보 생성
-     */
-    public static PageRequest getPageRequest(
-            final Map<String, Object> searchParamMap,
-            final String sortParam,
-            final ModelMap model
-    ) throws Exception {
-        Sort sort = Sort.by(Sort.Direction.DESC, sortParam);
-        return getPageRequest(searchParamMap, sort, model);
-    }
-
-    public static PageRequest getPageRequest(
-            final Map<String, Object> searchParamMap,
-            final Sort sort,
-            final ModelMap model
-    ) throws Exception {
-        String pageSizeStr = (String) searchParamMap.get("pageSize");
-        String pageNoStr = (String) searchParamMap.get("pageNo");
-        int pageSize = StringUtils.isNotEmpty(pageSizeStr) ? Integer.parseInt(pageSizeStr) : 10;
-        int pageNo = StringUtils.isNotEmpty(pageNoStr) ? Integer.parseInt(pageNoStr) : 1;
-        if (model != null) {
-            model.addAttribute("pageSize", pageSize);
-            model.addAttribute("pageNo", pageNo);
-        }
-        int pageIdx = pageNo - 1;
-        return PageRequest.of(pageIdx, pageSize, sort);
     }
 
     /**

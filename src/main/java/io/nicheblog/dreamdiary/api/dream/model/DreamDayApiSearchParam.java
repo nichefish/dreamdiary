@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.api.dream.model;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 
 /**
@@ -15,7 +16,8 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class DreamDayApiSearchParam {
+public class DreamDayApiSearchParam
+        extends BaseSearchParam {
 
     /**
      * 글분류 코드

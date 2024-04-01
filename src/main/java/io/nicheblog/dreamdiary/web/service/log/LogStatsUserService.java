@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.log;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.mapstruct.log.LogStatsUserMapstruct;
@@ -46,9 +47,11 @@ public class LogStatsUserService {
      * 활동 로그 > 활동 로그 목록 조회 (dto level)
      */
     public List<LogStatsUserDto> logStatsUserDtoList(
-            final Map<String, Object> searchParamMap,
+            final BaseSearchParam searchParam,
             final Pageable pageable
     ) throws Exception {
+
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         List<LogStatsUserIntrfc> intrfcList = this.getStatsUserIntrfcList(searchParamMap, pageable);
 
         List<LogStatsUserDto> dtoList = new ArrayList<>();
@@ -75,9 +78,11 @@ public class LogStatsUserService {
     }
 
     public List<LogStatsUserDto> logStatsNotUserDtoList(
-            Map<String, Object> searchParamMap,
+            final BaseSearchParam searchParam,
             Pageable pageable
     ) throws Exception {
+
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         List<LogStatsUserIntrfc> intrfcList = this.getStatsNotUserIntrfcList(searchParamMap, pageable);
 
         List<LogStatsUserDto> dtoList = new ArrayList<>();

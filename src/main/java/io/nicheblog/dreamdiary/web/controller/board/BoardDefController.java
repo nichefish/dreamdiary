@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
-import java.util.Map;
 
 /**
  * BoardDefController
@@ -66,8 +65,7 @@ public class BoardDefController
     @GetMapping(SiteUrl.BOARD_DEF_LIST)
     @Secured({Constant.ROLE_MNGR})
     public String boardDefList(
-            final @ModelAttribute("searchParam") BoardDefSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
+            @ModelAttribute("searchParam") BoardDefSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
@@ -80,16 +78,16 @@ public class BoardDefController
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             String baseUrl = SiteUrl.BOARD_DEF_LIST;
-            Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            searchParam = (BoardDefSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "sortOrdr", model);
-            Page<BoardDefDto> boardDefMngList = boardDefService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "sortOrdr", model);
+            Page<BoardDefDto> boardDefMngList = boardDefService.getListDto(searchParam, pageRequest);
             if (boardDefMngList != null) model.addAttribute("boardDefMngList", boardDefMngList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(boardDefMngList));
             cdService.setModelCdData(Constant.POST_CD, model);
 
-            CmmUtils.Param.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -190,8 +188,8 @@ public class BoardDefController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefUseAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("boardCd") String boardCd
+            final @RequestParam("boardCd") String boardCd,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -224,8 +222,8 @@ public class BoardDefController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefUnuseAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("boardCd") String boardCd
+            final @RequestParam("boardCd") String boardCd,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -258,8 +256,8 @@ public class BoardDefController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefDelAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("boardCd") String boardCd
+            final @RequestParam("boardCd") String boardCd,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

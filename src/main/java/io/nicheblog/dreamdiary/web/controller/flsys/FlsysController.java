@@ -12,7 +12,6 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.model.flsys.FlsysCmmDto;
 import io.nicheblog.dreamdiary.web.model.flsys.FlsysSearchParam;
 import io.nicheblog.dreamdiary.web.service.flsys.FlsysService;
@@ -64,10 +63,9 @@ public class FlsysController
     @RequestMapping(SiteUrl.FLSYS_HOME)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String flsysList(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteMenuAcsInfo,
-            final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") FlsysSearchParam searchParam,
+            @ModelAttribute("searchParam") FlsysSearchParam searchParam,
             final @RequestParam("filePath") @Nullable String filePathParam,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -104,8 +102,8 @@ public class FlsysController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> flsysListAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("filePath") String filePath
+            final @RequestParam("filePath") String filePath,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -139,8 +137,8 @@ public class FlsysController
     @RequestMapping(SiteUrl.FLSYS_FILE_DOWNLOAD)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public void flsysFileDownload(
-            final LogActvtyParam logParam,
-            final @RequestParam("filePath") String filePath
+            final @RequestParam("filePath") String filePath,
+            final LogActvtyParam logParam
     ) throws Exception {
 
         boolean isSuccess = false;

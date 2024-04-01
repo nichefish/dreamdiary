@@ -49,8 +49,8 @@ public class PrjctController
     @GetMapping(SiteUrl.PRJCT_INFO_LIST)
     @Secured({Constant.ROLE_MNGR})
     public String prjctInfoList(
+            @ModelAttribute("searchParam") FlsysSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") FlsysSearchParam searchParam,
             final ModelMap model
     ) throws Exception {
 

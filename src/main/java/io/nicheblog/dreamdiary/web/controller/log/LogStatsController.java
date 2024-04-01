@@ -18,12 +18,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * LogStatsUserController
@@ -58,9 +56,8 @@ public class LogStatsController
     @GetMapping(SiteUrl.LOG_STATS_USER_LIST)
     @Secured(Constant.ROLE_MNGR)
     public String logStatsUserList(
+            @ModelAttribute("searchParam") LogStatsSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") LogStatsSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) throws IOException {
 
@@ -72,18 +69,18 @@ public class LogStatsController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            searchParam = (LogStatsSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            List<LogStatsUserDto> logStatsUserList = logStatsUserService.logStatsUserDtoList(listParamMap, Pageable.unpaged());
+            List<LogStatsUserDto> logStatsUserList = logStatsUserService.logStatsUserDtoList(searchParam, Pageable.unpaged());
             if (logStatsUserList != null) model.addAttribute("logStatsUserList", logStatsUserList);
-            List<LogStatsUserDto> logStatsNotUserList = logStatsUserService.logStatsNotUserDtoList(listParamMap, Pageable.unpaged());
+            List<LogStatsUserDto> logStatsNotUserList = logStatsUserService.logStatsNotUserDtoList(searchParam, Pageable.unpaged());
             if (logStatsUserList != null) model.addAttribute("logStatsNotUserList", logStatsNotUserList);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

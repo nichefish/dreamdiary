@@ -64,7 +64,7 @@ public class DreamDayApiController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dreamDayListAjax(
-            final DreamDayApiSearchParam searchParam,
+            DreamDayApiSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) {
@@ -76,7 +76,7 @@ public class DreamDayApiController
         try {
             Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
             Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
-            PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getListDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(dreamDayList.getContent());
             isSuccess = true;

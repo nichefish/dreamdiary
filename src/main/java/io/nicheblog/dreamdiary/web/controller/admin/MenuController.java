@@ -5,8 +5,8 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
@@ -31,7 +31,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.util.Map;
 
 /**
  * MenuController
@@ -64,8 +63,7 @@ public class MenuController
      */
     @RequestMapping(SiteUrl.MENU_LIST)
     public String menuList(
-            final @ModelAttribute("searchParam") MenuSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
+            @ModelAttribute("searchParam") MenuSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws IOException {
@@ -136,8 +134,8 @@ public class MenuController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuDtlAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("menuId") String menuIdStr
+            final @RequestParam("menuId") String menuIdStr,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -175,9 +173,8 @@ public class MenuController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuListAjax(
+            @ModelAttribute("searchParam") MenuSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") MenuSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) {
 
@@ -188,8 +185,8 @@ public class MenuController
         try {
             // 팝업공지 목록 조회
             Sort sort = Sort.by(Sort.Direction.ASC, "sortOrdr");
-            PageRequest pageRequest = CmmUtils.getPageRequest(searchParamMap, sort, model);
-            Page<MenuListDto> menuList = menuService.getMainMenuList(searchParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            Page<MenuListDto> menuList = menuService.getMainMenuList(searchParam, pageRequest);
             ajaxResponse.setResultList(menuList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -214,8 +211,8 @@ public class MenuController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuDelAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("menuId") String menuIdStr
+            final @RequestParam("menuId") String menuIdStr,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

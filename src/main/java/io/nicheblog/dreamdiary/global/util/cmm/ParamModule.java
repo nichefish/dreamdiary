@@ -1,11 +1,12 @@
 package io.nicheblog.dreamdiary.global.util.cmm;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.util.date.DateParser;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -28,12 +29,10 @@ class ParamModule {
 
     /**
      * 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-     *
-     * @return
      */
-    public static BasePostSearchParam checkPrevSearchParam(
+    public static BaseSearchParam checkPrevSearchParam(
             final String listUrl,
-            final BasePostSearchParam searchParam
+            final BaseSearchParam searchParam
     ) {
 
         if (StringUtils.isEmpty(listUrl)) return searchParam;
@@ -45,63 +44,65 @@ class ParamModule {
         String prevListUrl = (String) session.getAttribute("prevListUrl");
         if (StringUtils.isEmpty(prevListUrl) || !listUrl.equals(prevListUrl)) return searchParam;
 
-        return (BasePostSearchParam) session.getAttribute("prevSearchParam");
+        return (BaseSearchParam) session.getAttribute("prevSearchParam");
     }
-
-
-
-
 
     /**
-     * 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
+     * 공통 > pageSize, pageNo로 페이징 요청 정보 생성
      */
-    public static Map<String, Object> checkPrevSearchMap(
-            final Map<String, Object> searchParamMap,
-            final String listUrl,
-            final BaseSearchParam searchParam
-    ) {
-        // 세션?에서 목록 검색 인자 저장해둔 거 있는지 체크 :: 메소드 분리
-        if (!searchParam.isBackToList()) return searchParamMap;
+    public static PageRequest getPageRequest(
+            final BaseSearchParam searchParam,
+            final String sortParam,
+            final ModelMap model
+    ) throws Exception {
 
-        ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = servletRequestAttribute.getRequest().getSession(true);
-
-        Map<String, Object> prevSearchMap = (Map<String, Object>) session.getAttribute("prevSearchMap");
-        String prevListUrl = (String) session.getAttribute("prevListUrl");
-        boolean hasPrevSearchMap = listUrl.equals(prevListUrl) && prevSearchMap != null;
-        if (!hasPrevSearchMap) return searchParamMap;
-        return (Map<String, Object>) CmmUtils.copyMap(prevSearchMap, "", null);
+        Sort sort = Sort.by(Sort.Direction.DESC, sortParam);
+        return getPageRequest(searchParam, sort, model);
     }
 
+    /**
+     * 공통 > pageSize, pageNo로 페이징 요청 정보 생성
+     */
+    public static PageRequest getPageRequest(
+            final BaseSearchParam searchParam,
+            final Sort sort,
+            final ModelMap model
+    ) throws Exception {
+
+        Integer pageSize = searchParam.getPageSize();
+        Integer pageNo = searchParam.getPageNo();
+        if (model != null) {
+            model.addAttribute("pageSize", pageSize);
+            model.addAttribute("pageNo", pageNo);
+        }
+        int pageIdx = pageNo - 1;
+        return PageRequest.of(pageIdx, pageSize, sort);
+    }
 
     /**
      * 공통 > 처리를 마친 parameterMap 값을 공백 제거하여 entrySet으로 화면에 추가
      */
     public static void setModelAttrMap(
-            final Map<String, Object> searchParamMap,
-            final BaseSearchParam param,
+            final BaseSearchParam searchParam,
             final String listUrl,
             final ModelMap model
     ) {
-
-        model.addAttribute("searchParamMap", searchParamMap);
 
         ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = servletRequestAttribute.getRequest().getSession(true);
 
         // 내 글 보기 체크시 목록 돌아가기 버튼 보여지기 위해 값 저장
-        boolean isMyPapr = !param.isBackToList() && param.isAction(Constant.ACTION_TY_MY_PAPR);
-        boolean isBackToMyPapr = param.isBackToList() && (Constant.ACTION_TY_MY_PAPR.equals(searchParamMap.get("actionTyCd")));
+        boolean isMyPapr = !searchParam.isBackToList() && searchParam.isAction(Constant.ACTION_TY_MY_PAPR);
+        boolean isBackToMyPapr = searchParam.isBackToList() && (Constant.ACTION_TY_MY_PAPR.equals(searchParam.getActionTyCd()));
         if (isMyPapr || isBackToMyPapr) model.addAttribute(Constant.ACTION_TY_MY_PAPR, true);
 
         // 목록 URL 모델에 추가 (검색 공통사용 용도)
         model.addAttribute(Constant.LIST_URL, listUrl);
 
         // 세션?에 목록 검색 인자 저장
-        session.setAttribute("prevSearchMap", searchParamMap);
+        session.setAttribute("prevSearchParam", searchParam);
         session.setAttribute("prevListUrl", listUrl);
     }
-
 
     /**
      * 공통 > 목록 검색 parameterMap 빈 값 걸러내고 정돈
@@ -150,5 +151,18 @@ class ParamModule {
             }
         }
         return filteredSearchKey;
+    }
+
+
+    public void streSearchParam(
+            final String listUrl,
+            final BaseSearchParam searchParam
+    ) {
+
+        ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = servletRequestAttribute.getRequest().getSession(true);
+        // 세션?에 목록 검색 인자 저장
+        session.setAttribute("prevSearchMap", searchParam);
+        session.setAttribute("prevListUrl", listUrl);
     }
 }

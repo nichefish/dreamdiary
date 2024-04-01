@@ -80,9 +80,8 @@ public class ExptrPrsnlPaprController
     @GetMapping(SiteUrl.EXPTR_PRSNL_PAPR_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlList(
+            @ModelAttribute("searchParam") ExptrPrsnlPaprSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") ExptrPrsnlPaprSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) throws Exception {
 
@@ -93,15 +92,15 @@ public class ExptrPrsnlPaprController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            searchParam = (ExptrPrsnlPaprSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.DESC, "yy")
                             .and(Sort.by(Sort.Direction.DESC, "mnth"))
                             .and(Sort.by(Sort.Direction.ASC, "cfYn"));
                             //.and(Sort.by(Sort.Direction.DESC, "managt.managtDt"))
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, sort, model);
-            Page<ExptrPrsnlPaprListDto> exptrPrsnlList = exptrPrsnlPaprService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            Page<ExptrPrsnlPaprListDto> exptrPrsnlList = exptrPrsnlPaprService.getListDto(searchParam, pageRequest);
             if (exptrPrsnlList != null) model.addAttribute("exptrPrsnlList", exptrPrsnlList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrPrsnlList));
             cdService.setModelCdData(Constant.YY_CD, model);
@@ -110,7 +109,7 @@ public class ExptrPrsnlPaprController
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -168,9 +167,9 @@ public class ExptrPrsnlPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlYyMnthChckAjax(
-            final LogActvtyParam logParam,
             final @RequestParam("yy") String yyStr,
-            final @RequestParam("mnth") String mnthStr
+            final @RequestParam("mnth") String mnthStr,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -204,8 +203,8 @@ public class ExptrPrsnlPaprController
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlRegForm(
-            final LogActvtyParam logParam,
             final @RequestParam("prevYn") @Nullable String prevYn,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -289,8 +288,8 @@ public class ExptrPrsnlPaprController
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlDtl(
-            final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -330,8 +329,8 @@ public class ExptrPrsnlPaprController
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_PDF_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlPdfPop(
-            final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -368,9 +367,9 @@ public class ExptrPrsnlPaprController
     @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlMdfForm(
-            final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
             final @RequestParam("mngrYn") @Nullable String mngrYn,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -416,8 +415,8 @@ public class ExptrPrsnlPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlDelAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("postNo") Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

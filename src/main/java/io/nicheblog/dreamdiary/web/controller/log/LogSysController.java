@@ -25,7 +25,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 /**
  * LogSysController
@@ -59,9 +58,8 @@ public class LogSysController
     @GetMapping(SiteUrl.LOG_SYS_LIST)
     @Secured(Constant.ROLE_MNGR)
     public String logSysList(
+            @ModelAttribute("searchParam") LogSysSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") LogSysSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) throws Exception {
 
@@ -73,18 +71,18 @@ public class LogSysController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            searchParam = (LogSysSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "logDt", model);
-            Page<LogSysDto> logSysList = logSysService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
+            Page<LogSysDto> logSysList = logSysService.getListDto(searchParam, pageRequest);
             if (logSysList != null) model.addAttribute("logSysList", logSysList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(logSysList));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -108,8 +106,8 @@ public class LogSysController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> logActvtyDtlAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("logSysNo") Integer logSysNo
+            final @RequestParam("logSysNo") Integer logSysNo,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

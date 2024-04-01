@@ -34,7 +34,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * BoardPostController
@@ -64,9 +63,6 @@ public class BoardPostController
     @Resource(name = "boardPostService")
     private BoardPostService boardPostService;
 
-    // @Resource(name = "boardPostManagtrService")
-    // private BoardPostManagtrService boardPostManagtrService;
-
     // @Resource(name = "boardTagService")
     // private BoardTagService boardTagService;
 
@@ -89,9 +85,8 @@ public class BoardPostController
     @GetMapping(SiteUrl.BOARD_POST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostList(
-            final @ModelAttribute("searchParam") BoardPostSearchParam searchParam,
+            @ModelAttribute("searchParam") BoardPostSearchParam searchParam,
             final @RequestParam("boardCd") String boardCd,
-            final @RequestParam Map<String, Object> searchParamMap,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
@@ -107,11 +102,11 @@ public class BoardPostController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            searchParam = (BoardPostSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "managt.managtDt", model);
-            Page<BoardPostListDto> postList = boardPostService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            Page<BoardPostListDto> postList = boardPostService.getListDto(searchParam, pageRequest);
             if (postList != null) model.addAttribute("postList", postList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(postList));
             model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdListByClCd(boardDef.getCtgrClCd()));
@@ -119,12 +114,12 @@ public class BoardPostController
             List<BoardPostListDto> postFxdList = boardPostService.getFxdList(boardCd);
             model.addAttribute("postFxdList", postFxdList);
             // 태그 전체 목록 조회
-            // Page<BoardTagDto> tagList = boardTagService.getListDto(listParamMap, Pageable.unpaged());
+            // Page<BoardTagDto> tagList = boardTagService.getListDto(searchParam, Pageable.unpaged());
             // model.addAttribute("tagList", tagList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            CmmUtils.Param.setModelAttrMap(listParamMap, searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -204,18 +199,7 @@ public class BoardPostController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 태그를 먼저 처리해준다.
-            // String tagListStr = boardPostDto.getTagListStr();
-            // List<BoardTagDto> tagList = boardTagService.parseTagList(tagListStr);
-            // if (!CollectionUtils.isEmpty(tagList)) {
-            //     List<BoardPostTagDto> postTagList = new ArrayList<>();
-            //     for (BoardTagDto tag : tagList) {
-            //         postTagList.add(new BoardPostTagDto(tag.getBoardTag()));
-            //     }
-            //     boardPostDto.setTagList(postTagList);
-            // }
             isSuccess = true;
-            // TODO: 파일 정보는? 하려면 불필요하게 난해하다...
             model.addAttribute("post", boardPostDto);
             model.addAttribute("currDateStr", DateUtils.getCurrDateStr(DateUtils.PTN_DATETIME));
         } catch (Exception e) {

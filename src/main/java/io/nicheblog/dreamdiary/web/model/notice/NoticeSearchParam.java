@@ -28,4 +28,6 @@ public class NoticeSearchParam
     /** 컨텐츠 타입 */
     private String contentType = ContentType.NOTICE.key;
 
+    private String test;
+
 }
