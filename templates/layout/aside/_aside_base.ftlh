@@ -7,7 +7,7 @@
 <#assign siteMenuNo = (siteAcsInfo.siteMenuNo)!>
 <script>
     /** 레이아웃 */
-    let Aside = function() {
+    const Aside = function() {
         return {
             init: function() {
                 /** 현재 접속중인 메뉴 활성화 로직 */
@@ -16,17 +16,22 @@
                     $("#${topMenuNo!}").addClass("hover");
                     $("#${siteMenuNo}").addClass("hover");
                 }
+
+                let isAsideMinimized = ${aside_minimized!};
+                console.log("aside_minimized: ", isAsideMinimized);
             },
             /** 사이드바 설정 쿠키 저장 */
             setAsideCookie: function() {
                 <#if Constant??>
+
                     const wasMinimizeOn = ($("#kt_body").attr("data-kt-aside-minimize") === "on");
-                    let toMode = !!wasMinimizeOn ? "${Constant.ASIDE_MENU_FIXED!}" : "${Constant.ASIDE_MENU_MINIMIZED!}";
-                    let options = {
+                    const toMode = !!wasMinimizeOn ? "${Constant.ASIDE_FIXED!}" : "${Constant.ASIDE_MINIMIZED!}";
+                    const options = {
                         path: "/",
-                        expires: commons.date.getCurrDateAddDay(36135)
+                        expires: commons.date.getCurrDateAddDay(361)
                     };
                     $.cookie("${Constant.ASIDE_MENU!}", toMode, options);
+                    console.log($.cookie("${Constant.ASIDE_MENU!}"));
                 </#if>
             },
         }

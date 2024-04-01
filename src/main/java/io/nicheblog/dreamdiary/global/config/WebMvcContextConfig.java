@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global.config;
 
 import io.nicheblog.dreamdiary.api.ApiUrl;
 import io.nicheblog.dreamdiary.global.handler.UTF8DecodeResourceResolver;
+import io.nicheblog.dreamdiary.global.interceptor.CookieInterceptor;
 import io.nicheblog.dreamdiary.global.interceptor.FreemarkerInterceptor;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +32,9 @@ public class WebMvcContextConfig
 
     @Resource(name = "freemarkerInterceptor")
     private FreemarkerInterceptor freemarkerInterceptor;
+
+    @Resource(name = "cookieInterceptor")
+    private CookieInterceptor cookieInterceptor;
 
     private static final List<String> STATIC_RESOURCES_URL_PATTERN = List.of("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/**");
 
@@ -123,6 +127,9 @@ public class WebMvcContextConfig
                 .excludePathPatterns("/**/*Download.do")
                 /* ajax 호출의 경우 처리하지 않음 */
                 .excludePathPatterns("/**/*Ajax.do");
+
+        // 쿠키 관련 인터셉터 수동 추가
+        registry.addInterceptor(cookieInterceptor);
 
         // device 감지 관련 인터셉터 수동 추가
         registry.addInterceptor(new DeviceResolverHandlerInterceptor());
