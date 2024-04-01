@@ -6,7 +6,7 @@ import lombok.extern.log4j.Log4j2;
 /**
  * CryptoUtils
  * <pre>
- *  암호화 유틸리티 모듈
+ *  암호화 관련 유틸리티 모듈
  * </pre>
  *
  * @author nichefish
@@ -19,9 +19,5 @@ public class CryptoUtils {
     public static class AES128 extends AES128Module {}
 
     /** 마스킹 관련 유틸리티 메소드 위임 */
-    public static class Mask extends MaskingUtils {}
-
-
-    /** 마스킹 관련 유틸리티 메소드 위임 */
-    public static MaskingUtils mask;
+    public static class Mask extends MaskingModule {}
 }

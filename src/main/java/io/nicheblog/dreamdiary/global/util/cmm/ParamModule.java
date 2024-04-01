@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * CmmUtils
+ * ParamModule
  * <pre>
  *  공통, 기본 기능 처리 유틸리티 모듈
  * </pre>

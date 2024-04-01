@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.flsys;
 
-import io.nicheblog.dreamdiary.web.model.cmm.BaseSearchParam;
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
 
 /**
@@ -18,14 +18,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class FlsysSearchParam
-        extends BaseSearchParam {
+        extends BasePostSearchParam {
 
-    /**
-     * 글분류 코드
-     */
-    private String ctgrCd;
-    /**
-     * 제목
-     */
-    private String postSj;
+    //
 }

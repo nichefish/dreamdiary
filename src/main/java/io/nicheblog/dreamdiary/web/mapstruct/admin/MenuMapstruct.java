@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.MenuEntity;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
 import io.nicheblog.dreamdiary.web.model.admin.MenuListDto;
