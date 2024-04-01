@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.mapstruct.notice;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.MapstructHelper;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeListDto;

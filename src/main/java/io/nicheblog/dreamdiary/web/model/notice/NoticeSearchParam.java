@@ -1,5 +1,8 @@
 package io.nicheblog.dreamdiary.web.model.notice;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
 
@@ -17,8 +20,12 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NoticeSearchParam
         extends BasePostSearchParam {
 
-    //
+    /** 컨텐츠 타입 */
+    private String contentType = ContentType.NOTICE.key;
+
 }
