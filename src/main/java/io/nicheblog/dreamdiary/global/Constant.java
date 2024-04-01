@@ -4,6 +4,9 @@ import io.nicheblog.dreamdiary.api.ApiConstant;
 import io.nicheblog.dreamdiary.global.auth.Auth;
 import lombok.AllArgsConstructor;
 
+import java.util.Locale;
+import java.util.TimeZone;
+
 /**
  * Constant
  * <pre>
@@ -21,6 +24,8 @@ public final class Constant
      * TimeZone
      */
     public static final String LOC_SEOUL = "Asia/Seoul";
+    public static final TimeZone TZ_SEOUL = TimeZone.getTimeZone(Constant.LOC_SEOUL);
+    public static final Locale LC_KO = new Locale("ko", "KR");
 
     public static final String PAGE_LGN = "로그인";
     public static final String PAGE_MAIN = "메인";
