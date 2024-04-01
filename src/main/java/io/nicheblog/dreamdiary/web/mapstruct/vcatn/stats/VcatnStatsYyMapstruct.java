@@ -25,8 +25,8 @@ public interface VcatnStatsYyMapstruct
     /**
      * Entity -> Dto
      */
-    @Mapping(target = "bgnDt", expression = "java(entity.getBgnDt() != null ? DateUtils.dateToStr(entity.getBgnDt(), DateUtils.PTN_DATE) : null)")
-    @Mapping(target = "endDt", expression = "java(entity.getEndDt() != null ? DateUtils.dateToStr(entity.getEndDt(), DateUtils.PTN_DATE) : null)")
+    @Mapping(target = "bgnDt", expression = "java(entity.getBgnDt() != null ? DateUtils.asStr(entity.getBgnDt(), DateUtils.PTN_DATE) : null)")
+    @Mapping(target = "endDt", expression = "java(entity.getEndDt() != null ? DateUtils.asStr(entity.getEndDt(), DateUtils.PTN_DATE) : null)")
     VcatnStatsYyDto toDto(final VcatnStatsYyEntity entity) throws Exception;
 
     /**
