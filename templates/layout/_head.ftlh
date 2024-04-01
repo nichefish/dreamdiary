@@ -3,7 +3,6 @@
   -- @included in : layout
   -->
 <#setting number_format="c">
-<#assign releaseDate = releaseDate!DateUtils.getCurrDateStr(DateUtils.PTN_PDATE)>
 
 <head>
     <title></title>
