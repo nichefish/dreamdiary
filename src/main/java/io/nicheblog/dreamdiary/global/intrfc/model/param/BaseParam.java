@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,8 @@ public class BaseParam {
     private String isBackToList;
 
     // TODO: UTM 파라미터...
-    // snake -> camel로 바까야한다.
+
+    /* ----- */
 
     public Boolean isBackToList() {
         return "Y".equals(this.isBackToList);

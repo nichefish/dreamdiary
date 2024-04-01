@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
 import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
-import io.nicheblog.dreamdiary.global.util.MaskingUtils;
+import io.nicheblog.dreamdiary.global.util.crypto.CryptoUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -49,6 +49,6 @@ public class BaseAuditRegDto
      * 마스킹 처리한 사용자ID 반환
      */
     public String getMaskedRegstrId() throws Exception {
-        return MaskingUtils.nameMasking(this.getRegstrId());
+        return CryptoUtils.Mask.nameMasking(this.getRegstrId());
     }
 }

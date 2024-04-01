@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
-import io.nicheblog.dreamdiary.global.util.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -76,7 +76,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
             final Object searchParam,
             final Pageable pageable
     ) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertParamToMap(searchParam);
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         return this.getListDto(searchParamMap, pageable);
     }
 
@@ -88,7 +88,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
             final Pageable pageable
     ) throws Exception {
         // searchParamMap에서 빈 값들 및 쓸모없는 값들 정리
-        Map<String, Object> filteredSearchKey = CmmUtils.filterParamMap(searchParamMap);
+        Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
 
         return this.pageEntityToDto(this.getListEntity(filteredSearchKey, pageable));
     }

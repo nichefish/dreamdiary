@@ -1,6 +1,5 @@
-package io.nicheblog.dreamdiary.global.util;
+package io.nicheblog.dreamdiary.global.util.crypto;
 
-import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -22,13 +21,12 @@ import java.util.Base64.Encoder;
  *
  * @author nichefish
  */
-@UtilityClass
 @Log4j2
-public class AES128Utils {
+class AES128Module {
 
     // 비밀키 선언 16바이트
     @Value("${aes128.secret-key:0000000000000000}")
-    private String secretKey;
+    private static String secretKey;
 
     /**
      * AES 암호화(인코딩)
