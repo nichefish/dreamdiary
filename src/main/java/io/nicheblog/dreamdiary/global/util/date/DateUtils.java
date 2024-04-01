@@ -27,9 +27,6 @@ public class DateUtils
 
     /** 날짜 파싱 관련 메소드 위임 */
     public static class Parser extends DateParser {}
-    /** 날짜 체크 관련 메소드 위임 */
-    public static class Checker extends DateChecker {}
-
     /** 음력 관련 메소드 위임 */
     public static class ChineseCal extends ChineseCalModule {}
 
@@ -424,6 +421,32 @@ public class DateUtils
         calendar.setTime(currDate);
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         return calendar.getTime();
+    }
+
+    /** 문자열이 날짜형식인지 체크 */
+    public static Boolean isDateStr(final String dateStr) {
+        try {
+            DateUtils.asDate(dateStr);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /** 날짜 받아서 주말여부 반환 */
+    public static Boolean isWeekend(final Object date) throws Exception {
+        return Arrays.asList(1, 7)
+                .contains(DateUtils.getDayOfWeek(date));
+    }
+
+    /** 두 날짜를 받아서 같은날짜 여부 반환 */
+    public static boolean isSameDay(
+            final Object date1,
+            final Object date2
+    ) throws Exception {
+        String date1str = DateUtils.asStr(date1, DateUtils.PTN_PDATE);
+        String date2str = DateUtils.asStr(date2, DateUtils.PTN_PDATE);
+        return date1str.equals(date2str);
     }
 
 }
