@@ -14,7 +14,6 @@ import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -47,7 +46,7 @@ public class DreamdiaryInitializer {
     /**
      * 최초 실행시 사용자가 공백이므로 관리자 계정 자동 등록 (PW 암호화)
      */
-    public void chkSystemAcnt() throws Exception {
+    public void chkSystemAcnt() {
 
         LogSysParam logParam = new LogSysParam();
 

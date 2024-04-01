@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

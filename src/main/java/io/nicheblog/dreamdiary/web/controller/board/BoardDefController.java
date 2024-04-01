@@ -6,8 +6,8 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
@@ -46,7 +46,6 @@ import java.util.Map;
 public class BoardDefController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.BOARD_DEF_LIST;
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_DEF;         // 작업 카테고리 (로그 적재용)
 
     @ModelAttribute("actvtyCtgrCd")
@@ -80,6 +79,7 @@ public class BoardDefController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
+            String baseUrl = SiteUrl.BOARD_DEF_LIST;
             Map<String, Object> listParamMap = CmmUtils.Param.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
