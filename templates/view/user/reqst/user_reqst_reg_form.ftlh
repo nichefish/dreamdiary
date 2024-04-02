@@ -163,7 +163,7 @@
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) Page.fnMain();
+                            if (res.result) Page.main();
                         });
                 });
             },
@@ -189,10 +189,10 @@
                     text: "메인 화면으로 이동합니다.\n(현재까지 입력한 내용은 사라집니다.)\n계속하겠습니까?",
                     showCancelButton: true,
                 }).then(function(result) {
-                    if (result.value) Page.fnMain();
+                    if (result.value) Page.main();
                 });
             },
-            fnMain: function() {
+            main: function() {
                 commons.util.blockUIReplace("${SiteUrl.MAIN!}");
             }
         }
