@@ -33,11 +33,11 @@
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
         <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Flsys.activateTab(this); Flsys.flsysListAjax('${HOME_FLSYS!}');">
+            <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Flsys.activateTab(this); Flsys.flsysListAjax('${HOME_FLSYS!}');">
                 <span class="nav-icon">
                     <i class="bi bi-sort-down-alt"></i>
                 </span>
-                <span class="nav-text ps-1">FLSYS</span>
+                <span class="nav-text ps-1 fw-bold">FLSYS_HOME</span>
             </a>
         </li>
     </ul>

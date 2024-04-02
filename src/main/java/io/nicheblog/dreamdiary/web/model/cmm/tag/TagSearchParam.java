@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.model.cmm.tag;
 
-import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 

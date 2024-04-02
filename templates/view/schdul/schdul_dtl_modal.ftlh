@@ -37,12 +37,12 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-light btn-active-primary me-2 btn-sm"
-                        onclick="Schdul.fnMdfForm();"
+                        onclick="Schdul.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                     <i class="bi bi-pencil-square"></i>수정
                 </button>
                 <button type="button" class="btn btn-sm btn-light btn-active-danger me-2 btn-sm"
-                        onclick="Schdul.fnDelAjax();"
+                        onclick="Schdul.delAjax();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                     <i class="bi bi-trash"></i>삭제
                 </button>

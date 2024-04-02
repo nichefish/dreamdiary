@@ -10,7 +10,7 @@
                 <option value="${user.userId!}" id="${user.userId!}">${user.userNm!}</option>
             </#list>
         </select>
-        <span class="btn btn-sm btn-icon btn-light-danger" onclick="Schdul.fnRemovePrtcpnt({{idx}});">
+        <span class="btn btn-sm btn-icon btn-light-danger" onclick="Schdul.removePrtcpnt({{idx}});">
             <i class="fas fa-trash float-end"></i>
         </span>
     </div>

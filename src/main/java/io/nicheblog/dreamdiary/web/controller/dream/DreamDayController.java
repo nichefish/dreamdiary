@@ -109,9 +109,9 @@ public class DreamDayController
         String resultMsg = "";
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            boolean isReg = dreamDay.getDreamDayNo() == null;
+            boolean isReg = dreamDay.getPostNo() == null;
             DreamDayDto result = isReg ? dreamDayService.regist(dreamDay, request) : dreamDayService.modify(dreamDay, postNo, request);
-            isSuccess = (result.getDreamDayNo() != null);
+            isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;

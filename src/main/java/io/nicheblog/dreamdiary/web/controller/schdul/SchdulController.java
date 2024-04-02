@@ -15,7 +15,6 @@ import io.nicheblog.dreamdiary.web.model.schdul.SchdulCalDto;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulDto;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulSearchParam;
 import io.nicheblog.dreamdiary.web.model.user.UserListDto;
-import io.nicheblog.dreamdiary.web.service.cmm.NotifyService;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulCalService;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;

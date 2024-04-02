@@ -11,15 +11,15 @@
             <label class="col-form-label text-center fs-6 fw-bold required mb-2">제목</label>
         </div>
         <div class="col-xl-3 col-4">
-            <select name="schdulTyCd" id="schdulTyCd" class="form-select form-select-solid required" onchange="Schdul.fnSchdulTyCd(this);">
+            <select name="schdulCd" id="schdulCd" class="form-select form-select-solid required" onchange="Schdul.schdulCd(this);">
                 <option value="">--구분--</option>
-                <#list SCHDUL_TY_CD![] as topic>
+                <#list SCHDUL_CD![] as topic>
                     {{#if isPrvt}}
                         {{#unless (equals "${topic.dtlCd!}" "HLDY")}} {{#unless (equals "${topic.dtlCd!}" "CEREMONY")}} {{#unless (equals "${topic.dtlCd!}" "TLCMMT")}}
-                            <option value="${topic.dtlCd!}" id="${topic.dtlCd!}" {{selectedIf (equals schdulTyCd "${topic.dtlCd!}")}} >[${topic.dtlCdNm!}]</option>
+                            <option value="${topic.dtlCd!}" id="${topic.dtlCd!}" {{selectedIf (equals schdulCd "${topic.dtlCd!}")}} >[${topic.dtlCdNm!}]</option>
                         {{/unless}} {{/unless}} {{/unless}}
                     {{else}}
-                        <option value="${topic.dtlCd!}" id="${topic.dtlCd!}" {{selectedIf (equals schdulTyCd "${topic.dtlCd!}")}} >[${topic.dtlCdNm!}]</option>
+                        <option value="${topic.dtlCd!}" id="${topic.dtlCd!}" {{selectedIf (equals schdulCd "${topic.dtlCd!}")}} >[${topic.dtlCdNm!}]</option>
                     {{/if}}
                 </#list>
             </select>
@@ -30,7 +30,7 @@
         <div class="col-xl-2 col-2">
         </div>
         <div class="col-xl-3 col-4">
-            <span id="schdulTyCdSpan"></span>
+            <span id="schdulCdSpan"></span>
         </div>
         <div class="col-xl-7 col-6">
             <span id="schdulNmSpan"></span>
@@ -42,7 +42,7 @@
             <label class="col-form-label text-center fs-6 fw-bold" for="prtcpnt">
                 참여자
             </label>
-            <span class="btn btn-sm btn-icon btn-light-primary" onclick="Schdul.fnAddPrtcpnt();">
+            <span class="btn btn-sm btn-icon btn-light-primary" onclick="Schdul.addPrtcpnt();">
                 <i class="fas fa-plus float-end"></i>
             </span>
         </div>
@@ -61,7 +61,7 @@
                             <option value="${user.userId!}" id="${user.userId!}" {{selectedIf (equals userId "${user.userId}")}}>${user.userNm!}</option>
                         </#list>
                     </select>
-                    <span class="btn btn-sm btn-icon btn-light-danger" onclick="Schdul.fnRemovePrtcpnt({{@index}});">
+                    <span class="btn btn-sm btn-icon btn-light-danger" onclick="Schdul.removePrtcpnt({{@index}});">
                         <i class="fas fa-trash float-end"></i>
                     </span>
                 </div>
@@ -89,8 +89,8 @@
             <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">일정</label>
         </div>
         <div class="col-xl-5 col-5">
-            <label class="fs-6 mt-3 mb-2 required" for="beginDt">시작일</label>
-            <input class="form-control form-control-solid required" name="beginDt" id="beginDt" placeholder="시작일" value="{{beginDt}}" readonly/>
+            <label class="fs-6 mt-3 mb-2 required" for="bgnDt">시작일</label>
+            <input class="form-control form-control-solid required" name="bgnDt" id="bgnDt" placeholder="시작일" value="{{bgnDt}}" readonly/>
         </div>
         <div class="col-xl-5 col-5" id="endDtDiv">
             <label class="fs-6 mt-3 mb-2" for="endDt">종료일</label>
@@ -98,7 +98,7 @@
         </div>
         <div class="col-xl-2 col-2 col-form-label"></div>
         <div class="col-xl-5 col-5">
-            <span id="beginDtSpan"></span>
+            <span id="bgnDtSpan"></span>
         </div>
         <div class="col-xl-5 col-5">
             <span id="endDtSpan" class="text-noti">※미입력시 시작일자와 같게끔 처리됩니다.</span>

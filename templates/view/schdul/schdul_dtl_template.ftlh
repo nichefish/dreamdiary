@@ -35,7 +35,7 @@
             <label class="fs-6 fw-bold mb-2">시작일</label>
         </div>
         <div class="col-xl-4 col-3 pe-0 col-form-label">
-            <span id="beginDtDtlSpan">{{beginDt}}</span>
+            <span id="bgnDtDtlSpan">{{bgnDt}}</span>
         </div>
         <div class="col-xl-2 col-3 col-form-label">
             <label class="fs-6 fw-bold mb-2">종료일</label>
