@@ -109,7 +109,7 @@
                     </td>
                     <td class="text-center col-form-label hidden-table">
                         <!-- 목록 첨부파일 표시 -->
-                        <@component.list_managtr post />
+                        <@component.list_atch_file post />
                     </td>
                     <td class="text-center col-form-label">
                         <#if (post.managtrInfo.proflImgUrl)??>
@@ -177,7 +177,7 @@
                     </td>
                     <td class="text-center col-form-label hidden-table">
                         <!-- 목록 첨부파일 표시 -->
-                        <@component.list_managtr post />
+                        <@component.list_atch_file post />
                     </td>
                     <td class="text-center col-form-label">
                         <!-- 목록 최종수정자 표시 -->

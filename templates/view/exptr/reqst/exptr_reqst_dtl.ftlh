@@ -51,7 +51,7 @@
                 });
             },
             /** 항목 미처리 (Ajax) */
-            fnDismissAjax: function() {
+            dismissAjax: function() {
                 Swal.fire({
                     text: "취소(기각) 처리하시겠습니까?",
                     showCancelButton: true,
@@ -160,7 +160,7 @@
                             미처리<i class="bi bi-dash text-muted"></i>
                         </span>
                         <button class="btn btn-sm btn-primary" onclick="Page.cfAjax();">처리완료하기</button>
-                        <button class="btn btn-sm btn-secondary ms-4" onclick="Page.fnDismissAjax();">취소(기각) 처리하기</button>
+                        <button class="btn btn-sm btn-secondary ms-4" onclick="Page.dismissAjax();">취소(기각) 처리하기</button>
                     <#elseif post.cfYn == "X">
                         <button class="btn btn-sm btn-secondary" disabled>
                             취소<i class="bi bi-x text-dark"></i>

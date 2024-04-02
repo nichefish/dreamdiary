@@ -56,7 +56,7 @@
                                     showCancelButton: true,
                                 }).then(function(result) {
                                     if (!result.value) return;
-                                    Page.fn<#if isMdf>Mdf<#else>Reg</#if>Ajax();
+                                    Page.<#if isMdf>mdf<#else>reg</#if>Ajax();
                                 });
                             }
                         },

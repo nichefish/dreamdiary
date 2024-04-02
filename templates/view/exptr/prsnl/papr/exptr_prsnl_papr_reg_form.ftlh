@@ -44,7 +44,7 @@
                                 // disabled된 selectbox 값을 풀어준다.
                                 $("input").removeAttr("disabled");
                                 $("select").removeAttr("disabled");
-                                Page.fn<#if isMdf>Mdf<#else>Reg</#if>Ajax();
+                                Page.<#if isMdf>mdf<#else>reg</#if>Ajax();
                             });
                         },
                         errorPlacement: function (error, element) {

@@ -130,7 +130,7 @@
                         ${post.title!"-"}
                     </a>
                     <#if post.comment.cnt gt 0>
-                        <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
+                        <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
                             [${post.comment.cnt!}]
                         </span>
