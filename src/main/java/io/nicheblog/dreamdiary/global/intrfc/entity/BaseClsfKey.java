@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import lombok.*;
 
 import java.io.Serializable;
@@ -25,4 +26,12 @@ public class BaseClsfKey
 
     /** 컨텐츠 타입 */
     protected String contentType;
+
+    /* ----- */
+
+    /** 생성자 */
+    public BaseClsfKey(Integer postNo, ContentType type) {
+        this.postNo = postNo;
+        this.contentType = type.key;
+    }
 }

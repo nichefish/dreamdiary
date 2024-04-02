@@ -4,7 +4,6 @@
   -->
 <!DOCTYPE html>
 <#import "/layout/layout.ftlh" as layout >
-<#import "/view/_component/_reg_btn_area.ftlh" as regBtn >
 
 <script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?20230918"></script>
@@ -278,8 +277,8 @@
 
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-between">
-        <@regBtn.previewBtn "Page" />
-        <@regBtn.postBtn "Page" />
+        <@component.btn_preview "Page" />
+        <@component.btn_post "Page" />
     </div>
 </div>
 

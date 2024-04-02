@@ -2,8 +2,8 @@ package io.nicheblog.dreamdiary.web.service.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
-import io.nicheblog.dreamdiary.global.util.ChineseCalUtils;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserMapstruct;
@@ -408,8 +408,8 @@ public class UserService
      * JPA로 해당조건 조회하기에 난항이 있어서 내부직원 조회 후 for문 처리
      */
     public List<UserListDto> getBrthdyCrdtUser() throws Exception {
-        String todayStr = DateUtils.getCurrDateStr(DateUtils.PTN_DATE);
-        String tomorrowStr = DateUtils.getNextDateStr(DateUtils.PTN_DATE);
+        String todayStr = DateUtils.getCurrDateStr(DatePtn.DATE);
+        String tomorrowStr = DateUtils.getNextDateStr(DatePtn.DATE);
         Page<UserListDto> crdtUserPage = this.getCrdtUserList(todayStr, tomorrowStr);
         List<UserListDto> crdtUserList = crdtUserPage.getContent();
         if (CollectionUtils.isEmpty(crdtUserList)) return null;
@@ -421,7 +421,7 @@ public class UserService
             // 음력 / 양력 구분해서 적용
             if ("Y".equals(user.getLunarYn())) {
                 // 음력일 경우 = 1) 오늘 날짜를 음력 날짜로 변환 후 2) 아래 로직 그대로 적용.
-                String todayLunarStr = ChineseCalUtils.solarToLunarStr(todayStr, DateUtils.PTN_DATE);
+                String todayLunarStr = DateUtils.ChineseCal.solToLunStr(todayStr, DatePtn.DATE);
                 String todayLunarYear = todayLunarStr.substring(0, 4);
 
                 String brthMnthDy = brthdy.substring(4);

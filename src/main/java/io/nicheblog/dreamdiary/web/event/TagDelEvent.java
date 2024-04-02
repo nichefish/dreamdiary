@@ -6,34 +6,31 @@ import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * TagEvent
+ * TagDelEvent
  * <pre>
- *  컨텐츠 조회자(viewer) 추가 이벤트 :: 메인 로직과 분리
+ *  태그 삭제 이벤트 :: 메인 로직과 분리
  * </pre>
  *
  * @author nichefish
  */
 @Getter
-public class TagEvent
+public class TagDelEvent
         extends ApplicationEvent {
 
     /** 컨텐츠 복합키 */
     private final BaseClsfKey clsfKey;
-    /** 태그 */
-    private final TagCmpstn tagCmpstn;
 
     /* ----- */
 
     /**
      * 생성자
      */
-    public TagEvent(
+    public TagDelEvent(
             final Object source,
             final BaseClsfKey clsfKey,
             TagCmpstn tag
     ) {
         super(source);
         this.clsfKey = clsfKey;
-        this.tagCmpstn = tag;
     }
 }

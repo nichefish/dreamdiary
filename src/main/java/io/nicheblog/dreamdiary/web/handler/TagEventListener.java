@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.handler;
 
-import io.nicheblog.dreamdiary.web.event.TagEvent;
+import io.nicheblog.dreamdiary.web.event.TagAddEvent;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -25,8 +25,8 @@ public class TagEventListener {
      * 태그 처리
      */
     @EventListener
-    public void handleTagAddEvent(TagEvent tagEvent) {
+    public void handleTagAddEvent(TagAddEvent tagAddEvent) {
         // 활동 로그 (로그인) 로깅 처리
-        tagService.procTags(tagEvent.getClsfKey(), tagEvent.getTagCmpstn());
+        tagService.procTags(tagAddEvent.getClsfKey(), tagAddEvent.getTagCmpstn());
     }
 }
