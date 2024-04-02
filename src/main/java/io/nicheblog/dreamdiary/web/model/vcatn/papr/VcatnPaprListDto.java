@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Embedded;
 import java.util.List;
 
 /**
@@ -38,18 +37,11 @@ public class VcatnPaprListDto
     /* ----- */
 
     /** 댓글 정보 모듈 (위임) */
-    @Embedded
     public CommentCmpstn comment;
-
     /** 태그 정보 모듈 (위임) */
-    @Embedded
     public TagCmpstn tag;
-
     /** 조치 정보 모듈 (위임) */
-    @Embedded
     public ManagtCmpstn managt;
-
     /** 열람자 정보 모듈 (위임) */
-    @Embedded
     public ViewerCmpstn viewer;
 }

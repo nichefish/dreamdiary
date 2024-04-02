@@ -56,7 +56,7 @@
 </script>
 
 <div class="card post">
-    <!--begin::Question-->
+    <!--begin::cn-->
     <div class="mb-0">
         <!--begin::Head-->
         <div class="d-flex align-items-center mb-9">
@@ -82,7 +82,7 @@
 
         <div class="separator separator-dashed border-gray-300 my-8"></div>
 
-        <!--begin::Question-->
+        <!--begin::cn-->
         <#if post.schdulList?has_content>
             <div class="row mb-4">
                 <div class="col-form-label">

@@ -9,7 +9,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 
 /**
  * DreamPieceDto
@@ -62,10 +61,7 @@ public class DreamPieceDto
     /* ----- */
 
     /** 댓글 정보 모듈 (위임) */
-    @Embedded
     public CommentCmpstn comment;
-
     /** 태그 정보 모듈 (위임) */
-    @Embedded
     public TagCmpstn tag;
 }

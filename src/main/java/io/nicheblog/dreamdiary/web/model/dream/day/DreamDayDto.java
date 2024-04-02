@@ -9,7 +9,6 @@ import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Embedded;
 import java.util.List;
 
 /**
@@ -61,10 +60,7 @@ public class DreamDayDto
     /* ----- */
 
     /** 댓글 정보 모듈 (위임) */
-    @Embedded
     public CommentCmpstn comment;
-
     /** 태그 정보 모듈 (위임) */
-    @Embedded
     public TagCmpstn tag;
 }

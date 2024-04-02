@@ -29,17 +29,39 @@
         <div class="d-flex align-items-center">
             <!--begin::Name-->
             <div class="d-flex flex-column align-items-start justify-content-center">
-                    <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">
+                <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">
+                    <#if post.managt??>
+                        <#if (post.managt.managtrInfo.proflImgUrl)??>
+                            <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
+                                <img src="${(post.managt.managtrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
+                            </div>
+                        </#if>
+                        ${managt.managtrNm!"-"}
+                    <#elseif post.mdfusrInfo??>
+                        <#if (post.mdfusrInfo.proflImgUrl)??>
+                            <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
+                                <img src="${(post.mdfusrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
+                            </div>
+                        </#if>
+                        ${post.mdfusrNm!}
+                    <#else>
                         <#if (post.regstrInfo.proflImgUrl)??>
                             <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
                                 <img src="${(post.regstrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
                             </div>
                         </#if>
-                        ${post.regstrNm!"-"}
-                    </span>
+                        ${post.regstrNm!}
+                    </#if>
+                </span>
                 <span class="text-muted fs-7 lh-1">
+                    <#if post.managtDt??>
+                        ${post.managtDt!}
+                    <#elseif post.mdfDt??>
+                        ${post.mdfDt!}
+                    <#else>
                         ${post.regDt!}
-                    </span>
+                    </#if>
+                </span>
             </div>
             <!--end::Name-->
         </div>
@@ -53,6 +75,41 @@
         <!--end::Info-->
     </div>
 </#macro>
+
+<#macro post_meta_preview post>
+    <!--begin::Foot-->
+    <div class="d-flex flex-stack flex-wrap mb-3">
+        <!--begin::Author-->
+        <div class="d-flex align-items-center">
+            <!--begin::Name-->
+            <div class="d-flex flex-column align-items-start justify-content-center">
+                <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">
+                    <#if (authInfo.proflImgUrl)??>
+                        <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
+                            <img src="${(authInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
+                        </div>
+                    </#if>
+                    ${authInfo.nickNm!"-"}
+                </span>
+                <span class="text-muted fs-7 lh-1">
+                    ${DateUtils.getCurrDtStr()!}
+                </span>
+            </div>
+            <!--end::Name-->
+        </div>
+        <!--end::Author-->
+        <!--begin::Info-->
+        <div class="d-flex align-items-center py-1">
+            <a href="#answers" data-kt-scroll-toggle="true"
+               class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${post.comment.cnt!}</a>
+            <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.hitCnt!}</button>
+        </div>
+        <!--end::Info-->
+    </div>
+</#macro>
+
+
+
 
 <#macro post_meta_print post>
     <!--begin::Foot-->

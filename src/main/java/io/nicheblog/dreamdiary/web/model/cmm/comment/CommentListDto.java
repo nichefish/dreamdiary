@@ -6,8 +6,6 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Embedded;
-
 /**
  * CommentListDto
  * <pre>
@@ -48,6 +46,5 @@ public class CommentListDto
     /* ----- */
 
     /** 댓글 정보 모듈 (위임) */
-    @Embedded
     public CommentCmpstn comment;
 }

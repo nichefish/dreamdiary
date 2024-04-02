@@ -1,10 +1,9 @@
 <#--
-  -- 댓글 목록 Template
- -- @included in : 댓글 미리보기 기능이 있는 페이지들
+  -- 게시판 목록 > 댓글 조회 !Handlebars! Template
+  -- @included in : 댓글 미리보기 기능이 있는 페이지들
   -->
 <script type="text/x-handlebars-template" id="comment_list_template">
     <div class="card mt-0 py-4">
-        <!--begin::Question-->
         <div class="mb-0">
             <table class="table align-middle table-row-dashed fs-small gy-3 table-fixed hoverTable mb-3">
                 <tbody>

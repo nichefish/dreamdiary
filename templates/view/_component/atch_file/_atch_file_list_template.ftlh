@@ -1,11 +1,10 @@
 <#--
-  -- 게시판 > 태그 전체 목록 Template
+  -- 게시판 목록 > 첨부파일 조회 !Handlebars! Template
   -- @included in : board_post_list
   -- @included in : board_post_dtl
   -->
 <script type="text/x-handlebars-template" id="atch_file_list_template">
     <div class="card mt-0 py-4">
-        <!--begin::Question-->
         <div class="mb-0">
             <table class="table align-middle table-row-dashed fs-small gy-3 table-fixed hoverTable mb-3">
                 <tbody>

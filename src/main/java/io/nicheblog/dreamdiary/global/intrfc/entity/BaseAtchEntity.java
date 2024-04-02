@@ -32,7 +32,7 @@ public class BaseAtchEntity
 
     /** 첨부파일 번호 */
     @Column(name = "atch_file_no")
-    protected String atchFileNo;
+    protected Integer atchFileNo;
 
     /** 첨부파일 정보 */
     @OneToOne

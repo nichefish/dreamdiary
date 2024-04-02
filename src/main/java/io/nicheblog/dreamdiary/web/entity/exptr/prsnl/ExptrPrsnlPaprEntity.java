@@ -128,6 +128,10 @@ public class ExptrPrsnlPaprEntity
     @Comment("확인 여부")
     private String cfYn = "N";
 
+    /** 경비지출 항목 영수증 첨부파일 번호 */
+    @Column(name = "rcipt_file_no")
+    private Integer rciptFileNo;
+
     /** 경비지출 항목 목록 */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no")

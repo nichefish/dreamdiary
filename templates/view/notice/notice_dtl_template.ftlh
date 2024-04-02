@@ -1,5 +1,5 @@
 <#--
-  -- 공지사항 > 상세 Template
+  -- 공지사항 > 상세 !Handlebars! Template
   -- @included in : notice_list
   -->
 <script type="text/x-handlebars-template" id="notice_dtl_template">
@@ -49,11 +49,14 @@
                 <!--end::Info-->
             </div>
             <!--end::Foot-->
+
             <div class="separator separator-dashed border-gray-300 my-8"></div>
-            <!--begin::Question-->
+
+            <!--begin::cn-->
             <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
                 {{{cn}}}
             </div>
+
             {{#atchFileInfo}}
                 <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
                     <div class="col-xl-2">

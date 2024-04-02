@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.global.util.date;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 import java.text.SimpleDateFormat;
@@ -116,6 +115,13 @@ public class DateUtils
      */
     public static String getCurrDateStr(final DatePtn ptn) throws Exception {
         return ptn.df.format(getCurrDate());
+    }
+
+    /**
+     * 현재 날짜+시간 문자열String 반환
+     */
+    public static String getCurrDtStr() throws Exception {
+        return DatePtn.DATETIME.df.format(getCurrDate());
     }
 
     /**

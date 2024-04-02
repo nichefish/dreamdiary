@@ -11,7 +11,6 @@ import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.dream.day.DreamDayDto;
 import io.nicheblog.dreamdiary.web.model.dream.day.DreamDaySearchParam;
-import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
 import io.nicheblog.dreamdiary.web.service.dream.DreamDayService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;

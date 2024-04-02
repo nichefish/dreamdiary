@@ -1,16 +1,16 @@
 <#--
-  -- 댓글 목록 Template
- -- @included in : 댓글 미리보기 기능이 있는 페이지들
+  -- 공지사항 조회 !Handlebaes! Template
+  -- @included in : 댓글 미리보기 기능이 있는 페이지들
   -->
 <script type="text/x-handlebars-template" id="notice_popup_template">
     <div class="table-responsive-sm">
         <!-- contents -->
         <div class="card mt-4">
+            <input type="hidden" name="postNo" id="noticePopupPostNo" value="{{postNo}}">
             <!--begin::Question-->
             <div class="mb-0">
                 <!--begin::Head-->
                 <div class="d-flex align-items-center mb-4">
-                    <input type="hidden" name="postNo" id="noticePopupPostNo" value="{{postNo}}">
                     <!--begin::Title-->
                     <div class="col-12">
                         <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
@@ -43,8 +43,10 @@
                     <!--end::Info-->
                 </div>
                 <!--end::Foot-->
+
                 <div class="separator separator-dashed border-gray-300 my-8"></div>
-                <!--begin::Question-->
+
+                <!--begin::cn-->
                 <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
                     {{{cn}}}
                 </div>

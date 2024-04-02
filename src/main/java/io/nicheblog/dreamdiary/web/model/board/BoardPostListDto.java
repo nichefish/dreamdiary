@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Embedded;
-
 /**
  * BoardPostListDto
  * <pre>
@@ -37,24 +35,17 @@ public class BoardPostListDto
     private String ctgrClCd;
 
     /** 노션 페이지 참조 ID :: UUID */
-    // private String notionPageId;
+    private String notionPageId;
 
     /* ----- */
 
     /** 댓글 정보 모듈 (위임) */
-    @Embedded
     public CommentCmpstn comment;
-
     /** 태그 정보 모듈 (위임) */
-    @Embedded
     public TagCmpstn tag;
-
     /** 조치 정보 모듈 (위임) */
-    @Embedded
     public ManagtCmpstn managt;
-
     /** 열람자 정보 모듈 (위임) */
-    @Embedded
     public ViewerCmpstn viewer;
 }
 

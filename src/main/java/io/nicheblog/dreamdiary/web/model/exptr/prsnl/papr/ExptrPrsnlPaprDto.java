@@ -9,7 +9,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
 
-import javax.persistence.Embedded;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +40,9 @@ public class ExptrPrsnlPaprDto
     /** 컨텐츠 타입 */
     @Builder.Default
     protected String contentType = CONTENT_TYPE.key;
+
+    /** 경비지출 항목 영수증 첨부파일 번호 */
+    private Integer rciptFileNo;
 
     /* ----- */
 
@@ -99,18 +101,11 @@ public class ExptrPrsnlPaprDto
     /* ----- */
 
     /** 댓글 정보 모듈 (위임) */
-    @Embedded
     public CommentCmpstn comment;
-
     /** 태그 정보 모듈 (위임) */
-    @Embedded
     public TagCmpstn tag;
-
     /** 조치 정보 모듈 (위임) */
-    @Embedded
     public ManagtCmpstn managt;
-
     /** 열람자 정보 모듈 (위임) */
-    @Embedded
     public ViewerCmpstn viewer;
 }

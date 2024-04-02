@@ -21,75 +21,22 @@
 <div class="card post">
     <!--begin::Question-->
     <div class="mb-0">
-        <!--begin::Head-->
-        <div class="d-flex align-items-center mb-9">
-            <!--begin::Title-->
-            <div class="col-12">
-                <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
-                    <#if (((post.imprtcYn)!"N") == "Y")!false><span class="badge badge-danger me-2">중요</span></#if>
-                    <span class="vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
-                        <#if (post.ctgrNm!"") != "">[${post.ctgrNm!}]</#if>
-                        ${post.title!}
-                     </span>
-                </h1>
-            </div>
-            <!--end::Title-->
-        </div>
-        <!--end::Head-->
-        <!--begin::Foot-->
-        <div class="d-flex flex-stack flex-wrap mb-3">
-            <!--begin::Author-->
-            <div class="d-flex align-items-center">
-                <!--begin::Name-->
-                <div class="d-flex flex-column align-items-start justify-content-center">
-                    <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">
-                        <#if (authInfo.proflImgUrl)??>
-                            <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
-                                <img src="${(authInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
-                            </div>
-                        </#if>
-                        ${authInfo.nickNm!"-"}
-                    </span>
-                    <span class="text-muted fs-7 lh-1">
-                        ${currDateStr!}
-                    </span>
-                </div>
-                <!--end::Name-->
-            </div>
-            <!--end::Author-->
-        </div>
-        <!--end::Foot-->
+        <!-- 게시물post 헤더 제목 영역 -->
+        <@component.post_title post />
+
+        <!-- 게시물post 미리보기 헤더 메타 영역 -->
+        <@component.post_meta_preview post />
+
         <div class="separator separator-dashed border-gray-300 my-8"></div>
-        <!--begin::Question-->
+
+        <!--begin::cn-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
             ${post.cn?no_esc}
         </div>
-        <#if (post.atchFileInfo.atchFileList)?has_content>
-            <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
-                <div class="col-xl-1">
-                    <div class="fs-6 fw-bold col-form-label px-5">
-                        첨부파일
-                    </div>
-                </div>
-                <div class="col-xl-11 my-3">
-                    <#list (post.atchFileInfo.atchFileList)![] as file>
-                        <div class="row my-1">
-                            <div class="col-xl-8">
-                                <a href="javascript:void(0);" onclick="commons.util.fileDownload('${file.atchFileId!}', '${file.atchFileDtlId!}');"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.download"/>">
-                                    <i class="fas fa-file-download fs-15 me-1"></i>
-                                    ${file.orgnFileNm!}(${file.fileSize!}byte)
-                                </a>
-                            </div>
-                        </div>
-                    <#else>
-                        <span>첨부된 파일이 없습니다.</span>
-                    </#list>
-                </div>
-            </div>
-        </#if>
     </div>
+
     <div class="separator separator-dashed border-gray-300 my-8"></div>
+
     <div class="d-flex justify-content-end">
         <button type="button" class="btn btn-sm btn-light" onclick="Page.close();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="팝업 창을 닫습니다.">

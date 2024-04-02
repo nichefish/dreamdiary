@@ -4,7 +4,7 @@
 -->
 <script type="text/x-handlebars-template" id="vcatn_papr_dtl_template">
     <div class="card mt-4">
-        <!--begin::Question-->
+        <!--begin::title-->
         <div class="mb-0">
             <!--begin::Head-->
             <div class="d-flex align-items-center mb-4">
@@ -26,29 +26,13 @@
                 <!--end::Title-->
             </div>
             <!--end::Head-->
-            <!--begin::Foot-->
-            <div class="d-flex flex-stack flex-wrap mb-3">
-                <!--begin::Author-->
-                <div class="d-flex align-items-center">
-                    <!--begin::Name-->
-                    <div class="d-flex flex-column align-items-start justify-content-center">
-                        <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">{{regstrNm}}</span>
-                        <span class="text-muted fs-7 lh-1">{{regDt}}</span>
-                    </div>
-                    <!--end::Name-->
-                </div>
-                <!--end::Author-->
-                <!--begin::Info-->
-                <div class="d-flex align-items-center py-1">
-                    <a href="#answers" data-kt-scroll-toggle="true"
-                       class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 {{commentCnt}}</a>
-                    <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 {{hitCnt}}</button>
-                </div>
-                <!--end::Info-->
-            </div>
-            <!--end::Foot-->
+
+            <!-- 게시물post 미리보기 헤더 메타 영역 -->
+            <@component.post_meta post />
+
             <div class="separator separator-dashed border-gray-300 my-8"></div>
-            <!--begin::Question-->
+
+            <!--begin::cn-->
             <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
                 <div class="row mb-4">
                     <div class="col-form-label">

@@ -81,11 +81,11 @@
         <@component.post_title post />
 
         <!-- 게시물post 헤더 메타 영역 -->
-        <@component.post_meta post />
+        <@component.post_meta_preview post />
 
         <div class="separator separator-dashed border-gray-300 my-8"></div>
 
-        <!--begin::Question-->
+        <!--begin::cn-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
             ${post.cn?no_esc}
         </div>

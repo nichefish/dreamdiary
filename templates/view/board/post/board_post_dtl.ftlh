@@ -74,40 +74,9 @@
         <!-- 게시물post 조치자 표시 영역 -->
         <@component.managtr_area post />
 
-        <#if post.managtrList?? && post.managtrList?size gt 1>
-            <div class="separator separator-dashed border-gray-300 mb-8"></div>
-            <div class="d-flex flex-stack flex-wrap justify-content-start ">
-                <!--begin::Author-->
-                <div class="d-flex align-items-center me-5">
-                    <span class="text-gray-400 fs-6 fw-bold lh-1">
-                        작업자:
-                    </span>
-                </div>
-                <div class="d-flex align-items-center">
-                    <#list post.managtrList![] as managtr>
-                        <!--begin::Name-->
-                        <div class="text-gray-600 fs-6 me-4">
-                            <#if (managtr.regstrInfo.proflImgUrl)??>
-                                <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
-                                    <img src="${(managtr.regstrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
-                                </div>
-                            </#if>
-                            <span class="cursor-help"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                                  title="최종 작업일시: &#10;${managtr.regDt!}">
-                                ${managtr.regstrNm!"-"}
-                            </span>
-                            <#if managtr?has_next>, </#if>
-                        </div>
-                        <!--end::Name-->
-                    </#list>
-                </div>
-                <!--end::Author-->
-            </div>
-        </#if>
-        <!--end::Foot-->
         <div class="separator separator-dashed border-gray-300 my-8"></div>
-        <!--begin::Question-->
+
+        <!--begin::cn-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
             ${post.cn?no_esc}
         </div>
