@@ -1,12 +1,12 @@
 <!--
  -- datepicker 관련 컴포넌트
- -- @included in : lib/macros.ftl
+ -- @included in : lib/components.ftl
  -->
 
-<#macro checkbox param checkboxNm yNlabel yNColor  >
+<#macro checkbox param checkboxNm ynLabel ynColor  >
     <script>
         $(document).ready(function() {
-            commons.util.chckboxLabel("${checkboxNm}", "${yNlabel}", "${yNColor}");
+            commons.util.chckboxLabel("${checkboxNm}", "${ynLabel}", "${ynColor}");
             if ("${param[checkboxNm]!}" == "Y") $("#${checkboxNm}").click();
         });
     </script>

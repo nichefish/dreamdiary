@@ -2,7 +2,6 @@
   -- 휴가계획서 > 상세 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/view/_component/_dtl_btn_area.ftlh" as dtlBtn >
 
 <@layout.layout>
 
@@ -77,37 +76,12 @@
             <!--end::Title-->
         </div>
         <!--end::Head-->
-        <!--begin::Foot-->
-        <div class="d-flex flex-stack flex-wrap mb-3">
-            <!--begin::Author-->
-            <div class="d-flex align-items-center">
-                <!--begin::Name-->
-                <div class="d-flex flex-column align-items-start justify-content-center">
-                    <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">
-                        <#if (post.regstrInfo.proflImgUrl)??>
-                            <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
-                                <img src="${(post.regstrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
-                            </div>
-                        </#if>
-                        ${post.regstrNm!"-"}
-                    </span>
-                    <span class="text-muted fs-7 lh-1">
-                        ${post.regDt!}
-                    </span>
-                </div>
-                <!--end::Name-->
-            </div>
-            <!--end::Author-->
-            <!--begin::Info-->
-            <div class="d-flex align-items-center py-1">
-                <a href="#answers" data-kt-scroll-toggle="true"
-                   class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${post.comment.cnt!}</a>
-                <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.hitCnt!}</button>
-            </div>
-            <!--end::Info-->
-        </div>
-        <!--end::Foot-->
+
+        <!-- 게시물post 헤더 메타 (+프린트) 영역 -->
+        <@component.post_meta_print post />
+
         <div class="separator separator-dashed border-gray-300 my-8"></div>
+
         <!--begin::Question-->
         <#if post.schdulList?has_content>
             <div class="row mb-4">
@@ -137,17 +111,12 @@
         <#include "/view/_component/atch_file/_atch_file_dtl_area.ftlh">
 
     </div>
+
     <div class="separator separator-dashed border-gray-300 my-8"></div>
-    <div class="row mb-5">
-        <div class="col-xl-2">
-            <div class="col-form-label fs-6 fw-bold mx-5">열람자</div>
-        </div>
-        <div class="col-xl-10 col-form-label">
-            <#list post.viewerList![] as viewer>
-                ${viewer.regstrNm!"-"} <#if !viewer?is_last>/</#if>
-            </#list>
-        </div>
-    </div>
+
+    <!-- 열람자 표시 영역 -->
+    <@component.viewer_area post />
+
     <#if isMngr>
         <div class="row mb-5">
             <div class="col-xl-2">

@@ -3,7 +3,6 @@
   -- TODO: Handlebars로 교체하기
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/view/_component/_reg_btn_area.ftlh" as regBtn >
 
 <#assign isReg = isReg!false>
 <#assign isMdf = isMdf!false>

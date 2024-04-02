@@ -2,7 +2,6 @@
   -- 휴가계획서 > 등록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/view/_component/_reg_btn_area.ftlh" as regBtn >
 
 <script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?20230918"></script>
@@ -249,8 +248,8 @@
         <div class="separator my-8 w-"></div>
 
         <!-- 버튼 영역 -->
-        <div class="d-flex justify-content-between">
-            <@regBtn.postBtn "Page" />
+        <div class="d-flex justify-content-end">
+            <@component.btn_post "Page" />
         </div>
     </form>
     <!--end:Form-->

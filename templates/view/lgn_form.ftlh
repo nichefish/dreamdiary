@@ -19,8 +19,8 @@
                     errorMsgSpan.html("${errorMsg!}".replace(/&lt;br&gt;/g, '<br/>'));   // 줄바꿈 처리
                 </#if>
 
-                commons.util.enterKey("#userId", Page.fnLgn);       // 엔터키 처리
-                commons.util.enterKey("#password", Page.fnLgn);       // 엔터키 처리
+                commons.util.enterKey("#userId", Page.lgn);       // 엔터키 처리
+                commons.util.enterKey("#password", Page.lgn);       // 엔터키 처리
 
                 <#if isCredentialExpired!false || needsPwReset!false>
                     let data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
@@ -29,7 +29,7 @@
                     $(function(){
                         $("#lgnPwChgForm").validate({
                             submitHandler: function() {
-                                Page.fnLgnPwChgAjax();
+                                Page.lgnPwChgAjax();
                             },
                             errorPlacement : function(error, element) {
                                 commons.validate.errorSpan(error, element);        // 공통 함수로 분리
@@ -64,7 +64,7 @@
                             $("#userId").val("${userId!}");
                             $("#isDupIdLgnProc").val("Y");
                             $("#password").attr("disabled", "disabled");
-                            Page.fnLgn();
+                            Page.lgn();
                         } else {
                             $("#isDupIdLgnProc").val("");
                         }
@@ -75,11 +75,11 @@
                 commons.validate.validateForm("#lgnForm");
             },
             /** 로그인 처리 */
-            fnLgn: function() {
+            lgn: function() {
                 commons.util.blockUISubmit("#lgnForm", "${SiteUrl.AUTH_LGN_PROC!}");
             },
             /** 비밀번호 수정 처리(Ajax) */
-            fnLgnPwChgAjax: function() {
+            lgnPwChgAjax: function() {
                 const url = '${SiteUrl.AUTH_LGN_PW_CHG_AJAX!}';
                 let ajaxData = { "userId" : $("#lgnUserId").val(), "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
@@ -90,7 +90,7 @@
                         if (res.result) {
                             $("#userId").val(userId);
                             $("#password").val(password);
-                            Page.fnLgn();
+                            Page.lgn();
                         }
                     });
                 });
@@ -154,7 +154,7 @@
             </label>
         </div>
         <div class="text-center mb-4 mt-15">
-            <button type="button" class="btn btn-lg btn-primary w-100" onclick="Page.fnLgn();">
+            <button type="button" class="btn btn-lg btn-primary w-100" onclick="Page.lgn();">
                 <span class="indicator-label">Sign In</span>
                 <span class="indicator-progress">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

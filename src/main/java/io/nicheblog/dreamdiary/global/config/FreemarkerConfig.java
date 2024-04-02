@@ -46,7 +46,7 @@ public class FreemarkerConfig
             // 숫자에 콤마 제거!!! (1000 넘어가는 ID(PK)에서 개꼬임...)
             configuration.addAutoImport("spring", "lib/spring.ftl");
             configuration.addAutoImport("fn", "lib/functions.ftl");
-            configuration.addAutoImport("component", "lib/macros.ftl");
+            configuration.addAutoImport("component", "lib/components.ftl");
             configuration.setNumberFormat("computer");
             Properties settings = new Properties();
             settings.setProperty("template_exception_handler", "ignore");

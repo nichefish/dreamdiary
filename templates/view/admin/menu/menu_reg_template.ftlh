@@ -68,7 +68,7 @@
             <input type="text" name="icon" id="icon" class="form-control d-inline-block" value="{{icon}}">
         </div>
         <div class="col-1 d-flex align-items-center">
-            <div class="btn btn-sm btn-icon btn-light-primary" onclick="Menu.fnRefreshIcon();">
+            <div class="btn btn-sm btn-icon btn-light-primary" onclick="Menu.refreshIcon();">
                 <i class="bi bi-arrow-repeat"></i>
             </div>
         </div>

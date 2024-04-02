@@ -1,0 +1,97 @@
+<!--
+ -- 수정 권한mdfable 관련 컴포넌트
+ -- @included in : lib/components.ftl
+ -->
+
+<#macro post_title post>
+    <!--begin::Head-->
+    <div class="d-flex align-items-center mb-9">
+        <!--begin::Title-->
+        <div class="col-12">
+            <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
+                <#if (((post.imprtcYn)!"N") == "Y")!false>
+                    <span class="badge badge-danger me-2">중요</span>
+                </#if>
+                <span class="vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
+                    <#if (post.ctgrNm!"") != "">[${post.ctgrNm!}]</#if>
+                    ${post.title!}
+                 </span>
+            </h1>
+        </div>
+        <!--end::Title-->
+    </div>
+</#macro>
+
+<#macro post_meta post>
+    <!--begin::Foot-->
+    <div class="d-flex flex-stack flex-wrap mb-3">
+        <!--begin::Author-->
+        <div class="d-flex align-items-center">
+            <!--begin::Name-->
+            <div class="d-flex flex-column align-items-start justify-content-center">
+                    <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">
+                        <#if (post.regstrInfo.proflImgUrl)??>
+                            <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
+                                <img src="${(post.regstrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
+                            </div>
+                        </#if>
+                        ${post.regstrNm!"-"}
+                    </span>
+                <span class="text-muted fs-7 lh-1">
+                        ${post.regDt!}
+                    </span>
+            </div>
+            <!--end::Name-->
+        </div>
+        <!--end::Author-->
+        <!--begin::Info-->
+        <div class="d-flex align-items-center py-1">
+            <a href="#answers" data-kt-scroll-toggle="true"
+               class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${post.comment.cnt!}</a>
+            <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.hitCnt!}</button>
+        </div>
+        <!--end::Info-->
+    </div>
+</#macro>
+
+<#macro post_meta_print post>
+    <!--begin::Foot-->
+    <div class="d-flex flex-stack flex-wrap mb-3">
+        <!--begin::Author-->
+        <div class="d-flex align-items-center">
+            <!--begin::Name-->
+            <div class="d-flex flex-column align-items-start justify-content-center">
+                    <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">
+                        <#if (post.regstrInfo.proflImgUrl)??>
+                            <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
+                                <img src="${(post.regstrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
+                            </div>
+                        </#if>
+                        ${post.regstrNm!"-"}
+                    </span>
+                <span class="text-muted fs-7 lh-1">
+                        ${post.regDt!}
+                    </span>
+            </div>
+            <!--end::Name-->
+        </div>
+        <!--end::Author-->
+        <!--begin::Info-->
+        <div class="d-flex align-items-center py-1">
+            <button type="button" class="btn btn-sm btn-primary px-4 me-2"
+                    onclick="Page.pdfPop();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="출력용 팝업을 호출합니다." >
+                <i class="bi bi-printer"></i>출력
+            </button>
+            <a href="#answers" data-kt-scroll-toggle="true"
+               class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">
+                댓글 ${post.comment.cnt!}
+            </a>
+            <button class="btn btn-sm btn-light px-4 me-2 disabled">
+                조회수 ${post.hitCnt!}
+            </button>
+        </div>
+        <!--end::Info-->
+    </div>
+</#macro>
+

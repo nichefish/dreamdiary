@@ -66,7 +66,7 @@
             //     if (!rslt.dir) $("#addBtn_"+menuId).remove();       // 소메뉴는 추가버튼 없앰
             //     // 그 하위메뉴 그리기
             //     let menuSubList = rslt.menuSubList;
-            //     for (let i = 0; i < menuSubList.length; i++) Page.fnDrawMenu("#"+menuId, menuSubList[i], i);
+            //     for (let i = 0; i < menuSubList.length; i++) Page.drawMenu("#"+menuId, menuSubList[i], i);
             // },
             fnDrawTree: function() {
                 let jstreeContainer = Page.jstreeContainer;
@@ -112,7 +112,7 @@
                 commons.util.handlebarsTemplate(obj, "menu_reg", "show");
             },
             /** 상세 모달 팝업 호출 */
-            fnRefreshIcon: function() {
+            refreshIcon: function() {
                 const $iconClassElmt = $("#menuRegForm #icon");
                 if (!$iconClassElmt.length) return;
                 let iconClass = $iconClassElmt.val();

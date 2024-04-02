@@ -55,7 +55,7 @@ public class FlsysMetaController
 
     /**
      * 파일시스템 메타 정보 등록/수정 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.FLSYS_META_REG_AJAX, SiteUrl.FLSYS_META_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -95,7 +95,7 @@ public class FlsysMetaController
 
     /**
      * 파일시스템 메타 정보 상세 조회 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.FLSYS_META_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -133,7 +133,7 @@ public class FlsysMetaController
 
     /**
      * 파일시스템 메타 정보 삭제 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(SiteUrl.FLSYS_META_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

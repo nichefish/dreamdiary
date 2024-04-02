@@ -2,7 +2,6 @@
   -- 일정 > 전체 일정 화면 (달력)
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <!--begin::Page Vendors Javascript(used by this page)-->
 <link href="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
@@ -43,39 +42,39 @@
                 /** TODO : 선택된 년도,달 기준으로 변경해야함 */
                 Page.calInitDt = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
                 Page.calDt = Page.calInitDt;
-                Page.fnGetEventList();
+                Page.getEventList();
                 Page.calendar = commons.fullcalendar.init("full_calendar_app", Page.eventList, function(info) {
                     // 일정 onclick 이벤트
                     let event = info.event;
-                    let schdulTyCd = event.groupId;
-                    let isVcatn = schdulTyCd === "${Constant.SCHDUL_TY_VCATN!}";
-                    let isBrthdy = schdulTyCd === "${Constant.SCHDUL_TY_BRTHDY!}"
-                    if (isVcatn || isBrthdy) return false;     // 휴가/생일은 팝업 띄우지 않음 - 휴가관리/사용자정보 쪽에서 관리
-                    Schdul.fnDtlAjax(event.id);
+                    let schdulCd = event.groupId;
+                    let isVcatn = schdulCd === "${Constant.SCHDUL_TY_VCATN!}";
+                    let isBrthdy = schdulCd === "${Constant.SCHDUL_TY_BRTHDY!}"
+                    if (isVcatn || isBrthdy) return false;     // 휴가/생일은 팝업 띄우지 않음 - 휴가관리/사용자 정보 쪽에서 관리
+                    Schdul.dtlAjax(event.id);
                 });
                 Page.calendar.render();
                 // 좌우탐색버튼 이벤트핸들러 추가
                 $(".fc-today-button").on("click", function() {
                     let calDt = new Date(Page.calInitDt.getFullYear(), Page.calInitDt.getMonth(), 1);
-                    Page.fnRefreshEventList(calDt);
+                    Page.refreshEventList(calDt);
                 });
                 $(".fc-prev-button").on("click", function() {
                     let calDt = new Date(Page.calDt.getFullYear(), Page.calDt.getMonth() - 1, 1);
-                    Page.fnRefreshEventList(calDt);
+                    Page.refreshEventList(calDt);
                 });
                 $(".fc-next-button").on("click", function() {
                     let calDt = new Date(Page.calDt.getFullYear(), Page.calDt.getMonth() + 1, 1);
-                    Page.fnRefreshEventList(calDt);
+                    Page.refreshEventList(calDt);
                 });
 
                 // datepicker 날짜 검색 init
                 commons.datepicker.singleDatePicker("#calDt", "yyyy-MM-DD", commons.date.asStr(Page.calInitDt), function(start) {
                     let selectedDt = new Date(start);
                     Page.calendar.gotoDate(selectedDt);
-                    Page.fnRefreshEventList(selectedDt);
+                    Page.refreshEventList(selectedDt);
                 });
 
-                commons.util.enterKey("#searchKeyword", Page.fnSearch);       // 엔터키 처리
+                commons.util.enterKey("#searchKeyword", Page.search);       // 엔터키 처리
 
                 // https://github.com/fullcalendar/fullcalendar/issues/6393
                 let harnessArr = $(".fc-daygrid-event-harness");
@@ -85,28 +84,28 @@
                 });
             },
             /** 일정 등록 모달 호출 */
-            fnRefreshEventList: function(calDt) {
+            refreshEventList: function(calDt) {
                 Page.calDt = calDt;
-                Page.fnGetEventList();
+                Page.getEventList();
                 Page.calendar.removeAllEvents();
                 Page.eventList.forEach(event => Page.calendar.addEvent(event));
             },
             /** 일정 등록 모달 호출 */
-            fnSearch: function() {
-                Page.fnGetEventList();
+            search: function() {
+                Page.getEventList();
                 Page.calendar.removeAllEvents();
                 Page.eventList.forEach(event => Page.calendar.addEvent(event));
             },
             /** 일정 등록 모달 호출 */
-            fnGetEventList: function() {
+            getEventList: function() {
                 const url = '${SiteUrl.SCHDUL_CAL_LIST_AJAX!}';
                 // 날짜 세팅
                 let calDt = Page.calDt;
                 let yy  = calDt.getFullYear();
-                let beginDt = commons.date.getDateAddDayStr(calDt, -35, "yyyy-MM-dd");
+                let bgnDt = commons.date.getDateAddDayStr(calDt, -35, "yyyy-MM-dd");
                 let endDt = commons.date.getDateAddDayStr(calDt, 45, "yyyy-MM-dd");
                 // 체크박스 값을 읽어와서 필터 요소를 만듬
-                let ajaxData = { 'yy': yy, 'beginDt': beginDt, 'endDt': endDt };
+                let ajaxData = { 'yy': yy, 'bgnDt': bgnDt, 'endDt': endDt };
                 let chkArr = $("input:checkbox[id^='schdul_chk_']");
                 chkArr.each(function(_index, item) {
                     const itemName = $(item).attr("name").replaceAll("schdul_chk_", "") + "ed";
@@ -125,11 +124,11 @@
                 return (cookie === undefined) ? "Y" : cookie;
             },
             /** 체크박스 쿠키 설정 */
-            fnChkbxProp: function(obj) {
+            chkbxProp: function(obj) {
                 let checkedYn = $(obj).prop("checked") ? "Y" : "N";
                 let cookieOptions = { "expires": commons.date.getCurrDateAddDay(36135) };
                 $.cookie($(obj).attr("id"), checkedYn, cookieOptions);
-                Page.fnRefreshEventList(Page.calDt);
+                Page.refreshEventList(Page.calDt);
             }
         }
     }();
@@ -147,7 +146,7 @@
                                 showCancelButton: true,
                             }).then(function(result) {
                                 if (!result.value) return;
-                                Schdul.fnRegAjax();
+                                Schdul.regAjax();
                             });
                         },
                         errorPlacement: function (error, element) {
@@ -157,11 +156,11 @@
                 });
             },
             /** 일정 등록 모달 호출 */
-            fnRegForm: function() {
+            regForm: function() {
                 commons.util.handlebarsTemplate({}, "schdul_reg", "show");
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray");
-                commons.datepicker.singleDatePicker("#beginDt", "yyyy-MM-DD");
+                commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD");
                 commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD");
 
                 // 잔디발송여부 클릭시 글씨 변경
@@ -171,25 +170,25 @@
                     $("#trgetTopicSpan").hide();
                 });
                 $("#jandiYn").click();
-                Schdul.fnAddPrtcpnt();
+                Schdul.addPrtcpnt();
             },
             /** 일정 등록 모달 호출 */
-            fnPrvtRegForm: function() {
+            prvtRegForm: function() {
                 commons.util.handlebarsTemplate({ "isPrvt": true }, "schdul_reg", "show");
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
-                commons.datepicker.singleDatePicker("#beginDt", "yyyy-MM-DD");
+                commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD");
                 commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD");
             },
             /** 참여자 추가 */
-            fnAddPrtcpnt: function() {
+            addPrtcpnt: function() {
                 commons.util.handlebarsAppend({ "idx": Schdul.prtcpntCnt++ }, "schdul_reg_prtcpnt");
             },
             /** 참여자 삭제 */
-            fnRemovePrtcpnt: function(idx) {
+            removePrtcpnt: function(idx) {
                 $("#schdul_reg_prtcpnt_div #prtcpntRow"+idx).remove();
             },
             /** 종료일자 토글 처리 */
-            fnSchdulTyCd: function(obj) {
+            schdulCd: function(obj) {
                 if ($(obj).val() === "${Constant.SCHDUL_TY_HLDY!}") {
                     $("#endDt").val($("#startDt").val());
                     $("#endDtDiv").hide();
@@ -200,9 +199,9 @@
                 }
             },
             /** 등록/수정 처리(Ajax) */
-            fnRegAjax: function() {
-                let ajaxData = $("#schdulRegForm").serializeArray();
+            regAjax: function() {
                 const url = "${SiteUrl.SCHDUL_REG_AJAX!}";
+                let ajaxData = $("#schdulRegForm").serializeArray();
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -211,9 +210,9 @@
                 });
             },
             /** 상세 모달 호출 (Ajax) */
-            fnDtlAjax: function(schdulNo) {
-                let ajaxData = { "schdulNo": schdulNo };
+            dtlAjax: function(schdulNo) {
                 const url = "${SiteUrl.SCHDUL_DTL_AJAX!}";
+                let ajaxData = { "schdulNo": schdulNo };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -225,9 +224,9 @@
                 });
             },
             /** 수정 폼 오픈 */
-            fnMdfForm: function() {
-                let ajaxData = { "schdulNo": Schdul.schdulNo };
+            mdfForm: function() {
                 const url = "${SiteUrl.SCHDUL_DTL_AJAX!}";
+                let ajaxData = { "schdulNo": Schdul.schdulNo };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -239,7 +238,7 @@
                     let prtcpnt = resultObj.prtcpntList;
                     Schdul.prtcpntCnt = prtcpnt !== undefined ? prtcpnt.length : 0;
 
-                    commons.datepicker.singleDatePicker("#beginDt", "yyyy-MM-DD", resultObj.beginDt);
+                    commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", resultObj.bgnDt);
                     commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD", resultObj.endDt);
                     // 잔디발송여부 클릭시 글씨 변경
                     commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function () {
@@ -250,7 +249,7 @@
                 });
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function() {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

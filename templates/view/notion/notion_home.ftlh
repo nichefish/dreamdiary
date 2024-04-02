@@ -2,7 +2,6 @@
   -- 활동 로그 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <#--<script defer="defer" src="/static/react/static/js/main.js"></script>
 <link rel="stylesheet" href="/static/react/static/css/main.css">-->
@@ -14,15 +13,15 @@
         return {
             /** init */
             init: function () {
-                // 모든 table 헤더에 클릭 이벤트를 설정한다.
-                Page.sortMode = "FORWARD";
-                commons.util.fnSortTable();
+                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
 
-                Page.setIframe('da2e0bf52cec445eb5edc7990e1471ee');
+                const domain = "";
+                const pageId ="";
+                Page.setIframe(pageId);
             },
             setIframe: function (pageId) {
                 const iframe = $('<iframe>', {
-                  src: 'http://115.144.8.81:3000/' + pageId,
+                  src: domain + pageId,
                   id: 'myFrame',
                   frameborder: 0,
                   scrolling: 'yes',
