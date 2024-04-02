@@ -94,7 +94,7 @@
                                     </#list>
                                 </a>
                                 <#if post.comment.cnt gt 0>
-                                    <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
+                                    <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
                                         [${post.comment.cnt!}]
                                     </span>
@@ -108,7 +108,7 @@
                     </td>
                     <td class="text-center col-form-label hidden-table">
                         <!-- 목록 첨부파일 표시 -->
-                        <@component.list_managtr post />
+                        <@component.list_atch_file post />
                     </td>
                     <td class="text-center ">
                         <#if (post.regstrInfo.proflImgUrl)??>
@@ -156,7 +156,7 @@
                                     </#list>
                                 </a>
                                 <#if post.comment.cnt gt 0>
-                                    <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.fnModal('${post.postNo!}');"
+                                    <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
                                         [${post.comment.cnt!}]
                                     </span>
@@ -170,18 +170,11 @@
                     </td>
                     <td class="text-center col-form-label hidden-table">
                         <!-- 목록 첨부파일 표시 -->
-                        <@component.list_managtr post />
+                        <@component.list_atch_file post />
                     </td>
                     <td class="text-center ">
-                        <#if (post.regstrInfo.proflImgUrl)??>
-                            <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
-                                <img src="${(post.regstrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
-                            </div>
-                        </#if>
-                        ${post.regstrNm!"-"}
-                        <#if post.isRegstr!false>
-                            <span class="badge badge-secondary opacity-75 mx-1 fs-9">나</span>
-                        </#if>
+                        <!-- 목록 최종수정자 표시 -->
+                        <@component.list_managtr post />
                     </td>
                     <td class="text-center hidden-table">
                         <#if post.cfYn! == "Y">

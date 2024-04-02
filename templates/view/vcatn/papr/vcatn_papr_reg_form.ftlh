@@ -18,7 +18,7 @@
         return {
             init: function () {
                 // 첨부파일 영역 0개인지 체크
-                AtchFile.fnAtchFileListToggle();
+                AtchFile.atchFileListToggle();
 
                 commons.validate.noSpaces(".no-space");        // 공백 자동 제거
 
