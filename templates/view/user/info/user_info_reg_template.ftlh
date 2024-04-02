@@ -7,7 +7,7 @@
         return {
             init: function () {
                 <#if (user.userProfl.itemList)?has_content>
-                    UserInfo.fnAddUserInfoItemMdfList();      // 기존 항목에 대하여 행 쭈루룩 추가
+                    UserInfo.addUserInfoItemMdfList();      // 기존 항목에 대하여 행 쭈루룩 추가
                 </#if>
 
                 commons.validate.cttpc("#cttpc");              // 전화번호 형식 유효성 검사
@@ -65,7 +65,7 @@
                 $("#user_info_enable_div").hide();
             },
             /** 직원정보 창 토글 */
-            fnDisableUserInfo: function() {
+            disableUserInfo: function() {
                 $("#nickNm").removeAttr("readonly").removeAttr("placeholder");
                 $("#userProflDiv").hide();
                 $("#userProflYn").val("N");
@@ -76,7 +76,7 @@
             /**
              * 사용자 정보 추가항목 영역 새로 추가
              */
-            fnAddUserInfoItem: function () {
+            addUserInfoItem: function () {
                 let reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=userProflItem", "userProflItem");		// elmt, selector, elmtId
                 let tableTmpl = "<div class='row my-5 my-lg-0' id='itemContainer"+reqstItemIdx+"'>" + $("#userProflItemTemplate").html() + "</div>";
                 let str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
@@ -85,7 +85,7 @@
             /**
              * 사용자 정보 추가항목 영역 기존 정보 목록 추가
              */
-            fnAddUserInfoItemMdfList: function() {
+            addUserInfoItemMdfList: function() {
                 <#if user.userProfl?? && user.userProfl.itemList?has_content>
                     let reqstItemIdx, tableTmpl, str;
                     <#list user.userProfl.itemList![] as item>
@@ -104,7 +104,7 @@
                 </#if>
             },
             /** 추가항목 영역 삭제 */
-            fnDelUserInfoItemSpan: function(idx) {
+            delUserInfoItemSpan: function(idx) {
                 if ($("#userIntoItemId"+idx).val() === "") {
                     $("div#itemContainer"+idx).remove();
                 } else {
@@ -404,7 +404,7 @@
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="기타 관리가 필요한 항목을&#10;입력할 때 사용합니다.">
                     추가정보
                 </label>
-                <a href="javascript:void(0);" id="userInfoItemPlusBtn" onclick="UserInfo.fnAddUserInfoItem();" class="btn btn-bg-light btn-active-color-primary p-0"
+                <a href="javascript:void(0);" id="userInfoItemPlusBtn" onclick="UserInfo.addUserInfoItem();" class="btn btn-bg-light btn-active-color-primary p-0"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목을 추가합니다.">
                     <span class="svg-icon svg-icon-muted svg-icon-fluid m-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -465,7 +465,7 @@
     <div class="col-lg-2 text-lg-center">
         <button type="button" class="btn btn-sm btn-danger"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원이 아닌 인원에 대하여&#10;세부 직원 정보를 삭제합니다."
-                onclick="UserInfo.fnDisableUserInfo();">
+                onclick="UserInfo.disableUserInfo();">
             직원정보 삭제-
         </button>
     </div>

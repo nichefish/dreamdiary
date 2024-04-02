@@ -36,7 +36,7 @@
                                 <img src="${(post.managt.managtrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
                             </div>
                         </#if>
-                        ${managt.managtrNm!"-"}
+                        ${post.managt.managtrNm!"-"}
                     <#elseif post.mdfusrInfo??>
                         <#if (post.mdfusrInfo.proflImgUrl)??>
                             <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">

@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseManageService;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.MenuEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.MenuMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
@@ -57,9 +59,11 @@ public class MenuService
      * 메인메뉴(사용자, 관리자, 공통 포함) 목록 조회
      */
     public Page<MenuListDto> getMainMenuList(
-            final Map<String, Object> searchParamMap,
+            final BaseSearchParam searchParam,
             final PageRequest pageRequest
     ) throws Exception {
+
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         searchParamMap.put("menuTyCd", "main");
         Page<MenuEntity> menuMainEntityPage = this.getListEntity(searchParamMap, pageRequest);
         return this.pageEntityToDto(menuMainEntityPage);

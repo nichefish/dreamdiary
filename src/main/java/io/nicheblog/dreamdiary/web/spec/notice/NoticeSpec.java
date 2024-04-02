@@ -65,7 +65,7 @@ public class NoticeSpec
                     continue;
                 case "nickNm":
                     // 작업자 이름 = 조인 후 LIKE 검색
-                    Join<NoticeEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
+                    Join<NoticeEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);
                     Expression<String> nickNmExp = regstr.get(key);
                     predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
                     continue;

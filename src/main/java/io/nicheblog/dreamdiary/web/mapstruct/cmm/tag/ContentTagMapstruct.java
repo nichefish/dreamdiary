@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.tag;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
@@ -19,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, TagMapstruct.class})
 public interface ContentTagMapstruct
-        extends BaseMapstruct<ContentTagDto, ContentTagEntity> {
+        extends BaseListMapstruct<ContentTagDto, ContentTagDto, ContentTagEntity> {
 
     ContentTagMapstruct INSTANCE = Mappers.getMapper(ContentTagMapstruct.class);
 

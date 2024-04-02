@@ -2,36 +2,37 @@ package io.nicheblog.dreamdiary.web.spec.cmm.tag;
 
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * TagSpec
+ * ContentTagSpec
  * <pre>
- *  태그 목록 검색인자 세팅 Specification
+ *  컨텐츠-태그 목록 검색인자 세팅 Specification
  * </pre>
  *
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("tagSpec")
+@Component("contentTagSpec")
 @Log4j2
-public class TagSpec
-        implements BaseSpec<TagEntity> {
+public class ContentTagSpec
+        implements BaseSpec<ContentTagEntity> {
 
     /**
      * 조회 후처리:: 정렬 순서 변경
      */
     @Override
     public void postQuery(
-            Root<TagEntity> root,
+            Root<ContentTagEntity> root,
             CriteriaQuery<?> query,
             CriteriaBuilder builder
     ) {
@@ -44,7 +45,7 @@ public class TagSpec
     @Override
     public List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
-            final Root<TagEntity> root,
+            final Root<ContentTagEntity> root,
             final CriteriaBuilder builder
     ) {
 
@@ -53,10 +54,6 @@ public class TagSpec
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
-                // case "contentType":
-                //     Join<BoardTagEntity, BoardPostTagEntity> postTag = root.join("postTagList", JoinType.LEFT);
-                //     predicate.add(builder.equal(postTag.get(key), searchParamMap.get(key)));
-                //     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
                     try {
@@ -67,18 +64,5 @@ public class TagSpec
             }
         }
         return predicate;
-    }
-
-    public Specification<TagEntity> getNoRefTags() {
-        return (root, query, builder) -> {
-            List<Predicate> predicate = new ArrayList<>();
-            try {
-                Join<TagEntity, ContentTagEntity> contentTagList = root.join("contentTagList", JoinType.INNER);
-                predicate.add(builder.isNull(contentTagList));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return builder.and(predicate.toArray(new Predicate[0]));
-        };
     }
 }

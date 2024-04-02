@@ -8,13 +8,14 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.ManagtrAddEvent;
-import io.nicheblog.dreamdiary.web.event.TagAddEvent;
+import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
@@ -238,7 +239,7 @@ public class NoticeController
             if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 태그 처리 :: 메인 로직과 분리
-            publisher.publishEvent(new TagAddEvent(this, result.getClsfKey(), noticeDto.tag));
+            publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), noticeDto.tag));
             // 조치자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ManagtrAddEvent(this, result.getClsfKey()));
             // 잔디 메세지 발송 :: 메인 로직과 분리
@@ -409,6 +410,8 @@ public class NoticeController
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            // 태그 처리 :: 메인 로직과 분리
+            publisher.publishEvent(new TagProcEvent(this, new BaseClsfKey(key, ContentType.NOTICE)));
             // 태그 처리 :: 메인 로직과 분리
             // publisher.publishEvent(new TagEvent(this, new BaseClsfKey(key, ContentType.NOTICE), noticeDto.tag));
         } finally {

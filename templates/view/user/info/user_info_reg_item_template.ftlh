@@ -19,7 +19,7 @@
     </div>
     <div class="col-xl-1 col-1 my-3">
         <input type="hidden" class="form-control form-control-solid" name="userInfo.itemList[__INDEX__].delYn" id="delYn__INDEX__" value="N" />
-        <a href="javascript:void(0);" class="btn btn-bg-light btn-active-color-primary p-0"onclick="UserInfo.fnDelUserInfoItemSpan(__INDEX__);">
+        <a href="javascript:void(0);" class="btn btn-bg-light btn-active-color-primary p-0"onclick="UserInfo.delUserInfoItemSpan(__INDEX__);">
             <span class="svg-icon svg-icon-muted svg-icon-fluid m-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="black"/>

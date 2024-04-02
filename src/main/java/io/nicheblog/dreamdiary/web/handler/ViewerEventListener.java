@@ -26,7 +26,7 @@ public class ViewerEventListener {
      */
     @EventListener
     public void handleViewerAddEvent(ViewerAddEvent viewerAddEvent) {
-        // 활동 로그 (로그인) 로깅 처리
+        // 열람자 추가
         viewerService.addViewer(viewerAddEvent.getClsfKey());
     }
 }

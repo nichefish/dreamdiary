@@ -5,10 +5,14 @@ import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * BaseCrudService
@@ -27,6 +31,13 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
      */
     default void preRegist(final Dto dto) throws Exception {
         // 등록 전처리:: 기본 공백, 필요시 각 함수에서 Override
+    }
+
+    /**
+     * default: 게시물 등록 후처리 (entity level, entity 변환 후 처리)
+     */
+    default void postRegist(final Entity rslt) throws Exception {
+        // 등록 후처리:: 기본 공백, 필요시 각 함수에서 Override
     }
 
     /**
@@ -50,10 +61,12 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
     }
 
     /**
-     * default: 게시물 등록 후처리 (entity level, entity 변환 후 처리)
+     * default: 게시물 bulk-insert (entity level)
      */
-    default void postRegist(final Entity rslt) throws Exception {
-        // 등록 후처리:: 기본 공백, 필요시 각 함수에서 Override
+    default boolean registAll(final List<Entity> entityList) {
+        Repository repository = this.getRepository();
+        repository.saveAllAndFlush(entityList);
+        return true;
     }
 
     /**
@@ -61,6 +74,20 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
      */
     default void preModify(final Dto dto) throws Exception {
         // 수정 전처리:: 기본 공백, 필요시 각 함수에서 Override
+    }
+
+    /**
+     * default: 게시물 수정 중간처리 (entity level, entity 변환 후 처리)
+     */
+    default void midModify(final Entity entity) {
+        // 수정 중간처리:: 기본 공백, 필요시 각 함수에서 Override
+    }
+
+    /**
+     * default: 게시물 수정 후처리 (entity level, entity 변환 후 처리)
+     */
+    default void postModify(final Entity rslt) throws Exception {
+        // 수정 후처리:: 기본 공백, 필요시 각 함수에서 Override
     }
 
     /**
@@ -89,20 +116,6 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
         this.postModify(rslt);
 
         return mapstruct.toDto(rslt);
-    }
-
-    /**
-     * default: 게시물 수정 중간처리 (entity level, entity 변환 후 처리)
-     */
-    default void midModify(final Entity entity) {
-        // 수정 중간처리:: 기본 공백, 필요시 각 함수에서 Override
-    }
-
-    /**
-     * default: 게시물 수정 후처리 (entity level, entity 변환 후 처리)
-     */
-    default void postModify(final Entity rslt) throws Exception {
-        // 수정 후처리:: 기본 공백, 필요시 각 함수에서 Override
     }
 
     /**
@@ -139,6 +152,22 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
         this.preDelete(e);
 
         repository.delete(e);
+        return true;
+    }
+
+    /**
+     * default: 게시물 bulk-delete (entity level)
+     */
+    default boolean deleteAll(List<Entity> entityList) {
+        Repository repository = this.getRepository();
+        repository.deleteAll(entityList);
+        return true;
+    }
+    default boolean deleteAll(final Map<String, Object> searchParamMap) throws Exception {
+        Page<Entity> entityPage = this.getListEntity(searchParamMap, Pageable.unpaged());
+        List<Entity> entityList = entityPage.getContent();
+        Repository repository = this.getRepository();
+        repository.deleteAll(entityList);
         return true;
     }
 }

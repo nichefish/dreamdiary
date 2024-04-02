@@ -55,7 +55,7 @@ public class CommentSpec
                     continue;
                 case "userNm":
                     // 작성자 이름 = LIKE 검색
-                    Join<CommentEntity, AuditorInfo> regstr = root.join("logUserInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
+                    Join<CommentEntity, AuditorInfo> regstr = root.join("logUserInfo", JoinType.LEFT);
                     Expression<String> userNmExp = regstr.get(key);
                     predicate.add(builder.like(userNmExp, "%" + searchParamMap.get(key) + "%"));
                     continue;

@@ -26,7 +26,7 @@ public class ManagtrEventListener {
      */
     @EventListener
     public void handleManagtrAddEvent(ManagtrAddEvent managtrAddEvent) {
-        // 활동 로그 (로그인) 로깅 처리
+        // 조치자 추가
         managtrService.addManagtr(managtrAddEvent.getClsfKey());
     }
 }

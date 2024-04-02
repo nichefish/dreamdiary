@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
-import io.nicheblog.dreamdiary.web.repository.cmm.tag.ContentTagRepository;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.TagRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.TagSpec;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +14,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,10 +35,10 @@ public class TagService
 
     private final TagMapstruct tagMapstruct = TagMapstruct.INSTANCE;
 
+    @Resource(name = "contentTagService")
+    private ContentTagService contentTagService;
     @Resource(name = "tagRepository")
     private TagRepository tagRepository;
-    @Resource(name = "contentTagRepository")
-    private ContentTagRepository contentTagRepository;
     @Resource(name = "tagSpec")
     private TagSpec tagSpec;
 
@@ -59,17 +60,27 @@ public class TagService
     /**
      * 컨텐츠 태그 처리
      */
-    public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) {
+    public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) throws Exception {
+
+        // 태그객체 또는 태그 문자열이 넘어오지 않았으면? 리턴.
+        if (tagCmpstn == null) return;
         List<String> tagStrList = tagCmpstn.getParsedTagList();
         if (CollectionUtils.isEmpty(tagStrList)) return;
+
         // 1, 마스터 태그 처리 (메소드 분리)
         List<TagEntity> rsList = this.masterTagProc(tagStrList);
 
-        // 2. 글번호 + 태그번호를 받아서 컨텐츠 태그를 처리해준다.
+        // 2. 기존 컨텐츠-태그 전부 삭제
+        this.delExistingContentTags(clsfKey);
+
+        // 3. 컨텐츠-태그를 처리해준다.
         List<ContentTagEntity> contentTagList = rsList.stream()
                 .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
                 .collect(Collectors.toList());
-        this.procContentTagList(contentTagList);
+        contentTagService.registAll(contentTagList);
+
+        // 4. 연관관계 없는 마스터 태그 삭제
+        this.deleteNoRefTags();
     }
 
     /**
@@ -84,8 +95,26 @@ public class TagService
         return tagRepository.saveAllAndFlush(tagEntityList);
     }
 
-    public void procContentTagList(List<ContentTagEntity> contentTagList) {
-        contentTagRepository.saveAllAndFlush(contentTagList);
+    /**
+     * 기존 컨텐츠 태그 전부 삭제:: 메소드 분리
+     */
+    private void delExistingContentTags(BaseClsfKey clsfKey) throws Exception {
+        // 2. 글번호 + 태그번호를 받아와서 기존 태그 목록 조회
+        Map<String, Object> searchParamMap = new HashMap(){{
+            put("refPostNo", clsfKey.getContentType());
+            put("refContentType", clsfKey.getContentType());
+        }};
+        contentTagService.deleteAll(searchParamMap);
+    }
+
+    /** 
+     * 연관관계 없는 마스터 태그 삭제
+     */
+    public Boolean deleteNoRefTags() {
+        List<TagEntity> entity = tagRepository.findAll(tagSpec.getNoRefTags());
+        tagRepository.deleteAll(entity);
+
+        return true;
     }
 
     /**

@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.handler;
 
-import io.nicheblog.dreamdiary.web.event.TagAddEvent;
+import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -25,8 +25,15 @@ public class TagEventListener {
      * 태그 처리
      */
     @EventListener
-    public void handleTagAddEvent(TagAddEvent tagAddEvent) {
-        // 활동 로그 (로그인) 로깅 처리
-        tagService.procTags(tagAddEvent.getClsfKey(), tagAddEvent.getTagCmpstn());
+    public void handleTagProcEvent(TagProcEvent tagProcEvent) throws Exception {
+
+        // 태그 객체 없이 키값만 넘어오면? 컨텐츠 삭제. -> 태그테이블 refresh (연관관계 없는 태그 삭제0
+        boolean isContentDelete = (tagProcEvent.getTagCmpstn() == null);
+        if (isContentDelete) {
+            tagService.deleteNoRefTags();
+            return;
+        }
+        // 태그 처리
+        tagService.procTags(tagProcEvent.getClsfKey(), tagProcEvent.getTagCmpstn());
     }
 }

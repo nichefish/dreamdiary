@@ -54,7 +54,7 @@ public class LogActvtySpec
                     continue;
                 case "nickNm":
                     // 작업자 이름 = 조인 후 LIKE 검색
-                    Join<LogActvtyEntity, AuditorInfo> regstr = root.join("logUserInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
+                    Join<LogActvtyEntity, AuditorInfo> regstr = root.join("logUserInfo", JoinType.LEFT);
                     Expression<String> nickNmExp = regstr.get(key);
                     predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
                     continue;

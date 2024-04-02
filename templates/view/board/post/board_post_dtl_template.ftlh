@@ -4,7 +4,7 @@
   -->
 <script type="text/x-handlebars-template" id="board_post_dtl_template">
     <div class="card mt-4">
-        <!--begin::Question-->
+        <!--begin::Title-->
         <div class="mb-0">
             <!--begin::Head-->
             <div class="d-flex align-items-center mb-4">
@@ -49,11 +49,14 @@
                 <!--end::Info-->
             </div>
             <!--end::Foot-->
+
             <div class="separator separator-dashed border-gray-300 my-8"></div>
-            <!--begin::Question-->
+
+            <!--begin::cn-->
             <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
                 {{{cn}}}
             </div>
+
             {{#atchFileInfo}}
                 <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
                     <div class="col-xl-2 col-form-label fs-6 fw-bold px-5">
@@ -78,6 +81,7 @@
                     </div>
                 </div>
             {{/atchFileInfo}}
+
         </div>
         <div class="separator separator-dashed border-gray-300 my-8"></div>
     </div>
