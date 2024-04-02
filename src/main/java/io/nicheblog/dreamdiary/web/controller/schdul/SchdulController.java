@@ -1,17 +1,23 @@
-package io.nicheblog.dreamdiary.web.controller.user;
+package io.nicheblog.dreamdiary.web.controller.schdul;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.service.user.UserMyService;
+import io.nicheblog.dreamdiary.web.model.schdul.SchdulCalDto;
+import io.nicheblog.dreamdiary.web.model.schdul.SchdulDto;
+import io.nicheblog.dreamdiary.web.model.schdul.SchdulSearchParam;
+import io.nicheblog.dreamdiary.web.model.user.UserListDto;
+import io.nicheblog.dreamdiary.web.service.cmm.NotifyService;
+import io.nicheblog.dreamdiary.web.service.schdul.SchdulCalService;
+import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -20,19 +26,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.util.List;
 
 /**
- * UserMyController
+ * SchdulController
  * <pre>
- *  내 정보 컨트롤러
+ *  일정 컨트롤러
  * </pre>
  *
  * @author nichefish
@@ -40,93 +45,76 @@ import javax.annotation.Resource;
  */
 @Controller
 @Log4j2
-public class UserMyController
+public class SchdulController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.USER_MY_DTL;
+    private final String baseUrl = SiteUrl.SCHDUL_CAL;
     @Getter
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER_MY;     // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.SCHDUL;      // 작업 카테고리 (로그 적재용)
+
+    @Resource(name = "cdService")
+    private CdService cdService;
+
+    @Resource(name = "schdulCalService")
+    private SchdulCalService schdulCalService;
+
+    @Resource(name = "schdulService")
+    private SchdulService schdulService;
 
     @Resource(name = "userService")
     private UserService userService;
 
-    @Resource(name = "userMyService")
-    private UserMyService userMyService;
-
-    // @Resource(name = "vcatnStatsService")
-    // private VcatnStatsService vcatnStatsService;
-
-    // @Resource(name = "vcatnStatsYyService")
-    // private VcatnStatsYyService vcatnStatsYyService;
-
-    // @Resource(name = "vcatnPaprService")
-    // private VcatnPaprService vcatnPaprService;
+    @Resource(name = "notifyService")
+    private NotifyService notifyService;
 
     /**
-     * 내 정보 (상세) 화면 조회
+     * 일정 > 전체 일정 (달력) 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.USER_MY_DTL)
+    @GetMapping(SiteUrl.SCHDUL_CAL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String myInfoDtl(
+    public String schdulCal(
             final LogActvtyParam logParam,
             final ModelMap model
-    ) throws Exception {
+    ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("내 정보"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.SCHDUL_CAL.setAcsPageInfo(Constant.PAGE_CAL));
 
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 내 정보 조회
-            String lgnUserId = AuthUtils.getLgnUserId();
-            UserDto lgnUserDto = userService.getDtlDto(lgnUserId);
-            isSuccess = (lgnUserDto != null);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            model.addAttribute("user", lgnUserDto);
-            // 휴가계획서 년도 정보 조회 (시작일자~종료일자)
-            // if (UserAuthService.hasEcnyDt()) {
-            //     VcatnStatsYyDto statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
-            //     model.addAttribute("vcatnYy", statsYy);
-            //     String userId = AuthUtils.getLgnUserId();
-            //     VcatnStatsDto vcatnStatsDtl = vcatnStatsService.getVcatnStatsDtl(statsYy, userId);
-            //     model.addAttribute("vcatnStats", vcatnStatsDtl);
-            //     // 올해 사용 휴가 목록 조회
-            //     Map<String, Object> searchParamMap = new HashMap<>() {{
-            //         put("searchStartDt", statsYy.getBgnDt());
-            //         put("searchEndDt", statsYy.getEndDt());
-            //         put("regstrId", lgnUserId);
-            //     }};
-            //     Page<VcatnPaprListDto> vcatnPaprList = vcatnPaprService.getListDto(searchParamMap, Pageable.unpaged());
-            //     model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
-            // }
+            List<UserListDto> crtdUserList = userService.getCrdtUserList(DateUtils.getCurrDateAddDayStr(-40), DateUtils.getCurrDateAddDayStr(40))
+                                                        .getContent();
+            model.addAttribute("crtdUserList", crtdUserList);
+            cdService.setModelCdData(Constant.SCHDUL_CD, model);
+            cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/my/user_my_dtl";
+        return "/view/schdul/schdul_cal";
     }
 
     /**
-     * 프로필 이미지 변경
+     * 일정 > 전체 일정 (달력) 목록 데이터 조회 (ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.USER_MY_REMOVE_PROFL_IMG_AJAX)
+    @RequestMapping(SiteUrl.SCHDUL_CAL_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> removeProflImgAjax(
-            final LogActvtyParam logParam
+    public ResponseEntity<AjaxResponse> schdulCalListAjax(
+            final LogActvtyParam logParam,
+            final SchdulSearchParam searchParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -134,8 +122,10 @@ public class UserMyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = userMyService.removeProflImg();
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            List<SchdulCalDto> schdulCalList = schdulCalService.getSchdulTotalCalList(searchParam);
+            ajaxResponse.setResultList(schdulCalList);
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -150,15 +140,19 @@ public class UserMyController
     }
 
     /**
-     * 프로필 이미지 삭제
+     * 일정 > 전체일정 > 일정 등록(ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.USER_MY_UPLOAD_PROFL_IMG_AJAX)
+    @PostMapping(value = {SiteUrl.SCHDUL_REG_AJAX, SiteUrl.SCHDUL_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> uploadProflImgAjax(
+    public ResponseEntity<AjaxResponse> schdulRegAjax(
+            final @Valid SchdulDto schdulDto,
             final LogActvtyParam logParam,
-            final MultipartHttpServletRequest request
+            final @RequestParam("postNo") @Nullable Integer postNo,
+            final @RequestParam("jandiYn") @Nullable String jandiYn,
+            final @RequestParam("trgetTopic") @Nullable String trgetTopic,
+            final BindingResult bindingResult
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -166,8 +160,15 @@ public class UserMyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = userMyService.uploadProflImg(request);
+            boolean isReg = postNo != null;
+            SchdulDto result = isReg ? schdulService.regist(schdulDto) : schdulService.modify(schdulDto, postNo);
+            isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            // 잔디 메세지 발송 :: 메인 로직과 분리
+            // if (isSuccess && "Y".equals(jandiYn)) {
+            //     String jandiResultMsg = notifyService.notifySchdulReg(trgetTopic, result, logParam);
+            //     resultMsg = resultMsg + "\n" + jandiResultMsg;
+            // }
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -175,57 +176,24 @@ public class UserMyController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
+            logParam.setCn(schdulDto.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
 
-
-    /**
-     * 내 비밀번호 확인 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
-     */
-    @PostMapping(SiteUrl.USER_MY_PW_CF_AJAX)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> myPwChkAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("currPw") @Nullable String currPw
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String resultMsg = "";
-        try {
-            String lgnUserId = AuthUtils.getLgnUserId();
-            isSuccess = userMyService.myPwCf(lgnUserId, currPw);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
     /**
-     * 내 비밀번호 변경 (Ajax)
+     * 일정 > 전체일정 > 일정 조회 (ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.USER_MY_PW_CHG_AJAX)
+    @PostMapping(SiteUrl.SCHDUL_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> myPwChgAjax(
+    public ResponseEntity<AjaxResponse> schdulDtlAjax(
             final LogActvtyParam logParam,
-            final @RequestParam("newPw") @Nullable String newPw,
-            final @RequestParam("currPw") @Nullable String currPw
+            final @RequestParam("schdulNo") Integer postNo
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -233,9 +201,10 @@ public class UserMyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            String lgnUserId = AuthUtils.getLgnUserId();
-            isSuccess = userMyService.myPwChg(lgnUserId, currPw, newPw);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            SchdulDto schdul = schdulService.getDtlDto(postNo);
+            ajaxResponse.setResultObj(schdul);
+            isSuccess = (schdul.getPostNo() != null);
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -243,9 +212,46 @@ public class UserMyController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
+            logParam.setCn("key: " + postNo);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 일정 > 전체일정 > 일정 삭제 (ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @PostMapping(SiteUrl.SCHDUL_DEL_AJAX)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> schdulDelAjax(
+            final LogActvtyParam logParam,
+            final @RequestParam("schdulNo") String schdulNoStr
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            Integer schdulNo = Integer.parseInt(schdulNoStr);
+            isSuccess = schdulService.delete(schdulNo);
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setCn("key: " + schdulNoStr);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 }
