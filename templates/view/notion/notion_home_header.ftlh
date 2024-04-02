@@ -4,8 +4,8 @@
   -->
 <form name="listForm" id="listForm" method="get">
     <div class="d-flex align-items-center">
-        <input type="hidden" name="pageNo" id="pageNo" value="${pageNo!}">
-        <input type="hidden" name="pageSize" id="pageSize" value="${pageSize!}">
+        <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
+        <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
         <!-- datePicker -->
         <div class="position-relative">
             <span class="menu-icon me-md-2 vertical-middle">
@@ -22,8 +22,8 @@
             <!--begin::Select-->
             <select name="rslt" id="rslt" class="form-select form-select-solid fs-7 fw-bolder me-md-2 w-125px" data-hide-search="true">
                 <option value="">작업결과</option>
-                <option value="true" id="true">성공</option>
-                <option value="false" id="false">실패</option>
+                <option value="true" label="성공" ${fn.selected(searchParam.rslt!, "true")} />
+                <option value="false" label="실패" ${fn.selected(searchParam.rslt!, "false")} />
             </select>
         </div>
         <div class="position-relative w-md-100px me-md-2">
@@ -62,7 +62,7 @@
     <div class="card-toolbar">
         <!--begin::Toolbar-->
 <#--        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-            <button type="button" class="btn btn-sm btn-light-primary" style="margin-left:auto;" onclick="Page.fnXlsxDownload();"
+            <button type="button" class="btn btn-sm btn-light-primary" style="margin-left:auto;" onclick="Page.xlsxDownload();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
                 <i class="fas fa-download fs-7"></i>다운로드
             </button>

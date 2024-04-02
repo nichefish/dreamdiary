@@ -20,4 +20,4 @@
     -> @commentList, @tagList
 
 #### ↓ BasePostDto / BasePostListDto :: extends BaseAtchDto
-    -> title, cn, ctgrCd, fxdYn, hitCnt, imprtcYn, ndfabke
+    -> title, cn, ctgrCd, fxdYn, imprtcYn, hitCnt, mdfable

@@ -19,4 +19,4 @@
     -> post_no, content_type
 
 #### ↓ BasePostEntity :: extends BaseClsfEntity
-    -> title, cn, ctgr_cd, imprtc_yn, fxd_yn, hit_cnt, ndfabke
+    -> title, cn, ctgr_cd, imprtc_yn, fxd_yn, hit_cnt, mdfable

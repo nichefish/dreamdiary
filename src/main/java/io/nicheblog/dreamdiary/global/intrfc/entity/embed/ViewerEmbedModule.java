@@ -2,6 +2,9 @@ package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
 /**
  * ViewerEmbedModule
+ * <pre>
+ *   Viewer 모듈 인터페이스
+ * </pre>
  *
  * @author nichefish
  */
