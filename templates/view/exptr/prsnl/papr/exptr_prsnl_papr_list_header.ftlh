@@ -73,4 +73,7 @@
             <#include "/view/exptr/prsnl/papr/exptr_prsnl_papr_rule_modal.ftlh">
         </div>
     </div>
+
+    <!-- #include:: component:: 태그 클릭 필터링 -->
+    <#include "/view/_component/tag/_tag_list_header.ftlh">
 </form>

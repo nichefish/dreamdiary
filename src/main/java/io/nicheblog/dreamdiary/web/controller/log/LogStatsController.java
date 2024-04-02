@@ -68,17 +68,16 @@ public class LogStatsController
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (LogStatsSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
-            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
+            // 목록 조회
             List<LogStatsUserDto> logStatsUserList = logStatsUserService.logStatsUserDtoList(searchParam, Pageable.unpaged());
             if (logStatsUserList != null) model.addAttribute("logStatsUserList", logStatsUserList);
             List<LogStatsUserDto> logStatsNotUserList = logStatsUserService.logStatsNotUserDtoList(searchParam, Pageable.unpaged());
             if (logStatsUserList != null) model.addAttribute("logStatsNotUserList", logStatsNotUserList);
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

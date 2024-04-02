@@ -19,8 +19,6 @@ import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeListDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
@@ -30,7 +28,6 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,10 +66,8 @@ public class NoticeController
 
     @Resource(name = "noticeService")
     private NoticeService noticeService;
-
     @Resource(name = "cdService")
     private CdService cdService;
-
     @Resource(name = "tagService")
     private TagService tagService;
 
@@ -95,27 +90,24 @@ public class NoticeController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 :: 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            if (searchParam.isBackToList()) searchParam = (NoticeSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
+            searchParam = (NoticeSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 상단 고정 목록 조회
             model.addAttribute("noticeFxdList", noticeService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            // 목록 조회
             Page<NoticeListDto> noticeList = noticeService.getListDto(searchParam, pageRequest);
-            if (noticeList != null) model.addAttribute("noticeList", noticeList.getContent());
+            model.addAttribute("noticeList", noticeList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
+            // 컨텐츠 타입에 맞는 태그 목록 조회
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.NOTICE));
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
-            // 태그 전체 목록 조회
-            TagSearchParam tagSeachParam = new TagSearchParam();
-            tagSeachParam.setContentType(ContentType.NOTICE.key);
-            Page<TagDto> tagList = tagService.getListDto(tagSeachParam, Pageable.unpaged());
-            model.addAttribute("tagList", tagList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

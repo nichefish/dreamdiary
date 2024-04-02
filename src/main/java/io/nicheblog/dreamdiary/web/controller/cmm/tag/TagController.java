@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,8 +41,8 @@ import java.util.Map;
 public class TagController
         extends BaseControllerImpl {
 
-    // 작업 카테고리 (로그 적재용)
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.TAG;
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.TAG;           // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "tagService")
     private TagService tagService;
@@ -67,6 +68,7 @@ public class TagController
             // 전체 태그 목록 조회 (태그클라우드)
             Page<TagDto> tagList = tagService.getListDto(searchParamMap, Pageable.unpaged());
             ajaxResponse.setResultList(tagList.getContent());
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -105,6 +107,7 @@ public class TagController
             ajaxResponse.setResultObj(tagDto);
             // if (!CollectionUtils.isEmpty(TagDto.getPostList())) ajaxResponse.setResultList(TagDto.getPostList());
             // if (!CollectionUtils.isEmpty(TagDto.getNoticeList())) ajaxResponse.setResultList(TagDto.getNoticeList());
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

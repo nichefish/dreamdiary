@@ -53,7 +53,6 @@ public class BoardDefController
 
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;
-
     @Resource(name = "cdService")
     private CdService cdService;
 
@@ -76,17 +75,17 @@ public class BoardDefController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            String baseUrl = SiteUrl.BOARD_DEF_LIST;
             searchParam = (BoardDefSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "sortOrdr", model);
+            // 목록 조회
             Page<BoardDefDto> boardDefMngList = boardDefService.getListDto(searchParam, pageRequest);
-            if (boardDefMngList != null) model.addAttribute("boardDefMngList", boardDefMngList.getContent());
+            model.addAttribute("boardDefMngList", boardDefMngList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(boardDefMngList));
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.POST_CD, model);
-
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

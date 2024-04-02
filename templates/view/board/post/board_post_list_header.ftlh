@@ -16,7 +16,7 @@
                 <@component.datepicker searchParam "searchEndDt" "" />
             </div>
             <#if POST_CTGR_CD??>
-                <div class="position-relative me-md-2 col-lg-2 col-4 searchType">
+                <div class="position-relative me-md-2">
                     <select name="ctgrCd" id="ctgrCd" class="form-select form-select-solid fw-bolder form-select-sm py-3">
                         <option value="">글머리</option>
                         <#list POST_CTGR_CD![] as ctgr>
@@ -25,13 +25,13 @@
                     </select>
                 </div>
             </#if>
-            <div class="position-relative me-md-2 col-lg-2 col-3 searchType">
+            <div class="position-relative me-md-2">
                 <select name="searchType" id="searchType" class="form-select form-select-solid fw-bolder form-select-sm py-3">
                     <option value="title" label="제목" ${fn.selected(searchParam.searchType!, "제목")} />
                     <option value="nickNm" label="작성자" ${fn.selected(searchParam.searchType!, "작성자")} />
                 </select>
             </div>
-            <div class="position-relative me-md-2 col-lg-8 col-4 searchType">
+            <div class="position-relative me-md-2">
                 <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                 <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

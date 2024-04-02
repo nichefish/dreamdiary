@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,7 +48,8 @@ import java.util.Map;
 public class DreamDayApiController
         extends BaseControllerImpl {
 
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;      // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "dreamDayApiService")
     private DreamDayApiService dreamDayApiService;

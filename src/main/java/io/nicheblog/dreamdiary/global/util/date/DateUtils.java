@@ -29,7 +29,7 @@ public class DateUtils
 
     /** 날짜 파싱 관련 메소드 위임 */
     public static class Parser extends DateParser {}
-    public Parser Parser = new Parser();
+    public Parser parser = new Parser();
 
     /** 음력 관련 메소드 위임 */
     public static class ChineseCal extends ChineseCalModule {}

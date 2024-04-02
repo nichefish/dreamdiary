@@ -17,6 +17,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
 import io.nicheblog.dreamdiary.web.service.board.BoardPostService;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -33,7 +34,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
-import java.util.List;
 
 /**
  * BoardPostController
@@ -57,19 +57,12 @@ public class BoardPostController
 
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;
-
     @Resource(name = "boardPostService")
     private BoardPostService boardPostService;
-
-    // @Resource(name = "boardTagService")
-    // private BoardTagService boardTagService;
-
     @Resource(name = "cdService")
     public CdService cdService;
-
-    // @Resource(name = "userService")
-    // private UserService userService;
-
+    @Resource(name = "tagService")
+    private TagService tagService;
     // @Resource(name = "xlsxUtils")
     // private XlsxUtils xlsxUtils;
 
@@ -98,23 +91,23 @@ public class BoardPostController
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (BoardPostSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
+            // 상단 고정 목록 조회
+            model.addAttribute("postFxdList", boardPostService.getFxdList(boardCd));
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            // 목록 조회
             Page<BoardPostListDto> postList = boardPostService.getListDto(searchParam, pageRequest);
-            if (postList != null) model.addAttribute("postList", postList.getContent());
+            model.addAttribute("postList", postList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(postList));
+            // 컨텐츠 타입에 맞는 태그 목록 조회
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(boardCd));
+            // 코드 정보 모델에 추가
             model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdListByClCd(boardDef.getCtgrClCd()));
-            // 상단 고정 목록 조회
-            List<BoardPostListDto> postFxdList = boardPostService.getFxdList(boardCd);
-            model.addAttribute("postFxdList", postFxdList);
-            // 태그 전체 목록 조회
-            // Page<BoardTagDto> tagList = boardTagService.getListDto(searchParam, Pageable.unpaged());
-            // model.addAttribute("tagList", tagList.getContent());
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

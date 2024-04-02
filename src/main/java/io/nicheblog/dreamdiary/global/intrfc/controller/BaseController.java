@@ -16,5 +16,7 @@ public interface BaseController {
     ActvtyCtgr getActvtyCtgr();
 
     /** baseUrl */
-    String getBaseUrl();
+    default String getBaseUrl() {
+        return null;
+    };
 }

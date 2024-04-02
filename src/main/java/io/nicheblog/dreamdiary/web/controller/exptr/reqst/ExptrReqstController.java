@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.exptr.reqst;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -18,6 +19,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstListDto;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstSearchParam;
 import io.nicheblog.dreamdiary.web.service.admin.TmplatTxtService;
 import io.nicheblog.dreamdiary.web.service.cmm.NotifyService;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.exptr.reqst.ExptrReqstService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -37,7 +39,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.util.List;
 
 /**
  * ExptrReqstController
@@ -60,15 +61,10 @@ public class ExptrReqstController
 
     @Resource(name = "cdService")
     public CdService cdService;
-
     @Resource(name = "exptrReqstService")
     public ExptrReqstService exptrReqstService;
-
-    @Resource(name = "notifyService")
-    private NotifyService notifyService;
-
-    @Resource(name = "tmplatTxtService")
-    private TmplatTxtService tmplatTxtService;
+    @Resource(name = "tagService")
+    private TagService tagService;
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 목록 화면 조회
@@ -90,22 +86,23 @@ public class ExptrReqstController
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (ExptrReqstSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
             // 상단 고정 목록 조회
-            List<ExptrReqstListDto> exptrReqstFxdList = exptrReqstService.getFxdList();
-            model.addAttribute("exptrReqstFxdList", exptrReqstFxdList);
+            model.addAttribute("exptrReqstFxdList", exptrReqstService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "regDt", model);
-            // PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            // 목록 조회
             Page<ExptrReqstListDto> exptrReqstList = exptrReqstService.getListDto(searchParam, pageRequest);
             if (exptrReqstList != null) model.addAttribute("exptrReqstList", exptrReqstList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrReqstList));
+            // 컨텐츠 타입에 맞는 태그 목록 조회
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.NOTICE));
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.EXPTR_REQST_CTGR_CD, model);
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

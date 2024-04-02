@@ -53,20 +53,14 @@ public class SchdulController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.SCHDUL;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "cdService")
-    private CdService cdService;
-
-    @Resource(name = "schdulCalService")
-    private SchdulCalService schdulCalService;
-
     @Resource(name = "schdulService")
     private SchdulService schdulService;
-
+    @Resource(name = "schdulCalService")
+    private SchdulCalService schdulCalService;
+    @Resource(name = "cdService")
+    private CdService cdService;
     @Resource(name = "userService")
     private UserService userService;
-
-    @Resource(name = "notifyService")
-    private NotifyService notifyService;
 
     /**
      * 일정 > 전체 일정 (달력) 화면 조회
@@ -90,6 +84,7 @@ public class SchdulController
             model.addAttribute("crtdUserList", crtdUserList);
             cdService.setModelCdData(Constant.SCHDUL_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -124,6 +119,7 @@ public class SchdulController
         try {
             List<SchdulCalDto> schdulCalList = schdulCalService.getSchdulTotalCalList(searchParam);
             ajaxResponse.setResultList(schdulCalList);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -238,6 +234,7 @@ public class SchdulController
         String resultMsg = "";
         try {
             Integer schdulNo = Integer.parseInt(schdulNoStr);
+
             isSuccess = schdulService.delete(schdulNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

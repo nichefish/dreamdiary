@@ -33,35 +33,11 @@
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
         <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Flsys.activateTab(this); Flsys.flsysListAjax('${HOME_WORKSPACE!}');">
+            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Flsys.activateTab(this); Flsys.flsysListAjax('${HOME_FLSYS!}');">
                 <span class="nav-icon">
                     <i class="bi bi-sort-down-alt"></i>
                 </span>
-                <span class="nav-text ps-1">WORKSPACE</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Flsys.activateTab(this); Flsys.flsysListAjax('${HOME_WORKSPACE_PROJECT!}');">
-                <span class="nav-icon">
-                    <i class="bi bi-people"></i>
-                </span>
-                <span class="nav-text ps-1">PROJECTS</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Flsys.activateTab(this); Flsys.flsysListAjax('${HOME_STORAGE!}');">
-                <span class="nav-icon">
-                    <i class="bi bi-grid-1x2"></i>
-                </span>
-                <span class="nav-text ps-1">STORAGE</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Flsys.activateTab(this); Flsys.flsysListAjax('${HOME_VOD_STORAGE!}');">
-                <span class="nav-icon">
-                    <i class="bi bi-camera-reels"></i>
-                </span>
-                <span class="nav-text ps-1">VOD-STORAGE</span>
+                <span class="nav-text ps-1">FLSYS</span>
             </a>
         </li>
     </ul>
@@ -96,10 +72,10 @@
 <#include "/view/flsys/flsys_meta_dtl_template.ftlh">
 <#include "/view/flsys/flsys_meta_dtl_btn_template.ftlh">
 
-<#include "/view/_component/tag/board_tag_dtl_modal.ftlh">
-<#include "/view/_component/tag/board_tag_dtl_template.ftlh">
-<#include "/view/_component/tag/board_tag_dtl_post_list_template.ftlh">
-<#include "/view/_component/tag/board_tag_list_modal.ftlh">
-<#include "/view/_component/tag/board_tag_list_template.ftlh">
+<#include "/view/_component/tag/tag_dtl_modal.ftlh">
+<#include "/view/_component/tag/tag_dtl_template.ftlh">
+<#include "/view/_component/tag/tag_dtl_post_list_template.ftlh">
+<#include "/view/_component/tag/tag_list_modal.ftlh">
+<#include "/view/_component/tag/tag_list_template.ftlh">
 
 </@layout.layout>

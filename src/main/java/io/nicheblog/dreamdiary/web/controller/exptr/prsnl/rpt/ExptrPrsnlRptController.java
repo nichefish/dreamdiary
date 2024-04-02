@@ -50,7 +50,6 @@ public class ExptrPrsnlRptController
 
     @Resource(name = "exptrPrsnlService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;
-
     @Resource(name = "exptrPrsnlRptService")
     private ExptrPrsnlRptService exptrPrsnlRptService;
 

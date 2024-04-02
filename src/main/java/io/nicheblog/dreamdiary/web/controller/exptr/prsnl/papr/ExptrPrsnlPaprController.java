@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -21,7 +22,9 @@ import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprListDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprSearchParam;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
+import io.nicheblog.dreamdiary.web.service.exptr.reqst.ExptrReqstService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -65,11 +68,12 @@ public class ExptrPrsnlPaprController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "cdService")
-    private CdService cdService;
-
     @Resource(name = "exptrPrsnlService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;
+    @Resource(name = "cdService")
+    private CdService cdService;
+    @Resource(name = "tagService")
+    private TagService tagService;
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 목록 조회
@@ -91,23 +95,27 @@ public class ExptrPrsnlPaprController
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (ExptrPrsnlPaprSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.DESC, "yy")
                             .and(Sort.by(Sort.Direction.DESC, "mnth"))
-                            .and(Sort.by(Sort.Direction.ASC, "cfYn"));
-                            //.and(Sort.by(Sort.Direction.DESC, "managt.managtDt"))
+                            .and(Sort.by(Sort.Direction.ASC, "cfYn"))
+                            .and(Sort.by(Sort.Direction.DESC, "managt.managtDt"));
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            // 목록 조회
             Page<ExptrPrsnlPaprListDto> exptrPrsnlList = exptrPrsnlPaprService.getListDto(searchParam, pageRequest);
             if (exptrPrsnlList != null) model.addAttribute("exptrPrsnlList", exptrPrsnlList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrPrsnlList));
+            // 컨텐츠 타입에 맞는 태그 목록 조회
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.NOTICE));
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.YY_CD, model);
             cdService.setModelCdData(Constant.MNTH_CD, model);
+
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

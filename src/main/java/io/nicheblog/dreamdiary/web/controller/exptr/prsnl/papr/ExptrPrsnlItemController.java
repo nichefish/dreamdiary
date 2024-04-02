@@ -43,13 +43,10 @@ public class ExptrPrsnlItemController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.EXPTR_PRSNL_ITEM_LIST_AJAX;             // 기본 URL
-    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "exptrPrsnlService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;
-
     @Resource(name = "exptrPrsnlItemService")
     private ExptrPrsnlItemService exptrPrsnlItemService;
 

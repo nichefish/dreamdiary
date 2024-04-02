@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.cmm.tag;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
@@ -53,10 +54,6 @@ public class TagSpec
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
-                // case "contentType":
-                //     Join<BoardTagEntity, BoardPostTagEntity> postTag = root.join("postTagList", JoinType.LEFT);
-                //     predicate.add(builder.equal(postTag.get(key), searchParamMap.get(key)));
-                //     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
                     try {
@@ -75,6 +72,25 @@ public class TagSpec
             try {
                 Join<TagEntity, ContentTagEntity> contentTagList = root.join("contentTagList", JoinType.INNER);
                 predicate.add(builder.isNull(contentTagList));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return builder.and(predicate.toArray(new Predicate[0]));
+        };
+    }
+    
+    /** 
+     * 컨텐츠 타입에 맞는 태그 목록 조회 
+     */
+    public Specification<TagEntity> getContentSpecificTag(ContentType contentType) {
+        return this.getContentSpecificTag(contentType.key);
+    }
+    public Specification<TagEntity> getContentSpecificTag(String contentType) {
+        return (root, query, builder) -> {
+            List<Predicate> predicate = new ArrayList<>();
+            try {
+                Join<TagEntity, ContentTagEntity> contentTagList = root.join("contentTagList", JoinType.INNER);
+                predicate.add(builder.equal(contentTagList.get("refContentType"), contentType));
             } catch (Exception e) {
                 e.printStackTrace();
             }

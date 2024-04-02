@@ -4,12 +4,14 @@ import io.nicheblog.dreamdiary.api.ApiUrl;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiApiRespnsDto;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiParam;
 import io.nicheblog.dreamdiary.api.jandi.service.JandiApiService;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,9 @@ import javax.annotation.Resource;
 public class JandiApiController
         extends BaseControllerImpl {
 
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JANDI;      // 작업 카테고리 (로그 적재용)
+
     @Resource(name = "jandiApiService")
     private JandiApiService jandiApiService;
 
@@ -52,7 +57,6 @@ public class JandiApiController
     ) {
 
         JandiApiRespnsDto apiResponse = new JandiApiRespnsDto();
-
         log.info("requestUrl: {}, jandiParam: {}", request.getRequestURL(), jandiParam.toString());
 
         boolean isSuccess = false;

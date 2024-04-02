@@ -50,16 +50,12 @@ public class UserMyController
 
     @Resource(name = "userService")
     private UserService userService;
-
     @Resource(name = "userMyService")
     private UserMyService userMyService;
-
     // @Resource(name = "vcatnStatsService")
     // private VcatnStatsService vcatnStatsService;
-
     // @Resource(name = "vcatnStatsYyService")
     // private VcatnStatsYyService vcatnStatsYyService;
-
     // @Resource(name = "vcatnPaprService")
     // private VcatnPaprService vcatnPaprService;
 
@@ -102,6 +98,7 @@ public class UserMyController
             //     Page<VcatnPaprListDto> vcatnPaprList = vcatnPaprService.getListDto(searchParamMap, Pageable.unpaged());
             //     model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
             // }
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

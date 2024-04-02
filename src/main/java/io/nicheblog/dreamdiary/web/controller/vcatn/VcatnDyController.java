@@ -60,16 +60,12 @@ public class VcatnDyController
 
     @Resource(name = "vcatnPaprService")
     private VcatnPaprService vcatnPaprService;
-
     @Resource(name = "vcatnStatsYyService")
     private VcatnStatsYyService vcatnStatsYyService;
-
     @Resource(name = "vcatnDyService")
     private VcatnDyService vcatnDyService;
-
     @Resource(name = "userService")
     private UserService userService;
-
     @Resource(name = "cdService")
     private CdService cdService;
 
@@ -112,9 +108,10 @@ public class VcatnDyController
             Page<VcatnDyDto> vcatnDyPage = vcatnDyService.getVcatnDyList(statsYy);
             List<VcatnDyDto> vcatnDyList = vcatnDyPage == null ? null : vcatnDyPage.getContent();
             model.addAttribute("vcatnDyList", vcatnDyList);
+            cdService.setModelCdData(Constant.VCATN_CD, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            cdService.setModelCdData(Constant.VCATN_CD, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -151,6 +148,7 @@ public class VcatnDyController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = (vcatnSchdulNo == null);
             VcatnSchdulDto result = isReg ? vcatnDyService.regist(vcatnSchdulDto) : vcatnDyService.modify(vcatnSchdulDto, vcatnSchdulNo);
+
             isSuccess = (result.getVcatnSchdulNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -188,6 +186,7 @@ public class VcatnDyController
             Integer vcatnSchdulNo = Integer.parseInt(vcatnSchdulNoStr);
             VcatnSchdulDto resultObj = vcatnDyService.getDtlDto(vcatnSchdulNo);
             ajaxResponse.setResultObj(resultObj);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -222,6 +221,7 @@ public class VcatnDyController
         String resultMsg = "";
         try {
             Integer vcatnSchdulNo = Integer.parseInt(vcatnSchdulNoStr);
+
             isSuccess = vcatnDyService.delete(vcatnSchdulNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

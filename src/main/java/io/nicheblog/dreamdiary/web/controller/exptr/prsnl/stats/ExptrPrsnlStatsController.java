@@ -53,7 +53,6 @@ public class ExptrPrsnlStatsController
 
     @Resource(name = "exptrPrsnlService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;
-
     @Resource(name = "exptrPrsnlStatsService")
     private ExptrPrsnlStatsService exptrPrsnlStatsService;
 

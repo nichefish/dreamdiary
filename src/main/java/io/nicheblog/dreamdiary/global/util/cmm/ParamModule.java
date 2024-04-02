@@ -31,10 +31,11 @@ class ParamModule {
      */
     public static BaseSearchParam checkPrevSearchParam(
             final String listUrl,
-            final BaseSearchParam searchParam
+            BaseSearchParam searchParam
     ) {
 
-        if (StringUtils.isEmpty(listUrl)) return searchParam;
+        // 목록 화면으로 돌아온 경우에만 체크
+        if (StringUtils.isEmpty(listUrl) || !searchParam.isBackToList()) return searchParam;
 
         // 세션에서 이전 정보 조회, 이전 정보가 있을 경우 이전 정보 반환
         ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();

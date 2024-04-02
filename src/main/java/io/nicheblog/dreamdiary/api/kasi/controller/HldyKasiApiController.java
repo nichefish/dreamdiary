@@ -3,14 +3,17 @@ package io.nicheblog.dreamdiary.api.kasi.controller;
 import io.nicheblog.dreamdiary.api.ApiUrl;
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.api.kasi.service.HldyKasiApiService;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -43,6 +46,9 @@ import java.util.List;
 public class HldyKasiApiController
         extends BaseControllerImpl {
 
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;      // 작업 카테고리 (로그 적재용)
+
     @Resource(name = "hldyKasiApiService")
     private HldyKasiApiService hldyKasiApiService;
 
@@ -71,6 +77,7 @@ public class HldyKasiApiController
             hldyKasiApiService.delHldyList(yyStr);
             List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);
             ajaxResponse.setResultList(hldyApiList);
+
             isSuccess = hldyKasiApiService.regHldyList(hldyApiList);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {

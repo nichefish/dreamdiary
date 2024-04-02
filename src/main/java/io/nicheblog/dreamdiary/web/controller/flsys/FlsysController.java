@@ -72,6 +72,7 @@ public class FlsysController
             String filePath = !StringUtils.isEmpty(filePathParam) ? filePathParam : Constant.HOME_FLSYS;
             FlsysCmmDto file = flsysService.getFlsysByPath(filePath);
             model.addAttribute("file", file);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -108,9 +109,10 @@ public class FlsysController
             if (!filePath.startsWith(Constant.HOME_FLSYS)) throw new IllegalArgumentException("허용되지 않은 경로입니다.");
             FlsysCmmDto file = flsysService.getFlsysByPath(filePath);
             ajaxResponse.setResultObj(file);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            } catch (Exception e) {
+        } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
@@ -144,6 +146,7 @@ public class FlsysController
             // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
             CookieUtils.setFileDownloadSuccessCookie();
             FileUtils.downloadFile(file.getFile());
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

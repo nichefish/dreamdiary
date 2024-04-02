@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.vcatn;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -16,7 +17,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprSearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.NotifyService;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -57,10 +58,8 @@ public class VcatnPaprController
 
     @Resource(name = "vcatnPaprService")
     private VcatnPaprService vcatnPaprService;
-
-    @Resource(name = "notifyService")
-    private NotifyService notifyService;
-
+    @Resource(name = "tagService")
+    private TagService tagService;
     @Resource(name = "cdService")
     private CdService cdService;
 
@@ -84,19 +83,21 @@ public class VcatnPaprController
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (VcatnPaprSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
             // 상단 고정 목록 조회
             model.addAttribute("vcatnPaprFxdList", vcatnPaprService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            // 목록 조회
             Page<VcatnPaprListDto> vcatnPaprList = vcatnPaprService.getListDto(searchParam, pageRequest);
-            if (vcatnPaprList != null) model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
+            model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(vcatnPaprList));
+            // 컨텐츠 타입에 맞는 태그 목록 조회
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.NOTICE));
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -131,6 +132,7 @@ public class VcatnPaprController
             model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
             cdService.setModelCdData(Constant.VCATN_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -172,6 +174,7 @@ public class VcatnPaprController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = key == null;
             VcatnPaprDto result = isReg ? vcatnPaprService.regist(vcatnPaprDto, request) : vcatnPaprService.modify(vcatnPaprDto, key, request);
+
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             // 조치자 추가 :: 메인 로직과 분리
@@ -213,6 +216,7 @@ public class VcatnPaprController
         String resultMsg = "";
         try {
             VcatnPaprDto result = vcatnPaprService.cf(key);
+
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -247,12 +251,13 @@ public class VcatnPaprController
         String resultMsg = "";
         try {
             VcatnPaprDto rsVcatnPaprDto = vcatnPaprService.getDtlDto(key);
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             model.addAttribute("post", rsVcatnPaprDto);
             model.addAttribute(Constant.IS_MDF, true);
             cdService.setModelCdData(Constant.VCATN_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -291,6 +296,7 @@ public class VcatnPaprController
             vcatnPaprService.hitCntUp(key);
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -326,10 +332,11 @@ public class VcatnPaprController
         try {
             VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
             ajaxResponse.setResultObj(rsDto);
-            // 조회수 카운트 추가
+            // 조회수 카운트 추가 :: 메인 로직과 분리
             vcatnPaprService.hitCntUp(key);
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

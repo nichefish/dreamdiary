@@ -54,10 +54,8 @@ public class VcatnStatsController
 
     @Resource(name = "vcatnPaprService")
     private VcatnPaprService vcatnPaprService;
-
     @Resource(name = "vcatnStatsService")
     private VcatnStatsService vcatnStatsService;
-
     @Resource(name = "vcatnStatsYyService")
     private VcatnStatsYyService vcatnStatsYyService;
 
@@ -96,10 +94,9 @@ public class VcatnStatsController
             // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
             List<VcatnStatsDto> statsList = vcatnStatsService.getVcatnStatsList(statsYy);
             model.addAttribute("statsList", statsList);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

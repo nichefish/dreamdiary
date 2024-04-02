@@ -47,11 +47,11 @@ public class LogActvtyController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_ACTVTY;        // 작업 카테고리 (로그 적재용)
 
-    // @Resource(name = "xlsxUtils")
-    // private XlsxUtils xlsxUtils;
-
     @Resource(name = "logActvtyService")
     private LogActvtyService logActvtyService;
+
+    // @Resource(name = "xlsxUtils")
+    // private XlsxUtils xlsxUtils;
 
     /**
      * 활동 로그 목록 (전체) 화면 조회
@@ -75,17 +75,17 @@ public class LogActvtyController
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             String baseUrl = SiteUrl.LOG_ACTVTY_LIST;
             searchParam = (LogActvtySearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
+            // 목록 조회
             Page<LogActvtyDto> logActvtyList = logActvtyService.getListDto(searchParam, pageRequest);
-            if (logActvtyList != null) model.addAttribute("logActvtyList", logActvtyList.getContent());
+            model.addAttribute("logActvtyList", logActvtyList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(logActvtyList));
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -119,6 +119,7 @@ public class LogActvtyController
         try {
             LogActvtyDto rsDto = logActvtyService.getDtlDto(logActvtyNo);
             ajaxResponse.setResultObj(rsDto);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
