@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS board_post(
     imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요 여부 (Y/N)',
     fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정 여부 (Y/N)',
     hit_cnt INT DEFAULT 0 COMMENT '조회수',
-    -- MANAGT (module)
     mdfable CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
+    -- MANAGT (module)
     managtr_id VARCHAR(20) COMMENT '작업자 ID',
     managt_dt DATETIME COMMENT '작업일시',
     -- ATCH_FILE
