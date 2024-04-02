@@ -31,7 +31,7 @@ public enum ActvtyCtgr {
 
     NOTICE("공지사항"),
     DREAM("꿈 관리"),
-    BOARD_POST("게시판"),
+    BOARD_POST("일반게시판"),
 
     VCATN_PAPR("휴가계획서"),
     VCATN_DY("휴가사용일자"),
@@ -53,7 +53,7 @@ public enum ActvtyCtgr {
     // MANAGE
     LGN_POLICY("로그인 정책 관리"),
     MENU("메뉴 관리"),
-    BOARD_DEF("게시판 관리"),
+    BOARD_DEF("일반게시판 관리"),
     TMPLAT("템플릿 관리"),
     CD("코드 관리"),
     // LOG

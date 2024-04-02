@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 /**
  * BasePostDto
  * <pre>
- *  (공통/상속) 게시판 Dto
+ *  (공통/상속) 일반게시판 Dto
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *

@@ -11,7 +11,7 @@ import javax.persistence.*;
 /**
  * BasePostEntity
  * <pre>
- *  (공통/상속) 게시판 속성 Entity
+ *  (공통/상속) 일반게시판 속성 Entity
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *

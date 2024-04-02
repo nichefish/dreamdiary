@@ -16,7 +16,7 @@
                 <ol class="breadcrumb text-muted fs-6 fw-semibold">
                     <li class="breadcrumb-item">
                         <a href="<#if isMngrMode>${SiteUrl.ADMIN_MAIN}<#else>${SiteUrl.MAIN}</#if>" class="">
-                            <i class="bi bi-house-<#if isMngrMode>gear-</#if>fill fs-4 me-1 text-primary"></i>Home
+                            <i class="bi bi-house-<#if isMngrMode>gear-</#if>fill fs-4 me-1 text-primary"></i>
                         </a>
                     </li>
                     <#if !(siteAcsInfo.isTopMenu)>

@@ -222,7 +222,7 @@
                     <li class="breadcrumb-item">
                         <a href="javascript:void(0);" onclick="Page.return();"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메인 화면으로 돌아갑니다.">
-                            <i class="bi bi-house-fill fs-4 me-1 text-primary"></i>Home
+                            <i class="bi bi-house-fill fs-4 me-1 text-primary"></i>
                         </a>
                     </li>
                     <li class="breadcrumb-item text-muted">${(siteAcsInfo.topMenuNm)!}</li>

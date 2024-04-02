@@ -53,7 +53,7 @@ public interface SiteUrl {
     String NOTICE_REG_PREVIEW_POP = Prefix.NOTICE + "/noticeRegPreviewPop.do";
     String NOTICE_POPUP_LIST_AJAX = Prefix.NOTICE + "/noticePopupListAjax.do";
 
-    /** 게시판 */
+    /** 일반게시판 */
     String BOARD_POST_LIST = Prefix.BOARD_POST + "/boardPostList.do";
     String BOARD_POST_REG_FORM = Prefix.BOARD_POST + "/boardPostRegForm.do";
     String BOARD_POST_REG_AJAX = Prefix.BOARD_POST + "/boardPostRegAjax.do";
