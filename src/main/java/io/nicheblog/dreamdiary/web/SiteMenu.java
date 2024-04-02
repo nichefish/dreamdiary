@@ -98,7 +98,7 @@ public class SiteMenu {
     public static SiteAcsInfo DREAM_DAY = SubMenu.DREAM_DAY;
     public static SiteAcsInfo DREAM_DAY_CAL = SubMenu.DREAM_DAY_CAL;
 
-    // 대메뉴 :: 게시판
+    // 대메뉴 :: 일반게시판
     public static SiteAcsInfo BOARD = new SiteAcsInfo(
             SiteTopMenu.BOARD,
             TOP_MENU_IDX,
