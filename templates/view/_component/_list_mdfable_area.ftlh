@@ -34,3 +34,29 @@
         ${post.managt.managtrNm!"-"}
     </span>
 </#macro>
+
+<#macro list_atch_file post >
+    <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
+        <a class="badge badge-secondary p-2 btn-white blank blink-slow"
+           data-bs-toggle="tooltip" data-bs-placement="top" title="첨부파일">
+            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.modal('${post.atchFileNo!}');"></i>
+        </a>
+    <#else>
+        -
+    </#if>
+</#macro>
+
+<#macro list_tag post >
+    <#if post.tag?? && post.tag.tagStrList??>
+        <span class="me-6 fs-7">
+            <span class="pe-1 text-muted"><i class="bi bi-tags"></i></span>
+            <#list post.tag.tagStrList as tag>
+                <span class="text-muted pe-1" onclick="Tag.dtlAjax('${tagNo!}')"
+                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                      title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
+                    #<span class="border-bottom text-primary fw-lighter opacity-hover">${tag!"-"}</span>
+                </span>
+            </#list>
+        </span>
+    </#if>
+</#macro>

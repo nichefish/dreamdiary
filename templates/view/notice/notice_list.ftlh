@@ -101,18 +101,9 @@
                             <@component.list_comment post />
                         </div>
                         <div class="col-xl-4 col-12 d-flex justify-content-end align-items-center">
-                            <#if post.tagStrList??>
-                                <span class="me-6 fs-7">
-                                    <span class="pe-1 text-muted"><i class="bi bi-tags"></i></span>
-                                    <#list post.tagStrList as tag>
-                                        <span class="text-muted pe-1" onclick="Tag.dtlAjax('${tag!}')"
-                                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                                              title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
-                                            #<span class="border-bottom text-primary fw-lighter opacity-hover">${tag!"-"}</span>
-                                        </span>
-                                    </#list>
-                                </span>
-                            </#if>
+                            <!-- 목록 태그 표시 -->
+                            <@component.list_tag post />
+                            <!-- 모달 팝업 표시 -->
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" title="모달 팝업으로 보기">
                                 <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
@@ -121,14 +112,8 @@
                     </div>
                 </td>
                 <td class="text-center col-form-label hidden-table">
-                    <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
-                        <a class="badge badge-secondary p-2 btn-white blank blink-slow"
-                           data-bs-toggle="tooltip" data-bs-placement="top" title="첨부파일">
-                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.modal('${post.atchFileNo!}');"></i>
-                        </a>
-                    <#else>
-                        -
-                    </#if>
+                    <!-- 목록 첨부파일 표시 -->
+                    <@component.list_managtr post />
                 </td>
                 <td class="text-center col-form-label">
                     <!-- 목록 최종수정자 표시 -->
@@ -170,18 +155,9 @@
                             <@component.list_comment post />
                         </div>
                         <div class="col-xl-4 col-12 d-flex justify-content-end align-items-center">
-                            <#if post.tagStrList??>
-                                <span class="me-6 fs-7">
-                                    <span class="pe-1 text-muted"><i class="bi bi-tags"></i></span>
-                                    <#list post.tagStrList as tag>
-                                        <span class="text-muted pe-1" onclick="Tag.dtlAjax('${tag!}')"
-                                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                                              title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
-                                            #<span class="border-bottom text-primary fw-lighter opacity-hover">${tag!"-"}</span>
-                                        </span>
-                                    </#list>
-                                </span>
-                            </#if>
+                            <!-- 목록 태그 표시 -->
+                            <@component.list_tag post />
+                            <!-- 모달 팝업 표시 -->
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                onclick="Page.dtlAjax('${post.postNo!}');"
                                data-bs-toggle="tooltip" data-bs-placement="top" title="모달 팝업으로 보기">
@@ -191,14 +167,8 @@
                     </div>
                 </td>
                 <td class="text-center col-form-label hidden-table">
-                    <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
-                        <a class="badge badge-secondary p-2 btn-white blank blink-slow"
-                           data-bs-toggle="tooltip" data-bs-placement="top" title="첨부파일">
-                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.modal('${post.atchFileNo!}');"></i>
-                        </a>
-                    <#else>
-                        -
-                    </#if>
+                    <!-- 목록 첨부파일 표시 -->
+                    <@component.list_managtr post />
                 </td>
                 <td class="text-center col-form-label">
                     <!-- 목록 최종수정자 표시 -->

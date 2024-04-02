@@ -107,14 +107,8 @@
                         </div>
                     </td>
                     <td class="text-center col-form-label hidden-table">
-                        <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
-                            <a class="badge badge-secondary p-2 btn-white blank blink-slow"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
-                                <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileId!}');"></i>
-                            </a>
-                        <#else>
-                            -
-                        </#if>
+                        <!-- 목록 첨부파일 표시 -->
+                        <@component.list_managtr post />
                     </td>
                     <td class="text-center ">
                         <#if (post.regstrInfo.proflImgUrl)??>
@@ -175,14 +169,8 @@
                         </div>
                     </td>
                     <td class="text-center col-form-label hidden-table">
-                        <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
-                            <a class="badge badge-secondary p-2 btn-white blank blink-slow"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
-                                <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="AtchFileList.fnModal('${post.atchFileId!}');"></i>
-                            </a>
-                        <#else>
-                            -
-                        </#if>
+                        <!-- 목록 첨부파일 표시 -->
+                        <@component.list_managtr post />
                     </td>
                     <td class="text-center ">
                         <#if (post.regstrInfo.proflImgUrl)??>
