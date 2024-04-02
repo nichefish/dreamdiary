@@ -40,32 +40,24 @@ import java.util.List;
 public class MenuEntity
         extends BaseManageEntity {
 
-    /**
-     * 메뉴 ID
-     */
+    /** 메뉴 ID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_id")
     @Comment("메뉴 ID")
     private Integer menuId;
 
-    /**
-     * 상위메뉴번호
-     */
+    /** 상위메뉴 ID */
     @Column(name = "upper_menu_id")
     @Comment("상위메뉴번호")
     private Integer upperMenuId;
 
-    /**
-     * 메뉴 구분 코드
-     */
+    /** 메뉴 구분 코드 */
     @Column(name = "menu_ty_cd")
     @Comment("메뉴 구분 코드")
     private String menuTyCd;
 
-    /**
-     * 메뉴 구분 코드 정보 (복합키 조인)
-     */
+    /** 메뉴 구분 코드 정보 (복합키 조인) */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "\'MENU_TY_CD\'", referencedColumnName = "cl_cd")),
@@ -76,37 +68,27 @@ public class MenuEntity
     @Comment("메뉴 구분 코드 정보")
     private DtlCdEntity menuTyInfo;
 
-    /**
-     * 메뉴명
-     */
+    /** 메뉴명 */
     @Column(name = "menu_nm")
     @Comment("메뉴명")
     private String menuNm;
 
-    /**
-     * 메뉴번호
-     */
+    /** 메뉴번호 */
     @Column(name = "menu_no")
     @Comment("메뉴번호")
     private String menuNo;
 
-    /**
-     * URL
-     */
+    /** URL  */
     @Column(name = "url")
     @Comment("URL")
     private String url;
 
-    /**
-     * 아이콘 (bootstrap icon 또는 font-awesome) TODO: svg?
-     */
+    /** 아이콘 (bootstrap icon 또는 font-awesome) TODO: svg? */
     @Column(name = "icon")
     @Comment("아이콘")
     private String icon;
 
-    /**
-     * 셀프 참조 :: 상위메뉴 조회
-     */
+    /** 셀프 참조 :: 상위메뉴 조회 */
     @ManyToOne
     @JoinColumn(name = "upper_menu_id", referencedColumnName = "menu_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
@@ -114,9 +96,7 @@ public class MenuEntity
     @Comment("상위메뉴 조회")
     private MenuUpperEntity upperMenu;
 
-    /**
-     * 셀프 참조 :: 하위메뉴 목록 조회
-     */
+    /** 셀프 참조 :: 하위메뉴 목록 조회 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "upper_menu_id", referencedColumnName = "menu_id", insertable = false, updatable = false)
     @Fetch(FetchMode.SELECT)
