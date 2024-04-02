@@ -29,7 +29,8 @@ public interface SiteUrl {
     String AUTH_LGOUT = Prefix.AUTH + "/lgout.do";
 
     String ADMIN_MAIN = Prefix.ADMIN + MAIN;
-    String ADMIN_TEST_PAGE = Prefix.ADMIN + "/testPage.do";
+
+    String TEST_PAGE = Prefix.ADMIN + "/testPage.do";
 
     /** 꿈 일자 */
     String DREAM_DAY_PAGE = Prefix.DREAM_DAY + "/dreamDayPage.do";
@@ -89,6 +90,7 @@ public interface SiteUrl {
     String COMMENT_DEL_AJAX = Prefix.COMMENT + "/commentDelAjax.do";
 
     /** 태그 */
+    String TAG_CLOUD_PAGE = Prefix.TAG + "/tagCloudPage.do";
     String TAG_LIST_AJAX = Prefix.TAG + "/tagListAjax.do";
     String TAG_DTL_AJAX = Prefix.TAG + "/tagDtlAjax.do";
 

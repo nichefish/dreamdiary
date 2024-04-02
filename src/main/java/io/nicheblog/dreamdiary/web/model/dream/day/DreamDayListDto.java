@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.dream.day;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfListDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
@@ -31,12 +32,16 @@ public class DreamDayListDto
         extends BaseClsfListDto
         implements CommentCmpstnModule, TagCmpstnModule {
 
-    /** 꿈 일자 고유 번호 (PK) */
-    private Integer dreamDayNo;
+    /** 필수: 컨텐츠 타입 */
+    private static final ContentType CONTENT_TYPE = ContentType.DREAM_DAY;
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    private String contentType = "dream_day";
+    protected String contentType = CONTENT_TYPE.key;
+
+    /* ----- */
 
     /** 꿈 일자 */
     private String dreamtDt;

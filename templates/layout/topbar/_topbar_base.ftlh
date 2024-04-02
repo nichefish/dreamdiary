@@ -8,20 +8,29 @@
         object-fit: cover;
     }
 </style>
-<div class="d-flex align-items-stretch flex-shrink-0 justify-content-end">
-    <!-- topbar icons -->
-    <#if isDev!false>
-        <#include "/layout/topbar/_topbar_test_page.ftlh">
-    </#if>
 
-    <#if false>
-        <#include "/layout/topbar/_topbar_notion.ftlh">
-        <#include "/layout/topbar/_topbar_sitemap.ftlh">
-    </#if>
+<div class="d-flex align-items-stretch flex-shrink-0">
+    <div class="d-flex align-items-center flex-shrink-0 justify-content-start ps-10">
+        TODO: put something here
+    </div>
+</div>
+<div class="d-flex align-items-stretch flex-shrink-0 justify-content-between">
+    <#include "/layout/topbar/_topbar_notion.ftlh">
     <#include "/layout/topbar/_topbar_flsys.ftlh">
-    <#if isDev!false>
-        <#include "/layout/topbar/_topbar_search.ftlh">
-    </#if>
+
+    <!--begin::Separator-->
+    <span class="my-3 border-gray-300 border-start ms-3 mx-2"></span>
+    <!--end::Separator-->
+
+    <!-- topbar icons -->
+    <#include "/layout/topbar/_topbar_test_page.ftlh">
+    <#include "/layout/topbar/_topbar_tag_cloud.ftlh">
+    <#include "/layout/topbar/_topbar_sitemap.ftlh">
+    <#include "/layout/topbar/_topbar_search.ftlh">
+
+    <!--begin::Separator-->
+    <span class="my-3 border-gray-300 border-start ms-3 mx-2"></span>
+    <!--end::Separator-->
 
     <#if isMngr>
         <!--begin::사용자/관리자 모드 선택-->

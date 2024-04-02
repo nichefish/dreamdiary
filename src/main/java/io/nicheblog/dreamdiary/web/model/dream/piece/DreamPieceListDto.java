@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.dream.piece;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostListDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
@@ -30,30 +31,28 @@ public class DreamPieceListDto
         extends BasePostListDto
         implements CommentCmpstnModule, TagCmpstnModule {
 
-    /** 꿈 조각 고유 번호 (PK) */
-    private Integer postNo;
+    /** 필수: 컨텐츠 타입 */
+    private static final ContentType CONTENT_TYPE = ContentType.DREAM_PIECE;
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    private String contentType = "dream_piece";
+    protected String contentType = CONTENT_TYPE.key;
+
+    /* ----- */
 
     /** 꿈 일자 번호 */
     private Integer dreamDayNo;
-
     /** 순번 */
-    private Integer sortOrdr;
-
-    /** 내용 */
-    private String cn;
+    private Integer idx;
 
     /** 편집완료 여부 (Y/N) */
     @Builder.Default
     private String editComptYn = "N";
-
     /** 타인 꿈 여부 (Y/N) */
     @Builder.Default
     private String elseDreamYn = "N";
-
     /** 꿈꾼이(타인) 이름 */
     @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;

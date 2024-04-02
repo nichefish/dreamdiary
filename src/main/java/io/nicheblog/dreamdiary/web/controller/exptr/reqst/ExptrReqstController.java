@@ -17,8 +17,6 @@ import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstListDto;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstSearchParam;
-import io.nicheblog.dreamdiary.web.service.admin.TmplatTxtService;
-import io.nicheblog.dreamdiary.web.service.cmm.NotifyService;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.exptr.reqst.ExptrReqstService;
 import lombok.Getter;
@@ -95,7 +93,7 @@ public class ExptrReqstController
             if (exptrReqstList != null) model.addAttribute("exptrReqstList", exptrReqstList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrReqstList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
-            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.NOTICE));
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.EXPTR_REQST));
             // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.EXPTR_REQST_CTGR_CD, model);
             // 목록 검색 URL + 파라미터 모델에 추가
@@ -134,17 +132,18 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = true;
-            model.addAttribute("post", new ExptrReqstDto());      // 빈 객체 주입 (freemarker error prevention)
-
             // 물품 구매 및 경조사비 신청 템플릿 조회
             // TmplatTxtDto exptrReqstTmplat = tmplatTxtService.getTmplatTxtByTmplatDef("EXPTR_REQST", null);
             // model.addAttribute("exptrReqstTmplat", exptrReqstTmplat);
-
-            model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
+            // 빈 객체 주입 (freemarker error prevention)
+            model.addAttribute("post", new ExptrReqstDto());
+            // 등록/수정 화면 플래그 세팅
+            model.addAttribute(Constant.IS_REG, true);
             cdService.setModelCdData(Constant.EXPTR_REQST_CTGR_CD, model);
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
+
+            isSuccess = true;
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -176,9 +175,10 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            model.addAttribute("post", exptrReqstDto);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            model.addAttribute("post", exptrReqstDto);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -343,13 +343,13 @@ public class ExptrReqstController
         try {
             ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
             model.addAttribute("post", rsDto);
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
             model.addAttribute(Constant.IS_MDF, key);           // 등록/수정 화면 플래그 세팅
             cdService.setModelCdData(Constant.EXPTR_REQST_CTGR_CD, model);
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -417,6 +417,7 @@ public class ExptrReqstController
         String resultMsg = "";
         try {
             ExptrReqstDto result = exptrReqstService.exptrReqstCf(key);
+
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -451,6 +452,7 @@ public class ExptrReqstController
         String resultMsg = "";
         try {
             ExptrReqstDto result = exptrReqstService.exptrReqstDismiss(key);
+
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {

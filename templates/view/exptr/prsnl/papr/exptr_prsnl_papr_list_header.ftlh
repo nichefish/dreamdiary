@@ -41,7 +41,7 @@
                 </span>
                 <!--end::Svg Icon-->
                 <input type="text" class="form-control form-control-solid ps-10 form-control-sm py-3"
-                       name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30" value="value="${searchParam.searchKeyword!}" />
+                       name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30" value="value=${searchParam.searchKeyword!}" />
                 <!--end::Input group-->
             </div>
         </div>

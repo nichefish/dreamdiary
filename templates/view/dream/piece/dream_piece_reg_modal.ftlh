@@ -43,6 +43,18 @@
                     });
                 });
             },
+            /** 꿈 조각 수정 모달 팝업 호출 */
+            mdfModal: function(dreamDayNo, dreamtDt) {
+                let obj = { "dreamDayNo": dreamDayNo, "dreamtDt": dreamtDt };
+                commons.util.handlebarsTemplate(obj, "dream_piece_reg_header");
+                commons.util.handlebarsTemplate(obj, "dream_piece_reg", "show");
+
+                // tinymce editor reset
+                tinymce.EditorManager.editors.splice(2, 2);     //removing second element in array.
+                delete tinymce.EditorManager.editors['tinymce_dreamPieceCn'];     //deleting respective textarea id from array
+                if (commons.util.isNotEmpty(tinyMCE.activeEditor)) tinyMCE.activeEditor.setContent("");
+                commons.tinymce.init('#tinymce_dreamPieceCn', commons.tinymce.imgRegFunc);
+            },
         }
     })();
     /** 페이지 초기화시 처리 */

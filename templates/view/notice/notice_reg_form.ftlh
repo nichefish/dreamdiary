@@ -151,6 +151,7 @@
                 <label class="text-gray-700 fs-6 fw-bolder cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" title="해당 글은 굵은 글씨, 아이콘 및 눈에 띄는 색상으로 강조됩니다.">
                     중요 여부
+                    <i class="bi bi-question-circle"></i>
                 </label>
             </div>
             <div class="col-lg-2 col-9 d-flex align-items-center">
@@ -160,6 +161,7 @@
                 <label class="text-gray-700 fs-6 fw-bolder cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" title="해당 글은 페이지에 상관없이&#10;항상 목록의 상단에 노출됩니다.">
                     상단 고정
+                    <i class="bi bi-question-circle"></i>
                 </label>
             </div>
             <div class="col-lg-2 col-9 d-flex align-items-center">
@@ -172,6 +174,7 @@
                 <label class="text-gray-700 fs-6 fw-bolder cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" title="해당 글은 사이트 접속시&#10;화면에 팝업으로 표출됩니다.">
                     팝업공지 여부
+                    <i class="bi bi-question-circle"></i>
                 </label>
             </div>
             <div class="col-lg-2 col-9 d-flex align-items-center">
@@ -185,6 +188,7 @@
                        data-bs-toggle="tooltip" data-bs-placement="top"
                        title="해당 글을 수정할 수 있는 권한의&#10;범위를 설정합니다.&#10;(기본 : 등록자)">
                     수정 권한
+                    <i class="bi bi-question-circle"></i>
                 </label>
             </div>
             <div class="col-lg-2 col-9 d-flex align-items-center">
@@ -200,8 +204,9 @@
                 <div class="col-lg-1 col-3 d-flex align-items-center">
                     <label class="text-gray-700 fs-6 fw-bolder cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top"
-                           title="미설정시 수정 일자가&#10;기존 일자로 유지됩니다.&#10;(기본 : ON)">
+                           title="미체크시 수정 일자가&#10;기존 일자로 유지됩니다.&#10;(기본 : ON)">
                         수정일자 변경
+                        <i class="bi bi-question-circle"></i>
                     </label>
                 </div>
                 <div class="col-lg-2 col-9 d-flex align-items-center">

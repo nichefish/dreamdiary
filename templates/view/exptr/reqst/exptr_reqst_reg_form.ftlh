@@ -154,6 +154,7 @@
                 <label class="text-gray-700 fs-6 fw-bolder cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 글은 페이지에 상관없이&#10;항상 목록의 상단에 노출됩니다.">
                     상단 고정
+                    <i class="bi bi-question-circle"></i>
                 </label>
             </div>
             <div class="col-lg-2 col-9 d-flex align-items-center">
@@ -166,6 +167,7 @@
                 <label for="mdfable" class="text-gray-700 fs-6 fw-bolder cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 글을 수정할 수 있는 권한의&#10;범위를 설정합니다.&#10;(기본 : 등록자)">
                     수정 권한
+                    <i class="bi bi-question-circle"></i>
                 </label>
             </div>
             <div class="col-lg-2 col-9 d-flex align-items-center">

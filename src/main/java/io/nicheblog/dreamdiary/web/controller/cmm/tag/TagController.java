@@ -48,7 +48,11 @@ public class TagController
     private TagService tagService;
 
     /**
-     * 게시판 태그 전체 목록 화면 조회
+     * TODO: 태그클라우드 화면 조회
+     */
+
+    /**
+     * 게시판 태그 전체 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.TAG_LIST_AJAX)

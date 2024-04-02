@@ -24,7 +24,6 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprListDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
-import io.nicheblog.dreamdiary.web.service.exptr.reqst.ExptrReqstService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -106,11 +105,10 @@ public class ExptrPrsnlPaprController
             if (exptrPrsnlList != null) model.addAttribute("exptrPrsnlList", exptrPrsnlList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrPrsnlList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
-            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.NOTICE));
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.EXPTR_PRSNL_PAPR));
             // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.YY_CD, model);
             cdService.setModelCdData(Constant.MNTH_CD, model);
-
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
@@ -149,6 +147,7 @@ public class ExptrPrsnlPaprController
         try {
             Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
             ajaxResponse.setResultMap((HashMap<String, Object>) resultMap);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -186,6 +185,7 @@ public class ExptrPrsnlPaprController
             Integer yy = Integer.parseInt(yyStr);
             Integer mnth = Integer.parseInt(mnthStr);
             BasePostDto resultObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -220,7 +220,6 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = true;
             model.addAttribute("post", new ExptrPrsnlPaprDto());      // 빈 객체 주입 (freemarker error prevention)
             Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
             Integer[] currYyMnth = DateUtils.getCurrYyMnth();
@@ -231,6 +230,8 @@ public class ExptrPrsnlPaprController
             if (StringUtils.isNotEmpty(prevYn)) model.addAttribute("prevYn", prevYn);           // 등록화면에서 체크 후 이전달 등록화면으로 보낼 떄 플래그
             model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
             cdService.setModelCdData(Constant.EXPTR_CD, model);
+
+            isSuccess = true;
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -270,6 +271,7 @@ public class ExptrPrsnlPaprController
             ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPaprDto, request) : exptrPrsnlPaprService.modify(exptrPrsnlPaprDto, key, request);
             // 조치자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
+
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -349,6 +351,7 @@ public class ExptrPrsnlPaprController
         try {
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -387,8 +390,6 @@ public class ExptrPrsnlPaprController
         try {
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
-            isSuccess = true;
-
             model.addAttribute(Constant.IS_MDF, true);           // 등록/수정 화면 플래그 세팅
             model.addAttribute("mngrYn", mngrYn);                   // 관리자 화면에서 넘어왔는지 여부 세팅
             Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
@@ -398,6 +399,8 @@ public class ExptrPrsnlPaprController
             model.addAttribute("prevMnth", prevYyMnth[1] + 1);
             model.addAttribute("currMnth", currYyMnth[1] + 1);
             cdService.setModelCdData(Constant.EXPTR_CD, model);
+
+            isSuccess = true;
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -465,6 +468,7 @@ public class ExptrPrsnlPaprController
             String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";
             List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
             PdfBoxUtils.imgCmbnPdfDonwload(fileNm, fileList);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

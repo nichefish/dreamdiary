@@ -1,10 +1,7 @@
 package io.nicheblog.dreamdiary.global.handler;
 
-import io.nicheblog.dreamdiary.global.util.date.DatePtn;
-import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
  * GlobalControllerAdvice
@@ -18,9 +15,5 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Log4j2
 public class GlobalControllerAdvice {
 
-    /** static 자원 releaseDate 설정 */
-    @ModelAttribute("releaseDate")
-    public String setCurrDate() throws Exception {
-        return DateUtils.getCurrDateStr(DatePtn.PDATE);
-    }
+    //
 }

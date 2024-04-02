@@ -92,7 +92,7 @@ public class VcatnPaprController
             model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(vcatnPaprList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
-            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.NOTICE));
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.VCATN_PAPR));
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
@@ -177,6 +177,7 @@ public class VcatnPaprController
 
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+
             // 조치자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
             // 잔디 메세지 발송 :: 메인 로직과 분리
@@ -332,6 +333,7 @@ public class VcatnPaprController
         try {
             VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
             ajaxResponse.setResultObj(rsDto);
+
             // 조회수 카운트 추가 :: 메인 로직과 분리
             vcatnPaprService.hitCntUp(key);
             // 열람자 추가 :: 메인 로직과 분리

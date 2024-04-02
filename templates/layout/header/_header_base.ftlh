@@ -1,5 +1,5 @@
 <!--
- -- 레이아웃 > 헤더 (포탈)
+ -- 레이아웃 > 헤더
  -- @included in : layout
  -->
 <script>
@@ -67,16 +67,15 @@
         </div>
         <!--end::logo-->
         <!--begin::Title-->
-        <p class="d-flex align-items-center text-gray-600 fs-6 py-6 d-none d-sm-block">
+        <p class="d-flex align-items-center text-gray-600 fs-6 py-6 d-none d-sm-block" style="width:235px;">
             현재 접속 계정 : ${(authInfo.nickNm)!}(${(authInfo.userId)!})
         </p>
         <!--end::Title-->
+        <span class="my-5 border-gray-300 border-start"></span>
         <!--begin::Wrapper-->
-        <div class="d-flex align-items-stretch justify-content-end flex-lg-grow-1">
+        <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
             <!--begin::Topbar-->
-            <div class="d-flex align-items-stretch flex-shrink-0">
-                <#include "/layout/topbar/_topbar_base.ftlh">
-            </div>
+            <#include "/layout/topbar/_topbar_base.ftlh">
             <!--end::Topbar-->
         </div>
         <!--end::Wrapper-->
