@@ -22,7 +22,7 @@
                             ${file.orgnFileNm!} (${file.fileSize!}byte)
                         </a>
                         <div class="badge badge-light btn-primary badge-outlined mx-2 cursor-pointer"
-                             onclick="AtchFile.fnDelExistingFile(${file.atchFileDtlNo!});"
+                             onclick="AtchFile.delExistingFile(${file.atchFileDtlNo!});"
                              data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.file.del"/>">
                             삭제
                         </div>

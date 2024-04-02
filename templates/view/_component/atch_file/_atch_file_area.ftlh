@@ -6,7 +6,7 @@
     let AtchFile = function() {
         return {
             init: function() {
-                AtchFile.fnAtchFileListToggle();     // 첨부파일 영역 0개인지 체크
+                AtchFile.atchFileListToggle();     // 첨부파일 영역 0개인지 체크
             },
             /**
              * 첨부파일 추가추가
@@ -30,11 +30,11 @@
                     } else {
                         newFileSpan.remove();
                     }
-                    AtchFile.fnAtchFileListToggle();
+                    AtchFile.atchFileListToggle();
                 });
             },
             /** 추가추가 개수 0개인지 체크 */
-            fnAtchFileListToggle: function() {
+            atchFileListToggle: function() {
                 if ($("#atchFileSpan div[id^=itemContainer]").length === 0) {
                     $("#emptyFileListDiv").show();
                 } else {
@@ -42,7 +42,7 @@
                 }
             },
             /** 새로 추가된 첨부파일 삭제 */
-            fnDelNewFileSpan: function(idx) {
+            delNewFileSpan: function(idx) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -52,7 +52,7 @@
                 });
             },
             /** 기존 첨부파일 삭제 플래그 세팅 */
-            fnDelExistingFile: function(atchFileDtlNo) {
+            delExistingFile: function(atchFileDtlNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -83,7 +83,7 @@
         <!--fileNm :: to display-->
         <i class="fas fa-file-download fs-15 me-3"></i> <span id="fileNm__INDEX__" ></span>
         <button type="button" class="badge badge-light btn-primary badge-outlined mx-2"
-                onclick="AtchFile.fnDelNewFileSpan('__INDEX__');"
+                onclick="AtchFile.delNewFileSpan('__INDEX__');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.del"/>">
             삭제
         </button>
