@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.controller;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.PwChgParam;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
@@ -11,6 +12,7 @@ import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.user.UserMyService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -38,6 +40,11 @@ import java.security.InvalidParameterException;
 @Log4j2
 public class LgnController
         extends BaseControllerImpl {
+
+    @Getter
+    private final String baseUrl = SiteUrl.AUTH_LGN_FORM;
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LGN;      // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "userMyService")
     private UserMyService userMyService;

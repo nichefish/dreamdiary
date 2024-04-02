@@ -18,10 +18,9 @@ import java.util.Map;
 /**
  * ParamModule
  * <pre>
- *  공통, 기본 기능 처리 유틸리티 모듈
+ *  공통, 기본 기능 처리 유틸리티 모듈 :: CmmUtils에서 사용
  *  (!package-private class)
  * </pre>
- * TODO:: 필요별로 유틸 분리하고 필요하면 새로 만들기
  *
  * @author nichefish
  */
@@ -95,9 +94,6 @@ class ParamModule {
         boolean isMyPapr = !searchParam.isBackToList() && searchParam.isAction(Constant.ACTION_TY_MY_PAPR);
         boolean isBackToMyPapr = searchParam.isBackToList() && (Constant.ACTION_TY_MY_PAPR.equals(searchParam.getActionTyCd()));
         if (isMyPapr || isBackToMyPapr) model.addAttribute(Constant.ACTION_TY_MY_PAPR, true);
-
-        // 목록 URL 모델에 추가 (검색 공통사용 용도)
-        model.addAttribute(Constant.LIST_URL, listUrl);
 
         // 세션?에 목록 검색 인자 저장
         session.setAttribute("prevSearchParam", searchParam);

@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.flsys.FlsysSearchParam;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.annotation.Secured;
@@ -35,7 +36,9 @@ import javax.annotation.Nullable;
 public class NotionController
         extends BaseControllerImpl {
 
+    @Getter
     private final String baseUrl = SiteUrl.NOTION_HOME;
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.NOTION;      // 작업 카테고리 (로그 적재용)
 
     private final String NOTION_PUBLIC = "";

@@ -13,8 +13,8 @@ import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.UserReqstDto;
-import io.nicheblog.dreamdiary.web.service.log.LogActvtyService;
 import io.nicheblog.dreamdiary.web.service.user.UserReqstService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
@@ -44,19 +47,13 @@ import java.security.InvalidParameterException;
 public class UserReqstController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.AUTH_LGN_FORM;                    // 기본 URL
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
+    @Getter
+    private final String baseUrl = SiteUrl.USER_REQST_REG_FORM;
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER_REQST;      // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "userReqstService")
     private UserReqstService userReqstService;
-
-    @Resource(name = "logActvtyService")
-    private LogActvtyService logActvtyService;
 
     @Resource(name = "cdService")
     private CdService cdService;

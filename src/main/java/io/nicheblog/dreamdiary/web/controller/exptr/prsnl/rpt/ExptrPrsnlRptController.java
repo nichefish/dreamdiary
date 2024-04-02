@@ -13,13 +13,13 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptItemDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptSmDto;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.rpt.ExptrPrsnlRptService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,12 +43,10 @@ import java.util.Map;
 public class ExptrPrsnlRptController
         extends BaseControllerImpl {
 
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_RPT;      // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
+    @Getter
+    private final String baseUrl = SiteUrl.EXPTR_PRSNL_RPT_ITEMS;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_RPT;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "exptrPrsnlService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;

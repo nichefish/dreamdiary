@@ -6,14 +6,11 @@ import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiRespDto;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
-import io.nicheblog.dreamdiary.web.repository.schdul.SchdulRepository;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,9 +40,6 @@ public class HldyKasiApiService {
 
     @Resource(name = "schdulService")
     private SchdulService schdulService;
-
-    @Resource(name = "schdulRepository")
-    private SchdulRepository schdulRepository;
 
     /**
      * API:: 한국천문연구원(KASI):: 휴일 정보 조회
@@ -78,7 +72,7 @@ public class HldyKasiApiService {
         for (HldyKasiApiItemDto hldy : hldyApiList) {
             schdulList.add(hldyApiMapstruct.toEntity(hldy));
         }
-        schdulRepository.saveAll(schdulList);
+        schdulService.registAll(schdulList);
 
         return true;
     }
@@ -95,8 +89,6 @@ public class HldyKasiApiService {
             put("searchEndDt", DateUtils.Parser.eDateParse(DateUtils.asDate(yyStr + "-12-31")));
             put("contentType", "hldyApi");
         }};
-        Page<SchdulEntity> schdulList = schdulService.getListEntity(searchParamMap, Pageable.unpaged());
-
-        schdulRepository.deleteAll(schdulList);
+        schdulService.deleteAll(searchParamMap);
     }
 }

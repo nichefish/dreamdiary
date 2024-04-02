@@ -26,6 +26,7 @@ import io.nicheblog.dreamdiary.web.model.notice.NoticeListDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.notice.NoticeService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,17 +62,10 @@ import java.util.Map;
 public class NoticeController
         extends BaseControllerImpl {
 
+    @Getter
     private final String baseUrl = SiteUrl.NOTICE_LIST;             // 기본 URL
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.NOTICE;      // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
-    @ModelAttribute(Constant.LIST_URL)
-    public String addListUrl() {
-        return baseUrl;
-    }
 
     @Resource(name = "noticeService")
     private NoticeService noticeService;

@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.admin.MenuListDto;
 import io.nicheblog.dreamdiary.web.model.admin.MenuSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.MenuService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,12 +49,10 @@ import java.security.InvalidParameterException;
 public class MenuController
         extends BaseControllerImpl {
 
+    @Getter
+    private final String baseUrl = SiteUrl.MENU_LIST;             // 기본 URL
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.MENU;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     @Resource(name = "menuService")
     private MenuService menuService;

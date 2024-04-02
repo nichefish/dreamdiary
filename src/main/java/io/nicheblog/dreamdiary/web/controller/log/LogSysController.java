@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.log.LogSysDto;
 import io.nicheblog.dreamdiary.web.model.log.LogSysSearchParam;
 import io.nicheblog.dreamdiary.web.service.log.LogSysService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,13 +41,10 @@ import javax.annotation.Resource;
 public class LogSysController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.LOG_SYS_LIST;
+    @Getter
+    private final String baseUrl = SiteUrl.LOG_SYS_LIST;             // 기본 URL
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_SYS;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     @Resource(name = "logSysService")
     private LogSysService logSysService;

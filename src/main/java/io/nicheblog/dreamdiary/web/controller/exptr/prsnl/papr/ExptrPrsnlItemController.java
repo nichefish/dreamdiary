@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -14,6 +13,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlItemService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,10 +42,10 @@ import javax.annotation.Resource;
 public class ExptrPrsnlItemController
         extends BaseControllerImpl {
 
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;      // 작업 카테고리 (로그 적재용)
-
-    @Resource(name = "atchFileService")
-    private AtchFileService atchFileService;
+    @Getter
+    private final String baseUrl = SiteUrl.EXPTR_PRSNL_ITEM_LIST_AJAX;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "exptrPrsnlService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;

@@ -19,6 +19,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstSearchParam;
 import io.nicheblog.dreamdiary.web.service.admin.TmplatTxtService;
 import io.nicheblog.dreamdiary.web.service.cmm.NotifyService;
 import io.nicheblog.dreamdiary.web.service.exptr.reqst.ExptrReqstService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -52,9 +53,10 @@ import java.util.List;
 public class ExptrReqstController
         extends BaseControllerImpl {
 
-    // 작업 카테고리 (로그 적재용)
-    private final String baseUrl = SiteUrl.EXPTR_REQST_LIST;
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_REQST;      // 작업 카테고리 (로그 적재용)
+    @Getter
+    private final String baseUrl = SiteUrl.EXPTR_REQST_LIST;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_REQST;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "cdService")
     public CdService cdService;

@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.controller;
 
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+
 /**
  * BaseController
  * <pre>
@@ -9,5 +11,10 @@ package io.nicheblog.dreamdiary.global.intrfc.controller;
  * @author nichefish
  */
 public interface BaseController {
-    //
+
+    /** actvtyCtgrCd */
+    ActvtyCtgr getActvtyCtgr();
+
+    /** baseUrl */
+    String getBaseUrl();
 }

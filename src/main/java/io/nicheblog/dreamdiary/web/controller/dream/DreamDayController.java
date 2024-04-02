@@ -13,6 +13,7 @@ import io.nicheblog.dreamdiary.web.model.dream.day.DreamDayDto;
 import io.nicheblog.dreamdiary.web.model.dream.day.DreamDaySearchParam;
 import io.nicheblog.dreamdiary.web.service.dream.DreamDayService;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -40,12 +41,10 @@ import java.security.InvalidParameterException;
 public class DreamDayController
         extends BaseControllerImpl {
 
+    @Getter
+    private final String baseUrl = SiteUrl.DREAM_DAY_PAGE;             // 기본 URL
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     @Resource(name = "dreamDayService")
     private DreamDayService dreamDayService;

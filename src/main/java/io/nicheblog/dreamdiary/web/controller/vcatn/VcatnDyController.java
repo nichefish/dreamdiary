@@ -9,7 +9,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.user.UserListDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.dy.VcatnDyDto;
@@ -19,6 +18,7 @@ import io.nicheblog.dreamdiary.web.service.user.UserService;
 import io.nicheblog.dreamdiary.web.service.vcatn.dy.VcatnDyService;
 import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
 import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -28,7 +28,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
@@ -50,15 +53,10 @@ import java.util.List;
 public class VcatnDyController
         extends BaseControllerImpl {
 
-    // 작업 카테고리 (로그 적재용)
+    @Getter
+    private final String baseUrl = SiteUrl.VCATN_DY_LIST;
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_DY;      // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
-
-    private final VcatnSchdulMapstruct vcatnSchdulMapstruct = VcatnSchdulMapstruct.INSTANCE;
 
     @Resource(name = "vcatnPaprService")
     private VcatnPaprService vcatnPaprService;

@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.DtlCdService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,8 +47,11 @@ import java.util.Map;
 public class DtlCdController
         extends BaseControllerImpl {
 
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;      // 작업 카테고리 (로그 적재용)
-    
+    @Getter
+    private final String baseUrl = SiteUrl.CL_CD_LIST;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.CD;        // 작업 카테고리 (로그 적재용)
+
     @Resource(name = "dtlCdService")
     private DtlCdService dtlCdService;
 

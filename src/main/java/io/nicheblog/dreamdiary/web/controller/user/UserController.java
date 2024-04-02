@@ -17,6 +17,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.UserListDto;
 import io.nicheblog.dreamdiary.web.model.user.UserSearchParam;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,13 +50,10 @@ import java.security.InvalidParameterException;
 public class UserController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.USER_LIST;               // 기본 URL
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER_REQST;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
+    @Getter
+    private final String baseUrl = SiteUrl.USER_LIST;
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER;      // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "userService")
     private UserService userService;

@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.stats.ExptrPrsnlStatsDto;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.stats.ExptrPrsnlStatsService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
@@ -42,12 +46,10 @@ import java.util.List;
 public class ExptrPrsnlStatsController
         extends BaseControllerImpl {
 
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_STATS;      // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
+    @Getter
+    private final String baseUrl = SiteUrl.EXPTR_PRSNL_STATS_PAGE;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_STATS;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "exptrPrsnlService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;

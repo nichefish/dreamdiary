@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsSearchParam;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserDto;
 import io.nicheblog.dreamdiary.web.service.log.LogStatsUserService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
@@ -38,13 +39,10 @@ import java.util.List;
 public class LogStatsController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.LOG_STATS_USER_LIST;
+    @Getter
+    private final String baseUrl = SiteUrl.LOG_STATS_USER_LIST;             // 기본 URL
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_STATS;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     @Resource(name = "logStatsUserService")
     private LogStatsUserService logStatsUserService;

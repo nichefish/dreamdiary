@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,9 @@ import java.util.List;
 public class EhCacheController
         extends BaseControllerImpl {
 
+    @Getter
+    private final String baseUrl = SiteUrl.ADMIN_PAGE;             // 기본 URL
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;        // 작업 카테고리 (로그 적재용)
 
     /**

@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.log.LogActvtyDto;
 import io.nicheblog.dreamdiary.web.model.log.LogActvtySearchParam;
 import io.nicheblog.dreamdiary.web.service.log.LogActvtyService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,12 +42,10 @@ import java.io.IOException;
 public class LogActvtyController
         extends BaseControllerImpl {
 
+    @Getter
+    private final String baseUrl = SiteUrl.LOG_ACTVTY_LIST;             // 기본 URL
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_ACTVTY;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     // @Resource(name = "xlsxUtils")
     // private XlsxUtils xlsxUtils;

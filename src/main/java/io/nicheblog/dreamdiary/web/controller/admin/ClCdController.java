@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.admin.ClCdSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.service.admin.ClCdService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,13 +45,10 @@ import java.security.InvalidParameterException;
 public class ClCdController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.CL_CD_LIST;
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;      // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
+    @Getter
+    private final String baseUrl = SiteUrl.CL_CD_LIST;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.CD;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "clCdService")
     private ClCdService clCdService;

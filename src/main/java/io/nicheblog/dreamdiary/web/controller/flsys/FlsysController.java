@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.controller.flsys;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -15,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.flsys.FlsysCmmDto;
 import io.nicheblog.dreamdiary.web.model.flsys.FlsysSearchParam;
 import io.nicheblog.dreamdiary.web.service.flsys.FlsysService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -42,19 +42,13 @@ import javax.annotation.Resource;
 public class FlsysController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.FLSYS_HOME;
+    @Getter
+    private final String baseUrl = SiteUrl.FLSYS_HOME;             // 기본 URL
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FLSYS;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     @Resource(name = "flsysService")
     public FlsysService flsysService;
-
-    @Resource(name = "atchFileService")
-    private AtchFileService atchFileService;
 
     /**
      * 파일시스템 화면 조회

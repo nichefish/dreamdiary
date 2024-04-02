@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.flsys.FlsysSearchParam;
 import io.nicheblog.dreamdiary.web.model.prjct.PrjctDto;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -33,14 +34,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PrjctController
         extends BaseControllerImpl {
 
-    // 작업 카테고리 (로그 적재용)
+    @Getter
     private final String baseUrl = SiteUrl.PRJCT_INFO_LIST;
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.PRJCT;      // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     /**
      * 프로젝트 관리 목록 화면 조회

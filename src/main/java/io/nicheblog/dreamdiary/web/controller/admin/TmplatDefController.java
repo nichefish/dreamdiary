@@ -5,16 +5,16 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.util.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatDefDto;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatDefSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
-import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.service.admin.TmplatDefService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,14 +24,16 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
-import java.util.Map;
 
 /**
  * TmplatDefController
@@ -48,14 +50,10 @@ import java.util.Map;
 public class TmplatDefController
         extends BaseControllerImpl {
 
-    // 작업 카테고리 (로그 적재용)
-    private final String baseUrl = SiteUrl.TMPLAT_DEF_LIST;
+    @Getter
+    private final String baseUrl = SiteUrl.TMPLAT_DEF_LIST;             // 기본 URL
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.TMPLAT;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     @Resource(name = "tmplatDefService")
     private TmplatDefService tmplatDefService;
@@ -67,10 +65,8 @@ public class TmplatDefController
     @GetMapping(SiteUrl.TMPLAT_DEF_LIST)
     @Secured({Constant.ROLE_MNGR})
     public String tmplatDefList(
-            final @ModelAttribute(Constant.SITE_MENU) SiteAcsInfo siteMenuAcsInfo,
+            @ModelAttribute("searchParam") TmplatDefSearchParam searchParam,
             final LogActvtyParam logParam,
-            final @ModelAttribute("searchParam") TmplatDefSearchParam searchParam,
-            final @RequestParam Map<String, Object> searchParamMap,
             final ModelMap model
     ) throws Exception {
 
@@ -79,19 +75,19 @@ public class TmplatDefController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            Map<String, Object> listParamMap = CmmUtils.checkPrevSearchMap(searchParamMap, baseUrl, searchParam);
+            // 상세/수정 화면에서 목록 화면 복귀시 :: 세션에 목록 검색 인자 저장해둔 거 있는지 체크
+            if (searchParam.isBackToList()) searchParam = (TmplatDefSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
 
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.getPageRequest(listParamMap, "regDt", model);
-            Page<TmplatDefDto> tmplatList = tmplatDefService.getListDto(listParamMap, pageRequest);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "regDt", model);
+            Page<TmplatDefDto> tmplatList = tmplatDefService.getListDto(searchParam, pageRequest);
             if (tmplatList != null) model.addAttribute("tmplatList", tmplatList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(tmplatList));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
             // 검색 파라미터 다시 모델에 추가
-            CmmUtils.setModelAttrMap(listParamMap, searchParam, baseUrl, model);
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
             // 관리자페이지 화면 모드 세팅
             session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
@@ -105,12 +101,12 @@ public class TmplatDefController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/tmplat/def/tmplat_def_list";
+        return "/view/admin/tmplat/def/tmplat_def_list";
     }
 
     /**
      * 템플릿 정의 등록/수정 (Ajax)
-     * 사용자USER, 관리자MNGR만 접근 가능
+     * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.TMPLAT_DEF_REG_AJAX, SiteUrl.TMPLAT_DEF_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

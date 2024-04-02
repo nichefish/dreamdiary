@@ -17,6 +17,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
 import io.nicheblog.dreamdiary.web.service.board.BoardPostService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,12 +50,10 @@ import java.util.List;
 public class BoardPostController
         extends BaseControllerImpl {
 
-    private final String baseUrl = SiteUrl.BOARD_POST_LIST;
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_POST;         // 작업 카테고리 (로그 적재용)
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
+    @Getter
+    private final String baseUrl = SiteUrl.BOARD_POST_LIST;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_POST;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;
@@ -67,9 +66,6 @@ public class BoardPostController
 
     @Resource(name = "cdService")
     public CdService cdService;
-
-    // @Resource(name = "notifyService")
-    // private NotifyService notifyService;
 
     // @Resource(name = "userService")
     // private UserService userService;

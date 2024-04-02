@@ -18,6 +18,7 @@ import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.NotifyService;
 import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,14 +50,10 @@ import java.security.InvalidParameterException;
 public class VcatnPaprController
         extends BaseControllerImpl {
 
-    // 작업 카테고리 (로그 적재용)
+    @Getter
     private final String baseUrl = SiteUrl.VCATN_PAPR_LIST;
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_PAPR;      // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     @Resource(name = "vcatnPaprService")
     private VcatnPaprService vcatnPaprService;

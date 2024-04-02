@@ -12,13 +12,13 @@ import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.flsys.FlsysMetaDto;
 import io.nicheblog.dreamdiary.web.service.flsys.FlsysMetaService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,13 +42,10 @@ import java.security.InvalidParameterException;
 public class FlsysMetaController
         extends BaseControllerImpl {
 
+    @Getter
     private final String baseUrl = SiteUrl.FLSYS_HOME;
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FLSYS;        // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
 
     @Resource(name = "flsysMetaService")
     public FlsysMetaService flsysMetaService;

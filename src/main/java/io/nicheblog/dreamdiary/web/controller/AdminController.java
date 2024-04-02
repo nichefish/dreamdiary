@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController
         extends BaseControllerImpl {
 
+    @Getter
+    private final String baseUrl = SiteUrl.ADMIN_PAGE;
+    @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;      // 작업 카테고리 (로그 적재용)
 
     /**

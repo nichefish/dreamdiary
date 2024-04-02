@@ -26,7 +26,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE flsys_meta SET del_yn = 'Y' WHERE content_type = ? AND post_no = ?")
+@SQLDelete(sql = "UPDATE flsys_meta SET del_yn = 'Y' WHERE post_no = ?")
 public class FlsysMetaEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {

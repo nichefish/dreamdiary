@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.board.BoardDefSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,12 +46,10 @@ import java.security.InvalidParameterException;
 public class BoardDefController
         extends BaseControllerImpl {
 
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_DEF;         // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
+    @Getter
+    private final String baseUrl = SiteUrl.BOARD_DEF_LIST;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_DEF;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;

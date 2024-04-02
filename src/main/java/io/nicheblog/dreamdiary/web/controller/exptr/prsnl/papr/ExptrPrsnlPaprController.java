@@ -22,6 +22,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprListDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprSearchParam;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -59,14 +60,10 @@ import java.util.Map;
 public class ExptrPrsnlPaprController
         extends BaseControllerImpl {
 
-    // 작업 카테고리 (로그 적재용)
-    private final String baseUrl = SiteUrl.EXPTR_PRSNL_PAPR_LIST;
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;      // 작업 카테고리 (로그 적재용)
-
-    @ModelAttribute("actvtyCtgrCd")
-    public String addActvtyCtgrCd() {
-        return actvtyCtgr.name();
-    }
+    @Getter
+    private final String baseUrl = SiteUrl.EXPTR_PRSNL_PAPR_LIST;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "cdService")
     private CdService cdService;
