@@ -2,7 +2,7 @@
   -- 에러 페이지 : 500 SERVER ERROR
   -- (사이드바 없음)
   -->
-<#import "/layout/layout_no_aside.ftlh" as layout >
+<#import "/layout/layout_without_aside.ftlh" as layout >
 
 <@layout.layout>
 

@@ -57,7 +57,6 @@ public class UserController
 
     @Resource(name = "userService")
     private UserService userService;
-
     @Resource(name = "cdService")
     private CdService cdService;
 
@@ -84,23 +83,25 @@ public class UserController
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (UserSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.ASC, "acntStus.cfYn")
                             .and(Sort.by(Sort.Direction.ASC, "acntStus.lockedYn"))
                             .and(Sort.by(Sort.Direction.DESC, "regDt"));
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            // 목록 조회
             Page<UserListDto> userList = userService.getListDto(searchParam, pageRequest);
-            if (userList != null) model.addAttribute("userList", userList.getContent());
+            model.addAttribute("userList", userList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(userList));
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.AUTH_CD, model);
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
             cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);        // 검색 파라미터 다시 모델에 추가
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

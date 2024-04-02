@@ -2,7 +2,7 @@
   -- 로그인 화면
   -- (사이드바 없음)
   -->
-<#import "/layout/layout_no_aside.ftlh" as layout >
+<#import "/layout/layout_without_aside.ftlh" as layout >
 
 <@layout.layout>
 

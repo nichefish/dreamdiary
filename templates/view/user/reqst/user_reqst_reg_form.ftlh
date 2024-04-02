@@ -3,7 +3,7 @@
   -->
 <#import "/layout/layout_without_aside.ftlh" as layout >
 
-<@layout.layout_without_aside>
+<@layout.layout>
 
 <#assign isReg = (isReg!false)>
 <#assign isMdf = (isMdf!false)>
@@ -211,6 +211,36 @@
 </style>
 
 <div class="card post" style="margin-top:1rem !important">
+    <div class="row mb-8 p-0">
+        <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+             data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+             class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">
+                <!-- breadcrumb -->
+                <ol class="breadcrumb text-muted fs-6 fw-semibold">
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void(0);" onclick="Page.return();"
+                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메인 화면으로 돌아갑니다.">
+                            <i class="bi bi-house-fill fs-4 me-1 text-primary"></i>Home
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item text-muted">${(siteAcsInfo.topMenuNm)!}</li>
+                    <li class="breadcrumb-item text-muted">${(siteAcsInfo.menuNm)!}</li>
+                </ol>
+                <!--begin::Separator-->
+                <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
+                <!--end::Separator-->
+                <!--begin::Description-->
+                <small class="text-muted fs-7 fw-bold my-1 ms-1">${(siteAcsInfo.acsPageNm)!}</small>
+                <!--end::Description-->
+            </h1>
+            <!--end::Title-->
+        </div>
+    </div>
+
+    <div class="separator separator-dashed border-gray-300 my-8"></div>
+
     <!--begin::Form-->
     <form name="userReqstForm" id="userReqstForm" class="form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="userNo" value="${user.userNo!}">
@@ -434,4 +464,4 @@
 <!-- #include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/atch_file/_atch_file_area.ftlh">
 
-</@layout.layout_without_aside>
+</@layout.layout>

@@ -54,7 +54,6 @@ public class UserReqstController
 
     @Resource(name = "userReqstService")
     private UserReqstService userReqstService;
-
     @Resource(name = "cdService")
     private CdService cdService;
 
@@ -122,6 +121,7 @@ public class UserReqstController
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             UserReqstDto rsDto = userReqstService.regist(userReqst, request);
+
             isSuccess = (rsDto.getUserNo() != null);
             resultMsg = isSuccess ? "신규계정이 성공적으로 신청되었습니다." : "신규계정 신청에 실패했습니다.";
         } catch (Exception e) {
@@ -155,6 +155,7 @@ public class UserReqstController
         String resultMsg = "";
         try {
             Integer userNo = Integer.parseInt(userNoStr);
+
             isSuccess = userReqstService.cf(userNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -189,6 +190,7 @@ public class UserReqstController
         String resultMsg = "";
         try {
             Integer userNo = Integer.parseInt(userNoStr);
+
             isSuccess = userReqstService.uncf(userNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

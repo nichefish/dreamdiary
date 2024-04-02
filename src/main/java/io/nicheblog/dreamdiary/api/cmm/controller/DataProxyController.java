@@ -2,9 +2,11 @@ package io.nicheblog.dreamdiary.api.cmm.controller;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.JsonRestTemplate;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.config.HttpClientConfig;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpEntity;
@@ -40,6 +42,9 @@ import java.util.Enumeration;
 )
 public class DataProxyController
         extends BaseControllerImpl {
+
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.NOTICE;      // 작업 카테고리 (로그 적재용)
 
     /**
      * PROXY REQUEST 전달받은 요청을 서버단에서 포크해서 그대로 다시 리턴한다.

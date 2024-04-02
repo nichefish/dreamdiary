@@ -54,6 +54,7 @@
                 <!--end::Info-->
             </div>
             <!--end::Foot-->
+
             <div class="separator separator-dashed border-gray-300 my-8"></div>
 
             <!--begin::cn-->
