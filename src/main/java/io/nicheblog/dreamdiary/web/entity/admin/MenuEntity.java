@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.entity.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManageEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.MenuMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ import java.util.List;
  *
  * @author nichefish
  * @extends BaseAuditEntity
+ * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "menu")
@@ -38,7 +41,8 @@ import java.util.List;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE menu SET del_yn = 'Y' WHERE menu_id = ?")
 public class MenuEntity
-        extends BaseManageEntity {
+        extends BaseAuditEntity
+        implements StateEmbedModule {
 
     /** 메뉴 ID */
     @Id
@@ -118,4 +122,10 @@ public class MenuEntity
         }
         return subMenuDtoList;
     }
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    @Embedded
+    public StateEmbed state;
 }

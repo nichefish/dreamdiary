@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseManageService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseManageService;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.MenuEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.MenuMapstruct;

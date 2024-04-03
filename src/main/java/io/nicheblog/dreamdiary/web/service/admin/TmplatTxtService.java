@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
-import io.nicheblog.dreamdiary.global.cmm.file.service.CmmFileService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseManageService;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatTxtEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.TmplatTxtMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatTxtDto;
@@ -20,17 +20,16 @@ import java.util.Optional;
  * </pre>
  *
  * @author nichefish
- * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseMultiCrudService, BaseStateService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("tmplatTxtService")
 @Log4j2
 public class TmplatTxtService
-        implements BaseMultiCrudService<TmplatTxtDto, TmplatTxtDto, Integer, TmplatTxtEntity, TmplatTxtRepository, TmplatTxtSpec, TmplatTxtMapstruct, CmmFileService> {
+        implements BaseMultiCrudService<TmplatTxtDto, TmplatTxtDto, Integer, TmplatTxtEntity, TmplatTxtRepository, TmplatTxtSpec, TmplatTxtMapstruct>
+        , BaseManageService<TmplatTxtDto, TmplatTxtDto, Integer, TmplatTxtEntity, TmplatTxtRepository, TmplatTxtSpec, TmplatTxtMapstruct> {
 
     @Resource(name = "tmplatTxtRepository")
     private TmplatTxtRepository tmplatTxtRepository;
-    @Resource(name = "cmmFileService")
-    private CmmFileService cmmFileService;
     @Resource(name = "tmplatTxtSpec")
     private TmplatTxtSpec tmplatTxtSpec;
 
@@ -49,11 +48,6 @@ public class TmplatTxtService
     @Override
     public TmplatTxtMapstruct getMapstruct() {
         return this.tmplatTxtMapstruct;
-    }
-
-    @Override
-    public CmmFileService getFileService() {
-        return this.cmmFileService;
     }
 
     /**
