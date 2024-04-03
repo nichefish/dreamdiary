@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseManageDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -13,6 +15,7 @@ import lombok.experimental.SuperBuilder;
  *
  * @author nichefish
  * @extends BasePostDto
+ * @implements StateCmpstnModule
  */
 @Getter
 @Setter
@@ -21,7 +24,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class BoardDefDto
-        extends BaseManageDto {
+        extends BaseAuditDto
+        implements StateCmpstnModule {
 
     /** 게시판 코드 */
     private String boardCd;
@@ -34,4 +38,9 @@ public class BoardDefDto
 
     /** 글분류 분류 코드 */
     private String ctgrClCd;
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    public StateCmpstn state;
 }

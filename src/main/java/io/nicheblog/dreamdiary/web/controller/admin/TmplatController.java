@@ -55,8 +55,7 @@ public class TmplatController
     @ResponseBody
     public ResponseEntity<AjaxResponse> tmplatRegAjax(
             final TmplatDefDto tmplatDto,
-            final LogActvtyParam logParam,
-            final MultipartHttpServletRequest request
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -64,7 +63,7 @@ public class TmplatController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            TmplatDefDto rsDto = tmplatDefService.regist(tmplatDto, request);
+            TmplatDefDto rsDto = tmplatDefService.regist(tmplatDto);
             // isSuccess = (StringUtils.isNotEmpty(rsDto.getTmplatCd()));
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

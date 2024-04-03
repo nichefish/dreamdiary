@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.web.entity.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManageEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +11,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * BoardDefEntity
@@ -23,6 +22,7 @@ import javax.persistence.Table;
  *
  * @author nichefish
  * @extends BaseManageEntity
+ * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "board_def")
@@ -33,7 +33,8 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 public class BoardDefEntity
-        extends BaseManageEntity {
+        extends BaseAuditEntity
+        implements StateEmbedModule {
 
     /** 게시판 코드 (PK) */
     @Id
@@ -55,4 +56,10 @@ public class BoardDefEntity
     @Column(name = "ctgr_cl_cd")
     @Comment("게시판 글분류 코드")
     private String ctgrClCd;
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    @Embedded
+    public StateEmbed state;
 }

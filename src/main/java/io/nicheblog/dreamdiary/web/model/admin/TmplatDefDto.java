@@ -1,7 +1,12 @@
 package io.nicheblog.dreamdiary.web.model.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
-import lombok.*;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -11,7 +16,8 @@ import lombok.experimental.SuperBuilder;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchDto
+ * @extends BaseAuditDto
+ * @implements StateCmpstnModule {
  */
 @Getter
 @Setter
@@ -19,51 +25,20 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class TmplatDefDto
-        extends BaseAtchDto {
+        extends BaseAuditDto
+        implements StateCmpstnModule {
 
-    /**
-     * 고유 ID (PK)
-     */
+    /** 고유 ID (PK) */
     private Integer tmplatDefNo;
 
-    /**
-     * 템플릿 정의 코드
-     */
+    /** 템플릿 정의 코드 */
     private String tmplatDefCd;
-    /** 템플릿 정의 정보 */
-    // private TmplatDefDto tmplatDefInfo;
 
-    /* ---- */
-
-    /**
-     * 템플릿 구분 코드 (TEXTAREA vs. TEXTEDITOR)
-     */
-    private String tmplatTyCd;
-    /**
-     * 템플릿 분류(상세) 코드
-     */
-    private String ctgrCd;
-
-    /**
-     * 제목
-     */
+    /** 제목 */
     private String title;
-    /**
-     * 내용 (텍스트에디터
-     */
-    private String cn;
-    /**
-     * 기본설정 여부
-     */
-    @Builder.Default
-    private String defaultYn = "N";
-    /**
-     * 정렬 순서
-     */
-    private Integer sortOrdr;
-    /**
-     * 사용여부
-     */
-    @Builder.Default
-    private String useYn = "N";
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    public StateCmpstn state;
 }

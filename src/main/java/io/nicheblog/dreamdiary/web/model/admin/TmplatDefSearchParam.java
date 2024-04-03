@@ -20,9 +20,6 @@ import lombok.*;
 public class TmplatDefSearchParam
         extends BaseSearchParam {
 
-    /** 글분류 코드 */
-    private String ctgrCd;
-
     /** 제목 */
     private String title;
 }

@@ -113,7 +113,6 @@ public class TmplatDefController
             final @Valid TmplatDefDto tmplatDefDto,
             final @Nullable Integer tmplatDefNo,
             final LogActvtyParam logParam,
-            final MultipartHttpServletRequest request,
             final BindingResult bindingResult
     ) {
 
@@ -124,7 +123,7 @@ public class TmplatDefController
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = tmplatDefNo == null;
-            TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDefDto, request) : tmplatDefService.modify(tmplatDefDto, tmplatDefNo, request);
+            TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDefDto) : tmplatDefService.modify(tmplatDefDto, tmplatDefNo);
 
             isSuccess = (result.getTmplatDefNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.web.entity.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -17,6 +19,7 @@ import javax.persistence.*;
  *
  * @author nichefish
  * @extends BaseAtchEntity
+ * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "tmplat_txt")
@@ -30,27 +33,22 @@ import javax.persistence.*;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "update tmplat_txt SET del_yn = 'Y' WHERE tmplat_txt_no = ?")
 public class TmplatTxtEntity
-        extends BaseAtchEntity {
+        extends BaseAtchEntity
+        implements StateEmbedModule {
 
-    /**
-     * 템플릿 번호 (PK)
-     */
+    /** 템플릿 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tmplat_txt_no")
-    @Comment("템플릿 번호")
+    @Comment("템플릿 번호 (PK)")
     private Integer tmplatTxtNo;
 
-    /**
-     * 템플릿 정의 코드
-     */
+    /** 템플릿 정의 코드 */
     @Column(name = "tmplat_def_cd", length = 1000)
     @Comment("템플릿 정의 코드")
     private String tmplatDefCd;
 
-    /**
-     * 템플릿 정의 정보
-     */
+    /** 템플릿 정의 정보 */
     @ManyToOne
     @JoinColumn(name = "tmplat_def_cd", referencedColumnName = "tmplat_def_cd", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -59,16 +57,12 @@ public class TmplatTxtEntity
 
     /* ---- */
 
-    /**
-     * 템플릿 구분 코드 (TEXTAREA vs. TEXTEDITOR)
-     */
+    /** 템플릿 구분 코드 (TEXTAREA vs. TEXTEDITOR) */
     @Column(name = "tmplat_ty_cd")
     @Comment("템플릿 구분 코드")
     private String tmplatTyCd;
 
-    /**
-     * 템플릿 코드
-     */
+    /** 템플릿 코드 */
     @Column(name = "ctgr_cd")
     @Comment("템플릿 코드")
     private String ctgrCd;
@@ -81,7 +75,7 @@ public class TmplatTxtEntity
     // })
     // @Fetch(value= FetchMode.JOIN)
     // @NotFound(action=NotFoundAction.IGNORE)
-    // private CmmDtlCdEntity ctgrCdInfo;
+    // private DtlCdEntity ctgrCdInfo;
 
     /**
      * 제목
@@ -98,14 +92,6 @@ public class TmplatTxtEntity
     private String cn;
 
     /**
-     * 사용여부
-     */
-    @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
-    @Column(name = "use_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("사용여부")
-    private String useYn = "N";
-
-    /**
      * 기본설정 여부
      */
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
@@ -113,10 +99,10 @@ public class TmplatTxtEntity
     @Comment("기본설정 여부")
     private String defaultYn = "N";
 
-    /**
-     * 정렬 순서
-     */
-    @Column(name = "sort_ordr")
-    @Comment("정렬 순서")
-    private Integer sortOrdr;
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    @Embedded
+    public StateEmbed state;
 }
