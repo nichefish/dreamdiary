@@ -99,7 +99,6 @@ public class TmplatTxtEntity
     @Comment("기본설정 여부")
     private String defaultYn = "N";
 
-
     /* ----- */
 
     /** 상태 관리 모듈 (위임) */

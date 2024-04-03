@@ -79,7 +79,7 @@ public class MenuService
             put("menuTyCd", "main");
             put("menuNo", "00000000");
         }};
-        Sort sort = Sort.by(Sort.Direction.ASC, "sortOrdr");
+        Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
         PageRequest pageRequest = PageRequest.of(0, 99, sort);
         Page<MenuEntity> menuMainEntityPage = this.getListEntity(searchParamMap, pageRequest);
         return this.pageEntityToDto(menuMainEntityPage);
@@ -93,7 +93,7 @@ public class MenuService
             put("menuTyCd", "main");
             put("menuNo", "00000000");
         }};
-        Sort sort = Sort.by(Sort.Direction.ASC, "sortOrdr");
+        Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
         PageRequest pageRequest = PageRequest.of(0, 99, sort);
         Page<MenuEntity> menuMainEntityPage = this.getListEntity(searchParamMap, pageRequest);
         return this.pageEntityToDto(menuMainEntityPage);

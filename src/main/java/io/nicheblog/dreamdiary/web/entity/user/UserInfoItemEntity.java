@@ -50,30 +50,22 @@ public class UserInfoItemEntity
     @Comment("사용자 정보")
     private UserProflEntity userInfo;
 
-    /**
-     * 이름
-     */
+    /** 이름 */
     @Column(name = "item_nm", length = 100)
     @Comment("이름")
     private String itemNm;
 
-    /**
-     * 항목
-     */
+    /** 항목 */
     @Column(name = "item_cn", length = 200)
     @Comment("항목")
     private String itemCn;
 
-    /**
-     * 비고
-     */
+    /** 비고 */
     @Column(name = "item_dc", length = 1000)
     @Comment("비고")
     private String itemDc;
 
-    /**
-     * 정렬 순서
-     */
+    /** 정렬 순서 */
     @Column(name = "sort_ordr")
     @Comment("정렬 순서")
     private Integer sortOrdr;

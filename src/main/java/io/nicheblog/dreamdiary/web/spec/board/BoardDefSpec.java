@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.embed.BaseStateSpec;
 import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Component("boardDefSpec")
 public class BoardDefSpec
-        implements BaseSpec<BoardDefEntity> {
+        implements BaseStateSpec <BoardDefEntity> {
 
     /**
      * 조회 후처리:: 정렬 순서 변경
@@ -35,7 +35,7 @@ public class BoardDefSpec
             CriteriaBuilder builder
     ) {
         List<Order> orders = new ArrayList<>();
-        orders.add(builder.asc(root.get("sortOrdr")));
+        orders.add(builder.asc(root.get("state").get("sortOrdr")));
         query.orderBy(orders);
     }
 }

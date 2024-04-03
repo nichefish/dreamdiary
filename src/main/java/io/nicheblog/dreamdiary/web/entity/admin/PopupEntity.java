@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.web.entity.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,10 +12,7 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -24,6 +23,7 @@ import java.util.Date;
  *
  * @author nichefish
  * @extends BaseAtchEntity
+ * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "POPUP")
@@ -35,55 +35,43 @@ import java.util.Date;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE popup SET del_yn = 'Y' WHERE popup_cd = ?")
 public class PopupEntity
-        extends BaseAtchEntity {
+        extends BaseAtchEntity
+        implements StateEmbedModule {
 
-    /**
-     * 팝업 코드
-     */
+    /** 팝업 코드 */
     @Id
     @Column(name = "popup_cd")
     @Comment("팝업 코드")
     private String popupCd;
 
-    /**
-     * 팝업 이름
-     */
+    /** 팝업 이름  */
     @Column(name = "popup_nm")
     @Comment("팝업 이름")
     private String popupNm;
 
-    /**
-     * 가로
-     */
+    /** 가로 */
     @Column(name = "width")
     @Comment("가로")
     private Integer width;
 
-    /**
-     * 세로
-     */
+    /** 세로 */
     @Column(name = "height")
     @Comment("세로")
     private Integer height;
 
-    /**
-     * 게시시작일시
-     */
+    /** 게시시작일시 */
     @Column(name = "popup_start_dt")
     @Comment("게시시작일시")
     private Date popupStartDt;
 
-    /**
-     * 게시종료일시
-     */
+    /** 게시종료일시 */
     @Column(name = "popup_end_dt")
     @Comment("게시종료일시")
     private Date popupEndDt;
 
-    /**
-     * 사용여부
-     */
-    @Column(name = "use_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
-    @Comment("사용여부")
-    private String useYn;
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    @Embedded
+    public StateEmbed state;
 }

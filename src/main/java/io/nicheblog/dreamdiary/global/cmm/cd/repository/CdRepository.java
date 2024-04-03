@@ -31,7 +31,7 @@ public interface CdRepository
     /**
      * 분류코드로 상세코드 목록 검색
      */
-    List<DtlCdEntity> findByClCdAndUseYn(
+    List<DtlCdEntity> findByClCdAndStateUseYn(
             final String clCd,
             String useYn,
             final Sort sortOrdrAsc

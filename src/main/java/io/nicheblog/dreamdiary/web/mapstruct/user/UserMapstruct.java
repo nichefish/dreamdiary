@@ -53,10 +53,10 @@ public interface UserMapstruct
     // @Mapping(target = "cmpyNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getCmpyCd())) ? entity.getUserProfl().getCmpyCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "teamNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getTeamCd())) ? entity.getUserProfl().getTeamCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "emplymNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getEmplymCd())) ? entity.getUserProfl().getEmplymCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "ecnyDt", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getEcnyDt(), DateUtils.PTN_DATE) : null)")
+    // @Mapping(target = "ecnyDt", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getEcnyDt(), DatePtn.DATE) : null)")
     // @Mapping(target = "cttpc", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getCttpc() : null)")
     // @Mapping(target = "email", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getEmail() : null)")
-    // @Mapping(target = "brthdy", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getBrthdy(), DateUtils.PTN_DATE) : null)")
+    // @Mapping(target = "brthdy", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getBrthdy(), DatePtn.DATE) : null)")
     // @Mapping(target = "lunarYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getLunarYn() : null)")
     // @Mapping(target = "userProflYn", expression = "java(entity.getUserProfl() != null ? \"Y\" : \"N\")")
     // @Mapping(target = "retireYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getRetireYn() : null)")
@@ -75,13 +75,13 @@ public interface UserMapstruct
      * Entity -> ListXlsxDto
      */
     // @Mapping(target = "authNm", expression = "java((entity.getAuthCdInfo() != null) ? entity.getAuthCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "lstLgnDt", expression = "java(DateUtils.asStr(entity.getLstLgnDt(), DateUtils.PTN_DATETIME))")
+    // @Mapping(target = "lstLgnDt", expression = "java(DateUtils.asStr(entity.getLstLgnDt(), DatePtn.DATETIME))")
     // UserListXlsxDto toListXlsxDto(final UserEntity entity) throws Exception;
 
     /**
      * dtlDtoToListDto
      */
-    // @Mapping(target = "ecnyDt", expression = "java(user.getUserProfl() != null ? DateUtils.asStr(user.getUserProfl().getEcnyDt(), DateUtils.PTN_DATE) : null)")
+    // @Mapping(target = "ecnyDt", expression = "java(user.getUserProfl() != null ? DateUtils.asStr(user.getUserProfl().getEcnyDt(), DatePtn.DATE) : null)")
     UserListDto dtlDtoToListDto(final UserDto user) throws Exception;
 
     /**

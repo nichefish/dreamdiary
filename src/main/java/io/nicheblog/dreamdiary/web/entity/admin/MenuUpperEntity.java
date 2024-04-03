@@ -2,6 +2,8 @@ package io.nicheblog.dreamdiary.web.entity.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import javax.persistence.*;
  *
  * @author nichefish
  * @extends BaseAuditEntity
+ * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "menu")
@@ -33,7 +36,8 @@ import javax.persistence.*;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE menu SET del_yn = 'Y' WHERE menu_id = ?")
 public class MenuUpperEntity
-        extends BaseAuditEntity {
+        extends BaseAuditEntity
+        implements StateEmbedModule {
 
     /**
      * 메뉴 ID
@@ -100,20 +104,6 @@ public class MenuUpperEntity
     private String icon;
 
     /**
-     * 정렬 순서
-     */
-    @Column(name = "sort_ordr")
-    @Comment("정렬 순서")
-    private Integer sortOrdr;
-
-    /**
-     * 사용여부
-     */
-    @Column(name = "use_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
-    @Comment("사용여부")
-    private String useYn;
-
-    /**
      * 셀프 참조 :: 상위메뉴 조회
      */
     @ManyToOne
@@ -122,4 +112,10 @@ public class MenuUpperEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("상위메뉴 조회")
     private MenuUpperEntity upperMenu;
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    @Embedded
+    public StateEmbed state;
 }

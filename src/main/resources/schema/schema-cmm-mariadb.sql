@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS cmm_cl_cd  (
     cl_cd VARCHAR(50) NOT NULL PRIMARY KEY COMMENT '분류코드',
     cl_cd_nm VARCHAR(50) COMMENT '분류코드 이름',
     cl_cd_dc VARCHAR(400) COMMENT '분류코드 설명',
-    -- MANAGE
+    -- STATE
     sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
     use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
     -- AUDIT
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS cmm_dtl_cd (
     dtl_cd VARCHAR(50) COMMENT '상세코드',
     dtl_cd_nm VARCHAR(40) COMMENT '상세코드 이름',
     dtl_cd_dc VARCHAR(400) COMMENT '상세코드 설명',
-    -- MANAGE
+    -- STATE
     sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
     use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
     -- AUDIT

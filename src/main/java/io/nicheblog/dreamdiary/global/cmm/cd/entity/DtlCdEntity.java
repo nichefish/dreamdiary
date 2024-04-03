@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import lombok.*;

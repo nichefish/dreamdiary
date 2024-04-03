@@ -40,7 +40,7 @@ public class CdService {
     @Cacheable(cacheNames = "cdEntityListByClCd", key = "#clCd", condition = "#clCd!=null")
     public List<DtlCdEntity> getCdEntityListByClCd(final String clCd) throws Exception {
         if (StringUtils.isEmpty(clCd)) return null;
-        return cdRepository.findByClCdAndUseYn(clCd, "Y", Sort.by(Sort.Direction.ASC, "sortOrdr"));
+        return cdRepository.findByClCdAndStateUseYn(clCd, "Y", Sort.by(Sort.Direction.ASC, "state.sortOrdr"));
     }
 
     /**

@@ -77,7 +77,7 @@ public class BoardDefController
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (BoardDefSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "sortOrdr", model);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "state.sortOrdr", model);
             // 목록 조회
             Page<BoardDefDto> boardDefMngList = boardDefService.getListDto(searchParam, pageRequest);
             model.addAttribute("boardDefMngList", boardDefMngList.getContent());

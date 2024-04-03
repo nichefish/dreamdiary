@@ -2,7 +2,8 @@ package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**

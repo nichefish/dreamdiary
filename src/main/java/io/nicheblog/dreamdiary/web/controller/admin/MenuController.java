@@ -183,7 +183,7 @@ public class MenuController
         String resultMsg = "";
         try {
             // 팝업공지 목록 조회
-            Sort sort = Sort.by(Sort.Direction.ASC, "sortOrdr");
+            Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             Page<MenuListDto> menuList = menuService.getMainMenuList(searchParam, pageRequest);
             ajaxResponse.setResultList(menuList.getContent());
