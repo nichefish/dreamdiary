@@ -1,12 +1,16 @@
 <!--
  -- 레이아웃 > 사이드바 푸터
- -- @included in : aside/_aside_base
+ -- @included_in : aside/_aside_base
  -->
+
 <!--begin::Footer-->
-<div class="aside-footer flex-column-auto pb-7 px-6" id="kt_aside_footer">
-    <a href="javascript:void(0);" class="btn btn-primary btn-active-light-primary w-100"
-       onclick="Layout.lgout();"
-       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="로그아웃합니다.">
+<div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
+    <a
+        href="javascript:void(0);"
+        class="btn btn-flex flex-center btn-muted btn-light-primary overflow-hidden text-nowrap px-0 h-40px w-100"
+        onclick="Layout.lgout();"
+        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="로그아웃합니다.">
+
         <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr076.svg-->
         <span class="svg-icon svg-icon-muted svg-icon-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -16,7 +20,9 @@
             </svg>
         </span>
         <!--end::Svg Icon-->
-        <span class="fw-bolder" style="letter-spacing :0.6px;">로그아웃</span>
+        <span class="btn-label fw-bold">
+            로그아웃
+        </span>
     </a>
 </div>
 <!--end::Footer-->
