@@ -76,20 +76,18 @@ public class TmplatDefController
         String resultMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 :: 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            if (searchParam.isBackToList()) searchParam = (TmplatDefSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-
+            searchParam = (TmplatDefSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "regDt", model);
+            // 목록 조회
             Page<TmplatDefDto> tmplatList = tmplatDefService.getListDto(searchParam, pageRequest);
-            if (tmplatList != null) model.addAttribute("tmplatList", tmplatList.getContent());
+            model.addAttribute("tmplatList", tmplatList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(tmplatList));
+            // 목록 검색 URL + 파라미터 모델에 추가
+            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
-            // 검색 파라미터 다시 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -127,6 +125,7 @@ public class TmplatDefController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = tmplatDefNo == null;
             TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDefDto, request) : tmplatDefService.modify(tmplatDefDto, tmplatDefNo, request);
+
             isSuccess = (result.getTmplatDefNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {

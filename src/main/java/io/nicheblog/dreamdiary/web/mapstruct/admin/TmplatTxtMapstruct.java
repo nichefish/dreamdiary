@@ -1,7 +1,8 @@
 package io.nicheblog.dreamdiary.web.mapstruct.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatTxtEntity;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatTxtDto;
 import org.mapstruct.*;
@@ -16,7 +17,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseListMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class})
 public interface TmplatTxtMapstruct
         extends BaseListMapstruct<TmplatTxtDto, TmplatTxtDto, TmplatTxtEntity> {
 
@@ -35,7 +36,7 @@ public interface TmplatTxtMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DateUtils.PTN_DATETIME))")
+    @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DatePtn.DATETIME))")
     TmplatTxtDto toDto(final TmplatTxtEntity entity) throws Exception;
 
     /**
