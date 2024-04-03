@@ -12,7 +12,7 @@ import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import java.io.Serializable;
 
 /**
- * BaseManageService
+ * BaseStateService
  * <pre>
  *  (공통/상속) 관리요소 CRUD 공통 서비스 인터페이스
  * </pre>
@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @author nichefish
  * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-public interface BaseManageService<Dto extends BaseAuditDto & StateCmpstnModule, ListDto extends BaseAuditDto & StateCmpstnModule, Key extends Serializable, Entity extends BaseCrudEntity & StateEmbedModule, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>>
+public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule, ListDto extends BaseAuditDto & StateCmpstnModule, Key extends Serializable, Entity extends BaseCrudEntity & StateEmbedModule, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>>
         extends BaseCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**

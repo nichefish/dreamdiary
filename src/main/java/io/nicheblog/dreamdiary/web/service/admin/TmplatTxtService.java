@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
-import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseManageService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatTxtEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.TmplatTxtMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatTxtDto;
@@ -25,8 +25,8 @@ import java.util.Optional;
 @Service("tmplatTxtService")
 @Log4j2
 public class TmplatTxtService
-        implements BaseMultiCrudService<TmplatTxtDto, TmplatTxtDto, Integer, TmplatTxtEntity, TmplatTxtRepository, TmplatTxtSpec, TmplatTxtMapstruct>
-        , BaseManageService<TmplatTxtDto, TmplatTxtDto, Integer, TmplatTxtEntity, TmplatTxtRepository, TmplatTxtSpec, TmplatTxtMapstruct> {
+        implements BaseCrudService<TmplatTxtDto, TmplatTxtDto, Integer, TmplatTxtEntity, TmplatTxtRepository, TmplatTxtSpec, TmplatTxtMapstruct>,
+                   BaseStateService<TmplatTxtDto, TmplatTxtDto, Integer, TmplatTxtEntity, TmplatTxtRepository, TmplatTxtSpec, TmplatTxtMapstruct> {
 
     @Resource(name = "tmplatTxtRepository")
     private TmplatTxtRepository tmplatTxtRepository;

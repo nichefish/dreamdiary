@@ -2,6 +2,8 @@ package io.nicheblog.dreamdiary.global.cmm.cd.model;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,7 @@ import lombok.experimental.SuperBuilder;
  *
  * @author nichefish
  * @extends BaseAuditDto
+ * @implements StateCmpstnModule
  */
 @Getter
 @Setter
@@ -24,46 +27,26 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DtlCd
-        extends BaseAuditDto {
+        extends BaseAuditDto
+        implements StateCmpstnModule {
 
-    /**
-     * 목록 순번
-     */
-    private Long rnum;
-
-    /**
-     * 상세코드
-     */
+    /** 상세코드 */
     private String dtlCd;
-    /**
-     * 상세코드이름
-     */
+    /** 상세코드이름 */
     private String dtlCdNm;
-    /**
-     * 상세코드설명
-     */
+    /** 상세코드설명 */
     private String dtlCdDc;
-    /**
-     * 분류코드
-     */
+    /** 분류코드 */
     private String clCd;
-    /**
-     * 사용 여부
-     */
-    private String useYn;
-    /**
-     * 정렬 순서
-     */
-    private Integer sortOrdr;
-
-    /**
-     * 성공여부
-     */
-    private Boolean isSuccess;
 
     /* ---- */
 
     public DtlCdKey getKey() {
         return new DtlCdKey(this.clCd, this.dtlCd);
     }
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    public StateCmpstn state;
 }

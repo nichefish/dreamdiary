@@ -1,6 +1,9 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.entity;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManageEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.NotFound;
@@ -17,7 +20,8 @@ import javax.persistence.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseManageEntity
+ * @extends BaseAuditEntity
+ * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "cmm_dtl_cd")
@@ -30,39 +34,30 @@ import javax.persistence.*;
 @ToString
 @Where(clause = "del_yn='N'")
 public class DtlCdEntity
-        extends BaseManageEntity {
+        extends BaseAuditEntity
+        implements StateEmbedModule {
 
-    /**
-     * 상세코드
-     */
+    /** 상세코드 */
     @Id
     @Column(name = "dtl_cd")
     private String dtlCd;
 
-    /**
-     * 공통코드
-     */
+    /** 공통코드 */
     @Id
     @Column(name = "cl_cd")
     private String clCd;
 
-    /**
-     * 분류코드 정보
-     */
+    /** 분류코드 정보 */
     @ManyToOne
     @JoinColumn(name = "cl_cd", referencedColumnName = "cl_cd", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     private ClCdEntity clCdInfo;
 
-    /**
-     * 상세코드이름
-     */
+    /** 상세코드이름 */
     @Column(name = "dtl_cd_nm")
     private String dtlCdNm;
 
-    /**
-     * 상세코드설명
-     */
+    /** 상세코드설명 */
     @Column(name = "dtl_cd_dc")
     private String dtlCdDc;
 
@@ -71,15 +66,17 @@ public class DtlCdEntity
     /**
      * 생성자
      */
-    public DtlCdEntity(
-            final String clCd,
-            final String dtlCd
-    ) {
+    public DtlCdEntity(final String clCd, final String dtlCd) {
         this.clCd = clCd;
         this.dtlCd = dtlCd;
     }
-
     public DtlCdEntity(final DtlCdKey key) {
         this(key.getClCd(), key.getDtlCd());
     }
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    @Embedded
+    public StateEmbed state;
 }

@@ -149,7 +149,7 @@ public class DtlCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = dtlCdService.setInUse(cmmDtlKey);
+            isSuccess = dtlCdService.setStateUse(cmmDtlKey);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -184,7 +184,7 @@ public class DtlCdController
         String resultMsg = "";
         try {
             DtlCdKey key = new DtlCdKey(clCd, dtlCd);
-            isSuccess = dtlCdService.setInUnuse(key);
+            isSuccess = dtlCdService.setStateUnuse(key);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -204,8 +204,7 @@ public class DtlCdController
      * 상세 코드 관리 (useYn=N 포함) 삭제
      * (관리자MNGR만 접근 가능)
      *
-     * @param clCd: 구분코드 (대분류)
-     * @param dtlCd: 상세코드
+     * @param dtlCdKey: clCd, dtlCd
      */
     @PostMapping(SiteUrl.DTL_CD_DEL_AJAX)
     @Secured({Constant.ROLE_MNGR})

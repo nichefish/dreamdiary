@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManageEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ import javax.persistence.*;
  *  메뉴 관리 간소화 Entity
  *  순환참조 방지 위해 ㅎ상위메뉴 entity에 대해서 하위메뉴 목록 참조 삭제
  * </pre>
- * (BaseAuditEntity 상속)
  *
  * @author nichefish
+ * @extends BaseAuditEntity
  */
 @Entity
 @Table(name = "menu")
@@ -33,7 +33,7 @@ import javax.persistence.*;
 @Where(clause = "DEL_YN='N'")
 @SQLDelete(sql = "UPDATE menu SET del_yn = 'Y' WHERE menu_id = ?")
 public class MenuUpperEntity
-        extends BaseManageEntity {
+        extends BaseAuditEntity {
 
     /**
      * 메뉴 ID

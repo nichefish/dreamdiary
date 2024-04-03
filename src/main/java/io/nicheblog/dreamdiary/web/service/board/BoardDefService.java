@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseManageService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.board.BoardDefMapstruct;
@@ -27,12 +28,13 @@ import java.util.stream.Collectors;
  * </pre>
  *
  * @author nichefish
- * @implements BaseManageService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseCrudService, BaseStateService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("boardDefService")
 @Log4j2
 public class BoardDefService
-        implements BaseManageService<BoardDefDto, BoardDefDto, String, BoardDefEntity, BoardDefRepository, BoardDefSpec, BoardDefMapstruct> {
+        implements BaseCrudService<BoardDefDto, BoardDefDto, String, BoardDefEntity, BoardDefRepository, BoardDefSpec, BoardDefMapstruct>,
+        BaseStateService<BoardDefDto, BoardDefDto, String, BoardDefEntity, BoardDefRepository, BoardDefSpec, BoardDefMapstruct> {
 
     private final BoardDefMapstruct boardDefMapstruct = BoardDefMapstruct.INSTANCE;
 

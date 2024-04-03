@@ -2,7 +2,8 @@ package io.nicheblog.dreamdiary.web.service.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseManageService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.ClCdMapstruct;
 import io.nicheblog.dreamdiary.web.repository.admin.ClCdRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.ClCdSpec;
@@ -22,7 +23,8 @@ import javax.annotation.Resource;
  */
 @Service("clCdService")
 public class ClCdService
-        implements BaseManageService<ClCd, ClCd, String, ClCdEntity, ClCdRepository, ClCdSpec, ClCdMapstruct> {
+        implements BaseCrudService<ClCd, ClCd, String, ClCdEntity, ClCdRepository, ClCdSpec, ClCdMapstruct>,
+                   BaseStateService<ClCd, ClCd, String, ClCdEntity, ClCdRepository, ClCdSpec, ClCdMapstruct> {
 
     @Resource(name = "clCdRepository")
     private ClCdRepository clCdRepository;
@@ -46,32 +48,5 @@ public class ClCdService
         return this.cmmClCdMapstruct;
     }
 
-    /**
-     * 분류 코드 등록 전처리
-     */
-    @Override
-    public void preRegist(final ClCd cmmClCd) {
-        // 사용 여부 체크박스 값 세팅
-        if (!"Y".equals(cmmClCd.getUseYn())) cmmClCd.setUseYn("N");
-    }
-
-    /**
-     * 분류 코드 수정 전처리
-     */
-    @Override
-    public void preModify(final ClCd cmmClCd) {
-        // 사용 여부 체크박스 값 세팅
-        if (!"Y".equals(cmmClCd.getUseYn())) cmmClCd.setUseYn("N");
-    }
-
-    /**
-     * 분류 코드 삭제
-     */
-    @Override
-    public Boolean delete(final String key) throws Exception {
-        ClCdEntity cmmClCdEntity = this.getDtlEntity(key);       // Entity 레벨 조회
-        // 키값이 코드값이므로 delYn 대신 삭제처리
-        clCdRepository.delete(cmmClCdEntity);
-        return true;
-    }
+    //
 }

@@ -3,7 +3,8 @@ package io.nicheblog.dreamdiary.web.service.admin;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseManageService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
 import io.nicheblog.dreamdiary.web.repository.admin.DtlCdRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.DtlCdSpec;
@@ -23,7 +24,8 @@ import javax.annotation.Resource;
  */
 @Service("dtlCdService")
 public class DtlCdService
-        implements BaseManageService<DtlCd, DtlCd, DtlCdKey, DtlCdEntity, DtlCdRepository, DtlCdSpec, DtlCdMapstruct> {
+        implements BaseCrudService<DtlCd, DtlCd, DtlCdKey, DtlCdEntity, DtlCdRepository, DtlCdSpec, DtlCdMapstruct>,
+                   BaseStateService<DtlCd, DtlCd, DtlCdKey, DtlCdEntity, DtlCdRepository, DtlCdSpec, DtlCdMapstruct> {
 
     @Resource(name = "dtlCdRepository")
     private DtlCdRepository dtlCdRepository;
@@ -47,32 +49,5 @@ public class DtlCdService
         return this.cmmDtlCdMapstruct;
     }
 
-    /**
-     * 상세 코드 등록 전처리
-     */
-    @Override
-    public void preRegist(final DtlCd cmmDtlCd) {
-        // 사용 여부 체크박스 값 세팅
-        if (!"Y".equals(cmmDtlCd.getUseYn())) cmmDtlCd.setUseYn("N");
-    }
-
-    /**
-     * 상세 코드 수정 전처리
-     */
-    @Override
-    public void preModify(final DtlCd cmmDtlCd) {
-        // 사용 여부 체크박스 값 세팅
-        if (!"Y".equals(cmmDtlCd.getUseYn())) cmmDtlCd.setUseYn("N");
-    }
-
-    /**
-     * 상세 코드 삭제
-     */
-    @Override
-    public Boolean delete(final DtlCdKey key) throws Exception {
-        DtlCdEntity cmmDtlCdEntity = this.getDtlEntity(key);       // Entity 레벨 조회
-        // 키값이 코드값이므로 delYn 대신 삭제처리
-        dtlCdRepository.delete(cmmDtlCdEntity);
-        return true;
-    }
+    //
 }

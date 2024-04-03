@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatDefEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.TmplatDefMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatDefDto;
@@ -18,12 +19,13 @@ import javax.annotation.Resource;
  * </pre>
  *
  * @author nichefish
- * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseCrudService, BaseStateService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("tmplatDefService")
 @Log4j2
 public class TmplatDefService
-        implements BaseMultiCrudService<TmplatDefDto, TmplatDefDto, Integer, TmplatDefEntity, TmplatDefRepository, TmplatDefSpec, TmplatDefMapstruct> {
+        implements BaseCrudService<TmplatDefDto, TmplatDefDto, Integer, TmplatDefEntity, TmplatDefRepository, TmplatDefSpec, TmplatDefMapstruct>,
+                   BaseStateService<TmplatDefDto, TmplatDefDto, Integer, TmplatDefEntity, TmplatDefRepository, TmplatDefSpec, TmplatDefMapstruct> {
 
     @Resource(name = "tmplatDefRepository")
     private TmplatDefRepository tmplatDefRepository;

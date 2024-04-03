@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.entity;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManageEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,6 +25,7 @@ import java.util.List;
  *
  * @author nichefish
  * @extends BaseManageEntity
+ * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "cmm_cl_cd")
@@ -34,36 +37,39 @@ import java.util.List;
 @ToString
 @Where(clause = "del_yn='N'")
 public class ClCdEntity
-        extends BaseManageEntity {
+        extends BaseCrudEntity
+        implements StateEmbedModule {
 
-    /**
-     * 분류코드
-     */
+    @PostLoad
+    private void onLoad() {
+        this.dtlCdCnt = (CollectionUtils.isEmpty(this.dtlCdList)) ? 0 : this.dtlCdList.size();
+    }
+
+    /** 분류코드 */
     @Id
     @Column(name = "cl_cd")
     private String clCd;
 
-    /**
-     * 분류코드 이름
-     */
+    /** 분류코드 이름 */
     @Column(name = "cl_cd_nm")
     private String clCdNm;
 
-    /**
-     * 분류코드 설명
-     */
+    /** 분류코드 설명 */
     @Column(name = "cl_cd_dc")
     private String clCdDc;
 
-    /**
-     * 분류코드 정보
-     */
+    /** 분류코드 정보 */
     @OneToMany
     @JoinColumn(name = "cl_cd", referencedColumnName = "cl_cd", insertable = false, updatable = false)
-    @OrderBy("sortOrdr ASC")
+    @OrderBy("state.sortOrdr ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @ToString.Exclude
     private List<DtlCdEntity> dtlCdList;
+
+    /** 상세코드 개수 */
+    @Transient
+    @Builder.Default
+    private Integer dtlCdCnt = 0;
 
     /* ----- */
 
@@ -95,4 +101,10 @@ public class ClCdEntity
             this.dtlCdList.addAll(dtlCdList);
         }
     }
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    @Embedded
+    public StateEmbed state;
 }

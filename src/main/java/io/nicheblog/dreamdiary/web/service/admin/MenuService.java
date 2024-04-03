@@ -1,7 +1,8 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
-import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseManageService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.MenuEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.MenuMapstruct;
@@ -31,7 +32,8 @@ import java.util.Map;
 @Service("menuService")
 @Log4j2
 public class MenuService
-        implements BaseManageService<MenuDto, MenuListDto, Integer, MenuEntity, MenuRepository, MenuSpec, MenuMapstruct> {
+        implements BaseCrudService<MenuDto, MenuListDto, Integer, MenuEntity, MenuRepository, MenuSpec, MenuMapstruct>,
+                   BaseStateService<MenuDto, MenuListDto, Integer, MenuEntity, MenuRepository, MenuSpec, MenuMapstruct> {
 
     @Resource(name = "menuRepository")
     private MenuRepository menuRepository;
