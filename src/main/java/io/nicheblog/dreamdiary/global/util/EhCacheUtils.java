@@ -1,9 +1,10 @@
 package io.nicheblog.dreamdiary.global.util;
 
-import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,38 +18,46 @@ import java.util.Objects;
  *
  * @author nichefish
  */
-@UtilityClass
+@Component("ehCacheUtils")
 @Log4j2
 public class EhCacheUtils {
 
     @Resource(name="cacheManager")
-    CacheManager cacheManager;
+    CacheManager manager;
+
+    private static CacheManager cacheManager;
+
+    /** static 맥락에서 사용할 수 있도록 bean 주입 */
+    @PostConstruct
+    private void init() {
+        cacheManager = manager;
+    }
 
     /**
      * 캐시 목록 조회
      */
-    public List<String> chckActiveCaches() {
+    public static List<String> chckActiveCaches() {
         return new ArrayList<>(cacheManager.getCacheNames());
     }
 
     /**
      * 캐시 이름의 특정 키 evict
      */
-    public void evictSingleCacheValue(final String cacheName, final String cacheKey) {
+    public static void evictSingleCacheValue(final String cacheName, final String cacheKey) {
         Objects.requireNonNull(cacheManager.getCache(cacheName)).evict(cacheKey);
     }
 
     /**
      * 캐시 이름으로 해당 캐시 evict
      */
-    public void evictAllCacheValues(final String cacheName) {
+    public static void evictAllCacheValues(final String cacheName) {
         Objects.requireNonNull(cacheManager.getCache(cacheName)).clear();
     }
 
     /**
      * 전체 캐시 evict
      */
-    public Boolean clearAllCaches() {
+    public static Boolean clearAllCaches() {
         cacheManager.getCacheNames()
                 .forEach(cacheName -> Objects.requireNonNull(cacheManager.getCache(cacheName)).clear());
         return true;
