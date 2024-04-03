@@ -7,11 +7,7 @@
 #### ↓ BaseCrudInterface :: extends BaseReadonlyService
     -> preRegist, regist, preModify, modify, updt, preDelete, delete
 
-#### ↓ BaseManageInterface :: extends BaseCrudInterface
-    -> setInUse, setInUnuse
-
 #### ↓ BaseMultiCrudService :: extends BaseCrudInterface
-    -> getFileService (dependency injection)
     -> CRUD uses multipartRequest
 
 #### ↓ BaseClsfService :: extends BaseMultiCrudService

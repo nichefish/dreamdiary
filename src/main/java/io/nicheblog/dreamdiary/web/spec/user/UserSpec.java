@@ -164,8 +164,8 @@ public class UserSpec
             final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
-        Join<UserEntity, UserProflEntity> userProfl = root.join("userProfl", JoinType.INNER);      //  JOIN 타입 명시하기
-        Join<UserProflEntity, DtlCdEntity> jobTitleCdInfo = userProfl.join("jobTitleCdInfo", JoinType.INNER);      //  JOIN 타입 명시하기
+        Join<UserEntity, UserProflEntity> userProfl = root.join("userProfl", JoinType.INNER);
+        Join<UserProflEntity, DtlCdEntity> jobTitleCdInfo = userProfl.join("jobTitleCdInfo", JoinType.INNER);
         order.add(builder.desc(jobTitleCdInfo.get("sortOrdr")));
         order.add(builder.asc(userProfl.get("ecnyDt")));
         return order;

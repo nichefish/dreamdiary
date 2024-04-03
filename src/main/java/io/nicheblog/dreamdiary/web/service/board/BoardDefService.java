@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseManageService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseManageService;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.board.BoardDefMapstruct;
@@ -89,7 +89,7 @@ public class BoardDefService
      * 사용/미사용 변경 후처리
      */
     @Override
-    public void postSetUseStatus() throws Exception {
+    public void postSetState() throws Exception {
         SiteMenu.BOARD.setSubMenuList(this.boardDefMenuList());
     }
 

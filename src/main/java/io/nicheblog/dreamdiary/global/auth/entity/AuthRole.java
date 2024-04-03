@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.global.auth.entity;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseManageEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,8 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseManagtEntity
+ * @extends BaseAuditEntity
+ * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "auth_role")
@@ -32,7 +35,8 @@ import java.util.List;
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 public class AuthRole
-        extends BaseManageEntity {
+        extends BaseAuditEntity
+        implements StateEmbedModule {
 
     /**
      * 권한 코드 (PK)
@@ -65,8 +69,14 @@ public class AuthRole
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "auth_cd", referencedColumnName = "top_auth_cd", insertable = false, updatable = false)
     @Fetch(value = FetchMode.SELECT)
-    @OrderBy("sortOrdr ASC")
+    @OrderBy("state.sortOrdr ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("하위 권한 정보")
     private List<AuthRole> subAuthList;
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    @Embedded
+    public StateEmbed state;
 }

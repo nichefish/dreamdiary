@@ -195,7 +195,7 @@ public class BoardDefController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = boardDefService.setInUse(boardCd);
+            isSuccess = boardDefService.setStateUse(boardCd);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -229,7 +229,7 @@ public class BoardDefController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = boardDefService.setInUnuse(boardCd);
+            isSuccess = boardDefService.setStateUnuse(boardCd);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

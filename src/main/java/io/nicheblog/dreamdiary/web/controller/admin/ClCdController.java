@@ -261,7 +261,7 @@ public class ClCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = clCdService.setInUse(clCd);
+            isSuccess = clCdService.setStateUse(clCd);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
