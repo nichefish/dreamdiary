@@ -1,12 +1,10 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
@@ -23,7 +21,7 @@ import java.util.Map;
  * @author nichefish
  * @extends BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>>
+public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
         extends BaseReadonlyService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**
@@ -164,8 +162,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
         return true;
     }
     default boolean deleteAll(final Map<String, Object> searchParamMap) throws Exception {
-        Page<Entity> entityPage = this.getListEntity(searchParamMap, Pageable.unpaged());
-        List<Entity> entityList = entityPage.getContent();
+        List<Entity> entityList = this.getListEntity(searchParamMap);
         Repository repository = this.getRepository();
         repository.deleteAll(entityList);
         return true;
