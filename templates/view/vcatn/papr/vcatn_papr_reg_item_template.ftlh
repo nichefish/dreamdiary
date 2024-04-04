@@ -1,6 +1,6 @@
 <#--
   -- 휴가계획서 > 개별휴가항목 폼 추가추가 Template
-  -- @included in : vcatn_papr_reg_form
+  -- @included_in : vcatn_papr_reg_form
   -->
 <div id="vcatn_reg_item_template" hidden>
     <span id="vcatnItemId__INDEX__"></span>

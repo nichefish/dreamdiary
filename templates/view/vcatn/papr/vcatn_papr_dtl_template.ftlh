@@ -1,6 +1,6 @@
 <#--
   -- 휴가계획서 > 상세 Template
-  -- @included in : vcatn_papr_list
+  -- @included_in : vcatn_papr_list
   -->
 <script type="text/x-handlebars-template" id="vcatn_papr_dtl_template">
     <div class="card mt-4">

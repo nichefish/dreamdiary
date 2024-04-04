@@ -1,6 +1,6 @@
 <#--
   -- 휴가계획서 > 목록 검색 Header
-  -- @included in : vcatn_papr_list
+  -- @included_in : vcatn_papr_list
   -->
 <form name="listForm" id="listForm" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">

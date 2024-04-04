@@ -1,6 +1,6 @@
 <#--
   -- 휴가관리 > 휴가사용일자 > 휴가 관리자 직접 등록 Template
-  -- @included in : vcatn_dy_list
+  -- @included_in : vcatn_dy_list
 -->
 <script type="text/x-handlebars-template" id="vcatn_papr_dtl_template">
     <div class="card mt-4">

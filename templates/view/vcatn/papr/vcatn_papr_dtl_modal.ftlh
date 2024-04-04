@@ -1,6 +1,6 @@
 <#--
   -- 휴가계획서 > 상세 Modal
-  -- @included in : vcatn_papr_list
+  -- @included_in : vcatn_papr_list
   -->
 <div class="modal fade" id="vcatn_papr_dtl_modal" tabindex="-1" role="dialog" aria-labelledby="vcatnPaprDtlModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
