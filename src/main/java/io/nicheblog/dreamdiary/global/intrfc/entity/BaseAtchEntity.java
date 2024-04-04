@@ -24,7 +24,7 @@ import javax.persistence.OneToOne;
 @MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseAtchEntity

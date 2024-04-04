@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 @MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class BaseClsfEntity

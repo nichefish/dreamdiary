@@ -7,7 +7,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
 
-import javax.persistence.MappedSuperclass;
 import java.util.List;
 
 /**
@@ -19,10 +18,9 @@ import java.util.List;
  * @author nichefish
  * @extends BaseAuditDto
  */
-@MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

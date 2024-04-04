@@ -5,8 +5,6 @@ import io.nicheblog.dreamdiary.global.util.crypto.CryptoUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.MappedSuperclass;
-
 /**
  * BaseAuditRegDto
  * <pre>
@@ -16,10 +14,9 @@ import javax.persistence.MappedSuperclass;
  * @author nichefish
  * @extends BaseCrudDto
  */
-@MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class BaseAuditRegDto

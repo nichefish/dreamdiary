@@ -4,8 +4,6 @@ import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.MappedSuperclass;
-
 /**
  * BaseAuditDto
  * <pre>
@@ -15,10 +13,9 @@ import javax.persistence.MappedSuperclass;
  * @author nichefish
  * @extends BaseAuditRegDto
  */
-@MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

@@ -4,8 +4,6 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.MappedSuperclass;
-
 /**
  * BaseClsfDto
  * <pre>
@@ -16,10 +14,9 @@ import javax.persistence.MappedSuperclass;
  * @author nichefish
  * @extends BaseAtchDto
  */
-@MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -43,5 +40,4 @@ public class BaseClsfDto
     public BaseClsfKey getClsfKey() {
         return new BaseClsfKey(this.getPostNo(), this.getContentType());
     }
-
 }
