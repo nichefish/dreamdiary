@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
+import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author nichefish
  */
-@Component("dreamdiaryInitializer")
+@Component
 @Log4j2
 public class DreamdiaryInitializer {
 
@@ -81,11 +81,11 @@ public class DreamdiaryInitializer {
      */
     public boolean regSystemAcnt() throws Exception {
 
-        final AuthRole authRoleMngr = authService.getAuthRole(Constant.AUTH_MNGR);
+        final AuthRoleEntity authRoleEntityMngr = authService.getAuthRole(Constant.AUTH_MNGR);
 
         final UserAuthRoleDto userAuthRole = UserAuthRoleDto.builder()
                 .authCd(Constant.AUTH_MNGR)
-                .role(authRoleMngr)
+                .role(authRoleEntityMngr)
                 .build();
 
         final UserDto systemAcnt = UserDto.builder()

@@ -18,7 +18,7 @@ import java.util.Arrays;
  *
  * @author nichefish
  */
-@Component("cookieUtils")
+@Component
 public class CookieUtils {
 
     @Resource

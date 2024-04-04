@@ -24,7 +24,7 @@ import java.util.Map;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("dreamDaySpec")
+@Component
 @Log4j2
 public class DreamDaySpec
         implements BaseSpec<DreamDayEntity> {

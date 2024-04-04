@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nichefish
  */
-@Component("csrfInterceptor")
+@Component
 @Log4j2
 public class CsrfInterceptor
         implements HandlerInterceptor {

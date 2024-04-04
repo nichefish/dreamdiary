@@ -15,7 +15,7 @@ import java.io.IOException;
  *
  * @author nichefish
  */
-@Component("corsFilter")
+@Component
 public class CorsFilter
         implements Filter {
 
