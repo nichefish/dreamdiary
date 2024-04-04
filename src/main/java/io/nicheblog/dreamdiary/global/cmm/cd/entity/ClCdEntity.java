@@ -31,7 +31,7 @@ import java.util.List;
 @Table(name = "cmm_cl_cd")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @ToString
