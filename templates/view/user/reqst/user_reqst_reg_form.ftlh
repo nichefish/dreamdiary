@@ -1,7 +1,7 @@
 <#--
   -- 사용자 관리 > 계정 및 권한 관리 > 등록 화면
   -->
-<#import "/layout/layout_without_aside.ftlh" as layout >
+<#import "/layout/layout_without_sidebar.ftlh" as layout >
 
 <@layout.layout>
 
@@ -115,8 +115,8 @@
                                 passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
                             </#if>
                             "userProfl.userNm": { required:"이름은 필수 항목입니다.", maxlength:"이름은 {0}자 이하로 입력해야 합니다." },
-                            "userProfl.cmpyCd": { required:"소속회사는 필수 항목입니다." },
-                            "userProfl.teamCd": { required:"소속팀은 필수 항목입니다." },
+                            "userProfl.cmpyCd": { required:"소속 회사는 필수 항목입니다." },
+                            "userProfl.teamCd": { required:"소속 팀은 필수 항목입니다." },
                             "userProfl.emplymCd": { required:"재직구분은 필수 항목입니다." },
                             "userProfl.cttpc": { required:"전화번호는 필수 항목입니다.", minlength:"전화번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"전화번호는 {0}자 이하로 입력해야 합니다." },
                             "userProfl.emailId": { required:"이메일 ID는 필수 항목입니다.", maxlength:"이메일 ID는 {0}자 이하로 입력해야 합니다." },
@@ -337,6 +337,7 @@
                     <label for="authCd" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="계정 권한을 설정합니다.&#10;계정 신청시 '사용자' 권한으로&#10;고정됩니다.">
                         권한
+                        <i class="bi bi-question-circle"></i>
                     </label>
                 </div>
             </div>
@@ -356,7 +357,10 @@
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-start required"
                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="(외부사용자, 임시계정 등)&#10;직원정보 미입력시&#10;사용할 이름입니다.&#10;(직원정보 입력시 미사용)">
-                    <label for="nickNm" class="cursor-help">표시이름</label>
+                    <label for="nickNm" class="cursor-help">
+                        표시이름
+                        <i class="bi bi-question-circle"></i>
+                    </label>
                 </div>
             </div>
             <div class="col-xl-2">
@@ -370,30 +374,13 @@
                 <span id="nickNmSpan"></span>
             </div>
         </div>
-        <#if isMdf>
-            <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2">
-                    <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-start">
-                        <label class="cursor-help"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="잠금 여부를 설정합니다.&#10;(잠금 상태인 계정은&#10;접속할 수 없습니다.)">
-                            잠금여부
-                        </label>
-                    </div>
-                </div>
-                <div class="col-xl-9">
-                    <div class="form-check form-switch form-check-custom form-check-solid mt-2">
-                        <input class="form-check-input" type="checkbox" value="Y" name="lockedYn" id="lockedYn" <#if user.isLocked!false>checked="checked"</#if> />
-                        <label class="form-check-label fw-bold ms-3" for="lockedYn" id="lockedYnLabel" style="color:<#if user.isLocked!false>red<#else>gray</#if>;"><#if user.isLocked!false>잠김<#else>해제</#if></label>
-                    </div>
-                </div>
-            </div>
-        </#if>
         <div class="row">           <!--begin::Row-->
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-start ">
                     <label for="acsIpListStr" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="특정 IP에서만&#10;접속 가능하도록 설정합니다.">
                         접속 IP
+                        <i class="bi bi-question-circle"></i>
                     </label>
                 </div>
             </div>
@@ -426,6 +413,7 @@
                     <label for="userDc" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비고 사항을 입력합니다.">
                         계정 설명
+                        <i class="bi bi-question-circle"></i>
                     </label>
                 </div>
             </div>
@@ -441,7 +429,7 @@
         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-primary me-2" onclick="commons.util.submit('#userReqstForm');"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                <i class="bi bi-pencil-square"></i>저장
+                <i class="bi bi-pencil-square"></i>신규계정 신청
             </button>
             <button type="button" class="btn btn-light" onclick="Page.return();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메인 화면으로 돌아갑니다.">

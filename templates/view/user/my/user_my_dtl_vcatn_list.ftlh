@@ -1,6 +1,6 @@
 <#--
   -- 내 정보 > 휴가사용현황 Modal
-  -- @included in : user_my_dtl
+  -- @included_in : user_my_dtl
   -->
 <div class="modal fade" id="user_my_dtl_vcatn_list" tabindex="-1" role="dialog" aria-labelledby="vcatnListModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
