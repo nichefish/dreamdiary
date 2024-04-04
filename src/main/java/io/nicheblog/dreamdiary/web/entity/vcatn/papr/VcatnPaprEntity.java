@@ -30,7 +30,7 @@ import java.util.List;
 @Table(name = "vcatn_papr")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString(callSuper = true)

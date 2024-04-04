@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("prjctSpec")
+@Component
 public class PrjctSpec
         implements BaseSpec<PrjctEntity> {
 

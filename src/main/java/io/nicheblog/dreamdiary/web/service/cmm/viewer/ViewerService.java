@@ -6,12 +6,12 @@ import io.nicheblog.dreamdiary.web.entity.cmm.viewer.ViewerEntity;
 import io.nicheblog.dreamdiary.web.repository.cmm.viewer.ViewerRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.viewer.ViewerSpec;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.map.HashedMap;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,8 +40,8 @@ public class ViewerService {
             put("refPostNo", key.getPostNo());
             put("refContentType", key.getContentType());
         }};
-        Page<ViewerEntity> viewerList = viewerRepository.findAll(viewerSpec.searchWith(searchParamMap), Pageable.unpaged());
-        return viewerList.getSize() > 0;
+        List<ViewerEntity> viewerList = viewerRepository.findAll(viewerSpec.searchWith(searchParamMap));
+        return CollectionUtils.isNotEmpty(viewerList);
     }
 
     /**

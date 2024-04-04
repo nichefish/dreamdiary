@@ -61,6 +61,26 @@ public class VcatnPaprDto
         return vcatnSchdulEntityList;
     }
 
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @ToString
+    public static class DTL extends VcatnPaprDto {
+        //
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @ToString
+    public static class LIST extends VcatnPaprDto {
+        //
+    }
+
     /* ----- */
 
     /** 댓글 정보 모듈 (위임) */
