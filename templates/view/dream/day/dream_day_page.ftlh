@@ -1,7 +1,7 @@
 <#--
   -- 사이트 관리 화면
   -->
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_with_aside.ftlh" as layout >
 
 <@layout.layout>
 

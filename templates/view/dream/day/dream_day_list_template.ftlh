@@ -1,6 +1,6 @@
 <#--
 -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Template
-  -- @included in : cl_cd_list
+  -- @included_in : cl_cd_list
   -->
 <script type="text/x-handlebars-template" id="dream_day_list_template">
     {{#each this}}
@@ -10,11 +10,16 @@
                     <i class="bi bi-calendar3 pe-1"></i> {{dreamtDt}}
                 </div>
                 <div class="col d-flex align-items-center">
-                    <button type="button" class="btn btn-sm btn-light-primary btn-outlined ps-4 pe-3 py-2 cursor-pointer"
+                    <button type="button" class="btn btn-sm btn-light-primary btn-outlined ps-4 pe-3 me-2 py-2 cursor-pointer"
                             onclick="DreamPiece.regModal({{dreamDayNo}}, '{{dreamtDt}}');"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈 조각 <@spring.message "bs.tooltip.modal.reg"/>">
                         <i class="bi bi-cloud-plus fs-4 pe-1"></i>
                         꿈 조각 등록
+                    </button>
+                    <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
+                            onclick="DreamDay.mdfModal({{dreamDayNo}});"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈 조각 <@spring.message "bs.tooltip.modal.mdf"/>">
+                        <i class="bi bi-pencil-square p-0"></i>
                     </button>
                 </div>
             </div>

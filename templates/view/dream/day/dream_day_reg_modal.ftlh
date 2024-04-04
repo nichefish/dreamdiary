@@ -1,6 +1,6 @@
 <#--
   -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Modal
-  -- @included in : cl_cd_dtl
+  -- @included_in : cl_cd_dtl
   -->
 <script>
     const DreamDay = (function() {
@@ -44,6 +44,24 @@
                                 if (res.result) commons.util.blockUIReload();;
                             });
                     });
+                });
+            },
+            /** 등록 화면 호출 */
+            mdfModal: function(postNo) {
+                const url = "${SiteUrl.DREAM_DAY_DTL_AJAX!}";
+                let ajaxData = { "postNo" : postNo };
+                commons.util.blockUIFileAjax(url, "get", ajaxData, function(res) {
+                    Swal.fire({ text: res.message })
+                        .then(function() {
+                            if (!res.result) {
+                                if (commons.util.isNotEmpty(res.message)) Swal.fire({text: res.message});
+                                return false;
+                            }
+                            commons.util.handlebarsTemplate(res.resultObj, "dream_day_reg", "show");
+                            commons.datepicker.singleDatePicker("#dreamtDt", "yyyy-MM-DD", commons.date.getCurrDateStr("yyyy-MM-dd"));         // datepicker 날짜 검색 init
+                            commons.validate.replaceBlankRegex("#dreamDayRegForm #clCd");
+                            commons.validate.toUpperCase("dreamDayRegForm #clCd");
+                        });
                 });
             },
         }
