@@ -10,8 +10,6 @@ import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.repository.board.BoardDefRepository;
 import io.nicheblog.dreamdiary.web.spec.board.BoardDefSpec;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -66,7 +64,7 @@ public class BoardDefService
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("useYn", "Y");
         }};
-        Page<BoardDefEntity> boardDefPage = this.getListEntity(searchParamMap, Pageable.unpaged());
+        List<BoardDefEntity> boardDefPage = this.getListEntity(searchParamMap);
         return boardDefPage.stream()
                 .map(entity -> {
                     try {

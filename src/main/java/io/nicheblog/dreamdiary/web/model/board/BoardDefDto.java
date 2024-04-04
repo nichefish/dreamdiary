@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
@@ -29,13 +29,10 @@ public class BoardDefDto
 
     /** 게시판 코드 */
     private String boardCd;
-
     /** 게시판 이름 */
     private String boardNm;
-
     /** 메뉴번호 */
     private String menuNo;
-
     /** 글분류 분류 코드 */
     private String ctgrClCd;
 

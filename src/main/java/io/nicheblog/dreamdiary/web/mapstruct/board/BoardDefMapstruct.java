@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.web.SiteTopMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
@@ -17,11 +17,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {SiteUrl.class, SiteTopMenu.class})
 public interface BoardDefMapstruct
-        extends BaseListMapstruct<BoardDefDto, BoardDefDto, BoardDefEntity> {
+        extends BaseCrudMapstruct<BoardDefDto, BoardDefDto, BoardDefEntity> {
 
     BoardDefMapstruct INSTANCE = Mappers.getMapper(BoardDefMapstruct.class);
 
@@ -29,7 +29,16 @@ public interface BoardDefMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     BoardDefDto toDto(final BoardDefEntity entity) throws Exception;
+
+
+    /**
+     * Entity -> Dto
+     */
+    @Override
+    @Named("toListDto")
+    BoardDefDto toListDto(final BoardDefEntity entity) throws Exception;
 
     /**
      * Dto -> Entity

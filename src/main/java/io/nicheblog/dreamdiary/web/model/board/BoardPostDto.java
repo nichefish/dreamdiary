@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class BoardPostDto
@@ -33,14 +33,6 @@ public class BoardPostDto
 
     /* ----- */
 
-    /** 노션 페이지 참조 ID :: UUID */
-    // private String notionPageId;
-
-    /** 파일시스템 참조 목록 */
-    // private List<FlsysRefDto> flsysRefList;
-
-    /* ----- */
-
     /**
      * 내부 값들 합쳐서 풀 타이틀 반환
      */
@@ -49,6 +41,31 @@ public class BoardPostDto
     //     if (StringUtils.isNotEmpty(this.ctgrNm)) title = "[" + this.ctgrNm + "] " + title;
     //     return title;
     // }
+
+    /* ----- */
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class DTL extends BoardPostDto {
+        /** 노션 페이지 참조 ID :: UUID */
+        // private String notionPageId;
+
+        /** 파일시스템 참조 목록 */
+        // private List<FlsysRefDto> flsysRefList;
+
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class LIST extends BoardPostDto {
+        //
+    }
 
     /* ----- */
 

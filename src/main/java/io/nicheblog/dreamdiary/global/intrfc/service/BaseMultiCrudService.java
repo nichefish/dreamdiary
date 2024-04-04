@@ -25,10 +25,7 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto, ListDto extends B
     /**
      * default: 게시물 등록 (Multipart)
      */
-    default Dto regist(
-            final Dto dto,
-            final MultipartHttpServletRequest request
-    ) throws Exception {
+    default Dto regist(final Dto dto, final MultipartHttpServletRequest request) throws Exception {
         // 파일 영역 처리
         Integer atchFileNo = dto.getAtchFileNo();
         dto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
@@ -39,11 +36,7 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto, ListDto extends B
     /**
      * default: 게시물 수정 (Multipart)
      */
-    default Dto modify(
-            final Dto dto,
-            final Key key,
-            final MultipartHttpServletRequest request
-    ) throws Exception {
+    default Dto modify(final Dto dto, final Key key, final MultipartHttpServletRequest request) throws Exception {
         // 파일 영역 처리
         Integer atchFileNo = dto.getAtchFileNo();
         dto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.

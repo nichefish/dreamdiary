@@ -21,7 +21,7 @@ import java.util.List;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("boardDefSpec")
+@Component
 public class BoardDefSpec
         implements BaseStateSpec <BoardDefEntity> {
 

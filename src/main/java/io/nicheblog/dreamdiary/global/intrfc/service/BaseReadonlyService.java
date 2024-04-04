@@ -39,7 +39,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
     Mapstruct getMapstruct();
 
     /**
-     * default: 항목 목록 조회 (dto level)
+     * default: 항목 페이징 목록 조회 (dto level)
      */
     default Page<ListDto> getPageDto(final BaseSearchParam searchParam, final Pageable pageable) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
@@ -47,7 +47,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
     }
 
     /**
-     * default: 항목 목록 조회 (dto level)
+     * default: 항목 페이징 목록 조회 (dto level)
      */
     default Page<ListDto> getPageDto(final Map<String, Object> searchParamMap, final Pageable pageable) throws Exception {
         // searchParamMap에서 빈 값들 및 쓸모없는 값들 정리
@@ -57,7 +57,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
     }
 
     /**
-     * default: 항목 목록 조회 (entity level)
+     * default: 항목 페이징 목록 조회 (entity level)
      */
     default Page<Entity> getPageEntity(final Map<String, Object> searchParamMap, final Pageable pageable) throws Exception {
         Repository repository = this.getRepository();
@@ -67,7 +67,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
     }
 
     /**
-     * default: 항목 목록 Page<Entity>->Page<Dto> 변환
+     * default: 항목 페이징 목록 Page<Entity>->Page<Dto> 변환
      */
     default Page<ListDto> pageEntityToDto(final Page<Entity> entityPage) throws Exception {
         Mapstruct mapstruct = this.getMapstruct();
@@ -84,6 +84,16 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
                 })
                 .collect(Collectors.toList());
         return new PageImpl<>(dtoList, entityPage.getPageable(), entityPage.getTotalElements());
+    }
+
+    /* ----- */
+
+    /**
+     * default: 항목 목록 조회 (dto level)
+     */
+    default List<ListDto> getListDto(final BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getListDto(searchParamMap);
     }
 
     /**
@@ -123,21 +133,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
                 .collect(Collectors.toList());
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /* ----- */
 
     /**
      * default: 단일 항목 조회 (entity level)

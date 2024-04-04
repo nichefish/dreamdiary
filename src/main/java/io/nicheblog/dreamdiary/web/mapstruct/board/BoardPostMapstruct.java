@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.board;
 
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ManagtEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.TagEmbedMapstruct;
@@ -8,7 +10,6 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostSmpEntity;
 import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
-import io.nicheblog.dreamdiary.web.model.board.BoardPostListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -20,11 +21,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseClsfMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class, ViewerEmbedMapstruct.class, ManagtEmbedMapstruct.class, TagEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface BoardPostMapstruct
-        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<BoardPostDto, BoardPostListDto, BoardPostEntity> {
+        extends BaseClsfMapstruct<BoardPostDto.DTL, BoardPostDto.LIST, BoardPostEntity> {
 
     BoardPostMapstruct INSTANCE = Mappers.getMapper(BoardPostMapstruct.class);
 
@@ -34,14 +35,14 @@ public interface BoardPostMapstruct
     @Override
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    BoardPostDto toDto(final BoardPostEntity entity) throws Exception;
+    BoardPostDto.DTL toDto(final BoardPostEntity entity) throws Exception;
 
     /**
      * Entity -> Dto
      */
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    BoardPostDto toDto(final BoardPostSmpEntity entity) throws Exception;
+    BoardPostDto.DTL toDto(final BoardPostSmpEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
@@ -49,7 +50,7 @@ public interface BoardPostMapstruct
     @Override
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    BoardPostListDto toListDto(final BoardPostEntity entity) throws Exception;
+    BoardPostDto.LIST toListDto(final BoardPostEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
@@ -57,7 +58,7 @@ public interface BoardPostMapstruct
     @Override
     @Mapping(target = "contentType", source = "boardCd")
     // @Mapping(target = "tagList", expression = "java(dto.getTagEntityList())")
-    BoardPostEntity toEntity(final BoardPostDto dto) throws Exception;
+    BoardPostEntity toEntity(final BoardPostDto.DTL dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
@@ -66,8 +67,5 @@ public interface BoardPostMapstruct
     @Mapping(target = "contentType", source = "boardCd")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     // @Mapping(target = "tagList", expression = "java(dto.getTagEntityList())")
-    void updateFromDto(
-            final BoardPostDto dto,
-            final @MappingTarget BoardPostEntity entity
-    ) throws Exception;
+    void updateFromDto(final BoardPostDto.DTL dto, final @MappingTarget BoardPostEntity entity) throws Exception;
 }

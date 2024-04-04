@@ -28,7 +28,7 @@ import javax.persistence.*;
 @IdClass(BaseClsfKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
@@ -81,15 +81,12 @@ public class BoardPostEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
-
     /** 태그 정보 모듈 (위임) */
     @Embedded
     public TagEmbed tag;
-
     /** 조치 정보 모듈 (위임) */
     @Embedded
     public ManagtEmbed managt;
-
     /** 열람자 정보 모듈 (위임) */
     @Embedded
     public ViewerEmbed viewer;

@@ -11,7 +11,10 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
-import io.nicheblog.dreamdiary.web.model.board.*;
+import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
+import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
+import io.nicheblog.dreamdiary.web.model.board.BoardPostKey;
+import io.nicheblog.dreamdiary.web.model.board.BoardPostSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
@@ -96,7 +99,7 @@ public class BoardPostController
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
             // 목록 조회
-            Page<BoardPostListDto> postList = boardPostService.getListDto(searchParam, pageRequest);
+            Page<BoardPostDto.LIST> postList = boardPostService.getPageDto(searchParam, pageRequest);
             model.addAttribute("postList", postList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(postList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
@@ -211,7 +214,7 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostRegAjax(
-            final @Valid BoardPostDto boardPostDto,
+            final @Valid BoardPostDto.DTL boardPostDto,
             final BoardPostKey key,
             final LogActvtyParam logParam,
             // final @RequestParam("jandiYn") @Nullable String jandiYn,
@@ -227,7 +230,7 @@ public class BoardPostController
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = key.getPostNo() == null;
-            BoardPostDto result = isReg ? boardPostService.regist(boardPostDto, request) : boardPostService.modify(boardPostDto, key.getClsfKey(), request);
+            BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPostDto, request) : boardPostService.modify(boardPostDto, key.getClsfKey(), request);
             isSuccess = (result.getPostNo() != null);
             if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

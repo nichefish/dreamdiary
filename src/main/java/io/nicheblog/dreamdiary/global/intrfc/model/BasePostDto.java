@@ -4,8 +4,6 @@ import io.nicheblog.dreamdiary.global.Constant;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.MappedSuperclass;
-
 /**
  * BasePostDto
  * <pre>
@@ -16,7 +14,6 @@ import javax.persistence.MappedSuperclass;
  * @author nichefish
  * @extends BaseClsfDto
  */
-@MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
 @SuperBuilder(toBuilder = true)

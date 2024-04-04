@@ -79,7 +79,7 @@ public class BoardDefController
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "state.sortOrdr", model);
             // 목록 조회
-            Page<BoardDefDto> boardDefMngList = boardDefService.getListDto(searchParam, pageRequest);
+            Page<BoardDefDto> boardDefMngList = boardDefService.getPageDto(searchParam, pageRequest);
             model.addAttribute("boardDefMngList", boardDefMngList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(boardDefMngList));
             // 코드 정보 모델에 추가
