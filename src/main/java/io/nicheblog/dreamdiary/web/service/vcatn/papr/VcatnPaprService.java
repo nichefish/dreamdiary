@@ -8,7 +8,6 @@ import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnPaprMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnSchdulDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnPaprRepository;
@@ -35,7 +34,7 @@ import java.util.stream.Collectors;
 @Service("vcatnPaprService")
 @Log4j2
 public class VcatnPaprService
-        implements BasePostService<VcatnPaprDto, VcatnPaprListDto, Integer, VcatnPaprEntity, VcatnPaprRepository, VcatnPaprSpec, VcatnPaprMapstruct> {
+        implements BasePostService<VcatnPaprDto.DTL, VcatnPaprDto.LIST, Integer, VcatnPaprEntity, VcatnPaprRepository, VcatnPaprSpec, VcatnPaprMapstruct> {
 
     @Resource(name = "vcatnPaprRepository")
     private VcatnPaprRepository vcatnPaprRepository;
@@ -68,7 +67,7 @@ public class VcatnPaprService
      * 일정  > 휴가계획서 > 휴가계획서 등록 전처리
      */
     @Override
-    public void preRegist(final VcatnPaprDto vcatnPaprDto) {
+    public void preRegist(final VcatnPaprDto.DTL vcatnPaprDto) {
         // 제목 자동 처리
         vcatnPaprDto.setTitle(this.initTitle(vcatnPaprDto));
     }
@@ -77,7 +76,7 @@ public class VcatnPaprService
      * 일정  > 휴가계획서 > 휴가계획서 수정 전처리
      */
     @Override
-    public void preModify(final VcatnPaprDto vcatnPaprDto) {
+    public void preModify(final VcatnPaprDto.DTL vcatnPaprDto) {
         // 제목 자동 처리
         vcatnPaprDto.setTitle(this.initTitle(vcatnPaprDto));
     }

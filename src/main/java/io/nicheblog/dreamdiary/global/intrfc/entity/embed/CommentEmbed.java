@@ -61,12 +61,12 @@ public class CommentEmbed
     /**
      * 댓글 :: List<Entity> -> List<Dto> 반환
      */
-    public List<CommentDto> getDtoList() {
+    public List<CommentDto.LIST> getDtoList() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()
                 .map(entity -> {
                     try {
-                        return CommentMapstruct.INSTANCE.toDto(entity);
+                        return CommentMapstruct.INSTANCE.toListDto(entity);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

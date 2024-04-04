@@ -26,7 +26,7 @@ import java.util.Date;
 @Table(name = "vcatn_schdul")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = "vcatnPaprInfo", callSuper = true)

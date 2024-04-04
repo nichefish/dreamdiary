@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.model.cmm.comment;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -17,7 +18,7 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
@@ -42,6 +43,34 @@ public class CommentDto
 
     /** 내용 */
     protected String cn;
+
+    /* ----- */
+
+    /**
+     *
+     */
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @ToString(callSuper = true)
+    public static class DTL extends CommentDto {
+
+    }
+
+    /**
+     *
+     */
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @ToString(callSuper = true)
+    public static class LIST extends CommentDto {
+        //
+    }
 
     /* ----- */
 
