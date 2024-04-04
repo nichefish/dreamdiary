@@ -1,6 +1,6 @@
 <#--
   -- 활동 로그 목록 > 검색 영역 Header
-  -- @included in : log_actvty_list_header
+  -- @included_in : log_actvty_list_header
   -->
 <form name="listForm" id="listForm" method="get">
     <div class="d-flex align-items-center">

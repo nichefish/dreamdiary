@@ -1,6 +1,6 @@
 <#--
   -- 활동 로그 > 상세 Modal
-  -- @included in : log_actvty_list
+  -- @included_in : log_actvty_list
   -->
 <div class="modal fade" id="log_actvty_dtl_modal" tabindex="-1" role="dialog" aria-labelledby="logActvtyDtlModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">

@@ -1,6 +1,6 @@
 <#--
   -- 활동 로그 > 상세 Template
-  -- @included in : log_actvty_list
+  -- @included_in : log_actvty_list
   -->
 <script type="text/x-handlebars-template" id="log_actvty_dtl_template">
     <div class="card mt-4">
