@@ -92,7 +92,7 @@ public class AtchFileController
     @ResponseBody
     public ResponseEntity<AjaxResponse> getFileList(
             final LogActvtyParam logParam,
-            final @RequestParam("atchFileNo") @Nullable String atchFileNoStr
+            final @RequestParam("atchFileNo") @Nullable Integer atchFileNo
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -100,8 +100,7 @@ public class AtchFileController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer atchFileNo = Integer.parseInt(atchFileNoStr);
-            List<AtchFileDtlDto> fileList = atchFileDtlService.getListDto(atchFileNo);
+            List<AtchFileDtlDto> fileList = atchFileDtlService.getPageDto(atchFileNo);
             isSuccess = (fileList != null);
             ajaxResponse.setResultList(fileList);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -116,7 +115,7 @@ public class AtchFileController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + atchFileNoStr);
+            logParam.setCn("key: " + atchFileNo);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

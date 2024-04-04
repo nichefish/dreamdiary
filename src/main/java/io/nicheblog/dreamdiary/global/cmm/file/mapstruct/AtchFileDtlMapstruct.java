@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.global.cmm.file.mapstruct;
 
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -14,11 +14,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AtchFileDtlMapstruct
-        extends BaseListMapstruct<AtchFileDtlDto, AtchFileDtlDto, AtchFileDtlEntity> {
+        extends BaseCrudMapstruct<AtchFileDtlDto, AtchFileDtlDto, AtchFileDtlEntity> {
 
     AtchFileDtlMapstruct INSTANCE = Mappers.getMapper(AtchFileDtlMapstruct.class);
 
@@ -26,7 +26,15 @@ public interface AtchFileDtlMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     AtchFileDtlDto toDto(final AtchFileDtlEntity entity) throws Exception;
+
+    /**
+     * Entity -> Dto
+     */
+    @Override
+    @Named("toListDto")
+    AtchFileDtlDto toListDto(final AtchFileDtlEntity entity) throws Exception;
 
     /**
      * Dto -> Entity

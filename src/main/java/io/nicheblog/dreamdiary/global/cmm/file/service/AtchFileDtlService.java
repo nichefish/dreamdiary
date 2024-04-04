@@ -29,7 +29,7 @@ import java.util.*;
  *
  * @author nichefish
  */
-@Service("atchFileDtlService")
+@Service
 @Log4j2
 public class AtchFileDtlService
         implements BaseCrudService<AtchFileDtlDto, AtchFileDtlDto, Integer, AtchFileDtlEntity, AtchFileDtlRepository, AtchFileDtlSpec, AtchFileDtlMapstruct> {
@@ -57,11 +57,11 @@ public class AtchFileDtlService
     /**
      * 첨부파일 상세 목록 조회 (dto level)
      */
-    public List<AtchFileDtlDto> getListDto(final Integer atchFileNo) throws Exception {
+    public List<AtchFileDtlDto> getPageDto(final Integer atchFileNo) throws Exception {
         Map<String, Object> paramMap = new HashMap<>() {{
             put("atchFileNo", atchFileNo);
         }};
-        return this.getListDto(paramMap, Pageable.unpaged()).getContent();
+        return this.getPageDto(paramMap, Pageable.unpaged()).getContent();
     }
 
     /**

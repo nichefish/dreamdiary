@@ -29,7 +29,7 @@ import java.util.Optional;
 @Table(name = "atch_file")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
