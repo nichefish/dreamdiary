@@ -27,7 +27,7 @@ import javax.persistence.*;
 @Table(name = "viewer")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")

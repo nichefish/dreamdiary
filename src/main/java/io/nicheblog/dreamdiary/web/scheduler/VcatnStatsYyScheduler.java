@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  *
  * @author nichefish
  */
-@Component("vcatnStatsYyScheduler")
+@Component
 @Log4j2
 public class VcatnStatsYyScheduler {
 

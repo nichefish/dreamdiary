@@ -129,7 +129,12 @@ public class WebMvcContextConfig
                 .excludePathPatterns("/**/*Ajax.do");
 
         // 쿠키 관련 인터셉터 수동 추가
-        registry.addInterceptor(cookieInterceptor);
+        registry.addInterceptor(cookieInterceptor)
+                /* 페이지 접근에 대해서만 처리 */
+                .addPathPatterns("/")
+                .addPathPatterns("/**/*.do")
+                /* 스태틱 자원 경로의 경우 처리하지 않음 */
+                .excludePathPatterns(STATIC_RESOURCES_URL_PATTERN);
 
         // device 감지 관련 인터셉터 수동 추가
         registry.addInterceptor(new DeviceResolverHandlerInterceptor());

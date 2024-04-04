@@ -21,7 +21,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "VCATN_STATS_YY")
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,24 +29,18 @@ import java.util.Date;
 @ToString(callSuper = true)
 public class VcatnStatsYyEntity {
 
-    /**
-     * 년도
-     */
+    /** 년도 */
     @Id
     @Column(name = "STATS_YY")
     @Comment("년도")
     private String statsYy;
 
-    /**
-     * 시작일
-     */
+    /** 시작일 */
     @Column(name = "bgn_dt")
     @Comment("시작일")
     private Date bgnDt;
 
-    /**
-     * 종료일
-     */
+    /** 종료일 */
     @Column(name = "END_DT")
     @Comment("종료일")
     private Date endDt;
