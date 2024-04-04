@@ -1,86 +1,99 @@
 <!--
- -- 레이아웃 > 사이드바
- -- @included in : layout
+ -- 레이아웃 > Footer
+ -- @included_in : layout
  -->
-<!--begin::Aside-->
-<#assign topMenuNo = (siteAcsInfo.topMenuNo)!>
-<#assign siteMenuNo = (siteAcsInfo.siteMenuNo)!>
-<script>
-    /** 레이아웃 */
-    const Aside = function() {
-        return {
-            init: function() {
-                /** 현재 접속중인 메뉴 활성화 로직 */
-                const siteAcsInfoExists = "${topMenuNo}" !== "" && "${siteMenuNo!}" !== "";
-                if (siteAcsInfoExists) {
-                    $("#${topMenuNo!}").addClass("hover");
-                    $("#${siteMenuNo}").addClass("hover");
-                }
-            },
-            /** 사이드바 설정 쿠키 저장 */
-            setAsideCookie: function() {
-                const wasMinimizeOn = ($("#kt_body").attr("data-kt-aside-minimize") === "on");
-                const toMode = !!wasMinimizeOn ? "${Constant.ASIDE_FIXED!}" : "${Constant.ASIDE_MINIMIZED!}";
-                const options = {
-                    path: "/",
-                    expires: commons.date.getCurrDateAddDay(361)
-                };
-                $.cookie("${Constant.ASIDE_MENU!}", toMode, options);
-                console.log($.cookie("${Constant.ASIDE_MENU!}"));
-            },
-        }
-    }();
 
-    $(document).ready(function() {
-        Aside.init();
-    });
-</script>
+<!--begin::aside-->
+<div id="kt_app_aside" class="app-aside flex-column mt-7"
+     data-kt-drawer="true"
+     data-kt-drawer-name="app-aside"
+     data-kt-drawer-activate="{default: true, lg: false}"
+     data-kt-drawer-overlay="true"
+     data-kt-drawer-width="auto"
+     data-kt-drawer-direction="end"
+     data-kt-drawer-toggle="#kt_app_aside_toggle">
 
+    <!--begin::Aside wrapper-->
+    <div id="kt_app_aside_wrapper" class="hover-scroll-y px-5 mx-5 my-5"
+         data-kt-scroll="true"
+         data-kt-scroll-activate="true"
+         data-kt-scroll-height="auto"
+         data-kt-scroll-dependencies="#kt_app_header"
+         data-kt-scroll-wrappers="#kt_app_aside"
+         data-kt-scroll-offset="5px"
+         data-kt-scroll-save-state="true">
 
-<div id="kt_aside" class="aside aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside"
-     data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
-     data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
-     data-kt-drawer-toggle="#kt_aside_mobile_<#if isMngrMode>admin_</#if>toggle">
-    <!--begin::Brand-->
-    <div class="aside-logo flex-column-auto mt-20 mb-1" id="kt_aside_logo">
-        <!--begin::Logo-->
-        <a href="${SiteUrl.MAIN!}" class="d-flex align-items-center"
-           data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="${SiteUrl.DOMAIN!}">
-            <div class="w-25px me-1">
-                <img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="img-thumbnail w-auto logo"/>
+        <!--begin::Aside1-->
+        <div class="card card-reset card-p-0">
+            <!--begin::Header-->
+            <div class="card-header min-h-auto mb-5">
+                <h3 class="card-title text-gray-900 fw-bold fs-3">Filters</h3>
+                <!--begin::Toolbar-->
+                <div class="card-toolbar">
+                    <a href="#" class="btn btn-sm btn-icon btn-color-gray-500 btn-light">
+                        <i class="ki-duotone ki-magnifier fs-3">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </a>
+                </div>
             </div>
-            <div>${SiteUrl.DOMAIN!}</div>
-        </a>
-        <!--end::Logo-->
-        <!--begin::Aside toggler-->
-        <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle "
-             data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize"
-             onclick="Aside.setAsideCookie();">
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->
-            <span class="svg-icon svg-icon-1 rotate-180"
-                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="사이드바를 고정/해제합니다.&#10;해당 설정은 브라우저 캐시에&#10;저장됩니다.">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path opacity="0.5" d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z" fill="black"/>
-                    <path d="M8.2657 11.4343L12.45 7.25C12.8642 6.83579 12.8642 6.16421 12.45 5.75C12.0358 5.33579 11.3642 5.33579 10.95 5.75L5.40712 11.2929C5.01659 11.6834 5.01659 12.3166 5.40712 12.7071L10.95 18.25C11.3642 18.6642 12.0358 18.6642 12.45 18.25C12.8642 17.8358 12.8642 17.1642 12.45 16.75L8.2657 12.5657C7.95328 12.2533 7.95328 11.7467 8.2657 11.4343Z" fill="black"/>
-                </svg>
-            </span>
-            <!--end::Svg Icon-->
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body">
+                <!--begin::Form-->
+                <div class="mb-7">
+                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Agents</span>
+                    <select class="form-select" aria-label="Select example">
+                        <option>Any agent</option>
+                        <option value="1">Grace Green</option>
+                        <option value="2">Nick LOgan</option>
+                        <option value="3">Carles Nilson</option>
+                        <option value="1">Alice Danchik</option>
+                        <option value="2">Harris Bold</option>
+                        <option value="3">Carles Nilson</option>
+                    </select>
+                </div>
+                <div class="mb-7">
+                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Groups</span>
+                    <select class="form-select" aria-label="Select example">
+                        <option>Any group</option>
+                        <option value="1">Grace Green</option>
+                        <option value="2">Nick LOgan</option>
+                        <option value="3">Carles Nilson</option>
+                        <option value="1">Alice Danchik</option>
+                        <option value="2">Harris Bold</option>
+                        <option value="3">Carles Nilson</option>
+                    </select>
+                </div>
+                <div class="mb-7">
+                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Crated</span>
+                    <select class="form-select" aria-label="Select example">
+                        <option>Any Time</option>
+                        <option value="1">day ago</option>
+                        <option value="2">2 days ago</option>
+                        <option value="3">April 15</option>
+                        <option value="1">April 10</option>
+                        <option value="2">March 30</option>
+                        <option value="3">March 25</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Email</span>
+                    <input type="text" class="form-control" placeholder="Your Email" />
+                </div>
+                <!--end::Form-->
+                <!--begin::Action-->
+                <div class="d-flex flex-column">
+                    <a href="#" class="btn btn-primary mb-4 p-3">Default</a>
+                    <a href="#" class="btn btn-secondary btn-color-gray-700 p-3">View more</a>
+                </div>
+                <!--end::Action-->
+                <!--end::Body-->
+            </div>
         </div>
-        <!--end::Aside toggler-->
+        <!--end::Aside1-->
     </div>
-    <!--end::Brand-->
-
-    <div class="separator mx-5 opacity-25 blink"></div>
-
-    <!--begin::Aside menu::사용자/관리자에 따라 사이드메뉴 다르게 첨부-->
-    <div class="aside-menu flex-column-fluid">
-        <#if isMngrMode>
-            <#include "/layout/aside/_aside_menu_admin.ftlh">
-        <#else>
-            <#include "/layout/aside/_aside_menu_portal.ftlh">
-        </#if>
-        <#include "/layout/aside/_aside_footer.ftlh">
-    </div>
-<!--end::Aside menu-->
+    <!--end::Aside wrapper-->
 </div>
-<!--end::Aside-->
+<!--end::aside-->
