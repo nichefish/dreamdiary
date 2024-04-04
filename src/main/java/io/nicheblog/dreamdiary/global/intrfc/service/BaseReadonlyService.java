@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
@@ -25,7 +27,7 @@ import java.util.stream.Collectors;
  *
  * @author nichefish
  */
-public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseListMapstruct<Dto, ListDto, Entity>> {
+public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>> {
 
     // Resource : repository
     Repository getRepository();
@@ -37,12 +39,27 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
     Mapstruct getMapstruct();
 
     /**
+     * default: 항목 목록 조회 (dto level)
+     */
+    default Page<ListDto> getPageDto(final BaseSearchParam searchParam, final Pageable pageable) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getPageDto(searchParamMap, pageable);
+    }
+
+    /**
+     * default: 항목 목록 조회 (dto level)
+     */
+    default Page<ListDto> getPageDto(final Map<String, Object> searchParamMap, final Pageable pageable) throws Exception {
+        // searchParamMap에서 빈 값들 및 쓸모없는 값들 정리
+        Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
+
+        return this.pageEntityToDto(this.getPageEntity(filteredSearchKey, pageable));
+    }
+
+    /**
      * default: 항목 목록 조회 (entity level)
      */
-    default Page<Entity> getListEntity(
-            final Map<String, Object> searchParamMap,
-            final Pageable pageable
-    ) throws Exception {
+    default Page<Entity> getPageEntity(final Map<String, Object> searchParamMap, final Pageable pageable) throws Exception {
         Repository repository = this.getRepository();
         Spec spec = this.getSpec();
 
@@ -56,42 +73,71 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
         Mapstruct mapstruct = this.getMapstruct();
         AtomicInteger counter = new AtomicInteger(0);
         List<ListDto> dtoList = entityPage.stream()
-                                          .map(entity -> {
-                                              try {
-                                                  ListDto listDto = mapstruct.toListDto(entity);
-                                                  listDto.setRnum(CmmUtils.getPageRnum(entityPage, counter.getAndIncrement()));
-                                                  return listDto;
-                                              } catch (Exception e) {
-                                                  throw new RuntimeException(e);
-                                              }
-                                          })
-                                          .collect(Collectors.toList());
+                .map(entity -> {
+                    try {
+                        ListDto listDto = mapstruct.toListDto(entity);
+                        listDto.setRnum(CmmUtils.getPageRnum(entityPage, counter.getAndIncrement()));
+                        return listDto;
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
         return new PageImpl<>(dtoList, entityPage.getPageable(), entityPage.getTotalElements());
     }
 
     /**
      * default: 항목 목록 조회 (dto level)
      */
-    default Page<ListDto> getListDto(
-            final Object searchParam,
-            final Pageable pageable
-    ) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-        return this.getListDto(searchParamMap, pageable);
-    }
-
-    /**
-     * default: 항목 목록 조회 (dto level)
-     */
-    default Page<ListDto> getListDto(
-            final Map<String, Object> searchParamMap,
-            final Pageable pageable
-    ) throws Exception {
+    default List<ListDto> getListDto(final Map<String, Object> searchParamMap) throws Exception {
         // searchParamMap에서 빈 값들 및 쓸모없는 값들 정리
         Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
 
-        return this.pageEntityToDto(this.getListEntity(filteredSearchKey, pageable));
+        return this.listEntityToDto(this.getListEntity(filteredSearchKey));
     }
+
+    /**
+     * default: 항목 목록 조회 (entity level)
+     */
+    default List<Entity> getListEntity(final Map<String, Object> searchParamMap) throws Exception {
+        Repository repository = this.getRepository();
+        Spec spec = this.getSpec();
+
+        return repository.findAll(spec.searchWith(searchParamMap));
+    }
+
+    /**
+     * default: 항목 목록 Page<Entity>->Page<Dto> 변환
+     */
+    default List<ListDto> listEntityToDto(final List<Entity> entityList) throws Exception {
+        Mapstruct mapstruct = this.getMapstruct();
+        AtomicInteger counter = new AtomicInteger(0);
+        return entityList.stream()
+                .map(entity -> {
+                    try {
+                        return mapstruct.toListDto(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * default: 단일 항목 조회 (entity level)
