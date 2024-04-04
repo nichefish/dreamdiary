@@ -6,12 +6,12 @@ import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import io.nicheblog.dreamdiary.web.repository.cmm.managt.ManagtrRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.managtr.ManagtrSpec;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.map.HashedMap;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,8 +40,8 @@ public class ManagtrService {
             put("refPostNo", key.getPostNo());
             put("refContentType", key.getContentType());
         }};
-        Page<ManagtrEntity> managtrList = managtrRepository.findAll(managtrSpec.searchWith(searchParamMap), Pageable.unpaged());
-        return managtrList.getSize() > 0;
+        List<ManagtrEntity> managtrList = managtrRepository.findAll(managtrSpec.searchWith(searchParamMap));
+        return CollectionUtils.isNotEmpty(managtrList);
     }
 
     /**
