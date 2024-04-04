@@ -1,6 +1,6 @@
 <#--
   -- 게시판 정의 > 목록 Header
-  -- @included in : board_def_list
+  -- @included_in : board_def_list
   -->
 <form name="listForm" id="listForm" method="get">
     <div class="row p-0">

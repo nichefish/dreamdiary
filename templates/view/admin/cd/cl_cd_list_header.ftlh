@@ -1,6 +1,6 @@
 <#--
   -- 분류 코드(CL_CD) > 목록 검색 영역 Header
-  -- @included in : cl_cd_list
+  -- @included_in : cl_cd_list
   -->
 <form name="listForm" id="listForm" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">

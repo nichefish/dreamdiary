@@ -1,6 +1,6 @@
 <#--
   -- 게시판 정의 > 등록 Modal
-  -- @included in : board_def_list
+  -- @included_in : board_def_list
   -->
 <div class="modal fade" id="board_def_reg_modal" tabindex="-1" role="dialog" aria-labelledby="boardDefRegModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">

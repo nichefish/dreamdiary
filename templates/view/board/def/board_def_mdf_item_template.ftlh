@@ -1,6 +1,6 @@
 <#--
   -- 게시판 정의 > 항목 수정 Template
-  -- @included in : board_def_list
+  -- @included_in : board_def_list
   -->
 <script type="text/x-handlebars-template" id="board_def_mdf_item_template">
     <!--begin::Question-->

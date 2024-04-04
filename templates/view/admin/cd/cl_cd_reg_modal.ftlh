@@ -1,6 +1,6 @@
 <#--
   -- 분류 코드(CL_CD) > 등록 Modal
-  -- @included in : cl_cd_list
+  -- @included_in : cl_cd_list
   -->
 <div class="modal fade" id="cl_cd_reg_modal" tabindex="-1" role="dialog" aria-labelledby="clCdRegModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

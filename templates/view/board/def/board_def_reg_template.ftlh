@@ -1,6 +1,6 @@
 <#--
   -- 게시판 정의 > 등록 Template
-  -- @included in : board_def_list
+  -- @included_in : board_def_list
   -->
 <script type="text/x-handlebars-template" id="board_def_reg_template">
     <!--begin::Table body-->

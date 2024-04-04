@@ -1,6 +1,6 @@
 <#--
   -- 게시판 > 목록 검색 영역 Header
-  -- @included in : board_post_list
+  -- @included_in : board_post_list
   -->
 <form name="listForm" id="listForm" method="get">
     <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>      <!-- 게시판 검색에선 꼭 있어야 한다. -->

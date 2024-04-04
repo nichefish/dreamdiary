@@ -1,6 +1,6 @@
 <#--
   -- 게시판 > 상세 Template
-  -- @included in : board_post_list
+  -- @included_in : board_post_list
   -->
 <script type="text/x-handlebars-template" id="board_post_dtl_template">
     <div class="card mt-4">

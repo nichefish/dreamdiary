@@ -1,6 +1,6 @@
 <#--
   -- 게시판 > 상세 Modal
-  -- @included in : board_post_list
+  -- @included_in : board_post_list
   -->
 <div class="modal fade" id="board_post_dtl_modal" tabindex="-1" role="dialog" aria-labelledby="postDtlModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">

@@ -1,6 +1,6 @@
 <#--
   -- 게시판 정의 > 항목 수정 Modal
-  -- @included in : board_def_list
+  -- @included_in : board_def_list
   -->
 <div class="modal fade" id="board_def_mdf_item_modal" tabindex="-1" role="dialog" aria-labelledby="boardDefModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
