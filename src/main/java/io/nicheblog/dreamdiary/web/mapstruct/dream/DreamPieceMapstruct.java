@@ -1,10 +1,9 @@
 package io.nicheblog.dreamdiary.web.mapstruct.dream;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
 import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
-import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -16,11 +15,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseClsfMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface DreamPieceMapstruct
-        extends BaseClsfListMapstruct<DreamPieceDto, DreamPieceListDto, DreamPieceEntity> {
+        extends BaseClsfMapstruct<DreamPieceDto, DreamPieceDto, DreamPieceEntity> {
 
     DreamPieceMapstruct INSTANCE = Mappers.getMapper(DreamPieceMapstruct.class);
 
@@ -28,13 +27,15 @@ public interface DreamPieceMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     DreamPieceDto toDto(final DreamPieceEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
-    DreamPieceListDto toListDto(final DreamPieceEntity entity) throws Exception;
+    @Named("toListDto")
+    DreamPieceDto toListDto(final DreamPieceEntity entity) throws Exception;
 
     /**
      * Dto -> Entity

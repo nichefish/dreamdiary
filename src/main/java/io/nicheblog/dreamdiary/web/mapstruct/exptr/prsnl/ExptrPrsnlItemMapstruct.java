@@ -19,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class})
 public interface ExptrPrsnlItemMapstruct
@@ -32,14 +32,12 @@ public interface ExptrPrsnlItemMapstruct
      */
     @Override
     @Mapping(target = "exptrDt", expression = "java(DateUtils.asStr(entity.getExptrDt(), DatePtn.DATE))")
-    @Mapping(target = "atchFileDtlNo", expression = "java(entity.getAtchFileDtlNo() != null ? Integer.toString(entity.getAtchFileDtlNo()) : null)")
     ExptrPrsnlItemDto toDto(final ExptrPrsnlItemEntity entity) throws Exception;
 
     /**
      * Entity -> RptItemDto
      */
     @Mapping(target = "exptrDt", expression = "java(DateUtils.asStr(entity.getExptrDt(), DatePtn.DATE))")
-    @Mapping(target = "atchFileDtlNo", expression = "java(entity.getAtchFileDtlNo() != null ? Integer.toString(entity.getAtchFileDtlNo()) : null)")
     ExptrPrsnlRptItemDto toRptItemDto(final ExptrPrsnlItemEntity entity) throws Exception;
 
     /**
@@ -54,7 +52,6 @@ public interface ExptrPrsnlItemMapstruct
      */
     @Override
     @Mapping(target = "exptrDt", expression = "java(DateUtils.asDate(dto.getExptrDt()))")
-    @Mapping(target = "atchFileDtlNo", expression = "java(StringUtils.isNotEmpty(dto.getAtchFileDtlNo()) ? Integer.valueOf(dto.getAtchFileDtlNo()) : null)")
     ExptrPrsnlItemEntity toEntity(final ExptrPrsnlItemDto dto) throws Exception;
 
     /**
@@ -62,8 +59,5 @@ public interface ExptrPrsnlItemMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final ExptrPrsnlItemDto dto,
-            final @MappingTarget ExptrPrsnlItemEntity entity
-    ) throws Exception;
+    void updateFromDto(final ExptrPrsnlItemDto dto, final @MappingTarget ExptrPrsnlItemEntity entity) throws Exception;
 }

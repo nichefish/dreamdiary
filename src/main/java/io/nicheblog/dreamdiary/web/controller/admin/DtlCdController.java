@@ -13,8 +13,6 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.DtlCdService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -257,14 +255,11 @@ public class DtlCdController
         try {
             Map<String, Object> searchParam = new HashMap<String, Object>();
             searchParam.put("clCd", clCd);
+            List<DtlCd> dtlCdList = dtlCdService.getListDto(searchParam);
+            ajaxResponse.setResultList(dtlCdList);
 
-            Page<DtlCd> dtlCdPage = dtlCdService.getListDto(searchParam, Pageable.unpaged());
-            List<DtlCd> dtlCdList = dtlCdPage.getContent();
-            if (dtlCdList != null) {
-                isSuccess = true;
-                ajaxResponse.setResultList(dtlCdList);
-            }
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

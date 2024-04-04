@@ -24,7 +24,7 @@ import java.util.List;
 @Log4j2
 public class ExptrPrsnlItemService {
 
-    @Resource(name = "exptrPrsnlService")
+    @Resource(name = "exptrPrsnlPaprService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;
 
     @Resource(name = "exptrPrsnlPaprRepository")

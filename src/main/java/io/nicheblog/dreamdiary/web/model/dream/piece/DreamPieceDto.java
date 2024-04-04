@@ -23,7 +23,7 @@ import javax.persistence.Column;
  */
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
@@ -56,6 +56,16 @@ public class DreamPieceDto
     /** 꿈꾼이(타인) 이름 */
     @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
+
+    /* ----- */
+
+    public static class DTL extends DreamPieceDto {
+
+    }
+
+    public static class LIST extends DreamPieceDto {
+        //
+    }
 
     /* ----- */
 

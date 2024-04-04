@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamDayMapstruct;
 import io.nicheblog.dreamdiary.web.model.dream.day.DreamDayDto;
-import io.nicheblog.dreamdiary.web.model.dream.day.DreamDayListDto;
 import io.nicheblog.dreamdiary.web.repository.dream.DreamDayRepository;
 import io.nicheblog.dreamdiary.web.spec.dream.DreamDaySpec;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +23,7 @@ import javax.annotation.Resource;
 @Service("dreamDayService")
 @Log4j2
 public class DreamDayService
-        implements BaseMultiCrudService<DreamDayDto, DreamDayListDto, Integer, DreamDayEntity, DreamDayRepository, DreamDaySpec, DreamDayMapstruct> {
+        implements BaseMultiCrudService<DreamDayDto, DreamDayDto, Integer, DreamDayEntity, DreamDayRepository, DreamDaySpec, DreamDayMapstruct> {
 
     private final DreamDayMapstruct dreamDayMapstruct = DreamDayMapstruct.INSTANCE;
 
