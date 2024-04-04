@@ -108,10 +108,6 @@
     });
 </script>
 <style>
-    /** ---- 모바일 버전 ---- */
-    @media (max-width: 768px) {
-        .logo{ width:200px; margin:0 40px; }
-    }
     .app-page {
         /* 이미지 경로를 여기에 추가하세요. 예: 'background.jpg' */
         background-image: url("/media/img/dreamdiary.jpg");

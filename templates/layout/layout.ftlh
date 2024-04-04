@@ -26,6 +26,7 @@
           data-kt-app-sidebar-push-header="true"
           data-kt-app-sidebar-push-toolbar="true"
           data-kt-app-sidebar-push-footer="true"
+          <#if isSidebarMinimized>data-kt-app-sidebar-minimize="on"</#if>
           data-kt-app-footer-fixed="true"
           class="app-default" >
 

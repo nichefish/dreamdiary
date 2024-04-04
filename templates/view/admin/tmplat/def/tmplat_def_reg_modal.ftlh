@@ -1,6 +1,6 @@
 <#--
   -- 분류 코드(CL_CD) > 등록 Modal
-  -- @included in : cl_cd_list
+  -- @included_in : cl_cd_list
   -->
 <div class="modal fade" id="tmplat_def_reg_modal" tabindex="-1" role="dialog" aria-labelledby="tmplatDefRegModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -21,7 +21,7 @@
                     </form>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-sm btn-primary me-2"
-                                onclick="Page.fnRegAjax();"
+                                onclick="Page.regAjax();"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
                             <i class="bi bi-pencil-square"></i>저장
                         </button>

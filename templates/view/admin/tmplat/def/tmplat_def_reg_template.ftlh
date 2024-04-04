@@ -1,6 +1,6 @@
 <#--
   -- 분류 코드(CL_CD) > 등록 Template
-  -- @included in : cl_cd_list
+  -- @included_in : cl_cd_list
   -->
 <script type="text/x-handlebars-template" id="tmplat_def_reg_template">
     <input type="hidden" class="form-control" name="tmplatDefNo" id="tmplatDefNo">

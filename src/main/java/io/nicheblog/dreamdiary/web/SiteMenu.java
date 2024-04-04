@@ -39,9 +39,9 @@ public class SiteMenu {
 
     // 공통화면 :: 신규계정 신청
     public static SiteAcsInfo USER_REQST = new SiteAcsInfo(
-            SiteTopMenu.LGN,
+            SiteTopMenu.USER_REQST,
             TOP_MENU_IDX,
-            "로그인",
+            "신규계정 신청",
             SiteUrl.AUTH_LGN_FORM
     );
 
@@ -108,7 +108,7 @@ public class SiteMenu {
 
     // 대메뉴 :: 일정
     public static SiteAcsInfo SCHDUL = new SiteAcsInfo(
-            SiteTopMenu.EXPTR,
+            SiteTopMenu.SCHDUL,
             TOP_MENU_IDX,
             "일정",
             SiteUrl.SCHDUL_CAL,

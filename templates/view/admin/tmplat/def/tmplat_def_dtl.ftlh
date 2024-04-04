@@ -2,7 +2,6 @@
   -- 공지사항 > 상세 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 
@@ -13,11 +12,11 @@
                 //
             },
             /** 수정 화면 이동 */
-            fnMdfForm: function() {
+            mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
-            fnDelAjax: function() {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -28,13 +27,13 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) Page.fnList();
+                                if (res.result) Page.list();
                             });
                     });
                 });
             },
             /** 목록 화면 이동 */
-            fnList: function() {
+            list: function() {
                 const listUrl = "${SiteUrl.NOTICE_LIST!}?isBackToList=Y";
                 commons.util.blockUIReplace(listUrl);
             }
@@ -42,11 +41,10 @@
     }();
 </script>
 
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${tmplat.postNo!}" />
+</form>
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${tmplat.postNo!}" />
-        <input type="hidden" name="boardCd" id="boardCd" value="${tmplat.boardCd!}" />
-    </form>
     <!--begin::Question-->
     <div class="mb-0">
         <!--begin::Head-->
@@ -57,7 +55,7 @@
                     <#if (((tmplat.imprtcYn)!"N") == "Y")!false><span class="badge badge-danger me-2">중요</span></#if>
                     <span class="vertical-middle<#if (((tmplat.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
                         <#if (tmplat.ctgrNm!"") != "">[${tmplat.ctgrNm!}]</#if>
-                        ${tmplat.postSj!}
+                        ${tmplat.title!}
                      </span>
                 </h1>
             </div>
@@ -88,7 +86,7 @@
         <div class="separator separator-dashed border-gray-300 my-8"></div>
         <!--begin::Question-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-            ${tmplat.postCn?no_esc}
+            ${tmplat.cn?no_esc}
         </div>
         <#if (tmplat.atchFileInfo.atchFileList)?has_content>
             <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
@@ -134,42 +132,43 @@
     </#if>
     <div class="d-flex justify-content-end">
         <!-- 수정권한에 따라 수정 권한 부여 -->
-        <#if (tmplat.mdfable!"") == (Constant.MDFABLE_REGSTR)>
+        <#if (tmplat.managt.mdfable!"") == (Constant.MDFABLE_REGSTR)>
             <#if tmplat.isRegstr>
-                <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.fnMdfForm();"
+                <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                     <i class="bi bi-pencil-square"></i>(내 글)수정
                 </button>
             </#if>
-        <#elseif (tmplat.mdfable!"") == (Constant.MDFABLE_MNGR)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.fnMdfForm();"
+        <#elseif (tmplat.managt.mdfable!"") == (Constant.MDFABLE_MNGR)>
+            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(관리자+)수정
             </button>
-        <#elseif (tmplat.mdfable!"") == (Constant.MDFABLE_USER)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.fnMdfForm();"
+        <#elseif (tmplat.managt.mdfable!"") == (Constant.MDFABLE_USER)>
+            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
-        <#elseif (tmplat.mdfable!"") == (Constant.MDFABLE_ALL)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.fnMdfForm();"
+        <#elseif (tmplat.managt.mdfable!"") == (Constant.MDFABLE_ALL)>
+            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(전체+)수정
             </button>
         </#if>
         <!-- 등록자 또는 관리자가 삭제 가능 -->
         <#if (tmplat.isRegstr)!false || isMngr>
-            <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm" onclick="Page.fnDelAjax();"
+            <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm" onclick="Page.delAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                 <i class="bi bi-trash"></i>삭제
             </button>
         </#if>
-        <button type="button" class="btn btn-light btn-sm" onclick="Page.fnList();"
+        <button type="button" class="btn btn-light btn-sm" onclick="Page.list();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
             <i class="bi bi-list"></i>목록
         </button>
     </div>
 
+    <!-- 댓글 영역 -->
     <#assign post = tmplat>
     <#include "/view/_component/comment/_comment_area.ftlh">
 </div>

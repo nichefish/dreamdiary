@@ -2,7 +2,6 @@
   -- 공지사항 > 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
-<#import "/spring.ftl" as spring />
 
 <@layout.layout>
 
@@ -10,39 +9,30 @@
     const Page = function() {
         return {
             init: function () {
-                /** 검색인자 세팅 */
-                <#if searchParamMap?has_content >
-                    <#list searchParamMap?keys as key>
-                        $("#${key!}").val("${searchParamMap[key]!}");
-                    </#list>
-                </#if>
-
-                // 모든 table 헤더에 클릭 이벤트를 설정한다.
-                Page.sortMode = "FORWARD";
-                commons.util.fnSortTable();
+                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
             },
             /** 목록 검색 */
-            fnSearch: function() {
-                $("#pageNo").val("");
+            search: function() {
+                $("#pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.TMPLAT_DEF_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
-            fnMyPapr: function () {
+            myPapr: function () {
                 const url = "${SiteUrl.TMPLAT_DEF_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
             /** 전체 목록 조회 */
-            fnResetSearch: function() {
+            resetSearch: function() {
                 commons.util.blockUIReplace("${SiteUrl.NOTICE_LIST!}");
             },
             /** 등록 화면 이동 */
-            fnRegForm: function() {
+            regForm: function() {
                 commons.util.blockUIRequest();
                 commons.util.handlebarsTemplate({}, "tmplat_def_reg", "show");
             },
             /** 등록 처리 (ajax) */
-            fnRegAjax: function() {
+            regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
                     showCancelButton: true,
@@ -60,15 +50,15 @@
                 });
             },
             /** 상세 화면 이동 */
-            fnDtl: function(postNo) {
+            dtl: function(postNo) {
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.TMPLAT_DEF_DTL!}");
             },
             /** 상세 모달 팝업 호출 */
-            fnDtlAjax: function (postNo) {
+            dtlAjax: function (postNo) {
                 event.stopPropagation();
                 const url = "${SiteUrl.TMPLAT_DEF_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo, "boardCd": $("#boardCd").val() };
+                let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -85,12 +75,11 @@
     });
 </script>
 
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value=""/>
+</form>
 <div class="card post">
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value=""/>
-        <input type="hidden" name="boardCd" id="boardCd" value="tmplat"/>
-    </form>
-    <#include "/view/tmplat/def/tmplat_def_list_header.ftlh">
+    <#include "/view/admin/tmplat/def/tmplat_def_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>
@@ -107,7 +96,7 @@
         <tbody>
         <!-- 공지사항 상단고정 목록 -->
         <#list tmplatFxdList![] as tmplat>
-            <tr class="bg-fxd-list bg-hover-secondary" onclick="Page.fnDtl('${tmplat.postNo!}');">
+            <tr class="bg-fxd-list bg-hover-secondary" onclick="Page.dtl('${tmplat.postNo!}');">
                 <td class="text-center hidden-table">
                     -
                 </td>
@@ -117,28 +106,19 @@
                             <#if (tmplat.ctgrNm!"") != "">
                                 <span class="ctgr-span ctgr-imprtc">${tmplat.ctgrNm!}</span>
                             </#if>
-                            ${tmplat.postSj!}
+                            ${tmplat.title!}
                         </span>
                         <#if (((tmplat.imprtcYn)!"N") == "Y")!false>
                             <span class="fs-1">&#128680;</span>
                         </#if>
-                        <!-- 수정권한 표시 -->
-                        <#if ((tmplat.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
-                            <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
-                        <#elseif ((tmplat.mdfable!"") == (Constant.MDFABLE_USER)) || ((tmplat.mdfable!"") == (Constant.MDFABLE_ALL))>
-                            <i class="bi bi-people-fill ms-1 blink-slow"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모든 사용자가 수정 가능"></i>
-                        </#if>
-                        <#if tmplat.commentCnt gt 0>
-                            <span class="mx-1 text-noti fs-x-small">
-                                [${tmplat.commentCnt!}]
-                            </span>
-                        </#if>
+                        <!-- 목록 수정권한 표시 -->
+                        <@component.mdfable post />
+                        <!-- 목록 댓글 표시 -->
+                        <@component.list_comment post />
                     </a>
                     <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                        <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.fnDtlAjax('${tmplat.postNo!}');"></i>
+                        <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${tmplat.postNo!}');"></i>
                     </a>
                 </td>
                 <td class="text-center col-form-label">
@@ -154,7 +134,7 @@
         </#list>
         <!-- 공지사항 목록 -->
         <#list tmplatList![] as tmplat>
-            <tr class="bg-hover-secondary" onclick="Page.fnDtl('${tmplat.postNo!}');">
+            <tr class="bg-hover-secondary" onclick="Page.dtl('${tmplat.postNo!}');">
                 <td class="text-center hidden-table">
                     ${tmplat.rnum!}
                 </td>
@@ -163,27 +143,18 @@
                         <#if (tmplat.ctgrNm!"") != "">
                             <span class="ctgr-span ctgr-gray">${tmplat.ctgrNm!}</span>
                         </#if>
-                        ${tmplat.postSj!}
+                        ${tmplat.title!}
                     </span>
                     <#if (((tmplat.imprtcYn)!"N") == "Y")!false>
                         <span class="fs-1">&#128680;</span>
                     </#if>
-                    <!-- 수정권한 표시 -->
-                    <#if ((tmplat.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
-                        <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
-                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="관리자 수정 가능"></i>
-                    <#elseif ((tmplat.mdfable!"") == (Constant.MDFABLE_USER)) || ((tmplat.mdfable!"") == (Constant.MDFABLE_ALL))>
-                        <i class="bi bi-people-fill ms-1 blink-slow"
-                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모든 사용자가 수정 가능"></i>
-                    </#if>
-                    <#if tmplat.commentCnt gt 0>
-                        <span class="mx-1 text-noti fs-x-small">
-                            [${tmplat.commentCnt!}]
-                        </span>
-                    </#if>
+                    <!-- 목록 수정권한 표시 -->
+                    <@component.mdfable post />
+                    <!-- 목록 댓글 표시 -->
+                    <@component.list_comment post />
                     <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                        <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.fnDtlAjax('${tmplat.postNo!}');"></i>
+                        <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${tmplat.postNo!}');"></i>
                     </a>
                 </td>
                 <td class="text-center col-form-label">${tmplat.regstrNm!"-"}
@@ -211,9 +182,9 @@
     <!-- pagination::end -->
 </div>
 
-<#include "/view/tmplat/def/tmplat_def_reg_modal.ftlh">
-<#include "/view/tmplat/def/tmplat_def_reg_template.ftlh">
-<#include "/view/tmplat/def/tmplat_def_dtl_modal.ftlh">
-<#include "/view/tmplat/def/tmplat_def_dtl_template.ftlh">
+<#include "/view/admin/tmplat/def/tmplat_def_reg_modal.ftlh">
+<#include "/view/admin/tmplat/def/tmplat_def_reg_template.ftlh">
+<#include "/view/admin/tmplat/def/tmplat_def_dtl_modal.ftlh">
+<#include "/view/admin/tmplat/def/tmplat_def_dtl_template.ftlh">
 
 </@layout.layout>

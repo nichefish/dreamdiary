@@ -1,6 +1,6 @@
 <#--
   -- 공지사항 > 상세 Template
-  -- @included in : tmplat_list
+  -- @included_in : tmplat_list
   -->
 <script type="text/x-handlebars-template" id="templat_def_dtl_template">
     <div class="card mt-4">
@@ -12,7 +12,7 @@
                 <div class="col-12">
                     <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
                     <span class="vertical-middle">
-                        {{postSj}}
+                        {{title}}
                      </span>
                     </h1>
                 </div>
@@ -43,7 +43,7 @@
             <div class="separator separator-dashed border-gray-300 my-8"></div>
             <!--begin::Question-->
             <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-                {{{postCn}}}
+                {{{cn}}}
             </div>
             {{#atchFileInfo}}
                 <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
