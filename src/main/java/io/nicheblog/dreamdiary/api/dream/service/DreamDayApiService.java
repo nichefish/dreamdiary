@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * @author nichefish
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Service("dreamDayApiService")
+@Service
 @Log4j2
 public class DreamDayApiService
         implements BaseMultiCrudService<DreamDayApiDto, DreamDayApiDto, Integer, DreamDayEntity, DreamDayRepository, DreamDaySpec, DreamDayApiMapstruct> {

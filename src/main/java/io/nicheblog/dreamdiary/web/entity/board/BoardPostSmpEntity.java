@@ -28,7 +28,7 @@ import javax.persistence.*;
 @IdClass(BaseClsfKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")

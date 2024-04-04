@@ -27,7 +27,7 @@ public class CommentCmpstn
         implements Serializable {
 
     /** 댓글 목록 */
-    private List<CommentDto> list;
+    private List<CommentDto.LIST> list;
     /** 댓글 갯수 */
     @Builder.Default
     private Integer cnt = 0;

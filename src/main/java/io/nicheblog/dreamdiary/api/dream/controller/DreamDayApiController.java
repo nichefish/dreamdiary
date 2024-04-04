@@ -79,7 +79,7 @@ public class DreamDayApiController
             Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
             Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getListDto(searchParamMap, pageRequest);
+            Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getPageDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(dreamDayList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -124,7 +124,7 @@ public class DreamDayApiController
             Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
             Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getListDto(searchParamMap, pageRequest);
+            Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getPageDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(dreamDayList.getContent());
 
             isSuccess = true;

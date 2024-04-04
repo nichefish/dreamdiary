@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.mapstruct.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
@@ -16,11 +16,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
 public interface ClCdMapstruct
-        extends BaseListMapstruct<ClCd, ClCd, ClCdEntity> {
+        extends BaseCrudMapstruct<ClCd, ClCd, ClCdEntity> {
 
     ClCdMapstruct INSTANCE = Mappers.getMapper(ClCdMapstruct.class);
 
@@ -28,6 +28,7 @@ public interface ClCdMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     @Mapping(target = "dtlCdList", expression = "java(entity.getDtlCdDtoList())")
     ClCd toDto(final ClCdEntity entity) throws Exception;
 
@@ -35,6 +36,7 @@ public interface ClCdMapstruct
      * Entity -> ListDto
      */
     @Override
+    @Named("toListDto")
     ClCd toListDto(final ClCdEntity entity) throws Exception;
 
     /**
@@ -50,8 +52,5 @@ public interface ClCdMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "dtlCdList", expression = "java(dto.getDtlCdEntityList())")
-    void updateFromDto(
-            final ClCd dto,
-            final @MappingTarget ClCdEntity entity
-    ) throws Exception;
+    void updateFromDto(final ClCd dto, final @MappingTarget ClCdEntity entity) throws Exception;
 }

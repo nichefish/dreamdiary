@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.tag;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
@@ -15,11 +15,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, TagMapstruct.class})
 public interface ContentTagMapstruct
-        extends BaseListMapstruct<ContentTagDto, ContentTagDto, ContentTagEntity> {
+        extends BaseCrudMapstruct<ContentTagDto, ContentTagDto, ContentTagEntity> {
 
     ContentTagMapstruct INSTANCE = Mappers.getMapper(ContentTagMapstruct.class);
 
@@ -27,8 +27,17 @@ public interface ContentTagMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     @Mapping(target = "tag", expression = "java(TagMapstruct.INSTANCE.toDto(entity.getTag()))")
     ContentTagDto toDto(final ContentTagEntity entity) throws Exception;
+
+    /**
+     * Entity -> Dto
+     */
+    @Override
+    @Named("toListDto")
+    @Mapping(target = "tag", expression = "java(TagMapstruct.INSTANCE.toDto(entity.getTag()))")
+    ContentTagDto toListDto(final ContentTagEntity entity) throws Exception;
 
     /**
      * Dto -> Entity

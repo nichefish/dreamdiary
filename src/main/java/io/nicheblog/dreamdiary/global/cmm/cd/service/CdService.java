@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author nichefish
  */
-@Service("cdService")
+@Service
 public class CdService {
 
     private final CdMapstruct cdMapstruct = CdMapstruct.INSTANCE;

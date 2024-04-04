@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.api.dream.mapstruct;
 
 import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiDto;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
@@ -16,11 +16,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface DreamDayApiMapstruct
-        extends BaseListMapstruct<DreamDayApiDto, DreamDayApiDto, DreamDayEntity> {
+        extends BaseCrudMapstruct<DreamDayApiDto, DreamDayApiDto, DreamDayEntity> {
 
     DreamDayApiMapstruct INSTANCE = Mappers.getMapper(DreamDayApiMapstruct.class);
 
@@ -28,6 +28,7 @@ public interface DreamDayApiMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     @Mapping(target = "dreamtDt", expression = "java(DateUtils.asStr(entity.getDreamtDt(), DatePtn.DATE))")
     DreamDayApiDto toDto(final DreamDayEntity entity) throws Exception;
 
@@ -35,6 +36,7 @@ public interface DreamDayApiMapstruct
      * Entity -> ListDto
      */
     @Override
+    @Named("toListDto")
     @Mapping(target = "dreamtDt", expression = "java(DateUtils.asStr(entity.getDreamtDt(), DatePtn.DATE))")
     DreamDayApiDto toListDto(final DreamDayEntity entity) throws Exception;
 

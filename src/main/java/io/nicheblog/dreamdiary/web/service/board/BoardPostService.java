@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.board.BoardPostMapstruct;
 import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
-import io.nicheblog.dreamdiary.web.model.board.BoardPostListDto;
 import io.nicheblog.dreamdiary.web.repository.board.BoardPostRepository;
 import io.nicheblog.dreamdiary.web.spec.board.BoardPostSpec;
 import lombok.extern.log4j.Log4j2;
@@ -34,7 +33,7 @@ import java.util.Map;
 @Service("boardPostService")
 @Log4j2
 public class BoardPostService
-        implements BasePostService<BoardPostDto, BoardPostListDto, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct> {
+        implements BasePostService<BoardPostDto.DTL, BoardPostDto.LIST, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct> {
 
     @Resource(name = "boardPostRepository")
     private BoardPostRepository boardPostRepository;
@@ -65,11 +64,11 @@ public class BoardPostService
      * 게시판 > 게시판 목록 Page<Entity>->Page<Dto> 변환
      */
     @Override
-    public Page<BoardPostListDto> pageEntityToDto(final Page<BoardPostEntity> entityPage) throws Exception {
-        List<BoardPostListDto> dtoList = new ArrayList<>();
+    public Page<BoardPostDto.LIST> pageEntityToDto(final Page<BoardPostEntity> entityPage) throws Exception {
+        List<BoardPostDto.LIST> dtoList = new ArrayList<>();
         int i = 0;
         for (BoardPostEntity entity : entityPage.getContent()) {
-            BoardPostListDto listDto = postMapstruct.toListDto(entity);
+            BoardPostDto.LIST listDto = postMapstruct.toListDto(entity);
             listDto.setRnum(CmmUtils.getPageRnum(entityPage, i));
             String ctgrNm = cdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
             listDto.setCtgrNm(ctgrNm);
@@ -82,16 +81,16 @@ public class BoardPostService
     /**
      * 게시판 > 게시판 상단 고정 목록 조회
      */
-    public List<BoardPostListDto> getFxdList(final String contentType) throws Exception {
+    public List<BoardPostDto.LIST> getFxdList(final String contentType) throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("contentType", contentType);
             put("fxdYn", "Y");
         }};
 
-        Page<BoardPostEntity> entityList = this.getListEntity(searchParamMap, Pageable.unpaged());
-        List<BoardPostListDto> dtoList = new ArrayList<>();
+        Page<BoardPostEntity> entityList = this.getPageEntity(searchParamMap, Pageable.unpaged());
+        List<BoardPostDto.LIST> dtoList = new ArrayList<>();
         for (BoardPostEntity entity : entityList.getContent()) {
-            BoardPostListDto listDto = postMapstruct.toListDto(entity);
+            BoardPostDto.LIST listDto = postMapstruct.toListDto(entity);
             String ctgrNm = cdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
             listDto.setCtgrNm(ctgrNm);
             dtoList.add(listDto);
@@ -103,9 +102,9 @@ public class BoardPostService
      * 게시판 > 게시판 조회 (dto level)
      */
     @Override
-    public BoardPostDto getDtlDto(final BaseClsfKey key) throws Exception {
+    public BoardPostDto.DTL getDtlDto(final BaseClsfKey key) throws Exception {
         BoardPostEntity rsEntity = this.getDtlEntity(key);       // Entity 레벨 조회
-        BoardPostDto rsDto = postMapstruct.toDto(rsEntity);
+        BoardPostDto.DTL rsDto = postMapstruct.toDto(rsEntity);
         String ctgrNm = cdService.getDtlCdNm(rsDto.getCtgrClCd(), rsDto.getCtgrCd());
         rsDto.setCtgrNm(ctgrNm);
         return rsDto;
@@ -115,7 +114,7 @@ public class BoardPostService
      * 게시판 > 게시판 등록 전처리
      */
     @Override
-    public void preRegist(final BoardPostDto boardPostDto) throws Exception {
+    public void preRegist(final BoardPostDto.DTL boardPostDto) throws Exception {
         // 태그를 먼저 처리해준다. :: 메소드 분리
         // tagService.processTagList(boardPostDto);
     }
@@ -124,7 +123,7 @@ public class BoardPostService
      * 게시판 > 게시판 수정 전처리
      */
     @Override
-    public void preModify(final BoardPostDto boardPostDto) throws Exception {
+    public void preModify(final BoardPostDto.DTL boardPostDto) throws Exception {
         // 태그를 먼저 처리해준다. :: 메소드 분리
         // tagService.processTagList(boardPostDto);
     }

@@ -1,10 +1,10 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.comment;
 
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -17,11 +17,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface CommentMapstruct
-        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<CommentDto, CommentListDto, CommentEntity> {
+        extends BaseCrudMapstruct<CommentDto.DTL, CommentDto.LIST, CommentEntity> {
 
     CommentMapstruct INSTANCE = Mappers.getMapper(CommentMapstruct.class);
 
@@ -29,27 +29,28 @@ public interface CommentMapstruct
      * Entity -> Dto
      */
     @Override
-    CommentDto toDto(final CommentEntity entity) throws Exception;
+    @Named("toDto")
+    CommentDto.DTL toDto(final CommentEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
-    CommentListDto toListDto(final CommentEntity entity) throws Exception;
+    @Named("toListDto")
+    CommentDto.LIST toListDto(final CommentEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
-    CommentEntity toEntity(final CommentDto dto) throws Exception;
+    CommentEntity toEntity(final CommentDto.DTL dto) throws Exception;
+
+    CommentEntity toEntity(final CommentDto.LIST dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final CommentDto dto,
-            final @MappingTarget CommentEntity entity
-    ) throws Exception;
+    void updateFromDto(final CommentDto.DTL dto, final @MappingTarget CommentEntity entity) throws Exception;
 }

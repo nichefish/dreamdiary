@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
@@ -61,6 +61,16 @@ public class DreamDayDto
 
     /** 꿈 조각 목록 */
     private List<DreamPieceDto> dreamPieceList;
+
+    /* ----- */
+
+    public static class DTL extends DreamDayDto {
+
+    }
+
+    public static class LIST extends DreamDayDto {
+        //
+    }
 
     /* ----- */
 

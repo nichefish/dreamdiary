@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentListDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.comment.CommentRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.comment.CommentSpec;
 import lombok.extern.log4j.Log4j2;
@@ -25,7 +24,7 @@ import javax.annotation.Resource;
 @Service("commentService")
 @Log4j2
 public class CommentService
-        implements BaseMultiCrudService<CommentDto, CommentListDto, Integer, CommentEntity, CommentRepository, CommentSpec, CommentMapstruct> {
+        implements BaseMultiCrudService<CommentDto.DTL, CommentDto.LIST, Integer, CommentEntity, CommentRepository, CommentSpec, CommentMapstruct> {
 
     private final CommentMapstruct commentMapstruct = CommentMapstruct.INSTANCE;
 

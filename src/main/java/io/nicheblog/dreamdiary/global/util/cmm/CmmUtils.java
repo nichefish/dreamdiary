@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author nichefish
  */
-@Component("cmmUtils")
+@Component
 @Log4j2
 public class CmmUtils {
 
