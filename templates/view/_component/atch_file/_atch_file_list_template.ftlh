@@ -1,7 +1,7 @@
 <#--
   -- 게시판 목록 > 첨부파일 조회 !Handlebars! Template
-  -- @included in : board_post_list
-  -- @included in : board_post_dtl
+  -- @included_in : board_post_list
+  -- @included_in : board_post_dtl
   -->
 <script type="text/x-handlebars-template" id="atch_file_list_template">
     <div class="card mt-0 py-4">

@@ -1,6 +1,6 @@
 <!--
  -- datepicker 관련 컴포넌트
- -- @included in : lib/components.ftl
+ -- @included_in : lib/components.ftl
  -->
 
 <#macro checkbox param checkboxNm ynLabel ynColor  >

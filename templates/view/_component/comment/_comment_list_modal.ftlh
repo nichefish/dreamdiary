@@ -1,6 +1,6 @@
 <#--
   -- 댓글 목록 Modal
- -- @included in : 댓글 미리보기 기능이 있는 페이지들
+ -- @included_in : 댓글 미리보기 기능이 있는 페이지들
   -->
 <script>
     let CommentList = function() {

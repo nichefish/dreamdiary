@@ -10,7 +10,7 @@
      data-kt-drawer-overlay="true"
      data-kt-drawer-width="{default:'250px', 'md': '400px'}"
      data-kt-drawer-direction="end"
-     data-kt-drawer-toggle="#kt_drawer_chat_toggle"
+     data-kt-drawer-toggle="#kt_drawer_chat_toggle, #kt_drawer_chat_toggle2"
      data-kt-drawer-close="#kt_drawer_chat_close">
 
     <!--begin::Messenger-->
@@ -28,7 +28,7 @@
                         </span>
                     </#if>
                 </div>
-                <span style="padding-left: 10px; font-weight: 600; font-size: 15px; color: #fff;">회원정보</span>
+                <span class="text-white fw-bold ps-4 fs-4">내 정보</span>
                 <!--end::Svg Icon-->
             </div>
             <!--end::Title-->
@@ -52,13 +52,13 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body" id="kt_drawer_chat_messenger_body">
-            <!--begin::회원정보-->
+            <!--begin::내 정보-->
             <div class="d-flex align-items-center">
                 <span class="h2 pt-2" style="padding-right: 10px;">${(authInfo.nickNm)!}</span>
                 <button type="button" class="badge badge-primary"
                         onclick="Layout.myInfoDtl();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내 정보 화면으로 이동합니다.">
-                    <i class="fas fa-user-circle fs-8 text-white"></i>
+                    <i class="fas fa-user-circle fs-8 pe-1 text-white"></i>
                     내 정보
                 </button>
             </div>
@@ -74,7 +74,15 @@
                 <tr>
                     <td class="text-gray-700 w-110px font-weight:600;" style="padding-left:10px;">계정 권한</td>
                     <td class="text-gray-600">
+                        <#if isMngr>
+                            <i class="bi bi-person-lines-fill fs-2 text-info ms-1 opacity-75"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="관리자"></i>   <!-- 관리자 -->
+                        <#else>
+                            <i class="bi bi-people-fill fs-2 ms-1"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="사용자"></i>   <!-- 관리자 -->
+                        </#if>
                         ${(authInfo.authNm)!}
+
                         <#if ((authInfo.authCd)! == Constant.AUTH_MNGR)>
                             <i class="bi bi-person-lines-fill text-info opacity-75"></i>   <!-- 관리자 -->
                         <#elseif ((authInfo.authCd)! == Constant.AUTH_USER)>

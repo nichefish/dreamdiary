@@ -1,6 +1,6 @@
 <!--
  -- 레이아웃 > 탑바
- -- @included in : layout/topbar
+ -- @included_in : layout/topbar
  -->
 <!--begin::Search-->
 <!--begin::Topbar-->

@@ -23,6 +23,8 @@
     <#else>
         <#include "/layout/sidebar/_sidebar_menu_portal.ftlh">
     </#if>
+
+    <!--include::Footer-->
     <#include "/layout/sidebar/_sidebar_footer.ftlh">
 </div>
 <!--end::Sidebar-->

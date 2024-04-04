@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  *
  * @author nichefish
  */
-@Component("activeProfile")
+@Component
 @ConfigurationProperties(prefix = "spring.profiles")
 @Getter
 @Setter

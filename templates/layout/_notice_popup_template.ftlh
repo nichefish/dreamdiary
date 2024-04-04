@@ -1,6 +1,6 @@
 <#--
   -- 공지사항 조회 !Handlebaes! Template
-  -- @included in : 댓글 미리보기 기능이 있는 페이지들
+  -- @included_in : 댓글 미리보기 기능이 있는 페이지들
   -->
 <script type="text/x-handlebars-template" id="notice_popup_template">
     <div class="table-responsive-sm">

@@ -1,7 +1,7 @@
 <!--
  -- 레이아웃 > 기본 레이아웃
- -- @included in : aside/_aside_menu_portal
- -- @included in : aside/_aside_menu_admin
+ -- @included_in : aside/_aside_menu_portal
+ -- @included_in : aside/_aside_menu_admin
  -->
 
 <!--

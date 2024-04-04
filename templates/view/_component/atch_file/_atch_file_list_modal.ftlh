@@ -1,7 +1,7 @@
 <#--
   -- 게시판 > 태그 전체 목록 Modal
-  -- @included in : board_post_list
-  -- @included in : board_post_dtl
+  -- @included_in : board_post_list
+  -- @included_in : board_post_dtl
   -->
 
 <script>

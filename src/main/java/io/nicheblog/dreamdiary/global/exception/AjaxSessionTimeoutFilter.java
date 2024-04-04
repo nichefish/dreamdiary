@@ -24,7 +24,7 @@ import java.io.IOException;
  *
  * @author nichefish
  */
-@Component("ajaxSessionTimeoutFilter")
+@Component
 public class AjaxSessionTimeoutFilter
         implements Filter {
 

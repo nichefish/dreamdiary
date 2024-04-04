@@ -1,8 +1,11 @@
 <!--
  -- 레이아웃 > 사이드바 메뉴 (관리자)
- -- @included in : aside/_aside_base
+ -- @included_in : aside/_aside_base
  -->
-<#import "/layout/aside/_aside_menu_template.ftlh" as menu >
+<#import "/layout/sidebar/_sidebar_menu_template.ftlh" as menu >
+
+<#assign topMenuNo = (siteAcsInfo.topMenuNo)!>
+<#assign siteMenuNo = (siteAcsInfo.siteMenuNo)!>
 
 <!--begin::Aside Menu-->
 <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true"

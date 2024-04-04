@@ -9,7 +9,7 @@
 
 <#macro noSubMenu topMenuNo siteMenu>
     <div class="menu-item">
-        <div class="menu-content mt-6 pb-2">
+        <div class="menu-content mt-5 pb-2">
             <span class="menu-heading fw-bold text-uppercase fs-8 ls-1">${siteMenu.topMenuLabel}</span>
         </div>
     </div>
@@ -26,14 +26,14 @@
             </span>
             <span class="menu-title">${siteMenu.menuNm!}</span>
             <!-- TODO: 새 글 갯수 표시 -->
-            <span class="badge badge-success">3</span>
+            <span class="badge badge-success blink-slow">3</span>
         </a>
     </div>
 </#macro>
 
 <#macro withSubMenu topMenuNo siteMenu>
     <div class="menu-item">
-        <div class="menu-content mt-6 pb-2">
+        <div class="menu-content mt-5 pb-2">
             <span class="menu-heading fw-bold text-uppercase fs-8 ls-1">${siteMenu.topMenuLabel}</span>
         </div>
     </div>
@@ -73,7 +73,7 @@
 
 <#macro extendedSubMenu topMenuNo siteMenu>
     <div class="menu-item">
-        <div class="menu-content mt-6 pb-2">
+        <div class="menu-content mt-5 pb-2">
             <span class="menu-heading fw-bold text-uppercase fs-8 ls-1">${siteMenu.topMenuLabel}</span>
         </div>
     </div>

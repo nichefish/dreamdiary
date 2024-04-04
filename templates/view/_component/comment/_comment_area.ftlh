@@ -1,6 +1,6 @@
 <!--
  -- 레이아웃 > 댓글 모듈
- -- @included in : 댓글 기능이 있는 페이지들
+ -- @included_in : 댓글 기능이 있는 페이지들
  -->
 <script>
     const Comment = (function() {
