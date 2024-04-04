@@ -1,6 +1,6 @@
 <#--
   -- 공지사항 > 목록 Header
-  -- @included in : notice_list
+  -- @included_in : notice_list
   -->
 <form name="listForm" id="listForm" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">

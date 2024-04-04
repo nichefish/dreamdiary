@@ -1,6 +1,6 @@
 <#--
   -- 게시판 > 내선번호 관련 Modal (슬기로운 회사생활)
-  -- @included in : board_post_list
+  -- @included_in : board_post_list
   -->
 <div class="modal fade" id="extn_phone_modal" tabindex="-1" role="dialog" aria-labelledby="extnPhoneModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">

@@ -1,6 +1,6 @@
 <#--
   -- 공지사항 > 상세 !Handlebars! Template
-  -- @included in : notice_list
+  -- @included_in : notice_list
   -->
 <script type="text/x-handlebars-template" id="notice_dtl_template">
     <div class="card mt-4">

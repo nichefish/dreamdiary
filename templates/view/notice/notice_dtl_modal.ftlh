@@ -1,6 +1,6 @@
 <#--
   -- 공지사항 > 상세 Modal
-  -- @included in : notice_list
+  -- @included_in : notice_list
   -->
 <div class="modal fade" id="notice_dtl_modal" tabindex="-1" role="dialog" aria-labelledby="noticeDtlModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">

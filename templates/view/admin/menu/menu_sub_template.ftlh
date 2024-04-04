@@ -1,6 +1,6 @@
 <#--
   -- 분류 코드(CL_CD) > 상세 Template
-  -- @included in : cl_cd_list
+  -- @included_in : cl_cd_list
   -->
 <script type="text/x-handlebars-template" id="menu_sub_template">
     <div class="list-unstyled" style="{{borderColor}}"
