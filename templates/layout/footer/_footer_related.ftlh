@@ -1,6 +1,6 @@
 <!--
  -- 레이아웃 > Footer
- -- @included in : layout/footer/_base
+ -- @included_in : layout/footer/_base
  -->
 <!--begin::Footer-->
 <li class="menu-item" data-kt-menu-trigger="hover" data-kt-menu-placement="top-start" data-kt-menu-flip="top-start">
