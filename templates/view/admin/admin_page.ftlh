@@ -7,79 +7,78 @@
 
 <@layout.layout>
 
-    <script>
-        const Page = function() {
-            return {
-                init: function () {
-                    //
-                },
-                /** 휴일정보 : url, data 받아서 ajax 호출 */
-                hldyAjax: function() {
-                    const url = "${SiteUrl.API_HLDY_GET!}";
-                    let ajaxData = { "yy" : $("#hldyYy option:selected").val() };
-                    Page.ajax(url, ajaxData);
-                },
-                /** NOTION : url, data 받아서 ajax 호출 */
-                notionAjax: function() {
-                    const url = "${SiteUrl.API_NOTION_GET!}";
-                    let ajaxData = { "dataType": $("#dataType").val(), "dataId": $("#dataId").val() };
-                    commons.util.blockUIAjax(url, 'get', data, function(res) {
-                        if (res.result) Swal.fire(JSON.stringify(res));
-                        Swal.fire({ text: res.message });
-                    });
-                },
-                /** url, data 받아서 ajax 호출 */
-                ajax: function(url, data) {
-                    commons.util.blockUIAjax(url, 'post', data, function(res) {
-                        if (res.result) Swal.fire(JSON.stringify(res));
-                        Swal.fire({ text: res.message });
-                    });
-                },
-                /** 사이트 관리 페이지로 이동 */
-                adminPage: function() {
-                    commons.util.blockUISubmit("#procForm", "${SiteUrl.SITE_ADMIN!}");
-                },
-                /** 코드 관리 페이지로 이동 */
-                cdList: function() {
-                    commons.util.blockUISubmit("#procForm", "${SiteUrl.CL_CD_LIST!}");
-                },
-            }
-        }();
-    </script>
+<script>
+    const Page = function() {
+        return {
+            init: function () {
+                //
+            },
+            /** 휴일정보 : url, data 받아서 ajax 호출 */
+            hldyAjax: function() {
+                const url = "${ApiUrl.API_HLDY_GET!}";
+                let ajaxData = { "yy" : $("#hldyYy option:selected").val() };
+                Page.ajax(url, ajaxData);
+            },
+            /** NOTION : url, data 받아서 ajax 호출 */
+            notionAjax: function() {
+                const url = "${ApiUrl.API_NOTION_GET!}";
+                let ajaxData = { "dataType": $("#dataType").val(), "dataId": $("#dataId").val() };
+                commons.util.blockUIAjax(url, 'get', data, function(res) {
+                    if (res.result) Swal.fire(JSON.stringify(res));
+                    Swal.fire({ text: res.message });
+                });
+            },
+            /** url, data 받아서 ajax 호출 */
+            ajax: function(url, data) {
+                commons.util.blockUIAjax(url, 'post', data, function(res) {
+                    if (res.result) Swal.fire(JSON.stringify(res));
+                    Swal.fire({ text: res.message });
+                });
+            },
+            /** 사이트 관리 페이지로 이동 */
+            adminPage: function() {
+                commons.util.blockUISubmit("#procForm", "${SiteUrl.ADMIN_PAGE!}");
+            },
+            /** 코드 관리 페이지로 이동 */
+            cdList: function() {
+                commons.util.blockUISubmit("#procForm", "${SiteUrl.CL_CD_LIST!}");
+            },
+        }
+    }();
+</script>
 
-    <!--begin::Card-->
-    <div class="card post">
-        <form name="procForm" id="procForm" method="get">
-        </form>
-        <!--begin::Tab -->
-        <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
-            <li class="nav-item">
-                <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.adminPage();">
-                <span class="nav-icon">
-                    <i class="bi bi-sort-down-alt"></i>
-                </span>
-                    <span class="nav-text">사이트 관리</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.cdList();">
-                <span class="nav-icon">
-                    <i class="bi bi-people"></i>
-                </span>
-                    <span class="nav-text">코드 관리</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.logStatsUserList();">
-                <span class="nav-icon">
-                    <i class="bi bi-grid-1x2"></i>
-                </span>
-                    <span class="nav-text">기능별</span>
-                </a>
-            </li>
-        </ul>
-
-        <div class="card-body p-9">
+<!--begin::Tab -->
+<ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
+    <li class="nav-item">
+        <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.adminPage();">
+        <span class="nav-icon">
+            <i class="bi bi-sort-down-alt"></i>
+        </span>
+            <span class="nav-text">사이트 관리</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.cdList();">
+        <span class="nav-icon">
+            <i class="bi bi-people"></i>
+        </span>
+            <span class="nav-text">코드 관리</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.logStatsUserList();">
+        <span class="nav-icon">
+            <i class="bi bi-grid-1x2"></i>
+        </span>
+            <span class="nav-text">기능별</span>
+        </a>
+    </li>
+</ul>
+<!--begin::Card-->
+<div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
+    <!--begin::Col-->
+    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-8 mb-md-5 mb-xl-10">
+        <div class="card post">
             <!--begin::Row-->
             <div class="row mb-8">
                 <div class="col-xl-2">
@@ -87,10 +86,10 @@
                 </div>
                 <div class="col-xl-3">
                     <div class="mt-1">
-                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CHCK!}');">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CHCK_AJAX!}');">
                             현재 캐시 조회
                         </button>
-                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CLEAR!}');">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CLEAR_AJAX!}');">
                             사이트 캐시 초기화
                         </button>
                     </div>
@@ -148,6 +147,60 @@
             </div>
         </div>
     </div>
-    <!--end::Card-->
+    <!--begin::Col-->
+    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-4 mb-md-5 mb-xl-10">
+        <div class="card post">
+        <!--begin::Card widget 20-->
+            <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed mb-3">
+                <!--begin::Table head-->
+                <thead>
+                <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 text-muted">
+                    <th class="col-2 text-center wb-keepall">권한 코드</th>
+                    <th class="col-2 text-center wb-keepall">권한명</th>
+                    <th class="col-1 text-center wb-keepall">권한 레벨</th>
+                    <th class="col-3 text-center wb-keepall">상위 권한</th>
+                    <th class="col-1 text-center wb-keepall">정렬 순서</th>
+                    <th class="col-2 text-center wb-keepall">사용 여부</th>
+                    <th class="col-1 text-center wb-keepall">-</th>
+                </tr>
+                </thead>
+                <!--end::Table head-->
+                <!--begin::Table body-->
+                <tbody>
+                <#list authRoleList![] as authRole>
+                    <tr>
+                        <td class="text-center hidden-table">
+                            ${authRole.authCd!}
+                        </td>
+                        <td class="text-start ps-15">
+                            ${authRole.authNm!}
+                        </td>
+                        <td class="text-start ps-15">
+                            ${authRole.authLevel!}
+                        </td>
+                        <td class="text-start ps-10 hidden-table">
+                            ${authRole.topAuthCd!}
+                        </td>
+                        <td class="text-start ps-10 hidden-table">
+                            ${authRole.sortOrdr!}
+                        </td>
+                        <td class="text-start ps-10 hidden-table">
+                            ${authRole.useYn!}
+                        </td>
+                    </tr>
+                <#else>
+                    <tr>
+                        <td colspan=8" class="text-center"><@spring.message "view.list.empty"/></td>
+                    </tr>
+                </#list>
+                <!--end::Table row-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--end::Card-->
+<form name="procForm" id="procForm" method="get">
+</form>
 
 </@layout.layout>

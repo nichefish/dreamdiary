@@ -87,10 +87,10 @@
             </div>
             <div class="col-xl-3">
                 <div class="mt-1">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CHCK!}');">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CHCK_AJAX!}');">
                         현재 캐시 조회
                     </button>
-                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CLEAR!}');">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CLEAR_AJAX!}');">
                         사이트 캐시 초기화
                     </button>
                 </div>

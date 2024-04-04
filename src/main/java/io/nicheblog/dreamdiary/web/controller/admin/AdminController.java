@@ -1,6 +1,8 @@
-package io.nicheblog.dreamdiary.web.controller;
+package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.model.AuthRoleDto;
+import io.nicheblog.dreamdiary.global.auth.service.AuthRoleService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -14,6 +16,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * AdminController
@@ -34,6 +40,9 @@ public class AdminController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;      // 작업 카테고리 (로그 적재용)
 
+    @Resource
+    private AuthRoleService authRoleService;
+
     /**
      * 사이트 관리 > 사이트 관리 화면 조회
      * 관리자MNGR만 접근 가능
@@ -46,11 +55,18 @@ public class AdminController
     ) {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.ADMIN.setAcsPageInfo("사이트 관리"));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.ADMIN_PAGE.setAcsPageInfo("사이트 관리"));
 
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 권한 정보 조회
+            List<AuthRoleDto> authRoleList = authRoleService.getListDto(new HashMap<>());
+            model.addAttribute("authRoleList", authRoleList);
+
+
+            
+            
             isSuccess = true;
         } catch (Exception e) {
             isSuccess = false;
