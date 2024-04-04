@@ -22,12 +22,6 @@ public interface BaseMapstruct<Dto, Entity> {
     Dto toDto(final Entity e) throws Exception;
 
     /**
-     * Entity -> ListDto
-     */
-    @Named("toListDto")
-    Dto toListDto(final Entity e) throws Exception;
-
-    /**
      * Dto -> Entity
      */
     @Named("toEntity")
