@@ -1,11 +1,14 @@
 package io.nicheblog.dreamdiary.global.auth.model;
 
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Embedded;
 import java.util.List;
 
 /**
@@ -34,4 +37,10 @@ public class AuthRoleDto
     private String topAuthCd;
     /** 하위 권한 정보 */
     private List<AuthRoleDto> subAuthList;
+
+    /* ----- */
+
+    /** 상태 관리 모듈 (위임) */
+    @Embedded
+    public StateCmpstn state;
 }

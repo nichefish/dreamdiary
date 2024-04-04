@@ -17,26 +17,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class UserCttpcListDto {
+public class UserCttpcDto {
 
-    /**
-     * 이름
-     */
+    /** 이름 */
     private String userNm;
-    /**
-     * 직급이름
-     */
+    /** 직급이름 */
     private String jobTitleNm;
-    /**
-     * 소속(팀 부서)
-     */
+    /** 소속(팀 부서) */
     private String teamNm;
-    /**
-     * 연락처(전화번호)
-     */
+    /** 연락처(전화번호) */
     private String cttpc;
-    /**
-     * E-mail
-     */
+    /** E-mail */
     private String email;
 }

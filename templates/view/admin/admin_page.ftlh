@@ -182,10 +182,10 @@
                             ${authRole.topAuthCd!}
                         </td>
                         <td class="text-start ps-10 hidden-table">
-                            ${authRole.sortOrdr!}
+                            ${authRole.state.sortOrdr!}
                         </td>
                         <td class="text-start ps-10 hidden-table">
-                            ${authRole.useYn!}
+                            ${authRole.state.useYn!}
                         </td>
                     </tr>
                 <#else>

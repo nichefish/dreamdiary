@@ -64,9 +64,6 @@ public class AdminController
             List<AuthRoleDto> authRoleList = authRoleService.getListDto(new HashMap<>());
             model.addAttribute("authRoleList", authRoleList);
 
-
-            
-            
             isSuccess = true;
         } catch (Exception e) {
             isSuccess = false;

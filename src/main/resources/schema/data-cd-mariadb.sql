@@ -3,31 +3,24 @@
 -- @database : mariadb
 -- @author : nichefish
 
--- 필수 :: 권한 분류코드 추가
-REPLACE INTO CMM_CL_CD (CL_CD, CL_CD_NM, CL_CD_DC) VALUES ('AUTH_CD', '권한', '사용자 계정 권한 코드');
--- 필수 :: 권한 상세코드 추가
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('AUTH_CD', 'USER', '사용자', '사용자', '1');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('AUTH_CD', 'MNGR', '관리자', '관리자', '2');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('AUTH_CD', 'DEV', '개발자', '개발자', '3');
-
--- -----------------------
+-- -------------------
 
 -- 필수 :: 잔디 토픽 분류코드 추가
-REPLACE INTO CMM_CL_CD (CL_CD, CL_CD_NM, CL_CD_DC) VALUES ('JANDI_TOPIC_CD', '잔디 토픽', '잔디 토픽 코드');
+REPLACE INTO CMM_CL_CD (cl_cd, cl_cd_nm, CL_CD_DC) VALUES ('JANDI_TOPIC_CD', '잔디 토픽', '잔디 토픽 코드');
 -- 필수 :: 잔디 토픽 상세코드 추가
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('JANDI_TOPIC_CD', 'NOTICE', '공지사항', '공지사항', '1');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('JANDI_TOPIC_CD', 'SCHDUL', '일정공유', '일정공유', '2');
-    REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('JANDI_TOPIC_CD', 'TEST', '테스트', '테스트', '9');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('JANDI_TOPIC_CD', 'NOTICE', '공지사항', '공지사항', '1');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('JANDI_TOPIC_CD', 'SCHDUL', '일정공유', '일정공유', '2');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('JANDI_TOPIC_CD', 'TEST', '테스트', '테스트', '9');
 
 -- -----------------------
 
 -- 필수 :: 수정권한 분류코드 추가
-REPLACE INTO CMM_CL_CD (CL_CD, CL_CD_NM, CL_CD_DC) VALUES ('MDFABLE_CD', '수정권한', '수정권한 코드');
+REPLACE INTO CMM_CL_CD (cl_cd, cl_cd_nm, cl_cd_dc) VALUES ('MDFABLE_CD', '수정권한', '수정권한 코드');
 -- 필수 :: 수정권한 상세코드 추가
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('MDFABLE_CD', 'REGSTR', '등록자', '등록자', '1');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('MDFABLE_CD', 'MNGR', '관리자', '관리자', '2');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('MDFABLE_CD', 'USER', '사용자', '사용자', '3');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('MDFABLE_CD', 'ALL', '전체', '전체', '4');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'REGSTR', '등록자', '등록자', '1');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'MNGR', '관리자', '관리자', '2');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'USER', '사용자', '사용자', '3');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'ALL', '전체', '전체', '4');
 
 -- -----------------------
 
@@ -45,9 +38,9 @@ REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES 
 REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'VCATN_STATS_YY', '년도별 휴가관리', '년도별 휴가관리', '4');
 REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'VCATN_DY', '휴가사용일자', '휴가사용일자', '3');
 
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_INDVD_PAPR', '경비지출서', '경비지출서', '4');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_INDVD_STATS_YY', '경비지출누적집계', '경비지출누적집계', '3');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_INDVD_RPT', '월간지출내역', '월간지출내역', '4');
+REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_PRSNL_PAPR', '경비지출서', '경비지출서', '4');
+REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_PRSNL_STATS_YY', '경비지출누적집계', '경비지출누적집계', '3');
+REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_PRSNL_RPT', '월간지출내역', '월간지출내역', '4');
 
 REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_REQST', '물품구매/경조사비 신청', '물품구매/경조사비 신청', '3');
 

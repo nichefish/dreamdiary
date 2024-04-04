@@ -13,10 +13,6 @@ public interface SiteUrl {
     /** 도메인 */
     String DOMAIN = "dreamdiary.nicheblog.io";
 
-    /** robot.txt */
-    String ROBOT_TXT = "/robot.txt";
-    String ROBOTS_TXT = "/robots.txt";
-
     /** 메인 */
     String ROOT = "/";
     String MAIN = "/main.do";
@@ -35,7 +31,9 @@ public interface SiteUrl {
     /** 꿈 일자 */
     String DREAM_DAY_PAGE = Prefix.DREAM_DAY + "/dreamDayPage.do";
     String DREAM_DAY_REG_AJAX = Prefix.DREAM_DAY + "/dreamDayRegAjax.do";
+    String DREAM_DAY_DTL_AJAX = Prefix.DREAM_DAY + "/dreamDayListAjax.do";
     String DREAM_DAY_MDF_AJAX = Prefix.DREAM_DAY + "/dreamDayMdfAjax.do";
+    String DREAM_DAY_DEL_AJAX = Prefix.DREAM_DAY + "/dreamDayListAjax.do";
 
     /** 꿈 조각 */
     String DREAM_PIECE_REG_AJAX = Prefix.DREAM_PIECE + "/dreamPieceRegAjax.do";
@@ -117,6 +115,8 @@ public interface SiteUrl {
     /** 템플릿 관리 (TODO) */
     String TMPLAT_DEF_LIST = Prefix.TMPLAT + "/tmplatDefList.do";
     String TMPLAT_DEF_REG_AJAX = Prefix.TMPLAT + "/tmplatDefRegAjaxdo";
+    String TMPLAT_DEF_DTL = Prefix.TMPLAT + "/tmplatDefDtl.do";
+    String TMPLAT_DEF_DTL_AJAX = Prefix.TMPLAT + "/tmplatDefDtlAjax.do";
     String TMPLAT_DEF_MDF_AJAX = Prefix.TMPLAT + "/tmplatDefMdfAjax.do";
     String TMPLAT_DEF_DEL_AJAX = Prefix.TMPLAT + "/tmplatDefDelAjax.do";
     String TMPLAT_REG_AJAX = Prefix.TMPLAT + "/tmplatRegAjax.do";
@@ -251,8 +251,8 @@ public interface SiteUrl {
     String VCATN_STATS_YY_UPDT_AJAX = "/vcatnStatsYyUpdtAjax.do";
     String VCATN_STATS_YY_XLSX_DOWNLOAD = "/vcatnStatsXlsxDownload.do";
 
-    String ADMIN_PAGE = "/admin";
-    String ADMIN_TEST = "/admin/test";
+    String ADMIN_PAGE = "/admin/adminPage.do";
+    String ADMIN_TEST = "/admin/testPage.do";
     String NOTION_HOME = "/notionHome.do";
 
     String USER_REQST_REG_FORM = Prefix.USER_REQST + "/userReqstRegForm.do";
@@ -265,12 +265,13 @@ public interface SiteUrl {
     String PRJCT_REG_FORM = Prefix.PRJCT + "/prjctRegForm.do";
 
     /**
-     * 서브메뉴 정보
+     * PREFIX 정보
      */
     interface Prefix {
         String AUTH = "/auth";
         String ADMIN = "/admin";
 
+        /* 공지사항 (notice) */
         String NOTICE = "/notice";
 
         String DREAM = "/dream";
@@ -283,6 +284,7 @@ public interface SiteUrl {
         String BOARD = "/board";
         String POST = "/board";
         String BOARD_POST = BOARD + POST;
+        String BOARD_DEF = BOARD + "/def";
 
         /* 일정 (schdul) */
         String SCHDUL = "/schdul";
@@ -315,10 +317,10 @@ public interface SiteUrl {
         String LGN_POLICY = "/lgnPolicy";
 
         String MENU = "/menu";
-        String BOARD_DEF = "/boardDef";
-        String TMPLAT = "/templat";
+        String TMPLAT = "/tmplat";
         String CD = "/cd";
 
+        /* 로그 (log) */
         String LOG = "/log";
         String ACTVTY = "/actvty";
         String LOG_ACTVTY = LOG + ACTVTY;
@@ -326,6 +328,7 @@ public interface SiteUrl {
         String LOG_SYS = LOG + SYS;
         String LOG_STATS = LOG + STATS;
 
+        /* 사용자 (user) */
         String USER = "/user";
         String MY = "/my";
         String USER_MY = USER + MY;

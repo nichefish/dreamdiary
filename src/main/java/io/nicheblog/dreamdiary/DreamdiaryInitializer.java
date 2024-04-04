@@ -92,7 +92,7 @@ public class DreamdiaryInitializer {
                 .nickNm(Constant.SYSTEM_ACNT_NM)
                 .userId(Constant.SYSTEM_ACNT)
                 .password(INIT_TEMP_PW)
-                .auth(List.of(userAuthRole))
+                .authList(List.of(userAuthRole))
                 .regstrId(Constant.SYSTEM_ACNT)
                 .build();
 

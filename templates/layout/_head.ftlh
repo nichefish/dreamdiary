@@ -50,7 +50,6 @@
     <!--Metronic:: Global Javascript Bundle(used by all pages)-->
     <script src="/metronic/assets/plugins/global/plugins.bundle.js?${releaseDate!}"></script>
 
-    <script type="text/javascript" src="/js/jquery-3.6.0.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.blockUI.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.form.min.js?${releaseDate!}"></script>

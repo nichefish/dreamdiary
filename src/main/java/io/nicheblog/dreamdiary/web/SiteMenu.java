@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author nichefish
  */
-@Component("siteMenu")
+@Component
 public class SiteMenu {
 
     @Resource(name = "boardDefService")
@@ -176,8 +176,9 @@ public class SiteMenu {
             TOP_MENU_IDX,
             "사이트 관리",
             SiteUrl.AUTH_LGN_FORM,
-            List.of(SubMenu.LGN_POLICY, SubMenu.MENU, SubMenu.BOARD_DEF, SubMenu.TMPLAT, SubMenu.POPUP, SubMenu.CD)
+            List.of(SubMenu.ADMIN_PAGE, SubMenu.LGN_POLICY, SubMenu.MENU, SubMenu.BOARD_DEF, SubMenu.TMPLAT, SubMenu.POPUP, SubMenu.CD)
     );
+    public static SiteAcsInfo ADMIN_PAGE = SubMenu.ADMIN_PAGE;
     public static SiteAcsInfo LGN_POLICY = SubMenu.LGN_POLICY;
     public static SiteAcsInfo MENU = SubMenu.MENU;
     public static SiteAcsInfo BOARD_DEF = SubMenu.BOARD_DEF;
@@ -296,6 +297,13 @@ public class SiteMenu {
         );
 
         /* 사이트 관리 */
+        // 소메뉴 :: 사이트 관리
+        SiteAcsInfo ADMIN_PAGE = new SiteAcsInfo(
+                SiteTopMenu.ADMIN,
+                "01",
+                "사이트 관리",
+                SiteUrl.ADMIN_PAGE
+        );
         // 소메뉴 :: 로그인 정책 관리
         SiteAcsInfo LGN_POLICY = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
