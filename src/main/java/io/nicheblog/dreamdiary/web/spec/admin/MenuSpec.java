@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("menuSpec")
+@Component
 public class MenuSpec
         implements BaseSpec<MenuEntity> {
 

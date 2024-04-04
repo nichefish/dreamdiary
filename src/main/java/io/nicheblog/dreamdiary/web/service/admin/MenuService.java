@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.MenuEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.MenuMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
-import io.nicheblog.dreamdiary.web.model.admin.MenuListDto;
 import io.nicheblog.dreamdiary.web.repository.admin.MenuRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.MenuSpec;
 import lombok.extern.log4j.Log4j2;
@@ -32,8 +31,8 @@ import java.util.Map;
 @Service("menuService")
 @Log4j2
 public class MenuService
-        implements BaseCrudService<MenuDto, MenuListDto, Integer, MenuEntity, MenuRepository, MenuSpec, MenuMapstruct>,
-                   BaseStateService<MenuDto, MenuListDto, Integer, MenuEntity, MenuRepository, MenuSpec, MenuMapstruct> {
+        implements BaseCrudService<MenuDto, MenuDto, Integer, MenuEntity, MenuRepository, MenuSpec, MenuMapstruct>,
+                   BaseStateService<MenuDto, MenuDto, Integer, MenuEntity, MenuRepository, MenuSpec, MenuMapstruct> {
 
     @Resource(name = "menuRepository")
     private MenuRepository menuRepository;
@@ -60,42 +59,42 @@ public class MenuService
     /**
      * 메인메뉴(사용자, 관리자, 공통 포함) 목록 조회
      */
-    public Page<MenuListDto> getMainMenuList(
+    public Page<MenuDto> getMainMenuList(
             final BaseSearchParam searchParam,
             final PageRequest pageRequest
     ) throws Exception {
 
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         searchParamMap.put("menuTyCd", "main");
-        Page<MenuEntity> menuMainEntityPage = this.getListEntity(searchParamMap, pageRequest);
+        Page<MenuEntity> menuMainEntityPage = this.getPageEntity(searchParamMap, pageRequest);
         return this.pageEntityToDto(menuMainEntityPage);
     }
 
     /**
      * 메인메뉴(사용자) 조회
      */
-    public Page<MenuListDto> getUserMenuList() throws Exception {
+    public Page<MenuDto> getUserMenuList() throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("menuTyCd", "main");
             put("menuNo", "00000000");
         }};
         Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
         PageRequest pageRequest = PageRequest.of(0, 99, sort);
-        Page<MenuEntity> menuMainEntityPage = this.getListEntity(searchParamMap, pageRequest);
+        Page<MenuEntity> menuMainEntityPage = this.getPageEntity(searchParamMap, pageRequest);
         return this.pageEntityToDto(menuMainEntityPage);
     }
 
     /**
      * 메인메뉴(관리자) 조회
      */
-    public Page<MenuListDto> getMngrMenuList() throws Exception {
+    public Page<MenuDto> getMngrMenuList() throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("menuTyCd", "main");
             put("menuNo", "00000000");
         }};
         Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
         PageRequest pageRequest = PageRequest.of(0, 99, sort);
-        Page<MenuEntity> menuMainEntityPage = this.getListEntity(searchParamMap, pageRequest);
+        Page<MenuEntity> menuMainEntityPage = this.getPageEntity(searchParamMap, pageRequest);
         return this.pageEntityToDto(menuMainEntityPage);
     }
 
