@@ -25,7 +25,7 @@ import java.util.Date;
 @Table(name = "exptr_prsnl_item")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")

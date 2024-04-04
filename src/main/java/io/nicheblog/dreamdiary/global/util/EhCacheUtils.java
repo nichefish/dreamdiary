@@ -18,7 +18,7 @@ import java.util.Objects;
  *
  * @author nichefish
  */
-@Component("ehCacheUtils")
+@Component
 @Log4j2
 public class EhCacheUtils {
 

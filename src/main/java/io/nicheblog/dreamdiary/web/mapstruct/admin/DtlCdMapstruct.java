@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.mapstruct.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -14,11 +14,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DtlCdMapstruct
-        extends BaseListMapstruct<DtlCd, DtlCd, DtlCdEntity> {
+        extends BaseCrudMapstruct<DtlCd, DtlCd, DtlCdEntity> {
 
     DtlCdMapstruct INSTANCE = Mappers.getMapper(DtlCdMapstruct.class);
 
@@ -26,12 +26,14 @@ public interface DtlCdMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     DtlCd toDto(final DtlCdEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
+    @Named("toListDto")
     DtlCd toListDto(final DtlCdEntity entity) throws Exception;
 
     /**
@@ -45,8 +47,5 @@ public interface DtlCdMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final DtlCd dto,
-            final @MappingTarget DtlCdEntity entity
-    ) throws Exception;
+    void updateFromDto(final DtlCd dto, final @MappingTarget DtlCdEntity entity) throws Exception;
 }

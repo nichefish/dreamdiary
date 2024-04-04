@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Table(name = "exptr_prsnl_papr")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "del_yn='N'")

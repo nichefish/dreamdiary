@@ -1,10 +1,10 @@
 package io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl;
 
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -17,11 +17,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, ExptrPrsnlItemMapstruct.class, CommentEmbedMapstruct.class})
 public interface ExptrPrsnlPaprMapstruct
-        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<ExptrPrsnlPaprDto, ExptrPrsnlPaprListDto, ExptrPrsnlPaprEntity> {
+        extends BaseClsfMapstruct<ExptrPrsnlPaprDto.DTL, ExptrPrsnlPaprDto.LIST, ExptrPrsnlPaprEntity> {
 
     ExptrPrsnlPaprMapstruct INSTANCE = Mappers.getMapper(ExptrPrsnlPaprMapstruct.class);
 
@@ -29,15 +29,17 @@ public interface ExptrPrsnlPaprMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     @Mapping(target = "itemList", expression = "java(entity.getItemDtoList())")
-    ExptrPrsnlPaprDto toDto(final ExptrPrsnlPaprEntity entity) throws Exception;
+    ExptrPrsnlPaprDto.DTL toDto(final ExptrPrsnlPaprEntity entity) throws Exception;
 
     /**
      * Entity -> listDto
      */
     @Override
+    @Named("toListDto")
     @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
-    ExptrPrsnlPaprListDto toListDto(final ExptrPrsnlPaprEntity entity) throws Exception;
+    ExptrPrsnlPaprDto.LIST toListDto(final ExptrPrsnlPaprEntity entity) throws Exception;
 
     /**
      * StatsDto -> StatsXlsxDto
@@ -64,7 +66,7 @@ public interface ExptrPrsnlPaprMapstruct
      */
     @Override
     @Mapping(target = "itemList", expression = "java(dto.getItemEntityList())")
-    ExptrPrsnlPaprEntity toEntity(final ExptrPrsnlPaprDto dto) throws Exception;
+    ExptrPrsnlPaprEntity toEntity(final ExptrPrsnlPaprDto.DTL dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
@@ -72,8 +74,5 @@ public interface ExptrPrsnlPaprMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "itemList", expression = "java(dto.getItemEntityList())")
-    void updateFromDto(
-            final ExptrPrsnlPaprDto dto,
-            final @MappingTarget ExptrPrsnlPaprEntity entity
-    ) throws Exception;
+    void updateFromDto(final ExptrPrsnlPaprDto.DTL dto, final @MappingTarget ExptrPrsnlPaprEntity entity) throws Exception;
 }

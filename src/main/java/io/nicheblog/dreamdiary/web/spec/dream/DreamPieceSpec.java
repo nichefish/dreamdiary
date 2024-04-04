@@ -24,7 +24,7 @@ import java.util.Map;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("dreamPieceSpec")
+@Component
 @Log4j2
 public class DreamPieceSpec
         implements BaseSpec<DreamPieceEntity> {
@@ -43,7 +43,6 @@ public class DreamPieceSpec
 
         // expressions
         Expression<Date> regDtExp = root.get("regDt");
-        Expression<Date> managtDtExp = root.get("managtDt");
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {

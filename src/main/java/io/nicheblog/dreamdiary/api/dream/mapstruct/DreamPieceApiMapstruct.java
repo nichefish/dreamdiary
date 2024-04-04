@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.api.dream.mapstruct;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
 import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
@@ -15,11 +15,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface DreamPieceApiMapstruct
-        extends BaseListMapstruct<DreamPieceDto, DreamPieceDto, DreamPieceEntity> {
+        extends BaseCrudMapstruct<DreamPieceDto, DreamPieceDto, DreamPieceEntity> {
 
     DreamPieceApiMapstruct INSTANCE = Mappers.getMapper(DreamPieceApiMapstruct.class);
 
@@ -27,12 +27,14 @@ public interface DreamPieceApiMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     DreamPieceDto toDto(final DreamPieceEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
+    @Named("toListDto")
     DreamPieceDto toListDto(final DreamPieceEntity entity) throws Exception;
 
     /**

@@ -28,7 +28,7 @@ import javax.persistence.*;
 @Table(name = "dream_piece")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
@@ -86,7 +86,6 @@ public class DreamPieceEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
-
     /** 태그 정보 모듈 (위임) */
     @Embedded
     public TagEmbed tag;

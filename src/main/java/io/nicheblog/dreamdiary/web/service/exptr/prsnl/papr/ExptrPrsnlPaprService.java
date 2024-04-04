@@ -12,7 +12,6 @@ import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlPaprMapstruct;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprListDto;
 import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.ExptrPrsnlPaprRepository;
 import io.nicheblog.dreamdiary.web.spec.exptr.prsnl.ExptrPrsnlPaprSpec;
 import lombok.extern.log4j.Log4j2;
@@ -25,7 +24,7 @@ import javax.annotation.Resource;
 import java.util.*;
 
 /**
- * ExptrPrsnlService
+ * ExptrPrsnlPaprService
  * <pre>
  *  경비 관리 > 경비지출서 관리 서비스 모듈
  *  ※ 경비지출서(exptr_prsnl_papr) = 경비지출서. 경비지출항목(exptr_prsnl_item)을 1:N으로 관리한다.
@@ -34,14 +33,14 @@ import java.util.*;
  * @author nichefish
  * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Service("exptrPrsnlService")
+@Service
 @Log4j2
 public class ExptrPrsnlPaprService
-        implements BasePostService<ExptrPrsnlPaprDto, ExptrPrsnlPaprListDto, Integer, ExptrPrsnlPaprEntity, ExptrPrsnlPaprRepository, ExptrPrsnlPaprSpec, ExptrPrsnlPaprMapstruct> {
+        implements BasePostService<ExptrPrsnlPaprDto.DTL, ExptrPrsnlPaprDto.LIST, Integer, ExptrPrsnlPaprEntity, ExptrPrsnlPaprRepository, ExptrPrsnlPaprSpec, ExptrPrsnlPaprMapstruct> {
 
     @Resource(name = "exptrPrsnlPaprRepository")
     private ExptrPrsnlPaprRepository exptrPrsnlPaprRepository;
-    @Resource(name = "exptrPrsnlSpec")
+    @Resource(name = "exptrPrsnlPaprSpec")
     private ExptrPrsnlPaprSpec exptrPrsnlPaprSpec;
 
     private final ExptrPrsnlPaprMapstruct exptrPrsnlPaprMapstruct = ExptrPrsnlPaprMapstruct.INSTANCE;
@@ -66,11 +65,11 @@ public class ExptrPrsnlPaprService
      * 공지사항 > 공지사항 목록 Page<Entity>->Page<Dto> 변환
      */
     @Override
-    public Page<ExptrPrsnlPaprListDto> pageEntityToDto(final Page<ExptrPrsnlPaprEntity> entityPage) throws Exception {
-        List<ExptrPrsnlPaprListDto> dtoList = new ArrayList<>();
+    public Page<ExptrPrsnlPaprDto.LIST> pageEntityToDto(final Page<ExptrPrsnlPaprEntity> entityPage) throws Exception {
+        List<ExptrPrsnlPaprDto.LIST> dtoList = new ArrayList<>();
         int i = 0;
         for (ExptrPrsnlPaprEntity entity : entityPage.getContent()) {
-            ExptrPrsnlPaprListDto listDto = exptrPrsnlPaprMapstruct.toListDto(entity);
+            ExptrPrsnlPaprDto.LIST listDto = exptrPrsnlPaprMapstruct.toListDto(entity);
             List<ExptrPrsnlItemEntity> itemList = entity.getItemList();
             listDto.setRnum(CmmUtils.getPageRnum(entityPage, i));
             dtoList.add(listDto);
@@ -121,7 +120,7 @@ public class ExptrPrsnlPaprService
      * 경비 관리 > 경비지출서 > 경비지출서 등록 전처리
      */
     @Override
-    public void preRegist(final ExptrPrsnlPaprDto exptrPrsnlPaprDto) {
+    public void preRegist(final ExptrPrsnlPaprDto.DTL exptrPrsnlPaprDto) {
         // 빈 지출항목 걸러내기
         exptrPrsnlPaprDto.filterEmptyItems();
     }
@@ -130,7 +129,7 @@ public class ExptrPrsnlPaprService
      * 경비 관리 > 경비지출서 > 경비지출서 수정 전처리
      */
     @Override
-    public void preModify(final ExptrPrsnlPaprDto exptrPrsnlPaprDto) {
+    public void preModify(final ExptrPrsnlPaprDto.DTL exptrPrsnlPaprDto) {
         // 빈 지출항목 걸러내기
         exptrPrsnlPaprDto.filterEmptyItems();
     }

@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  *
  * @author nichefish
  */
-@Component("ehCacheClearScheduler")
+@Component
 @Log4j2
 public class EhCacheScheduler {
 

@@ -27,7 +27,7 @@ import javax.persistence.*;
 @IdClass(DtlCdKey.class)      // 분류코드+상세코드 복합키 적용
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @ToString
