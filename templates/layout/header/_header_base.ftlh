@@ -1,6 +1,6 @@
 <!--
  -- 레이아웃 > 헤더
- -- @included in : layout
+ -- @included_in : layout
  -->
 <script>
     /** 레이아웃 */
@@ -22,10 +22,10 @@
                 });
 
                 /** 현재 접속중인 메뉴 활성화 로직 */
-                const siteAcsInfoExists = "${topMenuNo}" !== "" && "${siteMenuNo!}" !== "";
+                const siteAcsInfoExists = "${topMenuNo!}" !== "" && "${siteMenuNo!}" !== "";
                 if (siteAcsInfoExists) {
                     $("#${topMenuNo!}").addClass("hover");
-                    $("#${siteMenuNo}").addClass("hover");
+                    $("#${siteMenuNo!}").addClass("hover");
                 }
             },
             /** 사이트맵 모달 팝업 호출 */
@@ -55,31 +55,33 @@
 </script>
 <!--begin::Header-->
 
-<div id="kt_header" class="header align-items-stretch">
-    <!--begin::Container-->
-    <div class="container-fluid d-flex align-items-stretch justify-content-between">
-        <#include "/layout/header/_header_mobile.ftlh">
-        <!--begin::logo-->
-        <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 mx-2 d-block d-lg-none">
-            <a href="${SiteUrl.MAIN!}">
-                <img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="h-40px w-auto logo">
-            </a>
+<div id="kt_app_header"
+     class="app-header shadow-sm"
+     data-kt-sticky="true"
+     data-kt-sticky-activate="{default: true, lg: true}"
+     data-kt-sticky-name="app-header-minimize"
+     data-kt-sticky-offset="{default: '200px', lg: '0'}"
+     data-kt-sticky-animation="false" >
+
+    <!--begin::Header container-->
+    <div class="app-container container-fluid d-flex align-items-stretch justify-content-between" id="kt_app_header_container">
+
+        <!--begin::Mobile logo-->
+        <#include "/layout/header/_header_logo.ftlh">
+        <!--end::Mobile logo-->
+
+        <!--begin::Header wrapper-->
+        <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
+
+            <#include "/layout/header/_header_menu.ftlh">
+
+            <#include "/layout/header/navbar/_navbar_base.ftlh">
+
         </div>
-        <!--end::logo-->
-        <!--begin::Title-->
-        <p class="d-flex align-items-center text-gray-600 fs-6 py-6 d-none d-sm-block" style="width:235px;">
-            현재 접속 계정 : ${(authInfo.nickNm)!}(${(authInfo.userId)!})
-        </p>
-        <!--end::Title-->
-        <span class="my-5 border-gray-300 border-start"></span>
-        <!--begin::Wrapper-->
-        <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
-            <!--begin::Topbar-->
-            <#include "/layout/topbar/_topbar_base.ftlh">
-            <!--end::Topbar-->
-        </div>
-        <!--end::Wrapper-->
+        <!--end::Header wrapper-->
+
     </div>
-    <!--end::Container-->
+    <!--end::Header container-->
+
 </div>
 <!--end::Header-->
