@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nichefish
  */
-@Component("cookieInterceptor")
+@Component
 @Log4j2
 public class CookieInterceptor
         implements HandlerInterceptor {
