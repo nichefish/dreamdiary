@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
@@ -55,7 +56,7 @@ public class DreamDayApiController
     private DreamDayApiService dreamDayApiService;
 
     /**
-     * 꿈 일자 목록 조회 (Ajax)
+     * API:: 꿈 일자 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @Operation(
@@ -81,6 +82,52 @@ public class DreamDayApiController
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getListDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(dreamDayList.getContent());
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * API:: 꿈 일자 상세 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @Operation(
+            summary = "꿈 일자 목록 조회",
+            description = "꿈 일자 목록을 조회한다."
+    )
+    @GetMapping(value = {ApiUrl.API_DREAM_DAY_DTL_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> dreamDayDtlAjax(
+            DreamDayApiSearchParam searchParam,
+            final LogActvtyParam logParam,
+            final ModelMap model
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            // TagDto tagDto = dreamDayApiService.getDtlDto(tagNo);
+            // ajaxResponse.setResultObj(tagDto);
+            Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+            Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getListDto(searchParamMap, pageRequest);
+            ajaxResponse.setResultList(dreamDayList.getContent());
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

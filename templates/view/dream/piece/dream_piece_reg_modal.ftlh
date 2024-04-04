@@ -1,6 +1,6 @@
 <#--
   -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Modal
-  -- @included in : cl_cd_dtl
+  -- @included_in : cl_cd_dtl
   -->
 <script>
     const DreamPiece = (function() {

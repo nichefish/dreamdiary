@@ -1,7 +1,7 @@
 <#--
   -- 게시판 > 상세 화면
   -->
-<#import "/layout/layout_without_aside.ftlh" as layout >
+<#import "/layout/layout_without_sidebar.ftlh" as layout >
 
 <@layout.layout>
 

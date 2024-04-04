@@ -1,6 +1,6 @@
 <#--
 -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Template
-  -- @included in : cl_cd_list
+  -- @included_in : cl_cd_list
   -->
 <script type="text/x-handlebars-template" id="dtl_cd_reg_template">
     <input type="hidden" name="clCd" value="{{clCd}}">
