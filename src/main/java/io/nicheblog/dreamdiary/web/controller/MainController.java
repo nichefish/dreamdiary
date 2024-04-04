@@ -28,20 +28,6 @@ public class MainController
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DEFAULT;      // 작업 카테고리 (로그 적재용)
 
     /**
-     * Robots.txt 설정 (검색엔진 수집 거부)
-     */
-    @RequestMapping(value = {SiteUrl.ROBOT_TXT, SiteUrl.ROBOTS_TXT})
-    @ResponseBody
-    public String getRobotsTxt(
-            final LogActvtyParam logParam
-    ) {
-
-        // TODO: 로봇 수집 로그 남길거냐?
-
-        return "User-agent: *\n" + "Disallow: /\n";
-    }
-
-    /**
      * 메인 화면 :: 사용자
      */
     @RequestMapping(value = {SiteUrl.ROOT, SiteUrl.MAIN})

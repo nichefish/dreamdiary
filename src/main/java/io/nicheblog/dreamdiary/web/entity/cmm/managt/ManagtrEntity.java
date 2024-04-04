@@ -26,7 +26,7 @@ import javax.persistence.*;
 @Table(name = "managtr")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")

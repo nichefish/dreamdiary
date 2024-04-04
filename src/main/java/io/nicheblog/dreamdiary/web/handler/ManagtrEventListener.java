@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  *
  * @author nichefish
  */
-@Component("managtrEventListener")
+@Component
 public class ManagtrEventListener {
 
     @Resource
