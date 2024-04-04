@@ -12,31 +12,35 @@ public interface ApiUrl {
 
     String JANDI_CONNECT_WH = "https://wh.jandi.com/connect-api/webhook";
 
-    String PREFIX_API = "/api";
-
     /**
      * (API) 꿈 관리
      */
-    String PREFIX_DREAM = "/dream";
-    String PREFIX_API_DREAM = PREFIX_API + PREFIX_DREAM;
-
-    String PREFIX_DAY = "/day";
-    String PREFIX_API_DREAM_DAY = PREFIX_API_DREAM + PREFIX_DAY;
-    String API_DREAM_DAY_LIST_AJAX = PREFIX_API_DREAM_DAY + "/dreamDayListAjax.do";
-    String API_DREAM_DAY_DTL_AJAX = PREFIX_API_DREAM_DAY + "/dreamDayDtlAjax.do";
+    String API_DREAM_DAY_LIST_AJAX = Prefix.API_DREAM_DAY + "/dreamDayListAjax.do";
+    String API_DREAM_DAY_DTL_AJAX = Prefix.API_DREAM_DAY + "/dreamDayDtlAjax.do";
 
     /**
      * (API) 한국천문연구원 : 특일 정보 조회
      */
-    String PREFIX_HLDY = "/hldy";
-    String PREFIX_API_HLDY = PREFIX_API + PREFIX_HLDY;
-    String API_HLDY_GET = PREFIX_API_HLDY + "/getHldyInfo.do";
+    String API_HLDY_GET = Prefix.API_HLDY + "/getHldyInfo.do";
 
     /**
      * (API) JANDI : 메세지 송수신
      */
-    String PREFIX_JANDI = "/jandi";
-    String PREFIX_API_JANDI = PREFIX_API + PREFIX_JANDI;
-    String API_JANDI_SND_MSG = PREFIX_API_JANDI + "/sendMsg.do";
-    String API_JANDI_RCV_MSG = PREFIX_API_JANDI + "/receiveMsg.do";
+    String API_JANDI_SND_MSG = Prefix.API_JANDI + "/sendMsg.do";
+    String API_JANDI_RCV_MSG = Prefix.API_JANDI + "/receiveMsg.do";
+
+
+    String API_NOTION_GET = Prefix.API_NOTION + "/notion.do";
+
+    /**
+     * PREFIX 정보
+     */
+    interface Prefix {
+        String API = "/api";
+        String API_JANDI = API + "/jandi";
+        String API_HLDY = API + "/hldy";
+        String API_DREAM = API + "/dream";
+        String API_DREAM_DAY = API_DREAM + "/day";
+        String API_NOTION = API + "/notion";
+    }
 }

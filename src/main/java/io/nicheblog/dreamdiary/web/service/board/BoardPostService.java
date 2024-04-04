@@ -12,7 +12,6 @@ import io.nicheblog.dreamdiary.web.spec.board.BoardPostSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -87,9 +86,9 @@ public class BoardPostService
             put("fxdYn", "Y");
         }};
 
-        Page<BoardPostEntity> entityList = this.getPageEntity(searchParamMap, Pageable.unpaged());
+        List<BoardPostEntity> entityList = this.getListEntity(searchParamMap);
         List<BoardPostDto.LIST> dtoList = new ArrayList<>();
-        for (BoardPostEntity entity : entityList.getContent()) {
+        for (BoardPostEntity entity : entityList) {
             BoardPostDto.LIST listDto = postMapstruct.toListDto(entity);
             String ctgrNm = cdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
             listDto.setCtgrNm(ctgrNm);
@@ -108,34 +107,5 @@ public class BoardPostService
         String ctgrNm = cdService.getDtlCdNm(rsDto.getCtgrClCd(), rsDto.getCtgrCd());
         rsDto.setCtgrNm(ctgrNm);
         return rsDto;
-    }
-
-    /**
-     * 게시판 > 게시판 등록 전처리
-     */
-    @Override
-    public void preRegist(final BoardPostDto.DTL boardPostDto) throws Exception {
-        // 태그를 먼저 처리해준다. :: 메소드 분리
-        // tagService.processTagList(boardPostDto);
-    }
-
-    /**
-     * 게시판 > 게시판 수정 전처리
-     */
-    @Override
-    public void preModify(final BoardPostDto.DTL boardPostDto) throws Exception {
-        // 태그를 먼저 처리해준다. :: 메소드 분리
-        // tagService.processTagList(boardPostDto);
-    }
-
-    /**
-     * 게시판 > 게시판 삭제
-     */
-    @Override
-    public void preDelete(BoardPostEntity entity) {
-        // 게시물 태그 삭제 처리
-        // List<BoardPostTagEntity> tagList = entity.getTagList();
-        // for (BoardPostTagEntity e : tagList) e.setDelYn("Y");
-        // entity.setTagList(tagList);
     }
 }

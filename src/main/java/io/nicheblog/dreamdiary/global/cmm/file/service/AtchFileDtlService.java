@@ -9,7 +9,6 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,7 +60,7 @@ public class AtchFileDtlService
         Map<String, Object> paramMap = new HashMap<>() {{
             put("atchFileNo", atchFileNo);
         }};
-        return this.getPageDto(paramMap, Pageable.unpaged()).getContent();
+        return this.getListDto(paramMap);
     }
 
     /**
