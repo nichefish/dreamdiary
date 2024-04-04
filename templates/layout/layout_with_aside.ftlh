@@ -26,10 +26,14 @@
           data-kt-app-sidebar-push-header="true"
           data-kt-app-sidebar-push-toolbar="true"
           data-kt-app-sidebar-push-footer="true"
+          data-kt-app-aside-enabled="true"
+          data-kt-app-aside-fixed="true"
+          data-kt-app-aside-push-footer="true"
           data-kt-app-footer-fixed="true"
+
           class="app-default" >
 
-        <!--include::PageLoader-->
+    <!--include::PageLoader-->
         <#include "/layout/_page_loader.ftlh">
 
         <!--begin::App-->
@@ -74,6 +78,9 @@
 
                         <!--include:: Footer-->
                         <#include "/layout/footer/_footer_base.ftlh">
+
+                        <!--include:: Aside-->
+                        <#include "/layout/aside/_aside_base.ftlh">
                     </div>
                     <!--end:::Main-->
 
