@@ -1,10 +1,11 @@
 package io.nicheblog.dreamdiary.web.mapstruct.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import io.nicheblog.dreamdiary.web.model.admin.PopupDto;
+import jdk.jfr.Name;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -16,11 +17,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface PopupMapstruct
-        extends BaseListMapstruct<PopupDto, PopupDto, PopupEntity> {
+        extends BaseCrudMapstruct<PopupDto, PopupDto, PopupEntity> {
 
     PopupMapstruct INSTANCE = Mappers.getMapper(PopupMapstruct.class);
 
@@ -28,9 +29,20 @@ public interface PopupMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     @Mapping(target = "popupStartDt", expression = "java(DateUtils.asStr(entity.getPopupStartDt(), DatePtn.DATETIME))")
     @Mapping(target = "popupEndDt", expression = "java(DateUtils.asStr(entity.getPopupEndDt(), DatePtn.DATETIME))")
     PopupDto toDto(final PopupEntity entity) throws Exception;
+
+
+    /**
+     * Entity -> Dto
+     */
+    @Override
+    @Named("toListDto")
+    @Mapping(target = "popupStartDt", expression = "java(DateUtils.asStr(entity.getPopupStartDt(), DatePtn.DATETIME))")
+    @Mapping(target = "popupEndDt", expression = "java(DateUtils.asStr(entity.getPopupEndDt(), DatePtn.DATETIME))")
+    PopupDto toListDto(final PopupEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
@@ -47,8 +59,5 @@ public interface PopupMapstruct
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "popupStartDt", expression = "java(DateUtils.asDate(dto.getPopupStartDt()))")
     @Mapping(target = "popupEndDt", expression = "java(DateUtils.asDate(dto.getPopupEndDt()))")
-    void updateFromDto(
-            final PopupDto dto,
-            final @MappingTarget PopupEntity entity
-    ) throws Exception;
+    void updateFromDto(final PopupDto dto, final @MappingTarget PopupEntity entity) throws Exception;
 }

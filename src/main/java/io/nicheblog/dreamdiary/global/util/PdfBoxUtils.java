@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author nichefish
  */
-@Component("pdfBoxUtils")
+@Component
 @Log4j2
 public class PdfBoxUtils {
 
