@@ -18,7 +18,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
@@ -37,15 +37,6 @@ public class NoticeDto
 
     /* ----- */
 
-    /** 팝업공지 여부 (Y/N) */
-    @Builder.Default
-    private String popupYn = "N";
-
-    /** 파일시스템 참조 목록 */
-    // private List<FlsysRefDto> flsysRefList;
-
-    /* ----- */
-
     /**
      * 내부 값들 합쳐서 풀 타이틀 반환
      */
@@ -54,6 +45,33 @@ public class NoticeDto
         if (StringUtils.isNotEmpty(this.ctgrNm)) title = "[" + this.ctgrNm + "] " + title;
         if ("Y".equals(this.imprtcYn)) title = "[중요] " + title;
         return title;
+    }
+
+    /* ----- */
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @ToString(callSuper = true)
+    public static class DTL extends NoticeDto {
+        /** 팝업공지 여부 (Y/N) */
+        @Builder.Default
+        private String popupYn = "N";
+
+        /** 파일시스템 참조 목록 */
+        // private List<FlsysRefDto> flsysRefList;
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @ToString(callSuper = true)
+    public static class LIST extends NoticeDto {
+        //
     }
 
     /* ----- */

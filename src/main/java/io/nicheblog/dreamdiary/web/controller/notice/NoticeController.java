@@ -20,7 +20,6 @@ import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
-import io.nicheblog.dreamdiary.web.model.notice.NoticeListDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.notice.NoticeService;
@@ -96,7 +95,7 @@ public class NoticeController
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
             // 목록 조회
-            Page<NoticeListDto> noticeList = noticeService.getListDto(searchParam, pageRequest);
+            Page<NoticeDto.LIST> noticeList = noticeService.getPageDto(searchParam, pageRequest);
             model.addAttribute("noticeList", noticeList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
@@ -204,7 +203,7 @@ public class NoticeController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeRegAjax(
-            final @Valid NoticeDto noticeDto,
+            final @Valid NoticeDto.DTL noticeDto,
             final @RequestParam("postNo") @Nullable Integer key,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
@@ -435,7 +434,7 @@ public class NoticeController
             }};
             Sort sort = Sort.by(Sort.Direction.ASC, "managt.managtDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            Page<NoticeListDto> noticeList = noticeService.getListDto(searchParamMap, pageRequest);
+            Page<NoticeDto.LIST> noticeList = noticeService.getPageDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(noticeList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

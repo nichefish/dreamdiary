@@ -10,7 +10,6 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
-import io.nicheblog.dreamdiary.web.model.admin.MenuListDto;
 import io.nicheblog.dreamdiary.web.model.admin.MenuSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.MenuService;
@@ -185,7 +184,7 @@ public class MenuController
             // 팝업공지 목록 조회
             Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            Page<MenuListDto> menuList = menuService.getMainMenuList(searchParam, pageRequest);
+            Page<MenuDto> menuList = menuService.getMainMenuList(searchParam, pageRequest);
             ajaxResponse.setResultList(menuList.getContent());
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
