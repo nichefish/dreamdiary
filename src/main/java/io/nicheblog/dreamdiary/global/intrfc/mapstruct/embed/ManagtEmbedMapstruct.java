@@ -16,7 +16,7 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface ManagtEmbedMapstruct
@@ -44,8 +44,5 @@ public interface ManagtEmbedMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final ManagtCmpstn dto,
-            final @MappingTarget ManagtEmbed entity
-    ) throws Exception;
+    void updateFromDto(final ManagtCmpstn dto, final @MappingTarget ManagtEmbed entity) throws Exception;
 }

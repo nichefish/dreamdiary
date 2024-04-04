@@ -13,7 +13,7 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, builder = @Builder(disableBuilder = true))
 public interface CommentEmbedMapstruct
@@ -40,8 +40,5 @@ public interface CommentEmbedMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final CommentCmpstn dto,
-            final @MappingTarget CommentEmbed entity
-    ) throws Exception;
+    void updateFromDto(final CommentCmpstn dto, final @MappingTarget CommentEmbed entity) throws Exception;
 }
