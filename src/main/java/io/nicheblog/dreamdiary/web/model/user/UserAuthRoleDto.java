@@ -29,6 +29,8 @@ public class UserAuthRoleDto
     private Integer userAuthRoleNo;
     /** 권한 코드 */
     private String authCd;
+    /** 권한 코드 */
+    private String authNm;
     /** 권한 정보 매핑 */
     private AuthRoleEntity role;
 }

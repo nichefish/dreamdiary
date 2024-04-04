@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class UserDto
@@ -54,9 +54,6 @@ public class UserDto
     /** 퇴사일 */
     private String retireDt;
 
-    /** 계정 설명 (관리자용) */
-    private String userDc;
-
     /**
      * 등록/수정시 사용자 정보 저장할지 말지 화면에서 넘겨받는 임시필드
      */
@@ -66,7 +63,7 @@ public class UserDto
     private UserProflDto userProfl;
 
     /** 사용자 권한 정보 */
-    private List<UserAuthRoleDto> auth;
+    private List<UserAuthRoleDto> authList;
 
     /** 본인신청여부 */
     private String reqstYn;
@@ -82,13 +79,6 @@ public class UserDto
         return "Y".equals(this.useAcsIpYn);
     }
 
-    /**
-     * 내 정보 여부 채크
-     */
-    public Boolean getIsMe() {
-        return (AuthUtils.isRegstr(this.userId));       // 인자로 넘긴 ID와 세션의 사용자 ID 비교
-    }
-
     /** 잠금여부 채크 */
     public Boolean getIsLocked() {
         return "Y".equals(this.lockedYn);
@@ -97,5 +87,35 @@ public class UserDto
     /** 승인여부 채크 */
     public Boolean getIsCf() {
         return "Y".equals(this.cfYn);
+    }
+
+    /* ----- */
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class DTL extends UserDto {
+        /** 계정 설명 (관리자용) */
+        private String userDc;
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    public static class LIST extends UserDto {
+        /** 입사일 */
+        private String ecnyDt;
+        /** 입사일 */
+        private String userNm;
+
+        /* ----- */
+
+        /** 내 정보 여부 채크 */
+        public Boolean getIsMe() {
+            return (AuthUtils.isRegstr(this.getUserId()));       // 인자로 넘긴 ID와 세션의 사용자 ID 비교
+        }
     }
 }

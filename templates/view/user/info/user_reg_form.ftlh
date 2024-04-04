@@ -335,10 +335,10 @@
                 </div>
             </div>
             <div class="col-xl-2">
-                <select name="authCd" id="authCd" class="form-select form-select-solid">
-                    <option value="">--선택--</option>
-                    <#list AUTH_CD![] as auth>
-                        <option value="${auth.dtlCd!}" id="${auth.dtlCd!}"<#if isMdf && auth.dtlCd! == user.authCd!> selected="selected"</#if>>${auth.dtlCdNm!}</option>
+                <select name="authList[0].authCd" id="authCd" class="form-select form-select-solid"
+                        data-control="select2" data-allow-clear="true" data-hide-search="true" data-close-on-select="false" multiple="multiple">
+                    <#list authRoleList![] as auth>
+                        <option value="${auth.authCd!}">${auth.authNm!}</option>
                     </#list>
                 </select>
             </div>

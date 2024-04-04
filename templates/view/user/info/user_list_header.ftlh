@@ -1,6 +1,6 @@
 <#--
   -- 사용자 관리 > 계정 및 권한 관리 목록 > 검색 영역 Header
-  -- @included in : user_list
+  -- @included_in : user_list
   -->
 <form name="listForm" id="listForm" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">

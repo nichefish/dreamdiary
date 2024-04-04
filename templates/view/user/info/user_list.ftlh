@@ -73,12 +73,12 @@
         <thead>
             <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted">
                 <th class="text-center wb-keepall w-10 hidden-table">번호</th>
+                <th class="text-center wb-keepall hidden-table">권한</th>
                 <th class="col-2 text-center wb-keepall">이름 (아이디)</th>
                 <th class="col-1 text-center wb-keepall hidden-table">소속</th>
                 <th class="col-1 text-center wb-keepall hidden-table">팀</th>
                 <th class="col-1 text-center wb-keepall">직급</th>
                 <th class="col-3 text-center wb-keepall hidden-table">E-MAIL</th>
-                <th class="text-center wb-keepall hidden-table">권한</th>
                 <th class="text-center wb-keepall hidden-table">잠금여부</th>
             </tr>
         </thead>
@@ -92,6 +92,16 @@
                 <tr class="<#if user.isMe!false>bg-light</#if> bg-hover-secondary <#if divide>border-top-5</#if>" onclick="Page.dtl(${user.userNo!});">
                     <td class="text-center hidden-table">
                         ${user.rnum}
+                    </td>
+                    <td class="text-center hidden-table">
+                        <#list user.authList![] as auth>
+                            <#if (auth.authCd! == Constant.AUTH_MNGR)>
+                                <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"></i>   <!-- 관리자 -->
+                            <#elseif (auth.authCd! == Constant.AUTH_USER)>
+                                <i class="bi bi-people-fill ms-1"></i>        <!-- 사용자 -->
+                            </#if>
+                            ${auth.authNm!}
+                        </#list>
                     </td>
                     <td class="text-start ps-8">
                         <a href="javascript:void(0);" class="text-dark">
@@ -128,14 +138,6 @@
                     </td>
                     <td class="text-start ps-8 hidden-table">
                         ${(user.email)!"-"}
-                    </td>
-                    <td class="text-center hidden-table">
-                        ${user.authNm!"-"}
-                        <#if (user.authCd! == Constant.AUTH_MNGR)>
-                            <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"></i>   <!-- 관리자 -->
-                        <#elseif (user.authCd! == Constant.AUTH_USER)>
-                            <i class="bi bi-people-fill ms-1"></i>        <!-- 사용자 -->
-                        </#if>
                     </td>
                     <td class="text-center hidden-table">
                         <#if !user.isCf!true>

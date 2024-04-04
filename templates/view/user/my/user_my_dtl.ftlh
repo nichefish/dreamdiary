@@ -162,7 +162,7 @@
                                 <i class="fas fa-user-circle fs-2 blink"></i>
                             </span>
                         </#if>
-                        <!--end::Svg Icon&ndash;&gt;-->
+                        <!--end::Svg Icon-->
                     </div>
                     ${user.userId!}
                 </div>

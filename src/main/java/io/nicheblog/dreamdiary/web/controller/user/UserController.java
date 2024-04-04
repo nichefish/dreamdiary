@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.service.AuthRoleService;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -14,7 +15,6 @@ import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.model.user.UserListDto;
 import io.nicheblog.dreamdiary.web.model.user.UserSearchParam;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.Getter;
@@ -35,6 +35,8 @@ import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * UserInfoController
@@ -57,6 +59,8 @@ public class UserController
 
     @Resource(name = "userService")
     private UserService userService;
+    @Resource(name = "authRoleService")
+    private AuthRoleService authRoleService;
     @Resource(name = "cdService")
     private CdService cdService;
 
@@ -89,7 +93,7 @@ public class UserController
                             .and(Sort.by(Sort.Direction.DESC, "regDt"));
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회
-            Page<UserListDto> userList = userService.getListDto(searchParam, pageRequest);
+            Page<UserDto.LIST> userList = userService.getPageDto(searchParam, pageRequest);
             model.addAttribute("userList", userList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(userList));
             // 코드 정보 모델에 추가
@@ -135,6 +139,13 @@ public class UserController
         try {
             model.addAttribute("user", new UserDto());      // 빈 객체 주입 (freemarker error prevention)
             model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
+
+            // 권한 정보 모델에 추가
+            Map<String, Object> searchParamMap = new HashMap<>() {{
+                put("useYn", "Y");
+            }};
+            model.addAttribute("authRoleList", authRoleService.getListDto(searchParamMap));
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.AUTH_CD, model);
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
@@ -197,7 +208,7 @@ public class UserController
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userRegAjax(
-            final @Valid UserDto userDto,
+            final @Valid UserDto.DTL userDto,
             final @RequestParam("userNo") @Nullable Integer userNo,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
@@ -212,6 +223,7 @@ public class UserController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = userDto.getUserNo() == null;
             UserDto result = isReg ? userService.regist(userDto, request) : userService.modify(userDto, userNo, request);
+
             isSuccess = (result.getUserNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -249,6 +261,7 @@ public class UserController
         try {
             UserDto rsUserDto = userService.getDtlDto(userNo);
             model.addAttribute("user", rsUserDto);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -286,15 +299,20 @@ public class UserController
         try {
             UserDto rsUserDto = userService.getDtlDto(userNo);
             model.addAttribute("user", rsUserDto);
-
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-
+            // 권한 정보 모델에 추가
+            Map<String, Object> searchParamMap = new HashMap<>() {{
+                put("useYn", "Y");
+            }};
+            model.addAttribute("authRoleList", authRoleService.getListDto(searchParamMap));
             model.addAttribute(Constant.IS_MDF, true);       // 등록/수정 화면 플래그
             cdService.setModelCdData(Constant.AUTH_CD, model);
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
             cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

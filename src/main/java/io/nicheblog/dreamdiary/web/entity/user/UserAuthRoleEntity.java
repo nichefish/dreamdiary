@@ -32,6 +32,11 @@ import javax.persistence.*;
 public class UserAuthRoleEntity
         extends BaseCrudEntity {
 
+    @PostLoad
+    private void onLoad() {
+        if (this.roleInfo != null) this.authNm = this.roleInfo.getAuthNm();
+    }
+
     /** 사용자-권한 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,4 +63,8 @@ public class UserAuthRoleEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("작업자 정보")
     private AuthRoleEntity roleInfo;
+
+    /** 권한 이름 */
+    @Transient
+    private String authNm;
 }

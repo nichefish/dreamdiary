@@ -1,6 +1,6 @@
 <#--
   -- 사용자 관리 > 계정 및 권한 관리 > 등록 > 사용자(직원) 정보 추가 Template
-  -- @included in : user_reg_form
+  -- @included_in : user_reg_form
   -->
 <script>
     const UserInfo = function() {
@@ -457,7 +457,7 @@
     </div>
     <div class="col-lg-10 d-flex align-items-center">
         <div class="text-noti">
-            ※소속인 경우 직원정보를 입력해주세요.
+            ※회사 소속인 경우 직원정보를 입력해주세요.
         </div>
     </div>
 </div>
