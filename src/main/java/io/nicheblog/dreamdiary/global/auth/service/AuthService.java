@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.auth.service;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
+import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.global.auth.mapstruct.AuthInfoMapstruct;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.repository.AuthRoleRepository;
@@ -28,7 +28,7 @@ import java.util.Optional;
  *
  * @author nichefish
  */
-@Service("authService")
+@Service
 @Log4j2
 public class AuthService
         implements UserDetailsService {
@@ -148,7 +148,7 @@ public class AuthService
      * 권한 정보 조회
      * TODO: 사이트 커지면 역할 분리해야 함
      */
-    public AuthRole getAuthRole(String authCd) {
+    public AuthRoleEntity getAuthRole(String authCd) {
         return authRoleRepository.findById(authCd).orElse(null);
     }
 

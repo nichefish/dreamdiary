@@ -16,7 +16,7 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
 public interface AuthInfoMapstruct
@@ -28,6 +28,7 @@ public interface AuthInfoMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     // @Mapping(target = "authList", expression = "java(entity.getDtlCdDtoList())")
     @Mapping(target = "acsIpList", expression = "java(entity.acsIpInfo.getAcsIpStrList())")
     @Mapping(target = "lockedYn", expression = "java(entity.acntStus.getLockedYn())")

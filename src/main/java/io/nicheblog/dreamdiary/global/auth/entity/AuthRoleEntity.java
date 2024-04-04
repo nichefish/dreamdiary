@@ -17,7 +17,7 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * AuthRole
+ * AuthRoleEntity
  * <pre>
  *  (공통) 권한 정보 Entity
  * </pre>
@@ -30,49 +30,39 @@ import java.util.List;
 @Table(name = "auth_role")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-public class AuthRole
+public class AuthRoleEntity
         extends BaseAuditEntity
         implements StateEmbedModule {
 
-    /**
-     * 권한 코드 (PK)
-     */
+    /** 권한 코드 (PK) */
     @Id
     @Column(name = "auth_cd", length = 50)
     private String authCd;
 
-    /**
-     * 권한 이름
-     */
+    /** 권한 이름 */
     @Column(name = "auth_nm", length = 50)
     private String authNm;
 
-    /**
-     * 권한 레벨
-     */
+    /** 권한 레벨 */
     @Column(name = "auth_level")
     private Integer authLevel;
 
-    /**
-     * 상위 권한 코드 (null일시 최상위 권한)
-     */
+    /** 상위 권한 코드 (null일시 최상위 권한) */
     @Column(name = "top_auth_cd", length = 50)
     private String topAuthCd;
 
-    /**
-     * 하위 권한 정보
-     */
+    /** 하위 권한 정보 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "auth_cd", referencedColumnName = "top_auth_cd", insertable = false, updatable = false)
     @Fetch(value = FetchMode.SELECT)
     @OrderBy("state.sortOrdr ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("하위 권한 정보")
-    private List<AuthRole> subAuthList;
+    private List<AuthRoleEntity> subAuthList;
 
     /* ----- */
 

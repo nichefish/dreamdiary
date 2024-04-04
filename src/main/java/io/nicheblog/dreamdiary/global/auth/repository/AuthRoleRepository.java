@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.auth.repository;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRole;
+import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("authRoleRepository")
 public interface AuthRoleRepository
-        extends BaseRepository<AuthRole, String> {
+        extends BaseRepository<AuthRoleEntity, String> {
     //
 }
 
