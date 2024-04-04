@@ -53,6 +53,27 @@ public class ExptrReqstDto
 
     /* ----- */
 
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class DTL extends ExptrReqstDto {
+
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @ToString
+    public static class LIST extends ExptrReqstDto {
+
+    }
+
+    /* ----- */
+
     /** 댓글 정보 모듈 (위임) */
     public CommentCmpstn comment;
     /** 태그 정보 모듈 (위임) */

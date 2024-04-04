@@ -24,7 +24,7 @@ import javax.persistence.*;
 @Table(name = "exptr_reqst")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "del_yn='N'")

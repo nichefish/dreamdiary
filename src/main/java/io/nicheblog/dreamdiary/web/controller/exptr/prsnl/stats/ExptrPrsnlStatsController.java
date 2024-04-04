@@ -51,7 +51,7 @@ public class ExptrPrsnlStatsController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_STATS;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "exptrPrsnlService")
+    @Resource(name = "exptrPrsnlPaprService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;
     @Resource(name = "exptrPrsnlStatsService")
     private ExptrPrsnlStatsService exptrPrsnlStatsService;

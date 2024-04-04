@@ -15,7 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class ExptrPrsnlStatsListXlsxDto {
+public class ExptrPrsnlStatsXlsxDto {
 
     /** 구분 */
     private String emplymNm;

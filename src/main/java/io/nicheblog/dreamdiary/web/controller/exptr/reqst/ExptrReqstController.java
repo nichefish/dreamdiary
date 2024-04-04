@@ -15,7 +15,6 @@ import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
-import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstListDto;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.exptr.reqst.ExptrReqstService;
@@ -89,7 +88,7 @@ public class ExptrReqstController
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
             // 목록 조회
-            Page<ExptrReqstListDto> exptrReqstList = exptrReqstService.getListDto(searchParam, pageRequest);
+            Page<ExptrReqstDto.LIST> exptrReqstList = exptrReqstService.getPageDto(searchParam, pageRequest);
             if (exptrReqstList != null) model.addAttribute("exptrReqstList", exptrReqstList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrReqstList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
@@ -200,7 +199,7 @@ public class ExptrReqstController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrReqstRegAjax(
-            final @Valid ExptrReqstDto exptrReqstDto,
+            final @Valid ExptrReqstDto.DTL exptrReqstDto,
             final @RequestParam("postNo") @Nullable Integer key,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,

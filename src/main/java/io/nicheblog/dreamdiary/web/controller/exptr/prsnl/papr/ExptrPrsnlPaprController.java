@@ -20,7 +20,6 @@ import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprListDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
@@ -67,7 +66,7 @@ public class ExptrPrsnlPaprController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "exptrPrsnlService")
+    @Resource(name = "exptrPrsnlPaprService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;
     @Resource(name = "cdService")
     private CdService cdService;
@@ -101,7 +100,7 @@ public class ExptrPrsnlPaprController
                             .and(Sort.by(Sort.Direction.DESC, "managt.managtDt"));
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회
-            Page<ExptrPrsnlPaprListDto> exptrPrsnlList = exptrPrsnlPaprService.getListDto(searchParam, pageRequest);
+            Page<ExptrPrsnlPaprDto.LIST> exptrPrsnlList = exptrPrsnlPaprService.getPageDto(searchParam, pageRequest);
             if (exptrPrsnlList != null) model.addAttribute("exptrPrsnlList", exptrPrsnlList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrPrsnlList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
@@ -254,7 +253,7 @@ public class ExptrPrsnlPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlRegAjax(
-            final @Valid ExptrPrsnlPaprDto exptrPrsnlPaprDto,
+            final @Valid ExptrPrsnlPaprDto.DTL exptrPrsnlPaprDto,
             final @RequestParam("postNo") @Nullable Integer key,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,

@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
+import io.nicheblog.dreamdiary.web.model.cmm.CmmStus;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -96,6 +97,42 @@ public class ExptrPrsnlPaprDto
             sortedItemList.add(item);
         }
         this.setItemList(sortedItemList);
+    }
+
+    /* ----- */
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class DTL extends ExptrPrsnlPaprDto {
+
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class LIST extends ExptrPrsnlPaprDto {
+        /** 항목 건수 */
+        @Builder.Default
+        private Integer itemCnt = 0;
+        /** 영수증 첨부 건수 */
+        @Builder.Default
+        private Integer atchRciptCnt = 0;
+        /** 영수증 제출 건수 */
+        @Builder.Default
+        private Integer orgnlRciptCnt = 0;
+        /** 영수증 불필요 건수 */
+        @Builder.Default
+        private Integer orgnlRciptNotNeededCnt = 0;
+
+        /** 영수증 스캔본 첨부 상태 */
+        private CmmStus atchRciptStus;
+        /** 영수증 원본 제출 상태 */
+        private CmmStus orgnlRciptStus;
     }
 
     /* ----- */

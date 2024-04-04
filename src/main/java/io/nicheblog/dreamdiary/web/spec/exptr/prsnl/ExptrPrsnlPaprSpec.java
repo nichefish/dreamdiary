@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ExptrPrsnlSpec
+ * ExptrPrsnlPaprSpec
  * <pre>
  *  개인경비지출서 목록 검색인자 세팅 Specification
  *  ※ 경비지출서(exptr_prsnl_papr) = 경비지출서. 경비지출항목(exptr_prsnl_item)을 1:N으로 관리한다.
@@ -24,7 +24,7 @@ import java.util.Map;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("exptrPrsnlSpec")
+@Component
 @Log4j2
 public class ExptrPrsnlPaprSpec
         implements BaseSpec<ExptrPrsnlPaprEntity> {

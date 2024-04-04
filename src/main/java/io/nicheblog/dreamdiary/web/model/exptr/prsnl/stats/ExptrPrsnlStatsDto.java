@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.exptr.prsnl.stats;
 
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprListDto;
-import io.nicheblog.dreamdiary.web.model.user.UserListDto;
+import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
+import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import lombok.*;
 
 import java.util.List;
@@ -22,8 +22,8 @@ import java.util.List;
 public class ExptrPrsnlStatsDto {
 
     /** user */
-    private UserListDto user;
+    private UserDto user;
 
     /** 매달 경비지출서 목록 (1월~12월) (빈 값은 null로 들어감) */
-    List<ExptrPrsnlPaprListDto> paprList;
+    List<ExptrPrsnlPaprDto.LIST> paprList;
 }

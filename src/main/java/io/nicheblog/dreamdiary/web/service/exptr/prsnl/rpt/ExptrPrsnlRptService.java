@@ -39,7 +39,7 @@ public class ExptrPrsnlRptService {
 
     private final ExptrPrsnlItemMapstruct exptrPrsnlItemMapstruct = ExptrPrsnlItemMapstruct.INSTANCE;
 
-    @Resource(name = "exptrPrsnlService")
+    @Resource(name = "exptrPrsnlPaprService")
     private ExptrPrsnlPaprService exptrPrsnlPaprService;
 
     @Resource(name = "cdService")
@@ -56,7 +56,7 @@ public class ExptrPrsnlRptService {
             final Pageable pageable
     ) throws Exception {
         // 목록 검색
-        Page<ExptrPrsnlPaprEntity> entityList = exptrPrsnlPaprService.getListEntity(searchParamMap, pageable);
+        Page<ExptrPrsnlPaprEntity> entityList = exptrPrsnlPaprService.getPageEntity(searchParamMap, pageable);
 
         // Page<Entity> -> Page<Dto>
         List<ExptrPrsnlRptItemDto> dtoList = new ArrayList<>();
@@ -89,7 +89,7 @@ public class ExptrPrsnlRptService {
             final Pageable pageable
     ) throws Exception {
         // 경비지출서 목록 검색 (entity level)
-        Page<ExptrPrsnlPaprEntity> entityList = exptrPrsnlPaprService.getListEntity(searchParamMap, pageable);
+        Page<ExptrPrsnlPaprEntity> entityList = exptrPrsnlPaprService.getPageEntity(searchParamMap, pageable);
 
         // 개인별 경비지출내역을 계정항목별로 합산하여 추가
         List<ExptrPrsnlRptSmDto> dtoList = new ArrayList<>();
