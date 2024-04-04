@@ -1,6 +1,6 @@
 <#--
   -- 로그인 화면 > 비밀번호 변경 Modal
-  -- @included in : lgn_form
+  -- @included_in : lgn_form
   -->
 <script id="lgn_pw_chg_template" type="text/x-handlebars-template">
     <input type="hidden" name="userId" id="lgnUserId" value="{{userId}}">

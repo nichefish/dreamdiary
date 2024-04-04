@@ -2,7 +2,7 @@
   -- 로그인 화면
   -- (사이드바 없음)
   -->
-<#import "/layout/layout_without_aside.ftlh" as layout >
+<#import "/layout/layout_without_sidebar.ftlh" as layout >
 
 <@layout.layout>
 
@@ -112,19 +112,31 @@
     @media (max-width: 768px) {
         .logo{ width:200px; margin:0 40px; }
     }
+    .app-page {
+        /* 이미지 경로를 여기에 추가하세요. 예: 'background.jpg' */
+        background-image: url("/media/img/dreamdiary.jpg");
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
 </style>
 
 <!--begin::Root-->
-<div class="w-lg-500px bg-body rounded shadow-sm mt-20 p-10 p-lg-15 mx-auto my-auto">
-    <form class="form w-100" name="lgnForm" id="lgnForm" novalidate="novalidate" method="post">
-        <div class="aside-logo flex-column-auto mb-20" id="kt_aside_logo">
-            <div class="d-flex justify-content-center">
-                <img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="logo"/>
-            </div>
-        </div>
-        <div class="mb-7">
+<div class="w-lg-500px rounded shadow-sm mt-20 p-10 p-lg-15 mx-auto my-auto">
+    <div class="aside-logo flex-column-auto mb-20" style="height:105px;">
+        <!-- -->
+    </div>
+    <div class="d-flex justify-content-center fs-4 mb-4 fw-bold blink" style="letter-spacing:.6px">
+        <i class="bi bi-cloud-moon fs-2 text-dark"></i>
+        <span class="px-2">nichefish's dreamdiary...</span>
+        <i class="bi bi-stars fs-2 text-dark"></i>
+    </div>
+    <form class="form w-100 pe-14" name="lgnForm" id="lgnForm" novalidate="novalidate" method="post">
+        <div class="mb-5">
             <label class="form-label fs-6 fw-bolder" for="userId">아이디</label>
-            <input type="text" name="userId" id="userId" class="form-control form-control-lg form-control-solid enter required" autocomplete="off" maxlength="20" placeholder="아이디를 입력하세요." />
+            <input type="text" name="userId" id="userId" class="form-control form-control-lg enter required" autocomplete="off" maxlength="20" placeholder="아이디를 입력하세요." />
                 <#if isDupIdLgn!false>
                     <input type="hidden" name="isDupIdLgnProc" id="isDupIdLgnProc">
                 </#if>
@@ -133,10 +145,8 @@
             </div>
         </div>
         <div>
-            <div class="d-flex flex-stack mb-2">
-                <label class="form-label fw-bolder fs-6 mb-0" for="password">비밀번호</label>
-            </div>
-            <input type="password" name="password" id="password" class="form-control form-control-lg form-control-solid enter required" autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."/>
+            <label class="form-label fw-bolder fs-6 mb-1" for="password">비밀번호</label>
+            <input type="password" name="password" id="password" class="form-control form-control-lg enter required" autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."/>
             <div class="mb-3 h-15px">
                 <span id="passwordSpan" class="text-danger"></span>
             </div>
@@ -147,14 +157,14 @@
         <div class="me-2 float-end">
             <label class="form-check form-check-custom form-check-solid" for="${REMEMBER_ME_PARAM!}"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="현재 브라우저에서&#10;로그인 상태를 유지합니다.">
-                <span class="form-check-label me-2">
-                    로그인 유지
+                <span class="form-check-label text-dark me-2">
+                    로그인 상태 유지
                 </span>
                 <input type="checkbox" class="form-check-input" id="${REMEMBER_ME_PARAM!}" name="${REMEMBER_ME_PARAM!}">
             </label>
         </div>
-        <div class="text-center mb-4 mt-15">
-            <button type="button" class="btn btn-lg btn-primary w-100" onclick="Page.lgn();">
+        <div class="text-center mb-4 mt-12">
+            <button type="button" class="btn btn-lg btn-light-primary opacity-50 w-100" onclick="Page.lgn();">
                 <span class="indicator-label">Sign In</span>
                 <span class="indicator-progress">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

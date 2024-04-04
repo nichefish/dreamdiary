@@ -1,6 +1,6 @@
 <#--
   -- 로그인 화면 > 비밀번호 변경 Modal
-  -- @included in : lgn_form
+  -- @included_in : lgn_form
   -->
 <div class="modal fade" tabindex="-1" id="lgn_pw_chg_modal" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md modal-dialog-centered">
