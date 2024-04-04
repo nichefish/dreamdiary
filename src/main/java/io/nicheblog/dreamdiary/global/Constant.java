@@ -37,6 +37,8 @@ public final class Constant
     public static final String PAGE_STATS = "통계 조회";
     public static final String PAGE_CAL = "달력 조회";
 
+    public static final String IS_MBL = "IS_MBL";
+
     /**
      * 권한
      */
@@ -75,9 +77,9 @@ public final class Constant
     /**
      * 쿠키
      */
-    public static final String ASIDE_MENU = "aside_menu";
-    public static final String ASIDE_FIXED = "aside_fixed";
-    public static final String ASIDE_MINIMIZED = "aside_minimized";
+    public static final String KT_SIDEBAR_MINIMIZE = "data-kt-app-sidebar-minimize";
+    public static final String KT_SIDEBAR_MINIMIZE_STATE = "sidebar_minimize_state";
+    public static final String KT_ASIDE_MINIMIZE = "data-kt-aside-minimize";
 
     /**
      * Page Static Strings

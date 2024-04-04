@@ -36,12 +36,21 @@ public class CookieUtils {
         response = resp;
     }
 
+    private static final Integer A_DAY = 60 * 60 * 24;
+
     /**
      * 공통 > 쿠키 생성
      */
-    public void setCookie(final String name, final String value) {
+    public static void setCookie(final String name, final String value) {
+        setCookie(name, value, 60 * 60 * 24);
         Cookie cookie = new Cookie(name, value);
-        cookie.setMaxAge(60 * 60 * 24);     //쿠키 유효 기간: 하루로 설정(60초 * 60분 * 24시간)
+        cookie.setMaxAge(A_DAY);     //쿠키 유효 기간: 하루로 설정(60초 * 60분 * 24시간)
+        cookie.setPath("/");            //모든 경로에서 접근 가능하도록 설정
+        response.addCookie(cookie);
+    }
+    public static void setCookie(final String name, final String value, Integer age) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setMaxAge(age);     //쿠키 유효 기간: 하루로 설정(60초 * 60분 * 24시간)
         cookie.setPath("/");            //모든 경로에서 접근 가능하도록 설정
         response.addCookie(cookie);
     }
@@ -53,7 +62,6 @@ public class CookieUtils {
         Cookie cookie = new Cookie("FILE_CREATE_SUCCESS", "TRUE");
         cookie.setMaxAge(3);            //쿠키 유효 기간: 3초
         cookie.setPath("/");            //모든 경로에서 접근 가능하도록 설정
-        cookie.setSecure(false);
         response.addCookie(cookie);
     }
 
@@ -64,7 +72,6 @@ public class CookieUtils {
         Cookie cookie = new Cookie("RESPONSE_SUCCESS", "TRUE");
         cookie.setMaxAge(3);            //쿠키 유효 기간: 3초
         cookie.setPath("/");            //모든 경로에서 접근 가능하도록 설정
-        cookie.setSecure(false);
         response.addCookie(cookie);
     }
 

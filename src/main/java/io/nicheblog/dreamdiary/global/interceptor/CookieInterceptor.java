@@ -37,15 +37,12 @@ public class CookieInterceptor
             final ModelAndView mav
     ) {
 
-        /* ajax 호출의 경우 처리하지 않음 */
-        String requestUri = request.getRequestURI();
-        boolean isAjaxRequest = requestUri.endsWith("Ajax.do");
-        if (isAjaxRequest) return;
-
         /* 사이드바 접기 쿠키 설정 */
-        String asideMenu = CookieUtils.getCookie(Constant.ASIDE_MENU);
-        boolean isMinimized = Constant.ASIDE_MINIMIZED.equals(asideMenu);
-        if (mav != null) mav.addObject(Constant.ASIDE_MENU, isMinimized);
+        if (mav != null) {
+            String sidebarMinimizeState = CookieUtils.getCookie(Constant.KT_SIDEBAR_MINIMIZE_STATE);
+            boolean isSidebarMinimized = "on".equals(sidebarMinimizeState);
+            mav.addObject("isSidebarMinimized", isSidebarMinimized);
+        }
 
         /* 응답 내려갈 때마다 항상 blockUI 클리어 쿠키를 내려준다. */
         CookieUtils.setResponseSuccessCookie();

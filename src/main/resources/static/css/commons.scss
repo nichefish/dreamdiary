@@ -4,20 +4,15 @@
  */
 
 /** ----------------------- */
-
-/** 레이아웃:: 사이드바 접었을 시 로고 표시 안함 */
-[data-kt-aside-minimize=on] .aside:not(:hover) .aside-logo a div,
-[data-kt-aside-minimize=on] .aside:not(:hover) .aside-footer {
-    display: none;
-}
-/** 레이아웃:: 고정헤더가 사이드바에 영향 안받도록 조정 */
-.aside-enabled.aside-fixed.header-fixed .header {
-    left: 0;
-    z-index: 101 !important;
-}
-.aside-enabled.aside-fixed.header-fixed[data-kt-aside-minimize=on] .header {
-    left: 0;
-    z-index: 101 !important;
+@media (min-width: 992px) {
+    [data-kt-app-header-fixed=true][data-kt-app-sidebar-fixed=true][data-kt-app-sidebar-push-header=true] .app-header,
+    [data-kt-app-header-fixed=true][data-kt-app-sidebar-sticky=on][data-kt-app-sidebar-push-header=true] .app-header {
+        left: 0 !important;
+    }
+    body:not([data-kt-app-header-fixed=true])[data-kt-app-sidebar-fixed=true][data-kt-app-sidebar-push-header=true] .app-header,
+    body:not([data-kt-app-header-fixed=true])[data-kt-app-sidebar-sticky=on][data-kt-app-sidebar-push-header=true] .app-header {
+        left: 0 !important;
+    }
 }
 
 /** 모든 input, select, checkbox, a에 cursor-pointer 처리 */
