@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  *
  * @author nichefish
  */
-@Service("atchFileService")
+@Service
 @Log4j2
 public class AtchFileService
         implements BaseCrudService<AtchFileDto, AtchFileDto, Integer, AtchFileEntity, AtchFileRepository, AtchFileSpec, AtchFileMapstruct> {

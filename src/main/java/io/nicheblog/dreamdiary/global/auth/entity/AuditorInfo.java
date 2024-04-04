@@ -28,30 +28,22 @@ import java.io.Serializable;
 public class AuditorInfo
         implements Serializable {
 
-    /**
-     * Auditor 고유 번호 (PK)
-     */
+    /** 사용자 번호 (PK) */
     @Id
     @Column(name = "user_no", length = 20, insertable = false, updatable = false)
     private Integer userNo;
 
-    /**
-     * Auditor ID
-     */
+    /** 사용자 ID */
     @Column(name = "user_id", length = 20, insertable = false, updatable = false)
     private String userId;
 
-    /**
-     * 처리자 이름
-     */
+    /** 사용자 이름 */
     @Column(name = "nick_nm", length = 20, insertable = false, updatable = false)
     private String nickNm;
 
     // TODO: 권한정보 조회
 
-    /**
-     * 프로필 이미지 URL
-     */
+    /** 프로필 이미지 URL */
     @Column(name = "profl_img_url", length = 1000)
     private String proflImgUrl;
 

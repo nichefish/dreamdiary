@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.persistence.PostLoad;
 import java.io.Serializable;
 
 /**
@@ -22,33 +23,22 @@ import java.io.Serializable;
 public class AuditorDto
         implements Serializable {
 
-    /**
-     * 처리자 ID
-     */
-    private String userId;
-    /**
-     * 처리자 이름
-     */
-    private String nickNm;
-    /**
-     * 권한코드
-     */
-    private String authCd;
-    /**
-     * 권한명
-     */
-    private String authNm;
-    /**
-     * 프로필 이미지 URL
-     */
-    private String proflImgUrl;
-
-    /* ----- */
-
-    public String getProflImgUrl() {
-        if (StringUtils.isEmpty(this.proflImgUrl)) {
-            return ("/metronic/assets/media/avatar_blank.png");
-        }
-        return this.proflImgUrl;
+    @PostLoad
+    private void onLoad() {
+        if (StringUtils.isEmpty(this.proflImgUrl)) this.proflImgUrl = "/metronic/assets/media/avatar_blank.png";
     }
+
+    /** 사용자 ID */
+    private String userId;
+    /** 사용자 이름 */
+    private String nickNm;
+
+    /** TODO: 권한코드 */
+    private String authCd;
+
+    /** 권한명  */
+    private String authNm;
+
+    /** 프로필 이미지 URL */
+    private String proflImgUrl;
 }
