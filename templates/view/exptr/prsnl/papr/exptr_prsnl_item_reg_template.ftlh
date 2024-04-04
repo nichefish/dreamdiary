@@ -1,6 +1,6 @@
 <#--
   -- 경비 > 경비지출서 > 등록/수정 Template
-  -- @included in : exptr_prsnl_papr_reg_form, exptr_prsnl_papr_dtl_form
+  -- @included_in : exptr_prsnl_papr_reg_form, exptr_prsnl_papr_dtl_form
   -->
 <script id="exptr_prsnl_item_reg_template" type="text/x-handlebars-template">
     <tr id="itemContainer{{rnum}}" {{#if (equals rjectYn "Y")}}class="bg-light-danger"{{/if}}>

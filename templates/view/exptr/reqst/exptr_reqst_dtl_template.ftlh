@@ -1,6 +1,6 @@
 <#--
   -- 경비 > 물품구매/경조사비 신청 > 상세 !Handlebars! Template
-  -- @included in : exptr_reqst_list
+  -- @included_in : exptr_reqst_list
   -->
 <script type="text/x-handlebars-template" id="exptr_reqst_dtl_template">
     <div class="card mt-4">

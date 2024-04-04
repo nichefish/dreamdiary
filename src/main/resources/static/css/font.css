@@ -4,14 +4,6 @@
  * @auther : nichefish
  */
 /** ----------------------- */
-/*--- 기본 적용 폰트 (default) ---*/
-* {
-  font-family: "Pretendard-Regular";
-}
-
-/**
-* NotoSans
-*/
 @font-face {
   font-family: "NotoSans";
   font-weight: normal;

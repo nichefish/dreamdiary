@@ -1,6 +1,6 @@
 <#--
   -- 경비 관리 > 경비지출누적집계 > 반려사유 Modal
-  -- @included in : exptr_prsnl_stats_dtl
+  -- @included_in : exptr_prsnl_stats_dtl
   -->
 <div class="modal fade" tabindex="-1" id="modal_rject_resn" data-bs-keyboard="false" data-bs-backdrop="static">
     <input type="hidden" id="modal_idx" value="">

@@ -1,6 +1,6 @@
 <#--
   -- 경비 > 물품구매/경조사비 신청 > 목록 검색 영역 Header
-  -- @included in : exptr_reqst_list
+  -- @included_in : exptr_reqst_list
   -->
 <form name="listForm" id="listForm" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">

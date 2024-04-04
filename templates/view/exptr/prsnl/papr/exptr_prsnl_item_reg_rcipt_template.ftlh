@@ -1,7 +1,7 @@
 <#--
   -- 경비 > 경비지출서 > 영수증 Template
-  -- @included in : exptr_prsnl_papr_reg_form
-  -- @included in : exptr_prsnl_papr_dtl
+  -- @included_in : exptr_prsnl_papr_reg_form
+  -- @included_in : exptr_prsnl_papr_dtl
   -->
 <script>
     let Rcipt = function() {
