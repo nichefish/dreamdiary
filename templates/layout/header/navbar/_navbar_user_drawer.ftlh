@@ -1,12 +1,18 @@
 <!--
  -- 레이아웃 > 탑바
- -- @included in : layout
+ -- @included_in : layout
  -->
 <!--begin::user drawer-->
-<div id="kt_drawer_chat" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="chat"
-     data-kt-drawer-activate="true" data-kt-drawer-overlay="true"
-     data-kt-drawer-width="{default:'250px', 'md': '400px'}" data-kt-drawer-direction="end"
-     data-kt-drawer-toggle="#kt_drawer_chat_toggle" data-kt-drawer-close="#kt_drawer_chat_close">
+<div id="kt_drawer_chat" class="bg-body"
+     data-kt-drawer="true"
+     data-kt-drawer-name="chat"
+     data-kt-drawer-activate="true"
+     data-kt-drawer-overlay="true"
+     data-kt-drawer-width="{default:'250px', 'md': '400px'}"
+     data-kt-drawer-direction="end"
+     data-kt-drawer-toggle="#kt_drawer_chat_toggle"
+     data-kt-drawer-close="#kt_drawer_chat_close">
+
     <!--begin::Messenger-->
     <div class="card w-500px rounded-0" id="kt_drawer_chat_messenger">
         <!--begin::Card header-->
@@ -15,7 +21,7 @@
             <div class="card-title">
                 <div class="btn btn-icon btn-primary position-relative w-30px h-30px w-md-40px h-md-40px">
                     <#if (authInfo.proflImgUrl)??>
-                        <img src="${authInfo.proflImgUrl!}" class="img-thumbnail p-0 w-100" />
+                        <img src="${authInfo.proflImgUrl!}" class="img-thumbnail p-0 w-100" onerror="this.src='/metronic/assets/media/avatars/avatar_blank.png';" />
                     <#else>
                         <span class="svg-icon svg-icon-1">
                             <i class="fas fa-user-circle fs-1 text-white"></i>

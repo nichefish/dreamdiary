@@ -30,7 +30,7 @@
             4. Add "active" class to to sidebar toggle element with "kt_app_sidebar_toggle" id.
         }
     -->
-    <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle <#if isSidebarMinimized!false>active</#if> btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary h-30px w-30px position-absolute top-50 start-100 translate-middle rotate "
+    <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary h-30px w-30px position-absolute top-50 start-100 translate-middle rotate "
          data-kt-toggle="true"
          <#if isSidebarMinimized!false>data-kt-toggle-state="active"</#if>
          data-kt-toggle-target="body"

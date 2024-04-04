@@ -1,7 +1,8 @@
 <!--
  -- 레이아웃 > 페이지네이션 모듈
- -- @included in : 페이징이 있는 목록 페이지들
+ -- @included_in : 페이징이 있는 목록 페이지들
  -->
+
 <script>
     let Pagination = function() {
         return {
