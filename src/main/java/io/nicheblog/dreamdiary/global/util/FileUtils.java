@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  *
  * @author nichefish
  */
-@Component("fileUtils")
+@Component
 @Log4j2
 public class FileUtils {
 

@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.reqst.ExptrReqstMapstruct;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
-import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstListDto;
 import io.nicheblog.dreamdiary.web.repository.exptr.reqst.ExptrReqstRepository;
 import io.nicheblog.dreamdiary.web.spec.exptr.reqst.ExptrReqstSpec;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +23,7 @@ import javax.annotation.Resource;
 @Service("exptrReqstService")
 @Log4j2
 public class ExptrReqstService
-        implements BasePostService<ExptrReqstDto, ExptrReqstListDto, Integer, ExptrReqstEntity, ExptrReqstRepository, ExptrReqstSpec, ExptrReqstMapstruct> {
+        implements BasePostService<ExptrReqstDto.DTL, ExptrReqstDto.LIST, Integer, ExptrReqstEntity, ExptrReqstRepository, ExptrReqstSpec, ExptrReqstMapstruct> {
 
     @Resource(name = "exptrReqstRepository")
     private ExptrReqstRepository exptrReqstRepository;
@@ -51,13 +50,13 @@ public class ExptrReqstService
     /**
      * 경비 관리 > 물품구매/경조사비 신청 > 처리완료
      */
-    public ExptrReqstDto exptrReqstCf(final Integer key) throws Exception {
+    public ExptrReqstDto.DTL exptrReqstCf(final Integer key) throws Exception {
         // Entity 레벨 조회
         ExptrReqstEntity entity = this.getDtlEntity(key);
         entity.setCfYn("Y");
         // update
         ExptrReqstEntity rsltEntity = exptrReqstRepository.save(entity);
-        ExptrReqstDto rsltDto = exptrReqstMapstruct.toDto(rsltEntity);
+        ExptrReqstDto.DTL rsltDto = exptrReqstMapstruct.toDto(rsltEntity);
         rsltDto.setIsSuccess(rsltEntity.getPostNo() != null);
         return rsltDto;
     }
@@ -65,13 +64,13 @@ public class ExptrReqstService
     /**
      * 경비 관리 > 물품구매/경조사비 신청 > 처리안함
      */
-    public ExptrReqstDto exptrReqstDismiss(final Integer key) throws Exception {
+    public ExptrReqstDto.DTL exptrReqstDismiss(final Integer key) throws Exception {
         // Entity 레벨 조회
         ExptrReqstEntity entity = this.getDtlEntity(key);
         entity.setCfYn("X");
         // update
         ExptrReqstEntity rsltEntity = exptrReqstRepository.save(entity);
-        ExptrReqstDto rsltDto = exptrReqstMapstruct.toDto(rsltEntity);
+        ExptrReqstDto.DTL rsltDto = exptrReqstMapstruct.toDto(rsltEntity);
         rsltDto.setIsSuccess(rsltEntity.getPostNo() != null);
         return rsltDto;
     }

@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.flsys;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.flsys.FlsysMetaEntity;
 import io.nicheblog.dreamdiary.web.model.flsys.FlsysMetaDto;
@@ -15,11 +15,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseClsfMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
 public interface FlsysMetaMapstruct
-        extends BaseListMapstruct<FlsysMetaDto, FlsysMetaDto, FlsysMetaEntity> {
+        extends BaseClsfMapstruct<FlsysMetaDto, FlsysMetaDto, FlsysMetaEntity> {
 
     FlsysMetaMapstruct INSTANCE = Mappers.getMapper(FlsysMetaMapstruct.class);
 
@@ -27,12 +27,14 @@ public interface FlsysMetaMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     FlsysMetaDto toDto(final FlsysMetaEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
+    @Named("toListDto")
     FlsysMetaEntity toEntity(final FlsysMetaDto dto) throws Exception;
 
     /**

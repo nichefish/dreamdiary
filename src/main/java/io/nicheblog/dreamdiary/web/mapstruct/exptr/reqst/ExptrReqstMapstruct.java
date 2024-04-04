@@ -1,10 +1,10 @@
 package io.nicheblog.dreamdiary.web.mapstruct.exptr.reqst;
 
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
-import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -16,11 +16,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseClsfMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class})
 public interface ExptrReqstMapstruct
-        extends io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct<ExptrReqstDto, ExptrReqstListDto, ExptrReqstEntity> {
+        extends BaseClsfMapstruct<ExptrReqstDto.DTL, ExptrReqstDto.LIST, ExptrReqstEntity> {
 
     ExptrReqstMapstruct INSTANCE = Mappers.getMapper(ExptrReqstMapstruct.class);
 
@@ -28,23 +28,20 @@ public interface ExptrReqstMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
-    // @Mapping(target = "viewerList", expression = "java(entity.getViewerDtoList())")
-    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DatePtn.DATETIME))")
-    ExptrReqstDto toDto(final ExptrReqstEntity entity) throws Exception;
+    @Named("toDto")
+    ExptrReqstDto.DTL toDto(final ExptrReqstEntity entity) throws Exception;
 
     /**
      * Entity -> listDto
      */
-    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
-    // @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DatePtn.DATETIME))")
-    ExptrReqstListDto toListDto(final ExptrReqstEntity entity) throws Exception;
+    @Named("toListDto")
+    ExptrReqstDto.LIST toListDto(final ExptrReqstEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
-    ExptrReqstEntity toEntity(final ExptrReqstDto dto) throws Exception;
+    ExptrReqstEntity toEntity(final ExptrReqstDto.DTL dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
@@ -52,7 +49,7 @@ public interface ExptrReqstMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(
-            final ExptrReqstDto dto,
+            final ExptrReqstDto.DTL dto,
             final @MappingTarget ExptrReqstEntity entity
     ) throws Exception;
 }

@@ -22,7 +22,7 @@ import javax.persistence.*;
 @Table(name = "flsys_meta")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "del_yn='N'")
