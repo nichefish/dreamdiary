@@ -28,7 +28,7 @@ import javax.annotation.Resource;
  *
  * @author nichefish
  */
-@Service("jandiApiService")
+@Service
 @Log4j2
 public class JandiApiService {
 

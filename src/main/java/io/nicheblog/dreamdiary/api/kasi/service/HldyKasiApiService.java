@@ -29,7 +29,7 @@ import java.util.Map;
  *
  * @author nichefish
  */
-@Service("hldyKasiApiService")
+@Service
 @Log4j2
 public class HldyKasiApiService {
 

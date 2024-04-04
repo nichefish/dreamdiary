@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author nichefish
  */
-@Component("hldyKasiScheduler")
+@Component
 @Log4j2
 public class HldyKasiScheduler {
 

@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,16 +26,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author nichefish
  */
-@Component("freemarkerInterceptor")
+@Component
 @Log4j2
 public class FreemarkerInterceptor
         implements HandlerInterceptor {
-
-    //@Resource(name = "boardDefService")
-    //private BoardDefService boardDefService;
-//
-    //@Resource(name = "menuService")
-    //private MenuService menuService;
 
     @Resource
     private HttpSession session;
@@ -59,11 +54,11 @@ public class FreemarkerInterceptor
         // static 자원들에 releaseDate 세팅
         mav.addObject("releaseDate", releaseDate);
 
-        /* 모바일 여부 체크 추가 (현재 미사용중) */
-        // Boolean isMobile = DeviceUtils.getCurrentDevice(request).isMobile();
-        // request.setAttribute(Constant.IS_MBL, isMobile);
+        /* 모바일 여부 체크 추가 (TODO: 현재 미사용중) */
+        Boolean isMobile = DeviceUtils.getCurrentDevice(request).isMobile();
+        request.setAttribute(Constant.IS_MBL, isMobile);
 
-        /* 권한 정보 모델에 추가 */
+        /* 사용자 권한 정보 모델에 추가 */
         if (AuthUtils.isAuthenticated()) {
             AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
             Boolean isMngr = authInfo.getIsMngr();
@@ -76,14 +71,5 @@ public class FreemarkerInterceptor
             session.setAttribute("userMode", userMode);
             mav.addObject("isMngrMode", Constant.AUTH_MNGR.equals(userMode));
         }
-        /* 게시판 목록 조회 */
-        // Map<String, Object> searchParamMap = new HashMap<>() {{
-        //     put("useYn", "Y");
-        // }};
-        // Page<BoardDefDto> boardDefList = boardDefService.getListDto(searchParamMap, Pageable.unpaged());
-        // request.setAttribute("boardDefList", boardDefList.getContent());
-//
-        // // TODO: (사용자/관리자) 메뉴 정보 조회
-        // Page<MenuListDto> menuList = isMngrMode ? menuService.getMngrMenuList() : menuService.getUserMenuList();
     }
 }
