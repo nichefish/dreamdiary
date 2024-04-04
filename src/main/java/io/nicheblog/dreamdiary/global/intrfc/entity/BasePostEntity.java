@@ -21,7 +21,7 @@ import javax.persistence.*;
 @MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class BasePostEntity

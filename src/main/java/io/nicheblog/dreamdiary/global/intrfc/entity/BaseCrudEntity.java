@@ -19,7 +19,7 @@ import java.io.Serializable;
 @MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseCrudEntity

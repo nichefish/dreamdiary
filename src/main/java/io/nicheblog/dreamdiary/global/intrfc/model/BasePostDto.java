@@ -19,7 +19,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
