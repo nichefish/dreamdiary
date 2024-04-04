@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nichefish
  */
-@Component("lgnFailureHandler")
+@Component
 @Log4j2
 public class LgnFailureHandler
         extends SimpleUrlAuthenticationFailureHandler

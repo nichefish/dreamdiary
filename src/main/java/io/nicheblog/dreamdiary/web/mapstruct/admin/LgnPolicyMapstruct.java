@@ -38,8 +38,5 @@ public interface LgnPolicyMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final LgnPolicyDto dto,
-            final @MappingTarget LgnPolicyEntity entity
-    ) throws Exception;
+    void updateFromDto(final LgnPolicyDto dto, final @MappingTarget LgnPolicyEntity entity) throws Exception;
 }
