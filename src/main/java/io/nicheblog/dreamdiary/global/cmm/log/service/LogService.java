@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author nichefish
  * @implements BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Service("logService")
+@Service
 @Log4j2
 public class LogService {
 
@@ -56,10 +56,7 @@ public class LogService {
         this.regLogActvty(logParam, logCn);
     }
     @SneakyThrows
-    public void regLogActvty(
-            final LogActvtyParam logParam,
-            final String logCn
-    ) {
+    public void regLogActvty(final LogActvtyParam logParam, final String logCn) {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
         if (!activeProfile.isProd()) return;
@@ -79,9 +76,7 @@ public class LogService {
      * 활동 로그 등록 (비로그인 상태)
      */
     @SneakyThrows
-    public void regLogAnonActvty(
-            final LogActvtyParam logParam
-    ) {
+    public void regLogAnonActvty(final LogActvtyParam logParam) {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
         if (!activeProfile.isProd()) return;
@@ -94,11 +89,7 @@ public class LogService {
      * 활동 로그 등록 (비로그인 상태)
      */
     @SneakyThrows
-    public void regLogAnonActvty(
-            final String userId,
-            final String resultMsg,
-            boolean isSuccess
-    ) {
+    public void regLogAnonActvty(final String userId, final String resultMsg, boolean isSuccess) {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
         if (!activeProfile.isProd()) return;
@@ -117,9 +108,7 @@ public class LogService {
     }
 
     @SneakyThrows
-    public void regSysActvty(
-            final LogSysParam logParam
-    ) {
+    public void regSysActvty(final LogSysParam logParam) {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
         if (!activeProfile.isProd()) return;

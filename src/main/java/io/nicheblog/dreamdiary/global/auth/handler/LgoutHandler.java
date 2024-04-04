@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nichefish
  */
-@Component("lgoutHandler")
+@Component
 public class LgoutHandler
         implements LogoutHandler {
 

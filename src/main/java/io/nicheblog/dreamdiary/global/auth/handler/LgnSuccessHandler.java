@@ -30,7 +30,7 @@ import java.io.IOException;
  *
  * @author nichefish
  */
-@Component("lgnSuccessHandler")
+@Component
 @Log4j2
 public class LgnSuccessHandler
         extends SavedRequestAwareAuthenticationSuccessHandler

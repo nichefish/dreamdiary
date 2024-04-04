@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  *
  * @author nichefish
  */
-@Component("logEventListener")
+@Component
 public class LogEventListener {
 
     @Resource(name = "logWorker")

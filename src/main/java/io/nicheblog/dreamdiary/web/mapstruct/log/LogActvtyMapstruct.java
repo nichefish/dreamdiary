@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.log;
 
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogActvtyEntity;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.model.log.LogActvtyDto;
 import org.apache.commons.lang3.StringUtils;
@@ -16,11 +16,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
 public interface LogActvtyMapstruct
-        extends BaseListMapstruct<LogActvtyDto, LogActvtyDto, LogActvtyEntity> {
+        extends BaseCrudMapstruct<LogActvtyDto, LogActvtyDto, LogActvtyEntity> {
 
     LogActvtyMapstruct INSTANCE = Mappers.getMapper(LogActvtyMapstruct.class);
 

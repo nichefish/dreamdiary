@@ -73,7 +73,7 @@ public class LogSysController
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
             // 목록 조회
-            Page<LogSysDto> logSysList = logSysService.getListDto(searchParam, pageRequest);
+            Page<LogSysDto> logSysList = logSysService.getPageDto(searchParam, pageRequest);
             model.addAttribute("logSysList", logSysList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(logSysList));
             // 목록 검색 URL + 파라미터 모델에 추가
