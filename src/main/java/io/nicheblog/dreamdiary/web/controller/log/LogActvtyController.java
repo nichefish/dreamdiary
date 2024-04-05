@@ -117,6 +117,7 @@ public class LogActvtyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 상세 조회 및 응답에 추가
             LogActvtyDto rsDto = logActvtyService.getDtlDto(logActvtyNo);
             ajaxResponse.setResultObj(rsDto);
 

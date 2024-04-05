@@ -76,12 +76,11 @@ public class UserMyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 내 정보 조회
+            // 내 정보 조회 및 모델에 추가
             String lgnUserId = AuthUtils.getLgnUserId();
             UserDto lgnUserDto = userService.getDtlDto(lgnUserId);
-            isSuccess = (lgnUserDto != null);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             model.addAttribute("user", lgnUserDto);
+
             // 휴가계획서 년도 정보 조회 (시작일자~종료일자)
             // if (UserAuthService.hasEcnyDt()) {
             //     VcatnStatsYyDto statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
@@ -95,7 +94,7 @@ public class UserMyController
             //         put("searchEndDt", statsYy.getEndDt());
             //         put("regstrId", lgnUserId);
             //     }};
-            //     Page<VcatnPaprListDto> vcatnPaprList = vcatnPaprService.getListDto(searchParamMap, Pageable.unpaged());
+            //     Page<VcatnPaprDto.LIST> vcatnPaprList = vcatnPaprService.getPageDto(searchParamMap, Pageable.unpaged());
             //     model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
             // }
 
@@ -131,6 +130,7 @@ public class UserMyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 이미지 파일 삭제 처리
             isSuccess = userMyService.removeProflImg();
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -163,6 +163,7 @@ public class UserMyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 이미지 파일 업로드 처리
             isSuccess = userMyService.uploadProflImg(request);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -196,6 +197,7 @@ public class UserMyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 확인 처리
             String lgnUserId = AuthUtils.getLgnUserId();
             isSuccess = userMyService.myPwCf(lgnUserId, currPw);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -230,8 +232,8 @@ public class UserMyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            String lgnUserId = AuthUtils.getLgnUserId();
-            isSuccess = userMyService.myPwChg(lgnUserId, currPw, newPw);
+            // 비밀번호 변경 처리
+            isSuccess = userMyService.myPwChg(AuthUtils.getLgnUserId(), currPw, newPw);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;

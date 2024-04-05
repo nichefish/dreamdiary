@@ -73,9 +73,10 @@ public class SchdulCalController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            List<UserDto.LIST> crtdUserList = userService.getCrdtUserList(DateUtils.getCurrDateAddDayStr(-40), DateUtils.getCurrDateAddDayStr(40))
-                                                        .getContent();
+            // 재직자 목록 조회 및 모델에 추가 :: (일정 등록 참가자용)
+            List<UserDto.LIST> crtdUserList = userService.getCrdtUserList(DateUtils.getCurrDateAddDayStr(-40), DateUtils.getCurrDateAddDayStr(40));
             model.addAttribute("crtdUserList", crtdUserList);
+            // 코드 데이터 모델에 추가
             cdService.setModelCdData(Constant.SCHDUL_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
 
@@ -111,6 +112,7 @@ public class SchdulCalController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 목록 조회 및 응답에 추가
             List<SchdulCalDto> schdulCalList = schdulCalService.getSchdulTotalCalList(searchParam);
             ajaxResponse.setResultList(schdulCalList);
 

@@ -137,9 +137,10 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            model.addAttribute("user", new UserDto());      // 빈 객체 주입 (freemarker error prevention)
-            model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
-
+            // 빈 객체 주입 (freemarker error prevention)
+            model.addAttribute("user", new UserDto());
+            // 등록/수정 화면 플래그 세팅
+            model.addAttribute(Constant.IS_REG, true);
             // 권한 정보 모델에 추가
             Map<String, Object> searchParamMap = new HashMap<>() {{
                 put("useYn", "Y");
@@ -183,7 +184,9 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 중복여부 체크
             Boolean isUserIdDup = userService.userIdDupChck(userId);
+
             isSuccess = !isUserIdDup;
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_USER_ID_NOT_DUP : MessageUtils.RSLT_USER_ID_DUP);
         } catch (Exception e) {
@@ -220,7 +223,9 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             boolean isReg = userDto.getUserNo() == null;
             UserDto result = isReg ? userService.regist(userDto, request) : userService.modify(userDto, userNo, request);
 
@@ -259,6 +264,7 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 상세 조회 및 모델에 추가
             UserDto rsUserDto = userService.getDtlDto(userNo);
             model.addAttribute("user", rsUserDto);
 
@@ -297,14 +303,17 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 상세 조회 및 모델에 추가
             UserDto rsUserDto = userService.getDtlDto(userNo);
             model.addAttribute("user", rsUserDto);
+            // 등록/수정 화면 플래그
+            model.addAttribute(Constant.IS_MDF, true);
             // 권한 정보 모델에 추가
             Map<String, Object> searchParamMap = new HashMap<>() {{
                 put("useYn", "Y");
             }};
             model.addAttribute("authRoleList", authRoleService.getListDto(searchParamMap));
-            model.addAttribute(Constant.IS_MDF, true);       // 등록/수정 화면 플래그
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.AUTH_CD, model);
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
@@ -345,6 +354,7 @@ public class UserController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 패스워드 리셋 처리
             isSuccess = userService.passwordReset(userNo);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS_PW_RESET : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -378,11 +388,11 @@ public class UserController
         String resultMsg = "";
         try {
             UserDto rsUserDto = userService.getDtlDto(userNo);
-            // 내 정보인지 비교
+            // 내 정보인지 비교 :: "내 정보는 삭제할 수 없습니다."
             if (AuthUtils.isMyInfo(rsUserDto.getUserId())) {
-                isSuccess = false;
                 resultMsg = MessageUtils.NOT_DELABLE_OWN_ID;
             } else {
+                // 삭제 처리
                 isSuccess = userService.delete(userNo);
                 resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             }

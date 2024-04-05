@@ -111,6 +111,7 @@ public class FlsysMetaController
             postKey.setContentType("flsysMeta");
             FlsysMetaDto rsDto = flsysMetaService.getDtlDto(postKey);
             ajaxResponse.setResultObj(rsDto);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

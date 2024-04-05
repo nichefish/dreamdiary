@@ -68,15 +68,19 @@ public class SchdulController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 등록/수정 처리
             boolean isReg = postNo != null;
             SchdulDto result = isReg ? schdulService.regist(schdulDto) : schdulService.modify(schdulDto, postNo);
+
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            // 잔디 메세지 발송 :: 메인 로직과 분리
-            // if (isSuccess && "Y".equals(jandiYn)) {
-            //     String jandiResultMsg = notifyService.notifySchdulReg(trgetTopic, result, logParam);
-            //     resultMsg = resultMsg + "\n" + jandiResultMsg;
-            // }
+            if (isSuccess) {
+                // 잔디 메세지 발송 :: 메인 로직과 분리
+                // if (isSuccess && "Y".equals(jandiYn)) {
+                //     String jandiResultMsg = notifyService.notifySchdulReg(trgetTopic, result, logParam);
+                //     resultMsg = resultMsg + "\n" + jandiResultMsg;
+                // }
+            }
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -109,8 +113,10 @@ public class SchdulController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 응답에 추가
             SchdulDto schdul = schdulService.getDtlDto(postNo);
             ajaxResponse.setResultObj(schdul);
+
             isSuccess = (schdul.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -137,7 +143,7 @@ public class SchdulController
     @ResponseBody
     public ResponseEntity<AjaxResponse> schdulDelAjax(
             final LogActvtyParam logParam,
-            final @RequestParam("schdulNo") String schdulNoStr
+            final @RequestParam("schdulNo") Integer schdulNo
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -145,8 +151,7 @@ public class SchdulController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer schdulNo = Integer.parseInt(schdulNoStr);
-
+            // 삭제 처리
             isSuccess = schdulService.delete(schdulNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -156,7 +161,7 @@ public class SchdulController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + schdulNoStr);
+            logParam.setCn("key: " + schdulNo);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
