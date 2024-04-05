@@ -15,15 +15,8 @@
 <!-- buttons -->
 <#include "/view/_component/_btn.ftlh">
 
-
-
-
 <!-- in progress... -->
 <#include "/view/_component/post/_post_module.ftlh">
-
-
-
-
 
 <!-- in progress... -->
 <#include "/view/_component/_clsf_module.ftlh">

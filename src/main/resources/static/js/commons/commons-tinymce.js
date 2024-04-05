@@ -70,14 +70,6 @@ commons.tinymce = (function() {
                     });
                 }
             };
-            if (KTApp.isDarkMode()) {
-                options["language"] = "ko";
-                options["mode"] = "oxide-textareas";
-                options["theme"] = "advanced";
-                options["theme_advanced_buttons1"] = "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect,|,code";
-                options["skin"] = "oxide-dark";
-                options["content_css"] = "dark";
-            }
             tinymce.init(options);
         },
         /**

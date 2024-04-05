@@ -34,6 +34,12 @@ import javax.persistence.*;
 public class ContentTagEntity
         extends BaseCrudEntity {
 
+    @PostLoad
+    private void onLoad() {
+        // 지출 코드 이름
+        if (this.tag != null) this.tagNm = this.tag.getTagNm();
+    }
+
     /** 컨텐츠 태그 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +67,9 @@ public class ContentTagEntity
     @JoinColumn(name = "ref_tag_no", referencedColumnName = "tag_no", updatable = false, insertable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     private TagSmpEntity tag;
+
+    @Transient
+    private String tagNm;
 
     /* ----- */
 

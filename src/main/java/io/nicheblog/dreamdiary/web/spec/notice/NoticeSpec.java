@@ -1,11 +1,13 @@
 package io.nicheblog.dreamdiary.web.spec.notice;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
@@ -25,7 +27,19 @@ import java.util.Map;
 @Component
 @Log4j2
 public class NoticeSpec
-        implements BaseSpec<NoticeEntity> {
+        implements BaseClsfSpec<NoticeEntity> {
+
+    /**
+     * 조회 후처리:: 정렬 순서 변경
+     */
+    @Override
+    public void postQuery(
+            Root<NoticeEntity> root,
+            CriteriaQuery<?> query,
+            CriteriaBuilder builder
+    ) {
+        query.distinct(true);
+    }
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
@@ -69,11 +83,13 @@ public class NoticeSpec
                     Expression<String> nickNmExp = regstr.get(key);
                     predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
                     continue;
-                // case "tag":
-                //     // 태그 검색
-                //     Join<NoticeEntity, BoardPostTagEntity> boardTag = root.join("tagList", JoinType.INNER);
-                //     Expression<String> boardTagExp = boardTag.get("boardTag");
-                //     predicate.add(builder.equal(boardTagExp, searchParamMap.get(key)));
+                case "tags":
+                    // 태그 검색
+                    Join<NoticeEntity, ContentTagEntity> contentTag = root.join("tag").join("list", JoinType.INNER);
+                    Expression<String> contentTagExp = contentTag.get("refTagNo");
+                    List<Integer> refTagNoList = (List<Integer>) searchParamMap.get(key);
+                    if (!CollectionUtils.isEmpty(refTagNoList)) predicate.add(contentTagExp.in(refTagNoList)); // IN 절 사용
+                    continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
                     try {

@@ -36,4 +36,7 @@ public class ContentTagDto
 
     /** 태그 정보 */
     private TagDto tag;
+
+    /** 태그 이름 */
+    private String tagNm;
 }
