@@ -21,7 +21,7 @@
             },
             /** 목록 검색 */
             search: function() {
-                $("#pageNo").val(1);
+                $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}?actionTyCd=SEARCH");
             },
             /** 엑셀 다운로드 */

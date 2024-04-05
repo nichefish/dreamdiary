@@ -13,7 +13,7 @@
             },
             /** 목록 검색 */
             search: function() {
-                $("#pageNo").val(1);
+                $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_SYS_LIST!}?actionTyCd=SEARCH");
             },
         }
