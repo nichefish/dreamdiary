@@ -202,7 +202,7 @@ public class ExptrReqstController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrReqstRegAjax(
-            final @Valid ExptrReqstDto.DTL exptrReqstDto,
+            final @Valid ExptrReqstDto.DTL exptrReqst,
             final @RequestParam("postNo") @Nullable Integer key,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
@@ -219,8 +219,8 @@ public class ExptrReqstController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
-            boolean isReg = exptrReqstDto.getPostNo() == null;
-            ExptrReqstDto result = isReg ? exptrReqstService.regist(exptrReqstDto, request) : exptrReqstService.modify(exptrReqstDto, key, request);
+            boolean isReg = key == null;
+            ExptrReqstDto result = isReg ? exptrReqstService.regist(exptrReqst, request) : exptrReqstService.modify(exptrReqst, key, request);
 
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -240,7 +240,7 @@ public class ExptrReqstController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(exptrReqstDto.toString());
+            logParam.setCn(exptrReqst.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

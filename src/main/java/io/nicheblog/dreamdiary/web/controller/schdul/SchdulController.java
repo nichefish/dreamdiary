@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulDto;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.security.InvalidParameterException;
 
 /**
  * SchdulController
@@ -55,7 +57,7 @@ public class SchdulController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> schdulRegAjax(
-            final @Valid SchdulDto schdulDto,
+            final @Valid SchdulDto schdul,
             final LogActvtyParam logParam,
             final @RequestParam("postNo") @Nullable Integer postNo,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
@@ -68,13 +70,17 @@ public class SchdulController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
+            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
-            boolean isReg = postNo != null;
-            SchdulDto result = isReg ? schdulService.regist(schdulDto) : schdulService.modify(schdulDto, postNo);
+            boolean isReg = postNo == null;
+            SchdulDto result = isReg ? schdulService.regist(schdul) : schdulService.modify(schdul, postNo);
 
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             if (isSuccess) {
+                // 태그 처리 :: 메인 로직과 분리
+                publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), schdul.tag));
                 // 잔디 메세지 발송 :: 메인 로직과 분리
                 // if (isSuccess && "Y".equals(jandiYn)) {
                 //     String jandiResultMsg = notifyService.notifySchdulReg(trgetTopic, result, logParam);
@@ -88,7 +94,7 @@ public class SchdulController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(schdulDto.toString());
+            logParam.setCn(schdul.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

@@ -8,8 +8,8 @@
         return {
             init: function() {
                 /** 로그인 공지 목록 조회 */
-                let isNotAuthenticated = ${isNotAuthenticated!false?string};
-                if (!isNotAuthenticated) NoticePopup.showNoticePopupAjax();
+                let isAuthenticated = ${(authInfo != null)!false?string};
+                if (isAuthenticated) NoticePopup.showNoticePopupAjax();
             },
             /** 팝업 목록 조회 및 처리 */
             showNoticePopupAjax() {

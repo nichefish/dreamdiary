@@ -95,8 +95,8 @@ public class MenuController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuRegAjax(
-            final @Valid MenuDto menuDto,
-            final Integer menuId,
+            final @Valid MenuDto menu,
+            final Integer key,
             final LogActvtyParam logParam,
             final BindingResult bindingResult
     ) {
@@ -109,8 +109,9 @@ public class MenuController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
-            boolean isReg = menuDto.getMenuId() == null;
-            MenuDto result = isReg ? menuService.regist(menuDto) : menuService.modify(menuDto, menuId);
+            boolean isReg = key == null;
+            MenuDto result = isReg ? menuService.regist(menu) : menuService.modify(menu, key);
+
             isSuccess = result.getMenuId() != null;
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -120,7 +121,7 @@ public class MenuController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(menuDto.toString());
+            logParam.setCn(menu.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

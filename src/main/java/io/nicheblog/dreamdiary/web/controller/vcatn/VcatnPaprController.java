@@ -159,7 +159,7 @@ public class VcatnPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprRegAjax(
-            final @Valid VcatnPaprDto.DTL vcatnPaprDto,
+            final @Valid VcatnPaprDto.DTL vcatnPapr,
             final @RequestParam("postNo") @Nullable Integer key,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
@@ -177,7 +177,7 @@ public class VcatnPaprController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = key == null;
-            VcatnPaprDto result = isReg ? vcatnPaprService.regist(vcatnPaprDto, request) : vcatnPaprService.modify(vcatnPaprDto, key, request);
+            VcatnPaprDto result = isReg ? vcatnPaprService.regist(vcatnPapr, request) : vcatnPaprService.modify(vcatnPapr, key, request);
 
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -197,7 +197,7 @@ public class VcatnPaprController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(vcatnPaprDto.toString());
+            logParam.setCn(vcatnPapr.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

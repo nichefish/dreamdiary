@@ -94,7 +94,7 @@ public class LgnPolicyController
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> lgnPolicyRegAjax(
-            final @Valid LgnPolicyDto lgnPolicyDto,
+            final @Valid LgnPolicyDto lgnPolicy,
             final LogActvtyParam logParam,
             final BindingResult bindingResult
     ) {
@@ -107,7 +107,7 @@ public class LgnPolicyController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
-            isSuccess = lgnPolicyService.regist(lgnPolicyDto);
+            isSuccess = lgnPolicyService.regist(lgnPolicy);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
@@ -116,7 +116,7 @@ public class LgnPolicyController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(lgnPolicyDto.toString());
+            logParam.setCn(lgnPolicy.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

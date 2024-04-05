@@ -61,7 +61,7 @@ public class DreamPieceController
     @ResponseBody
     public ResponseEntity<AjaxResponse> dreamPieceRegAjax(
             final @Valid DreamPieceDto dreamPiece,
-            final @RequestParam("postNo") @Nullable Integer postNo,
+            final @RequestParam("postNo") @Nullable Integer key,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
             final BindingResult bindingResult
@@ -75,8 +75,8 @@ public class DreamPieceController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록 및 수정 처리
-            boolean isReg = dreamPiece.getPostNo() == null;
-            DreamPieceDto result = isReg ? dreamPieceService.regist(dreamPiece, request) : dreamPieceService.modify(dreamPiece, postNo, request);
+            boolean isReg = key == null;
+            DreamPieceDto result = isReg ? dreamPieceService.regist(dreamPiece, request) : dreamPieceService.modify(dreamPiece, key, request);
 
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

@@ -111,7 +111,7 @@ public class BoardDefController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefRegAjax(
-            final @Valid BoardDefDto boardDefDto,
+            final @Valid BoardDefDto boardDef,
             final LogActvtyParam logParam,
             final BindingResult bindingResult
     ) {
@@ -124,7 +124,7 @@ public class BoardDefController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
-            BoardDefDto result = boardDefService.regist(boardDefDto);
+            BoardDefDto result = boardDefService.regist(boardDef);
             
             isSuccess = (result.getBoardCd() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -135,7 +135,7 @@ public class BoardDefController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(boardDefDto.toString());
+            logParam.setCn(boardDef.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -151,7 +151,7 @@ public class BoardDefController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefMdfItemAjax(
-            final @Valid BoardDefDto boardDefDto,
+            final @Valid BoardDefDto boardDef,
             final String boardCd,
             final LogActvtyParam logParam,
             final BindingResult bindingResult
@@ -165,7 +165,7 @@ public class BoardDefController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 항목 수정 처리
-            BoardDefDto result = boardDefService.modify(boardDefDto, boardCd);
+            BoardDefDto result = boardDefService.modify(boardDef, boardCd);
 
             isSuccess = (result.getBoardCd() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -176,7 +176,7 @@ public class BoardDefController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(boardDefDto.toString());
+            logParam.setCn(boardDef.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

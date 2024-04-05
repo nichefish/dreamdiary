@@ -67,7 +67,6 @@ public class LgnController
 
         // 로그인 상태일 경우 메인 화면으로 리다이렉트
         if (AuthUtils.isAuthenticated()) return "redirect:" + SiteUrl.MAIN;
-        model.addAttribute("isNotAuthenticated", true);
 
         // remember-me 관련 파라미터 세팅
         model.addAttribute("REMEMBER_ME_PARAM", REMEMBER_ME_PARAM);

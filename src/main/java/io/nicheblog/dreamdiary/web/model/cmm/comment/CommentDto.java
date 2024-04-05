@@ -1,8 +1,11 @@
 package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -22,7 +25,8 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class CommentDto
-        extends BaseClsfDto {
+        extends BasePostDto
+        implements CommentCmpstnModule, TagCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     protected static final String CONTENT_TYPE = ContentType.COMMENT.key;
@@ -39,9 +43,6 @@ public class CommentDto
     protected Integer refPostNo;
     /** 원글 컨텐츠 타입 */
     protected String refContentType;
-
-    /** 내용 */
-    protected String cn;
 
     /* ----- */
 
@@ -75,4 +76,6 @@ public class CommentDto
 
     /** 댓글 정보 모듈 (위임) */
     public CommentCmpstn comment;
+    /** 태그 정보 모듈 (위임) */
+    public TagCmpstn tag;
 }

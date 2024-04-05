@@ -74,15 +74,12 @@ public class NoticeEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
-
     /** 태그 정보 모듈 (위임) */
     @Embedded
     public TagEmbed tag;
-
     /** 조치 정보 모듈 (위임) */
     @Embedded
     public ManagtEmbed managt;
-
     /** 열람자 정보 모듈 (위임) */
     @Embedded
     public ViewerEmbed viewer;

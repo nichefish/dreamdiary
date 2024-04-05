@@ -262,7 +262,7 @@ public class ExptrPrsnlPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlRegAjax(
-            final @Valid ExptrPrsnlPaprDto.DTL exptrPrsnlPaprDto,
+            final @Valid ExptrPrsnlPaprDto.DTL exptrPrsnlPapr,
             final @RequestParam("postNo") @Nullable Integer key,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
@@ -278,7 +278,7 @@ public class ExptrPrsnlPaprController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = key == null;
-            ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPaprDto, request) : exptrPrsnlPaprService.modify(exptrPrsnlPaprDto, key, request);
+            ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPapr, request) : exptrPrsnlPaprService.modify(exptrPrsnlPapr, key, request);
 
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -293,7 +293,7 @@ public class ExptrPrsnlPaprController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(exptrPrsnlPaprDto.toString());
+            logParam.setCn(exptrPrsnlPapr.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

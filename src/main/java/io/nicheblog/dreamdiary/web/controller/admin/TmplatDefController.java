@@ -109,8 +109,8 @@ public class TmplatDefController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> tmplatDefRegAjax(
-            final @Valid TmplatDefDto tmplatDefDto,
-            final @Nullable Integer tmplatDefNo,
+            final @Valid TmplatDefDto tmplatDef,
+            final @Nullable Integer key,
             final LogActvtyParam logParam,
             final BindingResult bindingResult
     ) {
@@ -123,8 +123,8 @@ public class TmplatDefController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
-            boolean isReg = tmplatDefNo == null;
-            TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDefDto) : tmplatDefService.modify(tmplatDefDto, tmplatDefNo);
+            boolean isReg = key == null;
+            TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDef) : tmplatDefService.modify(tmplatDef, key);
 
             isSuccess = (result.getTmplatDefNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -135,7 +135,7 @@ public class TmplatDefController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(tmplatDefDto.toString());
+            logParam.setCn(tmplatDef.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

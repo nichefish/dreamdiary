@@ -103,8 +103,8 @@ public class CommentController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentRegAjax(
-            final @Valid CommentDto.DTL commentDto,
-            final @RequestParam("postNo") @Nullable Integer postNo,
+            final @Valid CommentDto.DTL comment,
+            final @RequestParam("postNo") @Nullable Integer key,
             final CommentParam param,
             final LogActvtyParam logParam,
             final BindingResult bindingResult
@@ -118,8 +118,8 @@ public class CommentController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록 및 수정 처리
-            boolean isReg = (postNo == null);
-            CommentDto result = isReg ? commentService.regist(commentDto) : commentService.modify(commentDto, postNo);
+            boolean isReg = (key == null);
+            CommentDto result = isReg ? commentService.regist(comment) : commentService.modify(comment, key);
 
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

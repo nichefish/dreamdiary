@@ -211,7 +211,7 @@ public class UserController
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userRegAjax(
-            final @Valid UserDto.DTL userDto,
+            final @Valid UserDto.DTL user,
             final @RequestParam("userNo") @Nullable Integer userNo,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
@@ -226,8 +226,8 @@ public class UserController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
-            boolean isReg = userDto.getUserNo() == null;
-            UserDto result = isReg ? userService.regist(userDto, request) : userService.modify(userDto, userNo, request);
+            boolean isReg = user.getUserNo() == null;
+            UserDto result = isReg ? userService.regist(user, request) : userService.modify(user, userNo, request);
 
             isSuccess = (result.getUserNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -238,7 +238,7 @@ public class UserController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(userDto.toString());
+            logParam.setCn(user.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

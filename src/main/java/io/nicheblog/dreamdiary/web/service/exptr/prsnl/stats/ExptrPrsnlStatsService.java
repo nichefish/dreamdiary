@@ -47,8 +47,7 @@ public class ExptrPrsnlStatsService {
         String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYearStr();
         List<ExptrPrsnlStatsDto> list = new ArrayList<>();
 
-        List<UserDto.LIST> userList = userService.getCrdtUserList(yyStr)
-                                                .getContent();
+        List<UserDto.LIST> userList = userService.getCrdtUserList(yyStr);
 
         Map<String, Object> searchParamMap = new HashMap<>();
         searchParamMap.put("yy", yyStr);
