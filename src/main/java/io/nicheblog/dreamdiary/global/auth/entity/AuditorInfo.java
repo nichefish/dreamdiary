@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.auth.entity;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -53,7 +54,7 @@ public class AuditorInfo
      * getter override
      */
     public String getProflImgUrl() {
-        if (StringUtils.isEmpty(this.proflImgUrl)) return ("/metronic/assets/media/avatar_blank.png");
+        if (StringUtils.isEmpty(this.proflImgUrl)) return (Constant.BLANK_AVATAR_URL);
         return this.proflImgUrl;
     }
 }

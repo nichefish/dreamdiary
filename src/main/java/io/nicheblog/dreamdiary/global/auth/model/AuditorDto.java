@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.auth.model;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +26,7 @@ public class AuditorDto
 
     @PostLoad
     private void onLoad() {
-        if (StringUtils.isEmpty(this.proflImgUrl)) this.proflImgUrl = "/metronic/assets/media/avatar_blank.png";
+        if (StringUtils.isEmpty(this.proflImgUrl)) this.proflImgUrl = Constant.BLANK_AVATAR_URL;
     }
 
     /** 사용자 ID */

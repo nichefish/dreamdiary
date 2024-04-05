@@ -71,7 +71,7 @@ public class AuthInfo
      */
     public String getProflImgUrl() {
         if (StringUtils.isEmpty(this.proflImgUrl)) {
-            return ("/metronic/assets/media/avatar_blank.png");
+            return (Constant.BLANK_AVATAR_URL);
         }
         return this.proflImgUrl;
     }

@@ -1,7 +1,7 @@
 <!--
- -- 레이아웃 > Footer
- -- @included_in : layout
- -->
+  -- 꿈 관리 : ASIDE (우측 사이드바)
+  -- @included_in : layout
+  -->
 
 <!--begin::aside-->
 <div id="kt_app_aside" class="app-aside flex-column mt-7"

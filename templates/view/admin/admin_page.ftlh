@@ -1,7 +1,7 @@
 <#--
   -- 테스트 화면
   -->
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_with_aside.ftlh" as layout >
 
 <script defer="defer" src="/static/node_modules/sass/sass.js"></script>
 
@@ -150,14 +150,13 @@
     <!--begin::Col-->
     <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-4 mb-md-5 mb-xl-10">
         <div class="card post">
-        <!--begin::Card widget 20-->
+            <!--begin::Card widget 20-->
             <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed mb-3">
                 <!--begin::Table head-->
                 <thead>
                 <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 text-muted">
                     <th class="col-2 text-center wb-keepall">권한 코드</th>
-                    <th class="col-2 text-center wb-keepall">권한명</th>
-                    <th class="col-1 text-center wb-keepall">권한 레벨</th>
+                    <th class="col-2 text-center wb-keepall">권한명 (level)</th>
                     <th class="col-3 text-center wb-keepall">상위 권한</th>
                     <th class="col-1 text-center wb-keepall">정렬 순서</th>
                     <th class="col-2 text-center wb-keepall">사용 여부</th>
@@ -170,13 +169,30 @@
                 <#list authRoleList![] as authRole>
                     <tr>
                         <td class="text-center hidden-table">
-                            ${authRole.authCd!}
+                            <div class="text-muted fw-bold">${authRole.authCd!}</div>
                         </td>
-                        <td class="text-start ps-15">
-                            ${authRole.authNm!}
-                        </td>
-                        <td class="text-start ps-15">
-                            ${authRole.authLevel!}
+                        <td class="text-center">
+                            <div class="d-flex-center">
+                                <#if (authRole.authCd! == Constant.AUTH_MNGR)>
+                                    <!-- 관리자 -->
+                                    <i class="bi bi-person-lines-fill text-info fs-2 me-2 opacity-75"
+                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="${authRole.authNm!"-"}"></i>
+                                    <div class="text-info fw-bold">${authRole.authNm!}</div>
+                                    <div class="badge badge-info ms-3">${authRole.authLevel!}</div>
+                                <#elseif (authRole.authCd! == Constant.AUTH_USER)>
+                                    <!-- 사용자 -->
+                                    <i class="bi bi-people-fill me-2 fs-2"
+                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="${authRole.authNm!"-"}"></i>
+                                    <div class="text-muted fw-bold">${authRole.authNm!}</div>
+                                    <div class="badge badge-dark ms-3 opacity-50">${authRole.authLevel!}</div>
+                                <#elseif (authRole.authCd! == Constant.AUTH_DEV)>
+                                    <!-- 사용자 -->
+                                    <i class="bi bi-person-fill-gear text-info fs-2 me-2 opacity-75"
+                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="${authRole.authNm!"-"}"></i>
+                                    <div class="text-info fw-bold">${authRole.authNm!}</div>
+                                    <div class="badge badge-info ms-3">${authRole.authLevel!}</div>
+                                </#if>
+                            </div>
                         </td>
                         <td class="text-start ps-10 hidden-table">
                             ${authRole.topAuthCd!}
@@ -202,5 +218,8 @@
 <!--end::Card-->
 <form name="procForm" id="procForm" method="get">
 </form>
+
+<!--include:: Dream - Aside-->
+<#include "/view/admin/admin_aside_base.ftlh">
 
 </@layout.layout>

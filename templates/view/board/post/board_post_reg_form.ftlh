@@ -176,7 +176,9 @@
                 </div>
             </div>
         </#if>
+
         <div class="separator my-8"></div>
+
         <div class="d-flex flex-column mb-8">
             <!--begin::Label-->
             <label class="mb-2" for="tinymce_cn">

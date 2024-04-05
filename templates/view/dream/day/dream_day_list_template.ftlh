@@ -2,6 +2,7 @@
 -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Template
   -- @included_in : cl_cd_list
   -->
+
 <script type="text/x-handlebars-template" id="dream_day_list_template">
     {{#each this}}
         <div class="row dream-day">
@@ -45,7 +46,7 @@
                     <div class="row dream-piece">
                         <div class="col-1 text-center" style="width:85px;">-</div>
                         <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-start h-75" style="width:10px;">&nbsp;</div>
-                        <div class="col-1 py-3 dream-piece-cn">
+                        <div class="col-10 py-3 dream-piece-cn">
                             꿈 조각 정보가 없습니다.
                         </div>
                     </div>

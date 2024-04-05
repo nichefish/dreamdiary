@@ -39,6 +39,10 @@ public final class Constant
 
     public static final String IS_MBL = "IS_MBL";
 
+    /** blank avatar image url */
+    public static final String BLANK_AVATAR_URL = "/metronic/assets/media/avatars/avatar_blank.png";
+
+
     /**
      * 권한
      */
