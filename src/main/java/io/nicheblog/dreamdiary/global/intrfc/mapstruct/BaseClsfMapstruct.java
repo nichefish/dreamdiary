@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.mapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import org.mapstruct.AfterMapping;
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
@@ -23,7 +24,6 @@ public interface BaseClsfMapstruct<Dto extends BaseClsfDto, ListDto extends Base
      * default : ClsfEntity 요소들 매핑
      */
     @AfterMapping
-    @Named("toDto")
     default void mapClsfFields(final Entity entity, final @MappingTarget Dto dto) throws Exception {
         MapstructHelper.mapClsfFields(entity, dto);
     }
@@ -32,7 +32,6 @@ public interface BaseClsfMapstruct<Dto extends BaseClsfDto, ListDto extends Base
      * default : ClsfEntity 요소들 매핑
      */
     @AfterMapping
-    @Named("toListDto")
     default void mapClsfListFields(final Entity entity, final @MappingTarget ListDto dto) throws Exception {
         MapstructHelper.mapClsfFields(entity, dto);
     }

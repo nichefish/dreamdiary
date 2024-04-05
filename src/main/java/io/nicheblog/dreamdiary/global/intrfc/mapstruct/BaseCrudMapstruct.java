@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.mapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import org.mapstruct.AfterMapping;
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
@@ -31,8 +32,7 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
      * default : BaseEntity 기본 요소들 매핑
      */
     @AfterMapping
-    @Named("toDto")
-    default void mapBaseFields(final Entity entity, final @MappingTarget ListDto dto) throws Exception {
+    default void mapBaseFields(final Entity entity, final @MappingTarget Dto dto) throws Exception {
         MapstructHelper.mapBaseFields(entity, dto);
     }
 
@@ -40,7 +40,6 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
      * default : BaseEntity 기본 요소들 매핑
      */
     @AfterMapping
-    @Named("toListDto")
     default void mapBaseListFields(final Entity entity, final @MappingTarget ListDto dto) throws Exception {
         MapstructHelper.mapBaseFields(entity, dto);
     }
