@@ -26,7 +26,7 @@
 
 <#macro managtr_area post >
     <!--end::Foot-->
-    <#if post.managt?? && post.managt.list?size gt 1>
+    <#if post.managt?? && post.managt.list?? && post.managt.list?size gt 1>
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
         <div class="d-flex flex-stack flex-wrap justify-content-start ">
             <!--begin::Author-->

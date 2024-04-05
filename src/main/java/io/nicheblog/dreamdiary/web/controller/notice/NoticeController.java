@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -94,7 +93,7 @@ public class NoticeController
             model.addAttribute("noticeFxdList", noticeService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
-            // 목록 조회
+            // 목록 조회 및 모델에 추가
             Page<NoticeDto.LIST> noticeList = noticeService.getPageDto(searchParam, pageRequest);
             model.addAttribute("noticeList", noticeList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
@@ -138,13 +137,16 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            model.addAttribute("post", new NoticeDto());      // 빈 객체 주입 (freemarker error prevention)
-            model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
+            // 빈 객체 주입 (freemarker error prevention)
+            model.addAttribute("post", new NoticeDto());
+            // 등록/수정 화면 플래그 세팅
+            model.addAttribute(Constant.IS_REG, true);
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
-            cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
             // cmmService.setModelFlsysPath(model);
+            
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -168,7 +170,7 @@ public class NoticeController
     @RequestMapping(SiteUrl.NOTICE_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeRegPreviewPop(
-            final NoticeDto noticeDto,
+            final NoticeDto notice,
             final LogActvtyParam logParam,
             final ModelMap model
     ) {
@@ -178,16 +180,18 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 정보 모델에 추가
+            model.addAttribute("post", notice);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            model.addAttribute("post", noticeDto);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
         } finally {
             // 로그 관련 처리
-            logParam.setCn(noticeDto.toString());
+            logParam.setCn(notice.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -203,7 +207,7 @@ public class NoticeController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeRegAjax(
-            final @Valid NoticeDto.DTL noticeDto,
+            final @Valid NoticeDto.DTL notice,
             final @RequestParam("postNo") @Nullable Integer key,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
@@ -217,21 +221,25 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             boolean isReg = (key == null);
-            NoticeDto result = isReg ? noticeService.regist(noticeDto, request) : noticeService.modify(noticeDto, key, request);
+            NoticeDto result = isReg ? noticeService.regist(notice, request) : noticeService.modify(notice, key, request);
+
             isSuccess = (result.getPostNo() != null);
-            if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 태그 처리 :: 메인 로직과 분리
-            publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), noticeDto.tag));
-            // 조치자 추가 :: 메인 로직과 분리
-            publisher.publishEvent(new ManagtrAddEvent(this, result.getClsfKey()));
-            // 잔디 메세지 발송 :: 메인 로직과 분리
-            // if ("Y".equals(jandiYn)) {
-            //     String jandiResultMsg = notifyService.notifyNoticeReg(trgetTopic, result, logParam);
-            //     resultMsg = resultMsg + "\n" + jandiResultMsg;
-            // }
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            if (isSuccess) {
+                // 태그 처리 :: 메인 로직과 분리
+                publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), notice.tag));
+                // 조치자 추가 :: 메인 로직과 분리
+                publisher.publishEvent(new ManagtrAddEvent(this, result.getClsfKey()));
+                // 잔디 메세지 발송 :: 메인 로직과 분리
+                // if ("Y".equals(jandiYn)) {
+                //     String jandiResultMsg = notifyService.notifyNoticeReg(trgetTopic, result, logParam);
+                //     resultMsg = resultMsg + "\n" + jandiResultMsg;
+                // }
+            }
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -239,7 +247,7 @@ public class NoticeController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(noticeDto.toString());
+            logParam.setCn(notice.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -265,14 +273,16 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             NoticeDto rsDto = noticeService.getDtlDto(key);
             model.addAttribute("post", rsDto);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조회수 카운트 추가
             noticeService.hitCntUp(key);
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -305,15 +315,16 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 게시판 정보 조회
+            // 객체 조회 및 응답에 추가
             NoticeDto rsDto = noticeService.getDtlDto(key);
             ajaxResponse.setResultObj(rsDto);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조회수 카운트 추가
             noticeService.hitCntUp(key);
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -347,16 +358,19 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             NoticeDto rsDto = noticeService.getDtlDto(key);
             model.addAttribute("post", rsDto);
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 모델 정보 추가
+            // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_MDF, true);
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
             // cmmService.setModelFlsysPath(model);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -389,16 +403,18 @@ public class NoticeController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 삭제 처리
             isSuccess = noticeService.delete(key);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            if (isSuccess) {
+                // 태그 처리 :: 메인 로직과 분리
+                publisher.publishEvent(new TagProcEvent(this, new BaseClsfKey(key, ContentType.NOTICE)));
+            }
         } catch (Exception e) {
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            // 태그 처리 :: 메인 로직과 분리
-            publisher.publishEvent(new TagProcEvent(this, new BaseClsfKey(key, ContentType.NOTICE)));
-            // 태그 처리 :: 메인 로직과 분리
-            // publisher.publishEvent(new TagEvent(this, new BaseClsfKey(key, ContentType.NOTICE), noticeDto.tag));
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
@@ -436,6 +452,7 @@ public class NoticeController
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             Page<NoticeDto.LIST> noticeList = noticeService.getPageDto(searchParamMap, pageRequest);
             ajaxResponse.setResultList(noticeList.getContent());
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

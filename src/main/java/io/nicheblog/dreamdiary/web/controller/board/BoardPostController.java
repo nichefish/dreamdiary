@@ -5,11 +5,11 @@ import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.global.exception.FailureException;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
@@ -148,8 +148,11 @@ public class BoardPostController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 빈 객체 주입 (freemarker error prevention)
             model.addAttribute("post", new BoardPostDto());         // 빈 객체 주입 (freemarker error prevention)
+            // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
+            // 코드 정보 모델에 추가
             model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdListByClCd(boardDef.getCtgrClCd()));
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
@@ -178,7 +181,7 @@ public class BoardPostController
     @RequestMapping(SiteUrl.BOARD_POST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegPreviewPop(
-            final BoardPostDto boardPostDto,
+            final BoardPostDto boardPost,
             final @RequestParam("boardCd") String boardCd,
             final LogActvtyParam logParam,
             final ModelMap model
@@ -190,9 +193,11 @@ public class BoardPostController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 정보 모델에 추가
+            model.addAttribute("post", boardPost);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            model.addAttribute("post", boardPostDto);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -214,7 +219,7 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostRegAjax(
-            final @Valid BoardPostDto.DTL boardPostDto,
+            final @Valid BoardPostDto.DTL boardPost,
             final BoardPostKey key,
             final LogActvtyParam logParam,
             // final @RequestParam("jandiYn") @Nullable String jandiYn,
@@ -228,19 +233,25 @@ public class BoardPostController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             boolean isReg = key.getPostNo() == null;
-            BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPostDto, request) : boardPostService.modify(boardPostDto, key.getClsfKey(), request);
+            BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPost, request) : boardPostService.modify(boardPost, key.getClsfKey(), request);
+
             isSuccess = (result.getPostNo() != null);
-            if (!isSuccess) throw new FailureException("처리에 실패했습니다.");
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 조치자 추가 :: 메인 로직과 분리
-            publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
-            // 잔디 메세지 발송 :: 메인 로직과 분리
-            // if ("Y".equals(jandiYn)) {
-            //     String jandiResultMsg = notifyService.notifyBoardPostReg(trgetTopic, result, logParam);
-            //     resultMsg = resultMsg + "\n" + jandiResultMsg;
-            // }
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            if (isSuccess) {
+                // 태그 처리 :: 메인 로직과 분리
+                publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), boardPost.tag));
+                // 조치자 추가 :: 메인 로직과 분리
+                publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
+                // 잔디 메세지 발송 :: 메인 로직과 분리
+                // if ("Y".equals(jandiYn)) {
+                //     String jandiResultMsg = notifyService.notifyBoardPostReg(trgetTopic, result, logParam);
+                //     resultMsg = resultMsg + "\n" + jandiResultMsg;
+                // }
+            }
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -248,7 +259,7 @@ public class BoardPostController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(boardPostDto.toString());
+            logParam.setCn(boardPost.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -279,14 +290,16 @@ public class BoardPostController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
             model.addAttribute("post", rsDto);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조회수 카운트 추가
             boardPostService.hitCntUp(postKey.getClsfKey());
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -319,15 +332,16 @@ public class BoardPostController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 게시판 정보 조회
+            // 객체 조회 및 응답에 추가
             BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
             ajaxResponse.setResultObj(rsDto);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조회수 카운트 추가
             boardPostService.hitCntUp(postKey.getClsfKey());
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -367,16 +381,19 @@ public class BoardPostController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
-            isSuccess = rsDto.getPostNo() != null;
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             model.addAttribute("post", rsDto);
-
-            model.addAttribute(Constant.IS_MDF, true);           // 등록/수정 화면 플래그 세팅
+            // 등록/수정 화면 플래그 세팅
+            model.addAttribute(Constant.IS_MDF, true);
+            // 코드 정보 모델에 추가
             model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdListByClCd(boardDef.getCtgrClCd()));
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
             // CmmUtils.setModelFlsysPath(model);
+
+            isSuccess = rsDto.getPostNo() != null;
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -409,8 +426,13 @@ public class BoardPostController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 삭제 처리
             isSuccess = boardPostService.delete(postKey.getClsfKey());
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            if (isSuccess) {
+                // 태그 처리 :: 메인 로직과 분리
+                publisher.publishEvent(new TagProcEvent(this, postKey.getClsfKey()));
+            }
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
