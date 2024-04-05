@@ -2,6 +2,8 @@ package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
 import lombok.*;
 
+import java.util.List;
+
 /**
  * BaseClsfSearchParam
  * <pre>
@@ -22,5 +24,6 @@ public class BaseClsfSearchParam
     /** 컨텐츠 타입 */
     private String contentType;
 
-    // TODO: 태그 등 모듈 관련 검색 요소
+    /** 태그 검색 */
+    private List<Integer> tags;
 }
