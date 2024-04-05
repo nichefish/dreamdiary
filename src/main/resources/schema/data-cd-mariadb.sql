@@ -10,7 +10,7 @@ REPLACE INTO CMM_CL_CD (cl_cd, cl_cd_nm, CL_CD_DC) VALUES ('JANDI_TOPIC_CD', '�
 -- 필수 :: 잔디 토픽 상세코드 추가
 REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('JANDI_TOPIC_CD', 'NOTICE', '공지사항', '공지사항', '1');
 REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('JANDI_TOPIC_CD', 'SCHDUL', '일정공유', '일정공유', '2');
-REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('JANDI_TOPIC_CD', 'TEST', '테스트', '테스트', '9');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('JANDI_TOPIC_CD', 'TEST', '테스트', '테스트', '99');
 
 -- -----------------------
 
@@ -20,42 +20,19 @@ REPLACE INTO CMM_CL_CD (cl_cd, cl_cd_nm, cl_cd_dc) VALUES ('MDFABLE_CD', '수정
 REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'REGSTR', '등록자', '등록자', '1');
 REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'MNGR', '관리자', '관리자', '2');
 REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'USER', '사용자', '사용자', '3');
-REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'ALL', '전체', '전체', '4');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'ALL', '전체', '전체', '99');
 
 -- -----------------------
 
--- 필수 :: 활동 구분 분류코드 추가
-REPLACE INTO CMM_CL_CD (CL_CD, CL_CD_NM, CL_CD_DC) VALUES ('ACTVTY_CTGR_CD', '활동 구분 코드', '활동 구분 코드');
--- 필수 :: 활동 구분 상세코드 추가
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'LGN', '로그인', '로그인', '1');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'ADMIN', '사이트 관리', '사이트 관리', '1');
+-- 옵션 :: 일정 분류코드 추가
+REPLACE INTO CMM_CL_CD (cl_cd, cl_cd_nm, cl_cd_dc) VALUES ('SCHDUL_CD', '수정권한', '수정권한 코드');
+-- 필수 :: 수정권한 상세코드 추가
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'HLDY', '공휴일', '공휴일', '1');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'CEREMONY', '행사', '행사', '2');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'BRTHDY', '생일', '생일', '3');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'INDT', '내부일정', '내부일정', '11');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'TLCMMT', '재택', '재택', '21');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'OUTDT', '외근', '외근', '22');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'VCATN', '휴가', '휴가', '23');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'ETC', '기타', '기타', '99');
 
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'NOTICE', '공지사항', '공지사항', '2');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'BOARD_POST', '일반게시판', '일반게시판', '3');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'SCHDUL', '일정 관리', '일정 관리', '4');
-
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'VCATN_PAPR', '휴가계획서', '휴가계획서', '3');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'VCATN_STATS_YY', '년도별 휴가관리', '년도별 휴가관리', '4');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'VCATN_DY', '휴가사용일자', '휴가사용일자', '3');
-
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_PRSNL_PAPR', '경비지출서', '경비지출서', '4');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_PRSNL_STATS_YY', '경비지출누적집계', '경비지출누적집계', '3');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_PRSNL_RPT', '월간지출내역', '월간지출내역', '4');
-
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'EXPTR_REQST', '물품구매/경조사비 신청', '물품구매/경조사비 신청', '3');
-
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'user_profl', '사용자 관리', '사용자 관리', '4');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'USER_MY', '내 정보', '내 정보', '3');
-
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_CTGR_CD', 'BOARD_DEF', '게시판 정의 관리', '게시판 정의 관리', '4');
-
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_TY_CD', 'CL_CD', '코드 관리', '코드 관리', '3');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_TY_CD', 'LGN_POLICY', '로그인 정책 관리', '로그인 정책 관리', '4');
-
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_TY_CD', 'ACTVTY_TMPLAT', '사용자', '사용자', '3');
-
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_TY_CD', 'ACTVTY_LOG_ACTVTY', '전체', '전체', '4');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_TY_CD', 'ACTVTY_LOG_SYS', '사용자', '사용자', '3');
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_TY_CD', 'ACTVTY_LOG_STATS', '전체', '전체', '4');
-
-REPLACE INTO CMM_DTL_CD (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('ACTVTY_TY_CD', 'ACTVTY_FLSYS', '전체', '전체', '4');
