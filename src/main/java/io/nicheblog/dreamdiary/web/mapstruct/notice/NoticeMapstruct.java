@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.notice;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.MapstructHelper;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
