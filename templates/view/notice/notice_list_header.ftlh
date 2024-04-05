@@ -13,7 +13,7 @@
             <!-- datepicker -->
             <div class="position-relative me-md-3">
                 <@component.datepicker searchParam "searchStartDt" "" />
-                <@component.datepicker searchParam "searchEndDt" "" />
+                <@component.datepicker searchParam "searchEndDt" "today" />
             </div>
             <div class="position-relative me-md-3">
                 <select name="ctgrCd" id="ctgrCd" class="form-select form-select-solid fw-bolder form-select-sm py-3">

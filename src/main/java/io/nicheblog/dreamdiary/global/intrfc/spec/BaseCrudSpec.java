@@ -24,7 +24,12 @@ public interface BaseCrudSpec<Entity extends BaseCrudEntity>
     /**
      * default: 검색 조건 목록 반환
      */
+    @Override
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
+        // filter
+        searchParamMap.remove("backToList");
+        searchParamMap.remove("actvtyCtgr");
+
         return (root, query, builder) -> {
             List<Predicate> basePredicate = new ArrayList<>();
             List<Predicate> predicate = new ArrayList<>();

@@ -9,7 +9,7 @@
         <div class="col-lg-10 col-12 align-items-center d-flex my-2">
             <div class="position-relative me-md-3">
                 <@component.datepicker searchParam "searchStartDt" "" />
-                <@component.datepicker searchParam "searchEndDt" "" />
+                <@component.datepicker searchParam "searchEndDt" "today" />
             </div>
             <div class="position-relative me-md-2 searchType">
                 <select name="yy" id="yy" class="form-select form-select-solid fw-bolder form-select-sm py-3">

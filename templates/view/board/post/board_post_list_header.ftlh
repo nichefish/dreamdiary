@@ -14,7 +14,7 @@
             <!-- datepicker -->
             <div class="position-relative me-md-3">
                 <@component.datepicker searchParam "searchStartDt" "" />
-                <@component.datepicker searchParam "searchEndDt" "" />
+                <@component.datepicker searchParam "searchEndDt" "today" />
             </div>
             <#if POST_CTGR_CD??>
                 <div class="position-relative me-md-2">

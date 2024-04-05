@@ -24,6 +24,10 @@ public interface BaseSpec<Entity> {
      * default: 검색 조건 목록 반환
      */
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
+        // filter
+        searchParamMap.remove("backToList");
+        searchParamMap.remove("actvtyCtgr");
+
         return (root, query, builder) -> {
             List<Predicate> predicate = new ArrayList<>();
             try {

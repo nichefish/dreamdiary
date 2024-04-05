@@ -9,7 +9,7 @@
             const ptn = commons.datepicker.ptnDate;
             /** dateRangePicker init */
             let initDt = "${initDt!}";
-            if(initDt === "") initDt = commons.date.getCurrDateStr(ptn);
+            if(initDt === "today") initDt = commons.date.getCurrDateStr(ptn);
             commons.datepicker.singleDatePicker("#${searchNm}", ptn, initDt);
         });
     </script>

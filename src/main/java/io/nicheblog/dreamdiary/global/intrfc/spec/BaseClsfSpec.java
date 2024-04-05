@@ -25,7 +25,12 @@ public interface BaseClsfSpec<Entity extends BaseClsfEntity>
     /**
      * default: 검색 조건 목록 반환
      */
+    @Override
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
+        // filter
+        searchParamMap.remove("backToList");
+        searchParamMap.remove("actvtyCtgr");
+
         return (root, query, builder) -> {
             List<Predicate> basePredicate = new ArrayList<>();
             List<Predicate> clsfPredicate = new ArrayList<>();
@@ -59,12 +64,18 @@ public interface BaseClsfSpec<Entity extends BaseClsfEntity>
 
         for (String key : searchParamMap.keySet()) {
             switch(key) {
+                // 태그 모듈
                 case "tags":
-                    // 태그 검색
-                    Join<NoticeEntity, ContentTagEntity> contentTag = root.join("tag").join("list", JoinType.INNER);
-                    Expression<String> contentTagExp = contentTag.get("refTagNo");
-                    List<Integer> refTagNoList = (List<Integer>) searchParamMap.get(key);
-                    if (!CollectionUtils.isEmpty(refTagNoList)) predicate.add(contentTagExp.in(refTagNoList)); // IN 절 사용
+                    try {
+                        List<Integer> refTagNoList = (List<Integer>) searchParamMap.get(key);
+                        if (CollectionUtils.isEmpty(refTagNoList)) continue;
+                        // 태그 검색
+                        Join<NoticeEntity, ContentTagEntity> contentTag = root.join("tag").join("list", JoinType.INNER);
+                        Expression<String> contentTagExp = contentTag.get("refTagNo");
+                        predicate.add(contentTagExp.in(refTagNoList)); // IN 절 사용
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     keysToRemove.add(key);      // 처리된 키 저장
                     continue;
                 // TODO:

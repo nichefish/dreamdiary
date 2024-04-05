@@ -26,6 +26,7 @@ public interface BasePostSpec<Entity extends BasePostEntity>
     /**
      * default: 검색 조건 목록 반환
      */
+    @Override
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
         return (root, query, builder) -> {
             List<Predicate> basePredicate = new ArrayList<>();
