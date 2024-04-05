@@ -1,13 +1,19 @@
 package io.nicheblog.dreamdiary.web.entity.schdul;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -24,13 +30,19 @@ import java.util.Date;
 @Table(name = "schdul")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE schdul SET del_yn = 'Y' WHERE schdul_no = ?")
 public class SchdulEntity
-        extends BaseClsfEntity {
+        extends BasePostEntity
+        implements CommentEmbedModule, TagEmbedModule {
+
+    @PostLoad
+    private void onLoad() {
+        if (this.schdulCdInfo != null) this.schdulNm = this.schdulCdInfo.getDtlCdNm();
+    }
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.SCHDUL;
@@ -51,20 +63,25 @@ public class SchdulEntity
 
     /* ----- */
 
-    /** 일정 이름 */
-    @Column(name = "title")
-    @Comment("일정 이름")
-    private String title;
-
-    /** 내용 */
-    @Column(name = "cn")
-    @Comment("내용")
-    private String cn;
-
     /** 일정 코드 */
     @Column(name = "schdul_cd")
     @Comment("일정분류코드")
     private String schdulCd;
+
+    /** 일정 코드 정보 (복합키 조인) */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.SCHDUL_CD + "\'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "schdul_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
+    })
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("일정 코드 정보")
+    private DtlCdEntity schdulCdInfo;
+
+    /** 일정 코드명 */
+    @Transient
+    private String schdulNm;
 
     /** 시작일 */
     @Column(name = "bgn_dt")
@@ -76,14 +93,18 @@ public class SchdulEntity
     @Comment("종료일")
     private Date endDt;
 
-    /** 일정 비고 */
-    @Column(name = "rm")
-    @Comment("비고")
-    private String rm;
-
     /** 개인일정 여부 (Y/N) */
     @Builder.Default
     @Column(name = "prvt_yn")
     @Comment("개인일정 여부 (Y/N)")
     private String prvtYn = "N";
+
+    /* ----- */
+
+    /** 댓글 정보 모듈 (위임) */
+    @Embedded
+    public CommentEmbed comment;
+    /** 태그 정보 모듈 (위임) */
+    @Embedded
+    public TagEmbed tag;
 }
