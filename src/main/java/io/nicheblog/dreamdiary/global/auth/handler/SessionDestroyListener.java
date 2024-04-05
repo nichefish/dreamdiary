@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author nichefish
  */
-@Component("sessionDestroyListener")
+@Component
 @Log4j2
 public class SessionDestroyListener
         implements ApplicationListener<SessionDestroyedEvent> {
