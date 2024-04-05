@@ -54,7 +54,7 @@ public class DtlCdController
     private DtlCdService dtlCdService;
 
     /**
-     * 상세 코드 관리 (useYn=N 포함) 상세 조회 (Ajax)
+     * 상세 코드 관리(useYn=N 포함) 상세 조회 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.DTL_CD_DTL_AJAX)
@@ -70,12 +70,12 @@ public class DtlCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 응답에 추가
             DtlCd dtlCdDto = dtlCdService.getDtlDto(cmmDtlKey);
-            if (dtlCdDto != null) {
-                isSuccess = true;
-                ajaxResponse.setResultObj(dtlCdDto);
-            }
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            ajaxResponse.setResultObj(dtlCdDto);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -91,7 +91,7 @@ public class DtlCdController
     }
 
     /**
-     * 상세 코드 관리 (useYn=N 포함) 등록 (Ajax)
+     * 상세 코드 관리(useYn=N 포함) 등록/수정 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.DTL_CD_REG_AJAX, SiteUrl.DTL_CD_MDF_AJAX})
@@ -110,9 +110,12 @@ public class DtlCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             boolean isReg = "Y".equals(regYn);
             DtlCd result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd, dtlCdKey);
+            
             isSuccess = (result.getDtlCd() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -139,7 +142,7 @@ public class DtlCdController
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdUseAjax(
             final LogActvtyParam logParam,
-            final DtlCdKey cmmDtlKey
+            final DtlCdKey dtlKey
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -147,7 +150,8 @@ public class DtlCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = dtlCdService.setStateUse(cmmDtlKey);
+            // 상태 변경 처리
+            isSuccess = dtlCdService.setStateUse(dtlKey);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -172,8 +176,7 @@ public class DtlCdController
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdUnuseAjax(
             final LogActvtyParam logParam,
-            final @RequestParam("clCd") String clCd,
-            final @RequestParam("dtlCd") String dtlCd
+            final DtlCdKey dtlKey
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -181,8 +184,8 @@ public class DtlCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            DtlCdKey key = new DtlCdKey(clCd, dtlCd);
-            isSuccess = dtlCdService.setStateUnuse(key);
+            // 상태 변경 처리
+            isSuccess = dtlCdService.setStateUnuse(dtlKey);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -199,7 +202,7 @@ public class DtlCdController
     }
 
     /**
-     * 상세 코드 관리 (useYn=N 포함) 삭제
+     * 상세 코드 관리(useYn=N 포함) 삭제
      * (관리자MNGR만 접근 가능)
      *
      * @param dtlCdKey: clCd, dtlCd
@@ -217,6 +220,7 @@ public class DtlCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 삭제 처리
             isSuccess = dtlCdService.delete(dtlCdKey);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -235,7 +239,7 @@ public class DtlCdController
 
 
     /**
-     * 분류 코드로 상세 코드 관리 (useYn=N 포함) 목록 조회 (Ajax)
+     * 분류 코드로 상세 코드 관리(useYn=N 포함) 목록 조회 (Ajax)
      * (관리자MNGR만 접근 가능)
      *
      * @param clCd: 구분코드 (대분류)
@@ -253,6 +257,7 @@ public class DtlCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 목록 조회
             Map<String, Object> searchParam = new HashMap<String, Object>();
             searchParam.put("clCd", clCd);
             List<DtlCd> dtlCdList = dtlCdService.getListDto(searchParam);

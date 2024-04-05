@@ -72,6 +72,8 @@ public class MenuController
         boolean isSuccess = false;
         String resultMsg = null;
         try {
+            // TODO:
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -104,7 +106,9 @@ public class MenuController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             boolean isReg = menuDto.getMenuId() == null;
             MenuDto result = isReg ? menuService.regist(menuDto) : menuService.modify(menuDto, menuId);
             isSuccess = result.getMenuId() != null;
@@ -132,7 +136,7 @@ public class MenuController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuDtlAjax(
-            final @RequestParam("menuId") String menuIdStr,
+            final @RequestParam("menuId") Integer menuId,
             final LogActvtyParam logParam
     ) {
 
@@ -142,7 +146,6 @@ public class MenuController
         String resultMsg = "";
         try {
             // 게시판 정보 조회
-            Integer menuId = Integer.parseInt(menuIdStr);
             MenuDto rsDto = menuService.getDtlDto(menuId);
             ajaxResponse.setResultObj(rsDto);
             isSuccess = true;
@@ -154,7 +157,7 @@ public class MenuController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + menuIdStr);
+            logParam.setCn("key: " + menuId);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -181,11 +184,13 @@ public class MenuController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 팝업공지 목록 조회
+            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            // 목록 조회 및 응답에 추가
             Page<MenuDto> menuList = menuService.getMainMenuList(searchParam, pageRequest);
             ajaxResponse.setResultList(menuList.getContent());
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -209,7 +214,7 @@ public class MenuController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuDelAjax(
-            final @RequestParam("menuId") String menuIdStr,
+            final @RequestParam("menuId") Integer menuId,
             final LogActvtyParam logParam
     ) {
 
@@ -218,7 +223,6 @@ public class MenuController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer menuId = Integer.parseInt(menuIdStr);
             isSuccess = menuService.delete(menuId);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -228,7 +232,7 @@ public class MenuController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + menuIdStr);
+            logParam.setCn("key: " + menuId);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

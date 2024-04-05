@@ -54,7 +54,7 @@ public class ClCdController
     private ClCdService clCdService;
 
     /**
-     * 분류 코드(CL_CD) 관리 (useYn=N 포함) 목록 화면 조회
+     * 분류 코드(CL_CD) 관리(useYn=N 포함) 목록 화면 조회
      * (관리자MNGR만 접근 가능)
      */
     @GetMapping(SiteUrl.CL_CD_LIST)
@@ -99,7 +99,7 @@ public class ClCdController
     }
 
     /**
-     * 분류 코드(CL_CD) 관리 (useYn=N 포함) 상세 화면 조회
+     * 분류 코드(CL_CD) 관리(useYn=N 포함) 상세 화면 조회
      * (관리자MNGR만 접근 가능)
      */
     @GetMapping(SiteUrl.CL_CD_DTL)
@@ -116,8 +116,10 @@ public class ClCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             ClCd cmmClCd = clCdService.getDtlDto(clCd);
             model.addAttribute("clCd", cmmClCd);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -135,7 +137,7 @@ public class ClCdController
     }
 
     /**
-     * 분류 코드(CL_CD) 관리 (useYn=N 포함) 등록/수정 (Ajax)
+     * 분류 코드(CL_CD) 관리(useYn=N 포함) 등록/수정 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {SiteUrl.CL_CD_REG_AJAX, SiteUrl.CL_CD_MDF_AJAX})
@@ -154,10 +156,12 @@ public class ClCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            bindingResult.hasErrors();
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             boolean isReg = "Y".equals(regYn);
             ClCd rsDto = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd, key);
+
             isSuccess = (rsDto.getClCd() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -168,39 +172,6 @@ public class ClCdController
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
             logParam.setCn(clCd.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
-
-    /**
-     * 분류 코드(CL_CD) 관리 (useYn=N 포함) 삭제 (Ajax)
-     * (관리자MNGR만 접근 가능)
-     */
-    @PostMapping(SiteUrl.CL_CD_DEL_AJAX)
-    @Secured({Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> clCdDelAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("clCd") String clCd
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String resultMsg = "";
-        try {
-            isSuccess = clCdService.delete(clCd);
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
-            // 로그 관련 처리
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -225,8 +196,10 @@ public class ClCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 응답에 추가
             ClCd cmmClCd = clCdService.getDtlDto(clCd);
             ajaxResponse.setResultObj(cmmClCd);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -234,6 +207,40 @@ public class ClCdController
             resultMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
             MessageUtils.alertMessage(resultMsg, baseUrl);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 분류 코드(CL_CD) 관리(useYn=N 포함) 삭제 (Ajax)
+     * (관리자MNGR만 접근 가능)
+     */
+    @PostMapping(SiteUrl.CL_CD_DEL_AJAX)
+    @Secured({Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> clCdDelAjax(
+            final LogActvtyParam logParam,
+            final @RequestParam("clCd") String clCd
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            // 삭제 처리
+            isSuccess = clCdService.delete(clCd);
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
@@ -261,7 +268,42 @@ public class ClCdController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 상태 변경 처리
             isSuccess = clCdService.setStateUse(clCd);
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 분류 코드 관리(useYn=N 포함) 사용 (Ajax)
+     * (관리자MNGR만 접근 가능)
+     */
+    @PostMapping(SiteUrl.CL_CD_UNUSE_AJAX)
+    @Secured({Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> clCdUnuseAjax(
+            final LogActvtyParam logParam,
+            final @RequestParam("clCd") String clCd
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            // 상태 변경 처리
+            isSuccess = clCdService.setStateUnuse(clCd);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

@@ -121,8 +121,11 @@ public class BoardDefController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             BoardDefDto result = boardDefService.regist(boardDefDto);
+            
             isSuccess = (result.getBoardCd() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -159,8 +162,11 @@ public class BoardDefController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 항목 수정 처리
             BoardDefDto result = boardDefService.modify(boardDefDto, boardCd);
+
             isSuccess = (result.getBoardCd() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -195,6 +201,7 @@ public class BoardDefController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 상태 변경 처리
             isSuccess = boardDefService.setStateUse(boardCd);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -229,6 +236,7 @@ public class BoardDefController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 상태 변경 처리
             isSuccess = boardDefService.setStateUnuse(boardCd);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -263,6 +271,7 @@ public class BoardDefController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 삭제 처리
             isSuccess = boardDefService.delete(boardCd);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

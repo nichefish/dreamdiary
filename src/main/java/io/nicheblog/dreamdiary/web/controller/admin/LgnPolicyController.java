@@ -66,13 +66,12 @@ public class LgnPolicyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 현재는 항상 고정 ID(1L)로 조회한다.
+            // 항목 조회 및 모델에 추가 :: 현재는 항상 고정 ID(1L)로 조회한다.
             LgnPolicyDto rsUserLgnPolicDto = lgnPolicyService.getDtlDto();
+            model.addAttribute("lgnPolicy", rsUserLgnPolicDto);
+
             isSuccess = (rsUserLgnPolicDto != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            model.addAttribute("lgnPolicy", rsUserLgnPolicDto);
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -105,7 +104,9 @@ public class LgnPolicyController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             isSuccess = lgnPolicyService.regist(lgnPolicyDto);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {

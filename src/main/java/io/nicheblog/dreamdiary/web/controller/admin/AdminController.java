@@ -45,7 +45,7 @@ public class AdminController
 
     /**
      * 사이트 관리 > 사이트 관리 화면 조회
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.ADMIN_PAGE)
     @Secured(Constant.ROLE_MNGR)
@@ -65,6 +65,7 @@ public class AdminController
             model.addAttribute("authRoleList", authRoleList);
 
             isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -79,8 +80,8 @@ public class AdminController
     }
 
     /**
-     * 테스트 페이지
-     * 관리자MNGR만 접근 가능
+     * 사이트 관리 > 테스트 페이지
+     * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(SiteUrl.ADMIN_TEST)
     @Secured(Constant.ROLE_MNGR)
@@ -91,6 +92,21 @@ public class AdminController
 
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.ADMIN.setAcsPageInfo("테스트 화면"));
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+        } finally {
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
 
         return "/view/admin/test_page";
     }
