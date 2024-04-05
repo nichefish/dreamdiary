@@ -1,7 +1,8 @@
 package io.nicheblog.dreamdiary.web.spec.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.embed.BaseStateSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,8 @@ import java.util.Map;
 @Component
 @Log4j2
 public class ClCdSpec
-        implements BaseSpec<ClCdEntity> {
+        implements BaseCrudSpec<ClCdEntity>,
+                   BaseStateSpec<ClCdEntity> {
 
     /**
      * 인자별로 구체적인 검색 조건 세팅

@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.exptr.reqst;
 
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
 import lombok.extern.log4j.Log4j2;
@@ -27,7 +27,7 @@ import java.util.Map;
 @Component
 @Log4j2
 public class ExptrReqstSpec
-        implements BaseClsfSpec<ExptrReqstEntity> {
+        implements BasePostSpec<ExptrReqstEntity> {
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
@@ -53,11 +53,6 @@ public class ExptrReqstSpec
                 case "searchEndDt":
                     // 기간 검색
                     predicate.add(builder.lessThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
-                    continue;
-                case "title":
-                    // 제목 = LIKE 검색
-                    Expression<String> keyExp = root.get(key);
-                    predicate.add(builder.like(keyExp, "%" + searchParamMap.get(key) + "%"));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색

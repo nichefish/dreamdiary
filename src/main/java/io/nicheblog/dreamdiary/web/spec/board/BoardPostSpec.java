@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.board;
 
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import lombok.extern.log4j.Log4j2;
@@ -27,7 +27,7 @@ import java.util.Map;
 @Component
 @Log4j2
 public class BoardPostSpec
-        implements BaseClsfSpec<BoardPostEntity> {
+        implements BasePostSpec<BoardPostEntity> {
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
@@ -57,10 +57,6 @@ public class BoardPostSpec
                 case "boardCd":
                     // boardCd를 contentType으로 이용
                     predicate.add(builder.equal(root.get("contentType"), searchParamMap.get(key)));
-                    continue;
-                case "title":
-                    // 제목 = LIKE 검색
-                    predicate.add(builder.like(root.get(key), "%" + searchParamMap.get(key) + "%"));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색

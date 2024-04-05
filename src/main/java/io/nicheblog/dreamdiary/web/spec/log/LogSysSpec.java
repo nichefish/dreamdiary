@@ -1,13 +1,15 @@
 package io.nicheblog.dreamdiary.web.spec.log;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +24,7 @@ import java.util.Map;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("logSysSpec")
+@Component
 @Log4j2
 public class LogSysSpec
         implements BaseSpec<LogSysEntity> {
@@ -51,12 +53,6 @@ public class LogSysSpec
                 case "searchEndDt":
                     // 기간 검색
                     predicate.add(builder.lessThanOrEqualTo(logDtExp, DateUtils.asDate(searchParamMap.get(key))));
-                    continue;
-                case "nickNm":
-                    // 작업자 이름 = 조인 후 LIKE 검색
-                    Join<LogSysEntity, AuditorInfo> regstr = root.join("logUserInfo", JoinType.LEFT);
-                    Expression<String> nickNmExp = regstr.get(key);
-                    predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
                     continue;
                 case "rslt":
                     // 작업결과 :: true / false 검색

@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.notice;
 
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Component
 @Log4j2
 public class NoticeSpec
-        implements BaseClsfSpec<NoticeEntity> {
+        implements BasePostSpec<NoticeEntity> {
 
     /**
      * 조회 후처리:: 정렬 순서 변경
@@ -68,11 +68,6 @@ public class NoticeSpec
                 case "managtStartDt":
                     // 기간 검색
                     predicate.add(builder.greaterThanOrEqualTo(managtDtExp, DateUtils.asDate(searchParamMap.get(key))));
-                    continue;
-                case "title":
-                    // 제목 = LIKE 검색
-                    Expression<String> keyExp = root.get(key);
-                    predicate.add(builder.like(keyExp, "%" + searchParamMap.get(key) + "%"));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색

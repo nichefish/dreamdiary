@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.spec.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.embed.BaseStateSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import lombok.extern.log4j.Log4j2;
@@ -27,7 +28,8 @@ import java.util.Map;
 @Component
 @Log4j2
 public class PopupSpec
-        implements BaseSpec<PopupEntity> {
+        implements BaseCrudSpec<PopupEntity>,
+                   BaseStateSpec<PopupEntity> {
 
     /**
      * 인자별로 검색 조건 세팅 :: 메소드 분리

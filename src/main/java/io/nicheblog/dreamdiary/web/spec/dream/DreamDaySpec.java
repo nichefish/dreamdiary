@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.dream;
 
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
 import lombok.extern.log4j.Log4j2;
@@ -27,7 +27,7 @@ import java.util.Map;
 @Component
 @Log4j2
 public class DreamDaySpec
-        implements BaseSpec<DreamDayEntity> {
+        implements BaseClsfSpec<DreamDayEntity> {
 
     /**
      * 인자별로 구체적인 검색 조건 세팅

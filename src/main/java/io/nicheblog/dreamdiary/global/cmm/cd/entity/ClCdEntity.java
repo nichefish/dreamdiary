@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.entity;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
@@ -37,7 +37,7 @@ import java.util.List;
 @ToString
 @Where(clause = "del_yn='N'")
 public class ClCdEntity
-        extends BaseCrudEntity
+        extends BaseAuditEntity
         implements StateEmbedModule {
 
     @PostLoad

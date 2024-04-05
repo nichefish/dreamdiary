@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.spec.user;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
@@ -25,7 +24,7 @@ import java.util.Map;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("userProflSpec")
+@Component
 @Log4j2
 public class UserProflSpec
         implements BaseSpec<UserProflEntity> {
@@ -64,13 +63,7 @@ public class UserProflSpec
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
-                // 작성자 이름 = 조인 후 LIKE 검색
-                case "nickNm":
-                    Join<UserProflEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);      //  JOIN 타입 명시하기\
-                    Expression<String> nickNmExp = regstr.get(key);
-                    predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
-                    continue;
-                    // 기타 조건 처리
+                // 기타 조건 처리
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
                     try {
@@ -116,8 +109,8 @@ public class UserProflSpec
             final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
-        Join<UserProflEntity, DtlCdEntity> jobTitleCd = root.join("jobTitleCdInfo", JoinType.LEFT);      //  JOIN 타입 명시하기
-        order.add(builder.desc(jobTitleCd.get("sortOrdr")));
+        Join<UserProflEntity, DtlCdEntity> jobTitleCd = root.join("jobTitleCdInfo", JoinType.LEFT);
+        order.add(builder.desc(jobTitleCd.get("state").get("sortOrdr")));
         order.add(builder.asc(root.get("ecnyDt")));
         return order;
     }

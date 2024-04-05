@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.cmm.managtr;
 
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Log4j2
 public class ManagtrSpec
-        implements BaseSpec<ManagtrEntity> {
+        implements BaseCrudSpec<ManagtrEntity> {
 
     //
 }
