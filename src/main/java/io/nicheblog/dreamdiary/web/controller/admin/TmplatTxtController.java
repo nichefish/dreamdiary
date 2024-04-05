@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 import java.security.InvalidParameterException;
 
 /**
- * TmplatController
+ * TmplatTxtController
  * <pre>
  *  템플릿 관리 컨트롤러
  * </pre>

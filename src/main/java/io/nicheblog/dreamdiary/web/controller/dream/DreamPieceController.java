@@ -72,9 +72,12 @@ public class DreamPieceController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록 및 수정 처리
             boolean isReg = dreamPiece.getPostNo() == null;
             DreamPieceDto result = isReg ? dreamPieceService.regist(dreamPiece, request) : dreamPieceService.modify(dreamPiece, postNo, request);
+
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {

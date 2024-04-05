@@ -69,10 +69,13 @@ public class CommentController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            // 목록 조회 및 응답에 추가
             Page<CommentDto.LIST> commentList = commentService.getPageDto(searchParam, pageRequest);
             ajaxResponse.setResultList(commentList.getContent());
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (NumberFormatException e) {
@@ -112,9 +115,12 @@ public class CommentController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록 및 수정 처리
             boolean isReg = (postNo == null);
             CommentDto result = isReg ? commentService.regist(commentDto) : commentService.modify(commentDto, postNo);
+
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -149,6 +155,7 @@ public class CommentController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 삭제 처리
             isSuccess = commentService.delete(key);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
