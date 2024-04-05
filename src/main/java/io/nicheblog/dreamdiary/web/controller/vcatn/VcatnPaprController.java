@@ -301,7 +301,7 @@ public class VcatnPaprController
         String resultMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
+            VcatnPaprDto.DTL rsDto = vcatnPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
             isSuccess = true;

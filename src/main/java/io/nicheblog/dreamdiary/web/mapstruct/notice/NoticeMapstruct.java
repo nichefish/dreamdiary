@@ -18,7 +18,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseClsfMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, MapstructHelper.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface NoticeMapstruct
         extends BaseClsfMapstruct<NoticeDto.DTL, NoticeDto.LIST, NoticeEntity> {
 
@@ -49,10 +49,7 @@ public interface NoticeMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final NoticeDto.DTL dto,
-            final @MappingTarget NoticeEntity entity
-    ) throws Exception;
+    void updateFromDto(final NoticeDto.DTL dto, final @MappingTarget NoticeEntity entity) throws Exception;
 
 
 

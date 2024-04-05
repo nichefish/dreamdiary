@@ -81,7 +81,7 @@
 
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
-        <@component.btn_mdfable post isMngr />
+        <@component.btn_post_mdf post isMngr />
     </div>
 
     <!-- 댓글 영역 -->
