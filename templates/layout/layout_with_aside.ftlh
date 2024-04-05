@@ -1,5 +1,5 @@
 <!--
- -- 레이아웃 > 기본 레이아웃 (사이드바 제거 버전)
+ -- 레이아웃 > 기본 레이아웃 (aside(우측 사이드바) 추가 버전)
  -- metronic v8.2.5
  -->
 
@@ -79,8 +79,6 @@
                         <!--include:: Footer-->
                         <#include "/layout/footer/_footer_base.ftlh">
 
-                        <!--include:: Aside-->
-                        <#include "/layout/aside/_aside_base.ftlh">
                     </div>
                     <!--end:::Main-->
 

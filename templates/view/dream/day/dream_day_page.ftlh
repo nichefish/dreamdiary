@@ -1,5 +1,6 @@
 <#--
-  -- 사이트 관리 화면
+  -- 꿈 관리 : ASIDE (우측 사이드바)
+  -- @included_in : dream_day_page
   -->
 <#import "/layout/layout_with_aside.ftlh" as layout >
 
@@ -48,5 +49,8 @@
 <#include "/view/dream/piece/dream_piece_reg_modal.ftlh">
 <#include "/view/dream/piece/dream_piece_reg_header_template.ftlh">
 <#include "/view/dream/piece/dream_piece_reg_template.ftlh">
+
+<!--include:: Dream - Aside-->
+<#include "/view/dream/day/dream_day_aside_base.ftlh">
 
 </@layout.layout>
