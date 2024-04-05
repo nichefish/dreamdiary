@@ -1,6 +1,6 @@
 <#--
   -- 일정 > 전체 일정 > 일정 등록 Modal
-  -- @included in : schdul_cal
+  -- @included_in : schdul_cal
   -->
 <div class="modal fade" id="schdul_reg_modal" tabindex="-1" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
     <!--begin::Modal dialog-->

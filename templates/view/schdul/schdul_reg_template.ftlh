@@ -1,9 +1,9 @@
 <#--
   -- 일정 > 전체 일정 > 일정 등록 Template
-  -- @included in : schdul_cal
+  -- @included_in : schdul_cal
   -->
 <script id="schdul_reg_template" type="text/x-handlebars-template">
-    <input type="hidden" name="schdulNo" id="schdulNo" value="{{schdulNo}}">
+    <input type="hidden" name="postNo" id="postNo" value="{{postNo}}">
     <input type="hidden" name="prvtYn" id="prvtYn" value="{{#if isPrvt}}Y{{else}}N{{/if}}">
     <!--begin::Input group-->
     <div class="row mb-3">
@@ -25,7 +25,7 @@
             </select>
         </div>
         <div class="col-xl-7 col-6">
-            <input type="text" class="form-control form-control-solid required" placeholder="제목" name="schdulNm" id="schdulNm" maxlength="120" value="{{schdulNm}}" />
+            <input type="text" class="form-control form-control-solid required" placeholder="제목" name="title" id="title" maxlength="120" value="{{schdulNm}}" />
         </div>
         <div class="col-xl-2 col-2">
         </div>
@@ -33,7 +33,7 @@
             <span id="schdulCdSpan"></span>
         </div>
         <div class="col-xl-7 col-6">
-            <span id="schdulNmSpan"></span>
+            <span id="titleSpan"></span>
         </div>
     </div>
     <!--begin::Input group-->
@@ -72,15 +72,15 @@
     <!--begin::Input group-->
     <div class="row mb-3">
         <div class="col-xl-2 col-2">
-            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">설명</label>
+            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="cn">내용</label>
         </div>
         <div class="col-xl-10 col-10">
-            <textarea name="schdulResn" id="schdulResn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500">{{schdulResn}}</textarea>
+            <textarea name="cn" id="cn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500">{{cn}}</textarea>
         </div>
         <div class="col-xl-2 col-2">
         </div>
         <div class="col-xl-10 col-10">
-            <span id="schdulResnSpan"></span>
+            <span id="cnSpan"></span>
         </div>
     </div>
     <!--begin::Input group-->
