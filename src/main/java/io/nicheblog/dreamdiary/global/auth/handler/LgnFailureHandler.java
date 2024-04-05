@@ -83,18 +83,21 @@ public class LgnFailureHandler
                 authService.lockAccount(userId);
                 errorMsg += "<br>" + MessageUtils.getMessage(MessageUtils.LGN_FAIL_BADCREDENTIALS_LOCKED, new Object[]{newLgnFailCnt});
             }
-            // 장기간 미로그인 잠금
+        // 장기간 미로그인 잠금
         } else if (exception instanceof AcntDormantException) {
             authService.lockAccount(userId);        // 계정 잠금 처리
-            // 비밀번호 변경기간 만료
+        // 비밀번호 변경기간 만료
         } else if (exception instanceof CredentialsExpiredException) {
             request.setAttribute("userId", userId);
             request.setAttribute("isCredentialExpired", true);
-            // 중복 로그인 방지
+        // 중복 로그인 방지
         } else if (exception instanceof DupIdLgnException) {
             request.setAttribute("userId", userId);
             request.setAttribute("isDupIdLgn", true);
-            // 패스워드 초기화 강제
+            request.getRequestDispatcher(SiteUrl.MAIN)
+                    .forward(request, response);
+            return;
+        // 패스워드 초기화 강제
         } else if (exception instanceof AcntNeedsPwResetException) {
             request.setAttribute("userId", userId);
             request.setAttribute("needsPwReset", true);

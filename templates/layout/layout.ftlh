@@ -96,6 +96,8 @@
             <#include "/layout/_notice_popup_template.ftlh">
             <#include "/layout/topbar/_topbar_sitemap_modal.ftlh">
         </#if>
+        <!--include:: Tag Module-->
+        <#include "/view/_component/tag/_tag_module.ftlh">
         <!--include:: User-My-Drawer-->
         <#include "/layout/header/navbar/_navbar_user_drawer.ftlh">
         <!--end::Modals-->
