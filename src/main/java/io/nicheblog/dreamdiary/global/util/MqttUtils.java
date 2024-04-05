@@ -12,7 +12,7 @@ import java.util.UUID;
  *
  * @author nichefish
  */
-@Component("mqttUtils")
+@Component
 @Log4j2
 public class MqttUtils {
 

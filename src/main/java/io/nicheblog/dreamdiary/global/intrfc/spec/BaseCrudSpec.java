@@ -59,10 +59,10 @@ public interface BaseCrudSpec<Entity extends BaseCrudEntity>
                     predicate.add(builder.equal(root.get(key), searchParamMap.get(key)));
                     keysToRemove.add(key);      // 처리된 키 저장
                     continue;
-                case "regstrNm":
+                case "nickNm":
                     // 작성자 이름 = 조인 후 LIKE 검색
                     Join<ExptrPrsnlPaprEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);
-                    Expression<String> nickNmExp = regstr.get(key);
+                    Expression<String> nickNmExp = regstr.get("nickNm");
                     predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
                     keysToRemove.add(key);      // 처리된 키 저장
                     continue;

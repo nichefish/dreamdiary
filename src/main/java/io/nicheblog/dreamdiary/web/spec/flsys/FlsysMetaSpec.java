@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.flsys;
 
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.web.entity.flsys.FlsysMetaEntity;
 import org.springframework.stereotype.Component;
 
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("flsysMetaSpec")
+@Component
 public class FlsysMetaSpec
-        implements BaseSpec<FlsysMetaEntity> {
+        implements BasePostSpec<FlsysMetaEntity> {
 
     //
 }
