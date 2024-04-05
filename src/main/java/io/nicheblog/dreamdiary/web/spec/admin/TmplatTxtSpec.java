@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.spec.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.embed.BaseStateSpec;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatTxtEntity;
 import org.springframework.stereotype.Component;
 
@@ -13,9 +14,10 @@ import org.springframework.stereotype.Component;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("tmplatTxtSpec")
+@Component
 public class TmplatTxtSpec
-        implements BaseSpec<TmplatTxtEntity> {
+        implements BaseCrudSpec<TmplatTxtEntity>,
+                   BaseStateSpec<TmplatTxtEntity> {
 
     //
 }
