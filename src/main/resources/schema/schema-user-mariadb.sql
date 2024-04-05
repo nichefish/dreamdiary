@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS user (
     -- user_profl
     nick_nm VARCHAR(50) COMMENT '사용자 표시이름',
     profl_img_url VARCHAR(256) COMMENT '프로필 이미지 경로',
-    user_dc VARCHAR(4000) COMMENT '사용자 설명 (관리자용)',
+    user_dc LONGTEXT COMMENT '사용자 설명 (관리자용)',
     -- ACCOUNT_STATUS
     locked_yn CHAR(1) DEFAULT 'N' COMMENT '잠금 여부 (Y/N)',
     use_acs_ip_yn CHAR(1) DEFAULT 'N' COMMENT '접속IP 사용 여부 (Y/N)',

@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS log_actvty (
     action_ty_cd VARCHAR(50) COMMENT '액션 타입 코드',
     url VARCHAR(400) COMMENT '요청 URL',
     param VARCHAR(500) COMMENT '요청 파라미터',
-    cn VARCHAR(400) COMMENT '내용',
+    cn LONGTEXT COMMENT '내용',
     ip_addr VARCHAR(20) COMMENT 'IP 주소',
     referer VARCHAR(1000) COMMENT '리퍼러 URL',
     rslt CHAR(1) COMMENT '결과',
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS log_sys (
     --
     actvty_ctgr_cd VARCHAR(50) COMMENT '활동 카테고리 코드',
     --
-    cn VARCHAR(400) COMMENT '내용',
+    cn LONGTEXT COMMENT '내용',
     rslt CHAR(1) COMMENT '결과',
     rslt_msg VARCHAR(500) COMMENT '결과 메시지',
     exception_nm VARCHAR(100) COMMENT '예외 이름',

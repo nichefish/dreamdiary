@@ -190,8 +190,8 @@ CREATE TABLE IF NOT EXISTS EXPTR_PRSNL_ITEM (
     exptr_dt DATE COMMENT '지출일시',
     exptr_cd VARCHAR(30) COMMENT '지출 코드',
     exptr_amt INT COMMENT '지출 금액',
-    cn varchar(500) COMMENT '내용',
-    rm VARCHAR(500) COMMENT '비고',
+    cn LONGTEXT COMMENT '내용',
+    rm LONGTEXT COMMENT '비고',
     rject_yn CHAR(1) DEFAULT 'N' COMMENT '반려 여부 (Y/N)' ,
     rject_resn VARCHAR(500) COMMENT '반려사유',
     -- ATCH_FILE
