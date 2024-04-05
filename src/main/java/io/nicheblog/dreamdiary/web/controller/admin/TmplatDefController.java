@@ -108,7 +108,7 @@ public class TmplatDefController
     @PostMapping(value = {SiteUrl.TMPLAT_DEF_REG_AJAX, SiteUrl.TMPLAT_DEF_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> exptrReqstRegAjax(
+    public ResponseEntity<AjaxResponse> tmplatDefRegAjax(
             final @Valid TmplatDefDto tmplatDefDto,
             final @Nullable Integer tmplatDefNo,
             final LogActvtyParam logParam,
@@ -120,7 +120,9 @@ public class TmplatDefController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             boolean isReg = tmplatDefNo == null;
             TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDefDto) : tmplatDefService.modify(tmplatDefDto, tmplatDefNo);
 

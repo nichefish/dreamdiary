@@ -34,7 +34,7 @@ import java.security.InvalidParameterException;
  */
 @Controller
 @Log4j2
-public class TmplatController
+public class TmplatTxtController
         extends BaseControllerImpl {
 
     @Getter
@@ -47,12 +47,12 @@ public class TmplatController
 
     /**
      * 템플릿 관리 등록/수정 처리 (Ajax)
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.TMPLAT_REG_AJAX})
+    @PostMapping(value = {SiteUrl.TMPLAT_TXT_REG_AJAX, SiteUrl.TMPLAT_TXT_MDF_AJAX})
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
-    public ResponseEntity<AjaxResponse> tmplatRegAjax(
+    public ResponseEntity<AjaxResponse> tmplatTxtRegAjax(
             final TmplatDefDto tmplatDto,
             final LogActvtyParam logParam
     ) {
@@ -62,8 +62,10 @@ public class TmplatController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 등록/수정 처리
             TmplatDefDto rsDto = tmplatDefService.regist(tmplatDto);
             // isSuccess = (StringUtils.isNotEmpty(rsDto.getTmplatCd()));
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (NumberFormatException e) {
