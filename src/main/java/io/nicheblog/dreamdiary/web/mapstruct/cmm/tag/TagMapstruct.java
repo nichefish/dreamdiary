@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.tag;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagSmpEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
@@ -15,11 +15,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {})
 public interface TagMapstruct
-        extends BaseListMapstruct<TagDto, TagDto, TagEntity> {
+        extends BaseCrudMapstruct<TagDto, TagDto, TagEntity> {
 
     TagMapstruct INSTANCE = Mappers.getMapper(TagMapstruct.class);
 
@@ -27,6 +27,7 @@ public interface TagMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     @Mapping(target = "contentTagList", expression = "java(entity.getContentTagDtoList())")
     TagDto toDto(final TagEntity entity) throws Exception;
 
@@ -39,6 +40,7 @@ public interface TagMapstruct
      * Entity -> ListDto
      */
     @Override
+    @Named("toListDto")
     @Mapping(target = "contentTagList", expression = "java(entity.getContentTagDtoList())")
     TagDto toListDto(final TagEntity entity) throws Exception;
 
@@ -52,8 +54,5 @@ public interface TagMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final TagDto dto,
-            final @MappingTarget TagEntity entity
-    ) throws Exception;
+    void updateFromDto(final TagDto dto, final @MappingTarget TagEntity entity) throws Exception;
 }

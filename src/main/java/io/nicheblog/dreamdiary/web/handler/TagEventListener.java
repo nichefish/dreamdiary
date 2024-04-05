@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  *
  * @author nichefish
  */
-@Component("tagEventListener")
+@Component
 public class TagEventListener {
 
     @Resource

@@ -121,7 +121,7 @@ public class TagService
     private void delExistingContentTags(BaseClsfKey clsfKey) throws Exception {
         // 2. 글번호 + 태그번호를 받아와서 기존 태그 목록 조회
         Map<String, Object> searchParamMap = new HashMap(){{
-            put("refPostNo", clsfKey.getContentType());
+            put("refPostNo", clsfKey.getPostNo());
             put("refContentType", clsfKey.getContentType());
         }};
         contentTagService.deleteAll(searchParamMap);

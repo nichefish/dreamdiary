@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.tag;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagSmpEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import org.mapstruct.*;
@@ -14,11 +14,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {})
 public interface TagSmpMapstruct
-        extends BaseListMapstruct<TagDto, TagDto, TagSmpEntity> {
+        extends BaseCrudMapstruct<TagDto, TagDto, TagSmpEntity> {
 
     TagSmpMapstruct INSTANCE = Mappers.getMapper(TagSmpMapstruct.class);
 

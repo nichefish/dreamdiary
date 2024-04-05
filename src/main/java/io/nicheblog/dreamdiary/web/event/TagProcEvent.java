@@ -27,20 +27,13 @@ public class TagProcEvent
     /**
      * 생성자
      */
-    public TagProcEvent(
-            final Object source,
-            final BaseClsfKey clsfKey,
-            TagCmpstn tag
-    ) {
+    public TagProcEvent(final Object source,  final BaseClsfKey clsfKey, TagCmpstn tag) {
         super(source);
         this.clsfKey = clsfKey;
         this.tagCmpstn = tag;
     }
 
-    public TagProcEvent(
-            final Object source,
-            final BaseClsfKey clsfKey
-    ) {
+    public TagProcEvent(final Object source, final BaseClsfKey clsfKey) {
         super(source);
         this.clsfKey = clsfKey;
         this.tagCmpstn = null;
