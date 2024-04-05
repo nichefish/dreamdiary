@@ -56,9 +56,6 @@
     <script type="text/javascript" src="/js/jquery.validate.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/additional-methods.js?${releaseDate!}"></script>
 
-    <!--begin::Fonts(mandatory for all pages)-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-
     <script src="/metronic/assets/js/scripts.bundle.js?${releaseDate!}"></script>
 
     <!--Custom Javascript Bundle(used by all pages)-->
