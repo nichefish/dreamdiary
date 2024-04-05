@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.spec.user;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
@@ -28,7 +28,7 @@ import java.util.Map;
 @Component
 @Log4j2
 public class UserSpec
-        implements BaseSpec<UserEntity> {
+        implements BaseCrudSpec<UserEntity> {
 
     /**
      * 검색 조건 목록 반환 :: preset된 특정 모드를 반환
@@ -89,11 +89,6 @@ public class UserSpec
                     }
                     continue;
                     // 이름 = LIKE 검색
-                case "nickNm":
-                    Expression<String> keyExp = root.get(key);
-                    predicate.add(builder.like(keyExp, "%" + searchParamMap.get(key) + "%"));
-                    continue;
-                    // cmpyCd, jobTitleCd, teamCd = 사용자 정보user_profl와 조인해서 equals 처리
                 case "cmpyCd":
                 case "jobTitleCd":
                 case "teamCd":

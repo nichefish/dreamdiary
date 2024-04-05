@@ -5,6 +5,7 @@
 <form name="listForm" id="listForm" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!}">
+    <input type="hidden" name="tags" id="tags">
     <!-- header starts -->
     <div class="row mb-8 p-0">
         <!-- search-param starts -->

@@ -13,7 +13,7 @@
             },
             /** 목록 검색 */
             search: function () {
-                $("#pageNo").val(1);
+                $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */

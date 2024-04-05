@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * BoardPostSearchParam
@@ -22,4 +23,14 @@ public class BoardPostSearchParam
 
     /** 게시판 코드 */
     private String boardCd;
+
+    /* ----- */
+
+    /** 
+     * 게시판 코드 <-> 컨텐츠 타입 변환 
+     */
+    public String getBoardCd() {
+        if (StringUtils.isEmpty(boardCd)) return this.getContentType();
+        return this.boardCd;
+    }
 }

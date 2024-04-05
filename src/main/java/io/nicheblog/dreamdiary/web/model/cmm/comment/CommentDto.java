@@ -3,7 +3,6 @@ package io.nicheblog.dreamdiary.web.model.cmm.comment;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

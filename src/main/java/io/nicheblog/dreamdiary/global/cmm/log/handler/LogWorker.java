@@ -19,7 +19,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  * @author nichefish
  */
-@Component("logWorker")
+@Component
 public class LogWorker
         implements Runnable {
 

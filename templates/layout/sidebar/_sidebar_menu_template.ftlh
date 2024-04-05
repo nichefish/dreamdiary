@@ -40,7 +40,7 @@
     <!-- 메뉴 시작 -->
     <#assign isNotTopMenu = (topMenuNo != siteMenu.topMenuNo!)!>
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion hover show" id="${siteMenu.topMenuNo}">
-        <span class="menu-link <#if isNotTopMenu>text-inverse-light</#if>">
+        <span class="menu-link <#if isNotTopMenu>text-inverse-light</#if> mb-1">
             <span class="menu-icon">
                 <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
                 <span class="svg-icon svg-icon-3">

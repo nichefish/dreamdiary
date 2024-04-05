@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ManagtEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.TagEmbedMapstruct;

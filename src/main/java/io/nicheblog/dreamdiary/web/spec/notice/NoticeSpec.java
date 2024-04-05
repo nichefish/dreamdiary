@@ -1,13 +1,10 @@
 package io.nicheblog.dreamdiary.web.spec.notice;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
@@ -76,19 +73,6 @@ public class NoticeSpec
                     // 제목 = LIKE 검색
                     Expression<String> keyExp = root.get(key);
                     predicate.add(builder.like(keyExp, "%" + searchParamMap.get(key) + "%"));
-                    continue;
-                case "nickNm":
-                    // 작업자 이름 = 조인 후 LIKE 검색
-                    Join<NoticeEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);
-                    Expression<String> nickNmExp = regstr.get(key);
-                    predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
-                    continue;
-                case "tags":
-                    // 태그 검색
-                    Join<NoticeEntity, ContentTagEntity> contentTag = root.join("tag").join("list", JoinType.INNER);
-                    Expression<String> contentTagExp = contentTag.get("refTagNo");
-                    List<Integer> refTagNoList = (List<Integer>) searchParamMap.get(key);
-                    if (!CollectionUtils.isEmpty(refTagNoList)) predicate.add(contentTagExp.in(refTagNoList)); // IN 절 사용
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색

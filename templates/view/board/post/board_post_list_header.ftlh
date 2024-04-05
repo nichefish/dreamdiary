@@ -6,6 +6,7 @@
     <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>      <!-- 게시판 검색에선 꼭 있어야 한다. -->
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
+    <input type="hidden" name="tags" id="tags">
     <!-- header starts -->
     <div class="row mb-8 p-0">
         <!-- search-param starts -->

@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;

@@ -77,11 +77,11 @@ public class BoardPostController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostList(
             @ModelAttribute("searchParam") BoardPostSearchParam searchParam,
-            final @RequestParam("boardCd") String boardCd,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
+        String boardCd = searchParam.getBoardCd();
         model.addAttribute("boardCd", boardCd);
 
         /* 사이트 메뉴 설정 */

@@ -3,9 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.mapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import org.mapstruct.AfterMapping;
-import org.mapstruct.InheritConfiguration;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
 
 /**
  * BaseClsfListMapstruct

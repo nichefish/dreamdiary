@@ -5,7 +5,6 @@ import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import io.nicheblog.dreamdiary.web.model.admin.PopupDto;
-import jdk.jfr.Name;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;

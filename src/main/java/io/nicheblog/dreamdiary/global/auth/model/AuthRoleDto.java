@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.auth.model;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import lombok.Getter;

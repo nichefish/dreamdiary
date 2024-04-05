@@ -1,10 +1,9 @@
 package io.nicheblog.dreamdiary.global.intrfc.spec;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
-import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
+import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
@@ -12,15 +11,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * BaseClsfSpec
+ * BaseCrudSpec
  * <pre>
- *  (공통/상속) 검색인자 세팅 Specification 인터페이스
+ *  (공통/상속) AUDIT 요소에 대한 검색인자 세팅 Specification 인터페이스
  * </pre>
  *
  * @author nichefish
  */
-public interface BaseClsfSpec<Entity extends BaseClsfEntity>
-        extends BaseCrudSpec<Entity> {
+public interface BaseCrudSpec<Entity extends BaseCrudEntity>
+        extends BaseSpec<Entity> {
 
     /**
      * default: 검색 조건 목록 반환
@@ -28,27 +27,24 @@ public interface BaseClsfSpec<Entity extends BaseClsfEntity>
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
         return (root, query, builder) -> {
             List<Predicate> basePredicate = new ArrayList<>();
-            List<Predicate> clsfPredicate = new ArrayList<>();
             List<Predicate> predicate = new ArrayList<>();
             try {
                 // basePredicte 먼저 처리 후 나머지에 대해 처리
                 basePredicate = getBasePredicate(searchParamMap, root, builder);
-                clsfPredicate = getClsfPredicate(searchParamMap, root, builder);
                 predicate = getPredicateWithParams(searchParamMap, root, builder);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             predicate.addAll(basePredicate);
-            predicate.addAll(clsfPredicate);
             this.postQuery(root, query, builder);
             return builder.and(predicate.toArray(new Predicate[0]));
         };
     }
 
     /**
-     * default: CLSF 요소에 대해 인자별로 구체적인 검색 조건 세팅
+     * default: 인자별로 구체적인 검색 조건 세팅
      */
-    default List<Predicate> getClsfPredicate(
+    default List<Predicate> getBasePredicate(
             final Map<String, Object> searchParamMap,
             final Root<Entity> root,
             final CriteriaBuilder builder
@@ -59,15 +55,22 @@ public interface BaseClsfSpec<Entity extends BaseClsfEntity>
 
         for (String key : searchParamMap.keySet()) {
             switch(key) {
-                case "tags":
-                    // 태그 검색
-                    Join<NoticeEntity, ContentTagEntity> contentTag = root.join("tag").join("list", JoinType.INNER);
-                    Expression<String> contentTagExp = contentTag.get("refTagNo");
-                    List<Integer> refTagNoList = (List<Integer>) searchParamMap.get(key);
-                    if (!CollectionUtils.isEmpty(refTagNoList)) predicate.add(contentTagExp.in(refTagNoList)); // IN 절 사용
+                case "regstrId":
+                    predicate.add(builder.equal(root.get(key), searchParamMap.get(key)));
                     keysToRemove.add(key);      // 처리된 키 저장
                     continue;
-                // TODO:
+                case "regstrNm":
+                    // 작성자 이름 = 조인 후 LIKE 검색
+                    Join<ExptrPrsnlPaprEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);
+                    Expression<String> nickNmExp = regstr.get(key);
+                    predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
+                    // default :: 조건 파라미터에 대해 equal 검색
+                    try {
+                        predicate.add(builder.equal(root.get(key), searchParamMap.get(key)));
+                    } catch (Exception e) {
+                        // log.info("unable to locate attribute " + key + " while trying root.get(key).");
+                    }
+
             }
         }
         keysToRemove.forEach(searchParamMap::remove);       // 처리된 키를 searchParamMap에서 제거

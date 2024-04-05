@@ -24,7 +24,7 @@
                 if (pageSize !== undefined && pageSize !== prevPageSize) {
                     pageNo = Pagination.fnRepage(pageNo, prevPageSize, pageSize);
                 }
-                if (pageNo !== undefined) $("#pageNo").val(pageNo);
+                if (pageNo !== undefined) $("#listForm #pageNo").val(pageNo);
                 if (pageSize !== undefined) $("#pageSize").val(pageSize);
                 commons.util.blockUISubmit("#listForm", "${listUrl!}");
             },
