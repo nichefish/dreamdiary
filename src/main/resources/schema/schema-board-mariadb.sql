@@ -7,13 +7,14 @@
 -- ---------- --
 
 -- 일반게시판 정의 (board_def)
--- @extends: BaseManageEntity
+-- @extends: BaseAuditEntity
+-- @implements: StateEmbed
 CREATE TABLE IF NOT EXISTS board_def (
     board_cd VARCHAR(30) PRIMARY KEY COMMENT '게시판 코드 (PK)',
     board_nm VARCHAR(120) COMMENT '게시판 이름',
     ctgr_cl_cd VARCHAR(30) COMMENT '분류 코드',
     menu_no VARCHAR(10) COMMENT '메뉴 번호',
-    -- MANAGE
+    -- STATE (module)
     sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
     use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
     -- AUDIT
@@ -27,8 +28,8 @@ CREATE TABLE IF NOT EXISTS board_def (
 -- ---------- --
 
 -- 일반게시판 게시물 (board_post)
--- @extends: BaseManagtEntity
--- @Uses: ManagtEmbed, CommentEmbed
+-- @extends: BasePostEntity
+-- @implements: TagEmbed, CommentEmbed, ManagtEmbed, ViewerEmbed
 CREATE TABLE IF NOT EXISTS board_post(
     -- CLSF
     post_no INT COMMENT '글 번호 (PK)',
@@ -59,8 +60,8 @@ CREATE TABLE IF NOT EXISTS board_post(
 -- ---------- --
 
 -- 댓글 (comment)
--- @extends: BaseClsfEntity
--- @Uses: CommentEmbed
+-- @extends: BasePostEntity
+-- @implements: CommentEmbed
 CREATE TABLE IF NOT EXISTS comment (
     -- CLSF
     post_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '댓글 번호 (PK)',
@@ -68,7 +69,14 @@ CREATE TABLE IF NOT EXISTS comment (
     --
     ref_post_no INT COMMENT '참초 글 번호',
     ref_content_type VARCHAR(30) COMMENT '참조 컨텐츠 타입',
-    cn LONGTEXT COMMENT '내용',
+    -- POST
+    title VARCHAR(200) COMMENT '제목',
+    cn VARCHAR(500) COMMENT '내용',
+    ctgr_cd VARCHAR(50) COMMENT '글 분류 코드',
+    imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요 여부 (Y/N)',
+    fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정 여부 (Y/N)',
+    hit_cnt INT DEFAULT 0 COMMENT '조회수',
+    mdfable CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
     -- ATCH_FILE
     atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
@@ -109,6 +117,7 @@ CREATE TABLE IF NOT EXISTS content_tag (
 -- ---------- --
 
 -- 조치자 (managtr)
+-- @extends: BaseAuditRegEntity
 CREATE TABLE IF NOT EXISTS managtr (
     managtr_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '조치자 번호 (PK)',
     ref_post_no INT COMMENT '참조 글 번호',
@@ -122,6 +131,7 @@ CREATE TABLE IF NOT EXISTS managtr (
 -- ---------- --
 
 -- 열람자 (viewer)
+-- @extends: BaseAuditRegEntity
 CREATE TABLE IF NOT EXISTS viewer (
     viewer_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '열람자 번호 (PK)',
     ref_post_no INT COMMENT '참조 글 번호',

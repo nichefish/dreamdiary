@@ -8,14 +8,14 @@
 
 -- 공지사항 (notice)
 -- @extends: BasePostEntity
--- @Uses: ManagtEmbed, CommentEmbed
+-- @implements: TagEmbed, CommentEmbed, ManagtEmbed, ViewerEmbed
 CREATE TABLE IF NOT EXISTS notice (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
     content_type VARCHAR(32) DEFAULT 'notice' COMMENT '컨텐츠 타입',
     --
     popup_yn CHAR(1) DEFAULT 'N' COMMENT '팝업 여부 (Y/N)',
-    -- BOARD
+    -- POST
     title VARCHAR(200) COMMENT '제목',
     cn LONGTEXT COMMENT '내용',
     ctgr_cd VARCHAR(50) COMMENT '글 분류 코드',
@@ -40,14 +40,14 @@ CREATE TABLE IF NOT EXISTS notice (
 
 -- 휴가계획서 (vcatn_papr)
 -- @extends: BasePostEntity
--- @Uses: ManagtEmbed, CommentEmbed
+-- @implements: TagEmbed, CommentEmbed, ManagtEmbed, ViewerEmbed
 CREATE TABLE IF NOT EXISTS vcatn_papr (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
     content_type VARCHAR(32) DEFAULT 'vcatn_papr' COMMENT '컨텐츠 타입',
     --
     cf_yn CHAR(1) DEFAULT 'N' COMMENT '취합완료 여부 (Y/N)',
-    -- BOARD
+    -- POST
     title VARCHAR(200) COMMENT '제목',
     cn LONGTEXT COMMENT '내용',
     ctgr_cd VARCHAR(50) COMMENT '글분류 코드',
@@ -69,8 +69,8 @@ CREATE TABLE IF NOT EXISTS vcatn_papr (
 ) COMMENT = '휴가계획서';
 
 -- 휴가 일정 (vcatn_schdul)
--- @extends: BaseCrudEntity
 -- 휴가계획서(vcatn_papr)에 1:N으로 귀속된다.
+-- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS vcatn_schdul (
     vcatn_schdul_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '휴가 일정 번호 (PK)',
     ref_post_no INT DEFAULT NULL COMMENT '참조 글 번호',
@@ -86,13 +86,13 @@ CREATE TABLE IF NOT EXISTS vcatn_schdul (
 
 -- 휴가사용가능일자 (vcatn_stats)
 CREATE TABLE IF NOT EXISTS vcatn_stats (
-    stats_yy CHAR(4) COMMENT '휴가 년도 (PK)',
+    stats_yy INT COMMENT '휴가 년도 (PK)',
     user_id VARCHAR(20) COMMENT '사용자 ID (PK)',
-    cnwk_yy INT COMMENT '사용자 ID (PK)',
-    bs_yryc INT COMMENT '사용자 ID (PK)',
-    cnwk_yryc INT COMMENT '사용자 ID (PK)',
-    prjct_yryc INT COMMENT '사용자 ID (PK)',
-    refresh_yryc INT COMMENT '사용자 ID (PK)',
+    cnwk_yy INT DEFAULT 0 COMMENT '사용자 ID (PK)',
+    bs_yryc INT DEFAULT 0 COMMENT '사용자 ID (PK)',
+    cnwk_yryc INT DEFAULT 0 COMMENT '사용자 ID (PK)',
+    prjct_yryc INT DEFAULT 0 COMMENT '사용자 ID (PK)',
+    refresh_yryc INT DEFAULT 0 COMMENT '사용자 ID (PK)',
     -- CONSTRAINT
     PRIMARY KEY (stats_yy, user_id)
 ) COMMENT = '휴가사용가능일자';
@@ -107,19 +107,25 @@ CREATE TABLE IF NOT EXISTS vcatn_stats_yy (
 -- ---------- --
 
 -- 일정 (schdul)
--- @extends: BaseAuditEntity
+-- @extends: BasePostEntity
+-- @implements: TagEmbed, CommentEmbed
 CREATE TABLE IF NOT EXISTS schdul (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
     content_type VARCHAR(32) DEFAULT 'schdul' COMMENT '컨텐츠 타입',
     --
-    title VARCHAR(200) COMMENT '제목',
-    cn LONGTEXT COMMENT '내용',
     schdul_cd VARCHAR(30) COMMENT '일정 코드',
     bgn_dt DATETIME DEFAULT NULL COMMENT '시작일자',
     end_dt DATETIME DEFAULT NULL COMMENT '종료일자',
-    rm VARCHAR(500) DEFAULT NULL COMMENT '비고',
     prvt_yn CHAR(1) DEFAULT 'N' COMMENT '개인일정 여부 (Y/N)',
+    -- POST
+    title VARCHAR(200) COMMENT '제목',
+    cn LONGTEXT COMMENT '내용',
+    ctgr_cd VARCHAR(50) COMMENT '글 분류 코드',
+    imprtc_yn CHAR(1) DEFAULT 'N' COMMENT '중요 여부 (Y/N)',
+    fxd_yn CHAR(1) DEFAULT 'N' COMMENT '상단고정 여부 (Y/N)',
+    hit_cnt INT DEFAULT 0 COMMENT '조회수',
+    mdfable CHAR(50) DEFAULT 'REGSTR' COMMENT '수정권한',
     -- AUDIT
     regstr_id VARCHAR(20) COMMENT '등록자 ID',
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
@@ -144,7 +150,7 @@ CREATE TABLE IF NOT EXISTS schdul_prtcpnt (
 
 -- 경비지출서 (exptr_prsnl_papr)
 -- @extends: BasePostEntity
--- @Uses: ManagtEmbed, CommentEmbed
+-- @implements: TagEmbed, CommentEmbed, ManagtEmbed, ViewerEmbed
 CREATE TABLE IF NOT EXISTS exptr_prsnl_papr (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
@@ -153,7 +159,7 @@ CREATE TABLE IF NOT EXISTS exptr_prsnl_papr (
     yy VARCHAR(4) COMMENT '년도',
     mnth VARCHAR(2) COMMENT '월',
     cf_yn CHAR(1) DEFAULT 'N' COMMENT '취합완료 여부 (Y/N)',
-    -- BOARD
+    -- POST
     title VARCHAR(200) COMMENT '제목',
     cn LONGTEXT COMMENT '내용',
     ctgr_cd VARCHAR(50) COMMENT '글 분류 코드',
@@ -177,6 +183,7 @@ CREATE TABLE IF NOT EXISTS exptr_prsnl_papr (
 
 -- 경비지출 항목 (exptr_prsnl_item)
 -- 경비지출서(exptr_prsnl_papr)에 1:N으로 귀속된다.
+-- @extends: BaseCurdEntity
 CREATE TABLE IF NOT EXISTS EXPTR_PRSNL_ITEM (
     exptr_prsnl_item_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '경비지출 항목 번호 (PK)',
     ref_post_no INT COMMENT '참조 글 번호',
@@ -205,7 +212,7 @@ CREATE TABLE IF NOT EXISTS exptr_reqst(
     content_type VARCHAR(32) DEFAULT 'exptr_reqst' COMMENT '컨텐츠 타입',
     --
     cf_yn CHAR(1) DEFAULT 'N' COMMENT '처리완료 여부 (Y/N/X)'
-    -- BOARD
+    -- POST
     title VARCHAR(200) COMMENT '제목',
     cn LONGTEXT COMMENT '내용',
     ctgr_cd VARCHAR(50) COMMENT '글 분류 코드',
