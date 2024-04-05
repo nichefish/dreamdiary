@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "vcatn_stats")
 @IdClass(VcatnStatsKey.class)      // 분류코드+상세코드 복합키 적용
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @Getter
 @Setter
 @AllArgsConstructor

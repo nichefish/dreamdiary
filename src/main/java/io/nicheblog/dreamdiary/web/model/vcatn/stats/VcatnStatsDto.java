@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.vcatn.stats;
 
-import io.nicheblog.dreamdiary.web.model.user.UserListDto;
+import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import lombok.*;
 
 /**
@@ -23,7 +23,7 @@ public class VcatnStatsDto {
     /** userId */
     private String userId;
     /** User */
-    private UserListDto user;
+    private UserDto.LIST user;
     /** 산정기준년도 */
     private String statsYy;
     /** 산정기준년도 */
