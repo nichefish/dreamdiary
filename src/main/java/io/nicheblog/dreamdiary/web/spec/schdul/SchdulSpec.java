@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.spec.schdul;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
 import lombok.extern.log4j.Log4j2;
@@ -25,7 +25,7 @@ import java.util.Map;
 @Component
 @Log4j2
 public class SchdulSpec
-        implements BaseSpec<SchdulEntity> {
+        implements BasePostSpec<SchdulEntity> {
 
     /**
      * 조회 후처리:: 정렬 순서 변경
@@ -118,8 +118,8 @@ public class SchdulSpec
                 case "searchKeyword":
                     // 입력 키워드 검색
                     String keyword = (String) searchParamMap.get(key);
-                    Predicate schdulNm = builder.like(root.get("schdulNm"), "%" + keyword + "%");
-                    Predicate schdulResn = builder.like(root.get("schdulResn"), "%" + keyword + "%");
+                    Predicate schdulNm = builder.like(root.get("title"), "%" + keyword + "%");
+                    Predicate schdulResn = builder.like(root.get("cn"), "%" + keyword + "%");
                     predicate.add(builder.or(schdulNm, schdulResn));
                     continue;
                 default:

@@ -39,18 +39,18 @@
             },
             /** 조회년도 변경 */
             chgYy: function(obj) {
-                commons.util.blockUIReplace("${SiteUrl.VCATN_DY_LIST!}?statsYy=" + $(obj).val());
+                commons.util.blockUIReplace("${SiteUrl.VCATN_SCHDUL_LIST!}?statsYy=" + $(obj).val());
             },
             /** 등록 팝업 호출 */
             regForm: function() {
-                $("#vcatn_dy_reg_modal").modal("show");
+                $("#vcatn_schdul_reg_modal").modal("show");
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
             },
             /** 등록 또는 수정 처리(Ajax) */
             regAjax: function() {
                 let ajaxData = new FormData($("#vcantDyRegForm")[0]);
                 let isReg = ($("#vcatnSchdulNo").val() === "");
-                const url = isReg ? '${SiteUrl.VCATN_DY_REG_AJAX!}' : '${SiteUrl.VCATN_DY_MDF_AJAX!}';
+                const url = isReg ? '${SiteUrl.VCATN_SCHDUL_REG_AJAX!}' : '${SiteUrl.VCATN_SCHDUL_MDF_AJAX!}';
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -83,7 +83,7 @@
             /** 수정 팝업 호출 (ajax) */
             mdfFormPop: function(vcatnSchdulNo) {
                 $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
-                const url = "${SiteUrl.VCATN_DY_DTL_AJAX!}";
+                const url = "${SiteUrl.VCATN_SCHDUL_DTL_AJAX!}";
                 let ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.result) return;
@@ -96,7 +96,7 @@
                     $("#endDt").val(resultObj.endDt);
                     $("#vcatnResn").val(resultObj.vcatnResn);
                     $("#vcatnRm").val(resultObj.vcatnRm);
-                    $("#vcatn_dy_reg_modal").modal("show");
+                    $("#vcatn_schdul_reg_modal").modal("show");
                 });
             },
             /** 엑셀 다운로드 */
@@ -107,7 +107,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     commons.util.blockUIFileDownload();
-                    $("#procForm").attr("action", "${SiteUrl.VCATN_DY_XLSX_DOWNLOAD!}").submit();
+                    $("#procForm").attr("action", "${SiteUrl.VCATN_SCHDUL_XLSX_DOWNLOAD!}").submit();
                 });
             },
             /** 삭제 처리 (ajax) */
@@ -118,7 +118,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
-                    const url = "${SiteUrl.VCATN_DY_DEL_AJAX!}";
+                    const url = "${SiteUrl.VCATN_SCHDUL_DEL_AJAX!}";
                     let ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -196,19 +196,19 @@
         <!--end::Table head-->
         <!--begin::Table body-->
         <tbody class="cursor-pointer">
-            <#list vcatnDyList![] as vcatn>
+            <#list vcatnSchdulList![] as vcatn>
                 <tr>
                     <td class="text-center">${vcatn?counter}</td>
-                    <td class="text-center">${vcatn.vcatnDy!}</td>
+                    <td class="text-center">${vcatn.bgnDt!} ~ ${vcatn.endDt!}</td>
                     <td class="text-center">${vcatn.userNm!}</td>
                     <td class="text-center">${vcatn.vcatnNm!}</td>
                     <td class="text-center">${vcatn.vcatnExprDy!}</td>
-                    <td class="text-center">${vcatn.vcatnResn!}</td>
-                    <td class="text-center">${vcatn.vcatnRm!}</td>
+                    <td class="text-center">${vcatn.resn!}</td>
+                    <td class="text-center">${vcatn.rm!}</td>
                     <td class="text-center">
                         <#if (vcatn.vcatnSchdulNo?? && vcatn.userId??)>
-                            <button type="button" class="badge badge-primary" onclick="Page.mdfFormPop('${vcatn.vcatnSchdulNo!}');">수정</button>
-                            <button type="button" class="badge badge-primary" onclick="Page.delAjax('${vcatn.vcatnSchdulNo!}');">삭제</button>
+                            <button type="button" class="badge badge-primary" onclick="Page.mdfFormPop(${vcatn.vcatnSchdulNo!});">수정</button>
+                            <button type="button" class="badge badge-primary" onclick="Page.delAjax(${vcatn.vcatnSchdulNo!});">삭제</button>
                         </#if>
                     </td>
                 </tr>
@@ -217,6 +217,6 @@
     </table>
 </div>
 
-<#include "/view/vcatn/dy/vcatn_dy_reg_modal.ftlh">
+<#include "/view/vcatn/schdul/vcatn_schdul_reg_modal.ftlh">
 
 </@layout.layout>

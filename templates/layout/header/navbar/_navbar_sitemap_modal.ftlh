@@ -188,11 +188,11 @@
                             </div>
                             <!-- 휴가관리 > 휴가사용일자 -->
                             <div class="menu-item">
-                                <a class="menu-link" href="${SiteMenu.MENU_VCATN_DY[3]!}">
+                                <a class="menu-link" href="${SiteMenu.MENU_VCATN_SCHDUL[3]!}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">${SiteMenu.MENU_VCATN_DY[2]!}</span>
+                                    <span class="menu-title">${SiteMenu.MENU_VCATN_SCHDUL[2]!}</span>
                                 </a>
                             </div>
                             <div class="d-flex align-items-center">

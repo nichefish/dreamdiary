@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.vcatn.papr;
+package io.nicheblog.dreamdiary.web.model.vcatn.schdul;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import lombok.*;

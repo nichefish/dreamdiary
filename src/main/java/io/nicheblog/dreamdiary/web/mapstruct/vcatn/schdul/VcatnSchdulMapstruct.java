@@ -1,13 +1,11 @@
-package io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr;
+package io.nicheblog.dreamdiary.web.mapstruct.vcatn.schdul;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
-import io.nicheblog.dreamdiary.web.model.schdul.SchdulCalDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.dy.VcatnDyDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.dy.VcatnDyXlsxDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnSchdulDto;
+import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
+import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulXlsxDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -31,20 +29,25 @@ public interface VcatnSchdulMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
     @Mapping(target = "bgnDt", expression = "java(DateUtils.asStr(entity.getBgnDt(), DatePtn.DATE))")
     @Mapping(target = "endDt", expression = "java(DateUtils.asStr(entity.getEndDt(), DatePtn.DATE))")
     VcatnSchdulDto toDto(final VcatnSchdulEntity entity) throws Exception;
 
     /**
-     * Entity -> DyDto 생성 (1:N, for문 돌면서 개별 생성)
+     * Entity -> Dto
      */
-    VcatnDyDto toDyDto(final VcatnSchdulEntity entity) throws Exception;
+    @Override
+    @Named("toListDto")
+    @Mapping(target = "bgnDt", expression = "java(DateUtils.asStr(entity.getBgnDt(), DatePtn.DATE))")
+    @Mapping(target = "endDt", expression = "java(DateUtils.asStr(entity.getEndDt(), DatePtn.DATE))")
+    VcatnSchdulDto toListDto(final VcatnSchdulEntity entity) throws Exception;
 
     /**
      * Dto -> DyXlsxDto
      */
-    @Mapping(target = "vcatnExprDy", expression = "java(Double.toString(dto.getVcatnExprDy()))")
-    VcatnDyXlsxDto toDyXlsxDto(final VcatnDyDto dto) throws Exception;
+    // @Mapping(target = "vcatnExprDy", expression = "java(Double.toString(dto.getVcatnExprDy()))")
+    VcatnSchdulXlsxDto toDyXlsxDto(final VcatnSchdulDto dto) throws Exception;
 
     /**
      * Dto -> Entity

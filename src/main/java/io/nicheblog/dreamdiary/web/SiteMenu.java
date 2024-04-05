@@ -154,10 +154,10 @@ public class SiteMenu {
             TOP_MENU_IDX,
             "일정",
             SiteUrl.SCHDUL_CAL,
-            List.of(SubMenu.VCATN_STATS, SubMenu.VCATN_DY)
+            List.of(SubMenu.VCATN_STATS, SubMenu.VCATN_SCHDUL)
     );
     public static SiteAcsInfo VCATN_STATS = SubMenu.VCATN_STATS;
-    public static SiteAcsInfo VCATN_DY = SubMenu.VCATN_DY;
+    public static SiteAcsInfo VCATN_SCHDUL = SubMenu.VCATN_SCHDUL;
 
     // 대메뉴 :: 경비 관리
     public static SiteAcsInfo EXPTR_ADMIN = new SiteAcsInfo(
@@ -273,11 +273,11 @@ public class SiteMenu {
                 SiteUrl.VCATN_STATS_YY
         );
         // 소메뉴 :: 휴가사용일자
-        SiteAcsInfo VCATN_DY = new SiteAcsInfo(
+        SiteAcsInfo VCATN_SCHDUL = new SiteAcsInfo(
                 SiteTopMenu.VCATN_ADMIN,
                 "02",
                 "휴가사용일자",
-                SiteUrl.VCATN_DY_LIST
+                SiteUrl.VCATN_SCHDUL_LIST
         );
 
         /* 경비 관리 */

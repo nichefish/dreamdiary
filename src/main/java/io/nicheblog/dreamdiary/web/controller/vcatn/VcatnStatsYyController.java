@@ -9,7 +9,6 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsTotalDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * VcatnStatsController
@@ -44,7 +42,7 @@ import java.util.List;
  */
 @Controller
 @Log4j2
-public class VcatnStatsController
+public class VcatnStatsYyController
         extends BaseControllerImpl {
 
     @Getter
@@ -80,6 +78,7 @@ public class VcatnStatsController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 휴가계획서 년도 정보 조회 (시작일자~종료일자 정보)
             VcatnStatsYyDto statsYy = null;
             String yyStr = yyStrParam;
             if (StringUtils.isEmpty(yyStrParam)) {
@@ -87,13 +86,12 @@ public class VcatnStatsController
                 yyStr = statsYy.getStatsYy();
             }
             if (statsYy == null) statsYy = vcatnStatsYyService.getVcatnYyDtDto(yyStr);
-            // 휴가계획서 최저년도~올해년도 목록 조회
-            model.addAttribute("yyList", vcatnPaprService.getVcatnYyList());
-            // 휴가계획서 년도 정보 조회 (시작일자~종료일자)
             model.addAttribute("vcatnYy", statsYy);
-            // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
-            List<VcatnStatsDto> statsList = vcatnStatsService.getVcatnStatsList(statsYy);
-            model.addAttribute("statsList", statsList);
+            // 휴가계획서 최저년도~올해 년도 (year) 목록 조회
+            model.addAttribute("yyList", vcatnPaprService.getVcatnYyList());
+            // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
+            // List<VcatnStatsDto> statsList = vcatnStatsServicea.getVcatnStatsList(statsYy);
+            // model.addAttribute("statsList", statsList);
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -128,6 +126,7 @@ public class VcatnStatsController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 휴가사용현황 정보 저장
             isSuccess = vcatnStatsService.regStatsTotal(vcatnStatsTotal);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -159,7 +158,7 @@ public class VcatnStatsController
     //     String resultMsg = "";
     //     try {
     //         VcatnStatsYyDto statsYy = StringUtils.isNotEmpty(yyStr) ? vcatnStatsYyService.getVcatnYyDtDto(yyStr) : vcatnStatsYyService.getCurrVcatnYyDt();
-    //         // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
+    //         // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
     //         List<Object> statsObjList = vcatnStatsService.getVcatnStatsListXlsx(statsYy);
     //         xlsxUtils.listXlxsDownload(Constant.VCATN_STATS, statsObjList);
     //         isSuccess = true;

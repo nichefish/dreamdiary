@@ -199,7 +199,7 @@ public final class Constant
     public static final String EXPTR_PRSNL_RPT = "exptrPrsnlRpt";
     public static final String EXPTR_PRSNL_RPT_ITEM = "exptrPrsnlRptItem";
     public static final String VCATN_STATS = "vcatnStats";          // 휴가계획서
-    public static final String VCATN_DY = "vcatnDy";                // 휴가사용일자
+    public static final String VCATN_SCHDUL = "vcatnSchdul";                // 휴가사용일자
 
     public static final String HOME_FLSYS = "flsys";
 

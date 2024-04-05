@@ -1,8 +1,8 @@
 <#--
   -- 휴가관리 > 휴가사용일자 > 휴가 관리자 직접 등록 Modal
-  -- @included_in : vcatn_dy_list
+  -- @included_in : vcatn_schdul_list
   -->
-<div class="modal fade" tabindex="-1" id="vcatn_dy_reg_modal" data-bs-keyboard="false" data-bs-backdrop="static">
+<div class="modal fade" tabindex="-1" id="vcatn_schdul_reg_modal" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#41416e;">

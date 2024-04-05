@@ -242,12 +242,12 @@ public interface SiteUrl {
     String VCATN_PAPR_CF_AJAX = Prefix.VCATN_PAPR + "/vcatnPaprCfAjax.do";
     String VCATN_PAPR_DEL_AJAX = Prefix.VCATN_PAPR + "/vcatnPaprDelAjax.do";
 
-    String VCATN_DY_LIST = "/vcatnDyList.do";
-    String VCATN_DY_REG_AJAX = "/vcatnDyRegAjax.do";
-    String VCATN_DY_DTL_AJAX = "/vcatnDyDtlAjax.do";
-    String VCATN_DY_MDF_AJAX = "/vcatnDyMdfAjax.do";
-    String VCATN_DY_DEL_AJAX = "/vcatnDyDelAjax.do";
-    String VCATN_DY_XLSX_DOWNLOAD = "/vcatnDyXlsxDownload.do";
+    String VCATN_SCHDUL_LIST = "/vcatnSchdulList.do";
+    String VCATN_SCHDUL_REG_AJAX = "/vcatnSchdulRegAjax.do";
+    String VCATN_SCHDUL_DTL_AJAX = "/vcatnSchdulDtlAjax.do";
+    String VCATN_SCHDUL_MDF_AJAX = "/vcatnSchdulMdfAjax.do";
+    String VCATN_SCHDUL_DEL_AJAX = "/vcatnSchdulDelAjax.do";
+    String VCATN_SCHDUL_XLSX_DOWNLOAD = "/vcatnSchdulXlsxDownload.do";
 
     String VCATN_STATS_YY = "/vcatnStatsYy.do";
     String VCATN_STATS_YY_UPDT_AJAX = "/vcatnStatsYyUpdtAjax.do";

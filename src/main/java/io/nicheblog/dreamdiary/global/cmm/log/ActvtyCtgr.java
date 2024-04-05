@@ -34,7 +34,7 @@ public enum ActvtyCtgr {
     BOARD_POST("일반게시판"),
 
     VCATN_PAPR("휴가계획서"),
-    VCATN_DY("휴가사용일자"),
+    VCATN_SCHDUL("휴가사용일자"),
     VCATN_STATS("년도별 휴가관리"),
 
     EXPTR_PRSNL_PAPR("경비지출서"),

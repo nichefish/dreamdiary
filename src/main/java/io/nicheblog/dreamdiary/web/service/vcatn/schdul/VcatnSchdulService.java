@@ -1,40 +1,33 @@
-package io.nicheblog.dreamdiary.web.service.vcatn.dy;
+package io.nicheblog.dreamdiary.web.service.vcatn.schdul;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
-import io.nicheblog.dreamdiary.global.util.date.DatePtn;
-import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnSchdulMapstruct;
-import io.nicheblog.dreamdiary.web.model.vcatn.dy.VcatnDyDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnSchdulDto;
+import io.nicheblog.dreamdiary.web.mapstruct.vcatn.schdul.VcatnSchdulMapstruct;
+import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnSchdulRepository;
-import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
-import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnSchdulSpec;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * VcatnDyService
+ * VcatnPaprService
  * <pre>
- *  휴가관리 > 휴가사용일자 서비스 모듈
+ *  휴가계획서 서비스 모듈
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Service("vcatnDyService")
+@Service("vcatnSchdulService")
 @Log4j2
-public class VcatnDyService
-        implements BaseCrudService<VcatnSchdulDto, VcatnDyDto, Integer, VcatnSchdulEntity, VcatnSchdulRepository, VcatnSchdulSpec, VcatnSchdulMapstruct> {
+public class VcatnSchdulService
+        implements BaseCrudService<VcatnSchdulDto, VcatnSchdulDto, Integer, VcatnSchdulEntity, VcatnSchdulRepository, VcatnSchdulSpec, VcatnSchdulMapstruct> {
 
     @Resource(name = "vcatnSchdulRepository")
     private VcatnSchdulRepository vcatnSchdulRepository;
@@ -42,11 +35,6 @@ public class VcatnDyService
     private VcatnSchdulSpec vcatnSchdulSpec;
 
     private final VcatnSchdulMapstruct vcatnSchdulMapstruct = VcatnSchdulMapstruct.INSTANCE;
-
-    @Resource(name = "schdulService")
-    private SchdulService schdulService;
-    @Resource(name = "vcatnStatsYyService")
-    private VcatnStatsYyService vcatnStatsYyService;
 
     @Override
     public VcatnSchdulRepository getRepository() {
@@ -63,40 +51,26 @@ public class VcatnDyService
         return this.vcatnSchdulMapstruct;
     }
 
-    /**
-     * 휴가관리 > 휴가사용일자 목록 조회 (dto level)
-     * yyStr만 전달
-     */
-    public Page<VcatnDyDto> getVcatnDyList(final VcatnStatsYyDto statsYy) throws Exception {
-        Map<String, Object> searchParamMap = vcatnStatsYyService.getVcatnYyDtMap(statsYy);
-        return this.getListDto(searchParamMap, Pageable.unpaged());
+    public List<VcatnSchdulDto> getListDto(VcatnStatsYyDto statsYy) throws Exception {
+        Map<String, Object> searchParamMap = new HashMap(){{
+            put("statsYy", statsYy.getStatsYy());
+            put("statsYy", statsYy.getStatsYy());
+        }};
+        return this.getListDto(searchParamMap);
     }
 
-    /**
-     * 휴가관리 > 휴가사용일자 목록 조회 (entity level)
-     * override : searchParamMap을 같이 전달한다.
-     */
-    @Override
-    public Page<VcatnDyDto> getListDto(
-            Map<String, Object> searchParamMap,
-            Pageable pageable
-    ) throws Exception {
-        Page<VcatnSchdulEntity> rsVcatnEntityList = this.getListEntity(searchParamMap, pageable);
+    //
+/**
+ * 휴가관리 > 휴가사용일자 목록 Page<Entity>->Page<Dto> 변환
+ *//*
 
-        // Page<Entity> -> Page<Dto>
-        return this.pageEntityToDto(rsVcatnEntityList, searchParamMap);
-    }
-
-    /**
-     * 휴가관리 > 휴가사용일자 목록 Page<Entity>->Page<Dto> 변환
-     */
-    public Page<VcatnDyDto> pageEntityToDto(
+    public Page<VcatnSchdulDto> pageEntityToDto(
             final Page<VcatnSchdulEntity> entityPage,
             final Map<String, Object> searchParamMap
     ) throws Exception {
         Date statsYyBgnDt = DateUtils.asDate(searchParamMap.get("searchStartDt"));
         Date statsYyEndDt = DateUtils.asDate(searchParamMap.get("searchEndDt"));
-        List<VcatnDyDto> rsDyDtoList = new ArrayList<>();
+        List<VcatnSchdulDto> rsDyDtoList = new ArrayList<>();
         for (VcatnSchdulEntity vcatn : entityPage.getContent()) {
             // 연차(반차)만 계산한다. 공가, 무급/생리휴가, 경조휴가 등은 패스
             String vcatnTy = vcatn.getVcatnCd();
@@ -117,20 +91,22 @@ public class VcatnDyService
                     keyDt = DateUtils.getDateAddDay(keyDt, 1);
                     continue;
                 }
-                VcatnDyDto vcatnDy = vcatnSchdulMapstruct.toDyDto(vcatn);
+                VcatnSchdulDto vcatnSchdul = vcatnSchdulMapstruct.toDyDto(vcatn);
                 // 첫째날에는 특별히 수정 버튼 등 이것저것 달아줌
                 if (keyDt.compareTo(vcatnBgnDt) == 0) {
-                    vcatnDy.setVcatnSchdulNo(Integer.toString(vcatn.getVcatnSchdulNo()));
-                    vcatnDy.setRm(vcatn.getRm());
+                    vcatnSchdul.setVcatnSchdulNo(Integer.toString(vcatn.getVcatnSchdulNo()));
+                    vcatnSchdul.setRm(vcatn.getRm());
                 }
-                vcatnDy.setVcatnDy(DateUtils.asStr(keyDt, DatePtn.DATE));
-                vcatnDy.setVcatnExprDy(exhrDy);
-                rsDyDtoList.add(vcatnDy);
+                vcatnSchdul.setVcatnSchdul(DateUtils.asStr(keyDt, DatePtn.DATE));
+                vcatnSchdul.setVcatnExprDy(exhrDy);
+                rsDyDtoList.add(vcatnSchdul);
                 keyDt = DateUtils.getDateAddDay(keyDt, 1);
             }
         }
         rsDyDtoList.sort(Comparator.naturalOrder());
         return new PageImpl<>(rsDyDtoList, entityPage.getPageable(), entityPage.getTotalElements());
     }
+
+}*/
 
 }
