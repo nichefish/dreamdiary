@@ -1,6 +1,6 @@
 <#--
   -- 활동 로그 목록 > 검색 영역 Header
-  -- @included in : log_sys_list_header
+  -- @included_in : log_sys_list_header
   -->
 <script>
     const Flsys = function() {
