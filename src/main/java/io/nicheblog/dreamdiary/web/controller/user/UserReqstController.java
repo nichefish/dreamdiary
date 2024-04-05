@@ -73,14 +73,16 @@ public class UserReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            model.addAttribute("user", new UserDto());      // 빈 객체 주입 (freemarker error prevention)
-            model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
+            // 빈 객체 주입 (freemarker error prevention)
+            model.addAttribute("user", new UserDto());
+            // 등록/수정 화면 플래그 세팅
+            model.addAttribute(Constant.IS_REG, true);
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.AUTH_CD, model);
             cdService.setModelCdData(Constant.CMPY_CD, model);
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
             cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
-            model.addAttribute("isNotAuthenticated", true);
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -95,8 +97,6 @@ public class UserReqstController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        // model.addAttribute("userInfo", new UserInfoDto());      // 빈 객체 주입 (muatache error prevention)
-
         return "view/user/reqst/user_reqst_reg_form";
     }
 
@@ -108,7 +108,6 @@ public class UserReqstController
     @ResponseBody
     public ResponseEntity<AjaxResponse> userReqstRegAjax(
             final @Valid UserReqstDto userReqst,
-            final @RequestParam("userId") String userId,
             final LogActvtyParam logParam,
             final BindingResult bindingResult,
             final MultipartHttpServletRequest request
@@ -119,7 +118,9 @@ public class UserReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록 처리
             UserReqstDto rsDto = userReqstService.regist(userReqst, request);
 
             isSuccess = (rsDto.getUserNo() != null);
@@ -146,7 +147,7 @@ public class UserReqstController
     @ResponseBody
     public ResponseEntity<AjaxResponse> userCfAjax(
             final LogActvtyParam logParam,
-            final @RequestParam("userNo") String userNoStr
+            final @RequestParam("userNo") Integer userNo
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -154,8 +155,7 @@ public class UserReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer userNo = Integer.parseInt(userNoStr);
-
+            // 상태 변경 처리
             isSuccess = userReqstService.cf(userNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -181,7 +181,7 @@ public class UserReqstController
     @ResponseBody
     public ResponseEntity<AjaxResponse> userUncfAjax(
             final LogActvtyParam logParam,
-            final @RequestParam("userNo") String userNoStr
+            final @RequestParam("userNo") Integer userNo
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -189,8 +189,7 @@ public class UserReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer userNo = Integer.parseInt(userNoStr);
-
+            // 상태 변경 처리
             isSuccess = userReqstService.uncf(userNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
