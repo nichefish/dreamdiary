@@ -144,6 +144,7 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 존재여부 체크 및 응답에 추가
             Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
             ajaxResponse.setResultMap((HashMap<String, Object>) resultMap);
 
@@ -181,9 +182,11 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 상태여부 체크 및 응답에 추가
             Integer yy = Integer.parseInt(yyStr);
             Integer mnth = Integer.parseInt(mnthStr);
             BasePostDto resultObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
+            ajaxResponse.setResultObj(resultObj);
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -219,18 +222,24 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            model.addAttribute("post", new ExptrPrsnlPaprDto());      // 빈 객체 주입 (freemarker error prevention)
+            // 빈 객체 주입 (freemarker error prevention)
+            model.addAttribute("post", new ExptrPrsnlPaprDto());
+            // 등록/수정 화면 플래그 세팅
+            model.addAttribute(Constant.IS_REG, true);
+            // 목록화면에서 체크 후 이전달 등록화면으로 보낼 떄 쓰는 플래그 세팅
+            if (StringUtils.isNotEmpty(prevYn)) model.addAttribute("prevYn", prevYn);
+            // 전년도/전월 값 세팅
             Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
             Integer[] currYyMnth = DateUtils.getCurrYyMnth();
             model.addAttribute("prevYy", prevYyMnth[0]);
             model.addAttribute("currYy", currYyMnth[0]);
             model.addAttribute("prevMnth", prevYyMnth[1]);
             model.addAttribute("currMnth", currYyMnth[1]);
-            if (StringUtils.isNotEmpty(prevYn)) model.addAttribute("prevYn", prevYn);           // 등록화면에서 체크 후 이전달 등록화면으로 보낼 떄 플래그
-            model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.EXPTR_CD, model);
 
             isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -265,14 +274,18 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             boolean isReg = key == null;
             ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPaprDto, request) : exptrPrsnlPaprService.modify(exptrPrsnlPaprDto, key, request);
-            // 조치자 추가 :: 메인 로직과 분리
-            publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
 
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            if (isSuccess) {
+                // 조치자 추가 :: 메인 로직과 분리
+                publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
+            }
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -306,6 +319,7 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
             // 조회수 카운트 추가
@@ -348,6 +362,7 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
@@ -387,19 +402,25 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
-            model.addAttribute(Constant.IS_MDF, true);           // 등록/수정 화면 플래그 세팅
-            model.addAttribute("mngrYn", mngrYn);                   // 관리자 화면에서 넘어왔는지 여부 세팅
+            // 등록/수정 화면 플래그 세팅
+            model.addAttribute(Constant.IS_MDF, true);
+            // 관리자 경비관리 화면에서 넘어왔는지 여부 세팅
+            model.addAttribute("mngrYn", mngrYn);            
+            // 전년도/전월 값 세팅
             Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
             Integer[] currYyMnth = DateUtils.getCurrYyMnth();
             model.addAttribute("prevYy", prevYyMnth[0]);
             model.addAttribute("currYy", currYyMnth[0]);
             model.addAttribute("prevMnth", prevYyMnth[1] + 1);
             model.addAttribute("currMnth", currYyMnth[1] + 1);
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.EXPTR_CD, model);
 
             isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -432,6 +453,7 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 삭제 처리
             isSuccess = exptrPrsnlPaprService.delete(key);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -463,9 +485,11 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 첨부파일 목록 조회
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";
             List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
+            // PDF 파일 생성 및 다운로드
+            String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";
             PdfBoxUtils.imgCmbnPdfDonwload(fileNm, fileList);
 
             isSuccess = true;

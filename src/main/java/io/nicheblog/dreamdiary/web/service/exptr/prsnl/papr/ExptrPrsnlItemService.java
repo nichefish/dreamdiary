@@ -33,18 +33,18 @@ public class ExptrPrsnlItemService {
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 첨부파일 업데이트
      */
-    public Boolean updateExptrPrsnlItemRcipt(
+    public Boolean updateRciptFile(
             final Integer exptrPrsnlItemNo,
             final Integer atchFileDtlNo
     ) {
-        exptrPrsnlPaprRepository.updateExptrPrsnlItemRcipt(exptrPrsnlItemNo, atchFileDtlNo);
+        exptrPrsnlPaprRepository.updateRciptFile(exptrPrsnlItemNo, atchFileDtlNo);
         return true;
     }
 
     /**
      * 경비 관리 > 경비지출서 > 해당 지출내역에 대하여 영수증 원본 제출여부 업데이트
      */
-    public Boolean exptrPrsnlStatsOrgnlRcipt(
+    public Boolean updtOrgnlRciptYn(
             final Integer key,
             final Integer exptrPrsnlItemNo,
             String orgnlRciptYn

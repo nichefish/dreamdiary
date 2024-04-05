@@ -67,10 +67,12 @@ public class ExptrPrsnlItemController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 항목 조회 및 응답에 추가
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            isSuccess = rsDto != null;
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            if (isSuccess) ajaxResponse.setResultList(rsDto.getItemList());
+            ajaxResponse.setResultList(rsDto.getItemList());
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -105,13 +107,13 @@ public class ExptrPrsnlItemController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 파일 영역 처리 후 업로드 정보 받아서 반환
+            // 파일 영역 처리 후, 성공시 업로드 정보 받아서 반환
             AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
             Integer atchFileDtlNo = atchfileDtl.getAtchFileDtlNo();
+
             isSuccess = (atchFileDtlNo != null);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             if (isSuccess) {
-                isSuccess = exptrPrsnlItemService.updateExptrPrsnlItemRcipt(exptrPrsnlItemNo, atchFileDtlNo);
+                isSuccess = exptrPrsnlItemService.updateRciptFile(exptrPrsnlItemNo, atchFileDtlNo);
             }
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -136,10 +138,10 @@ public class ExptrPrsnlItemController
     @PostMapping(SiteUrl.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> exptrPrsnlStatsOrgnlRcipt(
+    public ResponseEntity<AjaxResponse> exptrPrsnlItemOrgnlRcipt(
             final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
-            final @RequestParam("exptrPrsnlItemNo") String exptrPrsnlItemNoStr,
+            final @RequestParam("exptrPrsnlItemNo") Integer exptrPrsnlItemNo,
             final @RequestParam("orgnlRciptYn") String orgnlRciptYn
     ) {
 
@@ -148,8 +150,8 @@ public class ExptrPrsnlItemController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer exptrPrsnlItemNo = Integer.parseInt(exptrPrsnlItemNoStr);
-            isSuccess = exptrPrsnlItemService.exptrPrsnlStatsOrgnlRcipt(key, exptrPrsnlItemNo, orgnlRciptYn);
+            // 상태 변경 처리
+            isSuccess = exptrPrsnlItemService.updtOrgnlRciptYn(key, exptrPrsnlItemNo, orgnlRciptYn);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
@@ -158,7 +160,7 @@ public class ExptrPrsnlItemController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + exptrPrsnlItemNoStr);
+            logParam.setCn("key: " + exptrPrsnlItemNo);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -176,7 +178,7 @@ public class ExptrPrsnlItemController
     public ResponseEntity<AjaxResponse> exptrPrsnlItemRject(
             final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
-            final @RequestParam("exptrPrsnlItemNo") String exptrPrsnlItemNoStr,
+            final @RequestParam("exptrPrsnlItemNo") Integer exptrPrsnlItemNo,
             final @RequestParam("rjectYn") String rjectYn,
             final @RequestParam("rjectResn") String rjectResn
     ) {
@@ -186,7 +188,7 @@ public class ExptrPrsnlItemController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            Integer exptrPrsnlItemNo = Integer.parseInt(exptrPrsnlItemNoStr);
+            // 상태 변경 처리
             isSuccess = exptrPrsnlItemService.exptrPrsnlItemRject(key, exptrPrsnlItemNo, rjectYn, rjectResn);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -196,7 +198,7 @@ public class ExptrPrsnlItemController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + exptrPrsnlItemNoStr);
+            logParam.setCn("key: " + exptrPrsnlItemNo);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

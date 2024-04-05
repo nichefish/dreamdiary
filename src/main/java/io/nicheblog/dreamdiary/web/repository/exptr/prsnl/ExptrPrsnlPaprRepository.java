@@ -53,7 +53,7 @@ public interface ExptrPrsnlPaprRepository
                     "WHERE exptr_prsnl_item_no = :exptrPrsnlItemNo",
             nativeQuery = true
     )
-    Integer updateExptrPrsnlItemRcipt(
+    Integer updateRciptFile(
             final @Param("exptrPrsnlItemNo") Integer exptrPrsnlItemNo,
             final @Param("atchFileDtlNo") Integer atchFileDtlNo
     );
