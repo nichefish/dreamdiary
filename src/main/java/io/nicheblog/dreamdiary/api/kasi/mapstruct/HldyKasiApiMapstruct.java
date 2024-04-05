@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.api.kasi.mapstruct;
 
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
@@ -16,7 +17,7 @@ import org.mapstruct.factory.Mappers;
  *
  * @author nichefish
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = { DateUtils.class, StringUtils.class })
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = { Constant.class, DateUtils.class, StringUtils.class })
 public interface HldyKasiApiMapstruct
         extends BaseMapstruct<HldyKasiApiItemDto, SchdulEntity> {
 
@@ -34,7 +35,8 @@ public interface HldyKasiApiMapstruct
     @Override
     // @Mapping(target = "contentType", expression = "java(\"hldyApi\")")
     @Mapping(target = "title", expression = "java(dto.getDateName())")
-    @Mapping(target = "schdulCd", expression = "java(\"HLDY\")")
+    @Mapping(target = "cn", expression = "java(dto.getDateName())")
+    @Mapping(target = "schdulCd", expression = "java(Constant.SCHDUL_TY_HLDY)")
     @Mapping(target = "bgnDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     @Mapping(target = "endDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     SchdulEntity toEntity(final HldyKasiApiItemDto dto) throws Exception;

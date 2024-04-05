@@ -16,7 +16,8 @@
             <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
                 <!--begin::Item-->
                 <li class="breadcrumb-item text-muted">
-                    <a href="<#if isMngrMode>${SiteUrl.ADMIN_MAIN}<#else>${SiteUrl.MAIN}</#if>" class="text-muted text-hover-primary">
+                    <a href="<#if isMngrMode>${SiteUrl.ADMIN_MAIN}<#else>${SiteUrl.MAIN}</#if>" class="text-muted text-hover-primary"
+                       data-bs-toggle="tooltip" data-bs-placement="right" data-bs-dismiss="click" title="메인 화면으로 이동합니다.">
                         <i class="bi bi-house-<#if isMngrMode>gear-</#if>fill fs-4 me-1 text-primary"></i>
                     </a>
                 </li>

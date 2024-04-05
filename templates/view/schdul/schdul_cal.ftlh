@@ -140,7 +140,7 @@
                 $(function () {
                     $("#schdulRegForm").validate({
                         submitHandler: function () {
-                            let isReg = ($("#schdulNo").val() === "");
+                            let isReg = ($("#schdulRegForm #postNo").val() === "");
                             Swal.fire({
                                 text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
                                 showCancelButton: true,
@@ -210,9 +210,9 @@
                 });
             },
             /** 상세 모달 호출 (Ajax) */
-            dtlAjax: function(schdulNo) {
+            dtlAjax: function(postNo) {
                 const url = "${SiteUrl.SCHDUL_DTL_AJAX!}";
-                let ajaxData = { "schdulNo": schdulNo };
+                let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -220,13 +220,13 @@
                     }
                     let obj = res.resultObj;
                     commons.util.handlebarsTemplate(obj, "schdul_dtl", "show");
-                    Schdul.schdulNo = obj.schdulNo;
+                    Schdul.postNo = obj.postNo;
                 });
             },
             /** 수정 폼 오픈 */
             mdfForm: function() {
                 const url = "${SiteUrl.SCHDUL_DTL_AJAX!}";
-                let ajaxData = { "schdulNo": Schdul.schdulNo };
+                let ajaxData = { "postNo": Schdul.postNo };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -256,7 +256,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${SiteUrl.SCHDUL_DEL_AJAX!}";
-                    let ajaxData = { "schdulNo" : Schdul.schdulNo }
+                    let ajaxData = { "postNo" : Schdul.postNo }
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

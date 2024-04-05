@@ -112,3 +112,37 @@
         </div>
     </div>
 </#macro>
+
+
+<#macro outer_menu siteMenu>
+    <!--begin:Menu item-->
+    <div class="menu-item" id="${siteMenu.menuNo!}">
+        <!--begin:Menu link-->
+        <a class="menu-link" href="${siteMenu.url!}">
+            <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">${siteMenu.menuNm!}</span>
+        </a>
+        <!--end:Menu link-->
+    </div>
+</#macro>
+
+
+<#macro inner_menu siteMenu>
+    <!--end:Menu item-->
+    <div class="menu-inner flex-column collapse" id="kt_app_sidebar_menu_dashboards_collapse">
+        <!--begin:Menu item-->
+        <div class="menu-item" id="${siteMenu.menuNo!}">
+            <!--begin:Menu link-->
+            <a class="menu-link" href="${siteMenu.url!}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">${siteMenu.menuNm!}</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+        <!--end:Menu item-->
+    </div>
+</#macro>
