@@ -2,16 +2,14 @@ package io.nicheblog.dreamdiary.web.service.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
-import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserProflMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
-import io.nicheblog.dreamdiary.web.model.user.UserCttpcListDto;
+import io.nicheblog.dreamdiary.web.model.user.UserCttpcDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.model.user.UserListDto;
 import io.nicheblog.dreamdiary.web.repository.user.UserProflRepository;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
@@ -23,7 +21,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -40,7 +37,7 @@ import java.util.stream.Collectors;
  */
 @Service("userService")
 public class UserService
-        implements BaseMultiCrudService<UserDto, UserListDto, Integer, UserEntity, UserRepository, UserSpec, UserMapstruct> {
+        implements BaseMultiCrudService<UserDto.DTL, UserDto.LIST, Integer, UserEntity, UserRepository, UserSpec, UserMapstruct> {
 
     @Resource(name = "userRepository")
     private UserRepository userRepository;
@@ -77,7 +74,7 @@ public class UserService
     /**
      * 사용자 관리 > 사용자 단일 조회 (Dto Level) (Long userId / String userId)
      */
-    public UserDto getDtlDto(final String userNo) throws Exception {
+    public UserDto.DTL getDtlDto(final String userNo) throws Exception {
         // Entity 레벨 조회
         UserEntity rsUserEntity = this.getDtlEntity(userNo);
         return userMapstruct.toDto(rsUserEntity);
@@ -104,7 +101,7 @@ public class UserService
      * 사용자 관리 > 사용자 등록
      */
     @Override
-    public UserDto regist(final UserDto userDto) throws Exception {
+    public UserDto.DTL regist(final UserDto.DTL userDto) throws Exception {
         // 계정 잠금여부 체크박스 값 세팅
         if (!"Y".equals(userDto.getLockedYn())) userDto.setLockedYn("N");
 
@@ -125,7 +122,7 @@ public class UserService
         userEntity.acntStus.setCfYn("Y");
         // insert
         UserEntity rsltEntity = userRepository.save(userEntity);
-        UserDto rsltDto = userMapstruct.toDto(rsltEntity);
+        UserDto.DTL rsltDto = userMapstruct.toDto(rsltEntity);
         rsltDto.setIsSuccess((rsltEntity.getUserNo() != null));
         return rsltDto;
     }
@@ -214,8 +211,8 @@ public class UserService
      * 사용자 관리 > 사용자 수정
      */
     @Override
-    public UserDto modify(
-            final UserDto userDto,
+    public UserDto.DTL modify(
+            final UserDto.DTL userDto,
             final Integer key
     ) throws Exception {
         // 계정 잠금여부 체크박스 값 세팅
@@ -247,7 +244,7 @@ public class UserService
         }
         // update
         UserEntity rsltEntity = this.updt(userEntity);
-        UserDto rsltDto = userMapstruct.toDto(rsltEntity);
+        UserDto.DTL rsltDto = userMapstruct.toDto(rsltEntity);
         rsltDto.setIsSuccess((rsltEntity.getUserNo() != null));
         return rsltDto;
     }
@@ -257,7 +254,7 @@ public class UserService
      */
     // public List<Object> userListXlsx(final Map<String, Object> searchParamMap) throws Exception {
     //     // 목록 검색
-    //     Page<UserEntity> userEntityList = this.getListEntity(searchParamMap, Pageable.unpaged());
+    //     List<UserEntity> userEntityList = this.getListEntity(searchParamMap);
 //
     //     // List<Entity> -> List<ListXlsxDto>
     //     List<Object> rsUserListXlxsDtoList = new ArrayList<>();
@@ -321,11 +318,11 @@ public class UserService
      * 사용자 정보UserInfo가 있는 계정 목록 조회
      * TODO: 어디어디 쓰지?
      */
-    public Page<UserListDto> getInfoUserList(final Pageable pageable) throws Exception {
+    public Page<UserDto.LIST> getInfoUserList(final Pageable pageable) throws Exception {
         HashMap<String, Object> searchParamMap = new HashMap<>() {{
             put("hasUserInfo", true);
         }};
-        return this.getListDto(searchParamMap, pageable);
+        return this.getPageDto(searchParamMap, pageable);
     }
 
     /**
@@ -333,7 +330,7 @@ public class UserService
      *
      * @param yyStr (년도)
      */
-    public Page<UserListDto> getCrdtUserList(final String yyStr) throws Exception {
+    public Page<UserDto.LIST> getCrdtUserList(final String yyStr) throws Exception {
         if (StringUtils.isEmpty(yyStr)) return null;
         // 목록 검색
         String startDtStr = yyStr + "-01-01";
@@ -347,7 +344,7 @@ public class UserService
      * @param startDtStr : 시작일자yyyy-MM-dd
      * @param endDtStr : 종료일자yyyy-MM-dd
      */
-    public Page<UserListDto> getCrdtUserList(
+    public Page<UserDto.LIST> getCrdtUserList(
             final String startDtStr,
             final String endDtStr
     ) throws Exception {
@@ -361,17 +358,17 @@ public class UserService
     /**
      * 내부직원 연락처 목록 조회
      */
-    public List<UserCttpcListDto> getCrdtUserCttpcList(
+    public List<UserCttpcDto> getCrdtUserCttpcList(
             final String startDtStr,
             final String endDtStr
     ) throws Exception {
-        List<UserListDto> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr)
+        List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr)
                                              .getContent();
 
         return crdtUserList.stream()
                 .map(listDto -> {
                     try {
-                        return userMapstruct.toCttpcListDto(listDto);
+                        return userMapstruct.toCttpcDto(listDto);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -386,7 +383,7 @@ public class UserService
             final String startDtStr,
             final String endDtStr
     ) throws Exception {
-        List<UserListDto> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr)
+        List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr)
                                              .getContent();
         List<Object> rsCrdtUserCttpcXlsxObjList = new ArrayList<>();
         Map<String, String> header = new LinkedHashMap<>() {{
@@ -397,7 +394,7 @@ public class UserService
             put("이메일", "이메일");
         }};
         rsCrdtUserCttpcXlsxObjList.add(header);
-        for (UserListDto listDto : crdtUserList) {
+        for (UserDto.LIST listDto : crdtUserList) {
             rsCrdtUserCttpcXlsxObjList.add(userMapstruct.toCttpcListXlsxDto(listDto));
         }
         return rsCrdtUserCttpcXlsxObjList;
@@ -407,38 +404,38 @@ public class UserService
      * 생일인 내부직원 목록 조회
      * JPA로 해당조건 조회하기에 난항이 있어서 내부직원 조회 후 for문 처리
      */
-    public List<UserListDto> getBrthdyCrdtUser() throws Exception {
-        String todayStr = DateUtils.getCurrDateStr(DatePtn.DATE);
-        String tomorrowStr = DateUtils.getNextDateStr(DatePtn.DATE);
-        Page<UserListDto> crdtUserPage = this.getCrdtUserList(todayStr, tomorrowStr);
-        List<UserListDto> crdtUserList = crdtUserPage.getContent();
-        if (CollectionUtils.isEmpty(crdtUserList)) return null;
-
-        List<UserListDto> brthdyUserList = new ArrayList<>();
-        for (UserListDto user : crdtUserList) {
-            String brthdy = user.getBrthdy();
-            if (StringUtils.isEmpty(brthdy)) continue;
-            // 음력 / 양력 구분해서 적용
-            if ("Y".equals(user.getLunarYn())) {
-                // 음력일 경우 = 1) 오늘 날짜를 음력 날짜로 변환 후 2) 아래 로직 그대로 적용.
-                String todayLunarStr = DateUtils.ChineseCal.solToLunStr(todayStr, DatePtn.DATE);
-                String todayLunarYear = todayLunarStr.substring(0, 4);
-
-                String brthMnthDy = brthdy.substring(4);
-                String thisLunarBrthdy = todayLunarYear + brthMnthDy;
-
-                if (!todayLunarStr.equals(thisLunarBrthdy)) continue;
-                brthdyUserList.add(user);
-            } else {
-                // 양력일 경우
-                String brthMnthDy = brthdy.substring(4);
-                String thisBrthdy = DateUtils.getCurrYearStr() + brthMnthDy;
-                if (!todayStr.equals(thisBrthdy)) continue;
-                brthdyUserList.add(user);
-            }
-        }
-
-        return brthdyUserList;
-    }
+    //public List<UserDto.LIST> getBrthdyCrdtUser() throws Exception {
+    //    String todayStr = DateUtils.getCurrDateStr(DatePtn.DATE);
+    //    String tomorrowStr = DateUtils.getNextDateStr(DatePtn.DATE);
+    //    Page<UserDto.LIST> crdtUserPage = this.getCrdtUserList(todayStr, tomorrowStr);
+    //    List<UserDto.LIST> crdtUserList = crdtUserPage.getContent();
+    //    if (CollectionUtils.isEmpty(crdtUserList)) return null;
+//
+    //    List<UserDto.LIST> brthdyUserList = new ArrayList<>();
+    //    for (UserDto.LIST user : crdtUserList) {
+    //        String brthdy = user.getBrthdy();
+    //        if (StringUtils.isEmpty(brthdy)) continue;
+    //        // 음력 / 양력 구분해서 적용
+    //        if ("Y".equals(user.getLunarYn())) {
+    //            // 음력일 경우 = 1) 오늘 날짜를 음력 날짜로 변환 후 2) 아래 로직 그대로 적용.
+    //            String todayLunarStr = DateUtils.ChineseCal.solToLunStr(todayStr, DatePtn.DATE);
+    //            String todayLunarYear = todayLunarStr.substring(0, 4);
+//
+    //            String brthMnthDy = brthdy.substring(4);
+    //            String thisLunarBrthdy = todayLunarYear + brthMnthDy;
+//
+    //            if (!todayLunarStr.equals(thisLunarBrthdy)) continue;
+    //            brthdyUserList.add(user);
+    //        } else {
+    //            // 양력일 경우
+    //            String brthMnthDy = brthdy.substring(4);
+    //            String thisBrthdy = DateUtils.getCurrYearStr() + brthMnthDy;
+    //            if (!todayStr.equals(thisBrthdy)) continue;
+    //            brthdyUserList.add(user);
+    //        }
+    //    }
+//
+    //    return brthdyUserList;
+    //}
 
 }

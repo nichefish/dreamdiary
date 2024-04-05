@@ -122,7 +122,7 @@ public class WebMvcContextConfig
                 /* 에러 화면 경로 제외 */
                 .excludePathPatterns(SiteUrl.ERROR)
                 .excludePathPatterns(SiteUrl.ERROR + "/**")
-                .excludePathPatterns(ApiUrl.PREFIX_API + "/**")
+                .excludePathPatterns(ApiUrl.Prefix.API + "/**")
                 /* 파일 다운로드의 경우 처리하지 않음 */
                 .excludePathPatterns("/**/*Download.do")
                 /* ajax 호출의 경우 처리하지 않음 */

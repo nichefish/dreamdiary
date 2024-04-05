@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
@@ -19,10 +19,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class})
 public interface VcatnSchdulMapstruct
-        extends BaseListMapstruct<VcatnSchdulDto, VcatnDyDto, VcatnSchdulEntity> {
+        extends BaseCrudMapstruct<VcatnSchdulDto, VcatnSchdulDto, VcatnSchdulEntity> {
 
     VcatnSchdulMapstruct INSTANCE = Mappers.getMapper(VcatnSchdulMapstruct.class);
 
@@ -84,8 +85,5 @@ public interface VcatnSchdulMapstruct
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "bgnDt", expression = "java(DateUtils.asDate(dto.getBgnDt()))")
     @Mapping(target = "endDt", expression = "java(DateUtils.asDate(dto.getEndDt()))")
-    void updateFromDto(
-            final VcatnSchdulDto dto,
-            final @MappingTarget VcatnSchdulEntity entity
-    ) throws Exception;
+    void updateFromDto(final VcatnSchdulDto dto, final @MappingTarget VcatnSchdulEntity entity) throws Exception;
 }

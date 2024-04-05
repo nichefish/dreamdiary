@@ -25,7 +25,7 @@ import java.util.Map;
  * @author nichefish
  * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-@Component("userSpec")
+@Component
 @Log4j2
 public class UserSpec
         implements BaseSpec<UserEntity> {
@@ -33,10 +33,7 @@ public class UserSpec
     /**
      * 검색 조건 목록 반환 :: preset된 특정 모드를 반환
      */
-    public Specification<UserEntity> searchCrdtUser(
-            final String startDtStr,
-            final String endDtStr
-    ) {
+    public Specification<UserEntity> searchCrdtUser(final String startDtStr, final String endDtStr) {
         return (root, query, builder) -> {
             List<Predicate> predicate = new ArrayList<>();
             try {
@@ -166,7 +163,7 @@ public class UserSpec
         List<Order> order = new ArrayList<>();
         Join<UserEntity, UserProflEntity> userProfl = root.join("userProfl", JoinType.INNER);
         Join<UserProflEntity, DtlCdEntity> jobTitleCdInfo = userProfl.join("jobTitleCdInfo", JoinType.INNER);
-        order.add(builder.desc(jobTitleCdInfo.get("sortOrdr")));
+        order.add(builder.desc(jobTitleCdInfo.get("state").get("sortOrdr")));
         order.add(builder.asc(userProfl.get("ecnyDt")));
         return order;
     }

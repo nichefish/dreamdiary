@@ -17,7 +17,7 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, UserAcsIpEmbed.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserReqstMapstruct
@@ -46,8 +46,5 @@ public interface UserReqstMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
-    void updateFromDto(
-            final UserReqstDto dto,
-            final @MappingTarget UserReqstEntity entity
-    ) throws Exception;
+    void updateFromDto(final UserReqstDto dto, final @MappingTarget UserReqstEntity entity) throws Exception;
 }

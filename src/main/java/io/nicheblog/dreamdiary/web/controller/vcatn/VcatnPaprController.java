@@ -15,7 +15,6 @@ import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprListDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
@@ -88,7 +87,7 @@ public class VcatnPaprController
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
             // 목록 조회
-            Page<VcatnPaprListDto> vcatnPaprList = vcatnPaprService.getListDto(searchParam, pageRequest);
+            Page<VcatnPaprDto.LIST> vcatnPaprList = vcatnPaprService.getPageDto(searchParam, pageRequest);
             model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(vcatnPaprList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
@@ -157,7 +156,7 @@ public class VcatnPaprController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprRegAjax(
-            final @Valid VcatnPaprDto vcatnPaprDto,
+            final @Valid VcatnPaprDto.DTL vcatnPaprDto,
             final @RequestParam("postNo") @Nullable Integer key,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
