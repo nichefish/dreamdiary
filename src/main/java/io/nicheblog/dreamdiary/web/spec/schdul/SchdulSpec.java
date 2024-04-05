@@ -1,9 +1,11 @@
 package io.nicheblog.dreamdiary.web.spec.schdul;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
+import io.nicheblog.dreamdiary.web.entity.schdul.SchdulPrtcpntEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -52,7 +54,7 @@ public class SchdulSpec
     ) throws Exception {
 
         List<Predicate> predicate = new ArrayList<>();
-        // Join<SchdulEntity, SchdulPrtcpntEntity> prtcpntList;
+        Join<SchdulEntity, SchdulPrtcpntEntity> prtcpntList;
         // expressions
         Expression<Date> endDtExp = root.get("endDt");
         Expression<Date> bgnDtExp = root.get("bgnDt");
@@ -84,12 +86,12 @@ public class SchdulSpec
                     Predicate notCeremony = builder.notEqual(schdulCdExp, Constant.SCHDUL_TY_CEREMONY);
                     predicate.add(builder.and(notHldy, notCeremony));
                     continue;
-                // case "getPrvtOnly":
-                //     // 개인 일정 조회
-                //     predicate.add(builder.equal(prvtYnExp, "Y"));
-                //     prtcpntList = root.join("prtcpntList", JoinType.INNER);
-                //     predicate.add(builder.equal(prtcpntList.get("userId"), AuthUtils.getLgnUserId()));
-                //     continue;
+                case "getPrvtOnly":
+                    // 개인 일정 조회
+                    predicate.add(builder.equal(prvtYnExp, "Y"));
+                    prtcpntList = root.join("prtcpntList", JoinType.INNER);
+                    predicate.add(builder.equal(prtcpntList.get("userId"), AuthUtils.getLgnUserId()));
+                    continue;
                 case "indtChked":
                     // 내근 조회
                     if ("N".equals(searchParamMap.get(key))) {

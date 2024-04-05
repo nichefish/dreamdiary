@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * SchdulDto
@@ -71,6 +72,14 @@ public class SchdulDto
      */
     public Boolean getIsPrvt() {
         return "Y".equals(this.prvtYn);
+    }
+
+    /** userId가 빈 객체는 패스 */
+    public List<SchdulPrtcpntDto> getPrtcpntList() {
+        if (CollectionUtils.isEmpty(this.prtcpntList)) return this.prtcpntList;
+        return this.prtcpntList.stream()
+                .filter(dto -> StringUtils.isNotEmpty(dto.getUserId()))
+                .collect(Collectors.toList());
     }
 
     public List<SchdulPrtcpntEntity> getPrtcpntEntityList() throws Exception {

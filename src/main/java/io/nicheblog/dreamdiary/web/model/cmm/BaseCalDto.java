@@ -65,8 +65,10 @@ public class BaseCalDto
     /** CSS 클래스 지정 */
     protected String className;
 
-    /** 일정 설멍 (사유) */
+    /** 일정 설명 (사유) */
     protected String description;
+
+    /* ----- */
 
     /**
      * 일정일자 기준 정렬 (오름차순)

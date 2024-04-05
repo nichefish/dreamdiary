@@ -11,11 +11,15 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
+import org.springframework.util.CollectionUtils;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * SchdulEntity
@@ -42,6 +46,12 @@ public class SchdulEntity
     @PostLoad
     private void onLoad() {
         if (this.schdulCdInfo != null) this.schdulNm = this.schdulCdInfo.getDtlCdNm();
+        if (!CollectionUtils.isEmpty(this.prtcpntList)) {
+            this.prtcpntStr = this.prtcpntList.stream()
+                    .filter(entity -> entity.getUser() != null)
+                    .map(entity -> entity.getUser().getNickNm())
+                    .collect(Collectors.joining(", "));
+        }
     }
 
     /** 필수: 컨텐츠 타입 */
@@ -98,6 +108,17 @@ public class SchdulEntity
     @Column(name = "prvt_yn")
     @Comment("개인일정 여부 (Y/N)")
     private String prvtYn = "N";
+
+    /** 참여자 정보 */
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no")
+    @Fetch(FetchMode.SELECT)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("참여자 정보")
+    private List<SchdulPrtcpntEntity> prtcpntList;
+
+    @Transient
+    private String prtcpntStr;
 
     /* ----- */
 
