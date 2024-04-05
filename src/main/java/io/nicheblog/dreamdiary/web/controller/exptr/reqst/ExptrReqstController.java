@@ -131,18 +131,20 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 빈 객체 주입 (freemarker error prevention)
+            model.addAttribute("post", new ExptrReqstDto());
             // 물품 구매 및 경조사비 신청 템플릿 조회
             // TmplatTxtDto exptrReqstTmplat = tmplatTxtService.getTmplatTxtByTmplatDef("EXPTR_REQST", null);
             // model.addAttribute("exptrReqstTmplat", exptrReqstTmplat);
-            // 빈 객체 주입 (freemarker error prevention)
-            model.addAttribute("post", new ExptrReqstDto());
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_REG, true);
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.EXPTR_REQST_CTGR_CD, model);
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
 
             isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -174,6 +176,7 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 모델에 추가
             model.addAttribute("post", exptrReqstDto);
 
             isSuccess = true;
@@ -213,18 +216,23 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
             boolean isReg = exptrReqstDto.getPostNo() == null;
             ExptrReqstDto result = isReg ? exptrReqstService.regist(exptrReqstDto, request) : exptrReqstService.modify(exptrReqstDto, key, request);
+
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            // 조치자 추가 :: 메인 로직과 분리
-            publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
-            // 잔디 메세지 발송 :: 메인 로직과 분리
-            // if (isSuccess && "Y".equals(jandiYn)) {
-            //     String jandiResultMsg = notifyService.notifyExptrReqstReg(trgetTopic, result, logParam);
-            //     resultMsg = resultMsg + "\n" + jandiResultMsg;
-            // }
+            if (isSuccess) {
+                // 조치자 추가 :: 메인 로직과 분리
+                publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
+                // 잔디 메세지 발송 :: 메인 로직과 분리
+                // if (isSuccess && "Y".equals(jandiYn)) {
+                //     String jandiResultMsg = notifyService.notifyExptrReqstReg(trgetTopic, result, logParam);
+                //     resultMsg = resultMsg + "\n" + jandiResultMsg;
+                // }
+            }
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -258,14 +266,16 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
             model.addAttribute("post", rsDto);
+            
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조회수 카운트 추가
             exptrReqstService.hitCntUp(key);
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -298,15 +308,16 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 게시판 정보 조회
+            // 객체 조회 및 응답에 추가
             ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
             ajaxResponse.setResultObj(rsDto);
+            
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조회수 카운트 추가
             exptrReqstService.hitCntUp(key);
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);
@@ -340,9 +351,12 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 객체 조회 및 모델에 추가
             ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
             model.addAttribute("post", rsDto);
-            model.addAttribute(Constant.IS_MDF, key);           // 등록/수정 화면 플래그 세팅
+            // 등록/수정 화면 플래그 세팅
+            model.addAttribute(Constant.IS_MDF, key);
+            // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.EXPTR_REQST_CTGR_CD, model);
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
@@ -381,6 +395,7 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 삭제 처리
             isSuccess = exptrReqstService.delete(key);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -415,6 +430,7 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 상태 변경 처리
             ExptrReqstDto result = exptrReqstService.exptrReqstCf(key);
 
             isSuccess = (result.getPostNo() != null);
@@ -450,6 +466,7 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 상태 변경 처리
             ExptrReqstDto result = exptrReqstService.exptrReqstDismiss(key);
 
             isSuccess = (result.getPostNo() != null);
