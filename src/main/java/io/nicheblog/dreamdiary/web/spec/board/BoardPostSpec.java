@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.spec.board;
 
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
@@ -20,12 +21,12 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseClsfSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Component
 @Log4j2
 public class BoardPostSpec
-        implements BaseSpec<BoardPostEntity> {
+        implements BaseClsfSpec<BoardPostEntity> {
 
     /**
      * 인자별로 구체적인 검색 조건 세팅

@@ -20,5 +20,6 @@ import lombok.*;
 public class BoardPostSearchParam
         extends BasePostSearchParam {
 
-    //
+    /** 게시판 코드 */
+    private String boardCd;
 }
