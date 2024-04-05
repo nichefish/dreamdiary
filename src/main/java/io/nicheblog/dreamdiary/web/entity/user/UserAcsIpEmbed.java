@@ -30,17 +30,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserAcsIpEmbed {
 
-    /**
-     * 접속 IP 사용 여부
-     */
+    /** 접속 IP 사용 여부 */
     @Builder.Default
     @Column(name = "use_acs_ip_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("접속 IP 사용 여부")
     private String useAcsIpYn = "N";
 
-    /**
-     * 접속 IP 정보
-     */
+    /** 접속 IP 정보 */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "user_no")
     @Fetch(FetchMode.SELECT)

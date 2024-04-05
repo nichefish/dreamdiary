@@ -25,7 +25,7 @@ import java.util.Date;
 @Table(name = "prjct")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
