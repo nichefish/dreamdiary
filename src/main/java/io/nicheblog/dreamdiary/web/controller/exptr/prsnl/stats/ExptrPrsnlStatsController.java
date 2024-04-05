@@ -77,10 +77,11 @@ public class ExptrPrsnlStatsController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
+            // 초기 년도검색 파라미터 세팅
             String yyStr = !StringUtils.isEmpty(yyStrParam) ? yyStrParam : DateUtils.getCurrYearStr();
             // 경비지출서 최저년도~올해년도 목록 조회
             model.addAttribute("yyList", exptrPrsnlPaprService.getExptrPrsnlYyList());
-            // 올해년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
+            // 올해년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
             List<ExptrPrsnlStatsDto> statsList = exptrPrsnlStatsService.getExptrPrsnlStatsList(yyStr);
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -192,7 +193,7 @@ public class ExptrPrsnlStatsController
     //     boolean isSuccess = false;
     //     String resultMsg = "";
     //     try {
-    //         // 올해년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
+    //         // 올해년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
     //         List<Object> statsObjList = exptrPrsnlStatsService.getExptrPrsnlStatsListXlsx(yyStr);
     //         xlsxUtils.listXlxsDownload(Constant.EXPTR_PRSNL_PAPR, statsObjList);
     //         isSuccess = true;

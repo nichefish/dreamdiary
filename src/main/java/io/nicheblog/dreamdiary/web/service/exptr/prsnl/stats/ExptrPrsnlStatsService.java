@@ -41,7 +41,7 @@ public class ExptrPrsnlStatsService {
     private UserService userService;
 
     /**
-     * 경비 관리 > 경비지출서 > 올해년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 통계 산정
+     * 경비 관리 > 경비지출서 > 올해년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 통계 산정
      */
     public List<ExptrPrsnlStatsDto> getExptrPrsnlStatsList(final String yyParam) throws Exception {
         String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYearStr();

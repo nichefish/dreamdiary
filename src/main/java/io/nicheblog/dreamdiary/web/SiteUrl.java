@@ -119,7 +119,9 @@ public interface SiteUrl {
     String TMPLAT_DEF_DTL_AJAX = Prefix.TMPLAT + "/tmplatDefDtlAjax.do";
     String TMPLAT_DEF_MDF_AJAX = Prefix.TMPLAT + "/tmplatDefMdfAjax.do";
     String TMPLAT_DEF_DEL_AJAX = Prefix.TMPLAT + "/tmplatDefDelAjax.do";
-    String TMPLAT_REG_AJAX = Prefix.TMPLAT + "/tmplatRegAjax.do";
+
+    String TMPLAT_TXT_REG_AJAX = Prefix.TMPLAT + "/tmplatTxtRegAjax.do";
+    String TMPLAT_TXT_MDF_AJAX = Prefix.TMPLAT + "/tmplatTxtMdfAjax.do";
 
     /** 팝업 관리 (TODO) */
     String POPUP_LIST = "";
