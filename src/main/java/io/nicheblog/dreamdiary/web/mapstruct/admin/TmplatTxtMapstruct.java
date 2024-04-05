@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatTxtEntity;
@@ -15,11 +15,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class})
 public interface TmplatTxtMapstruct
-        extends BaseListMapstruct<TmplatTxtDto, TmplatTxtDto, TmplatTxtEntity> {
+        extends BaseCrudMapstruct<TmplatTxtDto, TmplatTxtDto, TmplatTxtEntity> {
 
     /**
      * getMapper
@@ -44,9 +44,6 @@ public interface TmplatTxtMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final TmplatTxtDto dto,
-            final @MappingTarget TmplatTxtEntity entity
-    ) throws Exception;
+    void updateFromDto(final TmplatTxtDto dto, final @MappingTarget TmplatTxtEntity entity) throws Exception;
 
 }

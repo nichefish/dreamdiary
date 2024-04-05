@@ -79,7 +79,7 @@ public class TmplatDefController
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "regDt", model);
             // 목록 조회
-            Page<TmplatDefDto> tmplatList = tmplatDefService.getListDto(searchParam, pageRequest);
+            Page<TmplatDefDto> tmplatList = tmplatDefService.getPageDto(searchParam, pageRequest);
             model.addAttribute("tmplatList", tmplatList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(tmplatList));
             // 목록 검색 URL + 파라미터 모델에 추가

@@ -13,8 +13,6 @@ import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -25,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,8 +69,8 @@ public class TagController
         String resultMsg = "";
         try {
             // 전체 태그 목록 조회 (태그클라우드)
-            Page<TagDto> tagList = tagService.getListDto(searchParamMap, Pageable.unpaged());
-            ajaxResponse.setResultList(tagList.getContent());
+            List<TagDto> tagList = tagService.getListDto(searchParamMap);
+            ajaxResponse.setResultList(tagList);
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
