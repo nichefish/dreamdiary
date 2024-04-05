@@ -143,23 +143,14 @@
 
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
+        <@component.btn_post_mdf post isMngr />
         <!-- 등록자: 수정,삭제 가능, 관리자: 삭제 가능, 확인 시: 삭제만 가능 -->
-        <#if post.isRegstr!false && (post.cfYn)! == "N">
+<#--        <#if post.isRegstr!false && (post.cfYn)! == "N">
             <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>수정
             </button>
-        </#if>
-        <#if (post.isRegstr)!false || isMngr>
-            <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm" onclick="Page.delAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
-                <i class="bi bi-trash"></i>삭제
-            </button>
-        </#if>
-        <button type="button" class="btn btn-light btn-sm" onclick="Page.list();"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
-            <i class="bi bi-list"></i>목록
-        </button>
+        </#if>-->
     </div>
 
     <!-- 댓글 영역 -->

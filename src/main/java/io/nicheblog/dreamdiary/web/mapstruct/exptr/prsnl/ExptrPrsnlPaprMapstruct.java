@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
@@ -19,7 +18,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, ExptrPrsnlItemMapstruct.class, CommentEmbedMapstruct.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
 public interface ExptrPrsnlPaprMapstruct
         extends BaseClsfMapstruct<ExptrPrsnlPaprDto.DTL, ExptrPrsnlPaprDto.LIST, ExptrPrsnlPaprEntity> {
 
@@ -38,7 +37,7 @@ public interface ExptrPrsnlPaprMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "comment", expression = "java(CommentEmbedMapstruct.INSTANCE.toDto(entity.comment))")       // 댓글 모듈
+    @Mapping(target = "itemList", expression = "java(entity.getItemDtoList())")
     ExptrPrsnlPaprDto.LIST toListDto(final ExptrPrsnlPaprEntity entity) throws Exception;
 
     /**

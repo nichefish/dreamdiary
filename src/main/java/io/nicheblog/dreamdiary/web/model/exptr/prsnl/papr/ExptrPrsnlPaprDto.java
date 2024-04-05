@@ -42,10 +42,10 @@ public class ExptrPrsnlPaprDto
     @Builder.Default
     protected String contentType = CONTENT_TYPE.key;
 
+    /* ----- */
+
     /** 경비지출 항목 영수증 첨부파일 번호 */
     private Integer rciptFileNo;
-
-    /* ----- */
 
     /** 년도 */
     private String yy;
@@ -107,7 +107,7 @@ public class ExptrPrsnlPaprDto
     @NoArgsConstructor
     @EqualsAndHashCode(callSuper = false)
     public static class DTL extends ExptrPrsnlPaprDto {
-
+        //
     }
 
     @Getter

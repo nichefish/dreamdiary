@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.vcatn.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
@@ -30,6 +31,17 @@ import java.util.List;
 public class VcatnPaprDto
         extends BasePostDto
         implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
+
+    /** 필수: 컨텐츠 타입 */
+    private static final ContentType CONTENT_TYPE = ContentType.VCATN_PAPR;
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
+
+    /** 컨텐츠 타입 */
+    @Builder.Default
+    protected String contentType = CONTENT_TYPE.key;
+
+    /* ----- */
 
     /** 확인 여부 (Y/N) */
     private String cfYn;

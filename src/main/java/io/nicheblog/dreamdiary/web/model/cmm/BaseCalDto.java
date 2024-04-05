@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.cmm;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
@@ -84,7 +85,8 @@ public class BaseCalDto
     /**
      * 날짜 지났는지 여부 체크
      */
-    public Boolean isPassed() throws Exception {
+    @JsonIgnore
+    public Boolean hasPassed() throws Exception {
         return DateUtils.getCurrDate()
                         .compareTo(DateUtils.asDate(this.end)) > 0;
     }

@@ -43,6 +43,8 @@ public class VcatnPaprService
 
     private final VcatnPaprMapstruct vcatnPaprMapstruct = VcatnPaprMapstruct.INSTANCE;
 
+    @Resource(name = "vcatnSchdulService")
+    private VcatnSchdulService vcatnSchdulService;
     @Resource(name = "vcatnStatsYyService")
     private VcatnStatsYyService vcatnStatsYyService;
     @Resource(name = "cdService")
@@ -125,10 +127,8 @@ public class VcatnPaprService
     @Override
     public void preDelete(final VcatnPaprEntity entity) {
         // 휴가계획서 상세항목 삭제 처리
-        List<VcatnSchdulEntity> vcatnSchdulEntity = entity.getSchdulList();
-        for (VcatnSchdulEntity vcatnSchdul : vcatnSchdulEntity) {
-            vcatnSchdul.setDelYn("Y");
-        }
+        List<VcatnSchdulEntity> vcatnSchdulList = entity.getSchdulList();
+        vcatnSchdulService.deleteAll(vcatnSchdulList);
     }
 
     /**

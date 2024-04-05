@@ -41,31 +41,6 @@ public interface VcatnSchdulMapstruct
     VcatnDyDto toDyDto(final VcatnSchdulEntity entity) throws Exception;
 
     /**
-     * Entity -> CalDto
-     */
-    // 달력에선 종료일자에 시간 데이터(23:59:59)를 붙여줘야 한다.
-    // 하루짜리 이벤트일 때만 allDay=true를 붙여준다.
-    // @Mapping(target="title", expression="java((entity.getSchdulCdInfo() != null) ? entity.getSchdulCdInfo().getDtlCdNm() : schdulNm)")
-    // @Mapping(target="display", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"background\" : null)")
-    // @Mapping(target="color", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"red\" : null)")
-    @Mapping(target = "bgnDt", expression = "java(DateUtils.asStr(entity.getBgnDt(), DatePtn.DATE))")
-    @Mapping(target = "endDt", expression = "java(DateUtils.asStr(entity.getEndDt(), DatePtn.ZDATETIME))")
-    @Mapping(target = "allDay", expression = "java(entity.getEndDt() == null ? true : DateUtils.isSameDay(entity.getBgnDt(), entity.getEndDt()) ? true : false)")
-    SchdulCalDto toCalDto(final VcatnSchdulEntity entity) throws Exception;
-
-    /**
-     * Dto -> CalDto (endDt 시간정보를 수동으로 넣어준다.)
-     */
-    // 달력에선 종료일자에 시간 데이터(23:59:59)를 붙여줘야 한다.
-    // 하루짜리 이벤트일 때만 allDay=true를 붙여준다.
-    @Mapping(target = "title", expression = "java(StringUtils.isNotEmpty(dto.getUserNm()) ? dto.getUserNm() + \" \" + dto.getVcatnNm() : dto.getVcatnNm())")
-    // @Mapping(target="display", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"background\" : null)")
-    // @Mapping(target="color", expression="java(\"hldy\".equals(entity.getSchdulCd()) ? \"red\" : null)")
-    @Mapping(target = "endDt", expression = "java(StringUtils.isNotEmpty(dto.getEndDt()) ? dto.getEndDt() + \"T23:59:59\" : null)")
-    @Mapping(target = "allDay", expression = "java(StringUtils.isEmpty(dto.getEndDt()) ? true : DateUtils.isSameDay(dto.getBgnDt(), dto.getEndDt()) ? true : false)")
-    SchdulCalDto toCalDto(final VcatnSchdulDto dto) throws Exception;
-
-    /**
      * Dto -> DyXlsxDto
      */
     @Mapping(target = "vcatnExprDy", expression = "java(Double.toString(dto.getVcatnExprDy()))")

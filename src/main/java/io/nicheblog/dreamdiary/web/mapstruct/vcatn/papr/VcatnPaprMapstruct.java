@@ -18,7 +18,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseClsfMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface VcatnPaprMapstruct
         extends BaseClsfMapstruct<VcatnPaprDto.DTL, VcatnPaprDto.LIST, VcatnPaprEntity> {
 
@@ -27,12 +27,14 @@ public interface VcatnPaprMapstruct
     /**
      * Entity -> Dto
      */
+    @Named("toDto")
     @Mapping(target = "schdulList", expression = "java(entity.getVcatnSchdulDtoList())")
     VcatnPaprDto.DTL toDto(final VcatnPaprEntity entity) throws Exception;
 
     /**
      * Entity -> listDto
      */
+    @Named("toListDto")
     @Mapping(target = "schdulList", expression = "java(entity.getVcatnSchdulDtoList())")
     VcatnPaprDto.LIST toListDto(final VcatnPaprEntity entity) throws Exception;
 

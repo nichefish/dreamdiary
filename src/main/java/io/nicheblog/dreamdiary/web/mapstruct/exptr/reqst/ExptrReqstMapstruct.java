@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.exptr.reqst;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
@@ -18,7 +17,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseClsfMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
 public interface ExptrReqstMapstruct
         extends BaseClsfMapstruct<ExptrReqstDto.DTL, ExptrReqstDto.LIST, ExptrReqstEntity> {
 
@@ -48,8 +47,5 @@ public interface ExptrReqstMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final ExptrReqstDto.DTL dto,
-            final @MappingTarget ExptrReqstEntity entity
-    ) throws Exception;
+    void updateFromDto(final ExptrReqstDto.DTL dto, final @MappingTarget ExptrReqstEntity entity) throws Exception;
 }

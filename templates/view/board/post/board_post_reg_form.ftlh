@@ -243,7 +243,7 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-between">
         <@component.btn_preview "Page" />
-        <@component.btn_post "Page" />
+        <@component.btn_post_save "Page" />
     </div>
 </div>
 

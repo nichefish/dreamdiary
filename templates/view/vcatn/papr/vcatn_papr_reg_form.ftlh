@@ -33,7 +33,7 @@
 
                 /** jquery :: validation */
                 $(function () {
-                    $("#vcatnPaprForm").validate({
+                    $("#vcatnPaprRegForm").validate({
                         submitHandler: function () {
                             Swal.fire({
                                 text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
@@ -86,7 +86,7 @@
             /** 등록/수정 처리(Ajax) */
             <#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax: function() {
                 const url = "<#if isReg>${SiteUrl.VCATN_PAPR_REG_AJAX!}</#if><#if isMdf>${SiteUrl.VCATN_PAPR_MDF_AJAX!}</#if>";
-                let ajaxData = new FormData($("#vcatnPaprForm")[0]);
+                let ajaxData = new FormData($("#vcatnPaprRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -186,7 +186,7 @@
 <!-- class 속성이 덮어씌워지지 않아서 스타일 지정 -->
 <div class="card post" style="margin-top:15px !important;">
     <!--begin:Form-->
-    <form id="vcatnPaprForm" class="form" enctype="multipart/form-data">
+    <form id="vcatnPaprRegForm" class="form" enctype="multipart/form-data">
         <input type="hidden" name="postNo" value="${post.postNo!}">
         <input type="hidden" name="title" id="title" value="${post.title!}"/>
         <input type="hidden" name="atchFileId" value="${post.atchFileId!}">
@@ -249,7 +249,7 @@
 
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
-            <@component.btn_post "Page" />
+            <@component.btn_post_save "Page" />
         </div>
     </form>
     <!--end:Form-->

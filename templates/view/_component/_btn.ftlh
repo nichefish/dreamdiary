@@ -7,44 +7,56 @@
 <!--
  * 버튼 : 수정권한에 따른 수정 버튼
  -->
-<#macro btn_mdfable post isMngr>
-    <#if post.managt??>
+<#macro btn_post_mdf post isMngr>
+    <#if post.isRegstr>
+        <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
+                onclick="Page.mdfForm();"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
+            <i class="bi bi-pencil-square"></i>(내 글)수정
+        </button>
+        <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm"
+                onclick="Page.delAjax();"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
+            <i class="bi bi-trash"></i>(내 글)삭제
+        </button>
+    <#elseif post.mdfable??>
+        <!-- 1. mdfable 항목 사용시 사용시 -->
         <!-- 수정권한에 따라 수정 권한 부여 -->
-        <#if (post.mdfable!"") == (Constant.MDFABLE_REGSTR)>
-            <#if post.isRegstr>
+        <#if post.mdfable! == (Constant.MDFABLE_MNGR)>
+            <#if isMngr!false>
                 <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
                         onclick="Page.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
-                    <i class="bi bi-pencil-square"></i>(내 글)수정
+                    <i class="bi bi-pencil-square"></i>(관리자+)수정
                 </button>
             </#if>
-        <#elseif (post.mdfable!"") == (Constant.MDFABLE_MNGR)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
-                    onclick="Page.mdfForm();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
-                <i class="bi bi-pencil-square"></i>(관리자+)수정
-            </button>
-        <#elseif (post.mdfable!"") == (Constant.MDFABLE_USER)>
+        <#elseif post.mdfable! == (Constant.MDFABLE_USER)>
             <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
                     onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
-        <#elseif (post.mdfable!"") == (Constant.MDFABLE_ALL)>
+        <#elseif post.mdfable! == (Constant.MDFABLE_ALL)>
             <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
                     onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(전체+)수정
             </button>
         </#if>
-    </#if>
-    <!-- 등록자 또는 관리자가 삭제 가능 -->
-    <#if (post.isRegstr)!false || isMngr>
-        <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm"
-                onclick="Page.delAjax();"
-                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
-            <i class="bi bi-trash"></i>삭제
-        </button>
+    <#else>
+        <!-- 1. mdfable 항목 미사용시 : 관리자만 수정/삭제 가능 -->
+        <#if isMngr!false>
+            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
+                    onclick="Page.mdfForm();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
+                <i class="bi bi-pencil-square"></i>(관리자+)수정
+            </button>
+            <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm"
+                    onclick="Page.delAjax();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
+                <i class="bi bi-trash"></i>(관리자+)삭제
+            </button>
+        </#if>
     </#if>
     <button type="button" class="btn btn-light btn-sm" onclick="Page.list();"
             data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.list"/>">
@@ -70,7 +82,7 @@
 <!--
  * 버튼 : 글 저장 / 취소
  -->
-<#macro btn_post closerNm>
+<#macro btn_post_save closerNm>
     <span>
         <button type="button" class="btn btn-primary mx-2"
                 onclick="${closerNm}.submit();"
