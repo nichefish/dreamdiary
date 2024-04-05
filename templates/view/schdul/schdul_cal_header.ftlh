@@ -1,6 +1,6 @@
 <#--
   -- 일정 > 전체 일정 화면 (달력) 헤더
-  -- @included in : schdul_cal
+  -- @included_in : schdul_cal
   -->
 <style>
     @media (max-width: 768px) {

@@ -1,6 +1,6 @@
 <#--
   -- 일정 > 전체 일정 > 일정 등록 Template
-  -- @included in : schdul_cal
+  -- @included_in : schdul_cal
   -->
 <script id="schdul_reg_prtcpnt_template" type="text/x-handlebars-template">
     <div id="prtcpntRow{{idx}}" class="d-flex align-items-center mb-1">

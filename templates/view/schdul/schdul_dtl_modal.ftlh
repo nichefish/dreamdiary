@@ -1,6 +1,6 @@
 <#--
   -- 일정 > 전체 일정 > 상세 조회 Modal
-  -- @included in : schdul_cal
+  -- @included_in : schdul_cal
   -->
 <div class="modal fade" id="schdul_dtl_modal" tabindex="-1" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
     <!--begin::Modal dialog-->

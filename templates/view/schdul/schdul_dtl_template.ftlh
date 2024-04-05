@@ -1,6 +1,6 @@
 <#--
   -- 일정 > 전체 일정 > 상세 조회 Template
-  -- @included in : schdul_cal
+  -- @included_in : schdul_cal
   -->
 <script id="schdul_dtl_template" type="text/x-handlebars-template">
     <div class="row mb-3">
