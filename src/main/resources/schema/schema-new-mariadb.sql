@@ -6,6 +6,46 @@
 
 -- -----------------------
 
+-- 템플릿 정의 정보
+CREATE TABLE IF NOT EXISTS tmplat_def (
+    tmplat_def_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '템플릿 정의 번호 (PK)',
+    tmplat_def_cd VARCHAR(50) COMMENT '템플릿 정의 코드',
+    title VARCHAR(200) COMMENT '이름',
+    -- STATE
+    sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
+    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
+    -- AUDIT
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    INDEX (tmplat_def_cd)
+);
+
+-- 템플릿 항목(텍스트에디터) 정보
+CREATE TABLE IF NOT EXISTS tmplat_txt (
+    tmplat_txt_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '템플릿(텍스트) 번호 (PK)',
+    tmplat_def_cd VARCHAR(50) COMMENT '템플릿 정의 코드',
+    -- ctgr_cd VARCHAR(50) COMMENT '글분류 코드',
+    title VARCHAR(200) COMMENT '이름',
+    cn LONGTEXT COMMENT '내용',
+    default_yn CHAR(1) DEFAULT 'N' COMMENT '기본 템플릿 여부'
+    -- ATCH_FILE
+    atch_file_no INT COMMENT '첨부파일 번호',
+    -- AUDIT
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    INDEX (tmplat_def_cd)
+);
+
+-- -----------------------
+
 -- 파일시스템 메타 (flsys_meta)
 -- @extends: BasePostEntity
 -- @Uses: CommentEmbed
@@ -38,4 +78,3 @@ CREATE TABLE IF NOT EXISTS flsys_meta (
     --
     INDEX(file_path)
 );
-
