@@ -1,14 +1,15 @@
 package io.nicheblog.dreamdiary.web.spec.board;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
-import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,17 +62,6 @@ public class BoardPostSpec
                     // 제목 = LIKE 검색
                     predicate.add(builder.like(root.get(key), "%" + searchParamMap.get(key) + "%"));
                     continue;
-                case "nickNm":
-                    // 작성자 이름 = 조인 후 LIKE 검색
-                    Join<BoardPostEntity, AuditorInfo> regstr = root.join("regstrInfo", JoinType.LEFT);
-                    Expression<String> nickNmExp = regstr.get(key);
-                    predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
-                    continue;
-                // case "tag":
-                //     // 태그 검색
-                //     Join<NoticeEntity, BoardPostTagEntity> boardTag = root.join("tagList", JoinType.INNER);
-                //     Expression<String> boardTagExp = boardTag.get("boardTag");
-                //     predicate.add(builder.equal(boardTagExp, searchParamMap.get(key)));
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
                     try {
