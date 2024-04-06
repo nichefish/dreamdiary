@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/admin/cd/_cl_cd_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -122,14 +127,10 @@
     });
 </script>
 
+<form name="procForm" id="procForm" method="get">
+    <input type="hidden" id="clCd" name="clCd" />
+</form>
 <div class="card post">
-    <form name="procForm" id="procForm" method="get">
-        <input type="hidden" id="clCd" name="clCd" />
-    </form>
-
-    <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/admin/cd/_cl_cd_list_header.ftlh">
-    <!--end::Card header-->
     <!--begin::Card Body-->
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->

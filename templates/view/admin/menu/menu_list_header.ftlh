@@ -2,7 +2,7 @@
   -- 활동 로그 목록 > 검색 영역 Header
   -- @included_in : log_actvty_list_header
   -->
-<form name="listForm" id="listForm" method="get">
+<form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <div class="row mb-8 p-0">
         <div class="col-lg-9 col-12 d-flex align-items-center mt-2">
             <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">

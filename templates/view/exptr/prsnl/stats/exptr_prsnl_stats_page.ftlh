@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/exptr/prsnl/stats/_exptr_prsnl_stats_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -46,44 +51,6 @@
 </script>
 
 <div class="card post">
-    <!--begin::Card header 검색+헤더 UI -->
-    <div class="card-header border-0 pt-6">
-        <form name="listForm" id="listForm" method="get">
-            <div class="d-flex align-items-center">
-                <div class="position-relative w-md-100px me-md-2"
-                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
-                    <select name="statsYy" id="statsYy" class="form-select form-select-solid" onchange="Page.statsYy();">
-                        <#list yyList![] as yy>
-                            <option value="${yy}" label="${yy}년" ${fn.selected(statsYy!, yy)} />
-                        </#list>
-                    </select>
-                </div>
-                <div class="position-relative w-md-200px pt-2 me-md-2">
-                    <h4>년도 경비지출누적집계</h4>
-                </div>
-            </div>
-        </form>
-        <!--begin::Card title-->
-        <div class="card-title text-end">
-            <div class="d-flex align-items-center position-relative my-1">
-            </div>
-        </div>
-        <div class="card-toolbar">
-            <!--begin::Toolbar-->
-            <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.xlsxDownload();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
-                    <i class="fas fa-download fs-7"></i>다운로드
-                </button>
-            </div>
-            <!--end::Toolbar-->
-        </div>
-        <!--end::Card toolbar-->
-    </div>
-
-    <div class="separator separator-dashed border-gray-300 mt-5 mb-5"></div>
-
-    <!--end::Card header-->
     <!--begin::Card Body-->
     <div class="card-body pt-0">
         <table class="table table-hover align-middle table-row-dashed fs-small gy-5 table-fixed">

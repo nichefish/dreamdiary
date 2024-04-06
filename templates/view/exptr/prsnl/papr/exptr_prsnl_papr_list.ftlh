@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/exptr/prsnl/papr/_exptr_prsnl_papr_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -99,8 +104,18 @@
     });
 </script>
 
+<!-- #include:: component:: 태그 클릭 필터링 -->
+<#include "/view/_component/tag/_tag_list_header.ftlh">
+
+<div class="position-relative me-md-2 searchType">
+    <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#exptr_prsnl_rule_modal').modal('show');"
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작성 안내 팝업을 호출합니다.">
+        <i class="fas fa-info-circle"></i>작성 안내
+    </button>
+    <#include "/view/exptr/prsnl/papr/_exptr_prsnl_papr_rule_modal.ftlh">
+</div>
+
 <div class="card post">
-    <#include "/view/exptr/prsnl/papr/_exptr_prsnl_papr_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>

@@ -4,6 +4,11 @@
   -->
 <#import "/layout/layout_with_aside.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/dream/day/_dream_day_page_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
@@ -22,9 +27,6 @@
 
 <!--begin::Card-->
 <div class="card post">
-    <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/dream/day/_dream_day_page_header.ftlh">
-
     <div class="card-body p-9">
             <!--end::Table head-->
             <!--begin::Table body-->

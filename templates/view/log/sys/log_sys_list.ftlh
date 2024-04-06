@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/log/sys/_log_sys_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -24,13 +29,10 @@
     });
 </script>
 
+<form name="procForm" id="procForm" method="get">
+    <input type="hidden" name="logSysNo" id="logSysNo" />
+</form>
 <div class="card post">
-    <form name="procForm" id="procForm" method="get">
-        <input type="hidden" name="logSysNo" id="logSysNo" />
-    </form>
-    <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/log/sys/_log_sys_list_header.ftlh">
-
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
         <li class="nav-item">

@@ -47,7 +47,7 @@
                 });
             },
             /** 상세코드 등록 팝업 호출 */
-            dtlCdRegForm: function() {
+            dtlCdRegModal: function() {
                 commons.util.handlebarsTemplate({ "clCd": $("#clCd").val() }, "dtl_cd_reg", "show");
                 commons.validate.replaceBlankRegex("#dtlCdRegForm dtlCd");
                 commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
@@ -227,7 +227,7 @@
             <!--begin::Toolbar-->
             <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                 <button type="button" class="btn btn-sm btn-primary"
-                        onclick="Page.dtlCdRegForm();"
+                        onclick="Page.dtlCdRegModal();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 코드 등록 팝업을&#10;호출합니다.">
                     <i class="fas fa-plus"></i>상세코드 추가
                 </button>

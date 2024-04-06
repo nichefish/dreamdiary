@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/exptr/reqst/_exptr_reqst_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -57,9 +62,21 @@
     });
 </script>
 
+<button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#exptr_reqst_exmpl_modal').modal('show');"
+        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작성 안내 팝업을 호출합니다.">
+    <i class="fas fa-info-circle"></i>작성 안내
+</button>
+<#include "/view/exptr/reqst/_exptr_reqst_exmpl_modal.ftlh">
+<button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#exptr_reqst_rule_modal').modal('show');"
+        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="경조사비 기준 팝업을&#10;호출합니다.">
+    <i class="fas fa-info-circle"></i>경조사비 기준
+</button>
+<#include "/view/exptr/reqst/_exptr_reqst_rule_modal.ftlh">
+
+<!-- #include:: component:: 태그 클릭 필터링 -->
+<#include "/view/_component/tag/_tag_list_header.ftlh">
+
 <div class="card post">
-    <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/exptr/reqst/_exptr_reqst_list_header.ftlh">
     <!--end::Card header-->
     <!--begin::Card Body-->
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">

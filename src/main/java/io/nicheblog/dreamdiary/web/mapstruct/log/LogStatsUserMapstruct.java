@@ -38,6 +38,11 @@ public interface LogStatsUserMapstruct
     LogStatsUserDto toDto(final LogStatsUserEntity entity) throws Exception;
 
     /**
+     * Entity -> Dto
+     */
+    LogStatsUserDto toDto(final LogStatsUserIntrfc entity) throws Exception;
+
+    /**
      * Entity -> ListXlsxDto
      */
     // LogActvtyListXlsxDto toListXlsxDto(final LogStatsUserEntity entity) throws Exception;

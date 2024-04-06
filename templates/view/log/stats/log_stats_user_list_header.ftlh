@@ -2,7 +2,8 @@
   -- 활동 로그 목록 > 검색 영역 Header
   -- @included_in : log_actvty_list_header
   -->
-<form name="listForm" id="listForm" method="get">
+
+<form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <div class="d-flex align-items-center">
         <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
         <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
@@ -13,7 +14,7 @@
                 <!-- 인풋:: datepicker -->
                 <@component.header_datepicker searchParam "searchStartDt" "" />
                 <!-- 인풋:: datepicker -->
-                <@component.header_datepicker searchParam "searchEndDt" DateUtils.Parser.eDateParseStr(DateUtils.getCurrDate()) />
+                <@component.header_datepicker searchParam "searchEndDt" DateUtils.parser.eDateParseStr(DateUtils.getCurrDate()) />
             </div>
         </div>
         <div class="position-relative w-md-1250px me-md-2">
@@ -50,13 +51,8 @@
         </div>
     </div>
     <div class="card-toolbar">
-        <!--begin::Toolbar-->
-<#--        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-            <button type="button" class="btn btn-sm btn-light-primary" style="margin-left:auto;" onclick="Page.xlsxDownload();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
-                <i class="fas fa-download fs-7"></i>다운로드
-            </button>
-        </div>-->
+        <!-- 버튼:: 엑셀 다운로드하기 -->
+        <@component.btn_header_xlsx_download "Page" />
     </div>
     <!--end::Card toolbar-->
 </form>
