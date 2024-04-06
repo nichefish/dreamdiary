@@ -180,7 +180,7 @@
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="휴가규칙 팝업을 호출합니다.">
             <i class="fas fa-info-circle"></i>휴가규칙
         </button>
-        <#include "/view/vcatn/papr/vcatn_papr_rule_modal.ftlh">
+        <#include "/view/vcatn/papr/_vcatn_papr_rule_modal.ftlh">
     </div>
 </div>
 <!-- class 속성이 덮어씌워지지 않아서 스타일 지정 -->
@@ -261,6 +261,6 @@
 <!-- #include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 
-<#include "/view/vcatn/papr/vcatn_papr_reg_item_template.ftlh">
+<#include "/view/vcatn/papr/_vcatn_papr_reg_item_template.ftlh">
 
 </@layout.layout>

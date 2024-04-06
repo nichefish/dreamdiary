@@ -128,7 +128,7 @@
     </form>
 
     <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/admin/cd/cl_cd_list_header.ftlh">
+    <#include "/view/admin/cd/_cl_cd_list_header.ftlh">
     <!--end::Card header-->
     <!--begin::Card Body-->
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
@@ -209,9 +209,9 @@
     <!-- pagination::end -->
 </div>
 
-<#include "/view/admin/cd/cl_cd_reg_modal.ftlh">
-<#include "/view/admin/cd/cl_cd_reg_template.ftlh">
-<#include "/view/admin/cd/cl_cd_dtl_modal.ftlh">
-<#include "/view/admin/cd/cl_cd_dtl_template.ftlh">
+<#include "/view/admin/cd/_cl_cd_reg_modal.ftlh">
+<#include "/view/admin/cd/_cl_cd_reg_template.ftlh">
+<#include "/view/admin/cd/_cl_cd_dtl_modal.ftlh">
+<#include "/view/admin/cd/_cl_cd_dtl_template.ftlh">
 
 </@layout.layout>

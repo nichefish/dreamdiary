@@ -275,7 +275,7 @@
 </script>
 
 <div class="card post">
-    <#include "/view/schdul/schdul_cal_header.ftlh">
+    <#include "/view/schdul/_schdul_cal_header.ftlh">
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 mt-5">
         <li class="nav-item">
@@ -305,10 +305,10 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/schdul/schdul_reg_modal.ftlh">
-<#include "/view/schdul/schdul_reg_template.ftlh">
-<#include "/view/schdul/schdul_reg_prtcpnt_template.ftlh">
-<#include "/view/schdul/schdul_dtl_modal.ftlh">
-<#include "/view/schdul/schdul_dtl_template.ftlh">
+<#include "/view/schdul/_schdul_reg_modal.ftlh">
+<#include "/view/schdul/_schdul_reg_template.ftlh">
+<#include "/view/schdul/_schdul_reg_prtcpnt_template.ftlh">
+<#include "/view/schdul/_schdul_dtl_modal.ftlh">
+<#include "/view/schdul/_schdul_dtl_template.ftlh">
 
 </@layout.layout>

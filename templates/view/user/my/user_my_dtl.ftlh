@@ -370,9 +370,9 @@
     </form>
 </div>
 
-<#include "/view/user/my/user_my_mdf_pw_chg_modal.ftlh">
+<#include "/view/user/my/_user_my_mdf_pw_chg_modal.ftlh">
 <#if (authInfo.hasEcnyDt!false)>
-    <#include "/view/user/my/user_my_dtl_vcatn_list.ftlh">
+    <#include "/view/user/my/_user_my_dtl_vcatn_list.ftlh">
 </#if>
 
 </@layout.layout>

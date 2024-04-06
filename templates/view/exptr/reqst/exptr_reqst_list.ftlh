@@ -59,7 +59,7 @@
 
 <div class="card post">
     <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/exptr/reqst/exptr_reqst_list_header.ftlh">
+    <#include "/view/exptr/reqst/_exptr_reqst_list_header.ftlh">
     <!--end::Card header-->
     <!--begin::Card Body-->
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
@@ -227,8 +227,8 @@
     </form>
 </div>
 
-<#include "/view/exptr/reqst/exptr_reqst_dtl_modal.ftlh">
-<#include "/view/exptr/reqst/exptr_reqst_dtl_template.ftlh">
+<#include "/view/exptr/reqst/_exptr_reqst_dtl_modal.ftlh">
+<#include "/view/exptr/reqst/_exptr_reqst_dtl_template.ftlh">
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
 <#include "/view/_component/comment/_comment_list_template.ftlh">

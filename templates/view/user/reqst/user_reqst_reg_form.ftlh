@@ -422,7 +422,7 @@
             </div>
         </div>
 
-        <#include "/view/user/info/user_info_reg_template.ftlh">    <!-- 직원정보 부분 파일 분리 -->
+        <#include "/view/user/info/_user_info_reg_template.ftlh">    <!-- 직원정보 부분 파일 분리 -->
 
         <div class="separator my-6"></div>
 

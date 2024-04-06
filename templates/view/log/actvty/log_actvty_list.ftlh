@@ -57,7 +57,7 @@
         <input type="hidden" name="logActvtyNo" id="logActvtyNo" />
     </form>
     <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/log/actvty/log_actvty_list_header.ftlh">
+    <#include "/view/log/actvty/_log_actvty_list_header.ftlh">
 
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
@@ -173,7 +173,7 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/log/actvty/log_actvty_dtl_modal.ftlh">
-<#include "/view/log/actvty/log_actvty_dtl_template.ftlh">
+<#include "/view/log/actvty/_log_actvty_dtl_modal.ftlh">
+<#include "/view/log/actvty/_log_actvty_dtl_template.ftlh">
 
 </@layout.layout>

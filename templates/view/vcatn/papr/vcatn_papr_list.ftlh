@@ -57,7 +57,7 @@
 </script>
 
 <div class="card post">
-    <#include "/view/vcatn/papr/vcatn_papr_list_header.ftlh">
+    <#include "/view/vcatn/papr/_vcatn_papr_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>
@@ -207,8 +207,8 @@
 </div>
 <!--end::post-->
 
-<#include "/view/vcatn/papr/vcatn_papr_dtl_modal.ftlh">
-<#include "/view/vcatn/papr/vcatn_papr_dtl_template.ftlh">
+<#include "/view/vcatn/papr/_vcatn_papr_dtl_modal.ftlh">
+<#include "/view/vcatn/papr/_vcatn_papr_dtl_template.ftlh">
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
 <#include "/view/_component/comment/_comment_list_template.ftlh">

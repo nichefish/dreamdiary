@@ -60,7 +60,7 @@
     <input type="hidden" name="postNo" id="postNo" value="" />
 </form>
 <div class="card post">
-    <#include "/view/notice/notice_list_header.ftlh">
+    <#include "/view/notice/_notice_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>
@@ -197,8 +197,8 @@
     <!-- pagination::end -->
 </div>
 
-<#include "/view/notice/notice_dtl_modal.ftlh">
-<#include "/view/notice/notice_dtl_template.ftlh">
+<#include "/view/notice/_notice_dtl_modal.ftlh">
+<#include "/view/notice/_notice_dtl_template.ftlh">
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
 <#include "/view/_component/comment/_comment_list_template.ftlh">

@@ -180,8 +180,8 @@
     <!--end::Form-->
 </div>
 <#if isCredentialExpired!false || needsPwReset!false>
-    <#include "/view/lgn_pw_chg_modal.ftlh">
-    <#include "/view/lgn_pw_chg_template.ftlh">
+    <#include "/view/_lgn_pw_chg_modal.ftlh">
+    <#include "/view/_lgn_pw_chg_template.ftlh">
 </#if>
 
 </@layout.layout>

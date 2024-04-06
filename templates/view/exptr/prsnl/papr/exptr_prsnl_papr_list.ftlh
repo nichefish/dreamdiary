@@ -100,7 +100,7 @@
 </script>
 
 <div class="card post">
-    <#include "/view/exptr/prsnl/papr/exptr_prsnl_papr_list_header.ftlh">
+    <#include "/view/exptr/prsnl/papr/_exptr_prsnl_papr_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>

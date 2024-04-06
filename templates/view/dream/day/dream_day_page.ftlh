@@ -23,7 +23,7 @@
 <!--begin::Card-->
 <div class="card post">
     <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/dream/day/dream_day_page_header.ftlh">
+    <#include "/view/dream/day/_dream_day_page_header.ftlh">
 
     <div class="card-body p-9">
             <!--end::Table head-->
@@ -43,14 +43,14 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/dream/day/dream_day_list_template.ftlh">
-<#include "/view/dream/day/dream_day_reg_modal.ftlh">
-<#include "/view/dream/day/dream_day_reg_template.ftlh">
+<#include "/view/dream/day/_dream_day_list_template.ftlh">
+<#include "/view/dream/day/_dream_day_reg_modal.ftlh">
+<#include "/view/dream/day/_dream_day_reg_template.ftlh">
 <#include "/view/dream/piece/dream_piece_reg_modal.ftlh">
 <#include "/view/dream/piece/dream_piece_reg_header_template.ftlh">
 <#include "/view/dream/piece/dream_piece_reg_template.ftlh">
 
 <!--include:: Dream - Aside-->
-<#include "/view/dream/day/dream_day_aside_base.ftlh">
+<#include "/view/dream/day/_dream_day_aside_base.ftlh">
 
 </@layout.layout>

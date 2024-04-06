@@ -53,12 +53,12 @@
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원 연락처 팝업을 호출합니다.">
             <i class="bi bi-telephone"></i>직원 연락처
         </button>
-        <#include "/view/notice/notice_list_crdt_user_cttpc_modal.ftlh">
+        <#include "/view/notice/_notice_list_crdt_user_cttpc_modal.ftlh">
         <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#extn_phone_modal').modal('show');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내선전화 관련 안내 팝업을&#10;호출합니다.">
             <i class="bi bi-telephone"></i>내선전화 관련
         </button>
-        <#include "/view/notice/notice_list_extn_phone_modal.ftlh">
+        <#include "/view/notice/_notice_list_extn_phone_modal.ftlh">
     </div>
 
     <!-- #include:: component:: 태그 클릭 필터링 -->

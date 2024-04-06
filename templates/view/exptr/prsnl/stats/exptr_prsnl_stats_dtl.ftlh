@@ -325,6 +325,6 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/exptr/prsnl/stats/exptr_prsnl_stats_dtl_rject_resn_modal.ftlh">
+<#include "/view/exptr/prsnl/stats/_exptr_prsnl_stats_dtl_rject_resn_modal.ftlh">
 
 </@layout.layout>

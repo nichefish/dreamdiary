@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.service.log;
+package io.nicheblog.dreamdiary.web.service.cmm.log;
 
 import io.nicheblog.dreamdiary.global.ActiveProfile;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;

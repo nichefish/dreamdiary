@@ -306,7 +306,7 @@
     </form>
 </div>
 
-<#include "/view/exptr/prsnl/papr/exptr_prsnl_item_reg_rcipt_template.ftlh">
-<#include "/view/exptr/prsnl/papr/exptr_prsnl_item_rject_template.ftlh">
+<#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_reg_rcipt_template.ftlh">
+<#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_rject_template.ftlh">
 
 </@layout.layout>

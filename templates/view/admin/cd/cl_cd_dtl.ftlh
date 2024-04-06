@@ -335,9 +335,9 @@
     </form>
 </div>
 
-<#include "/view/admin/cd/cl_cd_reg_modal.ftlh">
-<#include "/view/admin/cd/cl_cd_reg_template.ftlh">
-<#include "/view/admin/cd/dtl_cd_reg_modal.ftlh">
-<#include "/view/admin/cd/dtl_cd_reg_template.ftlh">
+<#include "/view/admin/cd/_cl_cd_reg_modal.ftlh">
+<#include "/view/admin/cd/_cl_cd_reg_template.ftlh">
+<#include "/view/admin/cd/_dtl_cd_reg_modal.ftlh">
+<#include "/view/admin/cd/_dtl_cd_reg_template.ftlh">
 
 </@layout.layout>

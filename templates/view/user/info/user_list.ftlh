@@ -46,7 +46,7 @@
 
 <div class="card post">
     <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/user/info/user_list_header.ftlh">
+    <#include "/view/user/info/_user_list_header.ftlh">
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
         <li class="nav-item">

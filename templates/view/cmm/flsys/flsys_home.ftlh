@@ -92,6 +92,6 @@
 <#include "/view/_component/tag/tag_list_template.ftlh">
 
 <!--include:: Dream - Aside-->
-<#include "/view/cmm/flsys/flsys_aside_base.ftlh">
+<#include "/view/cmm/flsys/_flsys_aside_base.ftlh">
 
 </@layout.layout>

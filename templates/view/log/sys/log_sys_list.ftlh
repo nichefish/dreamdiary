@@ -29,7 +29,7 @@
         <input type="hidden" name="logSysNo" id="logSysNo" />
     </form>
     <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/log/sys/log_sys_list_header.ftlh">
+    <#include "/view/log/sys/_log_sys_list_header.ftlh">
 
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">

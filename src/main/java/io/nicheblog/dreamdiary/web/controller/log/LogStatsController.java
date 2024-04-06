@@ -10,7 +10,7 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsSearchParam;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserDto;
-import io.nicheblog.dreamdiary.web.service.log.LogStatsUserService;
+import io.nicheblog.dreamdiary.web.service.cmm.log.LogStatsUserService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.service.log;
+package io.nicheblog.dreamdiary.web.service.cmm.log;
 
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.cmm.log.repository.LogSysRepository;

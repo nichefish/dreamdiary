@@ -13,7 +13,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.log.LogActvtyDto;
 import io.nicheblog.dreamdiary.web.model.log.LogActvtySearchParam;
-import io.nicheblog.dreamdiary.web.service.log.LogActvtyService;
+import io.nicheblog.dreamdiary.web.service.cmm.log.LogActvtyService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

@@ -51,7 +51,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작성 안내 팝업을 호출합니다.">
                 <i class="fas fa-info-circle"></i>작성 안내
             </button>
-            <#include "/view/exptr/prsnl/papr/exptr_prsnl_papr_rule_modal.ftlh">
+            <#include "/view/exptr/prsnl/papr/_exptr_prsnl_papr_rule_modal.ftlh">
         </div>
     </div>
 

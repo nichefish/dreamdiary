@@ -1,6 +1,6 @@
 <#--
   -- 사용자 관리 > 계정 및 권한 관리 > 등록 > 사용자 정보 기타항목 추가추가 Template
-  -- @included in : user_reg_form
+  -- @included_in : user_reg_form
   -->
 <div id="userProflItemTemplate" hidden>
     <span id="userInfoItem__INDEX__"></span>

@@ -432,7 +432,7 @@
             </div>
         </div>
 
-        <#include "/view/user/info/user_info_reg_template.ftlh">    <!-- 직원정보 부분 파일 분리 -->
+        <#include "/view/user/info/_user_info_reg_template.ftlh">    <!-- 직원정보 부분 파일 분리 -->
 
         <div class="separator my-6"></div>
 
@@ -458,7 +458,7 @@
     </form>
 </div>
 
-<#include "/view/user/info/user_info_reg_item_template.ftlh">       <!-- 기타정보 추가추가 영역 template-->
+<#include "/view/user/info/_user_info_reg_item_template.ftlh">       <!-- 기타정보 추가추가 영역 template-->
 <!-- #include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/atch_file/_atch_file_area.ftlh">
 
