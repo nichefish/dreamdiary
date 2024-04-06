@@ -10,8 +10,10 @@
         <div class="position-relative">
             <!-- datepicker -->
             <div class="position-relative me-md-3">
-                <@component.datepicker searchParam "searchStartDt" "" />
-                <@component.datepicker searchParam "searchEndDt" DateUtils.Parser.eDateParseStr(DateUtils.getCurrDate()) />
+                <!-- 인풋:: datepicker -->
+                <@component.header_datepicker searchParam "searchStartDt" "" />
+                <!-- 인풋:: datepicker -->
+                <@component.header_datepicker searchParam "searchEndDt" DateUtils.Parser.eDateParseStr(DateUtils.getCurrDate()) />
             </div>
         </div>
         <div class="position-relative w-md-1250px me-md-2">
@@ -29,22 +31,15 @@
             </select>
         </div>
         <div class="position-relative w-md-200px me-md-2">
-            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-            <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
-                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
-                </svg>
-            </span>
-            <!--end::Svg Icon-->
-            <input type="text" class="form-control form-control-solid fs-7 ps-10" name="searchKeyword" id="searchKeyword" placeholder="검색" maxlength="16" />
+            <!-- 인풋:: searchKeyword -->
+            <@component.input_header_searchKeyword "Page" />
         </div>
         <div class="card-title me-md-2">
             <label class="form-label fw-bolder text-dark"> </label>
         </div>
         <div class="d-flex align-items-center me-md-2">
             <!-- 버튼:: 목록 검색 -->
-            <@component.btn_list_search "Page" />
+            <@component.btn_header_search "Page" />
         </div>
         <!--end::Input group-->
     </div>

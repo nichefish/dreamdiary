@@ -125,33 +125,3 @@
         <i class="bi bi-list"></i>닫기
     </button>
 </#macro>
-
-<!--
- * 버튼 : 목록 헤더 검색
- -->
-<#macro btn_list_search closerNm>
-    <button type="submit" class="btn btn-sm btn-primary"
-            onclick="${closerNm}.search();">
-        <i class="bi bi-search"></i>검색
-    </button>
-</#macro>
-
-<!--
- * 버튼 : 내 글 보기
- -->
-<#macro btn_list_mypapr closerNm myPapr>
-    <#if myPapr == false>
-        <div class="btn btn-sm btn-light-primary btn-outlined ms-2 ps-2 pe-3 cursor-pointer"
-             onclick="${closerNm}.myPapr();"
-             data-bs-toggle="tooltip" data-bs-placement="top" title="내가 작성한 글만 조회합니다.">
-            <i class="bi bi-check"></i>내 글 보기
-        </div>
-    <#else>
-        <div class="btn btn-sm btn-secondary btn-outlined ms-2 ps-2 pe-3 cursor-pointer" style="background-color:rgba(64,64,64,0.2) !important"
-             onclick="${closerNm}.resetSearch();"
-             data-bs-toggle="tooltip" data-bs-placement="top" title="전체 글을 조회합니다.">
-            <i class="bi bi-list"></i>전체 글 보기
-        </div>
-    </#if>
-</#macro>
-

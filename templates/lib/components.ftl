@@ -5,15 +5,16 @@
   -- @author: nichefish
   -->
 
-<!-- datepicker -->
-<#include "/view/_component/_datepicker_area.ftlh">
 <!-- checkbox -->
 <#include "/view/_component/_checkbox_toggle_area.ftlh">
 
 <!-- list-table items -->
-<#include "/view/_component/_list_table_item.ftlh">
+<#include "/view/_component/_list_table_elements.ftlh">
 <!-- buttons -->
 <#include "/view/_component/_post_buttons.ftlh">
+
+<!-- header_components -->
+<#include "/view/_component/_list_header_elements.ftlh">
 
 <!-- in progress... -->
 <#include "/view/_component/post/_post_module.ftlh">
