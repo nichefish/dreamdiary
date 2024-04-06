@@ -9,18 +9,15 @@ import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsKey;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.stats.VcatnStatsMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.model.user.UserListDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsTotalDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnStatsRepository;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
-import io.nicheblog.dreamdiary.web.service.vcatn.dy.VcatnDyService;
+import io.nicheblog.dreamdiary.web.service.vcatn.schdul.VcatnSchdulService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -47,8 +44,8 @@ public class VcatnStatsService {
     @Resource(name = "userService")
     private UserService userService;
 
-    @Resource(name = "vcatnDyService")
-    private VcatnDyService vcatnDyService;
+    @Resource(name = "vcatnSchdulService")
+    private VcatnSchdulService vcatnSchdulService;
 
     @Resource(name = "vcatnStatsYyService")
     private VcatnStatsYyService vcatnStatsYyService;
@@ -61,16 +58,15 @@ public class VcatnStatsService {
 
     /**
      * 휴가관리 > 년도별 휴가관리 통계 목록 조회
-     * 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
+     * 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
      */
     public List<VcatnStatsDto> getVcatnStatsList(final VcatnStatsYyDto statsYy) throws Exception {
         String yyStr = statsYy.getStatsYy();
-        // 직원목록 조회 :: 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
-        List<UserListDto> userList = userService.getCrdtUserList(yyStr)
-                                                .getContent();
+        // 직원목록 조회 :: 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
+        List<UserDto.LIST> userList = userService.getCrdtUserList(yyStr);
 
         List<VcatnStatsDto> stats = new ArrayList<>();
-        for (UserListDto user : userList) {
+        for (UserDto.LIST user : userList) {
             // 각 직원에 대하여 휴가일자 산정하여 목록 반환 :: 메소드 분리
             VcatnStatsDto vcantStats = this.getVcatnStats(user, statsYy);
             stats.add(vcantStats);
@@ -86,7 +82,7 @@ public class VcatnStatsService {
             final String userId
     ) throws Exception {
         UserDto user = userService.getDtlDto(userId);
-        UserListDto userDtl = userMapstruct.dtlDtoToListDto(user);
+        UserDto.LIST userDtl = userMapstruct.dtlDtoToListDto(user);
         if (StringUtils.isEmpty(userDtl.getEcnyDt())) throw new NullPointerException("입사일 정보가 존재하지 않습니다.");
         return this.getVcatnStats(userDtl, statsYy);
     }
@@ -95,7 +91,7 @@ public class VcatnStatsService {
      * 휴가관리 > 년도별 휴가관리 통계 > 개인별 휴가 현황 조회 (메소드 분리)
      */
     private VcatnStatsDto getVcatnStats(
-            final UserListDto user,
+            final UserDto.LIST user,
             final VcatnStatsYyDto statsYy
     ) throws Exception {
         // 입사일, 기준일로 근속년수 산청
@@ -148,9 +144,9 @@ public class VcatnStatsService {
         Date statsYyEndDt = DateUtils.asDate(searchParamMap.get("searchEndDt"));
         dto.setStatsDt(DateUtils.getDateAddDayStr(statsYyBgnDt, DatePtn.DATE, -1));
         searchParamMap.put("userId", userId);
-        Page<VcatnSchdulEntity> vcatnEntityList = vcatnDyService.getListEntity(searchParamMap, Pageable.unpaged());
-        double totVcatnDy = 0.0;
-        for (VcatnSchdulEntity vcatn : vcatnEntityList.getContent()) {
+        List<VcatnSchdulEntity> vcatnEntityList = vcatnSchdulService.getListEntity(searchParamMap);
+        double totVcatnSchdul = 0.0;
+        for (VcatnSchdulEntity vcatn : vcatnEntityList) {
             // 연차(반차)만 계산한다. 공가, 무급/생리휴가, 경조휴가 등은 패스
             String vcatnTy = vcatn.getVcatnCd();
             List<String> nonAnnuals = Arrays.asList(Constant.VCATN_PBLEN, Constant.VCATN_UNPAID, Constant.VCATN_MNSTR, Constant.VCATN_CTSNN);
@@ -158,14 +154,14 @@ public class VcatnStatsService {
             // 반차는 0.5일, 연차는 1일 소진
             boolean isHalf = (Constant.VCATN_AM_HALF.equals(vcatnTy) || Constant.VCATN_PM_HALF.equals(vcatnTy));
             double exhrDy = isHalf ? 0.5 : Constant.VCATN_ANNUAL.equals(vcatnTy) ? 1 : 0;
-
+//
             // 휴가 시작일자/종료일자 산정 : 2월 28일 전- 또는 3월 1일 후 식으로 경계에 걸쳐있는 경우를 따진다. (딱 경계까지만 일수 계산하기)
             Date vcatnBgnDt = DateUtils.Parser.sDateParse(vcatn.getBgnDt());
             Date vcatnEndDt = DateUtils.Parser.sDateParse(vcatn.getEndDt());
             assert vcatnBgnDt != null;
             if (vcatnBgnDt.compareTo(statsYyBgnDt) < 0) vcatnBgnDt = statsYyBgnDt;
             vcatnEndDt = (vcatnEndDt == null) ? vcatnBgnDt : (vcatnEndDt.compareTo(statsYyEndDt) > 0) ? statsYyEndDt : vcatnEndDt;
-
+//
             // 날짜 훑으면서 공휴일 또는 주말여부 체크
             Date keyDt = DateUtils.Parser.sDateParse(vcatnBgnDt);
             while (keyDt.compareTo(vcatnEndDt) <= 0) {
@@ -173,11 +169,11 @@ public class VcatnStatsService {
                     keyDt = DateUtils.getDateAddDay(keyDt, 1);
                     continue;
                 }
-                totVcatnDy += exhrDy;
+                totVcatnSchdul += exhrDy;
                 keyDt = DateUtils.getDateAddDay(keyDt, 1);
             }
         }
-        dto.setExhsYryc(totVcatnDy);
+        dto.setExhsYryc(totVcatnSchdul);
         return dto;
     }
 
@@ -202,14 +198,14 @@ public class VcatnStatsService {
 
     /**
      * 휴가관리 > 년도별 휴가관리 통계 엑셀 다운로드 목록 조회
-     * 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 신지넷+빅스소프트 직원(재직+프리랜서) 전원에 대하여 산정
+     * 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
      */
-    public List<Object> getVcatnStatsListXlsx(final VcatnStatsYyDto statsYy) throws Exception {
-        List<VcatnStatsDto> statsList = this.getVcatnStatsList(statsYy);
-        List<Object> statsObjList = new ArrayList<>();
-        for (VcatnStatsDto stats : statsList) {
-            statsObjList.add(vcatnStatsMapstruct.toListXlsxDto(stats));
-        }
-        return statsObjList;
-    }
+    // public List<Object> getVcatnStatsListXlsx(final VcatnStatsYyDto statsYy) throws Exception {
+    //     List<VcatnStatsDto> statsList = this.getVcatnStatsList(statsYy);
+    //     List<Object> statsObjList = new ArrayList<>();
+    //     for (VcatnStatsDto stats : statsList) {
+    //         statsObjList.add(vcatnStatsMapstruct.toListXlsxDto(stats));
+    //     }
+    //     return statsObjList;
+    // }
 }
