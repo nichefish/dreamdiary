@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS log_actvty (
     actvty_ctgr_cd VARCHAR(50) COMMENT '활동 카테고리 코드',
     action_ty_cd VARCHAR(50) COMMENT '액션 타입 코드',
     url VARCHAR(400) COMMENT '요청 URL',
+    mthd VARCHAR(400) COMMENT '요청 메소드',
     param VARCHAR(500) COMMENT '요청 파라미터',
     cn LONGTEXT COMMENT '내용',
     ip_addr VARCHAR(20) COMMENT 'IP 주소',

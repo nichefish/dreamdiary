@@ -28,7 +28,6 @@ public enum SiteTopMenu {
     BOARD("03", "0300", "일반게시판", "board", false),
     SCHDUL("04", "0400", "일정", "schedule", false),
     EXPTR("05", "0500", "경비", "expenditure", false),
-    PRJCT("06", "0600", "프로젝트 관리", "project", false),
 
     // ADMIN
     ADMIN_MAIN("00", "0000", "메인", "", true),

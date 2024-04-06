@@ -128,16 +128,6 @@ public class SiteMenu {
     public static SiteAcsInfo EXPTR_PRSNL_PAPR = SubMenu.EXPTR_PRSNL_PAPR;
     public static SiteAcsInfo EXPTR_REQST = SubMenu.EXPTR_REQST;
 
-    // 대메뉴 :: 프로젝트
-    public static SiteAcsInfo PRJCT = new SiteAcsInfo(
-            SiteTopMenu.PRJCT,
-            TOP_MENU_IDX,
-            "프로젝트 관리",
-            SiteUrl.PRJCT_INFO_LIST,
-            List.of(SubMenu.PRJCT_INFO)
-    );
-    public static SiteAcsInfo PRJCT_INFO = SubMenu.PRJCT_INFO;
-
     // 대메뉴 :: 사용자 관리
     public static SiteAcsInfo USER = new SiteAcsInfo(
             SiteTopMenu.USER,
@@ -245,14 +235,6 @@ public class SiteMenu {
                 "02",
                 "휴가계획서",
                 SiteUrl.VCATN_PAPR_LIST
-        );
-
-        // 소메뉴 :: 프로젝트 관리
-        SiteAcsInfo PRJCT_INFO = new SiteAcsInfo(
-                SiteTopMenu.PRJCT,
-                "01",
-                "프로젝트 관리",
-                SiteUrl.PRJCT_INFO_LIST
         );
 
         /* 사용자 관리 */

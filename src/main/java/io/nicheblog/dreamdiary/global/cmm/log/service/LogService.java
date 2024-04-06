@@ -63,6 +63,7 @@ public class LogService {
 
         LogActvtyEntity logActvty = logMapstruct.toEntity(logParam);
         logActvty.setUrl(request.getServletPath());         // 작업 url
+        logActvty.setMthd(request.getMethod());           // 접근 메소드
         logActvty.setParam(request.getQueryString());       // 작업 파라미터
         logActvty.setReferer(request.getHeader(Constant.REFERER));      // 리퍼러
         logActvty.setIpAddr(authService.getUserIpAddr());       // 작업 IP
@@ -97,6 +98,7 @@ public class LogService {
         LogActvtyEntity logActvty = new LogActvtyEntity();
         logActvty.setLogUserId(userId);
         logActvty.setUrl(request.getServletPath());     // 작업 url
+        logActvty.setMthd(request.getMethod());
         logActvty.setParam(request.getQueryString());       // 작업 파라미터
         logActvty.setReferer(request.getHeader(Constant.REFERER));  // 리퍼러
         logActvty.setIpAddr(authService.getUserIpAddr());       // 작업 IP

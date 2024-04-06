@@ -262,10 +262,6 @@ public interface SiteUrl {
     String USER_REQST_CF_AJAX = Prefix.USER_REQST + "/userReqstCfAjax.do";
     String USER_REQST_UNCF_AJAX = Prefix.USER_REQST + "/userReqstUncfAjax.do";
 
-    /** 프로젝트 */
-    String PRJCT_INFO_LIST = Prefix.PRJCT + "/prjctInfoList.do";
-    String PRJCT_REG_FORM = Prefix.PRJCT + "/prjctRegForm.do";
-
     /**
      * PREFIX 정보
      */
@@ -309,9 +305,6 @@ public interface SiteUrl {
         String EXPTR_PRSNL_STATS = EXPTR_PRSNL + STATS;
         String REQST = "/reqst";
         String EXPTR_REQST = EXPTR + REQST;
-
-        /* 프로젝트 (prjct) */
-        String PRJCT = "/project";
 
         String COMMENT = "/comment";
         String TAG = "/tag";

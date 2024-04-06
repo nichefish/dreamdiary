@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.cmm.log.entity;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,48 +35,39 @@ import java.util.HashMap;
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class LogActvtyEntity
+    extends BaseCrudEntity
         implements Serializable {
 
     // 브라우저 정보 (브라우저 종류, 버전, 운영체제 등)
     // 장치 정보 (모바일 또는 데스크톱, 화면 해상도 등)
     // 클릭 이벤트 (링크, 버튼, 이미지 등)
-    // 검색 쿼리 (검색에 특수 파라미터.. 붙이기..)
-    // 동영상 재생 또는 음악 재생
 
-    /**
-     * 로그 고유 ID (PK)
-     */
+    /** 로그 고유 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_actvty_no")
     @Comment("로그 고유 ID (key)")
     private Integer logActvtyNo;
 
-    /**
-     * 작업자 ID
-     */
+    /** 작업자 ID */
     @CreatedBy
     @Column(name = "log_user_id", length = 20)
     @Comment("작업자 ID")
     protected String logUserId;
 
-    /**
-     * 작업자 정보
-     */
+    /** 작업자 정보 */
     @ManyToOne
     @JoinColumn(name = "log_user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     private AuditorInfo logUserInfo;
 
-    /**
-     * 작업일시
-     */
+    /** 작업일시 */
     @CreatedDate
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -84,16 +76,12 @@ public class LogActvtyEntity
     @Comment("작업일시")
     private Date logDt;
 
-    /**
-     * 작업 구분 코드 (ex. 일반게시판, 공지사항, ...) (기능/모듈 단위)
-     */
+    /** 작업 구분 코드 (ex. 일반게시판, 공지사항, ...) (기능/모듈 단위) */
     @Column(name = "actvty_ctgr_cd", length = 400)
     @Comment("작업 구분 코드")
     private String actvtyCtgrCd;
 
-    /**
-     * 작업 구분 코드 정보 (복합키 조인)
-     */
+    /** 작업 구분 코드 정보 (복합키 조인) */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTVTY_CTGR_CD + "\'", referencedColumnName = "cl_cd")),
@@ -104,16 +92,12 @@ public class LogActvtyEntity
     @Comment("작업 구분 코드 정보")
     private DtlCdEntity actvtyCtgrInfo;
 
-    /**
-     * 작업 유형 코드 (조회, 검색, 처리...)
-     */
+    /** 작업 유형 코드 (조회, 검색, 처리...) */
     @Column(name = "action_ty_cd", length = 50)
     @Comment("작업 유형 코드")
     private String actionTyCd;
 
-    /**
-     * 작업 유형 코드 정보 (복합키 조인)
-     */
+    /** 작업 유형 코드 정보 (복합키 조인) */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.ACTION_TY_CD + "\'", referencedColumnName = "cl_cd")),
@@ -124,16 +108,12 @@ public class LogActvtyEntity
     @Comment("작업 유형 코드 정보")
     private DtlCdEntity actionTyInfo;
 
-    /**
-     * 작업 URL
-     */
+    /** 작업 URL */
     @Column(name = "url", length = 400)
     @Comment("작업 URL")
     private String url;
 
-    /**
-     * 작업 URL 정보
-     */
+    /** 작업 URL 정보 */
     @OneToOne
     @JoinColumn(name = "url", referencedColumnName = "url", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
@@ -141,58 +121,47 @@ public class LogActvtyEntity
     @Comment("작업 URL 정보")
     private LogActvtyUrlNmEntity urlNmInfo;
 
-    /**
-     * 작업 파라미터
-     */
+    /** 메소드 */
+    @Column(name = "mthd", length = 1000)
+    @Comment("메소드")
+    private String mthd;
+
+    /** 작업 파라미터 */
     @Column(name = "param", length = 1000)
     @Comment("작업 파라미터")
     private String param;
 
-    /**
-     * 작업 내용
-     */
+    /** 작업 내용 */
     @Column(name = "cn", length = 400)
     @Comment("작업 내용")
     private String cn;
 
-    /**
-     * 리퍼러
-     */
+    /** 리퍼러 */
     @Column(name = "referer", length = 1000)
     @Comment("리퍼러")
     private String referer;
 
-    /**
-     * 작업자 IP
-     */
+    /** 작업자 IP */
     @Column(name = "ip_addr", length = 20)
     @Comment("작업자 IP")
     private String ipAddr;
 
-    /**
-     * 작업 결과
-     */
+    /** 작업 결과 */
     @Column(name = "rslt")
     @Comment("작업 결과")
     private Boolean rslt;
 
-    /**
-     * 작업 결과 메세지
-     */
+    /** 작업 결과 메세지 */
     @Column(name = "rslt_msg")
     @Comment("작업 결과 메세지")
     private String rsltMsg;
 
-    /**
-     * 익셉션 이름
-     */
+    /** 익셉션 이름 */
     @Column(name = "exception_nm")
     @Comment("익셉션 이름")
     private String exceptionNm;
 
-    /**
-     * 익셉션 메세지
-     */
+    /** 익셉션 메세지 */
     @Column(name = "exception_msg")
     @Comment("익셉션 메세지")
     private String exceptionMsg;

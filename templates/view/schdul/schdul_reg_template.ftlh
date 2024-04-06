@@ -25,7 +25,7 @@
             </select>
         </div>
         <div class="col-xl-7 col-6">
-            <input type="text" class="form-control form-control-solid required" placeholder="제목" name="title" id="title" maxlength="120" value="{{schdulNm}}" />
+            <input type="text" class="form-control form-control-solid required" placeholder="제목" name="title" id="title" maxlength="120" value="{{title}}" />
         </div>
         <div class="col-xl-2 col-2">
         </div>
