@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.controller;
+package io.nicheblog.dreamdiary.web.controller.cmm.notion;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;

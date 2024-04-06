@@ -10,7 +10,7 @@
 
 <#macro btn_post_mdf closerNm post isMngr>
     <#if post.isRegstr>
-        <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
+        <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
                 onclick="${closerNm}.mdfForm();"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
             <i class="bi bi-pencil-square"></i>(내 글)수정
@@ -20,20 +20,20 @@
         <!-- 수정권한에 따라 수정 권한 부여 -->
         <#if post.mdfable! == (Constant.MDFABLE_MNGR)>
             <#if isMngr!false>
-                <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
+                <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
                         onclick="${closerNm}.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                     <i class="bi bi-pencil-square"></i>(관리자+)수정
                 </button>
             </#if>
         <#elseif post.mdfable! == (Constant.MDFABLE_USER)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>"
                     onclick="${closerNm}.mdfForm();">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
         <#elseif post.mdfable! == (Constant.MDFABLE_ALL)>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
                     onclick="${closerNm}.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(전체+)수정
@@ -42,7 +42,7 @@
     <#else>
         <!-- 1. mdfable 항목 미사용시 : 등록자/관리자만 수정 가능 -->
         <#if isMngr!false>
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
                     onclick="${closerNm}.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(관리자+)수정
@@ -56,7 +56,7 @@
  -->
 <#macro btn_post_delete closerNm post isMngr>
     <#if post.isRegstr>
-        <button type="button" class="btn btn-light btn-active-danger me-2 btn-sm"
+        <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
                 onclick="${closerNm}.delAjax();"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
             <i class="bi bi-trash"></i>(내 글)삭제
@@ -85,10 +85,10 @@
 
 
 <!--
- * 버튼 : 글 작성 전 미리보기
+ * 버튼 : 글 작성 전 미리보기 팝업 호출
  -->
 <#macro btn_preview_pop closerNm>
-    <button type="button" class="btn btn-sm btn-primary mx-2 float-start"
+    <button type="button" class="btn btn-sm btn-primary mx-2"
             onclick="${closerNm}.preview();"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
             title="작성한 내용에 대하여&#10;미리보기 팝업을 호출합니다.">
@@ -116,7 +116,7 @@
 </#macro>
 
 <!--
- * 버튼 : 글 저장 / 취소
+ * 버튼 : 미리보기 팝업 닫기
  -->
 <#macro btn_preview_close closerNm>
     <button type="button" class="btn btn-sm btn-light"
@@ -125,3 +125,33 @@
         <i class="bi bi-list"></i>닫기
     </button>
 </#macro>
+
+<!--
+ * 버튼 : 목록 헤더 검색
+ -->
+<#macro btn_list_search closerNm>
+    <button type="submit" class="btn btn-sm btn-primary"
+            onclick="${closerNm}.search();">
+        <i class="bi bi-search"></i>검색
+    </button>
+</#macro>
+
+<!--
+ * 버튼 : 내 글 보기
+ -->
+<#macro btn_list_mypapr closerNm myPapr>
+    <#if myPapr == false>
+        <div class="btn btn-sm btn-light-primary btn-outlined ms-2 ps-2 pe-3 cursor-pointer"
+             onclick="${closerNm}.myPapr();"
+             data-bs-toggle="tooltip" data-bs-placement="top" title="내가 작성한 글만 조회합니다.">
+            <i class="bi bi-check"></i>내 글 보기
+        </div>
+    <#else>
+        <div class="btn btn-sm btn-secondary btn-outlined ms-2 ps-2 pe-3 cursor-pointer" style="background-color:rgba(64,64,64,0.2) !important"
+             onclick="${closerNm}.resetSearch();"
+             data-bs-toggle="tooltip" data-bs-placement="top" title="전체 글을 조회합니다.">
+            <i class="bi bi-list"></i>전체 글 보기
+        </div>
+    </#if>
+</#macro>
+

@@ -38,6 +38,8 @@
                     commons.util.handlebarsTemplate(resultObj, "flsys_list");
                     Flsys.currPath = resultObj.filePath;
                     $("#absolute_path_div").text(resultObj.filePath);
+                    commons.util.handlebarsTemplate(resultObj, "flsys_home_header_path");
+
                     $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                     // $('.modal').modal('hide');
                 });

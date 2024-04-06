@@ -1,6 +1,6 @@
 <#--
   -- 활동 로그 목록 > 검색 영역 Header
-  -- @included in : log_sys_list_header
+  -- @included_in : log_sys_list_header
   -->
 <form name="listForm" id="listForm" method="get">
     <div class="d-flex align-items-center">
@@ -47,9 +47,8 @@
             <label class="form-label fw-bolder text-dark"> </label>
         </div>
         <div class="d-flex align-items-center me-md-2">
-            <button type="submit" class="btn btn-sm btn-primary me-5" onclick="Swal.fire('준비중입니다.');">
-                <i class="bi bi-search"></i>검색
-            </button>
+            <!-- 버튼:: 목록 검색 -->
+            <@component.btn_list_search "Page" />
         </div>
         <!--end::Input group-->
     </div>

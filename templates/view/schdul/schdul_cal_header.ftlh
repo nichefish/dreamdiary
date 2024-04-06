@@ -44,9 +44,8 @@
                        name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30"/>
                 <!--end::Input group-->
             </div>
-            <button type="submit" class="btn btn-sm btn-primary position-relative" onclick="Page.search();">
-                <i class="bi bi-search"></i>검색
-            </button>
+            <!-- 버튼:: 목록 검색 -->
+            <@component.btn_list_search "Page" />
             <div class="cursor-pointer ms-1 me-5" data-bs-toggle="collapse" href="#schdul_advanced_search_div">
                 <a class="btn btn-sm btn-light-primary h-100 d-flex align-items-center text-gray-700 fs-7 fw-bold">
                 <span class="svg-icon svg-icon-muted svg-icon-2 svg-icon-gray-700"

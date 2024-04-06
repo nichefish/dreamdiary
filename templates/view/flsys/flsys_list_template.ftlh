@@ -1,6 +1,6 @@
 <#--
   -- 분류 코드(CL_CD) > 상세 Template
-  -- @included in : cl_cd_list
+  -- @included_in : cl_cd_list
   -->
 <script type="text/x-handlebars-template" id="flsys_list_template">
     <div class="row mb-1">
@@ -21,7 +21,10 @@
                     </span>
                     <!-- icons -->
                     <span>
-                        <!--  -->
+                        {{length}}
+                    </span>
+                    <span>
+                        lastModified: {{lastModified}}
                     </span>
                 </div>
                 <!-- meta -->
@@ -58,6 +61,7 @@
 
     <div class="separator my-4"></div>
 
+    <tr>
     {{#if (exists fileList)}}
         {{#each fileList}}
             <div class="row py-1">
@@ -129,4 +133,5 @@
             </div>
         </div>
     {{/if}}
+    </tr>
 </script>

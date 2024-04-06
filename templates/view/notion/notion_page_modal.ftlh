@@ -1,6 +1,6 @@
 <#--
   -- 활동 로그 > 상세 Modal
-  -- @included in : log_actvty_list
+  -- @included_in : log_actvty_list
   -->
 <#--<script defer="defer" src="/static/react/static/js/main.668f159c.js"></script>
 <link rel="stylesheet" href="/static/react/static/css/main.4fb4fba2.css">-->

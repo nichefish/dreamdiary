@@ -44,22 +44,10 @@
             </div>
             <!-- button starts -->
             <div class="position-relative me-md-3">
-                <button type="submit" class="btn btn-sm btn-primary" onclick="Page.search();">
-                    <i class="bi bi-search"></i>검색
-                </button>
-                <#if MY_PAPR??>
-                    <div class="btn btn-sm btn-secondary btn-outlined ms-2 ps-2 pe-3 cursor-pointer" style="background-color:rgba(64,64,64,0.2) !important"
-                         onclick="Page.resetSearch();"
-                         data-bs-toggle="tooltip" data-bs-placement="top" title="전체 글을 조회합니다.">
-                        <i class="bi bi-list"></i>전체 글 보기
-                    </div>
-                <#else>
-                    <div class="btn btn-sm btn-light-primary btn-outlined ms-2 ps-2 pe-3 cursor-pointer"
-                         onclick="Page.myPapr();"
-                         data-bs-toggle="tooltip" data-bs-placement="top" title="내가 작성한 글만 조회합니다.">
-                        <i class="bi bi-check"></i>내 글 보기
-                    </div>
-                </#if>
+                <!-- 버튼:: 목록 검색 -->
+                <@component.btn_list_search "Page" />
+                <!-- 내 글 보기 버튼 -->
+                <@component.btn_list_mypapr "Page" MY_PAPR!false />
             </div>
         </div>
         <div class="col-lg-2 col-6 d-flex justify-content-end align-items-center mt-2">

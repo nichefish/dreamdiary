@@ -27,9 +27,8 @@
                 <!--end::Input group-->
             </div>
             <div class="col-lg-4 col-4">
-                <button type="submit" class="btn btn-sm btn-primary" onclick="Page.search();">
-                    <i class="bi bi-search"></i>검색
-                </button>
+                <!-- 버튼:: 목록 검색 -->
+                <@component.btn_list_search "Page" />
             </div>
         </div>
         <div class="col-lg-6 col-12 d-flex justify-content-end align-items-center buttons">
