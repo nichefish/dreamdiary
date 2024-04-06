@@ -160,6 +160,9 @@ dependencies {
     /** ↓ javax.mail api */
     implementation 'com.sun.mail:javax.mail:1.6.2'
 
+    /** ↓ maxmind geoip2 */
+    implementation 'com.maxmind.geoip2:geoip2:4.2.0'
+
     /** jsoup: 텍스트에디터 서버사이트 필터링 */
     implementation 'org.jsoup:jsoup:1.16.1'
 
