@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/vcatn/schdul/_vcatn_schdul_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -136,50 +141,11 @@
     });
 </script>
 
+<form name="procForm" id="procForm" method="get">
+    <input type="hidden" name="vcatnSchdulNo" id="vcatnSchdulNoProc" />
+    <input type="hidden" name="statsYy" id="statsYy" value="${(vcatnYy.statsYy)!}">
+</form>
 <div class="card post">
-    <!--begin::Card header 검색+헤더 UI -->
-    <div class="card-header border-0 pt-6">
-        <form name="procForm" id="procForm" method="get">
-            <input type="hidden" name="vcatnSchdulNo" id="vcatnSchdulNoProc" />
-            <div class="d-flex align-items-center">
-                <div class="position-relative w-md-100px me-md-2"
-                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
-                    <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy" data-hide-search="true" onchange="Page.chgYy(this);">
-                        <#list yyList![] as yy>
-                            <option value="${yy.statsYy!}"<#if yy.statsYy == vcatnYy.statsYy>selected="selected"</#if>>${yy.statsYy!}</option>
-                        </#list>
-                    </select>
-                </div>
-                <div class="position-relative w-md-150px pt-2 me-md-2">
-                    <h4>년도 휴가사용일자</h4>
-                </div>
-                <div class="position-relative w-md-500px me-md-2" style="padding-left:3rem">
-                    <span class="fs-6 text-gray-600 align-center mt-4">■ 연차 사용 기간 : ${(vcatnYy.bgnDt)!} ~ ${(vcatnYy.endDt)!}</span>
-                </div>
-            </div>
-        </form>
-        <div class="card-title text-end">
-            <div class="d-flex align-items-center position-relative my-1">
-            </div>
-        </div>
-        <div class="card-toolbar">
-            <!--begin::Toolbar-->
-            <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                <button type="button" class="btn btn-sm btn-primary me-2" onclick="Page.regForm();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
-                    <i class="fas fa-plus"></i>등록
-                </button>
-                <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.xlsxDownload();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
-                    <i class="fas fa-download fs-7"></i>다운로드
-                </button>
-            </div>
-            <!--end::Toolbar-->
-        </div>
-    </div>
-
-    <div class="separator separator-dashed border-gray-300 mt-5 mb-5"></div>
-
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable">
         <thead class="cursor-pointer">
             <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted">

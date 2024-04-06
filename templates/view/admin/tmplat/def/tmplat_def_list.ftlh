@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/admin/tmplat/def/_tmplat_def_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -79,7 +84,6 @@
     <input type="hidden" name="postNo" id="postNo" value=""/>
 </form>
 <div class="card post">
-    <#include "/view/admin/tmplat/def/tmplat_def_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>
@@ -182,9 +186,9 @@
     <!-- pagination::end -->
 </div>
 
-<#include "/view/admin/tmplat/def/tmplat_def_reg_modal.ftlh">
-<#include "/view/admin/tmplat/def/tmplat_def_reg_template.ftlh">
-<#include "/view/admin/tmplat/def/tmplat_def_dtl_modal.ftlh">
-<#include "/view/admin/tmplat/def/tmplat_def_dtl_template.ftlh">
+<#include "/view/admin/tmplat/def/_tmplat_def_reg_modal.ftlh">
+<#include "/view/admin/tmplat/def/_tmplat_def_reg_template.ftlh">
+<#include "/view/admin/tmplat/def/_tmplat_def_dtl_modal.ftlh">
+<#include "/view/admin/tmplat/def/_tmplat_def_dtl_template.ftlh">
 
 </@layout.layout>

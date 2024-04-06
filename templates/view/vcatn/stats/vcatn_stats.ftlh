@@ -3,117 +3,18 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/vcatn/stats/_vcatn_stats_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
-<script>
-    const Page = function() {
-        return {
-            init: function () {
-
-                <#list statsList![] as stats>
-                    Page.totYryc("${stats?counter}");
-                </#list>
-
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
-                commons.validate.onlyNumAndDot(".num");     // 숫자와 점 제외하곤 입력불가
-            },
-            /** 조회년도 변경 */
-            chgYy: function(obj) {
-                commons.util.blockUIReplace("${SiteUrl.VCATN_STATS_YY!}?statsYy=" + $(obj).val());
-            },
-            /** 연자 숫자 계산 */
-            totYryc: function(idx) {
-                // 근속년수에 따라 근속추가연차 계산
-                const cnwkYryc = Math.floor(commons.util.toNumber("#cnwkYy"+idx) / 2);
-                $("#cnwkYryc"+idx).val(cnwkYryc);
-                $("#cnwkYryc"+idx+"Span").text(cnwkYryc);
-                // 총연차 계산
-                const bsYryc = commons.util.toNumber("#bsYryc"+idx) + commons.util.toNumber("#newbieYryc"+idx) + commons.util.toNumber("#cnwkYryc"+idx)
-                const totYryc = bsYryc + commons.util.toNumber("#prjctYryc"+idx) + commons.util.toNumber("#refreshYryc"+idx);
-                $("#totYryc"+idx).val(totYryc);
-                $("#totYryc"+idx+"Span").text(totYryc);
-                // 총연차 - 소진연차 = 잔여연차
-                const remndrYryc = commons.util.toNumber("#totYryc"+idx) - commons.util.toNumber("#exhsYryc"+idx);
-                $("#remndrYryc"+idx).val(remndrYryc);
-                $("#remndrYryc"+idx+"Span").text(remndrYryc);
-            },
-            /** 정보 업데이트 (저장) */
-            updt: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.mdf"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.VCATN_STATS_YY_UPDT_AJAX!}";
-                    let ajaxData = $("#vcatnStatsForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({text: res.message})
-                            .then(function() {
-                                if (res.result) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 엑셀 다운로드 */
-            xlsxDownload: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.download"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    commons.util.blockUIFileDownload();
-                    $("#vcatnStatsForm").attr("action", "${SiteUrl.VCATN_STATS_YY_XLSX_DOWNLOAD!}").submit();
-                });
-            }
-        }
-    }();
-
-    $(document).ready(function() {
-        Page.init();
-    });
-</script>
-
 <div class="card post">
-    <form name="vcatnStatsForm" id="vcatnStatsForm" class="form" enctype="multipart/form-data" method="post" >
-        <!--begin::Card header 검색+헤더 UI -->
-        <div class="card-header border-0 pt-6">
-            <input type="hidden" name="bgnDt" id="bgnDt" value="${(vcatnYy.bgnDt)!}">
-            <input type="hidden" name="endDt" id="endDt" value="${(vcatnYy.endDt)!}">
-            <div class="d-flex align-items-center">
-                <div class="position-relative w-md-100px me-md-2"
-                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
-                    <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy" data-hide-search="true" onchange="Page.chgYy(this);">
-                        <#list yyList![] as yy>
-                            <option value="${yy.statsYy!}" <#if yy.statsYy == vcatnYy.statsYy>selected="selected"</#if>>${yy.statsYy!}</option>
-                        </#list>
-                    </select>
-                </div>
-                <div class="position-relative w-md-150px pt-2 me-md-2">
-                    <h4>년도 휴가관리</h4>
-                </div>
-                <div class="position-relative w-md-500px me-md-2" style="padding-left:3rem">
-                    <span class="fs-6 text-gray-600 align-center mt-4">■ 연차 사용 기간 : ${(vcatnYy.bgnDt)!} ~ ${(vcatnYy.endDt)!}</span>
-                </div>
-            </div>
-
-            <div class="card-title text-end">
-                <div class="d-flex align-items-center position-relative my-1">
-                </div>
-            </div>
-            <div class="card-toolbar">
-                <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.xlsxDownload();"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
-                        <i class="fas fa-download fs-7"></i>다운로드
-                    </button>
-                </div>
-                <!--end::Toolbar-->
-            </div>
-        </div>
-
-        <div class="separator separator-dashed border-gray-300 mt-5 mb-5"></div>
-
+    <form name="vcatnStatsForm" id="vcatnStatsForm" class="d-flex align-items-center flex-nowrap gap-2" enctype="multipart/form-data" method="post" >
+        <input type="hidden" name="bgnDt" id="bgnDt" value="${(vcatnYy.bgnDt)!}">
+        <input type="hidden" name="endDt" id="endDt" value="${(vcatnYy.endDt)!}">
+        <input type="hidden" name="statsYy" id="statsYy" value="${(vcatnYy.statsYy)!}">
         <table class="table table-row-dashed table-row-gray-300 gy-7">
             <thead>
                 <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
