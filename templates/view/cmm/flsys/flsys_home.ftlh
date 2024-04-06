@@ -31,7 +31,7 @@
                 <input type="hidden" name="logSysNo" id="logSysNo" />
             </form>
             <!--begin::Card header 검색+헤더 UI -->
-            <#include "/view/flsys/flsys_home_header.ftlh">
+            <#include "/view/cmm/flsys/flsys_home_header.ftlh">
 
             <!--begin::Tab -->
             <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
@@ -72,18 +72,18 @@
     </div>
 </div>
 
-<#include "/view/flsys/flsys_list_template.ftlh">
+<#include "/view/cmm/flsys/flsys_list_template.ftlh">
 
-<#include "/view/flsys/flsys_file_vod_modal.ftlh">
-<#include "/view/flsys/flsys_file_vod_template.ftlh">
+<#include "/view/cmm/flsys/flsys_file_vod_modal.ftlh">
+<#include "/view/cmm/flsys/flsys_file_vod_template.ftlh">
 
-<#include "/view/flsys/flsys_home_header_path_template.ftlh">
+<#include "/view/cmm/flsys/flsys_home_header_path_template.ftlh">
 
-<#include "/view/flsys/flsys_meta_reg_modal.ftlh">
-<#include "/view/flsys/flsys_meta_reg_template.ftlh">
-<#include "/view/flsys/flsys_meta_dtl_modal.ftlh">
-<#include "/view/flsys/flsys_meta_dtl_template.ftlh">
-<#include "/view/flsys/flsys_meta_dtl_btn_template.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_reg_modal.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_reg_template.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_dtl_modal.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_dtl_template.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_dtl_btn_template.ftlh">
 
 <#include "/view/_component/tag/tag_dtl_modal.ftlh">
 <#include "/view/_component/tag/tag_dtl_template.ftlh">
@@ -92,6 +92,6 @@
 <#include "/view/_component/tag/tag_list_template.ftlh">
 
 <!--include:: Dream - Aside-->
-<#include "/view/flsys/flsys_aside_base.ftlh">
+<#include "/view/cmm/flsys/flsys_aside_base.ftlh">
 
 </@layout.layout>

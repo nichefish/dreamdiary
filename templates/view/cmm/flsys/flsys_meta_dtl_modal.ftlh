@@ -1,8 +1,8 @@
 <#--
   -- 활동 로그 > 상세 Modal
-  -- @included in : log_actvty_list
+  -- @included_in : log_actvty_list
   -->
-<div class="modal fade" id="flsys_file_vod_modal" tabindex="-1" role="dialog" aria-labelledby="flsysMetaDtlModalTitle" aria-hidden="true">
+<div class="modal fade" id="flsys_meta_dtl_modal" tabindex="-1" role="dialog" aria-labelledby="flsysMetaDtlModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,13 +14,15 @@
             </div>
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
-                    <div id="flsys_file_vod_div">
+                    <div id="flsys_meta_dtl_div">
                         <!-- contents -->
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">닫기</button>
+                <div id="flsys_meta_dtl_btn_div">
+                    <!-- handlebars template goes in here -->
+                </div>
             </div>
         </div>
     </div>

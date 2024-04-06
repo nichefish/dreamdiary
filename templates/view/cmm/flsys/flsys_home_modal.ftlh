@@ -21,7 +21,7 @@
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
                     <!--begin::Card header 검색+헤더 UI -->
-                    <#include "/view/flsys/flsys_home_header.ftlh">
+                    <#include "/view/cmm/flsys/flsys_home_header.ftlh">
                     <!--begin::Tab -->
                     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
                         <li class="nav-item">
@@ -74,13 +74,13 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/flsys/flsys_list_template.ftlh">
+<#include "/view/cmm/flsys/flsys_list_template.ftlh">
 
-<#include "/view/flsys/flsys_file_vod_modal.ftlh">
-<#include "/view/flsys/flsys_file_vod_template.ftlh">
+<#include "/view/cmm/flsys/flsys_file_vod_modal.ftlh">
+<#include "/view/cmm/flsys/flsys_file_vod_template.ftlh">
 
-<#include "/view/flsys/flsys_meta_reg_modal.ftlh">
-<#include "/view/flsys/flsys_meta_reg_template.ftlh">
-<#include "/view/flsys/flsys_meta_dtl_modal.ftlh">
-<#include "/view/flsys/flsys_meta_dtl_template.ftlh">
-<#include "/view/flsys/flsys_meta_dtl_btn_template.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_reg_modal.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_reg_template.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_dtl_modal.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_dtl_template.ftlh">
+<#include "/view/cmm/flsys/flsys_meta_dtl_btn_template.ftlh">

@@ -1,6 +1,6 @@
 <#--
   -- 분류 코드(CL_CD) > 상세 Template
-  -- @included in : cl_cd_list
+  -- @included_in : cl_cd_list
   -->
 <script type="text/x-handlebars-template" id="flsys_meta_dtl_btn_template">
     <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Meta.mdfForm('{{postNo}}');"

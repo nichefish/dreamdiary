@@ -1,6 +1,6 @@
 <#--
   -- 활동 로그 > 상세 Modal
-  -- @included in : log_actvty_list
+  -- @included_in : log_actvty_list
   -->
 <script>
     let Meta = function() {
