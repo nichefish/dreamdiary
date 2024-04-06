@@ -6,7 +6,7 @@
 <@layout.layout>
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
                 //
@@ -15,7 +15,7 @@
                 window.close();
             }
         }
-    }();
+    })();
 </script>
 
 <div class="card post">
@@ -34,12 +34,13 @@
             ${post.cn?no_esc}
         </div>
     </div>
+
     <div class="separator separator-dashed border-gray-300 my-8"></div>
+
+    <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-sm btn-light" onclick="Page.close();"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="팝업 창을 닫습니다.">
-            <i class="bi bi-list"></i>닫기
-        </button>
+        <!-- 버튼:: 팝업 닫기 -->
+        <@component.btn_preview_close "Page" />
     </div>
 
     <form name="procForm" id="procForm">

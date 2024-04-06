@@ -2,14 +2,13 @@
  -- 레이아웃 > 페이지네이션 모듈
  -- @included_in : 페이징이 있는 목록 페이지들
  -->
-
 <script>
-    let Pagination = function() {
+    const Pagination = function() {
         return {
             init: function() {
                 /** 페이지 개수 selectbox 세팅 */
                 <#if paginationInfo??>
-                    let pageSize = "${pageSize!}";
+                const pageSize = "${pageSize!}";
                     $("#pageSizeSelect option").each(function (idx, elmt) {
                         if ($(elmt).val() === pageSize) $(elmt).attr("selected", "selected");
                     });
@@ -20,7 +19,7 @@
             /** 페이지 처리 함수 (공통) */
             fnPage: function(pageNo, pageSize) {
                 // 페이지 출력개수 변경시 페이지 자동 재계산
-                let prevPageSize = "${pageSize!}";
+                const prevPageSize = "${pageSize!}";
                 if (pageSize !== undefined && pageSize !== prevPageSize) {
                     pageNo = Pagination.fnRepage(pageNo, prevPageSize, pageSize);
                 }
@@ -30,7 +29,7 @@
             },
             /** 페이지 출력개수 변경시 페이지 자동 재계산 */
             fnRepage: function(pageNo, prevPageSize, newPageSize) {
-                let offset = Number((pageNo - 1) * prevPageSize);
+                const offset = Number((pageNo - 1) * prevPageSize);
                 return Math.floor(offset / newPageSize) + 1;
             }
         }

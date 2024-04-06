@@ -192,8 +192,11 @@
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
             ${clCd.clCdDc?no_esc}
         </div>
-        <div class="separator separator-dashed border-gray-300 my-8"></div>
     </div>
+
+    <div class="separator separator-dashed border-gray-300 my-8"></div>
+
+    <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
         <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
                 onclick="Page.mdfForm();"
@@ -206,13 +209,12 @@
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드를 삭제합니다.">
             <i class="bi bi-trash"></i>삭제
         </button>
-        <button type="button" class="btn btn-sm btn-light"
-                onclick="Page.list();"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
-            <i class="bi bi-list"></i>목록
-        </button>
+        <!-- 버튼 :: 목록으로 가기 -->
+        <@component.btn_post_toList "Page" />
     </div>
+
     <div class="separator separator-dashed border-gray-300 my-8"></div>
+
     <div class="card-header border-0 pt-6">
         <div class="d-flex justify-content-left align-items-center">
             <h5>상세 코드 목록</h5>

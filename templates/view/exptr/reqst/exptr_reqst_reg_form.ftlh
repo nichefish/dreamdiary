@@ -255,8 +255,14 @@
 
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-between">
-        <@component.btn_preview "Page" />
-        <@component.btn_post_save "Page" />
+        <!-- 버튼 :: 미리보기 -->
+        <@component.btn_preview_pop "Page" />
+        <div>
+            <!-- 버튼 :: 저장하기 -->
+            <@component.btn_post_save "Page" />
+            <!-- 버튼 :: 목록으로 가기 -->
+            <@component.btn_post_toList "Page" />
+        </div>
     </div>
 
     <!--end::Card footer-->

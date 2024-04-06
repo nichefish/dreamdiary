@@ -13,7 +13,7 @@
 <!-- list-table items -->
 <#include "/view/_component/_list_table_item.ftlh">
 <!-- buttons -->
-<#include "/view/_component/_btn.ftlh">
+<#include "/view/_component/_post_buttons.ftlh">
 
 <!-- in progress... -->
 <#include "/view/_component/post/_post_module.ftlh">

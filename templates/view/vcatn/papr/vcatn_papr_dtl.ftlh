@@ -143,7 +143,10 @@
 
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
-        <@component.btn_post_mdf post isMngr />
+        <!-- 버튼 :: 수정하기 -->
+        <@component.btn_post_mdf "Page" post isMngr />
+        <!-- 버튼 :: 삭제하기 -->
+        <@component.btn_post_delete "Page" post isMngr />
         <!-- 등록자: 수정,삭제 가능, 관리자: 삭제 가능, 확인 시: 삭제만 가능 -->
 <#--        <#if post.isRegstr!false && (post.cfYn)! == "N">
             <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
@@ -151,6 +154,8 @@
                 <i class="bi bi-pencil-square"></i>수정
             </button>
         </#if>-->
+        <!-- 버튼 :: 목록으로 가기 -->
+        <@component.btn_post_toList "Page" />
     </div>
 
     <!-- 댓글 영역 -->

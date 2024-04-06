@@ -101,7 +101,12 @@
 
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
-        <@component.btn_post_mdf post isMngr />
+        <!-- 버튼 :: 수정하기 -->
+        <@component.btn_post_mdf "Page" post isMngr />
+        <!-- 버튼 :: 삭제하기 -->
+        <@component.btn_post_delete "Page" post isMngr />
+        <!-- 버튼 :: 목록으로 가기 -->
+        <@component.btn_post_toList "Page" />
     </div>
 
     <!-- 댓글 영역 -->

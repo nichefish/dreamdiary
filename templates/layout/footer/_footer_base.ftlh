@@ -13,7 +13,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="프로젝트 기간: &#10;2024.03.20 ~ (진행중)">
                 2024&copy;
             </span>
-            <a href="${SiteUrl.DOMAIN!}" target="_blank" class="text-gray-600 text-hover-primary fw-bold blink cursor-help"
+            <a href="${SiteUrl.MAIN!}" target="_blank" class="text-gray-600 text-hover-primary fw-bold blink cursor-help"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작업인원: &#10;nysnyari">
                 ${SiteUrl.DOMAIN!}
             </a>

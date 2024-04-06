@@ -2,7 +2,6 @@
  -- 수정 권한mdfable 관련 컴포넌트
  -- @included_in : lib/components.ftl
  -->
-
 <#macro mdfable post >
     <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
         <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"

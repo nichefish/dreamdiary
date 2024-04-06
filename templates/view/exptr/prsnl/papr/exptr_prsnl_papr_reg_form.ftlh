@@ -379,10 +379,8 @@
                 <i class="bi bi-list"></i>뒤로가기
             </button>
         <#else>
-            <button type="button" class="btn btn-light" onclick="Page.list();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
-                <i class="bi bi-list"></i>취소
-            </button>
+            <!-- 버튼 :: 목록으로 가기 -->
+            <@component.btn_post_toList "Page" />
         </#if>
     </div>
     <!--end::Card footer-->
