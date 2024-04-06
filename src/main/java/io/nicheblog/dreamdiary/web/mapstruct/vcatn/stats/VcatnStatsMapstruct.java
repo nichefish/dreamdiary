@@ -68,8 +68,5 @@ public interface VcatnStatsMapstruct
     @Mapping(target = "cnwkYryc", expression = "java(dto.getCnwkYryc() != null ? dto.getCnwkYryc() : 0)")
     @Mapping(target = "prjctYryc", expression = "java(dto.getPrjctYryc() != null ? dto.getPrjctYryc() : 0)")
     @Mapping(target = "refreshYryc", expression = "java(dto.getRefreshYryc() != null ? dto.getRefreshYryc() : 0)")
-    void updateFromDto(
-            final VcatnStatsDto dto,
-            final @MappingTarget VcatnStatsEntity entity
-    ) throws Exception;
+    void updateFromDto(final VcatnStatsDto dto, final @MappingTarget VcatnStatsEntity entity) throws Exception;
 }

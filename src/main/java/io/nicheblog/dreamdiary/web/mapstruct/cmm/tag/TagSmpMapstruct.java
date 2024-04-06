@@ -44,8 +44,5 @@ public interface TagSmpMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final TagDto dto,
-            final @MappingTarget TagSmpEntity entity
-    ) throws Exception;
+    void updateFromDto(final TagDto dto, final @MappingTarget TagSmpEntity entity) throws Exception;
 }

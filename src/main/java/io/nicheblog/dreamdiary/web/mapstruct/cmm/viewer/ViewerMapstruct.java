@@ -42,8 +42,5 @@ public interface ViewerMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final ViewerDto dto,
-            final @MappingTarget ViewerEntity entity
-    ) throws Exception;
+    void updateFromDto(final ViewerDto dto, final @MappingTarget ViewerEntity entity) throws Exception;
 }

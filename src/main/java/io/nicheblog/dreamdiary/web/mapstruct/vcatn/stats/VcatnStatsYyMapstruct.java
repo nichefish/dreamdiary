@@ -40,8 +40,5 @@ public interface VcatnStatsYyMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final VcatnStatsYyDto dto,
-            final @MappingTarget VcatnStatsYyEntity entity
-    ) throws Exception;
+    void updateFromDto(final VcatnStatsYyDto dto, final @MappingTarget VcatnStatsYyEntity entity) throws Exception;
 }

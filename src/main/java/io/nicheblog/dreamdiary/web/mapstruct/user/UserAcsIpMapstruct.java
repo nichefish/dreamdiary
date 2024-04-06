@@ -41,8 +41,5 @@ public interface UserAcsIpMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
-    void updateFromDto(
-            final UserAcsIpDto dto,
-            final @MappingTarget UserAcsIpEntity entity
-    ) throws Exception;
+    void updateFromDto(final UserAcsIpDto dto, final @MappingTarget UserAcsIpEntity entity) throws Exception;
 }

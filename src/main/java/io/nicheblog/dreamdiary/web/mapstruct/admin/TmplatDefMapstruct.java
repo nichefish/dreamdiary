@@ -44,5 +44,4 @@ public interface TmplatDefMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(final TmplatDefDto dto, final @MappingTarget TmplatDefEntity entity) throws Exception;
-
 }
