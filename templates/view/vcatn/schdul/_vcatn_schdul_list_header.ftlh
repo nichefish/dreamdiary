@@ -1,0 +1,30 @@
+<#--
+  -- 휴가관리 > 휴가사용일자 화면
+  -->
+
+<form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="post" >
+    <div>
+        <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy"
+                onchange="Page.chgYy(this);"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
+            <#list yyList![] as yy>
+                <option value="${yy.statsYy!}"<#if yy.statsYy == vcatnYy.statsYy>selected="selected"</#if>>${yy.statsYy!}</option>
+            </#list>
+        </select>
+    </div>
+    <div>
+        년도 휴가사용일자
+    </div>
+    <div>
+        <span class="text-gray-600 align-center">■ 연차 사용 기간 : ${(vcatnYy.bgnDt)!} ~ ${(vcatnYy.endDt)!}</span>
+    </div>
+    <div>
+        <!-- 버튼:: 등록 화면 이동하기 -->
+        <@component.btn_header_reg_form "Page" />
+    </div>
+    <div>
+        <!-- 버튼:: 엑셀 다운로드하기 -->
+        <@component.btn_header_xlsx_download "Page" />
+    </div>
+</form>
+

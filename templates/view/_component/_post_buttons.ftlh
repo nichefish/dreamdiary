@@ -60,7 +60,7 @@
             <i class="bi bi-trash"></i>(내 글)삭제
         </button>
     <#elseif isMngr!false>
-        <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm"
+        <button type="button" class="btn btn-sm btn-light btn-active-primary me-2 btn-sm"
                 onclick="${closerNm}.delAjax();"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
             <i class="bi bi-pencil-square"></i>(관리자+)삭제

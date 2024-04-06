@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/board/def/_board_def_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -122,7 +127,6 @@
 </script>
 
 <div class="card post">
-    <#include "/view/board/def/_board_def_list_header.ftlh">
     <div class="mb-5 fs-5 fw-bold">
         <span class="opacity-75 me-5 cursor-help"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"

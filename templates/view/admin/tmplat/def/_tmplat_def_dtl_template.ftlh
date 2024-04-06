@@ -2,6 +2,7 @@
   -- 공지사항 > 상세 Template
   -- @included_in : tmplat_list
   -->
+
 <script type="text/x-handlebars-template" id="templat_def_dtl_template">
     <div class="card mt-4">
         <!--begin::Question-->

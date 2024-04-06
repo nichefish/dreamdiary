@@ -2,6 +2,7 @@
   -- 공지사항 > 상세 Modal
   -- @included_in : notice_list
   -->
+
 <div class="modal fade" id="templat_def_dtl_modal" tabindex="-1" role="dialog" aria-labelledby="tmplatDefDtlModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">

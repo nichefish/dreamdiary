@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/board/post/_board_post_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -57,8 +62,17 @@
     });
 </script>
 
+<!-- #include:: component:: 태그 클릭 필터링 -->
+<#include "/view/_component/tag/_tag_list_header.ftlh">
+
+<#if boardCd == "cmpyLife">
+    <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#cmpy_life_modal').modal('show');"
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="슬기로운 회사생활 안내 팝업을 호출합니다.">
+        <span class="blink"><i class="bi bi-lightbulb-fill text-noti"></i></span>슬기로운 회사생활
+    </button>
+</#if>
+
 <div class="card post">
-    <#include "/view/board/post/_board_post_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>

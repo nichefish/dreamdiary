@@ -1,7 +1,8 @@
 <#--
-  -- 게시판 > 목록 검색 영역 Header
+  -- 게시판 > 목록 툴바 Header
   -- @included_in : board_post_list
   -->
+
 <#if tagList?? && tagList?has_content>
     <hr class="my-6 text-muted" />
     <div class="d-flex align-items-center mb-6 ms-4">

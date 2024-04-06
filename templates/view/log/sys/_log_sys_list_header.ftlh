@@ -2,62 +2,43 @@
   -- 활동 로그 목록 > 검색 영역 Header
   -- @included_in : log_sys_list_header
   -->
-<form name="listForm" id="listForm" method="get">
-    <div class="d-flex align-items-center">
-        <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
-        <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
-        <!-- datePicker -->
-        <div class="position-relative">
-            <!-- datepicker -->
-            <div class="position-relative me-md-3">
-                <!-- 인풋:: datepicker -->
-                <@component.header_datepicker searchParam "searchStartDt" "" />
-                <!-- 인풋:: datepicker -->
-                <@component.header_datepicker searchParam "searchEndDt" DateUtils.Parser.eDateParseStr(DateUtils.getCurrDate()) />
-            </div>
-        </div>
-        <div class="position-relative w-md-1250px me-md-2">
-            <!--begin::Select-->
-            <select name="rslt" id="rslt" class="form-select form-select-solid fs-7 fw-bolder me-md-2 w-125px" data-hide-search="true">
-                <option value="">작업결과</option>
-                <option value="true" label="성공" ${fn.selected(searchParam.rslt!, "true")} />
-                <option value="false" label="실패" ${fn.selected(searchParam.rslt!, "false")} />
-            </select>
-        </div>
-        <div class="position-relative w-md-100px me-md-2">
-            <select name="searchType" id="searchType" class="form-select form-select-solid fs-7 fw-bolder">
-                <option value="nickNm">이름</option>
-                <option value="logUserId">아이디</option>
-            </select>
-        </div>
-        <div class="position-relative w-md-200px me-md-2">
-            <!-- 인풋:: searchKeyword -->
-            <@component.input_header_searchKeyword "Page" />
-        </div>
-        <div class="card-title me-md-2">
-            <label class="form-label fw-bolder text-dark"> </label>
-        </div>
-        <div class="d-flex align-items-center me-md-2">
-            <!-- 버튼:: 목록 검색 -->
-            <@component.btn_header_search "Page" />
-        </div>
-        <!--end::Input group-->
+<form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
+    <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
+    <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
+    <div>
+        <!-- 인풋:: datepicker -->
+        <@component.header_datepicker searchParam "searchStartDt" "" />
+        <!-- 인풋:: datepicker -->
+        <@component.header_datepicker searchParam "searchEndDt" DateUtils.parser.eDateParseStr(DateUtils.getCurrDate()) />
     </div>
-    <!--end::Compact form-->
-    <!--begin::Card title-->
-    <div class="card-title text-start">
-        <div class="d-flex align-items-center position-relative my-1">
-        </div>
+    <div>
+        <!--begin::Select-->
+        <select name="rslt" id="rslt" class="form-select form-select-sm form-select-solid">
+            <option value="">작업결과</option>
+            <option value="true" label="성공" ${fn.selected(searchParam.rslt!, "true")} />
+            <option value="false" label="실패" ${fn.selected(searchParam.rslt!, "false")} />
+        </select>
     </div>
-    <div class="card-toolbar">
-        <!--begin::Toolbar-->
-<#--        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-            <button type="button" class="btn btn-sm btn-light-primary" style="margin-left:auto;" onclick="Page.xlsxDownload();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
-                <i class="fas fa-download fs-7"></i>다운로드
-            </button>
-        </div>-->
+    <div>
+        <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
+            <option value="nickNm">이름</option>
+            <option value="logUserId">아이디</option>
+        </select>
     </div>
-    <!--end::Card toolbar-->
+    <div>
+        <!-- 인풋:: searchKeyword -->
+        <@component.input_header_searchKeyword "Page" />
+    </div>
+    <div>
+        <label class="form-label fw-bolder text-dark"> </label>
+    </div>
+    <div>
+        <!-- 버튼:: 목록 검색 -->
+        <@component.btn_header_search "Page" />
+    </div>
+    <div>
+        <!-- 버튼:: 엑셀 다운로드하기 -->
+        <@component.btn_header_xlsx_download "Page" />
+    </div>
 </form>
 
