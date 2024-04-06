@@ -6,7 +6,8 @@ import io.nicheblog.dreamdiary.web.entity.log.LogStatsUserEntity;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserDto;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserIntrfc;
 import org.apache.commons.lang3.StringUtils;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -35,8 +36,6 @@ public interface LogStatsUserMapstruct
      */
     @Override
     LogStatsUserDto toDto(final LogStatsUserEntity entity) throws Exception;
-
-    LogStatsUserDto toDto(final LogStatsUserIntrfc entity) throws Exception;
 
     /**
      * Entity -> ListXlsxDto

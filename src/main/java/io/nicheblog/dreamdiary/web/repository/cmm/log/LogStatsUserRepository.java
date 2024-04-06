@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.repository.log;
+package io.nicheblog.dreamdiary.web.repository.cmm.log;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import io.nicheblog.dreamdiary.web.entity.log.LogStatsUserEntity;

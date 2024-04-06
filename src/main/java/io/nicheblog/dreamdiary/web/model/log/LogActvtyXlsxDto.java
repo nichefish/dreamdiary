@@ -15,23 +15,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LogActvtyListXlsxDto {
+public class LogActvtyXlsxDto {
 
-    /**
-     * 작업일시
-     */
+    /** 작업일시 */
     private String logDt;
-    /**
-     * 작업자 ID
-     */
+    /** 작업자 ID */
     private String logUserId;
-    /**
-     * 작업자 이름
-     */
+    /** 작업자 이름 */
     private String logUserNm;
-    /**
-     * 작업자 IP
-     */
+    /** 작업자 IP */
     private String ipAddr;
     /**
      * 작업 URL
