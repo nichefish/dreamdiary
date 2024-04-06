@@ -22,30 +22,8 @@
     <!--include::검색 -->
     <#include "/layout/header/navbar/_navbar_search.ftlh">
 
-    <!--begin::Header menu toggle-->
-    <div class="app-navbar-item ms-2 me-n2" title="Show header menu">
-        <div class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px" id="kt_app_header_menu_toggle">
-            <i class="ki-duotone ki-element-4 fs-1">
-                <span class="path1"></span>
-                <span class="path2"></span>
-            </i>
-        </div>
-    </div>
-    <!--end::Header menu toggle-->
-    <!--begin::Aside toggle-->
-    <div class="app-navbar-item ms-2 me-n2" title="Show aside">
-        <div class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px" id="kt_app_aside_toggle">
-            <i class="ki-duotone ki-trello fs-1">
-                <span class="path1"></span>
-                <span class="path2"></span>
-                <span class="path3"></span>
-            </i>
-        </div>
-    </div>
-    <!--end::Header menu toggle-->
-
     <!--begin::Separator-->
-    <span class="my-6 border-gray-300 border-start mx-6"></span>
+    <span class="my-6 border-gray-300 border-start ms-2 me-6"></span>
     <!--end::Separator-->
 
     <div class="d-flex align-items-center">
