@@ -5,39 +5,46 @@
 <script id="schdul_dtl_template" type="text/x-handlebars-template">
     <div class="row mb-3">
         <div class="col-xl-2 col-3 col-form-label">
+            <i class="bi bi-justify-left fs-5 me-1"></i>
             <label class="fs-6 fw-bold mb-2">제목</label>
         </div>
         <div class="col-xl-8 col-9 col-form-label">
-            [{{schdulTyNm}}] {{schdulNm}}
+            {{#if (exists schdulNm)}}[{{schdulNm}}]{{/if}} {{title}}
         </div>
     </div>
+    {{#unless (equals schdulCd "HLDY")}}
     <!--begin::Input group-->
     <div class="row mb-3">
         <div class="col-xl-2 col-3 col-form-label">
+            <i class="bi bi-people fs-5 me-1"></i>
             <label class="fs-6 fw-bold mb-2">참여자</label>
         </div>
         <div class="col-xl-10 col-9 col-form-label">
-            {{prtcpnt}}
+            {{ifEmpty prtcpnt "-"}}
         </div>
     </div>
+    {{/unless}}
     <!--begin::Input group-->
     <div class="row mb-3">
         <div class="col-xl-2 col-3 col-form-label">
+            <i class="bi bi-info-circle fs-5 me-1"></i>
             <label class="fs-6 fw-bold mb-2">설명</label>
         </div>
         <div class="col-xl-10 col-9 col-form-label">
-            <div class="div-textarea-smp h-auto min-h-100px">{{schdulResn}}</div>
+            <div class="div-textarea-smp h-auto min-h-100px">{{cn}}</div>
         </div>
     </div>
     <!--begin::Input group-->
     <div class="row row-cols-lg-2 mb-3">
         <div class="col-xl-2 col-3 col-form-label">
+            <i class="bi bi-calendar3 fs-5 me-1"></i>
             <label class="fs-6 fw-bold mb-2">시작일</label>
         </div>
         <div class="col-xl-4 col-3 pe-0 col-form-label">
             <span id="bgnDtDtlSpan">{{bgnDt}}</span>
         </div>
         <div class="col-xl-2 col-3 col-form-label">
+            <i class="bi bi-calendar3 fs-5 me-1"></i>
             <label class="fs-6 fw-bold mb-2">종료일</label>
         </div>
         <div class="col-xl-4 col-3 pe-0 col-form-label">

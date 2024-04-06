@@ -33,7 +33,8 @@ public interface HldyKasiApiMapstruct
      * Dto -> Entity
      */
     @Override
-    // @Mapping(target = "contentType", expression = "java(\"hldyApi\")")
+    @Mapping(target = "src", expression = "java(\"KASI\")")
+    @Mapping(target = "contentType", expression = "java(\"schdul\")")
     @Mapping(target = "title", expression = "java(dto.getDateName())")
     @Mapping(target = "cn", expression = "java(dto.getDateName())")
     @Mapping(target = "schdulCd", expression = "java(Constant.SCHDUL_TY_HLDY)")
@@ -46,13 +47,9 @@ public interface HldyKasiApiMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    // @Mapping(target = "contentType", expression = "java(\"hldyApi\")")
     @Mapping(target = "title", expression = "java(dto.getDateName())")
     @Mapping(target = "schdulCd", expression = "java(\"HLDY\")")
     @Mapping(target = "bgnDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     @Mapping(target = "endDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
-    void updateFromDto(
-            final HldyKasiApiItemDto dto,
-            final @MappingTarget SchdulEntity entity
-    ) throws Exception;
+    void updateFromDto(final HldyKasiApiItemDto dto, final @MappingTarget SchdulEntity entity) throws Exception;
 }

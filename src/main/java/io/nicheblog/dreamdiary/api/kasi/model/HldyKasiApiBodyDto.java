@@ -19,6 +19,7 @@ import java.util.List;
 @Setter
 public class HldyKasiApiBodyDto {
 
+    /** 일자 목록 */
     private List<HldyKasiApiItemDto> items;
 
     @XmlElementWrapper(name = "items")

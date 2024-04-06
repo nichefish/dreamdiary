@@ -19,14 +19,10 @@ import java.util.Map;
 @Setter
 public class HldyKasiApiRespDto {
 
-    /**
-     * header
-     */
+    /** header */
     private Map<String, String> header;
 
-    /**
-     * body
-     */
+    /** body */
     private HldyKasiApiBodyDto body;
 
     /* ----- */

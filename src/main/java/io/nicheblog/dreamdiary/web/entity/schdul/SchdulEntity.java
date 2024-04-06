@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE schdul SET del_yn = 'Y' WHERE schdul_no = ?")
+@SQLDelete(sql = "UPDATE schdul SET del_yn = 'Y' WHERE post_no = ?")
 public class SchdulEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule {
@@ -72,6 +72,11 @@ public class SchdulEntity
     private String contentType = CONTENT_TYPE.key;
 
     /* ----- */
+
+    /** 출처 (ex.KASI) */
+    @Column(name = "src")
+    @Comment("출처 (ex.KASI) ")
+    private String src;
 
     /** 일정 코드 */
     @Column(name = "schdul_cd")

@@ -26,6 +26,7 @@
           data-kt-app-sidebar-push-header="true"
           data-kt-app-sidebar-push-toolbar="true"
           data-kt-app-sidebar-push-footer="true"
+          data-kt-app-aside-enabled="true"
           <#if isSidebarMinimized>data-kt-app-sidebar-minimize="on"</#if>
           data-kt-app-footer-fixed="true"
           class="app-default" >
@@ -87,21 +88,24 @@
         </div>
         <!--end::App-->
 
+        <!--include:: Engage-->
+        <#include "/layout/_engage.ftlh">
+
         <!--include:: Scrolltop-->
         <#include "/layout/_scrolltop.ftlh">
 
         <!--begin::Modals (include modals here)-->
         <#if false>
-            <#include "/layout/_notice_popup_modal.ftlh">
-            <#include "/layout/_notice_popup_template.ftlh">
+            <#include "/component/notice/_notice_popup_modal.ftlh">
+            <#include "/component/notice/_notice_popup_template.ftlh">
             <#include "/layout/topbar/_topbar_sitemap_modal.ftlh">
         </#if>
         <!--include:: Tag Module-->
         <#include "/view/_component/tag/_tag_module.ftlh">
         <!--include:: User-My-Drawer-->
         <#include "/layout/header/navbar/_navbar_user_drawer.ftlh">
-        <!--end::Modals-->
 
+        <!--end::Modals-->
         <script>
             $(document).ready(function() {
                 /** 타이틀 설정 */

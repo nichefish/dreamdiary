@@ -160,7 +160,7 @@
             </label>
         </div>
         <div class="text-center mb-4 mt-12">
-            <button type="button" class="btn btn-lg btn-light-primary opacity-50 w-100" onclick="Page.lgn();">
+            <button type="button" class="btn btn-lg btn-light-primary opacity-75 w-100" onclick="Page.lgn();">
                 <span class="indicator-label">Sign In</span>
                 <span class="indicator-progress">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

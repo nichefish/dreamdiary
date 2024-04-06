@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * HldyKasiApiService
@@ -35,11 +37,13 @@ public class HldyKasiApiService {
 
     private final HldyKasiApiMapstruct hldyApiMapstruct = HldyKasiApiMapstruct.INSTANCE;
 
-    @Value("${api.kasi.serviceKey}")
-    private final String serviceKey = "nEV3ii2%2B%2BQx%2FlOcC4W9PFXRDzAEeaL9saxCefl7bLKs6i1DIa9B1joBwZZfSj8V5whJnvwYyWMc7l7hL%2F9bqQA%3D%3D";
-
     @Resource(name = "schdulService")
     private SchdulService schdulService;
+
+    @Value("${api.kasi.serviceKey}")
+    private String serviceKey;
+    @Value("${api.kasi.api-url}")
+    private String serviceUrl;
 
     /**
      * API:: 한국천문연구원(KASI):: 휴일 정보 조회
@@ -48,11 +52,11 @@ public class HldyKasiApiService {
         String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYearStr();
         RestTemplate restTemplate = new RestTemplate();
         List<HldyKasiApiItemDto> rsItems = new ArrayList<>();
-        // URL 설정
-        final String holidayURL = "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo";
-        int numOfRows = 30;
         try {
-            URI requestURI = new URI(holidayURL + "?solYear=" + yyStr + "&numOfRows=" + numOfRows + "&ServiceKey=" + serviceKey);
+            // URL 설정
+            int numOfRows = 30;
+            URI requestURI = new URI(serviceUrl + "?solYear=" + yyStr + "&numOfRows=" + numOfRows + "&ServiceKey=" + serviceKey);
+            // 요청 생성
             HldyKasiApiRespDto respDto = restTemplate.getForObject(requestURI, HldyKasiApiRespDto.class);
             if (respDto != null) rsItems = respDto.getBody().getItems();
         } catch (Exception e) {
@@ -67,11 +71,17 @@ public class HldyKasiApiService {
      */
     @CacheEvict(value = {"hldyEntityList", "isHldy", "isHldyOrWeekend"}, allEntries = true)
     public Boolean regHldyList(final List<HldyKasiApiItemDto> hldyApiList) throws Exception {
+        if (CollectionUtils.isEmpty(hldyApiList)) return true;
         // dto to entity
-        List<SchdulEntity> schdulList = new ArrayList<>();
-        for (HldyKasiApiItemDto hldy : hldyApiList) {
-            schdulList.add(hldyApiMapstruct.toEntity(hldy));
-        }
+        List<SchdulEntity> schdulList = hldyApiList.stream()
+                .map(hldy -> {
+                    try {
+                        return hldyApiMapstruct.toEntity(hldy);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
         schdulService.registAll(schdulList);
 
         return true;
@@ -87,7 +97,7 @@ public class HldyKasiApiService {
         Map<String, Object> searchParamMap = new HashMap() {{
             put("searchStartDt", DateUtils.asDate(yyStr + "-01-01"));
             put("searchEndDt", DateUtils.Parser.eDateParse(DateUtils.asDate(yyStr + "-12-31")));
-            put("contentType", "hldyApi");
+            put("src", "KASI");
         }};
         schdulService.deleteAll(searchParamMap);
     }

@@ -18,13 +18,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Setter
 public class HldyKasiApiItemDto {
 
-    /**
-     * 날짜
-     */
+    /** 날짜 */
     private String locdate;
 
-    /**
-     * 명칭
-     */
+    /** 명칭 */
     private String dateName;
 }

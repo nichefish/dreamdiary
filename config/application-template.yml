@@ -28,6 +28,7 @@ api:
             id: "00000000000000000000000000000000"
     kasi:
         serviceKey: "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        api-url : "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo"
 
 
 spring:

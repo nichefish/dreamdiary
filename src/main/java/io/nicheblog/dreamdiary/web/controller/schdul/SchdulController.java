@@ -111,7 +111,7 @@ public class SchdulController
     @ResponseBody
     public ResponseEntity<AjaxResponse> schdulDtlAjax(
             final LogActvtyParam logParam,
-            final @RequestParam("schdulNo") Integer postNo
+            final @RequestParam("postNo") Integer key
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -120,7 +120,7 @@ public class SchdulController
         String resultMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            SchdulDto schdul = schdulService.getDtlDto(postNo);
+            SchdulDto schdul = schdulService.getDtlDto(key);
             ajaxResponse.setResultObj(schdul);
 
             isSuccess = (schdul.getPostNo() != null);
@@ -132,7 +132,7 @@ public class SchdulController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + postNo);
+            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -149,7 +149,7 @@ public class SchdulController
     @ResponseBody
     public ResponseEntity<AjaxResponse> schdulDelAjax(
             final LogActvtyParam logParam,
-            final @RequestParam("schdulNo") Integer schdulNo
+            final @RequestParam("postNo") Integer key
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -158,7 +158,7 @@ public class SchdulController
         String resultMsg = "";
         try {
             // 삭제 처리
-            isSuccess = schdulService.delete(schdulNo);
+            isSuccess = schdulService.delete(key);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -167,7 +167,7 @@ public class SchdulController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + schdulNo);
+            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

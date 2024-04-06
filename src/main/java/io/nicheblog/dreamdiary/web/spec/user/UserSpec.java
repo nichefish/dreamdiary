@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.spec.user;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
@@ -29,6 +30,34 @@ import java.util.Map;
 @Log4j2
 public class UserSpec
         implements BaseCrudSpec<UserEntity> {
+
+    /**
+     * 검색 조건 목록 반환
+     * ("시스템관리자" 목록 화면에서 제외 위해 override)
+     */
+    @Override
+    public Specification<UserEntity> searchWith(final Map<String, Object> searchParamMap) {
+        // filter
+        searchParamMap.remove("backToList");
+        searchParamMap.remove("actvtyCtgr");
+
+        return (root, query, builder) -> {
+            List<Predicate> basePredicate = new ArrayList<>();
+            List<Predicate> predicate = new ArrayList<>();
+            try {
+                // basePredicte 먼저 처리 후 나머지에 대해 처리
+                basePredicate = getBasePredicate(searchParamMap, root, builder);
+                predicate = getPredicateWithParams(searchParamMap, root, builder);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            predicate.addAll(basePredicate);
+            // 시스템 관리자 목록에서 제외
+            predicate.add(builder.notEqual(root.get("userId"), Constant.SYSTEM_ACNT));
+            this.postQuery(root, query, builder);
+            return builder.and(predicate.toArray(new Predicate[0]));
+        };
+    }
 
     /**
      * 검색 조건 목록 반환 :: preset된 특정 모드를 반환
