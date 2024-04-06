@@ -18,7 +18,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface ExptrPrsnlPaprMapstruct
         extends BaseClsfMapstruct<ExptrPrsnlPaprDto.DTL, ExptrPrsnlPaprDto.LIST, ExptrPrsnlPaprEntity> {
 

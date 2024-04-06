@@ -3,6 +3,7 @@
  -- @included_in : lib/components.ftl
  -->
 
+<!-- 열람자 정보 표시 영역 -->
 <#macro viewer_area post >
     <#if isMngr>
         <div class="row mb-5">
@@ -29,6 +30,7 @@
     </#if>
 </#macro>
 
+<!-- 조치자 정보 표시 영역 -->
 <#macro managtr_area post >
     <!--end::Foot-->
     <#if post.managt?? && post.managt.list?? && post.managt.list?size gt 1>
@@ -63,4 +65,35 @@
     </#if>
 </#macro>
 
-
+<#macro jandi_reg_area labelwidth jandiTopic>
+    <div class="row h-50px">
+        <div class="col-lg-${labelwidth} col-3 d-flex align-items-center width33">
+            <div class="text-gray-700 fs-6 fw-bolder cursor-help"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 글이 작성되었음을&#10;사내 메신저(JANDI)를 통해&#10;알립니다.">
+                잔디 알림 발송
+            </div>
+        </div>
+        <div class="col-lg-1 col-3 d-flex align-items-center width33">
+            <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
+                <input class="form-check-input ms-3" type="checkbox" value="Y" name="jandiYn" id="jandiYn" />
+                <label class="form-check-label fw-bold ms-3" for="jandiYn" id="jandiYnLabel" style="color:gray;">미발송</label>
+            </div>
+        </div>
+        <div class="col-lg-2 col-6 d-flex align-items-center width33">
+            <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
+            <div id="trgetTopicSpan" style="display:none;">
+                <select name="trgetTopic" id="trgetTopic" class="form-select form-select-solid"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="잔디 메세지를 발송할&#10;토픽(대화방)을 선택합니다.">
+                    <#if isDev!false>
+                        <option value="TEST">[테스트]</option>
+                    </#if>
+                    <#list JANDI_TOPIC_CD![] as topic>
+                        <#if topic.dtlCd == jandiTopic>
+                            <option value="${topic.dtlCd!}" id="${topic.dtlCd!}">[${topic.dtlCdNm!}]</option>
+                        </#if>
+                    </#list>
+                </select>
+            </div>
+        </div>
+    </div>
+</#macro>

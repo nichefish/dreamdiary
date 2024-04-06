@@ -113,22 +113,11 @@
             </div>
         </#if>
     </div>
+
     <div class="separator separator-dashed border-gray-300 my-8"></div>
-    <#if isMngr>
-        <div class="row mb-5">
-            <div class="col-xl-2">
-                <div class="col-form-label fs-6 fw-bold mx-5 ">열람자</div>
-            </div>
-            <div class="col-xl-10 col-form-label">
-                <#list tmplat.viewerList![] as viewer>
-                    ${viewer.regstrNm!"-"} <#if !viewer?is_last>/</#if>
-                </#list>
-            </div>
-        </div>
-        <!--end:Form-->
-        <!--end::Card body-->
-        <!--begin::Card footer-->
-    </#if>
+
+    <!-- 열람자 표시 영역 -->
+    <@component.viewer_area post />
 
     <div class="separator separator-dashed border-gray-300 my-8"></div>
 

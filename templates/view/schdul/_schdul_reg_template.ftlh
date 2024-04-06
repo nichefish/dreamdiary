@@ -105,38 +105,7 @@
         </div>
     </div>
     {{^if isPrvt}}
-        <!--begin::Input group-->
-        <div class="row mb-3">
-            <div class="col-xl-2 col-2">
-                <label class="col-form-label text-center fs-6 fw-bold mb-2 cursor-help"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 글이 작성되었음을&#10;사내 메신저(JANDI)를 통해&#10;알립니다.">
-                    잔디 알림 발송
-                </label>
-            </div>
-            <div class="col-xl-2 col-4">
-                <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
-                    <input class="form-check-input ms-3" type="checkbox" value="Y" name="jandiYn" id="jandiYn" <#if (((notice.jandiYn)!"N") == "Y")!false>checked="checked"</#if> />
-                    <label class="form-check-label fw-bold ms-3" for="jandiYn" id="jandiYnLabel" style="color:<#if (((notice.jandiYn)!"N") == "Y")!false>#0095E8<#else>gray</#if>;">
-                        <#if ((notice.jandiYn)! == "Y")!false>발송<#else>미발송</#if>
-                    </label>
-                </div>
-            </div>
-            <div class="col-xl-4 col-4">
-                <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-                <div id="trgetTopicSpan" style="display:none;">
-                    <select name="trgetTopic" id="trgetTopic" class="form-select form-select-solid"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="잔디 메세지를 발송할&#10;토픽(대화방)을 선택합니다.">
-                        <#list JANDI_TOPIC_CD![] as topic>
-                            <#if topic.dtlCd == "SCHDUL">
-                                <option value="${topic.dtlCd!}" id="${topic.dtlCd!}">[${topic.dtlCdNm!}]</option>
-                            </#if>
-                        </#list>
-                        <#if isDev>
-                            <option value="TEST">[테스트]</option>
-                        </#if>
-                    </select>
-                </div>
-            </div>
-        </div>
+        <!-- 잔디 알림 발송 영역 -->
+        <@component.jandi_reg_area 2 "SCHDUL" />
     {{/if}}
 </script>
