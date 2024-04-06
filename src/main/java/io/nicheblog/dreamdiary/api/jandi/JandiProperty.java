@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.api.jandi;
 
+import io.nicheblog.dreamdiary.api.jandi.exception.JandiException;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -36,20 +37,18 @@ public class JandiProperty {
     @Getter
     @Setter
     public static class Topic {
-
         /** 토픽 이름 (구분용) */
         private String name;
-
         /** incoming webhook id (TODO: outgoing webhook 추가되면 이름 바꿔야함) */
         private String id;
     }
 
     /** 토픽 조회 */
     public String getId(String name) {
-        if (StringUtils.isEmpty(name)) return "";
+        if (StringUtils.isEmpty(name)) throw new JandiException("팀 이름을 찾을 수 없습니다.");
         for (Topic topic : this.topics) {
             if (name.equals(topic.getName())) return topic.getId();
         }
-        return "";
+        throw new JandiException("팀 이름을 찾을 수 없습니다.");
     }
 }
