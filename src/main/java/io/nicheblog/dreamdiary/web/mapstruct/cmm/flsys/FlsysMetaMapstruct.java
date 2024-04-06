@@ -42,8 +42,5 @@ public interface FlsysMetaMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final FlsysMetaDto dto,
-            final @MappingTarget FlsysMetaEntity entity
-    ) throws Exception;
+    void updateFromDto(final FlsysMetaDto dto, final @MappingTarget FlsysMetaEntity entity) throws Exception;
 }
