@@ -5,8 +5,8 @@
   -- @author: nichefish
   -->
 
-<!-- checkbox -->
-<#include "/view/_component/_checkbox_toggle_area.ftlh">
+<!-- page elements -->
+<#include "/view/_component/_page_elements.ftlh">
 
 <!-- list-table items -->
 <#include "/view/_component/_list_table_elements.ftlh">

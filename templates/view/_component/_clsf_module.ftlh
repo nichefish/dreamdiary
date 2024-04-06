@@ -1,5 +1,5 @@
 <!--
- -- 수정 권한mdfable 관련 컴포넌트
+ -- clsf(댓글, 태그, 조치, 열람) 모듈 관련 컴포넌트
  -- @included_in : lib/components.ftl
  -->
 

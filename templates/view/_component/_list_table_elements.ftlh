@@ -1,5 +1,5 @@
 <!--
- -- 수정 권한mdfable 관련 컴포넌트
+ -- 목록 테이블 관련 컴포넌트
  -- @included_in : lib/components.ftl
  -->
 <#macro mdfable post >

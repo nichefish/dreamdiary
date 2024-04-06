@@ -1,8 +1,11 @@
 <!--
- -- datepicker 관련 컴포넌트
+ -- 상세/수정 페이지 관련 컴포넌트
  -- @included_in : lib/components.ftl
  -->
 
+<!--
+ * 체크박스
+ -->
 <#macro checkbox param checkboxNm ynLabel ynColor  >
     <script>
         $(document).ready(function() {
