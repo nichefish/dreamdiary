@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.flsys;
+package io.nicheblog.dreamdiary.web.model.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
@@ -49,6 +49,16 @@ public class FlsysMetaDto
 
     public String getBoardCd() {
         return "flsysMeta";
+    }
+
+    /* ----- */
+
+    public static class DTL extends FlsysMetaDto {
+        // private List<FlsysRefDto> flsysRefList;
+    }
+
+    public static class LIST extends FlsysMetaDto {
+        //
     }
 
     /* ----- */

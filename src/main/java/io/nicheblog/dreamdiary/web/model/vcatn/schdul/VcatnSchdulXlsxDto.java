@@ -1,9 +1,9 @@
-package io.nicheblog.dreamdiary.web.model.vcatn.dy;
+package io.nicheblog.dreamdiary.web.model.vcatn.schdul;
 
 import lombok.*;
 
 /**
- * VcatnDyXlsxDto
+ * VcatnSchdulXlsxDto
  * <pre>
  *  휴가일자 엑셀 다운로드 Dto
  * </pre>
@@ -15,12 +15,12 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString
-public class VcatnDyXlsxDto {
+public class VcatnSchdulXlsxDto {
 
     /**
      * 날짜
      */
-    private String vcatnDy;
+    private String vcatnSchdul;
     /**
      * 사용자
      */

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.flsys;
+package io.nicheblog.dreamdiary.web.model.cmm.flsys;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -23,16 +22,25 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class FlsysDirDto
-        extends FlsysCmmDto
+        extends FlsysDto
         implements Serializable {
-    //
+
+    /** lastModified */
+    private Long totalSpace;
+    /** lastModified */
+    private Long usableSpace;
+    /** lastModified */
+    private Long freeSpace;
 
     /* ----- */
 
     /**
      * 생성자
      */
-    public FlsysDirDto(final File file) throws IOException {
+    public FlsysDirDto(final File file) throws Exception {
         super(file);
+        this.totalSpace = file.getTotalSpace();
+        this.usableSpace = file.getUsableSpace();
+        this.freeSpace = file.getFreeSpace();
     }
 }

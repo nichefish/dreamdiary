@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.spec.cmm.managtr;
+package io.nicheblog.dreamdiary.web.spec.cmm.managt;
 
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;

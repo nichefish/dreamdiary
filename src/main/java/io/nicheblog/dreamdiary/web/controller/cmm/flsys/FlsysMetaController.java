@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.controller.flsys;
+package io.nicheblog.dreamdiary.web.controller.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -10,8 +10,8 @@ import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.flsys.FlsysMetaDto;
-import io.nicheblog.dreamdiary.web.service.flsys.FlsysMetaService;
+import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
+import io.nicheblog.dreamdiary.web.service.cmm.flsys.FlsysMetaService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -58,7 +58,7 @@ public class FlsysMetaController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> flsysMetaRegAjax(
-            final @Valid FlsysMetaDto flsysMetaDto,
+            final @Valid FlsysMetaDto flsysMeta,
             final BaseClsfKey key,
             final LogActvtyParam logParam,
             final BaseParam param,
@@ -72,7 +72,7 @@ public class FlsysMetaController
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = key.getPostNo() == null;
-            FlsysMetaDto result = isReg ? flsysMetaService.regist(flsysMetaDto) : flsysMetaService.modify(flsysMetaDto, key);
+            FlsysMetaDto result = isReg ? flsysMetaService.regist(flsysMeta) : flsysMetaService.modify(flsysMeta, key);
             isSuccess = (result.getPostNo() != null);
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class FlsysMetaController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn(flsysMetaDto.toString());
+            logParam.setCn(flsysMeta.toString());
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

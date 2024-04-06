@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.controller.flsys;
+package io.nicheblog.dreamdiary.web.controller.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -11,9 +11,9 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.flsys.FlsysCmmDto;
-import io.nicheblog.dreamdiary.web.model.flsys.FlsysSearchParam;
-import io.nicheblog.dreamdiary.web.service.flsys.FlsysService;
+import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysDto;
+import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysSearchParam;
+import io.nicheblog.dreamdiary.web.service.cmm.flsys.FlsysService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -70,8 +70,8 @@ public class FlsysController
         String resultMsg = "";
         try {
             String filePath = !StringUtils.isEmpty(filePathParam) ? filePathParam : Constant.HOME_FLSYS;
-            FlsysCmmDto file = flsysService.getFlsysByPath(filePath);
-            model.addAttribute("file", file);
+            FlsysDto flsys = flsysService.getFlsysByPath(filePath);
+            model.addAttribute("file", flsys);
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -107,7 +107,7 @@ public class FlsysController
         String resultMsg = "";
         try {
             if (!filePath.startsWith(Constant.HOME_FLSYS)) throw new IllegalArgumentException("허용되지 않은 경로입니다.");
-            FlsysCmmDto file = flsysService.getFlsysByPath(filePath);
+            FlsysDto file = flsysService.getFlsysByPath(filePath);
             ajaxResponse.setResultObj(file);
 
             isSuccess = true;
@@ -142,7 +142,7 @@ public class FlsysController
         try {
             if (!filePath.startsWith(Constant.HOME_FLSYS)) throw new IllegalArgumentException("허용되지 않은 경로입니다.");
 
-            FlsysCmmDto file = flsysService.getFlsysByPath(filePath);
+            FlsysDto file = flsysService.getFlsysByPath(filePath);
             // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
             CookieUtils.setFileDownloadSuccessCookie();
             FileUtils.downloadFile(file.getFile());

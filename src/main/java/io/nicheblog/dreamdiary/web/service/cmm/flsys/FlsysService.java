@@ -1,12 +1,10 @@
-package io.nicheblog.dreamdiary.web.service.flsys;
+package io.nicheblog.dreamdiary.web.service.cmm.flsys;
 
-import io.nicheblog.dreamdiary.web.model.flsys.FlsysCmmDto;
-import io.nicheblog.dreamdiary.web.model.flsys.FlsysDirDto;
-import io.nicheblog.dreamdiary.web.model.flsys.FlsysFileDto;
-import io.nicheblog.dreamdiary.web.model.flsys.FlsysMetaDto;
+import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysDirDto;
+import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysDto;
+import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysFileDto;
+import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,20 +28,23 @@ public class FlsysService {
     @Resource(name = "flsysMetaService")
     public FlsysMetaService flsysMetaService;
 
-    public FlsysCmmDto getFlsysByPath(final String filePath) throws Exception {
+    /**
+     * 경로를 받아서 파일 정보 조회
+     */
+    public FlsysDto getFlsysByPath(final String filePath) throws Exception {
         Path path = Paths.get(filePath);
         File file = path.toFile();
-        FlsysCmmDto dto = new FlsysCmmDto(file);
+        FlsysDto flsys = new FlsysDto(file);
+
 
         // TODO: 메타정보 조회
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("upperFilePath", filePath);
         }};
-        Page<FlsysMetaDto> metaPage = flsysMetaService.getListDto(searchParamMap, Pageable.unpaged());
-        List<FlsysMetaDto> metaList = metaPage.getContent();
+        List<FlsysMetaDto> metaList = flsysMetaService.getListDto(searchParamMap);
 
         File[] files = file.listFiles();
-        if (files == null) return dto;
+        if (files == null) return flsys;
         Arrays.sort(files, Comparator.comparing(File::getName));
         List<FlsysDirDto> dirList = new ArrayList<>();
         for (File f : files) {
@@ -57,21 +58,13 @@ public class FlsysService {
                     .ifPresent(flsysDir::setMeta);
             dirList.add(flsysDir);
         }
-        dto.setDirList(dirList);
+        flsys.setDirList(dirList);
 
+        // 하위경로
         List<FlsysFileDto> fileList = new ArrayList<>();
         for (File f : files) {
             if (f.isDirectory()) continue;
             FlsysFileDto flsysFile = new FlsysFileDto(f);
-
-            // String contentType = new MimetypesFileTypeMap().getContentType(f);
-            String fileExtn = f.getName()
-                               .substring(f.getName()
-                                           .lastIndexOf('.') + 1);
-            List<String> vodExtnList = List.of(new String[]{"mp3", "mp4", "mov", "avi", "webm", "webp", "wmv", "flv"});
-            boolean isVod = vodExtnList.contains(fileExtn);
-            flsysFile.setIsVod(isVod);
-
             metaList.stream()
                     .filter(e -> e.getFilePath()
                                   .equals((f.getPath()
@@ -80,9 +73,9 @@ public class FlsysService {
                     .ifPresent(flsysFile::setMeta);
             fileList.add(flsysFile);
         }
-        dto.setFileList(fileList);
+        flsys.setFileList(fileList);
 
-        return dto;
+        return flsys;
     }
 
     // public void waiting() {

@@ -1,9 +1,9 @@
-package io.nicheblog.dreamdiary.web.mapstruct.flsys;
+package io.nicheblog.dreamdiary.web.mapstruct.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.flsys.FlsysMetaEntity;
-import io.nicheblog.dreamdiary.web.model.flsys.FlsysMetaDto;
+import io.nicheblog.dreamdiary.web.entity.cmm.flsys.FlsysMetaEntity;
+import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;

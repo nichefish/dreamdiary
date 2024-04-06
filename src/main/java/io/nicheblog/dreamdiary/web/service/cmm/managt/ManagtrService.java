@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import io.nicheblog.dreamdiary.web.repository.cmm.managt.ManagtrRepository;
-import io.nicheblog.dreamdiary.web.spec.cmm.managtr.ManagtrSpec;
+import io.nicheblog.dreamdiary.web.spec.cmm.managt.ManagtrSpec;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.map.HashedMap;

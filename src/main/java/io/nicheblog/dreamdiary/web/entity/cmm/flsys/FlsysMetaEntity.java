@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.flsys;
+package io.nicheblog.dreamdiary.web.entity.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;

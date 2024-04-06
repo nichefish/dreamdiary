@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.flsys;
+package io.nicheblog.dreamdiary.web.entity.cmm.flsys;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import java.io.Serializable;
 @Table(name = "flsys_ref")
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "del_yn='N'")
@@ -32,28 +32,24 @@ import java.io.Serializable;
 public class FlsysRefEntity
         implements Serializable {
 
-    /**
-     * 파일시스템 참조 번호
-     */
+    /** 파일시스템 참조 번호 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "flsys_ref_no")
     @Comment("파일시스템 참조 번호")
     private Integer flsysRefNo;
 
-    /**
-     * 글 번호
-     */
-    @Column(name = "post_no")
+    /** 글 번호 */
+    @Column(name = "ref_post_no")
     @Comment("글 번호")
-    private Integer postNo;
+    private Integer refPostNo;
 
     /**
      * 게시판 분류코드
      */
-    @Column(name = "board_cd")
+    @Column(name = "ref_content_type")
     @Comment("게시판 분류코드")
-    private String boardCd;
+    private String refContentType;
 
     /**
      * 파일절대경로

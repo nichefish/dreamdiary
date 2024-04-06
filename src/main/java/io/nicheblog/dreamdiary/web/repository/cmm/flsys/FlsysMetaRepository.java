@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.repository.flsys;
+package io.nicheblog.dreamdiary.web.repository.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
-import io.nicheblog.dreamdiary.web.entity.flsys.FlsysMetaEntity;
+import io.nicheblog.dreamdiary.web.entity.cmm.flsys.FlsysMetaEntity;
 import org.springframework.stereotype.Repository;
 
 /**
