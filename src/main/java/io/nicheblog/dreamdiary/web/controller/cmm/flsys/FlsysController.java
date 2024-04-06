@@ -86,7 +86,7 @@ public class FlsysController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/flsys/flsys_home";
+        return "/view/cmm/flsys/flsys_home";
     }
 
     /**
