@@ -51,7 +51,7 @@ public interface SchdulCalMapstruct
     SchdulCalDto toCalDto(final VcatnSchdulEntity entity) throws Exception;
 
     /** 
-     * FullCalender 표시 설정 세팅 
+     * 일정분류에 따른 FullCalender 표시 설정 세팅
      */
     @AfterMapping
     default void mapCalFields(final SchdulEntity entity, @MappingTarget SchdulCalDto dto) throws Exception {

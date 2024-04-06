@@ -41,8 +41,5 @@ public interface SchdulPrtcpntMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final SchdulPrtcpntDto dto,
-            final @MappingTarget SchdulPrtcpntEntity entity
-    ) throws Exception;
+    void updateFromDto(final SchdulPrtcpntDto dto, final @MappingTarget SchdulPrtcpntEntity entity) throws Exception;
 }

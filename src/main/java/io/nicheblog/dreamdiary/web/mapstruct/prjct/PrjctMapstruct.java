@@ -38,8 +38,5 @@ public interface PrjctMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final PrjctDto dto,
-            final @MappingTarget PrjctEntity entity
-    ) throws Exception;
+    void updateFromDto(final PrjctDto dto, final @MappingTarget PrjctEntity entity) throws Exception;
 }

@@ -42,14 +42,4 @@ public interface LogStatsUserMapstruct
      * Entity -> ListXlsxDto
      */
     // LogActvtyListXlsxDto toListXlsxDto(final LogStatsUserEntity entity) throws Exception;
-
-    /**
-     * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
-     */
-    @Override
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final LogStatsUserDto dto,
-            final @MappingTarget LogStatsUserEntity entity
-    ) throws Exception;
 }

@@ -43,8 +43,5 @@ public interface ManagtrMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final ManagtrDto dto,
-            final @MappingTarget ManagtrEntity entity
-    ) throws Exception;
+    void updateFromDto(final ManagtrDto dto, final @MappingTarget ManagtrEntity entity) throws Exception;
 }
