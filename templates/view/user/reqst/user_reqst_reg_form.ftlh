@@ -3,7 +3,7 @@
   -->
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <#assign isReg = (isReg!false)>
 <#assign isMdf = (isMdf!false)>

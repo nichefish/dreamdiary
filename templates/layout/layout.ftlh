@@ -3,7 +3,7 @@
  -- metronic v8.2.5
  -->
 
-<#macro layout>
+<#macro layout toolbar>
 <!DOCTYPE html>
 <html lang="ko">
     <#assign asideAt = (siteAcsInfo.asideAt)!>
@@ -106,6 +106,10 @@
         <#include "/layout/header/navbar/_navbar_user_drawer.ftlh">
 
         <!--end::Modals-->
+
+        <#if pageScripts??>
+            ${pageScripts!}
+        </#if>
         <script>
             $(document).ready(function() {
                 /** 타이틀 설정 */

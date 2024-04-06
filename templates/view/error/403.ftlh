@@ -4,7 +4,7 @@
   -->
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <div class="d-flex-center">
     <span class="ctgr-span ctgr-imprtc">Access Denied</span>

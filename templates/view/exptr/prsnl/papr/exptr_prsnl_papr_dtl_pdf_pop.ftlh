@@ -4,7 +4,7 @@
   -->
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <script>
     const Page = function() {

@@ -3,7 +3,12 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
-<@layout.layout>
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/notice/_notice_list_header.ftlh">
+</#assign>
+
+<@layout.layout toolbar=toolbar!"">
 
 <script>
     const Page = function() {
@@ -56,11 +61,14 @@
     });
 </script>
 
+
+
 <form name="procForm" id="procForm">
     <input type="hidden" name="postNo" id="postNo" value="" />
 </form>
+    <!-- #include:: component:: 태그 클릭 필터링 -->
+    <#include "/view/_component/tag/_tag_list_header.ftlh">
 <div class="card post">
-    <#include "/view/notice/_notice_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>

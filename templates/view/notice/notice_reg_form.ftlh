@@ -12,7 +12,7 @@
 <#assign isReg = isReg!false>
 <#assign isMdf = isMdf!false>
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <script>
     /** tinymce 글접기 토글 테스트중... */

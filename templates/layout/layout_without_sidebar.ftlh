@@ -3,7 +3,7 @@
  -- metronic v8.2.5
  -->
 
-<#macro layout>
+<#macro layout toolbar>
 <!DOCTYPE html>
 <html lang="ko">
     <#assign isMngr = isMngr!false>

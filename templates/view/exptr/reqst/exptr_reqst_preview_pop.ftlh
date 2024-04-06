@@ -3,7 +3,7 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <script>
     const Page = (function() {

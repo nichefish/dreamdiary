@@ -6,7 +6,7 @@
 <#--<script defer="defer" src="/static/react/static/js/main.js"></script>
 <link rel="stylesheet" href="/static/react/static/css/main.css">-->
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <script>
     const Page = function() {

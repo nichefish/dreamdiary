@@ -4,7 +4,7 @@
   -->
 <#import "/layout/layout_with_aside.ftlh" as layout >
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?20230908"></script>

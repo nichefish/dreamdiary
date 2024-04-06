@@ -11,7 +11,7 @@
 <#assign isReg = (isReg!false)>
 <#assign isMdf = (isMdf!false)>
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <style>
     #full_calendar_app table {

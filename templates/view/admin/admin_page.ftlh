@@ -5,7 +5,7 @@
 
 <script defer="defer" src="/static/node_modules/sass/sass.js"></script>
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <script>
     const Page = function() {

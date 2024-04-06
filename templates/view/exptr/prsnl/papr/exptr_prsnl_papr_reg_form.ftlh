@@ -9,7 +9,7 @@
 <#assign isPrevY = ((prevYn!"N") == "Y")>
 <#assign isPrevMnthY = (isReg && isPrevY)>
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <script>
     const Page = function() {

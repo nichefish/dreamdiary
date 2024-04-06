@@ -3,7 +3,7 @@
   -->
 <#import "/layout/layout_with_aside.ftlh" as layout >
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <script>
     const Page = function() {

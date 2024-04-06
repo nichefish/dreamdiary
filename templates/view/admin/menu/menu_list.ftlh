@@ -3,7 +3,7 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
-<@layout.layout>
+<@layout.layout toolbar=toolbar!"">
 
 <link rel="stylesheet" href="/lib/jstree/css/style.min.css" />
 <script type="text/javascript" src="/lib/jstree/js/jstree.min.js"></script>

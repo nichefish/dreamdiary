@@ -47,7 +47,11 @@ commons.util = (function() {
     function fnBlockUI() {
         try {
             $.blockUI({
-                message: '<div class="blockui-message d-flex-center my-4"><span class="spinner-border text-primary"></span><span class="mx-2">loading...</span></div>'
+                message: `<div class="app-page-loader">
+                    <span class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </span>
+                </div>`
             });
         } catch (error) {
             console.log("blockUI is not defined.");
