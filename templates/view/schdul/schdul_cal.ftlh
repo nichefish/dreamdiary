@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/schdul/_schdul_cal_header.ftlh">
+</#assign>
+
 <!--begin::Page Vendors Javascript(used by this page)-->
 <link href="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 <script src="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
@@ -274,8 +279,45 @@
     });
 </script>
 
+<!--begin::Advance form-->
+<div class="collapse px-10 py-4 bg-light w-100" id="schdul_advanced_search_div">
+    <div class="d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-end text-muted">
+        <div class="mx-3"
+             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내 일정 정보만 조회합니다.&#10;(해당 정보는 브라우저 캐시에&#10;저장됩니다.)">
+            <label for="myPaprChk" class="me-2 text-muted cursor-help">내 일정만 보기</label>
+            <input type="checkbox" name="myPaprChk" id="schdul_chk_myPaprChk" class="form-check-input" value="Y" onclick="Page.chkbxProp(this);">
+        </div>
+
+        <div class="mx-3"
+             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="휴가 정보 표시여부를&#10;켜고 끕니다.&#10;(해당 정보는 브라우저 캐시에&#10;저장됩니다.)">
+            <label for="outdtChk" class="me-2 text-muted cursor-help">휴가</label>
+            <input type="checkbox" name="vcatnChk" id="schdul_chk_vcatnChk" class="form-check-input" value="Y" onclick="Page.chkbxProp(this);">
+        </div>
+        <div class="mx-3"
+             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내부일정 정보 표시여부를&#10;켜고 끕니다.&#10;(해당 정보는 브라우저 캐시에&#10;저장됩니다.)">
+            <label for="outdtChk" class="me-2 text-muted cursor-help">내부일정</label>
+            <input type="checkbox" name="indtChk" id="schdul_chk_indtChk" class="form-check-input" value="Y" onclick="Page.chkbxProp(this);">
+        </div>
+        <div class="mx-3"
+             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="외근 정보 표시여부를&#10;켜고 끕니다.&#10;(해당 정보는 브라우저 캐시에&#10;저장됩니다.)">
+            <label for="outdtChk" class="me-2 text-muted cursor-help">외근</label>
+            <input type="checkbox" name="outdtChk" id="schdul_chk_outdtChk" class="form-check-input" value="Y" onclick="Page.chkbxProp(this);">
+        </div>
+        <div class="mx-3"
+             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="재택근무 정보 표시여부를&#10;켜고 끕니다.&#10;(해당 정보는 브라우저 캐시에&#10;저장됩니다.)">
+            <label for="tlcmmtChk" class="me-2 text-muted cursor-help">재택근무</label>
+            <input type="checkbox" name="tlcmmtChk" id="schdul_chk_tlcmmtChk" class="form-check-input" value="Y" onclick="Page.chkbxProp(this);">
+        </div>
+        <div class="mx-3"
+             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="개인용 일정 표시여부를&#10;켜고 끕니다.&#10;(해당 정보는 브라우저 캐시에&#10;저장됩니다.)">
+            <label for="tlcmmtChk" class="me-2 text-muted cursor-help">개인용 일정</label>
+            <input type="checkbox" name="prvtChk" id="schdul_chk_prvtChk" class="form-check-input" value="Y" onclick="Page.chkbxProp(this);">
+        </div>
+    </div>
+</div>
+<!--end::Advance form-->
+
 <div class="card post">
-    <#include "/view/schdul/_schdul_cal_header.ftlh">
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 mt-5">
         <li class="nav-item">

@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/user/info/_user_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -45,8 +50,6 @@
 </script>
 
 <div class="card post">
-    <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/user/info/_user_list_header.ftlh">
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
         <li class="nav-item">

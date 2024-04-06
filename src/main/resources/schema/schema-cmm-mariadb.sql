@@ -104,6 +104,7 @@ CREATE TABLE IF NOT EXISTS atch_file_dtl (
 -- -----------------------
 
 -- 활동 로그
+-- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS log_actvty (
     log_actvty_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '활동 로그 번호 (PK)',
     log_dt DATETIME COMMENT '로그 기록 일시',
@@ -119,7 +120,9 @@ CREATE TABLE IF NOT EXISTS log_actvty (
     rslt CHAR(1) COMMENT '결과',
     rslt_msg VARCHAR(50) COMMENT '결과 메시지',
     exception_nm VARCHAR(100) COMMENT '예외 이름',
-    exception_msg VARCHAR(4000) COMMENT '예외 메시지'
+    exception_msg VARCHAR(4000) COMMENT '예외 메시지',
+    -- AUDIT
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
 ) COMMENT = '활동 로그';
 
 -- 활동 로그 URL명
@@ -132,6 +135,7 @@ CREATE TABLE IF NOT EXISTS log_actvty_url_nm (
 ) COMMENT = '활동 로그 URL명';
 
 -- 시스템 로그
+-- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS log_sys (
     log_sys_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '시스템 로그 번호 (PK)',
     log_dt DATETIME COMMENT '로그 날짜 및 시간',
@@ -144,4 +148,6 @@ CREATE TABLE IF NOT EXISTS log_sys (
     rslt_msg VARCHAR(500) COMMENT '결과 메시지',
     exception_nm VARCHAR(100) COMMENT '예외 이름',
     exception_msg VARCHAR(4000) COMMENT '예외 메시지'
+    -- AUDIT
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
 ) COMMENT = '시스템 로그';

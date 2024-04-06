@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -11,8 +12,14 @@ import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
+import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
+import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsDto;
+import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.service.user.UserMyService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
+import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
+import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsService;
+import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -28,6 +35,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * UserMyController
@@ -52,12 +62,12 @@ public class UserMyController
     private UserService userService;
     @Resource(name = "userMyService")
     private UserMyService userMyService;
-    // @Resource(name = "vcatnStatsService")
-    // private VcatnStatsService vcatnStatsService;
-    // @Resource(name = "vcatnStatsYyService")
-    // private VcatnStatsYyService vcatnStatsYyService;
-    // @Resource(name = "vcatnPaprService")
-    // private VcatnPaprService vcatnPaprService;
+    @Resource(name = "vcatnStatsService")
+    private VcatnStatsService vcatnStatsService;
+    @Resource(name = "vcatnStatsYyService")
+    private VcatnStatsYyService vcatnStatsYyService;
+    @Resource(name = "vcatnPaprService")
+    private VcatnPaprService vcatnPaprService;
 
     /**
      * 내 정보 (상세) 화면 조회
@@ -82,21 +92,25 @@ public class UserMyController
             model.addAttribute("user", lgnUserDto);
 
             // 휴가계획서 년도 정보 조회 (시작일자~종료일자)
-            // if (UserAuthService.hasEcnyDt()) {
-            //     VcatnStatsYyDto statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
-            //     model.addAttribute("vcatnYy", statsYy);
-            //     String userId = AuthUtils.getLgnUserId();
-            //     VcatnStatsDto vcatnStatsDtl = vcatnStatsService.getVcatnStatsDtl(statsYy, userId);
-            //     model.addAttribute("vcatnStats", vcatnStatsDtl);
-            //     // 올해 사용 휴가 목록 조회
-            //     Map<String, Object> searchParamMap = new HashMap<>() {{
-            //         put("searchStartDt", statsYy.getBgnDt());
-            //         put("searchEndDt", statsYy.getEndDt());
-            //         put("regstrId", lgnUserId);
-            //     }};
-            //     Page<VcatnPaprDto.LIST> vcatnPaprList = vcatnPaprService.getPageDto(searchParamMap, Pageable.unpaged());
-            //     model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
-            // }
+            try {
+                //if (AuthService.hasEcnyDt()) {
+                VcatnStatsYyDto statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
+                model.addAttribute("vcatnYy", statsYy);
+                String userId = AuthUtils.getLgnUserId();
+                VcatnStatsDto vcatnStatsDtl = vcatnStatsService.getVcatnStatsDtl(statsYy, userId);
+                model.addAttribute("vcatnStats", vcatnStatsDtl);
+                // 올해 사용 휴가 목록 조회
+                Map<String, Object> searchParamMap = new HashMap<>() {{
+                    put("searchStartDt", statsYy.getBgnDt());
+                    put("searchEndDt", statsYy.getEndDt());
+                    put("regstrId", lgnUserId);
+                }};
+                List<VcatnPaprDto.LIST> vcatnPaprList = vcatnPaprService.getListDto(searchParamMap);
+                model.addAttribute("vcatnPaprList", vcatnPaprList);
+                // }
+            } catch (Exception e) {
+                log.info("휴가계획서 정보를 조회하지 못했습니다.");
+            }
 
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

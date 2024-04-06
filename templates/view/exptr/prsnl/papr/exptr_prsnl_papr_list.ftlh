@@ -33,7 +33,6 @@
             },
             /** 등록 화면 이동 */
             regForm: function () {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_REG_FORM!}");
             },
             /** 상세 화면 이동 */
             dtl: function (postNo) {
@@ -42,44 +41,38 @@
             },
             /** 등록 전 점검 (Ajax) */
             // TODO: 로직 더 단순화할 수 있을 것 같은데???
-            existingChck: function() {
+            regForm: function() {
                 $("#prevYn").val("N");
                 const url = "${SiteUrl.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX!}";
                 commons.util.blockUIAjax(url, 'post', "", function(res) {
-                    if (res.resultMap === undefined) return;
-                    let resultMap = res.resultMap;
-                    let prevMnth = resultMap.prevMnth;
-                    let currMnth = resultMap.currMnth;
-                    const prevMnthCompt = (prevMnth !== undefined && prevMnth.cfYn === "Y");
-                    const currMnthCompt = (currMnth !== undefined && currMnth.cfYn === "Y");
-                    if (prevMnthCompt && currMnthCompt) {
-                        alert("<@spring.message 'view.post.prsnl.alreadyCompt'/>");
+                    if (!res.resultMap) return;
+                    // 중복 코드 감소를 위한 함수 정의
+                    const checkAndRedirect = (data) => {
+                        if (monthData && monthData.cfYn !== "Y") {
+                            const message = `이미 등록중인 글(${monthData.yy}년 ${monthData.mnth}월)이 있습니다. 해당 글로 이동하시겠습니까?`;
+                            if (confirm(message)) {
+                                $("#postNo").val(monthData.postNo);
+                                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
+                                return true;
+                            }
+                        }
                         return false;
+                    };
+
+                    let {prevMnth, currMnth} = res.resultMap;
+                    // 확인된 결과에 따라 처리
+                    if (prevMnth?.cfYn === "Y" && currMnth?.cfYn === "Y") {
+                        alert("<@spring.message 'view.post.prsnl.alreadyCompt'/>");
+                        return;
+                    }
+                    if (checkAndRedirect(prevMnth, 'prev') || checkAndRedirect(currMnth, 'curr')) return;
+
+                    // 여기까지 실행됐다는 것은 둘 다 진행중인 글이 없다는 것을 의미
+                    if (!prevMnth || !currMnth) {
+                        $("#prevYn").val(prevMnth ? "N" : "Y");
+                        commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_REG_FORM!}");
                     } else {
-                        const prevMnthOngoing = (prevMnth !== undefined && prevMnth.cfYn !== "Y");
-                        if (prevMnthOngoing) {
-                            if (confirm("이미 등록중인 글(" + prevMnth.yy + "년 " + prevMnth.mnth + "월)이 있습니다. 해당 글로 이동하시겠습니까?")) {
-                                $("#postNo").val(prevMnth.postNo);
-                                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
-                                return false;   // 없으면 아래쪽 regForm()까지 내려가버림
-                            }
-                        }
-                        const currMnthOngoing = (currMnth !== undefined && currMnth.cfYn !== "Y");
-                        if (currMnthOngoing) {
-                            if (confirm("이미 등록중인 글(" + currMnth.yy + "년 " + currMnth.mnth + "월)이 있습니다. 해당 글로 이동하시겠습니까?")) {
-                                $("#postNo").val(currMnth.postNo);
-                                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
-                                return false;   // 없으면 아래쪽 regForm()까지 내려가버림
-                            }
-                        }
-                        // === 로 비교할 시 제대로 비교가 되지 않으므로(원인은?) ==로 비교
-                        // TODO: 이쪽 로직 쫌 정리하자
-                        if (prevMnth == undefined || currMnth == undefined) {
-                            if (prevMnth == undefined && currMnth != undefined) $("#prevYn").val("Y");
-                            Page.regForm();
-                        } else {
-                            alert("경비지출서는 각 월당 한 개만 작성할 수 있습니다.");
-                        }
+                        alert("경비지출서는 각 월당 한 개만 작성할 수 있습니다.");
                     }
                 });
             },
