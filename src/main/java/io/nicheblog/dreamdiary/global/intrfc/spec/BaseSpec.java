@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.spec;
 
+import org.apache.commons.net.util.SubnetUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -70,5 +71,32 @@ public interface BaseSpec<Entity> {
             CriteriaBuilder builder
     ) {
         // 정렬 처리:: 기본 공백, 필요시 각 함수에서 Override
+    }
+
+    /**
+     * IPv4/CIDR 검색 조건 세팅 :: 메소드 분리
+     */
+    private Predicate getIpPredicate(
+            final String key,
+            final String ipStr,
+            final Root<Entity> root,
+            final CriteriaBuilder builder
+    ) throws Exception {
+
+        boolean isCidr = ipStr.contains("/");
+        // ipv4인 경우 : 단순 비교
+        if (!isCidr) return builder.like(root.get(key), "%" + ipStr + "%");
+        // cidr인 경우 : subnetUtils 사용
+        SubnetUtils subnetUtils = new SubnetUtils(ipStr);
+        String lowAddress = subnetUtils.getInfo().getLowAddress();
+        String mask = ipStr.substring(ipStr.indexOf("/") + 1);
+        String partialIp = ipStr;
+        if (Integer.parseInt(mask) >= 24)
+            partialIp = lowAddress.substring(0, lowAddress.lastIndexOf(".") + 1);
+        else if (Integer.parseInt(mask) >= 16)
+            partialIp = lowAddress.substring(0, lowAddress.indexOf(".", lowAddress.indexOf(".") + 1) + 1);
+        else if (Integer.parseInt(mask) >= 8)
+            partialIp = lowAddress.substring(0, lowAddress.indexOf(".") + 1);
+        return builder.like(root.get(key), partialIp + "%");
     }
 }

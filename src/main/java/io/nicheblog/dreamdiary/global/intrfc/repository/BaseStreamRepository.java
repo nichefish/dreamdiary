@@ -21,14 +21,4 @@ public interface BaseStreamRepository<T, ID extends Serializable> {
      * stream 조회
      */
     Stream<T> streamAllBy(Specification<T> searchWith);
-
-    /** 엑셀 다운로드용 Stream 조회 */
-    /*@QueryHints(value=@QueryHint(name="org.hibernate.readOnly", value="true"))
-    public Stream<Entity> streamAllBy(Specification<Entity> searchWith) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Entity> query = cb.createQuery(Entity.class);
-        Root<Entity> root = query.from(Entity.class);
-        query.where(searchWith.toPredicate(root, query, cb));
-        return entityManager.createQuery(query).getResultStream();
-    }*/
 }

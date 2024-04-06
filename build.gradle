@@ -163,6 +163,12 @@ dependencies {
     /** jsoup: 텍스트에디터 서버사이트 필터링 */
     implementation 'org.jsoup:jsoup:1.16.1'
 
+    /** subnetUtils (CIDR 처리 위함) */
+    implementation group: 'commons-net', name: 'commons-net', version: '3.9.0'
+
+    /** ↓ snmp4j (청각 경보) */
+    compileOnly group: 'org.snmp4j', name: 'snmp4j', version: '3.5.1'
+
     /** selenium */
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.17.0'
 

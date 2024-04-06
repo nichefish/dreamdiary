@@ -42,14 +42,14 @@ public class SnmpUtils {
      * SNMP 메세지 발송
      */
     public static Boolean sendSnmpMessage() throws Exception {
-        return sendSnmpMessage(new SnmpSendParam(defaultIp, defaultPort, defaultCommunity));
+        return sendSnmpMessage(new SnmpParam(defaultIp, defaultPort, defaultCommunity));
     }
     /**
      * SNMP 메세지 발송
-     * @param snmpSendParam : SNMP 전송 정보 (공통)
+     * @param snmpParam : SNMP 전송 정보 (공통)
      */
-    public static Boolean sendSnmpMessage(final SnmpSendParam snmpSendParam) throws Exception {
-        SnmpSendParam snmpSend = (snmpSendParam != null) ? snmpSendParam : new SnmpSendParam(defaultIp, defaultPort, defaultCommunity);
+    public static Boolean sendSnmpMessage(final SnmpParam snmpParam) throws Exception {
+        SnmpParam snmpSend = (snmpParam != null) ? snmpParam : new SnmpParam(defaultIp, defaultPort, defaultCommunity);
         if (snmpSend.getPort() == null) snmpSend.setPort(defaultPort);
 
         //1. Make Protocol Data Unit
