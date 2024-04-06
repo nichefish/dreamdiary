@@ -38,7 +38,7 @@
 
 <div class="card post">
     <div class="card-header border-0 pt-6">
-        <form name="listForm" id="listForm" method="get">
+        <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
             <div class="d-flex align-items-center">
                 <div class="position-relative w-md-100px me-md-2"
                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
@@ -69,14 +69,8 @@
             </div>
         </div>
         <div class="card-toolbar">
-            <!--begin::Toolbar-->
-            <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.xlsxDownload();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
-                    <i class="fas fa-download fs-7"></i>다운로드
-                </button>
-            </div>
-            <!--end::Toolbar-->
+            <!-- 버튼:: 엑셀 다운로드하기 -->
+            <@component.btn_header_xlsx_download "Page" />
         </div>
     </div>
 
