@@ -51,8 +51,5 @@ public interface ContentTagMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final ContentTagDto dto,
-            final @MappingTarget ContentTagEntity entity
-    ) throws Exception;
+    void updateFromDto(final ContentTagDto dto, final @MappingTarget ContentTagEntity entity) throws Exception;
 }

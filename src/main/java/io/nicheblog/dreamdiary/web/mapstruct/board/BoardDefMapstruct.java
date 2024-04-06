@@ -62,8 +62,5 @@ public interface BoardDefMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final BoardDefDto dto,
-            final @MappingTarget BoardDefEntity entity
-    ) throws Exception;
+    void updateFromDto(final BoardDefDto dto, final @MappingTarget BoardDefEntity entity) throws Exception;
 }

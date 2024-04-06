@@ -48,8 +48,5 @@ public interface DreamPieceMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final DreamPieceDto dto,
-            final @MappingTarget DreamPieceEntity entity
-    ) throws Exception;
+    void updateFromDto(final DreamPieceDto dto, final @MappingTarget DreamPieceEntity entity) throws Exception;
 }
