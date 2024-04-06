@@ -6,7 +6,6 @@
 <!--
  * 버튼 : 권한/수정권한(mdfable0에 따른 수정 버튼
  -->
-
 <#macro btn_post_mdf closerNm post isMngr>
     <#if post.isRegstr>
         <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"

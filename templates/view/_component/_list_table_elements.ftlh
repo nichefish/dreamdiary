@@ -2,6 +2,10 @@
  -- 목록 테이블 관련 컴포넌트
  -- @included_in : lib/components.ftl
  -->
+
+<!--
+ * 목록 수정 권한 표시
+ -->
 <#macro mdfable post >
     <#if ((post.mdfable!"") == (Constant.MDFABLE_MNGR)) && isMngr>
         <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"
@@ -12,6 +16,9 @@
     </#if>
 </#macro>
 
+<!--
+ * 목록 댓글 표시
+ -->
 <#macro list_comment post >
     <#if post.comment?? && post.comment.cnt gt 0>
         <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
@@ -22,6 +29,9 @@
     </#if>
 </#macro>
 
+<!--
+ * 목록 등록자(조치자) 표시
+ -->
 <#macro list_managtr post >
     <#if (post.managtrInfo)?? && (post.managtrInfo.proflImgUrl)??>
         <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
@@ -37,6 +47,9 @@
     </span>
 </#macro>
 
+<!--
+ * 목록 첨부파일 영역 표시
+ -->
 <#macro list_atch_file post >
     <#if post.atchFileInfo?? && (post.atchFileInfo.atchFileList)?has_content>
         <a class="badge badge-secondary p-2 btn-white blank blink-slow"
@@ -48,6 +61,9 @@
     </#if>
 </#macro>
 
+<!--
+ * 목록 태그 영역 표시
+ -->
 <#macro list_tag post >
     <#if post.tag?? && post.tag.tagStrList??>
         <span class="me-6 fs-7">
