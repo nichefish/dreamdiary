@@ -19,13 +19,12 @@ import java.util.List;
 public class DupIdLgnManager
         implements HttpSessionListener {
 
-    /**
-     * lgnIdList
-     */
+    /** lgnIdList */
     private static final List<String> lgnIdList = new ArrayList<>();
 
-    /**
-     * 중복 로그인 여부 체크
+    /* ----- */
+
+    /** 중복 로그인 여부 체크
      */
     public synchronized static boolean isDupIdLgn(final String compareId) {
         return lgnIdList.contains(compareId);

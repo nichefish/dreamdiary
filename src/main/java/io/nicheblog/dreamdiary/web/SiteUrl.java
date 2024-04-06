@@ -262,6 +262,8 @@ public interface SiteUrl {
     String USER_REQST_CF_AJAX = Prefix.USER_REQST + "/userReqstCfAjax.do";
     String USER_REQST_UNCF_AJAX = Prefix.USER_REQST + "/userReqstUncfAjax.do";
 
+    String URL_SNMP_SEND_AJAX = "/snmpSendAjax.do";
+
     /**
      * PREFIX 정보
      */

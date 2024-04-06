@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.net.util.SubnetUtils;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -87,8 +88,25 @@ public class DreamdiaryAuthenticationProvider
             if (CollectionUtils.isNotEmpty(acsIpList)) {
                 String remoteAddr = authService.getUserIpAddr();
                 log.info("logged in remoteAddr: {}", remoteAddr);
-                boolean isIpAddrValid = (acsIpList.contains(remoteAddr));
-                if (!isIpAddrValid) throw new AcsIpNotMatchedException("AcsIpNotMatchedException");
+
+                boolean isAllowedIp = false;
+                // CIDR 체크
+                for (String acsIp : acsIpList) {
+                    log.info("comparing remoteIP {} to access-allowed-IP {}...", remoteAddr, acsIp);
+                    boolean isCidr = acsIp.contains("/");
+                    if (!isCidr) {
+                        if (acsIp.equals(remoteAddr)) {
+                            isAllowedIp = true;
+                            break;
+                        }
+                        continue;
+                    }
+                    SubnetUtils subnetUtils = new SubnetUtils(acsIp);
+                    boolean isIpAddrValid = subnetUtils.getInfo().isInRange(remoteAddr);
+                    if (isIpAddrValid) isAllowedIp = true;
+                    break;
+                }
+                if (!isAllowedIp) throw new AcsIpNotAllowedException("허용되지 않은 IP입니다.");
             }
         }
 

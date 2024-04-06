@@ -4,8 +4,10 @@ import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import io.nicheblog.dreamdiary.web.entity.log.LogStatsUserEntity;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserIntrfc;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.QueryHint;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public interface LogStatsUserRepository
         extends BaseRepository<LogStatsUserEntity, String> {
 
     /** 로그인 유저별로 건수 조회 */
+    @QueryHints(value=@QueryHint(name="org.hibernate.readOnly", value="true"))
     @Query(
             value = "SELECT t.logUserId as userId, u.nickNm as userNm, count(t.logActvtyNo) as actvtyCnt " +
                     "FROM LogActvtyEntity t " +
@@ -35,6 +38,7 @@ public interface LogStatsUserRepository
     );
 
     /** 비로그인 구분별로 건수 조회 */
+    @QueryHints(value=@QueryHint(name="org.hibernate.readOnly", value="true"))
     @Query(
             value = "SELECT t.logUserId as userId, u.nickNm as userNm, count(t.logActvtyNo) as actvtyCnt " +
                     "FROM LogActvtyEntity t " +

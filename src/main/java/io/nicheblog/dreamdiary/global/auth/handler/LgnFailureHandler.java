@@ -43,10 +43,8 @@ public class LgnFailureHandler
 
     @Resource(name = "authService")
     private AuthService authService;
-
     @Resource(name = "lgnPolicyService")
     private LgnPolicyService lgnPolicyService;
-
     @Resource
     protected ApplicationEventPublisher publisher;
 
@@ -70,7 +68,6 @@ public class LgnFailureHandler
             LogActvtyParam logParam = new LogActvtyParam(userId, false, errorMsg, ActvtyCtgr.USER);
             publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
         }
-        ;
         // 비밀번호 불일치
         if (exception instanceof BadCredentialsException) {
             LgnPolicyEntity rsLgnPolicyEntity = lgnPolicyService.getDtlEntity();
@@ -94,9 +91,6 @@ public class LgnFailureHandler
         } else if (exception instanceof DupIdLgnException) {
             request.setAttribute("userId", userId);
             request.setAttribute("isDupIdLgn", true);
-            request.getRequestDispatcher(SiteUrl.MAIN)
-                    .forward(request, response);
-            return;
         // 패스워드 초기화 강제
         } else if (exception instanceof AcntNeedsPwResetException) {
             request.setAttribute("userId", userId);
@@ -105,8 +99,7 @@ public class LgnFailureHandler
 
         log.info("login attempt failed.. userId: {} errorMsg: {}", userId, errorMsg);
         request.setAttribute(Constant.ERROR_MSG, errorMsg);
-        request.getRequestDispatcher(SiteUrl.AUTH_LGN_FORM)
-               .forward(request, response);
+        request.getRequestDispatcher(SiteUrl.AUTH_LGN_FORM).forward(request, response);
     }
 
     /**
@@ -114,8 +107,7 @@ public class LgnFailureHandler
      * messageBundle에 exception 클래스명으로 설정시 해당 에러메세지 반환
      */
     public String getLgnFailureMsg(final Exception e) {
-        String exceptionNm = e.getClass()
-                              .toString();
+        String exceptionNm = e.getClass().toString();
         exceptionNm = exceptionNm.substring(exceptionNm.lastIndexOf('.') + 1);
         return MessageUtils.getMessage("AbstractUserDetailsAuthenticationProvider." + exceptionNm);
     }

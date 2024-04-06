@@ -38,10 +38,8 @@ public class LgnSuccessHandler
 
     @Resource(name = "authService")
     private AuthService authService;
-
     @Resource
     protected ApplicationEventPublisher publisher;
-
     @Resource
     private HttpSession session;
 
@@ -65,7 +63,7 @@ public class LgnSuccessHandler
         // 최종 로그인 날짜 세팅 및 패스워드오류 카운트 초기화
         String userId = authInfo.getUserId();
         authService.setLstLgnDt(userId);
-        // session에 lgnId attribute 추가 :: 중복로그인 방지 비교용
+        // session에 lgnId attribute 추가 :: 중복 로그인 방지 비교용
         DupIdLgnManager.addKey(userId);
 
         // 로그인 로그 남기기
