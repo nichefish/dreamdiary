@@ -42,8 +42,6 @@ public enum ActvtyCtgr {
     EXPTR_PRSNL_STATS("경비지출누적집계"),
     EXPTR_REQST("물품구매/경조사비 신청"),
     
-    PRJCT("프로젝트 관리"),
-
     TAG("태그"),
 
     USER("사용자 관리"),
