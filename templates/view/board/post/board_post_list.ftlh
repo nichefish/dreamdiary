@@ -58,7 +58,7 @@
 </script>
 
 <div class="card post">
-    <#include "/view/board/post/board_post_list_header.ftlh">
+    <#include "/view/board/post/_board_post_list_header.ftlh">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
         <thead>
@@ -199,8 +199,8 @@
 
 </div>
 
-<#include "/view/board/post/board_post_dtl_modal.ftlh">
-<#include "/view/board/post/board_post_dtl_template.ftlh">
+<#include "/view/board/post/_board_post_dtl_modal.ftlh">
+<#include "/view/board/post/_board_post_dtl_template.ftlh">
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
 <#include "/view/_component/comment/_comment_list_template.ftlh">

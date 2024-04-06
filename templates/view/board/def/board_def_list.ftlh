@@ -122,7 +122,7 @@
 </script>
 
 <div class="card post">
-    <#include "/view/board/def/board_def_list_header.ftlh">
+    <#include "/view/board/def/_board_def_list_header.ftlh">
     <div class="mb-5 fs-5 fw-bold">
         <span class="opacity-75 me-5 cursor-help"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
@@ -263,10 +263,10 @@
     </form>
 </div>
 
-<#include "/view/board/def/board_def_mdf_item_modal.ftlh">
-<#include "/view/board/def/board_def_mdf_item_template.ftlh">
-<#include "/view/board/def/board_def_reg_modal.ftlh">
-<#include "/view/board/def/board_def_reg_template.ftlh">
+<#include "/view/board/def/_board_def_mdf_item_modal.ftlh">
+<#include "/view/board/def/_board_def_mdf_item_template.ftlh">
+<#include "/view/board/def/_board_def_reg_modal.ftlh">
+<#include "/view/board/def/_board_def_reg_template.ftlh">
 
 </@layout.layout>
 
