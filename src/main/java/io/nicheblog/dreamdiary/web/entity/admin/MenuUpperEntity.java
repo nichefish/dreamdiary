@@ -30,7 +30,7 @@ import javax.persistence.*;
 @Table(name = "menu")
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "DEL_YN='N'")
@@ -39,9 +39,7 @@ public class MenuUpperEntity
         extends BaseAuditEntity
         implements StateEmbedModule {
 
-    /**
-     * 메뉴 ID
-     */
+    /** 메뉴 ID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_id")

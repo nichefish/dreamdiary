@@ -17,7 +17,7 @@
     </div>
     <div>
         <!-- 인풋:: ctgrCd -->
-        <@component.input_header_ctgrCd searchParam NOTICE_CTGR_CD!false />
+        <@component.input_header_ctgrCd searchParam NOTICE_CTGR_CD![] />
     </div>
     <div>
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">

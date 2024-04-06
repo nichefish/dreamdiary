@@ -7,7 +7,7 @@
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
     <div>
         <!-- 인풋:: ctgrCd -->
-        <@component.input_header_ctgrCd searchParam EXPTR_REQST_CTGR_CD!false />
+        <@component.input_header_ctgrCd searchParam EXPTR_REQST_CTGR_CD![] />
     </div>
     <div>
         <select name="searchType" id="searchType" class="form-select form-select-solid fw-bolder form-select-sm py-3">

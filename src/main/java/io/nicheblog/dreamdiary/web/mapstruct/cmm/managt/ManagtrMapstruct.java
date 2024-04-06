@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.managt;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.MapstructHelper;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
@@ -30,6 +31,7 @@ public interface ManagtrMapstruct
      */
     @Override
     @Mapping(target = "regDt", expression = "java(DateUtils.asStr(entity.getRegDt(), DatePtn.DATETIME))")
+    @Mapping(target = "regstrNm", expression = "java(entity.getRegstrInfo() != null ? entity.getRegstrInfo().getNickNm() : null)")
     ManagtrDto toDto(final ManagtrEntity entity) throws Exception;
 
     /**
@@ -39,9 +41,10 @@ public interface ManagtrMapstruct
     ManagtrEntity toEntity(final ManagtrDto dto) throws Exception;
 
     /**
-     * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
+     * default : BaseEntity 기본 요소들 매핑
      */
-    @Override
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(final ManagtrDto dto, final @MappingTarget ManagtrEntity entity) throws Exception;
+    @AfterMapping
+    default void mapBaseFields(final ManagtrEntity entity, final @MappingTarget ManagtrDto dto) throws Exception {
+        MapstructHelper.mapBaseFields(entity, dto);
+    }
 }

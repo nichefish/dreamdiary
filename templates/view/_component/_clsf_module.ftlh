@@ -6,13 +6,18 @@
 <#macro viewer_area post >
     <#if isMngr>
         <div class="row mb-5">
-            <div class="col-xl-2">
+            <div class="col-xl-1">
                 <div class="col-form-label fs-6 fw-bold mx-5">열람자</div>
             </div>
-            <div class="col-xl-10 col-form-label">
+            <div class="col-xl-11 col-form-label">
                 <#if post.viewer??>
-                    <#list post.viewer.viewerList![] as viewer>
-                        ${viewer.regstrNm!"-"} <#if !viewer?is_last>/</#if>
+                    <#list post.viewer.list![] as viewer>
+                        <span
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="${viewer.regstrId!"-"}">
+                            ${viewer.regstrNm!"-"}
+                        </span>
+
+                        <#if !viewer?is_last>/</#if>
                     </#list>
                 </#if>
             </div>

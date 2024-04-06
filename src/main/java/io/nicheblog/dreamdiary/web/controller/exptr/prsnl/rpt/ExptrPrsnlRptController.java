@@ -103,12 +103,11 @@ public class ExptrPrsnlRptController
                 }
                 model.addAttribute("exptyTySmList", exptyTySmList);
             }
-            isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             model.addAttribute("statsYy", Integer.toString((Integer) searchParamMap.get("yy")));
             model.addAttribute("statsMnth", Integer.toString((Integer) searchParamMap.get("mnth")));
-            // 관리자페이지 화면 모드 세팅
-            session.setAttribute("userMode", Constant.AUTH_MNGR);
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             resultMsg = MessageUtils.getExceptionMsg(e);

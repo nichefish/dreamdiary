@@ -18,7 +18,7 @@
     <#if POST_CTGR_CD??>
         <div>
             <!-- 인풋:: ctgrCd -->
-            <@component.input_header_ctgrCd searchParam POST_CTGR_CD!false />
+            <@component.input_header_ctgrCd searchParam POST_CTGR_CD![] />
         </div>
     </#if>
     <div>
