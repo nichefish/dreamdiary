@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.handler;
 
+import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.service.cmm.viewer.ViewerService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +27,8 @@ public class ViewerEventListener {
      * 열람자 추가
      */
     @EventListener
-    public void handleViewerAddEvent(ViewerAddEvent viewerAddEvent) {
+    public void handleViewerAddEvent(ViewerAddEvent event) {
         // 열람자 추가
-        viewerService.addViewer(viewerAddEvent.getClsfKey());
+        viewerService.addViewer(event.getClsfKey());
     }
 }

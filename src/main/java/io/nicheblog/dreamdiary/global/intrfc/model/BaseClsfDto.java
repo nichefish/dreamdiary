@@ -34,6 +34,10 @@ public class BaseClsfDto
 
     /* ----- */
 
+    /** 새 글 여부 */
+    @Builder.Default
+    private Boolean isNew = false;
+
     /**
      * 복합키 객체 반환
      */

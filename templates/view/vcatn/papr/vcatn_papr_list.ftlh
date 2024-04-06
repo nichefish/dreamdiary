@@ -106,11 +106,11 @@
                                         </span>
                                     </#list>
                                 </a>
-                                <#if post.comment.cnt gt 0>
-                                    <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
-                                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                        [${post.comment.cnt!}]
-                                    </span>
+                                <!-- 목록 댓글 표시 -->
+                                <@component.list_comment post />
+                                <!-- 새 글이면 'N' 표시 -->
+                                <#if post.isNew>
+                                    <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
                                 </#if>
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
@@ -168,11 +168,11 @@
                                         </span>
                                     </#list>
                                 </a>
-                                <#if post.comment.cnt gt 0>
-                                    <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
-                                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                                        [${post.comment.cnt!}]
-                                    </span>
+                                <!-- 목록 댓글 표시 -->
+                                <@component.list_comment post />
+                                <!-- 새 글이면 'N' 표시 -->
+                                <#if post.isNew>
+                                    <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
                                 </#if>
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"

@@ -118,6 +118,10 @@
                             <@component.mdfable post />
                             <!-- 목록 댓글 표시 -->
                             <@component.list_comment post />
+                            <!-- 새 글이면 'N' 표시 -->
+                            <#if post.isNew>
+                                <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
+                            </#if>
                         </div>
                         <div class="col-xl-4 col-12 d-flex justify-content-end align-items-center">
                             <!-- 목록 태그 표시 -->
@@ -172,6 +176,10 @@
                             <@component.mdfable post />
                             <!-- 목록 댓글 표시 -->
                             <@component.list_comment post />
+                            <!-- 새 글이면 'N' 표시 -->
+                            <#if post.isNew>
+                                <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
+                            </#if>
                         </div>
                         <div class="col-xl-4 col-12 d-flex justify-content-end align-items-center">
                             <!-- 목록 태그 표시 -->

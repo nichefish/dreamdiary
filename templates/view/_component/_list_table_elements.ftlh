@@ -24,7 +24,7 @@
         <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
               onclick="CommentList.modal('${post.postNo!}');"
               data-bs-toggle="tooltip" data-bs-placement="top" title="댓글 모달 팝업 호출">
-        [${post.comment.cnt!}]
+        [${post.comment.cnt!0}]
         </span>
     </#if>
 </#macro>

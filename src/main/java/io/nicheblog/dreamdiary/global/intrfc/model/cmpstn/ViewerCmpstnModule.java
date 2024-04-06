@@ -14,5 +14,8 @@ public interface ViewerCmpstnModule {
 
     /** Setter */
     void setViewer(ViewerCmpstn cmpstn);
+
+    /** 새 글 여부 세팅 */
+    void setIsNew(Boolean isNew);
 }
 

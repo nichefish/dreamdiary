@@ -28,7 +28,7 @@ public class MapstructHelper {
     /**
      * Map Base-inheritted Fields
      */
-    final static <Entity extends BaseCrudEntity, Dto extends BaseCrudDto> void mapBaseFields(final Entity entity, final @MappingTarget Dto dto) throws Exception {
+    public static <Entity extends BaseCrudEntity, Dto extends BaseCrudDto> void mapBaseFields(final Entity entity, final @MappingTarget Dto dto) throws Exception {
 
         // AUDIT_REG :: 공통 필드 매핑 로직
         if (entity instanceof BaseAuditRegEntity && dto instanceof BaseAuditRegDto) {
@@ -111,5 +111,27 @@ public class MapstructHelper {
             ViewerCmpstn cmpstn = ViewerEmbedMapstruct.INSTANCE.toDto(embed);
             ((ViewerCmpstnModule) dto).setViewer(cmpstn);
         }
+
+        // 새 글 여부 표시
+        if (usesManagtModule && usesViewerModule) {
+            ((ViewerCmpstnModule) dto).setIsNew(determineIfNew(entity));
+        }
     }
+
+    /** 
+     * 새 글 여부 처리 로직:: 메소드 분리
+     */
+    public static <Entity extends BaseClsfEntity, Dto extends BaseClsfDto> Boolean determineIfNew(Entity entity) throws Exception {
+
+        if (((ManagtEmbedModule) entity).getManagt() == null || ((ManagtEmbedModule) entity).getManagt().getManagtDt() == null) return false;
+        // 최종수정 이후 7일 지난 글은 새 글이 아님
+        if (!((ManagtEmbedModule) entity).getManagt().getManagtDt().after(DateUtils.getCurrDateAddDay(-7))) return false;
+        // 내가 최종수정자면 false
+        if (AuthUtils.isRegstr(((ManagtEmbedModule) entity).getManagt().getManagtrId())) return false;
+        // 열람자에 내가 없으면 true
+        if (((ViewerEmbedModule) entity).getViewer() == null || CollectionUtils.isEmpty(((ViewerEmbedModule) entity).getViewer().getList())) return true;
+        return ((ViewerEmbedModule) entity).getViewer().getList().stream()
+                .anyMatch(e -> !AuthUtils.getLgnUserId().equals(e.getRegstrId()));
+    }
+
 }

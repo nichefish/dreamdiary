@@ -25,13 +25,13 @@ public class TagEventListener {
      * 태그 처리
      */
     @EventListener
-    public void handleTagProcEvent(TagProcEvent tagProcEvent) throws Exception {
+    public void handleTagProcEvent(TagProcEvent event) throws Exception {
 
         // 태그 객체 없이 키값만 넘어오면? 컨텐츠 삭제.
-        boolean isContentDelete = (tagProcEvent.getTagCmpstn() == null);
+        boolean isContentDelete = (event.getTagCmpstn() == null);
         if (!isContentDelete) {
             // 태그 처리
-            tagService.procTags(tagProcEvent.getClsfKey(), tagProcEvent.getTagCmpstn());
+            tagService.procTags(event.getClsfKey(), event.getTagCmpstn());
         }
         // 태그테이블 refresh (연관관계 없는 태그 삭제0
         tagService.deleteNoRefTags();

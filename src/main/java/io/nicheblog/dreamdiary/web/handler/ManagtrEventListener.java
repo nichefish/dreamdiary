@@ -25,8 +25,8 @@ public class ManagtrEventListener {
      * 조치자 추가
      */
     @EventListener
-    public void handleManagtrAddEvent(ManagtrAddEvent managtrAddEvent) {
+    public void handleManagtrAddEvent(ManagtrAddEvent event) {
         // 조치자 추가
-        managtrService.addManagtr(managtrAddEvent.getClsfKey());
+        managtrService.addManagtr(event.getClsfKey());
     }
 }

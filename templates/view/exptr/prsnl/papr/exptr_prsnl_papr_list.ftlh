@@ -31,15 +31,12 @@
             resetSearch: function() {
                 commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}");
             },
-            /** 등록 화면 이동 */
-            regForm: function () {
-            },
             /** 상세 화면 이동 */
             dtl: function (postNo) {
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_DTL!}");
             },
-            /** 등록 전 점검 (Ajax) */
+            /** 등록 전 점검 + 등록 화면 이동 (Ajax) */
             // TODO: 로직 더 단순화할 수 있을 것 같은데???
             regForm: function() {
                 $("#prevYn").val("N");
@@ -49,7 +46,7 @@
                     // 중복 코드 감소를 위한 함수 정의
                     const checkAndRedirect = (data) => {
                         if (monthData && monthData.cfYn !== "Y") {
-                            const message = `이미 등록중인 글(${monthData.yy}년 ${monthData.mnth}월)이 있습니다. 해당 글로 이동하시겠습니까?`;
+                            const message = "이미 등록중인 글(" + monthData.yy + "년 " + monthData.mnth + " +월)이 있습니다. 해당 글로 이동하시겠습니까?";
                             if (confirm(message)) {
                                 $("#postNo").val(monthData.postNo);
                                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
@@ -137,11 +134,11 @@
                     <a href="${SiteUrl.EXPTR_PRSNL_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
                         ${post.title!"-"}
                     </a>
-                    <#if post.comment.cnt gt 0>
-                        <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover" onclick="CommentList.modal('${post.postNo!}');"
-                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 모달 팝업 호출">
-                            [${post.comment.cnt!}]
-                        </span>
+                    <!-- 목록 댓글 표시 -->
+                    <@component.list_comment post />
+                    <!-- 새 글이면 'N' 표시 -->
+                    <#if post.isNew>
+                        <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
                     </#if>
                 </td>
                 <td class="text-center">
