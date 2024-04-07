@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.repository.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.cmm.flsys.FlsysMetaEntity;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("flsysMetaRepository")
 public interface FlsysMetaRepository
-        extends BaseRepository<FlsysMetaEntity, BaseClsfKey> {
+        extends BaseStreamRepository<FlsysMetaEntity, BaseClsfKey> {
     //
 }

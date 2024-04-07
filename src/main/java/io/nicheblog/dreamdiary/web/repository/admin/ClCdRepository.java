@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.repository.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("clCdRepository")
 public interface ClCdRepository
-        extends BaseRepository<ClCdEntity, String> {
+        extends BaseStreamRepository<ClCdEntity, String> {
     //
 }

@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.global.intrfc.repository.impl;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -26,9 +26,10 @@ import java.util.stream.Stream;
  * @author nichefish
  * @implements BaseRepository
  */
+@NoRepositoryBean
 public class BaseRepositoryImpl<T, ID extends Serializable>
         extends SimpleJpaRepository<T, ID>
-        implements BaseRepository<T, ID>, BaseStreamRepository {
+        implements BaseStreamRepository<T, ID> {
 
     @PersistenceContext
     private final EntityManager entityManager;

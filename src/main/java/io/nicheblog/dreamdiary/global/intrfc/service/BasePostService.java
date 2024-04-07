@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,7 +22,7 @@ import java.util.Map;
  * @author nichefish
  * @extends BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-public interface BasePostService<Dto extends BasePostDto, ListDto extends BasePostDto, Key extends Serializable, Entity extends BasePostEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseClsfMapstruct<Dto, ListDto, Entity>>
+public interface BasePostService<Dto extends BasePostDto, ListDto extends BasePostDto, Key extends Serializable, Entity extends BasePostEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseClsfMapstruct<Dto, ListDto, Entity>>
         extends BaseClsfService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**

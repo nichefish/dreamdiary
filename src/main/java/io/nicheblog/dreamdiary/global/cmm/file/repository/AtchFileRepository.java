@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.cmm.file.repository;
 
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileEntity;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("atchFileRepository")
 public interface AtchFileRepository
-        extends BaseRepository<AtchFileEntity, Integer> {
+        extends BaseStreamRepository<AtchFileEntity, Integer> {
     //
 }

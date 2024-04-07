@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import org.springframework.data.domain.Page;
@@ -18,6 +18,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * BaseReadonlyService
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
  *
  * @author nichefish
  */
-public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>> {
+public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>> {
 
     // Resource : repository
     Repository getRepository();
@@ -131,6 +132,23 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
                     }
                 })
                 .collect(Collectors.toList());
+    }
+
+    /* ----- */
+
+    /**
+     * default: Stream<Entity> 변환
+     */
+    default Stream<Entity> getStreamEntity(final BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getStreamEntity(searchParamMap);
+
+    }
+    default Stream<Entity> getStreamEntity(final Map<String, Object> searchParamMap) throws Exception {
+        Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
+        Repository repository = this.getRepository();
+        Spec spec = this.getSpec();
+        return repository.streamAllBy(spec.searchWith(filteredSearchKey));
     }
 
     /* ----- */

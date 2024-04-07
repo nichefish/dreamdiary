@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.repository.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("dtlCdRepository")
 public interface DtlCdRepository
-        extends BaseRepository<DtlCdEntity, DtlCdKey> {
+        extends BaseStreamRepository<DtlCdEntity, DtlCdKey> {
     //
 }

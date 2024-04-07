@@ -52,6 +52,17 @@
                     }
                     commons.util.handlebarsTemplate(res.resultObj, "notice_dtl", "show");
                 });
+            },
+            /** 엑셀 다운로드 */
+            xlsxDownload: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.download"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    commons.util.blockUIFileDownload();
+                    $("#listForm").attr("action", "${SiteUrl.NOTICE_LIST_XLSX_DOWNLOAD!}").submit();
+                });
             }
         }
     }();

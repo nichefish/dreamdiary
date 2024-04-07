@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.auth.model;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.PostLoad;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * AuditorDto
@@ -33,13 +35,9 @@ public class AuditorDto
     private String userId;
     /** 사용자 이름 */
     private String nickNm;
-
-    /** TODO: 권한코드 */
-    private String authCd;
-
-    /** 권한명  */
-    private String authNm;
-
     /** 프로필 이미지 URL */
     private String proflImgUrl;
+
+    /** 사용자 권한 정보 */
+    private List<UserAuthRoleDto> authList;
 }

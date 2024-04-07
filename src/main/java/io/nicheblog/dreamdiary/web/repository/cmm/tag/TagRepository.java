@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.cmm.tag;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Repository("tagRepository")
 public interface TagRepository
-        extends BaseRepository<TagEntity, Integer> {
+        extends BaseStreamRepository<TagEntity, Integer> {
 
     /**
      * 태그명으로 테이블 조회

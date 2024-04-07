@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("popupRepository")
 public interface PopupRepository
-        extends BaseRepository<PopupEntity, Integer> {
+        extends BaseStreamRepository<PopupEntity, Integer> {
 
     //
 }

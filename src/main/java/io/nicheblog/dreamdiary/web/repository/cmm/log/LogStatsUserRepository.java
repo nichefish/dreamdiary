@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.cmm.log;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.log.LogStatsUserEntity;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserIntrfc;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Repository("logStatsUserRepository")
 public interface LogStatsUserRepository
-        extends BaseRepository<LogStatsUserEntity, String> {
+        extends BaseStreamRepository<LogStatsUserEntity, String> {
 
     /** 로그인 유저별로 건수 조회 */
     @QueryHints(value=@QueryHint(name="org.hibernate.readOnly", value="true"))

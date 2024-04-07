@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.exptr.reqst;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("exptrReqstRepository")
 public interface ExptrReqstRepository
-        extends BaseRepository<ExptrReqstEntity, Integer> {
+        extends BaseStreamRepository<ExptrReqstEntity, Integer> {
     //
 }

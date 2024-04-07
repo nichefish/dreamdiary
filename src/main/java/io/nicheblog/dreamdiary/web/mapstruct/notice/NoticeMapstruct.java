@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
+import io.nicheblog.dreamdiary.web.model.notice.NoticeXlsxDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -36,6 +37,12 @@ public interface NoticeMapstruct
     @Override
     @Named("toListDto")
     NoticeDto.LIST toListDto(final NoticeEntity entity) throws Exception;
+
+    /**
+     * Entity -> XlsxDto
+     */
+    @Named("toXlsxDto")
+    NoticeXlsxDto toXlsxDto(final NoticeEntity entity) throws Exception;
 
     /**
      * Dto -> Entity

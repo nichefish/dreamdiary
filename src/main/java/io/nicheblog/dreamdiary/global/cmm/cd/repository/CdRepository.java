@@ -2,14 +2,14 @@ package io.nicheblog.dreamdiary.global.cmm.cd.repository;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * CmmCdRepository
+ * CdRepository
  * <pre>
  *  공통 코드 repository 인터페이스
  * </pre>
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Repository("cdRepository")
 public interface CdRepository
-        extends BaseRepository<DtlCdEntity, DtlCdKey> {
+        extends BaseStreamRepository<DtlCdEntity, DtlCdKey> {
 
     /**
      * 분류코드로 상세코드 목록 검색

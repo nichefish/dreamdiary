@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.cmm.log.repository;
 
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("logSysRepository")
 public interface LogSysRepository
-        extends BaseRepository<LogSysEntity, Integer> {
+        extends BaseStreamRepository<LogSysEntity, Integer> {
     //
 }

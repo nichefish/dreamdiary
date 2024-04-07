@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 
 /**
  * 권한 Enum
+ *
+ * @author nichefish
  */
 @AllArgsConstructor
 public enum Auth {

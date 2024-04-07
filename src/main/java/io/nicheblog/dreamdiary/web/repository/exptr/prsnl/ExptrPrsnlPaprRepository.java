@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.exptr.prsnl;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("exptrPrsnlPaprRepository")
 public interface ExptrPrsnlPaprRepository
-        extends BaseRepository<ExptrPrsnlPaprEntity, Integer> {
+        extends BaseStreamRepository<ExptrPrsnlPaprEntity, Integer> {
 
     /**
      * 존재하는 경비지출서 중 최저년도 조회

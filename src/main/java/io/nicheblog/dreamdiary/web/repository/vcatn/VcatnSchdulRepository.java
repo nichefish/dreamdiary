@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.vcatn;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("vcatnSchdulRepository")
 public interface VcatnSchdulRepository
-        extends BaseRepository<VcatnSchdulEntity, Integer> {
+        extends BaseStreamRepository<VcatnSchdulEntity, Integer> {
     //
 }

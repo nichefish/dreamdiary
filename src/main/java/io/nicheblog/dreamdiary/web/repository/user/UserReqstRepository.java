@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.user;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.user.reqst.UserReqstEntity;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("userReqstRepository")
 public interface UserReqstRepository
-        extends BaseRepository<UserReqstEntity, Integer> {
+        extends BaseStreamRepository<UserReqstEntity, Integer> {
     //
 }

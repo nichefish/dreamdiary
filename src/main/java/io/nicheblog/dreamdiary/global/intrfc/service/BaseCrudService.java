@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.service;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,7 @@ import java.util.Map;
  * @author nichefish
  * @extends BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
+public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
         extends BaseReadonlyService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**

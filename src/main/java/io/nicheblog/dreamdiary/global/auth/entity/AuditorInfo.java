@@ -1,16 +1,18 @@
 package io.nicheblog.dreamdiary.global.auth.entity;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * AuditorInfo
@@ -42,7 +44,12 @@ public class AuditorInfo
     @Column(name = "nick_nm", length = 20, insertable = false, updatable = false)
     private String nickNm;
 
-    // TODO: 권한정보 조회
+    /** 사용자 권한 정보 */
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "user_no")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("사용자 권한 정보")
+    private List<UserAuthRoleEntity> authList;
 
     /** 프로필 이미지 URL */
     @Column(name = "profl_img_url", length = 1000)

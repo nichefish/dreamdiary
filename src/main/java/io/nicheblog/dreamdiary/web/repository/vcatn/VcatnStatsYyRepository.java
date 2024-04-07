@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.vcatn;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsYyEntity;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("vcatnStatsYyRepository")
 public interface VcatnStatsYyRepository
-        extends BaseRepository<VcatnStatsYyEntity, String> {
+        extends BaseStreamRepository<VcatnStatsYyEntity, String> {
 
     //
 }

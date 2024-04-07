@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.schdul;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 @Repository("schdulRepository")
 public interface SchdulRepository
-        extends BaseRepository<SchdulEntity, Integer> {
+        extends BaseStreamRepository<SchdulEntity, Integer> {
 
     /**
      * 날짜(date)에 대하여 휴일 해당 여부 조회

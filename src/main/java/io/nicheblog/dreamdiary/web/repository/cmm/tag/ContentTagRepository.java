@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.cmm.tag;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("contentTagRepository")
 public interface ContentTagRepository
-        extends BaseRepository<ContentTagEntity, Integer> {
+        extends BaseStreamRepository<ContentTagEntity, Integer> {
     //
 }

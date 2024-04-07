@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.vcatn;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("vcatnPaprRepository")
 public interface VcatnPaprRepository
-        extends BaseRepository<VcatnPaprEntity, Integer> {
+        extends BaseStreamRepository<VcatnPaprEntity, Integer> {
 
     /**
      * 존재하는 휴가계획서 중 최저년도 조회

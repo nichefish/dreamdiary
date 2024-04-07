@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 
@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @author nichefish
  * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule, ListDto extends BaseAuditDto & StateCmpstnModule, Key extends Serializable, Entity extends BaseCrudEntity & StateEmbedModule, Repository extends BaseRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
+public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule, ListDto extends BaseAuditDto & StateCmpstnModule, Key extends Serializable, Entity extends BaseCrudEntity & StateEmbedModule, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
         extends BaseCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**

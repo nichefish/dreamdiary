@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.dream;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("dreamDayRepository")
 public interface DreamDayRepository
-        extends BaseRepository<DreamDayEntity, Integer> {
+        extends BaseStreamRepository<DreamDayEntity, Integer> {
 
     //
 }

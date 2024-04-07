@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.cmm.managt;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("managtrRepository")
 public interface ManagtrRepository
-        extends BaseRepository<ManagtrEntity, Integer> {
+        extends BaseStreamRepository<ManagtrEntity, Integer> {
 
     //
 }

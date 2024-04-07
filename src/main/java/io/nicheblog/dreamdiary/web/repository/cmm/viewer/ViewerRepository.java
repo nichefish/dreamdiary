@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.cmm.viewer;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.cmm.viewer.ViewerEntity;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("viewerRepository")
 public interface ViewerRepository
-        extends BaseRepository<ViewerEntity, Integer> {
+        extends BaseStreamRepository<ViewerEntity, Integer> {
 
     //
 }

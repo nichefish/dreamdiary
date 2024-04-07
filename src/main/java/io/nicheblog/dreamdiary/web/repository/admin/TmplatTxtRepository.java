@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.admin;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatTxtEntity;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 @Repository("tmplatTxtRepository")
 public interface TmplatTxtRepository
-        extends BaseRepository<TmplatTxtEntity, Integer> {
+        extends BaseStreamRepository<TmplatTxtEntity, Integer> {
     //
 
     /**

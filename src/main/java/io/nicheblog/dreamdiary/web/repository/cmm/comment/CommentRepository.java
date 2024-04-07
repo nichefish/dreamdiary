@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.cmm.comment;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("commentRepository")
 public interface CommentRepository
-        extends BaseRepository<CommentEntity, Integer> {
+        extends BaseStreamRepository<CommentEntity, Integer> {
     //
 }
