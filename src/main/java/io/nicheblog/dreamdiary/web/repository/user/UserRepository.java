@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.user;
 
-import io.nicheblog.dreamdiary.global.intrfc.repository.BaseRepository;
+import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 @Repository("userRepository")
 public interface UserRepository
-        extends BaseRepository<UserEntity, Integer> {
+        extends BaseStreamRepository<UserEntity, Integer> {
 
     /**
      * 사용자 ID로 검색

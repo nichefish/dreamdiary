@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.util;
 
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
+import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
 import lombok.extern.log4j.Log4j2;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -10,10 +10,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,21 +27,6 @@ import java.util.List;
 @Component
 @Log4j2
 public class PdfBoxUtils {
-
-    @Resource(name = "atchFileService")
-    private AtchFileService atchFileService;
-    @Resource
-    private HttpServletResponse resp;
-
-    private static AtchFileService fileService;
-    private static HttpServletResponse response;
-
-    /** static 맥락에서 사용할 수 있도록 bean 주입 */
-    @PostConstruct
-    private void init() {
-        fileService = atchFileService;
-        response = resp;
-    }
 
     /**
      * 이미지 파일 묶음 PDF 다운로드

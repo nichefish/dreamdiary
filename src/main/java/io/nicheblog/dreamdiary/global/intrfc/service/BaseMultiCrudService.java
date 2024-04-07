@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
+import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
-import io.nicheblog.dreamdiary.global.util.FileUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.Serializable;

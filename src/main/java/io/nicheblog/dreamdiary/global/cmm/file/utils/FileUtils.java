@@ -1,10 +1,11 @@
-package io.nicheblog.dreamdiary.global.util;
+package io.nicheblog.dreamdiary.global.cmm.file.utils;
 
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileEntity;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileDtlService;
 import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Component;

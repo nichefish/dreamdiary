@@ -50,7 +50,7 @@ public interface SiteUrl {
     String NOTICE_DEL_AJAX = Prefix.NOTICE + "/noticeDelAjax.do";
     String NOTICE_REG_PREVIEW_POP = Prefix.NOTICE + "/noticeRegPreviewPop.do";
     String NOTICE_POPUP_LIST_AJAX = Prefix.NOTICE + "/noticePopupListAjax.do";
-    String NOTICE_XLSX_DOWNLOAD = Prefix.NOTICE + "/noticeXlsxDownload.do";
+    String NOTICE_LIST_XLSX_DOWNLOAD = Prefix.NOTICE + "/noticeListXlsxDownload.do";
 
     /** 일반게시판 */
     String BOARD_POST_LIST = Prefix.BOARD_POST + "/boardPostList.do";
