@@ -35,6 +35,7 @@ import java.util.stream.Stream;
  * XlsxUtils
  * <pre>
  *  엑셀 POI 라이브러리 관련 처리 유틸리티 모듈
+ *  (SXSSF 사용)
  *  (리플렉션 사용하여 일반화한 공통 로직, 가변적인 소규모 데이터에 적합, 대량(수십만건 이상) 처리에는 부적합.)
  *  (대용량 처리시 xlsxService에 특화된 로직 구현하기)
  * </pre>
@@ -216,6 +217,9 @@ public class XlsxUtils {
         } finally {
             response.getOutputStream().flush();
             response.getOutputStream().close();
+            // SXSSFWorkbook에 의해 생성된 임시 파일 정리
+            // TODO: 저장해놓고 캐시?
+            workbook.dispose();
         }
 
     }
