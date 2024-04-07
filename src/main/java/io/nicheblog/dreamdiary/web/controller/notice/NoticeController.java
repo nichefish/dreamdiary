@@ -6,6 +6,8 @@ import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.cmm.xlsx.XlsxType;
+import io.nicheblog.dreamdiary.global.cmm.xlsx.util.XlsxUtils;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -20,6 +22,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
+import io.nicheblog.dreamdiary.web.model.notice.NoticeXlsxDto;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.notice.NoticeService;
 import lombok.Getter;
@@ -42,6 +45,7 @@ import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * NoticeController
@@ -466,6 +470,39 @@ public class NoticeController
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 휴가 관리 > 휴가사용일자 > 휴가사용일자 엑셀 다운로드
+     * 관리자MNGR만 접근 가능
+     */
+    @RequestMapping(SiteUrl.NOTICE_LIST_XLSX_DOWNLOAD)
+    @Secured(Constant.ROLE_MNGR)
+    public void vcatnSchdulXlsxDownload(
+            final NoticeSearchParam searchParam,
+            final LogActvtyParam logParam
+    ) throws Exception {
+
+        boolean isSuccess = false;
+        String resultMsg = "";
+        try {
+            // 접근방식 1. stream 객체 전달
+            Stream<NoticeXlsxDto> xlsxStream = noticeService.getStreamXlsxDto(searchParam);
+            XlsxUtils.listXlxsDownload(XlsxType.NOTICE, xlsxStream);
+            // 접근방식 2. ???
+
+            isSuccess = true;
+            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            MessageUtils.alertMessage(resultMsg, SiteUrl.VCATN_SCHDUL_LIST);
+        } finally {
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
     }
 
 }

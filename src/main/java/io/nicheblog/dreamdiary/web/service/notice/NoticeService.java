@@ -4,12 +4,15 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.notice.NoticeMapstruct;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
+import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
+import io.nicheblog.dreamdiary.web.model.notice.NoticeXlsxDto;
 import io.nicheblog.dreamdiary.web.repository.notice.NoticeRepository;
 import io.nicheblog.dreamdiary.web.spec.notice.NoticeSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.stream.Stream;
 
 /**
  * NoticeService
@@ -45,5 +48,17 @@ public class NoticeService
     @Override
     public NoticeMapstruct getMapstruct() {
         return this.noticeMapstruct;
+    }
+
+    /** 엑셀 다운로드 스트림 조회 */
+    public Stream<NoticeXlsxDto> getStreamXlsxDto(NoticeSearchParam searchParam) throws Exception {
+        Stream<NoticeEntity> entityStream = this.getStreamEntity(searchParam);
+        return entityStream.map(e -> {
+            try {
+                return noticeMapstruct.toXlsxDto(e);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
 }
