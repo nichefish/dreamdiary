@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global;
 
 import io.nicheblog.dreamdiary.api.ApiConstant;
 import io.nicheblog.dreamdiary.global.auth.Auth;
+import io.nicheblog.dreamdiary.global.auth.AuthConstant;
 import lombok.AllArgsConstructor;
 
 import java.util.Locale;
@@ -18,7 +19,7 @@ import java.util.TimeZone;
  * @author nichefish
  */
 public final class Constant
-        implements ApiConstant {
+        implements AuthConstant, ApiConstant {
 
     /**
      * TimeZone
@@ -39,41 +40,21 @@ public final class Constant
     public static final String PAGE_STATS = "통계 조회";
     public static final String PAGE_CAL = "달력 조회";
 
-    public static final String IS_MBL = "IS_MBL";
-
     /** blank avatar image url */
     public static final String BLANK_AVATAR_URL = "/metronic/assets/media/avatars/avatar_blank.png";
 
-
-    /**
-     * 권한
-     */
-    public static final String SYSTEM_ACNT = "system";
-    public static final String SYSTEM_ACNT_NM = "시스템관리자";
-    public static final String DEV_ACNT = "nichefish";
-
-    /**
-     * 사용자 권한 코드
-     */
-    public static final String AUTH_CD = "AUTH_CD";
-
-    public static final String AUTH_MNGR = Auth.MNGR.name();
-    public static final String AUTH_USER = Auth.USER.name();
-    public static final String AUTH_DEV = Auth.DEV.name();
-
-    public static final String ROLE_MNGR = "ROLE_MNGR";
-    public static final String ROLE_USER = "ROLE_USER";
-    public static final String ROLE_DEV = "ROLE_DEV";
-
+    public static final String PREFIX = "PREFIX";
+    public static final String SUFFIX = "SUFFIX";
     public static final String SITE_MENU = "siteAcsInfo";
 
     /** URL_ENCODING */
     public static final Boolean URL_ENC_FALSE = false;
 
     /** 디바이스 정보 */
-    public static String DVC_PC = "PC";
-    public static String DVC_MOBILE = "MOBILE";
-    public static String DVC_TABLET = "TABLET";
+    public static final String DVC_PC = "PC";
+    public static final String DVC_MOBILE = "MOBILE";
+    public static final String DVC_TABLET = "TABLET";
+    public static final String IS_MBL = "IS_MBL";
 
     /** IP 헤더 목록 */
     public static final String[] IP_HEADERS = { "X-FORWARDED-FOR", "Proxy-Client-IP",  "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR" };
@@ -113,7 +94,6 @@ public final class Constant
 
     public static final String EMPLYM_FREE = Emplym.FREE.name();
 
-
     public static final String JOB_TITLE_CD = "JOB_TITLE_CD";       // 직급 코드
     public static final String JOB_TITLE_STAFF = "STAFF";           // 직급:사원
 
@@ -131,6 +111,11 @@ public final class Constant
 
     public static final String ACTVTY_CTGR_CD = "ACTVTY_CTGR_CD";     // 작업 카테고리 코드
     public static final String ACTION_TY_CD = "ACTION_TY_CD";         // 액션 유형 코드
+
+    /* 메뉴 분류 코드 */
+    public static final String MENU_TY_CD = "MENU_TY_CD";
+    public static final String MENU_TY_MAIN = "MAIN";
+    public static final String MENU_TY_SUB = "SUB";
 
     /* 일정 분류 코드 */
     public static final String SCHDUL_CD = "SCHDUL_CD";       // 일정 구분 코드
@@ -208,31 +193,6 @@ public final class Constant
     public static final String VCATN_SCHDUL = "vcatnSchdul";                // 휴가사용일자
 
     public static final String HOME_FLSYS = "flsys";
-
-    /* 수정 권한 코드 */
-    public static final String MDFABLE_CD = "MDFABLE_CD";
-
-    @AllArgsConstructor
-    public enum Mdfable {
-
-        REGSTR("등록자"),
-        MNGR("관리자"),
-        USER("사용자"),
-        ALL("전체");
-
-        public final String desc;
-    }
-
-    public static final String MDFABLE_REGSTR = Mdfable.REGSTR.name();
-    public static final String MDFABLE_MNGR = Mdfable.MNGR.name();
-    public static final String MDFABLE_USER = Mdfable.USER.name();
-    public static final String MDFABLE_ALL = Mdfable.ALL.name();
-
-    /**
-     * PREFIX / SUFFIX
-     */
-    public static final String PREFIX = "PREFIX";
-    public static final String SUFFIX = "SUFFIX";
 
     /**
      * UTM 파라미터

@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#-- 툴바 버튼 추가 -->
+<#assign toolbar>
+    <#include "/view/admin/menu/_menu_page_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <link rel="stylesheet" href="/lib/jstree/css/style.min.css" />
@@ -34,6 +39,7 @@
                         return false;
                     }
                     let mainMenuList = res.resultList;
+                    console.log(mainMenuList);
                     if (!Array.isArray(mainMenuList) || mainMenuList.length < 1) return;
                     mainMenuList.forEach(function(mainMenu) {
                         commons.util.handlebarsAppend(mainMenu, "menu_main_card");
@@ -68,7 +74,7 @@
             //     let menuSubList = rslt.menuSubList;
             //     for (let i = 0; i < menuSubList.length; i++) Page.drawMenu("#"+menuId, menuSubList[i], i);
             // },
-            fnDrawTree: function() {
+            drawTree: function() {
                 let jstreeContainer = Page.jstreeContainer;
                 commons.jstree.reset(jstreeContainer);
                 commons.jstree.init(jstreeContainer);     // 조직도 트리구조 세팅
@@ -99,14 +105,14 @@
             }
         }
     }();
-    let Menu = function() {
+    const Menu = function() {
         return {
             init: function() {
                 /** jquery :: validation */
                 commons.validate.validateForm("#menuRegForm", Menu.regAjax);
             },
-            /** 사용자별 로그 페이지로 이동 */
-            regForm: function(menuTyCd, upperMenuId) {
+            /** 등록 모달 팝업 호출 */
+            regModal: function(menuTyCd, upperMenuId) {
                 event.stopPropagation();
                 let obj = { "menuTyCd": menuTyCd, "upperMenuId": upperMenuId };
                 commons.util.handlebarsTemplate(obj, "menu_reg", "show");
@@ -115,9 +121,7 @@
             refreshIcon: function() {
                 const $iconClassElmt = $("#menuRegForm #icon");
                 if (!$iconClassElmt.length) return;
-                let iconClass = $iconClassElmt.val();
-                let iconHtml = `<i class="ms-8 ` + iconClass + `"></i>`;
-                $("#menuRegForm #menu_icon_div").html(iconHtml);
+                $("#menuRegForm #menu_icon_div").html($iconClassElmt.val());
             },
             /** 사용자별 로그 페이지로 이동 */
             mdfForm: function(menuId) {
@@ -144,9 +148,7 @@
                     commons.util.handlebarsTemplate(res.resultObj, "log_actvty_dtl", "show");
                 });
             },
-            /**
-             * 메뉴 정보 등록/수정
-             */
+            /** 메뉴 정보 등록/수정 */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.save"/>,
@@ -193,8 +195,6 @@
     <form name="procForm" id="procForm" method="get">
         <input type="hidden" name="logActvtyNo" id="logActvtyNo" />
     </form>
-    <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/admin/menu/menu_list_header.ftlh">
 
     <div class="row mt-2 mb-6" id="menu_main_card_div">
         <!-- handlebars template goes in here -->
@@ -202,9 +202,9 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/admin/menu/menu_main_card_template.ftlh">
-<#include "/view/admin/menu/menu_sub_template.ftlh">
-<#include "/view/admin/menu/menu_reg_modal.ftlh">
-<#include "/view/admin/menu/menu_reg_template.ftlh">
+<#include "/view/admin/menu/_menu_main_card_template.ftlh">
+<#include "/view/admin/menu/_menu_sub_template.ftlh">
+<#include "/view/admin/menu/_menu_reg_modal.ftlh">
+<#include "/view/admin/menu/_menu_reg_template.ftlh">
 
 </@layout.layout>

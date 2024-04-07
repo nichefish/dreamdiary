@@ -37,7 +37,6 @@ import java.security.InvalidParameterException;
  * <pre>
  *  메뉴 관리 컨트롤러
  * </pre>
- * TODO: 신규개발 예정
  *
  * @author nichefish
  * @extends BaseControllerImpl
@@ -49,7 +48,7 @@ public class MenuController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.MENU_LIST;             // 기본 URL
+    private final String baseUrl = SiteUrl.MENU_PAGE;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.MENU;        // 작업 카테고리 (로그 적재용)
 
@@ -59,8 +58,8 @@ public class MenuController
     /**
      * 관리자 > 메뉴 관리 > 메뉴 관리 화면 조회
      */
-    @RequestMapping(SiteUrl.MENU_LIST)
-    public String menuList(
+    @GetMapping(SiteUrl.MENU_PAGE)
+    public String menuPage(
             @ModelAttribute("searchParam") MenuSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
@@ -84,7 +83,7 @@ public class MenuController
             log.info("isSuccess: " + isSuccess + ", resultMsg: " + resultMsg);
         }
 
-        return "/view/admin/menu/menu_list";
+        return "/view/admin/menu/menu_page";
     }
 
     /**
@@ -112,7 +111,7 @@ public class MenuController
             boolean isReg = key == null;
             MenuDto result = isReg ? menuService.regist(menu) : menuService.modify(menu, key);
 
-            isSuccess = result.getMenuId() != null;
+            isSuccess = result.getMenuNo() != null;
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
@@ -133,7 +132,7 @@ public class MenuController
      * 메뉴 관리 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.MENU_DTL_AJAX)
+    @GetMapping(SiteUrl.MENU_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuDtlAjax(
@@ -171,10 +170,10 @@ public class MenuController
      * 메뉴 관리 (메인) 목록 조회 (Ajax)
      * (사용자USER, )관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.MENU_MAIN_LIST_AJAX)
+    @GetMapping(SiteUrl.MENU_MAIN_LIST_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> menuListAjax(
+    public ResponseEntity<AjaxResponse> mainMenuListAjax(
             @ModelAttribute("searchParam") MenuSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model

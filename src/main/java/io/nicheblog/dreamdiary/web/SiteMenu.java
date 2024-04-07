@@ -298,7 +298,7 @@ public class SiteMenu {
                 SiteTopMenu.ADMIN,
                 "02",
                 "메뉴 관리",
-                SiteUrl.MENU_LIST
+                SiteUrl.MENU_PAGE
         );
         // 소메뉴 :: 게시판 관리
         SiteAcsInfo BOARD_DEF = new SiteAcsInfo(

@@ -39,22 +39,22 @@ import java.util.List;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE menu SET del_yn = 'Y' WHERE menu_id = ?")
+@SQLDelete(sql = "UPDATE menu SET del_yn = 'Y' WHERE menu_no = ?")
 public class MenuEntity
         extends BaseAuditEntity
         implements StateEmbedModule {
 
-    /** 메뉴 ID */
+    /** 메뉴 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "menu_id")
-    @Comment("메뉴 ID")
-    private Integer menuId;
+    @Column(name = "menu_no")
+    @Comment("메뉴 번호 (PK)")
+    private Integer menuNo;
 
     /** 상위메뉴 ID */
-    @Column(name = "upper_menu_id")
-    @Comment("상위메뉴번호")
-    private Integer upperMenuId;
+    @Column(name = "upper_menu_no")
+    @Comment("상위 메뉴 번호")
+    private Integer upperMenuNo;
 
     /** 메뉴 구분 코드 */
     @Column(name = "menu_ty_cd")
@@ -70,17 +70,12 @@ public class MenuEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("메뉴 구분 코드 정보")
-    private DtlCdEntity menuTyInfo;
+    private DtlCdEntity menuTyCdInfo;
 
     /** 메뉴명 */
     @Column(name = "menu_nm")
     @Comment("메뉴명")
     private String menuNm;
-
-    /** 메뉴번호 */
-    @Column(name = "menu_no")
-    @Comment("메뉴번호")
-    private String menuNo;
 
     /** URL  */
     @Column(name = "url")
@@ -94,7 +89,7 @@ public class MenuEntity
 
     /** 셀프 참조 :: 상위메뉴 조회 */
     @ManyToOne
-    @JoinColumn(name = "upper_menu_id", referencedColumnName = "menu_id", insertable = false, updatable = false)
+    @JoinColumn(name = "upper_menu_no", referencedColumnName = "menu_no", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("상위메뉴 조회")
@@ -102,7 +97,7 @@ public class MenuEntity
 
     /** 셀프 참조 :: 하위메뉴 목록 조회 */
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "upper_menu_id", referencedColumnName = "menu_id", insertable = false, updatable = false)
+    @JoinColumn(name = "upper_menu_no", referencedColumnName = "menu_no", insertable = false, updatable = false)
     @Fetch(FetchMode.SELECT)
     @OrderBy("menuNo ASC")
     @NotFound(action = NotFoundAction.IGNORE)

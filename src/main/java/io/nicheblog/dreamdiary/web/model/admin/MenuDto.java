@@ -28,35 +28,27 @@ public class MenuDto
         extends BaseAuditDto
         implements StateCmpstnModule {
 
-    /** 메뉴 ID (PK)  */
-    private Integer menuId;
-    /** 상위 메뉴 ID */
-    private Integer upperMenuId;
+    /** 메뉴 번호 (PK)  */
+    private Integer menuNo;
+    /** 상위 메뉴 번호 */
+    private Integer upperMenuNo;
     /** 메뉴 구분 코드 (루트"ROOT", 대메뉴"MAIN", 중-소메뉴"SUB") */
     private String menuTyCd;
-    /** 메뉴 구분 코드 (루트"ROOT", 대메뉴"MAIN", 중-소메뉴"SUB") */
+    /** 메뉴 구분 코드명 (루트"ROOT", 대메뉴"MAIN", 중-소메뉴"SUB") */
     private String menuTyNm;
     /** 메뉴 이름 */
     private String menuNm;
-    /** 메뉴번호 */
-    private String menuNo;
     /** URL */
     private String url;
     /** 아이콘 (bootstrap icon 또는 font-awesome) TODO: svg? */
     private String icon;
 
-    /**
-     * 폴더(중메뉴) 여부
-     */
+    /** 폴더(중메뉴) 여부 */
     private String dirYn;
 
-    /**
-     * 셀프 참조 :: 상위메뉴 조회
-     */
+    /** 셀프 참조 :: 상위메뉴 조회 */
     private MenuDto upperMenu;
-    /**
-     * 셀프 참조 :: 하위메뉴 목록 조회
-     */
+    /** 셀프 참조 :: 하위메뉴 목록 조회 */
     private List<MenuDto> subMenuList;
 
     /* ----- */
@@ -64,7 +56,7 @@ public class MenuDto
     /**
      * 상위메뉴가 메인메뉴인지 여부 반환
      */
-    public boolean getIsUnderMain() {
+    public boolean getIsMain() {
         MenuDto upperMenu = this.upperMenu;
         if (upperMenu == null) return false;
         return "main".equals(upperMenu.getMenuTyCd());

@@ -17,6 +17,6 @@
     </div>
     <div>
         <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "Page" />
+        <@component.btn_header_xlsx_download "Page.xlsxDownload();" />
     </div>
 </form>

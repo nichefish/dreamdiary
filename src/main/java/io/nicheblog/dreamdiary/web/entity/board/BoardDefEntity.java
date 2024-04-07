@@ -47,9 +47,9 @@ public class BoardDefEntity
     @Comment("게시판 이름")
     private String boardNm;
 
-    /** 메뉴번호 */
+    /** 메뉴 번호 */
     @Column(name = "menu_no")
-    @Comment("메뉴번호")
+    @Comment("메뉴 번호")
     private String menuNo;
 
     /** 게시판 글분류 코드 */

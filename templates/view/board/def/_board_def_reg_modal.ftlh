@@ -48,7 +48,7 @@
                                                 <span class="cursor-help"
                                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                                       title="좌측 메뉴 목록에서&#10;메뉴를 특정할 때 사용할&#10;메뉴 번호를 입력합니다.">
-                                                    메뉴번호
+                                                    메뉴 번호
                                                 </span>
                                             </th>
                                             <th class="col-1 text-center wb-keepall pb-2">

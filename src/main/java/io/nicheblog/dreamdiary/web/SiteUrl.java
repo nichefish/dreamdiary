@@ -98,7 +98,7 @@ public interface SiteUrl {
     String LGN_POLICY_REG_AJAX = Prefix.LGN_POLICY + "/lgnPolicyRegAjax.do";
 
     /** 메뉴 관리 */
-    String MENU_LIST = Prefix.MENU + "/menuList.do";
+    String MENU_PAGE = Prefix.MENU + "/menuPage.do";
     String MENU_MAIN_LIST_AJAX = Prefix.MENU + "/menuMainListAjax.do";
     String MENU_REG_AJAX = Prefix.MENU + "/menuList.do";
     String MENU_DTL_AJAX = Prefix.MENU + "/menuDtlAjax.do";

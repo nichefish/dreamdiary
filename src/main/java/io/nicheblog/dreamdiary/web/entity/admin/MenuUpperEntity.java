@@ -33,36 +33,30 @@ import javax.persistence.*;
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Where(clause = "DEL_YN='N'")
-@SQLDelete(sql = "UPDATE menu SET del_yn = 'Y' WHERE menu_id = ?")
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE menu SET del_yn = 'Y' WHERE menu_no = ?")
 public class MenuUpperEntity
         extends BaseAuditEntity
         implements StateEmbedModule {
 
-    /** 메뉴 ID */
+    /** 메뉴 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "menu_id")
-    @Comment("메뉴 ID")
-    private Integer menuId;
+    @Column(name = "menu_no")
+    @Comment("메뉴 번호 (PK)")
+    private Integer menuNo;
 
-    /**
-     * 상위메뉴 ID
-     */
-    @Column(name = "upper_menu_id")
-    @Comment("상위메뉴 ID")
-    private Integer upperMenuId;
+    /** 상위메뉴 ID */
+    @Column(name = "upper_menu_no")
+    @Comment("상위 메뉴 번호")
+    private Integer upperMenuNo;
 
-    /**
-     * 메뉴 구분 코드
-     */
+    /** 메뉴 구분 코드 */
     @Column(name = "menu_ty_cd")
     @Comment("메뉴 구분 코드")
     private String menuTyCd;
 
-    /**
-     * 메뉴 구분 코드 정보 (복합키 조인)
-     */
+    /** 메뉴 구분 코드 정보 (복합키 조인) */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "\'MENU_TY_CD\'", referencedColumnName = "cl_cd")),
@@ -71,45 +65,32 @@ public class MenuUpperEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("메뉴 구분 코드 정보")
-    private DtlCdEntity menuTyInfo;
+    private DtlCdEntity menuTyCdInfo;
 
-    /**
-     * 메뉴명
-     */
+    /** 메뉴명 */
     @Column(name = "menu_nm")
     @Comment("메뉴명")
     private String menuNm;
 
-    /**
-     * 메뉴번호
-     */
-    @Column(name = "menu_no")
-    @Comment("메뉴번호")
-    private String menuNo;
-
-    /**
-     * URL
-     */
+    /** URL  */
     @Column(name = "url")
     @Comment("URL")
     private String url;
 
-    /**
-     * 아이콘 (bootstrap icon 또는 font-awesome)
-     */
+    /** 아이콘 (bootstrap icon 또는 font-awesome) TODO: svg? */
     @Column(name = "icon")
     @Comment("아이콘")
     private String icon;
 
-    /**
-     * 셀프 참조 :: 상위메뉴 조회
-     */
+    /** 셀프 참조 :: 상위메뉴 조회 */
     @ManyToOne
-    @JoinColumn(name = "upper_menu_id", referencedColumnName = "menu_id", insertable = false, updatable = false)
+    @JoinColumn(name = "upper_menu_no", referencedColumnName = "menu_no", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("상위메뉴 조회")
     private MenuUpperEntity upperMenu;
+
+    /** 순환참조 방지 위해 하위메뉴 목록 조회하지 않음 */
 
     /* ----- */
 

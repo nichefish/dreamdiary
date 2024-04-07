@@ -330,7 +330,7 @@ public class UserService
      *
      * @param yyStr (년도)
      */
-    public Page<UserDto.LIST> getCrdtUserList(final String yyStr) throws Exception {
+    public List<UserDto.LIST> getCrdtUserList(final String yyStr) throws Exception {
         if (StringUtils.isEmpty(yyStr)) return null;
         // 목록 검색
         String startDtStr = yyStr + "-01-01";
@@ -344,15 +344,15 @@ public class UserService
      * @param startDtStr : 시작일자yyyy-MM-dd
      * @param endDtStr : 종료일자yyyy-MM-dd
      */
-    public Page<UserDto.LIST> getCrdtUserList(
+    public List<UserDto.LIST> getCrdtUserList(
             final String startDtStr,
             final String endDtStr
     ) throws Exception {
         // 목록 검색
-        Page<UserEntity> rsUserEntityList = userRepository.findAll(userSpec.searchCrdtUser(startDtStr, endDtStr), Pageable.unpaged());
+        List<UserEntity> userEntityList = userRepository.findAll(userSpec.searchCrdtUser(startDtStr, endDtStr));
 
         // List<Entity> -> List<ListDto>
-        return this.pageEntityToDto(rsUserEntityList);
+        return this.listEntityToDto(userEntityList);
     }
 
     /**
@@ -362,8 +362,7 @@ public class UserService
             final String startDtStr,
             final String endDtStr
     ) throws Exception {
-        List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr)
-                                             .getContent();
+        List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr);
 
         return crdtUserList.stream()
                 .map(listDto -> {
@@ -383,8 +382,7 @@ public class UserService
             final String startDtStr,
             final String endDtStr
     ) throws Exception {
-        List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr)
-                                             .getContent();
+        List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr);
         List<Object> rsCrdtUserCttpcXlsxObjList = new ArrayList<>();
         Map<String, String> header = new LinkedHashMap<>() {{
             put("이름", "이름");

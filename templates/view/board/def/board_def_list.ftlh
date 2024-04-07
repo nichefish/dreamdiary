@@ -130,8 +130,8 @@
     <div class="mb-5 fs-5 fw-bold">
         <span class="opacity-75 me-5 cursor-help"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-              title="사용자 포탈에 표시되는&#10;'일반게시판' 대메뉴 번호입니다.&#10;게시판 메뉴번호 작성시&#10;해당 번호 아래에 둘 것을&#10;권장합니다.">
-            ※ 현재 게시판 상위메뉴번호 : </span>
+              title="사용자 포탈에 표시되는&#10;'일반게시판' 대메뉴 번호입니다.&#10;게시판 메뉴 번호 작성시&#10;해당 번호 아래에 둘 것을&#10;권장합니다.">
+            ※ 현재 게시판 상위메뉴 번호 : </span>
         <span class="text-noti ls-1 text-decoration-underline">${SiteMenu.BOARD.menuNo!}</span>
     </div>
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed mb-3">
@@ -142,7 +142,7 @@
                 <th class="col-lg-2 col-2 text-center wb-keepall">게시판 이름</th>
                 <th class="col-lg-1 col-6 text-center wb-keepall">게시판 코드</th>
                 <th class="col-2 text-center wb-keepall w-15">글분류코드</th>
-                <th class="col-1 text-center wb-keepall w-10">메뉴번호</th>
+                <th class="col-1 text-center wb-keepall w-10">메뉴 번호</th>
                 <th class="col-1 text-center wb-keepall w-10">정렬 순서</th>
                 <th class="col-1 text-center wb-keepall w-10">글 갯수</th>
                 <th class="col-1 text-center wb-keepall w-5">사용 여부</th>
@@ -183,7 +183,7 @@
                     ${boardDef.menuNo!}
                     <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard mt-4"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목 수정 팝업을 호출합니다.">
-                        <i class="bi bi-pencil-square fs-5 text-noti" onclick="Page.mdfItemForm('${boardDef.boardCd!}', 'menuNo', '메뉴번호', '${boardDef.menuNo!}');"></i>
+                        <i class="bi bi-pencil-square fs-5 text-noti" onclick="Page.mdfItemForm('${boardDef.boardCd!}', 'menuNo', '메뉴 번호', '${boardDef.menuNo!}');"></i>
                     </a>
                 </td>
                 <td class="text-center hidden-table">

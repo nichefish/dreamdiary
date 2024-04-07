@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
@@ -65,7 +66,7 @@ public class MenuService
     ) throws Exception {
 
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-        searchParamMap.put("menuTyCd", "main");
+        searchParamMap.put("menuTyCd", Constant.MENU_TY_MAIN);
         Page<MenuEntity> menuMainEntityPage = this.getPageEntity(searchParamMap, pageRequest);
         return this.pageEntityToDto(menuMainEntityPage);
     }

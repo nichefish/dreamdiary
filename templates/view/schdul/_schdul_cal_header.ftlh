@@ -29,10 +29,10 @@
     </div>
     <div>
         <!-- 인풋:: searchKeyword -->
-        <@component.input_header_searchKeyword "Page" />
+        <@component.input_header_searchKeyword searchParam />
     </div>
     <!-- 버튼:: 목록 검색 -->
-    <@component.btn_header_search "Page" />
+    <@component.btn_header_search "Page.search();" />
     <div class="cursor-pointer ms-1 me-5" data-bs-toggle="collapse" href="#schdul_advanced_search_div">
         <a class="btn btn-sm btn-light-primary h-100 d-flex align-items-center text-gray-700 fs-7 fw-bold">
         <span class="svg-icon svg-icon-muted svg-icon-2 svg-icon-gray-700"

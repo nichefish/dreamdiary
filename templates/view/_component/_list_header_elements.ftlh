@@ -62,27 +62,27 @@
 <!--
  * 인풋 : searchKeyword
  -->
-<#macro input_header_searchKeyword closerNm>
+<#macro input_header_searchKeyword param>
     <span class="position-relative">
         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
         <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
-                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="gray" />
             </svg>
         </span>
         <!--end::Svg Icon-->
         <input type="text" class="form-control form-control-sm form-control-solid fs-7 ps-10"
-               name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30" />
+               name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30" value="${(param.searchKeyword)!}" />
     </span>
 </#macro>
 
 <!--
  * 버튼 : 목록 헤더 검색
  -->
-<#macro btn_header_search closerNm>
+<#macro btn_header_search func>
     <button type="submit" class="btn btn-sm btn-primary"
-            onclick="${closerNm}.search();">
+            onclick="${func}">
         <i class="bi bi-search"></i>검색
     </button>
 </#macro>
@@ -112,7 +112,7 @@
 <#macro btn_header_reg_form closerNm>
     <!-- 버튼:: 등록하기 -->
     <button type="button" class="btn btn-sm btn-primary"
-            onclick="${closerNm}.regForm();"
+            onclick="${func}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.reg"/>">
         <i class="fas fa-plus"></i>등록
     </button>
@@ -121,10 +121,10 @@
 <!--
  * 버튼 : 등록 모달 호출
  -->
-<#macro btn_header_reg_modal closerNm>
+<#macro btn_header_reg_modal func>
     <!-- 버튼:: 등록하기 -->
     <button type="button" class="btn btn-sm btn-primary"
-            onclick="${closerNm}.regModal();"
+            onclick="${func}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
         <i class="fas fa-plus"></i>등록
     </button>
@@ -133,9 +133,9 @@
 <!--
  * 버튼 : 엑셀 다운로드
  -->
-<#macro btn_header_xlsx_download closerNm>
+<#macro btn_header_xlsx_download func>
     <button type="button" class="btn btn-sm btn-light-primary"
-            onclick="${closerNm}.xlsxDownload();"
+            onclick="${func}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
         <i class="fas fa-download fs-7"></i>다운로드
     </button>

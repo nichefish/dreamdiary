@@ -14,15 +14,15 @@
     </div>
     <div>
         <!-- 인풋:: searchKeyword -->
-        <@component.input_header_searchKeyword "Page" />
+        <@component.input_header_searchKeyword searchParam />
     </div>
     <div>
         <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "Page" />
+        <@component.btn_header_search "Page.search();" />
     </div>
     <div>
         <!-- 버튼:: 등록 모달 호출하기 -->
-        <@component.btn_header_reg_modal "Page" />
+        <@component.btn_header_reg_modal "Page.regModal();" />
     </div>
 </form>
 <!--end::Header-->
