@@ -7,7 +7,7 @@ import lombok.*;
 import java.io.Serializable;
 
 /**
- * SnmpSendParam
+ * SnmpParam
  * <pre>
  *  SNMP 연동 Param
  * </pre>

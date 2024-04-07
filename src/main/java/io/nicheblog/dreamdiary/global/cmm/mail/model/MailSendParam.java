@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * MailSendModel
+ * MailSendParam
+ * <pre>
+ *  메일 발송 파라미터
+ * </pre>
  *
  * @author nichefish
  */
@@ -25,9 +28,6 @@ public class MailSendParam {
 
     /** 본문 템플릿 */
     public String tmplat;
-
-    /** 템플릿 코드 (TODO: DB에서 템플릿 조회?) */
-    public String tmplatCd;
 
     /** 발신자 (홍길동<test@gmail.com>) */
     public MailAddress sender = null;

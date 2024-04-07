@@ -19,6 +19,7 @@ import java.util.Vector;
  * SnmpService
  * 가청 경보(사이렌) 관련 SNMP Protocol 서비스 모듈
  * "The SNMP service acts as an internal alarm listener and *sends traps* (or notifications) to any registered SNMP trap listener."
+ *
  * @author nichefish
  */
 @Component

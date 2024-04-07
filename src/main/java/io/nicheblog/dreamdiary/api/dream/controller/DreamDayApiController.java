@@ -119,8 +119,6 @@ public class DreamDayApiController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // TagDto tagDto = dreamDayApiService.getDtlDto(tagNo);
-            // ajaxResponse.setResultObj(tagDto);
             Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
             Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
