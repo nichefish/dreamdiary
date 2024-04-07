@@ -23,10 +23,7 @@ public class LogSysEvent
     /**
      * 생성자
      */
-    public LogSysEvent(
-            final Object source,
-            final LogSysParam log
-    ) {
+    public LogSysEvent(final Object source, final LogSysParam log) {
         super(source);
         this.log = log;
     }

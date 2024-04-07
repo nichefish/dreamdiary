@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -27,57 +28,26 @@ public class LogEventListener {
      * 현재 인증(로그인) 상태인 등록/수정자 반환
      */
     @EventListener
-    public void handleLogActvtyEvent(LogActvtyEvent logActvtyEvent) {
-        logWorker.offer(logActvtyEvent);
+    @Async
+    public void handleLogActvtyEvent(LogActvtyEvent event) {
+        logWorker.offer(event);
     }
 
     /**
      * 현재 인증(로그인) 상태인 등록/수정자 반환
      */
     @EventListener
-    public void handleLogAnonActvtyEvent(LogAnonActvtyEvent logAnonActvtyEvent) {
-        logWorker.offer(logAnonActvtyEvent);
+    @Async
+    public void handleLogAnonActvtyEvent(LogAnonActvtyEvent event) {
+        logWorker.offer(event);
     }
 
     /**
      * 현재 인증(로그인) 상태인 등록/수정자 반환
      */
     @EventListener
-    public void handleLogSysEvent(LogSysEvent logSysEvent) {
-        logWorker.offer(logSysEvent);
+    @Async
+    public void handleLogSysEvent(LogSysEvent event) {
+        logWorker.offer(event);
     }
-
-    /**
-     * LogWorker
-     * 로그 처리 Worker
-     */
-    // @RequiredArgsConstructor
-    // private static class LogWorker  {
-//
-    //     private final BlockingQueue<Object> logQueue;
-    //     private final LogService logService;
-//
-    //     @Override
-    //     public void run() {
-    //         try {
-    //             while (true) {
-    //                 // Blocks until an element is available
-    //                 Object logEvent = logQueue.take();
-//
-    //                 if (logEvent instanceof LogActvtyEvent) {
-    //                     // 활동 로그 (로그인) 로깅 처리
-    //                     logService.regLogActvty(((LogActvtyEvent) logEvent).getLog());
-    //                 } else if (logEvent instanceof LogAnonActvtyEvent) {
-    //                     // 활동 로그 (비로그인) 로깅 처리
-    //                     logService.regLogAnonActvty(((LogAnonActvtyEvent) logEvent).getLog());
-    //                 } else if (logEvent instanceof LogSysEvent) {
-    //                     // 시스템 로그 로깅 처리
-    //                     logService.regSysActvty(((LogSysEvent) logEvent).getLog());
-    //                 }
-    //             }
-    //         } catch (InterruptedException e) {
-    //             Thread.currentThread().interrupt();
-    //         }
-    //     }
-    // }
 }

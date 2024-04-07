@@ -114,7 +114,7 @@ public class DreamDayEntity
                     try {
                         return DreamPieceMapstruct.INSTANCE.toDto(entity);
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        throw new RuntimeException("객체 변환 중 에러가 발생했습니다.", e);
                     }
                 })
                 .collect(Collectors.toList());
@@ -127,7 +127,7 @@ public class DreamDayEntity
                     try {
                         return DreamPieceApiMapstruct.INSTANCE.toDto(entity);
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        throw new RuntimeException("객체 변환 중 에러가 발생했습니다.", e);
                     }
                 })
                 .collect(Collectors.toList());

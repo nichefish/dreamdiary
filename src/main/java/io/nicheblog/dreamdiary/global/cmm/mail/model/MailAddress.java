@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.cmm.mail.model;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,19 +20,16 @@ import java.io.UnsupportedEncodingException;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MailAddress {
+
+    /** 이메일 */
     private String email;
+
+    /** 이름 */
     private String name;
 
-    /**
-     * 생성자
-     */
-    public MailAddress(final String email) {
-        super();
-        this.email = email;
-        this.name = "";
-    }
+    /* ----- */
 
     public InternetAddress getInternetAddress() throws UnsupportedEncodingException {
-        return new InternetAddress(email, name, "UTF-8");
+        return new InternetAddress(email, name, Constant.CHARSET_UTF_8);
     }
 }

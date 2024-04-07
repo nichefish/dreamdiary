@@ -1,13 +1,15 @@
 package io.nicheblog.dreamdiary.global.cmm.mail.event;
 
-import io.nicheblog.dreamdiary.global.cmm.mail.model.MailSendModel;
+import io.nicheblog.dreamdiary.global.cmm.mail.model.MailSendParam;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
 /**
  * MailSendEvent
- * TODO: 봐야한다.
+ * <pre>
+ *  메일 발송 이벤트
+ * </pre>
  *
  * @author nichefish
  */
@@ -16,14 +18,12 @@ import org.springframework.context.ApplicationEvent;
 public class MailSendEvent
         extends ApplicationEvent {
 
-    private static final long serialVersionUID = 1L;
-    private MailSendModel mailSendModel;
+    private final MailSendParam mailSendParam;
 
-    public MailSendEvent(
-            final Object source,
-            final MailSendModel mailSendModel
-    ) {
+    /* ----- */
+
+    public MailSendEvent(final Object source, final MailSendParam mailSendParam) {
         super(source);
-        this.mailSendModel = mailSendModel;
+        this.mailSendParam = mailSendParam;
     }
 }

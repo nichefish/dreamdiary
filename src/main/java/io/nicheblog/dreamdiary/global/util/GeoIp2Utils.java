@@ -18,7 +18,7 @@ import java.net.InetAddress;
  * @author nichefish
  */
 @UtilityClass
-public class Geoip2Utils {
+public class GeoIp2Utils {
 
     /**
      * IP 주소로 국가 정보 조회

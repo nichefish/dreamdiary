@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ import javax.annotation.Resource;
 @SpringBootApplication(scanBasePackageClasses = { NicheblogBasePackage.class })
 @EnableCaching
 @EnableScheduling
+@EnableAsync
 @Log4j2
 public class DreamdiaryApplication
         implements CommandLineRunner {

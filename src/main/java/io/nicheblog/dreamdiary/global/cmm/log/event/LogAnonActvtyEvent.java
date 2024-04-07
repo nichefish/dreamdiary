@@ -23,10 +23,7 @@ public class LogAnonActvtyEvent
     /**
      * 생성자
      */
-    public LogAnonActvtyEvent(
-            final Object source,
-            final LogActvtyParam log
-    ) {
+    public LogAnonActvtyEvent(final Object source, final LogActvtyParam log) {
         super(source);
         this.log = log;
     }
