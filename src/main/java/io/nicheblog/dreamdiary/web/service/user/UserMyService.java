@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.web.service.user;
 import io.nicheblog.dreamdiary.global.auth.model.PwChgParam;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.util.FileUtils;
+import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
@@ -45,11 +45,7 @@ public class UserMyService {
     /**
      * 비밀번호 만료시 비밀번호 변경 :: 메소드 분리
      */
-    public Boolean lgnPwChg(
-            final String userId,
-            final String currPw,
-            final String newPw
-    ) throws Exception {
+    public Boolean lgnPwChg(final String userId, final String currPw, final String newPw) throws Exception {
 
         UserEntity userEntity = userService.getDtlEntity(userId);
 
@@ -66,10 +62,7 @@ public class UserMyService {
     /**
      * 사용자 관리 > 내 비밀번호 확인
      */
-    public Boolean myPwCf(
-            final String lgnUserId,
-            final String currPw
-    ) throws Exception {
+    public Boolean myPwCf(final String lgnUserId, final String currPw) throws Exception {
 
         // Entity 레벨 조회
         UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
@@ -84,11 +77,7 @@ public class UserMyService {
     /**
      * 사용자 관리 > 내 비밀번호 변경
      */
-    public Boolean myPwChg(
-            final String lgnUserId,
-            final String currPw,
-            final String newPw
-    ) throws Exception {
+    public Boolean myPwChg(final String lgnUserId, final String currPw, final String newPw) throws Exception {
         // Entity 레벨 조회
         UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
         if (rsUserEntity == null) return false;

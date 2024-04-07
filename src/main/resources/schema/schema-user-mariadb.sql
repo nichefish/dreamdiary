@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS user (
     -- ACCOUNT_BASIC_INFO
     user_id VARCHAR(20) COMMENT '로그인 ID',
     password VARCHAR(64) COMMENT '비밀번호',
-    -- user_profl
     nick_nm VARCHAR(50) COMMENT '사용자 표시이름',
     profl_img_url VARCHAR(256) COMMENT '프로필 이미지 경로',
     user_dc LONGTEXT COMMENT '사용자 설명 (관리자용)',
