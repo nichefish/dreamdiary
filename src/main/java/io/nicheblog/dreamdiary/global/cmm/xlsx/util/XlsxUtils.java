@@ -60,10 +60,22 @@ public class XlsxUtils {
     /**
      * 목록 엑셀 파일 다운로드
      */
-    public static void listXlxsDownload(final XlsxType xlsxType, final Stream<?> dataList) throws Exception {
+    public static void listXlxsDownload(final XlsxType xlsxType, final Stream<?> dataStream) throws Exception {
 
         // 엑셀 파일 생성 (메소드 분리)
-        SXSSFWorkbook workbook = makeListXlsxFile(xlsxType, dataList);
+        SXSSFWorkbook workbook = makeListXlsxFile(xlsxType, dataStream);
+
+        // 생성된 엑셀 파일 다운로드 (메소드 분리)
+        xslxFileDownload(xlsxType, workbook);
+    }
+
+    /**
+     * 다중 목록 엑셀 파일 다운로드 (목록이 여러 개 이어진 형태)
+     */
+    public void multiListXlxsDownload(final XlsxType xlsxType, final Map<String, Stream<?>> dataMap) throws Exception {
+
+        // 엑셀 파일 생성 (메소드 분리)
+        SXSSFWorkbook workbook = makeMultiListXlsxFile(xlsxType, dataMap);
 
         // 생성된 엑셀 파일 다운로드 (메소드 분리)
         xslxFileDownload(xlsxType, workbook);
@@ -72,7 +84,7 @@ public class XlsxUtils {
     /**
      * 목록 엑셀 파일 생성 (메소드 분리)
      */
-    public static SXSSFWorkbook makeListXlsxFile(final XlsxType xlsxType, final Stream<?> dataList) throws Exception {
+    public static SXSSFWorkbook makeListXlsxFile(final XlsxType xlsxType, final Stream<?> dataStream) throws Exception {
 
         // 1. 파일 및 시트 생성
         SXSSFWorkbook workbook = new SXSSFWorkbook();
@@ -87,9 +99,36 @@ public class XlsxUtils {
         // 3-2. Header Row 생성 (메소드 분리)
         createListHeaderRow(xlsxType, sheet, styleMap);
 
-        // 3-3. dataList Rows 생성 (if row is not empty) (메소드 분리)
-        createListDataRows(dataList, sheet, styleMap);
+        // 3-3. dataStream Rows 생성 (if row is not empty) (메소드 분리)
+        createListDataRows(dataStream, sheet, styleMap);
 
+        return workbook;
+    }
+
+    /**
+     * 목록 엑셀 파일 생성 (메소드 분리)
+     */
+    public static SXSSFWorkbook makeMultiListXlsxFile(final XlsxType xlsxType, Map<String, Stream<?>> dataMap) throws Exception {
+
+        // 1. 파일 및 시트 생성
+        SXSSFWorkbook workbook = new SXSSFWorkbook();
+        SXSSFSheet sheet = workbook.createSheet(xlsxType.title);
+
+        // 2. 기본 Cell Style 생성
+        Map<XlsxCellStyle, CellStyle> styleMap = XlsxCellStyle.createStyleMap(workbook);
+
+        // 3-1. Title Row 생성 (메소드 분리)
+        createTitleRow(xlsxType, sheet, styleMap);
+
+        for (String key : dataMap.keySet()) {
+            Stream<?> dataStream = dataMap.get(key);
+
+            // 3-2. Header Row 생성 (메소드 분리)
+            createListHeaderRow(xlsxType, sheet, styleMap);
+
+            // 3-3. dataStream Rows 생성 (if row is not empty) (메소드 분리)
+            createListDataRows(dataStream, sheet, styleMap);
+        }
         return workbook;
     }
 
@@ -124,16 +163,16 @@ public class XlsxUtils {
     }
 
     /**
-     * 엑셀 파일 목록 dataList Rows 생성 (메소드 분리)
+     * 엑셀 파일 목록 dataStream Rows 생성 (메소드 분리)
      * merged cell에 대하여 자동 열 높이 기능 작동안함. (poi가 아니라 엑셀 자체 문제)
      * TODO:: 필드 캐싱 처리?
      */
-    private static void createListDataRows(final Stream<?> dataList, final SXSSFSheet sheet,  final Map<XlsxCellStyle, CellStyle> styleMap) {
+    private static void createListDataRows(final Stream<?> dataStream, final SXSSFSheet sheet,  final Map<XlsxCellStyle, CellStyle> styleMap) {
         final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
 
         // row iteration
         final AtomicInteger rowIndex = new AtomicInteger(sheet.getLastRowNum() + 1);
-        dataList.forEach(item -> {
+        dataStream.forEach(item -> {
             try {
                 SXSSFRow dataRow = sheet.createRow(rowIndex.getAndIncrement());
                 dataRow.setHeight((short) -1);
@@ -218,9 +257,8 @@ public class XlsxUtils {
             response.getOutputStream().flush();
             response.getOutputStream().close();
             // SXSSFWorkbook에 의해 생성된 임시 파일 정리
-            // TODO: 저장해놓고 캐시?
+            // TODO: 바로 버리는 대신 저장해놓고 캐시?
             workbook.dispose();
         }
-
     }
 }
