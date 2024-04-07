@@ -20,7 +20,7 @@ public enum XlsxType {
             "공지사항",
             "공지사항 #1",
             "공지사항",
-            XlsxConstant.NOTICE
+            XlsxHeader.NOTICE
     );
 
     public final String fileNm;

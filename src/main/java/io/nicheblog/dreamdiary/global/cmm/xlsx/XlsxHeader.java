@@ -10,11 +10,10 @@ import java.util.List;
  *  엑셀 다운로드 관련 데이터(상수) 정의
  *  ×256(한글 1글자)으로 세팅됨. 대략적인 글자수로 세팅하면 된다.
  * </pre>
- * TODO: 사용방식 개편 필요 (비효율적인 방식...)
  *
  * @author nichefish
  */
-public interface XlsxConstant {
+public interface XlsxHeader {
 
     /** 공지사항 */
     List<XlsxCell> NOTICE = List.of(

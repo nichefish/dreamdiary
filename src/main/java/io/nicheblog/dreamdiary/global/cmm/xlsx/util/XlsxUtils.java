@@ -70,7 +70,8 @@ public class XlsxUtils {
     }
 
     /**
-     * 다중 목록 엑셀 파일 다운로드 (목록이 여러 개 이어진 형태)
+     * 다중 목록 엑셀 파일 다운로드
+     * (목록이 여러 개 이어진 형태)
      */
     public void multiListXlxsDownload(final XlsxType xlsxType, final Map<String, Stream<?>> dataMap) throws Exception {
 
@@ -117,16 +118,17 @@ public class XlsxUtils {
         // 2. 기본 Cell Style 생성
         Map<XlsxCellStyle, CellStyle> styleMap = XlsxCellStyle.createStyleMap(workbook);
 
-        // 3-1. Title Row 생성 (메소드 분리)
+        // 3. Title Row 생성 (메소드 분리)
         createTitleRow(xlsxType, sheet, styleMap);
 
+        // 4. 목록들 순회하며 생성
         for (String key : dataMap.keySet()) {
             Stream<?> dataStream = dataMap.get(key);
 
-            // 3-2. Header Row 생성 (메소드 분리)
+            // Header Row 생성 (메소드 분리)
             createListHeaderRow(xlsxType, sheet, styleMap);
 
-            // 3-3. dataStream Rows 생성 (if row is not empty) (메소드 분리)
+            // dataStream Rows 생성 (if row is not empty) (메소드 분리)
             createListDataRows(dataStream, sheet, styleMap);
         }
         return workbook;
