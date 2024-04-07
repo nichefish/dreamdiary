@@ -1,8 +1,9 @@
 <!--
- -- 레이아웃 > Footer
- -- @included_in : layout/footer/_base
+ -- 레이아웃 > 푸터 > 관련 사이트
+ -- @included_in : layout/footer/_footer_base.ftlh
  -->
-<!--begin::Footer-->
+
+<!--begin::Footer-Related-->
 <li class="menu-item" data-kt-menu-trigger="hover" data-kt-menu-placement="top-start" data-kt-menu-flip="top-start">
     <a target="_blank" class="menu-link blink px-2">
         관련 사이트<i class="bi bi-chevron-up ms-1"></i>
@@ -19,3 +20,4 @@
         </a>
     </div>
 </div>
+<!--end::Footer-Related-->

@@ -1,3 +1,8 @@
+<!--
+ -- 레이아웃 > 헤더 > 네비게이션 바 (base)
+ -- @included_in : layout/header/_header_base.ftlh
+ -->
+
 <!--begin::Navbar-->
 <div class="app-navbar flex-shrink-0">
     <!--include::Notion-->

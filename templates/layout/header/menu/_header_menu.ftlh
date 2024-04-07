@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 헤더
- -- @included_in : layout
+ -- 레이아웃 > 헤더 > 메뉴
+ -- @included_in : layout/header/_header_menu.ftlh
  -->
 <!--begin::Menu wrapper-->
 <div
@@ -31,7 +31,7 @@
             </span><!--end:Menu link-->
             <!--begin:Menu sub-->
             <div  class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0 w-100 w-lg-850px" >
-                <#include "/layout/header/__dashboards.html">
+                <#include "/layout/header/menu/__dashboards.html">
             </div><!--end:Menu sub-->
         </div>
         <!--end:Menu item-->
@@ -45,7 +45,7 @@
             <!--end:Menu link-->
             <!--begin:Menu sub-->
             <div  class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0" >
-                <#include "/layout/header/__pages.html">
+                <#include "/layout/header/menu/__pages.html">
             </div>
             <!--end:Menu sub-->
         </div>
@@ -104,7 +104,7 @@
             <!--end:Menu link-->
             <!--begin:Menu sub-->
             <div  class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0 w-100 w-lg-900px w-xxl-950px" >
-                <#include "/layout/header/__layouts.html">
+                <#include "/layout/header/menu/__layouts.html">
             </div>
             <!--end:Menu sub-->
         </div>

@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 헤더
- -- @included_in : layout
+ -- 레이아웃 > 헤더 (base)
+ -- @included_in : layout.ftlh
  -->
 <script>
     /** 레이아웃 */
@@ -73,7 +73,7 @@
         <!--begin::Header wrapper-->
         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
 
-            <#include "/layout/header/_header_menu.ftlh">
+            <#include "/layout/header/menu/_header_menu.ftlh">
 
             <#include "/layout/header/navbar/_navbar_base.ftlh">
 

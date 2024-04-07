@@ -1,5 +1,5 @@
 <!--
- -- 레이아웃 > Footer
+ -- 레이아웃 > 푸터 (base)
  -- @included_in : layout
  -->
 

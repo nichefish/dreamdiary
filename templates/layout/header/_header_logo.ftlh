@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 헤더 (모바일)
- -- @included_in : layout
+ -- 레이아웃 > 헤더 > 모바일
+ -- @included_in : layout/header/_header_base.ftlh
  -->
 
 <!--begin::Web logo-->
