@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.web.controller.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.CookieUtils;
-import io.nicheblog.dreamdiary.global.util.FileUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;

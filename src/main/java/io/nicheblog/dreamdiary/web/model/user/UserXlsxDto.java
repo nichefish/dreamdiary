@@ -5,9 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * UserListXlsxDto
+ * UserXlsxDto
  * <pre>
- *  사용자(계정) 정보 목록 엑셀 다운로드 Dto
+ *  사용자(계정) 정보 엑셀 다운로드 Dto
+ *  (필드 정의 후 XlsxUtils에서 속성을 reflection으로 읽어 동적으로 처리)
+ *  (헤더:: XlsxConstant에 정의)
  * </pre>
  *
  * @author nichefish
@@ -15,42 +17,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserListXlsxDto {
+public class UserXlsxDto {
 
-    /**
-     * 권한
-     */
+    /** 권한 */
     private String authNm;
-    /**
-     * 아이디
-     */
+    /** 아이디  */
     private String userId;
-    /**
-     * 이름
-     */
+    /** 이름 */
     private String nickNm;
-    /**
-     * 연락처(전화번호)
-     */
+    /** 연락처(전화번호) */
     private String cttpc;
-    /**
-     * E-mail
-     */
+    /** E-mail */
     private String email;
-    /**
-     * 잠금여부
-     */
+    /** 잠금여부 */
     private String lockedYn;
-    /**
-     * 접속 IP 정보 (String)
-     */
+    /** 접속 IP 정보 (String) */
     private String acsIpListStr;
-    /**
-     * 등록자 ID
-     */
+    /** 등록자 ID */
     protected String regstrId;
-    /**
-     * 최종접속일시
-     */
+    /** 최종접속일시 */
     private String lstLgnDt;
 }

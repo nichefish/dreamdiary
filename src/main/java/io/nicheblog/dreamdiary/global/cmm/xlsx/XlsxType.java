@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 /**
- * ContentType
+ * XlsxType
  * <pre>
- *  ClsfEntity를 상속받은 클래스들이 사용하는 컨텐츠 타입 정보
+ *  사전 정의된 엑셀 규격 정보
  * </pre>
  *
  * @author nichefish

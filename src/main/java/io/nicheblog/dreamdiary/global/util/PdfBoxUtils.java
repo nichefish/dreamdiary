@@ -39,7 +39,7 @@ public class PdfBoxUtils {
 
         try {
             // 폴더 생성
-            String pdfPath = "pdf_temp/";
+            String pdfPath = "local/pdf_temp/";
             File file = new File(pdfPath);
             if (!file.exists()) file.mkdirs();
 

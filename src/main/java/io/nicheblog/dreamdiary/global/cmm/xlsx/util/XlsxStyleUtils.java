@@ -19,7 +19,7 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 public class XlsxStyleUtils {
 
     /**
-     * 기본
+     * 기본 스타일
      */
     public static CellStyle getDefaultStyle(final SXSSFWorkbook workbook) {
         return workbook.createCellStyle();
