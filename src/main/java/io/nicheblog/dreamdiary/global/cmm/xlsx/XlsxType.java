@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.cmm.xlsx;
 
+import io.nicheblog.dreamdiary.global.cmm.xlsx.model.XlsxCell;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -25,5 +26,5 @@ public enum XlsxType {
     public final String fileNm;
     public final String sheetNm;
     public final String title;
-    public final List<XlsxCellDef> headers;
+    public final List<XlsxCell> headers;
 }

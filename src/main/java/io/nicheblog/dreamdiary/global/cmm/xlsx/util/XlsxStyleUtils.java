@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.xlsx;
+package io.nicheblog.dreamdiary.global.cmm.xlsx.util;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
