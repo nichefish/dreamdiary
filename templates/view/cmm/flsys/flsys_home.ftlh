@@ -31,7 +31,7 @@
                 <input type="hidden" name="logSysNo" id="logSysNo" />
             </form>
             <!--begin::Card header 검색+헤더 UI -->
-            <#include "/view/cmm/flsys/flsys_home_header.ftlh">
+            <#include "/view/cmm/flsys/_flsys_home_header.ftlh">
 
             <!--begin::Tab -->
             <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
@@ -72,12 +72,12 @@
     </div>
 </div>
 
-<#include "/view/cmm/flsys/flsys_list_template.ftlh">
+<#include "/view/cmm/flsys/_flsys_list_template.ftlh">
 
-<#include "/view/cmm/flsys/flsys_file_vod_modal.ftlh">
-<#include "/view/cmm/flsys/flsys_file_vod_template.ftlh">
+<#include "/view/cmm/flsys/_flsys_file_vod_modal.ftlh">
+<#include "/view/cmm/flsys/_flsys_file_vod_template.ftlh">
 
-<#include "/view/cmm/flsys/flsys_home_header_path_template.ftlh">
+<#include "/view/cmm/flsys/_flsys_home_header_path_template.ftlh">
 
 <#include "/view/cmm/flsys/flsys_meta_reg_modal.ftlh">
 <#include "/view/cmm/flsys/flsys_meta_reg_template.ftlh">

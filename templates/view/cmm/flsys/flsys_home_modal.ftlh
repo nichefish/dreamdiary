@@ -74,10 +74,10 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/cmm/flsys/flsys_list_template.ftlh">
+<#include "/view/cmm/flsys/_flsys_list_template.ftlh">
 
-<#include "/view/cmm/flsys/flsys_file_vod_modal.ftlh">
-<#include "/view/cmm/flsys/flsys_file_vod_template.ftlh">
+<#include "/view/cmm/flsys/_flsys_file_vod_modal.ftlh">
+<#include "/view/cmm/flsys/_flsys_file_vod_template.ftlh">
 
 <#include "/view/cmm/flsys/flsys_meta_reg_modal.ftlh">
 <#include "/view/cmm/flsys/flsys_meta_reg_template.ftlh">

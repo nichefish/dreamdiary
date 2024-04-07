@@ -25,7 +25,7 @@ REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES 
 -- -----------------------
 
 -- 옵션 :: 일정 분류코드 추가
-REPLACE INTO CMM_CL_CD (cl_cd, cl_cd_nm, cl_cd_dc) VALUES ('SCHDUL_CD', '수정권한', '수정권한 코드');
+REPLACE INTO CMM_CL_CD (cl_cd, cl_cd_nm, cl_cd_dc) VALUES ('SCHDUL_CD', '일정', '일정 코드');
 -- 필수 :: 수정권한 상세코드 추가
 REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'HLDY', '공휴일', '공휴일', '1');
 REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('SCHDUL_CD', 'CEREMONY', '행사', '행사', '2');

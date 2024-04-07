@@ -48,7 +48,7 @@
         <input type="hidden" name="logActvtyNo" id="logActvtyNo" />
     </form>
     <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/log/stats/log_stats_user_list_header.ftlh">
+    <#include "/view/log/stats/_log_stats_user_list_header.ftlh">
 
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">

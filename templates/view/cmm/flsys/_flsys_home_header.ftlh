@@ -112,7 +112,7 @@
 </form>
 
 <#--
-<form name="listForm" id="listForm" method="get">
+<form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <div class="d-flex align-items-center">
         <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
         <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
