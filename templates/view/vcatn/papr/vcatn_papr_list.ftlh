@@ -222,7 +222,6 @@
 <!--end::post-->
 
 <#include "/view/vcatn/papr/_vcatn_papr_dtl_modal.ftlh">
-<#include "/view/vcatn/papr/_vcatn_papr_dtl_template.hbs">
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
 

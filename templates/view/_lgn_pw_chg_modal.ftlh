@@ -39,3 +39,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/_lgn_pw_chg_template.hbs">

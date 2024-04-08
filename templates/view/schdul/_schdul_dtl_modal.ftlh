@@ -61,3 +61,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/schdul/_schdul_dtl_template.hbs">

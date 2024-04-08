@@ -184,6 +184,5 @@
 </div>
 
 <#include "/view/vcatn/schdul/_vcatn_schdul_reg_modal.ftlh">
-<#include "/view/vcatn/schdul/_vcatn_schdul_reg_template.hbs">
 
 </@layout.layout>

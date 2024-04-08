@@ -57,3 +57,6 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/schdul/_schdul_reg_template.hbs">
+<#include "/view/schdul/_schdul_reg_prtcpnt_template.hbs">

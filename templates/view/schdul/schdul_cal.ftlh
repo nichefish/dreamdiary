@@ -348,9 +348,6 @@
 <!--end::Card-->
 
 <#include "/view/schdul/_schdul_reg_modal.ftlh">
-<#include "/view/schdul/_schdul_reg_template.hbs">
-<#include "/view/schdul/_schdul_reg_prtcpnt_template.ftlh">
 <#include "/view/schdul/_schdul_dtl_modal.ftlh">
-<#include "/view/schdul/_schdul_dtl_template.hbs">
 
 </@layout.layout>

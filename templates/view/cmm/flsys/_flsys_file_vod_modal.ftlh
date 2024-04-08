@@ -25,3 +25,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/cmm/flsys/_flsys_file_vod_template.hbs">

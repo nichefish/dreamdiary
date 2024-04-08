@@ -25,3 +25,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/vcatn/papr/_vcatn_papr_dtl_template.hbs">

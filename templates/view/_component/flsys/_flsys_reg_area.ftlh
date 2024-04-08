@@ -15,28 +15,17 @@
         <div class="btn btn-sm btn-light-primary"
              onclick="Flsys.flsysModal('${HOME_FLSYS!}');"
              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="파일 시스템 모달 팝업을&#10;호출합니다.">
-                    <span class="svg-icon svg-icon-muted svg-icon-1hx">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path opacity="0.3" d="M7 20.5L2 17.6V11.8L7 8.90002L12 11.8V17.6L7 20.5ZM21 20.8V18.5L19 17.3L17 18.5V20.8L19 22L21 20.8Z" fill="currentColor"/>
-                            <path d="M22 14.1V6L15 2L8 6V14.1L15 18.2L22 14.1Z" fill="currentColor"/>
-                        </svg>
-                    </span>
+            <span class="svg-icon svg-icon-muted svg-icon-1hx">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.3" d="M7 20.5L2 17.6V11.8L7 8.90002L12 11.8V17.6L7 20.5ZM21 20.8V18.5L19 17.3L17 18.5V20.8L19 22L21 20.8Z" fill="currentColor"/>
+                    <path d="M22 14.1V6L15 2L8 6V14.1L15 18.2L22 14.1Z" fill="currentColor"/>
+                </svg>
+            </span>
             파일시스템 참조
         </div>
     </div>
     <div id="flsys_ref_div" class="mb-8">
     </div>
 </div>
-
-<script type="text/x-handlebars-template" id="flsys_ref_template">
-    <div>
-        <i class="fas fa-file-download fs-15 me-3"></i>
-        {{filePath}}
-        <input type="hidden" name="flsysRefList[{{refCnt}}].filePath" value="{{filePath}}">
-        <button type="button" class="badge badge-light btn-primary badge-outlined mx-2"
-                onclick="Flsys.delRef(this);"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.del"/>">
-            삭제
-        </button>
-    </div>
-</script>
+<!-- include:: Handlebars template -->
+<#include "/view/_component/flsys/_flsys_reg_template.hbs">

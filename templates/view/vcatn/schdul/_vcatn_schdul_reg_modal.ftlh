@@ -113,3 +113,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/vcatn/schdul/_vcatn_schdul_reg_template.hbs">
