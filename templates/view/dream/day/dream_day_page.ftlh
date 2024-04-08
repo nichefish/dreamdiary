@@ -45,12 +45,9 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/dream/day/_dream_day_list_template.ftlh">
+<#include "/view/dream/day/_dream_day_list_template.hbs">
 <#include "/view/dream/day/_dream_day_reg_modal.ftlh">
-<#include "/view/dream/day/_dream_day_reg_template.ftlh">
-<#include "/view/dream/piece/dream_piece_reg_modal.ftlh">
-<#include "/view/dream/piece/dream_piece_reg_header_template.ftlh">
-<#include "/view/dream/piece/dream_piece_reg_template.ftlh">
+<#include "/view/dream/piece/_dream_piece_reg_modal.ftlh">
 
 <!--include:: Dream - Aside-->
 <#include "/view/dream/day/_dream_day_aside_base.ftlh">

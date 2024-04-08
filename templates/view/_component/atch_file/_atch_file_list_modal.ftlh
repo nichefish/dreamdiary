@@ -5,7 +5,7 @@
   -->
 
 <script>
-    let AtchFileList = function() {
+    const AtchFileList = function() {
         return {
             init: function() {
                 //
@@ -59,3 +59,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/_component/atch_file/_atch_file_list_template.hbs">

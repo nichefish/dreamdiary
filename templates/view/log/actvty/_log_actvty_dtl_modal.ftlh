@@ -25,3 +25,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/log/actvty/_log_actvty_dtl_template.hbs">

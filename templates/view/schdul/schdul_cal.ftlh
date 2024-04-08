@@ -137,7 +137,7 @@
             }
         }
     }();
-    let Schdul = function() {
+    const Schdul = function() {
         return {
             prtcpntCnt: 0,
             init: function() {
@@ -348,9 +348,9 @@
 <!--end::Card-->
 
 <#include "/view/schdul/_schdul_reg_modal.ftlh">
-<#include "/view/schdul/_schdul_reg_template.ftlh">
+<#include "/view/schdul/_schdul_reg_template.hbs">
 <#include "/view/schdul/_schdul_reg_prtcpnt_template.ftlh">
 <#include "/view/schdul/_schdul_dtl_modal.ftlh">
-<#include "/view/schdul/_schdul_dtl_template.ftlh">
+<#include "/view/schdul/_schdul_dtl_template.hbs">
 
 </@layout.layout>

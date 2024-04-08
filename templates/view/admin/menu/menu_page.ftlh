@@ -205,6 +205,5 @@
 <#include "/view/admin/menu/_menu_main_card_template.hbs">
 <#include "/view/admin/menu/_menu_sub_template.hbs">
 <#include "/view/admin/menu/_menu_reg_modal.ftlh">
-<#include "/view/admin/menu/_menu_reg_template.hbs">
 
 </@layout.layout>

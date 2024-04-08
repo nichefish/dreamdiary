@@ -27,3 +27,6 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/cmm/flsys/_flsys_meta_dtl_template.hbs">
+<#include "/view/cmm/flsys/_flsys_meta_dtl_btn_template.hbs">

@@ -1,12 +1,13 @@
 <#--
-  -- 게시판 > 상세 Modal
+  -- 게시판 > 태그 전체 목록 Modal
   -- @included_in : board_post_list
+  -- @included_in : board_post_dtl
   -->
-<div class="modal fade" id="board_post_dtl_modal" tabindex="-1" role="dialog" aria-labelledby="postDtlModalTitle" aria-hidden="true">
+<div class="modal fade" id="board_tag_list_modal" tabindex="-1" role="dialog" aria-labelledby="tagModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="postDtlModalLongTitle">[게시판]</h5>
+                <h5 class="modal-title" id="tagModalLongTitle">[태그]</h5>
                 <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times"></i>
                 </div>
@@ -14,16 +15,16 @@
             </div>
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
-                    <div id="board_post_dtl_div">
+                    <div class="row" id="board_tag_list_div">
                         <!-- contents -->
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">닫기</button>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">닫기</button>
             </div>
         </div>
     </div>
 </div>
 <!-- include:: Handlebars template -->
-<#include "/view/board/post/_board_post_dtl_template.hbs">
+<#include "/view/_component/tag/_tag_list_template.hbs">

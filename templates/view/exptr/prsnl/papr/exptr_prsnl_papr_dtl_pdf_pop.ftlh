@@ -1,6 +1,5 @@
 <#--
   -- 경비 > 경비지출서 > 상세 팝업 (출력용)
-  -- @included_in : exptr_prsnl_papr_dtl
   -->
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 

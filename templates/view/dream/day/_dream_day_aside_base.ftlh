@@ -2,7 +2,6 @@
   -- 꿈 관리 : ASIDE (우측 사이드바)
   -- @included_in : layout
   -->
-
 <!--begin::aside-->
 <div id="kt_app_aside" class="app-aside flex-column mt-7"
      data-kt-drawer="true"

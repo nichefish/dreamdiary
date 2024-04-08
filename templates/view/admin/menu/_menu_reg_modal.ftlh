@@ -41,3 +41,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/admin/menu/_menu_reg_template.hbs">

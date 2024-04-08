@@ -268,9 +268,7 @@
 </div>
 
 <#include "/view/board/def/_board_def_mdf_item_modal.ftlh">
-<#include "/view/board/def/_board_def_mdf_item_template.ftlh">
 <#include "/view/board/def/_board_def_reg_modal.ftlh">
-<#include "/view/board/def/_board_def_reg_template.ftlh">
 
 </@layout.layout>
 

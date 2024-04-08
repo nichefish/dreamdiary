@@ -4,7 +4,7 @@
   -- @included_in : exptr_prsnl_papr_dtl
   -->
 <script>
-    let Rcipt = function() {
+    const Rcipt = function() {
         return {
             /**
              * 영수증 이미지 첨부 (등록/수정)

@@ -178,6 +178,5 @@
 <!--end::Card-->
 
 <#include "/view/log/actvty/_log_actvty_dtl_modal.ftlh">
-<#include "/view/log/actvty/_log_actvty_dtl_template.ftlh">
 
 </@layout.layout>

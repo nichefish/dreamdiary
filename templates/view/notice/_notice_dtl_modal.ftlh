@@ -25,3 +25,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/notice/_notice_dtl_template.hbs">

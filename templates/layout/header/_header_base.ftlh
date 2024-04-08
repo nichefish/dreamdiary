@@ -4,7 +4,7 @@
  -->
 <script>
     /** 레이아웃 */
-    let Layout = function() {
+    const Layout = function() {
         return {
             init: function() {
                 // 모든 버튼에 딜레이 기능 추가

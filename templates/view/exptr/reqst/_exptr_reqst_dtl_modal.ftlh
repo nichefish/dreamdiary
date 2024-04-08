@@ -25,3 +25,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/exptr/reqst/_exptr_reqst_dtl_template.hbs">

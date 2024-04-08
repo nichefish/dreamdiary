@@ -1,5 +1,5 @@
 <#--
-  -- 공지사항 > 목록 툴바 Header
+  -- 템플릿 관리 > 목록 툴바 Header
   -- @included_in : notice_list
   -->
 

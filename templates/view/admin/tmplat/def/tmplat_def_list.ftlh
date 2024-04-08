@@ -1,5 +1,5 @@
 <#--
-  -- 공지사항 > 목록 화면
+  -- 템플릿 관리 > 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
 
@@ -187,8 +187,6 @@
 </div>
 
 <#include "/view/admin/tmplat/def/_tmplat_def_reg_modal.ftlh">
-<#include "/view/admin/tmplat/def/_tmplat_def_reg_template.ftlh">
 <#include "/view/admin/tmplat/def/_tmplat_def_dtl_modal.ftlh">
-<#include "/view/admin/tmplat/def/_tmplat_def_dtl_template.ftlh">
 
 </@layout.layout>

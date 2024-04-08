@@ -222,12 +222,10 @@
 <!--end::post-->
 
 <#include "/view/vcatn/papr/_vcatn_papr_dtl_modal.ftlh">
-<#include "/view/vcatn/papr/_vcatn_papr_dtl_template.ftlh">
+<#include "/view/vcatn/papr/_vcatn_papr_dtl_template.hbs">
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
-<#include "/view/_component/comment/_comment_list_template.ftlh">
 
 <#include "/view/_component/atch_file/_atch_file_list_modal.ftlh">
-<#include "/view/_component/atch_file/_atch_file_list_template.ftlh">
 
 </@layout.layout>

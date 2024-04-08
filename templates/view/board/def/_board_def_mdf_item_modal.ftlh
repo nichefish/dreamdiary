@@ -24,3 +24,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/board/def/_board_def_mdf_item_template.hbs">

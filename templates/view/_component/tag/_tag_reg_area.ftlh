@@ -3,7 +3,7 @@
  -- @included_in : 파일 첨부 기능이 있는 페이지들
  -->
 <script>
-    let Tags = function() {
+    const Tags = function() {
         return {
             init: function () {
                 // 게시물 태그 tagify

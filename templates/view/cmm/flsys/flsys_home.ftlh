@@ -73,24 +73,19 @@
     </div>
 </div>
 
-<#include "/view/cmm/flsys/_flsys_list_template.ftlh">
+<#include "/view/cmm/flsys/_flsys_list_template.hbs">
 
 <#include "/view/cmm/flsys/_flsys_file_vod_modal.ftlh">
 <#include "/view/cmm/flsys/_flsys_file_vod_template.ftlh">
 
 <#include "/view/cmm/flsys/_flsys_home_header_path_template.ftlh">
 
-<#include "/view/cmm/flsys/flsys_meta_reg_modal.ftlh">
-<#include "/view/cmm/flsys/flsys_meta_reg_template.ftlh">
-<#include "/view/cmm/flsys/flsys_meta_dtl_modal.ftlh">
-<#include "/view/cmm/flsys/flsys_meta_dtl_template.ftlh">
-<#include "/view/cmm/flsys/flsys_meta_dtl_btn_template.ftlh">
+<#include "/view/cmm/flsys/_flsys_meta_reg_modal.ftlh">
+<#include "/view/cmm/flsys/_flsys_meta_dtl_modal.ftlh">
 
-<#include "/view/_component/tag/tag_dtl_modal.ftlh">
-<#include "/view/_component/tag/tag_dtl_template.ftlh">
-<#include "/view/_component/tag/tag_dtl_post_list_template.ftlh">
-<#include "/view/_component/tag/tag_list_modal.ftlh">
-<#include "/view/_component/tag/tag_list_template.ftlh">
+<#include "/view/_component/tag/_tag_dtl_modal.ftlh">
+<#include "/view/_component/tag/_tag_dtl_post_list_template.hbs">
+<#include "/view/_component/tag/_tag_list_modal.ftlh">
 
 <!--include:: Dream - Aside-->
 <#include "/view/cmm/flsys/_flsys_aside_base.ftlh">

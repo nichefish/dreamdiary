@@ -1,5 +1,5 @@
 <#--
-  -- 공지사항 > 상세 Modal
+  -- 템플릿 관리 > 상세 Modal
   -- @included_in : notice_list
   -->
 
@@ -23,3 +23,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/admin/tmplat/def/_tmplat_def_dtl_template.hbs">

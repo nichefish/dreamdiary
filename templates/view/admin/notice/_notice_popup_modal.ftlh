@@ -4,7 +4,7 @@
   -->
 <script>
     /** 공지사항 팝업 관련 */
-    let NoticePopup = function() {
+    const NoticePopup = function() {
         return {
             init: function() {
                 /** 로그인 공지 목록 조회 */
@@ -109,3 +109,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/component/notice/_notice_popup_template.hbs">

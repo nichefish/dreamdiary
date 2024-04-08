@@ -3,7 +3,7 @@
   -- @included_in : log_actvty_list
   -->
 <script>
-    let Meta = function() {
+    const Meta = function() {
         return {
             init: function() {
                 /** jquery :: validation */
@@ -163,3 +163,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/cmm/flsys/_flsys_meta_reg_template.hbs">

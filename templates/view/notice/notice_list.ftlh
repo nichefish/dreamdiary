@@ -236,12 +236,9 @@
 </div>
 
 <#include "/view/notice/_notice_dtl_modal.ftlh">
-<#include "/view/notice/_notice_dtl_template.ftlh">
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
-<#include "/view/_component/comment/_comment_list_template.ftlh">
 
 <#include "/view/_component/atch_file/_atch_file_list_modal.ftlh">
-<#include "/view/_component/atch_file/_atch_file_list_template.ftlh">
 
 </@layout.layout>

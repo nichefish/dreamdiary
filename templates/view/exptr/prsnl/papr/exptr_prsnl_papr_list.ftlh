@@ -212,6 +212,5 @@
 </div>
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
-<#include "/view/_component/comment/_comment_list_template.ftlh">
 
 </@layout.layout>

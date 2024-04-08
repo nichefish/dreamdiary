@@ -395,7 +395,7 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_reg_template.ftlh">
+<#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_reg_template.hbs">
 <#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_reg_rcipt_template.ftlh">
 <#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_rject_template.ftlh">
 

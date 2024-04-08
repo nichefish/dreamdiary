@@ -3,7 +3,7 @@
  -- @included_in : 댓글 미리보기 기능이 있는 페이지들
   -->
 <script>
-    let CommentList = function() {
+    const CommentList = function() {
         return {
             init: function() {
                 //
@@ -63,3 +63,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/_component/comment/_comment_list_template.hbs">

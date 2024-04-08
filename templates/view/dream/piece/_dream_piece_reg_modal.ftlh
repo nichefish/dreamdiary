@@ -113,3 +113,6 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/dream/piece/_dream_piece_reg_header_template.hbs">
+<#include "/view/dream/piece/_dream_piece_reg_template.hbs">

@@ -56,8 +56,6 @@
     });
 </script>
 
-<#include "/view/_component/tag/tag_dtl_modal.ftlh">
-<#include "/view/_component/tag/tag_dtl_post_list_template.ftlh">
-<#include "/view/_component/tag/tag_dtl_template.ftlh">
-<#include "/view/_component/tag/tag_list_modal.ftlh">
-<#include "/view/_component/tag/tag_list_template.ftlh">
+<#include "/view/_component/tag/_tag_dtl_modal.ftlh">
+<#include "/view/_component/tag/_tag_dtl_post_list_template.hbs">
+<#include "/view/_component/tag/_tag_list_modal.ftlh">

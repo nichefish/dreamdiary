@@ -22,3 +22,5 @@
         </div>
     </div>
 </div>
+<!-- include:: Handlebars template -->
+<#include "/view/admin/cd/_cl_cd_dtl_template.hbs">
