@@ -1,11 +1,5 @@
 package io.nicheblog.dreamdiary.global.auth;
 
-import io.nicheblog.dreamdiary.api.ApiConstant;
-import lombok.AllArgsConstructor;
-
-import java.util.Locale;
-import java.util.TimeZone;
-
 /**
  * AuthConstant
  * <pre>

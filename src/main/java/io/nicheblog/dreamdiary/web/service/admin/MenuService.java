@@ -15,8 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,8 +104,20 @@ public class MenuService
     /**
      * 정렬 순서 업데이트
      */
-    public boolean menuSortOrdr(List<MenuDto> menuSortOrdr) {
-        // return (menuMapper.menuSortOrdr(menuSortOrdr) > 0);
+    @Transactional
+    public boolean sortOrdr(List<MenuDto> sortOrdr) throws Exception {
+        if (CollectionUtils.isEmpty(sortOrdr)) return true;
+        sortOrdr.forEach(menu -> {
+            try {
+                MenuEntity e = this.getDtlEntity(menu.getMenuNo());
+                menuMapstruct.updateFromDto(menu, e);
+                this.updt(e);
+            } catch (Exception ex) {
+                ex.getStackTrace();
+                // 로그 기록, 예외 처리 등
+                throw new RuntimeException(ex);
+            }
+        });
         return true;
     }
 }

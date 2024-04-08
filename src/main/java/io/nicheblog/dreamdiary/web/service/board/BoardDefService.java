@@ -11,8 +11,10 @@ import io.nicheblog.dreamdiary.web.repository.board.BoardDefRepository;
 import io.nicheblog.dreamdiary.web.spec.board.BoardDefSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,4 +95,23 @@ public class BoardDefService
         SiteMenu.BOARD.setSubMenuList(this.boardDefMenuList());
     }
 
+    /**
+     * 정렬 순서 업데이트
+     */
+    @Transactional
+    public boolean sortOrdr(List<BoardDefDto> sortOrdr) throws Exception {
+        if (CollectionUtils.isEmpty(sortOrdr)) return true;
+        sortOrdr.forEach(menu -> {
+            try {
+                BoardDefEntity e = this.getDtlEntity(menu.getBoardCd());
+                boardDefMapstruct.updateFromDto(menu, e);
+                this.updt(e);
+            } catch (Exception ex) {
+                ex.getStackTrace();
+                // 로그 기록, 예외 처리 등
+                throw new RuntimeException(ex);
+            }
+        });
+        return true;
+    }
 }

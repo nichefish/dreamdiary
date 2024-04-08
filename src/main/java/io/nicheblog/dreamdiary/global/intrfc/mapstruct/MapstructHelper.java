@@ -4,10 +4,7 @@ import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.*;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ManagtEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.TagEmbedMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.ViewerEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.*;
 import io.nicheblog.dreamdiary.global.intrfc.model.*;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
@@ -79,7 +76,7 @@ public class MapstructHelper {
     /**
      * Map Clsf Fields
      */
-    public static <Entity extends BaseClsfEntity, Dto extends BaseClsfDto> void mapClsfFields(Entity entity, Dto dto) throws Exception {
+    public static <Entity extends BaseClsfEntity, Dto extends BaseClsfDto> void mapClsfFields(final Entity entity, final @MappingTarget Dto dto) throws Exception {
         // 댓글 :: 공통 필드 매핑 로직
         boolean usesCommentModule = (entity instanceof CommentEmbedModule && dto instanceof CommentCmpstnModule);
         if (usesCommentModule) {
@@ -115,6 +112,22 @@ public class MapstructHelper {
         // 새 글 여부 표시
         if (usesManagtModule && usesViewerModule) {
             ((ViewerCmpstnModule) dto).setIsNew(determineIfNew(entity));
+        }
+    }
+
+    /**
+     * Map State Fields
+     */
+    public static <Entity, Dto> void mapStateFields(final Dto dto, final @MappingTarget Entity entity) throws Exception {
+        // 댓글 :: 공통 필드 매핑 로직
+        boolean usesStateModule = (entity instanceof StateEmbedModule && dto instanceof StateCmpstnModule);
+        if (usesStateModule) {
+            StateEmbed embed = ((StateEmbedModule) entity).getState();
+            if (embed == null) embed = new StateEmbed();
+            StateCmpstn cmpstn = ((StateCmpstnModule) dto).getState();
+            if (cmpstn == null) cmpstn = new StateCmpstn();
+            StateEmbedMapstruct.INSTANCE.updateFromDto(cmpstn, embed);
+            ((StateEmbedModule) entity).setState(embed);
         }
     }
 

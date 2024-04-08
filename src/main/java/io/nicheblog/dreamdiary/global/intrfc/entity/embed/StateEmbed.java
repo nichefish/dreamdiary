@@ -30,5 +30,5 @@ public class StateEmbed
     /** 사용 여부 (Y/N) */
     @Builder.Default
     @Column(name = "use_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
-    private String useYn = "Y";
+    private String useYn = "N";
 }

@@ -3,13 +3,16 @@
   -- @included_in : menu_page.ftlh
   -->
 <script type="text/x-handlebars-template" id="menu_sub_template">
-    <li class="list-unstyled draggable-sub" style="{{borderColor}}"
-         id="{{menuNo}}" data-type="{{menuTyCd}}" data-index="{{sortOrdr}}">
+    <li class="list-unstyled sortable-item draggable-sub" style="{{borderColor}}"
+         id="{{menuNo}}" data-type="{{menuTyCd}}" upper-menu-no="{{upperMenuNo}}">
         <div class="d-flex align-items-center justify-content-between rounded">
             <div class="d-flex align-items-center">
                  <div class="draggable-handle-sub cursor-move pt-2"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
-                    <i class="ki-duotone ki-abstract-14 fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                    <i class="ki-duotone ki-abstract-14 fs-2x">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
                 </div>
                 {{#if (exists icon)}}
                     <i class="{{icon}} text-muted fs-3 ms-8"></i>
@@ -19,7 +22,7 @@
                 {{/if}}
                 <div class="mx-2 mb-0 text-dark cursor-pointer text-underline-dotted" onclick="Menu.mdfForm('{{menuNo}}');"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
-                    <span {{#if (equals state.useYn "Y")}}class="strikethrough"{{/if}}>
+                    <span class="title {{#if (equals state.useYn "Y")}}strikethrough{{/if}}">
                         {{menuNm}}
                     </span>
                 </div>

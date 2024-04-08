@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
+import io.nicheblog.dreamdiary.web.model.admin.MenuParam;
 import io.nicheblog.dreamdiary.web.model.admin.MenuSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.MenuService;
@@ -32,7 +33,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.util.List;
 
 /**
  * MenuController
@@ -212,10 +212,10 @@ public class MenuController
     /**
      * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
      */
-    @RequestMapping(SiteUrl.MENU_SORT_ORDR_AJAX)
+    @PostMapping(SiteUrl.MENU_SORT_ORDR_AJAX)
     @ResponseBody
     public AjaxResponse menuSortOrdrAjax(
-            @RequestBody List<MenuDto> menuSortOrdr,
+            @RequestBody MenuParam menuParam,
             final LogActvtyParam logParam
     ) {
 
@@ -225,7 +225,7 @@ public class MenuController
         String resultMsg = null;
         try {
             // 메뉴 정렬 순서 저장
-            isSuccess = menuService.menuSortOrdr(menuSortOrdr);
+            isSuccess = menuService.sortOrdr(menuParam.getSortOrdr());
             resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;

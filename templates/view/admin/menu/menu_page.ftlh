@@ -15,18 +15,12 @@
 <script type="text/javascript" src="/js/commons/commons-jstree.js?${releaseDate!}"></script>
 <script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
 
-    <style>
-        .dragging {
-            background-color: #99c794 !important;
-            opacity: 75%;
-        }
-    </style>
-
 <script>
     const Page = function() {
         return {
             colorArray: ['#185ADB','#FFC107','#00ADB5','#7952B3','#FFD93D','#4D96FF','#8479E1','#332FD0','#9254C8','#E15FED','#6EDCD9','#4D77FF','#5463FF','#533E85','#FFD32D','#008E89','#03045E','#1C658C','#E15FED','#A97155'],
             menuContainer: "#total_menu_board",
+            initIdx: 0,
             init: function () {
                 Page.updt();
 
@@ -40,26 +34,13 @@
                         appendTo: "body",
                         constrainDimensions: true
                     },
-                    // 드래그할 오브젝트에 설정 :: 유저가 드래그 시작시 발생한다. (단발)
-                    onDragStart: function(event) {
-                        console.log("main: ", event);
-                        // event.source.style.backgroundColor = "red"; // 드래그 시작 시 테두리 추가
-                        // alert("");
-                    },
-                    onDragStop: function(event) {
-                        console.log("main: ", event);
-                        // event.source.style.backgroundColor = ""; // 드래그 끝날 때 테두리 제거
-                        // alert("");
-                    },
-                    onDragOver: function(event) {
-                        console.log("main: ", event);
-                        // event.source.style.backgroundColor = ""; // 드래그 끝날 때 테두리 제거
-                        // alert("");
-                    }
+                }).on('drag:start', (event) => {
+                    const $card = $(event.data.source).find(".card");
+                    $card.addClass('dragging');
+                }).on('drag:stop', (event) => {
+                    const $card = $(event.data.source).find(".card");
+                    $card.removeClass('dragging');
                 });
-                Page.mainSwappable.onDragStop = function(event) {
-                    console.log("main: ", event);
-                };
 
                 const subContainers = document.querySelectorAll(".draggable-zone-sub");
                 if (subContainers.length === 0) return false;
@@ -71,41 +52,19 @@
                         appendTo: "body",
                         constrainDimensions: true
                     },
-                    // 드래그할 오브젝트에 설정 :: 유저가 드래그 시작시 발생한다. (단발)
-                    onDragStart: function(event) {
-                        console.log("sub: ", event);
-                        // event.source.style.backgroundColor = "red"; // 드래그 시작 시 테두리 추가
-                        // alert("!!");
-                    },
-                    onDragStop: function(event) {
-                        console.log("sub: ", event);
-                        // event.source.style.border = ""; // 드래그 끝날 때 테두리 제거
-                        // alert("!!!");
-                    }
+                }).on('drag:start', (event) => {
+                    $(event.data.source).addClass('dragging');
+                }).on('drag:stop', (event) => {
+                    const id = $(event.data.source).attr("id");
+                    setTimeout(() => {
+                        const $newLi = $("li#"+id);
+                        const $newParent = $newLi.parents("li.sortable-item");
+                        const newParentId = $newParent.closest("li.sortable-item").attr('id');
+                        $newLi.addClass("border-noti border-dotted border-1 blink");
+                        $newLi.attr('upper-menu-no', newParentId);
+                        $newLi.removeClass('dragging');
+                    }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
                 });
-
-
-
-                Page.mainSwappable.on('drag:start', (event) => {
-                    const $card = $(event.data.source).find(".card");
-                    $card.addClass('dragging');
-                });
-
-                Page.mainSwappable.on('drag:stop', (event) => {
-                    const $card = $(event.data.source).find(".card");
-                    $card.removeClass('dragging');
-                });
-
-                Page.subSwappable.on('drag:start', (event) => {
-                    const $li = $(event.data.source);
-                    $li.addClass('dragging');
-                });
-
-                Page.subSwappable.on('drag:stop', (event) => {
-                    const $li = $(event.data.source);
-                    $li.removeClass('dragging');
-                });
-
             },
 
             /**
@@ -140,18 +99,6 @@
                     Page.drawSubMenu(subMenu);
                 });
             },
-            // drawSubMenu: function(treeSelector, rslt, idx) {
-            //     let menuNo = rslt.menuNo, menuNm = rslt.menuNm, menuTyCd = rslt.menuTyCd;
-            //     commons.util.handlebarsAppend(rslt, "menu_sub");
-            //     Page.drawSubMenu();
-            //     let isDir = rslt.dir;
-            //     let subMenuContainer = upperElmtSelector + " > ul.sub-menu-list";
-            //     $(subMenuContainer).append(menuTemplateHtml);
-            //     if (!rslt.dir) $("#addBtn_"+menuNo).remove();       // 소메뉴는 추가버튼 없앰
-            //     // 그 하위메뉴 그리기
-            //     let menuSubList = rslt.menuSubList;
-            //     for (let i = 0; i < menuSubList.length; i++) Page.drawMenu("#"+menuNo, menuSubList[i], i);
-            // },
             drawTree: function() {
                 let jstreeContainer = Page.jstreeContainer;
                 commons.jstree.reset(jstreeContainer);
@@ -179,6 +126,25 @@
                     if (!result.value) return;
                     commons.util.blockUIFileDownload();
                     $("#listForm").attr("action", "${SiteUrl.LOG_ACTVTY_LIST_XLSX_DOWNLOAD!}").submit();
+                });
+            },
+            /** 정렬순서 저장 */
+            sortOrdr: function() {
+                let orderData = [];
+                document.querySelectorAll('.sortable-item').forEach((item, index) => {
+                    orderData.push({ "menuNo": Number($(item).attr("id")), "upperMenuNo": Number($(item).attr("upper-menu-no")), "state": { "sortOrdr": index }});
+                });
+                const url = "${SiteUrl.MENU_SORT_ORDR_AJAX!}";
+                let ajaxData = { "sortOrdr": orderData };
+                console.log(ajaxData);
+                commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
+                    if (res.result) {
+                        if (commons.util.isNotEmpty(res.message)) {
+                            Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
+                        } else {
+                            commons.util.blockUIReload();
+                        }
+                    }
                 });
             }
         }
@@ -328,18 +294,6 @@
                 });
                 MenuDrag.sortOrdr(sortOrdrAjaxData);       // 드래그앤드롭 메뉴 순서 저장 :: 메소드 분리
             },
-            /** 드래그앤드롭한 메뉴 순서 저장 */
-            sortOrdr: function(sortOrdrAjaxData) {
-                const url = "${SiteUrl.MENU_SORT_ORDR_AJAX!}";
-                let ajaxData = JSON.stringify(sortOrdrAjaxData);
-                commons.util.blockUIJsonAjax(url, "post", JSON.stringify(sortOrdrAjaxData), function(res) {
-                    if (res.result === false) {
-                        if (commons.util.isNotEmpty(res.message)) alert(res.message);
-                    } else {
-                        Page.fnUpdtTree(menuContainer);
-                    }
-                });
-            }
         }
     }();
     $(document).ready(function() {

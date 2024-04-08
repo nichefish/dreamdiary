@@ -3,20 +3,23 @@
   -- @included_in : menu_page.ftlh
 -->
 <script type="text/x-handlebars-template" id="menu_main_card_template">
-    <li class="col-4 list-unstyled p-5 draggable-main" style="{{borderColor}}"
-         id="{{menuNo}}" data-type="{{menuTyCd}}" data-index="{{#if (exists sortOrdr)}}{{sortOrdr}}{{else}}{{@index}}{{/if}}">
+    <li class="col-4 list-unstyled p-5 sortable-item draggable-main" style="{{borderColor}}"
+         id="{{menuNo}}" data-type="{{menuTyCd}}" upper-menu-no="{{upperMenuNo}}">
         <div class="card shadow">
             <div class="card-header">
                 <div class="d-flex align-items-center">
                     <div class="draggable-handle-main cursor-move pt-2"
                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
-                        <i class="ki-duotone ki-abstract-14 fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                        <i class="ki-duotone ki-abstract-14 fs-2x">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
                     </div>
                     <!-- ↓의도된것 -->
                     <i class="{{icon}} text-info fs-3 ms-8"></i>
                     <h2 class="mx-2 mb-0 text-info cursor-pointer text-underline-dotted" onclick="Menu.mdfForm('{{menuNo}}');"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
-                        <span {{#if (equals state.useYn "Y")}}class="strikethrough"{{/if}}>
+                        <span class="title {{#if (equals state.useYn "Y")}}strikethrough{{/if}}">
                             {{menuNm}}  // {{#if (exists sortOrdr)}}{{sortOrdr}}{{else}}@{{@index}}{{/if}} //   {{sortOrdr}}_{{@index}}
                         </span>
                     </h2>

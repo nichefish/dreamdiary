@@ -480,6 +480,27 @@ html, body {
     }
 }
 
+.dragging {
+    background-color: #a9d9a4 !important;
+    opacity: 75%;
+}
+
+/** tinymce 글접기 관련 */
+.tinymce-section {
+    margin-bottom: 10px;
+}
+.tinymce-collapse-toggle {
+    cursor: pointer;
+    font-weight: bold;
+}
+.tinymce-collapse-div {
+    //
+}
+.tinymce-collapsed {
+    display: none;
+}
+
+/** cursors */
 .cursor-help {
     cursor: help;
 }
@@ -518,19 +539,4 @@ html, body {
 }
 .cursor-zoom-in {
     cursor: zoom-in;
-}
-
-/** tinymce 글접기 관련 */
-.tinymce-section {
-    margin-bottom: 10px;
-}
-.tinymce-collapse-toggle {
-    cursor: pointer;
-    font-weight: bold;
-}
-.tinymce-collapse-div {
-    //
-}
-.tinymce-collapsed {
-    display: none;
 }

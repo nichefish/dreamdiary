@@ -110,6 +110,14 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
     /**
      * default: 항목 목록 조회 (entity level)
      */
+    default List<Entity> getListEntity(final BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getListEntity(searchParamMap);
+    }
+
+    /**
+     * default: 항목 목록 조회 (entity level)
+     */
     default List<Entity> getListEntity(final Map<String, Object> searchParamMap) throws Exception {
         Repository repository = this.getRepository();
         Spec spec = this.getSpec();

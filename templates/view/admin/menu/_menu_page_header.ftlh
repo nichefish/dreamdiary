@@ -32,5 +32,9 @@
         <!-- 버튼:: 등록 화면 이동하기 -->
         <@component.btn_header_reg_modal "Menu.regModal('${Constant.MENU_TY_MAIN!}');" />
     </div>
+    <div>
+        <!-- 버튼:: 정렬순서 -->
+        <@component.btn_header_sort_ordr "Page.sortOrdr();" />
+    </div>
 </form>
 

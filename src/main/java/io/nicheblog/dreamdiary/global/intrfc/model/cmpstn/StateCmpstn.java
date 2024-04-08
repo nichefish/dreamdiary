@@ -21,10 +21,9 @@ public class StateCmpstn
         implements Serializable {
 
     /** 정렬 순서 */
-    @Builder.Default
-    private Integer sortOrdr = 0;
+    private Integer sortOrdr;
 
     /** 사용 여부 (Y/N) */
     @Builder.Default
-    private String useYn = "Y";
+    private String useYn = "N";
 }

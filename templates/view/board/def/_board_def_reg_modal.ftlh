@@ -51,15 +51,6 @@
                                                     메뉴 번호
                                                 </span>
                                             </th>
-                                            <th class="col-1 text-center wb-keepall pb-2">
-                                                <em class="text-danger">*</em>
-                                                <span class="cursor-help"
-                                                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                                                      title="좌측 메뉴 목록에 표시될&#10;메뉴 순서를 입력합니다.&#10;순서가 겹칠 경우&#10;내부 로직에 따라 정렬됩니다.">
-                                                    정렬 순서
-                                                </span>
-                                            </th>
-                                            <th class="col-1 text-center wb-keepall pb-2">-</th>
                                         </tr>
                                     </thead>
                                     <tbody id="board_def_reg_div">

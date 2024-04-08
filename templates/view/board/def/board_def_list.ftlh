@@ -10,11 +10,37 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
+
 <script>
     const Page = function() {
         return {
             init: function () {
                 commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
+
+                const containers = document.querySelectorAll(".draggable-zone");
+                if (containers.length === 0) return false;
+                Page.swappable = new Draggable.Sortable(containers, {
+                    draggable: ".draggable",
+                    handle: ".draggable .draggable-handle",
+                    mirror: {
+                        //appendTo: selector,
+                        appendTo: "body",
+                        constrainDimensions: true
+                    },
+                }).on('drag:start', (event) => {
+                    $(event.data.source).addClass('dragging');
+                }).on('drag:stop', (event) => {
+                    const id = $(event.data.source).attr("id");
+                    setTimeout(() => {
+                        const $newLi = $("li#"+id);
+                        const $newParent = $newLi.parents("li.sortable-item");
+                        const newParentId = $newParent.closest("li.sortable-item").attr('id');
+                        $newLi.addClass("border-noti border-dotted border-1 blink");
+                        $newLi.attr('upper-menu-no', newParentId);
+                        $newLi.removeClass('dragging');
+                    }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
+                });
             },
             /** 등록 모달 호출 */
             regModal: function() {
@@ -118,6 +144,25 @@
                     });
                 });
             },
+            /** 정렬순서 저장 */
+            sortOrdr: function() {
+                let orderData = [];
+                document.querySelectorAll('.sortable-item').forEach((item, index) => {
+                    orderData.push({ "boardCd": $(item).attr("id"), "state": { "sortOrdr": index }});
+                });
+                const url = "${SiteUrl.BOARD_DEF_SORT_ORDR_AJAX!}";
+                let ajaxData = { "sortOrdr": orderData };
+                console.log(ajaxData);
+                commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
+                    if (res.result) {
+                        if (commons.util.isNotEmpty(res.message)) {
+                            Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
+                        } else {
+                            commons.util.blockUIReload();
+                        }
+                    }
+                });
+            }
         }
     }();
 
@@ -143,7 +188,6 @@
                 <th class="col-lg-1 col-6 text-center wb-keepall">게시판 코드</th>
                 <th class="col-2 text-center wb-keepall w-15">글분류코드</th>
                 <th class="col-1 text-center wb-keepall w-10">메뉴 번호</th>
-                <th class="col-1 text-center wb-keepall w-10">정렬 순서</th>
                 <th class="col-1 text-center wb-keepall w-10">글 갯수</th>
                 <th class="col-1 text-center wb-keepall w-5">사용 여부</th>
                 <th class="col-1 text-center wb-keepall w-5">-</th>
@@ -151,11 +195,17 @@
         </thead>
         <!--end::Table head-->
         <!--begin::Table body-->
-        <tbody>
+        <tbody class="draggable-zone">
         <#list boardDefMngList![] as boardDef>
-            <tr>
+            <tr class="sortable-item draggable" id="${boardDef.boardCd!}">
                 <td class="text-center hidden-table">
-                    ${boardDef.rnum!}
+                    <div class="draggable-handle cursor-move pt-2"
+                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
+                        <i class="ki-duotone ki-abstract-14 fs-2x">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
                 </td>
                 <td class="text-start ps-15">
                     <b>${boardDef.boardNm!}</b>
@@ -184,13 +234,6 @@
                     <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard mt-4"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목 수정 팝업을 호출합니다.">
                         <i class="bi bi-pencil-square fs-5 text-noti" onclick="Page.mdfItemForm('${boardDef.boardCd!}', 'menuNo', '메뉴 번호', '${boardDef.menuNo!}');"></i>
-                    </a>
-                </td>
-                <td class="text-center hidden-table">
-                    ${boardDef.sortOrdr!}
-                    <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard mt-4"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목 수정 팝업을 호출합니다.">
-                        <i class="bi bi-pencil-square fs-5 text-noti" onclick="Page.mdfItemForm('${boardDef.boardCd!}', 'sortOrdr', '정렬 순서', '${boardDef.sortOrdr!}');"></i>
                     </a>
                 </td>
                 <td class="text-center hidden-table">

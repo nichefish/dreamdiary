@@ -1,9 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.mapstruct;
 
-import org.mapstruct.BeanMapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 /**
  * BaseMapstruct
@@ -34,4 +31,12 @@ public interface BaseMapstruct<Dto, Entity> {
     @Named("updateFromDto")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(final Dto d, final @MappingTarget Entity e) throws Exception;
+
+    /**
+     * default : State 관련 기본 요소들 매핑
+     */
+    @AfterMapping
+    default void mapBaseListFields(final Dto dto, final @MappingTarget Entity entity) throws Exception {
+        MapstructHelper.mapStateFields(dto, entity);
+    }
 }

@@ -120,7 +120,7 @@
 </style>
 
 <!--begin::Root-->
-<div class="w-lg-500px rounded shadow-sm mt-20 p-10 p-lg-15 mx-auto my-auto">
+<div class="w-lg-500px rounded mt-20 p-10 p-lg-15 mx-auto my-auto">
     <div class="aside-logo flex-column-auto mb-20" style="height:105px;">
         <!-- -->
     </div>

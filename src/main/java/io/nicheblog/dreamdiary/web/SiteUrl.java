@@ -113,6 +113,7 @@ public interface SiteUrl {
     String BOARD_DEF_DEL_AJAX = Prefix.BOARD_DEF + "/boardDefDelAjax.do";
     String BOARD_DEF_USE_AJAX = Prefix.BOARD_DEF + "/boardDefUseAjax.do";
     String BOARD_DEF_UNUSE_AJAX = Prefix.BOARD_DEF + "/boardDefUnuseAjax.do";
+    String BOARD_DEF_SORT_ORDR_AJAX = Prefix.MENU + "/boardDefSortOrdrAjax.do";
 
     /** 템플릿 관리 (TODO) */
     String TMPLAT_DEF_LIST = Prefix.TMPLAT + "/tmplatDefList.do";
