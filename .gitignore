@@ -6,7 +6,7 @@
 /src/main/resources/application-local.yml
 /src/main/resources/application-dev.yml
 /src/main/resources/application-prod.yml
-/src/text/resources/application-test.yml
+/src/test/resources/application-test.yml
 /src/main/resources/static/metronic/*
 !/src/main/resources/static/metronic/.metronic_v8.0.23
 !/src/main/resources/static/metronic/.metronic_v8.2.5

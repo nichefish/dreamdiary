@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -98,4 +99,11 @@ public class MenuService
         return this.pageEntityToDto(menuMainEntityPage);
     }
 
+    /**
+     * 정렬 순서 업데이트
+     */
+    public boolean menuSortOrdr(List<MenuDto> menuSortOrdr) {
+        // return (menuMapper.menuSortOrdr(menuSortOrdr) > 0);
+        return true;
+    }
 }

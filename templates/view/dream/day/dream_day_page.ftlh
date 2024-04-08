@@ -13,7 +13,7 @@
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?20230908"></script>
-<link type="text/css" rel="stylesheet" href="/css/dream.css?${releaseDate!}" />
+<link rel="stylesheet" type="text/css" href="/css/dream.css?${releaseDate!}" />
 
 <script>
     const Page = function() {

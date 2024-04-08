@@ -29,20 +29,20 @@
     <link rel="shortcut icon" href="/favicon.ico" />
 
 <#--    <!--Fonts(used by all pages) &ndash;&gt;
-    <link type="text/css" rel="stylesheet" href="/css/font.css?family=Poppins:300,400,500,600,700" />-->
+    <link rel="stylesheet" type="text/css" href="/css/font.css?family=Poppins:300,400,500,600,700" />-->
 
     <!--Metronic:: Gloabl Css Bundle(used by all pages) -->
-    <link type="text/css" href="/metronic/assets/plugins/global/plugins.bundle.css?${releaseDate!}" rel="stylesheet" type="text/css"/>
-    <link type="text/css" href="/metronic/assets/css/style.bundle.css?${releaseDate!}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/metronic/assets/plugins/global/plugins.bundle.css?${releaseDate!}" />
+    <link rel="stylesheet" type="text/css" href="/metronic/assets/css/style.bundle.css?${releaseDate!}" />
     <!--Fonts:: Gloabl Css Bundle(used by all pages) -->
-    <link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/fontawesome.css?${releaseDate!}" />
-    <link type="text/css" rel="stylesheet" href="/lib/bootstrap-icon/bootstrap-icons.css?${releaseDate!}" />
+    <link rel="stylesheet" type="text/css" href="/lib/fontawesome/css/fontawesome.css?${releaseDate!}" />
+    <link rel="stylesheet" type="text/css" href="/lib/bootstrap-icon/bootstrap-icons.css?${releaseDate!}" />
 
 
     <!--My:: Gloabl Css Bundle(used by all pages) -->
-    <link type="text/css" rel="stylesheet" href="/css/commons.css?${releaseDate!}" />
-    <link type="text/css" rel="stylesheet" href="/css/commons-respns.css?${releaseDate!}" />
-    <link type="text/css" rel="stylesheet" href="/css/font.css?${releaseDate!}" />
+    <link rel="stylesheet" type="text/css" href="/css/commons.css?${releaseDate!}" />
+    <link rel="stylesheet" type="text/css" href="/css/commons-respns.css?${releaseDate!}" />
+    <link rel="stylesheet" type="text/css" href="/css/font.css?${releaseDate!}" />
 
     <!--Javascript:: Global Javascript Bundle(used by all pages)-->
     <script type="text/javascript" src="/js/handlebars.min.js?${releaseDate!}"></script>

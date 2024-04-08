@@ -3,9 +3,9 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
-<script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
-<script type="text/javascript" src="/js/commons/commons-tinymce.js?20230918"></script>
-<script type="text/javascript" src="/lib/prism/js/prism.js"></script>
+<script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/js/commons/commons-tinymce.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/lib/prism/js/prism.js?${releaseDate!}"></script>
 
 <#assign isReg = (isReg!false)>
 <#assign isMdf = (isMdf!false)>

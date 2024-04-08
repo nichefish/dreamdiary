@@ -3,15 +3,22 @@
   -- @included_in : menu_page.ftlh
 -->
 <script type="text/x-handlebars-template" id="menu_main_card_template">
-    <div class="col-4 my-4">
-        <div class="p-6 bg-white shadow" style="{{borderColor}}">
-            <div class="d-flex align-items-center justify-content-between fw-bold"
-                 id="{{menuNo}}" type="{{menuTyCd}}" data-index="{{sortOrdr}}">
+    <li class="col-4 list-unstyled p-5 draggable-main" style="{{borderColor}}"
+         id="{{menuNo}}" data-type="{{menuTyCd}}" data-index="{{#if (exists sortOrdr)}}{{sortOrdr}}{{else}}{{@index}}{{/if}}">
+        <div class="card shadow">
+            <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h2 class="mx-2 mb-0 cursor-pointer" onclick="Menu.mdfForm('{{menuNo}}');"
+                    <div class="draggable-handle-main cursor-move pt-2"
+                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
+                        <i class="ki-duotone ki-abstract-14 fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                    </div>
+                    <!-- ↓의도된것 -->
+                    <i class="{{icon}} text-info fs-3 ms-8"></i>
+                    <h2 class="mx-2 mb-0 text-info cursor-pointer text-underline-dotted" onclick="Menu.mdfForm('{{menuNo}}');"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
-                        <i class="{{icon}} fs-3 mx-1"></i>
-                        <span {{#if (equals state.useYn "Y")}}class="strikethrough"{{/if}}>{{menuNm}}</span>
+                        <span {{#if (equals state.useYn "Y")}}class="strikethrough"{{/if}}>
+                            {{menuNm}}  // {{#if (exists sortOrdr)}}{{sortOrdr}}{{else}}@{{@index}}{{/if}} //   {{sortOrdr}}_{{@index}}
+                        </span>
                     </h2>
                 </div>
                 <div class="d-flex align-items-center justify-content-between">
@@ -29,11 +36,9 @@
                 </div>
             </div>
 
-            <div class="separator separator-dashed border-gray-300 my-8"></div>
-
-            <ul id="menu_sub_{{menuNo}}" class="sub-menu-list custom-scroll">
+            <ul id="menu_sub_{{menuNo}}" class="card-body ps-15 sub-menu-list custom-scroll draggable-zone-sub">
                 <!-- sub-menu area -->
             </ul>
         </div>
-    </div>
+    </li>
 </script>

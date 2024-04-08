@@ -3,24 +3,26 @@
   -- @included_in : menu_page.ftlh
   -->
 <script type="text/x-handlebars-template" id="menu_sub_template">
-    <div class="list-unstyled" style="{{borderColor}}"
-        id="{{menuNo}}" type="{{menuTyCd}}" data-index="{{sortOrdr}}">
+    <li class="list-unstyled draggable-sub" style="{{borderColor}}"
+         id="{{menuNo}}" data-type="{{menuTyCd}}" data-index="{{sortOrdr}}">
         <div class="d-flex align-items-center justify-content-between rounded">
-            <div class="d-flex justify-content-between"
-                 onclick="Menu.mdfForm('{{menuNo}}');"
-                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
-                <span class="{{#if isMain}}text-primary fw-bolder fs-6{{else}}menu-title-gray-600{{/if}} cursor-pointer">
-                    {{#if (exists icon)}}
-                        <i class="{{icon}} fs-3"></i>
-                    {{else}}
-                        <span class="menu-bullet">
-                        <span class="bullet bullet-dot vertical-middle"></span>
-                    </span>
-                    {{/if}}
-                    <span class="ms-1">
+            <div class="d-flex align-items-center">
+                 <div class="draggable-handle-sub cursor-move pt-2"
+                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
+                    <i class="ki-duotone ki-abstract-14 fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                </div>
+                {{#if (exists icon)}}
+                    <i class="{{icon}} text-muted fs-3 ms-8"></i>
+                {{else}}
+                    <span class="menu-bullet">
+                    <span class="bullet bullet-dot vertical-middle"></span>
+                {{/if}}
+                <div class="mx-2 mb-0 text-dark cursor-pointer text-underline-dotted" onclick="Menu.mdfForm('{{menuNo}}');"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
+                    <span {{#if (equals state.useYn "Y")}}class="strikethrough"{{/if}}>
                         {{menuNm}}
                     </span>
-                </span>
+                </div>
             </div>
             <div class="d-flex align-items-center justify-content-end">
                 <div class="w-80px">
@@ -40,5 +42,5 @@
         <ul id="menu_sub_{{menuNo}}" class="sub-menu-list custom-scroll">
             <!-- sub-menu area -->
         </ul>
-    </div>
+    </li>
 </script>

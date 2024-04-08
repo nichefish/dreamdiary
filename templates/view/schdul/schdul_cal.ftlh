@@ -9,9 +9,9 @@
 </#assign>
 
 <!--begin::Page Vendors Javascript(used by this page)-->
-<link href="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-<script src="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-<script src="/js/commons/commons-fullcalendar.js?20230918"></script>
+<link rel="stylesheet" type="text/css" href="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css?${releaseDate!}" />
+<script src="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?${releaseDate!}"></script>
+<script src="/js/commons/commons-fullcalendar.js?${releaseDate!}"></script>
 
 <#assign isReg = (isReg!false)>
 <#assign isMdf = (isMdf!false)>

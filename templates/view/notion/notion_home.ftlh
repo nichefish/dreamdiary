@@ -4,7 +4,7 @@
 <#import "/layout/layout.ftlh" as layout >
 
 <#--<script defer="defer" src="/static/react/static/js/main.js"></script>
-<link rel="stylesheet" href="/static/react/static/css/main.css">-->
+<link rel="stylesheet" type="text/css" href="/static/react/static/css/main.css">-->
 
 <@layout.layout toolbar=toolbar!"">
 

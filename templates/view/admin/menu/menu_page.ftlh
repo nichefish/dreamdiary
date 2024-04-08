@@ -10,15 +10,18 @@
 
 <@layout.layout toolbar=toolbar!"">
 
-<link rel="stylesheet" href="/lib/jstree/css/style.min.css" />
-<script type="text/javascript" src="/lib/jstree/js/jstree.min.js"></script>
-<script type="text/javascript" src="/js/commons/commons-jstree.js?20230918"></script>
+<link rel="stylesheet" type="text/css" href="/lib/jstree/css/style.min.css?${releaseDate!}" />
+<script type="text/javascript" src="/lib/jstree/js/jstree.min.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/js/commons/commons-jstree.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
 
-<style>
-    ul {
-        padding-left: 1.5em !important;
-    }
-</style>
+    <style>
+        .dragging {
+            background-color: #99c794 !important;
+            opacity: 75%;
+        }
+    </style>
+
 <script>
     const Page = function() {
         return {
@@ -26,7 +29,85 @@
             menuContainer: "#total_menu_board",
             init: function () {
                 Page.updt();
+
+                const mainContainers = document.querySelectorAll(".draggable-zone-main");
+                if (mainContainers.length === 0) return false;
+                Page.mainSwappable = new Draggable.Sortable(mainContainers, {
+                    draggable: ".draggable-main",
+                    handle: ".draggable-main .draggable-handle-main",
+                    mirror: {
+                        //appendTo: selector,
+                        appendTo: "body",
+                        constrainDimensions: true
+                    },
+                    // 드래그할 오브젝트에 설정 :: 유저가 드래그 시작시 발생한다. (단발)
+                    onDragStart: function(event) {
+                        console.log("main: ", event);
+                        // event.source.style.backgroundColor = "red"; // 드래그 시작 시 테두리 추가
+                        // alert("");
+                    },
+                    onDragStop: function(event) {
+                        console.log("main: ", event);
+                        // event.source.style.backgroundColor = ""; // 드래그 끝날 때 테두리 제거
+                        // alert("");
+                    },
+                    onDragOver: function(event) {
+                        console.log("main: ", event);
+                        // event.source.style.backgroundColor = ""; // 드래그 끝날 때 테두리 제거
+                        // alert("");
+                    }
+                });
+                Page.mainSwappable.onDragStop = function(event) {
+                    console.log("main: ", event);
+                };
+
+                const subContainers = document.querySelectorAll(".draggable-zone-sub");
+                if (subContainers.length === 0) return false;
+                Page.subSwappable = new Draggable.Sortable(subContainers, {
+                    draggable: ".draggable-sub",
+                    handle: ".draggable-sub .draggable-handle-sub",
+                    mirror: {
+                        //appendTo: selector,
+                        appendTo: "body",
+                        constrainDimensions: true
+                    },
+                    // 드래그할 오브젝트에 설정 :: 유저가 드래그 시작시 발생한다. (단발)
+                    onDragStart: function(event) {
+                        console.log("sub: ", event);
+                        // event.source.style.backgroundColor = "red"; // 드래그 시작 시 테두리 추가
+                        // alert("!!");
+                    },
+                    onDragStop: function(event) {
+                        console.log("sub: ", event);
+                        // event.source.style.border = ""; // 드래그 끝날 때 테두리 제거
+                        // alert("!!!");
+                    }
+                });
+
+
+
+                Page.mainSwappable.on('drag:start', (event) => {
+                    const $card = $(event.data.source).find(".card");
+                    $card.addClass('dragging');
+                });
+
+                Page.mainSwappable.on('drag:stop', (event) => {
+                    const $card = $(event.data.source).find(".card");
+                    $card.removeClass('dragging');
+                });
+
+                Page.subSwappable.on('drag:start', (event) => {
+                    const $li = $(event.data.source);
+                    $li.addClass('dragging');
+                });
+
+                Page.subSwappable.on('drag:stop', (event) => {
+                    const $li = $(event.data.source);
+                    $li.removeClass('dragging');
+                });
+
             },
+
             /**
              * 트리 구조 데이터 리로드 및 새로 그리기
              */
@@ -39,7 +120,6 @@
                         return false;
                     }
                     let mainMenuList = res.resultList;
-                    console.log(mainMenuList);
                     if (!Array.isArray(mainMenuList) || mainMenuList.length < 1) return;
                     mainMenuList.forEach(function(mainMenu) {
                         commons.util.handlebarsAppend(mainMenu, "menu_main_card");
@@ -51,10 +131,8 @@
              * 서브메뉴 처리 :: 자기 자신을 그리고 각각의 서브메뉴에 대해서 재귀호출
              */
             drawSubMenu: function(upperMenu) {
-                console.log("upperMenu: ", upperMenu);
                 // 서브메뉴 돌면서 재귀호출
                 let subMenuList = upperMenu.subMenuList;
-                console.log("subMenuList: ", subMenuList);
                 if (!Array.isArray(subMenuList) || subMenuList.length <1) return;
                 let menuNo = upperMenu.menuNo;
                 subMenuList.forEach(function(subMenu) {
@@ -185,20 +263,96 @@
             },
         }
     }();
+    const MenuDrag = function() {
+        return {
+            /**
+             * 드래그할 오브젝트에 설정 :: 유저가 드래그 시작시 발생한다. (단발)
+             */
+            dragStart: function(draggingObj, e) {
+                $(".dragging").removeClass("dragging");     // dragging 클래스 리셋
+                $(draggingObj).addClass("dragging").css("cursor", "default");
+            },
+            /**
+             * 드래그 타겟에 설정 :: 자기 위에서 드래그가 일어나고 있을 때 계속 발생한다. (매 수백 밀리초마다 발생)
+             */
+            dragOver: function(targetObj, e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const $draggingObj = $(".dragging");
+                const draggingId = $draggingObj.closest("li").attr("id");
+                const draggingType = $draggingObj.closest("li").attr("data-type");
+
+                const targetId = $(targetObj).closest("li").attr("id");
+                const targetType = $(targetObj).closest("li").attr("data-type");
+
+                let targetDiv = targetType === '${Constant.MENU_TY_MAIN!}' ? $(targetObj).closest(".drag-item") : $(targetObj).find(".drag-item");
+                // 1. 자기자신은 타겟에서 제외시킨다. 2. 같은 요소(대-대, 중-중, 소-소)끼리만 순서바꾸기가 가능하다.
+                // let targetDiv =  $(targetObj).find(".drag-item");
+                // 1. 자기자신은 타겟에서 제외시킨다. 2. 같은 요소(대-대, 중-중, 소-소)끼리만 순서바꾸기가 가능하다.
+                const isSameObj = draggingId === targetId;
+                const isNotSameLevel = draggingType !== targetType;
+                if (isSameObj || isNotSameLevel) {
+                    // targetDiv.removeClass("drag-area").css("cursor", "not-allowed");
+                    return false;
+                }
+                targetDiv.addClass("drag-area").css("cursor", "default");
+            },
+            /**
+             * 드래그 타겟에 설정 :: 자신한테서 드래그 벗어날시 발생한다.
+             */
+            dragLeave: function(thisObj) {
+                $(thisObj).removeClass("drag-area").css("cursor", "default");
+            },
+            /**
+             * 드래그 타겟에 설정 :: 자신한테 드랍이 일어났을 시 발생한다.
+             */
+            drop: function(thisObj, e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!thisObj.hasClass("drag-area")) return false;
+                $(thisObj).removeClass("drag-area").css("cursor", "default");
+
+                // 순서 바꾸기
+                let droppingLi = $(".dragging").closest("li");
+                let droppingIdx = droppingLi.attr("data-index");
+                let targetLi = $(thisObj).closest("li");
+                let targetIdx = targetLi.attr("data-index");
+
+                let sortOrdrAjaxData = [ { "menuId" : droppingLi.attr("id"), "sortOrdr" : targetIdx } ];
+                let oldSortOrdr, newSortOrdr;
+                droppingLi.siblings("li").each(function (idx, elmt) {
+                    oldSortOrdr = Number($(elmt).attr("data-index"));
+                    if (oldSortOrdr < Math.min(targetIdx, droppingIdx) || oldSortOrdr > Math.max(targetIdx, droppingIdx)) return true;
+                    newSortOrdr = (droppingIdx > targetIdx) ? oldSortOrdr + 1 : oldSortOrdr - 1;
+                    sortOrdrAjaxData.push({ "menuId" : $(elmt).attr("id"), "sortOrdr" : newSortOrdr });
+                });
+                MenuDrag.sortOrdr(sortOrdrAjaxData);       // 드래그앤드롭 메뉴 순서 저장 :: 메소드 분리
+            },
+            /** 드래그앤드롭한 메뉴 순서 저장 */
+            sortOrdr: function(sortOrdrAjaxData) {
+                const url = "${SiteUrl.MENU_SORT_ORDR_AJAX!}";
+                let ajaxData = JSON.stringify(sortOrdrAjaxData);
+                commons.util.blockUIJsonAjax(url, "post", JSON.stringify(sortOrdrAjaxData), function(res) {
+                    if (res.result === false) {
+                        if (commons.util.isNotEmpty(res.message)) alert(res.message);
+                    } else {
+                        Page.fnUpdtTree(menuContainer);
+                    }
+                });
+            }
+        }
+    }();
     $(document).ready(function() {
         Page.init();
         Menu.init();
     });
 </script>
 
-<div class="card post">
-    <form name="procForm" id="procForm" method="get">
-        <input type="hidden" name="logActvtyNo" id="logActvtyNo" />
-    </form>
+<form name="procForm" id="procForm" method="get">
+</form>
 
-    <div class="row mt-2 mb-6" id="menu_main_card_div">
-        <!-- handlebars template goes in here -->
-    </div>
+<div class="row mt-2 mb-6 px-10 draggable-zone-main" id="menu_main_card_div">
+    <!-- handlebars template goes in here -->
 </div>
 <!--end::Card-->
 

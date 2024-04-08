@@ -32,6 +32,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.util.List;
 
 /**
  * MenuController
@@ -206,6 +207,37 @@ public class MenuController
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     */
+    @RequestMapping(SiteUrl.MENU_SORT_ORDR_AJAX)
+    @ResponseBody
+    public AjaxResponse menuSortOrdrAjax(
+            @RequestBody List<MenuDto> menuSortOrdr,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = null;
+        try {
+            // 메뉴 정렬 순서 저장
+            isSuccess = menuService.menuSortOrdr(menuSortOrdr);
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // logParam.setCn("key: " + menuNo);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ajaxResponse;
     }
 
     /**

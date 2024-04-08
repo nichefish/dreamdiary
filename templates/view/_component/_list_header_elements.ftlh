@@ -109,7 +109,7 @@
 <!--
  * 버튼 : 등록 화면 이동
  -->
-<#macro btn_header_reg_form closerNm>
+<#macro btn_header_reg_form func>
     <!-- 버튼:: 등록하기 -->
     <button type="button" class="btn btn-sm btn-primary"
             onclick="${func}"

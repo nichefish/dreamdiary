@@ -104,6 +104,7 @@ public interface SiteUrl {
     String MENU_DTL_AJAX = Prefix.MENU + "/menuDtlAjax.do";
     String MENU_MDF_AJAX = Prefix.MENU + "/menuMdfAjax.do";
     String MENU_DEL_AJAX = Prefix.MENU + "/menuDelAjax.do";
+    String MENU_SORT_ORDR_AJAX = Prefix.MENU + "/menuSortOrdrAjax.do";
 
     /** 게시판 관리 */
     String BOARD_DEF_LIST = Prefix.BOARD_DEF + "/boardDefList.do";
