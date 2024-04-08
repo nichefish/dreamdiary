@@ -211,8 +211,8 @@
 </div>
 
 <#include "/view/admin/cd/_cl_cd_reg_modal.ftlh">
-<#include "/view/admin/cd/_cl_cd_reg_template.ftlh">
+<#include "/view/admin/cd/_cl_cd_reg_template.hbs">
 <#include "/view/admin/cd/_cl_cd_dtl_modal.ftlh">
-<#include "/view/admin/cd/_cl_cd_dtl_template.ftlh">
+<#include "/view/admin/cd/_cl_cd_dtl_template.hbs">
 
 </@layout.layout>
