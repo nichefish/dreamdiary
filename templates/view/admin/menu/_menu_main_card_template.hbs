@@ -1,7 +1,7 @@
 <#--
-  -- 분류 코드(CL_CD) > 상세 Template
-  -- @included_in : cl_cd_list
-  -->
+  -- 메뉴 > 카드 Template
+  -- @included_in : menu_page.ftlh
+-->
 <script type="text/x-handlebars-template" id="menu_main_card_template">
     <div class="col-4 my-4">
         <div class="p-6 bg-white shadow" style="{{borderColor}}">
@@ -11,7 +11,7 @@
                     <h2 class="mx-2 mb-0 cursor-pointer" onclick="Menu.mdfForm('{{menuNo}}');"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
                         <i class="{{icon}} fs-3 mx-1"></i>
-                        <span>{{menuNm}}</span>
+                        <span {{#if (equals state.useYn "Y")}}class="strikethrough"{{/if}}>{{menuNm}}</span>
                     </h2>
                 </div>
                 <div class="d-flex align-items-center justify-content-between">

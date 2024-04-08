@@ -1,6 +1,6 @@
 <#--
   -- 활동 로그 목록 > 검색 영역 Header
-  -- @included_in : log_actvty_list_header
+  -- @included_in : menu_page.ftlh
   -->
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
