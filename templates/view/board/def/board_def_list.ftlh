@@ -33,12 +33,8 @@
                 }).on('drag:stop', (event) => {
                     const id = $(event.data.source).attr("id");
                     setTimeout(() => {
-                        const $newLi = $("li#"+id);
-                        const $newParent = $newLi.parents("li.sortable-item");
-                        const newParentId = $newParent.closest("li.sortable-item").attr('id');
-                        $newLi.addClass("border-noti border-dotted border-1 blink");
-                        $newLi.attr('upper-menu-no', newParentId);
-                        $newLi.removeClass('dragging');
+                        const $newTr = $("tr#"+id);
+                        $newTr.removeClass('dragging').addClass("draggable-modified");
                     }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
                 });
             },
@@ -152,7 +148,6 @@
                 });
                 const url = "${SiteUrl.BOARD_DEF_SORT_ORDR_AJAX!}";
                 let ajaxData = { "sortOrdr": orderData };
-                console.log(ajaxData);
                 commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
                     if (res.result) {
                         if (commons.util.isNotEmpty(res.message)) {
@@ -209,7 +204,7 @@
                 </td>
                 <td class="text-start ps-15">
                     <b>${boardDef.boardNm!}</b>
-                    <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard mt-4"
+                    <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                        title="항목 수정 팝업을 호출합니다.">
                         <i class="bi bi-pencil-square fs-5 text-noti" onclick="Page.mdfItemForm('${boardDef.boardCd!}', 'boardNm', '게시판 이름', '${boardDef.boardNm!}');"></i>
@@ -224,14 +219,14 @@
                 </td>
                 <td class="text-start ps-10 hidden-table">
                     ${boardDef.ctgrClCd!}
-                    <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard mt-4"
+                    <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목 수정 팝업을 호출합니다.">
                         <i class="bi bi-pencil-square fs-5 text-noti" onclick="Page.mdfItemForm('${boardDef.boardCd!}', 'ctgrClCd', '글분류 코드', '${boardDef.ctgrClCd!}');"></i>
                     </a>
                 </td>
                 <td class="text-start hidden-table">
                     ${boardDef.menuNo!}
-                    <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard mt-4"
+                    <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목 수정 팝업을 호출합니다.">
                         <i class="bi bi-pencil-square fs-5 text-noti" onclick="Page.mdfItemForm('${boardDef.boardCd!}', 'menuNo', '메뉴 번호', '${boardDef.menuNo!}');"></i>
                     </a>

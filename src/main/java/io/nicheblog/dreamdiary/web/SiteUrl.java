@@ -138,6 +138,7 @@ public interface SiteUrl {
     String CL_CD_DEL_AJAX = Prefix.CD + "/clCdDelAjax.do";
     String CL_CD_USE_AJAX = Prefix.CD + "/clCdUseAjax.do";
     String CL_CD_UNUSE_AJAX = Prefix.CD + "/clCdUnuseAjax.do";
+    String CL_CD_SORT_ORDR_AJAX = Prefix.CD + "/clCdSortOrdrAjax.do";
 
     String DTL_CD_REG_AJAX = Prefix.CD + "/dtlCdRegAjax.do";
     String DTL_CD_DTL_AJAX = Prefix.CD + "/dtlCdDtlAjax.do";
@@ -146,6 +147,7 @@ public interface SiteUrl {
     String DTL_CD_USE_AJAX = Prefix.CD + "/dtlCdUseAjax.do";
     String DTL_CD_UNUSE_AJAX = Prefix.CD + "/dtlCdUnuseAjax.do";
     String DTL_CD_DEL_AJAX = Prefix.CD + "/dtlCdDelAjax.do";
+    String DTL_CD_SORT_ORDR_AJAX = Prefix.CD + "/dtlCdSortOrdrAjax.do";
     
     /** 활동 로그 조회 */
     String LOG_ACTVTY_LIST = Prefix.LOG_ACTVTY + "/logActvtyList.do";

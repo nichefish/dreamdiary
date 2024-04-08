@@ -101,10 +101,10 @@ public class BoardDefService
     @Transactional
     public boolean sortOrdr(List<BoardDefDto> sortOrdr) throws Exception {
         if (CollectionUtils.isEmpty(sortOrdr)) return true;
-        sortOrdr.forEach(menu -> {
+        sortOrdr.forEach(dto -> {
             try {
-                BoardDefEntity e = this.getDtlEntity(menu.getBoardCd());
-                boardDefMapstruct.updateFromDto(menu, e);
+                BoardDefEntity e = this.getDtlEntity(dto.getBoardCd());
+                boardDefMapstruct.updateFromDto(dto, e);
                 this.updt(e);
             } catch (Exception ex) {
                 ex.getStackTrace();

@@ -4,12 +4,17 @@ import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
+import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.ClCdMapstruct;
+import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.repository.admin.ClCdRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.ClCdSpec;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * ClCdService
@@ -31,7 +36,7 @@ public class ClCdService
     @Resource(name = "clCdSpec")
     private ClCdSpec clCdSpec;
 
-    private final ClCdMapstruct cmmClCdMapstruct = ClCdMapstruct.INSTANCE;
+    private final ClCdMapstruct clCdMapstruct = ClCdMapstruct.INSTANCE;
 
     @Override
     public ClCdRepository getRepository() {
@@ -45,8 +50,26 @@ public class ClCdService
 
     @Override
     public ClCdMapstruct getMapstruct() {
-        return this.cmmClCdMapstruct;
+        return this.clCdMapstruct;
     }
 
-    //
+    /**
+     * 정렬 순서 업데이트
+     */
+    @Transactional
+    public boolean sortOrdr(List<ClCd> sortOrdr) throws Exception {
+        if (CollectionUtils.isEmpty(sortOrdr)) return true;
+        sortOrdr.forEach(dto -> {
+            try {
+                ClCdEntity e = this.getDtlEntity(dto.getClCd());
+                clCdMapstruct.updateFromDto(dto, e);
+                this.updt(e);
+            } catch (Exception ex) {
+                ex.getStackTrace();
+                // 로그 기록, 예외 처리 등
+                throw new RuntimeException(ex);
+            }
+        });
+        return true;
+    }
 }

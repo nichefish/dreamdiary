@@ -5,11 +5,31 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
+
 <script>
     const Page = function() {
         return {
             init: function () {
-                //
+                const containers = document.querySelectorAll(".draggable-zone");
+                if (containers.length === 0) return false;
+                Page.swappable = new Draggable.Sortable(containers, {
+                    draggable: ".draggable",
+                    handle: ".draggable .draggable-handle",
+                    mirror: {
+                        //appendTo: selector,
+                        appendTo: "body",
+                        constrainDimensions: true
+                    },
+                }).on('drag:start', (event) => {
+                    $(event.data.source).addClass('dragging');
+                }).on('drag:stop', (event) => {
+                    const id = $(event.data.source).attr("id");
+                    setTimeout(() => {
+                        const $newTr = $("tr#"+id);
+                        $newTr.removeClass('dragging').addClass("draggable-modified");
+                    }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
+                });
             },
             /** 수정 화면 이동 */
             mdfForm: function() {
@@ -168,8 +188,29 @@
                     });
                 });
             },
+            /** 정렬순서 저장 */
+            sortOrdr: function() {
+                let orderData = [];
+                document.querySelectorAll('.sortable-item').forEach((item, index) => {
+                    orderData.push({ "clCd": $("#clCd").val(), "dtlCd": $(item).attr("id"), "state": { "sortOrdr": index }});
+                });
+                const url = "${SiteUrl.DTL_CD_SORT_ORDR_AJAX!}";
+                let ajaxData = { "sortOrdr": orderData };
+                commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
+                    if (res.result) {
+                        if (commons.util.isNotEmpty(res.message)) {
+                            Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
+                        } else {
+                            commons.util.blockUIReload();
+                        }
+                    }
+                });
+            }
         }
     }();
+    $(document).ready(function() {
+        Page.init();
+    });
 </script>
 
 <div class="card post">
@@ -223,14 +264,18 @@
             <div class="d-flex align-items-center position-relative my-1">
             </div>
         </div>
-        <div class="card-toolbar">
+        <div class="card-toolbar gap-2">
             <!--begin::Toolbar-->
-            <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+            <div>
                 <button type="button" class="btn btn-sm btn-primary"
                         onclick="Page.dtlCdRegModal();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 코드 등록 팝업을&#10;호출합니다.">
                     <i class="fas fa-plus"></i>상세코드 추가
                 </button>
+            </div>
+            <div>
+                <!-- 버튼:: 정렬순서 -->
+                <@component.btn_header_sort_ordr "Page.sortOrdr();" />
             </div>
             <!--end::Toolbar-->
         </div>
@@ -275,11 +320,17 @@
             </thead>
             <!--end::Table head-->
             <!--begin::Table body-->
-            <tbody>
+            <tbody class="draggable-zone">
             <#list clCd.dtlCdList![] as dtlCd>
-                <tr class="bg-hover-secondary" onclick="Page.dtlCdMdfForm('${dtlCd.dtlCd!}');">
+                <tr class="sortable-item draggable bg-hover-secondary" id="${dtlCd.dtlCd!}" onclick="Page.dtlCdMdfForm('${dtlCd.dtlCd!}');">
                     <td class="text-center">
-                        ${dtlCd.rnum!}
+                        <div class="draggable-handle cursor-move pt-2"
+                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
+                            <i class="ki-duotone ki-abstract-14 fs-2x">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </div>
                     </td>
                     <td class="text-start ps-10 cursor-pointer">
                         <span class="fw-bold border-bottom">

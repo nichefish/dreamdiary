@@ -60,9 +60,8 @@
                         const $newLi = $("li#"+id);
                         const $newParent = $newLi.parents("li.sortable-item");
                         const newParentId = $newParent.closest("li.sortable-item").attr('id');
-                        $newLi.addClass("border-noti border-dotted border-1 blink");
                         $newLi.attr('upper-menu-no', newParentId);
-                        $newLi.removeClass('dragging');
+                        $newLi.removeClass('dragging').addClass("draggable-modified");
                     }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
                 });
             },
@@ -136,7 +135,6 @@
                 });
                 const url = "${SiteUrl.MENU_SORT_ORDR_AJAX!}";
                 let ajaxData = { "sortOrdr": orderData };
-                console.log(ajaxData);
                 commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
                     if (res.result) {
                         if (commons.util.isNotEmpty(res.message)) {

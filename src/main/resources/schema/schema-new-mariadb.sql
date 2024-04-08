@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS flsys_meta (
 CREATE TABLE IF NOT EXISTS menu (
     menu_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '메뉴 번호 (PK)',
     upper_menu_no VARCHAR(10) COMMENT '상위 메뉴 번호',
-    menu_cd VARCHAR(50) COMMENT '메뉴 구분코드',
+    menu_ty_cd VARCHAR(50) COMMENT '메뉴 구분코드',
     menu_nm VARCHAR(200) COMMENT '메뉴명',
     url VARCHAR(500) COMMENT '연결 URL',
     icon VARCHAR(200) COMMENT '아이콘',

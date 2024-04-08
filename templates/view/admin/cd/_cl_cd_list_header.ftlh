@@ -24,5 +24,9 @@
         <!-- 버튼:: 등록 모달 호출하기 -->
         <@component.btn_header_reg_modal "Page.regModal();" />
     </div>
+    <div>
+        <!-- 버튼:: 정렬순서 -->
+        <@component.btn_header_sort_ordr "Page.sortOrdr();" />
+    </div>
 </form>
 <!--end::Header-->

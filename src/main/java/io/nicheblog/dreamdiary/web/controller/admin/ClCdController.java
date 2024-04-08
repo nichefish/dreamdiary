@@ -10,7 +10,9 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.model.admin.ClCdParam;
 import io.nicheblog.dreamdiary.web.model.admin.ClCdSearchParam;
+import io.nicheblog.dreamdiary.web.model.board.BoardDefParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.service.admin.ClCdService;
@@ -18,6 +20,7 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -74,7 +77,8 @@ public class ClCdController
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (ClCdSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "clCd", model);
+            Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회
             Page<ClCd> clCdList = clCdService.getPageDto(searchParam, pageRequest);
             model.addAttribute("clCdList", clCdList.getContent());
@@ -317,5 +321,36 @@ public class ClCdController
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     */
+    @PostMapping(SiteUrl.CL_CD_SORT_ORDR_AJAX)
+    @ResponseBody
+    public AjaxResponse clCdSortOrdrAjax(
+            @RequestBody ClCdParam clCdParam,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = null;
+        try {
+            // 메뉴 정렬 순서 저장
+            isSuccess = clCdService.sortOrdr(clCdParam.getSortOrdr());
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // logParam.setCn("key: " + menuNo);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ajaxResponse;
     }
 }

@@ -55,7 +55,7 @@
             <!--begin::내 정보-->
             <div class="d-flex align-items-center">
                 <span class="h2 pt-2" style="padding-right: 10px;">${(authInfo.nickNm)!}</span>
-                <button type="button" class="badge badge-primary"
+                <button type="button" class="badge  badge-outlined badge-light-primary px-3 py-2"
                         onclick="Layout.myInfoDtl();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내 정보 화면으로 이동합니다.">
                     <i class="fas fa-user-circle fs-8 pe-1 text-white"></i>
@@ -64,30 +64,32 @@
             </div>
             <table class="table table-striped my-7 fs-7 fs-6">
                 <tr>
-                    <td class="text-gray-700 w-110px fw-bolder" style="padding-left:10px;">아이디</td>
+                    <td class="text-gray-700 w-110px fw-bolder ps-4">아이디</td>
                     <td class="text-gray-600">${(authInfo.userId)!}</td>
                 </tr>
                 <tr>
-                    <td class="text-gray-700 w-110px fw-bolder" style="padding-left:10px;">현재 IP 주소</td>
+                    <td class="text-gray-700 w-110px fw-bolder ps-4">현재 IP 주소</td>
                     <td class="text-gray-600">${acsIp!}</td>
                 </tr>
                 <tr>
-                    <td class="text-gray-700 w-110px font-weight:600;" style="padding-left:10px;">계정 권한</td>
+                    <td class="text-gray-700 w-110px fw-bolder ps-4">계정 권한</td>
                     <td class="text-gray-600">
-                        <#if isMngr>
-                            <i class="bi bi-person-lines-fill fs-2 text-info ms-1 opacity-75"
-                               data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="관리자"></i>   <!-- 관리자 -->
-                        <#else>
-                            <i class="bi bi-people-fill fs-2 ms-1"
-                               data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="사용자"></i>   <!-- 관리자 -->
-                        </#if>
-                        ${(authInfo.authNm)!}
-
-                        <#if ((authInfo.authCd)! == Constant.AUTH_MNGR)>
-                            <i class="bi bi-person-lines-fill text-info opacity-75"></i>   <!-- 관리자 -->
-                        <#elseif ((authInfo.authCd)! == Constant.AUTH_USER)>
-                            <i class="bi bi-people-fill ms-1"></i>        <!-- 사용자 -->
-                        </#if>
+                        <div class="d-flex align-items-center">
+                            <#if isMngr>
+                                <i class="bi bi-person-lines-fill fs-3 text-info mx-1 opacity-75"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="관리자"></i>   <!-- 관리자 -->
+                                관리자
+                            <#else>
+                                <i class="bi bi-people-fill fs-3 mx-1"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="사용자"></i>   <!-- 사용자 -->
+                                사용자
+                            </#if>
+                            <#if ((authInfo.authCd)! == Constant.AUTH_MNGR)>
+                                <i class="bi bi-person-lines-fill text-info opacity-75"></i>   <!-- 관리자 -->
+                            <#elseif ((authInfo.authCd)! == Constant.AUTH_USER)>
+                                <i class="bi bi-people-fill ms-1"></i>        <!-- 사용자 -->
+                            </#if>
+                        </div>
                     </td>
                 </tr>
             </table>

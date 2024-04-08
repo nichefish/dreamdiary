@@ -9,6 +9,8 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteUrl;
+import io.nicheblog.dreamdiary.web.model.admin.ClCdParam;
+import io.nicheblog.dreamdiary.web.model.admin.DtlCdParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.DtlCdService;
 import lombok.Getter;
@@ -18,10 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -279,4 +278,34 @@ public class DtlCdController
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
+    /**
+     * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     */
+    @PostMapping(SiteUrl.DTL_CD_SORT_ORDR_AJAX)
+    @ResponseBody
+    public AjaxResponse dtlCdSortOrdrAjax(
+            @RequestBody DtlCdParam dtlCdParam,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String resultMsg = null;
+        try {
+            // 메뉴 정렬 순서 저장
+            isSuccess = dtlCdService.sortOrdr(dtlCdParam.getSortOrdr());
+            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            resultMsg = MessageUtils.getExceptionMsg(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            // logParam.setCn("key: " + menuNo);
+            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ajaxResponse;
+    }
 }

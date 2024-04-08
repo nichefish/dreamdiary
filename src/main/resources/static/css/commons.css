@@ -195,39 +195,11 @@ html, body {
   animation: blink-effect 0.75s step-end infinite;
   -webkit-animation: blink 0.75s linear infinite;
 }
-@-webkit-keyframes blink {
-  0% {
-    opacity: 100%;
-  }
-  33% {
-    opacity: 85%;
-  }
-  66% {
-    opacity: 70%;
-  }
-  100% {
-    opacity: 85%;
-  }
-}
 
 /* 깜빡임 (느림) */
 .blink-slow {
   animation: blink-effect 1.5s step-end infinite;
   -webkit-animation: blink 1.5s linear infinite;
-}
-@-webkit-keyframes blink {
-  0% {
-    opacity: 100%;
-  }
-  33% {
-    opacity: 85%;
-  }
-  66% {
-    opacity: 70%;
-  }
-  100% {
-    opacity: 85%;
-  }
 }
 
 /* 깜빡임 (빠름) */
@@ -235,6 +207,7 @@ html, body {
   animation: blink-effect 0.4s step-end infinite;
   -webkit-animation: blink 0.4s linear infinite;
 }
+
 @-webkit-keyframes blink {
   0% {
     opacity: 100%;
@@ -249,7 +222,6 @@ html, body {
     opacity: 85%;
   }
 }
-
 /* textarea 대체용 text-div (simple) */
 .div-textarea-smp {
   overflow-y: auto;
@@ -512,6 +484,14 @@ html, body {
 .dragging {
   background-color: #a9d9a4 !important;
   opacity: 75%;
+}
+
+.draggable-modified {
+  /*    border-color: #ed7000 !important;*/
+  /*    border-width: 1px !important;*/
+  background-color: rgba(237, 112, 0, 0.1);
+  animation: blink-effect 0.75s step-end infinite;
+  -webkit-animation: blink 0.75s linear infinite;
 }
 
 /** tinymce 글접기 관련 */
