@@ -7,6 +7,8 @@
 -- -----------------------
 
 -- 템플릿 정의 정보
+-- @extends: BaseAuditEntity
+-- @implements: StateEmbed
 CREATE TABLE IF NOT EXISTS tmplat_def (
     tmplat_def_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '템플릿 정의 번호 (PK)',
     tmplat_def_cd VARCHAR(50) COMMENT '템플릿 정의 코드',
@@ -25,6 +27,8 @@ CREATE TABLE IF NOT EXISTS tmplat_def (
 );
 
 -- 템플릿 항목(텍스트에디터) 정보
+-- @extends: BaseAuditEntity
+-- @implements: StateEmbed
 CREATE TABLE IF NOT EXISTS tmplat_txt (
     tmplat_txt_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '템플릿(텍스트) 번호 (PK)',
     tmplat_def_cd VARCHAR(50) COMMENT '템플릿 정의 코드',
@@ -78,3 +82,26 @@ CREATE TABLE IF NOT EXISTS flsys_meta (
     --
     INDEX(file_path)
 );
+
+-- -----------------------
+
+-- 메뉴 (menu)
+-- @extends: BaseAuditEntity
+-- @implements: StateEmbed
+CREATE TABLE IF NOT EXISTS menu (
+    menu_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '메뉴 번호 (PK)',
+    upper_menu_no VARCHAR(10) COMMENT '상위 메뉴 번호',
+    menu_cd VARCHAR(50) COMMENT '메뉴 구분코드',
+    menu_nm VARCHAR(200) COMMENT '메뉴명',
+    url VARCHAR(500) COMMENT '연결 URL',
+    icon VARCHAR(200) COMMENT '아이콘',
+    -- STATE
+    sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
+    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
+    -- AUDIT
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
+) COMMENT = '메뉴';

@@ -64,7 +64,8 @@
 <!-- #include:: component:: 태그 클릭 필터링 -->
 <#include "/view/_component/tag/_tag_list_header.ftlh">
 
-<button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#vcatn_papr_rule_modal').modal('show');"
+<button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1"
+        onclick="$('#vcatn_papr_rule_modal').modal('show');"
         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="휴가규칙 팝업을 호출합니다.">
     <i class="fas fa-info-circle"></i>휴가규칙
 </button>

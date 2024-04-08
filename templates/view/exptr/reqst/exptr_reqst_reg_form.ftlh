@@ -107,12 +107,14 @@
 <!--begin::Row-->
 <div class="row">
     <div class="col-12 d-flex justify-content-end align-items-center mt-4">
-        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1" onclick="$('#exptr_reqst_exmpl_modal').modal('show');"
+        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1"
+                onclick="$('#exptr_reqst_exmpl_modal').modal('show');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작성 안내 팝업을 호출합니다.">
             <i class="fas fa-info-circle"></i>작성 안내
         </button>
         <#include "/view/exptr/reqst/_exptr_reqst_exmpl_modal.ftlh">
-        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1" onclick="$('#exptr_reqst_rule_modal').modal('show');"
+        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1"
+                onclick="$('#exptr_reqst_rule_modal').modal('show');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="경조사비 기준 팝업을&#10;호출합니다.">
             <i class="fas fa-info-circle"></i>경조사비 기준
         </button>

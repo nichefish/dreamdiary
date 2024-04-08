@@ -148,7 +148,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-primary" onclick="commons.util.submit('#flsysMetaRegForm');"
+                <button type="button" class="btn btn-sm btn-primary"
+                        onclick="commons.util.submit('#flsysMetaRegForm');"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
                     <i class="bi bi-pencil-square"></i>
                     <span class="indicator-label">저장</span>

@@ -3,14 +3,13 @@
   -- @included_in : cl_cd_list
   -->
 <div class="modal fade" id="menu_reg_modal" tabindex="-1" role="dialog" aria-labelledby="menuRegModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="menuRegModalLongTitle">[메뉴 저장]</h5>
                 <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times"></i>
                 </div>
-                <!--end::Close-->
             </div>
             <!--begin::Modal body-->
             <div class="modal-body modal-mbl-body mb-5">

@@ -48,6 +48,8 @@ public class MenuDto
 
     /** 셀프 참조 :: 상위메뉴 조회 */
     private MenuDto upperMenu;
+    /** 셀프 참조 :: 상위메뉴명 */
+    private String upperMenuNm;
     /** 셀프 참조 :: 하위메뉴 목록 조회 */
     private List<MenuDto> subMenuList;
 

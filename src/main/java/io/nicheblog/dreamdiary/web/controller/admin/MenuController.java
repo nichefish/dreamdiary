@@ -27,6 +27,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -95,7 +96,7 @@ public class MenuController
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuRegAjax(
             final @Valid MenuDto menu,
-            final Integer key,
+            final @RequestParam("menuNo") @Nullable Integer key,
             final LogActvtyParam logParam,
             final BindingResult bindingResult
     ) {
@@ -136,7 +137,7 @@ public class MenuController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuDtlAjax(
-            final @RequestParam("menuId") Integer menuId,
+            final @RequestParam("menuNo") Integer menuNo,
             final LogActvtyParam logParam
     ) {
 
@@ -145,9 +146,10 @@ public class MenuController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            // 게시판 정보 조회
-            MenuDto rsDto = menuService.getDtlDto(menuId);
+            // 객체 조회 및 모델에 추가
+            MenuDto rsDto = menuService.getDtlDto(menuNo);
             ajaxResponse.setResultObj(rsDto);
+
             isSuccess = true;
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -157,7 +159,7 @@ public class MenuController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + menuId);
+            logParam.setCn("key: " + menuNo);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -214,7 +216,7 @@ public class MenuController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuDelAjax(
-            final @RequestParam("menuId") Integer menuId,
+            final @RequestParam("menuNo") Integer menuNo,
             final LogActvtyParam logParam
     ) {
 
@@ -223,7 +225,8 @@ public class MenuController
         boolean isSuccess = false;
         String resultMsg = "";
         try {
-            isSuccess = menuService.delete(menuId);
+            // 삭제 처리
+            isSuccess = menuService.delete(menuNo);
             resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -232,7 +235,7 @@ public class MenuController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, resultMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + menuId);
+            logParam.setCn("key: " + menuNo);
             logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

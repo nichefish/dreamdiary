@@ -29,6 +29,7 @@ public interface MenuMapstruct
     @Override
     @Named("toDto")
     @Mapping(target = "subMenuList", expression = "java(entity.getSubMenuDtoList())")
+    @Mapping(target = "upperMenuNm", expression = "java(entity.getUpperMenu() != null ? entity.getUpperMenu().getMenuNm() : null)")
     MenuDto toDto(final MenuEntity entity) throws Exception;
 
     /**
@@ -37,6 +38,7 @@ public interface MenuMapstruct
     @Override
     @Named("toListDto")
     @Mapping(target = "subMenuList", expression = "java(entity.getSubMenuDtoList())")
+    @Mapping(target = "upperMenuNm", expression = "java(entity.getUpperMenu() != null ? entity.getUpperMenu().getMenuNm() : null)")
     MenuDto toListDto(final MenuEntity entity) throws Exception;
 
     /**

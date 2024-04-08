@@ -67,8 +67,7 @@ public class MenuService
 
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         searchParamMap.put("menuTyCd", Constant.MENU_TY_MAIN);
-        Page<MenuEntity> menuMainEntityPage = this.getPageEntity(searchParamMap, pageRequest);
-        return this.pageEntityToDto(menuMainEntityPage);
+        return this.getPageDto(searchParamMap, pageRequest);
     }
 
     /**

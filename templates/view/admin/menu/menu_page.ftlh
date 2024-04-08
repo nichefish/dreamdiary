@@ -56,23 +56,23 @@
                 let subMenuList = upperMenu.subMenuList;
                 console.log("subMenuList: ", subMenuList);
                 if (!Array.isArray(subMenuList) || subMenuList.length <1) return;
-                let menuId = upperMenu.menuId;
+                let menuNo = upperMenu.menuNo;
                 subMenuList.forEach(function(subMenu) {
-                    commons.util.handlebarsAppendTo(subMenu, "menu_sub", "menu_sub_"+menuId);
+                    commons.util.handlebarsAppendTo(subMenu, "menu_sub", "menu_sub_"+menuNo);
                     Page.drawSubMenu(subMenu);
                 });
             },
             // drawSubMenu: function(treeSelector, rslt, idx) {
-            //     let menuId = rslt.menuId, menuNm = rslt.menuNm, menuTyCd = rslt.menuTyCd;
+            //     let menuNo = rslt.menuNo, menuNm = rslt.menuNm, menuTyCd = rslt.menuTyCd;
             //     commons.util.handlebarsAppend(rslt, "menu_sub");
             //     Page.drawSubMenu();
             //     let isDir = rslt.dir;
             //     let subMenuContainer = upperElmtSelector + " > ul.sub-menu-list";
             //     $(subMenuContainer).append(menuTemplateHtml);
-            //     if (!rslt.dir) $("#addBtn_"+menuId).remove();       // 소메뉴는 추가버튼 없앰
+            //     if (!rslt.dir) $("#addBtn_"+menuNo).remove();       // 소메뉴는 추가버튼 없앰
             //     // 그 하위메뉴 그리기
             //     let menuSubList = rslt.menuSubList;
-            //     for (let i = 0; i < menuSubList.length; i++) Page.drawMenu("#"+menuId, menuSubList[i], i);
+            //     for (let i = 0; i < menuSubList.length; i++) Page.drawMenu("#"+menuNo, menuSubList[i], i);
             // },
             drawTree: function() {
                 let jstreeContainer = Page.jstreeContainer;
@@ -112,21 +112,21 @@
                 commons.validate.validateForm("#menuRegForm", Menu.regAjax);
             },
             /** 등록 모달 팝업 호출 */
-            regModal: function(menuTyCd, upperMenuId) {
+            regModal: function(menuTyCd, upperMenuNo, upperMenuNm) {
                 event.stopPropagation();
-                let obj = { "menuTyCd": menuTyCd, "upperMenuId": upperMenuId };
+                let obj = { "menuTyCd": menuTyCd, "upperMenuNo": upperMenuNo, "upperMenuNm": upperMenuNm };
                 commons.util.handlebarsTemplate(obj, "menu_reg", "show");
             },
-            /** 상세 모달 팝업 호출 */
+            /** 아이콘 새로고침 */
             refreshIcon: function() {
                 const $iconClassElmt = $("#menuRegForm #icon");
                 if (!$iconClassElmt.length) return;
                 $("#menuRegForm #menu_icon_div").html($iconClassElmt.val());
             },
-            /** 사용자별 로그 페이지로 이동 */
-            mdfForm: function(menuId) {
+            /** 수정 모달 팝업 호출 */
+            mdfForm: function(menuNo) {
                 const url = "${SiteUrl.MENU_DTL_AJAX!}";
-                let ajaxData = { "menuId": menuId };
+                let ajaxData = { "menuNo": menuNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.result) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -155,7 +155,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    let isReg = $("#menuRegForm #menuId").val() === "";
+                    let isReg = $("#menuRegForm #menuNo").val() === "";
                     const url = isReg ? "${SiteUrl.MENU_REG_AJAX!}" : "${SiteUrl.MENU_MDF_AJAX!}";
                     let ajaxData = $("#menuRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
@@ -167,14 +167,14 @@
                 });
             },
             /** 삭제 처리 (ajax) */
-            delAjax: function(menuId) {
+            delAjax: function(menuNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${SiteUrl.MENU_DEL_AJAX!}";
-                    let ajaxData = { "menuId": menuId };
+                    let ajaxData = { "menuNo": menuNo };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

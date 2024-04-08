@@ -8,7 +8,8 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="crdtUserCttpcModalLongTitle">[직원 연락처 목록]</h5>
                 <!--begin::Close-->
-                <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto" onclick="Page.cttpcXlsxDownload();"
+                <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto"
+                        onclick="Page.cttpcXlsxDownload();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
                     <i class="fas fa-download fs-7"></i>다운로드
                 </button>

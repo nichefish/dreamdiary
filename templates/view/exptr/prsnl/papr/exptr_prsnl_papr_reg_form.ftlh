@@ -227,7 +227,8 @@
 <!--begin::Row-->
 <div class="row">
     <div class="col-12 d-flex justify-content-end align-items-center mt-4">
-        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1" onclick="$('#exptr_prsnl_rule_modal').modal('show');"
+        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1"
+                onclick="$('#exptr_prsnl_rule_modal').modal('show');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작성 안내 팝업을 호출합니다.">
             <i class="fas fa-info-circle"></i>작성 안내
         </button>
@@ -291,7 +292,8 @@
             <div class="card-toolbar">
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.addExptrPrsnlItem();"
+                    <button type="button" class="btn btn-sm btn-primary"
+                            onclick="Page.addExptrPrsnlItem();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="지출내역 행을 추가합니다.">
                         <i class="fas fa-plus"></i>지출내역 추가
                     </button>
@@ -364,7 +366,8 @@
         <!-- 추가추가 -->
     </form>
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-primary mx-2" onclick="commons.util.submit('#exptrPrsnlRegForm');"
+        <button type="button" class="btn btn-primary mx-2"
+                onclick="commons.util.submit('#exptrPrsnlRegForm');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
             <i class="bi bi-pencil-square"></i>
             <span class="indicator-label">저장</span>
@@ -374,7 +377,8 @@
             </span>
         </button>
         <#if mngrYn! == "Y">
-            <button type="button" class="btn btn-light" onclick="Page.stats();"
+            <button type="button" class="btn btn-light"
+                    onclick="Page.stats();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.prev"/>">
                 <i class="bi bi-list"></i>뒤로가기
             </button>

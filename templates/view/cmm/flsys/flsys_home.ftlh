@@ -51,7 +51,8 @@
                 <div class="text-muted fw-bold ms-2" id="flsys_home_header_path">
                     <!-- absolutePath goes in here -->
                 </div>
-                <span class="badge badge-light-primary cursor-pointer ms-6 px-2" onclick="Flsys.flsysRefreshAjax();"
+                <span class="badge badge-light-primary cursor-pointer ms-6 px-2"
+                      onclick="Flsys.flsysRefreshAjax();"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="현재 디렉토리 내용을&#10;새로고침합니다.">
                     <i class="bi bi-arrow-clockwise"></i>
                 </span>

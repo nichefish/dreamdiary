@@ -98,7 +98,8 @@
 <#include "/view/_component/tag/_tag_list_header.ftlh">
 
 <div class="position-relative me-md-2 searchType">
-    <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#exptr_prsnl_rule_modal').modal('show');"
+    <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1"
+            onclick="$('#exptr_prsnl_rule_modal').modal('show');"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="작성 안내 팝업을 호출합니다.">
         <i class="fas fa-info-circle"></i>작성 안내
     </button>

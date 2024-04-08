@@ -164,7 +164,8 @@
                             <th class="min-w-200px text-center wb-keepall">인원 및 비고</th>
                             <th colspan="2" class="min-w-175px text-center wb-keepall w-20">
                                 영수증
-                                <a href="javascript:void(0);" class="badge badge-primary card mt-4 mx-1" onclick="Page.pdfDownload();"
+                                <a href="javascript:void(0);" class="badge badge-primary card mt-4 mx-1"
+                                   onclick="Page.pdfDownload();"
                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="영수증 사본 이미지 묶음을&#10;PDF 파일로 다운로드합니다.">
                                     <i class="bi bi-file-earmark-pdf text-light pe-1"></i>PDF 다운로드
                                 </a>
@@ -250,7 +251,9 @@
                                     <td class="py-2"></td>
                                     <td colspan="6" class="py-2">반려사유: ${exptr.rjectResn!}</td>
                                     <td class="py-2">
-                                        <label class="badge badge-secondary cursor-pointer rject" onclick="rjectAjax('${exptr?index}', 'N');">반려취소</label>
+                                        <label class="badge badge-secondary cursor-pointer rject" onclick="rjectAjax('${exptr?index}', 'N');">
+                                            반려취소
+                                        </label>
                                     </td>
                                 </tr>
                             </#if>
@@ -281,20 +284,24 @@
 
         <div class="card-footer d-flex justify-content-end py-6 px-9">
             <#if (post.cfYn!"N") != "Y">
-                <button type="button" class="btn btn-sm btn-primary me-2" onclick="Page.cfAjax();"
+                <button type="button" class="btn btn-sm btn-primary me-2"
+                        onclick="Page.cfAjax();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="경비지출서를 취합 처리합니다.&#10;취합 처리 후에는&#10;관리자만 수정할 수 있습니다.">
                     취합처리
                 </button>
             </#if>
-            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
+            <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
+                    onclick="Page.mdfForm();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>수정
             </button>
-            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2" onclick="Page.delAjax();"
+            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
+                    onclick="Page.delAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                 <i class="bi bi-trash"></i>삭제
             </button>
-            <button type="button" class="btn btn-sm btn-light"onclick="Page.stats();"
+            <button type="button" class="btn btn-sm btn-light"
+                    onclick="Page.stats();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.prev"/>">
                 <i class="bi bi-list"></i>뒤로가기
             </button>

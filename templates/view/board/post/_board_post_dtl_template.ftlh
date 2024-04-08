@@ -66,7 +66,8 @@
                         {{#atchFileList}}
                             <div class="row my-1">
                                 <div class="col-xl-8">
-                                    <a href="javascript:void(0);" onclick="commons.util.fileDownload('{{atchFileNo}}', '{{atchFileDtlNo}}');"
+                                    <a href="javascript:void(0);"
+                                       onclick="commons.util.fileDownload('{{atchFileNo}}', '{{atchFileDtlNo}}');"
                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                        title="<@spring.message "bs.tooltip.file.download"/>">
                                         <i class="fas fa-file-download fs-15 me-1"></i>

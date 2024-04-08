@@ -77,7 +77,8 @@
                             <td class="text-center">
                                 <#if mnth??>
                                     <#if (mnth.totAmt)! gt 0>
-                                        <a href="javascript:void(0);" onclick="Page.statsDtl('${mnth.postNo!}');"
+                                        <a href="javascript:void(0);"
+                                        onclick="Page.statsDtl('${mnth.postNo!}');"
                                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 항목으로 이동합니다.">
                                     </#if>
                                     <div class="d-flex justify-content-center rounded p-1 fs-7 badge-<#if (mnth.cfYn!"N") == "Y">success<#else>secondary</#if>">

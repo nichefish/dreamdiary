@@ -172,7 +172,8 @@
     <div class="card-toolbar">
         <!--begin::Toolbar&ndash;&gt;
 &lt;#&ndash;        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-            <button type="button" class="btn btn-sm btn-light-primary" style="margin-left:auto;" onclick="Page.xlsxDownload();"
+            <button type="button" class="btn btn-sm btn-light-primary" style="margin-left:auto;"
+                     onclick="Page.xlsxDownload();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
                 <i class="fas fa-download fs-7"></i>다운로드
             </button>

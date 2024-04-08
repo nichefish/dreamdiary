@@ -33,7 +33,8 @@
                         <span class="me-6 fs-7">
                                 <span class="pe-1 text-muted"><i class="bi bi-tags"></i></span>
                             {{#meta.tagList}}
-                                <span class="text-muted pe-1" onclick="Tag.dtlAjax('{{.}}')"
+                                <span class="text-muted pe-1"
+                                      onclick="Tag.dtlAjax('{{.}}')"
                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                       title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
                                         # <span class="border-bottom text-primary fw-lighter opacity-hover">{{boardTag}}</span>
@@ -49,7 +50,8 @@
                         </a>
                     {{/hasMeta}}
                     {{^hasMeta}}
-                        <a class="badge badge-sm badge-light-primary cursor-pointer ms-6 px-2 opacity-50" onclick="Meta.regForm('{{filePath}}');"
+                        <a class="badge badge-sm badge-light-primary cursor-pointer ms-6 px-2 opacity-50"
+                           onclick="Meta.regForm('{{filePath}}');"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메타 정보 등록 팝업을&#10;호출합니다.">
                             <i class="bi bi-plus"></i>
                         </a>
@@ -101,7 +103,8 @@
                         <span class="me-6 fs-7">
                                 <span class="pe-1 text-muted"><i class="bi bi-tags"></i></span>
                             {{#meta.tagList}}
-                                <span class="text-muted pe-1" onclick="Tag.dtlAjax('{{.}}')"
+                                <span class="text-muted pe-1"
+                                      onclick="Tag.dtlAjax('{{.}}')"
                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                       title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
                                         # <span class="border-bottom text-primary fw-lighter opacity-hover">{{boardTag}}</span>

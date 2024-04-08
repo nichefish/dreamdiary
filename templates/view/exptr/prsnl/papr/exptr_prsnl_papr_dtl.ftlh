@@ -259,7 +259,8 @@
                             <span class="text-muted me-10">
                                 미취합<i class="bi bi-dash text-muted"></i>
                             </span>
-                            <button class="btn btn-sm btn-primary" onclick="Page.statsPage();"
+                            <button class="btn btn-sm btn-primary"
+                                    onclick="Page.statsPage();"
                                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="경비지출서 관리자 페이지로&#10;이동합니다.">
                                 관리 페이지로 이동
                             </button>

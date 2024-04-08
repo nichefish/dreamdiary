@@ -176,7 +176,8 @@
 <!--begin::Row-->
 <div class="row">
     <div class="col-12 d-flex justify-content-end align-items-center mt-4">
-        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1" onclick="$('#vcatn_papr_rule_modal').modal('show');"
+        <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1"
+                onclick="$('#vcatn_papr_rule_modal').modal('show');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="휴가규칙 팝업을 호출합니다.">
             <i class="fas fa-info-circle"></i>휴가규칙
         </button>
@@ -198,7 +199,8 @@
             <label class="mb-2">
                 <span class="text-gray-700 fs-6 fw-bolder">휴가등록</span>
             </label>
-            <a href="javascript:void(0);" class="btn btn-light-primary btn-sm me-2 mb-2 m-lg-2 justify-content-end mb-5" onclick="Page.addVcatnInfoRegItem();"
+            <a href="javascript:void(0);" class="btn btn-light-primary btn-sm me-2 mb-2 m-lg-2 justify-content-end mb-5"
+               onclick="Page.addVcatnInfoRegItem();"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="휴가 일정을 추가합니다.">
                 <i class="fas fa-plus"></i>추가
             </a>

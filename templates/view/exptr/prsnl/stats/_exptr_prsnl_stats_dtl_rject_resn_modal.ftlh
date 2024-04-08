@@ -35,8 +35,12 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" id="pwCfMdfBtn" class="btn btn-sm btn-primary" onclick="Page.rjectAjax($('#modal_idx').val(), 'Y');">수정</button>
-                <button type="button" id="pwCfClsBtn" class="btn btn-sm btn-light" data-bs-dismiss="modal">닫기</button>
+                <button type="button" id="pwCfMdfBtn" class="btn btn-sm btn-primary" onclick="Page.rjectAjax($('#modal_idx').val(), 'Y');">
+                    수정
+                </button>
+                <button type="button" id="pwCfClsBtn" class="btn btn-sm btn-light" data-bs-dismiss="modal">
+                    닫기
+                </button>
             </div>
         </div>
     </div>
