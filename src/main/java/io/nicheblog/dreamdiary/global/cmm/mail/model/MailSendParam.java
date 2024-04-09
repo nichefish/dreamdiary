@@ -48,7 +48,7 @@ public class MailSendParam {
         this.tmplat = tmplat;
     }
     public MailSendParam(final String tmplat, final MailAddress sender) {
-        this.tmplat = tmplat;
+        this(tmplat);
         this.sender = sender;
     }
 }

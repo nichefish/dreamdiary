@@ -11,7 +11,9 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * MailAddress
- * TODO: 봐야한다.
+ * <pre>
+ *  메일 (발신자/수신자) 주소
+ * </pre>
  *
  * @author nichefish
  */

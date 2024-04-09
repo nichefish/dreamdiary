@@ -3,6 +3,8 @@ package io.nicheblog.dreamdiary.global.cmm.mail.service;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.cmm.mail.model.MailAddress;
 import io.nicheblog.dreamdiary.global.cmm.mail.model.MailSendParam;
@@ -80,8 +82,10 @@ public class MailService {
 
             mailSender.send(message);
         } catch (Exception e) {
-            publisher.publishEvent(new LogSysParam(false, "메일 발송에 실패했습니다."));
-            return false;
+            log.warn("mail send failed", e);
+            LogSysParam logParam = new LogSysParam(true, "메일 발송에 실패했습니다.", ActvtyCtgr.SYSTEM);
+            logParam.setExceptionInfo(e);
+            publisher.publishEvent(new LogSysEvent(this, logParam));
         }
         return true;
     }
