@@ -42,37 +42,31 @@ public class LogWorker
      */
     @Override
     public void run() {
-        boolean isSuccess = false;
         try {
             while (true) {
                 // Blocks until an element is available
                 Object logEvent = logQueue.take();
-                log.info("after taking logQueue: {}", logQueue);
 
                 if (logEvent instanceof LogActvtyEvent) {
                     // 활동 로그 (로그인) 로깅 처리
-
-                    isSuccess = logService.regLogActvty(((LogActvtyEvent) logEvent).getLog());
+                    logService.regLogActvty(((LogActvtyEvent) logEvent).getLog());
                 } else if (logEvent instanceof LogAnonActvtyEvent) {
                     // 활동 로그 (비로그인) 로깅 처리
-                    isSuccess = logService.regLogAnonActvty(((LogAnonActvtyEvent) logEvent).getLog());
+                    logService.regLogAnonActvty(((LogAnonActvtyEvent) logEvent).getLog());
                 } else if (logEvent instanceof LogSysEvent) {
                     // 시스템 로그 로깅 처리
-                    isSuccess = logService.regSysActvty(((LogSysEvent) logEvent).getLog());
+                    logService.regSysActvty(((LogSysEvent) logEvent).getLog());
                 }
             }
-        } catch (Exception e) {
-            log.warn("log regist failed with {}", (Object) e.getStackTrace());
-            e.printStackTrace();
+        } catch (InterruptedException e) {
+            log.warn("log regist failed", e);
             Thread.currentThread().interrupt();
-        } finally {
-            log.info("logWorker isSuccess: {}", isSuccess);
+        } catch (Exception e) {
+            log.warn("log regist failed", e);
         }
     }
 
     public void offer(Object o) {
-        log.info("logQueue: {}", logQueue);
-        Boolean isSuccess = logQueue.offer(o);
-        log.info("logging offer result: {}", isSuccess);
+        logQueue.offer(o);
     }
 }

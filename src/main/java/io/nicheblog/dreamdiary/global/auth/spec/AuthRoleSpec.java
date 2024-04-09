@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * AuthRoleSpec
  * <pre>
- *  게시판 정의 정보 목록 검색인자 세팅 Specification
- *  ※게시판 정의(board_def) = 게시판 분류. 게시판 게시물(board_post)을 1:N으로 관리한다.
+ *  권한 정보 목록 검색인자 세팅 Specification
  * </pre>
  *
  * @author nichefish
