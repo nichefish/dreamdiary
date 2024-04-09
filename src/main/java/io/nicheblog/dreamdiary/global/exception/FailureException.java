@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.global.exception;
 /**
  * FailureException
  * <pre>
- *  실패시 분기에서 아예 빼버리기 위해 던지는 Custom Exception
+ *  실패시 분기에서 빼버리기 위해 던지는 Custom Exception
  * </pre>
  *
  * @author nichefish

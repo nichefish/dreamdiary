@@ -6,6 +6,9 @@ import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 
 /**
  * CamelCasePhysicalNamingStrategy
+ * <pre>
+ *  JPA에서 컬럼명 규칙 전략 수동 주입
+ * </pre>
  *
  * @author nichefish
  */

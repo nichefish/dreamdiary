@@ -38,6 +38,9 @@ public class AjaxSessionTimeoutFilter
         this.filterConfig = filterConfig;
     }
 
+    /**
+     * Ajax 요청에 대하여 응답 설정 및 로깅 처리
+     */
     @Override
     public void doFilter(
             final ServletRequest request,
@@ -67,7 +70,8 @@ public class AjaxSessionTimeoutFilter
     }
 
     /**
-     * 헤더에 "AJAX"
+     * AJAX 요청들에 대하여 헤더에 "AJAX" 수동 설정
+     * (commons.js)
      */
     private boolean isAjaxRequest(final HttpServletRequest req) {
         String header = req.getHeader("AJAX");
