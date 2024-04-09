@@ -32,7 +32,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) Page.list();
+                                if (res.rslt) Page.list();
                             });
                     });
                 });
@@ -57,7 +57,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -166,9 +166,9 @@
                                     ${exptr.exptrRm!}
                                 </td>
                                 <td class="text-end w-10">
-                                    <#if exptr.atchFileDtlId??>
+                                    <#if exptr.atchFileDtlNo??>
                                         <a href="javascript:void(0);" class="text-primary opacity-75-hover"
-                                           onclick="commons.util.fileDownload('', '${exptr.atchFileDtlId!}');"
+                                           onclick="commons.util.fileDownload('', '${exptr.atchFileDtlNo!}');"
                                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.download"/>">
                                             다운로드
                                             <span class="svg-icon svg-icon-2x svg-icon-primary" >

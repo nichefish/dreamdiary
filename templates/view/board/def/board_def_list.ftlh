@@ -60,7 +60,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -84,7 +84,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -101,7 +101,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -118,7 +118,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -135,7 +135,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -149,7 +149,7 @@
                 const url = "${SiteUrl.BOARD_DEF_SORT_ORDR_AJAX!}";
                 let ajaxData = { "sortOrdr": orderData };
                 commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
-                    if (res.result) {
+                    if (res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) {
                             Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
                         } else {

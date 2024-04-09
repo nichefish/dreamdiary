@@ -36,13 +36,13 @@
                 const url = "${SiteUrl.CL_CD_DTL_AJAX!}";
                 let ajaxData = { "clCd": $("#clCd").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let resultObj = res.resultObj;
-                    resultObj.isMdf = true;
-                    commons.util.handlebarsTemplate(resultObj, "cl_cd_reg", "show");
+                    let rsltObj = res.rsltObj;
+                    rsltObj.isMdf = true;
+                    commons.util.handlebarsTemplate(rsltObj, "cl_cd_reg", "show");
                     commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                     commons.validate.replaceBlankRegex("#clCdRegForm #clCd");
                     $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
@@ -61,7 +61,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -88,7 +88,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -105,7 +105,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) Page.list();
+                                if (res.rslt) Page.list();
                             });
                     });
                 });
@@ -124,9 +124,9 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let resultObj = res.resultObj;
-                    resultObj.isMdf = true;
-                    commons.util.handlebarsTemplate(resultObj, "dtl_cd_reg", "show");
+                    let rsltObj = res.rsltObj;
+                    rsltObj.isMdf = true;
+                    commons.util.handlebarsTemplate(rsltObj, "dtl_cd_reg", "show");
                     commons.validate.replaceBlankRegex("#dtlCdRegForm #dtlCd");
                     commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
                     commons.validate.onlyNum("#dtlCdRegForm #sortOrdr");

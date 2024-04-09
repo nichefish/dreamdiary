@@ -342,7 +342,7 @@ public class VcatnPaprController
         String rsltMsg = "";
         try {
             VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
-            ajaxResponse.setResultObj(rsDto);
+            ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

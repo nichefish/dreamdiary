@@ -77,7 +77,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let mainMenuList = res.resultList;
+                    let mainMenuList = res.rsltList;
                     if (!Array.isArray(mainMenuList) || mainMenuList.length < 1) return;
                     mainMenuList.forEach(function(mainMenu) {
                         commons.util.handlebarsAppend(mainMenu, "menu_main_card");
@@ -106,7 +106,7 @@
                 // let deptUrl = "/manage/user/totalOrgnztChartAjax";
                 // commons.util.blockUIAjax(deptUrl, "get", {}, function(res) {
                 //     if (!res.result) return;
-                //     $(jstreeContainer).jstree(true).settings.core.data = res.resultList;
+                //     $(jstreeContainer).jstree(true).settings.core.data = res.rsltList;
                 //     $(jstreeContainer).jstree(true).settings.core.expand_selected_onload = true;
                 //     $(jstreeContainer).jstree(true).refresh(false, true);
                 // });
@@ -174,7 +174,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "menu_reg", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "menu_reg", "show");
                 });
             },
             /** 상세 모달 팝업 호출 */
@@ -187,7 +187,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "log_actvty_dtl", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "log_actvty_dtl", "show");
                 });
             },
             /** 메뉴 정보 등록/수정 */

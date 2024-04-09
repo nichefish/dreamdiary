@@ -44,6 +44,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -321,7 +322,7 @@ public class NoticeController
         try {
             // 객체 조회 및 응답에 추가
             NoticeDto rsDto = noticeService.getDtlDto(key);
-            ajaxResponse.setResultObj(rsDto);
+            ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -453,9 +454,8 @@ public class NoticeController
                 put("managtStartDt", DateUtils.getCurrDateAddDay(-7));
             }};
             Sort sort = Sort.by(Sort.Direction.ASC, "managt.managtDt");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            Page<NoticeDto.LIST> noticeList = noticeService.getPageDto(searchParamMap, pageRequest);
-            ajaxResponse.setResultList(noticeList.getContent());
+            List<NoticeDto.LIST> noticeList = noticeService.getListDto(searchParamMap, sort);
+            ajaxResponse.setRsltList(noticeList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

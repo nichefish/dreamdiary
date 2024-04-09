@@ -50,7 +50,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) Flsys.flsysRefreshAjax();
+                                if (res.rslt) Flsys.flsysRefreshAjax();
                             });
                     });
                 });
@@ -60,12 +60,12 @@
                 const url = "${SiteUrl.FLSYS_META_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "flsys_meta_dtl_btn");
-                    commons.util.handlebarsTemplate(res.resultObj, "flsys_meta_dtl", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "flsys_meta_dtl_btn");
+                    commons.util.handlebarsTemplate(res.rsltObj, "flsys_meta_dtl", "show");
                 });
             },
             /** 등록 모달 조회 */
@@ -73,18 +73,18 @@
                 const url = "${SiteUrl.FLSYS_META_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let resultObj = res.resultObj;
+                    let rsltObj = res.rsltObj;
                     $("#flsys_meta_dtl_modal").modal("hide");
-                    commons.util.handlebarsTemplate(resultObj, "flsys_meta_reg", "show");
+                    commons.util.handlebarsTemplate(rsltObj, "flsys_meta_reg", "show");
 
                     /** tagify */
                     let tagInput = document.querySelector("#tagListStr");
-                    let tagStrList = resultObj.tagStrList;
-                    if (resultObj.tagStrList !== undefined && resultObj.tagStrList.length > 0) {
+                    let tagStrList = rsltObj.tagStrList;
+                    if (rsltObj.tagStrList !== undefined && rsltObj.tagStrList.length > 0) {
                         let tagifyStr = "";
                         tagStrList.forEach(function(item) {
                             tagifyStr += item + ",";
@@ -118,7 +118,7 @@
                     let ajaxData = { "postNo": postNo };
                     commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        if (res.result) Flsys.flsysListAjax(Flsys.currPath);
+                        if (res.rslt) Flsys.flsysListAjax(Flsys.currPath);
                     });
                 });
             },

@@ -29,16 +29,16 @@
                 const url = "${SiteUrl.FLSYS_LIST_AJAX!}";
                 let ajaxData = { "filePath": filePath };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let resultObj = res.resultObj;
-                    resultObj.mode = Flsys.mode;
-                    commons.util.handlebarsTemplate(resultObj, "flsys_list");
-                    Flsys.currPath = resultObj.filePath;
-                    $("#absolute_path_div").text(resultObj.filePath);
-                    commons.util.handlebarsTemplate(resultObj, "flsys_home_header_path");
+                    let rsltObj = res.rsltObj;
+                    rsltObj.mode = Flsys.mode;
+                    commons.util.handlebarsTemplate(rsltObj, "flsys_list");
+                    Flsys.currPath = rsltObj.filePath;
+                    $("#absolute_path_div").text(rsltObj.filePath);
+                    commons.util.handlebarsTemplate(rsltObj, "flsys_home_header_path");
 
                     $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                     // $('.modal').modal('hide');
@@ -53,7 +53,7 @@
                 const url = "${SiteUrl.FLSYS_OPEN_IN_EXPLORER_AJAX!}";
                 let ajaxData = { "filePath": filePath, "objectTy": objectTy };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
@@ -98,7 +98,7 @@
                 const url = "${SiteUrl.FLSYS_FILE_EXEC_AJAX!}";
                 let ajaxData = { "filePath": filePath };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }

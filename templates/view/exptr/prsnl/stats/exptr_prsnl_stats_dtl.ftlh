@@ -47,7 +47,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -69,7 +69,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) Page.stats();
+                                if (res.rslt) Page.stats();
                             });
                     });
                 });
@@ -86,7 +86,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) Page.stats();
+                                if (res.rslt) Page.stats();
                             });
                     });
                 });
@@ -116,7 +116,7 @@
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) commons.util.blockUIReload();
+                            if (res.rslt) commons.util.blockUIReload();
                         });
                 });
             }
@@ -195,9 +195,9 @@
                                     ${exptr.exptrRm!}
                                 </td>
                                 <td class="text-end">
-                                    <#if exptr.atchFileDtlId??>
+                                    <#if exptr.atchFileDtlNo??>
                                         <a href="javascript:void(0);" class="text-primary fs-6 opacity-75-hover"
-                                           onclick="commons.util.fileDownload('', '${exptr.atchFileDtlId!}');"
+                                           onclick="commons.util.fileDownload('', '${exptr.atchFileDtlNo!}');"
                                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.download"/>">
                                             다운로드
                                             <span class="svg-icon svg-icon-2x svg-icon-primary" >

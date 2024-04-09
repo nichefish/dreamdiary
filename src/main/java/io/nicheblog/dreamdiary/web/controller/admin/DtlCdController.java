@@ -70,7 +70,7 @@ public class DtlCdController
         try {
             // 객체 조회 및 응답에 추가
             DtlCd dtlCdDto = dtlCdService.getDtlDto(cmmDtlKey);
-            ajaxResponse.setResultObj(dtlCdDto);
+            ajaxResponse.setRsltObj(dtlCdDto);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -259,7 +259,7 @@ public class DtlCdController
             Map<String, Object> searchParam = new HashMap<String, Object>();
             searchParam.put("clCd", clCd);
             List<DtlCd> dtlCdList = dtlCdService.getListDto(searchParam);
-            ajaxResponse.setResultList(dtlCdList);
+            ajaxResponse.setRsltList(dtlCdList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

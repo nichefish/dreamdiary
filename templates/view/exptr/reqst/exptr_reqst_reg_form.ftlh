@@ -85,7 +85,7 @@
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) Page.list();
+                            if (res.rslt) Page.list();
                         });
                 });
             },
@@ -126,7 +126,7 @@
     <!--begin::Form-->
     <form name="exptrReqstRegForm" id="exptrReqstRegForm" class="form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="postNo" value="${post.postNo!}">
-        <input type="hidden" name="atchFileId" value="${post.atchFileId!}">
+        <input type="hidden" name="atchFileNo" value="${post.atchFileNo!}">
         <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
         <input type="hidden" name="cfYn" value="${post.cfYn!"N"}">
         <!--begin::Row-->

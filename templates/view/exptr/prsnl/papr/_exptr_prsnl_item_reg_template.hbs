@@ -68,7 +68,7 @@
                    name="itemList[{{rnum}}].exptrRm" id="exptrRm{{rnum}}" maxlength="300" placeholder="인원 및 비고" value="{{exptrRm}}" {{#if (equals rjectYn "Y")}}readonly{{/if}}>
         </td>
         <td class="text-center">
-            {{#unless (exists atchFileDtlId)}}
+            {{#unless (exists atchFileDtlNo)}}
                 <a href="javascript:void(0);" class="text-hover-primary fs-8" id="rciptRegBtn{{rnum}}" onclick="Rcipt.uploadRegAjax('{{rnum}}')">
                     <span class="svg-icon svg-icon-muted svg-icon-2hx">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -79,7 +79,7 @@
                 </a>
             {{else}}
                 <span id="rciptFile{{rnum}}">
-                    <a href="javascript:void(0);" class="opacity-75-hover" id="rciptFileBtn{{rnum}}" onclick="commons.util.fileDownload('', '{{atchFileDtlId}}');">
+                    <a href="javascript:void(0);" class="opacity-75-hover" id="rciptFileBtn{{rnum}}" onclick="commons.util.fileDownload('', '{{atchFileDtlNo}}');">
                         <span class="svg-icon svg-icon-2hx svg-icon-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM13 15.4V10C13 9.4 12.6 9 12 9C11.4 9 11 9.4 11 10V15.4H8L11.3 18.7C11.7 19.1 12.3 19.1 12.7 18.7L16 15.4H13Z" fill="black"/>
@@ -92,7 +92,7 @@
                     <a href="javascript:void(0);" class="fs-8" id="rciptDelBtn{{rnum}}" onclick="Page.rciptDel({{rnum}})">삭제</a>
                 </span>
             {{/unless}}
-            <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].atchFileDtlId" id="atchFileDtlId{{rnum}}" value="{{atchFileDtlId}}"/>
+            <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].atchFileDtlNo" id="atchFileDtlNo{{rnum}}" value="{{atchFileDtlNo}}"/>
             <span id="rciptOrgnlSpan{{rnum}}"></span>
         </td>
         <td>

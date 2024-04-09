@@ -56,7 +56,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -74,7 +74,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -99,7 +99,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReplace("${SiteUrl.CL_CD_LIST!}");
+                                if (res.rslt) commons.util.blockUIReplace("${SiteUrl.CL_CD_LIST!}");
                             });
                     });
                 });
@@ -116,11 +116,11 @@
                 const url = "${SiteUrl.CL_CD_DTL_AJAX!}";
                 let ajaxData = { "clCd": clCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "cl_cd_dtl", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "cl_cd_dtl", "show");
                 });
             },
             /** 삭제 처리 (ajax) */
@@ -136,7 +136,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -150,7 +150,7 @@
                 const url = "${SiteUrl.CL_CD_SORT_ORDR_AJAX!}";
                 let ajaxData = { "sortOrdr": orderData };
                 commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
-                    if (res.result) {
+                    if (res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) {
                             Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
                         } else {

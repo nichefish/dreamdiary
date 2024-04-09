@@ -93,7 +93,7 @@ commons.tinymce = (function() {
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         if (commons.util.isNotEmpty(res.message)) alert(res.message);
                         if (res.result === true) {
-                            let fileInfo = res.resultObj;
+                            let fileInfo = res.rsltObj;
                             let imgTag = "<img src='" + fileInfo.url + "' data-mce-src='" + fileInfo.url + "' data-originalFileName='" + fileInfo.orgnFileNm + "' >";
                             tinymce.execCommand('mceInsertContent', true, imgTag);
                             // file input 초기화

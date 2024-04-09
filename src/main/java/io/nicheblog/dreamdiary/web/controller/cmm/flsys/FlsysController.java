@@ -106,9 +106,10 @@ public class FlsysController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
+            // 해당하는 경로의 파일시스템 정보 조회
             if (!filePath.startsWith(Constant.HOME_FLSYS)) throw new IllegalArgumentException("허용되지 않은 경로입니다.");
             FlsysDto file = flsysService.getFlsysByPath(filePath);
-            ajaxResponse.setResultObj(file);
+            ajaxResponse.setRsltObj(file);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

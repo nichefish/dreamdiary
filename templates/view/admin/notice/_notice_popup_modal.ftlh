@@ -15,11 +15,11 @@
             showNoticePopupAjax() {
                 // const url = "${SiteUrl.NOTICE_POPUP_LIST_AJAX!}";
                 // commons.util.blockUISyncAjax(url, 'post', null, function(res) {
-                //     if (commons.util.isNotEmpty(res.resultList)) {
-                //         let resultList = res.resultList;
-                //         NoticePopup.popupList = resultList;
-                //         NoticePopup.popupSize = resultList.length;
-                //         NoticePopup.popupMaxIdx = resultList.length - 1;
+                //     if (commons.util.isNotEmpty(res.rsltList)) {
+                //         let rsltList = res.rsltList;
+                //         NoticePopup.popupList = rsltList;
+                //         NoticePopup.popupSize = rsltList.length;
+                //         NoticePopup.popupMaxIdx = rsltList.length - 1;
                 //         NoticePopup.popupIdx = 0;
                 //         NoticePopup.showNoticePopup();
                 //     }
@@ -42,7 +42,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "notice_popup", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "notice_popup", "show");
                     NoticePopup.popupIdx++;
                 });
             },

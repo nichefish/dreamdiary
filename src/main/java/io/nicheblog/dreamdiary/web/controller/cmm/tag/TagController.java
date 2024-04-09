@@ -70,7 +70,7 @@ public class TagController
         try {
             // 전체 태그 목록 조회 (태그클라우드)
             List<TagDto> tagList = tagService.getListDto(searchParamMap);
-            ajaxResponse.setResultList(tagList);
+            ajaxResponse.setRsltList(tagList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -107,9 +107,9 @@ public class TagController
         try {
             // 태그 상세 조회 (관련글 목록 포함)
             TagDto tagDto = tagService.getDtlDto(tagNo);
-            ajaxResponse.setResultObj(tagDto);
-            // if (!CollectionUtils.isEmpty(TagDto.getPostList())) ajaxResponse.setResultList(TagDto.getPostList());
-            // if (!CollectionUtils.isEmpty(TagDto.getNoticeList())) ajaxResponse.setResultList(TagDto.getNoticeList());
+            ajaxResponse.setRsltObj(tagDto);
+            // if (!CollectionUtils.isEmpty(TagDto.getPostList())) ajaxResponse.setRsltList(TagDto.getPostList());
+            // if (!CollectionUtils.isEmpty(TagDto.getNoticeList())) ajaxResponse.setRsltList(TagDto.getNoticeList());
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

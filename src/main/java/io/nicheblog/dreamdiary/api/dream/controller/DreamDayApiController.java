@@ -80,7 +80,7 @@ public class DreamDayApiController
             Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getPageDto(searchParamMap, pageRequest);
-            ajaxResponse.setResultList(dreamDayList.getContent());
+            ajaxResponse.setRsltList(dreamDayList.getContent());
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -123,7 +123,7 @@ public class DreamDayApiController
             Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getPageDto(searchParamMap, pageRequest);
-            ajaxResponse.setResultList(dreamDayList.getContent());
+            ajaxResponse.setRsltList(dreamDayList.getContent());
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

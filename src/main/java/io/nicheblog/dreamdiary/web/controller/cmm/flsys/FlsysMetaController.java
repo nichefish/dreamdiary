@@ -107,10 +107,10 @@ public class FlsysMetaController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 게시판 정보 조회
+            // 정보 조회 및 응답에 세팅
             postKey.setContentType("flsysMeta");
             FlsysMetaDto rsDto = flsysMetaService.getDtlDto(postKey);
-            ajaxResponse.setResultObj(rsDto);
+            ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

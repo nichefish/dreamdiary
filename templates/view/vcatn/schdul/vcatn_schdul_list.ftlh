@@ -59,7 +59,7 @@
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) commons.util.blockUIReload();
+                            if (res.rslt) commons.util.blockUIReload();
                         });
                 });
             },
@@ -91,16 +91,16 @@
                 const url = "${SiteUrl.VCATN_SCHDUL_DTL_AJAX!}";
                 let ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    if (!res.result) return;
-                    let resultObj = res.resultObj;
+                    if (!res.rslt) return;
+                    let rsltObj = res.rsltObj;
                     // 수정 modal_form에 값 세팅
                     $("#vcatnSchdulNo").val(vcatnSchdulNo);
-                    $("#userId").val(resultObj.userId);
-                    $("#vcatnCd").val(resultObj.vcatnCd);
-                    $("#bgnDt").val(resultObj.bgnDt);
-                    $("#endDt").val(resultObj.endDt);
-                    $("#vcatnResn").val(resultObj.vcatnResn);
-                    $("#vcatnRm").val(resultObj.vcatnRm);
+                    $("#userId").val(rsltObj.userId);
+                    $("#vcatnCd").val(rsltObj.vcatnCd);
+                    $("#bgnDt").val(rsltObj.bgnDt);
+                    $("#endDt").val(rsltObj.endDt);
+                    $("#vcatnResn").val(rsltObj.vcatnResn);
+                    $("#vcatnRm").val(rsltObj.vcatnRm);
                     $("#vcatn_schdul_reg_modal").modal("show");
                 });
             },
@@ -128,7 +128,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });

@@ -45,17 +45,17 @@ public class MessageUtils
         response = resp;
     }
 
-    public static final String RSLT_SUCCESS = "common.result.success";
-    public static final String RSLT_FAILURE = "common.result.failure";
-    public static final String RSLT_EXCEPTION = "common.result.exception";
-    public static final String RSLT_EMPTY = "common.result.empty";
+    public static final String RSLT_SUCCESS = "common.rslt.success";
+    public static final String RSLT_FAILURE = "common.rslt.failure";
+    public static final String RSLT_EXCEPTION = "common.rslt.exception";
+    public static final String RSLT_EMPTY = "common.rslt.empty";
 
-    public static final String RSLT_JANDI_SUCCESS = "commons.result.jandi.success";
-    public static final String RSLT_JANDI_FAILURE = "commons.result.jandi.failure";
+    public static final String RSLT_JANDI_SUCCESS = "commons.rslt.jandi.success";
+    public static final String RSLT_JANDI_FAILURE = "commons.rslt.jandi.failure";
 
-    public static final String RSLT_USER_ID_DUP = "userInfo.ipDupChck.result.idUnusable";
-    public static final String RSLT_USER_ID_NOT_DUP = "userInfo.ipDupChck.result.idUsable";
-    public static final String RSLT_SUCCESS_PW_RESET = "userInfo.resetPw.result.success";
+    public static final String RSLT_USER_ID_DUP = "userInfo.ipDupChck.rslt.idUnusable";
+    public static final String RSLT_USER_ID_NOT_DUP = "userInfo.ipDupChck.rslt.idUsable";
+    public static final String RSLT_SUCCESS_PW_RESET = "userInfo.resetPw.rslt.success";
 
     public static final String LGN_FAIL_BADCREDENTIALS_CNT = "AbstractUserDetailsAuthenticationProvider.badCredentials.failCnt";
     public static final String LGN_FAIL_BADCREDENTIALS_LOCKED = "AbstractUserDetailsAuthenticationProvider.badCredentials.locked";
@@ -124,8 +124,7 @@ public class MessageUtils
         if (StringUtils.isNotEmpty(e.getMessage())) return e.getMessage();
         String exceptionNm = getExceptionNm(e);
         String rsltMsg = getMessage(RSLT_EXCEPTION + "." + exceptionNm);
-        log.info("exceptionNm: {}, rsltMsg: {}. {}", exceptionNm, rsltMsg, e.getStackTrace());
-        log.error(e);
+        log.error("exceptionNm: {}, rsltMsg: {}. {}", exceptionNm, rsltMsg, e.getStackTrace());
         return rsltMsg;
     }
 

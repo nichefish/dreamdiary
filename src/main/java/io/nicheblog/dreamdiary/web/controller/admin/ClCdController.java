@@ -201,7 +201,7 @@ public class ClCdController
         try {
             // 객체 조회 및 응답에 추가
             ClCd cmmClCd = clCdService.getDtlDto(clCd);
-            ajaxResponse.setResultObj(cmmClCd);
+            ajaxResponse.setRsltObj(cmmClCd);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

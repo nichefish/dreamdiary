@@ -109,7 +109,7 @@
                             </td>
                             <td>${exptr.exptrRm!}</td>
                             <td class="text-center">
-                                <#if exptr.atchFileDtlId??>
+                                <#if exptr.atchFileDtlNo??>
                                     <i class="bi bi-circle fs-8 text-success"></i>
                                 <#else>
                                     <i class="bi bi-x text-danger"></i>

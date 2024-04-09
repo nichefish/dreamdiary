@@ -182,8 +182,8 @@ public class VcatnSchdulController
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 세팅
-            VcatnSchdulDto resultObj = vcatnSchdulService.getDtlDto(vcatnSchdulNo);
-            ajaxResponse.setResultObj(resultObj);
+            VcatnSchdulDto rsDto = vcatnSchdulService.getDtlDto(vcatnSchdulNo);
+            ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

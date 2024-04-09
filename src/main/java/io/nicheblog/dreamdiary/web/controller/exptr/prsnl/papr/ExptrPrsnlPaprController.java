@@ -146,7 +146,7 @@ public class ExptrPrsnlPaprController
         try {
             // 존재여부 체크 및 응답에 추가
             Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
-            ajaxResponse.setResultMap((HashMap<String, Object>) resultMap);
+            ajaxResponse.setRsltMap((HashMap<String, Object>) resultMap);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -185,8 +185,8 @@ public class ExptrPrsnlPaprController
             // 상태여부 체크 및 응답에 추가
             Integer yy = Integer.parseInt(yyStr);
             Integer mnth = Integer.parseInt(mnthStr);
-            BasePostDto resultObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
-            ajaxResponse.setResultObj(resultObj);
+            BasePostDto rsltObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
+            ajaxResponse.setRsltObj(rsltObj);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

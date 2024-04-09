@@ -334,7 +334,7 @@ public class BoardPostController
         try {
             // 객체 조회 및 응답에 추가
             BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
-            ajaxResponse.setResultObj(rsDto);
+            ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

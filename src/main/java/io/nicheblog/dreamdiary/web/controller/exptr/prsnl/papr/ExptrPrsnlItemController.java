@@ -69,7 +69,7 @@ public class ExptrPrsnlItemController
         try {
             // 항목 조회 및 응답에 추가
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            ajaxResponse.setResultList(rsDto.getItemList());
+            ajaxResponse.setRsltList(rsDto.getItemList());
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

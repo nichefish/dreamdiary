@@ -22,11 +22,11 @@
                 const url = "${ApiUrl.API_DREAM_DAY_LIST_AJAX!}";
                 let ajaxData = {};
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultList, "dream_day_list");
+                    commons.util.handlebarsTemplate(res.rsltList, "dream_day_list");
                 });
             },
             /** 등록 */
@@ -41,7 +41,7 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();;
+                                if (res.rslt) commons.util.blockUIReload();;
                             });
                     });
                 });
@@ -53,11 +53,11 @@
                 commons.util.blockUIFileAjax(url, "get", ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (!res.result) {
+                            if (!res.rslt) {
                                 if (commons.util.isNotEmpty(res.message)) Swal.fire({text: res.message});
                                 return false;
                             }
-                            commons.util.handlebarsTemplate(res.resultObj, "dream_day_reg", "show");
+                            commons.util.handlebarsTemplate(res.rsltObj, "dream_day_reg", "show");
                             commons.datepicker.singleDatePicker("#dreamtDt", "yyyy-MM-DD", commons.date.getCurrDateStr("yyyy-MM-dd"));         // datepicker 날짜 검색 init
                             commons.validate.replaceBlankRegex("#dreamDayRegForm #clCd");
                             commons.validate.toUpperCase("dreamDayRegForm #clCd");

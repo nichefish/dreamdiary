@@ -82,7 +82,7 @@
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) Page.list();
+                            if (res.rslt) Page.list();
                         });
                 });
             },

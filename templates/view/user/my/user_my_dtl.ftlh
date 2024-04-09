@@ -64,7 +64,7 @@
                                     .then(function() {
                                         Swal.fire({ "text": "변경된 프로필은 재접속 이후에 적용됩니다." })
                                             .then(function() {
-                                                if (res.result) commons.util.blockUIReload();
+                                                if (res.rslt) commons.util.blockUIReload();
                                             });
                                     });
                             }
@@ -89,7 +89,7 @@
                                 .then(function() {
                                     Swal.fire({ "text": "변경된 프로필은 재접속 이후에 적용됩니다." })
                                         .then(function() {
-                                            if (res.result) commons.util.blockUIReload();
+                                            if (res.rslt) commons.util.blockUIReload();
                                         });
                                 });
                         }
@@ -114,7 +114,7 @@
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) commons.util.blockUIReload();
+                            if (res.rslt) commons.util.blockUIReload();
                         });
                 });
             },

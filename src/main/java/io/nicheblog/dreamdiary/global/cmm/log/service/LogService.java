@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.global.cmm.log.service;
 
 import io.nicheblog.dreamdiary.global.ActiveProfile;
-import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogActvtyEntity;
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.cmm.log.mapstruct.LogMapstruct;
@@ -14,7 +13,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * LogService
@@ -35,15 +33,10 @@ public class LogService {
     private LogActvtyRepository logActvtyRepository;
     @Resource(name = "logSysRepository")
     private LogSysRepository logSysRepository;
-    @Resource(name = "authService")
-    private AuthService authService;
-    @Resource
-    private HttpServletRequest request;
     @Resource(name = "activeProfile")
     ActiveProfile activeProfile;
 
-    // private final Boolean LOG_DISABLED = !activeProfile.isProd();
-    private final Boolean LOG_DISABLED = false;
+    private final Boolean LOG_DISABLED = !activeProfile.isProd();
 
     /**
      * 활동 로그 등록 (로그인 상태)

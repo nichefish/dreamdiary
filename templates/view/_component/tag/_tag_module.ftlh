@@ -14,14 +14,14 @@
                 const url = "${SiteUrl.TAG_DTL_AJAX!}";
                 let ajaxData = { "tagNo": tagNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
                     // 태그 상세 정보
-                    commons.util.handlebarsTemplate(res.resultObj, "tag_dtl", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "tag_dtl", "show");
                     // 태그 글 목록
-                    commons.util.handlebarsTemplate(res.resultList, "tag_dtl_post_list");
+                    commons.util.handlebarsTemplate(res.rsltList, "tag_dtl_post_list");
                     $("#board_tag_list_modal").modal("hide");
                     $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 });
@@ -38,12 +38,12 @@
                 const url = "${SiteUrl.TAG_LIST_AJAX!}";
                 let ajaxData = { "contentType": $("#contentType").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
                     // 태그 상세 정보
-                    commons.util.handlebarsTemplate(res.resultList, "board_tag_list", "show");
+                    commons.util.handlebarsTemplate(res.rsltList, "board_tag_list", "show");
                     $("#board_tag_dtl_modal").modal("hide");
                     $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 });

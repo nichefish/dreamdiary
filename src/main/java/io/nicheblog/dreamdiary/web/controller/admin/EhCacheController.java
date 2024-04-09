@@ -57,7 +57,7 @@ public class EhCacheController
         try {
             // 현재 활성 중인 캐시(name) 목록 조회 :: 성공시 처리완료목록으로 출력
             List<String> activeCacheList = EhCacheUtils.chckActiveCaches();
-            ajaxResponse.setResultList(activeCacheList);
+            ajaxResponse.setRsltList(activeCacheList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -92,7 +92,7 @@ public class EhCacheController
         try {
             // 목록 조회 및 초기화
             List<String> activeCacheList = EhCacheUtils.chckActiveCaches();
-            ajaxResponse.setResultList(activeCacheList);
+            ajaxResponse.setRsltList(activeCacheList);
             
             isSuccess = EhCacheUtils.clearAllCaches();
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

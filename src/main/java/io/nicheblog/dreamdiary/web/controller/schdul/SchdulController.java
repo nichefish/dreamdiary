@@ -120,10 +120,10 @@ public class SchdulController
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            SchdulDto schdul = schdulService.getDtlDto(key);
-            ajaxResponse.setResultObj(schdul);
+            SchdulDto rsDto = schdulService.getDtlDto(key);
+            ajaxResponse.setRsltObj(rsDto);
 
-            isSuccess = (schdul.getPostNo() != null);
+            isSuccess = (rsDto.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

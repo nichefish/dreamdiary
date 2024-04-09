@@ -47,11 +47,11 @@
                 const url = "${SiteUrl.EXPTR_REQST_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "exptr_reqst_dtl", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "exptr_reqst_dtl", "show");
                 });
             },
         }

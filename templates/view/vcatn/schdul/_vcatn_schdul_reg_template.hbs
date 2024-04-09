@@ -79,15 +79,15 @@
                     </div>
                     <div class="col-xl-10 my-3" id="atchFileSpan">
                         {{#atchFileList}}
-                            <div class="row my-1" id="atchFile{{atchFileDtlId}}">
-                                <div class="col-xl-8" id="itemContainer{{atchFileDtlId}}">
+                            <div class="row my-1" id="atchFile{{atchFileDtlNo}}">
+                                <div class="col-xl-8" id="itemContainer{{atchFileDtlNo}}">
                                     <a href="javascript:void(0);"
-                                       onclick="commons.util.fileDownload('{{atchFileId}}', '{{atchFileDtlId}}');"
+                                       onclick="commons.util.fileDownload('{{atchFileNo}}', '{{atchFileDtlNo}}');"
                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.download"/>">
                                         <i class="fas fa-file-download fs-15 me-1"></i>
                                         {{orgnFileNm}}({{fileSize}}byte)
                                     </a>
-                                    <input type="hidden" name="atchCtrl{{atchFileDtlId}}" id="atchCtrl{{atchFileDtlId}}" value="R">
+                                    <input type="hidden" name="atchCtrl{{atchFileDtlNo}}" id="atchCtrl{{atchFileDtlNo}}" value="R">
                                 </div>
                             </div>
                         {{/atchFileList}}

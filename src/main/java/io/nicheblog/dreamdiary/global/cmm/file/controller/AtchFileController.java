@@ -66,6 +66,7 @@ public class AtchFileController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
+            // 체크 로직 처리
             isSuccess = FileUtils.fileChck(fileId);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -99,8 +100,9 @@ public class AtchFileController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
+            // 목록 조회 및 응답에 세팅
             List<AtchFileDtlDto> fileList = atchFileDtlService.getPageDto(atchFileNo);
-            ajaxResponse.setResultList(fileList);
+            ajaxResponse.setRsltList(fileList);
 
             isSuccess = (fileList != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -138,9 +140,10 @@ public class AtchFileController
             Integer atchFileDtlNo = Integer.parseInt(atchFileDtlNoStr);
             AtchFileDtlEntity atchFileDtl = atchFileDtlService.getDtlEntity(atchFileDtlNo);
             String orgnFileNm = atchFileDtl.getOrgnFileNm();
-            // 파일 다운로드 처리 시작
+            // 파일 다운로드 처리
             File file = new File(atchFileDtl.getFileStrePath(), atchFileDtl.getStreFileNm());
             FileUtils.downloadFile(file, orgnFileNm);
+
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -177,6 +180,7 @@ public class AtchFileController
             File file = new File("vod-storage/" + dir + "/" + fileName);
             log.debug("file: {}", file);
             FileUtils.downloadFile(file, fileName);
+
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -242,9 +246,11 @@ public class AtchFileController
         try {
             // 파일 영역 처리 후 업로드 정보 받아서 반환
             AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
+            ajaxResponse.setRsltObj(atchfileDtl);
+
             isSuccess = (atchfileDtl.getAtchFileDtlNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            if (isSuccess) ajaxResponse.setResultObj(atchfileDtl);
+
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);

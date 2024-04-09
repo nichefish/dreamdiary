@@ -74,7 +74,7 @@ public class CommentController
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회 및 응답에 추가
             Page<CommentDto.LIST> commentList = commentService.getPageDto(searchParam, pageRequest);
-            ajaxResponse.setResultList(commentList.getContent());
+            ajaxResponse.setRsltList(commentList.getContent());
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

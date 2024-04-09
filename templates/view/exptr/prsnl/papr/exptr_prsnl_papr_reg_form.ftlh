@@ -64,17 +64,17 @@
                 const url = "${SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
                 let ajaxData = {"yy": $("#yy").val(), "mnth": $("#mnth").val()};
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    let resultObj = res.resultObj;
-                    if (resultObj === undefined) return;
-                    if (resultObj.cfYn === "Y") {
+                    let rsltObj = res.rsltObj;
+                    if (rsltObj === undefined) return;
+                    if (rsltObj.cfYn === "Y") {
                         Swal.fire("이미 해당 월 경비 취합이 완료된 상태입니다.")
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     } else {
                         Swal.fire("이미 등록중인 글이 있습니다. 해당 글로 이동합니다.")
                             .then(function() {
-                                $("#postNo").val(resultObj.postNo);
+                                $("#postNo").val(rsltObj.postNo);
                                 commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
                             });
                     }
@@ -127,13 +127,13 @@
                 const url = "${SiteUrl.EXPTR_PRSNL_ITEM_LIST_AJAX!}";
                 let ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         Swal.fire({text: res.message});
                         return;
                     }
-                    let resultList = res.resultList;
-                    if (commons.util.isEmpty(resultList)) return;
-                    resultList.forEach(function (item, idx) {
+                    let rsltList = res.rsltList;
+                    if (commons.util.isEmpty(rsltList)) return;
+                    rsltList.forEach(function (item, idx) {
                         item.rnum = idx;
                         commons.util.handlebarsAppend(item, "exptr_prsnl_item_reg");
 
@@ -168,7 +168,7 @@
                 $("#rciptFile" + idx).empty();
                 $("#rciptRegBtn" + idx).show();
                 $("#rciptDel" + idx).hide();
-                $("#atchFileDtlId" + idx).val("");
+                $("#atchFileDtlNo" + idx).val("");
             },
             /** 추가항목 영역 삭제 */
             delExptrPrsnlItemSpan: function(idx) {
@@ -193,7 +193,7 @@
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (!res.result) return;
+                            if (!res.rslt) return;
                             if ($("#mngrYn").val() === "Y") {
                                 commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS_PAGE!}")
                             } else
@@ -243,7 +243,7 @@
         <input type="hidden" name="postNo" value="${post.postNo!}">
         <input type="hidden" name="mngrYn" id="mngrYn" value="${mngrYn!}">
         <input type="hidden" name="title" id="title" value="${post.title!}">
-        <input type="hidden" name="atchFileId" value="${post.atchFileId!}">
+        <input type="hidden" name="atchFileNo" value="${post.atchFileNo!}">
         <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
         <input type="hidden" name="cfYn" value="${post.cfYn!"N"}">
 

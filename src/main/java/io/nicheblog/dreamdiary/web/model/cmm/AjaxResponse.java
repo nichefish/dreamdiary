@@ -20,54 +20,33 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AjaxResponse {
 
-    /**
-     * message
-     */
+    /** message */
     private String message;
-    /**
-     * status
-     */
+    /** status */
     private Integer status;
-    /**
-     * TODO: url to replace
-     */
+    /** TODO: url to replace? */
     private String url;
-    /**
-     * result
-     */
-    private Boolean result;
-    /**
-     * resultList (목록)
-     */
-    private List<?> resultList;
-    /**
-     * resultMap (맵)
-     */
-    private HashMap<String, Object> resultMap;
-    /**
-     * resultVal (숫자)
-     */
-    private Integer resultVal;
-    /**
-     * resultObj (객체)
-     */
-    private Object resultObj;
-    /**
-     * resultStr (문자열)
-     */
-    private String resultStr;
+    /** 결과 (성공여부) */
+    private Boolean rslt;
+    /** 결과 (목록) */
+    private List<?> rsltList;
+    /** 결과 (맵) */
+    private HashMap<String, Object> rsltMap;
+    /** 결과 (숫자) */
+    private Integer rsltVal;
+    /** 결과 (객체) */
+    private Object rsltObj;
+    /** 결과 (문자열) */
+    private String rsltStr;
 
     /* ----- */
 
     /**
      * Ajax 결과 세팅
      */
-    public void setAjaxResult(
-            final Boolean result,
-            final String message
-    ) {
-        this.result = result;
+    public void setAjaxResult(final Boolean rslt, final String message) {
+        this.rslt = rslt;
         this.message = message;
-        if (this.status == null) this.status = result ? 200 : 400;
+        if (this.status == null) this.status = rslt ? 200 : 400;
     }
 }

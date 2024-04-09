@@ -119,7 +119,7 @@
                 // 검색키워드 설정
                 ajaxData.searchKeyword = $("#searchKeyword").val();
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (res.result) Page.eventList = res.resultList;
+                    if (res.rslt) Page.eventList = res.rsltList;
                 });
             },
             /** 팝업 쿠키 존재여부 체크 */
@@ -210,7 +210,7 @@
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
-                            if (res.result) commons.util.blockUIReload();
+                            if (res.rslt) commons.util.blockUIReload();
                         });
                 });
             },
@@ -219,11 +219,11 @@
                 const url = "${SiteUrl.SCHDUL_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let obj = res.resultObj;
+                    let obj = res.rsltObj;
                     commons.util.handlebarsTemplate(obj, "schdul_dtl", "show");
                     Schdul.postNo = obj.postNo;
                 });
@@ -233,18 +233,18 @@
                 const url = "${SiteUrl.SCHDUL_DTL_AJAX!}";
                 let ajaxData = { "postNo": Schdul.postNo };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
                     $("#schdul_dtl_modal").modal("hide");
-                    commons.util.handlebarsTemplate(res.resultObj, "schdul_reg", "show");
-                    let resultObj = res.resultObj;
-                    let prtcpnt = resultObj.prtcpntList;
+                    commons.util.handlebarsTemplate(res.rsltObj, "schdul_reg", "show");
+                    let rsltObj = res.rsltObj;
+                    let prtcpnt = rsltObj.prtcpntList;
                     Schdul.prtcpntCnt = prtcpnt !== undefined ? prtcpnt.length : 0;
 
-                    commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", resultObj.bgnDt);
-                    commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD", resultObj.endDt);
+                    commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", rsltObj.bgnDt);
+                    commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD", rsltObj.endDt);
                     // 잔디발송여부 클릭시 글씨 변경
                     commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function () {
                         $("#trgetTopicSpan").show();
@@ -265,7 +265,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });

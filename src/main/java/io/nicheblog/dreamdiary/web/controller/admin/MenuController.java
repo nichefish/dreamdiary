@@ -149,7 +149,7 @@ public class MenuController
         try {
             // 객체 조회 및 모델에 추가
             MenuDto rsDto = menuService.getDtlDto(menuNo);
-            ajaxResponse.setResultObj(rsDto);
+            ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -192,7 +192,7 @@ public class MenuController
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회 및 응답에 추가
             Page<MenuDto> menuList = menuService.getMainMenuList(searchParam, pageRequest);
-            ajaxResponse.setResultList(menuList.getContent());
+            ajaxResponse.setRsltList(menuList.getContent());
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

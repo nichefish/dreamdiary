@@ -49,7 +49,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReplace("${SiteUrl.CL_CD_LIST!}");
+                                if (res.rslt) commons.util.blockUIReplace("${SiteUrl.CL_CD_LIST!}");
                             });
                     });
                 });
@@ -65,11 +65,11 @@
                 const url = "${SiteUrl.TMPLAT_DEF_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "tmplat_dtl", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "tmplat_dtl", "show");
                 });
             },
         }

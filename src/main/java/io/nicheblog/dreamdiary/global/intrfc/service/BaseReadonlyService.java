@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.io.Serializable;
 import java.util.List;
@@ -108,6 +109,24 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
     }
 
     /**
+     * default: 항목 목록 조회 (+정렬) (dto level)
+     */
+    default List<ListDto> getListDto(final BaseSearchParam searchParam, Sort sort) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getListDto(searchParamMap, sort);
+    }
+
+    /**
+     * default: 항목 목록 조회 (+정렬) (dto level)
+     */
+    default List<ListDto> getListDto(final Map<String, Object> searchParamMap, Sort sort) throws Exception {
+        // searchParamMap에서 빈 값들 및 쓸모없는 값들 정리
+        Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
+
+        return this.listEntityToDto(this.getListEntity(filteredSearchKey, sort));
+    }
+
+    /**
      * default: 항목 목록 조회 (entity level)
      */
     default List<Entity> getListEntity(final BaseSearchParam searchParam) throws Exception {
@@ -123,6 +142,24 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
         Spec spec = this.getSpec();
 
         return repository.findAll(spec.searchWith(searchParamMap));
+    }
+
+    /**
+     * default: 항목 목록 조회 (+정렬) (entity level)
+     */
+    default List<Entity> getListEntity(final BaseSearchParam searchParam, Sort sort) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getListEntity(searchParamMap, sort);
+    }
+
+    /**
+     * default: 항목 목록 조회 (+정렬) (entity level)
+     */
+    default List<Entity> getListEntity(final Map<String, Object> searchParamMap, Sort sort) throws Exception {
+        Repository repository = this.getRepository();
+        Spec spec = this.getSpec();
+
+        return repository.findAll(spec.searchWith(searchParamMap), sort);
     }
 
     /**
@@ -150,13 +187,34 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
     default Stream<Entity> getStreamEntity(final BaseSearchParam searchParam) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         return this.getStreamEntity(searchParamMap);
-
     }
+
+    /**
+     * default: Stream<Entity> 변환
+     */
     default Stream<Entity> getStreamEntity(final Map<String, Object> searchParamMap) throws Exception {
         Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
         Repository repository = this.getRepository();
         Spec spec = this.getSpec();
         return repository.streamAllBy(spec.searchWith(filteredSearchKey));
+    }
+
+    /**
+     * default: Stream<Entity> (+정렬) 변환
+     */
+    default Stream<Entity> getStreamEntity(final BaseSearchParam searchParam, Sort sort) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getStreamEntity(searchParamMap, sort);
+    }
+
+    /**
+     * default: Stream<Entity> 변환
+     */
+    default Stream<Entity> getStreamEntity(final Map<String, Object> searchParamMap, Sort sort) throws Exception {
+        Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
+        Repository repository = this.getRepository();
+        Spec spec = this.getSpec();
+        return repository.streamAllBy(spec.searchWith(filteredSearchKey), sort);
     }
 
     /* ----- */

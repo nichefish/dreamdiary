@@ -27,11 +27,11 @@
                 const url = "${SiteUrl.LOG_ACTVTY_DTL_AJAX!}";
                 let ajaxData = { "logActvtyNo": logActvtyNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "log_actvty_dtl", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "log_actvty_dtl", "show");
                 });
             },
             /** 목록 검색 */

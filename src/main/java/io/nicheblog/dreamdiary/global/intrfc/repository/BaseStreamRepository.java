@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.repository;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -24,4 +25,9 @@ public interface BaseStreamRepository<T, ID extends Serializable>
      * stream 조회
      */
     Stream<T> streamAllBy(Specification<T> searchWith);
+
+    /**
+     * stream 조회 (+정렬)
+     */
+    Stream<T> streamAllBy(Specification<T> searchWith, Sort sort);
 }

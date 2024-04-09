@@ -42,7 +42,7 @@
                 $("#prevYn").val("N");
                 const url = "${SiteUrl.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX!}";
                 commons.util.blockUIAjax(url, 'post', "", function(res) {
-                    if (!res.resultMap) return;
+                    if (!res.rsltMap) return;
                     // 중복 코드 감소를 위한 함수 정의
                     const checkAndRedirect = (data) => {
                         if (monthData && monthData.cfYn !== "Y") {
@@ -56,7 +56,7 @@
                         return false;
                     };
 
-                    let {prevMnth, currMnth} = res.resultMap;
+                    let {prevMnth, currMnth} = res.rsltMap;
                     // 확인된 결과에 따라 처리
                     if (prevMnth?.cfYn === "Y" && currMnth?.cfYn === "Y") {
                         alert("<@spring.message 'view.post.prsnl.alreadyCompt'/>");

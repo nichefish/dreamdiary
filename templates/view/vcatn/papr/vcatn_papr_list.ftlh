@@ -46,11 +46,11 @@
                 const url = "${SiteUrl.VCATN_PAPR_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "vcatn_papr_dtl", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "vcatn_papr_dtl", "show");
                 });
             },
         }

@@ -310,7 +310,7 @@ public class ExptrReqstController
         try {
             // 객체 조회 및 응답에 추가
             ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
-            ajaxResponse.setResultObj(rsDto);
+            ajaxResponse.setRsltObj(rsDto);
             
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

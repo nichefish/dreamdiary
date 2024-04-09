@@ -47,11 +47,11 @@
                 const url = "${SiteUrl.BOARD_POST_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo, "boardCd": $("#boardCd").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.resultObj, "board_post_dtl", "show");
+                    commons.util.handlebarsTemplate(res.rsltObj, "board_post_dtl", "show");
                 });
             },
         }
