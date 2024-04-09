@@ -118,7 +118,7 @@ public class DreamdiaryAuthenticationProvider
         boolean isPwExprd = (pwExprDt == null || pwExprDt.compareTo(DateUtils.getCurrDate()) < 0);
         if (isPwExprd) throw new CredentialsExpiredException("CredentialsExpiredException");
 
-        // 비밀번호 / 2차 비밀번호 변경 필요 여부 체크
+        // 비밀번호 변경 필요 여부 체크
         boolean needsPwReset = "Y".equals(authInfo.getNeedsPwReset());
         if (needsPwReset) throw new AcntNeedsPwResetException("AcntNeedsPwResetException");
 

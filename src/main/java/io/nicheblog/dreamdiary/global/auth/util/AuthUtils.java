@@ -4,10 +4,10 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -40,9 +40,9 @@ public class AuthUtils {
      * 현재 로그인 중인 사용자 정보 세션에서 조회해서 반환
      */
     public static AuthInfo getAuthenticatedUser() {
-        if (RequestContextHolder.getRequestAttributes() == null) return null;
-        return (AuthInfo) RequestContextHolder.getRequestAttributes()
-                                                  .getAttribute("authInfo", RequestAttributes.SCOPE_SESSION);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) return null;
+        return (AuthInfo) authentication.getPrincipal();
     }
 
     /**
@@ -67,9 +67,7 @@ public class AuthUtils {
      * 현재 사용자 인증여부 세션에서 조회해서 반환
      */
     public static Boolean isAuthenticated() {
-        if (RequestContextHolder.getRequestAttributes() == null) return false;
-        return (RequestContextHolder.getRequestAttributes()
-                                    .getAttribute("authInfo", RequestAttributes.SCOPE_SESSION) != null);
+        return SecurityContextHolder.getContext().getAuthentication() != null;
     }
 
     /**

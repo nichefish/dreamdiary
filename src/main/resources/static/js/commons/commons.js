@@ -9,12 +9,8 @@
  */
 if (typeof commons === 'undefined') { var commons = {}; }
 (function($) {
-    // 인증만료로 ajax 실패시 로그인페이지로 이동
-    // AjaxSessionTimeoutFilter.java와 한 세트임
+    // 인증만료로 ajax 실패시 로그인 페이지로 이동
     $.ajaxSetup({
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("AJAX", true);
-        },
         error: function(xhr, status, err) {
             if (xhr.status === 401) {   // ACCESS DENIED
                 if (commons.util.hasSwal()) {
@@ -22,22 +18,15 @@ if (typeof commons === 'undefined') { var commons = {}; }
                 } else {
                     alert("접근이 거부되었습니다. (ACCESS DENIED)");
                 }
-                location.replace("/lgnForm.do");
+                location.replace("/auth/lgnForm.do");
             } else if (xhr.status === 403) {
                 if (commons.util.hasSwal()) {
                     Swal.fire("접근이 거부되었습니다. (FORBIDDEN)");
                 } else {
                     alert("접근이 거부되었습니다. (FORBIDDEN)");
                 }
-                location.replace("/lgnForm.do");
+                location.replace("/auth/lgnForm.do");
             }
-            // else {
-            //     if (commons.util.hasSwal()) {
-            //         Swal.fire("에러가 발생했습니다.");
-            //     } else {
-            //         alert("에러가 발생했습니다.");
-            //     }
-            // }
             // location.replace("/lgnForm.do");
         }
     });
@@ -45,12 +34,12 @@ if (typeof commons === 'undefined') { var commons = {}; }
 commons.util = (function() {
     /** blockUI wrapped by try-catch */
     function fnBlockUI() {
+        // let blockUI = new KTBlockUI();
         try {
             $.blockUI({
-                message: `<div class="app-page-loader">
-                    <span class="spinner-border text-primary" role="status">
-                        <span class="visually">Loading...</span>
-                    </span>
+                message: `<div class="flex-column py-2 bg-dark bg-opacity-25">
+                    <span class="spinner-border text-primary" role="status"></span>
+                    <span class="text-muted fs-6 fw-semibold mt-5">Loading...</span>
                 </div>`
             });
         } catch (error) {
