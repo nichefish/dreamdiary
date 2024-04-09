@@ -26,7 +26,7 @@
             </span>
             <span class="menu-title">${siteMenu.menuNm!}</span>
             <!-- TODO: 새 글 갯수 표시 -->
-            <span class="badge badge-success blink-slow">3</span>
+            <span class="badge badge-success bg-noti blink-fast">3</span>
         </a>
     </div>
 </#macro>
