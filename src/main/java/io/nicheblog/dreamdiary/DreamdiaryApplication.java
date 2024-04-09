@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary;
 
 import io.nicheblog.NicheblogBasePackage;
 import io.nicheblog.dreamdiary.global.ActiveProfile;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import lombok.extern.log4j.Log4j2;
@@ -52,7 +53,7 @@ public class DreamdiaryApplication
     @Override
     public void run(final String... args) throws Exception {
 
-        log.info("activeProfile: {}", activeProfile.getActive());
+        log.info("DreamdiaryApplication init... activeProfile: {}", activeProfile.getActive());
 
         // 시스템 계정 부재시 등록
         initializer.chkSystemAcnt();
@@ -61,7 +62,7 @@ public class DreamdiaryApplication
 
         // 시스템 재기동 로그 적재
         if (!activeProfile.isProd()) return;
-        LogSysParam logParam = new LogSysParam(true, "시스템이 정상적으로 재기동되었습니다.");
+        LogSysParam logParam = new LogSysParam(true, "시스템이 정상적으로 재기동되었습니다.", ActvtyCtgr.SYSTEM);
         publisher.publishEvent(new LogSysEvent(this, logParam));
     }
 }
