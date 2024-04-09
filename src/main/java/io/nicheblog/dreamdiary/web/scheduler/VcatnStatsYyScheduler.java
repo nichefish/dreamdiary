@@ -41,17 +41,17 @@ public class VcatnStatsYyScheduler {
         log.info("vcatnStatsYySchedule...");
 
         LogSysParam logParam = new LogSysParam();
-        boolean isSuccess = false;
-        String resultMsg = "";
+        boolean isSuccess;
+        String rsltMsg = "";
         try {
             isSuccess = vcatnStatsYyService.regVcatnYyDt();
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            // 수시로 이루어지므로 실패시에만 로깅한다.
-            logParam.setResult(false, resultMsg, ActvtyCtgr.CACHE);
+            // 로그 관련 처리
+            logParam.setResult(false, rsltMsg, ActvtyCtgr.CACHE);
             publisher.publishEvent(new LogSysEvent(this, logParam));
         }
     }

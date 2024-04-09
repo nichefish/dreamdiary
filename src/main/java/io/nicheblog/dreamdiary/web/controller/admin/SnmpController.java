@@ -50,19 +50,21 @@ public class SnmpController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             SnmpParam snmpSendInfo = new SnmpParam(ipAddr);
             snmpSendInfo.setIpAddr(ipAddr);
             SnmpUtils.sendSnmpMessage(snmpSendInfo);
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
-            log.info("{} / isSuccess: {}, resultMsg: {}", request.getRequestURI(), isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            log.info("{} / isSuccess: {}, rsltMsg: {}", request.getRequestURI(), isSuccess, rsltMsg);
+            // TODO: 로그 관련 처리
         }
         
         return ajaxResponse;

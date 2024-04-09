@@ -91,8 +91,9 @@ public class PdfBoxUtils {
             File pdfFile = new File(pdfPath, fileNm);
             FileUtils.downloadFile(pdfFile, fileNm);
         } catch (Exception e) {
-            String resultMsg = MessageUtils.getExceptionMsg(e);
-            MessageUtils.alertMessage(resultMsg);
+            String rsltMsg = MessageUtils.getExceptionMsg(e);
+            MessageUtils.alertMessage(rsltMsg);
+            // TODO: 로그 관련 처리
         }
     }
 }
