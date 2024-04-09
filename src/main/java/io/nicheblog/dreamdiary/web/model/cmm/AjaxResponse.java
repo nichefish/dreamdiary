@@ -42,6 +42,15 @@ public class AjaxResponse {
     /* ----- */
 
     /**
+     * 생성자
+     */
+    public AjaxResponse(final Boolean rslt, final String message) {
+        this.rslt = rslt;
+        this.message = message;
+        if (this.status == null) this.status = rslt ? 200 : 400;
+    }
+
+    /**
      * Ajax 결과 세팅
      */
     public void setAjaxResult(final Boolean rslt, final String message) {

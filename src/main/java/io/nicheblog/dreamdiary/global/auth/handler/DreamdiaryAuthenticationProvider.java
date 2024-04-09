@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * IntranetAuthenticationProvider
+ * DreamdiaryAuthenticationProvider
  * <pre>
  *  로그인 및 인증 처리
  *  비밀번호 체크 + 접속IP + 비밀번호 변경기간 체크기능 추가하여 구현
