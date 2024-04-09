@@ -18,13 +18,13 @@
                 const url = "${SiteUrl.COMMENT_LIST_AJAX!}";
                 let ajaxData = $("#commentProcForm").serializeArray();
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let resultList = res.resultList;
-                    if (commons.util.isEmpty(res.resultList)) resultList = [];
-                    commons.util.handlebarsTemplate(resultList, "comment_list", "show");
+                    let rsltList = res.rsltList;
+                    if (commons.util.isEmpty(res.rsltList)) rsltList = [];
+                    commons.util.handlebarsTemplate(rsltList, "comment_list", "show");
                 });
             },
         }

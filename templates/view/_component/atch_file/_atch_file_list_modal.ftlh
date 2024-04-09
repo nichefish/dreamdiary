@@ -19,13 +19,13 @@
                 const url = "${SiteUrl.FILE_INFO_LIST_AJAX!}";
                 let ajaxData = { "atchFileNo": atchFileNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let resultList = res.resultList;
-                    if (commons.util.isEmpty(res.resultList)) resultList = [];
-                    commons.util.handlebarsTemplate(resultList, "atch_file_list", "show");
+                    let rsltList = res.rsltList;
+                    if (commons.util.isEmpty(res.rsltList)) rsltList = [];
+                    commons.util.handlebarsTemplate(rsltList, "atch_file_list", "show");
                 });
             },
         }

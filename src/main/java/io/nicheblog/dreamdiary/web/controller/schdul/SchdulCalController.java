@@ -114,7 +114,7 @@ public class SchdulCalController
         try {
             // 목록 조회 및 응답에 추가
             List<SchdulCalDto> schdulCalList = schdulCalService.getSchdulTotalCalList(searchParam);
-            ajaxResponse.setResultList(schdulCalList);
+            ajaxResponse.setRsltList(schdulCalList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
