@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.cmm;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AjaxResponse {
 
@@ -26,6 +28,7 @@ public class AjaxResponse {
     private Integer status;
     /** TODO: url to replace? */
     private String url;
+
     /** 결과 (성공여부) */
     private Boolean rslt;
     /** 결과 (목록) */

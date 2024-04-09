@@ -6,7 +6,6 @@ import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -18,31 +17,28 @@ import java.util.Properties;
 
 /**
  * SchemaHandler
+ * <pre>
+ *  .sql 실행 관련 핸들러
+ * </pre>
  *
  * @author nichefish
  */
-@Component("schemaHandler")
+@Component
 @Log4j2
 public class SchemaHandler {
 
     @Resource
     private ApplicationContext applicationContext;
-
     @Resource
     private DataSource datasource;
-
     @Resource
     private BuildProperties buildProperties;
-
     @Resource
     @Qualifier("vendorProperties")
     private Properties vendorProperties;
 
-    @Resource
-    private PasswordEncoder passwordEncoder;
-
     /**
-     * 관리자administrator 계정 존재여부 체크 및 생성
+     * sql 실행 전 사전 준비
      */
     public boolean execute() throws Exception {
 
@@ -51,31 +47,7 @@ public class SchemaHandler {
         log.info("Build Date: " + buildProperties.getTime());
 
         // sql script 실행:: 메소드 분리
-        this.execSqlScript();
-
-        // 구동이 필요한 로직이 있으면 수행
-        return true;
-        // try {
-        //     // UserModel model = userService.loadUserByUsername("administrator");
-        //     // boolean alreadyHasAdmin = (model != null);
-        //     // if (alreadyHasAdmin) return true;
-        // } catch (UsernameNotFoundException e) {
-        //     // administrator 새로 생성 :: 메소드 분리
-        //     return this.createAdminUser();
-        // } catch (Exception e) {
-        //     return false;
-        // }
-        // return false;
-    }
-
-    /**
-     * databaseProductName 얻기:: 메소드 분리
-     */
-    public String getDatabaseProductName() throws SQLException {
-        Connection connection = datasource.getConnection();
-        DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-        return databaseMetaData.getDatabaseProductName();
+        return this.execSqlScript();
     }
 
     /**
@@ -90,7 +62,8 @@ public class SchemaHandler {
 
         // database vendor에 따라 .sql 파일 로드
         // TODO: 상황에 맞게 로직 보완하기 (releaseDate 등)
-        String location = String.format("classpath:schema/231106/data-%s.sql", vendor);
+        String releaseDate = "240224";
+        String location = String.format("classpath:schema/" + releaseDate + "/data-%s.sql", vendor);
         org.springframework.core.io.Resource schemaSql = applicationContext.getResource(location);
         if (!schemaSql.exists()) return true;
 
@@ -113,4 +86,15 @@ public class SchemaHandler {
 
         return true;
     }
+
+    /**
+     * databaseProductName 얻기:: 메소드 분리
+     */
+    public String getDatabaseProductName() throws SQLException {
+        Connection connection = datasource.getConnection();
+        DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+        return databaseMetaData.getDatabaseProductName();
+    }
+
 }

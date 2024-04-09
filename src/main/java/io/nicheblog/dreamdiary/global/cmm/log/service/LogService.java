@@ -35,15 +35,13 @@ public class LogService {
     @Resource(name = "activeProfile")
     ActiveProfile activeProfile;
 
-    private final Boolean LOG_DISABLED = !activeProfile.isProd();
-
     /**
      * 활동 로그 등록 (로그인 상태)
      */
     public Boolean regLogActvty(final LogActvtyParam logParam) throws Exception {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
-        if (LOG_DISABLED) return true;
+        if (!activeProfile.isProd()) return true;
 
         LogActvtyEntity logActvty = logMapstruct.toEntity(logParam);
 
@@ -59,7 +57,7 @@ public class LogService {
     public Boolean regLogAnonActvty(final LogActvtyParam logParam) throws Exception {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
-        if (LOG_DISABLED) return true;
+        if (!activeProfile.isProd()) return true;
 
         // TODO: 막상 분리해놓고 보니 차이가 없네? 일단 분리 상태 유지하기
         LogActvtyEntity logActvty = logMapstruct.toEntity(logParam);
@@ -75,7 +73,7 @@ public class LogService {
     public Boolean regSysActvty(final LogSysParam logParam) throws Exception {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
-        if (LOG_DISABLED) return true;
+        if (!activeProfile.isProd()) return true;
 
         LogSysEntity logActvty = logMapstruct.toEntity(logParam);
 
