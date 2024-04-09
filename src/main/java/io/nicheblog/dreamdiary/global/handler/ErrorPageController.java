@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.controller;
+package io.nicheblog.dreamdiary.global.handler;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -46,12 +46,14 @@ public class ErrorPageController
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
+        // 응답 코드에 따른 페이지 분기
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
-            if (statusCode == HttpStatus.FORBIDDEN.value()) return "/error/error_access_denied";
-            if (statusCode == HttpStatus.NOT_FOUND.value()) return "/error/error_not_found";
+            if (statusCode == HttpStatus.BAD_REQUEST.value()) return "/view/error/error_bad_request";
+            if (statusCode == HttpStatus.FORBIDDEN.value()) return "/view/error/error_access_denied";
+            if (statusCode == HttpStatus.NOT_FOUND.value()) return "/view/error/error_not_found";
         }
-        return "/error/error";
+        return "/error/error_page";
     }
 
     /**
@@ -90,7 +92,7 @@ public class ErrorPageController
      * 에러 화면 (공통)
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @GetMapping({ SiteUrl.ERROR, SiteUrl.ERROR_PAGE })
+    @GetMapping(SiteUrl.ERROR_PAGE)
     public String errorPage(
             final ModelMap model
     ) {

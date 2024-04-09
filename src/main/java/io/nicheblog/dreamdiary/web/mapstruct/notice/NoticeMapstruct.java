@@ -56,7 +56,4 @@ public interface NoticeMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(final NoticeDto.DTL dto, final @MappingTarget NoticeEntity entity) throws Exception;
-
-
-
 }

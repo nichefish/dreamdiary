@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.model.log;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -101,5 +102,23 @@ public class LogActvtyDto
     @Override
     public Integer getKey() {
         return this.logActvtyNo;
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class DTL extends LogActvtyDto {
+        //
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class LIST extends LogActvtyDto {
+        //
     }
 }

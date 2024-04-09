@@ -13,7 +13,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.log.LogActvtyDto;
 import io.nicheblog.dreamdiary.web.model.log.LogActvtySearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.log.LogActvtyService;
+import io.nicheblog.dreamdiary.web.service.log.LogActvtyService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -78,7 +78,7 @@ public class LogActvtyController
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
             // 목록 조회
-            Page<LogActvtyDto> logActvtyList = logActvtyService.getPageDto(searchParam, pageRequest);
+            Page<LogActvtyDto.LIST> logActvtyList = logActvtyService.getPageDto(searchParam, pageRequest);
             model.addAttribute("logActvtyList", logActvtyList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(logActvtyList));
             // 목록 검색 URL + 파라미터 모델에 추가
@@ -118,7 +118,7 @@ public class LogActvtyController
         String rsltMsg = "";
         try {
             // 상세 조회 및 응답에 추가
-            LogActvtyDto rsDto = logActvtyService.getDtlDto(logActvtyNo);
+            LogActvtyDto.DTL rsDto = logActvtyService.getDtlDto(logActvtyNo);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;

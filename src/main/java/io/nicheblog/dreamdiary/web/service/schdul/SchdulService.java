@@ -100,14 +100,11 @@ public class SchdulService
      */
     @Override
     @CacheEvict(value = {"hldyEntityList", "isHldy", "isHldyOrWeekend"}, allEntries = true)
-    public SchdulDto modify(
-            final SchdulDto schdulDto,
-            Integer key
-    ) throws Exception {
+    public SchdulDto modify(final SchdulDto schdulDto) throws Exception {
         // 수정 전처리
         this.preModify(schdulDto);
 
-        SchdulEntity schdulEntity = this.getDtlEntity(key);       // Entity 레벨 조회
+        SchdulEntity schdulEntity = this.getDtlEntity(schdulDto);       // Entity 레벨 조회
         boolean wasSingleDate = DateUtils.isSameDay(schdulEntity.getBgnDt(), schdulEntity.getEndDt());
         boolean isInvalidEndDate = schdulDto.getBgnDt()
                                             .compareTo(schdulDto.getEndDt()) > 0;

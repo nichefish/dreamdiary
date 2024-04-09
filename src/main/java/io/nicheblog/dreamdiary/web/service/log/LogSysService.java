@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.service.cmm.log;
+package io.nicheblog.dreamdiary.web.service.log;
 
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.cmm.log.repository.LogSysRepository;
@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 @Service("logSysService")
 @Log4j2
 public class LogSysService
-        implements BaseReadonlyService<LogSysDto, LogSysDto, Integer, LogSysEntity, LogSysRepository, LogSysSpec, LogSysMapstruct> {
+        implements BaseReadonlyService<LogSysDto.DTL, LogSysDto.LIST, Integer, LogSysEntity, LogSysRepository, LogSysSpec, LogSysMapstruct> {
 
     private final LogSysMapstruct logSysMapstruct = LogSysMapstruct.INSTANCE;
 

@@ -25,7 +25,7 @@
     <span class="ctgr-span ctgr-imprtc">Error Page</span>
 </div>
 <div class="d-flex-center flex-column mt-8">
-    <div>존재하지 않는 경로입니다</div>
+    <div>잘못된 요청입니다.</div>
 
     <div class="text-gray-500 fw-bold min-h-100px">${errorMsg!}</div>
 

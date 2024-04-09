@@ -24,11 +24,10 @@ import java.io.Serializable;
 public interface BaseClsfService<Dto extends BaseClsfDto & Identifiable<Key>, ListDto extends BaseClsfDto, Key extends Serializable, Entity extends BaseClsfEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseClsfMapstruct<Dto, ListDto, Entity>>
         extends BaseMultiCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
-    //
-    @Override
     /**
      * default: 게시물 등록 (dto level)
      */
+    @Override
     default Dto regist(final Dto dto) throws Exception {
         // 등록 전처리
         this.preRegist(dto);
@@ -54,16 +53,14 @@ public interface BaseClsfService<Dto extends BaseClsfDto & Identifiable<Key>, Li
     /**
      * default: 게시물 수정 (dto level)
      */
-    default Dto modify(
-            final Dto dto,
-            final Key key
-    ) throws Exception {
+    @Override
+    default Dto modify(final Dto dto) throws Exception {
         // 수정 전처리
         this.preModify(dto);
 
         // Entity 레벨 조회
         Mapstruct mapstruct = this.getMapstruct();
-        Entity entity = this.getDtlEntity(key);
+        Entity entity = this.getDtlEntity(dto);
         mapstruct.updateFromDto(dto, entity);
 
         // 수정 중간처리

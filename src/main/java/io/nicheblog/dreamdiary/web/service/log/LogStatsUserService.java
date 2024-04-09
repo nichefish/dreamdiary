@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.service.cmm.log;
+package io.nicheblog.dreamdiary.web.service.log;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
@@ -7,7 +7,7 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.mapstruct.log.LogStatsUserMapstruct;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserDto;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserIntrfc;
-import io.nicheblog.dreamdiary.web.repository.cmm.log.LogStatsUserRepository;
+import io.nicheblog.dreamdiary.web.repository.log.LogStatsUserRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

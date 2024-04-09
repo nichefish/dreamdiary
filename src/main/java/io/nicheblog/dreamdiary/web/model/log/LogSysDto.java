@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.log;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -65,5 +66,23 @@ public class LogSysDto
     @Override
     public Integer getKey() {
         return this.logSysNo;
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class DTL extends LogSysDto {
+        //
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class LIST extends LogSysDto {
+        //
     }
 }

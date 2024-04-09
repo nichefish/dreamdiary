@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.annotation.Resource;
 
@@ -22,6 +23,7 @@ import javax.annotation.Resource;
  * <pre>
  *  Controller에서 catch되지 않는 exception 공통 처리 클래스
  *  (각 exception별로 처리 메소드 생성 가능)
+ *  "컨트롤러 메소드의 실행이 완료된 후 뷰를 렌더링하는 과정에서 발생하는 예외는 @ExceptionHandler로 처리되지 않습니다."
  * </pre>
  *
  * @author nichefish
@@ -42,6 +44,7 @@ public class BaseExceptionlHandler {
 
     /**
      * 예외 처리 공통 로직
+     * Ajax 요청과 페이지뷰 요청을 구분하여 응답을 내려준다.
      */
     private Object handleException(Exception e, WebRequest request, HttpStatus status) {
         return handleException(e, request, status, "/view/error_page");
@@ -57,11 +60,19 @@ public class BaseExceptionlHandler {
         if (this.isAjaxRequest(request)) {
             AjaxResponse ajaxResponse = new AjaxResponse(false, errorMsg);
             return new ResponseEntity<>(ajaxResponse, status);
-        } else {
-            ModelAndView modelAndView = new ModelAndView(view);
-            modelAndView.addObject("errorMsg", errorMsg);
-            return modelAndView;
         }
+        ModelAndView modelAndView = new ModelAndView(view);
+        modelAndView.addObject("errorMsg", errorMsg);
+        return modelAndView;
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public Object handleNoHandlerFoundException(
+            NoHandlerFoundException e,
+            WebRequest request
+    ) {
+
+        return handleException(e, request, HttpStatus.NOT_FOUND, "/view/error/error_not_found");
     }
 
     /**
@@ -72,9 +83,10 @@ public class BaseExceptionlHandler {
     @ResponseBody
     public Object accessDenied(
             AccessDeniedException e,
-            WebRequest request) {
+            WebRequest request
+    ) {
 
-        return handleException(e, request, HttpStatus.FORBIDDEN, "/view/error_access_denied");
+        return handleException(e, request, HttpStatus.FORBIDDEN, "/view/error/error_access_denied");
     }
 
     /**

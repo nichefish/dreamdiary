@@ -11,6 +11,12 @@ spring:
             max-file-size: 500MB
             max-request-size: 500MB
 
+    mvc:
+        throw-exception-if-no-handler-found: true
+    #web:
+    #    resources:
+    #        add-mappings: false
+    #        static-locations: "classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/"
     cache:
         jcache:
             config: classpath:ehcache.yml
@@ -57,7 +63,7 @@ spring:
         default-encoding: UTF-8
         host: smart.whoismail.net
         username: webmaster@gmail.com
-        password: _qlrtmthvmxm000
+        password: _password
         port: 587
         protocol: smtp
         test-connection: false
@@ -71,6 +77,10 @@ spring:
                         trust: smtp.gmail.com
 
 server:
+    error:
+        path: /error
+        whitelabel:
+            enabled: false
     servlet:
         context-path: /
         encoding:

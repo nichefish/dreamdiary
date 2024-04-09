@@ -29,6 +29,7 @@ public interface ManagtEmbedMapstruct
      */
     @Override
     @Mapping(target = "list", expression = "java(entity.getDtoList())")
+    @Mapping(target = "managtDt", expression = "java(DateUtils.asStr(entity.getManagtDt(), DatePtn.DATETIME))")
     ManagtCmpstn toDto(final ManagtEmbed entity) throws Exception;
 
     /**
@@ -36,6 +37,7 @@ public interface ManagtEmbedMapstruct
      */
     @Override
     @Mapping(target = "list", expression = "java(dto.getEntityList())")
+    @Mapping(target = "managtDt", expression = "java(DateUtils.asDate(dto.getManagtDt()))")
     ManagtEmbed toEntity(final ManagtCmpstn dto) throws Exception;
 
     /**

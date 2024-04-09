@@ -13,7 +13,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.log.LogSysDto;
 import io.nicheblog.dreamdiary.web.model.log.LogSysSearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.log.LogSysService;
+import io.nicheblog.dreamdiary.web.service.log.LogSysService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -73,7 +73,7 @@ public class LogSysController
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
             // 목록 조회
-            Page<LogSysDto> logSysList = logSysService.getPageDto(searchParam, pageRequest);
+            Page<LogSysDto.LIST> logSysList = logSysService.getPageDto(searchParam, pageRequest);
             model.addAttribute("logSysList", logSysList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(logSysList));
             // 목록 검색 URL + 파라미터 모델에 추가
@@ -114,7 +114,7 @@ public class LogSysController
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 세팅
-            LogSysDto rsDto = logSysService.getDtlDto(logSysNo);
+            LogSysDto.DTL rsDto = logSysService.getDtlDto(logSysNo);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
