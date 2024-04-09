@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * XlsxService
- * 엑셀 POI 라이브러리 관련 처리 서비스 모듈
- * (단순 목록은 XlsxUtils 이용, 여기는 특별 양식 등 개별 로직 커스터마이징이 필요한 항목 정의)
+ * <pre>
+ *  엑셀 POI 라이브러리 관련 처리 서비스 모듈
+ *  (단순 목록은 XlsxUtils 이용, 여기는 특별 양식 등 개별 로직 커스터마이징이 필요한 항목 정의)
+ * </pre>
  *
  * @author nichefish
  */
