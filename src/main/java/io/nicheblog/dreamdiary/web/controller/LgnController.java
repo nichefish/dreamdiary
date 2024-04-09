@@ -103,17 +103,19 @@ public class LgnController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
+            // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 비밀번호 변경 처리
             isSuccess = userMyService.lgnPwChg(pwChgParam);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
         } finally {
             // 로그 관련 처리
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

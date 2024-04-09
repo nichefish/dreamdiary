@@ -20,9 +20,9 @@ public class LogActvtyXlsxDto {
     /** 작업일시 */
     private String logDt;
     /** 작업자 ID */
-    private String logUserId;
+    private String userId;
     /** 작업자 이름 */
-    private String logUserNm;
+    private String userNm;
     /** 작업자 IP */
     private String ipAddr;
     /**

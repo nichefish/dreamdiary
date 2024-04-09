@@ -1,10 +1,11 @@
 package io.nicheblog.dreamdiary.global.cmm.mail.model;
 
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,6 @@ import java.util.Map;
  */
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class MailSendParam {
@@ -30,18 +30,16 @@ public class MailSendParam {
     public String tmplat;
 
     /** 발신자 (홍길동<test@gmail.com>) */
-    public MailAddress sender = null;
+    public MailAddress sender;
 
     /** 수신자 Array(홍길동<test@gmail.com>) */
-    @Builder.Default
-    public List<MailAddress> recipientList = new ArrayList<>();
+    public List<MailAddress> recipientList;
 
     /** 첨부파일 목록 */
-    @Builder.Default
-    public List<AtchFileDtlDto> atchFileList = new ArrayList<>();
+    public List<AtchFileDtlDto> atchFileList;
 
     /** 데이터:: freemarker 템플릿 처리 */
-    public Map<String, Object> dataMap = new HashMap<>();
+    public Map<String, Object> dataMap;
 
     /* ----- */
 

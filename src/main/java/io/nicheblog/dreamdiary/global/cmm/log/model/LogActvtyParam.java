@@ -1,10 +1,16 @@
 package io.nicheblog.dreamdiary.global.cmm.log.model;
 
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.persistence.PostLoad;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * LogActvtyParam
@@ -18,110 +24,71 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-public class LogActvtyParam {
+public class LogActvtyParam extends BaseLogParam {
 
-    /** 작업 카테고리 */
-    private ActvtyCtgr actvtyCtgr;
-    /** 액션 구분 코드 */
-    private String actionTyCd;
-    /** 성공 여부 */
-    private Boolean isSuccess;
-    /** 결과 메세지 */
-    private String resultMsg;
+    @PostLoad
+    private void onLoad() {
 
+    }
+
+    /** 로그 고유 ID */
+    private Integer logActvtysNo;
     /** 사용자 ID */
     private String userId;
 
-    /** 내용 */
-    private String cn;
-    /** 익셉션 이름 */
-    private String exceptionNm;
-    /** 익셉션 메세지 */
-    private String exceptionMsg;
+    /** 액션 구분 코드 */
+    private String actionTyCd;
+
+    /** URL */
+    private String url;
+    /** 메소드 */
+    private String mthd;
+    /** 파라미터 */
+    private String param;
+    /** 리퍼터 */
+    private String referer;
+    /** IP 주소 */
+    private String ipAddr;
 
     /* ----- */
 
     /**
      * 생성자
+     * 객체 생성시 request 관련 인자들 자동 세팅 (가능하면)
      */
-    public LogActvtyParam(final Boolean isSuccess) {
-        this.isSuccess = isSuccess;
+    public LogActvtyParam() {
+        this.setRequestAttr();
     }
-
-    public LogActvtyParam(
-            final Boolean isSuccess,
-            final String resultMsg
-    ) {
-        this(isSuccess);
-        this.resultMsg = resultMsg;
+    public LogActvtyParam(final Boolean rslt) {
+        super(rslt);
+        this.setRequestAttr();
     }
-
-    public LogActvtyParam(
-            final Boolean isSuccess,
-            final String resultMsg,
-            final ActvtyCtgr actvtyCtgr
-    ) {
-        this(isSuccess, resultMsg);
-        this.actvtyCtgr = actvtyCtgr;
+    public LogActvtyParam(final Boolean rslt, final String rsltMsg) {
+        super(rslt, rsltMsg);
+        this.setRequestAttr();
     }
-
-    public LogActvtyParam(
-            final String userId,
-            final Boolean isSuccess,
-            final String resultMsg,
-            final ActvtyCtgr actvtyCtgr
-    ) {
-        this(isSuccess, resultMsg, actvtyCtgr);
+    public LogActvtyParam(final Boolean rslt, final String rsltMsg, final ActvtyCtgr actvtyCtgr) {
+        super(rslt, rsltMsg, actvtyCtgr);
+        this.setRequestAttr();
+    }
+    public LogActvtyParam(final String userId, final Boolean rslt, final String rsltMsg, final ActvtyCtgr actvtyCtgr) {
+        super(rslt, rsltMsg, actvtyCtgr);
         this.userId = userId;
+        this.setRequestAttr();
     }
 
-    /**
-     * 결과 세팅 함수
-     */
-    public LogActvtyParam setResult(
-            final boolean isSuccess,
-            final String resultMsg,
-            final ActvtyCtgr actvtyCtgr
-    ) {
-        this.setResult(isSuccess, resultMsg);
-        this.actvtyCtgr = actvtyCtgr;
-        return this;
-    }
+    /** request 관련 내용들 */
+    public void setRequestAttr() {
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        // request 관련 인자들 미리 세팅 (가능하다면)
+        if (attr == null) return;
+        HttpServletRequest request = attr.getRequest();
 
-    public LogActvtyParam setResult(
-            final boolean isSuccess,
-            final String resultMsg
-    ) {
-        this.isSuccess = isSuccess;
-        this.resultMsg = resultMsg;
-        return this;
-    }
-
-    /**
-     * Exception 정보 세팅 함수
-     */
-    public void setExceptionInfo(
-            final String exceptionNm,
-            final String exceptionMsg
-    ) {
-        this.exceptionNm = exceptionNm;
-        this.exceptionMsg = exceptionMsg;
-    }
-
-    /**
-     * 값 없음 반환 함수
-     */
-    public Boolean hasNoAttr(final String attrNm) {
-        return !this.hasAttr(attrNm);
-    }
-
-    public Boolean hasAttr(final String attrNm) {
-        switch (attrNm) {
-            case "actvtyCtgr":
-                return StringUtils.isNotEmpty(this.actvtyCtgr.name());
-        }
-        return false;
+        this.url = request.getServletPath();         // 작업 url
+        this.mthd = request.getMethod();           // 접근 메소드
+        this.param = request.getQueryString();       // 작업 파라미터
+        this.referer = request.getHeader(Constant.REFERER);      // 리퍼러
+        this.ipAddr = AuthUtils.getAcsIpAddr();       // 작업 IP
     }
 
     /**

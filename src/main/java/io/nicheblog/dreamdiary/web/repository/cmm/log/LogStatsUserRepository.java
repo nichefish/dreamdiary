@@ -26,11 +26,11 @@ public interface LogStatsUserRepository
     /** 로그인 유저별로 건수 조회 */
     @QueryHints(value=@QueryHint(name="org.hibernate.readOnly", value="true"))
     @Query(
-            value = "SELECT t.logUserId as userId, u.nickNm as userNm, count(t.logActvtyNo) as actvtyCnt " +
+            value = "SELECT t.userId as userId, u.nickNm as userNm, count(t.logActvtyNo) as actvtyCnt " +
                     "FROM LogActvtyEntity t " +
-                    "INNER JOIN UserEntity u ON t.logUserId = u.userId " +
+                    "INNER JOIN UserEntity u ON t.userId = u.userId " +
                     "WHERE t.logDt between :searchStartDt and :searchEndDt and u.nickNm != null " +
-                    "GROUP BY t.logUserId"
+                    "GROUP BY t.userId"
     )
     List<LogStatsUserIntrfc> getStatsUserIntrfcList(
             final Date searchStartDt,
@@ -40,11 +40,11 @@ public interface LogStatsUserRepository
     /** 비로그인 구분별로 건수 조회 */
     @QueryHints(value=@QueryHint(name="org.hibernate.readOnly", value="true"))
     @Query(
-            value = "SELECT t.logUserId as userId, u.nickNm as userNm, count(t.logActvtyNo) as actvtyCnt " +
+            value = "SELECT t.userId as userId, u.nickNm as userNm, count(t.logActvtyNo) as actvtyCnt " +
                     "FROM LogActvtyEntity t " +
-                    "LEFT JOIN UserEntity u ON t.logUserId = u.userId " +
+                    "LEFT JOIN UserEntity u ON t.userId = u.userId " +
                     "WHERE t.logDt between :searchStartDt and :searchEndDt and u.nickNm = null " +
-                    "GROUP BY t.logUserId"
+                    "GROUP BY t.userId"
     )
     List<LogStatsUserIntrfc> getStatsNotUserIntrfcList(
             final Date searchStartDt,

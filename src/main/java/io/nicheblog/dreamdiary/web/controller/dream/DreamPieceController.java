@@ -70,7 +70,7 @@ public class DreamPieceController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
@@ -79,16 +79,16 @@ public class DreamPieceController
             DreamPieceDto result = isReg ? dreamPieceService.regist(dreamPiece, request) : dreamPieceService.modify(dreamPiece, key, request);
 
             isSuccess = (result.getPostNo() != null);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
             logParam.setCn(dreamPiece.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

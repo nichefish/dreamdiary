@@ -70,7 +70,7 @@ public class LogActvtyController
 
         // 활동 로그 목록 조회
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             String baseUrl = SiteUrl.LOG_ACTVTY_LIST;
@@ -85,15 +85,15 @@ public class LogActvtyController
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -115,23 +115,23 @@ public class LogActvtyController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 상세 조회 및 응답에 추가
             LogActvtyDto rsDto = logActvtyService.getDtlDto(logActvtyNo);
             ajaxResponse.setResultObj(rsDto);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + logActvtyNo);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -151,20 +151,20 @@ public class LogActvtyController
     // ) throws Exception {
 //
     //     boolean isSuccess = false;
-    //     String resultMsg = "";
+    //     String rsltMsg = "";
     //     try {
     //         List<Object> logActvtyListXlsx = logActvtyService.logActvtyListXlsx(searchParamMap);
     //         xlsxUtils.listXlxsDownload(Constant.LOG_ACTVTY, logActvtyListXlsx);
     //         isSuccess = true;
-    //         resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+    //         rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
     //     } catch (Exception e) {
     //         isSuccess = false;
-    //         resultMsg = MessageUtils.getExceptionMsg(e);
-    //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-    //         MessageUtils.alertMessage(resultMsg, baseUrl);
+    //         rsltMsg = MessageUtils.getExceptionMsg(e);
+    //         logParam.setExceptionInfo(e);
+    //         MessageUtils.alertMessage(rsltMsg, baseUrl);
     //     } finally {
     //         // 로그 관련 처리
-    //         logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+    //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
     //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     //     }
     // }

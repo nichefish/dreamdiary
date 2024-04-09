@@ -64,22 +64,22 @@ public class LgnPolicyController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.LGN_POLICY.setAcsPageInfo("로그인 정책 관리"));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 항목 조회 및 모델에 추가 :: 현재는 항상 고정 ID(1L)로 조회한다.
             LgnPolicyDto rsUserLgnPolicDto = lgnPolicyService.getDtlDto();
             model.addAttribute("lgnPolicy", rsUserLgnPolicDto);
 
             isSuccess = (rsUserLgnPolicDto != null);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -102,22 +102,22 @@ public class LgnPolicyController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             isSuccess = lgnPolicyService.regist(lgnPolicy);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
             logParam.setCn(lgnPolicy.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

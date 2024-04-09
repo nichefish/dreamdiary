@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.auth.service;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.global.auth.mapstruct.AuthInfoMapstruct;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
@@ -123,25 +122,6 @@ public class AuthService
         userEntity.acntStus.setLstLgnDt(new Date());
         userEntity.acntStus.setLgnFailCnt(0);
         userRepository.save(userEntity);
-    }
-
-    /**
-     * 사용자 IP주소 조회 (헤더 조회)
-     */
-    public String getUserIpAddr() {
-        String ipType = "";
-        String ipAddr = "";
-        for (String s : Constant.IP_HEADERS) {
-            ipType = s;
-            ipAddr = request.getHeader(ipType);
-            if (ipAddr != null) break;
-        }
-        if (ipAddr == null) {
-            ipType = Constant.REMOTE_ADDR;
-            ipAddr = request.getRemoteAddr();
-        }
-        log.info("ipAddr > {}: {}", ipType, ipAddr);
-        return ipAddr;
     }
 
     /**

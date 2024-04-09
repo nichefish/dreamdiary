@@ -45,20 +45,20 @@ public class HldyKasiScheduler {
 
         LogSysParam logParam = new LogSysParam();
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             String yyStr = DateUtils.getCurrYearStr();
             // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
             hldyKasiApiService.delHldyList(yyStr);
             List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);
             isSuccess = hldyKasiApiService.regHldyList(hldyApiList);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.API_KASI);
+            logParam.setResult(isSuccess, rsltMsg, ActvtyCtgr.API_KASI);
             publisher.publishEvent(new LogSysEvent(this, logParam));
         }
     }

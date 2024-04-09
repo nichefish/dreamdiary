@@ -71,7 +71,7 @@ public class UserReqstController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_REQST.setAcsPageInfo(Constant.PAGE_REG));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 빈 객체 주입 (freemarker error prevention)
             model.addAttribute("user", new UserDto());
@@ -85,15 +85,15 @@ public class UserReqstController
             cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, baseUrl);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -116,7 +116,7 @@ public class UserReqstController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
@@ -124,15 +124,15 @@ public class UserReqstController
             UserReqstDto rsDto = userReqstService.regist(userReqst, request);
 
             isSuccess = (rsDto.getUserNo() != null);
-            resultMsg = isSuccess ? "신규계정이 성공적으로 신청되었습니다." : "신규계정 신청에 실패했습니다.";
+            rsltMsg = isSuccess ? "신규계정이 성공적으로 신청되었습니다." : "신규계정 신청에 실패했습니다.";
         } catch (Exception e) {
-            resultMsg = MessageUtils.getExceptionMsg(e);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
-            // logActvtyService.regLogAnonActvty(userDto.getUserId(), resultMsg, isSuccess);
+            // logActvtyService.regLogAnonActvty(userDto.getUserId(), rsltMsg, isSuccess);
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
@@ -153,19 +153,19 @@ public class UserReqstController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 상태 변경 처리
             isSuccess = userReqstService.cf(userNo);
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -187,19 +187,19 @@ public class UserReqstController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 상태 변경 처리
             isSuccess = userReqstService.uncf(userNo);
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

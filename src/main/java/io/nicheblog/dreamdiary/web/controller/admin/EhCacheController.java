@@ -53,22 +53,22 @@ public class EhCacheController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 현재 활성 중인 캐시(name) 목록 조회 :: 성공시 처리완료목록으로 출력
             List<String> activeCacheList = EhCacheUtils.chckActiveCaches();
             ajaxResponse.setResultList(activeCacheList);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
@@ -88,22 +88,22 @@ public class EhCacheController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 목록 조회 및 초기화
             List<String> activeCacheList = EhCacheUtils.chckActiveCaches();
             ajaxResponse.setResultList(activeCacheList);
             
             isSuccess = EhCacheUtils.clearAllCaches();
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);

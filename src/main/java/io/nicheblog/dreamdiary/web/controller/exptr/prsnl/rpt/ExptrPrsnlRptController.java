@@ -73,7 +73,7 @@ public class ExptrPrsnlRptController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_RPT.setAcsPageInfo(Constant.PAGE_STATS));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 경비지출서 최저년도~올해년도 목록 조회
             model.addAttribute("yyList", exptrPrsnlPaprService.getExptrPrsnlYyList());
@@ -107,15 +107,15 @@ public class ExptrPrsnlRptController
             model.addAttribute("statsMnth", Integer.toString((Integer) searchParamMap.get("mnth")));
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -135,7 +135,7 @@ public class ExptrPrsnlRptController
     // ) throws Exception {
 //
     //     boolean isSuccess = false;
-    //     String resultMsg = "";
+    //     String rsltMsg = "";
     //     try {
     //         // 년도, 월 담긴 HashMap 생성
     //         Map<String, Object> searchParamMap = cmmService.getYyMhtnMap(yyStr, mnthStr);
@@ -151,15 +151,15 @@ public class ExptrPrsnlRptController
     //         }};
     //         xlsxUtils.multiListXlxsDownload(Constant.EXPTR_PRSNL_RPT, objMap);
     //         isSuccess = true;
-    //         resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+    //         rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
     //     } catch (Exception e) {
     //         isSuccess = false;
-    //         resultMsg = MessageUtils.getExceptionMsg(e);
-    //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-    //         MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_RPT_ITEMS);
+    //         rsltMsg = MessageUtils.getExceptionMsg(e);
+    //         logParam.setExceptionInfo(e);
+    //         MessageUtils.alertMessage(rsltMsg, SiteUrl.EXPTR_PRSNL_RPT_ITEMS);
     //     } finally {
     //         // 로그 관련 처리
-    //         logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+    //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
     //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     //     }
     // }

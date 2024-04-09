@@ -1,9 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
-import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;

@@ -1,21 +1,17 @@
 package io.nicheblog.dreamdiary.web.entity.user.profl;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
-import io.nicheblog.dreamdiary.global.util.DateUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 /**
  * UserInfoEntity
@@ -31,7 +27,7 @@ import java.util.List;
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"user"}, callSuper = true)
@@ -109,7 +105,7 @@ public class UserProflEntity
     // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     // @JoinColumn(name = "user_profl_no")
     // @Fetch(FetchMode.SELECT)
-    // @OrderBy("sortOrdr ASC")
+    // @OrderBy("state.sortOrdr ASC")
     // @NotFound(action = NotFoundAction.IGNORE)
     // @Comment("사용자 정보 추가추가 목록")
     // private List<UserInfoItemEntity> itemList;

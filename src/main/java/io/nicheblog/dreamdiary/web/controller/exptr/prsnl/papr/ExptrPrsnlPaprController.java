@@ -89,7 +89,7 @@ public class ExptrPrsnlPaprController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_PAPR.setAcsPageInfo(Constant.PAGE_LIST));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (ExptrPrsnlPaprSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
@@ -112,16 +112,16 @@ public class ExptrPrsnlPaprController
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.MAIN);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.MAIN);
         } finally {
-            logParam.setResult(isSuccess, resultMsg);
+            logParam.setResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -142,22 +142,22 @@ public class ExptrPrsnlPaprController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 존재여부 체크 및 응답에 추가
             Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
             ajaxResponse.setResultMap((HashMap<String, Object>) resultMap);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -180,7 +180,7 @@ public class ExptrPrsnlPaprController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 상태여부 체크 및 응답에 추가
             Integer yy = Integer.parseInt(yyStr);
@@ -189,15 +189,15 @@ public class ExptrPrsnlPaprController
             ajaxResponse.setResultObj(resultObj);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -220,7 +220,7 @@ public class ExptrPrsnlPaprController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_PAPR.setAcsPageInfo(Constant.PAGE_REG));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 빈 객체 주입 (freemarker error prevention)
             model.addAttribute("post", new ExptrPrsnlPaprDto());
@@ -239,15 +239,15 @@ public class ExptrPrsnlPaprController
             cdService.setModelCdData(Constant.EXPTR_CD, model);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, baseUrl);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -272,7 +272,7 @@ public class ExptrPrsnlPaprController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
@@ -281,20 +281,20 @@ public class ExptrPrsnlPaprController
             ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPapr, request) : exptrPrsnlPaprService.modify(exptrPrsnlPapr, key, request);
 
             isSuccess = (result.getPostNo() != null);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             if (isSuccess) {
                 // 조치자 추가 :: 메인 로직과 분리
                 publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
             }
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
             logParam.setCn(exptrPrsnlPapr.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -317,27 +317,27 @@ public class ExptrPrsnlPaprController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_PAPR.setAcsPageInfo(Constant.PAGE_DTL));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조회수 카운트 추가
             exptrPrsnlPaprService.hitCntUp(key);
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, baseUrl);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -361,23 +361,23 @@ public class ExptrPrsnlPaprController
         model.addAttribute("isPdf", true);      // 관련 세팅 위해 필요 TODO: 레이아웃 자체에 두기...
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, baseUrl);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -401,7 +401,7 @@ public class ExptrPrsnlPaprController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_PAPR.setAcsPageInfo(Constant.PAGE_MDF));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
@@ -421,16 +421,16 @@ public class ExptrPrsnlPaprController
             cdService.setModelCdData(Constant.EXPTR_CD, model);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, baseUrl);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -452,20 +452,20 @@ public class ExptrPrsnlPaprController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 삭제 처리
             isSuccess = exptrPrsnlPaprService.delete(key);
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -484,7 +484,7 @@ public class ExptrPrsnlPaprController
     ) throws Exception {
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 첨부파일 목록 조회
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
@@ -494,16 +494,16 @@ public class ExptrPrsnlPaprController
             PdfBoxUtils.imgCmbnPdfDonwload(fileNm, fileList);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
     }

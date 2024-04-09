@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.model.admin;
 
-import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import lombok.*;
@@ -24,5 +23,6 @@ import java.util.List;
 public class DtlCdParam
         extends BaseParam {
 
+    /** 정렬순서 배열 */
     List<DtlCd> sortOrdr;
 }

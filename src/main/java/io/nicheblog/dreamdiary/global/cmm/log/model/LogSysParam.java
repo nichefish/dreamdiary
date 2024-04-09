@@ -2,9 +2,7 @@ package io.nicheblog.dreamdiary.global.cmm.log.model;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * LogSysParam
@@ -17,92 +15,30 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
-public class LogSysParam {
+@AllArgsConstructor
+public class LogSysParam
+        extends BaseLogParam {
 
-    /**
-     * 작업 카테고리 코드
-     */
-    private ActvtyCtgr actvtyCtgr;
-    /**
-     * 성공여부
-     */
-    private Boolean isSuccess;
-    /**
-     * 결과 메세지
-     */
-    private String resultMsg;
-
-
-    /**
-     * 로그 고유 ID
-     */
+    /** 로그 고유 ID */
     private Integer logSysNo;
-    /**
-     * 작업자 ID
-     */
-    private String logUserId = Constant.SYSTEM_ACNT;
-    /**
-     * 작업자 이름
-     */
-    private String logUserNm;
-    /**
-     * 작업일시
-     */
-    private String logDt;
-
-    /**
-     * 익셉션 이름
-     */
-    private String exceptionNm;
-    /**
-     * 익셉션 메세지
-     */
-    private String exceptionMsg;
+    /** 작업자 ID = 시스템 계정 */
+    @Builder.Default
+    private String userId = Constant.SYSTEM_ACNT;
 
     /* ----- */
 
     /**
      * 생성자
      */
-    public LogSysParam(
-            final boolean isSuccess,
-            final String resultMsg
-    ) {
-        this.isSuccess = isSuccess;
-        this.resultMsg = resultMsg;
+    public LogSysParam(final Boolean rslt) {
+        super(rslt);
     }
-
-    /**
-     * 결과 세팅 함수
-     */
-    public LogSysParam setResult(
-            final boolean isSuccess,
-            final String resultMsg,
-            final ActvtyCtgr actvtyCtgr
-    ) {
-        this.setResult(isSuccess, resultMsg);
-        this.actvtyCtgr = actvtyCtgr;
-        return this;
+    public LogSysParam(final Boolean rslt, final String rsltMsg) {
+        super(rslt, rsltMsg);
     }
-
-    public LogSysParam setResult(
-            final boolean isSuccess,
-            final String resultMsg
-    ) {
-        this.isSuccess = isSuccess;
-        this.resultMsg = resultMsg;
-        return this;
-    }
-
-    /**
-     * Exception 정보 세팅 함수
-     */
-    public void setExceptionInfo(
-            final String exceptionNm,
-            final String exceptionMsg
-    ) {
-        this.exceptionNm = exceptionNm;
-        this.exceptionMsg = exceptionMsg;
+    public LogSysParam(final Boolean rslt, final String rsltMsg, final ActvtyCtgr actvtyCtgr) {
+        super(rslt, rsltMsg, actvtyCtgr);
     }
 }

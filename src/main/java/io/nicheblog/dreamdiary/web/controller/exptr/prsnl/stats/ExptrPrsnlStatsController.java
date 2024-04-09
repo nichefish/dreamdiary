@@ -75,7 +75,7 @@ public class ExptrPrsnlStatsController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_STATS.setAcsPageInfo(Constant.PAGE_STATS));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 초기 년도검색 파라미터 세팅
             String yyStr = !StringUtils.isEmpty(yyStrParam) ? yyStrParam : DateUtils.getCurrYearStr();
@@ -87,15 +87,15 @@ public class ExptrPrsnlStatsController
             model.addAttribute("statsYy", yyStr);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -118,26 +118,26 @@ public class ExptrPrsnlStatsController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_STATS.setAcsPageInfo(Constant.PAGE_DTL));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 조회수 카운트 추가
             exptrPrsnlPaprService.hitCntUp(key);
             // 열람자 추가 :: 메인 로직과 분리
             publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -159,19 +159,19 @@ public class ExptrPrsnlStatsController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             isSuccess = exptrPrsnlStatsService.exptrPrsnlStatsCompt(key);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
@@ -189,21 +189,21 @@ public class ExptrPrsnlStatsController
     // ) throws Exception {
 //
     //     boolean isSuccess = false;
-    //     String resultMsg = "";
+    //     String rsltMsg = "";
     //     try {
     //         // 올해년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
     //         List<Object> statsObjList = exptrPrsnlStatsService.getExptrPrsnlStatsListXlsx(yyStr);
     //         xlsxUtils.listXlxsDownload(Constant.EXPTR_PRSNL_PAPR, statsObjList);
     //         isSuccess = true;
-    //         resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+    //         rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
     //     } catch (Exception e) {
     //         isSuccess = false;
-    //         resultMsg = MessageUtils.getExceptionMsg(e);
-    //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-    //         MessageUtils.alertMessage(resultMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
+    //         rsltMsg = MessageUtils.getExceptionMsg(e);
+    //         logParam.setExceptionInfo(e);
+    //         MessageUtils.alertMessage(rsltMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
     //     } finally {
     //         // 로그 관련 처리
-    //         logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+    //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
     //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     //     }
     // }

@@ -65,7 +65,7 @@ public class LgnFailureHandler
         String errorMsg = this.getLgnFailureMsg(exception);
         // 존재하지 않는 계정 제외하고 로그인 실패 로그 저장
         if (!(exception instanceof InternalAuthenticationServiceException) && !(exception instanceof DupIdLgnException)) {
-            LogActvtyParam logParam = new LogActvtyParam(userId, false, errorMsg, ActvtyCtgr.USER);
+            LogActvtyParam logParam = new LogActvtyParam(userId, false, errorMsg, ActvtyCtgr.LGN);
             publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
         }
         // 비밀번호 불일치

@@ -86,7 +86,7 @@ public class VcatnSchdulController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.VCATN_SCHDUL.setAcsPageInfo(Constant.PAGE_CAL));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 휴가계획서 년도 정보 조회 (시작일자~종료일자 세팅 정보)
             VcatnStatsYyDto statsYy = null;
@@ -107,15 +107,15 @@ public class VcatnSchdulController
             cdService.setModelCdData(Constant.VCATN_CD, model);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -139,7 +139,7 @@ public class VcatnSchdulController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
@@ -148,16 +148,16 @@ public class VcatnSchdulController
             VcatnSchdulDto result = isReg ? vcatnSchdulService.regist(vcatnSchdul) : vcatnSchdulService.modify(vcatnSchdul, vcatnSchdulNo);
 
             isSuccess = (result.getVcatnSchdulNo() != null);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
             logParam.setCn(vcatnSchdul.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -179,22 +179,22 @@ public class VcatnSchdulController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 세팅
             VcatnSchdulDto resultObj = vcatnSchdulService.getDtlDto(vcatnSchdulNo);
             ajaxResponse.setResultObj(resultObj);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -216,19 +216,19 @@ public class VcatnSchdulController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 삭제 처리
             isSuccess = vcatnSchdulService.delete(vcatnSchdulNo);
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -247,7 +247,7 @@ public class VcatnSchdulController
     // ) throws Exception {
 //
     //     boolean isSuccess = false;
-    //     String resultMsg = "";
+    //     String rsltMsg = "";
     //     try {
     //         VcatnStatsYyDto statsYy = vcatnStatsYyService.getVcatnYyDtDto(yyStr);
     //         // 일반 휴가(날짜범위)를 하루하루로 다 쪼개야 한다.
@@ -258,15 +258,15 @@ public class VcatnSchdulController
     //         }
     //         xlsxUtils.listXlxsDownload(Constant.VCATN_SCHDUL, statsObjList);
     //         isSuccess = true;
-    //         resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+    //         rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
     //     } catch (Exception e) {
     //         isSuccess = false;
-    //         resultMsg = MessageUtils.getExceptionMsg(e);
-    //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-    //         MessageUtils.alertMessage(resultMsg, SiteUrl.VCATN_SCHDUL_LIST);
+    //         rsltMsg = MessageUtils.getExceptionMsg(e);
+    //         logParam.setExceptionInfo(e);
+    //         MessageUtils.alertMessage(rsltMsg, SiteUrl.VCATN_SCHDUL_LIST);
     //     } finally {
     //         // 로그 관련 처리
-    //         logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+    //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
     //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     //     }
     // }

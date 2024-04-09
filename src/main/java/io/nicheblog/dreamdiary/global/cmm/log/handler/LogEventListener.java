@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * LogEventListener
@@ -21,8 +22,10 @@ import javax.annotation.Resource;
 @Component
 public class LogEventListener {
 
+    @Resource
+    private HttpServletRequest request;
     @Resource(name = "logWorker")
-    LogWorker logWorker;
+    private LogWorker logWorker;
 
     /**
      * 현재 인증(로그인) 상태인 등록/수정자 반환
@@ -30,6 +33,7 @@ public class LogEventListener {
     @EventListener
     @Async
     public void handleLogActvtyEvent(LogActvtyEvent event) {
+        // 큐에 전달하기 전에 request 관련 속성들을 미리 바인딩해야 한다. (권장)
         logWorker.offer(event);
     }
 
@@ -39,6 +43,7 @@ public class LogEventListener {
     @EventListener
     @Async
     public void handleLogAnonActvtyEvent(LogAnonActvtyEvent event) {
+        // 큐에 전달하기 전에 request 관련 속성들을 미리 바인딩해야 한다. (권장)
         logWorker.offer(event);
     }
 
@@ -48,6 +53,7 @@ public class LogEventListener {
     @EventListener
     @Async
     public void handleLogSysEvent(LogSysEvent event) {
+        // 큐에 전달하기 전에 request 관련 속성들을 미리 바인딩해야 한다. (권장)
         logWorker.offer(event);
     }
 }

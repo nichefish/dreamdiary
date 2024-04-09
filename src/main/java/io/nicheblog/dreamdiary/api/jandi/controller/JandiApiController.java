@@ -60,18 +60,18 @@ public class JandiApiController
         log.info("requestUrl: {}, jandiParam: {}", request.getRequestURL(), jandiParam.toString());
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             isSuccess = jandiApiService.sendMsg(jandiParam);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            apiResponse.setApiResult(isSuccess, resultMsg);
+            apiResponse.setApiResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg);
+            logParam.setResult(isSuccess, rsltMsg);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
@@ -95,18 +95,18 @@ public class JandiApiController
     //     log.info("requestUrl: {}", request.getRequestURL());
 //
     //     boolean isSuccess = false;
-    //     String resultMsg = "";
+    //     String rsltMsg = "";
     //     try {
     //         isSuccess = jandiApiService.receiveMsg(rcvMsg);
-    //         resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+    //         rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
     //     } catch (Exception e) {
     //         isSuccess = false;
-    //         resultMsg = MessageUtils.getExceptionMsg(e);
-    //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+    //         rsltMsg = MessageUtils.getExceptionMsg(e);
+    //         logParam.setExceptionInfo(e);
     //     } finally {
-    //         apiResponse.setApiResult(isSuccess, resultMsg);
+    //         apiResponse.setApiResult(isSuccess, rsltMsg);
     //         // 로그 관련 처리
-    //         logParam.setResult(isSuccess, resultMsg);
+    //         logParam.setResult(isSuccess, rsltMsg);
     //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     //     }
     //     return new ResponseEntity<>(apiResponse, HttpStatus.OK);

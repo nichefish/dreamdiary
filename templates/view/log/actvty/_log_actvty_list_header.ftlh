@@ -23,7 +23,7 @@
     <div>
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
             <option value="nickNm" label="이름" ${fn.selected(searchParam.searchType!, "nickNm")} />
-            <option value="logUserId" label="아이디" ${fn.selected(searchParam.searchType!, "logUserId")} />
+            <option value="userId" label="아이디" ${fn.selected(searchParam.searchType!, "userId")} />
         </select>
     </div>
     <div>

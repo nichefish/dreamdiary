@@ -67,7 +67,7 @@ public class CommentController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
@@ -77,19 +77,19 @@ public class CommentController
             ajaxResponse.setResultList(commentList.getContent());
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (NumberFormatException e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(new InvalidParameterException("파라미터 형식이 맞지 않습니다."));
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(new InvalidParameterException("파라미터 형식이 맞지 않습니다."));
+            logParam.setExceptionInfo(e);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgrCd()));
+            logParam.setResult(isSuccess, rsltMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgrCd()));
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
@@ -113,7 +113,7 @@ public class CommentController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
@@ -122,15 +122,15 @@ public class CommentController
             CommentDto result = isReg ? commentService.regist(comment) : commentService.modify(comment, key);
 
             isSuccess = (result.getPostNo() != null);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, param.getActvtyCtgr());
+            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -153,20 +153,20 @@ public class CommentController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 삭제 처리
             isSuccess = commentService.delete(key);
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
             logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, resultMsg, param.getActvtyCtgr());
+            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

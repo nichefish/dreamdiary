@@ -39,10 +39,10 @@ public class EhCacheScheduler {
         try {
             EhCacheUtils.clearAllCaches();
         } catch (Exception e) {
-            String resultMsg = MessageUtils.getExceptionMsg(e);
+            String rsltMsg = MessageUtils.getExceptionMsg(e);
             // 수시로 이루어지므로 실패시에만 로깅한다.
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            logParam.setResult(false, resultMsg, ActvtyCtgr.CACHE);
+            logParam.setExceptionInfo(e);
+            logParam.setResult(false, rsltMsg, ActvtyCtgr.CACHE);
             publisher.publishEvent(new LogSysEvent(this, logParam));
         }
     }

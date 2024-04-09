@@ -128,7 +128,7 @@
                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="${log.authNm!"-"}"></i>   <!-- 관리자 -->
                             </#if>
                         </div>
-                        <div>(${log.logUserId!})</div>
+                        <div>(${log.userId!})</div>
                         <#if log.isRegstr!false>
                             <span class="badge badge-secondary opacity-75 mx-1 fs-9">나</span>
                         </#if>

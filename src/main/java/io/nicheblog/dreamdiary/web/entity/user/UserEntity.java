@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ import java.util.List;
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
@@ -98,7 +99,7 @@ public class UserEntity
      */
     public String getProflImgUrl() {
         if (StringUtils.isEmpty(this.proflImgUrl)) {
-            return ("/metronic/assets/media/avatar_blank.png");
+            return (Constant.BLANK_AVATAR_URL);
         }
         return this.proflImgUrl;
     }

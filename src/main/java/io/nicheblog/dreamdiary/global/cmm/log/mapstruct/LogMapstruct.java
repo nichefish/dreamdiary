@@ -26,12 +26,14 @@ public interface LogMapstruct {
     LogMapstruct INSTANCE = Mappers.getMapper(LogMapstruct.class);
 
     /**
-     * Param -> Entity
+     * logActvtyParam -> logActvtyEntity
      */
-    @Mapping(target = "rslt", source = "isSuccess")
-    @Mapping(target = "logUserId", source = "userId")
-    LogActvtyEntity toEntity(final LogActvtyParam dto) throws Exception;
+    @Mapping(target = "actvtyCtgrCd", expression = "java(param.getActvtyCtgr() != null ? param.getActvtyCtgr().name() : null)")
+    LogActvtyEntity toEntity(final LogActvtyParam param) throws Exception;
 
-    @Mapping(target = "rslt", source = "isSuccess")
-    LogSysEntity toEntity(final LogSysParam dto) throws Exception;
+    /**
+     * logSysParam -> logSysEntity
+     */
+    @Mapping(target = "actvtyCtgrCd", expression = "java(param.getActvtyCtgr() != null ? param.getActvtyCtgr().name() : null)")
+    LogSysEntity toEntity(final LogSysParam param) throws Exception;
 }

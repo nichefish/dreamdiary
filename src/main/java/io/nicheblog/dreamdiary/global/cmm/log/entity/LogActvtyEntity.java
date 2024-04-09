@@ -56,16 +56,16 @@ public class LogActvtyEntity
 
     /** 작업자 ID */
     @CreatedBy
-    @Column(name = "log_user_id", length = 20)
+    @Column(name = "user_id", length = 20)
     @Comment("작업자 ID")
-    protected String logUserId;
+    protected String userId;
 
     /** 작업자 정보 */
     @ManyToOne
-    @JoinColumn(name = "log_user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
-    private AuditorInfo logUserInfo;
+    private AuditorInfo userInfo;
 
     /** 작업일시 */
     @CreatedDate

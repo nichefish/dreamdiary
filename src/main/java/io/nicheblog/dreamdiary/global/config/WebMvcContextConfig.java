@@ -5,11 +5,8 @@ import io.nicheblog.dreamdiary.global.handler.UTF8DecodeResourceResolver;
 import io.nicheblog.dreamdiary.global.interceptor.CookieInterceptor;
 import io.nicheblog.dreamdiary.global.interceptor.FreemarkerInterceptor;
 import io.nicheblog.dreamdiary.web.SiteUrl;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -37,22 +34,6 @@ public class WebMvcContextConfig
     private CookieInterceptor cookieInterceptor;
 
     private static final List<String> STATIC_RESOURCES_URL_PATTERN = List.of("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/**");
-
-    /**
-     * Device 정보 resolver
-     */
-    @Bean
-    public DeviceHandlerMethodArgumentResolver deviceHandlerMethodArgumentResolver() {
-        return new DeviceHandlerMethodArgumentResolver();
-    }
-
-    /**
-     * Device 정보 resolver
-     */
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(deviceHandlerMethodArgumentResolver());
-    }
 
     /**
      * 모든 /api/** 경로에 대하여 CORS 허용 설정 추가

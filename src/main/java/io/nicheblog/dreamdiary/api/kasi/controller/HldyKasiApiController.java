@@ -69,7 +69,7 @@ public class HldyKasiApiController
         log.info("requestUrl: {}", request.getRequestURL() + "?" + request.getQueryString());
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYearStr();
             // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
@@ -78,15 +78,15 @@ public class HldyKasiApiController
             ajaxResponse.setResultList(hldyApiList);
 
             isSuccess = hldyKasiApiService.regHldyList(hldyApiList);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg);
+            logParam.setResult(isSuccess, rsltMsg);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

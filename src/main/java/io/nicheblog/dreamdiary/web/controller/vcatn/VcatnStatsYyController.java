@@ -76,7 +76,7 @@ public class VcatnStatsYyController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.VCATN_STATS.setAcsPageInfo(Constant.PAGE_CAL));
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 휴가계획서 년도 정보 조회 (시작일자~종료일자 정보)
             VcatnStatsYyDto statsYy = null;
@@ -94,15 +94,15 @@ public class VcatnStatsYyController
             // model.addAttribute("statsList", statsList);
 
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -124,20 +124,20 @@ public class VcatnStatsYyController
         AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 휴가사용현황 정보 저장
             isSuccess = vcatnStatsService.regStatsTotal(vcatnStatsTotal);
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
-            ajaxResponse.setAjaxResult(isSuccess, resultMsg);
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
             logParam.setCn(vcatnStatsTotal.toString());
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
@@ -155,22 +155,22 @@ public class VcatnStatsYyController
     // ) throws Exception {
 //
     //     boolean isSuccess = false;
-    //     String resultMsg = "";
+    //     String rsltMsg = "";
     //     try {
     //         VcatnStatsYyDto statsYy = StringUtils.isNotEmpty(yyStr) ? vcatnStatsYyService.getVcatnYyDtDto(yyStr) : vcatnStatsYyService.getCurrVcatnYyDt();
     //         // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
     //         List<Object> statsObjList = vcatnStatsService.getVcatnStatsListXlsx(statsYy);
     //         xlsxUtils.listXlxsDownload(Constant.VCATN_STATS, statsObjList);
     //         isSuccess = true;
-    //         resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+    //         rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
     //     } catch (Exception e) {
     //         isSuccess = false;
-    //         resultMsg = MessageUtils.getExceptionMsg(e);
-    //         logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-    //         MessageUtils.alertMessage(resultMsg, SiteUrl.VCATN_STATS_YY);
+    //         rsltMsg = MessageUtils.getExceptionMsg(e);
+    //         logParam.setExceptionInfo(e);
+    //         MessageUtils.alertMessage(rsltMsg, SiteUrl.VCATN_STATS_YY);
     //     } finally {
     //         // 로그 관련 처리
-    //         logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+    //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
     //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     //     }
     // }

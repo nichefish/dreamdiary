@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.web.model.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 
 import java.util.List;
@@ -24,5 +23,6 @@ import java.util.List;
 public class ClCdParam
         extends BaseParam {
 
+    /** 정렬순서 배열 */
     List<ClCd> sortOrdr;
 }

@@ -25,9 +25,9 @@ public class LogSysDto
     /** 로그 고유 번호 */
     private Integer logSysNo;
     /** 작업자 ID */
-    private String logUserId;
+    private String userId;
     /** 작업자 이름 */
-    private String logUserNm;
+    private String userNm;
     /** 작업일시 */
     private String logDt;
 

@@ -1,14 +1,13 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseListMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
-import io.nicheblog.dreamdiary.web.model.user.UserCttpcListDto;
-import io.nicheblog.dreamdiary.web.model.user.UserCttpcListXlsxDto;
+import io.nicheblog.dreamdiary.web.model.user.UserCttpcDto;
+import io.nicheblog.dreamdiary.web.model.user.UserCttpcXlsxDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.model.user.UserListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -20,11 +19,11 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseListMapstruct
+ * @extends BaseCrudMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, UserAcsIpEmbed.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserMapstruct
-        extends BaseListMapstruct<UserDto, UserListDto, UserEntity> {
+        extends BaseCrudMapstruct<UserDto.DTL, UserDto.LIST, UserEntity> {
 
     UserMapstruct INSTANCE = Mappers.getMapper(UserMapstruct.class);
 
@@ -35,7 +34,7 @@ public interface UserMapstruct
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
     // @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
     // @Mapping(target = "authNm", expression = "java(entity.getAuthCdInfo() != null ? entity.getAuthCdInfo().getDtlCdNm() : null)")
-    UserDto toDto(final UserEntity entity) throws Exception;
+    UserDto.DTL toDto(final UserEntity entity) throws Exception;
 
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
     // @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
@@ -60,7 +59,7 @@ public interface UserMapstruct
     // @Mapping(target = "lunarYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getLunarYn() : null)")
     // @Mapping(target = "userProflYn", expression = "java(entity.getUserProfl() != null ? \"Y\" : \"N\")")
     // @Mapping(target = "retireYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getRetireYn() : null)")
-    UserListDto toListDto(final UserEntity entity) throws Exception;
+    UserDto.LIST toListDto(final UserEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
@@ -69,7 +68,7 @@ public interface UserMapstruct
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
     @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpEmbed(dto))")
     @Mapping(target = "acntStus", expression = "java(new UserStusEmbed(dto))")
-    UserEntity toEntity(final UserDto dto) throws Exception;
+    UserEntity toEntity(final UserDto.DTL dto) throws Exception;
 
     /**
      * Entity -> ListXlsxDto
@@ -82,19 +81,19 @@ public interface UserMapstruct
      * dtlDtoToListDto
      */
     // @Mapping(target = "ecnyDt", expression = "java(user.getUserProfl() != null ? DateUtils.asStr(user.getUserProfl().getEcnyDt(), DatePtn.DATE) : null)")
-    UserListDto dtlDtoToListDto(final UserDto user) throws Exception;
+    UserDto.LIST dtlDtoToListDto(final UserDto user) throws Exception;
 
     /**
      * toCttpcListDto
      */
-    @Mapping(target = "jobTitleNm", expression = "java(\"사원\".equals(user.getJobTitleNm()) ? \"Y\".equals(user.getApntcYn()) ? \"수습사원\" : user.getJobTitleNm() : user.getJobTitleNm())")
-    UserCttpcListDto toCttpcListDto(final UserListDto user);
+    // @Mapping(target = "jobTitleNm", expression = "java(\"사원\".equals(user.getJobTitleNm()) ? \"Y\".equals(user.getApntcYn()) ? \"수습사원\" : user.getJobTitleNm() : user.getJobTitleNm())")
+    UserCttpcDto toCttpcDto(final UserDto.LIST user);
 
     /**
      * toCttpcListXlsxDto
      */
-    @Mapping(target = "jobTitleNm", expression = "java(\"사원\".equals(user.getJobTitleNm()) ? \"Y\".equals(user.getApntcYn()) ? \"수습사원\" : user.getJobTitleNm() : user.getJobTitleNm())")
-    UserCttpcListXlsxDto toCttpcListXlsxDto(final UserListDto user);
+    // @Mapping(target = "jobTitleNm", expression = "java(\"사원\".equals(user.getJobTitleNm()) ? \"Y\".equals(user.getApntcYn()) ? \"수습사원\" : user.getJobTitleNm() : user.getJobTitleNm())")
+    UserCttpcXlsxDto toCttpcListXlsxDto(final UserDto.LIST user);
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
@@ -102,10 +101,7 @@ public interface UserMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
-    void updateFromDto(
-            final UserDto dto,
-            final @MappingTarget UserEntity entity
-    ) throws Exception;
+    void updateFromDto(final UserDto.DTL dto, final @MappingTarget UserEntity entity) throws Exception;
 
 
 }

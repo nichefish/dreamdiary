@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.service.LogService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author nichefish
  */
 @Component
+@Log4j2
 public class LogWorker
         implements Runnable {
 
@@ -27,7 +29,7 @@ public class LogWorker
     private LogService logService;
 
     /** 로그 queue */
-    private final BlockingQueue<Object> logQueue = new LinkedBlockingQueue<>();
+    private static final BlockingQueue<Object> logQueue = new LinkedBlockingQueue<>();
 
     @PostConstruct
         public void init() {
@@ -40,28 +42,37 @@ public class LogWorker
      */
     @Override
     public void run() {
+        boolean isSuccess = false;
         try {
             while (true) {
                 // Blocks until an element is available
                 Object logEvent = logQueue.take();
+                log.info("after taking logQueue: {}", logQueue);
 
                 if (logEvent instanceof LogActvtyEvent) {
                     // 활동 로그 (로그인) 로깅 처리
-                    logService.regLogActvty(((LogActvtyEvent) logEvent).getLog());
+
+                    isSuccess = logService.regLogActvty(((LogActvtyEvent) logEvent).getLog());
                 } else if (logEvent instanceof LogAnonActvtyEvent) {
                     // 활동 로그 (비로그인) 로깅 처리
-                    logService.regLogAnonActvty(((LogAnonActvtyEvent) logEvent).getLog());
+                    isSuccess = logService.regLogAnonActvty(((LogAnonActvtyEvent) logEvent).getLog());
                 } else if (logEvent instanceof LogSysEvent) {
                     // 시스템 로그 로깅 처리
-                    logService.regSysActvty(((LogSysEvent) logEvent).getLog());
+                    isSuccess = logService.regSysActvty(((LogSysEvent) logEvent).getLog());
                 }
             }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
+            log.warn("log regist failed with {}", (Object) e.getStackTrace());
+            e.printStackTrace();
             Thread.currentThread().interrupt();
+        } finally {
+            log.info("logWorker isSuccess: {}", isSuccess);
         }
     }
 
     public void offer(Object o) {
-        this.logQueue.offer(o);
+        log.info("logQueue: {}", logQueue);
+        Boolean isSuccess = logQueue.offer(o);
+        log.info("logging offer result: {}", isSuccess);
     }
 }

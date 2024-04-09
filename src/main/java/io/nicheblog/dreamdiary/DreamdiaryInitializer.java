@@ -52,7 +52,7 @@ public class DreamdiaryInitializer {
 
         boolean isSuccess = false;
         boolean systemAcntExists = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             try {
                 // 시스템계정 존재여부 체크
@@ -61,15 +61,15 @@ public class DreamdiaryInitializer {
             } catch (UsernameNotFoundException e) {
                 // 시스템계정 부재시 등록:: 메소드 분리
                 isSuccess = this.regSystemAcnt();
-                resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+                rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             }
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
             if (!systemAcntExists) {
-                logParam.setResult(isSuccess, resultMsg);
+                logParam.setResult(isSuccess, rsltMsg);
                 publisher.publishEvent(new LogSysEvent(this, logParam));
             }
         }
@@ -109,7 +109,7 @@ public class DreamdiaryInitializer {
 
         boolean isSuccess = false;
         boolean systemAcntExists = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             // 로그인 정책 존재여부 체크
             LgnPolicyDto rsLgnPolicy = lgnPolicyService.getDtlDto();
@@ -119,14 +119,14 @@ public class DreamdiaryInitializer {
             }
             // 로그인 정책 등록:: 메소드 분리
             isSuccess = this.regLgnPolicy();
-            resultMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
         } finally {
             if (!systemAcntExists) {
-                logParam.setResult(isSuccess, resultMsg);
+                logParam.setResult(isSuccess, rsltMsg);
                 publisher.publishEvent(new LogSysEvent(this, logParam));
             }
         }

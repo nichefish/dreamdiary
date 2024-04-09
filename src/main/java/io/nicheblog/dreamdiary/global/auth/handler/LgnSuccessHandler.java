@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.auth.handler;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
+import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -58,7 +59,7 @@ public class LgnSuccessHandler
         // 사용자 정보 세션에 추가
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
         session.setAttribute("authInfo", authentication.getPrincipal());
-        session.setAttribute("acsIp", authService.getUserIpAddr());
+        session.setAttribute("acsIp", AuthUtils.getAcsIpAddr());
 
         // 최종 로그인 날짜 세팅 및 패스워드오류 카운트 초기화
         String userId = authInfo.getUserId();

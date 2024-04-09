@@ -22,7 +22,7 @@
     <div>
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
             <option value="nickNm">이름</option>
-            <option value="logUserId">아이디</option>
+            <option value="userId">아이디</option>
         </select>
     </div>
     <div>

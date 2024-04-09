@@ -123,10 +123,10 @@ public class MessageUtils
     public static String getExceptionMsg(final Exception e) {
         if (StringUtils.isNotEmpty(e.getMessage())) return e.getMessage();
         String exceptionNm = getExceptionNm(e);
-        String resultMsg = getMessage(RSLT_EXCEPTION + "." + exceptionNm);
-        log.info("exceptionNm: {}, resultMsg: {}", exceptionNm, resultMsg);
+        String rsltMsg = getMessage(RSLT_EXCEPTION + "." + exceptionNm);
+        log.info("exceptionNm: {}, rsltMsg: {}. {}", exceptionNm, rsltMsg, e.getStackTrace());
         log.error(e);
-        return resultMsg;
+        return rsltMsg;
     }
 
     public static String getExceptionNm(final Exception e) {

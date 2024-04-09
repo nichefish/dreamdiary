@@ -61,22 +61,22 @@ public class NotionController
 
         // 활동 로그 목록 조회
         boolean isSuccess = false;
-        String resultMsg = "";
+        String rsltMsg = "";
         try {
             String notionPageId = !StringUtils.isEmpty(notionPageIdParam) ? notionPageIdParam : NOTION_PUBLIC;
             // NotionRetriever notionRetriever = new NotionRetriever(notionPageId);
             // String notionPage = notionRetriever.render();
             // model.addAttribute("notionPage", notionPage);
             isSuccess = true;
-            resultMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
-            resultMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(MessageUtils.getExceptionNm(e), e.getMessage());
-            MessageUtils.alertMessage(resultMsg, SiteUrl.ADMIN_MAIN);
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
-            logParam.setResult(isSuccess, resultMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

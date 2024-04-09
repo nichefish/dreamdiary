@@ -1,11 +1,17 @@
 package io.nicheblog.dreamdiary.global.auth.util;
 
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * AuthUtils
@@ -15,8 +21,20 @@ import org.springframework.web.context.request.RequestContextHolder;
  *
  * @author nichefish
  */
+@Component
 @Log4j2
 public class AuthUtils {
+
+    @Resource
+    private HttpServletRequest reqst;
+
+    private static HttpServletRequest request;
+
+    /** static 맥락에서 사용할 수 있도록 bean 주입 */
+    @PostConstruct
+    private void init() {
+        request = reqst;
+    }
 
     /**
      * 현재 로그인 중인 사용자 정보 세션에서 조회해서 반환
@@ -93,5 +111,24 @@ public class AuthUtils {
             if (roleStr.equals(grantedAuthority.getAuthority())) return true;
         }
         return false;
+    }
+
+    /**
+     * 사용자 IP주소 조회 (헤더 조회)
+     */
+    public static String getAcsIpAddr() {
+        String ipType = "";
+        String ipAddr = "";
+        for (String s : Constant.IP_HEADERS) {
+            ipType = s;
+            ipAddr = request.getHeader(ipType);
+            if (ipAddr != null) break;
+        }
+        if (ipAddr == null) {
+            ipType = Constant.REMOTE_ADDR;
+            ipAddr = request.getRemoteAddr();
+        }
+        log.info("ipAddr > {}: {}", ipType, ipAddr);
+        return ipAddr;
     }
 }

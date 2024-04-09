@@ -385,6 +385,7 @@ public class DateUtils
             DateUtils.asDate(dateStr);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

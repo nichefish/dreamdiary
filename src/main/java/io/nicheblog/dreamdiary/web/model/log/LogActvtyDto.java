@@ -28,7 +28,7 @@ public class LogActvtyDto
     /** 로그 고유 번호 (PK) */
     private Integer logActvtyNo;
     /** 작업자 ID */
-    private String logUserId;
+    private String userId;
     /** 작업자 이름 */
     private String logUserNm;
     /** 권한코드 */
@@ -85,7 +85,7 @@ public class LogActvtyDto
      * 작업자 여부
      */
     public Boolean getIsJobUser() {
-        return (AuthUtils.isRegstr(this.logUserId));
+        return (AuthUtils.isRegstr(this.userId));
     }
 
     /**

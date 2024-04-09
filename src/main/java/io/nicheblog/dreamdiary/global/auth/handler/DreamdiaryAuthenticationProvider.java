@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.auth.handler;
 import io.nicheblog.dreamdiary.global.auth.exception.*;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
+import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
@@ -86,7 +87,7 @@ public class DreamdiaryAuthenticationProvider
         if ("Y".equals(authInfo.getUseAcsIpYn())) {
             List<String> acsIpList = authInfo.getAcsIpList();
             if (CollectionUtils.isNotEmpty(acsIpList)) {
-                String remoteAddr = authService.getUserIpAddr();
+                String remoteAddr = AuthUtils.getAcsIpAddr();
                 log.info("logged in remoteAddr: {}", remoteAddr);
 
                 boolean isAllowedIp = false;

@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.global.cmm.log.service;
 
 import io.nicheblog.dreamdiary.global.ActiveProfile;
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogActvtyEntity;
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
@@ -34,90 +33,85 @@ public class LogService {
 
     @Resource(name = "logActvtyRepository")
     private LogActvtyRepository logActvtyRepository;
-
     @Resource(name = "logSysRepository")
     private LogSysRepository logSysRepository;
-
     @Resource(name = "authService")
     private AuthService authService;
-
     @Resource
     private HttpServletRequest request;
-
     @Resource(name = "activeProfile")
     ActiveProfile activeProfile;
+
+    // private final Boolean LOG_DISABLED = !activeProfile.isProd();
+    private final Boolean LOG_DISABLED = false;
 
     /**
      * 활동 로그 등록 (로그인 상태)
      */
     @SneakyThrows
-    public void regLogActvty(final LogActvtyParam logParam) {
-        String logCn = logParam.getCn();
-        this.regLogActvty(logParam, logCn);
-    }
-    @SneakyThrows
-    public void regLogActvty(final LogActvtyParam logParam, final String logCn) {
+    public Boolean regLogActvty(final LogActvtyParam logParam) throws Exception {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
-        if (!activeProfile.isProd()) return;
+        if (LOG_DISABLED) return true;
 
         LogActvtyEntity logActvty = logMapstruct.toEntity(logParam);
-        logActvty.setUrl(request.getServletPath());         // 작업 url
-        logActvty.setMthd(request.getMethod());           // 접근 메소드
-        logActvty.setParam(request.getQueryString());       // 작업 파라미터
-        logActvty.setReferer(request.getHeader(Constant.REFERER));      // 리퍼러
-        logActvty.setIpAddr(authService.getUserIpAddr());       // 작업 IP
-        logActvty.setCn(logCn);     // 작업 내용
 
-        log.info("isSuccess: {}, resultMsg: {}", logParam.getIsSuccess(), logParam.getResultMsg());
-        logActvtyRepository.save(logActvty);
+        log.info("isSuccess: {}, rsltMsg: {}", logParam.getRslt(), logParam.getRsltMsg());
+        LogActvtyEntity rslt = logActvtyRepository.save(logActvty);
+
+        return rslt.getLogActvtyNo() != null;
     }
 
     /**
      * 활동 로그 등록 (비로그인 상태)
      */
-    @SneakyThrows
-    public void regLogAnonActvty(final LogActvtyParam logParam) {
+    // @SneakyThrows
+    public Boolean regLogAnonActvty(final LogActvtyParam logParam) throws Exception {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
-        if (!activeProfile.isProd()) return;
+        if (LOG_DISABLED) return true;
 
         // TODO: 막상 분리해놓고 보니 차이가 없네? 일단 분리 상태 유지하기
-        this.regLogActvty(logParam);
+        LogActvtyEntity logActvty = logMapstruct.toEntity(logParam);
+        logActvty.setUserId(logParam.getUserId());
+        logActvty.setRslt(logParam.getRslt());               // 작업 결과
+        logActvty.setRsltMsg(logParam.getRsltMsg());            // 작업 결과 메세지
+        LogActvtyEntity rslt = logActvtyRepository.save(logActvty);
+
+        log.info("isSuccess: {}, rsltMsg: {}", logParam.getRslt(), logParam.getRsltMsg());
+        return rslt.getLogActvtyNo() != null;
     }
 
     /**
      * 활동 로그 등록 (비로그인 상태)
      */
-    @SneakyThrows
-    public void regLogAnonActvty(final String userId, final String resultMsg, boolean isSuccess) {
+    // @SneakyThrows
+    public Boolean regLogAnonActvty(final String userId, final String rsltMsg, boolean isSuccess) {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
-        if (!activeProfile.isProd()) return;
+        if (LOG_DISABLED) return true;
 
         LogActvtyEntity logActvty = new LogActvtyEntity();
-        logActvty.setLogUserId(userId);
-        logActvty.setUrl(request.getServletPath());     // 작업 url
-        logActvty.setMthd(request.getMethod());
-        logActvty.setParam(request.getQueryString());       // 작업 파라미터
-        logActvty.setReferer(request.getHeader(Constant.REFERER));  // 리퍼러
-        logActvty.setIpAddr(authService.getUserIpAddr());       // 작업 IP
+        logActvty.setUserId(userId);
         logActvty.setRslt(isSuccess);               // 작업 결과
-        logActvty.setRsltMsg(resultMsg);            // 작업 결과 메세지
-        logActvtyRepository.save(logActvty);
+        logActvty.setRsltMsg(rsltMsg);            // 작업 결과 메세지
+        LogActvtyEntity rslt = logActvtyRepository.save(logActvty);
 
-        log.info("isSuccess: {}, resultMsg: {}", isSuccess, resultMsg);
+        log.info("isSuccess: {}, rsltMsg: {}", isSuccess, rsltMsg);
+        return rslt.getLogActvtyNo() != null;
     }
 
-    @SneakyThrows
-    public void regSysActvty(final LogSysParam logParam) {
+    // @SneakyThrows
+    public Boolean regSysActvty(final LogSysParam logParam) throws Exception {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
-        if (!activeProfile.isProd()) return;
+        if (LOG_DISABLED) return true;
 
         LogSysEntity logActvty = logMapstruct.toEntity(logParam);
 
-        log.info("isSuccess: {}, resultMsg: {}", logParam.getIsSuccess(), logParam.getResultMsg());
-        logSysRepository.save(logActvty);
+        log.info("isSuccess: {}, rsltMsg: {}", logParam.getRslt(), logParam.getRsltMsg());
+        LogSysEntity rslt = logSysRepository.save(logActvty);
+
+        return rslt.getLogSysNo() != null;
     }
 }
