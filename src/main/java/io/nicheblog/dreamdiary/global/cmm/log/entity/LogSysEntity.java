@@ -20,7 +20,11 @@ import java.util.Date;
 
 /**
  * LogSysEntity
- * 시스템 로그 Entity
+ * <pre>
+ *  시스템 로그 Entity
+ * </pre>
+ *
+ * @author nichefish
  */
 @Entity
 @Table(name = "log_sys")

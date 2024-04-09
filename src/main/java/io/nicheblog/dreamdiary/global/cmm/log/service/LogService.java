@@ -41,7 +41,6 @@ public class LogService {
     /**
      * 활동 로그 등록 (로그인 상태)
      */
-    @SneakyThrows
     public Boolean regLogActvty(final LogActvtyParam logParam) throws Exception {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
@@ -58,7 +57,6 @@ public class LogService {
     /**
      * 활동 로그 등록 (비로그인 상태)
      */
-    // @SneakyThrows
     public Boolean regLogAnonActvty(final LogActvtyParam logParam) throws Exception {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음
@@ -75,26 +73,6 @@ public class LogService {
         return rslt.getLogActvtyNo() != null;
     }
 
-    /**
-     * 활동 로그 등록 (비로그인 상태)
-     */
-    // @SneakyThrows
-    public Boolean regLogAnonActvty(final String userId, final String rsltMsg, boolean isSuccess) {
-
-        // 로컬 또는 개발 접속은 로그 남기지 않음
-        if (LOG_DISABLED) return true;
-
-        LogActvtyEntity logActvty = new LogActvtyEntity();
-        logActvty.setUserId(userId);
-        logActvty.setRslt(isSuccess);               // 작업 결과
-        logActvty.setRsltMsg(rsltMsg);            // 작업 결과 메세지
-        LogActvtyEntity rslt = logActvtyRepository.save(logActvty);
-
-        log.info("isSuccess: {}, rsltMsg: {}", isSuccess, rsltMsg);
-        return rslt.getLogActvtyNo() != null;
-    }
-
-    // @SneakyThrows
     public Boolean regSysActvty(final LogSysParam logParam) throws Exception {
 
         // 로컬 또는 개발 접속은 로그 남기지 않음

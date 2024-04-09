@@ -15,6 +15,8 @@ import java.io.Serializable;
 /**
  * LogActvtyUrlNmEntity
  * 로그 작업URL 한글 매칭 Entity
+ *
+ * @author nichefish
  */
 @Entity
 @Table(name = "log_actvty_url_nm")

@@ -132,7 +132,6 @@ public class UserReqstController
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
-            // logActvtyService.regLogAnonActvty(userDto.getUserId(), rsltMsg, isSuccess);
         }
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);

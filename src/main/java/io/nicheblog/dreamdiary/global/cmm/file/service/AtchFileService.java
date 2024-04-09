@@ -15,7 +15,6 @@ import javax.annotation.Resource;
  * AtchFileService
  * <pre>
  *  공통 > 파일 처리 서비스 모듈
- *  TODO: DB단 관리하는 서비스와 실제 파일을 처리하는 유틸리티 분리
  * </pre>
  *
  * @author nichefish

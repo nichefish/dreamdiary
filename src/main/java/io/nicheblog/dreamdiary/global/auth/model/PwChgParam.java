@@ -23,21 +23,15 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class PwChgParam {
 
-    /**
-     * 사용자 ID
-     */
+    /** 사용자 ID */
     @NotEmpty
     private String userId;
 
-    /**
-     * 현재 패스워드
-     */
+    /** 현재 패스워드 */
     @NotEmpty
     private String currPw;
 
-    /**
-     * 변경할 패스워드
-     */
+    /** 변경할 패스워드 */
     @NotEmpty
     @Size(min = 9, max = 15, message = "비밀번호는 9자 이상 15자 이하로 입력해야 합니다.")
     @Pattern(regexp = CmmRegex.PW_REGEX, message = "비밀번호가 형식에 맞지 않습니다.")

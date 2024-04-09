@@ -34,7 +34,8 @@ import java.util.stream.Collectors;
 /**
  * FileUtils
  * <pre>
- *  파일 서비스에서 (서비스 인터페이스에서 쓰는) 파일 업로드 부분만 유틸리티 클래스로 분리
+ *  파일 처리 유틸리티 모듈
+ *  (파일 서비스에서 (서비스 인터페이스에서 쓰는) 파일 업로드 부분을 유틸리티 클래스로 분리)
  * </pre>
  *
  * @author nichefish

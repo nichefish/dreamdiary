@@ -23,25 +23,15 @@ public interface CdRepository
     /**
      * 분류코드로 상세코드 목록 검색
      */
-    List<DtlCdEntity> findByClCd(
-            final String clCd,
-            final Sort sortOrdrAsc
-    );
+    List<DtlCdEntity> findByClCd(final String clCd, final Sort sortOrdrAsc);
 
     /**
      * 분류코드로 상세코드 목록 검색
      */
-    List<DtlCdEntity> findByClCdAndStateUseYn(
-            final String clCd,
-            String useYn,
-            final Sort sortOrdrAsc
-    );
+    List<DtlCdEntity> findByClCdAndStateUseYn(final String clCd, String useYn, final Sort sortOrdrAsc);
 
     /**
      * 공통코드, 상세코드로 상세코드명 조회
      */
-    DtlCdEntity findByClCdAndDtlCd(
-            final String clCd,
-            final String dtlCd
-    );
+    DtlCdEntity findByClCdAndDtlCd(final String clCd, final String dtlCd);
 }

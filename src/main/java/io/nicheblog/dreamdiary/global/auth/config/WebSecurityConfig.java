@@ -40,25 +40,21 @@ import javax.annotation.Resource;
 @Log4j2
 public class WebSecurityConfig {
 
+    @Resource(name = "authService")
+    private AuthService authService;
+    @Resource(name = "lgnFailureHandler")
+    private LgnFailureHandler lgnFailureHandler;
+    @Resource(name = "lgnSuccessHandler")
+    private LgnSuccessHandler lgnSuccessHandler;
+    @Resource(name = "lgoutHandler")
+    private LgoutHandler lgoutHandler;
+    @Value("${springdoc.api-docs.path:}")
+    private String API_DOCS_PATH;
+
     @Value("${remember-me.key")
     private String REMEMBER_ME_KEY;
     @Value("${remember-me.param")
     private String REMEMBER_ME_PARAM;
-
-    @Resource(name = "authService")
-    private AuthService authService;
-
-    @Resource(name = "lgnFailureHandler")
-    private LgnFailureHandler lgnFailureHandler;
-
-    @Resource(name = "lgnSuccessHandler")
-    private LgnSuccessHandler lgnSuccessHandler;
-
-    @Resource(name = "lgoutHandler")
-    private LgoutHandler lgoutHandler;
-
-    @Value("${springdoc.api-docs.path:}")
-    private String API_DOCS_PATH;
 
     /** 로그인시 사용할 암호화 로직 */
     @Bean

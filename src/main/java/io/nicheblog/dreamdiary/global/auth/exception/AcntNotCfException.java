@@ -3,9 +3,9 @@ package io.nicheblog.dreamdiary.global.auth.exception;
 import org.springframework.security.core.AuthenticationException;
 
 /**
- * DormantAcntException
+ * AcntNotCfException
  * <pre>
- *  Spring Security:: 장기간 미로그인시 던지는 Custom Exception
+ *  Spring Security:: 계정 미승인시 던지는 Custom Exception
  * </pre>
  *
  * @author nichefish

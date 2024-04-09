@@ -28,7 +28,11 @@ import java.util.HashMap;
 
 /**
  * LogActvtyEntity
- * 활동 로그 Entity
+ * <pre>
+ *  활동 로그 Entity
+ * </pre>
+ *
+ * @author nichefish
  */
 @Entity
 @Table(name = "log_actvty")

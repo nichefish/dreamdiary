@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * AuthUtils
  * <pre>
- *  Spring Security:: 인증 및 권한 처리 관련 서비스 모듈
+ *  Spring Security:: 인증 및 권한 처리 관련 유틸리티 모듈
  * </pre>
  *
  * @author nichefish

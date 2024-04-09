@@ -60,20 +60,14 @@ public class CdService {
     /**
      * 공통 > 코드 정보 model에 추가 (가독성+편의상 분리)
      */
-    public void setModelCdData(
-            final String clCd,
-            final ModelMap model
-    ) throws Exception {
+    public void setModelCdData(final String clCd, final ModelMap model) throws Exception {
         model.addAttribute(clCd, this.getCdListByClCd(clCd));
     }
 
     /**
      * 공통 > 공통코드CL_CD, 상세코드DTL_CD로 상세코드명 조회
      */
-    public String getDtlCdNm(
-            final String clCd,
-            final String dtlCd
-    ) {
+    public String getDtlCdNm(final String clCd, final String dtlCd) {
         if (StringUtils.isEmpty(clCd) || StringUtils.isEmpty(dtlCd)) return null;
         DtlCdEntity rsDtlCd = cdRepository.findByClCdAndDtlCd(clCd, dtlCd);
         if (rsDtlCd == null) return null;

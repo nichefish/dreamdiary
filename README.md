@@ -14,3 +14,5 @@
 * Javascript, jQuery, Handlebars.js
 * Bootstrap 5 (Metronic 8)
 * CSS / SCSS
+
+### "All classes in the hierarchy must be annotated with @SuperBuilder."

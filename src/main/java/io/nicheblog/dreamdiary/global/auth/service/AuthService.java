@@ -15,7 +15,6 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Optional;
 
@@ -38,9 +37,6 @@ public class AuthService
     @Resource(name = "authRoleRepository")
     private AuthRoleRepository authRoleRepository;
 
-    @Resource
-    private HttpServletRequest request;
-
     /**
      * userId로 계정 + 사용자 정보 조회
      * 로그인 등 인증시 Spring Security에서 사용. Spring Security용 사용자 인터페이스(UserDetails) 반환
@@ -60,8 +56,6 @@ public class AuthService
         // }
 
         return AuthInfoMapstruct.INSTANCE.toDto(rsUser);
-
-        // return new AuthInfo(rsUserEntity);
     }
 
     /**
@@ -75,7 +69,7 @@ public class AuthService
     /**
      * 현재 로그인 중인 사용자 정보 Id 세션에서 조회해서 반환
      */
-    public static Integer getAuthenticatedUserInfoNo() {
+    public static Integer getAuthenticatedUserProflNo() {
         if (RequestContextHolder.getRequestAttributes() == null) return null;
         AuthInfo authInfo = getAuthenticatedUser();
         assert authInfo != null;

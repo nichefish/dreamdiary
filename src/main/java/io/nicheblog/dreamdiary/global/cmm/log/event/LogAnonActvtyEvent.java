@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * LogAnonmssActvtyEvent
+ * LogAnonActvtyEvent
  * <pre>
  *  활동 로그(비로그인) 적재 이벤트
  * </pre>

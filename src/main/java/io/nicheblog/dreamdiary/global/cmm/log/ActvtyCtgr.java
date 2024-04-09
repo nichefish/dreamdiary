@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 /**
  * ActvtyCtgr
  * <pre>
- *  공통으로 사용하는 코드성 데이터 정의
+ *  활동 카테고리 enum
  * </pre>
- * TODO: enum으로 점진적 변환쓰
- * TODO: Freemarker 단에서 enum을 어떻게 처리할 것인지?
  *
  * @author nichefish
  */
@@ -17,8 +15,10 @@ public enum ActvtyCtgr {
 
     // DEFAULT
     DEFAULT("DEFAULT"),
+    SYSTEM("SYSTEM"),
 
     // API
+    API("API"),
     API_JANDI("API_잔디"),
     API_KASI("API_특일"),
     API_DREAM("API_꿈 관리"),

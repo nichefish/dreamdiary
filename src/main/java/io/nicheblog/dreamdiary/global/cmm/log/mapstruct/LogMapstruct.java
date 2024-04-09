@@ -14,7 +14,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * LogMapstruct
  * <pre>
- *  로그 MapStruct 기반 Mapper 인터페이스
+ *  로그 적재용 MapStruct 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish
