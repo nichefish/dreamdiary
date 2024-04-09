@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
@@ -50,22 +49,22 @@ public class AjaxSessionTimeoutFilter
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        if (isAjaxRequest(req)) {
-            try {
-                chain.doFilter(req, res);
-            } catch (AuthenticationException e) {
+        try {
+            chain.doFilter(req, res);
+        } catch (AuthenticationException e) {
+            if (isAjaxRequest(req)) {
                 res.sendError(HttpServletResponse.SC_UNAUTHORIZED);     // 401
                 // 로그 관련 처리
                 LogActvtyParam logParam = new LogActvtyParam(false, MessageUtils.getExceptionMsg(e), ActvtyCtgr.DEFAULT);
                 publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
-            } catch (AccessDeniedException e) {
+            }
+        } catch (AccessDeniedException e) {
+            if (isAjaxRequest(req)) {
                 res.sendError(HttpServletResponse.SC_FORBIDDEN);        // 403
                 // 로그 관련 처리
                 LogActvtyParam logParam = new LogActvtyParam(false, MessageUtils.getExceptionMsg(e), ActvtyCtgr.DEFAULT);
                 publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
             }
-        } else {
-            chain.doFilter(req, res);
         }
     }
 
@@ -73,10 +72,8 @@ public class AjaxSessionTimeoutFilter
      * AJAX 요청들에 대하여 헤더에 "AJAX" 수동 설정
      * (commons.js)
      */
-    private boolean isAjaxRequest(final HttpServletRequest req) {
-        String header = req.getHeader("AJAX");
-        if (StringUtils.isEmpty(header)) return false;
-        return header.equals(Boolean.TRUE.toString());
+    private boolean isAjaxRequest(final HttpServletRequest request) {
+        return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 
     @Override
