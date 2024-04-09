@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,11 +27,16 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 public class BoardPostDto
         extends BasePostDto
-        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
+        implements Identifiable<BaseClsfKey>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 컨텐츠 타입 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType */
     @JsonProperty("contentType")
     private String boardCd;
+
+    @Override
+    public BaseClsfKey getKey() {
+        return new BaseClsfKey(this.postNo, this.boardCd);
+    }
 
     /* ----- */
 
@@ -49,7 +56,8 @@ public class BoardPostDto
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
     @EqualsAndHashCode(callSuper = false)
-    public static class DTL extends BoardPostDto {
+    public static class DTL
+            extends BoardPostDto {
         /** 노션 페이지 참조 ID :: UUID */
         // private String notionPageId;
 
@@ -63,7 +71,8 @@ public class BoardPostDto
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
     @EqualsAndHashCode(callSuper = false)
-    public static class LIST extends BoardPostDto {
+    public static class LIST
+            extends BoardPostDto {
         //
     }
 

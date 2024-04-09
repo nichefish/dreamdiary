@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.service;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ import java.util.Map;
  * @author nichefish
  * @extends BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
-public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
+public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
         extends BaseReadonlyService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**
@@ -91,16 +92,13 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
     /**
      * default: 게시물 수정 (dto level)
      */
-    default Dto modify(
-            final Dto dto,
-            final Key key
-    ) throws Exception {
+    default Dto modify(final Dto dto) throws Exception {
         // 수정 전처리
         this.preModify(dto);
 
         // Entity 레벨 조회
         Mapstruct mapstruct = this.getMapstruct();
-        Entity entity = this.getDtlEntity(key);
+        Entity entity = this.getDtlEntity(dto);
         mapstruct.updateFromDto(dto, entity);
 
         // 수정 중간처리
@@ -142,6 +140,10 @@ public interface BaseCrudService<Dto extends BaseCrudDto, ListDto extends BaseCr
     /**
      * default: 게시물 삭제
      */
+    default Boolean delete(final Dto dto) throws Exception {
+        return this.delete(dto.getKey());
+    }
+
     default Boolean delete(final Key key) throws Exception {
         Repository repository = this.getRepository();
         Entity e = this.getDtlEntity(key);

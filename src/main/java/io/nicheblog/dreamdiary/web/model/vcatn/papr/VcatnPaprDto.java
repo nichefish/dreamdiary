@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.model.vcatn.papr;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.schdul.VcatnSchdulMapstruct;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 @ToString
 public class VcatnPaprDto
         extends BasePostDto
-        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.VCATN_PAPR;
@@ -76,6 +77,11 @@ public class VcatnPaprDto
                     }
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.postNo;
     }
 
     @Getter

@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.user;
 
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,7 +24,8 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class UserDto
-        extends BaseAtchDto {
+        extends BaseAtchDto
+        implements Identifiable<Integer> {
 
     /** 사용자 고유 번호 (PK) */
     private Integer userNo;
@@ -87,6 +89,11 @@ public class UserDto
     /** 승인여부 채크 */
     public Boolean getIsCf() {
         return "Y".equals(this.cfYn);
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.userNo;
     }
 
     /* ----- */

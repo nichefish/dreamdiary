@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.schdul;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(callSuper = false)
 public class SchdulDto
         extends BasePostDto
-        implements CommentCmpstnModule, TagCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.SCHDUL;
@@ -98,4 +99,9 @@ public class SchdulDto
     public CommentCmpstn comment;
     /** 태그 정보 모듈 (위임) */
     public TagCmpstn tag;
+
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
 }

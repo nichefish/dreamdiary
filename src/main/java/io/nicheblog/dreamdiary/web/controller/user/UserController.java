@@ -227,7 +227,7 @@ public class UserController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = user.getUserNo() == null;
-            UserDto result = isReg ? userService.regist(user, request) : userService.modify(user, userNo, request);
+            UserDto result = isReg ? userService.regist(user, request) : userService.modify(user, request);
 
             isSuccess = (result.getUserNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.managt.ManagtrMapstruct;
@@ -55,6 +56,7 @@ public class ManagtCmpstn
     /**
      * 댓글 :: List<Dto> -> List<Entity> 반환
      */
+    @JsonIgnore
     public List<ManagtrEntity> getEntityList() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()

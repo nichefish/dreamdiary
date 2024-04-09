@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
 import lombok.Getter;
@@ -26,7 +27,7 @@ import java.util.List;
 @NoArgsConstructor
 public class MenuDto
         extends BaseAuditDto
-        implements StateCmpstnModule {
+        implements Identifiable<Integer>, StateCmpstnModule {
 
     /** 메뉴 번호 (PK)  */
     private Integer menuNo;
@@ -75,4 +76,9 @@ public class MenuDto
 
     /** 상태 관리 모듈 (위임) */
     public StateCmpstn state;
+
+    @Override
+    public Integer getKey() {
+        return this.menuNo;
+    }
 }

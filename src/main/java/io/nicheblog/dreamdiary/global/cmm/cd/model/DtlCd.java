@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global.cmm.cd.model;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class DtlCd
         extends BaseAuditDto
-        implements StateCmpstnModule {
+        implements StateCmpstnModule, Identifiable<DtlCdKey> {
 
     /** 상세코드 */
     private String dtlCd;
@@ -41,6 +42,7 @@ public class DtlCd
 
     /* ---- */
 
+    @Override
     public DtlCdKey getKey() {
         return new DtlCdKey(this.clCd, this.dtlCd);
     }

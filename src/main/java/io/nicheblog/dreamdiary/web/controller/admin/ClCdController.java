@@ -163,7 +163,7 @@ public class ClCdController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = "Y".equals(regYn);
-            ClCd rsDto = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd, key);
+            ClCd rsDto = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd);
 
             isSuccess = (rsDto.getClCd() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.log;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 public class LogSysDto
-        extends BaseCrudDto {
+        extends BaseCrudDto
+        implements Identifiable<Integer> {
 
     /** 로그 고유 번호 */
     private Integer logSysNo;
@@ -58,5 +60,10 @@ public class LogSysDto
 
     public Boolean isSuccess() {
         return "true".equals(this.rslt);
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.logSysNo;
     }
 }

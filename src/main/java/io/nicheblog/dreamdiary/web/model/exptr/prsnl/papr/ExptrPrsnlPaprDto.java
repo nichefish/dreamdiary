@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(callSuper = false)
 public class ExptrPrsnlPaprDto
         extends BasePostDto
-        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
+        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule, Identifiable<Integer> {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.EXPTR_PRSNL_PAPR;
@@ -97,6 +98,11 @@ public class ExptrPrsnlPaprDto
             sortedItemList.add(item);
         }
         this.setItemList(sortedItemList);
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.postNo;
     }
 
     /* ----- */

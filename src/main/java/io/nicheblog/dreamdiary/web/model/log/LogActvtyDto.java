@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.log;
 
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +24,8 @@ import java.util.HashMap;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 public class LogActvtyDto
-        extends BaseCrudDto {
+        extends BaseCrudDto
+        implements Identifiable<Integer> {
 
     /** 로그 고유 번호 (PK) */
     private Integer logActvtyNo;
@@ -94,5 +96,10 @@ public class LogActvtyDto
     public String getParam() {
         if ("null".equals(this.param)) return "-";
         return this.param;
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.logActvtyNo;
     }
 }

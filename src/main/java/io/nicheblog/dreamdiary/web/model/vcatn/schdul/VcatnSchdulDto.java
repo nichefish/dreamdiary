@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.vcatn.schdul;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -20,7 +21,8 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 public class VcatnSchdulDto
-        extends BaseCrudDto {
+        extends BaseCrudDto
+        implements Identifiable<Integer> {
 
     /** 휴가 고유번호 (PK) */
     private Integer vcatnSchdulNo;
@@ -46,4 +48,9 @@ public class VcatnSchdulDto
 
     /** 처리 성공여부  */
     private Boolean isSuccess;
+
+    @Override
+    public Integer getKey() {
+        return this.vcatnSchdulNo;
+    }
 }

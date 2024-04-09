@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
@@ -40,6 +41,7 @@ public class CommentCmpstn
     /**
      * 댓글 :: List<Dto> -> List<Entity> 반환
      */
+    @JsonIgnore
     public List<CommentEntity> getEntityList() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()

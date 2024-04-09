@@ -168,7 +168,7 @@ public class BoardDefController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 항목 수정 처리
-            BoardDefDto result = boardDefService.modify(boardDef, boardCd);
+            BoardDefDto result = boardDefService.modify(boardDef);
 
             isSuccess = (result.getBoardCd() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

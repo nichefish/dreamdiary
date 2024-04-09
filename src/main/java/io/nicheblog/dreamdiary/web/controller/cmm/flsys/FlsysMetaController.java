@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -72,7 +73,7 @@ public class FlsysMetaController
         try {
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = key.getPostNo() == null;
-            FlsysMetaDto result = isReg ? flsysMetaService.regist(flsysMeta) : flsysMetaService.modify(flsysMeta, key);
+            FlsysMetaDto result = isReg ? flsysMetaService.regist(flsysMeta) : flsysMetaService.modify(flsysMeta);
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -98,8 +99,8 @@ public class FlsysMetaController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> flsysMetaDtlAjax(
-            final LogActvtyParam logParam,
-            final BaseClsfKey postKey
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -108,8 +109,7 @@ public class FlsysMetaController
         String rsltMsg = "";
         try {
             // 정보 조회 및 응답에 세팅
-            postKey.setContentType("flsysMeta");
-            FlsysMetaDto rsDto = flsysMetaService.getDtlDto(postKey);
+            FlsysMetaDto rsDto = flsysMetaService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
@@ -121,7 +121,7 @@ public class FlsysMetaController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + postKey.toString());
+            logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -137,9 +137,10 @@ public class FlsysMetaController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> flsysMetaDelAjax(
-            final LogActvtyParam logParam,
-            final BaseClsfKey clsfKey
-    ) {
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
+
+        ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
 
@@ -147,8 +148,7 @@ public class FlsysMetaController
         String rsltMsg = "";
         try {
             // 게시판 정보 조회
-            clsfKey.setContentType("flsysMeta");
-            isSuccess = flsysMetaService.delete(clsfKey);
+            isSuccess = flsysMetaService.delete(key);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
@@ -157,7 +157,7 @@ public class FlsysMetaController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + clsfKey.toString());
+            logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

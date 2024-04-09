@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
@@ -26,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 public class CommentDto
         extends BasePostDto
-        implements CommentCmpstnModule, TagCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     protected static final String CONTENT_TYPE = ContentType.COMMENT.key;
@@ -43,6 +44,11 @@ public class CommentDto
     protected Integer refPostNo;
     /** 원글 컨텐츠 타입 */
     protected String refContentType;
+
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
 
     /* ----- */
 

@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.dream.piece;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
@@ -29,7 +30,7 @@ import javax.persistence.Column;
 @ToString(callSuper = true)
 public class DreamPieceDto
         extends BasePostDto
-        implements CommentCmpstnModule, TagCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.DREAM_PIECE;
@@ -56,6 +57,11 @@ public class DreamPieceDto
     /** 꿈꾼이(타인) 이름 */
     @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
+
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
 
     /* ----- */
 

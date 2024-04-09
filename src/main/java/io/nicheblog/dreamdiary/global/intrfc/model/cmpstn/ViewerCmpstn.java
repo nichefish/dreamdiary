@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nicheblog.dreamdiary.web.entity.cmm.viewer.ViewerEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.viewer.ViewerMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.viewer.ViewerDto;
@@ -34,6 +35,7 @@ public class ViewerCmpstn
     /**
      * 열람자 :: List<Dto> -> List<Entity> 반환
      */
+    @JsonIgnore
     public List<ViewerEntity> getEntityList() throws Exception {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()

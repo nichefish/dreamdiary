@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.exptr.reqst;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,7 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 @EqualsAndHashCode(callSuper = false)
 public class ExptrReqstDto
         extends BasePostDto
-        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.EXPTR_REQST;
@@ -49,6 +50,11 @@ public class ExptrReqstDto
         String title = this.title;
         if (StringUtils.isNotEmpty(this.ctgrNm)) title = "[" + this.ctgrNm + "] " + title;
         return title;
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.postNo;
     }
 
     /* ----- */

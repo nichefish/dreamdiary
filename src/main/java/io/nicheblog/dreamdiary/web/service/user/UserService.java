@@ -211,10 +211,7 @@ public class UserService
      * 사용자 관리 > 사용자 수정
      */
     @Override
-    public UserDto.DTL modify(
-            final UserDto.DTL userDto,
-            final Integer key
-    ) throws Exception {
+    public UserDto.DTL modify(final UserDto.DTL userDto) throws Exception {
         // 계정 잠금여부 체크박스 값 세팅
         if (!"Y".equals(userDto.getLockedYn())) userDto.setLockedYn("N");
 

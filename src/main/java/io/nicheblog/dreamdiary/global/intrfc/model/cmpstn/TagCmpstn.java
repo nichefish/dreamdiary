@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
@@ -72,6 +73,7 @@ public class TagCmpstn
     /**
      * 태그 :: List<Dto> -> List<Entity> 반환
      */
+    @JsonIgnore
     public List<ContentTagEntity> getEntityList() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()

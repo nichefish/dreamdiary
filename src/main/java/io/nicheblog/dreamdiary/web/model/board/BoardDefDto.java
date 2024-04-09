@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.board;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
 import lombok.*;
@@ -25,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 public class BoardDefDto
         extends BaseAuditDto
-        implements StateCmpstnModule {
+        implements Identifiable<String>, StateCmpstnModule {
 
     /** 게시판 코드 */
     private String boardCd;
@@ -40,4 +41,9 @@ public class BoardDefDto
 
     /** 상태 관리 모듈 (위임) */
     public StateCmpstn state;
+
+    @Override
+    public String getKey() {
+        return this.boardCd;
+    }
 }

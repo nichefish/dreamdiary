@@ -107,10 +107,10 @@ public class MenuService
     @Transactional
     public boolean sortOrdr(List<MenuDto> sortOrdr) throws Exception {
         if (CollectionUtils.isEmpty(sortOrdr)) return true;
-        sortOrdr.forEach(menu -> {
+        sortOrdr.forEach(dto -> {
             try {
-                MenuEntity e = this.getDtlEntity(menu.getMenuNo());
-                menuMapstruct.updateFromDto(menu, e);
+                MenuEntity e = this.getDtlEntity(dto.getMenuNo());
+                e.getState().setSortOrdr(dto.getState().getSortOrdr());
                 this.updt(e);
             } catch (Exception ex) {
                 ex.getStackTrace();

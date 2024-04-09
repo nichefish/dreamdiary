@@ -104,7 +104,7 @@ public class BoardDefService
         sortOrdr.forEach(dto -> {
             try {
                 BoardDefEntity e = this.getDtlEntity(dto.getBoardCd());
-                boardDefMapstruct.updateFromDto(dto, e);
+                e.getState().setSortOrdr(dto.getState().getSortOrdr());
                 this.updt(e);
             } catch (Exception ex) {
                 ex.getStackTrace();

@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.service.cmm.flsys;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.cmm.flsys.FlsysMetaEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.flsys.FlsysMetaMapstruct;
@@ -24,7 +23,7 @@ import javax.annotation.Resource;
 @Service("flsysMetaService")
 @Log4j2
 public class FlsysMetaService
-        implements BaseMultiCrudService<FlsysMetaDto, FlsysMetaDto, BaseClsfKey, FlsysMetaEntity, FlsysMetaRepository, FlsysMetaSpec, FlsysMetaMapstruct> {
+        implements BaseMultiCrudService<FlsysMetaDto, FlsysMetaDto, Integer, FlsysMetaEntity, FlsysMetaRepository, FlsysMetaSpec, FlsysMetaMapstruct> {
 
     @Resource(name = "flsysMetaRepository")
     private FlsysMetaRepository flsysMetaRepository;

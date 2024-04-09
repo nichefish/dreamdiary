@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.dream.day;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
@@ -30,7 +31,7 @@ import java.util.List;
 @ToString(callSuper = true)
 public class DreamDayDto
         extends BaseClsfDto
-        implements CommentCmpstnModule, TagCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.DREAM_DAY;
@@ -61,6 +62,11 @@ public class DreamDayDto
 
     /** 꿈 조각 목록 */
     private List<DreamPieceDto> dreamPieceList;
+
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
 
     /* ----- */
 

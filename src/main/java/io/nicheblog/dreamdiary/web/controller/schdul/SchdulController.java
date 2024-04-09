@@ -74,7 +74,7 @@ public class SchdulController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = postNo == null;
-            SchdulDto result = isReg ? schdulService.regist(schdul) : schdulService.modify(schdul, postNo);
+            SchdulDto result = isReg ? schdulService.regist(schdul) : schdulService.modify(schdul);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

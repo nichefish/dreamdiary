@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.admin;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
 import lombok.EqualsAndHashCode;
@@ -25,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class PopupDto
         extends BaseAtchDto
-        implements StateCmpstnModule {
+        implements Identifiable<Integer>, StateCmpstnModule {
 
     /** 팝업 코드 */
     private String popupCd;
@@ -45,4 +46,9 @@ public class PopupDto
 
     /** 상태 관리 모듈 (위임) */
     public StateCmpstn state;
+
+    @Override
+    public Integer getKey() {
+        return null;
+    }
 }

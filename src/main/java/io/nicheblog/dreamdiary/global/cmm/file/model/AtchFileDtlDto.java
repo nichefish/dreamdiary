@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.cmm.file.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 public class AtchFileDtlDto
-        extends BaseCrudDto {
+        extends BaseCrudDto
+        implements Identifiable<Integer> {
 
     /** 첨부파일 상세 번호 (PK) */
     private Integer atchFileDtlNo;
@@ -41,4 +43,9 @@ public class AtchFileDtlDto
     private String fileStrePath;
     /**  URL (상대경로) */
     private String url;
+
+    @Override
+    public Integer getKey() {
+        return this.atchFileDtlNo;
+    }
 }

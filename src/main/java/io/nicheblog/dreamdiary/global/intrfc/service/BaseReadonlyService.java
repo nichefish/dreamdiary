@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.service;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
@@ -29,7 +30,7 @@ import java.util.stream.Stream;
  *
  * @author nichefish
  */
-public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>> {
+public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>, ListDto extends BaseCrudDto, Key extends Serializable, Entity extends BaseCrudEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>> {
 
     // Resource : repository
     Repository getRepository();
@@ -227,6 +228,12 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto, ListDto extends Ba
         Repository repository = this.getRepository();
         Optional<Entity> entityWrapper = repository.findById(key);
         return Objects.requireNonNull(entityWrapper.orElseThrow(() -> new NullPointerException("해당 정보가 존재하지 않습니다.")));
+    }
+    /**
+     * default: 단일 항목 조회 (entity level)
+     */
+    default Entity getDtlEntity(final Dto dto) throws Exception {
+        return this.getDtlEntity(dto.getKey());
     }
 
     /**

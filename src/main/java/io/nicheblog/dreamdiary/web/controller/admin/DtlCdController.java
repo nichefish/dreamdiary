@@ -97,7 +97,6 @@ public class DtlCdController
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdRegAjax(
             final @Valid DtlCd dtlCd,
-            final DtlCdKey dtlCdKey,
             final LogActvtyParam logParam,
             final @RequestParam("regYn") String regYn,
             final BindingResult bindingResult
@@ -112,7 +111,7 @@ public class DtlCdController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = "Y".equals(regYn);
-            DtlCd result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd, dtlCdKey);
+            DtlCd result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd);
             
             isSuccess = (result.getDtlCd() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

@@ -230,7 +230,7 @@ public class NoticeController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = (key == null);
-            NoticeDto result = isReg ? noticeService.regist(notice, request) : noticeService.modify(notice, key, request);
+            NoticeDto result = isReg ? noticeService.regist(notice, request) : noticeService.modify(notice, request);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

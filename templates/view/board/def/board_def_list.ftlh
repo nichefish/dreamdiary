@@ -235,7 +235,7 @@
                     -
                 </td>
                 <td class="text-center hidden-table">
-                    <#if (boardDef.useYn!"Y") == "Y">
+                    <#if (boardDef.state.useYn!"Y") == "Y">
                         <div class="badge badge-success cursor-pointer" onclick="Page.unuseAjax('${boardDef.boardCd!}');"
                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
                             <i class="bi bi-check text-light blink-slow "></i>사용

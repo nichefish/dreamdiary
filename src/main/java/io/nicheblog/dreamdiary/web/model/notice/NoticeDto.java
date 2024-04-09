@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.notice;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 @ToString(callSuper = true)
 public class NoticeDto
         extends BasePostDto
-        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.NOTICE;
@@ -45,6 +46,11 @@ public class NoticeDto
         if (StringUtils.isNotEmpty(this.ctgrNm)) title = "[" + this.ctgrNm + "] " + title;
         if ("Y".equals(this.imprtcYn)) title = "[중요] " + title;
         return title;
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.postNo;
     }
 
     /* ----- */

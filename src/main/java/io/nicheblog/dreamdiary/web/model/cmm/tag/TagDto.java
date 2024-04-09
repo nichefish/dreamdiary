@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.cmm.tag;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -22,7 +23,8 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class TagDto
-        extends BaseCrudDto {
+        extends BaseCrudDto
+        implements Identifiable<Integer> {
 
     /** 태그 번호 (PK) */
     private Integer tagNo;
@@ -45,5 +47,10 @@ public class TagDto
      */
     public TagDto(final String tagNm) {
         this.tagNm = tagNm;
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.tagNo;
     }
 }

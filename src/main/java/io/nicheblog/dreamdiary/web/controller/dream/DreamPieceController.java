@@ -76,7 +76,7 @@ public class DreamPieceController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록 및 수정 처리
             boolean isReg = key == null;
-            DreamPieceDto result = isReg ? dreamPieceService.regist(dreamPiece, request) : dreamPieceService.modify(dreamPiece, key, request);
+            DreamPieceDto result = isReg ? dreamPieceService.regist(dreamPiece, request) : dreamPieceService.modify(dreamPiece, request);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(of = {"filePath"}, callSuper = false)
 public class FlsysMetaDto
         extends BasePostDto
-        implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     private Integer postNo;
     private String boardCd;
@@ -49,6 +50,11 @@ public class FlsysMetaDto
 
     public String getBoardCd() {
         return "flsysMeta";
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.postNo;
     }
 
     /* ----- */

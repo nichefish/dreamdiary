@@ -60,7 +60,7 @@ public class ClCdService
         sortOrdr.forEach(dto -> {
             try {
                 ClCdEntity e = this.getDtlEntity(dto.getClCd());
-                clCdMapstruct.updateFromDto(dto, e);
+                e.getState().setSortOrdr(dto.getState().getSortOrdr());
                 this.updt(e);
             } catch (Exception ex) {
                 ex.getStackTrace();

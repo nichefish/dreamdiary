@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global.cmm.cd.model;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
@@ -30,7 +31,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ClCd
         extends BaseAuditDto
-        implements StateCmpstnModule {
+        implements StateCmpstnModule, Identifiable<String> {
 
     /** 목록 순번 */
     private Long rnum;
@@ -68,4 +69,9 @@ public class ClCd
 
     /** 상태 관리 모듈 (위임) */
     public StateCmpstn state;
+
+    @Override
+    public String getKey() {
+        return this.clCd;
+    }
 }

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.api.dream.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,7 +24,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class DreamDayApiDto
-        extends BaseClsfDto {
+        extends BaseClsfDto
+        implements Identifiable<Integer> {
 
     /** 꿈 일자 고유 번호 (PK) */
     private Integer dreamDayNo;
@@ -40,4 +42,9 @@ public class DreamDayApiDto
     private String aprxmtDt;
     /** 꿈 조각 목록 */
     private List<DreamPieceDto> dreamPieceList;
+
+    @Override
+    public Integer getKey() {
+        return this.dreamDayNo;
+    }
 }

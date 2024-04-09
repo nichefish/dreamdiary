@@ -42,6 +42,8 @@ spring:
         open-in-view: true
 
     jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: Asia/Seoul
         serialization:
             fail-on-empty-beans: false
 
