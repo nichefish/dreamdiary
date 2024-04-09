@@ -22,6 +22,9 @@ public class MailSendEvent
 
     /* ----- */
 
+    /**
+     * 생성자
+     */
     public MailSendEvent(final Object source, final MailSendParam mailSendParam) {
         super(source);
         this.mailSendParam = mailSendParam;
