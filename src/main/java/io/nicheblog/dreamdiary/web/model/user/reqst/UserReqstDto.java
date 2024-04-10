@@ -40,10 +40,10 @@ public class UserReqstDto
     /** 계정 설명 (관리자용) */
     private String cn;
 
-    /* ----- */
+    /** 사용자 프로필 정보 */
+    protected UserProflDto profl;
 
-    /** 사용자 정보 (위임) */
-    private UserProflDto userProfl;
+    /* ----- */
 
     /** 이메일 반환 (override) */
     public String getEmail() {

@@ -117,10 +117,12 @@ public class UserEntity
     private String cn;
 
     /** 사용자 프로필 정보 */
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "user_no")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 프로필 정보")
     private UserProflEntity userProfl;
+
 
     /** 계정 상태 정보 (위임) */
     @Embedded

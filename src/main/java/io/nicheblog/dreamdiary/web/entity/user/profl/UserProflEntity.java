@@ -36,27 +36,20 @@ import java.util.Date;
 public class UserProflEntity
         extends BaseCrudEntity {
 
-    /**
-     * 사용자 정보 번호 (PK)
-     */
+    /** 사용자 프로필 정보 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_profl_no")
-    @Comment("사용자 정보 번호")
+    @Comment("사용자 프로필 정보 번호 (PK)")
     private Integer userProflNo;
 
-    /**
-     * 계정 정보
-     */
-    @OneToOne
-    @JoinColumn(name = "user_no", referencedColumnName = "user_no", insertable = false, updatable = false)
+    /** 사용자 정보 (FK) */
+    @OneToOne(mappedBy = "userProfl", fetch = FetchType.LAZY)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("계정 정보")
     private UserEntity user;
 
-    /**
-     * 이름
-     */
+    /** 이름 */
     @Column(name = "user_nm", length = 20)
     @Comment("이름")
     private String userNm;
@@ -67,7 +60,7 @@ public class UserProflEntity
     @Comment("생년월일")
     private Date brthdy;
 
-    /** 음력여부 /
+    /** 음력여부 */
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
     @Column(name = "lunar_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("음력여부")

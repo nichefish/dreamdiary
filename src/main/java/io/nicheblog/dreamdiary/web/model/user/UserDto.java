@@ -77,6 +77,9 @@ public class UserDto
     protected String isReqst;
     /** 승인여부 */
     protected Boolean isCf;
+
+    /** 사용자 프로필 정보 */
+    protected UserProflDto profl;
     
     /* ----- */
 
