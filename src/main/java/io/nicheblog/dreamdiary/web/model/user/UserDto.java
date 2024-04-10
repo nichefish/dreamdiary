@@ -6,7 +6,9 @@ import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Comment;
 
+import javax.persistence.Column;
 import java.util.List;
 
 /**
@@ -37,6 +39,13 @@ public class UserDto
     private String nickNm;
     /** 프로필 이미지 URL */
     private String proflImgUrl;
+
+    /** 연락처 */
+    private String cttpc;
+    /** E-mail ID */
+    private String emailId;
+    /** E-mail 뒷부분 */
+    private String emailDomain;
 
     /** 잠금여부 */
     @Builder.Default
@@ -105,7 +114,7 @@ public class UserDto
     @EqualsAndHashCode(callSuper = false)
     public static class DTL extends UserDto {
         /** 계정 설명 (관리자용) */
-        private String userDc;
+        private String cn;
     }
 
     @Getter

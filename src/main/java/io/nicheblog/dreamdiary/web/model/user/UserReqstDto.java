@@ -36,6 +36,13 @@ public class UserReqstDto
     /** 프로필 이미지 URL */
     private String proflImgUrl;
 
+    /** 연락처 */
+    private String cttpc;
+    /** E-mail ID */
+    private String emailId;
+    /** E-mail 뒷부분 */
+    private String emailDomain;
+
     /** 잠금 여부 (Y/N) */
     @Builder.Default
     private String lockedYn = "N";
@@ -55,11 +62,8 @@ public class UserReqstDto
     private String retireDt;
 
     /** 계정 설명 (관리자용) */
-    private String userDc;
+    private String cn;
 
-    /** 등록/수정시 사용자 정보 저장할지 말지 화면에서 넘겨받는 임시필드 */
-    @Builder.Default
-    private String userProflYn = "N";
     /** 사용자 정보 (위임) */
     private UserProflDto userProfl;
 
@@ -70,7 +74,7 @@ public class UserReqstDto
     private String reqstYn;
     /** 승인여부 (Y/N) */
     private String cfYn;
-    
+
     /* ----- */
 
     /** 접속IP 사용 여부 채크 */

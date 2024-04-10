@@ -78,15 +78,25 @@ public class UserEntity
     private String proflImgUrl;
 
     /** 계정 설명 (관리자용) */
-    @Column(name = "user_dc", length = 1000)
+    @Column(name = "cn")
     @Comment("계정 설명")
-    private String userDc;
+    private String cn;
 
     /** 사용자 프로필 정보 */
     @OneToOne(mappedBy = "user")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 프로필 정보")
     private UserProflEntity userProfl;
+
+    /** 연락처 */
+    @Column(name = "cttpc", length = 20)
+    @Comment("연락처")
+    private String cttpc;
+
+    /** Email 주소 (사내메일) */
+    @Column(name = "email", length = 40)
+    @Comment("Email 주소")
+    private String email;
 
     /** 계정 상태 정보 (위임) */
     @Embedded

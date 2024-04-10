@@ -97,7 +97,7 @@ public class UserReqstController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "view/user/reqst/user_reqst_reg_form";
+        return "view/user/reqst/user_reqst_form";
     }
 
     /**

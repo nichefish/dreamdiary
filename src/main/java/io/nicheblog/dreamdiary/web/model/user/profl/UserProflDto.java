@@ -24,88 +24,36 @@ import java.util.List;
 public class UserProflDto
         extends BaseCrudDto {
 
-    /**
-     * 사용자 정보 고유 ID (PK)
-     */
+    /** 사용자 정보 고유 ID (PK) */
     private Integer userProflNo;
-    /**
-     * 이름
-     */
+    /** 이름 */
     private String userNm;
-    /**
-     * 소속(회사)코드
-     */
+    /** 소속(회사)코드 */
     private String cmpyCd;
-    /**
-     * 소속(회사)이름
-     */
+    /** 소속(회사)이름 */
     private String cmpyNm;
-    /**
-     * 소속(팀)코드
-     */
+    /** 소속(팀)코드 */
     private String teamCd;
-    /**
-     * 소속(팀)이름
-     */
+    /** 소속(팀)이름 */
     private String teamNm;
-    /**
-     * 재직구분코드
-     */
+    /** 재직구분코드 */
     private String emplymCd;
-    /**
-     * 재직구분이름
-     */
+    /** 재직구분이름 */
     private String emplymNm;
-    /**
-     * 직급코드
-     */
+    /** 직급코드 */
     private String jobTitleCd;
-    /**
-     * 직급이름
-     */
+    /** 직급이름 */
     private String jobTitleNm;
-    /**
-     * 수습여부
-     */
+    /** 수습여부 */
     @Builder.Default
     private String apntcYn = "N";
-    /**
-     * 입사일
-     */
+    /** 입사일 */
     private String ecnyDt;
-    /**
-     * 퇴사여부
-     */
+    /** 퇴사여부 */
     @Builder.Default
     private String retireYn = "N";
-    /**
-     * 퇴사일
-     */
+    /** 퇴사일 */
     private String retireDt;
-    /**
-     * 연락처(전화번호)
-     */
-    private String cttpc;
-    /**
-     * E-mail
-     */
-    private String email;
-    /**
-     * E-mail ID
-     */
-    private String emailId;
-    /**
-     * E-mail 뒷부분
-     */
-    private String emailDomain;
-    /**
-     * bix-email
-     */
-    private String bixEmail;
-    /**
-     * JANDI-email
-     */
-    private String jandiEmail;
     /**
      * 생년월일
      */
@@ -130,5 +78,5 @@ public class UserProflDto
     /**
      * 사용자 설명 (관리자용)
      */
-    private String userDc;
+    private String cn;
 }

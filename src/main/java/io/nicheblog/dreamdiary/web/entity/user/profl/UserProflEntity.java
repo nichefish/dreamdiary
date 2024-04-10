@@ -61,42 +61,22 @@ public class UserProflEntity
     @Comment("이름")
     private String userNm;
 
-    /**
-     * 연락처
-     */
-    @Column(name = "cttpc", length = 20)
-    @Comment("연락처")
-    private String cttpc;
-
-    /**
-     * Email 주소 (사내메일)
-     */
-    @Column(name = "email", length = 40)
-    @Comment("Email 주소")
-    private String email;
-
-    /**
-     * 생년월일
-     */
+    /** 생년월일 */
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Column(name = "brthdy")
     @Comment("생년월일")
     private Date brthdy;
 
-    /**
-     * 음력여부
-     */
+    /** 음력여부 /
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
     @Column(name = "lunar_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("음력여부")
     private String lunarYn = "N";
 
-    /**
-     * 사용자 설명 (관리자용)
-     */
-    @Column(name = "profl_dc", length = 1000)
+    /** 사용자 설명 (관리자용) */
+    @Column(name = "profl_cn", length = 1000)
     @Comment("사용자 설명")
-    private String proflDc;
+    private String proflCn;
 
     /**
      * 사용자 정보 추가추가 목록
