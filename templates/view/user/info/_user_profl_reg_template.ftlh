@@ -23,14 +23,14 @@
                         if (elmt.value === emailDomain) $(elmt).attr("selected", "selected");
                     });
 
-                    <#if (user.userProfl.jobTitleCd)! == "STAFF">
+                    <#if (user.userProfl.rankCd)! == "STAFF">
                         $("#apntcYnDiv").show();"이름은 필수 항목입니다."
                     </#if>
                 </#if>
 
                 // 직급 변경시 '사원'일 때만 수습여부 영역 출력 + 수습여부 초기화
-                $("#jobTitleCd").on("change", function() {
-                    if ($("#jobTitleCd").val() === "STAFF") {
+                $("#rankCd").on("change", function() {
+                    if ($("#rankCd").val() === "STAFF") {
                         $("#apntcYnDiv").show();
                     } else {
                         $("#apntcYnDiv").hide();
@@ -183,13 +183,13 @@
     </div>
     <div class="row">           <!--begin::Row-->
         <div class="col-xl-2">
-            <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center "><label for="jobTitleCd">직급</label></div>
+            <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center "><label for="rankCd">직급</label></div>
         </div>
         <div class="col-xl-2">
-            <select name="userInfo.jobTitleCd" id="jobTitleCd" class="form-select form-select-solid">
+            <select name="userInfo.rankCd" id="rankCd" class="form-select form-select-solid">
                 <option value="">--선택--</option>
-                <#list JOB_TITLE_CD![] as jobTitle>
-                    <option value="${jobTitle.dtlCd!}" id="${jobTitle.dtlCd!}"<#if jobTitle.dtlCd == (user.userInfo.jobTitleCd)!> selected="selected"</#if>>${jobTitle.dtlCdNm!}</option>
+                <#list RANK_CD![] as rank>
+                    <option value="${rank.dtlCd!}" id="${rank.dtlCd!}"<#if rank.dtlCd == (user.userInfo.rankCd)!> selected="selected"</#if>>${rank.dtlCdNm!}</option>
                 </#list>
             </select>
         </div>
@@ -205,7 +205,7 @@
     <div class="row mb-4">      <!-- errorMsgSpan -->
         <div class="col-xl-2"></div>
         <div class="col-xl-10">
-            <div id="jobTitleCd_valid_span"></div>
+            <div id="rankCd_valid_span"></div>
         </div>
     </div>
     <div class="row">           <!--begin::Row-->
@@ -270,7 +270,7 @@
     <div class="row mb-4">      <!-- errorMsgSpan -->
         <div class="col-xl-2"></div>
         <div class="col-xl-10">
-            <div id="jobTitleCd_valid_span"></div>
+            <div id="rankCd_valid_span"></div>
         </div>
     </div>
     <div class="row">           <!--begin::Row-->
@@ -310,7 +310,7 @@
     <div class="row mb-4">      <!-- errorMsgSpan -->
         <div class="col-xl-2"></div>
         <div class="col-xl-10">
-            <div id="jobTitleCd_valid_span"></div>
+            <div id="rankCd_valid_span"></div>
         </div>
     </div>
     <div class="row">           <!--begin::Row-->

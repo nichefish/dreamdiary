@@ -31,8 +31,8 @@ public interface SchdulCalMapstruct
      */
     // 달력에선 종료일자에 시간 데이터(23:59:59)를 붙여줘야 한다.
     // 하루짜리 이벤트일 때만 allDay=true를 붙여준다.
-    @Mapping(target = "display", expression = "java(Constant.SCHDUL_TY_HLDY.equals(entity.getSchdulCd()) ? \"background\" : null)")
-    @Mapping(target = "color", expression = "java(Constant.SCHDUL_TY_HLDY.equals(entity.getSchdulCd()) ? \"red\" : null)")
+    @Mapping(target = "display", expression = "java(Constant.SCHDUL_HLDY.equals(entity.getSchdulCd()) ? \"background\" : null)")
+    @Mapping(target = "color", expression = "java(Constant.SCHDUL_HLDY.equals(entity.getSchdulCd()) ? \"red\" : null)")
     // @Mapping(target = "prtcpnt", expression = "java(entity.getPrtcpntStr())")
     @Mapping(target = "bgnDt", expression = "java(DateUtils.asStr(entity.getBgnDt(), DatePtn.DATE))")
     @Mapping(target = "endDt", expression = "java(DateUtils.Parser.eDateParseStr(entity.getEndDt(), DatePtn.ZDATETIME))")
@@ -55,7 +55,7 @@ public interface SchdulCalMapstruct
      */
     @AfterMapping
     default void mapCalFields(final SchdulEntity entity, @MappingTarget SchdulCalDto dto) throws Exception {
-        Constant.SchdulTy schdulTy = Constant.SchdulTy.valueOf(dto.getSchdulCd());
+        Constant.Schdul schdulTy = Constant.Schdul.valueOf(dto.getSchdulCd());
         String title = dto.getTitle();
         switch (schdulTy) {
             case HLDY:

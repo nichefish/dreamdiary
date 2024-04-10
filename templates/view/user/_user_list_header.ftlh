@@ -16,10 +16,10 @@
     </div>
     <div>
         <!--begin::Select-->
-        <select name="jobTitleCd" id="jobTitleCd" class="form-select form-select-sm form-select-solid">
+        <select name="rankCd" id="rankCd" class="form-select form-select-sm form-select-solid">
             <option value="">직급</option>
-            <#list JOB_TITLE_CD![] as jobTitle>
-                <option value="${jobTitle.dtlCd!}" id="${jobTitle.dtlCd!}">${jobTitle.dtlCdNm!}</option>
+            <#list RANK_CD![] as rank>
+                <option value="${rank.dtlCd!}" id="${rank.dtlCd!}">${rank.dtlCdNm!}</option>
             </#list>
         </select>
     </div>

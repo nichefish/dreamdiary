@@ -123,7 +123,7 @@ public class SchdulService
     @Cacheable(cacheNames = "hldyEntityList")
     public List<SchdulEntity> getHldyEntityList() throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
-            put("schdulCd", Constant.SCHDUL_TY_HLDY);
+            put("schdulCd", Constant.SCHDUL_HLDY);
         }};
         return this.getListEntity(searchParamMap);
     }
@@ -136,7 +136,7 @@ public class SchdulService
         // 공휴일 여부 체크
         Date asDate = DateUtils.asDate(date);
         Date sDate = DateUtils.Parser.sDateParse(asDate);
-        Optional<SchdulEntity> schdulDtlWrapper = schdulRepository.findBySchdulCdAndBgnDt(Constant.SCHDUL_TY_HLDY, sDate);
+        Optional<SchdulEntity> schdulDtlWrapper = schdulRepository.findBySchdulCdAndBgnDt(Constant.SCHDUL_HLDY, sDate);
         return schdulDtlWrapper.isPresent();
     }
 

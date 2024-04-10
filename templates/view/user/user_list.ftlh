@@ -136,8 +136,8 @@
                         ${(user.teamNm)!"-"}
                     </td>
                     <td class="text-center">
-                        ${(user.jobTitleNm)!"-"}
-                        <#if (user.jobTitleNm)! == "사원" && user.apntcYn! == "Y"><span class="text-muted">(수습)</span></#if>
+                        ${(user.rankNm)!"-"}
+                        <#if (user.rankNm)! == "사원" && user.apntcYn! == "Y"><span class="text-muted">(수습)</span></#if>
                     </td>
                     <td class="text-start ps-8 hidden-table">
                         ${(user.email)!"-"}

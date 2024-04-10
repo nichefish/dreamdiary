@@ -50,9 +50,15 @@ public final class Constant
     public static final Boolean URL_ENC_FALSE = false;
 
     /** 디바이스 정보 */
-    public static final String DVC_PC = "PC";
-    public static final String DVC_MOBILE = "MOBILE";
-    public static final String DVC_TABLET = "TABLET";
+    @AllArgsConstructor
+    public enum Device {
+        PC,
+        MOBILE,
+        TABLET;
+    }
+    public static final String DVC_PC = Device.PC.name();
+    public static final String DVC_MOBILE = Device.MOBILE.name();
+    public static final String DVC_TABLET = Device.TABLET.name();
     public static final String IS_MBL = "IS_MBL";
 
     /** IP 헤더 목록 */
@@ -60,16 +66,12 @@ public final class Constant
     public static final String REMOTE_ADDR = "remoteAddr";
     public static final String REFERER = "referer";
 
-    /**
-     * 쿠키
-     */
+    /** 쿠키 */
     public static final String KT_SIDEBAR_MINIMIZE = "data-kt-app-sidebar-minimize";
     public static final String KT_SIDEBAR_MINIMIZE_STATE = "sidebar_minimize_state";
     public static final String KT_ASIDE_MINIMIZE = "data-kt-aside-minimize";
 
-    /**
-     * Page Static Strings
-     */
+    /** Page Static Strings */
     public static final String ERROR_MSG = "errorMsg";
     public static final String MESSAGE = "message";
     public static final String PAGINATION_INFO = "paginationInfo";
@@ -80,21 +82,20 @@ public final class Constant
     /* 소속(팀) 코드 */
     public static final String TEAM_CD = "TEAM_CD";
 
-    /* 재직구분 코드 */
-    public static final String EMPLYM_CD = "EMPLYM_CD";
-
+    /** 재직 구분 코드 */
     @AllArgsConstructor
     public enum Emplym {
-
+        EMPLYM("재직"),
         FREE("프리랜서");
 
         public final String desc;
     }
-
+    public static final String EMPLYM_CD = "EMPLYM_CD";
     public static final String EMPLYM_FREE = Emplym.FREE.name();
 
-    public static final String JOB_TITLE_CD = "JOB_TITLE_CD";       // 직급 코드
-    public static final String JOB_TITLE_STAFF = "STAFF";           // 직급:사원
+
+    public static final String RANK_CD = "JOB_TITLE_CD";       // 직급 코드
+    public static final String RANK_STAFF = "STAFF";           // 직급:사원
 
     public static final String NOTICE_CTGR_CD = "NOTICE_CTGR_CD";   // 공지사항 글분류 코드
     public static final String POST_CTGR_CD = "POST_CTGR_CD";       // 게시판
@@ -116,12 +117,10 @@ public final class Constant
     public static final String MENU_TY_MAIN = "MAIN";
     public static final String MENU_TY_SUB = "SUB";
 
-    /* 일정 분류 코드 */
-    public static final String SCHDUL_CD = "SCHDUL_CD";       // 일정 구분 코드
 
+    /** 일정 분류 코드 */
     @AllArgsConstructor
-    public enum SchdulTy {
-
+    public enum Schdul {
         HLDY("공휴일"),
         CEREMONY("행사"),
         TLCMMT("재택근무"),
@@ -133,22 +132,20 @@ public final class Constant
 
         public final String desc;
     }
+    public static final String SCHDUL_CD = "SCHDUL_CD";       // 일정 구분 코드
+    public static final String SCHDUL_HLDY = Schdul.HLDY.name();
+    public static final String SCHDUL_CEREMONY = Schdul.CEREMONY.name();
+    public static final String SCHDUL_TLCMMT = Schdul.TLCMMT.name();
+    public static final String SCHDUL_OUTDT = Schdul.OUTDT.name();
+    public static final String SCHDUL_INDT = Schdul.INDT.name();
+    public static final String SCHDUL_VCATN = Schdul.VCATN.name();
+    public static final String SCHDUL_BRTHDY = Schdul.BRTHDY.name();
+    public static final String SCHDUL_ETC = Schdul.ETC.name();
 
-    public static final String SCHDUL_TY_HLDY = SchdulTy.HLDY.name();
-    public static final String SCHDUL_TY_CEREMONY = SchdulTy.CEREMONY.name();
-    public static final String SCHDUL_TY_TLCMMT = SchdulTy.TLCMMT.name();
-    public static final String SCHDUL_TY_OUTDT = SchdulTy.OUTDT.name();
-    public static final String SCHDUL_TY_INDT = SchdulTy.INDT.name();
-    public static final String SCHDUL_TY_VCATN = SchdulTy.VCATN.name();
-    public static final String SCHDUL_TY_BRTHDY = SchdulTy.BRTHDY.name();
-    public static final String SCHDUL_TY_ETC = SchdulTy.ETC.name();
 
-    /* 휴가 분류 코드 */
-    public static final String VCATN_CD = "VCATN_CD";
-
+    /** 휴가 분류 코드 */
     @AllArgsConstructor
     public enum Vcatn {
-
         ANNUAL("연차"),
         AM_HALF("오전반차"),
         PM_HALF("오후반차"),
@@ -159,7 +156,7 @@ public final class Constant
 
         public final String desc;
     }
-
+    public static final String VCATN_CD = "VCATN_CD";
     public static final String VCATN_ANNUAL = Vcatn.ANNUAL.name();
     public static final String VCATN_AM_HALF = Vcatn.AM_HALF.name();
     public static final String VCATN_PM_HALF = Vcatn.PM_HALF.name();
@@ -168,18 +165,14 @@ public final class Constant
     public static final String VCATN_UNPAID = Vcatn.UNPAID.name();
     public static final String VCATN_MNSTR = Vcatn.MNSTR.name();
 
-    /**
-     * 활동 구분 코드 (로그)
-     */
+    /** 활동 구분 코드 (로그) */
     public static final String ACTION_TY_SEARCH = "SEARCH";
     public static final String ACTION_TY_MY_PAPR = "MY_PAPR";
     public static final String ACTION_TY_VIEW = "VIEW";
     public static final String ACTION_TY_SUBMIT = "SUBMIT";
     public static final String ACTION_TY_DOWNLOAD = "DOWNLOAD";
 
-    /**
-     * 각 메뉴 번호
-     */
+    /** 각 메뉴 번호 */
     public static final String USER = "user";              // 계정 관리
     public static final String LGN_POLICY = "lgnPolicy";       // 로그인 관리
     public static final String CRDT_USER_CTTPC = "crdtUserCttpc";   // 직원 연락처
@@ -193,9 +186,7 @@ public final class Constant
 
     public static final String HOME_FLSYS = "flsys";
 
-    /**
-     * UTM 파라미터
-     */
+    /** UTM 파라미터 */
     @AllArgsConstructor
     public enum UtmParam {
 

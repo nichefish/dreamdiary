@@ -28,7 +28,7 @@ public interface UserProflMapstruct
      * Dto -> Entity
      */
     @Override
-    // @Mapping(target = "apntcYn", expression = "java(\"STAFF\".equals(dto.getJobTitleCd()) ? dto.getApntcYn() : null)")
+    // @Mapping(target = "apntcYn", expression = "java(\"STAFF\".equals(dto.getRankCd()) ? dto.getApntcYn() : null)")
     // @Mapping(target = "ecnyDt", expression = "java(DateUtils.asDate(dto.getEcnyDt()))")
     // @Mapping(target = "retireDt", expression = "java(\"Y\".equals(dto.getRetireYn()) ? DateUtils.asDate(dto.getRetireDt()) : null)")
     // @Mapping(target = "brthdy", expression = "java(DateUtils.asDate(dto.getBrthdy()))")
@@ -43,7 +43,7 @@ public interface UserProflMapstruct
     // @Mapping(target = "cmpyNm", expression = "java((entity.getCmpyCdInfo() != null) ? entity.getCmpyCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "teamNm", expression = "java((entity.getTeamCdInfo() != null) ? entity.getTeamCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "emplymNm", expression = "java((entity.getEmplymCdInfo() != null) ? entity.getEmplymCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "jobTitleNm", expression = "java((entity.getJobTitleCdInfo() != null) ? entity.getJobTitleCdInfo().getDtlCdNm() : null)")
+    // @Mapping(target = "rankNm", expression = "java((entity.getRankCdInfo() != null) ? entity.getRankCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "ecnyDt", expression = "java(DateUtils.asStr(entity.getEcnyDt(), DatePtn.DATE))")
     // @Mapping(target = "retireDt", expression = "java(DateUtils.asStr(entity.getRetireDt(), DatePtn.DATE))")
     // @Mapping(target = "brthdy", expression = "java(DateUtils.asStr(entity.getBrthdy(), DatePtn.DATE))")
@@ -57,7 +57,7 @@ public interface UserProflMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    // @Mapping(target = "apntcYn", expression = "java(\"STAFF\".equals(dto.getJobTitleCd()) ? dto.getApntcYn() : null)")
+    // @Mapping(target = "apntcYn", expression = "java(\"STAFF\".equals(dto.getRankCd()) ? dto.getApntcYn() : null)")
     // @Mapping(target = "ecnyDt", expression = "java(DateUtils.asDate(dto.getEcnyDt()))")
     // @Mapping(target = "retireDt", expression = "java(DateUtils.asDate(dto.getRetireDt()))")
     // @Mapping(target = "brthdy", expression = "java(StringUtils.isNotEmpty(dto.getBrthdy()) ? DateUtils.asDate(dto.getBrthdy()) : null)")

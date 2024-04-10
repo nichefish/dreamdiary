@@ -119,7 +119,7 @@ public class UserSpec
                     continue;
                     // 이름 = LIKE 검색
                 case "cmpyCd":
-                case "jobTitleCd":
+                case "rankCd":
                 case "teamCd":
                     predicate.add(builder.equal(userProfl.get(key), searchParamMap.get(key)));
                     continue;
@@ -186,8 +186,8 @@ public class UserSpec
     ) {
         List<Order> order = new ArrayList<>();
         Join<UserEntity, UserProflEntity> userProfl = root.join("userProfl", JoinType.INNER);
-        Join<UserProflEntity, DtlCdEntity> jobTitleCdInfo = userProfl.join("jobTitleCdInfo", JoinType.INNER);
-        order.add(builder.desc(jobTitleCdInfo.get("state").get("sortOrdr")));
+        Join<UserProflEntity, DtlCdEntity> rankCdInfo = userProfl.join("rankCdInfo", JoinType.INNER);
+        order.add(builder.desc(rankCdInfo.get("state").get("sortOrdr")));
         order.add(builder.asc(userProfl.get("ecnyDt")));
         return order;
     }

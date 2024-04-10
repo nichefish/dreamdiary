@@ -37,7 +37,7 @@ public interface HldyKasiApiMapstruct
     @Mapping(target = "contentType", expression = "java(\"schdul\")")
     @Mapping(target = "title", expression = "java(dto.getDateName())")
     @Mapping(target = "cn", expression = "java(dto.getDateName())")
-    @Mapping(target = "schdulCd", expression = "java(Constant.SCHDUL_TY_HLDY)")
+    @Mapping(target = "schdulCd", expression = "java(Constant.SCHDUL_HLDY)")
     @Mapping(target = "bgnDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     @Mapping(target = "endDt", expression = "java(DateUtils.asDate(dto.getLocdate()))")
     SchdulEntity toEntity(final HldyKasiApiItemDto dto) throws Exception;

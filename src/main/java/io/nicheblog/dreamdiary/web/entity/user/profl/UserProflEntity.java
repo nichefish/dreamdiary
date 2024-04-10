@@ -49,11 +49,6 @@ public class UserProflEntity
     @Comment("계정 정보")
     private UserEntity user;
 
-    /** 이름 */
-    @Column(name = "user_nm", length = 20)
-    @Comment("이름")
-    private String userNm;
-
     /** 생년월일 */
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Column(name = "brthdy")
@@ -67,35 +62,8 @@ public class UserProflEntity
     private String lunarYn = "N";
 
     /** 사용자 설명 (관리자용) */
-    @Column(name = "profl_cn", length = 1000)
+    @Column(name = "profl_cn", length = 4000)
     @Comment("사용자 설명")
     private String proflCn;
 
-    /**
-     * 사용자 정보 추가추가 목록
-     * TODO
-     */
-    // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    // @JoinColumn(name = "user_profl_no")
-    // @Fetch(FetchMode.SELECT)
-    // @OrderBy("state.sortOrdr ASC")
-    // @NotFound(action = NotFoundAction.IGNORE)
-    // @Comment("사용자 정보 추가추가 목록")
-    // private List<UserInfoItemEntity> itemList;
-
-    /* ----- */
-
-    /**
-     * 서브엔티티 List 처리를 위한 Setter Override
-     * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
-     */
-    // public void setItemList(final List<UserInfoItemEntity> itemList) {
-    //     if (CollectionUtils.isEmpty(itemList)) return;
-    //     if (this.itemList == null) {
-    //         this.itemList = itemList;
-    //     } else {
-    //         this.itemList.clear();
-    //         this.itemList.addAll(itemList);
-    //     }
-    // }
 }

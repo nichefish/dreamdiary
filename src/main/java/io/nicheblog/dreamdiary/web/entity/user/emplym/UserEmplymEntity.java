@@ -1,0 +1,152 @@
+package io.nicheblog.dreamdiary.web.entity.user.emplym;
+
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
+
+/**
+ * UserEmplymEntity
+ * <pre>
+ *  사용자 정보 Entity :: 계정(User) 정보에 귀속됨
+ * </pre>
+ *
+ * @author nichefish
+ * @extends BaseCrudEntity
+ */
+@Entity
+@Table(name = "user_emplym")
+@DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
+@Getter
+@Setter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(exclude = {"user"}, callSuper = true)
+@Where(clause = "del_yn='N'")
+@SQLDelete(sql = "UPDATE user_emplym SET DEL_YN = 'Y' WHERE user_emplym_no = ?")
+public class UserEmplymEntity
+        extends BaseCrudEntity {
+
+    /** 사용자 인사정보 번호 (PK) */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_emplym_no")
+    @Comment("사용자 인사정보 번호 (PK)")
+    private Integer userEmplymNo;
+
+    /** 사용자 정보 (FK) */
+    @OneToOne(mappedBy = "userEmplym", fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("계정 정보")
+    private UserEntity user;
+
+    /** 소속(회사) 코드 */
+    @Column(name = "cmpy_cd", length = 20)
+    @Comment("소속(회사)코드")
+    private String cmpyCd;
+
+    /** 소속(회사) 코드 정보 (복합키 조인) */
+    @ManyToOne
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula=@JoinFormula(value="'"+ Constant.CMPY_CD+"'", referencedColumnName="cl_cd")),
+            @JoinColumnOrFormula(column=@JoinColumn(name="cmpy_cd", referencedColumnName="dtl_cd", insertable=false, updatable=false))
+    })
+    @Fetch(value= FetchMode.JOIN)
+    @NotFound(action=NotFoundAction.IGNORE)
+    private DtlCdEntity cmpyCdInfo;
+
+    /** 소속(팀) 코드 */
+    @Column(name = "team_cd", length = 20)
+    @Comment("소속(팀)코드")
+    private String teamCd;
+
+    /** 소속(팀) 코드 정보 (복합키 조인) */
+    @ManyToOne
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula=@JoinFormula(value="'"+ Constant.TEAM_CD+"'", referencedColumnName="cl_cd")),
+            @JoinColumnOrFormula(column=@JoinColumn(name="team_cd", referencedColumnName="dtl_cd", insertable=false, updatable=false))
+    })
+    @Fetch(value= FetchMode.JOIN)
+    @NotFound(action=NotFoundAction.IGNORE)
+    private DtlCdEntity teamCdInfo;
+
+    /** 재직구분 코드 */
+    @Column(name = "emplym_cd", length = 20)
+    @Comment("소속(팀)코드")
+    private String emplymCd;
+
+    /** 재직구분 코드 정보 (복합키 조인) */
+    @ManyToOne
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula=@JoinFormula(value="'"+ Constant.RANK_CD+"'", referencedColumnName="cl_cd")),
+            @JoinColumnOrFormula(column=@JoinColumn(name="emplym_cd", referencedColumnName="dtl_cd", insertable=false, updatable=false))
+    })
+    @Fetch(value= FetchMode.JOIN)
+    @NotFound(action=NotFoundAction.IGNORE)
+    private DtlCdEntity emplymCdInfo;
+
+    /** 직급코드 */
+    @Column(name = "rank_cd", length = 20)
+    @Comment("직급코드")
+    private String rank_cd;
+
+    /** 직급 코드 정보 (복합키 조인) */
+    @ManyToOne
+    @JoinColumnsOrFormulas({
+        @JoinColumnOrFormula(formula=@JoinFormula(value="'"+ Constant.RANK_CD+"'", referencedColumnName="cl_cd")),
+        @JoinColumnOrFormula(column=@JoinColumn(name="rank_cd", referencedColumnName="dtl_cd", insertable=false, updatable=false))
+    })
+    @Fetch(value= FetchMode.JOIN)
+    @NotFound(action=NotFoundAction.IGNORE)
+    private DtlCdEntity rankCdInfo;
+
+    /** 수습여부 */
+    @Builder.Default
+    @Column(name = "apntc_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("수습여부")
+    private String apntcYn = "N";
+
+    /** 입사일 */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = DateUtils.PTN_DATE)
+    @Column(name = "ecny_dt")
+    @Comment("입사일")
+    private Date ecnyDt;
+
+    /** 퇴사여부 */
+    @Builder.Default
+    @Column(name = "retire_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("퇴사여부")
+    private String retireYn = "N";
+
+    /** 퇴사일 */
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = DateUtils.PTN_DATE)
+    @Column(name = "retire_dt")
+    @Comment("퇴사일")
+    private Date retireDt;
+
+    /** (급여계좌) 은행 */
+    @Column(name = "acnt_bank", length = 20)
+    private String acntBank;
+
+    /** (급여계좌) 계좌번호 */
+    @Column(name = "acnt_no", length = 20)
+    private String acntNo;
+
+    /** 인사정보 설명 (관리자용) */
+    @Column(name = "emplym_cn", length = 4000)
+    @Comment("인사정보 설명")
+    private String emplymCn;
+}

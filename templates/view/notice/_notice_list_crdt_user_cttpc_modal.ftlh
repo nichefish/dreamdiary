@@ -35,7 +35,7 @@
                                 <tr>
                                     <td>${user.userNm!}</td>
                                     <td class="hidden-table">${user.teamNm!}</td>
-                                    <td>${user.jobTitleNm!}</td>
+                                    <td>${user.rankNm!}</td>
                                     <td>${user.cttpc!}</td>
                                     <td>${user.email!}</td>
                                 </tr>

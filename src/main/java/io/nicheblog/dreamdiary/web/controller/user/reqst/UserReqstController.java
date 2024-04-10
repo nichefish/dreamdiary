@@ -82,7 +82,7 @@ public class UserReqstController
             cdService.setModelCdData(Constant.CMPY_CD, model);
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
-            cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
+            cdService.setModelCdData(Constant.RANK_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

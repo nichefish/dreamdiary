@@ -99,7 +99,7 @@ public class UserController
             cdService.setModelCdData(Constant.AUTH_CD, model);
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
-            cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
+            cdService.setModelCdData(Constant.RANK_CD, model);
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
@@ -149,7 +149,7 @@ public class UserController
             cdService.setModelCdData(Constant.AUTH_CD, model);
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
-            cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
+            cdService.setModelCdData(Constant.RANK_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -315,7 +315,7 @@ public class UserController
             cdService.setModelCdData(Constant.AUTH_CD, model);
             cdService.setModelCdData(Constant.TEAM_CD, model);
             cdService.setModelCdData(Constant.EMPLYM_CD, model);
-            cdService.setModelCdData(Constant.JOB_TITLE_CD, model);
+            cdService.setModelCdData(Constant.RANK_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

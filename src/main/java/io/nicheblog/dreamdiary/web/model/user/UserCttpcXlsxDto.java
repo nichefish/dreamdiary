@@ -22,7 +22,7 @@ public class UserCttpcXlsxDto {
     /** 이름 */
     private String userNm;
     /** 직급이름 */
-    private String jobTitleNm;
+    private String rankNm;
     /** 소속(팀) */
     private String teamNm;
     /** 연락처(전화번호) */

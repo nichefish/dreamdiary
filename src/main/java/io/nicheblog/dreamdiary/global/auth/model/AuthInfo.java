@@ -84,9 +84,9 @@ public class AuthInfo
     /**
      * 사용자 정보 존재여부 (내부사용자)
      */
-    public Boolean getHasEcnyDt() {
-        return this.userProfl != null && this.userProfl.getEcnyDt() != null;
-    }
+    // public Boolean getHasEcnyDt() {
+    //     return this.userProfl != null && this.userProfl.getEcnyDt() != null;
+    // }
 
     /**
      * 관리자 여부

@@ -6,6 +6,22 @@
     <!--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
+            <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center required">
+                <label for="userNm" class="cursor-help"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원명(실명)을 입력합니다.">
+                    직원명
+                    <i class="bi bi-question-circle"></i>
+                </label>
+            </div>
+        </div>
+        <div class="col-xl-2">
+            <input type="text" class="form-control form-control-solid" name="userProfl.userNm" id="userNm" placeholder="이름" maxlength="20" />
+            <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
+        </div>
+    </div>
+    <!--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-xl-2">
             <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center">
                 <label for="cmpyCd" class="cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="소속회사, 소속팀,&#10;재직/프리랜서 여부를&#10;입력합니다.">
@@ -45,16 +61,16 @@
     <!--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
-            <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center "><label for="jobTitleCd">직급</label></div>
+            <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center "><label for="rankCd">직급</label></div>
         </div>
         <div class="col-xl-2">
-            <select name="userInfo.jobTitleCd" id="jobTitleCd" class="form-select form-select-solid">
+            <select name="userInfo.rankCd" id="rankCd" class="form-select form-select-solid">
                 <option value="">--선택--</option>
-                <#list JOB_TITLE_CD![] as jobTitle>
-                        <option value="${jobTitle.dtlCd!}" id="${jobTitle.dtlCd!}"<#if jobTitle.dtlCd == (user.userInfo.jobTitleCd)!> selected="selected"</#if>>${jobTitle.dtlCdNm!}</option>
+                <#list RANK_CD![] as rank>
+                        <option value="${rank.dtlCd!}" id="${rank.dtlCd!}"<#if rank.dtlCd == (user.userInfo.rankCd)!> selected="selected"</#if>>${rank.dtlCdNm!}</option>
                 </#list>
             </select>
-            <div id="jobTitleCd_valid_span"></div>
+            <div id="rankCd_valid_span"></div>
         </div>
         <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
         <div class="col-xl-2" id="apntcYnDiv" style="display:none;">

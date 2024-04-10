@@ -152,7 +152,7 @@ public class SchdulCalService {
     private SchdulCalDto initNewCalDto(VcatnSchdulEntity vcatn, Date keyDt) throws Exception {
         SchdulCalDto calDto = schdulCalMapstruct.toCalDto(vcatn);
         calDto.setBgnDt(DateUtils.asStr(keyDt, DatePtn.DATE));
-        if (StringUtils.isEmpty(calDto.getSchdulCd())) calDto.setSchdulCd(Constant.SCHDUL_TY_VCATN);
+        if (StringUtils.isEmpty(calDto.getSchdulCd())) calDto.setSchdulCd(Constant.SCHDUL_VCATN);
         if (StringUtils.isEmpty(calDto.getClassName())) calDto.setClassName("cursor-pointer fc-event-danger fc-event-solid-warning");
         return calDto;
     }
@@ -188,7 +188,7 @@ public class SchdulCalService {
     //        if ("Y".equals(user.getLunarYn())) {
     //            schdulNm += " (음력)";
     //        }
-    //        SchdulCalDto calDto = new SchdulCalDto(schdulNm, thisBrthdyStr, Constant.SCHDUL_TY_BRTHDY);
+    //        SchdulCalDto calDto = new SchdulCalDto(schdulNm, thisBrthdyStr, Constant.SCHDUL_BRTHDY);
     //        brthdyCalList.add(calDto);
     //    }
     //     return brthdyCalList;

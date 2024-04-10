@@ -6,16 +6,16 @@
     <!--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
-            <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center required">
-                <label for="userNm" class="cursor-help"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원명을 입력합니다.">
-                    이름
+            <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center">
+                <label for="userInfoDc" class="cursor-help"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="주소를 작성합니다.">
+                    주소
+                    <i class="bi bi-question-circle"></i>
                 </label>
             </div>
         </div>
-        <div class="col-xl-2">
-            <input type="text" class="form-control form-control-solid" name="userProfl.userNm" id="userNm" placeholder="이름" maxlength="20" />
-            <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
+        <div class="col-xl-9">
+            <textarea name="profl.proflCn" id="proflCn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500"></textarea>
         </div>
     </div>
     <!--begin::Row-->
@@ -25,6 +25,7 @@
                 <label for="brthdy" class="cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="생년월일을 입력합니다.">
                     생년월일
+                    <i class="bi bi-question-circle"></i>
                 </label>
             </div>
         </div>
@@ -40,7 +41,7 @@
                           fill="black"/>
                 </svg>
             </span>
-            <input type="text" class="form-control form-control-solid ps-12" name="userProfl.brthdy" id="brthdy"
+            <input type="text" class="form-control form-control-solid ps-12" name="profl.brthdy" id="brthdy"
                    placeholder="생년월일" value="${(user.userInfo.brthdy)!}" readonly/>
         </div>
         <div class="col-xl-2">
@@ -49,7 +50,7 @@
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="음력 생일 사용시 체크합니다.">
                     음력여부 :
                 </label>
-                <input class="form-check-input ms-3" type="checkbox" value="Y" name="userProfl.lunarYn" id="lunarYn" <#if (((user.userProfl.lunarYn)!"N") == "Y")!false>checked="checked"</#if> />
+                <input class="form-check-input ms-3" type="checkbox" value="Y" name="profl.lunarYn" id="lunarYn" <#if (((user.userProfl.lunarYn)!"N") == "Y")!false>checked="checked"</#if> />
                 <label class="form-check-label fw-bold ms-3" for="lunarYn" id="lunarYnLabel" <#if ((user.userProfl.lunarYn)!"N") == "Y">blue<#else>gray</#if>;>
                     <#if ((user.userProfl.lunarYn)!"N") == "Y">음력<#else>양력</#if>
                 </label>
@@ -67,7 +68,7 @@
             </div>
         </div>
         <div class="col-xl-9">
-            <textarea name="userProfl.proflCn" id="proflCn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500"></textarea>
+            <textarea name="profl.proflCn" id="proflCn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500"></textarea>
         </div>
     </div>
 

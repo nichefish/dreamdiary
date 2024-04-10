@@ -75,15 +75,15 @@ public class SchdulSpec
                 case "getHldyCeremonyOnly":
                     // 휴일/공휴일, 행사 조회
                     predicate.add(builder.equal(prvtYnExp, "N"));
-                    Predicate hldy = builder.equal(schdulCdExp, Constant.SCHDUL_TY_HLDY);
-                    Predicate ceremony = builder.equal(schdulCdExp, Constant.SCHDUL_TY_CEREMONY);
+                    Predicate hldy = builder.equal(schdulCdExp, Constant.SCHDUL_HLDY);
+                    Predicate ceremony = builder.equal(schdulCdExp, Constant.SCHDUL_CEREMONY);
                     predicate.add(builder.or(hldy, ceremony));
                     continue;
                 case "getExceptHldyCeremony":
                     // 휴일/공휴일, 행사 제외하고 조회
                     predicate.add(builder.equal(prvtYnExp, "N"));
-                    Predicate notHldy = builder.notEqual(schdulCdExp, Constant.SCHDUL_TY_HLDY);
-                    Predicate notCeremony = builder.notEqual(schdulCdExp, Constant.SCHDUL_TY_CEREMONY);
+                    Predicate notHldy = builder.notEqual(schdulCdExp, Constant.SCHDUL_HLDY);
+                    Predicate notCeremony = builder.notEqual(schdulCdExp, Constant.SCHDUL_CEREMONY);
                     predicate.add(builder.and(notHldy, notCeremony));
                     continue;
                 case "getPrvtOnly":
@@ -95,19 +95,19 @@ public class SchdulSpec
                 case "indtChked":
                     // 내근 조회
                     if ("N".equals(searchParamMap.get(key))) {
-                        predicate.add(builder.notEqual(schdulCdExp, Constant.SCHDUL_TY_INDT));
+                        predicate.add(builder.notEqual(schdulCdExp, Constant.SCHDUL_INDT));
                     }
                     continue;
                 case "outdtChked":
                     // 외근 조회
                     if ("N".equals(searchParamMap.get(key))) {
-                        predicate.add(builder.notEqual(schdulCdExp, Constant.SCHDUL_TY_OUTDT));
+                        predicate.add(builder.notEqual(schdulCdExp, Constant.SCHDUL_OUTDT));
                     }
                     continue;
                 case "tlcmmtChked":
                     // 재택근무 조회
                     if ("N".equals(searchParamMap.get(key))) {
-                        predicate.add(builder.notEqual(schdulCdExp, Constant.SCHDUL_TY_TLCMMT));
+                        predicate.add(builder.notEqual(schdulCdExp, Constant.SCHDUL_TLCMMT));
                     }
                     continue;
                 // case "myPaprChked":

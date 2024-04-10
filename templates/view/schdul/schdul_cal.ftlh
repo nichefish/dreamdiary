@@ -52,8 +52,8 @@
                     // 일정 onclick 이벤트
                     let event = info.event;
                     let schdulCd = event.groupId;
-                    let isVcatn = schdulCd === "${Constant.SCHDUL_TY_VCATN!}";
-                    let isBrthdy = schdulCd === "${Constant.SCHDUL_TY_BRTHDY!}"
+                    let isVcatn = schdulCd === "${Constant.SCHDUL_VCATN!}";
+                    let isBrthdy = schdulCd === "${Constant.SCHDUL_BRTHDY!}"
                     if (isVcatn || isBrthdy) return false;     // 휴가/생일은 팝업 띄우지 않음 - 휴가관리/사용자 정보 쪽에서 관리
                     Schdul.dtlAjax(event.id);
                 });
@@ -194,7 +194,7 @@
             },
             /** 종료일자 토글 처리 */
             schdulCd: function(obj) {
-                if ($(obj).val() === "${Constant.SCHDUL_TY_HLDY!}") {
+                if ($(obj).val() === "${Constant.SCHDUL_HLDY!}") {
                     $("#endDt").val($("#startDt").val());
                     $("#endDtDiv").hide();
                     $("#endDtSpan").hide();

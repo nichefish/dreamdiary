@@ -24,8 +24,8 @@
                 });
 
                 // 직급 변경시 '사원'일 때만 수습여부 영역 출력 + 수습여부 초기화
-                $("#jobTitleCd").on("change", function() {
-                    if ($("#jobTitleCd").val() === "STAFF") {
+                $("#rankCd").on("change", function() {
+                    if ($("#rankCd").val() === "STAFF") {
                         $("#apntcYnDiv").show();
                     } else {
                         $("#apntcYnDiv").hide();
