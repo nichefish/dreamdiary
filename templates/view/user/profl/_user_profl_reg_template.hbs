@@ -14,8 +14,7 @@
             </div>
         </div>
         <div class="col-xl-2">
-            <input type="text" class="form-control form-control-solid" name="userProfl.userNm" id="userNm"
-                   <#if user.userInfo??>value="${user.userInfo.userNm!}"</#if> maxlength="20" onkeyup="$('#nickNm').val($(this).val());" />
+            <input type="text" class="form-control form-control-solid" name="userProfl.userNm" id="userNm" placeholder="이름" maxlength="20" />
             <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
         </div>
     </div>
