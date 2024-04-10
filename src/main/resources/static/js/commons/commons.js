@@ -524,7 +524,6 @@ commons.util = (function() {
             let yesColor = ynColor.substring(0, colorIdx);
             let noStr = ynCn.substring(cnIdx + 2);
             let noColor = ynColor.substring(colorIdx + 2);
-            $("#"+attrId+"Label").text(noStr).css("color", noColor);
             $chckboxElmt.on("click", function () {
                 if ($chckboxElmt.is(":checked")) {
                     $("#"+attrId+"Label").text(yesStr).css("color", yesColor);

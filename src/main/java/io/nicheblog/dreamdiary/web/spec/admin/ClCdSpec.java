@@ -27,8 +27,7 @@ import java.util.Map;
 @Component
 @Log4j2
 public class ClCdSpec
-        implements BaseCrudSpec<ClCdEntity>,
-                   BaseStateSpec<ClCdEntity> {
+        implements BaseStateSpec<ClCdEntity> {
 
     /**
      * 인자별로 구체적인 검색 조건 세팅

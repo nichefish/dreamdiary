@@ -94,13 +94,8 @@ public interface UserMapstruct
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
      */
     @Override
+    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpEmbed(dto.getAcsIpInfo()))")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
     void updateFromDto(final UserDto.DTL dto, final @MappingTarget UserEntity entity) throws Exception;
-
-    @AfterMapping
-    default void mapBaseListFields(final UserEntity entity, final @MappingTarget UserDto.DTL dto) throws Exception {
-
-        // MapstructHelper.mapStateFields(dto, entity);
-    }
 }

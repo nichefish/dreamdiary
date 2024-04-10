@@ -117,7 +117,7 @@ public class UserController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/info/user_list";
+        return "/view/user/user_list";
     }
 
     /**
@@ -165,7 +165,7 @@ public class UserController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/info/user_reg_form";
+        return "/view/user/user_reg_form";
     }
 
     /**
@@ -282,7 +282,7 @@ public class UserController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/info/user_dtl";
+        return "/view/user/user_dtl";
     }
 
     /**
@@ -304,8 +304,8 @@ public class UserController
         String rsltMsg = "";
         try {
             // 상세 조회 및 모델에 추가
-            UserDto rsUserDto = userService.getDtlDto(userNo);
-            model.addAttribute("user", rsUserDto);
+            UserDto rsDto = userService.getDtlDto(userNo);
+            model.addAttribute("user", rsDto);
             // 등록/수정 화면 플래그
             model.addAttribute(Constant.IS_MDF, true);
             // 권한 정보 모델에 추가
@@ -334,7 +334,7 @@ public class UserController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/info/user_reg_form";
+        return "/view/user/user_reg_form";
     }
 
     /**

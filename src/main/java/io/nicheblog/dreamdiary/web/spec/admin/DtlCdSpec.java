@@ -17,8 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DtlCdSpec
-        implements BaseCrudSpec<DtlCdEntity>,
-                   BaseStateSpec<DtlCdEntity> {
+        implements BaseStateSpec<DtlCdEntity> {
 
     //
 }

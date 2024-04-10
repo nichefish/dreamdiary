@@ -15,10 +15,6 @@
                 commons.validate.noSpaces(".no-space");        // 공백 자동 제거
                 commons.validate.toLowerCase("#userId");       // 자동 대문자->소문자처리
 
-                <#if isMdf>
-                    commons.util.chckboxLabel("lockedYn", "잠김//해제", "red//gray");  // 계정잠금여부 클릭시 글씨 변경
-                </#if>
-
                 // 권한 유효성검사 바꿀때마다 지우기
                 $("#authCd").on("change", function() {
                     if ($(this).val() !== "") $("#authCd_valid_span").text("");
@@ -45,28 +41,7 @@
                 });
 
                 // 접속IP tagify
-                const acsIpInput = document.querySelector("#acsIpListStr");
-                <#if isMdf>
-                    <#if user.acsIpList?has_content>
-                        let tagifyStr = "";
-                        <#list user.acsIpList![] as acsIpInfo>
-                            tagifyStr += "${acsIpInfo.acsIp},";
-                        </#list>
-                        tagifyStr.replace(/,$/, '');     // 마지막에 쉼표가 있을 경우 제거
-                        acsIpInput.value = tagifyStr;
-                    </#if>
-                </#if>
-                new Tagify(acsIpInput, {
-                    maxTags: 5,
-                    pattern: commons.validate.ipv4regex,
-                    keepInvalidTags: false,
-                    skipInvalid: true,
-                    duplicates: false,
-                    editTags: {
-                        clicks: 2,
-                        keepInvalid: false      // if after editing, tag is invalid, auto-revert
-                    },
-                });
+                User.tagifyAcsIp();
 
                 /** jquery :: validation */
                 $(function(){
@@ -126,30 +101,6 @@
                     return (this.optional(element) || regExp.test(value));
                 });
             },
-            /** 아이디 중복 체크(Ajax) */
-            userIdDupChckAjax: function() {
-                const userId_valid_span = $("#userId_valid_span");
-                const userId = $("#userId").val();
-                const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
-                if (!idRegex.test(userId)) {
-                    userId_valid_span.text("아이디가 형식에 맞지 않습니다.\n(영문소문자 (+숫자 포함 가능) 4~16자)").css("color", "red");
-                    return false;
-                }
-                const url = "${SiteUrl.USER_ID_DUP_CHK_AJAX!}";
-                let ajaxData = { "userId": userId };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    userId_valid_span.text(res.message);
-                    if (res.rslt) {
-                        userId_valid_span.css("color", "blue");
-                        $("#isIdDupChckValid").val("Y");
-                        $("#isIdDupChck_valid_span").text("");
-                        $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
-                    } else {
-                        userId_valid_span.css("color", "red");
-                        $("#isIdDupChckValid").val("N");
-                    }
-                });
-            },
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 const url = "<#if isReg>${SiteUrl.USER_REG_AJAX!}</#if><#if isMdf>${SiteUrl.USER_MDF_AJAX!}</#if>";
@@ -171,6 +122,51 @@
     $(document).ready(function() {
         Page.init();
     });
+
+    const User = function() {
+        return {
+            /** 아이디 중복 체크(Ajax) */
+            tagifyAcsIp: function() {
+                // 접속IP tagify
+                const acsIpInput = document.querySelector("#acsIpListStr");
+                new Tagify(acsIpInput, {
+                    maxTags: 5,
+                    pattern: commons.validate.ipv4regex,
+                    keepInvalidTags: false,
+                    skipInvalid: true,
+                    duplicates: false,
+                    editTags: {
+                        clicks: 2,
+                        keepInvalid: false      // if after editing, tag is invalid, auto-revert
+                    },
+                });
+            },
+            /** 아이디 중복 체크(Ajax) */
+            idDupChckAjax: function() {
+                const userId_valid_span = $("#userId_valid_span");
+                let userId = $("#userId").val();
+                const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
+                if (!idRegex.test(userId)) {
+                    userId_valid_span.text("아이디가 형식에 맞지 않습니다.").removeClass("text-success").addClass("text-danger");
+                    return false;
+                }
+                const url = "${SiteUrl.USER_ID_DUP_CHK_AJAX!}";
+                let ajaxData = { "userId": userId };
+                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    userId_valid_span.text(res.message);
+                    if (res.rslt) {
+                        userId_valid_span.removeClass("text-danger").addClass("text-success");
+                        $("#ipDupChckPassed").val("Y");
+                        $("#ipDupChckPassed_valid_span").text("");
+                        $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
+                    } else {
+                        userId_valid_span.css("color", "red");
+                        $("#ipDupChckPassed").val("N");
+                    }
+                });
+            },
+        }
+    }();
 </script>
 <style>
     @media (max-width: 768px) {
@@ -213,8 +209,8 @@
     <form name="userRegForm" id="userRegForm" class="form mt-10" method="post" enctype="multipart/form-data">
         <input type="hidden" name="userNo" value="${user.userNo!}">
         <input type="hidden" name="atchFileNo" value="${user.atchFileNo!}">
-        <!--begin::Card body-->
-        <div class="row mb-4">           <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-lg-center text-sm-end required">
                     <label for="userId">아이디</label>
@@ -227,7 +223,7 @@
                 </div>
                 <div class="col-xl-2 col-4">
                     <button type="button" class="btn btn-sm btn-secondary required blink" id="idDupChckBtn"
-                            onclick="Page.userIdDupChckAjax();"
+                            onclick="User.idDupChckAjax();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="입력한 아이디에 대한&#10;중복 여부를 확인합니다.">
                         <span class="hidden-table">아이디 </span>중복 확인
                     </button>
@@ -291,7 +287,8 @@
             </div>
         </div>
         <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-        <div class="row mb-4" id="nickNmShowDiv" <#if user.userInfo??>style="display:none;"</#if>>           <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4" id="nickNmShowDiv" <#if user.userInfo??>style="display:none;"</#if>>
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-lg-center text-sm-start required"
                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원정보 미입력시&#10;사용할 이름입니다.&#10;(외부사용자, 임시계정 등)">
@@ -358,46 +355,31 @@
                 <span id="cttpc_valid_span"></span>
             </div>
         </div>
-        <#if isMdf>
-            <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2">
-                    <div class="fw-bold col-form-label text-lg-center text-sm-start">
-                        <label class="cursor-help"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="잠금 여부를 설정합니다.&#10;(잠금 상태인 계정은&#10;접속할 수 없습니다.)">
-                            잠금여부
-                        </label>
-                    </div>
-                </div>
-                <div class="col-xl-9">
-                    <div class="form-check form-switch form-check-custom form-check-solid mt-2">
-                        <input class="form-check-input" type="checkbox" value="Y" name="lockedYn" id="lockedYn" <#if user.isLocked!false>checked="checked"</#if> />
-                        <label class="form-check-label fw-bold ms-3" for="lockedYn" id="lockedYnLabel" style="color:<#if user.isLocked!false>red<#else>gray</#if>;"><#if user.isLocked!false>잠김<#else>해제</#if></label>
-                    </div>
-                </div>
-            </div>
-        </#if>
-        <div class="row mb-4">           <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-lg-center text-sm-start ">
                     <label for="acsIpListStr" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="특정 IP에서만&#10;접속 가능하도록 설정합니다.">
                         접속 IP
+                        ${user.acsIpInfo.useAcsIp?string}
                     </label>
                 </div>
             </div>
             <div class="col-xl-2">
                 <div class="form-check form-switch form-check-custom form-check-solid mt-2">
-                    <input class="form-check-input" type="checkbox" value="Y" name="useAcsIpYn" id="useAcsIpYn" <#if user.isAcsIpY!false>checked="checked"</#if> />
-                    <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:<#if user.isAcsIpY!false>blue<#else>gray</#if>;"><#if !user.isAcsIpY!false>미</#if>사용</label>
+                    <input class="form-check-input" type="checkbox" value="Y" name="useAcsIpYn" id="useAcsIpYn" <#if (user.acsIpInfo.useAcsIp)!>checked="checked"</#if> />
+                    <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:<#if (user.acsIpInfo.useAcsIp)!>blue<#else>gray</#if>;">
+                        <#if (user.acsIpInfo.useAcsIp)!>
+                            사용
+                        <#else>
+                            미사용
+                        </#if>
+                    </label>
                 </div>
-            </div>
-        </div>
-        <div class="row">           <!--begin::Row-->
-            <div class="col-xl-2"></div>
-            <div class="col-xl-6">
                 <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-                <div id="acsIpListSpan" class="mb-0" style="display:none;">
-                    <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
+                <div id="acsIpListSpan" class="mb-0" style="<#if !(user.acsIpInfo.useAcsIp!false)>display:none;</#if>">
+                    <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off" value="${user.acsIpInfo.acsIpListStr!}"/>
                     <div class="form-text text-noti">(※최대 5개)</div>
                 </div>
                 <span id="acsIpListStrSpan"></span>

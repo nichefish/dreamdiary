@@ -15,10 +15,6 @@
                 commons.validate.noSpaces(".no-space");        // 공백 자동 제거
                 commons.validate.toLowerCase("#userId");       // 자동 대문자->소문자처리
 
-                <#if isMdf>
-                    commons.util.chckboxLabel("lockedYn", "잠김//해제", "red//gray");  // 계정잠금여부 클릭시 글씨 변경
-                </#if>
-
                 // 권한 유효성검사 바꿀때마다 지우기
                 $("#authCd").on("change", function() {
                     if ($(this).val() !== "") $("#authCd_valid_span").text("");
@@ -45,28 +41,7 @@
                 });
 
                 // 접속IP tagify
-                const acsIpInput = document.querySelector("#acsIpListStr");
-                <#if isMdf>
-                    <#if user.acsIpList?has_content>
-                        let tagifyStr = "";
-                        <#list user.acsIpList![] as acsIpInfo>
-                            tagifyStr += "${acsIpInfo.acsIp},";
-                        </#list>
-                        tagifyStr.replace(/,$/, '');     // 마지막에 쉼표가 있을 경우 제거
-                        acsIpInput.value = tagifyStr;
-                    </#if>
-                </#if>
-                new Tagify(acsIpInput, {
-                    maxTags: 5,
-                    pattern: commons.validate.ipv4regex,
-                    keepInvalidTags: false,
-                    skipInvalid: true,
-                    duplicates: false,
-                    editTags: {
-                        clicks: 2,
-                        keepInvalid: false      // if after editing, tag is invalid, auto-revert
-                    },
-                });
+                User.tagifyAcsIp();
 
                 /** jquery :: validation */
                 $(function(){
@@ -137,23 +112,6 @@
                         });
                 });
             },
-            /** 패스워드 초기화 */
-            pwResetAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.resetPw"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.USER_PW_RESET_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
             return: function() {
                 Swal.fire({
                     text: "메인 화면으로 이동합니다.\n(현재까지 입력한 내용은 사라집니다.)\n계속하겠습니까?",
@@ -174,6 +132,22 @@
 
     const User = function() {
         return {
+            /** 아이디 중복 체크(Ajax) */
+            tagifyAcsIp: function() {
+                // 접속IP tagify
+                const acsIpInput = document.querySelector("#acsIpListStr");
+                new Tagify(acsIpInput, {
+                    maxTags: 5,
+                    pattern: commons.validate.ipv4regex,
+                    keepInvalidTags: false,
+                    skipInvalid: true,
+                    duplicates: false,
+                    editTags: {
+                        clicks: 2,
+                        keepInvalid: false      // if after editing, tag is invalid, auto-revert
+                    },
+                });
+            },
             /** 아이디 중복 체크(Ajax) */
             idDupChckAjax: function() {
                 const userId_valid_span = $("#userId_valid_span");

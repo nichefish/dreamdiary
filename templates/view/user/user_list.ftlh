@@ -5,7 +5,7 @@
 
 <#-- 툴바 버튼 추가 -->
 <#assign toolbar>
-    <#include "/view/user/info/_user_list_header.ftlh">
+    <#include "/view/user/_user_list_header.ftlh">
 </#assign>
 
 <@layout.layout toolbar=toolbar!"">

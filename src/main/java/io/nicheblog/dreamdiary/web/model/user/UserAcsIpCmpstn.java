@@ -59,6 +59,7 @@ public class UserAcsIpCmpstn {
                         }
                     })
                     .collect(Collectors.toList());
+            this.acsIpListStr = embed.getAcsIpListStr();
         }
     }
 }

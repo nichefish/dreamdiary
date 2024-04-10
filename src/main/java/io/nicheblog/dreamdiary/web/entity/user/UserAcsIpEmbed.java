@@ -52,7 +52,9 @@ public class UserAcsIpEmbed {
     public UserAcsIpEmbed(UserAcsIpCmpstn dto) {
         this();
         this.useAcsIpYn = dto.getUseAcsIpYn();
-        if (!CollectionUtils.isEmpty(dto.getAcsIpList())) {
+        boolean useAcsIp = "Y".equals(this.useAcsIpYn);
+        if (!useAcsIp) this.acsIpList = new ArrayList<>();
+        if (useAcsIp && !CollectionUtils.isEmpty(dto.getAcsIpList())) {
             this.acsIpList = dto.getAcsIpList().stream()
                     .map(acsIp -> {
                         try {
