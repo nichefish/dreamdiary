@@ -126,30 +126,6 @@
                     return (this.optional(element) || regExp.test(value));
                 });
             },
-            /** 아이디 중복 체크(Ajax) */
-            userIdDupChckAjax: function() {
-                const userId_valid_span = $("#userId_valid_span");
-                let userId = $("#userId").val();
-                const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
-                if (!idRegex.test(userId)) {
-                    userId_valid_span.text("아이디가 형식에 맞지 않습니다.").removeClass("text-success").addClass("text-danger");
-                    return false;
-                }
-                const url = "${SiteUrl.USER_ID_DUP_CHK_AJAX!}";
-                let ajaxData = { "userId": userId };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    userId_valid_span.text(res.message);
-                    if (res.rslt) {
-                        userId_valid_span.removeClass("text-danger").addClass("text-success");
-                        $("#ipDupChckPassed").val("Y");
-                        $("#ipDupChckPassed_valid_span").text("");
-                        $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
-                    } else {
-                        userId_valid_span.css("color", "red");
-                        $("#ipDupChckPassed").val("N");
-                    }
-                });
-            },
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 const url = "${SiteUrl.USER_REQST_REG_AJAX!}";
@@ -195,6 +171,35 @@
     $(document).ready(function() {
         Page.init();
     });
+
+    const User = function() {
+        return {
+            /** 아이디 중복 체크(Ajax) */
+            idDupChckAjax: function() {
+                const userId_valid_span = $("#userId_valid_span");
+                let userId = $("#userId").val();
+                const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
+                if (!idRegex.test(userId)) {
+                    userId_valid_span.text("아이디가 형식에 맞지 않습니다.").removeClass("text-success").addClass("text-danger");
+                    return false;
+                }
+                const url = "${SiteUrl.USER_ID_DUP_CHK_AJAX!}";
+                let ajaxData = { "userId": userId };
+                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    userId_valid_span.text(res.message);
+                    if (res.rslt) {
+                        userId_valid_span.removeClass("text-danger").addClass("text-success");
+                        $("#ipDupChckPassed").val("Y");
+                        $("#ipDupChckPassed_valid_span").text("");
+                        $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
+                    } else {
+                        userId_valid_span.css("color", "red");
+                        $("#ipDupChckPassed").val("N");
+                    }
+                });
+            },
+        }
+    }();
 </script>
 <style>
     @media (max-width: 768px) {
@@ -255,7 +260,7 @@
             </div>
             <div class="col-xl-2 col-4">
                 <button type="button" class="btn btn-sm btn-secondary required blink" id="idDupChckBtn"
-                        onclick="Page.userIdDupChckAjax();"
+                        onclick="User.idDupChckAjax();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="입력한 아이디에 대한&#10;중복 여부를 확인합니다.">
                     <span class="hidden-table">아이디 </span>중복 확인
                 </button>

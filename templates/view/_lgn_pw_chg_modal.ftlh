@@ -7,62 +7,40 @@
     const PwChg = function() {
         return {
             init: function () {
+                // 조건 일치시 비밀번호 변경 팝업 호출
                 <#if isCredentialExpired!false || needsPwReset!false>
-                    const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
-                    commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
-
-                    /** jquery :: validation */
-                    $(function(){
-                        $("#lgnPwChgForm").validate({
-                            submitHandler: function() {
-                                PwChg.lgnPwChgAjax();
-                            },
-                            errorPlacement : function(error, element) {
-                                commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                            },
-                            rules: {
-                                newPw: { regex: commons.validate.pwRegex },
-                                newPwCf: { equalTo: "#newPw" }
-                            },
-                            ignore: [],         // hidden 필드도 검증하기 위함
-                            messages: {
-                                newPw: { regex: "변경할 비밀번호가 형식에 맞지 않습니다." },
-                                newPwCf: { equalTo: "변경할 비밀번호에 입력한 값과 동일하게 입력해야 합니다." }
-                            },
-                        });
-                    });
-                    $.validator.addMethod("regex", function(value, element, regex) {
-                        const regExp = new RegExp(regex);
-                        return (this.optional(element) || regExp.test(value));
-                    });
+                    PwChg.pwChgModal();
                 </#if>
-
-                <#if isDupIdLgn!false>
-                Swal.fire({
-                    title: <@spring.message "view.result.dupLgn"/>,
-                    text: <@spring.message "view.cnfm.dupLgn"/>,
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "로그인",
-                    cancelButtonText: "취소",
-                }).then(function(result) {
-                    if (result.value) {
-                        $("#userId").val("${userId!}");
-                        $("#isDupIdLgnProc").val("Y");
-                        $("#password").attr("disabled", "disabled");
-                        Page.lgn();
-                    } else {
-                        $("#isDupIdLgnProc").val("");
-                    }
-                });
-                </#if>
+            },
+            /** 비밀번호 변경 팝업 호출 */
+            pwChgModal: function() {
+                const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
+                commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
 
                 /** jquery :: validation */
-                commons.validate.validateForm("#lgnForm");
-            },
-            /** 로그인 처리 */
-            lgn: function() {
-                commons.util.blockUISubmit("#lgnForm", "${SiteUrl.AUTH_LGN_PROC!}");
+                $(function(){
+                    $("#lgnPwChgForm").validate({
+                        submitHandler: function() {
+                            PwChg.lgnPwChgAjax();
+                        },
+                        errorPlacement : function(error, element) {
+                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
+                        },
+                        rules: {
+                            newPw: { regex: commons.validate.pwRegex },
+                            newPwCf: { equalTo: "#newPw" }
+                        },
+                        ignore: [],         // hidden 필드도 검증하기 위함
+                        messages: {
+                            newPw: { regex: "변경할 비밀번호가 형식에 맞지 않습니다." },
+                            newPwCf: { equalTo: "변경할 비밀번호에 입력한 값과 동일하게 입력해야 합니다." }
+                        },
+                    });
+                });
+                $.validator.addMethod("regex", function(value, element, regex) {
+                    const regExp = new RegExp(regex);
+                    return (this.optional(element) || regExp.test(value));
+                });
             },
             /** 비밀번호 수정 처리(Ajax) */
             lgnPwChgAjax: function() {
@@ -80,10 +58,6 @@
                         }
                     });
                 });
-            },
-            /** 신규계정 신청 페이지로 이동 */
-            reqstUser: function() {
-                commons.util.blockUIReplace("${SiteUrl.USER_REQST_REG_FORM!}");
             },
         }
     }();
