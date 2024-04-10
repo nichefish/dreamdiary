@@ -1,0 +1,57 @@
+<#--
+  -- 사용자 관리 > 계정 및 권한 관리 > 등록 > 사용자(직원) 정보 추가 Template
+  -- @included_in : user_reg_form
+  -->
+<script>
+    const UserEmplym = (function() {
+        return {
+            /** 직원정보 창 토글 */
+            enableUserEmplym: function() {
+                // 영역 표시
+                commons.util.handlebarsTemplate({}, "user_emplym");
+                $('[data-bs-toggle="tooltip"]').tooltip();
+                // 버튼 교체 :: 툴팁 작동 유지 위해 속성만 교체
+                let $btn = $("#userEmplymBtn");
+                $btn.removeClass("btn-primary").addClass("btn-danger");
+                $btn.text("직원 인사정보 삭제-");
+                $btn.attr("onclick", "UserEmplym.disableUserEmplym();");
+                $btn.attr("title", "직원 인사정보를&#10;삭제합니다.");
+
+                commons.validate.cttpc("#cttpc");              // 전화번호 형식 유효성 검사
+                // 이메일 도메인 select시 자동입력
+                $("#emailDomainSelect").on("change", function() {
+                    $("#emailDomain").val($(this).val());
+                });
+
+                // 직급 변경시 '사원'일 때만 수습여부 영역 출력 + 수습여부 초기화
+                $("#jobTitleCd").on("change", function() {
+                    if ($("#jobTitleCd").val() === "STAFF") {
+                        $("#apntcYnDiv").show();
+                    } else {
+                        $("#apntcYnDiv").hide();
+                    }
+                });
+                // 수습여부 클릭시 글씨 변경
+                commons.util.chckboxLabel("apntcYn", "수습//해당없음", "blue//gray");
+                // 퇴사여부 클릭시 글씨 변경
+                commons.util.chckboxLabel("retireYn", "퇴사//해당없음", "red//gray", function() {$(".retireDtDiv").show();}, function() {$(".retireDtDiv").hide();});
+
+                commons.datepicker.singleDatePicker("#ecnyDt", "yyyy-MM-DD");
+                commons.datepicker.singleDatePicker("#retireDt", "yyyy-MM-DD");
+            },
+            /** 직원정보 창 토글 */
+            disableUserEmplym: function() {
+                // 영역 삭제
+                $("#user_emplym_div").empty();
+                // 버튼 교체 :: 툴팁 작동 유지 위해 속성만 교체
+                let $btn = $("#userEmplymBtn");
+                $btn.removeClass("btn-danger").addClass("btn-primary");
+                $btn.text("직원 인사정보 추가+");
+                $btn.attr("title", "직원 인사정보를 &#10;추가합니다.");
+                $btn.attr("onclick", "UserEmplym.enableUserEmplym();");
+            },
+        }
+    })();
+</script>
+<!-- include:: Handlebars template -->
+<#include "/view/user/emplym/_user_emplym_reg_template.hbs">

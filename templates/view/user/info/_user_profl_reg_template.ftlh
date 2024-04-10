@@ -55,17 +55,17 @@
                 });
             },
             /** 직원정보 창 토글 */
-            enableUserInfo: function() {
+            enableUserProfl: function() {
                 $("#nickNm").attr("readonly", true).val("").attr("placeholder", "직원명을 아래에 입력해주세요.");
                 $("#userProflDiv").show();
                 $("#userProflYn").val("Y");
                 $("#nickNmShowDiv").hide();
-                $("#nickNmSpan").empty();
+                $("#nickNm_valid_span").empty();
                 $("#user_info_disable_div").show();
                 $("#user_info_enable_div").hide();
             },
             /** 직원정보 창 토글 */
-            disableUserInfo: function() {
+            disableUserProfl: function() {
                 $("#nickNm").removeAttr("readonly").removeAttr("placeholder");
                 $("#userProflDiv").hide();
                 $("#userProflYn").val("N");
@@ -176,9 +176,9 @@
     <div class="row mb-4">      <!-- errorMsgSpan -->
         <div class="col-xl-2"></div>
         <div class="col-xl-10">
-            <div id="cmpyCdSpan"></div>
-            <div id="teamCdSpan"></div>
-            <div id="emplymCdSpan"></div>
+            <div id="cmpyCd_valid_span"></div>
+            <div id="teamCd_valid_span"></div>
+            <div id="emplymCd_valid_span"></div>
         </div>
     </div>
     <div class="row">           <!--begin::Row-->
@@ -205,7 +205,7 @@
     <div class="row mb-4">      <!-- errorMsgSpan -->
         <div class="col-xl-2"></div>
         <div class="col-xl-10">
-            <div id="jobTitleCdSpan"></div>
+            <div id="jobTitleCd_valid_span"></div>
         </div>
     </div>
     <div class="row">           <!--begin::Row-->
@@ -270,67 +270,7 @@
     <div class="row mb-4">      <!-- errorMsgSpan -->
         <div class="col-xl-2"></div>
         <div class="col-xl-10">
-            <div id="jobTitleCdSpan"></div>
-        </div>
-    </div>
-    <div class="row">           <!--begin::Row-->
-        <div class="col-xl-2">
-            <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center  required">
-                <label for="cttpc" class="cursor-help"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원 연락처에 표시될&#10;전화번호입니다.">
-                    전화번호
-                </label>
-            </div>
-        </div>
-        <div class="col-xl-2">
-            <input type="text" class="form-control form-control-solid" name="userInfo.cttpc" id="cttpc" <#if user.userInfo??>value="${user.userInfo.cttpc!}"</#if>  bnm maxlength="20"/>
-            <div class="form-text">(※숫자만 입력)</div>
-        </div>
-    </div>
-    <div class="row mb-4">      <!-- errorMsgSpan -->
-        <div class="col-xl-2"></div>
-        <div class="col-xl-10">
-            <span id="cttpcSpan"></span>
-        </div>
-    </div>
-    <div class="row">           <!--begin::Row-->
-        <div class="col-xl-2">
-            <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center required">
-                <label for="emailId" class="cursor-help"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원 연락처에 표시될&#10;회사 이메일 주소입니다.(~@gmail.com)">
-                    E-mail
-                </label>
-            </div>
-        </div>
-        <div class="col-lg-2 col-4">
-            <input type="text" class="form-control form-control-solid no-space" name="userInfo.emailId" id="emailId"
-                   <#if user.userInfo??>value="${user.userInfo.emailId!}"</#if> maxlength="20" />
-        </div>
-        <div class="col-xl-2 col-1 mt-2" style="width:2%;">
-            <label for="emailDomain"><label for="emailDomainSelect">@</label></label>
-        </div>
-        <div class="col-lg-2 col-5 vertical-center">
-            <input type="text" class="form-control form-control-solid no-space" name="userInfo.emailDomain" id="emailDomain"
-                   value="<#if user.userInfo??>${user.userInfo.emailDomain!}<#else>gmail.com</#if>" maxlength="20" />
-        </div>
-        <div class="col-xl-2 col-1">
-            <select name="userInfo.emailDomainSelect" id="emailDomainSelect" class="form-select form-select-solid">
-                <option value="">직접입력</option>
-                <option value="gmail.com" <#if isReg!false>selected</#if>>gmail.com</option>
-                <option value="gmail.com">gmail.com</option>
-                <option value="gmail.com">gmail.com</option>
-                <option value="kakao.com">kakao.com</option>
-            </select>
-        </div>
-    </div>
-    <div class="row mb-4">      <!-- errorMsgSpan -->
-        <div class="col-xl-2"></div>
-        <div class="col-xl-3">
-            <div id="emailIdSpan"></div>
-        </div>
-        <div class="col-xl-2" style="width:2%;"></div>
-        <div class="col-xl-3">
-            <div id="emailDomainSpan"></div>
+            <div id="jobTitleCd_valid_span"></div>
         </div>
     </div>
     <div class="row">           <!--begin::Row-->
@@ -370,7 +310,7 @@
     <div class="row mb-4">      <!-- errorMsgSpan -->
         <div class="col-xl-2"></div>
         <div class="col-xl-10">
-            <div id="jobTitleCdSpan"></div>
+            <div id="jobTitleCd_valid_span"></div>
         </div>
     </div>
     <div class="row">           <!--begin::Row-->
@@ -423,11 +363,11 @@
     <div class="row mb-4">      <!-- errorMsgSpan -->
         <div class="col-xl-2"></div>
         <div class="col-xl-3">
-            <div id="emailIdSpan"></div>
+            <div id="emailId_valid_span"></div>
         </div>
         <div class="col-xl-2" style="width:2%;"></div>
         <div class="col-xl-3">
-            <div id="emailDomainSpan"></div>
+            <div id="emailDomain_valid_span"></div>
         </div>
     </div>
     <div class="row">           <!--begin::Row-->
@@ -451,7 +391,7 @@
     <div class="col-lg-2 text-lg-center">
         <button type="button" class="btn btn-sm btn-primary blink"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="입사인원에 대하여&#10;세부 직원 정보를 추가합니다."
-                onclick="UserInfo.enableUserInfo();">
+                onclick="UserInfo.enableUserProfl();">
             직원정보 추가+
         </button>
     </div>
@@ -465,7 +405,7 @@
     <div class="col-lg-2 text-lg-center">
         <button type="button" class="btn btn-sm btn-danger"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원이 아닌 인원에 대하여&#10;세부 직원 정보를 삭제합니다."
-                onclick="UserInfo.disableUserInfo();">
+                onclick="UserInfo.disableUserProfl();">
             직원정보 삭제-
         </button>
     </div>
