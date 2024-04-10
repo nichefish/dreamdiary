@@ -51,14 +51,6 @@ public class UserDto
     @Builder.Default
     private String lockedYn = "N";
 
-    /** 접속 IP 사용 여부 */
-    @Builder.Default
-    private String useAcsIpYn = "N";
-    /** 접속 IP 정보 (String) */
-    private String acsIpListStr;
-    /** 접속 IP 목록 */
-    private List<UserAcsIpDto> acsIpList;
-
     /** 퇴사여부 */
     @Builder.Default
     private String retireYn = "N";
@@ -83,13 +75,6 @@ public class UserDto
     
     /* ----- */
 
-    /**
-     * 접속IP 사용 여부 채크
-     */
-    public Boolean getIsAcsIpY() {
-        return "Y".equals(this.useAcsIpYn);
-    }
-
     /** 잠금여부 채크 */
     public Boolean getIsLocked() {
         return "Y".equals(this.lockedYn);
@@ -110,6 +95,11 @@ public class UserDto
     public static class DTL extends UserDto {
         /** 계정 설명 (관리자용) */
         private String cn;
+
+        /* ----- */
+
+        /** 접속 IP 정보 (위임) */
+        private UserAcsIpCmpstn acsIpInfo;
     }
 
     @Getter

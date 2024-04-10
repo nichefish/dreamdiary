@@ -46,6 +46,23 @@
                     });
                 });
             },
+            /** 패스워드 초기화 */
+            pwResetAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.resetPw"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${SiteUrl.USER_PW_RESET_AJAX!}";
+                    let ajaxData = $("#procForm").serializeArray();
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.rslt) commons.util.blockUIReload();
+                            });
+                    });
+                });
+            },
             /** 삭제 처리 (ajax) */
             delAjax: function() {
                 Swal.fire({
@@ -69,6 +86,10 @@
             },
         }
     }();
+
+    $(document).ready(function() {
+        Page.init();
+    });
 </script>
 
 <div class="card post">
@@ -77,7 +98,7 @@
         <!--begin::Row-->
         <div class="row mb-1">
             <div class="col-xl-2 col-4 d-flex-center">
-                <label class="fs-6 fw-bold">승인여부</label>
+                <label class="fw-bold">승인여부</label>
             </div>
             <div class="col-xl-1 col-2 d-flex align-items-center">
                 <#if user.isCf!true>
@@ -107,9 +128,10 @@
         <div class="separator my-8"></div>
         <!--end::Menu separator-->
 
-        <div class="row mb-1">      <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2 col-4 d-flex-center">
-                <label class="fs-6 fw-bold">아이디</label>
+                <label class="fw-bold">아이디</label>
             </div>
             <div class="col-xl-2 col-8 col-form-label">
                 <div class="btn btn-icon btn-secondary position-relative w-30px h-30px w-md-40px h-md-40px me-3">
@@ -124,16 +146,33 @@
                 ${user.userId!}
             </div>
             <div class="col-xl-2 col-4">
-                <div class="col-form-label text-center fs-6 fw-bold">등록자</div>
+                <div class="col-form-label text-center fw-bold">등록자</div>
             </div>
             <div class="col-xl-6 col-8 pc-d-flex col-form-label">
                 <div class="col-xl-2 col-12">${user.regstrId!}</div>
                 <div class="col-xl-6 col-12"> (${user.regDt!})</div>
             </div>
         </div>
-        <div class="row mb-4">      <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4">
+            <div class="col-xl-2 d-flex-center">
+                <label class="fw-bold">비밀번호</label>
+            </div>
+            <div class="col-xl-2">
+                <button type="button" class="btn btn-sm btn-secondary" onclick="Page.pwResetAjax();"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호를 초기화합니다.&#10;로그인 정책 관리 메뉴에서&#10;초기화 값을 설정할 수&#10;있습니다.">
+                    비밀번호 초기화
+                </button>
+            </div>
+            <div class="col-xl-8">
+            </div>
+        </div>
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2 col-4">
-                <div class="col-form-label text-center fs-6 fw-bold"><label for="authNm">권한</label></div>
+                <div class="col-form-label text-center fw-bold">
+                    <label for="authNm">권한</label>
+                </div>
             </div>
             <div class="col-xl-2 col-8 col-form-label">
                 <#list user.authList![] as auth>
@@ -146,9 +185,10 @@
                 </#list>
             </div>
         </div>
-        <div class="row mb-4">      <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2 col-4">
-                <div class="col-form-label text-center fs-6 fw-bold">
+                <div class="col-form-label text-center fw-bold">
                     <label for="nickNm">이름</label>
                 </div>
             </div>
@@ -156,9 +196,10 @@
                 ${user.nickNm!}
             </div>
         </div>
-        <div class="row mb-4">      <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2 col-4">
-                <div class="col-form-label text-center fs-6 fw-bold">잠금여부</div>
+                <div class="col-form-label text-center fw-bold">잠금여부</div>
             </div>
             <div class="col-xl-9 col-8 col-form-label">
                 <#if user.isLocked!false>
@@ -172,32 +213,38 @@
                 </#if>
             </div>
         </div>
-        <div class="row mb-4">      <!--begin::Row-->
-            <div class="col-xl-2 col-4 col-form-label">
-                <div class="text-center fs-6 fw-bold ">
+        <!--begin::Row-->
+        <div class="row mb-4">
+            <div class="col-xl-2 col-4">
+                <div class="col-form-label text-center fw-bold">
                     <label for="acsIpListStr">접속IP</label>
                 </div>
             </div>
-            <div class="col-xl-2 col-4 d-flex align-items-center">
-                <div class="form-check form-switch form-check-custom form-check-solid">
-                    <span class="me-8">
-                        <#if user.isAcsIpY!false>사용<#else>미사용</#if>
-                    </span>
+            <div class="col-xl-2 col-4">
+                <div class="col-form-label">
+                    <#if user.acsIpInfo.useAcsIp!false>
+                        <div class="text-success">
+                            사용<i class="bi bi-check text-success"></i>
+                        </div>
+                    <#else>
+                        <div class="text-muted">
+                            미사용<i class="bi bi-dash fs-9 text-muted"></i>
+                        </div>
+                    </#if>
                 </div>
-            </div>
-            <div class="col-xl-6 col-4 col-form-label">
-                <div class="form-check form-switch form-check-custom form-check-solid">
-                    <#if user.isAcsIpY && user.acsIpList??>
-                        <#list user.acsIpList![] as item>
-                            <span class="div-textarea div-height-1 me-4">${item.acsIp}</span>
+                <div class="form-check form-switch form-check-custom form-check-solid gap-4">
+                    <#if user.acsIpInfo.useAcsIp! && user.acsIpInfo.acsIpList??>
+                        <#list user.acsIpInfo.acsIpList![] as item>
+                            <span class="div-textarea div-height-1 px-5">${item.acsIp}</span>
                         </#list>
                     </#if>
                 </div>
             </div>
         </div>
-        <div class="row">           <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row">
             <div class="col-xl-2 col-4">
-                <div class="col-form-label text-center fs-6 fw-bold">계정 설명</div>
+                <div class="col-form-label text-center fw-bold">계정 설명</div>
             </div>
             <div class="col-xl-9 col-8 col-form-label">
                 <div class="div-textarea h-auto min-h-125px">${user.cn!}</div>
@@ -213,7 +260,7 @@
         <div class="card-body p-9">
             <div class="row mb-4">      <!--begin::Row-->
                 <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fs-6 fw-bold"><label for="cttpc">부서</label></div>
+                    <div class="col-form-label text-center fw-bold"><label for="cttpc">부서</label></div>
                 </div>
                 <div class="col-xl-2 col-8 col-form-label">
                     ${user.userInfo.cmpyNm!"-"} / ${user.userInfo.teamNm!"-"} / ${user.userInfo.emplymNm!"-"}
@@ -221,7 +268,7 @@
             </div>
             <div class="row mb-4">      <!--begin::Row-->
                 <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fs-6 fw-bold">직급</div>
+                    <div class="col-form-label text-center fw-bold">직급</div>
                 </div>
                 <div class="col-xl-2 col-8 col-form-label">
                     ${(user.userInfo.jobTitleNm)!"-"}
@@ -232,14 +279,14 @@
             </div>
             <div class="row mb-4">      <!--begin::Row-->
                 <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fs-6 fw-bold">입사일</div>
+                    <div class="col-form-label text-center fw-bold">입사일</div>
                 </div>
                 <div class="col-xl-2 col-8 col-form-label">
                     ${(user.userInfo.ecnyDt)!"-"}
                 </div>
                 <#if (((user.userInfo.retireYn)!"N") == "Y")!false>
                     <div class="col-xl-2 col-4">
-                        <div class="col-form-label text-center fs-6 fw-bold">퇴사일</div>
+                        <div class="col-form-label text-center fw-bold">퇴사일</div>
                     </div>
                     <div class="col-xl-2 col-8 col-form-label">
                         ${user.userInfo.retireDt!"-"}
@@ -248,7 +295,7 @@
             </div>
             <div class="row mb-4">      <!--begin::Row-->
                 <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fs-6 fw-bold">전화번호</div>
+                    <div class="col-form-label text-center fw-bold">전화번호</div>
                 </div>
                 <div class="col-xl-2 col-8 col-form-label">
                     ${user.userInfo.cttpc!"-"}
@@ -256,7 +303,7 @@
             </div>
             <div class="row mb-4">      <!--begin::Row-->
                 <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fs-6 fw-bold">E-mail</div>
+                    <div class="col-form-label text-center fw-bold">E-mail</div>
                 </div>
                 <div class="col-xl-2 col-8 col-form-label">
                     ${user.userInfo.email!"-"}
@@ -264,7 +311,7 @@
             </div>
             <div class="row mb-4">      <!--begin::Row-->
                 <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fs-6 fw-bold">생년월일</div>
+                    <div class="col-form-label text-center fw-bold">생년월일</div>
                 </div>
                 <div class="col-xl-1 col-4 col-form-label">
                     ${user.userInfo.brthdy!"-"}
@@ -275,7 +322,7 @@
             </div>
             <div class="row mb-4">      <!--begin::Row-->
                 <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fs-6 fw-bold">계좌번호</div>
+                    <div class="col-form-label text-center fw-bold">계좌번호</div>
                 </div>
                 <div class="col-8 col-form-label">
                     ${user.userInfo.acntBank!"-"} <span class="px-3">|</span> ${user.userInfo.acntNo!"-"}
@@ -284,7 +331,7 @@
             <#if user.userInfo.itemList?has_content>
                 <div class="row mb-4">           <!--begin::Row-->
                     <div class="col-xl-2 col-4">
-                        <div class="col-form-label text-center fs-6 fw-bold">추가정보</div>
+                        <div class="col-form-label text-center fw-bold">추가정보</div>
                     </div>
                     <div class="col-xl-9 col-12 col-form-label" id="userItemListDiv">
                         <#if user.userInfo?? && user.userInfo.itemList?has_content>
@@ -301,7 +348,7 @@
             </#if>
             <div class="row">           <!--begin::Row-->
                 <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fs-6 fw-bold">사용자 설명</div>
+                    <div class="col-form-label text-center fw-bold">사용자 설명</div>
                 </div>
                 <div class="col-xl-9 col-8 col-form-label">
                     <div class="div-textarea h-auto min-h-125px">${user.userInfo.userInfoDc!}</div>
@@ -312,20 +359,12 @@
     <!--end::Card body-->
     <!--begin::Card footer-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-sm btn-light btn-active-primary me-2" onclick="Page.mdfForm();"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
-            수정
-        </button>
-        <#if isMngr>
-            <button type="button" class="btn btn-sm btn-light btn-active-danger me-2" onclick="Page.delAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
-                삭제
-            </button>
-        </#if>
-        <button type="button" class="btn btn-sm btn-light" onclick="Page.list();"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
-            목록
-        </button>
+        <!-- 버튼 :: 수정하기 -->
+        <@component.btn_post_mdf "Page" user isMngr />
+        <!-- 버튼 :: 삭제하기 -->
+        <@component.btn_post_delete "Page" user isMngr />
+        <!-- 버튼 :: 목록으로 가기 -->
+        <@component.btn_post_toList "Page" />
     </div>
     <!--end::Card footer-->
 

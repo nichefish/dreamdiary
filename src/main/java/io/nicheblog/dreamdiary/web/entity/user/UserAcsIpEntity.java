@@ -28,33 +28,25 @@ import javax.persistence.*;
 @SQLDelete(sql = "UPDATE user_acs_ip SET del_yn = 'Y' WHERE user_acs_ip_no = ?")
 public class UserAcsIpEntity {
 
-    /**
-     * 사용자 정보 접속가능 IP 번호 (PK)
-     */
+    /** 사용자 정보 접속가능 IP 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_acs_ip_no")
-    @Comment("사용자 정보 접속가능 IP 번호")
+    @Comment("사용자 정보 접속가능 IP 번호 (PK)")
     private Integer userAcsIpNo;
 
-    /**
-     * 사용자 정보
-     */
+    /** 사용자 정보 */
     @ManyToOne
     @JoinColumn(name = "user_no", referencedColumnName = "user_no")
     @Comment("사용자 정보")
     private UserEntity user;
 
-    /**
-     * 접속가능 IP
-     */
+    /** 접속가능 IP */
     @Column(name = "acs_ip", length = 20)
     @Comment("접속가능 IP")
     private String acsIp;
 
-    /**
-     * 삭제 여부
-     */
+    /** 삭제 여부 */
     @Builder.Default
     @Column(name = "del_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("삭제 여부")

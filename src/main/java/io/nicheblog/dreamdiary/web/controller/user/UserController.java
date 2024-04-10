@@ -265,8 +265,8 @@ public class UserController
         String rsltMsg = "";
         try {
             // 상세 조회 및 모델에 추가
-            UserDto rsUserDto = userService.getDtlDto(userNo);
-            model.addAttribute("user", rsUserDto);
+            UserDto rsDto = userService.getDtlDto(userNo);
+            model.addAttribute("user", rsDto);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

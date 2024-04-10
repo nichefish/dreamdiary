@@ -335,16 +335,17 @@
                 </div>
             </div>
             <div class="col-lg-2 col-4">
-                <input type="text" class="form-control form-control-solid no-space" name="userInfo.emailId" id="emailId"
-                       <#if user.userInfo??>value="${user.userInfo.emailId!}"</#if> maxlength="20" />
+                <input type="text" class="form-control form-control-solid required no-space" name="userInfo.emailId" id="emailId"
+                       maxlength="20" placeholder="이메일 ID 입력" <#if user.userInfo??>value="${user.userInfo.emailId!}"</#if> />
                 <div id="emailId_valid_span"></div>
             </div>
             <div class="col-xl-2 col-1 d-flex-center fw-bold text-gray-700" style="width:2%;">
                 <label for="emailDomain"><label for="emailDomainSelect">@</label></label>
             </div>
             <div class="col-lg-2 col-5 vertical-center">
-                <input type="text" class="form-control form-control-solid no-space" name="userInfo.emailDomain" id="emailDomain"
+                <input type="text" class="form-control form-control-solid required no-space" name="userInfo.emailDomain" id="emailDomain"
                        placeholder="직접입력" maxlength="20" value="<#if user.userInfo??>${user.userInfo.emailDomain!}<#else>gmail.com</#if>" />
+                <div id="emailDomain_valid_span"></div>
             </div>
             <div class="col-xl-2 col-1">
                 <select name="userInfo.emailDomainSelect" id="emailDomainSelect" class="form-select form-select-solid">
@@ -354,7 +355,6 @@
                     <option value="gmail.com">gmail.com</option>
                     <option value="kakao.com">kakao.com</option>
                 </select>
-                <div id="emailDomain_valid_span"></div>
             </div>
         </div>
         <!--begin::Row-->
@@ -386,12 +386,14 @@
             </div>
             <div class="col-xl-10">
                 <div class="form-check form-switch form-check-custom form-check-solid mt-2">
-                    <input class="form-check-input" type="checkbox" value="Y" name="useAcsIpYn" id="useAcsIpYn" <#if user.isAcsIpY!false>checked="checked"</#if> />
-                    <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:<#if user.isAcsIpY!false>blue<#else>gray</#if>;"><#if !user.isAcsIpY!false>미</#if>사용</label>
+                    <input class="form-check-input" type="checkbox" value="Y" name="acsIpInfo.useAcsIpYn" id="useAcsIpYn" <#if user.isAcsIpY!false>checked="checked"</#if> />
+                    <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:<#if user.isAcsIpY!false>blue<#else>gray</#if>;">
+                        <#if !user.isAcsIpY!false>미</#if>사용
+                    </label>
                 </div>
                 <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
                 <div id="acsIpListSpan" class="mt-2 mb-0" style="display:none;">
-                    <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
+                    <input name="acsIpInfo.acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
                     <div class="form-text text-noti">(※최대 5개)</div>
                     <div id="acsIpListStrSpan"></div>
                 </div>

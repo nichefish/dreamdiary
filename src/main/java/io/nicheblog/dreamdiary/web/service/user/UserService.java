@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserProflMapstruct;
+import io.nicheblog.dreamdiary.web.model.user.UserAcsIpCmpstn;
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
 import io.nicheblog.dreamdiary.web.model.user.UserCttpcDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
@@ -104,15 +105,9 @@ public class UserService
     public UserDto.DTL regist(final UserDto.DTL userDto) throws Exception {
 
         // 접속 IP 사용 여부 체크박스 값 세팅
-        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) {
-            userDto.setUseAcsIpYn("N");
-        } else {
-            // 접속 IP 사용"Y"시 접속 IP 세팅
-            String acsIpListStr = userDto.getAcsIpListStr();
-            List<UserAcsIpDto> acsIpList = this.parseAcsIpListInfo(acsIpListStr);
-            userDto.setAcsIpList(acsIpList);
-        }
-
+        if (userDto.getAcsIpInfo() == null) userDto.setAcsIpInfo(new UserAcsIpCmpstn());
+        String acsIpListStr = userDto.getAcsIpInfo().getAcsIpListStr();
+        if (StringUtils.isEmpty(acsIpListStr)) userDto.getAcsIpInfo().setUseAcsIpYn("N");
         // Dto -> Entity
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserEntity userEntity = userMapstruct.toEntity(userDto);
@@ -210,15 +205,11 @@ public class UserService
      */
     @Override
     public UserDto.DTL modify(final UserDto.DTL userDto) throws Exception {
+
         // 접속 IP 사용 여부 체크박스 값 세팅
-        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) {
-            userDto.setUseAcsIpYn("N");
-        } else {
-            // 접속 IP 사용"Y"시 접속 IP 세팅
-            String acsIpListStr = userDto.getAcsIpListStr();
-            List<UserAcsIpDto> acsIpList = this.parseAcsIpListInfo(acsIpListStr);
-            userDto.setAcsIpList(acsIpList);
-        }
+        if (userDto.getAcsIpInfo() == null) userDto.setAcsIpInfo(new UserAcsIpCmpstn());
+        String acsIpListStr = userDto.getAcsIpInfo().getAcsIpListStr();
+        if (StringUtils.isEmpty(acsIpListStr)) userDto.getAcsIpInfo().setUseAcsIpYn("N");
 
         // update entity from dto :: (null로 넘어오는 password 미처리 위해)
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)

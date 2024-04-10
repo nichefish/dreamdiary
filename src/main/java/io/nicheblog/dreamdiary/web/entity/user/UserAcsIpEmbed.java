@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserAcsIpMapstruct;
+import io.nicheblog.dreamdiary.web.model.user.UserAcsIpCmpstn;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
@@ -48,7 +49,7 @@ public class UserAcsIpEmbed {
     /* ----- */
 
     /** 생성자 */
-    public UserAcsIpEmbed(UserDto dto) {
+    public UserAcsIpEmbed(UserAcsIpCmpstn dto) {
         this();
         this.useAcsIpYn = dto.getUseAcsIpYn();
         if (!CollectionUtils.isEmpty(dto.getAcsIpList())) {

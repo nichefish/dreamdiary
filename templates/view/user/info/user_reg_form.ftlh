@@ -161,23 +161,6 @@
                         });
                 });
             },
-            /** 패스워드 초기화 */
-            pwResetAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.resetPw"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.USER_PW_RESET_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
             /** 목록 화면 이동 */
             list: function() {
                 commons.util.blockUIReplace("${SiteUrl.USER_LIST!}<#if isMdf>?isBackToList=Y</#if>");
@@ -205,7 +188,7 @@
                 <span class="nav-icon">
                     <i class="bi bi-sort-down-alt"></i>
                 </span>
-                <span class="nav-text">전체 로그</span>
+                <span class="nav-text">계정 정보</span>
             </a>
         </li>
         <li class="nav-item">
@@ -213,7 +196,7 @@
                 <span class="nav-icon">
                     <i class="bi bi-people"></i>
                 </span>
-                <span class="nav-text">사용자별</span>
+                <span class="nav-text">프로필 정보</span>
             </a>
         </li>
         <li class="nav-item">
@@ -221,7 +204,7 @@
                 <span class="nav-icon">
                     <i class="bi bi-grid-1x2"></i>
                 </span>
-                <span class="nav-text">기능별</span>
+                <span class="nav-text">직원 인사정보</span>
             </a>
         </li>
     </ul>
@@ -229,12 +212,11 @@
     <!--begin::Form-->
     <form name="userRegForm" id="userRegForm" class="form mt-10" method="post" enctype="multipart/form-data">
         <input type="hidden" name="userNo" value="${user.userNo!}">
-        <input type="hidden" name="userProflYn" id="userProflYn" value="<#if (user.userInfo.userProflNo)??>Y<#else>N</#if>">
         <input type="hidden" name="atchFileNo" value="${user.atchFileNo!}">
         <!--begin::Card body-->
-        <div class="row">           <!--begin::Row-->
+        <div class="row mb-4">           <!--begin::Row-->
             <div class="col-xl-2">
-                <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-end required">
+                <div class="fw-bold col-form-label text-lg-center text-sm-end required">
                     <label for="userId">아이디</label>
                 </div>
             </div>
@@ -250,78 +232,47 @@
                         <span class="hidden-table">아이디 </span>중복 확인
                     </button>
                     <input type="hidden" name="isIdDupChckValid" id="isIdDupChckValid" value="N"/>
+                    <div id="userId_valid_span" class="text-danger"></div>
+                    <div id="isIdDupChck_valid_span" style="color:red;"></div>
                 </div>
             </#if>
             <#if isMdf>
                 <div class="col-xl-2">
                     <input type="hidden" class="form-control form-control-solid" name="userId" id="userId" value="${user.userId!}" maxlength="16" autocomplete="off" />
-                    <div class="fs-6 fw-bold col-form-label text-start">${user.userId!}</div>
+                    <div class="fw-bold col-form-label text-start">${user.userId!}</div>
                 </div>
             </#if>
         </div>
-        <div class="row mb-4">      <!-- errorMsgSpan -->
-            <div class="col-xl-2"></div>
-            <div class="col-xl-10">
-                <#if isReg>
-                    <div id="userId_valid_span" class="text-danger"></div>
-                    <div id="isIdDupChck_valid_span" style="color:red;"></div>
-                </#if>
-            </div>
-        </div>
-        <div class="row">           <!--begin::Row-->
-            <div class="col-xl-2">
-                <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-end  required">
-                    <label for="password">비밀번호</label>
+        <#if isReg>
+            <!--begin::Row-->
+            <div class="row mb-4">
+                <div class="col-xl-2">
+                    <div class="fw-bold col-form-label text-lg-center text-sm-end  required">
+                        <label for="password">비밀번호</label>
+                    </div>
                 </div>
-            </div>
-            <#if isReg>
                 <div class="col-xl-2">
                     <input type="password" class="form-control form-control-solid required no-space" name="password" id="password" autocomplete="off" />
+                    <div class="form-text text-noti">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
+                    <div id="password_valid_span"></div>
                 </div>
                 <div class="col-xl-2">
-                    <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-end required">
+                    <div class="fw-bold col-form-label text-sm-start text-lg-end required">
                         <label for="passwordCf">비밀번호 확인</label>
                     </div>
                 </div>
                 <div class="col-xl-2">
                     <input type="password" class="form-control form-control-solid no-space" name="passwordCf" id="passwordCf" autocomplete="off" />
+                    <div id="passwordCf_valid_span"></div>
                 </div>
                 <div class="col-xl-4">
                 </div>
-            </#if>
-            <#if isMdf>
-                <div class="col-xl-2">
-                    <div class="fs-6 fw-bold mb-3 text-start">
-                        <button type="button" class="btn btn-sm btn-secondary" onclick="Page.pwResetAjax();"
-                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호를 초기화합니다.&#10;로그인 정책 관리 메뉴에서&#10;초기화 값을 설정할 수&#10;있습니다.">
-                            비밀번호 초기화
-                        </button>
-                    </div>
-                </div>
-                <div class="col-xl-2">
-                    <div id="pwResetSpan"></div>
-                </div>
-                <div class="col-xl-6">
-                </div>
-            </#if>
+            </div>
+        </#if>
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2">
-            </div>
-            <div class="col-xl-10">
-                <div class="form-text text-noti">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
-            </div>
-        </div>
-        <div class="row mb-4">      <!-- errorMsgSpan -->
-            <div class="col-xl-2"></div>
-            <div class="col-xl-4">
-                <div id="password_valid_span"></div>
-            </div>
-            <div class="col-xl-6">
-                <div id="passwordCf_valid_span"></div>
-            </div>
-        </div>
-        <div class="row">           <!--begin::Row-->
-            <div class="col-xl-2">
-                <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-end required">
+                <div class="fw-bold col-form-label text-lg-center text-sm-end required">
                     <label for="authCd" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="계정 권한을 설정합니다.">
                         권한
@@ -336,18 +287,13 @@
                         <option value="${auth.authCd!}">${auth.authNm!}</option>
                     </#list>
                 </select>
-            </div>
-        </div>
-        <div class="row mb-4">      <!-- errorMsgSpan -->
-            <div class="col-xl-2"></div>
-            <div class="col-xl-10">
                 <div id="authCd_valid_span"></div>
             </div>
         </div>
         <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-        <div class="row" id="nickNmShowDiv" <#if user.userInfo??>style="display:none;"</#if>>           <!--begin::Row-->
+        <div class="row mb-4" id="nickNmShowDiv" <#if user.userInfo??>style="display:none;"</#if>>           <!--begin::Row-->
             <div class="col-xl-2">
-                <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-start required"
+                <div class="fw-bold col-form-label text-lg-center text-sm-start required"
                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원정보 미입력시&#10;사용할 이름입니다.&#10;(외부사용자, 임시계정 등)">
                     <label for="nickNm" class="cursor-help">
                         표시이름
@@ -358,18 +304,13 @@
             <div class="col-xl-2">
                 <input type="text" class="form-control form-control-solid required" name="nickNm" id="nickNm" value="${user.nickNm!}" maxlength="20" />
                 <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
-            </div>
-        </div>
-        <div class="row mb-4">      <!-- errorMsgSpan -->
-            <div class="col-xl-2"></div>
-            <div class="col-xl-10">
                 <span id="nickNm_valid_span"></span>
             </div>
         </div>
-
-        <div class="row">           <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2">
-                <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center required">
+                <div class="fw-bold col-form-label text-sm-start text-lg-center required">
                     <label for="emailId" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="이메일 주소입니다. 알림 및 계정 복구 등에 사용됩니다.">
                         E-mail
@@ -380,6 +321,7 @@
             <div class="col-lg-2 col-4">
                 <input type="text" class="form-control form-control-solid no-space" name="emailId" id="emailId"
                        <#if user.userInfo??>value="${user.userInfo.emailId!}"</#if> maxlength="20" />
+                <div id="emailId_valid_span"></div>
             </div>
             <div class="col-xl-2 col-1 d-flex-center fw-bold text-gray-700" style="width:2%;">
                 <label for="emailDomain"><label for="emailDomainSelect">@</label></label>
@@ -396,21 +338,13 @@
                     <option value="gmail.com">gmail.com</option>
                     <option value="kakao.com">kakao.com</option>
                 </select>
-            </div>
-        </div>
-        <div class="row mb-4">      <!-- errorMsgSpan -->
-            <div class="col-xl-2"></div>
-            <div class="col-xl-3">
-                <div id="emailId_valid_span"></div>
-            </div>
-            <div class="col-xl-2" style="width:2%;"></div>
-            <div class="col-xl-3">
                 <div id="emailDomain_valid_span"></div>
             </div>
         </div>
-        <div class="row">           <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2">
-                <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center">
+                <div class="fw-bold col-form-label text-sm-start text-lg-center">
                     <label for="cttpc" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원 연락처에 표시될&#10;전화번호입니다.">
                         전화번호
@@ -420,19 +354,14 @@
             <div class="col-xl-2">
                 <input type="text" class="form-control form-control-solid" name="userInfo.cttpc" id="cttpc"
                        maxlength="20" <#if user.userInfo??>value="${user.userInfo.cttpc!}"</#if> />
-                <div class="form-text">(※숫자만 입력)</div>
-            </div>
-        </div>
-        <div class="row mb-4">      <!-- errorMsgSpan -->
-            <div class="col-xl-2"></div>
-            <div class="col-xl-10">
+                <div class="form-text text-noti">(※숫자만 입력)</div>
                 <span id="cttpc_valid_span"></span>
             </div>
         </div>
         <#if isMdf>
             <div class="row mb-4">      <!--begin::Row-->
                 <div class="col-xl-2">
-                    <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-start">
+                    <div class="fw-bold col-form-label text-lg-center text-sm-start">
                         <label class="cursor-help"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="잠금 여부를 설정합니다.&#10;(잠금 상태인 계정은&#10;접속할 수 없습니다.)">
                             잠금여부
@@ -447,9 +376,9 @@
                 </div>
             </div>
         </#if>
-        <div class="row">           <!--begin::Row-->
+        <div class="row mb-4">           <!--begin::Row-->
             <div class="col-xl-2">
-                <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-start ">
+                <div class="fw-bold col-form-label text-lg-center text-sm-start ">
                     <label for="acsIpListStr" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="특정 IP에서만&#10;접속 가능하도록 설정합니다.">
                         접속 IP
@@ -469,19 +398,15 @@
                 <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
                 <div id="acsIpListSpan" class="mb-0" style="display:none;">
                     <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
-                    <div class="form-text">(※최대 5개)</div>
+                    <div class="form-text text-noti">(※최대 5개)</div>
                 </div>
-            </div>
-        </div>
-        <div class="row mb-4">      <!-- errorMsgSpan -->
-            <div class="col-xl-2"></div>
-            <div class="col-xl-10">
                 <span id="acsIpListStrSpan"></span>
             </div>
         </div>
-        <div class="row">           <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row">
             <div class="col-xl-2">
-                <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center">
+                <div class="fw-bold col-form-label text-sm-start text-lg-center">
                     <label for="cn" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="계정에 대한 관리용 정보를&#10;입력합니다.&#10;(입력한 내용은 사용자에게&#10;노출되지 않습니다.)">
                         계정 설명
@@ -493,7 +418,15 @@
             </div>
         </div>
 
-        <#include "/view/user/profl/_user_profl_reg_template.ftlh">    <!-- 직원정보 부분 파일 분리 -->
+        <!-- 사용자 프로필 정보 영역 -->
+        <div id="user_profl_div">
+            <!-- handlebars template goes in here -->
+        </div>
+
+        <!-- 사용자 인사정보 정보 영역 -->
+        <div id="user_emplym_div">
+            <!-- handlebars template goes in here -->
+        </div>
 
         <div class="separator my-6"></div>
 

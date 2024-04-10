@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.controller.user;
+package io.nicheblog.dreamdiary.web.controller.user.reqst;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
@@ -12,8 +12,8 @@ import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.model.user.UserReqstDto;
-import io.nicheblog.dreamdiary.web.service.user.UserReqstService;
+import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
+import io.nicheblog.dreamdiary.web.service.user.reqst.UserReqstService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;

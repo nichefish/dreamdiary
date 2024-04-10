@@ -1,14 +1,15 @@
-package io.nicheblog.dreamdiary.web.service.user;
+package io.nicheblog.dreamdiary.web.service.user.reqst;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.reqst.UserReqstEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.user.UserReqstMapstruct;
-import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
-import io.nicheblog.dreamdiary.web.model.user.UserReqstDto;
+import io.nicheblog.dreamdiary.web.mapstruct.user.reqst.UserReqstMapstruct;
+import io.nicheblog.dreamdiary.web.model.user.UserAcsIpCmpstn;
+import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
-import io.nicheblog.dreamdiary.web.repository.user.UserReqstRepository;
+import io.nicheblog.dreamdiary.web.repository.user.reqst.UserReqstRepository;
+import io.nicheblog.dreamdiary.web.service.user.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,6 @@ public class UserReqstService {
 
     @Resource(name = "userRepository")
     private UserRepository userRepository;
-    // @Resource(name = "userProflRepository")
-    // private UserInfoRepository userProflRepository;
     @Resource(name = "userReqstRepository")
     private UserReqstRepository userReqstRepository;
 
@@ -45,19 +44,14 @@ public class UserReqstService {
     /**
      * 사용자 관리 > 사용자 신규계정 신청
      * 계정 기본정보만 입력, 세부정보는 가입 승인 후 수정
+     * (등록 과정과 거의 동일하지만 일단 프로세스 분리)
      */
-    public UserReqstDto regist(
-            final UserReqstDto userReqst
-    ) throws Exception {
+    public UserReqstDto regist(final UserReqstDto userReqst) throws Exception {
+
         // 접속 IP 사용 여부 체크박스 값 세팅
-        if (StringUtils.isEmpty(userReqst.getAcsIpListStr())) {
-            userReqst.setUseAcsIpYn("N");
-        } else {
-            // 접속 IP 사용"Y"시 접속 IP 세팅
-            String acsIpListStr = userReqst.getAcsIpListStr();
-            List<UserAcsIpDto> acsIpList = userService.parseAcsIpListInfo(acsIpListStr);
-            userReqst.setAcsIpList(acsIpList);
-        }
+        if (userReqst.getAcsIpInfo() == null) userReqst.setAcsIpInfo(new UserAcsIpCmpstn());
+        String acsIpListStr = userReqst.getAcsIpInfo().getAcsIpListStr();
+        if (StringUtils.isEmpty(acsIpListStr)) userReqst.getAcsIpInfo().setUseAcsIpYn("N");
         // Dto -> Entity
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserReqstEntity userReqstEntity = userReqstMapstruct.toEntity(userReqst);

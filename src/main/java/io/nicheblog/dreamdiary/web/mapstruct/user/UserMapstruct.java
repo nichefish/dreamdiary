@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
+import io.nicheblog.dreamdiary.web.model.user.UserAcsIpCmpstn;
 import io.nicheblog.dreamdiary.web.model.user.UserCttpcDto;
 import io.nicheblog.dreamdiary.web.model.user.UserCttpcXlsxDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
@@ -22,7 +23,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseCrudMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, UserAcsIpEmbed.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, UserAcsIpEmbed.class, UserAcsIpCmpstn.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserMapstruct
         extends BaseCrudMapstruct<UserDto.DTL, UserDto.LIST, UserEntity> {
 
@@ -32,16 +33,12 @@ public interface UserMapstruct
      * Entity -> Dto
      */
     @Override
+    @Named("toDto")
+    @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
     @Mapping(target = "isCf", expression = "java(entity.getAcntStus() != null && \"Y\".equals(entity.getAcntStus().getCfYn()))")
+    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpCmpstn(entity.getAcsIpInfo()))")
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
-    // @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
-    // @Mapping(target = "authNm", expression = "java(entity.getAuthCdInfo() != null ? entity.getAuthCdInfo().getDtlCdNm() : null)")
     UserDto.DTL toDto(final UserEntity entity) throws Exception;
-
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
-    // @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
-    // @Mapping(target = "authNm", expression = "java(entity.getAuthCdInfo() != null ? entity.getAuthCdInfo().getDtlCdNm() : null)")
-    // UserDto toDto(final UserReqstEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
@@ -56,10 +53,6 @@ public interface UserMapstruct
     // @Mapping(target = "teamNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getTeamCd())) ? entity.getUserProfl().getTeamCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "emplymNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getEmplymCd())) ? entity.getUserProfl().getEmplymCdInfo().getDtlCdNm() : null)")
     // @Mapping(target = "ecnyDt", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getEcnyDt(), DatePtn.DATE) : null)")
-    // @Mapping(target = "cttpc", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getCttpc() : null)")
-    // @Mapping(target = "email", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getEmail() : null)")
-    // @Mapping(target = "brthdy", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getBrthdy(), DatePtn.DATE) : null)")
-    // @Mapping(target = "lunarYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getLunarYn() : null)")
     // @Mapping(target = "userProflYn", expression = "java(entity.getUserProfl() != null ? \"Y\" : \"N\")")
     // @Mapping(target = "retireYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getRetireYn() : null)")
     UserDto.LIST toListDto(final UserEntity entity) throws Exception;
@@ -69,7 +62,7 @@ public interface UserMapstruct
      */
     @Override
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
-    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpEmbed(dto))")
+    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpEmbed(dto.getAcsIpInfo()))")
     UserEntity toEntity(final UserDto.DTL dto) throws Exception;
 
     /**

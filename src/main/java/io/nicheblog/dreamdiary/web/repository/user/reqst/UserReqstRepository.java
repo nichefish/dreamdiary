@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.repository.user;
+package io.nicheblog.dreamdiary.web.repository.user.reqst;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.user.reqst.UserReqstEntity;

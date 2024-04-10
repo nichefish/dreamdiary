@@ -1,11 +1,12 @@
-package io.nicheblog.dreamdiary.web.mapstruct.user;
+package io.nicheblog.dreamdiary.web.mapstruct.user.reqst;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.reqst.UserReqstEntity;
-import io.nicheblog.dreamdiary.web.model.user.UserReqstDto;
+import io.nicheblog.dreamdiary.web.mapstruct.user.UserProflMapstruct;
+import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -29,14 +30,12 @@ public interface UserReqstMapstruct
      * Entity -> Dto
      */
     @Override
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
-    @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
-    // @Mapping(target = "authNm", expression = "java(entity.getAuthCdInfo() != null ? entity.getAuthCdInfo().getDtlCdNm() : null)")
     UserReqstDto toDto(final UserReqstEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
+    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpEmbed(dto.getAcsIpInfo()))")
     UserReqstEntity toEntity(final UserReqstDto dto) throws Exception;
 
     /**
@@ -44,6 +43,5 @@ public interface UserReqstMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
     void updateFromDto(final UserReqstDto dto, final @MappingTarget UserReqstEntity entity) throws Exception;
 }

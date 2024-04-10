@@ -60,10 +60,10 @@
             <i class="bi bi-trash"></i>(내 글)삭제
         </button>
     <#elseif isMngr!false>
-        <button type="button" class="btn btn-sm btn-light btn-active-primary me-2 btn-sm"
+        <button type="button" class="btn btn-sm btn-light btn-active-danger me-2 btn-sm"
                 onclick="${closerNm}.delAjax();"
-                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
-            <i class="bi bi-pencil-square"></i>(관리자+)삭제
+                data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
+            <i class="bi bi-trash"></i>(관리자+)삭제
         </button>
     </#if>
 </#macro>
