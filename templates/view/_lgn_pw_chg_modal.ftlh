@@ -2,6 +2,97 @@
   -- 로그인 화면 > 비밀번호 변경 Modal
   -- @included_in : lgn_form
   -->
+
+<script>
+    const PwChg = function() {
+        return {
+            init: function () {
+                <#if isCredentialExpired!false || needsPwReset!false>
+                    const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
+                    commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
+
+                    /** jquery :: validation */
+                    $(function(){
+                        $("#lgnPwChgForm").validate({
+                            submitHandler: function() {
+                                PwChg.lgnPwChgAjax();
+                            },
+                            errorPlacement : function(error, element) {
+                                commons.validate.errorSpan(error, element);        // 공통 함수로 분리
+                            },
+                            rules: {
+                                newPw: { regex: commons.validate.pwRegex },
+                                newPwCf: { equalTo: "#newPw" }
+                            },
+                            ignore: [],         // hidden 필드도 검증하기 위함
+                            messages: {
+                                newPw: { regex: "변경할 비밀번호가 형식에 맞지 않습니다." },
+                                newPwCf: { equalTo: "변경할 비밀번호에 입력한 값과 동일하게 입력해야 합니다." }
+                            },
+                        });
+                    });
+                    $.validator.addMethod("regex", function(value, element, regex) {
+                        const regExp = new RegExp(regex);
+                        return (this.optional(element) || regExp.test(value));
+                    });
+                </#if>
+
+                <#if isDupIdLgn!false>
+                Swal.fire({
+                    title: <@spring.message "view.result.dupLgn"/>,
+                    text: <@spring.message "view.cnfm.dupLgn"/>,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "로그인",
+                    cancelButtonText: "취소",
+                }).then(function(result) {
+                    if (result.value) {
+                        $("#userId").val("${userId!}");
+                        $("#isDupIdLgnProc").val("Y");
+                        $("#password").attr("disabled", "disabled");
+                        Page.lgn();
+                    } else {
+                        $("#isDupIdLgnProc").val("");
+                    }
+                });
+                </#if>
+
+                /** jquery :: validation */
+                commons.validate.validateForm("#lgnForm");
+            },
+            /** 로그인 처리 */
+            lgn: function() {
+                commons.util.blockUISubmit("#lgnForm", "${SiteUrl.AUTH_LGN_PROC!}");
+            },
+            /** 비밀번호 수정 처리(Ajax) */
+            lgnPwChgAjax: function() {
+                const url = '${SiteUrl.AUTH_LGN_PW_CHG_AJAX!}';
+                let ajaxData = { "userId" : $("#lgnUserId").val(), "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };
+                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    Swal.fire({
+                        text: res.message
+                    }).then(function() {
+                        $("#lgnPwChgForm")[0].reset();
+                        if (res.result) {
+                            $("#userId").val(userId);
+                            $("#password").val(password);
+                            Page.lgn();
+                        }
+                    });
+                });
+            },
+            /** 신규계정 신청 페이지로 이동 */
+            reqstUser: function() {
+                commons.util.blockUIReplace("${SiteUrl.USER_REQST_REG_FORM!}");
+            },
+        }
+    }();
+
+    /** 페이지 초기화시 처리 */
+    $(document).ready(function() {
+        Page.init();
+    });
+</script>
 <div class="modal fade" tabindex="-1" id="lgn_pw_chg_modal" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">

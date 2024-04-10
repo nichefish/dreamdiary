@@ -7,50 +7,24 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
                 // request에서 불러온 에러 메세지 표시
                 const errorMsgSpan = $("#errorMsgSpan");
                 errorMsgSpan.html("");
                 <#if errorMsg??>
-                    $("#userIdSpan").text("");
-                    $("#passwordSpan").text("");
+                    $("#userId_valid_span").text("");
+                    $("#password_valid_span").text("");
                     errorMsgSpan.html("${errorMsg!}".replace(/&lt;br&gt;/g, '<br/>'));   // 줄바꿈 처리
                 </#if>
 
-                commons.util.enterKey("#userId", Page.lgn);       // 엔터키 처리
-                commons.util.enterKey("#password", Page.lgn);       // 엔터키 처리
+                /** jquery :: validation */
+                commons.validate.validateForm("#lgnForm");
+                // 엔터키 처리
+                commons.util.enterKey(".enter", Page.lgn);
 
-                <#if isCredentialExpired!false || needsPwReset!false>
-                    let data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
-                    commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
-                    /** jquery :: validation */
-                    $(function(){
-                        $("#lgnPwChgForm").validate({
-                            submitHandler: function() {
-                                Page.lgnPwChgAjax();
-                            },
-                            errorPlacement : function(error, element) {
-                                commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                            },
-                            rules: {
-                                newPw: { regex: commons.validate.pwRegex },
-                                newPwCf: { equalTo: "#newPw" }
-                            },
-                            ignore: [],         // hidden 필드도 검증하기 위함
-                            messages: {
-                                newPw: { regex: "변경할 비밀번호가 형식에 맞지 않습니다." },
-                                newPwCf: { equalTo: "변경할 비밀번호에 입력한 값과 동일하게 입력해야 합니다." }
-                            },
-                        });
-                    });
-                    $.validator.addMethod("regex", function(value, element, regex) {
-                        const regExp = new RegExp(regex);
-                        return (this.optional(element) || regExp.test(value));
-                    });
-                </#if>
-
+                // 중복 로그인시 기존 로그인 끊기 팝업 호출
                 <#if isDupIdLgn!false>
                     Swal.fire({
                         title: <@spring.message "view.result.dupLgn"/>,
@@ -70,37 +44,17 @@
                         }
                     });
                 </#if>
-
-                /** jquery :: validation */
-                commons.validate.validateForm("#lgnForm");
             },
             /** 로그인 처리 */
             lgn: function() {
                 commons.util.blockUISubmit("#lgnForm", "${SiteUrl.AUTH_LGN_PROC!}");
-            },
-            /** 비밀번호 수정 처리(Ajax) */
-            lgnPwChgAjax: function() {
-                const url = '${SiteUrl.AUTH_LGN_PW_CHG_AJAX!}';
-                let ajaxData = { "userId" : $("#lgnUserId").val(), "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    Swal.fire({
-                        text: res.message
-                    }).then(function() {
-                        $("#lgnPwChgForm")[0].reset();
-                        if (res.result) {
-                            $("#userId").val(userId);
-                            $("#password").val(password);
-                            Page.lgn();
-                        }
-                    });
-                });
             },
             /** 신규계정 신청 페이지로 이동 */
             reqstUser: function() {
                 commons.util.blockUIReplace("${SiteUrl.USER_REQST_REG_FORM!}");
             },
         }
-    }();
+    })();
 
     /** 페이지 초기화시 처리 */
     $(document).ready(function() {
@@ -109,7 +63,6 @@
 </script>
 <style>
     .app-page {
-        /* 이미지 경로를 여기에 추가하세요. 예: 'background.jpg' */
         background-image: url("/media/img/dreamdiary.jpg");
         height: 100%;
         background-position: center;
@@ -124,27 +77,31 @@
     <div class="aside-logo flex-column-auto mb-20" style="height:105px;">
         <!-- -->
     </div>
-    <div class="d-flex justify-content-center fs-4 mb-4 fw-bold blink" style="letter-spacing:.6px">
+    <div class="d-flex justify-content-center fs-4 mb-4 pe-10 fw-bold ls-1 blink">
         <i class="bi bi-cloud-moon fs-2 text-dark"></i>
-        <span class="px-2">nichefish's dreamdiary...</span>
+        <span class="px-2">${SiteUrl.DOMAIN!}</span>
         <i class="bi bi-stars fs-2 text-dark"></i>
     </div>
-    <form class="form w-100 pe-14" name="lgnForm" id="lgnForm" novalidate="novalidate" method="post">
+    <form class="form w-100 pe-14" name="lgnForm" id="lgnForm" method="post">
         <div class="mb-5">
             <label class="form-label fs-6 fw-bolder" for="userId">아이디</label>
-            <input type="text" name="userId" id="userId" class="form-control form-control-lg enter required" autocomplete="off" maxlength="20" placeholder="아이디를 입력하세요." />
+            <input type="text" name="userId" id="userId" class="form-control form-control-lg enter required"
+                   autocomplete="off" maxlength="20" placeholder="아이디를 입력하세요."
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="아이디를 입력하세요." />
                 <#if isDupIdLgn!false>
                     <input type="hidden" name="isDupIdLgnProc" id="isDupIdLgnProc">
                 </#if>
             <div class="h-15px">
-                <span id="userIdSpan" class="text-danger"></span>
+                <span id="userId_valid_span" class="text-danger"></span>
             </div>
         </div>
         <div>
             <label class="form-label fw-bolder fs-6 mb-1" for="password">비밀번호</label>
-            <input type="password" name="password" id="password" class="form-control form-control-lg enter required" autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."/>
+            <input type="password" name="password" id="password" class="form-control form-control-lg enter required"
+                   autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호를 입력하세요." />
             <div class="mb-3 h-15px">
-                <span id="passwordSpan" class="text-danger"></span>
+                <span id="password_valid_span" class="text-danger"></span>
             </div>
         </div>
         <div class="text-left">
@@ -160,7 +117,9 @@
             </label>
         </div>
         <div class="text-center mb-4 mt-12">
-            <button type="button" class="btn btn-lg btn-light-primary opacity-75 w-100" onclick="Page.lgn();">
+            <button type="button" class="btn btn-lg btn-light-primary opacity-75 w-100"
+                    onclick="Page.lgn();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="로그인합니다." >
                 <span class="indicator-label">Sign In</span>
                 <span class="indicator-progress">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -168,7 +127,8 @@
             </button>
         </div>
         <div class="d-flex justify-content-end mb-5">
-            <button type="button" class="badge btn btn-sm btn-light-primary badge-outlined btn-outlined fw-light opacity-75 blink" onclick="Page.reqstUser();"
+            <button type="button" class="badge btn btn-sm btn-light-primary badge-outlined btn-outlined fw-light opacity-75 blink"
+                    onclick="Page.reqstUser();"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="계정 신청 화면으로&#10;이동합니다.">
                 <i class="bi bi-person-plus-fill blink"></i>신규 계정 신청
             </button>
