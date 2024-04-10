@@ -37,7 +37,6 @@ public interface UserReqstMapstruct
     /**
      * Dto -> Entity
      */
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
     UserReqstEntity toEntity(final UserReqstDto dto) throws Exception;
 
     /**

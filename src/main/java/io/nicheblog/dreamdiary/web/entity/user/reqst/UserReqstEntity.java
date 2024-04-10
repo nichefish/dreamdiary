@@ -54,7 +54,7 @@ public class UserReqstEntity
     private String userId;
 
     /** 비밀번호 :: 암호화된 비밀번호(64bit)를 저장하기 위해 길이=64이다. */
-    @Column(name = "PASSWORD", length = 64)
+    @Column(name = "password", length = 64)
     @Comment("비밀번호")
     private String password;
 
@@ -70,7 +70,7 @@ public class UserReqstEntity
     public UserAcsIpEmbed acsIpInfo;
 
     /** 표시이름 :: 사용자 정보가 없을때 표시되는 이름 */
-    @Column(name = "NICK_NM", length = 50)
+    @Column(name = "nick_nm", length = 50)
     @Comment("표시이름")
     private String nickNm;
 
@@ -80,9 +80,9 @@ public class UserReqstEntity
     private String proflImgUrl;
 
     /** 계정 설명 (관리자용) */
-    @Column(name = "user_dc", length = 1000)
+    @Column(name = "cn", length = 1000)
     @Comment("계정 설명")
-    private String userDc;
+    private String cn;
 
     /** 사용자 프로필 정보 */
     @OneToOne(mappedBy = "user")
@@ -92,6 +92,6 @@ public class UserReqstEntity
 
     /** 계정 상태 정보 (위임) */
     @Embedded
-    public UserStusEmbed acntStus;
+    public UserStusEmbed acntStus = new UserStusEmbed("Y", "N");
 
 }
