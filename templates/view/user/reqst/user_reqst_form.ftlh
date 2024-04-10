@@ -420,22 +420,27 @@
             <!-- handlebars template goes in here -->
         </div>
 
+        <!-- 사용자 인사정보 정보 영역 -->
+        <div id="user_emplym_div">
+            <!-- handlebars template goes in here -->
+        </div>
+
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-between">
             <div>
                 <div class="d-flex gap-2">
                     <div id="user_profl_reg_btn_div">
-                        <button type="button" id="userProflRegBtn" class="btn btn-sm btn-primary blink"
+                        <button type="button" id="userProflBtn" class="btn btn-sm btn-primary blink"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="사용자 프로필 정보를&#10;추가합니다."
-                                onclick="UserInfo.enableUserProfl();">
+                                onclick="UserProfl.enableUserProfl();">
                             프로필 정보 추가+
                         </button>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-sm btn-primary blink"
-                                data-bs-toggle="tooltip" data-bs-placement="top" title="입사인원에 대하여&#10;직원 인사정보를 추가합니다."
-                                onclick="UserInfo.enableUserProfl();">
-                            직원 정보 추가+
+                        <button type="button" id="userEmplymBtn" class="btn btn-sm btn-primary blink"
+                                onclick="UserEmplym.enableUserEmplym();"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="입사인원에 대하여&#10;직원 인사정보를 추가합니다.">
+                            직원 인사정보 추가+
                         </button>
                         <div class="text-noti">
                             ※회사 소속인 경우 직원 인사정보를 입력해주세요.
@@ -461,6 +466,7 @@
 </div>
 
 <#include "/view/user/profl/_user_profl_reg_area.ftlh">       <!-- 사용자 프로필 정보 영역 -->
+<#include "/view/user/emplym/_user_emplym_reg_area.ftlh">       <!-- 사용자 인사정보 영역 -->
 
 <!-- #include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/atch_file/_atch_file_area.ftlh">

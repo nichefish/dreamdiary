@@ -226,8 +226,8 @@ commons.validate = (function() {
          * @param: error, element
          */
         errorSpan: function (error, element) {
-            let $errorSpan = $("#" + $(element).attr("id") + "Span");
-            $errorSpan.append(error).css("color", "red").focus();
+            const $errorSpan = $("#" + $(element).attr("id") + "_valid_span");
+            $errorSpan.append(error).addClass("text-danger").focus();
         },
 
         /**

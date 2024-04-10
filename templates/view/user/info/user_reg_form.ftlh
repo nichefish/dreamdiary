@@ -21,17 +21,17 @@
 
                 // 권한 유효성검사 바꿀때마다 지우기
                 $("#authCd").on("change", function() {
-                    if ($(this).val() !== "") $("#authCdSpan").text("");
+                    if ($(this).val() !== "") $("#authCd_valid_span").text("");
                 });
 
                 <#if isReg>
                     // 등록화면:: 사용자 ID 변경입력시 중복체크 통과여부 초기화
                     $("#userId").on("keyup", function() {
-                        $("#userIdSpan").empty();
+                        $("#userId_valid_span").empty();
                         $("#isIdDupChckValid").val("N");
                         $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
                     }).on("keydown", function() {
-                        $("#userIdSpan").text("");
+                        $("#userId_valid_span").text("");
                         $("#isIdDupChckValid").val("N");
                         $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
                     });
@@ -81,7 +81,7 @@
                                 showCancelButton: true,
                             }).then(function(result) {
                                 if (!result.value) return;
-                                Page.<#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax();
+                                Page.regAjax();
                             });
                         },
                         errorPlacement : function(error, element) {
@@ -89,36 +89,30 @@
                         },
                         ignore: [],         // hidden 필드도 검증하기 위함
                         rules: {
-                            authCd: { required:true },
-                            nickNm: { required:function() {return $("#userProflYn").val() === "N"}, maxlength:20 },
                             <#if isReg>
                                 userId: { required:true, minlength:4, maxlength:16 },
                                 isIdDupChckValid: { dupChckValid:true },
-                                password: { required:true, minlength:9, maxlength:20, regex:commons.validate.pwRegex },
+                                password: { minlength:9, maxlength:20, regex:commons.validate.pwRegex },
                                 passwordCf: { equalTo:"#password", maxlength:20 },
                             </#if>
                             "userProfl.userNm": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
                             "userProfl.cmpyCd": { required:function() {return $("#userProflYn").val() === "Y"} },
                             "userProfl.teamCd": { required:function() {return $("#userProflYn").val() === "Y"} },
                             "userInfo.emplymCd": { required:function() {return $("#userProflYn").val() === "Y"} },
-                            "userInfo.cttpc": { required:function() {return $("#userProflYn").val() === "Y"}, minlength:11, maxlength:20 },
                             "userInfo.emailId": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
                             "userInfo.emailDomain": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
                         },
                         messages: {
-                            authCd: { required:"권한은 필수 항목입니다." },
-                            nickNm: { required:"표시이름은 필수 항목입니다.", maxlength:"표시이름은 {0}자 이하로 입력해야 합니다." },
                             <#if isReg>
                                 userId: { required:"아이디는 필수 항목입니다.", minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
                                 isIdDupChckValid: { dupChckValid:"아이디 중복 체크는 필수 항목입니다." },
-                                password: { required:"비밀번호는 필수 항목입니다.", minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
+                                password: { minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
                                 passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
                             </#if>
                             "userInfo.userNm": { required:"이름은 필수 항목입니다.", maxlength:"이름은 {0}자 이하로 입력해야 합니다." },
                             "userInfo.cmpyCd": { required:"소속회사는 필수 항목입니다." },
                             "userInfo.teamCd": { required:"소속팀은 필수 항목입니다." },
                             "userInfo.emplymCd": { required:"재직구분은 필수 항목입니다." },
-                            "userInfo.cttpc": { required:"전화번호는 필수 항목입니다.", minlength:"전화번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"전화번호는 {0}자 이하로 입력해야 합니다." },
                             "userInfo.emailId": { required:"이메일 ID는 필수 항목입니다.", maxlength:"이메일 ID는 {0}자 이하로 입력해야 합니다." },
                             "userInfo.emailDomain": { required:"이메일 도메인은 필수 항목입니다.", maxlength:"이메일 도메인은 {0}자 이하로 입력해야 합니다." },
                         },
@@ -134,30 +128,30 @@
             },
             /** 아이디 중복 체크(Ajax) */
             userIdDupChckAjax: function() {
-                const userIdSpan = $("#userIdSpan");
+                const userId_valid_span = $("#userId_valid_span");
                 const userId = $("#userId").val();
                 const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
                 if (!idRegex.test(userId)) {
-                    userIdSpan.text("아이디가 형식에 맞지 않습니다.\n(영문소문자 (+숫자 포함 가능) 4~16자)").css("color", "red");
+                    userId_valid_span.text("아이디가 형식에 맞지 않습니다.\n(영문소문자 (+숫자 포함 가능) 4~16자)").css("color", "red");
                     return false;
                 }
                 const url = "${SiteUrl.USER_ID_DUP_CHK_AJAX!}";
                 let ajaxData = { "userId": userId };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    userIdSpan.text(res.message);
+                    userId_valid_span.text(res.message);
                     if (res.rslt) {
-                        userIdSpan.css("color", "blue");
+                        userId_valid_span.css("color", "blue");
                         $("#isIdDupChckValid").val("Y");
-                        $("#isIdDupChckValidSpan").text("");
+                        $("#isIdDupChck_valid_span").text("");
                         $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
                     } else {
-                        userIdSpan.css("color", "red");
+                        userId_valid_span.css("color", "red");
                         $("#isIdDupChckValid").val("N");
                     }
                 });
             },
             /** 등록/수정 처리(Ajax) */
-            <#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax: function() {
+            regAjax: function() {
                 const url = "<#if isReg>${SiteUrl.USER_REG_AJAX!}</#if><#if isMdf>${SiteUrl.USER_MDF_AJAX!}</#if>";
                 let ajaxData = new FormData($("#userRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
@@ -246,7 +240,7 @@
             </div>
             <#if isReg>
                 <div class="col-xl-2 col-8">
-                    <input type="text" class="form-control form-control-solid no-space" name="userId" id="userId" value="${user.userId!}" maxlength="16" />
+                    <input type="text" class="form-control form-control-solid required no-space" name="userId" id="userId" value="${user.userId!}" maxlength="16" />
                     <div class="form-text">(※영문소문자, 숫자 포함 4~16자)</div>
                 </div>
                 <div class="col-xl-2 col-4">
@@ -269,8 +263,8 @@
             <div class="col-xl-2"></div>
             <div class="col-xl-10">
                 <#if isReg>
-                    <div id="userIdSpan" class="text-red"></div>
-                    <div id="isIdDupChckValidSpan" style="color:red;"></div>
+                    <div id="userId_valid_span" class="text-danger"></div>
+                    <div id="isIdDupChck_valid_span" style="color:red;"></div>
                 </#if>
             </div>
         </div>
@@ -282,7 +276,7 @@
             </div>
             <#if isReg>
                 <div class="col-xl-2">
-                    <input type="password" class="form-control form-control-solid no-space" name="password" id="password" autocomplete="off" />
+                    <input type="password" class="form-control form-control-solid required no-space" name="password" id="password" autocomplete="off" />
                 </div>
                 <div class="col-xl-2">
                     <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-end required">
@@ -319,23 +313,24 @@
         <div class="row mb-4">      <!-- errorMsgSpan -->
             <div class="col-xl-2"></div>
             <div class="col-xl-4">
-                <div id="passwordSpan"></div>
+                <div id="password_valid_span"></div>
             </div>
             <div class="col-xl-6">
-                <div id="passwordCfSpan"></div>
+                <div id="passwordCf_valid_span"></div>
             </div>
         </div>
         <div class="row">           <!--begin::Row-->
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-end required">
                     <label for="authCd" class="cursor-help"
-                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="계정 권한을 설정합니다.&#10;-사용자 : &#10;일반 사용자 계정입니다.&#10;-관리자 : &#10;관리자 메뉴 및 관리 기능에&#10;접근 가능합니다.&#10;-개발자 : &#10;개발용 권한이며&#10;관리자 권한을 겸합니다.">
+                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="계정 권한을 설정합니다.">
                         권한
+                        <i class="bi bi-question-circle"></i>
                     </label>
                 </div>
             </div>
             <div class="col-xl-2">
-                <select name="authList[0].authCd" id="authCd" class="form-select form-select-solid"
+                <select name="authList[0].authCd" id="authCd" class="form-select form-select-solid required"
                         data-control="select2" data-allow-clear="true" data-hide-search="true" data-close-on-select="false" multiple="multiple">
                     <#list authRoleList![] as auth>
                         <option value="${auth.authCd!}">${auth.authNm!}</option>
@@ -346,7 +341,7 @@
         <div class="row mb-4">      <!-- errorMsgSpan -->
             <div class="col-xl-2"></div>
             <div class="col-xl-10">
-                <div id="authCdSpan"></div>
+                <div id="authCd_valid_span"></div>
             </div>
         </div>
         <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
@@ -354,18 +349,84 @@
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label text-lg-center text-sm-start required"
                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원정보 미입력시&#10;사용할 이름입니다.&#10;(외부사용자, 임시계정 등)">
-                    <label for="nickNm" class="cursor-help">표시이름</label>
+                    <label for="nickNm" class="cursor-help">
+                        표시이름
+                        <i class="bi bi-question-circle"></i>
+                    </label>
                 </div>
             </div>
             <div class="col-xl-2">
-                <input type="text" class="form-control form-control-solid" name="nickNm" id="nickNm" value="${user.nickNm!}" maxlength="20" />
-                <div class="form-text">(※한글/영문 최대 20자)</div>
+                <input type="text" class="form-control form-control-solid required" name="nickNm" id="nickNm" value="${user.nickNm!}" maxlength="20" />
+                <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
             </div>
         </div>
         <div class="row mb-4">      <!-- errorMsgSpan -->
             <div class="col-xl-2"></div>
             <div class="col-xl-10">
-                <span id="nickNmSpan"></span>
+                <span id="nickNm_valid_span"></span>
+            </div>
+        </div>
+
+        <div class="row">           <!--begin::Row-->
+            <div class="col-xl-2">
+                <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center required">
+                    <label for="emailId" class="cursor-help"
+                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="이메일 주소입니다. 알림 및 계정 복구 등에 사용됩니다.">
+                        E-mail
+                        <i class="bi bi-question-circle"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-2 col-4">
+                <input type="text" class="form-control form-control-solid no-space" name="emailId" id="emailId"
+                       <#if user.userInfo??>value="${user.userInfo.emailId!}"</#if> maxlength="20" />
+            </div>
+            <div class="col-xl-2 col-1 d-flex-center fw-bold text-gray-700" style="width:2%;">
+                <label for="emailDomain"><label for="emailDomainSelect">@</label></label>
+            </div>
+            <div class="col-lg-2 col-5 vertical-center">
+                <input type="text" class="form-control form-control-solid no-space" name="emailDomain" id="emailDomain"
+                       value="<#if user.userInfo??>${user.userInfo.emailDomain!}<#else>gmail.com</#if>" maxlength="20" />
+            </div>
+            <div class="col-xl-2 col-1">
+                <select name="userInfo.emailDomainSelect" id="emailDomainSelect" class="form-select form-select-solid">
+                    <option value="">직접입력</option>
+                    <option value="gmail.com" <#if isReg!false>selected</#if>>gmail.com</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="kakao.com">kakao.com</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-4">      <!-- errorMsgSpan -->
+            <div class="col-xl-2"></div>
+            <div class="col-xl-3">
+                <div id="emailId_valid_span"></div>
+            </div>
+            <div class="col-xl-2" style="width:2%;"></div>
+            <div class="col-xl-3">
+                <div id="emailDomain_valid_span"></div>
+            </div>
+        </div>
+        <div class="row">           <!--begin::Row-->
+            <div class="col-xl-2">
+                <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center">
+                    <label for="cttpc" class="cursor-help"
+                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원 연락처에 표시될&#10;전화번호입니다.">
+                        전화번호
+                    </label>
+                </div>
+            </div>
+            <div class="col-xl-2">
+                <input type="text" class="form-control form-control-solid" name="userInfo.cttpc" id="cttpc"
+                       maxlength="20" <#if user.userInfo??>value="${user.userInfo.cttpc!}"</#if> />
+                <div class="form-text">(※숫자만 입력)</div>
+            </div>
+        </div>
+        <div class="row mb-4">      <!-- errorMsgSpan -->
+            <div class="col-xl-2"></div>
+            <div class="col-xl-10">
+                <span id="cttpc_valid_span"></span>
             </div>
         </div>
         <#if isMdf>
@@ -421,18 +482,18 @@
         <div class="row">           <!--begin::Row-->
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center">
-                    <label for="userDc" class="cursor-help"
+                    <label for="cn" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="계정에 대한 관리용 정보를&#10;입력합니다.&#10;(입력한 내용은 사용자에게&#10;노출되지 않습니다.)">
                         계정 설명
                     </label>
                 </div>
             </div>
             <div class="col-xl-9">
-                <textarea name="userDc" id="userDc" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500">${user.userDc!}</textarea>
+                <textarea name="cn" id="cn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500">${user.cn!}</textarea>
             </div>
         </div>
 
-        <#include "/view/user/info/_user_info_reg_template.ftlh">    <!-- 직원정보 부분 파일 분리 -->
+        <#include "/view/user/profl/_user_profl_reg_template.ftlh">    <!-- 직원정보 부분 파일 분리 -->
 
         <div class="separator my-6"></div>
 

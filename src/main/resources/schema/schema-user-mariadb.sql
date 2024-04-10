@@ -14,7 +14,9 @@ CREATE TABLE IF NOT EXISTS user (
     password VARCHAR(64) COMMENT '비밀번호',
     nick_nm VARCHAR(50) COMMENT '사용자 표시이름',
     profl_img_url VARCHAR(256) COMMENT '프로필 이미지 경로',
-    user_dc LONGTEXT COMMENT '사용자 설명 (관리자용)',
+    cn LONGTEXT COMMENT '사용자 설명 (관리자용)',
+    cttpc VARCHAR(20) COMMENT '연락처',        -- 기본 연락처
+    email VARCHAR(40) COMMENT '이메일',        -- 기본 이메일:: 계정복구 등에 사용함
     -- ACCOUNT_STATUS
     locked_yn CHAR(1) DEFAULT 'N' COMMENT '잠금 여부 (Y/N)',
     use_acs_ip_yn CHAR(1) DEFAULT 'N' COMMENT '접속IP 사용 여부 (Y/N)',
@@ -54,11 +56,11 @@ CREATE TABLE IF NOT EXISTS user_profl (
     user_profl_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 프로필 고유 번호 (PK)',
     user_no INT COMMENT '사용자 고유 번호',
     user_nm VARCHAR(50) COMMENT '사용자 이름',
-    cttpc VARCHAR(20) COMMENT '연락처',
-    email VARCHAR(40) COMMENT '이메일',
+    addr VARCHAR(500) COMMENT '주소',
+    zipcode VARCHAR(20) COMMENT '우편번호',
     brthdy DATE COMMENT '생일',
     lunar_yn CHAR(1) DEFAULT 'N' COMMENT '음력 여부 (Y/N)',
-    profl_dc VARCHAR(2000) COMMENT '프로필 비고',
+    profl_cn VARCHAR(2000) COMMENT '프로필(자기소개)',
     -- ATCH_FILE
     atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
@@ -75,6 +77,8 @@ CREATE TABLE IF NOT EXISTS user_profl (
 CREATE TABLE IF NOT EXISTS user_emplym (
     user_emplym_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 인사정보 고유 번호 (PK)',
     user_no INT COMMENT '사용자 고유 번호',
+    emplym_cttpc VARCHAR(20) COMMENT '연락처',        -- 기본 연락처
+    emplym_email VARCHAR(40) COMMENT '이메일',        -- 기본 이메일:: 계정복구 등에 사용함
     cmpy_cd VARCHAR(30) COMMENT '회사 코드',
     team_cd VARCHAR(30) COMMENT '팀 코드',
     emplym_cd VARCHAR(30) COMMENT '재직구분 코드',
@@ -85,7 +89,7 @@ CREATE TABLE IF NOT EXISTS user_emplym (
     apntc_yn CHAR(1) DEFAULT 'N' COMMENT '수습 여부 (Y/N)',
     acnt_bank VARCHAR(50) COMMENT '급여 은행',
     acnt_no VARCHAR(50) COMMENT '급여 계좌번호',
-    emplym_dc VARCHAR(2000) COMMENT '인사정보 비고',
+    emplym_cn VARCHAR(2000) COMMENT '인사정보 비고',
     -- ATCH_FILE
     atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
@@ -143,14 +147,3 @@ CREATE TABLE user_auth_role (
 --     DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 -- );
 --
--- -- TODO: 사용자 정보 - 기타항목
--- CREATE TABLE IF NOT EXISTS user_profl_ITEM (
---     user_profl_ITEM_NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
---     user_profl_no INT,
---     ITEM_NM VARCHAR(100),
---     ITEM_CN VARCHAR(200),
---     ITEM_DC VARCHAR(2000),
---     SORT_ORDR INT DEFAULT 0 COMMENT '정렬 순서',
---     -- AUDIT
---     DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
--- );
