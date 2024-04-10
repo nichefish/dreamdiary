@@ -280,6 +280,8 @@
                 <select name="authListStr" id="authCd" class="form-select form-select-solid required"
                         data-control="select2" data-allow-clear="true" data-hide-search="true" data-close-on-select="false" multiple="multiple">
                     <#list authRoleList![] as auth>
+                        <#assign is_selected = user.authStrList?? && user.authStrList?seq_contains(auth.authCd) />
+                        <option value="${auth.authCd!}" <#if is_selected>selected</#if>>${auth.authNm!}</option>
                     </#list>
                 </select>
                 <div id="authCd_valid_span"></div>

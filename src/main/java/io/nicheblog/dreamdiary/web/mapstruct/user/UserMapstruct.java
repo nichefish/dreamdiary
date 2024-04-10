@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.MapstructHelper;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
+import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpCmpstn;
@@ -14,6 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+import javax.persistence.PostLoad;
+import java.util.stream.Collectors;
+
 /**
  * UserMapstruct
  * <pre>
@@ -21,7 +25,7 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudMapstruct
+ * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속:: 기본 변환 매핑 로직 상속
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, UserAcsIpEmbed.class, UserAcsIpCmpstn.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserMapstruct
@@ -98,4 +102,17 @@ public interface UserMapstruct
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
     void updateFromDto(final UserDto.DTL dto, final @MappingTarget UserEntity entity) throws Exception;
+
+    /**
+     * Entity -> Dto
+     */
+    @AfterMapping
+    default void mapBaseListFields(final UserEntity entity, final @MappingTarget UserDto dto) throws Exception {
+        // 권한 문자열 목록 세팅
+        dto.setAuthStrList(entity.getAuthList().stream()
+                .map(UserAuthRoleEntity::getAuthCd)
+                .collect(Collectors.toList()));
+    }
+
+
 }

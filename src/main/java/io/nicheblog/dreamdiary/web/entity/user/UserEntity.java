@@ -40,13 +40,6 @@ import java.util.stream.Collectors;
 public class UserEntity
         extends BaseAtchEntity {
 
-    @PostLoad
-    private void init() {
-        this.authStrList = this.authList.stream()
-                .map(UserAuthRoleEntity::getAuthCd)
-                .collect(Collectors.toList());
-    }
-
     /** 사용자 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,10 +63,6 @@ public class UserEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 권한 정보")
     private List<UserAuthRoleEntity> authList;
-
-    /** 사용자 권한 문자열 목록 */
-    @Transient
-    private List<String> authStrList;
 
     /** 접속가능 IP 정보 (위임) */
     @Embedded

@@ -138,7 +138,7 @@ public class UserController
         String rsltMsg = "";
         try {
             // 빈 객체 주입 (freemarker error prevention)
-            model.addAttribute("user", new UserDto());
+            model.addAttribute("user", new UserDto.DTL());
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_REG, true);
             // 권한 정보 모델에 추가

@@ -28,7 +28,7 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
     /* ----- */
 
     /**
-     * default : BaseEntity 기본 요소들 매핑
+     * default : BaseEntity 기본 요소들 매핑 (toDto)
      */
     @AfterMapping
     default void mapBaseFields(final Entity entity, final @MappingTarget Dto dto) throws Exception {
@@ -36,7 +36,7 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
     }
 
     /**
-     * default : BaseEntity 기본 요소들 매핑
+     * default : BaseEntity 기본 요소들 매핑 (toListDto)
      */
     @AfterMapping
     default void mapBaseListFields(final Entity entity, final @MappingTarget ListDto dto) throws Exception {
