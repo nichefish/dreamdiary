@@ -45,6 +45,13 @@ public class UserService
     @Resource(name = "userSpec")
     private UserSpec userSpec;
 
+    @Resource(name = "userProflRepository")
+    private UserProflRepository userProflRepository;
+    @Resource(name = "lgnPolicyService")
+    private LgnPolicyService lgnPolicyService;
+    @Resource(name = "passwordEncoder")
+    private PasswordEncoder passwordEncoder;
+
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
     private final UserProflMapstruct userProflMapstruct = UserProflMapstruct.INSTANCE;
 
@@ -62,15 +69,6 @@ public class UserService
     public UserMapstruct getMapstruct() {
         return this.userMapstruct;
     }
-
-    @Resource(name = "userProflRepository")
-    private UserProflRepository userProflRepository;
-
-    @Resource(name = "lgnPolicyService")
-    private LgnPolicyService lgnPolicyService;
-
-    @Resource(name = "passwordEncoder")
-    private PasswordEncoder passwordEncoder;
 
     /**
      * 사용자 관리 > 사용자 단일 조회 (Dto Level) (Long userId / String userId)
@@ -98,16 +96,20 @@ public class UserService
         return userRepository.findByUserId(userId).isPresent();
     }
 
+    @Override
+    public void preRegist(final UserDto.DTL userDto) throws Exception {
+        // 접속 IP 사용 여부 체크박스 값 세팅
+        if (userDto.getAcsIpInfo() == null) userDto.setAcsIpInfo(new UserAcsIpCmpstn());
+        String acsIpListStr = userDto.getAcsIpInfo().getAcsIpListStr();
+        if (StringUtils.isEmpty(acsIpListStr)) userDto.getAcsIpInfo().setUseAcsIpYn("N");
+        userDto.getAcsIpInfo().parseTagifyStr();      // tagify 문자열 -> List<AcsIpDto> 변환
+    }
+
     /**
      * 사용자 관리 > 사용자 등록
      */
     @Override
     public UserDto.DTL regist(final UserDto.DTL userDto) throws Exception {
-
-        // 접속 IP 사용 여부 체크박스 값 세팅
-        if (userDto.getAcsIpInfo() == null) userDto.setAcsIpInfo(new UserAcsIpCmpstn());
-        String acsIpListStr = userDto.getAcsIpInfo().getAcsIpListStr();
-        if (StringUtils.isEmpty(acsIpListStr)) userDto.getAcsIpInfo().setUseAcsIpYn("N");
         // Dto -> Entity
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserEntity userEntity = userMapstruct.toEntity(userDto);
@@ -149,23 +151,6 @@ public class UserService
     }
 
     /**
-     * 사용자 관리 > 접속 IP 목록 파싱 (메소드 분리)
-     * Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜.
-     * 문자열을 JSON Array로 변환하여 직접 DTO에 세팅한다.
-     */
-    public List<UserAcsIpDto> parseAcsIpListInfo(final String acsIpListStr) {
-        JSONArray jArray = new JSONArray(acsIpListStr);
-        List<UserAcsIpDto> acsIpList = new ArrayList<>();
-        for (int i = 0; i < jArray.length(); i++) {
-            JSONObject json = jArray.getJSONObject(i);
-            UserAcsIpDto acsIp = new UserAcsIpDto();
-            acsIp.setAcsIp(json.getString("value"));
-            acsIpList.add(acsIp);
-        }
-        return acsIpList;
-    }
-
-    /**
      * 사용자 관리 > 사용자 정보 추가정보 정리 (null값 걸러내기 + sorting)
      */
     // public void sortUserInfoItemList(final UserProflEntity userProflEntity) {
@@ -200,31 +185,24 @@ public class UserService
         return (rsId != null);
     }
 
+    @Override
+    public void preModify(final UserDto.DTL userDto) throws Exception {
+        // 접속 IP 사용 여부 체크박스 값 세팅
+        if (userDto.getAcsIpInfo() == null) userDto.setAcsIpInfo(new UserAcsIpCmpstn());
+        String acsIpListStr = userDto.getAcsIpInfo().getAcsIpListStr();
+        if (StringUtils.isEmpty(acsIpListStr)) userDto.getAcsIpInfo().setUseAcsIpYn("N");
+        userDto.getAcsIpInfo().parseTagifyStr();      // tagify 문자열 -> List<AcsIpDto> 변환
+    }
+
     /**
      * 사용자 관리 > 사용자 수정
      */
     @Override
     public UserDto.DTL modify(final UserDto.DTL userDto) throws Exception {
-
-        // 접속 IP 사용 여부 체크박스 값 세팅
-        if (userDto.getAcsIpInfo() == null) userDto.setAcsIpInfo(new UserAcsIpCmpstn());
-        String acsIpListStr = userDto.getAcsIpInfo().getAcsIpListStr();
-        if (StringUtils.isEmpty(acsIpListStr)) userDto.getAcsIpInfo().setUseAcsIpYn("N");
-
-        // update entity from dto :: (null로 넘어오는 password 미처리 위해)
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserEntity userEntity = this.getDtlEntity(userDto.getUserNo());
         userMapstruct.updateFromDto(userDto, userEntity);
-        // 잠금 -> 잠금해제시 로그인 실패 횟수 초기화
-        boolean isUnlocking = "Y".equals(userEntity.acntStus.getLockedYn()) && "N".equals(userDto.getLockedYn());
-        if (isUnlocking) userEntity.acntStus.setLgnFailCnt(0);
 
-        // userEntity.setUserProflNo(this.userInfoReg(userEntity, userDto));
-        // 잠금해제 상태로 업데이트시 로그인 실패 횟수 초기화 및 최종 로그인 일자=수정일자로 세팅
-        if ("N".equals(userEntity.acntStus.getLockedYn())) {
-            userEntity.acntStus.setLgnFailCnt(0);
-            userEntity.acntStus.setLstLgnDt(DateUtils.getCurrDate());
-        }
         // update
         UserEntity rsltEntity = this.updt(userEntity);
         UserDto.DTL rsltDto = userMapstruct.toDto(rsltEntity);

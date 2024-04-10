@@ -67,6 +67,10 @@ public class UserDto
 
     /** 사용자 권한 정보 */
     private List<UserAuthRoleDto> authList;
+    /** 사용자 권한 정보(문자열) */
+    private List<String> authStrList;
+    /** 사용자 권한 정보(문자열) */
+    private String authListStr;
 
     /** 본인신청여부 */
     private String isReqst;

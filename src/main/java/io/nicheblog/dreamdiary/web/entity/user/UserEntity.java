@@ -16,6 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * UserEntity
@@ -38,6 +39,13 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE user SET del_yn = 'Y' WHERE user_no = ?")
 public class UserEntity
         extends BaseAtchEntity {
+
+    @PostLoad
+    private void init() {
+        this.authStrList = this.authList.stream()
+                .map(UserAuthRoleEntity::getAuthCd)
+                .collect(Collectors.toList());
+    }
 
     /** 사용자 번호 (PK) */
     @Id
@@ -62,6 +70,10 @@ public class UserEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 권한 정보")
     private List<UserAuthRoleEntity> authList;
+
+    /** 사용자 권한 문자열 목록 */
+    @Transient
+    private List<String> authStrList;
 
     /** 접속가능 IP 정보 (위임) */
     @Embedded

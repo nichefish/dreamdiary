@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.reqst.UserReqstEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.user.reqst.UserReqstMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpCmpstn;
+import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import io.nicheblog.dreamdiary.web.repository.user.reqst.UserReqstRepository;
@@ -47,11 +48,12 @@ public class UserReqstService {
      * (등록 과정과 거의 동일하지만 일단 프로세스 분리)
      */
     public UserReqstDto regist(final UserReqstDto userReqst) throws Exception {
-
-        // 접속 IP 사용 여부 체크박스 값 세팅
+        // 전처리 :: 접속IP 목록
         if (userReqst.getAcsIpInfo() == null) userReqst.setAcsIpInfo(new UserAcsIpCmpstn());
         String acsIpListStr = userReqst.getAcsIpInfo().getAcsIpListStr();
         if (StringUtils.isEmpty(acsIpListStr)) userReqst.getAcsIpInfo().setUseAcsIpYn("N");
+        userReqst.getAcsIpInfo().parseTagifyStr();      // tagify 문자열 -> List<AcsIpDto> 변환
+
         // Dto -> Entity
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserReqstEntity userReqstEntity = userReqstMapstruct.toEntity(userReqst);

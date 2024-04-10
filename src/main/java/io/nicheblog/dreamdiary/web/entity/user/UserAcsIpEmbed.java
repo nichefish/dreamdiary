@@ -2,11 +2,14 @@ package io.nicheblog.dreamdiary.web.entity.user;
 
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserAcsIpMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpCmpstn;
+import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.persistence.CascadeType;
 import javax.persistence.OrderBy;
@@ -53,7 +56,9 @@ public class UserAcsIpEmbed {
         this();
         this.useAcsIpYn = dto.getUseAcsIpYn();
         boolean useAcsIp = "Y".equals(this.useAcsIpYn);
+        // acsIp 사용하지 않으면? 기존 acsIp 목록 초기화
         if (!useAcsIp) this.acsIpList = new ArrayList<>();
+        // acsIp 사용하면? 목록 변환
         if (useAcsIp && !CollectionUtils.isEmpty(dto.getAcsIpList())) {
             this.acsIpList = dto.getAcsIpList().stream()
                     .map(acsIp -> {

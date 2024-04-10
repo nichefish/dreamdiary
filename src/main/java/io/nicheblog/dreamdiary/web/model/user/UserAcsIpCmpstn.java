@@ -1,15 +1,12 @@
 package io.nicheblog.dreamdiary.web.model.user;
 
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
-import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserAcsIpMapstruct;
 import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OrderBy;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +42,7 @@ public class UserAcsIpCmpstn {
     /* ----- */
 
     /** 생성자 */
-    public UserAcsIpCmpstn(UserAcsIpEmbed embed) {
+    public UserAcsIpCmpstn(final UserAcsIpEmbed embed) {
         this();
         this.useAcsIpYn = embed.getUseAcsIpYn();
         if (!CollectionUtils.isEmpty(embed.getAcsIpList())) {
@@ -61,5 +58,22 @@ public class UserAcsIpCmpstn {
                     .collect(Collectors.toList());
             this.acsIpListStr = embed.getAcsIpListStr();
         }
+    }
+
+    /**
+     * 사용자 관리 > 화면에서 넘어온 접속IP tagify 문자열 파싱
+     * Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜.
+     * 문자열을 JSON Array로 변환하여 직접 DTO에 세팅한다.
+     */
+    public void parseTagifyStr() {
+        JSONArray jArray = new JSONArray(this.acsIpListStr);
+        List<UserAcsIpDto> acsIpList = new ArrayList<>();
+        for (int i = 0; i < jArray.length(); i++) {
+            JSONObject json = jArray.getJSONObject(i);
+            UserAcsIpDto acsIp = new UserAcsIpDto();
+            acsIp.setAcsIp(json.getString("value"));
+            acsIpList.add(acsIp);
+        }
+        this.acsIpList = acsIpList;
     }
 }

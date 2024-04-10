@@ -212,7 +212,7 @@
         <!--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2">
-                <div class="fw-bold col-form-label text-lg-center text-sm-end required">
+                <div class="fw-bold col-form-label text-lg-center text-sm-end <#if isReg>required</#if>">
                     <label for="userId">아이디</label>
                 </div>
             </div>
@@ -277,10 +277,9 @@
                 </div>
             </div>
             <div class="col-xl-2">
-                <select name="authList[0].authCd" id="authCd" class="form-select form-select-solid required"
+                <select name="authListStr" id="authCd" class="form-select form-select-solid required"
                         data-control="select2" data-allow-clear="true" data-hide-search="true" data-close-on-select="false" multiple="multiple">
                     <#list authRoleList![] as auth>
-                        <option value="${auth.authCd!}">${auth.authNm!}</option>
                     </#list>
                 </select>
                 <div id="authCd_valid_span"></div>
@@ -342,8 +341,7 @@
         <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-sm-start text-lg-center">
-                    <label for="cttpc" class="cursor-help"
-                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원 연락처에 표시될&#10;전화번호입니다.">
+                    <label for="cttpc">
                         전화번호
                     </label>
                 </div>
@@ -362,7 +360,7 @@
                     <label for="acsIpListStr" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="특정 IP에서만&#10;접속 가능하도록 설정합니다.">
                         접속 IP
-                        ${user.acsIpInfo.useAcsIp?string}
+                        <i class="bi bi-question-circle"></i>
                     </label>
                 </div>
             </div>
@@ -392,6 +390,7 @@
                     <label for="cn" class="cursor-help"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="계정에 대한 관리용 정보를&#10;입력합니다.&#10;(입력한 내용은 사용자에게&#10;노출되지 않습니다.)">
                         계정 설명
+                        <i class="bi bi-question-circle"></i>
                     </label>
                 </div>
             </div>

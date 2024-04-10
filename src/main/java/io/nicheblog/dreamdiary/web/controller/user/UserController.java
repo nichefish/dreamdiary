@@ -212,7 +212,6 @@ public class UserController
     @ResponseBody
     public ResponseEntity<AjaxResponse> userRegAjax(
             final @Valid UserDto.DTL user,
-            final @RequestParam("userNo") @Nullable Integer userNo,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
             final BindingResult bindingResult
