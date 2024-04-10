@@ -53,7 +53,7 @@ public class AuthInfo
     /** 접속 IP 사용 여부 (Y/N) */
     private String useAcsIpYn;
     /** 접속 IP 목록 */
-    private List<String> acsIpList;
+    private List<String> acsIpStrList;
     /** 최종접속일시 */
     private Date lstLgnDt;
     /** 최종비밀번호변경일시 */

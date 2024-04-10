@@ -1,21 +1,22 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.MapstructHelper;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
+import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
-import io.nicheblog.dreamdiary.web.model.user.UserAcsIpCmpstn;
 import io.nicheblog.dreamdiary.web.model.user.UserCttpcDto;
 import io.nicheblog.dreamdiary.web.model.user.UserCttpcXlsxDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
-import javax.persistence.PostLoad;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
  * @author nichefish
  * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속:: 기본 변환 매핑 로직 상속
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, UserAcsIpEmbed.class, UserAcsIpCmpstn.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserMapstruct
         extends BaseCrudMapstruct<UserDto.DTL, UserDto.LIST, UserEntity> {
 
@@ -39,35 +40,58 @@ public interface UserMapstruct
     @Override
     @Named("toDto")
     @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
+    @Mapping(target = "useAcsIp", expression = "java(\"Y\".equals(entity.getUseAcsIpYn()))")
+    @Mapping(target = "acsIpListStr", expression = "java(String.join(\",\", entity.getAcsIpStrList()))")      // 접속IP tagify 문자열 세팅
     @Mapping(target = "isCf", expression = "java(entity.getAcntStus() != null && \"Y\".equals(entity.getAcntStus().getCfYn()))")
-    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpCmpstn(entity.getAcsIpInfo()))")
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toDto(entity.getUserProfl()))")
     UserDto.DTL toDto(final UserEntity entity) throws Exception;
+
+    @AfterMapping
+    private void mapToDtoFields(final UserEntity entity, final @MappingTarget UserDto.DTL dto) throws Exception {
+        // 권한 문자열 목록 세팅
+        dto.setAuthStrList(entity.getAuthList().stream()
+                .map(UserAuthRoleEntity::getAuthCd)
+                .collect(Collectors.toList()));
+    }
 
     /**
      * Entity -> ListDto
      */
     @Override
     @Mapping(target = "isCf", expression = "java(entity.getAcntStus() != null && \"Y\".equals(entity.getAcntStus().getCfYn()))")
-    // @Mapping(target = "authNm", expression = "java((entity.getAuthCdInfo() != null) ? entity.getAuthCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "userNm", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getUserNm() : entity.getNickNm())")
-    // @Mapping(target = "jobTitleNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getJobTitleCd())) ? entity.getUserProfl().getJobTitleCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "apntcYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getApntcYn() : null)")
-    // @Mapping(target = "cmpyNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getCmpyCd())) ? entity.getUserProfl().getCmpyCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "teamNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getTeamCd())) ? entity.getUserProfl().getTeamCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "emplymNm", expression = "java((entity.getUserProfl() != null && StringUtils.isNotEmpty(entity.getUserProfl().getEmplymCd())) ? entity.getUserProfl().getEmplymCdInfo().getDtlCdNm() : null)")
-    // @Mapping(target = "ecnyDt", expression = "java(entity.getUserProfl() != null ? DateUtils.asStr(entity.getUserProfl().getEcnyDt(), DatePtn.DATE) : null)")
-    // @Mapping(target = "userProflYn", expression = "java(entity.getUserProfl() != null ? \"Y\" : \"N\")")
-    // @Mapping(target = "retireYn", expression = "java(entity.getUserProfl() != null ? entity.getUserProfl().getRetireYn() : null)")
     UserDto.LIST toListDto(final UserEntity entity) throws Exception;
+
+    private void mapToListDtoFields(final UserEntity entity, final @MappingTarget UserDto.LIST dto) throws Exception {
+        // 권한 문자열 목록 세팅
+        dto.setAuthStrList(entity.getAuthList().stream()
+                .map(UserAuthRoleEntity::getAuthCd)
+                .collect(Collectors.toList()));
+    }
 
     /**
      * Dto -> Entity
      */
     @Override
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
-    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpEmbed(dto.getAcsIpInfo()))")
     UserEntity toEntity(final UserDto.DTL dto) throws Exception;
+
+    @AfterMapping
+    private void mapToEntityFields(final UserDto.DTL dto, final @MappingTarget UserEntity entity) throws Exception {
+        // 권한 문자열 목록 세팅
+        if (!"Y".equals(dto.getUseAcsIpYn())) {
+            entity.getAcsIpList().clear();
+        } else {
+            String acsIpListStr = dto.getAcsIpListStr();
+            if (StringUtils.isEmpty(acsIpListStr)) return;
+            JSONArray jArray = new JSONArray(dto.getAcsIpListStr());
+            List<UserAcsIpEntity> acsIpList = new ArrayList<>();
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject json = jArray.getJSONObject(i);
+                UserAcsIpEntity acsIp = new UserAcsIpEntity();
+                acsIp.setAcsIp(json.getString("value"));
+                acsIpList.add(acsIp);
+            }
+            entity.setAcsIpList(acsIpList);
+        }
+    }
 
     /**
      * Entity -> ListXlsxDto
@@ -98,21 +122,6 @@ public interface UserMapstruct
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
      */
     @Override
-    @Mapping(target = "acsIpInfo", expression = "java(new UserAcsIpEmbed(dto.getAcsIpInfo()))")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    // @Mapping(target = "userProfl", expression = "java(UserInfoMapstruct.INSTANCE.toEntity(dto.getUserProfl()))")
     void updateFromDto(final UserDto.DTL dto, final @MappingTarget UserEntity entity) throws Exception;
-
-    /**
-     * Entity -> Dto
-     */
-    @AfterMapping
-    default void mapBaseListFields(final UserEntity entity, final @MappingTarget UserDto dto) throws Exception {
-        // 권한 문자열 목록 세팅
-        dto.setAuthStrList(entity.getAuthList().stream()
-                .map(UserAuthRoleEntity::getAuthCd)
-                .collect(Collectors.toList()));
-    }
-
-
 }

@@ -85,14 +85,14 @@ public class DreamdiaryAuthenticationProvider
 
         // 접속IP 체크
         if ("Y".equals(authInfo.getUseAcsIpYn())) {
-            List<String> acsIpList = authInfo.getAcsIpList();
-            if (CollectionUtils.isNotEmpty(acsIpList)) {
+            List<String> acsIpStrList = authInfo.getAcsIpStrList();
+            if (CollectionUtils.isNotEmpty(acsIpStrList)) {
                 String remoteAddr = AuthUtils.getAcsIpAddr();
                 log.info("logged in remoteAddr: {}", remoteAddr);
 
                 boolean isAllowedIp = false;
                 // CIDR 체크
-                for (String acsIp : acsIpList) {
+                for (String acsIp : acsIpStrList) {
                     log.info("comparing remoteIP {} to access-allowed-IP {}...", remoteAddr, acsIp);
                     boolean isCidr = acsIp.contains("/");
                     if (!isCidr) {

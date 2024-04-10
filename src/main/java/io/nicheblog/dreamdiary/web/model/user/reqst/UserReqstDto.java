@@ -1,8 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.user.reqst;
 
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
-import io.nicheblog.dreamdiary.web.model.user.UserAcsIpCmpstn;
+import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
@@ -27,13 +25,22 @@ import java.util.List;
 public class UserReqstDto
         extends UserDto {
 
+    /** 접속IP 사용 여부 체크 */
+    @Builder.Default
+    private Boolean useAcsIp = false;
+    /** 접속 IP 사용 여부 */
+    @Builder.Default
+    private String useAcsIpYn = "N";
+    /** 접속 IP 정보 */
+    private String acsIpListStr;
+    /** 접속 IP 정보 */
+    private List<UserAcsIpDto> acsIpList;
+
     /** 계정 설명 (관리자용) */
     private String cn;
 
     /* ----- */
 
-    /** 접속 IP 정보 (위임) */
-    private UserAcsIpCmpstn acsIpInfo;
     /** 사용자 정보 (위임) */
     private UserProflDto userProfl;
 }

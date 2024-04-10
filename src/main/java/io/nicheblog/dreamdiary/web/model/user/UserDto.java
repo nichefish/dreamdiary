@@ -94,6 +94,7 @@ public class UserDto
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
     @EqualsAndHashCode(callSuper = false)
     public static class DTL extends UserDto {
         /** 계정 설명 (관리자용) */
@@ -101,13 +102,16 @@ public class UserDto
 
         /* ----- */
 
-        /** 접속 IP 정보 (위임) */
-        private UserAcsIpCmpstn acsIpInfo;
-
-
-        public DTL() {
-            this.acsIpInfo = new UserAcsIpCmpstn();
-        }
+        /** 접속IP 사용 여부 체크 */
+        @Builder.Default
+        private Boolean useAcsIp = false;
+        /** 접속 IP 사용 여부 */
+        @Builder.Default
+        private String useAcsIpYn = "N";
+        /** 접속 IP 정보 */
+        private String acsIpListStr;
+        /** 접속 IP 정보 */
+        private List<UserAcsIpDto> acsIpList;
     }
 
     @Getter

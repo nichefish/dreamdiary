@@ -222,7 +222,7 @@
             </div>
             <div class="col-xl-2 col-4">
                 <div class="col-form-label">
-                    <#if user.acsIpInfo.useAcsIp!false>
+                    <#if user.useAcsIp!false>
                         <div class="text-success">
                             사용<i class="bi bi-check text-success"></i>
                         </div>
@@ -233,8 +233,8 @@
                     </#if>
                 </div>
                 <div class="form-check form-switch form-check-custom form-check-solid gap-4">
-                    <#if user.acsIpInfo.useAcsIp! && user.acsIpInfo.acsIpList??>
-                        <#list user.acsIpInfo.acsIpList![] as item>
+                    <#if user.useAcsIp! && user.acsIpList??>
+                        <#list user.acsIpList![] as item>
                             <span class="div-textarea div-height-1 px-5">${item.acsIp}</span>
                         </#list>
                     </#if>

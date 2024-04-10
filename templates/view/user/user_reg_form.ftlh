@@ -368,9 +368,9 @@
             </div>
             <div class="col-xl-2">
                 <div class="form-check form-switch form-check-custom form-check-solid mt-2">
-                    <input class="form-check-input" type="checkbox" value="Y" name="useAcsIpYn" id="useAcsIpYn" <#if (user.acsIpInfo.useAcsIp)!>checked="checked"</#if> />
-                    <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:<#if (user.acsIpInfo.useAcsIp)!>blue<#else>gray</#if>;">
-                        <#if (user.acsIpInfo.useAcsIp)!>
+                    <input class="form-check-input" type="checkbox" value="Y" name="useAcsIpYn" id="useAcsIpYn" <#if (user.useAcsIp)!>checked="checked"</#if> />
+                    <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:<#if (user.useAcsIp)!>blue<#else>gray</#if>;">
+                        <#if (user.useAcsIp)!>
                             사용
                         <#else>
                             미사용
@@ -378,8 +378,8 @@
                     </label>
                 </div>
                 <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-                <div id="acsIpListSpan" class="mb-0" style="<#if !(user.acsIpInfo.useAcsIp!false)>display:none;</#if>">
-                    <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off" value="${user.acsIpInfo.acsIpListStr!}"/>
+                <div id="acsIpListSpan" class="mb-0" style="<#if !(user.useAcsIp!false)>display:none;</#if>">
+                    <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off" value="${user.acsIpListStr!}"/>
                     <div class="form-text text-noti">(※최대 5개)</div>
                 </div>
                 <span id="acsIpListStrSpan"></span>

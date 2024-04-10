@@ -1,16 +1,18 @@
 package io.nicheblog.dreamdiary.web.entity.user.reqst;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
+import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.annotations.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.List;
@@ -62,9 +64,20 @@ public class UserReqstEntity
     @Comment("사용자 권한 정보")
     private List<UserAuthRoleEntity> authList;
 
-    /** 접속가능 IP 정보 (위임) */
-    @Embedded
-    public UserAcsIpEmbed acsIpInfo;
+    /** 접속 IP 사용 여부 */
+    @Builder.Default
+    @Column(name = "use_acs_ip_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("접속 IP 사용 여부")
+    private String useAcsIpYn = "N";
+
+    /** 접속 IP 정보 */
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "user_no")
+    @Fetch(FetchMode.SELECT)
+    @OrderBy("acsIp ASC")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("접속 IP 정보")
+    private List<UserAcsIpEntity> acsIpList;
 
     /** 표시이름 :: 사용자 정보가 없을때 표시되는 이름 */
     @Column(name = "nick_nm", length = 50)
@@ -92,4 +105,19 @@ public class UserReqstEntity
     @Builder.Default
     public UserStusEmbed acntStus = new UserStusEmbed("Y", "N");
 
+    /* ----- */
+
+    /**
+     * 서브엔티티 List 처리를 위한 Setter (override)
+     * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
+     */
+    public void setAcsIpList(final List<UserAcsIpEntity> acsIpList) {
+        if (CollectionUtils.isEmpty(acsIpList)) return;
+        if (this.acsIpList == null) {
+            this.acsIpList = acsIpList;
+        } else {
+            this.acsIpList.clear();
+            this.acsIpList.addAll(acsIpList);
+        }
+    }
 }

@@ -29,7 +29,6 @@ public interface AuthInfoMapstruct
     @Override
     @Named("toDto")
     // @Mapping(target = "authList", expression = "java(entity.getDtlCdDtoList())")
-    @Mapping(target = "acsIpList", expression = "java(entity.acsIpInfo.getAcsIpStrList())")
     @Mapping(target = "lockedYn", expression = "java(entity.acntStus.getLockedYn())")
     @Mapping(target = "lstLgnDt", expression = "java(entity.acntStus.getLstLgnDt() != null ? entity.acntStus.getLstLgnDt() : entity.getRegDt())")       // 최종접속일 또는 등록일
     @Mapping(target = "pwChgDt", expression = "java(entity.acntStus.getPwChgDt() != null ? entity.acntStus.getPwChgDt() : entity.getRegDt())")          // 최종비밀번호변경일 또는 등록일
