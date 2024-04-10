@@ -27,7 +27,7 @@
                 // 중복 로그인시 기존 로그인 끊기 팝업 호출
                 <#if isDupIdLgn!false>
                     Swal.fire({
-                        title: <@spring.message "view.result.dupLgn"/>,
+                        title: <@spring.message "view.rslt.dupLgn"/>,
                         text: <@spring.message "view.cnfm.dupLgn"/>,
                         icon: "warning",
                         showCancelButton: true,

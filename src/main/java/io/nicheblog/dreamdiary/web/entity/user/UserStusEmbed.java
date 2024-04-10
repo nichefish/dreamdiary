@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,8 +29,8 @@ public class UserStusEmbed {
      * 잠금여부
      */
     @Builder.Default
-    @Column(name = "locked_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    protected String lockedYn = "N";
+    @Column(name = "locked_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'Y'")
+    protected String lockedYn = "Y";
 
     /**
      * 마지막 로그인 일시
@@ -92,9 +91,8 @@ public class UserStusEmbed {
     /* ----- */
 
     /** 생성자 */
-    public UserStusEmbed(UserDto dto) {
-        this();
-        this.reqstYn = dto.getReqstYn();
-        this.cfYn = dto.getCfYn();
+    public UserStusEmbed(String reqstYn, String cfYn) {
+        this.reqstYn = reqstYn;
+        this.cfYn = cfYn;
     }
 }

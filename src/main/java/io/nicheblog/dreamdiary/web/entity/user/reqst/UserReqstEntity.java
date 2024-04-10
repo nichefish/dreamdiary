@@ -5,10 +5,7 @@ import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 
@@ -92,6 +89,7 @@ public class UserReqstEntity
 
     /** 계정 상태 정보 (위임) */
     @Embedded
+    @Builder.Default
     public UserStusEmbed acntStus = new UserStusEmbed("Y", "N");
 
 }

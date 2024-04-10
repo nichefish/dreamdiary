@@ -67,4 +67,15 @@ public class UserAuthRoleEntity
     /** 권한 이름 */
     @Transient
     private String authNm;
+    
+    /* ----- */
+
+    /**
+     * 생성자
+     */
+    public UserAuthRoleEntity(String authCd) {
+        this.authCd = authCd;
+    }
+    
+    /** 생성자 */
 }

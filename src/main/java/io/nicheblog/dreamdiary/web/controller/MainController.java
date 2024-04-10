@@ -39,8 +39,10 @@ public class MainController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo(Constant.PAGE_MAIN));
 
         // TODO: 접근 권한 통제
-        
-        return "view/main/main_page";
+
+        // 메인 화면 꾸밀때까지 공지사항 목록 화면으로 리다이렉트
+        return "redirect:" + SiteUrl.NOTICE_LIST;
+        // return "view/main/main_page";
     }
 
     /**
@@ -57,7 +59,9 @@ public class MainController
 
         // TODO: 접근 권한 통제
 
-        return "view/main/main_page";
+        // 메인 화면 꾸밀때까지 사용자 목록 화면으로 리다이렉트
+        return "redirect:" + SiteUrl.USER_LIST;
+        // return "view/main/main_page";
     }
 
 

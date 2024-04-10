@@ -28,11 +28,11 @@
                     // 등록화면:: 사용자 ID 변경입력시 중복체크 통과여부 초기화
                     $("#userId").on("keyup", function() {
                         $("#userId_valid_span").empty();
-                        $("#isIdDupChckValid").val("N");
+                        $("#ipDupChckPassed").val("N");
                         $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
                     }).on("keydown", function() {
                         $("#userId_valid_span").text("");
-                        $("#isIdDupChckValid").val("N");
+                        $("#ipDupChckPassed").val("N");
                         $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
                     });
                 </#if>
@@ -91,7 +91,7 @@
                         rules: {
                             <#if isReg>
                                 userId: { required:true, minlength:4, maxlength:16 },
-                                isIdDupChckValid: { dupChck:true },
+                                ipDupChckPassed: { dupChck:true },
                                 password: { minlength:9, maxlength:20, regex:commons.validate.pwRegex },
                                 passwordCf: { equalTo:"#password", maxlength:20 },
                             </#if>
@@ -105,7 +105,7 @@
                         messages: {
                             <#if isReg>
                                 userId: { required:"아이디는 필수 항목입니다.", minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
-                                isIdDupChckValid: { dupChck:"아이디 중복 체크는 필수 항목입니다." },
+                                ipDupChckPassed: { dupChck:"아이디 중복 체크는 필수 항목입니다." },
                                 password: { minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
                                 passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
                             </#if>
@@ -141,12 +141,12 @@
                     userId_valid_span.text(res.message);
                     if (res.rslt) {
                         userId_valid_span.removeClass("text-danger").addClass("text-success");
-                        $("#isIdDupChckValid").val("Y");
-                        $("#isIdDupChck_valid_span").text("");
+                        $("#ipDupChckPassed").val("Y");
+                        $("#ipDupChckPassed_valid_span").text("");
                         $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
                     } else {
                         userId_valid_span.css("color", "red");
-                        $("#isIdDupChckValid").val("N");
+                        $("#ipDupChckPassed").val("N");
                     }
                 });
             },
@@ -251,7 +251,7 @@
                        maxlength="16" placeholder="아이디" value="${user.userId!}" />
                 <div class="form-text text-noti">(※영문소문자, 숫자 포함 4~16자)</div>
                 <div id="userId_valid_span" class="text-danger"></div>
-                <div id="isIdDupChck_valid_span" class="text-danger"></div>
+                <div id="ipDupChckPassed_valid_span" class="text-danger"></div>
             </div>
             <div class="col-xl-2 col-4">
                 <button type="button" class="btn btn-sm btn-secondary required blink" id="idDupChckBtn"
@@ -259,7 +259,7 @@
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="입력한 아이디에 대한&#10;중복 여부를 확인합니다.">
                     <span class="hidden-table">아이디 </span>중복 확인
                 </button>
-                <input type="hidden" name="isIdDupChckValid" id="isIdDupChckValid" value="N"/>
+                <input type="hidden" name="ipDupChckPassed" id="ipDupChckPassed" value="N"/>
             </div>
         </div>
         <!--begin::Row-->
@@ -467,8 +467,5 @@
 
 <#include "/view/user/profl/_user_profl_reg_area.ftlh">       <!-- 사용자 프로필 정보 영역 -->
 <#include "/view/user/emplym/_user_emplym_reg_area.ftlh">       <!-- 사용자 인사정보 영역 -->
-
-<!-- #include:: component:: 첨부파일 추가 영역 template-->
-<#include "/view/_component/atch_file/_atch_file_area.ftlh">
 
 </@layout.layout>

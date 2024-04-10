@@ -77,9 +77,9 @@ public class UserDto
     private List<UserAuthRoleDto> authList;
 
     /** 본인신청여부 */
-    private String reqstYn;
+    private String isReqst;
     /** 승인여부 */
-    private String cfYn;
+    private Boolean isCf;
     
     /* ----- */
 
@@ -93,11 +93,6 @@ public class UserDto
     /** 잠금여부 채크 */
     public Boolean getIsLocked() {
         return "Y".equals(this.lockedYn);
-    }
-
-    /** 승인여부 채크 */
-    public Boolean getIsCf() {
-        return "Y".equals(this.cfYn);
     }
 
     @Override

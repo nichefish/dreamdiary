@@ -121,7 +121,7 @@ public class UserReqstController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록 처리
-            UserReqstDto rsDto = userReqstService.regist(userReqst, request);
+            UserReqstDto rsDto = userReqstService.regist(userReqst);
 
             isSuccess = (rsDto.getUserNo() != null);
             rsltMsg = isSuccess ? "신규계정이 성공적으로 신청되었습니다." : "신규계정 신청에 실패했습니다.";

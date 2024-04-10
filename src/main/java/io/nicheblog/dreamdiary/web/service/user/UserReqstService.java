@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.user;
 
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.reqst.UserReqstEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserReqstMapstruct;
@@ -10,7 +12,6 @@ import io.nicheblog.dreamdiary.web.repository.user.UserReqstRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -46,10 +47,8 @@ public class UserReqstService {
      * 계정 기본정보만 입력, 세부정보는 가입 승인 후 수정
      */
     public UserReqstDto regist(
-            final UserReqstDto userReqst,
-            final MultipartHttpServletRequest request
+            final UserReqstDto userReqst
     ) throws Exception {
-        // 파일 영역 처리
         // 접속 IP 사용 여부 체크박스 값 세팅
         if (StringUtils.isEmpty(userReqst.getAcsIpListStr())) {
             userReqst.setUseAcsIpYn("N");
@@ -63,6 +62,7 @@ public class UserReqstService {
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserReqstEntity userReqstEntity = userReqstMapstruct.toEntity(userReqst);
         // userReqstEntity.setUserProflNo(this.userInfoReg(userReqstEntity, userReqst));
+        userReqstEntity.setAuthList(List.of(new UserAuthRoleEntity(Constant.AUTH_USER)));
         userReqstEntity.setPassword(passwordEncoder.encode(userReqst.getPassword()));
         userReqstEntity.acntStus.setReqstYn("Y");
         userReqstEntity.acntStus.setCfYn("N");

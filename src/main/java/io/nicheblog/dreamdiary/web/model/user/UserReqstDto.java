@@ -33,8 +33,6 @@ public class UserReqstDto
     private String password;
     /** 표시이름 */
     private String nickNm;
-    /** 프로필 이미지 URL */
-    private String proflImgUrl;
 
     /** 연락처 */
     private String cttpc;
@@ -42,10 +40,6 @@ public class UserReqstDto
     private String emailId;
     /** E-mail 뒷부분 */
     private String emailDomain;
-
-    /** 잠금 여부 (Y/N) */
-    @Builder.Default
-    private String lockedYn = "N";
 
     /** 접속 IP 사용 여부 (Y/N) */
     @Builder.Default
@@ -55,45 +49,16 @@ public class UserReqstDto
     /** 접속 IP 목록 */
     private List<UserAcsIpDto> acsIpList;
 
-    /** 퇴사 여부 (Y/N) */
-    @Builder.Default
-    private String retireYn = "N";
-    /** 퇴사일 */
-    private String retireDt;
-
     /** 계정 설명 (관리자용) */
     private String cn;
 
     /** 사용자 정보 (위임) */
     private UserProflDto userProfl;
 
-    /** 사용자 권한 정보 */
-    private List<UserAuthRoleDto> auth;
-
-    /** 본인신청 여부 (Y/N) */
-    private String reqstYn;
-    /** 승인여부 (Y/N) */
-    private String cfYn;
-
     /* ----- */
 
     /** 접속IP 사용 여부 채크 */
     public Boolean getIsAcsIpY() {
         return "Y".equals(this.useAcsIpYn);
-    }
-
-    /** 내 정보 여부 채크 */
-    public Boolean getIsMe() {
-        return (AuthUtils.isRegstr(this.userId));       // 인자로 넘긴 ID와 세션의 사용자 ID 비교
-    }
-
-    /** 잠금여부 채크 */
-    public Boolean getIsLocked() {
-        return "Y".equals(this.lockedYn);
-    }
-
-    /** 승인여부 채크 */
-    public Boolean getIsCf() {
-        return "Y".equals(this.cfYn);
     }
 }
