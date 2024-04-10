@@ -102,11 +102,9 @@ public class UserService
      */
     @Override
     public UserDto.DTL regist(final UserDto.DTL userDto) throws Exception {
-        // 계정 잠금여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getLockedYn())) userDto.setLockedYn("N");
 
         // 접속 IP 사용 여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getUseAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpListStr())) {
+        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) {
             userDto.setUseAcsIpYn("N");
         } else {
             // 접속 IP 사용"Y"시 접속 IP 세팅
@@ -212,11 +210,8 @@ public class UserService
      */
     @Override
     public UserDto.DTL modify(final UserDto.DTL userDto) throws Exception {
-        // 계정 잠금여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getLockedYn())) userDto.setLockedYn("N");
-
         // 접속 IP 사용 여부 체크박스 값 세팅
-        if (!"Y".equals(userDto.getUseAcsIpYn()) || StringUtils.isEmpty(userDto.getAcsIpListStr())) {
+        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) {
             userDto.setUseAcsIpYn("N");
         } else {
             // 접속 IP 사용"Y"시 접속 IP 세팅

@@ -50,11 +50,8 @@ public class UserReqstService {
             final MultipartHttpServletRequest request
     ) throws Exception {
         // 파일 영역 처리
-        // 계정 잠금여부 체크박스 값 세팅
-        if (!"Y".equals(userReqst.getLockedYn())) userReqst.setLockedYn("N");
-
         // 접속 IP 사용 여부 체크박스 값 세팅
-        if (!"Y".equals(userReqst.getUseAcsIpYn()) || StringUtils.isEmpty(userReqst.getAcsIpListStr())) {
+        if (StringUtils.isEmpty(userReqst.getAcsIpListStr())) {
             userReqst.setUseAcsIpYn("N");
         } else {
             // 접속 IP 사용"Y"시 접속 IP 세팅
@@ -69,7 +66,6 @@ public class UserReqstService {
         userReqstEntity.setPassword(passwordEncoder.encode(userReqst.getPassword()));
         userReqstEntity.acntStus.setReqstYn("Y");
         userReqstEntity.acntStus.setCfYn("N");
-        userReqstEntity.acntStus.setLockedYn("Y");
         // insert
         UserReqstEntity rsltEntity = userReqstRepository.save(userReqstEntity);
         return userReqstMapstruct.toDto(rsltEntity);
