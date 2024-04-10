@@ -47,7 +47,10 @@ public class UserReqstService {
      */
     public UserReqstDto regist(final UserReqstDto userReqst) throws Exception {
         // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
-        if (StringUtils.isEmpty(userReqst.getAcsIpListStr())) userReqst.setUseAcsIpYn("N");
+        if (StringUtils.isEmpty(userReqst.getAcsIpListStr())) {
+            userReqst.setUseAcsIpYn("N");
+            userReqst.setAcsIpListStr(null);
+        }
 
         // Dto -> Entity
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)

@@ -199,6 +199,28 @@
         <!--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2 col-4">
+                <div class="col-form-label text-center fw-bold">
+                    <label for="email">이메일</label>
+                </div>
+            </div>
+            <div class="col-xl-2 col-8 col-form-label">
+                ${user.email!}
+            </div>
+        </div>
+        <!--begin::Row-->
+        <div class="row mb-4">
+            <div class="col-xl-2 col-4">
+                <div class="col-form-label text-center fw-bold">
+                    <label for="cttpc">연락처</label>
+                </div>
+            </div>
+            <div class="col-xl-2 col-8 col-form-label">
+                ${user.cttpc!}
+            </div>
+        </div>
+        <!--begin::Row-->
+        <div class="row mb-4">
+            <div class="col-xl-2 col-4">
                 <div class="col-form-label text-center fw-bold">잠금여부</div>
             </div>
             <div class="col-xl-9 col-8 col-form-label">
@@ -298,7 +320,7 @@
                     <div class="col-form-label text-center fw-bold">전화번호</div>
                 </div>
                 <div class="col-xl-2 col-8 col-form-label">
-                    ${user.userInfo.cttpc!"-"}
+                    ${user.cttpc!"-"}
                 </div>
             </div>
             <div class="row mb-4">      <!--begin::Row-->
@@ -306,7 +328,7 @@
                     <div class="col-form-label text-center fw-bold">E-mail</div>
                 </div>
                 <div class="col-xl-2 col-8 col-form-label">
-                    ${user.userInfo.email!"-"}
+                    ${user.email!"-"}
                 </div>
             </div>
             <div class="row mb-4">      <!--begin::Row-->

@@ -35,9 +35,9 @@ public class ExptrPrsnlPaprDto
         implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule, Identifiable<Integer> {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.EXPTR_PRSNL_PAPR;
+    protected static final ContentType CONTENT_TYPE = ContentType.EXPTR_PRSNL_PAPR;
     /** 필수(Override): 글분류 코드 */
-    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
+    protected static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
     @Builder.Default
@@ -46,20 +46,20 @@ public class ExptrPrsnlPaprDto
     /* ----- */
 
     /** 경비지출 항목 영수증 첨부파일 번호 */
-    private Integer rciptFileNo;
+    protected Integer rciptFileNo;
 
     /** 년도 */
-    private String yy;
+    protected String yy;
     /** 월 */
-    private String mnth;
+    protected String mnth;
     /** 확인 여부 (Y/N) */
-    private String cfYn;
+    protected String cfYn;
 
     /** 개별 지출내역 목록 */
     List<ExptrPrsnlItemDto> itemList;
     /** 항목 금액 총합 */
     @Builder.Default
-    private Integer totAmt = 0;
+    protected Integer totAmt = 0;
 
     /* ----- */
 

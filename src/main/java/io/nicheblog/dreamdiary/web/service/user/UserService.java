@@ -6,10 +6,7 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserMapstruct;
-import io.nicheblog.dreamdiary.web.mapstruct.user.UserProflMapstruct;
-import io.nicheblog.dreamdiary.web.model.user.UserCttpcDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.repository.user.UserProflRepository;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.spec.user.UserSpec;
@@ -21,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * UserService
@@ -41,15 +37,12 @@ public class UserService
     @Resource(name = "userSpec")
     private UserSpec userSpec;
 
-    @Resource(name = "userProflRepository")
-    private UserProflRepository userProflRepository;
     @Resource(name = "lgnPolicyService")
     private LgnPolicyService lgnPolicyService;
     @Resource(name = "passwordEncoder")
     private PasswordEncoder passwordEncoder;
 
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
-    private final UserProflMapstruct userProflMapstruct = UserProflMapstruct.INSTANCE;
 
     @Override
     public UserRepository getRepository() {
@@ -95,7 +88,10 @@ public class UserService
     @Override
     public void preRegist(final UserDto.DTL userDto) throws Exception {
         // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
-        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) userDto.setUseAcsIpYn("N");
+        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) {
+            userDto.setUseAcsIpYn("N");
+            userDto.setAcsIpListStr(null);
+        }
     }
 
     /**
@@ -181,7 +177,10 @@ public class UserService
     @Override
     public void preModify(final UserDto.DTL userDto) throws Exception {
         // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
-        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) userDto.setUseAcsIpYn("N");
+        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) {
+            userDto.setUseAcsIpYn("N");
+            userDto.setAcsIpListStr(null);
+        }
     }
 
     /**
@@ -308,45 +307,45 @@ public class UserService
     /**
      * 내부직원 연락처 목록 조회
      */
-    public List<UserCttpcDto> getCrdtUserCttpcList(
-            final String startDtStr,
-            final String endDtStr
-    ) throws Exception {
-        List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr);
-
-        return crdtUserList.stream()
-                .map(listDto -> {
-                    try {
-                        return userMapstruct.toCttpcDto(listDto);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * 내부직원 연락처 엑셀 다운로드 목록 조회
-     */
-    public List<Object> getCrdtUserCttpcListXlsx(
-            final String startDtStr,
-            final String endDtStr
-    ) throws Exception {
-        List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr);
-        List<Object> rsCrdtUserCttpcXlsxObjList = new ArrayList<>();
-        Map<String, String> header = new LinkedHashMap<>() {{
-            put("이름", "이름");
-            put("직급", "직급");
-            put("부서", "부서");
-            put("연락처", "연락처");
-            put("이메일", "이메일");
-        }};
-        rsCrdtUserCttpcXlsxObjList.add(header);
-        for (UserDto.LIST listDto : crdtUserList) {
-            rsCrdtUserCttpcXlsxObjList.add(userMapstruct.toCttpcListXlsxDto(listDto));
-        }
-        return rsCrdtUserCttpcXlsxObjList;
-    }
+    // public List<UserCttpcDto> getCrdtUserCttpcList(
+    //         final String startDtStr,
+    //         final String endDtStr
+    // ) throws Exception {
+    //     List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr);
+//
+    //     return crdtUserList.stream()
+    //             .map(listDto -> {
+    //                 try {
+    //                     return userMapstruct.toCttpcDto(listDto);
+    //                 } catch (Exception e) {
+    //                     throw new RuntimeException(e);
+    //                 }
+    //             })
+    //             .collect(Collectors.toList());
+    // }
+//
+    // /**
+    //  * 내부직원 연락처 엑셀 다운로드 목록 조회
+    //  */
+    // public List<Object> getCrdtUserCttpcListXlsx(
+    //         final String startDtStr,
+    //         final String endDtStr
+    // ) throws Exception {
+    //     List<UserDto.LIST> crdtUserList = this.getCrdtUserList(startDtStr, endDtStr);
+    //     List<Object> rsCrdtUserCttpcXlsxObjList = new ArrayList<>();
+    //     Map<String, String> header = new LinkedHashMap<>() {{
+    //         put("이름", "이름");
+    //         put("직급", "직급");
+    //         put("부서", "부서");
+    //         put("연락처", "연락처");
+    //         put("이메일", "이메일");
+    //     }};
+    //     rsCrdtUserCttpcXlsxObjList.add(header);
+    //     for (UserDto.LIST listDto : crdtUserList) {
+    //         rsCrdtUserCttpcXlsxObjList.add(userMapstruct.toCttpcListXlsxDto(listDto));
+    //     }
+    //     return rsCrdtUserCttpcXlsxObjList;
+    // }
 
     /**
      * 생일인 내부직원 목록 조회

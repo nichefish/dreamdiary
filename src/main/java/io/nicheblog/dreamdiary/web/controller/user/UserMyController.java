@@ -12,7 +12,6 @@ import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.service.user.UserMyService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
@@ -96,8 +95,8 @@ public class UserMyController
                 VcatnStatsYyDto statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
                 model.addAttribute("vcatnYy", statsYy);
                 String userId = AuthUtils.getLgnUserId();
-                VcatnStatsDto vcatnStatsDtl = vcatnStatsService.getVcatnStatsDtl(statsYy, userId);
-                model.addAttribute("vcatnStats", vcatnStatsDtl);
+                // VcatnStatsDto vcatnStatsDtl = vcatnStatsService.getVcatnStatsDtl(statsYy, userId);
+               //  model.addAttribute("vcatnStats", vcatnStatsDtl);
                 // 올해 사용 휴가 목록 조회
                 Map<String, Object> searchParamMap = new HashMap<>() {{
                     put("searchStartDt", statsYy.getBgnDt());

@@ -28,9 +28,9 @@ public class NoticeDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.NOTICE;
+    protected static final ContentType CONTENT_TYPE = ContentType.NOTICE;
     /** 필수(Override): 글분류 코드 */
-    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
+    protected static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
     @Builder.Default

@@ -48,8 +48,5 @@ public interface AtchFileMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final AtchFileDto dto,
-            final @MappingTarget AtchFileEntity entity
-    ) throws Exception;
+    void updateFromDto(final AtchFileDto dto, final @MappingTarget AtchFileEntity entity) throws Exception;
 }

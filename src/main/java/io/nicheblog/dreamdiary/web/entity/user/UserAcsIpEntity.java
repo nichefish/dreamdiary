@@ -1,6 +1,11 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
-import lombok.*;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.SQLDelete;
@@ -21,12 +26,13 @@ import javax.persistence.*;
 @DynamicInsert      // null인 값은 (null로 insert하는 대신) insert에서 제외
 @Getter
 @Setter
-@Builder
+@SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE user_acs_ip SET del_yn = 'Y' WHERE user_acs_ip_no = ?")
-public class UserAcsIpEntity {
+public class UserAcsIpEntity
+        extends BaseCrudEntity {
 
     /** 사용자 정보 접속가능 IP 번호 (PK) */
     @Id
@@ -46,9 +52,12 @@ public class UserAcsIpEntity {
     @Comment("접속가능 IP")
     private String acsIp;
 
-    /** 삭제 여부 */
-    @Builder.Default
-    @Column(name = "del_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("삭제 여부")
-    private String delYn = "N";
+    /* ----- */
+
+    /**
+     * 생성자
+     */
+    public UserAcsIpEntity(String acsIp) {
+        this.setAcsIp(acsIp);
+    }
 }

@@ -47,8 +47,5 @@ public interface AuthInfoMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final AuthInfo dto,
-            final @MappingTarget UserEntity entity
-    ) throws Exception;
+    void updateFromDto(final AuthInfo dto, final @MappingTarget UserEntity entity) throws Exception;
 }

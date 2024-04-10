@@ -8,13 +8,16 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.global.validator.CmmRegex;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -181,5 +184,18 @@ public class CmmUtils {
      */
     public String removeComma(final String value) {
         return value.replaceAll("\\,", "");
+    }
+
+    /**
+     * 공통 > tagify 문자열 파싱
+     */
+    public static List<String> parseTagify(final String tafigyStr) {
+        if (StringUtils.isEmpty(tafigyStr)) return new ArrayList<>();
+        JSONArray jArray = new JSONArray(tafigyStr);
+        List<String> strList = new ArrayList<>();
+        for (int i = 0; i < jArray.length(); i++) {
+            strList.add(jArray.getJSONObject(i).getString("value"));
+        }
+        return strList;
     }
 }

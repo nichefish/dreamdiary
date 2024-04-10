@@ -271,7 +271,7 @@
                         <div class="col-form-label text-center fs-6 fw-bold">전화번호</div>
                     </div>
                     <div class="col-xl-2 col-8 col-form-label">
-                        ${user.userInfo.cttpc!"-"}
+                        ${user.cttpc!"-"}
                     </div>
                 </div>
                 <div class="row mb-4">      <!--begin::Row-->
@@ -279,7 +279,7 @@
                         <div class="col-form-label text-center fs-6 fw-bold">E-mail</div>
                     </div>
                     <div class="col-xl-2 col-8 col-form-label">
-                        ${user.userInfo.email!"-"}
+                        ${user.email!"-"}
                     </div>
                 </div>
                 <div class="row mb-4">      <!--begin::Row-->

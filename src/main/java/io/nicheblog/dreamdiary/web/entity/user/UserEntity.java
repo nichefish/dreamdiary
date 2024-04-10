@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.entity.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -95,6 +96,16 @@ public class UserEntity
     @Comment("표시이름")
     private String nickNm;
 
+    /** 연락처 */
+    @Column(name = "cttpc", length = 20)
+    @Comment("연락처")
+    private String cttpc;
+
+    /** Email 주소 (사내메일) */
+    @Column(name = "email", length = 40)
+    @Comment("Email 주소")
+    private String email;
+
     /** 프로필 이미지 URL */
     @Column(name = "profl_img_url", length = 1000)
     @Comment("프로필 이미지 URL")
@@ -111,16 +122,6 @@ public class UserEntity
     @Comment("사용자 프로필 정보")
     private UserProflEntity userProfl;
 
-    /** 연락처 */
-    @Column(name = "cttpc", length = 20)
-    @Comment("연락처")
-    private String cttpc;
-
-    /** Email 주소 (사내메일) */
-    @Column(name = "email", length = 40)
-    @Comment("Email 주소")
-    private String email;
-
     /** 계정 상태 정보 (위임) */
     @Embedded
     public UserStusEmbed acntStus;
@@ -128,7 +129,29 @@ public class UserEntity
     /* ----- */
 
     /**
-     * 서브엔티티 List 처리를 위한 Setter (override)
+     * tagify 문자열로부터 List<useAcsIpEntity> 세팅
+     */
+    public void setAuthList(String authStr) {
+        if (StringUtils.isEmpty(authStr)) return;
+        // 권한 정보 문자열에서 권한 목록 생성
+        List<String> authStrList = List.of(authStr.split(","));
+        this.setAuthList(authStrList.stream()
+                .map(UserAuthRoleEntity::new)
+                .collect(Collectors.toList()));
+    }
+
+    /**
+     * tagify 문자열로부터 List<useAcsIpEntity> 세팅
+     */
+    public void setAcsIpList(String tagifyStr) {
+        List<String> acsIpStrList = CmmUtils.parseTagify(tagifyStr);
+        this.setAcsIpList(acsIpStrList.stream()
+                .map(UserAcsIpEntity::new)
+                .collect(Collectors.toList()));
+    }
+
+    /**
+     * 서브엔티티 List 처리를 위한 Setter Override
      * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
      */
     public void setAcsIpList(final List<UserAcsIpEntity> acsIpList) {
@@ -138,6 +161,15 @@ public class UserEntity
         } else {
             this.acsIpList.clear();
             this.acsIpList.addAll(acsIpList);
+        }
+    }
+    public void setAuthList(final List<UserAuthRoleEntity> authList) {
+        if (CollectionUtils.isEmpty(authList)) return;
+        if (this.authList == null) {
+            this.authList = authList;
+        } else {
+            this.authList.clear();
+            this.authList.addAll(authList);
         }
     }
 

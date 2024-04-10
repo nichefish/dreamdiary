@@ -77,15 +77,15 @@ public class VcatnStatsService {
     /**
      * 휴가관리 > (개인) 휴가현황 조회
      */
-    public VcatnStatsDto getVcatnStatsDtl(
-            final VcatnStatsYyDto statsYy,
-            final String userId
-    ) throws Exception {
-        UserDto user = userService.getDtlDto(userId);
-        UserDto.LIST userDtl = userMapstruct.dtlDtoToListDto(user);
-        if (StringUtils.isEmpty(userDtl.getEcnyDt())) throw new NullPointerException("입사일 정보가 존재하지 않습니다.");
-        return this.getVcatnStats(userDtl, statsYy);
-    }
+    // public VcatnStatsDto getVcatnStatsDtl(
+    //         final VcatnStatsYyDto statsYy,
+    //         final String userId
+    // ) throws Exception {
+    //     UserDto user = userService.getDtlDto(userId);
+    //     UserDto.LIST userDtl = userMapstruct.dtlDtoToListDto(user);
+    //     if (StringUtils.isEmpty(userDtl.getEcnyDt())) throw new NullPointerException("입사일 정보가 존재하지 않습니다.");
+    //     return this.getVcatnStats(userDtl, statsYy);
+    // }
 
     /**
      * 휴가관리 > 년도별 휴가관리 통계 > 개인별 휴가 현황 조회 (메소드 분리)

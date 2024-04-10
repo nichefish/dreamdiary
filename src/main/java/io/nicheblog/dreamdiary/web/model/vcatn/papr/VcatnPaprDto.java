@@ -35,9 +35,9 @@ public class VcatnPaprDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.VCATN_PAPR;
+    protected static final ContentType CONTENT_TYPE = ContentType.VCATN_PAPR;
     /** 필수(Override): 글분류 코드 */
-    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
+    protected static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
     @Builder.Default
@@ -46,10 +46,10 @@ public class VcatnPaprDto
     /* ----- */
 
     /** 확인 여부 (Y/N) */
-    private String cfYn;
+    protected String cfYn;
 
     /** 휴가 일정 리스트 */
-    private List<VcatnSchdulDto> schdulList;
+    protected List<VcatnSchdulDto> schdulList;
 
     /* ----- */
 

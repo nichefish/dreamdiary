@@ -90,7 +90,7 @@ public class VcatnPaprEntity
     }
 
     /**
-     * 서브엔티티 List 처리를 위한 Setter (override)
+     * 서브엔티티 List 처리를 위한 Setter Override
      * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
      */
     public void setSchdulList(final List<VcatnSchdulEntity> itemList) {

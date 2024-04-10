@@ -48,8 +48,5 @@ public interface AuthRoleMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final AuthRoleDto dto,
-            final @MappingTarget AuthRoleEntity entity
-    ) throws Exception;
+    void updateFromDto(final AuthRoleDto dto, final @MappingTarget AuthRoleEntity entity) throws Exception;
 }

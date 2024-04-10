@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.user.reqst;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
@@ -16,6 +17,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * UserReqstEntity
@@ -84,6 +86,16 @@ public class UserReqstEntity
     @Comment("표시이름")
     private String nickNm;
 
+    /** 연락처 */
+    @Column(name = "cttpc", length = 20)
+    @Comment("연락처")
+    private String cttpc;
+
+    /** Email 주소 (사내메일) */
+    @Column(name = "email", length = 40)
+    @Comment("Email 주소")
+    private String email;
+
     /** 프로필 이미지 URL */
     @Column(name = "profl_img_url", length = 1000)
     @Comment("프로필 이미지 URL")
@@ -108,7 +120,17 @@ public class UserReqstEntity
     /* ----- */
 
     /**
-     * 서브엔티티 List 처리를 위한 Setter (override)
+     * tagify 문자열로부터 List<useAcsIpEntity> 세팅
+     */
+    public void setAcsIpList(String tagifyStr) {
+        List<String> acsIpStrList = CmmUtils.parseTagify(tagifyStr);
+        this.setAcsIpList(acsIpStrList.stream()
+                .map(UserAcsIpEntity::new)
+                .collect(Collectors.toList()));
+    }
+
+    /**
+     * 서브엔티티 List 처리를 위한 Setter Override
      * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
      */
     public void setAcsIpList(final List<UserAcsIpEntity> acsIpList) {

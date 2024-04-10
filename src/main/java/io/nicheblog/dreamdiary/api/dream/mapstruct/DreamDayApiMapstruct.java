@@ -52,8 +52,5 @@ public interface DreamDayApiMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(
-            final DreamDayApiDto dto,
-            final @MappingTarget DreamDayEntity entity
-    ) throws Exception;
+    void updateFromDto(final DreamDayApiDto dto, final @MappingTarget DreamDayEntity entity) throws Exception;
 }

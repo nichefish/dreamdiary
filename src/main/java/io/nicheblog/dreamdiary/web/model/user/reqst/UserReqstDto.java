@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -43,4 +44,10 @@ public class UserReqstDto
 
     /** 사용자 정보 (위임) */
     private UserProflDto userProfl;
+
+    /** 이메일 반환 (override) */
+    public String getEmail() {
+        if (!StringUtils.isEmpty(this.email)) return this.email;
+        return this.emailId + "@" + this.emailDomain;
+    }
 }

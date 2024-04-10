@@ -31,7 +31,7 @@ public class BoardPostDto
 
     /** 컨텐츠 타입 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType */
     @JsonProperty("contentType")
-    private String boardCd;
+    protected String boardCd;
 
     @Override
     public BaseClsfKey getKey() {

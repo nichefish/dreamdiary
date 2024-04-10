@@ -6,9 +6,8 @@ import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
+import org.apache.commons.lang3.StringUtils;
 
-import javax.persistence.Column;
 import java.util.List;
 
 /**
@@ -30,52 +29,54 @@ public class UserDto
         implements Identifiable<Integer> {
 
     /** 사용자 고유 번호 (PK) */
-    private Integer userNo;
+    protected Integer userNo;
     /** 아이디 */
-    private String userId;
+    protected String userId;
     /** 비밀번호 */
-    private String password;
+    protected String password;
     /** 표시이름 */
-    private String nickNm;
+    protected String nickNm;
     /** 프로필 이미지 URL */
-    private String proflImgUrl;
+    protected String proflImgUrl;
 
     /** 연락처 */
-    private String cttpc;
+    protected String cttpc;
+    /** 이메일 */
+    protected String email;
     /** E-mail ID */
-    private String emailId;
+    protected String emailId;
     /** E-mail 뒷부분 */
-    private String emailDomain;
+    protected String emailDomain;
 
     /** 잠금여부 */
     @Builder.Default
-    private String lockedYn = "N";
+    protected String lockedYn = "N";
 
     /** 퇴사여부 */
     @Builder.Default
-    private String retireYn = "N";
+    protected String retireYn = "N";
     /** 퇴사일 */
-    private String retireDt;
+    protected String retireDt;
 
     /**
      * 등록/수정시 사용자 정보 저장할지 말지 화면에서 넘겨받는 임시필드
      */
     @Builder.Default
-    private String userProflYn = "N";
+    protected String userProflYn = "N";
     /** 사용자 정보 (위임) */
-    private UserProflDto userProfl;
+    protected UserProflDto userProfl;
 
     /** 사용자 권한 정보 */
-    private List<UserAuthRoleDto> authList;
+    protected List<UserAuthRoleDto> authList;
     /** 사용자 권한 정보(문자열) */
-    private List<String> authStrList;
+    protected List<String> authStrList;
     /** 사용자 권한 정보(문자열) */
-    private String authListStr;
+    protected String authListStr;
 
     /** 본인신청여부 */
-    private String isReqst;
+    protected String isReqst;
     /** 승인여부 */
-    private Boolean isCf;
+    protected Boolean isCf;
     
     /* ----- */
 
@@ -112,6 +113,12 @@ public class UserDto
         private String acsIpListStr;
         /** 접속 IP 정보 */
         private List<UserAcsIpDto> acsIpList;
+
+        /** 이메일 반환 (override) */
+        public String getEmail() {
+            if (!StringUtils.isEmpty(this.email)) return this.email;
+            return this.emailId + "@" + this.emailDomain;
+        }
     }
 
     @Getter

@@ -12,26 +12,25 @@
     const Page = function() {
         return {
             init: function () {
-                commons.validate.noSpaces(".no-space");        // 공백 자동 제거
-                commons.validate.toLowerCase("#userId");       // 자동 대문자->소문자처리
+                commons.validate.noSpaces(".no-space");         // 공백 자동 제거
+                commons.validate.toLowerCase("#userId");        // 자동 대문자->소문자처리
+                commons.validate.cttpc("#cttpc");               // 연락처 포맷
 
                 // 권한 유효성검사 바꿀때마다 지우기
                 $("#authCd").on("change", function() {
                     if ($(this).val() !== "") $("#authCd_valid_span").text("");
                 });
 
-                <#if isReg>
-                    // 등록화면:: 사용자 ID 변경입력시 중복체크 통과여부 초기화
-                    $("#userId").on("keyup", function() {
-                        $("#userId_valid_span").empty();
-                        $("#ipDupChckPassed").val("N");
-                        $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
-                    }).on("keydown", function() {
-                        $("#userId_valid_span").text("");
-                        $("#ipDupChckPassed").val("N");
-                        $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
-                    });
-                </#if>
+                // 등록화면:: 사용자 ID 변경입력시 중복체크 통과여부 초기화
+                $("#userId").on("keyup", function() {
+                    $("#userId_valid_span").empty();
+                    $("#ipDupChckPassed").val("N");
+                    $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
+                }).on("keydown", function() {
+                    $("#userId_valid_span").text("");
+                    $("#ipDupChckPassed").val("N");
+                    $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
+                });
 
                 // 접속IP 사용 여부 클릭시 글씨 변경 + 입력창 토글 :: 메소드 분리
                 commons.util.chckboxLabel("useAcsIpYn", "사용//미사용", "blue//gray", function(){
@@ -64,32 +63,16 @@
                         },
                         ignore: [],         // hidden 필드도 검증하기 위함
                         rules: {
-                            <#if isReg>
-                                userId: { required:true, minlength:4, maxlength:16 },
-                                ipDupChckPassed: { dupChck:true },
-                                password: { minlength:9, maxlength:20, regex:commons.validate.pwRegex },
-                                passwordCf: { equalTo:"#password", maxlength:20 },
-                            </#if>
-                            "userProfl.userNm": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
-                            "userProfl.cmpyCd": { required:function() {return $("#userProflYn").val() === "Y"} },
-                            "userProfl.teamCd": { required:function() {return $("#userProflYn").val() === "Y"} },
-                            "userProfl.emplymCd": { required:function() {return $("#userProflYn").val() === "Y"} },
-                            "userProfl.emailId": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
-                            "userProfl.emailDomain": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
+                            userId: { required:true, minlength:4, maxlength:16 },
+                            ipDupChckPassed: { dupChck:true },
+                            password: { minlength:9, maxlength:20, regex:commons.validate.pwRegex },
+                            passwordCf: { equalTo:"#password", maxlength:20 },
                         },
                         messages: {
-                            <#if isReg>
-                                userId: { required:"아이디는 필수 항목입니다.", minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
-                                ipDupChckPassed: { dupChck:"아이디 중복 체크는 필수 항목입니다." },
-                                password: { minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
-                                passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
-                            </#if>
-                            "userProfl.userNm": { required:"이름은 필수 항목입니다.", maxlength:"이름은 {0}자 이하로 입력해야 합니다." },
-                            "userProfl.cmpyCd": { required:"소속 회사는 필수 항목입니다." },
-                            "userProfl.teamCd": { required:"소속 팀은 필수 항목입니다." },
-                            "userProfl.emplymCd": { required:"재직구분은 필수 항목입니다." },
-                            "userProfl.emailId": { required:"이메일 ID는 필수 항목입니다.", maxlength:"이메일 ID는 {0}자 이하로 입력해야 합니다." },
-                            "userProfl.emailDomain": { required:"이메일 도메인은 필수 항목입니다.", maxlength:"이메일 도메인은 {0}자 이하로 입력해야 합니다." },
+                            userId: { required:"아이디는 필수 항목입니다.", minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
+                            ipDupChckPassed: { dupChck:"아이디 중복 체크는 필수 항목입니다." },
+                            password: { minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
+                            passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
                         },
                     });
                 });
@@ -150,24 +133,24 @@
             },
             /** 아이디 중복 체크(Ajax) */
             idDupChckAjax: function() {
-                const userId_valid_span = $("#userId_valid_span");
+                const userIdValidSpan = $("#userId_valid_span");
                 let userId = $("#userId").val();
                 const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
                 if (!idRegex.test(userId)) {
-                    userId_valid_span.text("아이디가 형식에 맞지 않습니다.").removeClass("text-success").addClass("text-danger");
+                    userIdValidSpan.text("아이디가 형식에 맞지 않습니다.").removeClass("text-success").addClass("text-danger");
                     return false;
                 }
                 const url = "${SiteUrl.USER_ID_DUP_CHK_AJAX!}";
                 let ajaxData = { "userId": userId };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    userId_valid_span.text(res.message);
+                    userIdValidSpan.text(res.message);
                     if (res.rslt) {
-                        userId_valid_span.removeClass("text-danger").addClass("text-success");
+                        userIdValidSpan.removeClass("text-danger").addClass("text-success");
                         $("#ipDupChckPassed").val("Y");
                         $("#ipDupChckPassed_valid_span").text("");
                         $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
                     } else {
-                        userId_valid_span.css("color", "red");
+                        userIdValidSpan.removeClass("text-success").addClass("text-danger");
                         $("#ipDupChckPassed").val("N");
                     }
                 });
@@ -303,7 +286,8 @@
                 <div id="nickNm_valid_span"></div>
             </div>
         </div>
-        <div class="row mb-4">           <!--begin::Row-->
+        <!--begin::Row-->
+        <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-sm-start text-lg-center required">
                     <label for="emailId" class="cursor-help"
@@ -314,24 +298,23 @@
                 </div>
             </div>
             <div class="col-lg-2 col-4">
-                <input type="text" class="form-control form-control-solid required no-space" name="userInfo.emailId" id="emailId"
-                       maxlength="20" placeholder="이메일 ID 입력" <#if user.userInfo??>value="${user.userInfo.emailId!}"</#if> />
+                <input type="text" class="form-control form-control-solid required no-space" name="emailId" id="emailId"
+                       maxlength="20" placeholder="이메일 ID 입력" value="${user.emailId!}" />
                 <div id="emailId_valid_span"></div>
             </div>
             <div class="col-xl-2 col-1 d-flex-center fw-bold text-gray-700" style="width:2%;">
                 <label for="emailDomain"><label for="emailDomainSelect">@</label></label>
             </div>
             <div class="col-lg-2 col-5 vertical-center">
-                <input type="text" class="form-control form-control-solid required no-space" name="userInfo.emailDomain" id="emailDomain"
-                       placeholder="직접입력" maxlength="20" value="<#if user.userInfo??>${user.userInfo.emailDomain!}<#else>gmail.com</#if>" />
+                <input type="text" class="form-control form-control-solid required no-space" name="emailDomain" id="emailDomain"
+                       placeholder="직접입력" maxlength="20" value="gmail.com" />
                 <div id="emailDomain_valid_span"></div>
             </div>
             <div class="col-xl-2 col-1">
-                <select name="userInfo.emailDomainSelect" id="emailDomainSelect" class="form-select form-select-solid">
+                <select name="emailDomainSelect" id="emailDomainSelect" class="form-select form-select-solid">
                     <option value="">직접입력</option>
                     <option value="gmail.com" <#if isReg!false>selected</#if>>gmail.com</option>
-                    <option value="gmail.com">gmail.com</option>
-                    <option value="gmail.com">gmail.com</option>
+                    <option value="naver.com">naver.com</option>
                     <option value="kakao.com">kakao.com</option>
                 </select>
             </div>
@@ -346,8 +329,8 @@
                 </div>
             </div>
             <div class="col-xl-2">
-                <input type="text" class="form-control form-control-solid" name="userInfo.cttpc" id="cttpc"
-                       maxlength="20" placeholder="전화번호" <#if user.userInfo??>value="${user.userInfo.cttpc!}"</#if> />
+                <input type="text" class="form-control form-control-solid" name="cttpc" id="cttpc"
+                       maxlength="20" placeholder="전화번호" <#if user.userInfo??>value="${user.cttpc!}"</#if> />
                 <div class="form-text text-noti">(※숫자만 입력)</div>
                 <div id="cttpc_valid_span"></div>
             </div>
@@ -365,14 +348,14 @@
             </div>
             <div class="col-xl-10">
                 <div class="form-check form-switch form-check-custom form-check-solid mt-2">
-                    <input class="form-check-input" type="checkbox" value="Y" name="acsIpInfo.useAcsIpYn" id="useAcsIpYn" <#if user.isAcsIpY!false>checked="checked"</#if> />
-                    <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:<#if user.isAcsIpY!false>blue<#else>gray</#if>;">
-                        <#if !user.isAcsIpY!false>미</#if>사용
+                    <input class="form-check-input" type="checkbox" value="Y" name="useAcsIpYn" id="useAcsIpYn" />
+                    <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:gray;">
+                        미사용
                     </label>
                 </div>
                 <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
                 <div id="acsIpListSpan" class="mt-2 mb-0" style="display:none;">
-                    <input name="acsIpInfo.acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
+                    <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
                     <div class="form-text text-noti">(※최대 5개)</div>
                     <div id="acsIpListStrSpan"></div>
                 </div>
