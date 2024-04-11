@@ -1,6 +1,6 @@
 <#--
-  -- 활동 로그 목록 화면
-  -->
+ -- 활동 로그 목록 화면
+ -->
 <#import "/layout/layout.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->
