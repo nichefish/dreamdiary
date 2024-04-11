@@ -1,6 +1,6 @@
 <#--
-  -- 로그인 정책 관리 화면
-  -->
+ -- 로그인 정책 관리 화면
+ -->
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">

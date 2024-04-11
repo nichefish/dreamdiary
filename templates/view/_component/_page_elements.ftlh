@@ -1,4 +1,4 @@
-<!--
+<#--
  -- 상세/수정 페이지 관련 컴포넌트
  -- @included_in : lib/components.ftl
  -->

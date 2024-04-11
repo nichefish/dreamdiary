@@ -1,8 +1,7 @@
 <#--
-  -- 태그 관련파일 묶음
-  -- @included_in : board_post_list
-  -->
-
+ -- 태그 관련파일 묶음
+ -- @included_in : board_post_list
+ -->
 <script>
     const Tag = function() {
         return {

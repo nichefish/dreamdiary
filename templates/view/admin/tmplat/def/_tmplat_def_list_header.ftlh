@@ -1,8 +1,7 @@
 <#--
-  -- 템플릿 관리 > 목록 툴바 Header
-  -- @included_in : notice_list
-  -->
-
+ -- 템플릿 관리 > 목록 툴바 Header
+ -- @included_in : notice_list
+ -->
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">

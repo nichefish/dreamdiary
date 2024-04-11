@@ -3,7 +3,7 @@
   -- @included_in : vcatn_papr_list_header
   -- @included_in : vcatn_papr_reg_form
   -->
-<div class="modal fade" id="vcatn_papr_rule_modal" tabindex="-1" role="dialog" aria-labelledby="vcatn_papr_rule_modal_title" aria-hidden="true">
+<div class="modal fade" id="vcatn_papr_rule_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <!-- 영역:: 모달 헤더 -->
@@ -133,6 +133,13 @@
                             </td>
                         </tr>
                     </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- 버튼 영역 -->
+                <div class="d-flex justify-content-end">
+                    <!-- 버튼:: 모달 닫기 -->
+                    <@component.btn_modal_close />
                 </div>
             </div>
         </div>

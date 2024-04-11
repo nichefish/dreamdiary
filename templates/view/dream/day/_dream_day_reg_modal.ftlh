@@ -72,7 +72,7 @@
     });
 </script>
 
-<div class="modal fade" id="dream_day_reg_modal" tabindex="-1" role="dialog" aria-labelledby="dreamDayRegModalTitle" aria-hidden="true">
+<div class="modal fade" id="dream_day_reg_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <!-- 영역:: 모달 헤더 -->

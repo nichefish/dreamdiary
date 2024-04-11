@@ -2,7 +2,7 @@
   -- 경비 > 물품구매/경조사비 신청 > 작성예시 Modal
   -- @included_in : exptr_reqst_list
   -->
-<div class="modal fade" id="exptr_reqst_exmpl_modal" tabindex="-1" role="dialog" aria-labelledby="exptr_reqst_exmpl_modal_title" aria-hidden="true">
+<div class="modal fade" id="exptr_reqst_exmpl_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <!-- 영역:: 모달 헤더 -->
@@ -61,6 +61,13 @@
                             </td>
                         </tr>
                     </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- 버튼 영역 -->
+                <div class="d-flex justify-content-end">
+                    <!-- 버튼:: 모달 닫기 -->
+                    <@component.btn_modal_close />
                 </div>
             </div>
         </div>

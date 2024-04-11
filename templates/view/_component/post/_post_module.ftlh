@@ -1,4 +1,4 @@
-<!--
+<#--
  -- 수정 권한mdfable 관련 컴포넌트
  -- @included_in : lib/components.ftl
  -->

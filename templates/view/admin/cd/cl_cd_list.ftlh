@@ -1,6 +1,6 @@
 <#--
-  -- 분류 코드(CL_CD) > 목록 화면
-  -->
+ -- 분류 코드(CL_CD) > 목록 화면
+ -->
 <#import "/layout/layout.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->

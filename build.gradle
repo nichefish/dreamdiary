@@ -77,6 +77,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.18'
     implementation 'org.springframework.boot:spring-boot-starter-cache:2.7.18'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.2'
+    implementation 'pl.allegro.tech.boot:handlebars-spring-boot-starter:0.4.1'
+    // https://github.com/allegro/handlebars-spring-boot-starter
     implementation 'org.springframework.session:spring-session-core'
     implementation 'org.projectlombok:lombok:1.18.30'
     // implementation 'junit:junit:4.13.2'

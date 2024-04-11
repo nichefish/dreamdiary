@@ -1,9 +1,9 @@
 <#--
-  -- 게시판 > 태그 전체 목록 Modal
-  -- @included_in : board_post_list
-  -- @included_in : board_post_dtl
-  -->
-<div class="modal fade" id="board_tag_list_modal" tabindex="-1" role="dialog" aria-labelledby="tagModalTitle" aria-hidden="true">
+ -- 게시판 > 태그 전체 목록 Modal
+ -- @included_in : board_post_list
+ -- @included_in : board_post_dtl
+ -->
+<div class="modal fade" id="board_tag_list_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <!-- 영역:: 모달 헤더 -->

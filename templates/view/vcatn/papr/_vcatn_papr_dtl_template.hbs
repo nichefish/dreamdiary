@@ -78,28 +78,7 @@
             </div>
         </div>
     </div>
-    {{#atchFileInfo}}
-        <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
-            <div class="col-xl-2 col-form-label fs-6 fw-bold px-5">
-                첨부파일
-            </div>
-            <div class="col-xl-10 my-3">
-                {{#atchFileList}}
-                    <div class="row my-1">
-                        <div class="col-xl-8">
-                            <a href="javascript:void(0);"
-                               onclick="commons.util.fileDownload('{{atchFileNo}}', '{{atchFileDtlNo}}');"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.download"/>">
-                                <i class="fas fa-file-download fs-15 me-1"></i>
-                                {{orgnFileNm}}({{fileSize}}byte)
-                            </a>
-                        </div>
-                    </div>
-                {{/atchFileList}}
-                {{^atchFileList}}
-                    <span>첨부된 파일이 없습니다.</span>
-                {{/atchFileList}}
-            </div>
-        </div>
-    {{/atchFileInfo}}
+
+    <#-- 첨부파일 영역 -->
+    <#include "/view/_component/atch_file/_atch_file_partial.hbs">
 </script>

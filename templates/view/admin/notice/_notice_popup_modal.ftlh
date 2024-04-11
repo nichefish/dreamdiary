@@ -1,7 +1,7 @@
 <#--
-  -- 로그인 화면 > 공지사항 Modal
-  -- TODO:
-  -->
+ -- 로그인 화면 > 공지사항 Modal
+ -- TODO:
+ -->
 <script>
     /** 공지사항 팝업 관련 */
     const NoticePopup = function() {

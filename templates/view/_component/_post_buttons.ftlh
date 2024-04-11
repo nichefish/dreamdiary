@@ -1,4 +1,4 @@
-<!--
+<#--
  -- 버튼 관련 컴포넌트
  -- @included_in : lib/components.ftl
  -->

@@ -1,8 +1,8 @@
 <#--
-  -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Modal
-  -- @included_in : cl_cd_dtl
-  -->
-<div class="modal fade" id="dtl_cd_reg_modal" tabindex="-1" role="dialog" aria-labelledby="dtlCdRegModalTitle" aria-hidden="true">
+ -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Modal
+ -- @included_in : cl_cd_dtl
+ -->
+<div class="modal fade" id="dtl_cd_reg_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <!-- 영역:: 모달 헤더 -->

@@ -1,7 +1,7 @@
 <#--
-  -- 댓글 목록 Modal
+ -- 댓글 목록 Modal
  -- @included_in : 댓글 미리보기 기능이 있는 페이지들
-  -->
+ -->
 <script>
     const CommentList = function() {
         return {
@@ -40,7 +40,7 @@
     <input type="hidden" name="refContentType" value="${contentType!}" />
     <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" />
 </form>
-<div class="modal fade" id="comment_list_modal" tabindex="-1" role="dialog" aria-labelledby="tagModalTitle" aria-hidden="true">
+<div class="modal fade" id="comment_list_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <!-- 영역:: 모달 헤더 -->

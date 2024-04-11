@@ -3,7 +3,7 @@
   -- @included_in : exptr_reqst_list_header
   -- @included_in : exptr_reqst_reg_form
   -->
-<div class="modal fade" id="exptr_reqst_rule_modal" tabindex="-1" role="dialog" aria-labelledby="exptrInfoModalTitle" aria-hidden="true">
+<div class="modal fade" id="exptr_reqst_rule_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <!-- 영역:: 모달 헤더 -->
@@ -118,6 +118,13 @@
                             ※휴일제외 : 휴일에 경조사 발생시 해당일 외의 연속되는 평일에 해당일수만큼 붙여서 경조휴가 사용 가능
                         </p>
                     </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- 버튼 영역 -->
+                <div class="d-flex justify-content-end">
+                    <!-- 버튼:: 모달 닫기 -->
+                    <@component.btn_modal_close />
                 </div>
             </div>
         </div>

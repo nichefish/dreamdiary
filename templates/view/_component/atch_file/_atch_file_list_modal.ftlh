@@ -1,9 +1,8 @@
 <#--
-  -- 게시판 > 태그 전체 목록 Modal
-  -- @included_in : board_post_list
-  -- @included_in : board_post_dtl
-  -->
-
+ -- 게시판 > 태그 전체 목록 Modal
+ -- @included_in : board_post_list
+ -- @included_in : board_post_dtl
+ -->
 <script>
     const AtchFileList = function() {
         return {
@@ -36,7 +35,7 @@
     });
 </script>
 
-<div class="modal fade" id="atch_file_list_modal" tabindex="-1" role="dialog" aria-labelledby="tagModalTitle" aria-hidden="true">
+<div class="modal fade" id="atch_file_list_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <!-- 영역:: 모달 헤더 -->

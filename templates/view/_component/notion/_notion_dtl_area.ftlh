@@ -1,8 +1,7 @@
-<!--
- -- 레이아웃 > 첨부파일 모듈
+<#--
+ -- 레이아웃 > NOTION 참조 ID
  -- @included_in : 파일 첨부 기능이 있는 페이지들
  -->
-<!-- NOTION 참조 ID -->
 <!--begin::Row-->
 <#if post.notionPageId?? && post.notionPageId != "">
     <div class="d-flex flex-stack flex-wrap mb-3 bg-light">

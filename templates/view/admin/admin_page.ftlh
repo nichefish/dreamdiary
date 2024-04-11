@@ -1,6 +1,6 @@
 <#--
-  -- 테스트 화면
-  -->
+ -- 테스트 화면
+ -->
 <#import "/layout/layout_with_aside.ftlh" as layout >
 
 <script defer="defer" src="/static/node_modules/sass/sass.js"></script>

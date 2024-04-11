@@ -5,7 +5,7 @@
 <#--<script defer="defer" src="/static/react/static/js/main.668f159c.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/react/static/css/main.4fb4fba2.css">-->
 
-<div class="modal fade" id="notion_page_modal" tabindex="-1" role="dialog" aria-labelledby="notionPageModalTitle" aria-hidden="true">
+<div class="modal fade" id="notion_page_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <!-- 영역:: 모달 헤더 -->
