@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
+import io.nicheblog.dreamdiary.web.mapstruct.user.emplym.UserEmplymMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.user.profl.UserProflMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
  * @author nichefish
  * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속:: 기본 변환 매핑 로직 상속
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, Collectors.class, UserProflMapstruct.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, Collectors.class, UserProflMapstruct.class, UserEmplymMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserMapstruct
         extends BaseCrudMapstruct<UserDto.DTL, UserDto.LIST, UserEntity> {
 
@@ -35,13 +36,14 @@ public interface UserMapstruct
     @Override
     @Named("toDto")
     @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
-    @Mapping(target = "emailId", expression = "java(entity.getEmail().split(\"@\")[0])")
-    @Mapping(target = "emailDomain", expression = "java(entity.getEmail().split(\"@\")[1])")
+    @Mapping(target = "emailId", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(0, entity.getEmail().indexOf('@')) : \"\")")
+    @Mapping(target = "emailDomain", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(entity.getEmail().indexOf('@')+1) : \"\")")
     @Mapping(target = "useAcsIp", expression = "java(\"Y\".equals(entity.getUseAcsIpYn()))")
     @Mapping(target = "acsIpListStr", expression = "java(String.join(\",\", entity.getAcsIpStrList()))")      // 접속IP tagify 문자열 세팅
     @Mapping(target = "authStrList", expression = "java(entity.getAuthList().stream().map(UserAuthRoleEntity::getAuthCd).collect(Collectors.toList()))")      // 접속IP tagify 문자열 세팅
     @Mapping(target = "isCf", expression = "java(entity.getAcntStus() != null && \"Y\".equals(entity.getAcntStus().getCfYn()))")
     @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toDto(entity.getProfl()))")
+    @Mapping(target = "emplym", expression = "java(UserEmplymMapstruct.INSTANCE.toDto(entity.getEmplym()))")
     UserDto.DTL toDto(final UserEntity entity) throws Exception;
 
     /**
@@ -50,15 +52,18 @@ public interface UserMapstruct
     @Override
     @Mapping(target = "isCf", expression = "java(entity.getAcntStus() != null && \"Y\".equals(entity.getAcntStus().getCfYn()))")
     @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toDto(entity.getProfl()))")
+    @Mapping(target = "emplym", expression = "java(UserEmplymMapstruct.INSTANCE.toDto(entity.getEmplym()))")
     UserDto.LIST toListDto(final UserEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
+    @Mapping(target = "email", expression = "java(dto.getEmailId() + \"@\" + dto.getEmailDomain())")
     @Mapping(target = "acsIpList", expression = "java(dto.getAcsIpListStr())")
     @Mapping(target = "authList", expression = "java(dto.getAuthListStr())")
     @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toEntity(dto.getProfl()))")
+    @Mapping(target = "emplym", expression = "java(UserEmplymMapstruct.INSTANCE.toEntity(dto.getEmplym()))")
     UserEntity toEntity(final UserDto.DTL dto) throws Exception;
 
     @AfterMapping
@@ -79,6 +84,7 @@ public interface UserMapstruct
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "acsIpList", expression = "java(dto.getAcsIpListStr())")
     @Mapping(target = "authList", expression = "java(dto.getAuthListStr())")
-    @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toEntity(dto.getProfl()))")
+    @Mapping(target = "profl", expression = "java(entity.getProflUpdt(dto.getProfl()))")
+    @Mapping(target = "emplym", expression = "java(entity.getEmplymUpdt(dto.getEmplym()))")
     void updateFromDto(final UserDto.DTL dto, final @MappingTarget UserEntity entity) throws Exception;
 }

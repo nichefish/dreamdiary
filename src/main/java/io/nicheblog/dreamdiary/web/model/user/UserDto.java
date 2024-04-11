@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.model.user;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
+import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -58,13 +59,10 @@ public class UserDto
     /** 퇴사일 */
     protected String retireDt;
 
-    /**
-     * 등록/수정시 사용자 정보 저장할지 말지 화면에서 넘겨받는 임시필드
-     */
-    @Builder.Default
-    protected String userProflYn = "N";
     /** 사용자 정보 (위임) */
     protected UserProflDto profl;
+    /** 사용자 정보 (위임) */
+    protected UserEmplymDto emplym;
 
     /** 사용자 권한 정보 */
     protected List<UserAuthRoleDto> authList;
@@ -117,6 +115,7 @@ public class UserDto
         /** 이메일 반환 (override) */
         public String getEmail() {
             if (!StringUtils.isEmpty(this.email)) return this.email;
+            if (!StringUtils.isEmpty(this.emailId) || !StringUtils.isEmpty(this.emailDomain)) return null;
             return this.emailId + "@" + this.emailDomain;
         }
     }

@@ -19,7 +19,7 @@
                 // 음력여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("lunarYn", "음력//양력", "blue//gray");
                 // datepicker init
-                commons.datepicker.singleDatePicker("#brthdy", "yyyy-MM-DD");
+                commons.datepicker.singleDatePicker("#brthdy", "yyyy-MM-DD", "${(user.profl.brthdy)!}");
             },
             /** 프로필 정보 창 토글 */
             disableUserProfl: function() {

@@ -36,8 +36,8 @@
                 // 퇴사여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("retireYn", "퇴사//해당없음", "red//gray", function() {$(".retireDtDiv").show();}, function() {$(".retireDtDiv").hide();});
 
-                commons.datepicker.singleDatePicker("#ecnyDt", "yyyy-MM-DD");
-                commons.datepicker.singleDatePicker("#retireDt", "yyyy-MM-DD");
+                commons.datepicker.singleDatePicker("#ecnyDt", "yyyy-MM-DD", "${(user.emplym.ecnyDt)!}");
+                commons.datepicker.singleDatePicker("#retireDt", "yyyy-MM-DD", "${(user.emplym.retireDt)!}");
             },
             /** 직원정보 창 토글 */
             disableUserEmplym: function() {

@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
+import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * UserInfoSpec
+ * UserSpec
  * <pre>
  *  사용자(계정) 정보 목록 검색인자 세팅 Specification
  * </pre>
@@ -146,17 +147,17 @@ public class UserSpec
     ) throws Exception {
         List<Predicate> predicate = new ArrayList<>();
         // JOIN 조건 세팅
-        Join<UserEntity, UserProflEntity> userProfl = root.join("userProfl", JoinType.INNER);
+        Join<UserEntity, UserEmplymEntity> emplym = root.join("emplym", JoinType.INNER);
         // 2. 기간조건 :: 해당 년도 내에 근무내역이 있음 (입사일 // 퇴사일)
         // 퇴사일 :: 퇴사 안했거나 or 비교일 내에 퇴사했거나
         Date startDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(startDtStr));
-        Predicate notRetired = builder.isNull(userProfl.get("retireDt"));
-        Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(userProfl.get("retireDt"), startDay);
+        Predicate notRetired = builder.isNull(emplym.get("retireDt"));
+        Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(emplym.get("retireDt"), startDay);
         predicate.add(builder.or(notRetired, retiredAfterFirstDay));
         // 입사일 :: 비교일보다 전에 입사
         Date endDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(endDtStr));
-        Predicate hasEcnyDt = builder.isNotNull(userProfl.get("ecnyDt"));
-        Predicate enteredBeforeEndDay = builder.lessThanOrEqualTo(userProfl.get("ecnyDt"), endDay);
+        Predicate hasEcnyDt = builder.isNotNull(emplym.get("ecnyDt"));
+        Predicate enteredBeforeEndDay = builder.lessThanOrEqualTo(emplym.get("ecnyDt"), endDay);
         predicate.add(builder.and(hasEcnyDt, enteredBeforeEndDay));
         return predicate;
     }
@@ -172,8 +173,9 @@ public class UserSpec
     ) throws Exception {
         List<Predicate> predicate = getCrdtUser(startDtStr, endDtStr, root, builder);
         // JOIN 조건 세팅
-        Join<UserEntity, UserProflEntity> userProfl = root.join("userProfl", JoinType.INNER);
-        predicate.add(builder.equal(userProfl.get("brthdy"), DateUtils.asDate(startDtStr)));
+        Join<UserEntity, UserEmplymEntity> emplym = root.join("emplym", JoinType.INNER);
+        Join<UserEntity, UserProflEntity> profl = root.join("profl", JoinType.INNER);
+        predicate.add(builder.equal(profl.get("brthdy"), DateUtils.asDate(startDtStr)));
         return predicate;
     }
 
@@ -185,10 +187,10 @@ public class UserSpec
             final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
-        Join<UserEntity, UserProflEntity> userProfl = root.join("userProfl", JoinType.INNER);
-        Join<UserProflEntity, DtlCdEntity> rankCdInfo = userProfl.join("rankCdInfo", JoinType.INNER);
+        Join<UserEntity, UserEmplymEntity> emplym = root.join("emplym", JoinType.INNER);
+        Join<UserEmplymEntity, DtlCdEntity> rankCdInfo = emplym.join("rankCdInfo", JoinType.INNER);
         order.add(builder.desc(rankCdInfo.get("state").get("sortOrdr")));
-        order.add(builder.asc(userProfl.get("ecnyDt")));
+        order.add(builder.asc(emplym.get("ecnyDt")));
         return order;
     }
 }

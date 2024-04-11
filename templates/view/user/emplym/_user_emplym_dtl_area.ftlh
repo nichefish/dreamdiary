@@ -2,38 +2,73 @@
   -- 사용자 관리 > 계정 및 권한 관리 > 등록 > 사용자(직원) 정보 추가 Template
   -- @included_in : user_reg_form
   -->
-<script>
-    const UserProfl = (function() {
-        return {
-            /** 프로필 정보 창 토글 */
-            enableUserProfl: function() {
-                // 영역 표시
-                commons.util.handlebarsTemplate({}, "user_profl");
-                $('[data-bs-toggle="tooltip"]').tooltip();
-                // 버튼 교체 :: 툴팁 작동 유지 위해 속성만 교체
-                let $btn = $("#userProflBtn");
-                $btn.removeClass("btn-primary").addClass("btn-danger");
-                $btn.text("프로필 정보 삭제-");
-                $btn.attr("onclick", "UserProfl.disableUserProfl();");
-                $btn.attr("title", "사용자 프로필 정보를&#10;삭제합니다.");
-                // 음력여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("lunarYn", "음력//양력", "blue//gray");
-                // datepicker init
-                commons.datepicker.singleDatePicker("#brthdy", "yyyy-MM-DD");
-            },
-            /** 프로필 정보 창 토글 */
-            disableUserProfl: function() {
-                // 영역 삭제
-                $("#user_profl_div").empty();
-                // 버튼 교체 :: 툴팁 작동 유지 위해 속성만 교체
-                let $btn = $("#userProflBtn");
-                $btn.removeClass("btn-danger").addClass("btn-primary");
-                $btn.text("프로필 정보 추가+");
-                $btn.attr("title", "사용자 프로필 정보를&#10;추가합니다.");
-                $btn.attr("onclick", "UserProfl.enableUserProfl();");
-            },
-        }
-    })();
-</script>
-<!-- include:: Handlebars template -->
-<#include "/view/user/profl/_user_profl_reg_template.hbs">
+
+<!--begin::Menu separator-->
+<div class="separator my-2"></div>
+<!--end::Menu separator-->
+
+<div class="card-body p-9">
+    <!--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-xl-2 col-4">
+            <div class="col-form-label text-center fw-bold">직원명</div>
+        </div>
+        <div class="col-xl-2 col-8 col-form-label">
+            ${(user.emplym.userNm)!"-"}
+        </div>
+    </div>
+    <!--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-xl-2 col-4">
+            <div class="col-form-label text-center fw-bold">업무용 이메일</div>
+        </div>
+        <div class="col-xl-2 col-8 col-form-label">
+            ${user.emplym.emplymEmail!}
+        </div>
+    </div>
+    <!--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-xl-2 col-4">
+            <div class="col-form-label text-center fw-bold">업무용 연락처</div>
+        </div>
+        <div class="col-xl-2 col-8 col-form-label">
+            ${user.emplym.emplymCttpc!}
+        </div>
+    </div>
+    <!--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-xl-2 col-4">
+            <div class="col-form-label text-center fw-bold">소속</div>
+        </div>
+        <div class="col-xl-2 col-8 col-form-label">
+            ${user.emplym.cmpyNm!} / ${user.emplym.teamNm!} / ${user.emplym.emplymNm!}
+        </div>
+    </div>
+    <!--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-xl-2 col-4">
+            <div class="col-form-label text-center fw-bold">직급</div>
+        </div>
+        <div class="col-xl-2 col-8 col-form-label">
+            ${user.emplym.cmpyNm!} / ${user.emplym.teamNm!} / ${user.emplym.emplymNm!}
+        </div>
+    </div>
+    <!--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-xl-2 col-4">
+            <div class="col-form-label text-center fw-bold">입사일</div>
+        </div>
+        <div class="col-xl-2 col-8 col-form-label">
+            ${user.emplym.ecnyDt!} / ${user.emplym.retireYn!} / ${user.emplym.retireDt!}
+        </div>
+    </div>
+    <!--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-xl-2 col-4">
+            <div class="col-form-label text-center fw-bold">급여 계좌 정보</div>
+        </div>
+        <div class="col-xl-9 col-8 col-form-label">
+            <div class="div-textarea h-auto min-h-125px">${user.emplym.acntBank!} / ${user.emplym.acntNo!}</div>
+        </div>
+    </div>
+</div>

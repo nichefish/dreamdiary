@@ -89,6 +89,16 @@
                     const regExp = new RegExp(regex);
                     return (this.optional(element) || regExp.test(value));
                 });
+
+                // 프로필 정보 / 인사정보 창 활성화
+                <#if isMdf>
+                    <#if user.profl??>
+                        UserProfl.enableUserProfl();
+                    </#if>
+                    <#if user.emplym??>
+                        UserEmplym.enableUserEmplym();
+                    </#if>
+                </#if>
             },
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {

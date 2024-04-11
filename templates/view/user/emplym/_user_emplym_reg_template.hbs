@@ -1,5 +1,6 @@
 <#--
   -- 사용자 관리 > 계정 및 권한 관리 > 등록 > 사용자(직원) 정보 추가 Template
+  -- (freemarker 맥락 하에서 쓰이므로 freemarker 형식으로 데이터 바인딩)
   -- @included_in : user_reg_form
   -->
 <script type="text/x-handlebars-template" id="user_emplym_template">
@@ -15,7 +16,7 @@
             </div>
         </div>
         <div class="col-xl-2">
-            <input type="text" class="form-control form-control-solid required" name="emplym.userNm" id="userNm" placeholder="이름" maxlength="20" />
+            <input type="text" class="form-control form-control-solid required" name="emplym.userNm" id="userNm" placeholder="이름" maxlength="20" value="${(user.emplym.userNm)!}" />
             <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
             <div id="userNm_valid_span">
         </div>
@@ -33,7 +34,7 @@
         </div>
         <div class="col-lg-2 col-4">
             <input type="text" class="form-control form-control-solid no-space required" name="emplym.emplymEmailId" id="emplymEmailId"
-                   maxlength="20" placeholder="이메일 ID 입력" value="{{emplym.emplymEmailId}}" />
+                   maxlength="20" placeholder="이메일 ID 입력" value="${(user.emplym.emplymEmailId)!}" />
             <div id="emplymEmailId_valid_span"></div>
         </div>
         <div class="col-xl-2 col-1 d-flex-center fw-bold text-gray-700" style="width:2%;">
@@ -41,15 +42,15 @@
         </div>
         <div class="col-lg-2 col-5 vertical-center">
             <input type="text" class="form-control form-control-solid no-space required" name="emplym.emplymEmailDomain" id="emplymEmailDomain"
-                   maxlength="20" placeholder="직접입력" value="{{emplym.emplymEmailDomain}}" />
+                   maxlength="20" placeholder="직접입력" value="${(user.emplym.emplymEmailDomain)!}" />
             <div id="emplymEmailDomain_valid_span"></div>
         </div>
         <div class="col-xl-2 col-1">
             <select name="emplymEmailDomainSelect" id="emplymEmailDomainSelect" class="form-select form-select-solid">
                 <option value="">직접입력</option>
                 <option value="gmail.com" <#if isReg!false>selected</#if>>gmail.com</option>
-            <option value="naver.com">naver.com</option>
-            <option value="kakao.com">kakao.com</option>
+                <option value="naver.com">naver.com</option>
+                <option value="kakao.com">kakao.com</option>
             </select>
         </div>
     </div>
@@ -66,7 +67,7 @@
         </div>
         <div class="col-xl-2">
             <input type="text" class="form-control form-control-solid required" name="emplym.emplymCttpc" id="emplymCttpc"
-                   maxlength="20" value="{{emplym.emplymCttpc}}" />
+                   maxlength="20" value="${(user.emplym.emplymCttpc)!}" />
             <div class="form-text text-noti">(※숫자만 입력)</div>
             <span id="cttpc_valid_span"></span>
         </div>
@@ -119,7 +120,7 @@
             <select name="emplym.rankCd" id="rankCd" class="form-select form-select-solid">
                 <option value="">--선택--</option>
                 <#list RANK_CD![] as rank>
-                        <option value="${rank.dtlCd!}" id="${rank.dtlCd!}"<#if rank.dtlCd == (user.emplym.rankCd)!> selected="selected"</#if>>${rank.dtlCdNm!}</option>
+                    <option value="${rank.dtlCd!}" id="${rank.dtlCd!}"<#if rank.dtlCd == (user.emplym.rankCd)!> selected="selected"</#if>>${rank.dtlCdNm!}</option>
                 </#list>
             </select>
             <div id="rankCd_valid_span"></div>
@@ -153,7 +154,8 @@
                           fill="black"/>
                 </svg>
             </span>
-            <input type="text" class="form-control form-control-solid ps-12 required" name="emplym.ecnyDt" id="ecnyDt" placeholder="입사일" value="${(user.emplym.ecnyDt)!}" readonly/>
+            <input type="text" class="form-control form-control-solid ps-12 required" name="emplym.ecnyDt" id="ecnyDt"
+                   placeholder="입사일" value="${(user.emplym.ecnyDt)!}" readonly/>
             <div class="text-noti form-text">※입사일 정보가 없는 계정은 '현재 직원' 대상에 포함되지 않습니다.</div>
             <div id="ecnyDt_valid_span"></div>
         </div>

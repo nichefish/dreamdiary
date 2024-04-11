@@ -42,7 +42,7 @@
                 </svg>
             </span>
             <input type="text" class="form-control form-control-solid ps-12" name="profl.brthdy" id="brthdy"
-                   placeholder="생년월일" value="${(user.userInfo.brthdy)!}" readonly/>
+                   placeholder="생년월일" value="${(user.profl.brthdy)!}" readonly/>
         </div>
         <div class="col-xl-2">
             <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
@@ -50,9 +50,9 @@
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="음력 생일 사용시 체크합니다.">
                     음력여부 :
                 </label>
-                <input class="form-check-input ms-3" type="checkbox" value="Y" name="profl.lunarYn" id="lunarYn" <#if (((user.userProfl.lunarYn)!"N") == "Y")!false>checked="checked"</#if> />
-                <label class="form-check-label fw-bold ms-3" for="lunarYn" id="lunarYnLabel" <#if ((user.userProfl.lunarYn)!"N") == "Y">blue<#else>gray</#if>;>
-                    <#if ((user.userProfl.lunarYn)!"N") == "Y">음력<#else>양력</#if>
+                <input class="form-check-input ms-3" type="checkbox" value="Y" name="profl.lunarYn" id="lunarYn" <#if (((user.profl.lunarYn)!"N") == "Y")!false>checked="checked"</#if> />
+                <label class="form-check-label fw-bold ms-3" for="lunarYn" id="lunarYnLabel" <#if ((user.profl.lunarYn)!"N") == "Y">blue<#else>gray</#if>;>
+                    <#if ((user.profl.lunarYn)!"N") == "Y">음력<#else>양력</#if>
                 </label>
             </div>
         </div>
@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="col-xl-9">
-            <textarea name="profl.proflCn" id="proflCn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500"></textarea>
+            <textarea name="profl.proflCn" id="proflCn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500">${(user.profl.proflCn)!}</textarea>
         </div>
     </div>
 

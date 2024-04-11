@@ -10,9 +10,9 @@ import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 /**
- * UserInfoMapstruct
+ * UserProflMapstruct
  * <pre>
- *  사용자 정보 MapStruct 기반 Mapper 인터페이스
+ *  사용자 프로필 정보 MapStruct 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish

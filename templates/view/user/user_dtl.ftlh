@@ -101,7 +101,7 @@
                 <label class="fw-bold">승인여부</label>
             </div>
             <div class="col-xl-1 col-2 d-flex align-items-center">
-                <#if user.isCf!true>
+                <#if (user.isCf)!true>
                     <span class="text-success">
                         사용<i class="bi bi-check text-success"></i>
                     </span>
@@ -112,7 +112,7 @@
                 </#if>
             </div>
             <div class="col-xl-2 col-8 col-form-label">
-                <#if user.isCf!true>
+                <#if (user.isCf)!true>
                     <div class="btn btn-sm btn-danger" onclick="Page.uncfAjax();">
                         승인 취소
                     </div>
@@ -189,7 +189,7 @@
         <div class="row mb-4">
             <div class="col-xl-2 col-4">
                 <div class="col-form-label text-center fw-bold">
-                    <label for="nickNm">이름</label>
+                    <label for="nickNm">표시이름</label>
                 </div>
             </div>
             <div class="col-xl-2 col-8 col-form-label">
@@ -277,7 +277,10 @@
     <#if user.profl??>
         <#include "/view/user/profl/_user_profl_dtl_area.ftlh">
     </#if>
-    <!--end::Card body-->
+
+    <#if user.emplym??>
+        <#include "/view/user/emplym/_user_emplym_dtl_area.ftlh">
+    </#if>
 
     <!--begin::Card footer-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">

@@ -44,6 +44,7 @@ public class UserReqstDto
     /** 이메일 반환 (override) */
     public String getEmail() {
         if (!StringUtils.isEmpty(this.email)) return this.email;
+        if (!StringUtils.isEmpty(this.emailId) || !StringUtils.isEmpty(this.emailDomain)) return null;
         return this.emailId + "@" + this.emailDomain;
     }
 }

@@ -1,9 +1,14 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
+import com.google.common.collect.Maps;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.user.emplym.UserEmplymMapstruct;
+import io.nicheblog.dreamdiary.web.mapstruct.user.profl.UserProflMapstruct;
+import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
+import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -125,7 +130,7 @@ public class UserEntity
     private UserProflEntity profl;
 
     /** 사용자 인사정보 */
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "user_no", referencedColumnName = "user_no")
     @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -182,6 +187,16 @@ public class UserEntity
             this.authList.addAll(authList);
         }
     }
+
+    public UserProflEntity getProflUpdt(UserProflDto dto) throws Exception {
+        UserProflMapstruct.INSTANCE.updateFromDto(dto, this.profl);
+        return this.profl;
+    }
+    public UserEmplymEntity getEmplymUpdt(UserEmplymDto dto) throws Exception {
+        UserEmplymMapstruct.INSTANCE.updateFromDto(dto, this.emplym);
+        return this.emplym;
+    }
+
 
     /**
      * 등록시 cascade
