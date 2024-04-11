@@ -46,17 +46,21 @@
             <!--end::Modal body-->
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-light btn-active-primary me-2 btn-sm"
-                        onclick="Schdul.mdfForm();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
-                    <i class="bi bi-pencil-square"></i>수정
-                </button>
-                <button type="button" class="btn btn-sm btn-light btn-active-danger me-2 btn-sm"
-                        onclick="Schdul.delAjax();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
-                    <i class="bi bi-trash"></i>삭제
-                </button>
-                <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">닫기</button>
+                <!-- 버튼 영역 -->
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-sm btn-light btn-active-primary me-2 btn-sm"
+                            onclick="Schdul.mdfForm();"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
+                        <i class="bi bi-pencil-square"></i>수정
+                    </button>
+                    <button type="button" class="btn btn-sm btn-light btn-active-danger me-2 btn-sm"
+                            onclick="Schdul.delAjax();"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
+                        <i class="bi bi-trash"></i>삭제
+                    </button>
+                    <!-- 버튼:: 모달 닫기 -->
+                    <@component.btn_modal_close />
+                </div>
             </div>
         </div>
     </div>

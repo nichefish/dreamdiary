@@ -37,6 +37,7 @@ public class VcatnSchdulEntity
 
     @PostLoad
     private void onLoad() {
+        // 코드 이름 세팅
         if (this.vcatnCdInfo != null) this.vcatnNm = this.vcatnCdInfo.getDtlCdNm();
         this.userNm = this.getVcatnUserNm();        // return 용이성 때문에 메소드 분리
     }

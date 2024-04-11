@@ -45,6 +45,7 @@ public class SchdulEntity
 
     @PostLoad
     private void onLoad() {
+        // 코드 이름 세팅
         if (this.schdulCdInfo != null) this.schdulNm = this.schdulCdInfo.getDtlCdNm();
         if (!CollectionUtils.isEmpty(this.prtcpntList)) {
             this.prtcpntStr = this.prtcpntList.stream()

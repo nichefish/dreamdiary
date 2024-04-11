@@ -60,13 +60,18 @@
                             </form>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-sm btn-primary me-2" onclick="Page.regAjax();"
-                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목을 저장합니다.">
-                            <i class="bi bi-pencil-square"></i>저장
-                        </button>
-                        <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">닫기</button>
-                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!-- 버튼 영역 -->
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-sm btn-primary me-2" onclick="Page.regAjax();"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목을 저장합니다.">
+                        <i class="bi bi-pencil-square"></i>저장
+                    </button>
+                    <!-- 버튼:: 모달 닫기 -->
+                    <@component.btn_modal_close />
                 </div>
             </div>
         </div>

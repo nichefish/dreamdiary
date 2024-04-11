@@ -433,11 +433,8 @@
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
                     <i class="bi bi-pencil-square"></i>저장
                 </button>
-                <button type="button" class="btn btn-light"
-                        onclick="Page.list();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="목록 화면으로 돌아갑니다.">
-                    취소
-                </button>
+                <!-- 버튼 :: 목록으로 가기 -->
+                <@component.btn_post_toList "Page" />
             </div>
         </div>
     </form>

@@ -35,7 +35,7 @@ public class ExptrPrsnlItemEntity
 
     @PostLoad
     private void onLoad() {
-        // 지출 코드 이름
+        // 코드 이름 세팅
         if (this.exptrCdInfo != null) this.exptrTyNm = this.exptrCdInfo.getDtlCdNm();
     }
 

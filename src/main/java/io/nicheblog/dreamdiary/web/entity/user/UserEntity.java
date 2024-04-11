@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
+import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -96,15 +96,15 @@ public class UserEntity
     @Comment("표시이름")
     private String nickNm;
 
+    /** Email 주소 */
+    @Column(name = "email", length = 40)
+    @Comment("Email 주소")
+    private String email;
+
     /** 연락처 */
     @Column(name = "cttpc", length = 20)
     @Comment("연락처")
     private String cttpc;
-
-    /** Email 주소 (사내메일) */
-    @Column(name = "email", length = 40)
-    @Comment("Email 주소")
-    private String email;
 
     /** 프로필 이미지 URL */
     @Column(name = "profl_img_url", length = 1000)
@@ -117,12 +117,20 @@ public class UserEntity
     private String cn;
 
     /** 사용자 프로필 정보 */
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "user_no")
+    @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 프로필 정보")
-    private UserProflEntity userProfl;
+    private UserProflEntity profl;
 
+    /** 사용자 인사정보 */
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "user_no", referencedColumnName = "user_no")
+    @Fetch(FetchMode.SELECT)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("사용자 프로필 정보")
+    private UserEmplymEntity emplym;
 
     /** 계정 상태 정보 (위임) */
     @Embedded
@@ -176,12 +184,10 @@ public class UserEntity
     }
 
     /**
-     * getter override
+     * 등록시 cascade
      */
-    public String getProflImgUrl() {
-        if (StringUtils.isEmpty(this.proflImgUrl)) {
-            return (Constant.BLANK_AVATAR_URL);
-        }
-        return this.proflImgUrl;
+    public void cascade() {
+        if (this.profl != null) this.profl.setUser(this);
+        if (this.emplym != null) this.emplym.setUser(this);
     }
 }

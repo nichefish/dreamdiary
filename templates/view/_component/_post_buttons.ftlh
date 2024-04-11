@@ -123,3 +123,13 @@
         <i class="bi bi-list"></i>닫기
     </button>
 </#macro>
+
+<!--
+ * 버튼 : 미리보기 팝업 닫기
+ -->
+<#macro btn_modal_close>
+    <button type="button" class="btn btn-sm btn-light"
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close"/>">
+        <i class="bi bi-x"></i>닫기
+    </button>
+</#macro>

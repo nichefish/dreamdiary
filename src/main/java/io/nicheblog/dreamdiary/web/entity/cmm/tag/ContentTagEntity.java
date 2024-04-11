@@ -36,7 +36,7 @@ public class ContentTagEntity
 
     @PostLoad
     private void onLoad() {
-        // 지출 코드 이름
+        // 태그 이름 세팅
         if (this.tag != null) this.tagNm = this.tag.getTagNm();
     }
 

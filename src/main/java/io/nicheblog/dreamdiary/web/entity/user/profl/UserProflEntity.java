@@ -5,11 +5,12 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -43,10 +44,10 @@ public class UserProflEntity
     @Comment("사용자 프로필 정보 번호 (PK)")
     private Integer userProflNo;
 
-    /** 사용자 정보 (FK) */
-    @OneToOne(mappedBy = "userProfl", fetch = FetchType.LAZY)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("계정 정보")
+    /** 사용자 정보 */
+    @OneToOne
+    @JoinColumn(name = "user_no", referencedColumnName = "user_no")
+    @Comment("사용자 정보")
     private UserEntity user;
 
     /** 생년월일 */

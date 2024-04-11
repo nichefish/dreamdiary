@@ -5,19 +5,21 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.spec.user.UserSpec;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * UserService
@@ -103,57 +105,14 @@ public class UserService
         // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserEntity userEntity = userMapstruct.toEntity(userDto);
         userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        userEntity.acntStus.setCfYn("Y");
+        userEntity.setAcntStus(UserStusEmbed.getRegistStus());
+        userEntity.cascade();
         // insert
         UserEntity rsltEntity = userRepository.save(userEntity);
         UserDto.DTL rsltDto = userMapstruct.toDto(rsltEntity);
         rsltDto.setIsSuccess((rsltEntity.getUserNo() != null));
         return rsltDto;
     }
-
-    /**
-     * 사용자 관리 > 사용자 정보 등록 (메소드 분리)
-     */
-    public Integer userInfoReg(
-            final UserEntity userEntity,
-            final UserDto userDto
-    ) throws Exception {
-        // String userProflYn = userDto.getUserProflYn();
-        // Integer userProflNo = userEntity.getUserProflNo();
-        // if ("N".equals(userProflYn) && userProflNo == null) {
-        //     userEntity.setUserProfl(null);
-        //     return null;
-        // }
-        // UserProflEntity rsUserProflEntity = userEntity.getUserProfl();
-        // if (rsUserProflEntity == null) {
-        //     rsUserProflEntity = userProflRepository.findById(userProflNo)
-        //                                          .orElse(new UserProflEntity());
-        // }
-        // if ("Y".equals(userProflYn)) {
-        //     userInfoMapstruct.updateFromDto(userDto.getUserProfl(), rsUserProflEntity);
-        //     this.sortUserInfoItemList(rsUserProflEntity);      // 빈값 걸러내기+순번매기기
-        // } else {
-        //     rsUserProflEntity.setDelYn("Y");
-        // }
-        // return userProflRepository.save(rsUserProflEntity).getUserProflNo();
-        return null;
-    }
-
-    /**
-     * 사용자 관리 > 사용자 정보 추가정보 정리 (null값 걸러내기 + sorting)
-     */
-    // public void sortUserInfoItemList(final UserProflEntity userProflEntity) {
-    //     List<UserInfoItemEntity> itemList = userProflEntity.getItemList();
-    //     if (CollectionUtils.isEmpty(itemList)) return;
-    //     List<UserInfoItemEntity> sortedItemList = new ArrayList<>();
-    //     int sortOrdr = 1;
-    //     for (UserInfoItemEntity item : itemList) {
-    //         if (StringUtils.isEmpty(item.getItemNm())) continue;
-    //         item.setSortOrdr(sortOrdr++);
-    //         sortedItemList.add(item);
-    //     }
-    //     userProflEntity.setItemList(sortedItemList);
-    // }
 
     /**
      * 사용자 관리 > 사용자 비밀번호 초기화
@@ -235,7 +194,7 @@ public class UserService
     /**
      * 사용자 정보 잠금
      */
-    public Boolean userInfoLock(final Integer userProflNo) throws Exception {
+    public Boolean userLock(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
         UserEntity rsEntity = this.getDtlEntity(userProflNo);
         if (rsEntity == null) return false;
@@ -249,7 +208,7 @@ public class UserService
     /**
      * 사용자 정보 잠금 해제
      */
-    public Boolean userInfoUnlock(final Integer userProflNo) throws Exception {
+    public Boolean userUnlock(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
         UserEntity rsEntity = this.getDtlEntity(userProflNo);
         if (rsEntity == null) return false;
@@ -261,17 +220,6 @@ public class UserService
         Integer rsId = userRepository.saveAndFlush(rsEntity)
                                      .getUserNo();
         return (rsId != null);
-    }
-
-    /**
-     * 사용자 정보UserInfo가 있는 계정 목록 조회
-     * TODO: 어디어디 쓰지?
-     */
-    public Page<UserDto.LIST> getInfoUserList(final Pageable pageable) throws Exception {
-        HashMap<String, Object> searchParamMap = new HashMap<>() {{
-            put("hasUserInfo", true);
-        }};
-        return this.getPageDto(searchParamMap, pageable);
     }
 
     /**

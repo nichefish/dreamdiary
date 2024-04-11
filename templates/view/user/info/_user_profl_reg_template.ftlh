@@ -260,7 +260,7 @@
     <div class="row">
         <div class="col-xl-2 col-0"></div>
         <div class="col-xl-10 col-10">
-            <div class="text-noti form-text">※입사일 정보가 없는 계정은 '현재 직원' 대상 로직에 포함되지 않습니다.</div>
+            <div class="text-noti form-text">※입사일 정보가 없는 계정은 '현재 직원' 대상에 포함되지 않습니다.</div>
         </div>
         <div class="col-xl-2 col-0"></div>
         <div class="col-xl-10 col-10">

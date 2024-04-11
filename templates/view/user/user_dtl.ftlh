@@ -274,111 +274,11 @@
         </div>
     </div>
 
-    <#if user.userInfo??>
-        <!--begin::Menu separator-->
-        <div class="separator my-2"></div>
-        <!--end::Menu separator-->
-
-        <div class="card-body p-9">
-            <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fw-bold"><label for="cttpc">부서</label></div>
-                </div>
-                <div class="col-xl-2 col-8 col-form-label">
-                    ${user.userInfo.cmpyNm!"-"} / ${user.userInfo.teamNm!"-"} / ${user.userInfo.emplymNm!"-"}
-                </div>
-            </div>
-            <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fw-bold">직급</div>
-                </div>
-                <div class="col-xl-2 col-8 col-form-label">
-                    ${(user.userInfo.rankNm)!"-"}
-                    <#if ((user.userInfo.rankCd)! == "STAFF") && ((user.userInfo.apntcYn)! == "Y")>
-                        <span class="text-muted">(수습)</span>
-                    </#if>
-                </div>
-            </div>
-            <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fw-bold">입사일</div>
-                </div>
-                <div class="col-xl-2 col-8 col-form-label">
-                    ${(user.userInfo.ecnyDt)!"-"}
-                </div>
-                <#if (((user.userInfo.retireYn)!"N") == "Y")!false>
-                    <div class="col-xl-2 col-4">
-                        <div class="col-form-label text-center fw-bold">퇴사일</div>
-                    </div>
-                    <div class="col-xl-2 col-8 col-form-label">
-                        ${user.userInfo.retireDt!"-"}
-                    </div>
-                </#if>
-            </div>
-            <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fw-bold">전화번호</div>
-                </div>
-                <div class="col-xl-2 col-8 col-form-label">
-                    ${user.cttpc!"-"}
-                </div>
-            </div>
-            <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fw-bold">E-mail</div>
-                </div>
-                <div class="col-xl-2 col-8 col-form-label">
-                    ${user.email!"-"}
-                </div>
-            </div>
-            <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fw-bold">생년월일</div>
-                </div>
-                <div class="col-xl-1 col-4 col-form-label">
-                    ${user.userInfo.brthdy!"-"}
-                </div>
-                <div class="col-xl-2 col-4 col-form-label">
-                    <#if (user.userInfo.lunarYn!"N") == "Y">(음력)</#if>
-                </div>
-            </div>
-            <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fw-bold">계좌번호</div>
-                </div>
-                <div class="col-8 col-form-label">
-                    ${user.userInfo.acntBank!"-"} <span class="px-3">|</span> ${user.userInfo.acntNo!"-"}
-                </div>
-            </div>
-            <#if user.userInfo.itemList?has_content>
-                <div class="row mb-4">           <!--begin::Row-->
-                    <div class="col-xl-2 col-4">
-                        <div class="col-form-label text-center fw-bold">추가정보</div>
-                    </div>
-                    <div class="col-xl-9 col-12 col-form-label" id="userItemListDiv">
-                        <#if user.userInfo?? && user.userInfo.itemList?has_content>
-                            <#list user.userInfo.itemList![] as item>
-                                <div class="row mb-2 ps-2 border-bottom border-1 text-muted">
-                                    <div class="col-xl-2 col-3 text-start">${item.itemNm}</div>
-                                    <div class="col-xl-4 col-4 text-start">${item.itemCn}</div>
-                                    <div class="col-xl-4 col-4 text-start">${item.itemDc}</div>
-                                </div>
-                            </#list>
-                        </#if>
-                    </div>
-                </div>
-            </#if>
-            <div class="row">           <!--begin::Row-->
-                <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fw-bold">사용자 설명</div>
-                </div>
-                <div class="col-xl-9 col-8 col-form-label">
-                    <div class="div-textarea h-auto min-h-125px">${user.userInfo.userInfoDc!}</div>
-                </div>
-            </div>
-        </div>
+    <#if user.profl??>
+        <#include "/view/user/profl/_user_profl_dtl_area.ftlh">
     </#if>
     <!--end::Card body-->
+
     <!--begin::Card footer-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
         <!-- 버튼 :: 수정하기 -->
@@ -392,8 +292,8 @@
 
     <form name="procForm" id="procForm">
         <input type="hidden" name="userNo" value="${user.userNo!}">
-        <#if user.userInfo??>
-            <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
+        <#if user.profl??>
+            <input type="hidden" name="userProflNo" value="${user.profl.userProflNo!}">
         </#if>
     </form>
 </div>

@@ -1,11 +1,8 @@
 package io.nicheblog.dreamdiary.web.model.user.emplym;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
-import io.nicheblog.dreamdiary.web.model.user.UserInfoItemDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 /**
  * UserInfoDto
@@ -44,6 +41,14 @@ public class UserEmplymDto
     private String rankCd;
     /** 직급이름 */
     private String rankNm;
+    /** 업무 Email 주소 */
+    private String emplymEmail;
+    /** 업무 E-mail ID */
+    protected String emailId;
+    /** 업무 E-mail 뒷부분 */
+    protected String emailDomain;
+    /** 업무 연락처 */
+    private String emplymCttpc;
     /** 수습여부 */
     @Builder.Default
     private String apntcYn = "N";

@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS user (
     nick_nm VARCHAR(50) COMMENT '사용자 표시이름',
     profl_img_url VARCHAR(256) COMMENT '프로필 이미지 경로',
     cn LONGTEXT COMMENT '사용자 설명 (관리자용)',
-    cttpc VARCHAR(20) COMMENT '연락처',        -- 기본 연락처
     email VARCHAR(40) COMMENT '이메일',        -- 기본 이메일:: 계정복구 등에 사용함
+    cttpc VARCHAR(20) COMMENT '연락처',        -- 기본 연락처
     -- ACCOUNT_STATUS
     locked_yn CHAR(1) DEFAULT 'N' COMMENT '잠금 여부 (Y/N)',
     use_acs_ip_yn CHAR(1) DEFAULT 'N' COMMENT '접속IP 사용 여부 (Y/N)',
@@ -55,7 +55,6 @@ CREATE TABLE IF NOT EXISTS user_acs_ip (
 CREATE TABLE IF NOT EXISTS user_profl (
     user_profl_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 프로필 고유 번호 (PK)',
     user_no INT COMMENT '사용자 고유 번호',
-    user_nm VARCHAR(50) COMMENT '사용자 이름',
     addr VARCHAR(500) COMMENT '주소',
     zipcode VARCHAR(20) COMMENT '우편번호',
     brthdy DATE COMMENT '생일',
@@ -77,6 +76,7 @@ CREATE TABLE IF NOT EXISTS user_profl (
 CREATE TABLE IF NOT EXISTS user_emplym (
     user_emplym_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 인사정보 고유 번호 (PK)',
     user_no INT COMMENT '사용자 고유 번호',
+    user_nm VARCHAR(50) COMMENT '사용자 이름',
     emplym_cttpc VARCHAR(20) COMMENT '연락처',        -- 기본 연락처
     emplym_email VARCHAR(40) COMMENT '이메일',        -- 기본 이메일:: 계정복구 등에 사용함
     cmpy_cd VARCHAR(30) COMMENT '회사 코드',
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS user_emplym (
     ecny_dt DATE COMMENT '입사일',
     retire_yn CHAR(1) DEFAULT 'N' COMMENT '퇴사 여부 (Y/N)',
     retire_dt DATETIME COMMENT '퇴사일',
-    job_title_cd VARCHAR(30) COMMENT '직급코드',
+    rank_cd VARCHAR(30) COMMENT '직급코드',
     apntc_yn CHAR(1) DEFAULT 'N' COMMENT '수습 여부 (Y/N)',
     acnt_bank VARCHAR(50) COMMENT '급여 은행',
     acnt_no VARCHAR(50) COMMENT '급여 계좌번호',

@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulCalDto;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulSearchParam;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
+import io.nicheblog.dreamdiary.web.model.user.UserSearchParam;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulCalService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.Getter;
@@ -24,6 +25,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -63,6 +65,7 @@ public class SchdulCalController
     @GetMapping(SiteUrl.SCHDUL_CAL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String schdulCal(
+            @ModelAttribute("searchParam") SchdulSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) {

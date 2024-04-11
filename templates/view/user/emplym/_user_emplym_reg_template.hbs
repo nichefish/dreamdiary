@@ -15,8 +15,9 @@
             </div>
         </div>
         <div class="col-xl-2">
-            <input type="text" class="form-control form-control-solid" name="userProfl.userNm" id="userNm" placeholder="이름" maxlength="20" />
+            <input type="text" class="form-control form-control-solid required" name="emplym.userNm" id="userNm" placeholder="이름" maxlength="20" />
             <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
+            <div id="userNm_valid_span">
         </div>
     </div>
     <!--begin::Row-->
@@ -31,28 +32,28 @@
             </div>
         </div>
         <div class="col-xl-2 col-6">
-            <select name="userInfo.cmpyCd" id="cmpyCd" class="form-select form-select-solid">
+            <select name="profl.cmpyCd" id="cmpyCd" class="form-select form-select-solid">
                 <option value="">--회사--</option>
                 <#list CMPY_CD![] as cmpy>
-                    <option value="${cmpy.dtlCd!}" id="${cmpy.dtlCd!}" <#if user.userInfo?? && cmpy.dtlCd == (user.userInfo.cmpyCd)!> selected="selected"</#if>>${cmpy.dtlCdNm!}</option>
+                    <option value="${cmpy.dtlCd!}" id="${cmpy.dtlCd!}" <#if user.userInfo?? && cmpy.dtlCd == (user.profl.cmpyCd)!> selected="selected"</#if>>${cmpy.dtlCdNm!}</option>
                 </#list>
             </select>
             <div id="cmpyCd_valid_span"></div>
         </div>
         <div class="col-xl-1 col-6">
-            <select name="userInfo.teamCd" id="teamCd" class="form-select form-select-solid">
+            <select name="profl.teamCd" id="teamCd" class="form-select form-select-solid">
                 <option value="">--팀--</option>
                 <#list TEAM_CD![] as team>
-                    <option value="${team.dtlCd!}" id="${team.dtlCd!}"<#if user.userInfo?? && team.dtlCd == (user.userInfo.teamCd)!> selected="selected"</#if>>${team.dtlCdNm!}</option>
+                    <option value="${team.dtlCd!}" id="${team.dtlCd!}"<#if user.userInfo?? && team.dtlCd == (user.profl.teamCd)!> selected="selected"</#if>>${team.dtlCdNm!}</option>
                 </#list>
             </select>
             <div id="teamCd_valid_span"></div>
         </div>
         <div class="col-xl-2 mg-lg-0">
-            <select name="userInfo.emplymCd" id="emplymCd" class="form-select form-select-solid">
+            <select name="profl.emplymCd" id="emplymCd" class="form-select form-select-solid">
                 <option value="">--재직구분--</option>
                 <#list EMPLYM_CD![] as emplym>
-                    <option value="${emplym.dtlCd!}" id="${emplym.dtlCd!}"<#if emplym.dtlCd == (user.userInfo.emplymCd)!> selected="selected"</#if>>${emplym.dtlCdNm!}</option>
+                    <option value="${emplym.dtlCd!}" id="${emplym.dtlCd!}"<#if emplym.dtlCd == (user.profl.emplymCd)!> selected="selected"</#if>>${emplym.dtlCdNm!}</option>
                 </#list>
             </select>
             <div id="emplymCd_valid_span"></div>
@@ -64,10 +65,10 @@
             <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center "><label for="rankCd">직급</label></div>
         </div>
         <div class="col-xl-2">
-            <select name="userInfo.rankCd" id="rankCd" class="form-select form-select-solid">
+            <select name="profl.rankCd" id="rankCd" class="form-select form-select-solid">
                 <option value="">--선택--</option>
                 <#list RANK_CD![] as rank>
-                        <option value="${rank.dtlCd!}" id="${rank.dtlCd!}"<#if rank.dtlCd == (user.userInfo.rankCd)!> selected="selected"</#if>>${rank.dtlCdNm!}</option>
+                        <option value="${rank.dtlCd!}" id="${rank.dtlCd!}"<#if rank.dtlCd == (user.profl.rankCd)!> selected="selected"</#if>>${rank.dtlCdNm!}</option>
                 </#list>
             </select>
             <div id="rankCd_valid_span"></div>
@@ -76,8 +77,8 @@
         <div class="col-xl-2" id="apntcYnDiv" style="display:none;">
             <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
                 수습여부 :
-                <input class="form-check-input ms-3" type="checkbox" value="Y" name="userInfo.apntcYn" id="apntcYn" <#if (((user.userInfo.apntcYn)!"N") == "Y")!false>checked="checked"</#if> />
-                <label class="form-check-label fw-bold ms-3" for="apntcYn" id="apntcYnLabel" style="color:<#if (((user.userInfo.apntcYn)!"N") == "Y")!false>blue<#else>gray</#if>;"><#if ((user.userInfo.apntcYn)! == "Y")!false>수습<#else>해당없음</#if></label>
+                <input class="form-check-input ms-3" type="checkbox" value="Y" name="profl.apntcYn" id="apntcYn" <#if (((user.profl.apntcYn)!"N") == "Y")!false>checked="checked"</#if> />
+                <label class="form-check-label fw-bold ms-3" for="apntcYn" id="apntcYnLabel" style="color:<#if (((user.profl.apntcYn)!"N") == "Y")!false>blue<#else>gray</#if>;"><#if ((user.profl.apntcYn)! == "Y")!false>수습<#else>해당없음</#if></label>
             </div>
         </div>
     </div>
@@ -101,8 +102,8 @@
                           fill="black"/>
                 </svg>
             </span>
-            <input type="text" class="form-control form-control-solid ps-12" name="userInfo.ecnyDt" id="ecnyDt" placeholder="입사일" value="${(user.userInfo.ecnyDt)!}" readonly/>
-            <div class="text-noti form-text">※입사일 정보가 없는 계정은 '현재 직원' 대상 로직에 포함되지 않습니다.</div>
+            <input type="text" class="form-control form-control-solid ps-12 required" name="profl.ecnyDt" id="ecnyDt" placeholder="입사일" value="${(user.profl.ecnyDt)!}" readonly/>
+            <div class="text-noti form-text">※입사일 정보가 없는 계정은 '현재 직원' 대상에 포함되지 않습니다.</div>
             <div id="ecnyDt_valid_span"></div>
         </div>
         <div class="col-xl-2">
@@ -112,18 +113,18 @@
                     퇴사여부 :
                     <i class="bi bi-question-circle"></i>
                 </label>
-                <input class="form-check-input ms-3" type="checkbox" value="Y" name="userInfo.retireYn" id="retireYn" <#if (((user.userInfo.retireYn)!"N") == "Y")!false>checked="checked"</#if> />
-                <label class="form-check-label fw-bold ms-3" for="retireYn" id="retireYnLabel" style="color:<#if ((user.userInfo.retireYn)!"N") == "Y">red<#else>gray</#if>;">
-                    <#if ((user.userInfo.retireYn)!"N") == "Y">퇴사<#else>해당없음</#if>
+                <input class="form-check-input ms-3" type="checkbox" value="Y" name="profl.retireYn" id="retireYn" <#if (((user.profl.retireYn)!"N") == "Y")!false>checked="checked"</#if> />
+                <label class="form-check-label fw-bold ms-3" for="retireYn" id="retireYnLabel" style="color:<#if ((user.profl.retireYn)!"N") == "Y">red<#else>gray</#if>;">
+                    <#if ((user.profl.retireYn)!"N") == "Y">퇴사<#else>해당없음</#if>
                 </label>
             </div>
         </div>
         <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-        <div class="col-xl-1 col-form-label col-2 my-2 my-lg-0 retireDtDiv" <#if (((user.userInfo.retireYn)!"N") == "N")!false>style="display:none;"</#if>>
+        <div class="col-xl-1 col-form-label fw-bold col-2 my-2 my-lg-0 retireDtDiv" <#if (((user.profl.retireYn)!"N") == "N")!false>style="display:none;"</#if>>
             <label for="retireDt">퇴사일</label>
         </div>
         <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-        <div class="col-xl-2 col-10 retireDtDiv" <#if !(user.userInfo.retireDt)??>style="display:none;"</#if>>
+        <div class="col-xl-2 col-10 retireDtDiv" <#if !(user.profl.retireDt)??>style="display:none;"</#if>>
             <span class="svg-icon svg-icon-2 position-absolute m-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path opacity="0.3"
@@ -135,7 +136,7 @@
                           fill="black"/>
                 </svg>
             </span>
-            <input type="text" class="form-control form-control-solid ps-12" name="userInfo.retireDt" id="retireDt" placeholder="퇴사일" value="${(user.userInfo.retireDt)!}" readonly/>
+            <input type="text" class="form-control form-control-solid ps-12" name="profl.retireDt" id="retireDt" placeholder="퇴사일" value="${(user.profl.retireDt)!}" readonly/>
             <div class="text-noti form-text mt-0">※퇴사일 정보가 입력되지 않은 계정은 '현재 직원' 대상 로직에 포함됩니다.</div>
         </div>
     </div>
@@ -151,12 +152,12 @@
             </div>
         </div>
         <div class="col-xl-1">
-            <input type="text" class="form-control form-control-solid" name="userInfo.acntBank" id="acntBank" value="${(user.userInfo.acntBank)!}"
+            <input type="text" class="form-control form-control-solid" name="profl.acntBank" id="acntBank" value="${(user.profl.acntBank)!}"
                    maxlength="40" placeholder="은행"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="급여계좌 은행을&#10;입력합니다.">
         </div>
         <div class="col-xl-2">
-            <input type="text" class="form-control form-control-solid" name="userInfo.acntNo" id="acntNo" value="${(user.userInfo.acntNo)!}"
+            <input type="text" class="form-control form-control-solid" name="profl.acntNo" id="acntNo" value="${(user.profl.acntNo)!}"
                    maxlength="40" placeholder="계좌번호"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="급여계좌 계좌번호를&#10;입력합니다.">
             <div id="acntNoSpan"></div>

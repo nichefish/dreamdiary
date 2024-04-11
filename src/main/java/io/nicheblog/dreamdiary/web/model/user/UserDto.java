@@ -64,7 +64,7 @@ public class UserDto
     @Builder.Default
     protected String userProflYn = "N";
     /** 사용자 정보 (위임) */
-    protected UserProflDto userProfl;
+    protected UserProflDto profl;
 
     /** 사용자 권한 정보 */
     protected List<UserAuthRoleDto> authList;
@@ -77,9 +77,6 @@ public class UserDto
     protected String isReqst;
     /** 승인여부 */
     protected Boolean isCf;
-
-    /** 사용자 프로필 정보 */
-    protected UserProflDto profl;
     
     /* ----- */
 

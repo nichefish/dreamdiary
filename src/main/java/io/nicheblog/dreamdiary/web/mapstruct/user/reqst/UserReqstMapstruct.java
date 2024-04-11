@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
-import io.nicheblog.dreamdiary.web.mapstruct.user.UserProflMapstruct;
+import io.nicheblog.dreamdiary.web.mapstruct.user.profl.UserProflMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Builder;
@@ -38,5 +38,6 @@ public interface UserReqstMapstruct
      * Dto -> Entity
      */
     @Mapping(target = "acsIpList", expression = "java(dto.getAcsIpListStr())")
+    @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toEntity(dto.getProfl()))")
     UserEntity toEntity(final UserReqstDto dto) throws Exception;
 }

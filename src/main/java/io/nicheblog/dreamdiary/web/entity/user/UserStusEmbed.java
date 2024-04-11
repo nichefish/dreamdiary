@@ -95,4 +95,10 @@ public class UserStusEmbed {
         this.reqstYn = reqstYn;
         this.cfYn = cfYn;
     }
+    public static UserStusEmbed getReqstStus() {
+        return new UserStusEmbed("Y", "N");
+    }
+    public static UserStusEmbed getRegistStus() {
+        return new UserStusEmbed("N", "Y");
+    }
 }

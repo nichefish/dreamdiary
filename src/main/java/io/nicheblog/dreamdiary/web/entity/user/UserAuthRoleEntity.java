@@ -34,6 +34,7 @@ public class UserAuthRoleEntity
 
     @PostLoad
     private void onLoad() {
+        // 코드 이름 세팅
         if (this.roleInfo != null) this.authNm = this.roleInfo.getAuthNm();
     }
 

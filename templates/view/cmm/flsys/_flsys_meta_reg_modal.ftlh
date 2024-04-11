@@ -148,17 +148,21 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-primary"
-                        onclick="commons.util.submit('#flsysMetaRegForm');"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                    <i class="bi bi-pencil-square"></i>
-                    <span class="indicator-label">저장</span>
-                    <span class="indicator-progress">
-                        Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </button>
-                <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">닫기</button>
+                <!-- 버튼 영역 -->
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-sm btn-primary"
+                            onclick="commons.util.submit('#flsysMetaRegForm');"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
+                        <i class="bi bi-pencil-square"></i>
+                        <span class="indicator-label">저장</span>
+                        <span class="indicator-progress">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                    <!-- 버튼:: 모달 닫기 -->
+                    <@component.btn_modal_close />
+                </div>
             </div>
         </div>
     </div>

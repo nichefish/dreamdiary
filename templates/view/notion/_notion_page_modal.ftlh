@@ -26,7 +26,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">닫기</button>
+                <!-- 버튼 영역 -->
+                <div class="d-flex justify-content-end">
+                    <!-- 버튼:: 모달 닫기 -->
+                    <@component.btn_modal_close />
+                </div>
             </div>
         </div>
     </div>

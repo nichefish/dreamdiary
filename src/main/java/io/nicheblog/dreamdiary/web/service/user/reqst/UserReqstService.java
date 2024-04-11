@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.service.user.reqst;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.user.reqst.UserReqstMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
@@ -52,13 +53,12 @@ public class UserReqstService {
         }
 
         // Dto -> Entity
-        // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
         UserEntity userReqstEntity = userReqstMapstruct.toEntity(userReqst);
         // userReqstEntity.setUserProflNo(this.userInfoReg(userReqstEntity, userReqst));
         userReqstEntity.setAuthList(List.of(new UserAuthRoleEntity(Constant.AUTH_USER)));
         userReqstEntity.setPassword(passwordEncoder.encode(userReqst.getPassword()));
-        userReqstEntity.acntStus.setReqstYn("Y");
-        userReqstEntity.acntStus.setCfYn("N");
+        userReqstEntity.setAcntStus(UserStusEmbed.getReqstStus());
+        userReqstEntity.cascade();
         // insert
         UserEntity rsltEntity = userReqstRepository.save(userReqstEntity);
         return userReqstMapstruct.toDto(rsltEntity);

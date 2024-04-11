@@ -46,7 +46,7 @@ public class UserEmplymEntity
     private Integer userEmplymNo;
 
     /** 사용자 정보 (FK) */
-    @OneToOne(mappedBy = "userEmplym", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "emplym", fetch = FetchType.LAZY)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("계정 정보")
     private UserEntity user;
@@ -100,6 +100,16 @@ public class UserEmplymEntity
     @Column(name = "rank_cd", length = 20)
     @Comment("직급코드")
     private String rank_cd;
+
+    /** 업무 Email 주소 */
+    @Column(name = "emplym_email", length = 40)
+    @Comment("업무 Email 주소")
+    private String emplymEmail;
+
+    /** 업무 연락처 */
+    @Column(name = "emplym_cttpc", length = 20)
+    @Comment("업무 연락처")
+    private String emplymCttpc;
 
     /** 직급 코드 정보 (복합키 조인) */
     @ManyToOne

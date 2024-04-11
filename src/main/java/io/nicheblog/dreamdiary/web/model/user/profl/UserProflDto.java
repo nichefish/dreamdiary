@@ -1,11 +1,8 @@
 package io.nicheblog.dreamdiary.web.model.user.profl;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
-import io.nicheblog.dreamdiary.web.model.user.UserInfoItemDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 /**
  * UserInfoDto

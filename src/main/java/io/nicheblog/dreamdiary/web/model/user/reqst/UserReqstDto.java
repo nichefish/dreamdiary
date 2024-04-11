@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.web.model.user.reqst;
 
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -39,9 +38,6 @@ public class UserReqstDto
 
     /** 계정 설명 (관리자용) */
     private String cn;
-
-    /** 사용자 프로필 정보 */
-    protected UserProflDto profl;
 
     /* ----- */
 
