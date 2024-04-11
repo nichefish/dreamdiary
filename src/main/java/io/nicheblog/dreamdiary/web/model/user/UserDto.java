@@ -40,29 +40,14 @@ public class UserDto
     /** 프로필 이미지 URL */
     protected String proflImgUrl;
 
-    /** 연락처 */
-    protected String cttpc;
     /** 이메일 */
     protected String email;
     /** E-mail ID */
     protected String emailId;
     /** E-mail 뒷부분 */
     protected String emailDomain;
-
-    /** 잠금여부 */
-    @Builder.Default
-    protected String lockedYn = "N";
-
-    /** 퇴사여부 */
-    @Builder.Default
-    protected String retireYn = "N";
-    /** 퇴사일 */
-    protected String retireDt;
-
-    /** 사용자 정보 (위임) */
-    protected UserProflDto profl;
-    /** 사용자 정보 (위임) */
-    protected UserEmplymDto emplym;
+    /** 연락처 */
+    protected String cttpc;
 
     /** 사용자 권한 정보 */
     protected List<UserAuthRoleDto> authList;
@@ -71,10 +56,24 @@ public class UserDto
     /** 사용자 권한 정보(문자열) */
     protected String authListStr;
 
+    /** 사용자 정보 (위임) */
+    protected UserProflDto profl;
+    /** 사용자 정보 (위임) */
+    protected UserEmplymDto emplym;
+
     /** 본인신청여부 */
     protected String isReqst;
     /** 승인여부 */
     protected Boolean isCf;
+
+    /** 잠금여부 */
+    @Builder.Default
+    protected String lockedYn = "N";
+    /** 퇴사여부 */
+    @Builder.Default
+    protected String retireYn = "N";
+    /** 퇴사일 */
+    protected String retireDt;
     
     /* ----- */
 

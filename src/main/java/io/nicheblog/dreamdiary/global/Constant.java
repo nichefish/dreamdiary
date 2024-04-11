@@ -93,9 +93,22 @@ public final class Constant
     public static final String EMPLYM_CD = "EMPLYM_CD";
     public static final String EMPLYM_FREE = Emplym.FREE.name();
 
+    @AllArgsConstructor
+    public enum Rank {
+        INTN("인턴"),
+        STAFF("사원"),
+        DAERI("대리"),
+        GWJANG("과장"),
+        CHJANG("차장"),
+        BJANG("부장"),
+        SLJANG("실장"),
+        DRCTR("이사"),
+        PRSDNT("사장");
 
+        public final String desc;
+    }
     public static final String RANK_CD = "JOB_TITLE_CD";       // 직급 코드
-    public static final String RANK_STAFF = "STAFF";           // 직급:사원
+    public static final String RANK_STAFF = Rank.STAFF.name();           // 직급:사원
 
     public static final String NOTICE_CTGR_CD = "NOTICE_CTGR_CD";   // 공지사항 글분류 코드
     public static final String POST_CTGR_CD = "POST_CTGR_CD";       // 게시판

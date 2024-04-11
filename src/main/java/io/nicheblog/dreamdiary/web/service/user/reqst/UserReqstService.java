@@ -41,16 +41,24 @@ public class UserReqstService {
     private PasswordEncoder passwordEncoder;
 
     /**
-     * 사용자 관리 > 사용자 신규계정 신청
-     * 계정 기본정보만 입력, 세부정보는 가입 승인 후 수정
-     * (등록 과정과 거의 동일하지만 일단 프로세스 분리)
+     * 신청 전처리:: 메소드 분리
      */
-    public UserReqstDto regist(final UserReqstDto userReqst) throws Exception {
+    public void preRegist(final UserReqstDto userReqst) throws Exception {
         // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
         if (StringUtils.isEmpty(userReqst.getAcsIpListStr())) {
             userReqst.setUseAcsIpYn("N");
             userReqst.setAcsIpListStr(null);
         }
+    }
+    
+    /**
+     * 사용자 관리 > 사용자 신규계정 신청
+     * 계정 기본정보만 입력, 세부정보는 가입 승인 후 수정
+     * (등록 과정과 거의 동일하지만 일단 프로세스 분리)
+     */
+    public UserReqstDto regist(final UserReqstDto userReqst) throws Exception {
+        // 전처리 (메소드 분리)
+        this.preRegist(userReqst);
 
         // Dto -> Entity
         UserEntity userReqstEntity = userReqstMapstruct.toEntity(userReqst);
