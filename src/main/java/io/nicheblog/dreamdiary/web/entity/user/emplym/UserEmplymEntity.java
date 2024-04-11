@@ -38,6 +38,15 @@ import java.util.Date;
 public class UserEmplymEntity
         extends BaseCrudEntity {
 
+    @PostLoad
+    private void onLoad() {
+        // 코드 이름 세팅
+        if (this.cmpyCdInfo != null) this.cmpyNm = this.cmpyCdInfo.getDtlCdNm();
+        if (this.teamCdInfo != null) this.teamNm = this.teamCdInfo.getDtlCdNm();
+        if (this.emplymCdInfo != null) this.emplymNm = this.emplymCdInfo.getDtlCdNm();
+        if (this.rankCdInfo != null) this.rankNm = this.rankCdInfo.getDtlCdNm();
+    }
+
     /** 사용자 인사정보 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +91,9 @@ public class UserEmplymEntity
     @NotFound(action=NotFoundAction.IGNORE)
     private DtlCdEntity cmpyCdInfo;
 
+    @Transient
+    private String cmpyNm;
+
     /** 소속(팀) 코드 */
     @Column(name = "team_cd", length = 20)
     @Comment("소속(팀)코드")
@@ -96,6 +108,9 @@ public class UserEmplymEntity
     @Fetch(value= FetchMode.JOIN)
     @NotFound(action=NotFoundAction.IGNORE)
     private DtlCdEntity teamCdInfo;
+
+    @Transient
+    private String teamNm;
 
     /** 재직구분 코드 */
     @Column(name = "emplym_cd", length = 20)
@@ -112,6 +127,9 @@ public class UserEmplymEntity
     @NotFound(action=NotFoundAction.IGNORE)
     private DtlCdEntity emplymCdInfo;
 
+    @Transient
+    private String emplymNm;
+
     /** 직급코드 */
     @Column(name = "rank_cd", length = 20)
     @Comment("직급코드")
@@ -126,6 +144,9 @@ public class UserEmplymEntity
     @Fetch(value= FetchMode.JOIN)
     @NotFound(action=NotFoundAction.IGNORE)
     private DtlCdEntity rankCdInfo;
+
+    @Transient
+    private String rankNm;
 
     /** 수습여부 */
     @Builder.Default
