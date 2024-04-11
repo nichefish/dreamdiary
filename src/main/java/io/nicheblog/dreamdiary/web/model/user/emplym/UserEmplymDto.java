@@ -44,9 +44,9 @@ public class UserEmplymDto
     /** 업무 Email 주소 */
     private String emplymEmail;
     /** 업무 E-mail ID */
-    protected String emailId;
+    protected String emplymEmailId;
     /** 업무 E-mail 뒷부분 */
-    protected String emailDomain;
+    protected String emplymEmailDomain;
     /** 업무 연락처 */
     private String emplymCttpc;
     /** 수습여부 */

@@ -66,27 +66,19 @@
                         ignore: [],         // hidden 필드도 검증하기 위함
                         rules: {
                             <#if isReg>
-                                userId: { required:true, minlength:4, maxlength:16 },
+                                userId: { minlength:4, maxlength:16 },
                                 ipDupChckPassed: { dupChckValid:true },
                                 password: { minlength:9, maxlength:20, regex:commons.validate.pwRegex },
                                 passwordCf: { equalTo:"#password", maxlength:20 },
                             </#if>
-                            "userProfl.userNm": { required:function() {return $("#userProflYn").val() === "Y"}, maxlength:20 },
-                            "userProfl.cmpyCd": { required:function() {return $("#userProflYn").val() === "Y"} },
-                            "userProfl.teamCd": { required:function() {return $("#userProflYn").val() === "Y"} },
-                            "userInfo.emplymCd": { required:function() {return $("#userProflYn").val() === "Y"} },
                         },
                         messages: {
                             <#if isReg>
-                                userId: { required:"아이디는 필수 항목입니다.", minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
+                                userId: { minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
                                 ipDupChckPassed: { dupChckValid:"아이디 중복 체크는 필수 항목입니다." },
                                 password: { minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
                                 passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
                             </#if>
-                            "userInfo.userNm": { required:"이름은 필수 항목입니다.", maxlength:"이름은 {0}자 이하로 입력해야 합니다." },
-                            "userInfo.cmpyCd": { required:"소속회사는 필수 항목입니다." },
-                            "userInfo.teamCd": { required:"소속팀은 필수 항목입니다." },
-                            "userInfo.emplymCd": { required:"재직구분은 필수 항목입니다." },
                         },
                     });
                 });
