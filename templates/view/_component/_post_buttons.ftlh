@@ -124,8 +124,25 @@
     </button>
 </#macro>
 
+
+
+
 <!--
- * 버튼 : 미리보기 팝업 닫기
+ * 버튼 : 미리보기 모달 닫기
+ -->
+<#macro modal_header title>
+    <div class="modal-header">
+        <h5 class="modal-title">[${title!}]</h5>
+        <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" aria-label="Close"
+             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close"/>">
+            <i class="fas fa-times"></i>
+        </div>
+        <!--end::Close-->
+    </div>
+</#macro>
+
+<!--
+ * 버튼 : 미리보기 모달 닫기
  -->
 <#macro btn_modal_close>
     <button type="button" class="btn btn-sm btn-light"

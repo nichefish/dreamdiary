@@ -19,6 +19,7 @@
                 </div>
                 <!--end::Close-->
             </div>
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body">
                 <form name="myPwCfForm" id="myPwCfForm" class="form">
                     <div class="row mb-5">      <!--begin::Row-->

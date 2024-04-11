@@ -18,6 +18,7 @@
                 </div>
                 <!--end::Close-->
             </div>
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body">
                 <form name="vcantDyRegForm" id="vcantDyRegForm" class="form" enctype="multipart/form-data">
                     <input type="hidden" name="vcatnSchdulNo" id="vcatnSchdulNo">

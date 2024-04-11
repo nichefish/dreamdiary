@@ -5,13 +5,9 @@
 <div class="modal fade" id="user_my_dtl_vcatn_list" tabindex="-1" role="dialog" aria-labelledby="vcatnListModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="vcatnListModalLongTitle">[${vcatnYy.statsYy}년 휴가 상세 현황]</h5>
-                <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times"></i>
-                </div>
-                <!--end::Close-->
-            </div>
+            <!-- 영역:: 모달 헤더 -->
+            <@component.modal_header "${vcatnYy.statsYy}년 휴가 상세 현황" />
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
                     <table class="table table-row-bordered table-row-gray-300 gy-2 align-middle fs-small">

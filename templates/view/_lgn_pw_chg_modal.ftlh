@@ -70,6 +70,7 @@
 <div class="modal fade" tabindex="-1" id="lgn_pw_chg_modal" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
+            <!-- 영역:: 모달 헤더 -->
             <div class="modal-header" style="background-color:#41416e;">
                 <h2 class="modal-title text-light">비밀번호 변경</h2>
                 <!--begin::Close-->
@@ -83,6 +84,7 @@
                 </div>
                 <!--end::Close-->
             </div>
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body">
                 <form name="lgnPwChgForm" id="lgnPwChgForm" class="form">
                     <div id="lgn_pw_chg_div">

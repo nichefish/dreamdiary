@@ -93,6 +93,7 @@
 <div class="modal fade" id="notice_popup_modal" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
+            <!-- 영역:: 모달 헤더 -->
             <div class="modal-header">
                 <h5 class="modal-title" id="lgnNotifyModalLongTitle">[공지사항 팝업]</h5>
                 <div class="btn btn-sm btn-icon btn-active-light-primary ms-2"
@@ -101,6 +102,7 @@
                 </div>
                 <!--end::Close-->
             </div>
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body modal-mbl-body mb-5">
                 <div id="notice_popup_div">
                     <!-- handlebars template goes in here -->

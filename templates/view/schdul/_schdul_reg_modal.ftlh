@@ -27,7 +27,7 @@
                 <!--end::Close-->
             </div>
             <!--end::Modal header-->
-            <!--begin::Modal body-->
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body py-10 px-lg-17">
                 <!--begin::Form-->
                 <form class="form" name="schdulRegForm" id="schdulRegForm">

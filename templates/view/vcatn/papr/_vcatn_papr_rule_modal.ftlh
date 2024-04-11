@@ -6,14 +6,9 @@
 <div class="modal fade" id="vcatn_papr_rule_modal" tabindex="-1" role="dialog" aria-labelledby="vcatn_papr_rule_modal_title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="vcatn_papr_rule_modal_long_title">[휴가규칙]</h5>
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times"></i>
-                </div>
-                <!--end::Close-->
-            </div>
+            <!-- 영역:: 모달 헤더 -->
+            <@component.modal_header "휴가규칙" />
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
                     <table class="table table-row-bordered table-row-gray-300 gy-2 align-middle fs-small">

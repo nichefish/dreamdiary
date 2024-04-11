@@ -5,14 +5,9 @@
 <div class="modal fade" id="exptr_reqst_exmpl_modal" tabindex="-1" role="dialog" aria-labelledby="exptr_reqst_exmpl_modal_title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exptr_reqst_exmpl_modal_long_title">[물품구매/경조사비 신청 작성 안내]</h5>
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times"></i>
-                </div>
-                <!--end::Close-->
-            </div>
+            <!-- 영역:: 모달 헤더 -->
+            <@component.modal_header "물품구매/경조사비 신청 작성 안내" />
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
                     <h4 class="text-start mt-10">[물품구매 요청]</h4>

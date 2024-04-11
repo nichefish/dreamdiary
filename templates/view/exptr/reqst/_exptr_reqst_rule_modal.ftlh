@@ -6,14 +6,9 @@
 <div class="modal fade" id="exptr_reqst_rule_modal" tabindex="-1" role="dialog" aria-labelledby="exptrInfoModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exptrInfoModalLongTitle">[경조사비 기준]</h5>
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times"></i>
-                </div>
-                <!--end::Close-->
-            </div>
+            <!-- 영역:: 모달 헤더 -->
+            <@component.modal_header "경조사비 기준" />
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
                     <table class="table table-row-bordered table-row-gray-300 gy-2 align-middle">

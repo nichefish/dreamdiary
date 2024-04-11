@@ -131,13 +131,9 @@
 <div class="modal fade" id="flsys_meta_reg_modal" tabindex="-1" role="dialog" aria-labelledby="flsysMetaRegModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="flsysMetaRegModalLongTitle">[메타 정보 저장]</h5>
-                <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times"></i>
-                </div>
-                <!--end::Close-->
-            </div>
+            <!-- 영역:: 모달 헤더 -->
+            <@component.modal_header "파일시스템 메타 정보 저장" />
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
                     <form class="form" name="flsysMetaRegForm" id="flsysMetaRegForm">

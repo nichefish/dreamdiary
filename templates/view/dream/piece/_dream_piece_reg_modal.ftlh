@@ -66,13 +66,9 @@
 <div class="modal fade" id="dream_piece_reg_modal" tabindex="-1" role="dialog" aria-labelledby="dreamPieceRegModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="dreamPieceRegModalLongTitle">[꿈 조각 등록]</h5>
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times"></i>
-                </div>
-                <!--end::Close-->
-            </div>
+            <!-- 영역:: 모달 헤더 -->
+            <@component.modal_header "꿈 조각 저장" />
+            <!-- 영역:: 모달 내용 -->
             <div class="modal-body modal-mbl-body mb-5">
                 <div class="table-responsive-sm">
                     <form name="dreamPieceRegForm" id="dreamPieceRegForm" class="form" enctype="multipart/form-data">
