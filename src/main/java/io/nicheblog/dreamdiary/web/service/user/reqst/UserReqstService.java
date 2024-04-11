@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.user.reqst.UserReqstMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
-import io.nicheblog.dreamdiary.web.repository.user.reqst.UserReqstRepository;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,8 +33,6 @@ public class UserReqstService {
 
     @Resource(name = "userRepository")
     private UserRepository userRepository;
-    @Resource(name = "userReqstRepository")
-    private UserReqstRepository userReqstRepository;
 
     @Resource(name = "passwordEncoder")
     private PasswordEncoder passwordEncoder;
@@ -68,16 +65,16 @@ public class UserReqstService {
         userReqstEntity.setAcntStus(UserStusEmbed.getReqstStus());
         userReqstEntity.cascade();
         // insert
-        UserEntity rsltEntity = userReqstRepository.save(userReqstEntity);
+        UserEntity rsltEntity = userRepository.save(userReqstEntity);
         return userReqstMapstruct.toDto(rsltEntity);
     }
 
     /**
      * 사용자 정보 승인
      */
-    public Boolean cf(final Integer userProflNo) throws Exception {
+    public Boolean cf(final Integer userNo) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsEntity = userService.getDtlEntity(userProflNo);
+        UserEntity rsEntity = userService.getDtlEntity(userNo);
         if (rsEntity == null) return false;
         // lockedYn 플래그 업데이트
         rsEntity.acntStus.setCfYn("Y");
