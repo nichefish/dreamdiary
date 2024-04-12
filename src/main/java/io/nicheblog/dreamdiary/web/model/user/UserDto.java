@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * UserDto
@@ -51,8 +52,6 @@ public class UserDto
     protected List<UserAuthRoleDto> authList;
     /** 사용자 권한 정보(문자열) */
     protected List<String> authStrList;
-    /** 사용자 권한 정보(문자열) (multiselect parameter) */
-    protected String authListStr;
 
     /** 사용자 정보 (위임) */
     protected UserProflDto profl;
@@ -96,10 +95,11 @@ public class UserDto
         /** 비밀번호 */
         private String password;
 
+        /** 사용자 권한 정보(문자열) (multiselect parameter) */
+        private String authListStr;
+
         /** 계정 설명 (관리자용) */
         private String cn;
-
-        /* ----- */
 
         /** 접속IP 사용 여부 체크 */
         @Builder.Default
@@ -117,6 +117,14 @@ public class UserDto
             if (!StringUtils.isEmpty(this.email)) return this.email;
             if (!StringUtils.isEmpty(this.emailId) || !StringUtils.isEmpty(this.emailDomain)) return null;
             return this.emailId + "@" + this.emailDomain;
+        }
+
+        /** Getter Override */
+        public String getAuthListStr() {
+            if (this.authList != null) return this.authList.stream()
+                    .map(UserAuthRoleDto::getAuthCd)
+                    .collect(Collectors.joining(","));
+            return this.authListStr;
         }
     }
 
