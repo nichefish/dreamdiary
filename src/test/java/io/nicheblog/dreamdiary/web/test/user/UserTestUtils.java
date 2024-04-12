@@ -1,10 +1,18 @@
 package io.nicheblog.dreamdiary.web.test.user;
 
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
+import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
+import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import lombok.experimental.UtilityClass;
+
+import java.util.List;
 
 /**
  * UserTestUtils
@@ -79,5 +87,35 @@ public class UserTestUtils {
         return UserEntity.builder()
                 .userId("test_user")
                 .build();
+    }
+
+    /**
+     * 사용자 정보 Entity 객체 생성
+     */
+    public static UserEntity createUserEntity(UserProflEntity profl, UserEmplymEntity emplym) {
+        // 갹체 생성
+        return UserEntity.builder()
+                .userId("test_user")
+                .password("test_password_encoded")
+                .authList(List.of(UserAuthRoleEntity.builder().authCd(Constant.AUTH_USER).build()))
+                .nickNm("test_nick_nm")
+                .email("test_email_id@test_email_domain")
+                .cttpc("010-0101-0101")
+                .useAcsIpYn("Y")
+                .acsIpList(UserTestUtils.createUserAcsIpEntityList())
+                .cn("test_cn")
+                .profl(profl)
+                .emplym(emplym)
+                .acntStus(new UserStusEmbed())
+                .build();
+    }
+
+    public static List<UserAcsIpEntity> createUserAcsIpEntityList() {
+        return List.of(UserAcsIpEntity.builder()
+                .acsIp("1.1.1.1")
+                .build(),
+                UserAcsIpEntity.builder()
+                .acsIp("2.2.2.2")
+                .build());
     }
 }

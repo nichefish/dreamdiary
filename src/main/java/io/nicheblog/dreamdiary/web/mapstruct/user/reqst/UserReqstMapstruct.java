@@ -34,6 +34,8 @@ public interface UserReqstMapstruct
      */
     @Override
     @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
+    @Mapping(target = "emailId", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(0, entity.getEmail().indexOf('@')) : \"\")")
+    @Mapping(target = "emailDomain", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(entity.getEmail().indexOf('@')+1) : \"\")")
     UserReqstDto toDto(final UserEntity entity) throws Exception;
 
     /**
