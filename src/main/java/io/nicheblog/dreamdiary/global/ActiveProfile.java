@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.profiles")
 @Getter
 @Setter
-public final class ActiveProfile {
+public class ActiveProfile {
 
     /**
      * 프로필 Enum
@@ -37,11 +37,11 @@ public final class ActiveProfile {
 
     private Profile profile;
 
-    private final String PROFILE_LOCAL = Profile.LOCAL.key;
-    private final String PROFILE_DEV = Profile.DEV.key;
-    private final String PROFILE_STG = Profile.STG.key;
-    private final String PROFILE_PROD = Profile.PROD.key;
-    private final String PROFILE_TEST = Profile.TEST.key;
+    public final static String PROFILE_LOCAL = Profile.LOCAL.key;
+    public final static String PROFILE_DEV = Profile.DEV.key;
+    public final static String PROFILE_STG = Profile.STG.key;
+    public final static String PROFILE_PROD = Profile.PROD.key;
+    public final static String PROFILE_TEST = Profile.TEST.key;
 
     /**
      * 활성화된 프로필 항목

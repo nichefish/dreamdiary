@@ -171,7 +171,7 @@ dependencies {
     implementation group: 'commons-net', name: 'commons-net', version: '3.9.0'
 
     /** ↓ snmp4j (청각 경보) */
-    compileOnly group: 'org.snmp4j', name: 'snmp4j', version: '3.5.1'
+    implementation group: 'org.snmp4j', name: 'snmp4j', version: '3.5.1'
 
     /** selenium */
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.17.0'
@@ -182,8 +182,9 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    implementation group: 'org.beamfoundry.bundles.spring-data-jpa.test', name: 'org.beamfoundry.bundles.spring-data-jpa.test-common', version: '1.6.4.RELEASE_2'
+    testImplementation 'org.beamfoundry.bundles.spring-data-jpa.test:org.beamfoundry.bundles.spring-data-jpa.test-common:1.6.4.RELEASE_2'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'com.h2database:h2'
 
     /**
      * ↓ lombok , mapstruct

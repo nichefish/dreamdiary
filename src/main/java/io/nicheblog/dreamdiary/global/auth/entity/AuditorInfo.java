@@ -2,8 +2,7 @@ package io.nicheblog.dreamdiary.global.auth.entity;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.NotFound;
@@ -27,6 +26,9 @@ import java.util.List;
 @Table(name = "user")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Where(clause = "del_yn='N'")
 public class AuditorInfo
         implements Serializable {
