@@ -51,7 +51,7 @@ public class UserDto
     protected List<UserAuthRoleDto> authList;
     /** 사용자 권한 정보(문자열) */
     protected List<String> authStrList;
-    /** 사용자 권한 정보(문자열) */
+    /** 사용자 권한 정보(문자열) (multiselect parameter) */
     protected String authListStr;
 
     /** 사용자 정보 (위임) */
