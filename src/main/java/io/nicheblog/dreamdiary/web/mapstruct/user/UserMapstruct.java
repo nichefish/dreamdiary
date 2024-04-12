@@ -38,9 +38,9 @@ public interface UserMapstruct
     @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
     @Mapping(target = "emailId", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(0, entity.getEmail().indexOf('@')) : \"\")")
     @Mapping(target = "emailDomain", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(entity.getEmail().indexOf('@')+1) : \"\")")
+    @Mapping(target = "authStrList", expression = "java(entity.getAuthList().stream().map(UserAuthRoleEntity::getAuthCd).collect(Collectors.toList()))")      // 접속IP tagify 문자열 세팅
     @Mapping(target = "useAcsIp", expression = "java(\"Y\".equals(entity.getUseAcsIpYn()))")
     @Mapping(target = "acsIpListStr", expression = "java(String.join(\",\", entity.getAcsIpStrList()))")      // 접속IP tagify 문자열 세팅
-    @Mapping(target = "authStrList", expression = "java(entity.getAuthList().stream().map(UserAuthRoleEntity::getAuthCd).collect(Collectors.toList()))")      // 접속IP tagify 문자열 세팅
     @Mapping(target = "isCf", expression = "java(entity.getAcntStus() != null && \"Y\".equals(entity.getAcntStus().getCfYn()))")
     @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toDto(entity.getProfl()))")
     @Mapping(target = "emplym", expression = "java(UserEmplymMapstruct.INSTANCE.toDto(entity.getEmplym()))")

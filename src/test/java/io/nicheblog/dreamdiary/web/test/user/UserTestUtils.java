@@ -103,6 +103,7 @@ public class UserTestUtils {
                 .cttpc("010-0101-0101")
                 .useAcsIpYn("Y")
                 .acsIpList(UserTestUtils.createUserAcsIpEntityList())
+                .acsIpStrList(UserTestUtils.createUserAcsIpStrList())
                 .cn("test_cn")
                 .profl(profl)
                 .emplym(emplym)
@@ -117,5 +118,9 @@ public class UserTestUtils {
                 UserAcsIpEntity.builder()
                 .acsIp("2.2.2.2")
                 .build());
+    }
+
+    public static List<String> createUserAcsIpStrList() {
+        return List.of("1.1.1.1", "2.2.2.2");
     }
 }
