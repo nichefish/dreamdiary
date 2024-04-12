@@ -1,17 +1,20 @@
 package io.nicheblog.dreamdiary.web.test.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
+import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import lombok.experimental.UtilityClass;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -81,15 +84,6 @@ public class UserTestUtils {
     }
 
     /**
-     * 사용자 신청 - 인사정보 Dto 객체 생성 :: 메소드 분리
-     */
-    public static UserEntity createUserEntity(Object o, Object o1) {
-        return UserEntity.builder()
-                .userId("test_user")
-                .build();
-    }
-
-    /**
      * 사용자 정보 Entity 객체 생성
      */
     public static UserEntity createUserEntity(UserProflEntity profl, UserEmplymEntity emplym) {
@@ -111,16 +105,68 @@ public class UserTestUtils {
                 .build();
     }
 
+    /**
+     * 사용자 신청 - 프로필 정보 Entity 객체 생성 :: 메소드 분리
+     */
+    public static UserProflEntity createUserProflEntity() throws Exception {
+        // 갹체 생성
+        return UserProflEntity.builder()
+                .brthdy(DateUtils.asDate("2000-01-01"))
+                .proflCn("test_profl_cn")
+                .build();
+    }
+
+    /**
+     * 사용자 신청 - 인사정보 Dto 객체 생성 :: 메소드 분리
+     */
+    public static UserEmplymEntity createUserEmplymEntity() throws Exception {
+        // 갹체 생성
+        return UserEmplymEntity.builder()
+                .userNm("test_user")
+                .cmpyCd("test_cmpy_cd")
+                .teamCd("test_team_cd")
+                .emplymCd("test_emplym_cd")
+                .rankCd("test_rank")
+                .apntcYn("Y")
+                .emplymEmail("test_emplym_email_id@test_emplym_email_domain")
+                .emplymCttpc("000-0000-0000")
+                .ecnyDt(DateUtils.asDate("2000-01-01"))
+                .retireYn("Y")
+                .retireDt(DateUtils.asDate("2000-01-01"))
+                .acntBank("test_acnt_bank")
+                .acntNo("test-acnt_no")
+                .emplymCn("test_emplym_cn")
+                .build();
+    }
+
     public static List<UserAcsIpEntity> createUserAcsIpEntityList() {
-        return List.of(UserAcsIpEntity.builder()
+        UserAcsIpEntity aa = UserAcsIpEntity.builder()
                 .acsIp("1.1.1.1")
-                .build(),
-                UserAcsIpEntity.builder()
+                .build();
+        UserAcsIpEntity bb = UserAcsIpEntity.builder()
                 .acsIp("2.2.2.2")
-                .build());
+                .build();
+        return List.of(aa, bb);
     }
 
     public static List<String> createUserAcsIpStrList() {
         return List.of("1.1.1.1", "2.2.2.2");
+    }
+
+    public static UserDto.DTL createUser(UserProflDto profl, UserEmplymDto emplym) {
+        // 갹체 생성
+        return UserDto.DTL.builder()
+                .userId("test_user")
+                .password("test_password")
+                .nickNm("test_nick_nm")
+                .emailId("test_email_id")
+                .emailDomain("test_email_domain")
+                .cttpc("010-0101-0101")
+                .useAcsIpYn("Y")
+                .acsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]")
+                .cn("test_cn")
+                .profl(profl)
+                .emplym(emplym)
+                .build();
     }
 }
