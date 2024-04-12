@@ -18,8 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * <pre>
  *  사용자 계정 신청 Mapstruct 매핑 테스트 모듈
  * </pre>
- * (toDto는 로직상 존재하지만 세세한 매핑이 중요하지 앖으므로 패스.)
- * (toDto 매핑은 UserMapstructTest에서 세부적으로 테스트 예정)
+ * (toDto는 로직상 존재하지만 세세한 매핑이 중요하지 않음. UserMapstructTest에서 세부 테스트 예정)
  *
  * @author nichefish
  */
