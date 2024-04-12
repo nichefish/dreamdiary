@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user.reqst;
 
-import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
@@ -63,7 +63,8 @@ class UserReqstMapstructTest {
         assertNotNull(entity);
         UserProflEntity userProflEntity = entity.getProfl();
         assertNotNull(userProflEntity);
-        // TODO: profl 관련 체크
+        // 날짜 변환 체크
+        assertEquals(userProflEntity.getBrthdy(), DateUtils.asDate("2000-01-01"));
     }
 
     @Test
@@ -80,6 +81,10 @@ class UserReqstMapstructTest {
         assertNotNull(entity);
         UserEmplymEntity userEmplymEntity = entity.getEmplym();
         assertNotNull(userEmplymEntity);
-        // TODO: emplym 관련 체크
+        // 날짜 변환 체크
+        assertEquals(userEmplymEntity.getEcnyDt(), DateUtils.asDate("2000-01-01"));
+        assertEquals(userEmplymEntity.getRetireDt(), DateUtils.asDate("2000-01-01"));
+        // 이메일 변환 로직
+        assertEquals(entity.getEmail(), userReqstDto.getEmailId() + "@" + userReqstDto.getEmailDomain());
     }
 }

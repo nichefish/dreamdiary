@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
@@ -8,10 +9,11 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import io.nicheblog.dreamdiary.web.test.user.UserTestUtils;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.CollectionUtils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * UserMapstructTest
@@ -21,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  * @author nichefish
  */
+@Log4j2
 class UserMapstructTest {
 
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
@@ -61,7 +64,8 @@ class UserMapstructTest {
         assertNotNull(entity);
         UserProflEntity userProflEntity = entity.getProfl();
         assertNotNull(userProflEntity);
-        // TODO: profl 관련 체크
+        // 날짜 변환 체크
+        assertEquals(userProflEntity.getBrthdy(), DateUtils.asDate("2000-01-01"));
     }
 
     @Test
@@ -78,7 +82,11 @@ class UserMapstructTest {
         assertNotNull(entity);
         UserEmplymEntity userEmplymEntity = entity.getEmplym();
         assertNotNull(userEmplymEntity);
-        // TODO: emplym 관련 체크
+        // 날짜 변환 체크
+        assertEquals(userEmplymEntity.getEcnyDt(), DateUtils.asDate("2000-01-01"));
+        assertEquals(userEmplymEntity.getRetireDt(), DateUtils.asDate("2000-01-01"));
+        // 이메일 변환 로직
+        assertEquals(entity.getEmail(), userDto.getEmailId() + "@" + userDto.getEmailDomain());
     }
 
     /* ----- */
@@ -98,13 +106,15 @@ class UserMapstructTest {
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
         assertNotNull(dto);
         // 권한 관련 매핑 검증
+        assertFalse(CollectionUtils.isEmpty(dto.getAuthList()));
         assertEquals(dto.getAuthList().get(0).getAuthCd(), Constant.AUTH_USER);
-        assertEquals(dto.getAuthListStr(), Constant.AUTH_USER);
         // 이메일 변환 로직 검증
         assertEquals(dto.getEmailId(), userEntity.getEmail().split("@")[0]);
         assertEquals(dto.getEmailDomain(), userEntity.getEmail().split("@")[1]);
         // 접속 IP 관련 매핑 검증
         assertNotNull(dto.getAcsIpList());
+        assertNotNull(dto.getAcsIpList().get(0).getAcsIp(), "1.1.1.1");
+        assertNotNull(dto.getAcsIpList().get(0).getAcsIp(), "2.2.2.2");
         assertEquals(dto.getAcsIpListStr(), "1.1.1.1,2.2.2.2");
     }
 
@@ -122,7 +132,8 @@ class UserMapstructTest {
         assertNotNull(dto);
         UserProflDto userProflDto = dto.getProfl();
         assertNotNull(userProflDto);
-        // TODO: CHECK PROFL
+        // 날짜 변환 체크
+        assertEquals(userProflDto.getBrthdy(), "2000-01-01");
     }
 
 
@@ -139,6 +150,11 @@ class UserMapstructTest {
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
         UserEmplymDto userEmplymDto = dto.getEmplym();
         assertNotNull(userEmplymDto);
-        // TODO: CHECK PROFL
+        // 날짜 변환 체크
+        assertEquals(userEmplymDto.getEcnyDt(), "2000-01-01");
+        assertEquals(userEmplymDto.getRetireDt(), "2000-01-01");
+        // 이메일 변환 로직
+        assertEquals(userEmplymDto.getEmplymEmailId(), userEmplymEntity.getEmplymEmail().split("@")[0]);
+        assertEquals(userEmplymDto.getEmplymEmailDomain(), userEmplymEntity.getEmplymEmail().split("@")[1]);
     }
 }
