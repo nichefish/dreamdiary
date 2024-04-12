@@ -39,6 +39,8 @@ class UserProflMapstructTest {
         assertEquals(userProflEntity.getBrthdy(), DateUtils.asDate("2000-01-01"));
     }
 
+    /* ----- */
+
     /**
      * toDto 검증
      */

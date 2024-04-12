@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.test.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserAcsIpEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
@@ -65,7 +66,7 @@ public class UserTestUtils {
     /**
      * 사용자 정보 Entity 객체 생성
      */
-    public static UserEntity createUserEntity(UserProflEntity profl, UserEmplymEntity emplym) {
+    public static UserEntity createUserEntity(UserProflEntity profl, UserEmplymEntity emplym) throws Exception {
         // 갹체 생성
         return UserEntity.builder()
                 .userId("test_user")
@@ -81,6 +82,12 @@ public class UserTestUtils {
                 .profl(profl)
                 .emplym(emplym)
                 .acntStus(new UserStusEmbed())
+                .regstrId("test_reg_user")
+                .regstrInfo(AuditorInfo.builder().userId("test_reg_user").nickNm("test_reg_nick_nm").build())
+                .regDt(DateUtils.asDate("2000-01-01"))
+                .mdfusrId("test_mdf_user")
+                .mdfusrInfo(AuditorInfo.builder().userId("test_mdf_user").nickNm("test_reg_nick_nm").build())
+                .mdfDt(DateUtils.asDate("2000-01-01"))
                 .build();
     }
 

@@ -100,6 +100,24 @@ class UserMapstructTest {
      * toDto 검증
      */
     @Test
+    void toDto_checkAuditor() throws Exception {
+        // Given::
+        UserEntity userEntity = UserTestUtils.createUserEntity(null, null);
+
+        // When::
+        UserDto.DTL dto = userMapstruct.toDto(userEntity);
+
+        // Then::
+        assertNotNull(dto);
+        assertEquals(dto.getRegstrId(), "test_reg_user");
+        assertEquals(dto.getRegstrNm(), "test_reg_nick_nm");
+        assertEquals(dto.getRegDt(), "2000-01-01 00:00:00");
+        assertEquals(dto.getMdfusrId(), "test_mdf_user");
+        assertEquals(dto.getMdfusrNm(), "test_reg_nick_nm");
+        assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
+    }
+
+    @Test
     void toDto_checkBasic() throws Exception {
         // Given::
         UserEntity userEntity = UserTestUtils.createUserEntity(null, null);
@@ -163,5 +181,26 @@ class UserMapstructTest {
         // 이메일 변환 로직
         assertEquals(userEmplymDto.getEmplymEmailId(), userEmplymEntity.getEmplymEmail().split("@")[0]);
         assertEquals(userEmplymDto.getEmplymEmailDomain(), userEmplymEntity.getEmplymEmail().split("@")[1]);
+    }
+
+    /**
+     * toListDto 검증
+     */
+    @Test
+    void toListDto_checkAuditor() throws Exception {
+        // Given::
+        UserEntity userEntity = UserTestUtils.createUserEntity(null, null);
+
+        // When::
+        UserDto.LIST dto = userMapstruct.toListDto(userEntity);
+
+        // Then::
+        assertNotNull(dto);
+        assertEquals(dto.getRegstrId(), "test_reg_user");
+        assertEquals(dto.getRegstrNm(), "test_reg_nick_nm");
+        assertEquals(dto.getRegDt(), "2000-01-01 00:00:00");
+        assertEquals(dto.getMdfusrId(), "test_mdf_user");
+        assertEquals(dto.getMdfusrNm(), "test_reg_nick_nm");
+        assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
     }
 }

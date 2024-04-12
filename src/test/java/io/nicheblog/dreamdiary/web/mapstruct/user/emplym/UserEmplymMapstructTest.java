@@ -42,6 +42,8 @@ class UserEmplymMapstructTest {
         assertEquals(userEmplymEntity.getEmplymEmail(), userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain());
     }
 
+    /* ----- */
+
     /**
      * toDto 검증
      */
