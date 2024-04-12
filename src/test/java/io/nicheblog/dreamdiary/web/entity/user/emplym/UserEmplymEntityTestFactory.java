@@ -1,0 +1,40 @@
+package io.nicheblog.dreamdiary.web.entity.user.emplym;
+
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import lombok.experimental.UtilityClass;
+
+/**
+ * UserEmplymEntityTestFactory
+ * <pre>
+ *  사용자 인사정보 테스트 Entity 생성 팩토리 모듈
+ * </pre>
+ * 
+ * @author nichefish 
+ */
+@UtilityClass
+public class UserEmplymEntityTestFactory {
+
+    /**
+     * 사용자 인사정보 Entity 객체 생성
+     */
+    public static UserEmplymEntity createUserEmplymEntity() throws Exception {
+        // 갹체 생성
+        return UserEmplymEntity.builder()
+                .userNm("test_user")
+                .cmpyCd("test_cmpy_cd")
+                .teamCd("test_team_cd")
+                .emplymCd("test_emplym_cd")
+                .rankCd("test_rank")
+                .apntcYn("Y")
+                .emplymEmail("test_emplym_email_id@test_emplym_email_domain")
+                .emplymCttpc("000-0000-0000")
+                .ecnyDt(DateUtils.asDate("2000-01-01"))
+                .retireYn("Y")
+                .retireDt(DateUtils.asDate("2000-01-01"))
+                .acntBank("test_acnt_bank")
+                .acntNo("test-acnt_no")
+                .emplymCn("test_emplym_cn")
+                .build();
+    }
+
+}
