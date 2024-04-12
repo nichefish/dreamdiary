@@ -5,10 +5,11 @@ import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
+import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDtoTestFactory;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
+import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDtoTestFactory;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
-import io.nicheblog.dreamdiary.web.test.user.UserTestUtils;
-import io.nicheblog.dreamdiary.web.test.user.reqst.UserReqstTestUtils;
+import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDtoTestFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +34,7 @@ class UserReqstMapstructTest {
     @Test
     void toEntity_checkBasic() throws Exception {
         // Given::
-        UserReqstDto userReqstDto = UserReqstTestUtils.createUserReqst(null, null);
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(null, null);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
@@ -52,8 +53,8 @@ class UserReqstMapstructTest {
     @Test
     void toEntity_checkProfl() throws Exception {
         // Given::
-        UserProflDto userProflDto = UserTestUtils.createUserProfl();
-        UserReqstDto userReqstDto = UserReqstTestUtils.createUserReqst(userProflDto, null);
+        UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(userProflDto, null);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
@@ -70,8 +71,8 @@ class UserReqstMapstructTest {
     @Test
     void toEntity_checkEmplym() throws Exception {
         // Given::
-        UserEmplymDto userEmplymDto = UserTestUtils.createUserEmplym();
-        UserReqstDto userReqstDto = UserReqstTestUtils.createUserReqst(null, userEmplymDto);
+        UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(null, userEmplymDto);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);

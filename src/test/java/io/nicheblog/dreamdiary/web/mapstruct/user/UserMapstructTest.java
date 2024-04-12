@@ -3,12 +3,17 @@ package io.nicheblog.dreamdiary.web.mapstruct.user;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
+import io.nicheblog.dreamdiary.web.entity.user.UserEntityTestFactory;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
+import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntityTestFactory;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
+import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntityTestFactory;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
+import io.nicheblog.dreamdiary.web.model.user.UserDtoTestFactory;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
+import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDtoTestFactory;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
-import io.nicheblog.dreamdiary.web.test.user.UserTestUtils;
+import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDtoTestFactory;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.CollectionUtils;
@@ -29,80 +34,12 @@ class UserMapstructTest {
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
 
     /**
-     * toEntity 검증
-     */
-    @Test
-    void toEntity_checkBasic() throws Exception {
-        // Given::
-        UserDto.DTL userDto = UserTestUtils.createUser(null, null);
-
-        // When::
-        UserEntity entity = userMapstruct.toEntity(userDto);
-
-        // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(entity);
-        // 권한 관련 매핑 검증
-        assertFalse(CollectionUtils.isEmpty(entity.getAuthList()));
-        assertEquals(entity.getAuthList().size(), 2);
-        assertEquals(entity.getAuthList().get(0).getAuthCd(), Constant.AUTH_USER);
-        assertEquals(entity.getAuthList().get(1).getAuthCd(), Constant.AUTH_MNGR);
-        // 이메일 변환 로직
-        assertEquals(entity.getEmail(), userDto.getEmailId() + "@" + userDto.getEmailDomain());
-        // 접속 IP 관련
-        assertEquals(entity.getUseAcsIpYn(), userDto.getUseAcsIpYn());
-        assertEquals(entity.getAcsIpList().get(0).getAcsIp(), "1.1.1.1");
-        assertEquals(entity.getAcsIpList().get(1).getAcsIp(), "2.2.2.2");
-    }
-
-    @Test
-    void toEntity_checkProfl() throws Exception {
-        // Given::
-        UserProflDto userProflDto = UserTestUtils.createUserProfl();
-        UserDto.DTL userDto = UserTestUtils.createUser(userProflDto, null);
-
-        // When::
-        UserEntity entity = userMapstruct.toEntity(userDto);
-
-        // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(entity);
-        UserProflEntity userProflEntity = entity.getProfl();
-        assertNotNull(userProflEntity);
-        // 날짜 변환 체크
-        assertEquals(userProflEntity.getBrthdy(), DateUtils.asDate("2000-01-01"));
-    }
-
-    @Test
-    void toEntity_checkEmplym() throws Exception {
-        // Given::
-        UserEmplymDto userEmplymDto = UserTestUtils.createUserEmplym();
-        UserDto.DTL userDto = UserTestUtils.createUser(null, userEmplymDto);
-
-        // When::
-        UserEntity entity = userMapstruct.toEntity(userDto);
-
-        // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(entity);
-        UserEmplymEntity userEmplymEntity = entity.getEmplym();
-        assertNotNull(userEmplymEntity);
-        // 날짜 변환 체크
-        assertEquals(userEmplymEntity.getEcnyDt(), DateUtils.asDate("2000-01-01"));
-        assertEquals(userEmplymEntity.getRetireDt(), DateUtils.asDate("2000-01-01"));
-        // 이메일 변환 로직
-        assertEquals(userEmplymEntity.getEmplymEmail(), userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain());
-    }
-
-    /* ----- */
-
-    /**
      * toDto 검증
      */
     @Test
     void toDto_checkAuditor() throws Exception {
         // Given::
-        UserEntity userEntity = UserTestUtils.createUserEntity(null, null);
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity(null, null);
 
         // When::
         UserDto.DTL dto = userMapstruct.toDto(userEntity);
@@ -120,7 +57,7 @@ class UserMapstructTest {
     @Test
     void toDto_checkBasic() throws Exception {
         // Given::
-        UserEntity userEntity = UserTestUtils.createUserEntity(null, null);
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity(null, null);
 
         // When::
         UserDto.DTL dto = userMapstruct.toDto(userEntity);
@@ -146,8 +83,8 @@ class UserMapstructTest {
     @Test
     void toDto_checkProfl() throws Exception {
         // Given::
-        UserProflEntity userProflEntity = UserTestUtils.createUserProflEntity();
-        UserEntity userEntity = UserTestUtils.createUserEntity(userProflEntity, null);
+        UserProflEntity userProflEntity = UserProflEntityTestFactory.createUserProflEntity();
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity(userProflEntity, null);
 
         // When::
         UserDto dto = userMapstruct.toDto(userEntity);
@@ -165,8 +102,8 @@ class UserMapstructTest {
     @Test
     void toDto_checkEmplym() throws Exception {
         // Given::
-        UserEmplymEntity userEmplymEntity = UserTestUtils.createUserEmplymEntity();
-        UserEntity userEntity = UserTestUtils.createUserEntity(null, userEmplymEntity);
+        UserEmplymEntity userEmplymEntity = UserEmplymEntityTestFactory.createUserEmplymEntity();
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity(null, userEmplymEntity);
 
         // When::
         UserDto dto = userMapstruct.toDto(userEntity);
@@ -189,7 +126,7 @@ class UserMapstructTest {
     @Test
     void toListDto_checkAuditor() throws Exception {
         // Given::
-        UserEntity userEntity = UserTestUtils.createUserEntity(null, null);
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity(null, null);
 
         // When::
         UserDto.LIST dto = userMapstruct.toListDto(userEntity);
@@ -203,4 +140,73 @@ class UserMapstructTest {
         assertEquals(dto.getMdfusrNm(), "test_reg_nick_nm");
         assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
     }
+
+    /* ----- */
+
+    /**
+     * toEntity 검증
+     */
+    @Test
+    void toEntity_checkBasic() throws Exception {
+        // Given::
+        UserDto.DTL userDto = UserDtoTestFactory.createUser(null, null);
+
+        // When::
+        UserEntity entity = userMapstruct.toEntity(userDto);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(entity);
+        // 권한 관련 매핑 검증
+        assertFalse(CollectionUtils.isEmpty(entity.getAuthList()));
+        assertEquals(entity.getAuthList().size(), 2);
+        assertEquals(entity.getAuthList().get(0).getAuthCd(), Constant.AUTH_USER);
+        assertEquals(entity.getAuthList().get(1).getAuthCd(), Constant.AUTH_MNGR);
+        // 이메일 변환 로직
+        assertEquals(entity.getEmail(), userDto.getEmailId() + "@" + userDto.getEmailDomain());
+        // 접속 IP 관련
+        assertEquals(entity.getUseAcsIpYn(), userDto.getUseAcsIpYn());
+        assertEquals(entity.getAcsIpList().get(0).getAcsIp(), "1.1.1.1");
+        assertEquals(entity.getAcsIpList().get(1).getAcsIp(), "2.2.2.2");
+    }
+
+    @Test
+    void toEntity_checkProfl() throws Exception {
+        // Given::
+        UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
+        UserDto.DTL userDto = UserDtoTestFactory.createUser(userProflDto, null);
+
+        // When::
+        UserEntity entity = userMapstruct.toEntity(userDto);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(entity);
+        UserProflEntity userProflEntity = entity.getProfl();
+        assertNotNull(userProflEntity);
+        // 날짜 변환 체크
+        assertEquals(userProflEntity.getBrthdy(), DateUtils.asDate("2000-01-01"));
+    }
+
+    @Test
+    void toEntity_checkEmplym() throws Exception {
+        // Given::
+        UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
+        UserDto.DTL userDto = UserDtoTestFactory.createUser(null, userEmplymDto);
+
+        // When::
+        UserEntity entity = userMapstruct.toEntity(userDto);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(entity);
+        UserEmplymEntity userEmplymEntity = entity.getEmplym();
+        assertNotNull(userEmplymEntity);
+        // 날짜 변환 체크
+        assertEquals(userEmplymEntity.getEcnyDt(), DateUtils.asDate("2000-01-01"));
+        assertEquals(userEmplymEntity.getRetireDt(), DateUtils.asDate("2000-01-01"));
+        // 이메일 변환 로직
+        assertEquals(userEmplymEntity.getEmplymEmail(), userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain());
+    }
+
 }
