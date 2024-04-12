@@ -8,13 +8,12 @@ import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
+import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
-import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import lombok.experimental.UtilityClass;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,26 +26,6 @@ import java.util.List;
  */
 @UtilityClass
 public class UserTestUtils {
-
-    /**
-     * 사용자 신청 정보 Dto 객체 생성
-     */
-    public static UserReqstDto createUserReqst(UserProflDto profl, UserEmplymDto emplym) {
-        // 갹체 생성
-        return UserReqstDto.builder()
-                .userId("test_user")
-                .password("test_password")
-                .nickNm("test_nick_nm")
-                .emailId("test_email_id")
-                .emailDomain("test_email_domain")
-                .cttpc("010-0101-0101")
-                .useAcsIpYn("Y")
-                .acsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]")
-                .cn("test_cn")
-                .profl(profl)
-                .emplym(emplym)
-                .build();
-    }
 
     /**
      * 사용자 신청 - 프로필 정보 Dto 객체 생성 :: 메소드 분리
@@ -91,7 +70,7 @@ public class UserTestUtils {
         return UserEntity.builder()
                 .userId("test_user")
                 .password("test_password_encoded")
-                .authList(List.of(UserAuthRoleEntity.builder().authCd(Constant.AUTH_USER).build()))
+                .authList(UserTestUtils.getUserAuthRoleEntityList())
                 .nickNm("test_nick_nm")
                 .email("test_email_id@test_email_domain")
                 .cttpc("010-0101-0101")
@@ -158,6 +137,7 @@ public class UserTestUtils {
         return UserDto.DTL.builder()
                 .userId("test_user")
                 .password("test_password")
+                .authList(UserTestUtils.getUserAuthRoleDtoList())
                 .nickNm("test_nick_nm")
                 .emailId("test_email_id")
                 .emailDomain("test_email_domain")
@@ -168,5 +148,25 @@ public class UserTestUtils {
                 .profl(profl)
                 .emplym(emplym)
                 .build();
+    }
+
+    public static List<UserAuthRoleEntity> getUserAuthRoleEntityList() {
+        UserAuthRoleEntity aa = UserAuthRoleEntity.builder()
+                .authCd(Constant.AUTH_USER)
+                .build();
+        UserAuthRoleEntity bb = UserAuthRoleEntity.builder()
+                .authCd(Constant.AUTH_MNGR)
+                .build();
+        return List.of(aa, bb);
+    }
+
+    public static List<UserAuthRoleDto> getUserAuthRoleDtoList() {
+        UserAuthRoleDto aa = UserAuthRoleDto.builder()
+                .authCd(Constant.AUTH_USER)
+                .build();
+        UserAuthRoleDto bb = UserAuthRoleDto.builder()
+                .authCd(Constant.AUTH_MNGR)
+                .build();
+        return List.of(aa, bb);
     }
 }
