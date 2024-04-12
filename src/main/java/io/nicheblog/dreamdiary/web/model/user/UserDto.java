@@ -33,8 +33,6 @@ public class UserDto
     protected Integer userNo;
     /** 아이디 */
     protected String userId;
-    /** 비밀번호 */
-    protected String password;
     /** 표시이름 */
     protected String nickNm;
     /** 프로필 이미지 URL */
@@ -95,6 +93,9 @@ public class UserDto
     @NoArgsConstructor
     @EqualsAndHashCode(callSuper = false)
     public static class DTL extends UserDto {
+        /** 비밀번호 */
+        private String password;
+
         /** 계정 설명 (관리자용) */
         private String cn;
 

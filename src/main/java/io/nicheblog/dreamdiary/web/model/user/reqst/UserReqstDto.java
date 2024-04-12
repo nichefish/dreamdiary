@@ -25,6 +25,9 @@ import java.util.List;
 public class UserReqstDto
         extends UserDto {
 
+    /** 비밀번호 */
+    private String password;
+
     /** 접속IP 사용 여부 체크 */
     @Builder.Default
     private Boolean useAcsIp = false;

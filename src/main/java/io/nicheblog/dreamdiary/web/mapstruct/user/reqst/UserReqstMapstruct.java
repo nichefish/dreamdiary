@@ -33,6 +33,7 @@ public interface UserReqstMapstruct
      * Entity -> Dto
      */
     @Override
+    @Mapping(target = "password", expression = "java(null)")      // DTO로 패스워드 전달하지 않음
     UserReqstDto toDto(final UserEntity entity) throws Exception;
 
     /**
