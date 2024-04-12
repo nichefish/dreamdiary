@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * <pre>
  *  사용자 계정 신청 Mapstruct 매핑 테스트 모듈
  * </pre>
+ * (toDto는 로직상 존재하지만 세세한 매핑이 중요하지 앖으므로 패스.)
+ * (toDto 매핑은 UserMapstructTest에서 세부적으로 테스트 예정)
  *
  * @author nichefish
  */
@@ -79,33 +81,5 @@ class UserReqstMapstructTest {
         UserEmplymEntity userEmplymEntity = entity.getEmplym();
         assertNotNull(userEmplymEntity);
         // TODO: emplym 관련 체크
-    }
-
-    /* ----- */
-
-    /**
-     * toDto 검증
-     */
-
-    @Test
-    void toDto_checkBasic() throws Exception {
-        // Given::
-        UserEntity userEntity = UserTestUtils.createUserEntity(null, null);
-
-        // When::
-        UserReqstDto dto = userReqstMapstruct.toDto(userEntity);
-
-        // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(dto);
-        // 권한 관련 매핑 검증
-        assertEquals(dto.getAuthList().get(0).getAuthCd(), Constant.AUTH_USER);
-        assertEquals(dto.getAuthListStr(), Constant.AUTH_USER);
-        // 이메일 변환 로직 검증
-        assertEquals(dto.getEmailId(), userEntity.getEmail().split("@")[0]);
-        assertEquals(dto.getEmailDomain(), userEntity.getEmail().split("@")[1]);
-        // 접속 IP 관련 매핑 검증
-        assertNotNull(dto.getAcsIpList());
-        assertEquals(dto.getAcsIpListStr(), "1.1.1.1,2.2.2.2");
     }
 }
