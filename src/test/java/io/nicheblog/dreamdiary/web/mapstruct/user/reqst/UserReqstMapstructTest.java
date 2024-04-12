@@ -85,6 +85,6 @@ class UserReqstMapstructTest {
         assertEquals(userEmplymEntity.getEcnyDt(), DateUtils.asDate("2000-01-01"));
         assertEquals(userEmplymEntity.getRetireDt(), DateUtils.asDate("2000-01-01"));
         // 이메일 변환 로직
-        assertEquals(entity.getEmail(), userReqstDto.getEmailId() + "@" + userReqstDto.getEmailDomain());
+        assertEquals(userEmplymEntity.getEmplymEmail(), userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain());
     }
 }
