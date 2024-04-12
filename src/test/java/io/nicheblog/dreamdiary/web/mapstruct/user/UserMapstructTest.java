@@ -42,6 +42,11 @@ class UserMapstructTest {
         // Then::
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
         assertNotNull(entity);
+        // 권한 관련 매핑 검증
+        assertFalse(CollectionUtils.isEmpty(entity.getAuthList()));
+        assertEquals(entity.getAuthList().size(), 2);
+        assertEquals(entity.getAuthList().get(0).getAuthCd(), Constant.AUTH_USER);
+        assertEquals(entity.getAuthList().get(1).getAuthCd(), Constant.AUTH_MNGR);
         // 이메일 변환 로직
         assertEquals(entity.getEmail(), userDto.getEmailId() + "@" + userDto.getEmailDomain());
         // 접속 IP 관련
@@ -107,7 +112,9 @@ class UserMapstructTest {
         assertNotNull(dto);
         // 권한 관련 매핑 검증
         assertFalse(CollectionUtils.isEmpty(dto.getAuthList()));
+        assertEquals(dto.getAuthList().size(), 2);
         assertEquals(dto.getAuthList().get(0).getAuthCd(), Constant.AUTH_USER);
+        assertEquals(dto.getAuthList().get(1).getAuthCd(), Constant.AUTH_MNGR);
         // 이메일 변환 로직 검증
         assertEquals(dto.getEmailId(), userEntity.getEmail().split("@")[0]);
         assertEquals(dto.getEmailDomain(), userEntity.getEmail().split("@")[1]);

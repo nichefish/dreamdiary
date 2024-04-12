@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.test.user.UserTestUtils;
+import io.nicheblog.dreamdiary.web.test.user.reqst.UserReqstTestUtils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +33,7 @@ class UserReqstMapstructTest {
     @Test
     void toEntity_checkBasic() throws Exception {
         // Given::
-        UserReqstDto userReqstDto = UserTestUtils.createUserReqst(null, null);
+        UserReqstDto userReqstDto = UserReqstTestUtils.createUserReqst(null, null);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
@@ -52,7 +53,7 @@ class UserReqstMapstructTest {
     void toEntity_checkProfl() throws Exception {
         // Given::
         UserProflDto userProflDto = UserTestUtils.createUserProfl();
-        UserReqstDto userReqstDto = UserTestUtils.createUserReqst(userProflDto, null);
+        UserReqstDto userReqstDto = UserReqstTestUtils.createUserReqst(userProflDto, null);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
@@ -70,7 +71,7 @@ class UserReqstMapstructTest {
     void toEntity_checkEmplym() throws Exception {
         // Given::
         UserEmplymDto userEmplymDto = UserTestUtils.createUserEmplym();
-        UserReqstDto userReqstDto = UserTestUtils.createUserReqst(null, userEmplymDto);
+        UserReqstDto userReqstDto = UserReqstTestUtils.createUserReqst(null, userEmplymDto);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
