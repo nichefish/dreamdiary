@@ -133,7 +133,7 @@ public class UserEmplymEntity
     /** 직급코드 */
     @Column(name = "rank_cd", length = 20)
     @Comment("직급코드")
-    private String rank_cd;
+    private String rankCd;
 
     /** 직급 코드 정보 (복합키 조인) */
     @ManyToOne
