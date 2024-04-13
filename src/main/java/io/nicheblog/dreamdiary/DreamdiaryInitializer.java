@@ -1,8 +1,10 @@
 package io.nicheblog.dreamdiary;
 
+import io.nicheblog.dreamdiary.global.ActiveProfile;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
+import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -12,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -29,7 +32,13 @@ import java.util.List;
  */
 @Component
 @Log4j2
-public class DreamdiaryInitializer {
+public class DreamdiaryInitializer
+        implements CommandLineRunner {
+
+    @Resource(name = "activeProfile")
+    private ActiveProfile activeProfile;
+    @Resource(name = "dreamdiaryInitializer")
+    private DreamdiaryInitializer initializer;
 
     @Resource(name = "authService")
     private AuthService authService;
@@ -42,6 +51,25 @@ public class DreamdiaryInitializer {
     protected ApplicationEventPublisher publisher;
 
     public final String INIT_TEMP_PW = "123qwe!QA";
+
+    /**
+     * 프로그램 최초 구동시 수행할 로직
+     */
+    @Override
+    public void run(final String... args) throws Exception {
+
+        log.info("DreamdiaryApplication init... activeProfile: {}", activeProfile.getActive());
+
+        // 시스템 계정 부재시 등록
+        initializer.chkSystemAcnt();
+        // 로그인 정책 부재시 등록
+        initializer.chkLgnPolicy();
+
+        // 시스템 재기동 로그 적재
+        if (!activeProfile.isProd()) return;
+        LogSysParam logParam = new LogSysParam(true, "시스템이 정상적으로 재기동되었습니다.", ActvtyCtgr.SYSTEM);
+        publisher.publishEvent(new LogSysEvent(this, logParam));
+    }
 
     /**
      * 최초 실행시 사용자가 공백이므로 관리자 계정 자동 등록 (PW 암호화)

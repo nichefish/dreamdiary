@@ -37,7 +37,7 @@ spring:
         properties:
             hibernate:
                 database: mysql
-                database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+                database-platform: org.hibernate.dialect.MariaDBDialect
                 jdbc:
                     batch_size: 1000
                     batch_versioned_data: true
