@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.user.emplym.UserEmplymMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.user.profl.UserProflMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
  * @author nichefish
  * @extends BaseMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, Collectors.class, UserStusEmbed.class, UserProflMapstruct.class, UserEmplymMapstruct.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CollectionUtils.class, Collectors.class, UserStusEmbed.class, UserProflMapstruct.class, UserEmplymMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserReqstMapstruct
         extends BaseMapstruct<UserReqstDto, UserEntity> {
 
@@ -39,7 +40,7 @@ public interface UserReqstMapstruct
     @Mapping(target = "emailId", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(0, entity.getEmail().indexOf('@')) : \"\")")
     @Mapping(target = "emailDomain", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(entity.getEmail().indexOf('@')+1) : \"\")")
     @Mapping(target = "authStrList", expression = "java(entity.getAuthList().stream().map(UserAuthRoleEntity::getAuthCd).collect(Collectors.toList()))")      // 접속IP tagify 문자열 세팅
-    @Mapping(target = "acsIpListStr", expression = "java(String.join(\",\", entity.getAcsIpStrList()))")      // 접속IP tagify 문자열 세팅
+    @Mapping(target = "acsIpListStr", expression = "java(CollectionUtils.isEmpty(entity.getAcsIpStrList()) ? null : String.join(\",\", entity.getAcsIpStrList()))")      // 접속IP tagify 문자열 세팅
     UserReqstDto toDto(final UserEntity entity) throws Exception;
 
     /**
