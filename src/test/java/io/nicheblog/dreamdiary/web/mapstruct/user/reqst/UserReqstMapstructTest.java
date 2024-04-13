@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * <pre>
  *  사용자 계정 신청 Mapstruct 매핑 테스트 모듈
  * </pre>
- * (toDto는 로직상 존재하지만 세세한 매핑이 중요하지 않음. UserMapstructTest에서 세부 테스트 예정)
+ * (toDto는 로직상 존재하지만 여기서는 세세한 매핑이 중요하지 않음. UserMapstructTest에서 테스트 예정)
  *
  * @author nichefish
  */
@@ -29,7 +29,7 @@ class UserReqstMapstructTest {
     private final UserReqstMapstruct userReqstMapstruct = UserReqstMapstruct.INSTANCE;
 
     /**
-     * toEntity 검증
+     * toEntity 검증 :: 기본
      */
     @Test
     void toEntity_checkBasic() throws Exception {
@@ -44,12 +44,34 @@ class UserReqstMapstructTest {
         assertNotNull(entity);
         // 이메일 변환 로직
         assertEquals(entity.getEmail(), userReqstDto.getEmailId() + "@" + userReqstDto.getEmailDomain());
+    }
+
+    /**
+     * toEntity 검증 :: 접속 IP 관련
+     */
+    @Test
+    void toEntity_checkAcsIp() throws Exception {
+        // Given::
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst();
+        // 접속 IP 세팅
+        userReqstDto.setUseAcsIpYn("Y");
+        userReqstDto.setAcsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]");
+
+        // When::
+        UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(entity);
         // 접속 IP 관련
         assertEquals(entity.getUseAcsIpYn(), userReqstDto.getUseAcsIpYn());
         assertEquals(entity.getAcsIpList().get(0).getAcsIp(), "1.1.1.1");
         assertEquals(entity.getAcsIpList().get(1).getAcsIp(), "2.2.2.2");
     }
 
+    /** 
+     * toEntity 검증 :: 사용자 프로필 정보 관련
+     */
     @Test
     void toEntity_checkProfl() throws Exception {
         // Given::
@@ -68,6 +90,9 @@ class UserReqstMapstructTest {
         assertEquals(userProflEntity.getBrthdy(), DateUtils.asDate("2000-01-01"));
     }
 
+    /**
+     * toEntity 검증 :: 사용자 인사정보 관련
+     */
     @Test
     void toEntity_checkEmplym() throws Exception {
         // Given::

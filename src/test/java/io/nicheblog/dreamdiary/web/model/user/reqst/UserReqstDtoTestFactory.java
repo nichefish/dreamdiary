@@ -28,13 +28,12 @@ public class UserReqstDtoTestFactory {
         return UserReqstDto.builder()
                 .userId("test_user")
                 .password("test_password")
+                // 권한:: 운영 로직에선 변환 전 서비스단에서 할당하여 넣어줌.
                 .authList(List.of(UserAuthRoleDto.builder().authCd(Constant.AUTH_USER).build()))
                 .nickNm("test_nick_nm")
                 .emailId("test_email_id")
                 .emailDomain("test_email_domain")
                 .cttpc("010-0101-0101")
-                .useAcsIpYn("Y")
-                .acsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]")
                 .cn("test_cn")
                 .build();
     }

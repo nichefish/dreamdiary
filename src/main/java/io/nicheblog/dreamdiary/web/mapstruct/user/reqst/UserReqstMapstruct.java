@@ -47,7 +47,7 @@ public interface UserReqstMapstruct
      * Dto -> Entity
      */
     @Mapping(target = "email", expression = "java(dto.getEmailId() + \"@\" + dto.getEmailDomain())")
-    @Mapping(target = "acsIpList", expression = "java(dto.getAcsIpListStr())")
+    @Mapping(target = "acsIpList", expression = "java(dto.getAcsIpListStr())")      // tagify 문자열 파싱
     @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toEntity(dto.getProfl()))")
     @Mapping(target = "emplym", expression = "java(UserEmplymMapstruct.INSTANCE.toEntity(dto.getEmplym()))")
     UserEntity toEntity(final UserReqstDto dto) throws Exception;

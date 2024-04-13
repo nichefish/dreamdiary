@@ -61,8 +61,8 @@ public interface UserMapstruct
      */
     @Override
     @Mapping(target = "email", expression = "java(dto.getEmailId() + \"@\" + dto.getEmailDomain())")
-    @Mapping(target = "acsIpList", expression = "java(dto.getAcsIpListStr())")
-    @Mapping(target = "authList", expression = "java(dto.getAuthListStr())")
+    @Mapping(target = "acsIpList", expression = "java(dto.getAcsIpListStr())")      // tagify 문자열 파싱
+    @Mapping(target = "authList", expression = "java(dto.getAuthListStr())")        // multiselect 문자열 파싱
     @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toEntity(dto.getProfl()))")
     @Mapping(target = "emplym", expression = "java(UserEmplymMapstruct.INSTANCE.toEntity(dto.getEmplym()))")
     UserEntity toEntity(final UserDto.DTL dto) throws Exception;
@@ -83,9 +83,9 @@ public interface UserMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "acsIpList", expression = "java(dto.getAcsIpListStr())")
-    @Mapping(target = "authList", expression = "java(dto.getAuthListStr())")
-    @Mapping(target = "profl", expression = "java(entity.getProflUpdt(dto.getProfl()))")
-    @Mapping(target = "emplym", expression = "java(entity.getEmplymUpdt(dto.getEmplym()))")
+    @Mapping(target = "acsIpList", expression = "java(dto.getAcsIpListStr())")      // tagify 문자열 파싱
+    @Mapping(target = "authList", expression = "java(dto.getAuthListStr())")        // multiselect 문자열 파싱
+    @Mapping(target = "profl", expression = "java(entity.getProflUpdt(dto.getProfl()))")            // 영속성 유지를 위해 update 로직을 타야 한다.
+    @Mapping(target = "emplym", expression = "java(entity.getEmplymUpdt(dto.getEmplym()))")         // 영속성 유지를 위해 update 로직을 타야 한다.
     void updateFromDto(final UserDto.DTL dto, final @MappingTarget UserEntity entity) throws Exception;
 }
