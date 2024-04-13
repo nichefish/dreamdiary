@@ -1,19 +1,16 @@
 package io.nicheblog.dreamdiary.web.model.user;
 
-import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.web.model.UserAuthRoleDtoTestFactory;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.experimental.UtilityClass;
-
-import java.util.List;
 
 /**
  * UserDtoTestFactory
  * <pre>
  *  사용자 계정 테스트 Dto 생성 팩토리 모듈
  * </pre>
+ * TODO: 케이스별로 생성 로직 세분화
  * 
  * @author nichefish 
  */

@@ -39,7 +39,7 @@ class UserMapstructTest {
     @Test
     void toDto_checkAuditor() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity(null, null);
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity();
 
         // When::
         UserDto.DTL dto = userMapstruct.toDto(userEntity);
@@ -57,7 +57,7 @@ class UserMapstructTest {
     @Test
     void toDto_checkBasic() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity(null, null);
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity();
 
         // When::
         UserDto.DTL dto = userMapstruct.toDto(userEntity);
@@ -84,7 +84,7 @@ class UserMapstructTest {
     void toDto_checkProfl() throws Exception {
         // Given::
         UserProflEntity userProflEntity = UserProflEntityTestFactory.createUserProflEntity();
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity(userProflEntity, null);
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity(userProflEntity);
 
         // When::
         UserDto dto = userMapstruct.toDto(userEntity);
@@ -103,7 +103,7 @@ class UserMapstructTest {
     void toDto_checkEmplym() throws Exception {
         // Given::
         UserEmplymEntity userEmplymEntity = UserEmplymEntityTestFactory.createUserEmplymEntity();
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity(null, userEmplymEntity);
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity(userEmplymEntity);
 
         // When::
         UserDto dto = userMapstruct.toDto(userEntity);
@@ -126,7 +126,7 @@ class UserMapstructTest {
     @Test
     void toListDto_checkAuditor() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity(null, null);
+        UserEntity userEntity = UserEntityTestFactory.createUserEntity();
 
         // When::
         UserDto.LIST dto = userMapstruct.toListDto(userEntity);

@@ -13,6 +13,7 @@ import java.util.List;
  * <pre>
  *  사용자 계정 신청 테스트 Dto 생성 팩토리 모듈
  * </pre>
+ * TODO: 케이스별로 생성 로직 세분화
  * 
  * @author nichefish 
  */
@@ -22,6 +23,15 @@ public class UserReqstDtoTestFactory {
     /**
      * 사용자 신청 정보 Dto 객체 생성
      */
+    public static UserReqstDto createUserReqst() {
+        return createUserReqst(null, null);
+    }
+    public static UserReqstDto createUserReqst(UserProflDto profl) {
+        return createUserReqst(profl, null);
+    }
+    public static UserReqstDto createUserReqst(UserEmplymDto emplym) {
+        return createUserReqst(null, emplym);
+    }
     public static UserReqstDto createUserReqst(UserProflDto profl, UserEmplymDto emplym) {
         // 갹체 생성
         return UserReqstDto.builder()

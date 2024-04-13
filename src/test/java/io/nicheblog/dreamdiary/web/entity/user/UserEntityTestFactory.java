@@ -11,6 +11,7 @@ import lombok.experimental.UtilityClass;
  * <pre>
  *  사용자 계정 테스트 Entity 생성 팩토리 모듈
  * </pre>
+ * TODO: 케이스별로 생성 로직 세분화
  *
  * @author nichefish 
  */
@@ -20,6 +21,15 @@ public class UserEntityTestFactory {
     /**
      * 사용자 정보 Entity 객체 생성
      */
+    public static UserEntity createUserEntity() throws Exception {
+        return createUserEntity(null, null);
+    }
+    public static UserEntity createUserEntity(UserProflEntity profl) throws Exception {
+        return createUserEntity(profl, null);
+    }
+    public static UserEntity createUserEntity(UserEmplymEntity emplym) throws Exception {
+        return createUserEntity(null, emplym);
+    }
     public static UserEntity createUserEntity(UserProflEntity profl, UserEmplymEntity emplym) throws Exception {
         // 갹체 생성
         return UserEntity.builder()

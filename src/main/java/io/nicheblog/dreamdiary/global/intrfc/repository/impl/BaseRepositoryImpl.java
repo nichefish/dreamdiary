@@ -48,6 +48,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 
     /**
      * entity refresh
+     * 자식 엔티티에 대해서는 적용되지 않는다.
      */
     @Override
     @Transactional
@@ -55,7 +56,11 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
         entityManager.refresh(t);
     }
 
+    /**
+     * entity merge
+     */
     @Override
+    @Transactional
     public void merge(T t) {
         entityManager.merge(t);
     }

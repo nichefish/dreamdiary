@@ -10,7 +10,6 @@ import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDtoTestFactory;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -31,7 +30,6 @@ import static org.mockito.Mockito.when;
  *
  * @author nichefish
  */
-@SpringBootTest
 class UserReqstServiceTest {
 
     private final UserReqstMapstruct userReqstMapstruct = UserReqstMapstruct.INSTANCE;
@@ -66,7 +64,4 @@ class UserReqstServiceTest {
         // passwordEncoder 정상 실행여부 체크
         assertEquals("encoded_password", userEntity.getPassword());
     }
-
-    /* ----- */
-
 }

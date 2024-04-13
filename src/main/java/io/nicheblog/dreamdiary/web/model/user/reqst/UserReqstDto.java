@@ -1,12 +1,14 @@
 package io.nicheblog.dreamdiary.web.model.user.reqst;
 
 import io.nicheblog.dreamdiary.web.model.user.UserAcsIpDto;
+import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * UserDto
@@ -27,6 +29,9 @@ public class UserReqstDto
 
     /** 비밀번호 */
     private String password;
+
+    /** 사용자 권한 정보(문자열) (multiselect parameter) */
+    private String authListStr;
 
     /** 접속IP 사용 여부 체크 */
     @Builder.Default
@@ -49,5 +54,13 @@ public class UserReqstDto
         if (!StringUtils.isEmpty(this.email)) return this.email;
         if (!StringUtils.isEmpty(this.emailId) || !StringUtils.isEmpty(this.emailDomain)) return null;
         return this.emailId + "@" + this.emailDomain;
+    }
+
+    /** Getter Override */
+    public String getAuthListStr() {
+        if (this.authList != null) return this.authList.stream()
+                .map(UserAuthRoleDto::getAuthCd)
+                .collect(Collectors.joining(","));
+        return this.authListStr;
     }
 }

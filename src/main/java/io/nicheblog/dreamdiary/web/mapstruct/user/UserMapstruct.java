@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.user.emplym.UserEmplymMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.user.profl.UserProflMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
  * @author nichefish
  * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속:: 기본 변환 매핑 로직 상속
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserStusEmbed.class, Collectors.class, UserProflMapstruct.class, UserEmplymMapstruct.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CollectionUtils.class, UserStusEmbed.class, Collectors.class, UserProflMapstruct.class, UserEmplymMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserMapstruct
         extends BaseCrudMapstruct<UserDto.DTL, UserDto.LIST, UserEntity> {
 
@@ -40,7 +41,7 @@ public interface UserMapstruct
     @Mapping(target = "emailDomain", expression = "java(StringUtils.isNotEmpty(entity.getEmail()) ? entity.getEmail().substring(entity.getEmail().indexOf('@')+1) : \"\")")
     @Mapping(target = "authStrList", expression = "java(entity.getAuthList().stream().map(UserAuthRoleEntity::getAuthCd).collect(Collectors.toList()))")      // 접속IP tagify 문자열 세팅
     @Mapping(target = "useAcsIp", expression = "java(\"Y\".equals(entity.getUseAcsIpYn()))")
-    @Mapping(target = "acsIpListStr", expression = "java(String.join(\",\", entity.getAcsIpStrList()))")      // 접속IP tagify 문자열 세팅
+    @Mapping(target = "acsIpListStr", expression = "java(CollectionUtils.isEmpty(entity.getAcsIpStrList()) ? null : String.join(\",\", entity.getAcsIpStrList()))")      // 접속IP tagify 문자열 세팅
     @Mapping(target = "isCf", expression = "java(entity.getAcntStus() != null && \"Y\".equals(entity.getAcntStus().getCfYn()))")
     @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toDto(entity.getProfl()))")
     @Mapping(target = "emplym", expression = "java(UserEmplymMapstruct.INSTANCE.toDto(entity.getEmplym()))")

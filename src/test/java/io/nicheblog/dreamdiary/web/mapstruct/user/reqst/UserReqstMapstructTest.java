@@ -34,7 +34,7 @@ class UserReqstMapstructTest {
     @Test
     void toEntity_checkBasic() throws Exception {
         // Given::
-        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(null, null);
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst();
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
@@ -54,7 +54,7 @@ class UserReqstMapstructTest {
     void toEntity_checkProfl() throws Exception {
         // Given::
         UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
-        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(userProflDto, null);
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(userProflDto);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
@@ -72,7 +72,7 @@ class UserReqstMapstructTest {
     void toEntity_checkEmplym() throws Exception {
         // Given::
         UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
-        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(null, userEmplymDto);
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(userEmplymDto);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
