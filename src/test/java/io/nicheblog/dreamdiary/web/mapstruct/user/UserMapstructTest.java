@@ -39,7 +39,7 @@ class UserMapstructTest {
     @Test
     void toDto_checkAuditor() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity();
+        UserEntity userEntity = UserEntityTestFactory.createUser();
 
         // When::
         UserDto.DTL dto = userMapstruct.toDto(userEntity);
@@ -57,7 +57,7 @@ class UserMapstructTest {
     @Test
     void toDto_checkBasic() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity();
+        UserEntity userEntity = UserEntityTestFactory.createUser();
 
         // When::
         UserDto.DTL dto = userMapstruct.toDto(userEntity);
@@ -84,7 +84,7 @@ class UserMapstructTest {
     void toDto_checkProfl() throws Exception {
         // Given::
         UserProflEntity userProflEntity = UserProflEntityTestFactory.createUserProflEntity();
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity(userProflEntity);
+        UserEntity userEntity = UserEntityTestFactory.createUser(userProflEntity);
 
         // When::
         UserDto dto = userMapstruct.toDto(userEntity);
@@ -103,7 +103,7 @@ class UserMapstructTest {
     void toDto_checkEmplym() throws Exception {
         // Given::
         UserEmplymEntity userEmplymEntity = UserEmplymEntityTestFactory.createUserEmplymEntity();
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity(userEmplymEntity);
+        UserEntity userEntity = UserEntityTestFactory.createUser(userEmplymEntity);
 
         // When::
         UserDto dto = userMapstruct.toDto(userEntity);
@@ -126,7 +126,7 @@ class UserMapstructTest {
     @Test
     void toListDto_checkAuditor() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUserEntity();
+        UserEntity userEntity = UserEntityTestFactory.createUser();
 
         // When::
         UserDto.LIST dto = userMapstruct.toListDto(userEntity);
@@ -149,7 +149,7 @@ class UserMapstructTest {
     @Test
     void toEntity_checkBasic() throws Exception {
         // Given::
-        UserDto.DTL userDto = UserDtoTestFactory.createUser(null, null);
+        UserDto.DTL userDto = UserDtoTestFactory.createUser();
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);
@@ -174,7 +174,7 @@ class UserMapstructTest {
     void toEntity_checkProfl() throws Exception {
         // Given::
         UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
-        UserDto.DTL userDto = UserDtoTestFactory.createUser(userProflDto, null);
+        UserDto.DTL userDto = UserDtoTestFactory.createUser(userProflDto);
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);
@@ -192,7 +192,7 @@ class UserMapstructTest {
     void toEntity_checkEmplym() throws Exception {
         // Given::
         UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
-        UserDto.DTL userDto = UserDtoTestFactory.createUser(null, userEmplymDto);
+        UserDto.DTL userDto = UserDtoTestFactory.createUser(userEmplymDto);
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);

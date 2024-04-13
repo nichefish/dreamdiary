@@ -24,15 +24,6 @@ public class UserReqstDtoTestFactory {
      * 사용자 신청 정보 Dto 객체 생성
      */
     public static UserReqstDto createUserReqst() {
-        return createUserReqst(null, null);
-    }
-    public static UserReqstDto createUserReqst(UserProflDto profl) {
-        return createUserReqst(profl, null);
-    }
-    public static UserReqstDto createUserReqst(UserEmplymDto emplym) {
-        return createUserReqst(null, emplym);
-    }
-    public static UserReqstDto createUserReqst(UserProflDto profl, UserEmplymDto emplym) {
         // 갹체 생성
         return UserReqstDto.builder()
                 .userId("test_user")
@@ -45,8 +36,25 @@ public class UserReqstDtoTestFactory {
                 .useAcsIpYn("Y")
                 .acsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]")
                 .cn("test_cn")
-                .profl(profl)
-                .emplym(emplym)
                 .build();
+    }
+    public static UserReqstDto createUserReqst(UserProflDto profl) {
+        // 갹체 생성
+        UserReqstDto dto = createUserReqst();
+        dto.setProfl(profl);
+        return dto;
+    }
+    public static UserReqstDto createUserReqst(UserEmplymDto emplym) {
+        // 갹체 생성
+        UserReqstDto dto = createUserReqst();
+        dto.setEmplym(emplym);
+        return dto;
+    }
+    public static UserReqstDto createUserReqst(UserProflDto profl, UserEmplymDto emplym) {
+        // 갹체 생성
+        UserReqstDto dto = createUserReqst();
+        dto.setProfl(profl);
+        dto.setEmplym(emplym);
+        return dto;
     }
 }

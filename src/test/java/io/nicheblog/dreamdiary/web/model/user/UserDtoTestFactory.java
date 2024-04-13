@@ -17,7 +17,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class UserDtoTestFactory {
 
-    public static UserDto.DTL createUser(UserProflDto profl, UserEmplymDto emplym) {
+    public static UserDto.DTL createUser() {
         // 갹체 생성
         return UserDto.DTL.builder()
                 .userId("test_user")
@@ -30,8 +30,25 @@ public class UserDtoTestFactory {
                 .useAcsIpYn("Y")
                 .acsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]")
                 .cn("test_cn")
-                .profl(profl)
-                .emplym(emplym)
                 .build();
+    }
+    public static UserDto.DTL createUser(UserProflDto profl) {
+        // 갹체 생성
+        UserDto.DTL dto = createUser();
+        dto.setProfl(profl);
+        return dto;
+    }
+    public static UserDto.DTL createUser(UserEmplymDto emplym) {
+        // 갹체 생성
+        UserDto.DTL dto = createUser();
+        dto.setEmplym(emplym);
+        return dto;
+    }
+    public static UserDto.DTL createUser(UserProflDto profl, UserEmplymDto emplym) {
+        // 갹체 생성
+        UserDto.DTL dto = createUser();
+        dto.setProfl(profl);
+        dto.setEmplym(emplym);
+        return dto;
     }
 }

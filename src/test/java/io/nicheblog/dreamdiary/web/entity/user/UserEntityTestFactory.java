@@ -21,16 +21,7 @@ public class UserEntityTestFactory {
     /**
      * 사용자 정보 Entity 객체 생성
      */
-    public static UserEntity createUserEntity() throws Exception {
-        return createUserEntity(null, null);
-    }
-    public static UserEntity createUserEntity(UserProflEntity profl) throws Exception {
-        return createUserEntity(profl, null);
-    }
-    public static UserEntity createUserEntity(UserEmplymEntity emplym) throws Exception {
-        return createUserEntity(null, emplym);
-    }
-    public static UserEntity createUserEntity(UserProflEntity profl, UserEmplymEntity emplym) throws Exception {
+    public static UserEntity createUser() throws Exception {
         // 갹체 생성
         return UserEntity.builder()
                 .userId("test_user")
@@ -43,8 +34,6 @@ public class UserEntityTestFactory {
                 .acsIpList(UserAcsIpEntityTestFactory.createUserAcsIpEntityList())
                 .acsIpStrList(UserAcsIpEntityTestFactory.createUserAcsIpStrList())
                 .cn("test_cn")
-                .profl(profl)
-                .emplym(emplym)
                 .acntStus(new UserStusEmbed())
                 .regstrId("test_reg_user")
                 .regstrInfo(AuditorInfo.builder().userId("test_reg_user").nickNm("test_reg_nick_nm").build())
@@ -53,5 +42,24 @@ public class UserEntityTestFactory {
                 .mdfusrInfo(AuditorInfo.builder().userId("test_mdf_user").nickNm("test_reg_nick_nm").build())
                 .mdfDt(DateUtils.asDate("2000-01-01"))
                 .build();
+    }
+    public static UserEntity createUser(UserProflEntity profl) throws Exception {
+        // 갹체 생성
+        UserEntity entity = createUser();
+        entity.setProfl(profl);
+        return entity;
+    }
+    public static UserEntity createUser(UserEmplymEntity emplym) throws Exception {
+        // 갹체 생성
+        UserEntity entity = createUser();
+        entity.setEmplym(emplym);
+        return entity;
+    }
+    public static UserEntity createUser(UserProflEntity profl, UserEmplymEntity emplym) throws Exception {
+        // 갹체 생성
+        UserEntity entity = createUser();
+        entity.setProfl(profl);
+        entity.setEmplym(emplym);
+        return entity;
     }
 }
