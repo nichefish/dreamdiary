@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.global.config;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.impl.BaseRepositoryImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.jetbrains.annotations.NotNull;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -28,6 +27,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 
 /**
