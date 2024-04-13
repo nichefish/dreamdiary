@@ -37,8 +37,6 @@ public class DreamdiaryInitializer
 
     @Resource(name = "activeProfile")
     private ActiveProfile activeProfile;
-    @Resource(name = "dreamdiaryInitializer")
-    private DreamdiaryInitializer initializer;
 
     @Resource(name = "authService")
     private AuthService authService;
@@ -61,14 +59,15 @@ public class DreamdiaryInitializer
         log.info("DreamdiaryApplication init... activeProfile: {}", activeProfile.getActive());
 
         // 시스템 계정 부재시 등록
-        initializer.chkSystemAcnt();
+        this.chkSystemAcnt();
         // 로그인 정책 부재시 등록
-        initializer.chkLgnPolicy();
+        this.chkLgnPolicy();
 
         // 시스템 재기동 로그 적재
-        if (!activeProfile.isProd()) return;
-        LogSysParam logParam = new LogSysParam(true, "시스템이 정상적으로 재기동되었습니다.", ActvtyCtgr.SYSTEM);
-        publisher.publishEvent(new LogSysEvent(this, logParam));
+        if (activeProfile.isProd()) {
+            LogSysParam logParam = new LogSysParam(true, "시스템이 정상적으로 재기동되었습니다.", ActvtyCtgr.SYSTEM);
+            publisher.publishEvent(new LogSysEvent(this, logParam));
+        }
     }
 
     /**
