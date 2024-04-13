@@ -16,13 +16,22 @@ import java.util.List;
  */
 @UtilityClass
 public class UserAuthRoleDtoTestFactory {
+
+    /**
+     * 사용자 권한 Dto 생성
+     */
+    public static UserAuthRoleDto getUserAuthRoleDto(String auchCd) {
+        return UserAuthRoleDto.builder()
+                .authCd(auchCd)
+                .build();
+    }
+
+    /**
+     * 사용자 권한 Dto 목록 생성
+     */
     public static List<UserAuthRoleDto> getUserAuthRoleDtoList() {
-        UserAuthRoleDto aa = UserAuthRoleDto.builder()
-                .authCd(Constant.AUTH_USER)
-                .build();
-        UserAuthRoleDto bb = UserAuthRoleDto.builder()
-                .authCd(Constant.AUTH_MNGR)
-                .build();
+        UserAuthRoleDto aa = getUserAuthRoleDto(Constant.AUTH_USER);
+        UserAuthRoleDto bb = getUserAuthRoleDto(Constant.AUTH_MNGR);
         return List.of(aa, bb);
     }
 }

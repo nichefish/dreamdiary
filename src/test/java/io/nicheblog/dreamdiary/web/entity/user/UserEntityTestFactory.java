@@ -1,7 +1,5 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.experimental.UtilityClass;
@@ -35,12 +33,6 @@ public class UserEntityTestFactory {
                 .acsIpStrList(UserAcsIpEntityTestFactory.createUserAcsIpStrList())
                 .cn("test_cn")
                 .acntStus(new UserStusEmbed())
-                .regstrId("test_reg_user")
-                .regstrInfo(AuditorInfo.builder().userId("test_reg_user").nickNm("test_reg_nick_nm").build())
-                .regDt(DateUtils.asDate("2000-01-01"))
-                .mdfusrId("test_mdf_user")
-                .mdfusrInfo(AuditorInfo.builder().userId("test_mdf_user").nickNm("test_reg_nick_nm").build())
-                .mdfDt(DateUtils.asDate("2000-01-01"))
                 .build();
     }
     public static UserEntity createUser(UserProflEntity profl) throws Exception {

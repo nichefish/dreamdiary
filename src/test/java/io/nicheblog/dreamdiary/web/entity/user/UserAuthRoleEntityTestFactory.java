@@ -17,15 +17,20 @@ import java.util.List;
 public class UserAuthRoleEntityTestFactory {
 
     /**
+     * 사용자 권한 Entity 생성
+     */
+    public static UserAuthRoleEntity getUserAuthRoleEntity(String auchCd) {
+        return UserAuthRoleEntity.builder()
+                .authCd(auchCd)
+                .build();
+    }
+
+    /**
      * 사용자 권한 Entity 목록 생성
      */
     public static List<UserAuthRoleEntity> getUserAuthRoleEntityList() {
-        UserAuthRoleEntity aa = UserAuthRoleEntity.builder()
-                .authCd(Constant.AUTH_USER)
-                .build();
-        UserAuthRoleEntity bb = UserAuthRoleEntity.builder()
-                .authCd(Constant.AUTH_MNGR)
-                .build();
+        UserAuthRoleEntity aa = getUserAuthRoleEntity(Constant.AUTH_USER);
+        UserAuthRoleEntity bb = getUserAuthRoleEntity(Constant.AUTH_MNGR);
         return List.of(aa, bb);
     }
 }
