@@ -26,7 +26,7 @@ class UserEmplymMapstructTest {
      * toDto 검증
      */
     @Test
-    void toDto_checkEmplym() throws Exception {
+    void testToDto_checkEmplym() throws Exception {
 
         // Given::
         UserEmplymEntity userEmplymEntity = UserEmplymEntityTestFactory.createUserEmplymEntity();
@@ -50,7 +50,7 @@ class UserEmplymMapstructTest {
      * toEntity 검증
      */
     @Test
-    void toEntity_checkBasic() throws Exception {
+    void testToEntity_checkBasic() throws Exception {
         // Given::
         UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
 

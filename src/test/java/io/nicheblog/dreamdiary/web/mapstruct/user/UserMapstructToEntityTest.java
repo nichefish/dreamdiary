@@ -38,7 +38,7 @@ class UserMapstructToEntityTest {
      * toEntity 검증
      */
     @Test
-    void toEntity_checkBasic() throws Exception {
+    void testTestToEntity_checkBasic() throws Exception {
         // Given::
         UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
 
@@ -56,7 +56,7 @@ class UserMapstructToEntityTest {
      * toEntity 검증:: 권한
      */
     @Test
-    void toEntity_checkAuth() throws Exception {
+    void testTestToEntity_checkAuth() throws Exception {
         // Given::
         UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
         // AUTH
@@ -81,7 +81,7 @@ class UserMapstructToEntityTest {
      * toEntity 검증:: 접속 IP
      */
     @Test
-    void toEntity_checkAcsIp() throws Exception {
+    void testTestToEntity_checkAcsIp() throws Exception {
         // Given::
         UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
         // ACS_IP
@@ -104,10 +104,10 @@ class UserMapstructToEntityTest {
      * toEntity 검증:: 사용자 프로필 정보
      */
     @Test
-    void toEntity_checkProfl() throws Exception {
+    void testTestToEntity_checkProfl() throws Exception {
         // Given::
         UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
-        UserDto.DTL userDto = UserDtoTestFactory.createUser(userProflDto);
+        UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto(userProflDto);
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);
@@ -125,10 +125,10 @@ class UserMapstructToEntityTest {
      * toEntity 검증:: 사용자 인사정보
      */
     @Test
-    void toEntity_checkEmplym() throws Exception {
+    void testTestToEntity_checkEmplym() throws Exception {
         // Given::
         UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
-        UserDto.DTL userDto = UserDtoTestFactory.createUser(userEmplymDto);
+        UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto(userEmplymDto);
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);

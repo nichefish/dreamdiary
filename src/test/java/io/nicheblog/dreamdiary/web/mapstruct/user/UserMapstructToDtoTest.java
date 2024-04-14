@@ -34,7 +34,7 @@ class UserMapstructToDtoTest {
      * toDto 검증 :: 등록자/수정자 정보 체크
      */
     @Test
-    void toDto_checkAuditor() throws Exception {
+    void testToDto_checkAuditor() throws Exception {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
         // 등록자
@@ -61,7 +61,7 @@ class UserMapstructToDtoTest {
      * toDto 검증 :: 기본 체크
      */
     @Test
-    void toDto_checkBasic() throws Exception {
+    void testToDto_checkBasic() throws Exception {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
 
@@ -87,7 +87,7 @@ class UserMapstructToDtoTest {
     }
 
     @Test
-    void toDto_checkProfl() throws Exception {
+    void testToDto_checkProfl() throws Exception {
         // Given::
         UserProflEntity userProflEntity = UserProflEntityTestFactory.createUserProflEntity();
         UserEntity userEntity = UserEntityTestFactory.createUser(userProflEntity);
@@ -106,7 +106,7 @@ class UserMapstructToDtoTest {
 
 
     @Test
-    void toDto_checkEmplym() throws Exception {
+    void testToDto_checkEmplym() throws Exception {
         // Given::
         UserEmplymEntity userEmplymEntity = UserEmplymEntityTestFactory.createUserEmplymEntity();
         UserEntity userEntity = UserEntityTestFactory.createUser(userEmplymEntity);
@@ -133,7 +133,7 @@ class UserMapstructToDtoTest {
      * toListDto 검증 :: 등록자/수정자 정보 체크
      */
     @Test
-    void toListDto_checkAuditor() throws Exception {
+    void testToListDto_checkAuditor() throws Exception {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
 

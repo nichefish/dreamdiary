@@ -28,19 +28,19 @@ public class UserDtoTestFactory {
                 .cn("test_cn")
                 .build();
     }
-    public static UserDto.DTL createUser(UserProflDto profl) {
+    public static UserDto.DTL createUserDtlDto(UserProflDto profl) {
         // 갹체 생성
         UserDto.DTL dto = createUserDtlDto();
         dto.setProfl(profl);
         return dto;
     }
-    public static UserDto.DTL createUser(UserEmplymDto emplym) {
+    public static UserDto.DTL createUserDtlDto(UserEmplymDto emplym) {
         // 갹체 생성
         UserDto.DTL dto = createUserDtlDto();
         dto.setEmplym(emplym);
         return dto;
     }
-    public static UserDto.DTL createUser(UserProflDto profl, UserEmplymDto emplym) {
+    public static UserDto.DTL createUserDtlDto(UserProflDto profl, UserEmplymDto emplym) {
         // 갹체 생성
         UserDto.DTL dto = createUserDtlDto();
         dto.setProfl(profl);

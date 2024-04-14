@@ -26,7 +26,7 @@ class UserProflMapstructTest {
      * toDto 검증
      */
     @Test
-    void toDto_checkProfl() throws Exception {
+    void testToDto_checkProfl() throws Exception {
 
         // Given::
         UserProflEntity userProflEntity = UserProflEntityTestFactory.createUserProflEntity();
@@ -47,7 +47,7 @@ class UserProflMapstructTest {
      * toEntity 검증
      */
     @Test
-    void toEntity_checkBasic() throws Exception {
+    void testToEntity_checkBasic() throws Exception {
         // Given::
         UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
 
