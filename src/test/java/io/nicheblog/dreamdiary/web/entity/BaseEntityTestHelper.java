@@ -35,7 +35,7 @@ public class BaseEntityTestHelper {
         if (!(obj instanceof BaseAuditEntity)) return;
 
         ((BaseAuditEntity) obj).setMdfDt(DateUtils.asDate("2000-01-01"));
-        ((BaseAuditEntity) obj).setMdfusrId("test_reg_user");
-        ((BaseAuditEntity) obj).setMdfusrInfo(AuditorInfo.builder().userId("test_reg_user").nickNm("test_reg_nick_nm").build());
+        ((BaseAuditEntity) obj).setMdfusrId("test_mdf_user");
+        ((BaseAuditEntity) obj).setMdfusrInfo(AuditorInfo.builder().userId("test_mdf_user").nickNm("test_mdf_nick_nm").build());
     }
 }

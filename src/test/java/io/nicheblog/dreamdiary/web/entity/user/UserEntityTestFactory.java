@@ -24,14 +24,16 @@ public class UserEntityTestFactory {
         return UserEntity.builder()
                 .userId("test_user")
                 .password("test_password_encoded")
-                .authList(UserAuthRoleEntityTestFactory.getUserAuthRoleEntityList())
                 .nickNm("test_nick_nm")
                 .email("test_email_id@test_email_domain")
                 .cttpc("010-0101-0101")
+                .cn("test_cn")
+                // ACS_IP
                 .useAcsIpYn("Y")
                 .acsIpList(UserAcsIpEntityTestFactory.createUserAcsIpEntityList())
                 .acsIpStrList(UserAcsIpEntityTestFactory.createUserAcsIpStrList())
-                .cn("test_cn")
+                // AUTH
+                .authList(UserAuthRoleEntityTestFactory.getUserAuthRoleEntityList())
                 .acntStus(new UserStusEmbed())
                 .build();
     }
