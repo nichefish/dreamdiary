@@ -22,14 +22,16 @@ public class UserDtoTestFactory {
         return UserDto.DTL.builder()
                 .userId("test_user")
                 .password("test_password")
-                .authList(UserAuthRoleDtoTestFactory.getUserAuthRoleDtoList())
                 .nickNm("test_nick_nm")
                 .emailId("test_email_id")
                 .emailDomain("test_email_domain")
                 .cttpc("010-0101-0101")
+                .cn("test_cn")
+                // ACS_IP
                 .useAcsIpYn("Y")
                 .acsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]")
-                .cn("test_cn")
+                // AUTH
+                .authList(UserAuthRoleDtoTestFactory.getUserAuthRoleDtoList())
                 .build();
     }
     public static UserDto.DTL createUser(UserProflDto profl) {
