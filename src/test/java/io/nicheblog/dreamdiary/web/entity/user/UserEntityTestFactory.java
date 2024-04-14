@@ -28,10 +28,6 @@ public class UserEntityTestFactory {
                 .email("test_email_id@test_email_domain")
                 .cttpc("010-0101-0101")
                 .cn("test_cn")
-                // ACS_IP
-                .useAcsIpYn("Y")
-                .acsIpList(UserAcsIpEntityTestFactory.createUserAcsIpEntityList())
-                .acsIpStrList(UserAcsIpEntityTestFactory.createUserAcsIpStrList())
                 // AUTH
                 .authList(UserAuthRoleEntityTestFactory.getUserAuthRoleEntityList())
                 .acntStus(new UserStusEmbed())

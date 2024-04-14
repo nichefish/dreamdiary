@@ -1,10 +1,7 @@
 package io.nicheblog.dreamdiary.web.model;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import lombok.experimental.UtilityClass;
-
-import java.util.List;
 
 /**
  * UserAuthRoleDtoTestFactory
@@ -24,14 +21,5 @@ public class UserAuthRoleDtoTestFactory {
         return UserAuthRoleDto.builder()
                 .authCd(auchCd)
                 .build();
-    }
-
-    /**
-     * 사용자 권한 Dto 목록 생성
-     */
-    public static List<UserAuthRoleDto> getUserAuthRoleDtoList() {
-        UserAuthRoleDto aa = getUserAuthRoleDto(Constant.AUTH_USER);
-        UserAuthRoleDto bb = getUserAuthRoleDto(Constant.AUTH_MNGR);
-        return List.of(aa, bb);
     }
 }
