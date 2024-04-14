@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.Auth;
 import io.nicheblog.dreamdiary.web.entity.BaseEntityTestHelper;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntityTestFactory;
+import io.nicheblog.dreamdiary.web.entity.user.*;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntityTestFactory;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
@@ -14,6 +14,8 @@ import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -79,6 +81,55 @@ class UserMapstructToDtoTest {
         // 이메일 변환 로직 검증
         assertEquals(dto.getEmailId(), userEntity.getEmail().split("@")[0]);
         assertEquals(dto.getEmailDomain(), userEntity.getEmail().split("@")[1]);
+    }
+
+    /**
+     * toDto 검증 :: 권한 체크
+     */
+    @Test
+    void testToDto_checkAuth() throws Exception {
+        // Given::
+        UserEntity userEntity = UserEntityTestFactory.createUser();
+        // AUTH
+        UserAuthRoleEntity aa = UserAuthRoleEntityTestFactory.getUserAuthRoleEntity(Auth.USER);
+        UserAuthRoleEntity bb = UserAuthRoleEntityTestFactory.getUserAuthRoleEntity(Auth.MNGR);
+        userEntity.setAuthList(List.of(aa, bb));
+        // STUS
+        userEntity.setAcntStus(new UserStusEmbed());
+
+        // When::
+        UserDto.DTL dto = userMapstruct.toDto(userEntity);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(dto);
+        // 권한 관련 매핑 검증
+        assertFalse(CollectionUtils.isEmpty(dto.getAuthList()));
+        assertEquals(dto.getAuthList().size(), 2);
+        assertEquals(dto.getAuthList().get(0).getAuthCd(), Constant.AUTH_USER);
+        assertEquals(dto.getAuthList().get(1).getAuthCd(), Constant.AUTH_MNGR);
+    }
+
+    /**
+     * toDto 검증 :: 접속 IP 체크
+     */
+    @Test
+    void testToDto_checkAcsIp() throws Exception {
+        // Given::
+        UserEntity userEntity = UserEntityTestFactory.createUser();
+        userEntity.setUseAcsIpYn("Y");
+        userEntity.setAcsIpList(List.of());
+        // AUTH
+        UserAcsIpEntity aa = UserAcsIpEntityTestFactory.createUserAcsIpEntity("1,1,1,1");
+        UserAcsIpEntity bb = UserAcsIpEntityTestFactory.createUserAcsIpEntity("2,2,2,2");
+        userEntity.setAcsIpList(List.of(aa, bb));
+
+        // When::
+        UserDto.DTL dto = userMapstruct.toDto(userEntity);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(dto);
         // 접속 IP 관련 매핑 검증
         assertNotNull(dto.getAcsIpList());
         assertNotNull(dto.getAcsIpList().get(0).getAcsIp(), "1.1.1.1");

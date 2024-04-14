@@ -28,9 +28,6 @@ public class UserEntityTestFactory {
                 .email("test_email_id@test_email_domain")
                 .cttpc("010-0101-0101")
                 .cn("test_cn")
-                // AUTH
-                .authList(UserAuthRoleEntityTestFactory.getUserAuthRoleEntityList())
-                .acntStus(new UserStusEmbed())
                 .build();
     }
     public static UserEntity createUser(UserProflEntity profl) throws Exception {

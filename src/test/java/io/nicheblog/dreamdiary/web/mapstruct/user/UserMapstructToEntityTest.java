@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.Auth;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
@@ -60,8 +61,8 @@ class UserMapstructToEntityTest {
         // Given::
         UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
         // AUTH
-        UserAuthRoleDto aa = UserAuthRoleDtoTestFactory.getUserAuthRoleDto(Constant.AUTH_USER);
-        UserAuthRoleDto bb = UserAuthRoleDtoTestFactory.getUserAuthRoleDto(Constant.AUTH_MNGR);
+        UserAuthRoleDto aa = UserAuthRoleDtoTestFactory.getUserAuthRoleDto(Auth.USER);
+        UserAuthRoleDto bb = UserAuthRoleDtoTestFactory.getUserAuthRoleDto(Auth.MNGR);
         userDto.setAuthList(List.of(aa, bb));
 
         // When::

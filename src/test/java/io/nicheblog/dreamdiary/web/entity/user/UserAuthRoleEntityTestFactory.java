@@ -1,9 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
-import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.Auth;
 import lombok.experimental.UtilityClass;
-
-import java.util.List;
 
 /**
  * UserAuthRoleEntityTestFactory
@@ -19,18 +17,9 @@ public class UserAuthRoleEntityTestFactory {
     /**
      * 사용자 권한 Entity 생성
      */
-    public static UserAuthRoleEntity getUserAuthRoleEntity(String auchCd) {
+    public static UserAuthRoleEntity getUserAuthRoleEntity(Auth auth) {
         return UserAuthRoleEntity.builder()
-                .authCd(auchCd)
+                .authCd(auth.name())
                 .build();
-    }
-
-    /**
-     * 사용자 권한 Entity 목록 생성
-     */
-    public static List<UserAuthRoleEntity> getUserAuthRoleEntityList() {
-        UserAuthRoleEntity aa = getUserAuthRoleEntity(Constant.AUTH_USER);
-        UserAuthRoleEntity bb = getUserAuthRoleEntity(Constant.AUTH_MNGR);
-        return List.of(aa, bb);
     }
 }
