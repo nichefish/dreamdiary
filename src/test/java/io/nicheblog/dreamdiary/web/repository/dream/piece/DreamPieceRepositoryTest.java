@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.repository.dream.piece;
 
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
-import io.nicheblog.dreamdiary.global.config.TestConfig;
+import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
 import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
 import io.nicheblog.dreamdiary.web.entity.dream.piece.DreamPieceEntityTestFactory;
 import io.nicheblog.dreamdiary.web.repository.dream.DreamPieceRepository;
@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureTestEntityManager
 @ImportAutoConfiguration(DataSourceConfig.class)
-@Import(TestConfig.class)
+@Import(TestAuditConfig.class)
 @ActiveProfiles("test")
 @Log4j2
 class DreamPieceRepositoryTest {

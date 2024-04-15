@@ -1,18 +1,23 @@
 package io.nicheblog.dreamdiary.global.config;
 
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.util.Optional;
 
 /**
- * TestConfig
+ * TestAuditConfig
+ * <pre>
+ *  테스트용 auditor 정보 세팅 설정
+ * </pre>
  *
  * @author nichefish
  */
-@Configuration
-public class TestConfig {
+@TestConfiguration
+@EnableJpaAuditing(auditorAwareRef = "auditorProvider")
+public class TestAuditConfig {
 
     /**
      * 테스트용 auditor 세팅
