@@ -48,7 +48,7 @@
             },
             /** 등록 화면 호출 */
             mdfModal: function(postNo) {
-                const url = "${SiteUrl.DREAM_DAY_DTL_AJAX!}";
+                const url = "${ApiUrl.API_DREAM_DAY_DTL_AJAX!}";
                 let ajaxData = { "postNo" : postNo };
                 commons.util.blockUIFileAjax(url, "get", ajaxData, function(res) {
                     Swal.fire({ text: res.message })

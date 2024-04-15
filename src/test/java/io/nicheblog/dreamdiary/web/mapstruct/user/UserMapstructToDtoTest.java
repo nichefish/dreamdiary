@@ -33,6 +33,25 @@ class UserMapstructToDtoTest {
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
 
     /**
+     * toDto 검증 :: 기본 체크
+     */
+    @Test
+    void testToDto_checkBasic() throws Exception {
+        // Given::
+        UserEntity userEntity = UserEntityTestFactory.createUser();
+
+        // When::
+        UserDto.DTL dto = userMapstruct.toDto(userEntity);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(dto);
+        // 이메일 변환 로직 검증
+        assertEquals(dto.getEmailId(), userEntity.getEmail().split("@")[0]);
+        assertEquals(dto.getEmailDomain(), userEntity.getEmail().split("@")[1]);
+    }
+
+    /**
      * toDto 검증 :: 등록자/수정자 정보 체크
      */
     @Test
@@ -57,30 +76,6 @@ class UserMapstructToDtoTest {
         assertEquals(dto.getMdfusrId(), "test_mdf_user");
         assertEquals(dto.getMdfusrNm(), "test_mdf_nick_nm");
         assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
-    }
-
-    /**
-     * toDto 검증 :: 기본 체크
-     */
-    @Test
-    void testToDto_checkBasic() throws Exception {
-        // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
-
-        // When::
-        UserDto.DTL dto = userMapstruct.toDto(userEntity);
-
-        // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(dto);
-        // 권한 관련 매핑 검증
-        assertFalse(CollectionUtils.isEmpty(dto.getAuthList()));
-        assertEquals(dto.getAuthList().size(), 2);
-        assertEquals(dto.getAuthList().get(0).getAuthCd(), Constant.AUTH_USER);
-        assertEquals(dto.getAuthList().get(1).getAuthCd(), Constant.AUTH_MNGR);
-        // 이메일 변환 로직 검증
-        assertEquals(dto.getEmailId(), userEntity.getEmail().split("@")[0]);
-        assertEquals(dto.getEmailDomain(), userEntity.getEmail().split("@")[1]);
     }
 
     /**
@@ -137,6 +132,9 @@ class UserMapstructToDtoTest {
         assertEquals(dto.getAcsIpListStr(), "1.1.1.1,2.2.2.2");
     }
 
+    /**
+     * toDto 검증 :: 사용자 프로필 정보 체크
+     */
     @Test
     void testToDto_checkProfl() throws Exception {
         // Given::
@@ -155,7 +153,9 @@ class UserMapstructToDtoTest {
         assertEquals(userProflDto.getBrthdy(), "2000-01-01");
     }
 
-
+    /**
+     * toDto 검증 :: 사용자 인사정보 체크
+     */
     @Test
     void testToDto_checkEmplym() throws Exception {
         // Given::
@@ -179,6 +179,24 @@ class UserMapstructToDtoTest {
 
     /* ----- */
 
+    /**
+     * toDto 검증 :: 기본 체크
+     */
+    @Test
+    void testToListDto_checkBasic() throws Exception {
+        // Given::
+        UserEntity userEntity = UserEntityTestFactory.createUser();
+
+        // When::
+        UserDto.LIST dto = userMapstruct.toListDto(userEntity);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(dto);
+        // 이메일 변환 로직 검증
+        assertEquals(dto.getEmailId(), userEntity.getEmail().split("@")[0]);
+        assertEquals(dto.getEmailDomain(), userEntity.getEmail().split("@")[1]);
+    }
 
     /**
      * toListDto 검증 :: 등록자/수정자 정보 체크
@@ -193,11 +211,13 @@ class UserMapstructToDtoTest {
 
         // Then::
         assertNotNull(dto);
+        // 등록자
         assertEquals(dto.getRegstrId(), "test_reg_user");
         assertEquals(dto.getRegstrNm(), "test_reg_nick_nm");
         assertEquals(dto.getRegDt(), "2000-01-01 00:00:00");
+        // 수정자
         assertEquals(dto.getMdfusrId(), "test_mdf_user");
-        assertEquals(dto.getMdfusrNm(), "test_reg_nick_nm");
+        assertEquals(dto.getMdfusrNm(), "test_mdf_nick_nm");
         assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
     }
 

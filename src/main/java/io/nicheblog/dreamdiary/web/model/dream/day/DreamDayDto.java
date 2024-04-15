@@ -28,7 +28,6 @@ import java.util.List;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@ToString(callSuper = true)
 public class DreamDayDto
         extends BaseClsfDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
@@ -70,10 +69,20 @@ public class DreamDayDto
 
     /* ----- */
 
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
     public static class DTL extends DreamDayDto {
 
     }
 
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
     public static class LIST extends DreamDayDto {
         //
     }

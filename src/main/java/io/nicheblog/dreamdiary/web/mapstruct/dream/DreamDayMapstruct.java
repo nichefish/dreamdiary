@@ -30,7 +30,7 @@ public interface DreamDayMapstruct
     @Override
     @Named("toDto")
     @Mapping(target = "dreamtDt", expression = "java(DateUtils.asStr(entity.getDreamtDt(), DatePtn.DATE))")
-    DreamDayDto toDto(final DreamDayEntity entity) throws Exception;
+    DreamDayDto.DTL toDto(final DreamDayEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto

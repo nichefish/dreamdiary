@@ -67,6 +67,9 @@ public class DreamDayController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
+            // 년도 추가
+            model.addAttribute("yy", null);
+
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

@@ -57,7 +57,7 @@ public class DreamDayEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_no")
     @Comment("꿈 일자 고유 번호 (PK)")
-    private Integer dreamDayNo;
+    private Integer postNo;
 
     /** 컨텐츠 타입 */
     @Builder.Default

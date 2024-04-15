@@ -18,7 +18,7 @@ public class DreamPieceEntityTestFactory {
     /**
      * 꿈 일자 Entity 생성
      */
-    public static DreamPieceEntity createDreamPieceEntity() throws Exception {
+    public static DreamPieceEntity createDreamPiece() throws Exception {
         return DreamPieceEntity.builder()
                 .postNo(0)
                 .contentType(ContentType.NOTICE.key)

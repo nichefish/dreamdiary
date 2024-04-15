@@ -23,10 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -110,8 +107,8 @@ public class DreamDayApiController
     @ResponseBody
     public ResponseEntity<AjaxResponse> dreamDayDtlAjax(
             DreamDayApiSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final ModelMap model
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -119,13 +116,11 @@ public class DreamDayApiController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-            Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getPageDto(searchParamMap, pageRequest);
-            ajaxResponse.setRsltList(dreamDayList.getContent());
+            // 객체 조회 및 모델에 추가
+            DreamDayApiDto rslt = dreamDayApiService.getDtlDto(key);
+            ajaxResponse.setRsltObj(rslt);
 
-            isSuccess = true;
+            isSuccess = (rslt.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

@@ -19,7 +19,7 @@ public class DreamDayEntityTestFactory {
     /**
      * 꿈 일자 Entity 생성
      */
-    public static DreamDayEntity createDreamDayEntity() throws Exception {
+    public static DreamDayEntity createDreamDay() throws Exception {
         return DreamDayEntity.builder()
                 .postNo(0)
                 .contentType(ContentType.NOTICE.key)
