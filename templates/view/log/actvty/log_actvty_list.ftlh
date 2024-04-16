@@ -12,6 +12,9 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/log/actvty/_log_actvty_scripts.ftlh">
+
 <script>
     const Page = function() {
         return {
@@ -30,9 +33,6 @@
     });
 </script>
 
-<form name="procForm" id="procForm" method="get">
-    <input type="hidden" name="logActvtyNo" id="logActvtyNo" />
-</form>
 <div class="card post">
 
     <!--begin::Tab -->
@@ -149,9 +149,11 @@
 </div>
 <!--end::Card-->
 
-<#include "/view/log/actvty/_log_actvty_dtl_modal.ftlh">
+<form name="procForm" id="procForm" method="get">
+    <input type="hidden" name="logActvtyNo" id="logActvtyNo" />
+</form>
 
-<!--include:: script modules -->
-<#include "/view/log/actvty/_log_actvty_scripts.ftlh">
+<!--include:: Modals-->
+<#include "/view/log/actvty/_log_actvty_dtl_modal.ftlh">
 
 </@layout.layout>

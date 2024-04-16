@@ -1,6 +1,5 @@
 <#--
   -- 활동 로그(log_actvty) : 모듈 스크립트 분리
-  -- @included_in : log_actvty_list.ftlh
   -->
 
 <script>
