@@ -1,6 +1,6 @@
 <#--
   -- 저널 일자(jrnl_day) > 등록/수정 Modal
-  -- @included_in : cl_cd_dtl
+  -- @included_in : jrnl_day_page.ftlh
   -->
 
 <div class="modal fade" id="jrnl_day_reg_modal" tabindex="-1" role="dialog" aria-hidden="true">

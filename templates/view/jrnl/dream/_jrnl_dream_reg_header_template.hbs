@@ -1,18 +1,18 @@
 <#--
-  -- 분류 코드(CL_CD) > 상세 코드(DTL_CD) 등록/수정 Template
-  -- @included_in : _dream_piece_reg_modal.ftlh
+  -- 저널 꿈(jrnl_dream) > 등록/수정 Template
+  -- @included_in : _jrnl_dream_reg_modal.ftlh
   -->
-<script type="text/x-handlebars-template" id="dream_piece_reg_header_template">
+<script type="text/x-handlebars-template" id="jrnl_dream_reg_header_template">
     <input type="hidden" name="postNo" value="{{postNo}}">
-    <input type="hidden" name="dreamDayNo" value="{{dreamDayNo}}">
+    <input type="hidden" name="jrnlDayNo" value="{{jrnlDayNo}}">
 
     <!--begin::Input group-->
     <div class="row row-cols-lg-2 mb-3">
         <div class="col-xl-2 col-2">
-            <label class="col-form-label text-center fs-6 fw-bold mb-2">꿈 일자</label>
+            <label class="col-form-label text-center fs-6 fw-bold mb-2">저널 일자</label>
         </div>
         <div class="col-xl-3 col-5 col-form-label">
-            <i class="bi bi-calendar"></i> {{dreamtDt}}
+            <i class="bi bi-calendar"></i> {{jrnlDt}}
         </div>
         <div class="col-xl-2 col-2">
             <label class="col-form-label text-center fs-6 fw-bold mb-2">인덱스</label>

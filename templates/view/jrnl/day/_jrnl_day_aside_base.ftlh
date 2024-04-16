@@ -1,5 +1,5 @@
 <#--
-  -- 저널 일자 : ASIDE (우측 사이드바)
+  -- 저널 일자(jrnl_day) : ASIDE (우측 사이드바)
   -- @included_in : jrnl_day_page.ftlh
   -->
 

@@ -1,6 +1,6 @@
 <#--
-  -- 저널 일자 : 페이지
-  -- @included_in : jrnl_day_page
+  -- 저널 일자(jrnl_day) : 페이지
+  -- @included_in : jrnl_day_page.ftlh
   -->
 
 <#import "/layout/layout_with_aside.ftlh" as layout >

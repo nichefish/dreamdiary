@@ -1,6 +1,6 @@
 <#--
   -- 저널 일자(jrnl_day) > 목록 툴바 Header
-  -- @included_in : cl_cd_list
+  -- @included_in : jrnl_day_page.ftlh
   -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
