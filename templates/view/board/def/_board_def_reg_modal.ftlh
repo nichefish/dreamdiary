@@ -1,7 +1,8 @@
 <#--
-  -- 게시판 정의 > 등록 Modal
+  -- 게시판 정의(board_def) > 등록 Modal
   -- @included_in : board_def_list
   -->
+
 <div class="modal fade" id="board_def_reg_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -62,7 +63,7 @@
             <div class="modal-footer">
                 <!-- 버튼 영역 -->
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-sm btn-primary me-2" onclick="Page.regAjax();"
+                    <button type="button" class="btn btn-sm btn-primary me-2" onclick="BoardDef.regAjax();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목을 저장합니다.">
                         <i class="bi bi-pencil-square"></i>저장
                     </button>
@@ -73,5 +74,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/board/def/_board_def_reg_template.hbs">

@@ -1,7 +1,8 @@
 <#--
-  -- 게시판 정의 > 항목 수정 Template
+  -- 게시판 정의(board_def) > 항목 수정 Template
   -- @included_in : _board_def_mdf_item_modal.ftlh
   -->
+
 <script type="text/x-handlebars-template" id="board_def_mdf_item_template">
     <!--begin::Question-->
     <div class="fs-4 mx-4 px-4 fw-normal text-gray-800">
@@ -23,7 +24,7 @@
                         </div>
                     </td>
                     <td class="col-2 text-center">
-                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.mdfItemAjax();">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="BoardDef.mdfItemAjax();">
                             <i class="bi bi-pencil-square"></i>저장
                         </button>
                     </td>
