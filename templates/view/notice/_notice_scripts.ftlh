@@ -5,6 +5,35 @@
 <script>
     const Notice = function() {
         return {
+            /** form validation init */
+            initValidateForm: function() {
+                /* jquery :: validation */
+                $("#noticeRegForm").validate({
+                    submitHandler: function () {
+                        if (Page.submitMode === "preview") {
+                            const popupNm = "preview";
+                            const options = 'width=1280,height=1440,top=0,left=270';
+                            commons.util.popup("", popupNm, options);
+                            let popupUrl = "${Url.NOTICE_REG_PREVIEW_POP!}";
+                            $("#noticeRegForm").attr("action", popupUrl).attr("target", popupNm);
+                            return true;
+                        } else if (Page.submitMode === "submit") {
+                            $("#noticeRegForm").removeAttr("action");
+                            Swal.fire({
+                                text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                                showCancelButton: true,
+                            }).then(function(result) {
+                                if (!result.value) return;
+                                Notice.regAjax();
+                            });
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
+                    },
+                    ignore: [],         // hidden 필드도 검증하기 위함
+                });
+            },
             /** 목록 검색 */
             search: function() {
                 $("#listForm #pageNo").val(1);

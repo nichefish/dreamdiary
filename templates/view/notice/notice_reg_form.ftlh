@@ -32,13 +32,16 @@
         });
     });
 
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
-                /** tinymce init */
-                commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
+                /* jquery :: validation */
+                Notice.initValidateForm()
 
-                commons.validate.noSpaces(".no-space");        // 공백 자동 제거
+                /* tinymce init */
+                commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
+                /* 공백 자동 제거 */
+                commons.validate.noSpaces(".no-space");
 
                 // 중요 여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
@@ -57,39 +60,9 @@
                 <#if isReg>
                     $("#jandiYn").click();
                 </#if>
-
-                /** jquery :: validation */
-                $(function () {
-                    $("#noticeRegForm").validate({
-                        submitHandler: function () {
-                            if (Page.submitMode === "preview") {
-                                const popupNm = "preview";
-                                const options = 'width=1280,height=1440,top=0,left=270';
-                                commons.util.popup("", popupNm, options);
-                                let popupUrl = "${Url.NOTICE_REG_PREVIEW_POP!}";
-                                $("#noticeRegForm").attr("action", popupUrl).attr("target", popupNm);
-                                return true;
-                            } else if (Page.submitMode === "submit") {
-                                $("#noticeRegForm").removeAttr("action");
-                                Swal.fire({
-                                    text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                    showCancelButton: true,
-                                }).then(function(result) {
-                                    if (!result.value) return;
-                                    Notice.regAjax();
-                                });
-                            }
-                        },
-                        errorPlacement: function(error, element) {
-                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                        },
-                        ignore: [],         // hidden 필드도 검증하기 위함
-                    });
-                });
             },
         }
-    }();
-
+    })();
     $(document).ready(function () {
         Page.init();
     });

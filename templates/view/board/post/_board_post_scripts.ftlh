@@ -7,7 +7,7 @@
         return {
             /** form validation init */
             initValidateForm: function() {
-                /** jquery :: validation */
+                /* jquery :: validation */
                 $("#postRegForm").validate({
                     submitHandler: function () {
                         if (Page.submitMode === "preview") {
