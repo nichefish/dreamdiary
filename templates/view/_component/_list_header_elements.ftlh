@@ -90,16 +90,16 @@
 <!--
  * 버튼 : 내 글 보기
  -->
-<#macro btn_header_mypapr closerNm myPapr>
+<#macro btn_header_mypapr func myPapr>
     <#if myPapr == false>
         <div class="btn btn-sm btn-light-primary btn-outlined"
-             onclick="${closerNm}.myPapr();"
+             onclick="${func}"
              data-bs-toggle="tooltip" data-bs-placement="top" title="내가 작성한 글만 조회합니다.">
             <i class="bi bi-check"></i>내 글 보기
         </div>
     <#else>
         <div class="btn btn-sm btn-secondary btn-outlined" style="background-color:rgba(64,64,64,0.2) !important"
-             onclick="${closerNm}.resetSearch();"
+             onclick="${fn.closerNm(func?string)}.list();"
              data-bs-toggle="tooltip" data-bs-placement="top" title="전체 글을 조회합니다.">
             <i class="bi bi-list"></i>전체 글 보기
         </div>

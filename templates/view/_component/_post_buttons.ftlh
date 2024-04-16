@@ -6,10 +6,10 @@
 <!--
  * 버튼 : 권한/수정권한(mdfable0에 따른 수정 버튼
  -->
-<#macro btn_post_mdf closerNm post isMngr>
+<#macro btn_post_modify func post isMngr>
     <#if post.isRegstr>
         <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                onclick="${closerNm}.mdfForm();"
+                onclick="${func}"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
             <i class="bi bi-pencil-square"></i>(내 글)수정
         </button>
@@ -19,20 +19,20 @@
         <#if post.mdfable! == (Constant.MDFABLE_MNGR)>
             <#if isMngr!false>
                 <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                        onclick="${closerNm}.mdfForm();"
+                        onclick="${func}"
                         data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                     <i class="bi bi-pencil-square"></i>(관리자+)수정
                 </button>
             </#if>
         <#elseif post.mdfable! == (Constant.MDFABLE_USER)>
             <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>"
-                    onclick="${closerNm}.mdfForm();">
+                    onclick="${func}"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
         <#elseif post.mdfable! == (Constant.MDFABLE_ALL)>
             <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                    onclick="${closerNm}.mdfForm();"
+                    onclick="${func}"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(전체+)수정
             </button>
@@ -52,16 +52,16 @@
 <!--
  * 버튼 : 권한에 따른 삭제 버튼
  -->
-<#macro btn_post_delete closerNm post isMngr>
+<#macro btn_post_delete func post isMngr>
     <#if post.isRegstr>
         <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
-                onclick="${closerNm}.delAjax();"
+                onclick="${func}"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
             <i class="bi bi-trash"></i>(내 글)삭제
         </button>
     <#elseif isMngr!false>
         <button type="button" class="btn btn-sm btn-light btn-active-danger me-2 btn-sm"
-                onclick="${closerNm}.delAjax();"
+                onclick="${func}"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
             <i class="bi bi-trash"></i>(관리자+)삭제
         </button>
@@ -71,9 +71,9 @@
 <!--
  * 버튼 : 목록으로 가기 버튼
  -->
-<#macro btn_post_toList closerNm>
+<#macro btn_post_toList func>
     <button type="button" class="btn btn-sm btn-light"
-            onclick="${closerNm}.list();"
+            onclick="${func!}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
         <span class="indicator-label">
             <i class="bi bi-list"></i>목록
@@ -85,9 +85,9 @@
 <!--
  * 버튼 : 글 작성 전 미리보기 팝업 호출
  -->
-<#macro btn_preview_pop closerNm>
+<#macro btn_preview_pop func>
     <button type="button" class="btn btn-sm btn-primary mx-2"
-            onclick="${closerNm}.preview();"
+            onclick="${func!}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
             title="작성한 내용에 대하여&#10;미리보기 팝업을 호출합니다.">
         <i class="bi bi-pencil-square"></i>
@@ -101,9 +101,9 @@
 <!--
  * 버튼 : 글 저장 / 취소
  -->
-<#macro btn_post_save closerNm>
+<#macro btn_post_submit func>
     <button type="button" class="btn btn-sm btn-primary mx-2"
-            onclick="${closerNm}.submit();"
+            onclick="${func!}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
         <i class="bi bi-pencil-square"></i>
         <span class="indicator-label">저장</span>
@@ -123,9 +123,6 @@
         <i class="bi bi-list"></i>닫기
     </button>
 </#macro>
-
-
-
 
 <!--
  * 버튼 : 미리보기 모달 닫기

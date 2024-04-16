@@ -29,3 +29,17 @@
 	</#if>
 	<#return ""/>
 </#function>
+
+<#--
+  -- closerNm: 전달받은 javascript 함수에서 네임스페이스를 추출한다.
+  -->
+<#function closerNm func>
+	<#local parts = func?split(".")>
+	<#local beforeLastDot = "">
+	<#list parts as part>
+		<#if part_has_next>
+			<#local beforeLastDot = beforeLastDot + ((beforeLastDot != "")?then(beforeLastDot + ".", "") + part)>
+		</#if>
+	</#list>
+	<#return beforeLastDot>
+</#function>
