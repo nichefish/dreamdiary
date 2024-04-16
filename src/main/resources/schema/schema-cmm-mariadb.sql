@@ -6,7 +6,7 @@
 
 -- -----------------------
 
--- 시퀀스 (cmm_sequenc)
+-- 시퀀스 (cmm_sequence)
 -- 복합키 요소에 대한 시퀀스 :: AUTO_INCREMENT가 먹지 않는 복합키 요소에 대하여 사용
 CREATE TABLE IF NOT EXISTS cmm_sequence (
     seq_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '시퀀스 ID',
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS cmm_sequence (
 
 -- -----------------------
 
--- 분류 코드 (cmm_cl_cd)
+-- 분류 코드 (cl_cd)
 -- @extends: BaseAuditEntity
 -- @implements: StateEmbed
 CREATE TABLE IF NOT EXISTS cmm_cl_cd  (
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS cmm_cl_cd  (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '분류 코드';
 
--- 상세 코드 (cmm_dtl_cd)
+-- 상세 코드 (dtl_cd)
 -- @extends: BaseAuditEntity
 -- @implements: StateEmbed
 CREATE TABLE IF NOT EXISTS cmm_dtl_cd (
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS cmm_dtl_cd (
 
 -- -----------------------
 
--- 로그인 정책
+-- 로그인 정책 (lgn_policy)
 -- @extends: BaseAuditEntity
 CREATE TABLE IF NOT EXISTS lgn_policy (
     lgn_policy_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '로그인 정책 번호 (PK)',
@@ -125,7 +125,8 @@ CREATE TABLE IF NOT EXISTS log_actvty (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '활동 로그';
 
--- 활동 로그 URL명
+-- 활동 로그 URL명 (log_actvty_url_nm)
+-- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS log_actvty_url_nm (
     log_actvty_url_nm_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '활동 로그 URL명 번호 (PK)',
     url VARCHAR(200) UNIQUE COMMENT 'URL',
@@ -134,15 +135,13 @@ CREATE TABLE IF NOT EXISTS log_actvty_url_nm (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '활동 로그 URL명';
 
--- 시스템 로그
+-- 시스템 로그 (log_sys)
 -- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS log_sys (
     log_sys_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '시스템 로그 번호 (PK)',
     log_dt DATETIME COMMENT '로그 날짜 및 시간',
     user_id VARCHAR(20) COMMENT '로그 기록 사용자 ID',
-    --
     actvty_ctgr_cd VARCHAR(50) COMMENT '활동 카테고리 코드',
-    --
     cn LONGTEXT COMMENT '내용',
     rslt CHAR(1) COMMENT '결과',
     rslt_msg VARCHAR(500) COMMENT '결과 메시지',

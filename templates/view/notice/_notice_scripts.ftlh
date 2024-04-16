@@ -20,7 +20,7 @@
                         } else if (Page.submitMode === "submit") {
                             $("#noticeRegForm").removeAttr("action");
                             Swal.fire({
-                                text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                                text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
                                 showCancelButton: true,
                             }).then(function (result) {
                                 if (!result.value) return;

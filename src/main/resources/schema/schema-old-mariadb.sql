@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS EXPTR_PRSNL_ITEM (
 
 -- 물품구매 및 경조사비 신청
 -- @extends: BasePostEntity
--- @Uses: ManagtEmbed, CommentEmbed
+-- @uses: ManagtEmbed, CommentEmbed
 CREATE TABLE IF NOT EXISTS exptr_reqst(
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',

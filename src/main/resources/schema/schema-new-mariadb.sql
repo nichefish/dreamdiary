@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS tmplat_txt (
 
 -- 파일시스템 메타 (flsys_meta)
 -- @extends: BasePostEntity
--- @Uses: CommentEmbed
+-- @uses: CommentEmbed
 CREATE TABLE IF NOT EXISTS flsys_meta (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',

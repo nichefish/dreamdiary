@@ -100,7 +100,6 @@ CREATE TABLE IF NOT EXISTS tag (
     INDEX (tag_nm)
 ) COMMENT = '태그';
 
-
 -- 컨텐츠 태그 (content_tag)
 -- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS content_tag (

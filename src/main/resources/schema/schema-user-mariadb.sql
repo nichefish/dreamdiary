@@ -6,7 +6,8 @@
 
 -- -----------------------
 
--- 사용자 계정 정보
+-- 사용자 계정 정보 (user)
+-- @extends: BaseAtchEntity
 CREATE TABLE IF NOT EXISTS user (
     user_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 고유 번호 (PK)',
     -- ACCOUNT_BASIC_INFO
@@ -38,7 +39,44 @@ CREATE TABLE IF NOT EXISTS user (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '사용자 계정';
 
--- 사용자 계정 정보 :: 접속 IP
+-- -----------------------
+
+-- 권한 (auth_role)
+-- @extends: BaseAuditEntity
+CREATE TABLE IF NOT EXISTS auth_role (
+    auth_cd VARCHAR(50) PRIMARY KEY COMMENT '권한 코드',
+    auth_nm VARCHAR(50) COMMENT '권한 이름',
+    auth_level INT COMMENT '권한 레벨',
+    top_auth_cd VARCHAR(50) COMMENT '상위 권한 코드',
+    -- STATE
+    sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
+    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
+    -- AUDIT
+    regstr_id VARCHAR(20) COMMENT '등록자 ID',
+    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
+    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
+    mdf_dt DATETIME COMMENT '수정일시',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    FOREIGN KEY (top_auth_cd) REFERENCES auth_role(auth_cd)
+    ) COMMENT = '권한';
+
+-- 사용자 권한 (user_auth_role)
+-- @extends: BaseCrudEntity
+CREATE TABLE user_auth_role (
+    user_auth_role_no INT PRIMARY KEY AUTO_INCREMENT COMMENT '사용자 권한 번호 (PK)',
+    user_no INT COMMENT '사용자 고유 번호',
+    auth_cd VARCHAR(50) COMMENT '권한 코드',
+    -- AUDIT
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    FOREIGN KEY(user_no) REFERENCES user (user_no), FOREIGN KEY(auth_cd) REFERENCES auth_role (auth_cd)
+) COMMENT = '사용자 권한';
+
+-- -----------------------
+
+-- 사용자 계정 정보 :: 접속 IP (user_acs_ip)
+-- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS user_acs_ip (
     user_acs_ip_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 접속 IP 고유 번호 (PK)',
     user_no INT COMMENT '사용자 고유 번호',
@@ -51,7 +89,8 @@ CREATE TABLE IF NOT EXISTS user_acs_ip (
 
 -- -----------------------
 
--- 사용자 프로필 정보
+-- 사용자 프로필 정보 (user_profl)
+-- @extends: BaseAtchEntity
 CREATE TABLE IF NOT EXISTS user_profl (
     user_profl_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 프로필 고유 번호 (PK)',
     user_no INT COMMENT '사용자 고유 번호',
@@ -72,7 +111,8 @@ CREATE TABLE IF NOT EXISTS user_profl (
     FOREIGN KEY(user_no) REFERENCES user (user_no)
 ) COMMENT = '사용자 프로필';
 
--- 사용자 인사정보
+-- 사용자 인사정보 (user_emplym)
+-- @extends: BaseAtchEntity
 CREATE TABLE IF NOT EXISTS user_emplym (
     user_emplym_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '사용자 인사정보 고유 번호 (PK)',
     user_no INT COMMENT '사용자 고유 번호',
@@ -101,49 +141,3 @@ CREATE TABLE IF NOT EXISTS user_emplym (
     -- CONSTRAINT
     FOREIGN KEY(user_no) REFERENCES user (user_no)
 ) COMMENT = '사용자 인사정보';
-
--- -----------------------
-
--- 권한
-CREATE TABLE IF NOT EXISTS auth_role (
-    auth_cd VARCHAR(50) PRIMARY KEY COMMENT '권한 코드',
-    auth_nm VARCHAR(50) COMMENT '권한 이름',
-    auth_level INT COMMENT '권한 레벨',
-    top_auth_cd VARCHAR(50) COMMENT '상위 권한 코드',
-    -- STATE
-    sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
-    use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
-    -- AUDIT
-    regstr_id VARCHAR(20) COMMENT '등록자 ID',
-    reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
-    mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
-    mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
-    -- CONSTRAINT
-    FOREIGN KEY (top_auth_cd) REFERENCES auth_role(auth_cd)
-) COMMENT = '권한';
-
--- 사용자 권한
-CREATE TABLE user_auth_role (
-    user_auth_role_no INT PRIMARY KEY AUTO_INCREMENT COMMENT '사용자 권한 번호 (PK)',
-    user_no INT COMMENT '사용자 고유 번호',
-    auth_cd VARCHAR(50) COMMENT '권한 코드',
-    -- AUDIT
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
-    -- CONSTRAINT
-    FOREIGN KEY(user_no) REFERENCES user (user_no), FOREIGN KEY(auth_cd) REFERENCES auth_role (auth_cd)
-) COMMENT = '사용자 권한';
-
--- -----------------------
-
--- TODO: 그룹과 팀...
-
--- -- TODO: 사용자 정보 - 팀
--- CREATE TABLE IF NOT EXISTS user_profl_TEAM (
---     user_profl_TEAM_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
---     user_profl_no INT,
---     TEAM_CD VARCHAR(30),
---     -- AUDIT
---     DEL_YN CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
--- );
---

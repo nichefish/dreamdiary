@@ -8,7 +8,7 @@
 
 -- 저널 일자 (jrnl_day)
 -- @extends: BaseClsfEntity
--- @Uses: CommentEmbed
+-- @uses: CommentEmbed
 CREATE TABLE IF NOT EXISTS jrnl_day (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '저널 일자 번호 (PK)',
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS jrnl_day (
 
 -- 저널 꿈 (jrnl_dream)
 -- @extends: BasePostEntity
--- @Uses: CommentEmbed
+-- @uses: CommentEmbed
 CREATE TABLE IF NOT EXISTS jrnl_dream (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '저널 꿈 번호 (PK)',
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS jrnl_dream (
 
 -- 저널 일기 (jrnl_diary)
 -- @extends: BasePostEntity
--- @Uses: CommentEmbed
+-- @uses: CommentEmbed
 CREATE TABLE IF NOT EXISTS jrnl_diary (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '저널 일기 번호 (PK)',
