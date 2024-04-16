@@ -5,6 +5,28 @@
 <script>
     const ClCd = (function() {
         return {
+            /** Draggable 컴포넌트 init */
+            initDraggable: function() {
+                const containers = document.querySelectorAll(".draggable-zone");
+                if (containers.length === 0) return false;
+                Page.swappable = new Draggable.Sortable(containers, {
+                    draggable: ".draggable",
+                    handle: ".draggable .draggable-handle",
+                    mirror: {
+                        //appendTo: selector,
+                        appendTo: "body",
+                        constrainDimensions: true
+                    },
+                }).on('drag:start', (event) => {
+                    $(event.data.source).addClass('dragging');
+                }).on('drag:stop', (event) => {
+                    const id = $(event.data.source).attr("id");
+                    setTimeout(() => {
+                        const $newTr = $("tr#"+id);
+                        $newTr.removeClass('dragging').addClass("draggable-modified");
+                    }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
+                });
+            },
             /** 목록 검색 */
             search: function() {
                 $("#listForm #pageNo").val(1);
