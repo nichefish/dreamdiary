@@ -1,6 +1,5 @@
 <#--
   -- 저널 일자(jrnl_day) : 모듈 스크립트 분리
-  -- @included_in : jrnl_day_page.ftlh
   -->
 
 <script>

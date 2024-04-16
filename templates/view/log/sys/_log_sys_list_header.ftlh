@@ -32,7 +32,7 @@
     </div>
     <div>
         <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "Page" />
+        <@component.btn_header_search "Page.search();" />
     </div>
     <div>
         <!-- 버튼:: 엑셀 다운로드하기 -->

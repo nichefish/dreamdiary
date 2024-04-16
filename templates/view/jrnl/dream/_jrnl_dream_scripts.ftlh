@@ -1,6 +1,5 @@
 <#--
   -- 저널 꿈(jrnl_dream) : 모듈 스크립트 분리
-  -- @included_in : jrnl_day_page.ftlh
   -->
 
 <script>

@@ -29,9 +29,6 @@
     });
 </script>
 
-<form name="procForm" id="procForm" method="get">
-    <input type="hidden" name="logSysNo" id="logSysNo" />
-</form>
 <div class="card post">
     <!--begin::Tab -->
     <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
@@ -138,5 +135,9 @@
     <!-- pagination::end -->
 </div>
 <!--end::Card-->
+
+<form name="procForm" id="procForm" method="get">
+    <input type="hidden" name="logSysNo" id="logSysNo" />
+</form>
 
 </@layout.layout>

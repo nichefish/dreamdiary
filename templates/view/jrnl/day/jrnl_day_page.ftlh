@@ -16,6 +16,10 @@
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?20230908"></script>
 <link rel="stylesheet" type="text/css" href="/css/dream.css?${releaseDate!}" />
 
+<!--include:: script modules -->
+<#include "/view/jrnl/day/jrnl_day_scripts.ftlh">
+<#include "/view/jrnl/dream/jrnl_dream_scripts.ftlh">
+
 <script>
     const Page = function() {
         return {
@@ -43,22 +47,19 @@
         <#include "/view/_component/_pagination.ftlh">
         <!-- pagination::end -->
     </div>
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="jrnlDayNo" id="jrnlDayNo" />
-    </form>
 </div>
 <!--end::Card-->
 
+<form name="procForm" id="procForm">
+    <input type="hidden" name="jrnlDayNo" id="jrnlDayNo" />
+</form>
+
+<!--include:: Modals-->
 <#include "/view/jrnl/day/_jrnl_day_list_template.hbs">
 <#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 
-<!--include:: script modules -->
-<#include "/view/jrnl/day/jrnl_day_scripts.ftlh">
-<#include "/view/jrnl/dream/jrnl_dream_scripts.ftlh">
-
-<!--include:: Dream - Aside-->
+<!--include:: Aside-->
 <#include "/view/jrnl/day/_jrnl_day_aside_base.ftlh">
 
 </@layout.layout>

@@ -13,16 +13,16 @@
             },
             /** 전체 로그 페이지로 이동 */
             logActvtyList: function() {
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_ACTVTY_LIST!}");
+                commons.util.blockUISubmit("#listForm", "${Url.LOG_ACTVTY_LIST!}");
             },
             /** 전체 로그 페이지로 이동 */
             logStatsUserList: function() {
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}");
+                commons.util.blockUISubmit("#listForm", "${Url.LOG_STATS_USER_LIST!}");
             },
             /** 목록 검색 */
             search: function() {
                 $("#listForm #pageNo").val(1);
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}?actionTyCd=SEARCH");
+                commons.util.blockUISubmit("#listForm", "${Url.LOG_STATS_USER_LIST!}?actionTyCd=SEARCH");
             },
             /** 엑셀 다운로드 */
             xlsxDownload: function() {
@@ -32,7 +32,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     commons.util.blockUIFileDownload();
-                    $("#listForm").attr("action", "${SiteUrl.LOG_ACTVTY_LIST_XLSX_DOWNLOAD!}").submit();
+                    $("#listForm").attr("action", "${Url.LOG_ACTVTY_LIST_XLSX_DOWNLOAD!}").submit();
                 });
             }
         }
@@ -44,9 +44,6 @@
 </script>
 
 <div class="card post">
-    <form name="procForm" id="procForm" method="get">
-        <input type="hidden" name="logActvtyNo" id="logActvtyNo" />
-    </form>
     <!--begin::Card header 검색+헤더 UI -->
     <#include "/view/log/stats/_log_stats_user_list_header.ftlh">
 
@@ -197,5 +194,9 @@
     <!-- pagination::end -->
 </div>
 <!--end::Card-->
+
+<form name="procForm" id="procForm" method="get">
+    <input type="hidden" name="logActvtyNo" id="logActvtyNo" />
+</form>
 
 </@layout.layout>
