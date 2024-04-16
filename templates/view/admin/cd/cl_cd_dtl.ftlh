@@ -15,7 +15,9 @@
     const Page = function() {
         return {
             init: function () {
-                /** init : Draggable */
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
+                /* init : Draggable */
                 DtlCd.initDraggable();
             },
         }

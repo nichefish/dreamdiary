@@ -6,7 +6,7 @@
     const LgnPolicy = (function() {
         return {
             /** form validation init */
-            initValidate: function() {
+            initValidateForm: function() {
                 $("#lgnPolicyForm").validate({
                     submitHandler: function() {
                         LgnPolicy.regAjax();

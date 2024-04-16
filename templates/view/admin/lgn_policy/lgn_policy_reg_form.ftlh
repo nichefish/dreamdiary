@@ -10,11 +10,10 @@
     const Page = function() {
         return {
             init: function () {
+                /** jquery :: validation */
+                LgnPolicy.initValidateForm();
                 /** 개별 input 유효성검사 */
                 commons.validate.onlyNum(".number");
-
-                /** jquery :: validation */
-                LgnPolicy.initValidate();
             },
         }
     }();
