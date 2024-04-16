@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.entity.user;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.experimental.UtilityClass;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * UserEntityTestFactory
@@ -14,6 +15,7 @@ import lombok.experimental.UtilityClass;
  * @author nichefish 
  */
 @UtilityClass
+@ActiveProfiles("test")
 public class UserEntityTestFactory {
 
     /**

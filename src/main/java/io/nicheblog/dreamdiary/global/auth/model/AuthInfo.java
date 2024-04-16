@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global.auth.model;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 import java.util.Date;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
  */
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(of = {"userId"}, callSuper = false)
 @Log4j2
 public class AuthInfo
@@ -107,6 +110,7 @@ public class AuthInfo
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (CollectionUtils.isEmpty(this.authList)) throw new RuntimeException("authList is empty.");
         return this.authList.stream()
                 .map(entity -> {
                     try {

@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.model.user;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.experimental.UtilityClass;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * UserDtoTestFactory
@@ -14,6 +15,7 @@ import lombok.experimental.UtilityClass;
  * @author nichefish 
  */
 @UtilityClass
+@ActiveProfiles("test")
 public class UserDtoTestFactory {
 
     public static UserDto.DTL createUserDtlDto() {

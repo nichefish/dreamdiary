@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntityTestFactory;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDtoTestFactory;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  * @author nichefish
  */
+@ActiveProfiles("test")
 class UserProflMapstructTest {
 
     private final UserProflMapstruct userProflMapstruct = UserProflMapstruct.INSTANCE;

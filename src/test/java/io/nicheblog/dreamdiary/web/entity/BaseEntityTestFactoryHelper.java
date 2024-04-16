@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditRegEntity;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.experimental.UtilityClass;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * BaseEntityTestHelper
@@ -15,7 +16,8 @@ import lombok.experimental.UtilityClass;
  * @author nichefish 
  */
 @UtilityClass
-public class BaseEntityTestHelper {
+@ActiveProfiles("test")
+public class BaseEntityTestFactoryHelper {
 
     /**
      * 등록자 정보 세팅

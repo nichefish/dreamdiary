@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.entity.jrnl.dream;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import lombok.experimental.UtilityClass;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * JrnlDreamEntityTestFactory
@@ -12,6 +13,7 @@ import lombok.experimental.UtilityClass;
  * @author nichefish 
  */
 @UtilityClass
+@ActiveProfiles("test")
 public class JrnlDreamEntityTestFactory {
 
     /**

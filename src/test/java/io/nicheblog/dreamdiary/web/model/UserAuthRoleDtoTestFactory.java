@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.model;
 import io.nicheblog.dreamdiary.global.auth.Auth;
 import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import lombok.experimental.UtilityClass;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * UserAuthRoleDtoTestFactory
@@ -13,6 +14,7 @@ import lombok.experimental.UtilityClass;
  * @author nichefish
  */
 @UtilityClass
+@ActiveProfiles("test")
 public class UserAuthRoleDtoTestFactory {
 
     /**

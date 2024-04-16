@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.user.profl;
 
 import lombok.experimental.UtilityClass;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * UserTestUtils
@@ -11,6 +12,7 @@ import lombok.experimental.UtilityClass;
  * @author nichefish 
  */
 @UtilityClass
+@ActiveProfiles("test")
 public class UserProflDtoTestFactory {
 
     /**

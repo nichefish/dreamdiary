@@ -115,6 +115,8 @@ public class AuthUtils {
      * 사용자 IP주소 조회 (헤더 조회)
      */
     public static String getAcsIpAddr() {
+        // request 맥락 하에서만 실행
+        if (request == null) return null;
         String ipType = "";
         String ipAddr = "";
         for (String s : Constant.IP_HEADERS) {

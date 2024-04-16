@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDtoTestFactory;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  * @author nichefish
  */
+@ActiveProfiles("test")
 class NoticeMapstructTest {
 
     private final NoticeMapstruct noticeMapstruct = NoticeMapstruct.INSTANCE;

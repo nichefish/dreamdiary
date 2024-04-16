@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntityTestFactor
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDtoTestFactory;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  * @author nichefish
  */
+@ActiveProfiles("test")
 class UserEmplymMapstructTest {
 
     private final UserEmplymMapstruct userEmplymMapstruct = UserEmplymMapstruct.INSTANCE;

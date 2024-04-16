@@ -67,6 +67,8 @@ public class MessageUtils
      * 코드로 사전 정의된 메세지 조회
      */
     public static String getMessage(final String code) throws NoSuchMessageException {
+        // test환경에서의 난해성 때문에 bean 주입 환경 외에는 예외 리턴 처리
+        if (messageSource == null) return null;
         String msg = messageSource.getMessage(code, null, Locale.getDefault());
         log.info("code: {}, msg: {}", code, msg);
         return msg;
@@ -75,10 +77,7 @@ public class MessageUtils
     /**
      * 코드로 사전 정의된 메세지 조회
      */
-    public static String getMessage(
-            final String code,
-            final @Nullable Object[] args
-    ) throws NoSuchMessageException {
+    public static String getMessage(final String code, final @Nullable Object[] args) throws NoSuchMessageException {
         String msg = messageSource.getMessage(code, args, Locale.getDefault());
         log.info("code: {}, msg: {}", code, msg);
         return msg;
@@ -94,10 +93,7 @@ public class MessageUtils
     /**
      * Response에 Javascript alert 처리 및 리다이렉트
      */
-    public static void alertMessage(
-            final String msg,
-            final String url
-    ) throws IOException {
+    public static void alertMessage(final String msg, final String url) throws IOException {
         response.setContentType("text/html; charset=utf-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<script language=\"JavaScript\" type=\"text/JavaScript\">");

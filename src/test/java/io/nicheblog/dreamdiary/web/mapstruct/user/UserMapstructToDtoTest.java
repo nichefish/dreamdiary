@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.mapstruct.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.Auth;
-import io.nicheblog.dreamdiary.web.entity.BaseEntityTestHelper;
+import io.nicheblog.dreamdiary.web.entity.BaseEntityTestFactoryHelper;
 import io.nicheblog.dreamdiary.web.entity.user.*;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntityTestFactory;
@@ -13,6 +13,7 @@ import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author nichefish
  */
+@ActiveProfiles("test")
 @Log4j2
 class UserMapstructToDtoTest {
 
@@ -59,9 +61,9 @@ class UserMapstructToDtoTest {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
         // 등록자
-        BaseEntityTestHelper.setRegstrInfo(userEntity);
+        BaseEntityTestFactoryHelper.setRegstrInfo(userEntity);
         // 수정자
-        BaseEntityTestHelper.setMdfusrInfo(userEntity);
+        BaseEntityTestFactoryHelper.setMdfusrInfo(userEntity);
 
         // When::
         UserDto.DTL dto = userMapstruct.toDto(userEntity);

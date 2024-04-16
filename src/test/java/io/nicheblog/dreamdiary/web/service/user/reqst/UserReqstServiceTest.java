@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.annotation.Resource;
 
@@ -30,13 +31,14 @@ import static org.mockito.Mockito.when;
  *
  * @author nichefish
  */
+@ActiveProfiles("test")
 class UserReqstServiceTest {
 
     private final UserReqstMapstruct userReqstMapstruct = UserReqstMapstruct.INSTANCE;
 
     @Resource(name = "userReqstService")
     private UserReqstService userReqstService;
-    @MockBean
+    @MockBean(name = "userRepository")
     private UserRepository userRepository;
     @MockBean
     private PasswordEncoder passwordEncoder;

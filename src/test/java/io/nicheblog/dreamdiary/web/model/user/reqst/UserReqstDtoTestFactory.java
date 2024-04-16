@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.experimental.UtilityClass;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @author nichefish 
  */
 @UtilityClass
+@ActiveProfiles("test")
 public class UserReqstDtoTestFactory {
 
     /**

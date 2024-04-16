@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntityTestFactory;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDtoTestFactory;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  * @author nichefish
  */
+@ActiveProfiles("test")
 class JrnlDayMapstructTest {
 
     private final JrnlDayMapstruct jrnlDayMapstruct = JrnlDayMapstruct.INSTANCE;

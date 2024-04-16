@@ -16,6 +16,7 @@ import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDtoTestFactory;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -30,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author nichefish
  */
+@ActiveProfiles("test")
 @Log4j2
 class UserMapstructToEntityTest {
 
