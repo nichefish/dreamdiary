@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.controller.exptr.reqst;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -10,7 +11,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
@@ -52,7 +52,7 @@ public class ExptrReqstController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.EXPTR_REQST_LIST;             // 기본 URL
+    private final String baseUrl = Url.EXPTR_REQST_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_REQST;        // 작업 카테고리 (로그 적재용)
 
@@ -67,7 +67,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 목록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.EXPTR_REQST_LIST)
+    @GetMapping(Url.EXPTR_REQST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstList(
             @ModelAttribute("searchParam") ExptrReqstSearchParam searchParam,
@@ -104,7 +104,7 @@ public class ExptrReqstController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -118,7 +118,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.EXPTR_REQST_REG_FORM)
+    @RequestMapping(Url.EXPTR_REQST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstRegForm(
             final LogActvtyParam logParam,
@@ -163,7 +163,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.EXPTR_REQST_REG_PREVIEW_POP)
+    @RequestMapping(Url.EXPTR_REQST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstRegPreviewPop(
             final ExptrReqstDto exptrReqstDto,
@@ -198,7 +198,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 등록/수정 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.EXPTR_REQST_REG_AJAX, SiteUrl.EXPTR_REQST_MDF_AJAX})
+    @PostMapping(value = {Url.EXPTR_REQST_REG_AJAX, Url.EXPTR_REQST_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrReqstRegAjax(
@@ -252,7 +252,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = SiteUrl.EXPTR_REQST_DTL)
+    @RequestMapping(value = Url.EXPTR_REQST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstDtl(
             final @RequestParam("postNo") Integer key,
@@ -295,7 +295,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.EXPTR_REQST_DTL_AJAX)
+    @RequestMapping(Url.EXPTR_REQST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> postDtlAjax(
@@ -337,7 +337,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = SiteUrl.EXPTR_REQST_MDF_FORM)
+    @RequestMapping(value = Url.EXPTR_REQST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstMdfForm(
             final @RequestParam("postNo") Integer key,
@@ -382,7 +382,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 삭제 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.EXPTR_REQST_DEL_AJAX)
+    @PostMapping(Url.EXPTR_REQST_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrReqstDelAjax(
@@ -417,7 +417,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 처리완료 (Ajax)
      * 관리자MNGR만 접근 가능
      */
-    @PostMapping(value = {SiteUrl.EXPTR_REQST_CF_AJAX})
+    @PostMapping(value = {Url.EXPTR_REQST_CF_AJAX})
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrReqstCfAjax(
@@ -453,7 +453,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 '처리안함' 처리 (Ajax)
      * 관리자MNGR만 접근 가능
      */
-    @PostMapping(value = {SiteUrl.EXPTR_REQST_DISMISS_AJAX})
+    @PostMapping(value = {Url.EXPTR_REQST_DISMISS_AJAX})
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrReqstDismissAjax(

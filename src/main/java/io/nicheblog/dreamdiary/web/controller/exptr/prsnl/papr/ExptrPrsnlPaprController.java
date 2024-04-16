@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -15,7 +16,6 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
@@ -62,7 +62,7 @@ public class ExptrPrsnlPaprController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.EXPTR_PRSNL_PAPR_LIST;             // 기본 URL
+    private final String baseUrl = Url.EXPTR_PRSNL_PAPR_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;        // 작업 카테고리 (로그 적재용)
 
@@ -77,7 +77,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 목록 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.EXPTR_PRSNL_PAPR_LIST)
+    @GetMapping(Url.EXPTR_PRSNL_PAPR_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlList(
             @ModelAttribute("searchParam") ExptrPrsnlPaprSearchParam searchParam,
@@ -117,7 +117,7 @@ public class ExptrPrsnlPaprController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
             logParam.setResult(isSuccess, rsltMsg);
             // 로그 관련 처리
@@ -132,7 +132,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 기존 작성중인 정보 존재여부 체크
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = SiteUrl.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX)
+    @PostMapping(value = Url.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlExistingChckAjax(
@@ -168,7 +168,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 년도/월에 기존 작성중인 정보 있는지 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(value = SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX)
+    @GetMapping(value = Url.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlYyMnthChckAjax(
@@ -208,7 +208,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_REG_FORM)
+    @RequestMapping(Url.EXPTR_PRSNL_PAPR_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlRegForm(
             final @RequestParam("prevYn") @Nullable String prevYn,
@@ -258,7 +258,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 등록/수정 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.EXPTR_PRSNL_PAPR_REG_AJAX, SiteUrl.EXPTR_PRSNL_PAPR_MDF_AJAX})
+    @PostMapping(value = {Url.EXPTR_PRSNL_PAPR_REG_AJAX, Url.EXPTR_PRSNL_PAPR_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlRegAjax(
@@ -305,7 +305,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_DTL)
+    @RequestMapping(Url.EXPTR_PRSNL_PAPR_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlDtl(
             final @RequestParam("postNo") Integer key,
@@ -348,7 +348,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 출력 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_PDF_POP)
+    @RequestMapping(Url.EXPTR_PRSNL_PAPR_PDF_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlPdfPop(
             final @RequestParam("postNo") Integer key,
@@ -388,7 +388,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM)
+    @RequestMapping(Url.EXPTR_PRSNL_PAPR_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlMdfForm(
             final @RequestParam("postNo") Integer key,
@@ -441,7 +441,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 삭제 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.EXPTR_PRSNL_PAPR_DEL_AJAX)
+    @PostMapping(Url.EXPTR_PRSNL_PAPR_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlDelAjax(
@@ -476,7 +476,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 영수증 이미지파일 묶음 PDF 다운로드
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
+    @RequestMapping(Url.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public void exptrPrsnlStatsRciptPdfDownload(
             final LogActvtyParam logParam,
@@ -499,7 +499,7 @@ public class ExptrPrsnlPaprController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
+            MessageUtils.alertMessage(rsltMsg, Url.EXPTR_PRSNL_STATS_PAGE);
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + key);

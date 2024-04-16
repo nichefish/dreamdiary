@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.global.handler;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.web.AcsPageNm;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -35,14 +35,14 @@ public class ErrorPageController
         implements ErrorController {
 
     @Getter
-    private final String baseUrl = SiteUrl.ERROR_PAGE;
+    private final String baseUrl = Url.ERROR_PAGE;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DEFAULT;      // 작업 카테고리 (로그 적재용)
 
     /**
      * 기본 에러 화면(/error) :: 에러 코드에 따라 반환 페이지 분기
      */
-    @RequestMapping(SiteUrl.ERROR)
+    @RequestMapping(Url.ERROR)
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
@@ -60,7 +60,7 @@ public class ErrorPageController
      * 에러 화면 (404 NOT FOUND)
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @GetMapping(SiteUrl.ERROR_NOT_FOUND)
+    @GetMapping(Url.ERROR_NOT_FOUND)
     public String errorNotFound(
             final ModelMap model
     ) {
@@ -76,7 +76,7 @@ public class ErrorPageController
      * 에러 화면 (비인가 접근)
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @GetMapping(SiteUrl.ERROR_ACCESS_DENIED)
+    @GetMapping(Url.ERROR_ACCESS_DENIED)
     public String errorAccessDenied(
             final ModelMap model
     ) {
@@ -92,7 +92,7 @@ public class ErrorPageController
      * 에러 화면 (공통)
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @GetMapping(SiteUrl.ERROR_PAGE)
+    @GetMapping(Url.ERROR_PAGE)
     public String errorPage(
             final ModelMap model
     ) {

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.rpt;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -8,7 +9,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptItemDto;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptSmDto;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
@@ -44,7 +44,7 @@ public class ExptrPrsnlRptController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.EXPTR_PRSNL_RPT_ITEMS;             // 기본 URL
+    private final String baseUrl = Url.EXPTR_PRSNL_RPT_ITEMS;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_RPT;        // 작업 카테고리 (로그 적재용)
 
@@ -60,7 +60,7 @@ public class ExptrPrsnlRptController
      * 경비 관리 > 월간지출내역 > 년도별 경비지출 누적집계 화면
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(SiteUrl.EXPTR_PRSNL_RPT_ITEMS)
+    @RequestMapping(Url.EXPTR_PRSNL_RPT_ITEMS)
     @Secured(Constant.ROLE_MNGR)
     public String exptrPrsnlRpt(
             final LogActvtyParam logParam,
@@ -112,7 +112,7 @@ public class ExptrPrsnlRptController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -126,7 +126,7 @@ public class ExptrPrsnlRptController
      * 경비 관리 > 경비지출누적집계 > 년도별 경비 지출 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      */
-    // @RequestMapping(SiteUrl.EXPTR_PRSNL_RPT_XLSX_DOWNLOAD)
+    // @RequestMapping(Url.EXPTR_PRSNL_RPT_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)
     // public void exptrPrsnlRptXlsxDownload(
     //         final LogActvtyParam logParam,
@@ -156,7 +156,7 @@ public class ExptrPrsnlRptController
     //         isSuccess = false;
     //         rsltMsg = MessageUtils.getExceptionMsg(e);
     //         logParam.setExceptionInfo(e);
-    //         MessageUtils.alertMessage(rsltMsg, SiteUrl.EXPTR_PRSNL_RPT_ITEMS);
+    //         MessageUtils.alertMessage(rsltMsg, Url.EXPTR_PRSNL_RPT_ITEMS);
     //     } finally {
     //         // 로그 관련 처리
     //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);

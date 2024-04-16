@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -9,7 +10,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.CookieUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysDto;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysSearchParam;
@@ -43,7 +43,7 @@ public class FlsysController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.FLSYS_HOME;             // 기본 URL
+    private final String baseUrl = Url.FLSYS_HOME;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FLSYS;        // 작업 카테고리 (로그 적재용)
 
@@ -54,7 +54,7 @@ public class FlsysController
      * 파일시스템 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.FLSYS_HOME)
+    @RequestMapping(Url.FLSYS_HOME)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String flsysList(
             @ModelAttribute("searchParam") FlsysSearchParam searchParam,
@@ -79,7 +79,7 @@ public class FlsysController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -93,7 +93,7 @@ public class FlsysController
      * 파일시스템 정보 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = SiteUrl.FLSYS_LIST_AJAX)
+    @PostMapping(value = Url.FLSYS_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> flsysListAjax(
@@ -131,7 +131,7 @@ public class FlsysController
      * 파일 시스템 파일 다운로드
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.FLSYS_FILE_DOWNLOAD)
+    @RequestMapping(Url.FLSYS_FILE_DOWNLOAD)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public void flsysFileDownload(
             final @RequestParam("filePath") String filePath,

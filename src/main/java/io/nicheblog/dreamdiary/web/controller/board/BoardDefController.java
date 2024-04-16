@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.board;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -9,7 +10,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefParam;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefSearchParam;
@@ -49,7 +49,7 @@ public class BoardDefController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.BOARD_DEF_LIST;             // 기본 URL
+    private final String baseUrl = Url.BOARD_DEF_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_DEF;        // 작업 카테고리 (로그 적재용)
 
@@ -62,7 +62,7 @@ public class BoardDefController
      * 게시판 정의 목록 조회
      * (관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.BOARD_DEF_LIST)
+    @GetMapping(Url.BOARD_DEF_LIST)
     @Secured({Constant.ROLE_MNGR})
     public String boardDefList(
             @ModelAttribute("searchParam") BoardDefSearchParam searchParam,
@@ -96,7 +96,7 @@ public class BoardDefController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -110,7 +110,7 @@ public class BoardDefController
      * 게시판 정의 등록 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.BOARD_DEF_REG_AJAX)
+    @PostMapping(Url.BOARD_DEF_REG_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefRegAjax(
@@ -150,7 +150,7 @@ public class BoardDefController
      * 게시판 정의 항목 수정 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.BOARD_DEF_MDF_ITEM_AJAX)
+    @PostMapping(Url.BOARD_DEF_MDF_ITEM_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefMdfItemAjax(
@@ -191,7 +191,7 @@ public class BoardDefController
      * 게시판 정의 사용 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.BOARD_DEF_USE_AJAX)
+    @PostMapping(Url.BOARD_DEF_USE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefUseAjax(
@@ -226,7 +226,7 @@ public class BoardDefController
      * 게시판 정의 미사용 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.BOARD_DEF_UNUSE_AJAX)
+    @PostMapping(Url.BOARD_DEF_UNUSE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefUnuseAjax(
@@ -261,7 +261,7 @@ public class BoardDefController
     /**
      * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
      */
-    @PostMapping(SiteUrl.BOARD_DEF_SORT_ORDR_AJAX)
+    @PostMapping(Url.BOARD_DEF_SORT_ORDR_AJAX)
     @ResponseBody
     public AjaxResponse boardDefSortOrdrAjax(
             @RequestBody BoardDefParam boardDefParam,
@@ -293,7 +293,7 @@ public class BoardDefController
      * 게시판 정의 삭제 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.BOARD_DEF_DEL_AJAX)
+    @PostMapping(Url.BOARD_DEF_DEL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefDelAjax(

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.board;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -8,7 +9,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
@@ -54,7 +54,7 @@ public class BoardPostController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.BOARD_POST_LIST;             // 기본 URL
+    private final String baseUrl = Url.BOARD_POST_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_POST;        // 작업 카테고리 (로그 적재용)
 
@@ -73,7 +73,7 @@ public class BoardPostController
      * 일반게시판 게시물 목록 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.BOARD_POST_LIST)
+    @GetMapping(Url.BOARD_POST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostList(
             @ModelAttribute("searchParam") BoardPostSearchParam searchParam,
@@ -115,7 +115,7 @@ public class BoardPostController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -129,7 +129,7 @@ public class BoardPostController
      * 일반게시판 게시물 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.BOARD_POST_REG_FORM)
+    @RequestMapping(Url.BOARD_POST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegForm(
             final @RequestParam("boardCd") String boardCd,
@@ -178,7 +178,7 @@ public class BoardPostController
      * 일반게시판 게시물 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.BOARD_POST_REG_PREVIEW_POP)
+    @RequestMapping(Url.BOARD_POST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegPreviewPop(
             final BoardPostDto boardPost,
@@ -215,7 +215,7 @@ public class BoardPostController
      * 일반게시판 게시물 등록/수정 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.BOARD_POST_REG_AJAX, SiteUrl.BOARD_POST_MDF_AJAX})
+    @PostMapping(value = {Url.BOARD_POST_REG_AJAX, Url.BOARD_POST_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostRegAjax(
@@ -271,7 +271,7 @@ public class BoardPostController
      * 일반게시판 게시물 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = SiteUrl.BOARD_POST_DTL)
+    @RequestMapping(value = Url.BOARD_POST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostDtl(
             final BoardPostKey postKey,
@@ -319,7 +319,7 @@ public class BoardPostController
      * 일반게시판 게시물 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.BOARD_POST_DTL_AJAX)
+    @RequestMapping(Url.BOARD_POST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostDtlAjax(
@@ -361,7 +361,7 @@ public class BoardPostController
      * 일반게시판 게시물 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = SiteUrl.BOARD_POST_MDF_FORM)
+    @RequestMapping(value = Url.BOARD_POST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostMdfForm(
             final BoardPostKey postKey,
@@ -413,7 +413,7 @@ public class BoardPostController
      * 일반게시판 게시물 삭제 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.BOARD_POST_DEL_AJAX)
+    @PostMapping(Url.BOARD_POST_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostDelAjax(

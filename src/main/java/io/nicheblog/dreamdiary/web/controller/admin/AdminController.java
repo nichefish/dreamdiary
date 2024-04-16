@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.auth.model.AuthRoleDto;
 import io.nicheblog.dreamdiary.global.auth.service.AuthRoleService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -9,7 +10,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.annotation.Secured;
@@ -36,7 +36,7 @@ public class AdminController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.ADMIN_PAGE;
+    private final String baseUrl = Url.ADMIN_PAGE;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;      // 작업 카테고리 (로그 적재용)
 
@@ -47,7 +47,7 @@ public class AdminController
      * 사이트 관리 > 사이트 관리 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.ADMIN_PAGE)
+    @RequestMapping(Url.ADMIN_PAGE)
     @Secured(Constant.ROLE_MNGR)
     public String adminPage(
             final LogActvtyParam logParam,
@@ -83,7 +83,7 @@ public class AdminController
      * 사이트 관리 > 테스트 페이지
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.ADMIN_TEST)
+    @RequestMapping(Url.ADMIN_TEST)
     @Secured(Constant.ROLE_MNGR)
     public String testPage(
             final LogActvtyParam logParam,

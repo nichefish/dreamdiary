@@ -69,10 +69,9 @@ public class FreemarkerConfig
         TemplateHashModel statics = config.getStaticModels();
         sharedVariables.put("Statics", statics);
         sharedVariables.put("Constant", statics.get("io.nicheblog.dreamdiary.global.Constant"));
-        sharedVariables.put("DateUtils", statics.get("io.nicheblog.dreamdiary.global.util.date.DateUtils"));
-        sharedVariables.put("SiteUrl", statics.get("io.nicheblog.dreamdiary.web.SiteUrl"));
+        sharedVariables.put("Url", statics.get("io.nicheblog.dreamdiary.global.Url"));
         sharedVariables.put("SiteMenu", statics.get("io.nicheblog.dreamdiary.web.SiteMenu"));
-        sharedVariables.put("ApiUrl", statics.get("io.nicheblog.dreamdiary.api.ApiUrl"));
+        sharedVariables.put("DateUtils", statics.get("io.nicheblog.dreamdiary.global.util.date.DateUtils"));
         return sharedVariables;
     }
 }

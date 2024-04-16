@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.web.mapstruct.board;
 
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.web.SiteTopMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
@@ -19,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {SiteUrl.class, SiteTopMenu.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {Url.class, SiteTopMenu.class})
 public interface BoardDefMapstruct
         extends BaseCrudMapstruct<BoardDefDto, BoardDefDto, BoardDefEntity> {
 
@@ -54,7 +54,7 @@ public interface BoardDefMapstruct
     @Mapping(target = "topMenuNm", expression = "java(SiteTopMenu.BOARD.menuNm)")
     @Mapping(target = "topMenuLabel", expression = "java(SiteTopMenu.BOARD.label)")
     @Mapping(target = "menuNm", expression = "java(entity.getBoardNm())")
-    @Mapping(target = "url", expression = "java(SiteUrl.BOARD_POST_LIST + \"?boardCd=\" + entity.getBoardCd())")
+    @Mapping(target = "url", expression = "java(Url.BOARD_POST_LIST + \"?boardCd=\" + entity.getBoardCd())")
     SiteAcsInfo toMenu(final BoardDefEntity entity) throws Exception;
 
     /**

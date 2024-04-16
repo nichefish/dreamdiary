@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.cmm.file.controller;
 
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileDtlService;
@@ -9,7 +10,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -53,7 +53,7 @@ public class AtchFileController
      * 파일ID 이용 (atchFileDtlNo)
      * 로그인 사용자만 접근 가능
      */
-    @RequestMapping(SiteUrl.FILE_DOWNLOAD_CHK_AJAX)
+    @RequestMapping(Url.FILE_DOWNLOAD_CHK_AJAX)
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
     public ResponseEntity<AjaxResponse> fileChckAjax(
@@ -88,7 +88,7 @@ public class AtchFileController
      * 파일ID 이용 (atchFileNo)
      * 비로그인 사용자도 외부에서 접근 가능 (인증 없음)
      */
-    @RequestMapping(SiteUrl.FILE_INFO_LIST_AJAX)
+    @RequestMapping(Url.FILE_INFO_LIST_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> getFileList(
             final LogActvtyParam logParam,
@@ -125,7 +125,7 @@ public class AtchFileController
      * Ajax로 유무 체크 후 다운로드하므로 항상 파일이 존재한다 가정하고 진행
      * 로그인 사용자만 접근 가능
      */
-    @RequestMapping(SiteUrl.FILE_DOWNLOAD)
+    @RequestMapping(Url.FILE_DOWNLOAD)
     @PreAuthorize("isAuthenticated()")
     public void fileDownload(
             final LogActvtyParam logParam,
@@ -232,7 +232,7 @@ public class AtchFileController
      * 파일 업로드 : 업로드 후 AtchDtlFileDto 반환 (filepath 정보 포함)
      * 로그인 사용자만 접근 가능
      */
-    @RequestMapping(SiteUrl.FILE_UPLOAD_AJAX)
+    @RequestMapping(Url.FILE_UPLOAD_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> uploadFileAjax(
             final LogActvtyParam logParam,

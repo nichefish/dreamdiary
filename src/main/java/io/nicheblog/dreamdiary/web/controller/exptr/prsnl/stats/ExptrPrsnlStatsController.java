@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.stats;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -8,7 +9,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
@@ -47,7 +47,7 @@ public class ExptrPrsnlStatsController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.EXPTR_PRSNL_STATS_PAGE;             // 기본 URL
+    private final String baseUrl = Url.EXPTR_PRSNL_STATS_PAGE;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_STATS;        // 작업 카테고리 (로그 적재용)
 
@@ -63,7 +63,7 @@ public class ExptrPrsnlStatsController
      * 경비 관리 > 경비지출누적집계 > 년도별 경비지출누적집계 화면 조회
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(SiteUrl.EXPTR_PRSNL_STATS_PAGE)
+    @RequestMapping(Url.EXPTR_PRSNL_STATS_PAGE)
     @Secured(Constant.ROLE_MNGR)
     public String exptrPrsnlStats(
             final LogActvtyParam logParam,
@@ -92,7 +92,7 @@ public class ExptrPrsnlStatsController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -106,7 +106,7 @@ public class ExptrPrsnlStatsController
      * 경비 관리 > 경비지출누적집계 > 경비지출서 상세 화면 조회 (관리자)
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(SiteUrl.EXPTR_PRSNL_STATS_DTL)
+    @RequestMapping(Url.EXPTR_PRSNL_STATS_DTL)
     @Secured(Constant.ROLE_MNGR)
     public String exptrPrsnlStatsDtl(
             final LogActvtyParam logParam,
@@ -133,7 +133,7 @@ public class ExptrPrsnlStatsController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
+            MessageUtils.alertMessage(rsltMsg, Url.EXPTR_PRSNL_STATS_PAGE);
         } finally {
             // 로그 관련 처리
             logParam.setCn("key: " + key);
@@ -148,7 +148,7 @@ public class ExptrPrsnlStatsController
      * 경비 관리 > 경비지출누적집계 > 경비지출서 취합완료 처리 (Ajax)
      * 관리자MNGR만 접근 가능
      */
-    @PostMapping(SiteUrl.EXPTR_PRSNL_STATS_CF_AJAX)
+    @PostMapping(Url.EXPTR_PRSNL_STATS_CF_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlStatsComptAjax(
@@ -181,7 +181,7 @@ public class ExptrPrsnlStatsController
      * 경비 관리 > 경비지출누적집계 > 년도별 경비 지출 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      */
-    // @RequestMapping(SiteUrl.EXPTR_PRSNL_STATS_XLSX_DOWNLOAD)
+    // @RequestMapping(Url.EXPTR_PRSNL_STATS_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)
     // public void exptrPrsnlStatsXlsxDownload(
     //         final LogActvtyParam logParam,
@@ -200,7 +200,7 @@ public class ExptrPrsnlStatsController
     //         isSuccess = false;
     //         rsltMsg = MessageUtils.getExceptionMsg(e);
     //         logParam.setExceptionInfo(e);
-    //         MessageUtils.alertMessage(rsltMsg, SiteUrl.EXPTR_PRSNL_STATS_PAGE);
+    //         MessageUtils.alertMessage(rsltMsg, Url.EXPTR_PRSNL_STATS_PAGE);
     //     } finally {
     //         // 로그 관련 처리
     //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);

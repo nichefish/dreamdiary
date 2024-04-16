@@ -13,7 +13,7 @@ public interface ApiUrl {
     String JANDI_CONNECT_WH = "https://wh.jandi.com/connect-api/webhook";
 
     /**
-     * (API) 저널 꿈 일자
+     * (API) 저널 일자
      */
     String API_JRNL_DAY_LIST_AJAX = Prefix.API_JRNL_DAY + "/jrnlDayListAjax.do";
     String API_JRNL_DAY_DTL_AJAX = Prefix.API_JRNL_DAY + "/jrnlDayDtlAjax.do";

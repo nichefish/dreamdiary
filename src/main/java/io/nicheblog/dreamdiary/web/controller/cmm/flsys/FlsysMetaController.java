@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.cmm.flsys;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -8,7 +9,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
 import io.nicheblog.dreamdiary.web.service.cmm.flsys.FlsysMetaService;
@@ -44,7 +44,7 @@ public class FlsysMetaController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.FLSYS_HOME;
+    private final String baseUrl = Url.FLSYS_HOME;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FLSYS;        // 작업 카테고리 (로그 적재용)
 
@@ -55,7 +55,7 @@ public class FlsysMetaController
      * 파일시스템 메타 정보 등록/수정 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.FLSYS_META_REG_AJAX, SiteUrl.FLSYS_META_MDF_AJAX})
+    @PostMapping(value = {Url.FLSYS_META_REG_AJAX, Url.FLSYS_META_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> flsysMetaRegAjax(
@@ -95,7 +95,7 @@ public class FlsysMetaController
      * 파일시스템 메타 정보 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.FLSYS_META_DTL_AJAX)
+    @RequestMapping(Url.FLSYS_META_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> flsysMetaDtlAjax(
@@ -133,7 +133,7 @@ public class FlsysMetaController
      * 파일시스템 메타 정보 삭제 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.FLSYS_META_DEL_AJAX)
+    @PostMapping(Url.FLSYS_META_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> flsysMetaDelAjax(
