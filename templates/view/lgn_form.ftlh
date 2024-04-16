@@ -18,44 +18,50 @@
                     $("#password_valid_span").text("");
                     errorMsgSpan.html("${errorMsg!}".replace(/&lt;br&gt;/g, '<br/>'));   // 줄바꿈 처리
                 </#if>
+                // 중복 로그인시 기존 로그인 끊기 팝업 호출
+                <#if isDupIdLgn!false>
+                    Page.dupLgnAlert();
+                </#if>
+                // 조건 일치시 비밀번호 변경 팝업 호출
+                <#if isCredentialExpired!false || needsPwReset!false>
+                    PwChg.pwChgModal();
+                </#if>
 
-                /** jquery :: validation */
+                /* jquery :: validation */
                 commons.validate.validateForm("#lgnForm");
                 // 엔터키 처리
                 commons.util.enterKey(".enter", Page.lgn);
-
-                // 중복 로그인시 기존 로그인 끊기 팝업 호출
-                <#if isDupIdLgn!false>
-                    Swal.fire({
-                        title: <@spring.message "view.rslt.dupLgn"/>,
-                        text: <@spring.message "view.cnfm.dupLgn"/>,
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonText: "로그인",
-                        cancelButtonText: "취소",
-                    }).then(function(result) {
-                        if (result.value) {
-                            $("#userId").val("${userId!}");
-                            $("#isDupIdLgnProc").val("Y");
-                            $("#password").attr("disabled", "disabled");
-                            Page.lgn();
-                        } else {
-                            $("#isDupIdLgnProc").val("");
-                        }
-                    });
-                </#if>
+            },
+            /** 기존 로그인 끊기 팝업 호출 */
+            dupLgnAlert: function() {
+                Swal.fire({
+                    title: <@spring.message "view.rslt.dupLgn"/>,
+                    text: <@spring.message "view.cnfm.dupLgn"/>,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "로그인",
+                    cancelButtonText: "취소",
+                }).then(function(result) {
+                    if (result.value) {
+                        $("#userId").val("${userId!}");
+                        $("#isDupIdLgnProc").val("Y");
+                        $("#password").attr("disabled", "disabled");
+                        Page.lgn();
+                    } else {
+                        $("#isDupIdLgnProc").val("");
+                    }
+                });
             },
             /** 로그인 처리 */
             lgn: function() {
-                commons.util.blockUISubmit("#lgnForm", "${SiteUrl.AUTH_LGN_PROC!}");
+                commons.util.blockUISubmit("#lgnForm", "${Url.AUTH_LGN_PROC!}");
             },
             /** 신규계정 신청 페이지로 이동 */
             reqstUser: function() {
-                commons.util.blockUIReplace("${SiteUrl.USER_REQST_REG_FORM!}");
+                commons.util.blockUIReplace("${Url.USER_REQST_REG_FORM!}");
             },
         }
     })();
-
     /** 페이지 초기화시 처리 */
     $(document).ready(function() {
         Page.init();
@@ -79,7 +85,7 @@
     </div>
     <div class="d-flex justify-content-center fs-4 mb-4 pe-10 fw-bold ls-1 blink">
         <i class="bi bi-cloud-moon fs-2 text-dark"></i>
-        <span class="px-2">${SiteUrl.DOMAIN!}</span>
+        <span class="px-2">${Url.DOMAIN!}</span>
         <i class="bi bi-stars fs-2 text-dark"></i>
     </div>
     <form class="form w-100 pe-14" name="lgnForm" id="lgnForm" method="post">
