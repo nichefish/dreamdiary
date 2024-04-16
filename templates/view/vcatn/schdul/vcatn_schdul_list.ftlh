@@ -1,6 +1,7 @@
 <#--
-  -- 휴가관리 > 휴가사용일자 화면
+  -- 휴가일자(vcatn_schdul) > 휴가사용일자 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->
@@ -9,6 +10,9 @@
 </#assign>
 
 <@layout.layout toolbar=toolbar!"">
+
+<!--include:: script modules -->
+<#include "/view/vcatn/schdul/_vcatn_schdul_scripts.ftlh">
 
 <script>
     const Page = function() {
@@ -33,34 +37,13 @@
                                 showCancelButton: true,
                             }).then(function(result) {
                                 if (!result.value) return;
-                                Page.regAjax();
+                                VcatnSchdul.regAjax();
                             });
                         },
                         errorPlacement: function(error, element) {
                             commons.validate.errorSpan(error, element);        // 공통 함수로 분리
                         }
                     });
-                });
-            },
-            /** 조회년도 변경 */
-            chgYy: function(obj) {
-                commons.util.blockUIReplace("${SiteUrl.VCATN_SCHDUL_LIST!}?statsYy=" + $(obj).val());
-            },
-            /** 등록 팝업 호출 */
-            regForm: function() {
-                $("#vcatn_schdul_reg_modal").modal("show");
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
-            },
-            /** 등록 또는 수정 처리(Ajax) */
-            regAjax: function() {
-                let ajaxData = new FormData($("#vcantDyRegForm")[0]);
-                let isReg = ($("#vcatnSchdulNo").val() === "");
-                const url = isReg ? '${SiteUrl.VCATN_SCHDUL_REG_AJAX!}' : '${SiteUrl.VCATN_SCHDUL_MDF_AJAX!}';
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
-                    Swal.fire({ text: res.message })
-                        .then(function() {
-                            if (res.rslt) commons.util.blockUIReload();
-                        });
                 });
             },
             /** 유효성검사:: 시작일 이전 날짜 선택 불가하게 막기 */
@@ -85,54 +68,6 @@
                     $("#endDtDiv").show();
                 }
             },
-            /** 수정 팝업 호출 (ajax) */
-            mdfFormPop: function(vcatnSchdulNo) {
-                $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
-                const url = "${SiteUrl.VCATN_SCHDUL_DTL_AJAX!}";
-                let ajaxData = $("#procForm").serializeArray();
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    if (!res.rslt) return;
-                    let rsltObj = res.rsltObj;
-                    // 수정 modal_form에 값 세팅
-                    $("#vcatnSchdulNo").val(vcatnSchdulNo);
-                    $("#userId").val(rsltObj.userId);
-                    $("#vcatnCd").val(rsltObj.vcatnCd);
-                    $("#bgnDt").val(rsltObj.bgnDt);
-                    $("#endDt").val(rsltObj.endDt);
-                    $("#vcatnResn").val(rsltObj.vcatnResn);
-                    $("#vcatnRm").val(rsltObj.vcatnRm);
-                    $("#vcatn_schdul_reg_modal").modal("show");
-                });
-            },
-            /** 엑셀 다운로드 */
-            xlsxDownload: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.download"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    commons.util.blockUIFileDownload();
-                    $("#procForm").attr("action", "${SiteUrl.VCATN_SCHDUL_XLSX_DOWNLOAD!}").submit();
-                });
-            },
-            /** 삭제 처리 (ajax) */
-            delAjax: function(vcatnSchdulNo) {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
-                    const url = "${SiteUrl.VCATN_SCHDUL_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            }
         }
     }();
 
@@ -141,10 +76,6 @@
     });
 </script>
 
-<form name="procForm" id="procForm" method="get">
-    <input type="hidden" name="vcatnSchdulNo" id="vcatnSchdulNoProc" />
-    <input type="hidden" name="statsYy" id="statsYy" value="${(vcatnYy.statsYy)!}">
-</form>
 <div class="card post">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable">
         <thead class="cursor-pointer">
@@ -173,8 +104,8 @@
                     <td class="text-center">${vcatn.rm!}</td>
                     <td class="text-center">
                         <#if (vcatn.vcatnSchdulNo?? && vcatn.userId??)>
-                            <button type="button" class="badge badge-primary" onclick="Page.mdfFormPop(${vcatn.vcatnSchdulNo!});">수정</button>
-                            <button type="button" class="badge badge-primary" onclick="Page.delAjax(${vcatn.vcatnSchdulNo!});">삭제</button>
+                            <button type="button" class="badge badge-primary" onclick="VcatnSchdul.mdfModal(${vcatn.vcatnSchdulNo!});">수정</button>
+                            <button type="button" class="badge badge-primary" onclick="VcatnSchdul.delAjax(${vcatn.vcatnSchdulNo!});">삭제</button>
                         </#if>
                     </td>
                 </tr>
@@ -182,6 +113,11 @@
         </tbody>
     </table>
 </div>
+
+<form name="procForm" id="procForm" method="get">
+    <input type="hidden" name="vcatnSchdulNo" id="vcatnSchdulNoProc" />
+    <input type="hidden" name="statsYy" id="statsYy" value="${(vcatnYy.statsYy)!}">
+</form>
 
 <#include "/view/vcatn/schdul/_vcatn_schdul_reg_modal.ftlh">
 

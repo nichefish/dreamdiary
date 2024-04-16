@@ -1,11 +1,12 @@
 <#--
-  -- 휴가관리 > 휴가사용일자 화면
+  -- 휴가일자(vcatn_schdul) > 휴가사용일자 화면
+  -- @included_in : vcatn_schdul_list.ftlh
   -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="post" >
     <div>
         <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy"
-                onchange="Page.chgYy(this);"
+                onchange="VcatnSchdul.chgYy(this);"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
             <#list yyList![] as yy>
                 <option value="${yy.statsYy!}"<#if yy.statsYy == vcatnYy.statsYy>selected="selected"</#if>>${yy.statsYy!}</option>
@@ -20,11 +21,11 @@
     </div>
     <div>
         <!-- 버튼:: 등록 화면 이동하기 -->
-        <@component.btn_header_reg_form "Page.regForm();" />
+        <@component.btn_header_reg_form "VcatnSchdul.regForm();" />
     </div>
     <div>
         <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "Page.xlsxDownload();" />
+        <@component.btn_header_xlsx_download "VcatnSchdul.xlsxDownload();" />
     </div>
 </form>
 

@@ -1,7 +1,8 @@
 <#--
-  -- 휴가관리 > 휴가사용일자 > 휴가 관리자 직접 등록 Modal
-  -- @included_in : vcatn_schdul_list
+  -- 휴가일자(vcatn_schdul) > 휴가사용일자 > 휴가 관리자 직접 등록 Modal
+  -- @included_in : vcatn_schdul_list.ftlh
   -->
+
 <div class="modal fade" tabindex="-1" id="vcatn_schdul_reg_modal" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
@@ -118,5 +119,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/vcatn/schdul/_vcatn_schdul_reg_template.hbs">
