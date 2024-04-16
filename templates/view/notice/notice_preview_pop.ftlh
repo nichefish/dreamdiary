@@ -1,7 +1,8 @@
 <#--
-  -- 공지사항 > 글작성 미리보기 팝업
+  -- 공지사항(notice) > 글작성 미리보기 팝업
   -- (사이드바 없음)
   -->
+
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">

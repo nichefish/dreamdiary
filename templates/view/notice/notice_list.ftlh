@@ -1,6 +1,7 @@
 <#--
-  -- 공지사항 > 목록 화면
+  -- 공지사항(notice) > 목록 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->

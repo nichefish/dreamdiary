@@ -1,7 +1,8 @@
 <#--
-  -- 공지사항 > 등록 화면
+  -- 공지사항(notice) > 등록 화면
   -- tinyMCE 정책 때문에 문서 최상단에 <!DOCTYPE html> 추가
   -->
+
 <!DOCTYPE html>
 <#import "/layout/layout.ftlh" as layout >
 
@@ -62,7 +63,7 @@
                                 const popupNm = "preview";
                                 const options = 'width=1280,height=1440,top=0,left=270';
                                 commons.util.popup("", popupNm, options);
-                                let popupUrl = "${SiteUrl.NOTICE_REG_PREVIEW_POP!}";
+                                let popupUrl = "${Url.NOTICE_REG_PREVIEW_POP!}";
                                 $("#noticeRegForm").attr("action", popupUrl).attr("target", popupNm);
                                 return true;
                             } else if (Page.submitMode === "submit") {
@@ -72,7 +73,7 @@
                                     showCancelButton: true,
                                 }).then(function(result) {
                                     if (!result.value) return;
-                                    Page.<#if isMdf>mdf<#else>reg</#if>Ajax();
+                                    Page.regAjax();
                                 });
                             }
                         },
@@ -96,9 +97,9 @@
                 $("#noticeRegForm").submit();
             },
             /** 등록/수정 처리(Ajax) */
-            <#if isMdf>mdf<#else>reg</#if>Ajax: function () {
+            regAjax: function () {
                 let ajaxData = new FormData($("#noticeRegForm")[0]);
-                const url = " <#if isMdf>${SiteUrl.NOTICE_MDF_AJAX!}<#else>${SiteUrl.NOTICE_REG_AJAX!}</#if>";
+                const url = " <#if isMdf>${Url.NOTICE_MDF_AJAX!}<#else>${Url.NOTICE_REG_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -106,11 +107,6 @@
                         });
                 }, 'block');
             },
-            /** 목록 화면 이동 */
-            list: function() {
-                const listUrl = "${SiteUrl.NOTICE_LIST!}<#if isMdf>?isBackToList=Y</#if>";
-                commons.util.blockUIReplace(listUrl);
-            }
         }
     }();
 
@@ -257,7 +253,7 @@
             <!-- 버튼 :: 저장하기 -->
             <@component.btn_post_save "Page" />
             <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "Page" />
+            <@component.btn_post_toList "Notice" />
         </div>
     </div>
 </div>
@@ -266,5 +262,8 @@
 <#include "/view/_component/atch_file/_atch_file_area.ftlh">
 <!-- #include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
+
+<!--include:: script modules -->
+<#include "/view/notice/_notice_scripts.ftlh">
 
 </@layout.layout>

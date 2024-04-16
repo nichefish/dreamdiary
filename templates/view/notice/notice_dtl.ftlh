@@ -1,45 +1,10 @@
 <#--
-  -- 공지사항 > 상세 화면
+  -- 공지사항(notice) > 상세 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
-
-<script>
-    const Page = function() {
-        return {
-            init: function () {
-                //
-            },
-            /** 수정 화면 이동 */
-            mdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_MDF_FORM!}");
-            },
-            /** 삭제 처리 (ajax) */
-            delAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.NOTICE_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) Page.list();
-                            });
-                    });
-                });
-            },
-            /** 목록 화면 이동 */
-            list: function() {
-                const listUrl = "${SiteUrl.NOTICE_LIST!}?isBackToList=Y";
-                commons.util.blockUIReplace(listUrl);
-            }
-        }
-    }();
-</script>
 
 <form name="procForm" id="procForm">
     <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
@@ -82,15 +47,18 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
         <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_mdf "Page" post isMngr />
+        <@component.btn_post_mdf "Notice" post isMngr />
         <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "Page" post isMngr />
+        <@component.btn_post_delete "Notice" post isMngr />
         <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "Page" />
+        <@component.btn_post_toList "Notice" />
     </div>
 
     <!-- 댓글 영역 -->
     <#include "/view/_component/comment/_comment_area.ftlh">
 </div>
+
+<!--include:: script modules -->
+<#include "/view/notice/_notice_scripts.ftlh">
 
 </@layout.layout>
