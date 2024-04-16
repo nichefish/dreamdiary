@@ -20,7 +20,7 @@ public class JrnlDreamEntityTestFactory {
     public static JrnlDreamEntity createJrnlDream() throws Exception {
         return JrnlDreamEntity.builder()
                 .postNo(0)
-                .contentType(ContentType.NOTICE.key)
+                .contentType(ContentType.JRNL_DREAM.key)
                 .title("test_title")
                 .cn("test_cn")
                 .ctgrCd("test_ctgr_cd")
