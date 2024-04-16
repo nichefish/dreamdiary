@@ -12,7 +12,7 @@
 <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px" data-kt-menu="true">
     <div class="menu-item"
          data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="left" title="홈페이지입니다.">
-        <a class="menu-link py-3" onclick="window.open('${SiteUrl.MAIN!}', '_blank');">
+        <a class="menu-link py-3" onclick="window.open('${Url.MAIN!}', '_blank');">
             <span class="menu-icon">
                 <img src="/media/img/logo/logo_racoon.jpg" class="img-fluid p-0" />
             </span>

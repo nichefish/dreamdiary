@@ -7,7 +7,7 @@
 
 <head>
     <title></title>
-    <base href="${SiteUrl.MAIN!}">
+    <base href="${Url.MAIN!}">
     <meta name="description" content="
             The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo,
             Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions.
