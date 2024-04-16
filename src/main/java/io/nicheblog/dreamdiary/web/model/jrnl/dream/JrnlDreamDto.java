@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.dream.piece;
+package io.nicheblog.dreamdiary.web.model.jrnl.dream;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
@@ -13,9 +13,9 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Column;
 
 /**
- * DreamPieceDto
+ * JrnlDreamDto
  * <pre>
- *  꿈 일자 Dto
+ *  저널 꿈 Dto
  * </pre>
  *
  * @author nichefish
@@ -28,12 +28,12 @@ import javax.persistence.Column;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class DreamPieceDto
+public class JrnlDreamDto
         extends BasePostDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.DREAM_PIECE;
+    private static final ContentType CONTENT_TYPE = ContentType.JRNL_DREAM;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
@@ -43,8 +43,8 @@ public class DreamPieceDto
 
     /* ----- */
 
-    /** 꿈 일자 번호 */
-    private Integer dreamDayNo;
+    /** 저널 일자 번호 */
+    private Integer jrnlDayNo;
     /** 순번 */
     private Integer idx;
 
@@ -65,11 +65,11 @@ public class DreamPieceDto
 
     /* ----- */
 
-    public static class DTL extends DreamPieceDto {
+    public static class DTL extends JrnlDreamDto {
 
     }
 
-    public static class LIST extends DreamPieceDto {
+    public static class LIST extends JrnlDreamDto {
         //
     }
 

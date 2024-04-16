@@ -15,7 +15,7 @@
             },
             /** 메인으로 돌아가기 */
             main: function() {
-                commons.util.blockUIReplace("${SiteUrl.MAIN!}");
+                commons.util.blockUIReplace("${Url.MAIN!}");
             }
         }
     })();

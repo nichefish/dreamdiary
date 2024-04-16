@@ -29,7 +29,7 @@ public class JrnlDreamApiDto
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    private String contentType = "dream_piece";
+    private String contentType = "jrnl_dream";
 
     /** 저널 일자 번호 */
     private Integer jrnlDayNo;

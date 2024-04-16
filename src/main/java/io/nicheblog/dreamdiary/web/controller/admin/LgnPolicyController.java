@@ -1,13 +1,13 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.LgnPolicyDto;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
@@ -42,7 +42,7 @@ public class LgnPolicyController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.LGN_POLICY_FORM;             // 기본 URL
+    private final String baseUrl = Url.LGN_POLICY_FORM;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LGN_POLICY;        // 작업 카테고리 (로그 적재용)
 
@@ -53,7 +53,7 @@ public class LgnPolicyController
      * 사이트 관리 > 로그인 설정 관리 > 로그인 설정 등록/수정 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.LGN_POLICY_FORM)
+    @GetMapping(Url.LGN_POLICY_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String lgnPolicyForm(
             final LogActvtyParam logParam,
@@ -76,7 +76,7 @@ public class LgnPolicyController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -90,7 +90,7 @@ public class LgnPolicyController
      * 사이트 관리 > 로그인 설정 관리 > 로그인 설정 등록/수정 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.LGN_POLICY_REG_AJAX)
+    @PostMapping(Url.LGN_POLICY_REG_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> lgnPolicyRegAjax(

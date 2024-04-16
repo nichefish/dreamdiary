@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.spec.dream;
+package io.nicheblog.dreamdiary.web.spec.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * DreamDaySpec
+ * JrnlDaySpec
  * <pre>
- *  꿈 일자 목록 검색인자 세팅 Specification
+ *  저널 일자 목록 검색인자 세팅 Specification
  * </pre>
  *
  * @author nichefish
@@ -26,8 +26,8 @@ import java.util.Map;
  */
 @Component
 @Log4j2
-public class DreamDaySpec
-        implements BaseClsfSpec<DreamDayEntity> {
+public class JrnlDaySpec
+        implements BaseClsfSpec<JrnlDayEntity> {
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
@@ -35,7 +35,7 @@ public class DreamDaySpec
     @Override
     public List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
-            final Root<DreamDayEntity> root,
+            final Root<JrnlDayEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
 

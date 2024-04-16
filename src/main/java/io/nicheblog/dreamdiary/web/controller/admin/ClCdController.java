@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -9,7 +10,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.ClCdParam;
 import io.nicheblog.dreamdiary.web.model.admin.ClCdSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
@@ -48,7 +48,7 @@ public class ClCdController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.CL_CD_LIST;             // 기본 URL
+    private final String baseUrl = Url.CL_CD_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.CD;        // 작업 카테고리 (로그 적재용)
 
@@ -59,7 +59,7 @@ public class ClCdController
      * 분류 코드(CL_CD) 관리(useYn=N 포함) 목록 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.CL_CD_LIST)
+    @GetMapping(Url.CL_CD_LIST)
     @Secured({Constant.ROLE_MNGR})
     public String clCdList(
             @ModelAttribute("searchParam") ClCdSearchParam searchParam,
@@ -91,7 +91,7 @@ public class ClCdController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -105,7 +105,7 @@ public class ClCdController
      * 분류 코드(CL_CD) 관리(useYn=N 포함) 상세 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.CL_CD_DTL)
+    @GetMapping(Url.CL_CD_DTL)
     @Secured({Constant.ROLE_MNGR})
     public String clCdDtl(
             final LogActvtyParam logParam,
@@ -143,7 +143,7 @@ public class ClCdController
      * 분류 코드(CL_CD) 관리(useYn=N 포함) 등록/수정 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.CL_CD_REG_AJAX, SiteUrl.CL_CD_MDF_AJAX})
+    @PostMapping(value = {Url.CL_CD_REG_AJAX, Url.CL_CD_MDF_AJAX})
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> clCdRegAjax(
@@ -186,7 +186,7 @@ public class ClCdController
      * 분류 코드 관리(useYn=N 포함) 상세 데이터 조회 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.CL_CD_DTL_AJAX)
+    @RequestMapping(Url.CL_CD_DTL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> clCdDtlAjax(
@@ -224,7 +224,7 @@ public class ClCdController
      * 분류 코드(CL_CD) 관리(useYn=N 포함) 삭제 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.CL_CD_DEL_AJAX)
+    @PostMapping(Url.CL_CD_DEL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> clCdDelAjax(
@@ -258,7 +258,7 @@ public class ClCdController
      * 분류 코드 관리(useYn=N 포함) 사용 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.CL_CD_USE_AJAX)
+    @PostMapping(Url.CL_CD_USE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> clCdUseAjax(
@@ -292,7 +292,7 @@ public class ClCdController
      * 분류 코드 관리(useYn=N 포함) 사용 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.CL_CD_UNUSE_AJAX)
+    @PostMapping(Url.CL_CD_UNUSE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> clCdUnuseAjax(
@@ -325,7 +325,7 @@ public class ClCdController
     /**
      * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
      */
-    @PostMapping(SiteUrl.CL_CD_SORT_ORDR_AJAX)
+    @PostMapping(Url.CL_CD_SORT_ORDR_AJAX)
     @ResponseBody
     public AjaxResponse clCdSortOrdrAjax(
             @RequestBody ClCdParam clCdParam,

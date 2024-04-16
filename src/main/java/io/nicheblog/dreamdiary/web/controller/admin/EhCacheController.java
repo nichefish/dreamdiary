@@ -1,13 +1,13 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -35,7 +35,7 @@ public class EhCacheController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.ADMIN_PAGE;             // 기본 URL
+    private final String baseUrl = Url.ADMIN_PAGE;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;        // 작업 카테고리 (로그 적재용)
 
@@ -43,7 +43,7 @@ public class EhCacheController
      * 사이트 캐시 조회 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.CACHE_CHCK_AJAX)
+    @RequestMapping(Url.CACHE_CHCK_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> chckActiveCachesAjax(
@@ -78,7 +78,7 @@ public class EhCacheController
      * 사이트 캐시 전체 초기화 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.CACHE_CLEAR_AJAX)
+    @RequestMapping(Url.CACHE_CLEAR_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> clearCacheAjax(

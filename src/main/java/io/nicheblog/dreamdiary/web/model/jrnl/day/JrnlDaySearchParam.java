@@ -1,12 +1,12 @@
-package io.nicheblog.dreamdiary.web.model.dream.day;
+package io.nicheblog.dreamdiary.web.model.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 
 /**
- * UserSearchParam
+ * JrnlDaySearchParam
  * <pre>
- *  사용자(계정) 정보 목록 검색 파라미터 Dto
+ *  저널 일자 목록 검색 파라미터 Dto
  * </pre>
  *
  * @author nichefish
@@ -17,7 +17,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class DreamDaySearchParam
+public class JrnlDaySearchParam
         extends BaseSearchParam {
 
     /**

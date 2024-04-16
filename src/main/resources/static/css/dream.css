@@ -4,22 +4,22 @@
  * @auther : nichefish
  */
 /** ----------------------- */
-.dream-day {
+.jrnl-day {
   padding-top: 2rem !important;
   padding-bottom: 2rem !important;
 }
 
-.dream-piece {
+.jrnl-dream {
   display: flex !important;
   flex-direction: row !important;
   justify-content: start;
   align-items: center;
 }
 
-.dream-piece-cn {
+.jrnl-dream-cn {
   align-items: center;
 }
-.dream-piece-cn p {
+.jrnl-dream-cn p {
   margin-top: 0.1rem !important;
   margin-bottom: 0.1rem !important;
 }

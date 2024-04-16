@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -8,7 +9,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.DtlCdParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.DtlCdService;
@@ -44,7 +44,7 @@ public class DtlCdController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.CL_CD_LIST;             // 기본 URL
+    private final String baseUrl = Url.CL_CD_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.CD;        // 작업 카테고리 (로그 적재용)
 
@@ -55,7 +55,7 @@ public class DtlCdController
      * 상세 코드 관리(useYn=N 포함) 상세 조회 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.DTL_CD_DTL_AJAX)
+    @RequestMapping(Url.DTL_CD_DTL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdDtlAjax(
@@ -92,7 +92,7 @@ public class DtlCdController
      * 상세 코드 관리(useYn=N 포함) 등록/수정 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.DTL_CD_REG_AJAX, SiteUrl.DTL_CD_MDF_AJAX})
+    @PostMapping(value = {Url.DTL_CD_REG_AJAX, Url.DTL_CD_MDF_AJAX})
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdRegAjax(
@@ -134,7 +134,7 @@ public class DtlCdController
      * 상세 코드 관리(useYn=N 포함) 사용 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.DTL_CD_USE_AJAX)
+    @PostMapping(Url.DTL_CD_USE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdUseAjax(
@@ -168,7 +168,7 @@ public class DtlCdController
      * 상세 코드 관리(useYn=N 포함) 미사용 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.DTL_CD_UNUSE_AJAX)
+    @PostMapping(Url.DTL_CD_UNUSE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdUnuseAjax(
@@ -204,7 +204,7 @@ public class DtlCdController
      *
      * @param dtlCdKey: clCd, dtlCd
      */
-    @PostMapping(SiteUrl.DTL_CD_DEL_AJAX)
+    @PostMapping(Url.DTL_CD_DEL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdDelAjax(
@@ -241,7 +241,7 @@ public class DtlCdController
      *
      * @param clCd: 구분코드 (대분류)
      */
-    @RequestMapping(SiteUrl.DTL_CD_LIST_AJAX)
+    @RequestMapping(Url.DTL_CD_LIST_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdListAjax(
@@ -279,7 +279,7 @@ public class DtlCdController
     /**
      * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
      */
-    @PostMapping(SiteUrl.DTL_CD_SORT_ORDR_AJAX)
+    @PostMapping(Url.DTL_CD_SORT_ORDR_AJAX)
     @ResponseBody
     public AjaxResponse dtlCdSortOrdrAjax(
             @RequestBody DtlCdParam dtlCdParam,

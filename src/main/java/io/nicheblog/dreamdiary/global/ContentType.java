@@ -16,8 +16,8 @@ public enum ContentType {
     DEFAULT("default", "기본"),
     NOTICE("notice", "공지사항"),
     COMMENT("comment", "댓글"),
-    DREAM_DAY("dream_day", "꿈 일자"),
-    DREAM_PIECE("dream_piece", "꿈 조각"),
+    JRNL_DAY("jrnl_day", "저널 일자"),
+    JRNL_DREAM("jrnl_dream", "저널 꿈"),
 
     VCATN_PAPR("vcatn_papr", "휴가계획서"),
     SCHDUL("schdul", "일정"),

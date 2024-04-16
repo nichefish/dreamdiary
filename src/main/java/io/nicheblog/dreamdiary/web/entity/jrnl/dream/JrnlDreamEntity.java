@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.dream;
+package io.nicheblog.dreamdiary.web.entity.jrnl.dream;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
@@ -15,9 +15,9 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 /**
- * DreamPieceEntity
+ * JrnlDreamEntity
  * <pre>
- *  꿈 조각 Entity.
+ *  저널 꿈 Entity.
  *  Entity that contains each distinct dream.
  * </pre>
  *
@@ -25,28 +25,28 @@ import javax.persistence.*;
  * @extends BaseCrudEntity
  */
 @Entity
-@Table(name = "dream_piece")
+@Table(name = "jrnl_dream")
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE dream_piece SET del_yn = 'Y' WHERE dream_piece_no = ?")
-public class DreamPieceEntity
+@SQLDelete(sql = "UPDATE jrnl_dream SET del_yn = 'Y' WHERE jrnl_dream_no = ?")
+public class JrnlDreamEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.DREAM_PIECE;
+    private static final ContentType CONTENT_TYPE = ContentType.JRNL_DREAM;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
-    /** 꿈 조각 고유 번호 (PK) */
+    /** 저널 꿈 고유 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_no")
-    @Comment("꿈 조각 고유 번호")
+    @Comment("저널 꿈 고유 번호")
     private Integer postNo;
 
     /** 게시판 분류 코드 */
@@ -56,10 +56,10 @@ public class DreamPieceEntity
 
     /* ----- */
 
-    /** 꿈 일자 번호  */
-    @Column(name = "dream_day_no")
-    @Comment("꿈 일자 번호")
-    private Integer dreamDayNo;
+    /** 저널 일자 번호  */
+    @Column(name = "jrnl_day_no")
+    @Comment("저널 일자 번호")
+    private Integer jrnlDayNo;
 
     /** 순번 */
     @Column(name = "idx", columnDefinition = "INT DEFAULT 1")

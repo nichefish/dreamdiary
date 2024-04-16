@@ -1,13 +1,13 @@
 package io.nicheblog.dreamdiary.web.controller.log;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsSearchParam;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserDto;
 import io.nicheblog.dreamdiary.web.service.log.LogStatsUserService;
@@ -40,7 +40,7 @@ public class LogStatsController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.LOG_STATS_USER_LIST;             // 기본 URL
+    private final String baseUrl = Url.LOG_STATS_USER_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_STATS;        // 작업 카테고리 (로그 적재용)
 
@@ -51,7 +51,7 @@ public class LogStatsController
      * 활동 로그 > 활동 로그 목록 (전체) 화면 조회
      * 관리자MNGR만 접근 가능
      */
-    @GetMapping(SiteUrl.LOG_STATS_USER_LIST)
+    @GetMapping(Url.LOG_STATS_USER_LIST)
     @Secured(Constant.ROLE_MNGR)
     public String logStatsUserList(
             @ModelAttribute("searchParam") LogStatsSearchParam searchParam,
@@ -82,7 +82,7 @@ public class LogStatsController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);

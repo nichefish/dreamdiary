@@ -1,10 +1,9 @@
-package io.nicheblog.dreamdiary.web.repository.dream.piece;
+package io.nicheblog.dreamdiary.web.repository.jrnl.dream;
 
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
-import io.nicheblog.dreamdiary.web.entity.dream.DreamPieceEntity;
-import io.nicheblog.dreamdiary.web.entity.dream.piece.DreamPieceEntityTestFactory;
-import io.nicheblog.dreamdiary.web.repository.dream.DreamPieceRepository;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntityTestFactory;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * DreamPieceRepositoryTest
+ * JrnlDreamRepositoryTest
  * <pre>
- *  DreamPieceRepository 테스트 모듈
+ *  JrnlDreamRepository 테스트 모듈
  * </pre>
  *
  * @author nichefish
@@ -34,12 +33,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Import(TestAuditConfig.class)
 @ActiveProfiles("test")
 @Log4j2
-class DreamPieceRepositoryTest {
+class JrnlDreamRepositoryTest {
 
     @Autowired
     private TestEntityManager testEntityManager;
     @Autowired
-    private DreamPieceRepository dreamPieceRepository;
+    private JrnlDreamRepository jrnlDreamRepository;
 
     /**
      * regist 테스트
@@ -47,11 +46,11 @@ class DreamPieceRepositoryTest {
     @Test
     public void testRegist() throws Exception {
         // Given::
-        DreamPieceEntity dreamPiece = DreamPieceEntityTestFactory.createDreamPiece();
+        JrnlDreamEntity jrnlDream = JrnlDreamEntityTestFactory.createJrnlDream();
 
         // When::
-        Integer rsltId = dreamPieceRepository.save(dreamPiece).getPostNo();
-        DreamPieceEntity rslt = dreamPieceRepository.findById(rsltId).orElse(null);
+        Integer rsltId = jrnlDreamRepository.save(jrnlDream).getPostNo();
+        JrnlDreamEntity rslt = jrnlDreamRepository.findById(rsltId).orElse(null);
 
         // Then::
         assertNotNull(rslt);

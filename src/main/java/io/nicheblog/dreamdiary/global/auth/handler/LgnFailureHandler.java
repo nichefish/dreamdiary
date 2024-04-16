@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.auth.handler;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.auth.exception.AcntDormantException;
 import io.nicheblog.dreamdiary.global.auth.exception.AcntNeedsPwResetException;
 import io.nicheblog.dreamdiary.global.auth.exception.DupIdLgnException;
@@ -9,7 +10,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import lombok.SneakyThrows;
@@ -99,7 +99,7 @@ public class LgnFailureHandler
 
         log.info("login attempt failed.. userId: {} errorMsg: {}", userId, errorMsg);
         request.setAttribute(Constant.ERROR_MSG, errorMsg);
-        request.getRequestDispatcher(SiteUrl.AUTH_LGN_FORM).forward(request, response);
+        request.getRequestDispatcher(Url.AUTH_LGN_FORM).forward(request, response);
     }
 
     /**

@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.web.controller;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,14 +22,14 @@ public class MainController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.MAIN;
+    private final String baseUrl = Url.MAIN;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DEFAULT;      // 작업 카테고리 (로그 적재용)
 
     /**
      * 메인 화면 :: 사용자
      */
-    @RequestMapping(value = {SiteUrl.ROOT, SiteUrl.MAIN})
+    @RequestMapping(value = {Url.ROOT, Url.MAIN})
     public String mainPage(
             final LogActvtyParam logParam,
             final ModelMap model
@@ -41,14 +41,14 @@ public class MainController
         // TODO: 접근 권한 통제
 
         // 메인 화면 꾸밀때까지 공지사항 목록 화면으로 리다이렉트
-        return "redirect:" + SiteUrl.NOTICE_LIST;
+        return "redirect:" + Url.NOTICE_LIST;
         // return "view/main/main_page";
     }
 
     /**
      * 메인 화면 :: 관리자
      */
-    @RequestMapping(value = {SiteUrl.ADMIN_MAIN})
+    @RequestMapping(value = {Url.ADMIN_MAIN})
     public String adminMainPage(
             final LogActvtyParam logParam,
             final ModelMap model
@@ -60,7 +60,7 @@ public class MainController
         // TODO: 접근 권한 통제
 
         // 메인 화면 꾸밀때까지 사용자 목록 화면으로 리다이렉트
-        return "redirect:" + SiteUrl.USER_LIST;
+        return "redirect:" + Url.USER_LIST;
         // return "view/main/main_page";
     }
 

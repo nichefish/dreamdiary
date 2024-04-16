@@ -1,13 +1,13 @@
 package io.nicheblog.dreamdiary.web.controller.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentParam;
@@ -55,7 +55,7 @@ public class CommentController
      * 댓글 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.COMMENT_LIST_AJAX)
+    @RequestMapping(Url.COMMENT_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentListAjax(
@@ -99,7 +99,7 @@ public class CommentController
      * 댓글 등록/수정 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.COMMENT_REG_AJAX, SiteUrl.COMMENT_MDF_AJAX})
+    @PostMapping(value = {Url.COMMENT_REG_AJAX, Url.COMMENT_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentRegAjax(
@@ -141,7 +141,7 @@ public class CommentController
      * 댓글 삭제 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.COMMENT_DEL_AJAX)
+    @PostMapping(Url.COMMENT_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentDelAjax(
