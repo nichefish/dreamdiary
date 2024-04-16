@@ -1,8 +1,9 @@
 <#--
-  -- 경비 > 물품구매/경조사비 신청 > 경조사비 규칙 Modal
+  -- 물품구매/경조사비 신청(exptr_reqst) > 경조사비 규칙 Modal
   -- @included_in : exptr_reqst_list_header
   -- @included_in : exptr_reqst_reg_form
   -->
+
 <div class="modal fade" id="exptr_reqst_rule_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">

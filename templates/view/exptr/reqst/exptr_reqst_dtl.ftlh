@@ -1,78 +1,13 @@
 <#--
-  -- 경비 > 물품구매/경조사비 신청 > 상세 화면
+  -- 물품구매/경조사비 신청(exptr_reqst) > 상세 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 
-<script>
-    const Page = function() {
-        return {
-            init: function () {
-                //
-            },
-            /** 수정 화면 이동 */
-            mdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_REQST_MDF_FORM!}");
-            },
-            /** 삭제 처리 (ajax) */
-            delAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_REQST_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) Page.list();
-                            });
-                    });
-                });
-            },
-            /** 관리자 확인 여부 변경 (Ajax) */
-            cfAjax: function() {
-                Swal.fire({
-                    text: "완료 처리하시겠습니까?",
-                    showCancelButton: true,
-                }).then(function (result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_REQST_CF_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 항목 미처리 (Ajax) */
-            dismissAjax: function() {
-                Swal.fire({
-                    text: "취소(기각) 처리하시겠습니까?",
-                    showCancelButton: true,
-                }).then(function (result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_REQST_DISMISS_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 목록 화면 이동 */
-            list: function() {
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_REQST_LIST!}?isBackToList=Y");
-            }
-        }
-    }();
-</script>
+<!--include:: script modules -->
+<#include "/view/exptr/reqst/_exptr_reqst_scripts.ftlh">
 
 <div class="card post">
     <!--begin::Question-->
@@ -114,8 +49,8 @@
                         <span class="text-muted me-10">
                             미처리<i class="bi bi-dash text-muted"></i>
                         </span>
-                        <button class="btn btn-sm btn-primary" onclick="Page.cfAjax();">처리완료하기</button>
-                        <button class="btn btn-sm btn-secondary ms-4" onclick="Page.dismissAjax();">취소(기각) 처리하기</button>
+                        <button class="btn btn-sm btn-primary" onclick="ExptrReqst.cfAjax();">처리완료하기</button>
+                        <button class="btn btn-sm btn-secondary ms-4" onclick="ExptrReqst.dismissAjax();">취소(기각) 처리하기</button>
                     <#elseif post.cfYn == "X">
                         <button class="btn btn-sm btn-secondary" disabled>
                             취소<i class="bi bi-x text-dark"></i>
@@ -139,19 +74,19 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
         <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_mdf "Page" post isMngr />
+        <@component.btn_post_modify "ExptrReqst.mdfForm();" post isMngr />
         <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "Page" post isMngr />
+        <@component.btn_post_delete "ExptrReqst.delAjax();" post isMngr />
         <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "Page" />
+        <@component.btn_post_toList "ExptrReqst.list();" />
     </div>
 
     <!-- 댓글 영역 -->
     <#include "/view/_component/comment/_comment_area.ftlh">
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+</form>
 
 </@layout.layout>

@@ -1,6 +1,7 @@
 <#--
-  -- 경비 > 물품구매/경조사비 신청 > 목록 화면
+  -- 물품구매/경조사비 신청(exptr_reqst) > 목록 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->
@@ -10,53 +11,18 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/exptr/reqst/_exptr_reqst_scripts.ftlh">
+
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
-            },
-            /** 목록 검색 */
-            search: function () {
-                $("#listForm #pageNo").val(1);
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.EXPTR_REQST_LIST!}?actionTyCd=SEARCH");
-            },
-            /** 내가 작성한 글 보기 */
-            myPapr: function () {
-                const url = "${SiteUrl.EXPTR_REQST_LIST!}";
-                let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
-                commons.util.blockUIReplace(url + param);
-            },
-            /** 전체 목록 조회 */
-            resetSearch: function() {
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_REQST_LIST!}");
-            },
-            /** 등록 화면 이동 */
-            regForm: function () {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_REQST_REG_FORM!}");
-            },
-            /** 상세 화면 이동 */
-            dtl: function (postNo) {
-                commons.util.blockUIRequest();
-                $("#procForm #postNo").val(postNo);
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_REQST_DTL!}");
-            },
-            /** 상세 모달 팝업 호출 */
-            dtlAjax: function (postNo) {
-                event.stopPropagation();
-                const url = "${SiteUrl.EXPTR_REQST_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltObj, "exptr_reqst_dtl", "show");
-                });
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
             },
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });
@@ -98,14 +64,14 @@
         <!--begin::Table body-->
         <tbody>
             <#list exptrReqstFxdList![] as post>
-                <tr class="bg-fxd-list bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
+                <tr class="bg-fxd-list bg-hover-secondary" onclick="ExptrReqst.dtl('${post.postNo!}');">
                     <td class="text-center hidden-table">
                         -
                     </td>
                     <td class="text-start cursor-pointer title-fxd">
                         <div class="d-flex align-items-center justify-content-between">
                             <span>
-                                <a href="${SiteUrl.EXPTR_REQST_DTL!}?postNo=${post.postNo!}"
+                                <a href="${Url.EXPTR_REQST_DTL!}?postNo=${post.postNo!}"
                                    class="title-fxd vertical-middle <#if (((post.imprtcYn)!"N") == "Y")!false>fw-bold</#if>">
                                     <#if (post.ctgrNm!"") != "">
                                         <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
@@ -126,7 +92,7 @@
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="ExptrReqst.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </td>
@@ -170,14 +136,14 @@
                 </tr>
             </#list>
             <#list exptrReqstList![] as post>
-                <tr class="bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
+                <tr class="bg-hover-secondary" onclick="ExptrReqst.dtl('${post.postNo!}');">
                     <td class="text-center hidden-table">
                         ${post.rnum!}
                     </td>
                     <td class="text-start cursor-pointer">
                         <div class="d-flex align-items-center justify-content-between">
                             <span>
-                                <a href="${SiteUrl.EXPTR_REQST_DTL!}?postNo=${post.postNo!}"
+                                <a href="${Url.EXPTR_REQST_DTL!}?postNo=${post.postNo!}"
                                    class="text-dark vertical-middle <#if (((post.imprtcYn)!"N") == "Y")!false>fw-bold text-danger</#if>">
                                     <#if (post.ctgrNm!"") != "">
                                         <span class="ctgr-span ctgr-gray">${post.ctgrNm!}</span>
@@ -198,7 +164,7 @@
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="ExptrReqst.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </td>
@@ -248,11 +214,11 @@
     <!-- pagination::begin -->
     <#include "/view/_component/_pagination.ftlh">
     <!-- pagination::end -->
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" />
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" />
+</form>
 
 <#include "/view/exptr/reqst/_exptr_reqst_dtl_modal.ftlh">
 

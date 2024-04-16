@@ -1,7 +1,8 @@
 <#--
-  -- 경비 > 물품구매/경조사비 신청 > 등록/수정 화면
+  -- 물품구매/경조사비 신청(exptr_reqst) > 등록/수정 화면
   -- tinyMCE 정책 때문에 문서 최상단에 <!DOCTYPE html> 추가
   -->
+
 <!DOCTYPE html>
 <#import "/layout/layout.ftlh" as layout >
 
@@ -14,14 +15,20 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/exptr/reqst/_exptr_reqst_scripts.ftlh">
+
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
                 /** tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
 
-                commons.validate.noSpaces(".no-space");        // 공백 자동 제거
+                /* jquery :: validation */
+                ExptrReqst.initValidateForm();
+                // 공백 자동 제거
+                commons.validate.noSpaces(".no-space");
 
                 // 상단고정 여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("fxdYn", "고정//해제", "blue//gray");
@@ -36,72 +43,13 @@
                 <#if isReg>
                     $("#jandiYn").click();
                 </#if>
-
-                /** jquery :: validation */
-                $(function(){
-                    $("#exptrReqstRegForm").validate({
-                        submitHandler: function() {
-                            if (Page.submitMode === "preview") {
-                                const popupNm = "preview";
-                                const options = 'width=1280,height=1440,top=0,left=270';
-                                commons.util.popup("", popupNm, options);
-                                let popupUrl = "${SiteUrl.EXPTR_REQST_REG_PREVIEW_POP!}";
-                                $("#exptrReqstRegForm").attr("action", popupUrl).attr("target", popupNm);
-                                return true;
-                            } else if (Page.submitMode === "submit") {
-                                $("#exptrReqstRegForm").removeAttr("action");
-                                Swal.fire({
-                                    text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                    showCancelButton: true,
-                                }).then(function(result) {
-                                    if (!result.value) return;
-                                    Page.<#if isMdf>mdf<#else>reg</#if>Ajax();
-                                });
-                            }
-                        },
-                        errorPlacement : function(error, element) {
-                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                        },
-                        ignore: [],         // hidden 필드도 검증하기 위함
-                    });
-                });
             },
-            /** submit */
-            submit: function() {
-                tinymce.activeEditor.save();
-                Page.submitMode = "submit";
-                $("#exptrReqstRegForm").submit();
-            },
-            /** 미리보기 팝업 호출 */
-            preview: function() {
-                tinymce.activeEditor.save();
-                Page.submitMode = "preview";
-                $("#exptrReqstRegForm").submit();
-            },
-            /** 등록/수정 처리(Ajax) */
-            <#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax: function() {
-                let ajaxData = new FormData($("#exptrReqstRegForm")[0]);
-                const url = "<#if isReg>${SiteUrl.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf>${SiteUrl.EXPTR_REQST_MDF_AJAX!}</#if>";
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
-                    Swal.fire({ text: res.message })
-                        .then(function() {
-                            if (res.rslt) Page.list();
-                        });
-                });
-            },
-            /** 목록 화면 이동 */
-            list: function() {
-                const listUrl = "${SiteUrl.EXPTR_REQST_LIST!}<#if isMdf>?isBackToList=Y</#if>";
-                commons.util.blockUIReplace(listUrl);
-            }
         }
-    }();
+    })();
 
     $(document).ready(function() {
         Page.init();
     });
-
-
 </script>
 
 <!--begin::Row-->
@@ -229,12 +177,12 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-between">
         <!-- 버튼 :: 미리보기 -->
-        <@component.btn_preview_pop "Page" />
+        <@component.btn_preview_pop "ExptrReqst.preview();" />
         <div>
             <!-- 버튼 :: 저장하기 -->
-            <@component.btn_post_save "Page" />
+            <@component.btn_post_submit "ExptrReqst.submit();" />
             <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "Page" />
+            <@component.btn_post_toList "ExptrReqst.list();" />
         </div>
     </div>
 

@@ -1,7 +1,8 @@
 <#--
-  -- 경비 > 물품구매/경조사비 신청 > 상세 Modal
+  -- 물품구매/경조사비 신청(exptr_reqst) > 상세 Modal
   -- @included_in : exptr_reqst_list
   -->
+
 <div class="modal fade" id="exptr_reqst_dtl_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -25,5 +26,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/exptr/reqst/_exptr_reqst_dtl_template.hbs">

@@ -1,6 +1,7 @@
 <#--
-  -- 경비 > 물품구매/경조사비 신청 > 상세 화면
+  -- 물품구매/경조사비 신청(exptr_reqst) > 상세 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -8,9 +9,6 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
-                //
-            },
             close: function() {
                 window.close();
             }
@@ -42,10 +40,10 @@
         <!-- 버튼:: 팝업 닫기 -->
         <@component.btn_preview_close "Page" />
     </div>
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+</form>
 
 </@layout.layout>

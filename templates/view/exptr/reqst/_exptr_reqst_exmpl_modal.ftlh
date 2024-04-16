@@ -1,7 +1,8 @@
 <#--
-  -- 경비 > 물품구매/경조사비 신청 > 작성예시 Modal
+  -- 물품구매/경조사비 신청(exptr_reqst) > 작성예시 Modal
   -- @included_in : exptr_reqst_list
   -->
+
 <div class="modal fade" id="exptr_reqst_exmpl_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
