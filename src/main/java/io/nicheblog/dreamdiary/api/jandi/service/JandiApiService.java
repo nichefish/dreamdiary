@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.api.jandi.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.nicheblog.dreamdiary.api.ApiUrl;
 import io.nicheblog.dreamdiary.api.jandi.JandiProperty;
 import io.nicheblog.dreamdiary.api.jandi.JandiTopic;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiApiRespnsDto;
@@ -10,6 +9,7 @@ import io.nicheblog.dreamdiary.api.jandi.model.JandiApiSndMsgDto;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiParam;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.JsonRestTemplate;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.config.HttpClientConfig;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
@@ -111,7 +111,7 @@ public class JandiApiService {
      */
     public String setRequestUrlParam(final JandiTopic trgetTopic) {
         final String trgetTopicNm = trgetTopic.name();
-        return ApiUrl.JANDI_CONNECT_WH + "/" + jandiProperty.getTeamId() + "/" + jandiProperty.getId(trgetTopicNm);
+        return Url.JANDI_CONNECT_WH + "/" + jandiProperty.getTeamId() + "/" + jandiProperty.getId(trgetTopicNm);
     }
 
     /**

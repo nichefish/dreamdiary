@@ -1,12 +1,12 @@
-package io.nicheblog.dreamdiary.api.dream.model;
+package io.nicheblog.dreamdiary.api.jrnl.day.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 
 /**
- * DreamDayApiSearchParam
+ * JrnlDayApiSearchParam
  * <pre>
- *  API:: 꿈 일자 검색 파라미터 Dto
+ *  API:: 저널 일자 검색 파라미터 Dto
  * </pre>
  *
  * @author nichefish
@@ -16,7 +16,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class DreamDayApiSearchParam
+public class JrnlDayApiSearchParam
         extends BaseSearchParam {
 
     /**

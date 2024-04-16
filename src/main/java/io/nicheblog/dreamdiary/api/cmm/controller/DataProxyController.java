@@ -44,7 +44,7 @@ public class DataProxyController
         extends BaseControllerImpl {
 
     @Getter
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.NOTICE;      // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.API;      // 작업 카테고리 (로그 적재용)
 
     /**
      * PROXY REQUEST 전달받은 요청을 서버단에서 포크해서 그대로 다시 리턴한다.

@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.api.kasi.controller;
 
-import io.nicheblog.dreamdiary.api.ApiUrl;
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.api.kasi.service.HldyKasiApiService;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -58,7 +58,7 @@ public class HldyKasiApiController
             summary = "휴일 정보 조회 및 DB 저장",
             description = "잔디 메신저로부터 웹훅 메세지 수신한다."
     )
-    @PostMapping(ApiUrl.API_HLDY_GET)
+    @PostMapping(Url.API_HLDY_GET)
     public ResponseEntity<AjaxResponse> getHldyInfo(
             final @RequestParam("yy") @Nullable String yyParam,
             final LogActvtyParam logParam

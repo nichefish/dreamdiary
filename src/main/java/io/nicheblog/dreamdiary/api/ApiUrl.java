@@ -13,10 +13,10 @@ public interface ApiUrl {
     String JANDI_CONNECT_WH = "https://wh.jandi.com/connect-api/webhook";
 
     /**
-     * (API) 꿈 관리
+     * (API) 저널 꿈 일자
      */
-    String API_DREAM_DAY_LIST_AJAX = Prefix.API_DREAM_DAY + "/dreamDayListAjax.do";
-    String API_DREAM_DAY_DTL_AJAX = Prefix.API_DREAM_DAY + "/dreamDayDtlAjax.do";
+    String API_JRNL_DAY_LIST_AJAX = Prefix.API_JRNL_DAY + "/jrnlDayListAjax.do";
+    String API_JRNL_DAY_DTL_AJAX = Prefix.API_JRNL_DAY + "/jrnlDayDtlAjax.do";
 
     /**
      * (API) 한국천문연구원 : 특일 정보 조회
@@ -37,10 +37,14 @@ public interface ApiUrl {
      */
     interface Prefix {
         String API = "/api";
+        // API:: 저널
+        String API_JRNL = API + "/jrnl";
+        String API_JRNL_DAY = API_JRNL + "/day";
+        // API:: 잔디
         String API_JANDI = API + "/jandi";
+        // API:: 특일정보 (공공데이터)
         String API_HLDY = API + "/hldy";
-        String API_DREAM = API + "/dream";
-        String API_DREAM_DAY = API_DREAM + "/day";
+        // API:: 노션
         String API_NOTION = API + "/notion";
     }
 }

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.api.dream.model;
+package io.nicheblog.dreamdiary.api.jrnl.dream.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import lombok.*;
@@ -7,9 +7,9 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Column;
 
 /**
- * DreamPieceApiDto
+ * JrnlDreamApiDto
  * <pre>
- *  꿈 일자 Dto
+ *  API:: 저널 꿈 Dto
  * </pre>
  *
  * @author nichefish
@@ -21,18 +21,18 @@ import javax.persistence.Column;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class DreamPieceApiDto
+public class JrnlDreamApiDto
         extends BasePostDto {
 
-    /** 꿈 조각 고유 번호 (PK) */
+    /** 저널 꿈 고유 번호 (PK) */
     private Integer postNo;
 
     /** 컨텐츠 타입 */
     @Builder.Default
     private String contentType = "dream_piece";
 
-    /** 꿈 일자 번호 */
-    private Integer dreamDayNo;
+    /** 저널 일자 번호 */
+    private Integer jrnlDayNo;
 
     /** 순번 */
     private Integer sortOrdr;

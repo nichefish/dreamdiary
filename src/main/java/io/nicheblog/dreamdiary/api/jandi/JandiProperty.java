@@ -25,7 +25,6 @@ public class JandiProperty {
 
     /** 팀 고유 id */
     private String teamId;
-
     /** 토픽 정보 목록 */
     private List<Topic> topics;
 

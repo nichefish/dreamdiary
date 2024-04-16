@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.api.jandi.controller;
 
-import io.nicheblog.dreamdiary.api.ApiUrl;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiApiRespnsDto;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiParam;
 import io.nicheblog.dreamdiary.api.jandi.service.JandiApiService;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -50,7 +50,7 @@ public class JandiApiController
             summary = "잔디 메신저로 웹훅 메세지 전송",
             description = "잔디 메신저로 웹훅 메세지를 전송한다."
     )
-    @PostMapping(ApiUrl.API_JANDI_SND_MSG)
+    @PostMapping(Url.API_JANDI_SND_MSG)
     public ResponseEntity<JandiApiRespnsDto> sendMsg(
             final LogActvtyParam logParam,
             final JandiParam jandiParam
@@ -84,7 +84,7 @@ public class JandiApiController
     //         summary = "잔디 메신저로부터 웹훅 메세지 수신",
     //         description = "잔디 메신저로부터 웹훅 메세지를 수신한다."
     // )
-    // @PostMapping(ApiUrl.API_JANDI_RCV_MSG)
+    // @PostMapping(Url.API_JANDI_RCV_MSG)
     // public ResponseEntity<JandiApiRespnsDto> receiveMsg(
     //         final @RequestBody @Nullable JandiApiRcvMsgDto rcvMsg,
     //         final LogActvtyParam logParam

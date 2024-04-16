@@ -1,10 +1,10 @@
-package io.nicheblog.dreamdiary.api.dream.controller;
+package io.nicheblog.dreamdiary.api.jrnl.day.controller;
 
-import io.nicheblog.dreamdiary.api.ApiUrl;
-import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiDto;
-import io.nicheblog.dreamdiary.api.dream.model.DreamDayApiSearchParam;
-import io.nicheblog.dreamdiary.api.dream.service.DreamDayApiService;
+import io.nicheblog.dreamdiary.api.jrnl.day.model.JrnlDayApiDto;
+import io.nicheblog.dreamdiary.api.jrnl.day.model.JrnlDayApiSearchParam;
+import io.nicheblog.dreamdiary.api.jrnl.day.service.JrnlDayApiService;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -29,9 +29,9 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 /**
- * DreamDayApiController
+ * JrnlDayApiController
  * <pre>
- *  API:: 꿈 일자 조회 API controller
+ *  API:: 저널 일자 조회 API controller
  * </pre>
  *
  * @author nichefish
@@ -41,29 +41,29 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
 @Log4j2
-@Tag(name = "꿈 일자 API", description = "잔디 메신저 API입니다.")
-public class DreamDayApiController
+@Tag(name = "저널 일자 API", description = "잔디 메신저 API입니다.")
+public class JrnlDayApiController
         extends BaseControllerImpl {
 
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "dreamDayApiService")
-    private DreamDayApiService dreamDayApiService;
+    @Resource(name = "jrnlDayApiService")
+    private JrnlDayApiService jrnlDayApiService;
 
     /**
-     * API:: 꿈 일자 목록 조회 (Ajax)
+     * API:: 저널 일자 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @Operation(
-            summary = "꿈 일자 목록 조회",
-            description = "꿈 일자 목록을 조회한다."
+            summary = "저널 일자 목록 조회",
+            description = "저널 일자 목록을 조회한다."
     )
-    @GetMapping(value = {ApiUrl.API_DREAM_DAY_LIST_AJAX})
+    @GetMapping(value = {Url.API_JRNL_DAY_LIST_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> dreamDayListAjax(
-            DreamDayApiSearchParam searchParam,
+    public ResponseEntity<AjaxResponse> jrnlDayListAjax(
+            JrnlDayApiSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) {
@@ -76,8 +76,8 @@ public class DreamDayApiController
             Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
             Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            Page<DreamDayApiDto> dreamDayList = dreamDayApiService.getPageDto(searchParamMap, pageRequest);
-            ajaxResponse.setRsltList(dreamDayList.getContent());
+            Page<JrnlDayApiDto> jrnlDayList = jrnlDayApiService.getPageDto(searchParamMap, pageRequest);
+            ajaxResponse.setRsltList(jrnlDayList.getContent());
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -95,18 +95,18 @@ public class DreamDayApiController
     }
 
     /**
-     * API:: 꿈 일자 상세 조회 (Ajax)
+     * API:: 저널 일자 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @Operation(
-            summary = "꿈 일자 목록 조회",
-            description = "꿈 일자 목록을 조회한다."
+            summary = "저널 일자 목록 조회",
+            description = "저널 일자 목록을 조회한다."
     )
-    @GetMapping(value = {ApiUrl.API_DREAM_DAY_DTL_AJAX})
+    @GetMapping(value = {Url.API_JRNL_DAY_DTL_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> dreamDayDtlAjax(
-            DreamDayApiSearchParam searchParam,
+    public ResponseEntity<AjaxResponse> jrnlDayDtlAjax(
+            JrnlDayApiSearchParam searchParam,
             final @RequestParam("postNo") Integer key,
             final LogActvtyParam logParam
     ) {
@@ -117,7 +117,7 @@ public class DreamDayApiController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            DreamDayApiDto rslt = dreamDayApiService.getDtlDto(key);
+            JrnlDayApiDto rslt = jrnlDayApiService.getDtlDto(key);
             ajaxResponse.setRsltObj(rslt);
 
             isSuccess = (rslt.getPostNo() != null);

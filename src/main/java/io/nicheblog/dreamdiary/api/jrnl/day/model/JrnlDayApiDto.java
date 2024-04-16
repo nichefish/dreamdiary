@@ -1,17 +1,17 @@
-package io.nicheblog.dreamdiary.api.dream.model;
+package io.nicheblog.dreamdiary.api.jrnl.day.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 /**
- * DreamDayApiDto
+ * JrnlDayApiDto
  * <pre>
- *  API:: 꿈 일자 Dto
+ *  API:: 저널 일자 Dto
  * </pre>
  *
  * @author nichefish
@@ -23,13 +23,13 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class DreamDayApiDto
+public class JrnlDayApiDto
         extends BaseClsfDto
         implements Identifiable<Integer> {
 
-    /** 꿈 일자 고유 번호 (PK) */
-    private Integer dreamDayNo;
-    /** 꿈 일자 */
+    /** 저널 일자 고유 번호 (PK) */
+    private Integer jrnlDayNo;
+    /** 저널 일자 */
     private String dreamtDt;
     /** 날짜미상여부 (Y/N) */
     @Builder.Default
@@ -40,11 +40,11 @@ public class DreamDayApiDto
     private Integer mnth;
     /** 대략일자 (날짜미상시 해당일자 이후에 표기) */
     private String aprxmtDt;
-    /** 꿈 조각 목록 */
-    private List<DreamPieceDto> dreamPieceList;
+    /** 저널 꿈 목록 */
+    private List<JrnlDreamDto> jrnlDreamList;
 
     @Override
     public Integer getKey() {
-        return this.dreamDayNo;
+        return this.jrnlDayNo;
     }
 }
