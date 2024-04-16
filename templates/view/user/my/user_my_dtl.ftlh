@@ -1,6 +1,7 @@
-    <#--
-  -- 내 정보 > 상세 화면
+<#--
+  -- 내 정보(user_my) > 상세 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -56,7 +57,7 @@
                     if (this.value !== "") {
                         if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
                         if (!commons.validate.fileExtnChck(this, "jpg|jpeg|png")) return false;      // fileExtnChck
-                        const url = "${SiteUrl.USER_MY_UPLOAD_PROFL_IMG_AJAX!}";
+                        const url = "${Url.USER_MY_UPLOAD_PROFL_IMG_AJAX!}";
                         let ajaxData = new FormData($("#profllImgForm")[0]);
                         commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                             if (commons.util.isNotEmpty(res.message)) {
@@ -76,13 +77,12 @@
              * 프로필 이미지 삭제
              */
             removeProflImg: function() {
-
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.USER_MY_REMOVE_PROFL_IMG_AJAX!}";
+                    const url = "${Url.USER_MY_REMOVE_PROFL_IMG_AJAX!}";
                     commons.util.blockUIFileAjax(url, {}, function(res) {
                         if (commons.util.isNotEmpty(res.message)) {
                             Swal.fire({ "text": res.message })
@@ -109,7 +109,7 @@
             },
             /** 내 비밀번호 수정 처리(Ajax) */
             myPwChgAjax: function() {
-                const url = "${SiteUrl.USER_MY_PW_CHG_AJAX!}";
+                const url = "${Url.USER_MY_PW_CHG_AJAX!}";
                 let ajaxData = { "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })

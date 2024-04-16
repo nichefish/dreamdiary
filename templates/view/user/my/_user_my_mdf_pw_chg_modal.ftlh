@@ -1,7 +1,8 @@
 <#--
-  -- 내 정보 > 내 비밀번호 변경 Modal
+  -- 내 정보(user_my) > 내 비밀번호 변경 Modal
   -- @included_in : user_my_dtl
   -->
+
 <div class="modal fade" tabindex="-1" id="pw_chg_modal" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
