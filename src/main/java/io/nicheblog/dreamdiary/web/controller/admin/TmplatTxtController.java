@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatDefDto;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.TmplatDefService;
@@ -38,7 +38,7 @@ public class TmplatTxtController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.TMPLAT_DEF_LIST;             // 기본 URL
+    private final String baseUrl = Url.TMPLAT_DEF_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.TMPLAT;        // 작업 카테고리 (로그 적재용)
 
@@ -49,7 +49,7 @@ public class TmplatTxtController
      * 템플릿 관리 등록/수정 처리 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.TMPLAT_TXT_REG_AJAX, SiteUrl.TMPLAT_TXT_MDF_AJAX})
+    @PostMapping(value = {Url.TMPLAT_TXT_REG_AJAX, Url.TMPLAT_TXT_MDF_AJAX})
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> tmplatTxtRegAjax(

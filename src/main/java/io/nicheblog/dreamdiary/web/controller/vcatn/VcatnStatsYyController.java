@@ -1,13 +1,13 @@
 package io.nicheblog.dreamdiary.web.controller.vcatn;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsTotalDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
@@ -46,7 +46,7 @@ public class VcatnStatsYyController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.VCATN_STATS_YY;
+    private final String baseUrl = Url.VCATN_STATS_YY;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_STATS;      // 작업 카테고리 (로그 적재용)
 
@@ -64,7 +64,7 @@ public class VcatnStatsYyController
      * 휴가관리 > 년도별 휴가관리 > 목록 조회
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(SiteUrl.VCATN_STATS_YY)
+    @RequestMapping(Url.VCATN_STATS_YY)
     @Secured(Constant.ROLE_MNGR)
     public String vcatnStatsList(
             final LogActvtyParam logParam,
@@ -99,7 +99,7 @@ public class VcatnStatsYyController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -113,7 +113,7 @@ public class VcatnStatsYyController
      * 휴가관리 > 년도별 휴가관리 > 업데이트 (Ajax)
      * 관리자MNGR만 접근 가능
      */
-    @PostMapping(SiteUrl.VCATN_STATS_YY_UPDT_AJAX)
+    @PostMapping(Url.VCATN_STATS_YY_UPDT_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnStatsUpdtAjax(
@@ -147,7 +147,7 @@ public class VcatnStatsYyController
      * 휴가관리 > 년도별 휴가관리 > 목록 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      */
-    // @RequestMapping(SiteUrl.VCATN_STATS_YY_XLSX_DOWNLOAD)
+    // @RequestMapping(Url.VCATN_STATS_YY_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)
     // public void vcatnStatsXlsxDownload(
     //         final LogActvtyParam logParam,
@@ -167,7 +167,7 @@ public class VcatnStatsYyController
     //         isSuccess = false;
     //         rsltMsg = MessageUtils.getExceptionMsg(e);
     //         logParam.setExceptionInfo(e);
-    //         MessageUtils.alertMessage(rsltMsg, SiteUrl.VCATN_STATS_YY);
+    //         MessageUtils.alertMessage(rsltMsg, Url.VCATN_STATS_YY);
     //     } finally {
     //         // 로그 관련 처리
     //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);

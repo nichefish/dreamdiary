@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.web.entity.dream;
+package io.nicheblog.dreamdiary.web.entity.jrnl.day;
 
-import io.nicheblog.dreamdiary.api.dream.mapstruct.DreamPieceApiMapstruct;
+import io.nicheblog.dreamdiary.api.jrnl.dream.mapstruct.JrnlDreamApiMapstruct;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
@@ -8,8 +8,9 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.mapstruct.dream.DreamPieceMapstruct;
-import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamMapstruct;
+import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -25,9 +26,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * DreamDayEntity
+ * JrnlDayEntity
  * <pre>
- *  꿈 일자 Entity.
+ *  저널 일자 Entity.
  *  Entity that contains each distinct dream day.
  * </pre>
  *
@@ -35,28 +36,28 @@ import java.util.stream.Collectors;
  * @extends BaseCrudEntity
  */
 @Entity
-@Table(name = "dream_day")
+@Table(name = "jrnl_day")
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE dream_day SET del_yn = 'Y' WHERE post_no = ?")
-public class DreamDayEntity
+@SQLDelete(sql = "UPDATE jrnl_day SET del_yn = 'Y' WHERE post_no = ?")
+public class JrnlDayEntity
         extends BaseClsfEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.DREAM_DAY;
+    private static final ContentType CONTENT_TYPE = ContentType.JRNL_DAY;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
-    /** 꿈 일자 고유 번호 (PK) */
+    /** 저널 일자 고유 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_no")
-    @Comment("꿈 일자 고유 번호 (PK)")
+    @Comment("저널 일자 고유 번호 (PK)")
     private Integer postNo;
 
     /** 컨텐츠 타입 */
@@ -66,12 +67,12 @@ public class DreamDayEntity
 
     /* ----- */
 
-    /** 꿈 일자 */
-    @Column(name = "dreamt_dt")
+    /** 저널 일자 */
+    @Column(name = "jrnl_dt")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
-    @Comment("꿈 일자")
-    private Date dreamtDt;
+    @Comment("저널 일자")
+    private Date jrnlDt;
 
     /** 날짜미상 여부 (Y/N) */
     @Builder.Default
@@ -96,23 +97,23 @@ public class DreamDayEntity
     @Comment("대략일자 (날짜미상시 해당일자 이후에 표기)")
     private Date aprxmtDt;
 
-    /** 꿈 조각 목록 */
+    /** 저널 꿈 목록 */
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "dream_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
     @Fetch(FetchMode.SELECT)
     @OrderBy("idx ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("댓글 목록")
-    private List<DreamPieceEntity> dreamPieceList;
+    private List<JrnlDreamEntity> jrnlDreamList;
 
     /* ----- */
 
-    public List<DreamPieceDto> getDreamPieceDtoList() {
-        if (CollectionUtils.isEmpty(this.dreamPieceList)) return null;
-        return this.dreamPieceList.stream()
+    public List<JrnlDreamDto> getJrnlDreamDtoList() {
+        if (CollectionUtils.isEmpty(this.jrnlDreamList)) return null;
+        return this.jrnlDreamList.stream()
                 .map(entity -> {
                     try {
-                        return DreamPieceMapstruct.INSTANCE.toDto(entity);
+                        return JrnlDreamMapstruct.INSTANCE.toDto(entity);
                     } catch (Exception e) {
                         throw new RuntimeException("객체 변환 중 에러가 발생했습니다.", e);
                     }
@@ -120,12 +121,12 @@ public class DreamDayEntity
                 .collect(Collectors.toList());
     }
 
-    public List<DreamPieceDto> getDreamPieceApiDtoList() {
-        if (CollectionUtils.isEmpty(this.dreamPieceList)) return null;
-        return this.dreamPieceList.stream()
+    public List<JrnlDreamDto> getJrnlDreamApiDtoList() {
+        if (CollectionUtils.isEmpty(this.jrnlDreamList)) return null;
+        return this.jrnlDreamList.stream()
                 .map(entity -> {
                     try {
-                        return DreamPieceApiMapstruct.INSTANCE.toDto(entity);
+                        return JrnlDreamApiMapstruct.INSTANCE.toDto(entity);
                     } catch (Exception e) {
                         throw new RuntimeException("객체 변환 중 에러가 발생했습니다.", e);
                     }

@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.web.controller.schdul;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulDto;
@@ -42,7 +42,7 @@ public class SchdulController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.SCHDUL_CAL;
+    private final String baseUrl = Url.SCHDUL_CAL;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.SCHDUL;      // 작업 카테고리 (로그 적재용)
 
@@ -53,7 +53,7 @@ public class SchdulController
      * 일정 > 전체일정 > 일정 등록(ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.SCHDUL_REG_AJAX, SiteUrl.SCHDUL_MDF_AJAX})
+    @PostMapping(value = {Url.SCHDUL_REG_AJAX, Url.SCHDUL_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> schdulRegAjax(
@@ -106,7 +106,7 @@ public class SchdulController
      * 일정 > 전체일정 > 일정 조회 (ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.SCHDUL_DTL_AJAX)
+    @PostMapping(Url.SCHDUL_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> schdulDtlAjax(
@@ -144,7 +144,7 @@ public class SchdulController
      * 일정 > 전체일정 > 일정 삭제 (ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.SCHDUL_DEL_AJAX)
+    @PostMapping(Url.SCHDUL_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> schdulDelAjax(

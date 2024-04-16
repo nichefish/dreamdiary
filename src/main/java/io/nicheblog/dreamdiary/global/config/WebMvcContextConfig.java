@@ -1,10 +1,9 @@
 package io.nicheblog.dreamdiary.global.config;
 
-import io.nicheblog.dreamdiary.api.ApiUrl;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.handler.UTF8DecodeResourceResolver;
 import io.nicheblog.dreamdiary.global.interceptor.CookieInterceptor;
 import io.nicheblog.dreamdiary.global.interceptor.FreemarkerInterceptor;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -99,11 +98,11 @@ public class WebMvcContextConfig
                 /* 스태틱 자원 경로의 경우 처리하지 않음 */
                 .excludePathPatterns(STATIC_RESOURCES_URL_PATTERN)
                 /* 로그인 화면 경로 제외 */
-                .excludePathPatterns(SiteUrl.AUTH_LGN_FORM)
+                .excludePathPatterns(Url.AUTH_LGN_FORM)
                 /* 에러 화면 경로 제외 */
-                .excludePathPatterns(SiteUrl.ERROR)
-                .excludePathPatterns(SiteUrl.ERROR + "/**")
-                .excludePathPatterns(ApiUrl.Prefix.API + "/**")
+                .excludePathPatterns(Url.ERROR)
+                .excludePathPatterns(Url.ERROR + "/**")
+                .excludePathPatterns("/api/**")
                 /* 파일 다운로드의 경우 처리하지 않음 */
                 .excludePathPatterns("/**/*Download.do")
                 /* ajax 호출의 경우 처리하지 않음 */

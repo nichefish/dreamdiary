@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.controller.vcatn;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -10,7 +11,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
@@ -51,7 +51,7 @@ public class VcatnPaprController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.VCATN_PAPR_LIST;
+    private final String baseUrl = Url.VCATN_PAPR_LIST;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_PAPR;      // 작업 카테고리 (로그 적재용)
 
@@ -66,7 +66,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 휴가 계획서 목록
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.VCATN_PAPR_LIST)
+    @GetMapping(Url.VCATN_PAPR_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprList(
             @ModelAttribute("searchParam") VcatnPaprSearchParam searchParam,
@@ -101,7 +101,7 @@ public class VcatnPaprController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -114,7 +114,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 휴가 계획서 등록 폼 이동
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.VCATN_PAPR_REG_FORM)
+    @RequestMapping(Url.VCATN_PAPR_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprRegForm(
             final LogActvtyParam logParam,
@@ -155,7 +155,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 휴가 계획서 등록/수정(ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.VCATN_PAPR_REG_AJAX, SiteUrl.VCATN_PAPR_MDF_AJAX})
+    @PostMapping(value = {Url.VCATN_PAPR_REG_AJAX, Url.VCATN_PAPR_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprRegAjax(
@@ -208,7 +208,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 휴가 계획서 확인 처리 (ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.VCATN_PAPR_CF_AJAX)
+    @PostMapping(Url.VCATN_PAPR_CF_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprCfAjax(
@@ -243,7 +243,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 휴가 계획서 수정 폼 이동
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.VCATN_PAPR_MDF_FORM)
+    @RequestMapping(Url.VCATN_PAPR_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprMdfForm(
             final @RequestParam("postNo") Integer key,
@@ -286,7 +286,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 상세화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.VCATN_PAPR_DTL)
+    @RequestMapping(Url.VCATN_PAPR_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprDtl(
             final @RequestParam("postNo") Integer key,
@@ -328,7 +328,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.VCATN_PAPR_DTL_AJAX)
+    @RequestMapping(Url.VCATN_PAPR_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprDtlAjax(
@@ -368,7 +368,7 @@ public class VcatnPaprController
      * 일정 > 휴가계획서 > 휴가계획서 삭제 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.VCATN_PAPR_DEL_AJAX)
+    @PostMapping(Url.VCATN_PAPR_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprDelAjax(

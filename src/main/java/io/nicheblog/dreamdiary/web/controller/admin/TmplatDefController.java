@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -8,7 +9,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatDefDto;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatDefSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
@@ -50,7 +50,7 @@ public class TmplatDefController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.TMPLAT_DEF_LIST;             // 기본 URL
+    private final String baseUrl = Url.TMPLAT_DEF_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.TMPLAT;        // 작업 카테고리 (로그 적재용)
 
@@ -61,7 +61,7 @@ public class TmplatDefController
      * 템플릿 정의 목록 조회
      * 관리자MNGR만 접근 가능
      */
-    @GetMapping(SiteUrl.TMPLAT_DEF_LIST)
+    @GetMapping(Url.TMPLAT_DEF_LIST)
     @Secured({Constant.ROLE_MNGR})
     public String tmplatDefList(
             @ModelAttribute("searchParam") TmplatDefSearchParam searchParam,
@@ -91,7 +91,7 @@ public class TmplatDefController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -105,7 +105,7 @@ public class TmplatDefController
      * 템플릿 정의 등록/수정 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.TMPLAT_DEF_REG_AJAX, SiteUrl.TMPLAT_DEF_MDF_AJAX})
+    @PostMapping(value = {Url.TMPLAT_DEF_REG_AJAX, Url.TMPLAT_DEF_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> tmplatDefRegAjax(

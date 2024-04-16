@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.dream.day;
+package io.nicheblog.dreamdiary.web.model.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
@@ -7,16 +7,16 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
-import io.nicheblog.dreamdiary.web.model.dream.piece.DreamPieceDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 /**
- * DreamDayDto
+ * JrnlDayDto
  * <pre>
- *  꿈 일자 Dto
+ *  저널 일자 Dto
  * </pre>
  *
  * @author nichefish
@@ -28,12 +28,12 @@ import java.util.List;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class DreamDayDto
+public class JrnlDayDto
         extends BaseClsfDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.DREAM_DAY;
+    private static final ContentType CONTENT_TYPE = ContentType.JRNL_DAY;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
@@ -43,8 +43,8 @@ public class DreamDayDto
 
     /* ----- */
 
-    /** 꿈 일자 */
-    private String dreamtDt;
+    /** 저널 일자 */
+    private String jrnlDt;
 
     /** 날짜미상 여부 (Y/N) */
     @Builder.Default
@@ -59,8 +59,8 @@ public class DreamDayDto
     /** 대략일자 (날짜미상시 해당일자 이후에 표기) */
     private String aprxmtDt;
 
-    /** 꿈 조각 목록 */
-    private List<DreamPieceDto> dreamPieceList;
+    /** 저널 꿈 목록 */
+    private List<JrnlDreamDto> jrnlDreamList;
 
     @Override
     public Integer getKey() {
@@ -74,7 +74,7 @@ public class DreamDayDto
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
     @EqualsAndHashCode(callSuper = false)
-    public static class DTL extends DreamDayDto {
+    public static class DTL extends JrnlDayDto {
 
     }
 
@@ -83,7 +83,7 @@ public class DreamDayDto
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
     @EqualsAndHashCode(callSuper = false)
-    public static class LIST extends DreamDayDto {
+    public static class LIST extends JrnlDayDto {
         //
     }
 

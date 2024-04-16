@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.vcatn;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -8,7 +9,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
@@ -52,7 +52,7 @@ public class VcatnSchdulController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.VCATN_SCHDUL_LIST;
+    private final String baseUrl = Url.VCATN_SCHDUL_LIST;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_SCHDUL;      // 작업 카테고리 (로그 적재용)
 
@@ -74,7 +74,7 @@ public class VcatnSchdulController
      * 휴가관리 > 휴가사용일자 > 휴가사용일자 목록 화면 조회
      * 관리자MNGR만 접근 가능
      */
-    @GetMapping(SiteUrl.VCATN_SCHDUL_LIST)
+    @GetMapping(Url.VCATN_SCHDUL_LIST)
     @Secured(Constant.ROLE_MNGR)
     public String vcatnSchdulList(
             final @RequestParam("statsYy") @Nullable String yyStrParam,
@@ -112,7 +112,7 @@ public class VcatnSchdulController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -126,7 +126,7 @@ public class VcatnSchdulController
      * 휴가관리 > 휴가사용일자 > 휴가사용일자 등록
      * 관리자MNGR만 접근 가능
      */
-    @PostMapping(value = {SiteUrl.VCATN_SCHDUL_REG_AJAX, SiteUrl.VCATN_SCHDUL_MDF_AJAX})
+    @PostMapping(value = {Url.VCATN_SCHDUL_REG_AJAX, Url.VCATN_SCHDUL_MDF_AJAX})
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnSchdulRegAjax(
@@ -168,7 +168,7 @@ public class VcatnSchdulController
      * 휴가관리 > 휴가사용일자 > 휴가사용일자 단일 조회 (ajax)
      * 관리자MNGR만 접근 가능
      */
-    @PostMapping(value = SiteUrl.VCATN_SCHDUL_DTL_AJAX)
+    @PostMapping(value = Url.VCATN_SCHDUL_DTL_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnSchdulDtlAjax(
@@ -205,7 +205,7 @@ public class VcatnSchdulController
      * 휴가관리 > 휴가사용일자 > 휴가사용일자 삭제 (ajax)
      * 관리자MNGR만 접근 가능
      */
-    @PostMapping(SiteUrl.VCATN_SCHDUL_DEL_AJAX)
+    @PostMapping(Url.VCATN_SCHDUL_DEL_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnSchdulDelAjax(
@@ -239,7 +239,7 @@ public class VcatnSchdulController
      * 휴가 관리 > 휴가사용일자 > 휴가사용일자 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      *//*
-    // @RequestMapping(SiteUrl.VCATN_SCHDUL_XLSX_DOWNLOAD)
+    // @RequestMapping(Url.VCATN_SCHDUL_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)
     // public void vcatnSchdulXlsxDownload(
     //         final LogActvtyParam logParam,
@@ -263,7 +263,7 @@ public class VcatnSchdulController
     //         isSuccess = false;
     //         rsltMsg = MessageUtils.getExceptionMsg(e);
     //         logParam.setExceptionInfo(e);
-    //         MessageUtils.alertMessage(rsltMsg, SiteUrl.VCATN_SCHDUL_LIST);
+    //         MessageUtils.alertMessage(rsltMsg, Url.VCATN_SCHDUL_LIST);
     //     } finally {
     //         // 로그 관련 처리
     //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);

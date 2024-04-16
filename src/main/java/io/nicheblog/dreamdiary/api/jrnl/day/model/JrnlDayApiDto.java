@@ -30,7 +30,7 @@ public class JrnlDayApiDto
     /** 저널 일자 고유 번호 (PK) */
     private Integer jrnlDayNo;
     /** 저널 일자 */
-    private String dreamtDt;
+    private String jrnlDt;
     /** 날짜미상여부 (Y/N) */
     @Builder.Default
     private String dtUnknownYn = "N";

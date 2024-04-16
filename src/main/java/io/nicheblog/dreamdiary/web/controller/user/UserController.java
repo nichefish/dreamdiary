@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.auth.service.AuthRoleService;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
@@ -11,7 +12,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
@@ -52,7 +52,7 @@ public class UserController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.USER_LIST;
+    private final String baseUrl = Url.USER_LIST;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER;      // 작업 카테고리 (로그 적재용)
 
@@ -70,7 +70,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 목록 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.USER_LIST)
+    @GetMapping(Url.USER_LIST)
     @Secured(Constant.ROLE_MNGR)
     public String userList(
             @ModelAttribute("searchParam") UserSearchParam searchParam,
@@ -109,7 +109,7 @@ public class UserController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -123,7 +123,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 등록 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.USER_REG_FORM)
+    @RequestMapping(Url.USER_REG_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String userRegForm(
             final LogActvtyParam logParam,
@@ -171,7 +171,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 아이디 중복 체크 (Ajax)
      * 사용자 계정 신청시 사용해야 하므로 인증 없이 접근 가능
      */
-    @PostMapping(SiteUrl.USER_ID_DUP_CHK_AJAX)
+    @PostMapping(Url.USER_ID_DUP_CHK_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userIdDupChckAjax(
             final @RequestParam("userId") String userId,
@@ -206,7 +206,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 등록/수정 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.USER_REG_AJAX, SiteUrl.USER_MDF_AJAX})
+    @PostMapping(value = {Url.USER_REG_AJAX, Url.USER_MDF_AJAX})
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userRegAjax(
@@ -248,7 +248,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 상세 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.USER_DTL)
+    @RequestMapping(Url.USER_DTL)
     @Secured(Constant.ROLE_MNGR)
     public String userDtl(
             final @RequestParam("userNo") Integer userNo,
@@ -287,7 +287,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 수정 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.USER_MDF_FORM)
+    @RequestMapping(Url.USER_MDF_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String userMdfForm(
             final @RequestParam("userNo") Integer userNo,
@@ -339,7 +339,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 패스워드 초기화
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.USER_PW_RESET_AJAX)
+    @PostMapping(Url.USER_PW_RESET_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> passwordResetAjax(
@@ -372,7 +372,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 삭제 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.USER_DEL_AJAX)
+    @PostMapping(Url.USER_DEL_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userDelAjax(
@@ -412,7 +412,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 목록 엑셀 다운로드
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.USER_LIST_XLSX_DOWNLOAD)
+    @RequestMapping(Url.USER_LIST_XLSX_DOWNLOAD)
     @Secured(Constant.ROLE_MNGR)
     public void userListXlsxDownload(
             @ModelAttribute("searchParam") UserSearchParam searchParam,

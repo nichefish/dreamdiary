@@ -74,7 +74,7 @@ public class JrnlDayApiController
         String rsltMsg = "";
         try {
             Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-            Sort sort = Sort.by(Sort.Direction.ASC, "dreamtDt");
+            Sort sort = Sort.by(Sort.Direction.ASC, "jrnlDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             Page<JrnlDayApiDto> jrnlDayList = jrnlDayApiService.getPageDto(searchParamMap, pageRequest);
             ajaxResponse.setRsltList(jrnlDayList.getContent());

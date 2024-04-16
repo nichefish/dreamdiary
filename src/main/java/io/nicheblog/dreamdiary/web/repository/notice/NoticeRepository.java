@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * NoticeRepository
  * <pre>
- *  공지사항 Repository 인터페이스.
+ *  공지사항 Repository 인터페이스
  * </pre>
  *
  * @author nichefish

@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.controller.notice;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -14,7 +15,6 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.event.ManagtrAddEvent;
 import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
@@ -63,7 +63,7 @@ public class NoticeController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.NOTICE_LIST;             // 기본 URL
+    private final String baseUrl = Url.NOTICE_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.NOTICE;      // 작업 카테고리 (로그 적재용)
 
@@ -78,7 +78,7 @@ public class NoticeController
      * 공지사항 목록 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.NOTICE_LIST)
+    @GetMapping(Url.NOTICE_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeList(
             @ModelAttribute("searchParam") NoticeSearchParam searchParam,
@@ -115,7 +115,7 @@ public class NoticeController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
@@ -129,7 +129,7 @@ public class NoticeController
      * 공지사항 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.NOTICE_REG_FORM)
+    @RequestMapping(Url.NOTICE_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeRegForm(
             final LogActvtyParam logParam,
@@ -172,7 +172,7 @@ public class NoticeController
      * 공지사항 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.NOTICE_REG_PREVIEW_POP)
+    @RequestMapping(Url.NOTICE_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeRegPreviewPop(
             final NoticeDto notice,
@@ -208,7 +208,7 @@ public class NoticeController
      * 공지사항 등록/수정 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.NOTICE_REG_AJAX, SiteUrl.NOTICE_MDF_AJAX})
+    @PostMapping(value = {Url.NOTICE_REG_AJAX, Url.NOTICE_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeRegAjax(
@@ -264,7 +264,7 @@ public class NoticeController
      * 공지사항 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = SiteUrl.NOTICE_DTL)
+    @RequestMapping(value = Url.NOTICE_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeDtl(
             final @RequestParam("postNo") Integer key,
@@ -307,7 +307,7 @@ public class NoticeController
      * 공지사항 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.NOTICE_DTL_AJAX)
+    @RequestMapping(Url.NOTICE_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeDtlAjax(
@@ -349,7 +349,7 @@ public class NoticeController
      * 공지사항 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = SiteUrl.NOTICE_MDF_FORM)
+    @RequestMapping(value = Url.NOTICE_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeMdfForm(
             final @RequestParam("postNo") Integer key,
@@ -395,7 +395,7 @@ public class NoticeController
      * 공지사항 삭제 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.NOTICE_DEL_AJAX)
+    @PostMapping(Url.NOTICE_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeDelAjax(
@@ -435,7 +435,7 @@ public class NoticeController
      * 공지사항 팝업공지 목록 조회 (Ajax)
      * 비로그인 사용자도 외부에서 접근 가능 (인증 없음)
      */
-    @RequestMapping(SiteUrl.NOTICE_POPUP_LIST_AJAX)
+    @RequestMapping(Url.NOTICE_POPUP_LIST_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticePopupListAjax(
             final NoticeSearchParam searchParam,
@@ -476,7 +476,7 @@ public class NoticeController
      * 휴가 관리 > 휴가사용일자 > 휴가사용일자 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(SiteUrl.NOTICE_LIST_XLSX_DOWNLOAD)
+    @RequestMapping(Url.NOTICE_LIST_XLSX_DOWNLOAD)
     @Secured(Constant.ROLE_MNGR)
     public void vcatnSchdulXlsxDownload(
             final NoticeSearchParam searchParam,
@@ -497,7 +497,7 @@ public class NoticeController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.VCATN_SCHDUL_LIST);
+            MessageUtils.alertMessage(rsltMsg, Url.VCATN_SCHDUL_LIST);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);

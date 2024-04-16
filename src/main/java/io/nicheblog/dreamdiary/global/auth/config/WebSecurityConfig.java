@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.global.auth.config;
 
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.auth.handler.DreamdiaryAuthenticationProvider;
 import io.nicheblog.dreamdiary.global.auth.handler.LgnFailureHandler;
 import io.nicheblog.dreamdiary.global.auth.handler.LgnSuccessHandler;
 import io.nicheblog.dreamdiary.global.auth.handler.LgoutHandler;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
@@ -91,19 +91,19 @@ public class WebSecurityConfig {
 
             web.ignoring()
                     // 로그인 화면 인증 무시
-                    .antMatchers(SiteUrl.AUTH_LGN_FORM)
+                    .antMatchers(Url.AUTH_LGN_FORM)
                     // static 디렉터리의 하위 파일 목록은 인증 무시(=항상 통과 )
                     .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/public/**")
                     .antMatchers("/favicon.ico")
                     .antMatchers("/robots.txt")
                     // 에러 페이지
-                    .antMatchers(SiteUrl.ERROR + "/**")
+                    .antMatchers(Url.ERROR + "/**")
                     // 비밀번호 만료시 비밀번호 변경 화면
-                    .antMatchers(SiteUrl.AUTH_LGN_PW_CHG_AJAX)
+                    .antMatchers(Url.AUTH_LGN_PW_CHG_AJAX)
                     // 신규계정 신청 화면/기능 전체 접근 (+아이디 중복 체크)
-                    .antMatchers(SiteUrl.USER_REQST_REG_FORM)
-                    .antMatchers(SiteUrl.USER_REQST_REG_AJAX)
-                    .antMatchers(SiteUrl.USER_ID_DUP_CHK_AJAX);
+                    .antMatchers(Url.USER_REQST_REG_FORM)
+                    .antMatchers(Url.USER_REQST_REG_AJAX)
+                    .antMatchers(Url.USER_ID_DUP_CHK_AJAX);
         }
 
         @Override
@@ -111,7 +111,7 @@ public class WebSecurityConfig {
             // 페이지 권한 설정
             http.authorizeRequests()
                     // 로그인 화면 전체 접근
-                    .antMatchers(SiteUrl.AUTH_LGN_FORM)
+                    .antMatchers(Url.AUTH_LGN_FORM)
                     .permitAll()
                     // static resource 전체 접근
                     .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/public/**")
@@ -144,31 +144,31 @@ public class WebSecurityConfig {
             http.sessionManagement()
                     .maximumSessions(1)     // 최대 1개
                     .maxSessionsPreventsLogin(false)        // true:: 나중에 접속한 사용자 로그인 방지, false:: 먼저 접속한 사용자 로그아웃 처리
-                    .expiredUrl(SiteUrl.AUTH_LGN_FORM + "?dupLgnAt=Y")
+                    .expiredUrl(Url.AUTH_LGN_FORM + "?dupLgnAt=Y")
                     .sessionRegistry(sessionRegistry());
 
             // Form 로그인 설정
             http.formLogin()
-                    .loginPage(SiteUrl.AUTH_LGN_FORM)
+                    .loginPage(Url.AUTH_LGN_FORM)
                     .usernameParameter("userId")
                     .passwordParameter("password")
-                    .loginProcessingUrl(SiteUrl.AUTH_LGN_PROC)
-                    .defaultSuccessUrl(SiteUrl.MAIN)
+                    .loginProcessingUrl(Url.AUTH_LGN_PROC)
+                    .defaultSuccessUrl(Url.MAIN)
                     .failureHandler(lgnFailureHandler)
                     .successHandler(lgnSuccessHandler)
                     .permitAll();
 
             // 로그아웃 설정
             http.logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher(SiteUrl.AUTH_LGOUT))
-                    .logoutUrl(SiteUrl.AUTH_LGOUT)
-                    .logoutSuccessUrl(SiteUrl.AUTH_LGN_FORM)
+                    .logoutRequestMatcher(new AntPathRequestMatcher(Url.AUTH_LGOUT))
+                    .logoutUrl(Url.AUTH_LGOUT)
+                    .logoutSuccessUrl(Url.AUTH_LGN_FORM)
                     .addLogoutHandler(lgoutHandler)
                     .invalidateHttpSession(true);
 
             // 403(권한없는 주소 접근) 예외처리 핸들링
             http.exceptionHandling()
-                    .accessDeniedPage(SiteUrl.ERROR_ACCESS_DENIED);
+                    .accessDeniedPage(Url.ERROR_ACCESS_DENIED);
         }
     }
 

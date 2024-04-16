@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.user.reqst;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -9,7 +10,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
@@ -48,7 +48,7 @@ public class UserReqstController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.USER_REQST_REG_FORM;
+    private final String baseUrl = Url.USER_REQST_REG_FORM;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER_REQST;      // 작업 카테고리 (로그 적재용)
 
@@ -61,7 +61,7 @@ public class UserReqstController
      * 계정 정보 신청 화면 조회
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @RequestMapping(value = SiteUrl.USER_REQST_REG_FORM)
+    @RequestMapping(value = Url.USER_REQST_REG_FORM)
     public String userReqstRegForm(
             final LogActvtyParam logParam,
             final ModelMap model
@@ -104,7 +104,7 @@ public class UserReqstController
      * 계정 정보 신청 (Ajax)
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @PostMapping(value = {SiteUrl.USER_REQST_REG_AJAX})
+    @PostMapping(value = {Url.USER_REQST_REG_AJAX})
     @ResponseBody
     public ResponseEntity<AjaxResponse> userReqstRegAjax(
             final @Valid UserReqstDto userReqst,
@@ -141,7 +141,7 @@ public class UserReqstController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 승인 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.USER_REQST_CF_AJAX)
+    @PostMapping(Url.USER_REQST_CF_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userCfAjax(
@@ -175,7 +175,7 @@ public class UserReqstController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 승인취소 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.USER_REQST_UNCF_AJAX)
+    @PostMapping(Url.USER_REQST_UNCF_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userUncfAjax(

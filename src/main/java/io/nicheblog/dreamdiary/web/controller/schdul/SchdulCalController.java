@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.schdul;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -9,12 +10,10 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulCalDto;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulSearchParam;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.model.user.UserSearchParam;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulCalService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.Getter;
@@ -47,7 +46,7 @@ public class SchdulCalController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.SCHDUL_CAL;
+    private final String baseUrl = Url.SCHDUL_CAL;
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.SCHDUL;      // 작업 카테고리 (로그 적재용)
 
@@ -62,7 +61,7 @@ public class SchdulCalController
      * 일정 > 전체 일정 (달력) 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.SCHDUL_CAL)
+    @GetMapping(Url.SCHDUL_CAL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String schdulCal(
             @ModelAttribute("searchParam") SchdulSearchParam searchParam,
@@ -102,7 +101,7 @@ public class SchdulCalController
      * 일정 > 전체 일정 (달력) 목록 데이터 조회 (ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(SiteUrl.SCHDUL_CAL_LIST_AJAX)
+    @RequestMapping(Url.SCHDUL_CAL_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> schdulCalListAjax(
