@@ -2,9 +2,9 @@ package io.nicheblog.dreamdiary.web.repository.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntityTestFactory;
-import io.nicheblog.dreamdiary.web.repository.jrnl.day.JrnlDayRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,7 @@ class JrnlDayRepositoryTest {
     public void testRegist() throws Exception {
         // Given::
         JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.createJrnlDay();
+        jrnlDay.setJrnlDt(DateUtils.asDate("2000-01-01"));
 
         // When::
         Integer rsltId = jrnlDayRepository.save(jrnlDay).getPostNo();
