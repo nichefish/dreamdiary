@@ -7,6 +7,10 @@
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
 
+<!--include:: script modules -->
+<#include "/view/admin/cd/_cl_cd_scripts.ftlh">
+<#include "/view/admin/cd/_dtl_cd_scripts.ftlh">
+
 <script>
     const Page = function() {
         return {
@@ -31,181 +35,6 @@
                     }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
                 });
             },
-            /** 수정 화면 이동 */
-            mdfForm: function() {
-                const url = "${SiteUrl.CL_CD_DTL_AJAX!}";
-                let ajaxData = { "clCd": $("#clCd").val() };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    let rsltObj = res.rsltObj;
-                    rsltObj.isMdf = true;
-                    commons.util.handlebarsTemplate(rsltObj, "cl_cd_reg", "show");
-                    commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                    commons.validate.replaceBlankRegex("#clCdRegForm #clCd");
-                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
-                });
-            },
-            /** 등록 또는 수정 처리(Ajax) */
-            regAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.save"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    $("#clCdRegForm #regYn").val("N");
-                    const url = "${SiteUrl.CL_CD_MDF_AJAX!}";
-                    let ajaxData = $("#clCdRegForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 상세코드 등록 팝업 호출 */
-            dtlCdRegModal: function() {
-                commons.util.handlebarsTemplate({ "clCd": $("#clCd").val() }, "dtl_cd_reg", "show");
-                commons.validate.replaceBlankRegex("#dtlCdRegForm dtlCd");
-                commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
-                commons.validate.onlyNum("#dtlCdRegForm sortOrdr");
-                commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
-            },
-            /** 상세코드 등록 (Ajax) */
-            dtlCdRegAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.reg"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    $("#clCdRegForm #regYn").val("Y");
-                    const url = "${SiteUrl.DTL_CD_REG_AJAX!}";
-                    let ajaxData = $("#dtlCdRegForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 삭제 처리 (ajax) */
-            delAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.BOARD_DEF_DEL_AJAX!}";
-                    let ajaxData = { "clCd": $("#clCd").val() };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) Page.list();
-                            });
-                    });
-                });
-            },
-            /** 목록 화면 이동 */
-            list: function() {
-                const listUrl = "${SiteUrl.CL_CD_LIST!}?isBackToList=Y";
-                commons.util.blockUIReplace(listUrl);
-            },
-            /** 수정 화면 이동 */
-            dtlCdMdfForm: function(dtlCd) {
-                const url = "${SiteUrl.DTL_CD_DTL_AJAX!}";
-                let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    let rsltObj = res.rsltObj;
-                    rsltObj.isMdf = true;
-                    commons.util.handlebarsTemplate(rsltObj, "dtl_cd_reg", "show");
-                    commons.validate.replaceBlankRegex("#dtlCdRegForm #dtlCd");
-                    commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
-                    commons.validate.onlyNum("#dtlCdRegForm #sortOrdr");
-                    commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
-                });
-            },
-            /** 사용으로 변경 (Ajax) */
-            dtlCdUseAjax: function(dtlCd) {
-                event.stopPropagation();
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.use"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = '${SiteUrl.DTL_CD_USE_AJAX!}';
-                    let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.result) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 미사용으로 변경 (Ajax) */
-            dtlCdUnuseAjax: function(dtlCd) {
-                event.stopPropagation();
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.unuse"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = '${SiteUrl.DTL_CD_UNUSE_AJAX!}';
-                    let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.result) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 삭제 처리 (ajax) */
-            dtlCdDelAjax: function(dtlCd) {
-                event.stopPropagation();
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.DTL_CD_DEL_AJAX!}";
-                    let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.result) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 정렬순서 저장 */
-            sortOrdr: function() {
-                let orderData = [];
-                document.querySelectorAll('.sortable-item').forEach((item, index) => {
-                    orderData.push({ "clCd": $("#clCd").val(), "dtlCd": $(item).attr("id"), "state": { "sortOrdr": index }});
-                });
-                const url = "${SiteUrl.DTL_CD_SORT_ORDR_AJAX!}";
-                let ajaxData = { "sortOrdr": orderData };
-                commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
-                    if (res.result) {
-                        if (commons.util.isNotEmpty(res.message)) {
-                            Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
-                        } else {
-                            commons.util.blockUIReload();
-                        }
-                    }
-                });
-            }
         }
     }();
     $(document).ready(function() {
@@ -240,18 +69,18 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
         <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                onclick="Page.mdfForm();"
+                onclick="ClCd.mdfModal();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드 수정 팝업을&#10;호출합니다.">
             <i class="bi bi-pencil-square"></i>수정
         </button>
         <!-- 등록자 또는 관리자가 삭제 가능 -->
         <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
-                onclick="Page.delAjax();"
+                onclick="ClCd.delAjax();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드를 삭제합니다.">
             <i class="bi bi-trash"></i>삭제
         </button>
         <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "Page" />
+        <@component.btn_post_toList "ClCd.list();" />
     </div>
 
     <div class="separator separator-dashed border-gray-300 my-8"></div>
@@ -268,14 +97,14 @@
             <!--begin::Toolbar-->
             <div>
                 <button type="button" class="btn btn-sm btn-primary"
-                        onclick="Page.dtlCdRegModal();"
+                        onclick="DtlCd.regModal();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 코드 등록 팝업을&#10;호출합니다.">
                     <i class="fas fa-plus"></i>상세코드 추가
                 </button>
             </div>
             <div>
                 <!-- 버튼:: 정렬순서 -->
-                <@component.btn_header_sort_ordr "Page.sortOrdr();" />
+                <@component.btn_header_sort_ordr "DtlCd.sortOrdr();" />
             </div>
             <!--end::Toolbar-->
         </div>
@@ -322,7 +151,7 @@
             <!--begin::Table body-->
             <tbody class="draggable-zone">
             <#list clCd.dtlCdList![] as dtlCd>
-                <tr class="sortable-item draggable bg-hover-secondary" id="${dtlCd.dtlCd!}" onclick="Page.dtlCdMdfForm('${dtlCd.dtlCd!}');">
+                <tr class="sortable-item draggable bg-hover-secondary" id="${dtlCd.dtlCd!}" onclick="DtlCd.mdfModal('${dtlCd.dtlCd!}');">
                     <td class="text-center">
                         <div class="draggable-handle cursor-move pt-2"
                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
@@ -351,13 +180,13 @@
                     <td class="text-center">
                         <#if (dtlCd.useYn!"Y") == "Y">
                             <div class="badge badge-success cursor-pointer"
-                                 onclick="Page.dtlCdUnuseAjax('${dtlCd.dtlCd!}');"
+                                 onclick="DtlCd.unuseAjax('${dtlCd.dtlCd!}');"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
                                 <i class="bi bi-check text-light blink-slow"></i>사용
                             </div>
                         <#else>
                             <div class="badge badge-secondary btn-white cursor-pointer"
-                                 onclick="Page.dtlCdUseAjax('${dtlCd.dtlCd!}');"
+                                 onclick="DtlCd.useAjax('${dtlCd.dtlCd!}');"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
                                 <i class="bi bi-x blink-slow"></i>미사용
                             </div>
@@ -365,7 +194,7 @@
                     </td>
                     <td class="text-center">
                         <div class="badge badge-danger badge-outlined cursor-pointer"
-                             onclick="Page.dtlCdDelAjax('${dtlCd.dtlCd!}')"
+                             onclick="DtlCd.delAjax('${dtlCd.dtlCd!}')"
                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                             <i class="bi bi-trash text-danger fs-7 blink-slow"></i>삭제
                         </div>
@@ -380,12 +209,13 @@
             </tbody>
         </table>
     </div>
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="clCd" id="clCd" value="${clCd.clCd!}" />
-    </form>
 </div>
 
+<form name="procForm" id="procForm">
+    <input type="hidden" name="clCd" id="clCd" value="${clCd.clCd!}" />
+</form>
+
+<!--include:: Modals-->
 <#include "/view/admin/cd/_cl_cd_reg_modal.ftlh">
 <#include "/view/admin/cd/_dtl_cd_reg_modal.ftlh">
 

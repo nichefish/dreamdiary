@@ -1,7 +1,8 @@
 <#--
- -- 분류 코드(CL_CD) > 상세 Modal
+ -- 분류 코드(cl_cd) > 상세 Modal
  -- @included_in : cl_cd_list.ftlh
  -->
+
 <div class="modal fade" id="cl_cd_dtl_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -18,5 +19,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/admin/cd/_cl_cd_dtl_template.hbs">
