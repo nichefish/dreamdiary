@@ -9,7 +9,7 @@
         <div class="btn btn-icon btn-active-light-primary blink position-relative w-30px h-30px w-md-40px h-md-40px"
              data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click"
              title="파일시스템 연동&#10;화면으로 이동합니다."
-             onclick="location.replace('${SiteUrl.FLSYS_HOME!}');">
+             onclick="location.replace('${Url.FLSYS_HOME!}');">
             <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
             <span class="svg-primary svg-icon svg-icon-1">
                 <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/keenthemes/metronic/docs/core/html/src/media/icons/duotune/abstract/abs026.svg-->

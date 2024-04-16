@@ -15,7 +15,7 @@
 <#include "/view/vcatn/schdul/_vcatn_schdul_scripts.ftlh">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
                 commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", null, function () {
@@ -25,7 +25,8 @@
                     if ($("#endDt").val() !== "") Page.noBefore("#bgnDt", "#endDt");
                 });
 
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
 
                 /** jquery validation */
                 $(function () {
@@ -69,8 +70,7 @@
                 }
             },
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });

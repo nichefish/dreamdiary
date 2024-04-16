@@ -7,7 +7,7 @@
         return {
             /** form validation init */
             initValidateForm: function() {
-                /** jquery :: validation */
+                /* jquery :: validation */
                 commons.validate.validateForm("#menuRegForm", Menu.regAjax);
             },
             /** Draggable 컴포넌트 init */

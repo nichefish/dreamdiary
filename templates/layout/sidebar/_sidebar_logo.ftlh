@@ -7,13 +7,13 @@
 <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 
     <!--begin::Logo image-->
-    <a href="${SiteUrl.MAIN!}" class="d-flex align-items-center"
-       data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="${SiteUrl.DOMAIN!}">
+    <a href="${Url.MAIN!}" class="d-flex align-items-center"
+       data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click" title="${Url.DOMAIN!}">
         <!-- default -->
         <div class="app-sidebar-logo-default w-25px me-5">
             <img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="img-thumbnail w-auto logo"/>
         </div>
-        <div class="app-sidebar-logo-default">${SiteUrl.DOMAIN!}</div>
+        <div class="app-sidebar-logo-default">${Url.DOMAIN!}</div>
         <!-- minimized -->
         <div class="app-sidebar-logo-minimize w-25px me-5">
             <img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="img-thumbnail w-auto logo"/>

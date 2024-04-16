@@ -28,7 +28,7 @@
             init: function () {
                 Page.updt();
 
-                /** jquery :: validation */
+                /* jquery :: validation */
                 Menu.initValidateForm();
                 /* init : Draggable */
                 Menu.initDraggable();

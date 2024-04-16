@@ -1,6 +1,7 @@
 <#--
-  -- 로그인 화면
+  -- 메인 화면 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -43,12 +44,12 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.LGN_POLICY_REG_AJAX!}";
+                    const url = "${Url.LGN_POLICY_REG_AJAX!}";
                     let ajaxData = $("#lgnPolicyForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReplace("${SiteUrl.LGN_POLICY_FORM!}");
+                                if (res.result) commons.util.blockUIReplace("${Url.LGN_POLICY_FORM!}");
                             });
                     });
                 });

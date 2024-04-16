@@ -7,6 +7,7 @@
         return {
             /** form validation init */
             initValidateForm: function() {
+                /* jquery :: validation */
                 $("#lgnPolicyForm").validate({
                     submitHandler: function() {
                         LgnPolicy.regAjax();

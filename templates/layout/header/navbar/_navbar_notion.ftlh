@@ -9,7 +9,7 @@
         <div class="btn btn-icon btn-active-light-primary blink position-relative w-30px h-30px w-md-40px h-md-40px"
              data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click"
              title="노션 연동&#10;화면으로 이동합니다.&#10;(Alpha version)"
-             onclick="location.replace('${SiteUrl.NOTION_HOME!}?notionPageId=');">
+             onclick="location.replace('${Url.NOTION_HOME!}?notionPageId=');">
             <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
             <span class="svg-primary svg-icon svg-icon-1">
                 <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/keenthemes/metronic/docs/core/html/src/media/icons/duotune/general/gen017.svg-->

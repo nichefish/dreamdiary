@@ -24,8 +24,8 @@
                 VcatnPapr.initValidateForm();
                 // 첨부파일 영역 0개인지 체크
                 AtchFile.atchFileListToggle();
-
-                commons.validate.noSpaces(".no-space");        // 공백 자동 제거
+                // 공백 자동 제거
+                commons.validate.noSpaces(".no-space");
 
                 // 잔디발송여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("jandiYn", "발송//미발송", "#0095E8//gray", function () {

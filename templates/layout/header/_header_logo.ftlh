@@ -6,16 +6,16 @@
 <!--begin::Web logo-->
 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0" style="width:235px;">
 	<div class="d-flex align-items-center w-100 border-end h-50 border-gray-400">
-		<a href="${SiteUrl.MAIN!}">
+		<a href="${Url.MAIN!}">
 			<img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="h-30px"/>
-			<span class="ps-3 fs-6 text-underline-dotted" style="letter-spacing: 0.2px">${SiteUrl.DOMAIN!}</span>
+			<span class="ps-3 fs-6 text-underline-dotted" style="letter-spacing: 0.2px">${Url.DOMAIN!}</span>
 		</a>
 	</div>
 </div>
 <!--end::Web logo-->
 <!--begin::Mobile logo-->
 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-	<a href="${SiteUrl.MAIN!}" class="d-lg-none">
+	<a href="${Url.MAIN!}" class="d-lg-none">
 		<img alt="Logo" src="/media/img/logo/logo_racoon.jpg" class="h-30px"/>
 	</a>
 </div>
