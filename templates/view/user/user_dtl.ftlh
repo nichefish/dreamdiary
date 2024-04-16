@@ -5,92 +5,8 @@
 
 <@layout.layout toolbar=toolbar!"">
 
-<script>
-    const Page = function() {
-        return {
-            /** 수정 화면 이동 */
-            mdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.USER_MDF_FORM!}");
-            },
-            /** 승인 처리 (ajax) */
-            cfAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.cf"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.USER_REQST_CF_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 승인취소 처리 (ajax) */
-            uncfAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.uncf"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.USER_REQST_UNCF_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 패스워드 초기화 */
-            pwResetAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.resetPw"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.USER_PW_RESET_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 삭제 처리 (ajax) */
-            delAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.USER_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) Page.list();
-                            });
-                    });
-                });
-            },
-            /** 목록 화면 이동 */
-            list: function() {
-                commons.util.blockUIReplace("${SiteUrl.USER_LIST!}?isBackToList=Y");
-            },
-        }
-    }();
-
-    $(document).ready(function() {
-        Page.init();
-    });
-</script>
+<!--include:: script modules -->
+<#include "/view/user/_user_scripts.ftlh">
 
 <div class="card post">
     <!--begin::Card body-->
@@ -113,11 +29,11 @@
             </div>
             <div class="col-xl-2 col-8 col-form-label">
                 <#if (user.isCf)!true>
-                    <div class="btn btn-sm btn-danger" onclick="Page.uncfAjax();">
+                    <div class="btn btn-sm btn-danger" onclick="User.uncfAjax();">
                         승인 취소
                     </div>
                 <#else>
-                    <div class="btn btn-sm btn-secondary" onclick="Page.cfAjax();">
+                    <div class="btn btn-sm btn-secondary" onclick="User.cfAjax();">
                         승인 처리
                     </div>
                 </#if>
@@ -159,7 +75,7 @@
                 <label class="fw-bold">비밀번호</label>
             </div>
             <div class="col-xl-2">
-                <button type="button" class="btn btn-sm btn-secondary" onclick="Page.pwResetAjax();"
+                <button type="button" class="btn btn-sm btn-secondary" onclick="User.pwResetAjax();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호를 초기화합니다.&#10;로그인 정책 관리 메뉴에서&#10;초기화 값을 설정할 수&#10;있습니다.">
                     비밀번호 초기화
                 </button>
@@ -285,21 +201,21 @@
     <!--begin::Card footer-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
         <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_mdf "Page" user isMngr />
+        <@component.btn_post_modify "User.mdfForm();" user isMngr />
         <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "Page" user isMngr />
+        <@component.btn_post_delete "User.delAjax();" user isMngr />
         <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "Page" />
+        <@component.btn_post_toList "User.list();" />
     </div>
     <!--end::Card footer-->
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="userNo" value="${user.userNo!}">
-        <#if user.profl??>
-            <input type="hidden" name="userProflNo" value="${user.profl.userProflNo!}">
-        </#if>
-    </form>
 </div>
 <!--end::Card-->
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="userNo" value="${user.userNo!}">
+    <#if user.profl??>
+        <input type="hidden" name="userProflNo" value="${user.profl.userProflNo!}">
+    </#if>
+</form>
 
 </@layout.layout>

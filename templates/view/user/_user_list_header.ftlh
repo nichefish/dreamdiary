@@ -53,15 +53,15 @@
     </div>
     <div>
         <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "Page.search();" />
+        <@component.btn_header_search "User.search();" />
     </div>
     <div>
         <!-- 버튼:: 등록 화면 이동하기 -->
-        <@component.btn_header_reg_form "Page.regForm();" />
+        <@component.btn_header_reg_form "User.regForm();" />
     </div>
     <div>
         <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "Page.xlsxDownload();" />
+        <@component.btn_header_xlsx_download "User.xlsxDownload();" />
     </div>
 </form>
 

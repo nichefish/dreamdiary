@@ -1,0 +1,209 @@
+<#--
+  -- 사용자(user) : 모듈 스크립트 분리
+  -->
+
+<script>
+    const User = (function() {
+        return {
+            /** form validation init */
+            initValidateForm: function() {
+                /* jquery :: validation */
+                $("#userRegForm").validate({
+                    submitHandler: function() {
+                        if ($("#useAcsIpYn").is(":checked") && $("#acsIpListStr").val() === "") {
+                            Swal.fire("접속 IP는 최소 한 개 이상 입력해야 합니다.");
+                            return false;
+                        }
+                        Swal.fire({
+                            text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                            showCancelButton: true,
+                        }).then(function(result) {
+                            if (!result.value) return;
+                            User.regAjax();
+                        });
+                    },
+                    errorPlacement : function(error, element) {
+                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
+                    },
+                    ignore: [],         // hidden 필드도 검증하기 위함
+                    rules: {
+                        <#if isReg>
+                        userId: { minlength:4, maxlength:16 },
+                        ipDupChckPassed: { dupChck:true },
+                        password: { minlength:9, maxlength:20, regex:commons.validate.pwRegex },
+                        passwordCf: { equalTo:"#password", maxlength:20 },
+                        </#if>
+                    },
+                    messages: {
+                        <#if isReg>
+                        userId: { minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
+                        ipDupChckPassed: { dupChck:"아이디 중복 체크는 필수 항목입니다." },
+                        password: { minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
+                        passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
+                        </#if>
+                    },
+                });
+                $.validator.addMethod("dupChck", function(value) {
+                    return (value === "Y");
+                });
+                $.validator.addMethod("regex", function(value, element, regex) {
+                    const regExp = new RegExp(regex);
+                    return (this.optional(element) || regExp.test(value));
+                });
+            },
+            /** 목록 검색 */
+            search: function() {
+                $("#listForm #pageNo").val(1);
+                commons.util.blockUISubmit("#listForm", "${Url.USER_LIST!}?actionTyCd=SEARCH");
+            },
+            /** 엑셀 다운로드 */
+            xlsxDownload: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.download"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    commons.util.blockUIFileDownload();
+                    $("#listForm").attr("action", "${Url.USER_LIST_XLSX_DOWNLOAD!}").submit();
+                });
+            },
+            /** 등록 화면 이동 */
+            regForm: function() {
+                commons.util.blockUISubmit("#procForm", "${Url.USER_REG_FORM!}");
+            },
+            /** 아이디 중복 체크(Ajax) */
+            tagifyAcsIp: function() {
+                // 접속IP tagify
+                const acsIpInput = document.querySelector("#acsIpListStr");
+                new Tagify(acsIpInput, {
+                    maxTags: 5,
+                    pattern: commons.validate.ipv4regex,
+                    keepInvalidTags: false,
+                    skipInvalid: true,
+                    duplicates: false,
+                    editTags: {
+                        clicks: 2,
+                        keepInvalid: false      // if after editing, tag is invalid, auto-revert
+                    },
+                });
+            },
+            /** 아이디 중복 체크(Ajax) */
+            idDupChckAjax: function() {
+                const userIdValidSpan = $("#userId_valid_span");
+                let userId = $("#userId").val();
+                const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
+                if (!idRegex.test(userId)) {
+                    userIdValidSpan.text("아이디가 형식에 맞지 않습니다.").removeClass("text-success").addClass("text-danger");
+                    return false;
+                }
+                const url = "${Url.USER_ID_DUP_CHK_AJAX!}";
+                let ajaxData = { "userId": userId };
+                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    userIdValidSpan.text(res.message);
+                    if (res.rslt) {
+                        userIdValidSpan.removeClass("text-danger").addClass("text-success");
+                        $("#ipDupChckPassed").val("Y");
+                        $("#ipDupChckPassed_valid_span").text("");
+                        $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
+                    } else {
+                        userIdValidSpan.removeClass("text-success").addClass("text-danger");
+                        $("#ipDupChckPassed").val("N");
+                    }
+                });
+            },
+            /** 등록/수정 처리(Ajax) */
+            regAjax: function() {
+                const url = "<#if isReg>${Url.USER_REG_AJAX!}</#if><#if isMdf>${Url.USER_MDF_AJAX!}</#if>";
+                let ajaxData = new FormData($("#userRegForm")[0]);
+                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                    Swal.fire({ text: res.message })
+                        .then(function() {
+                            if (res.rslt) User.list();
+                        });
+                });
+            },
+            /** 상세 화면 이동 */
+            dtl: function(userNo) {
+                $("#procForm #userNo").val(userNo);
+                commons.util.blockUISubmit("#procForm", "${Url.USER_DTL!}");
+            },
+            /** 승인 처리 (ajax) */
+            cfAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.cf"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${Url.USER_REQST_CF_AJAX!}";
+                    let ajaxData = $("#procForm").serializeArray();
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.rslt) commons.util.blockUIReload();
+                            });
+                    });
+                });
+            },
+            /** 승인취소 처리 (ajax) */
+            uncfAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.uncf"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${Url.USER_REQST_UNCF_AJAX!}";
+                    let ajaxData = $("#procForm").serializeArray();
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.rslt) commons.util.blockUIReload();
+                            });
+                    });
+                });
+            },
+            /** 패스워드 초기화 */
+            pwResetAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.resetPw"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${Url.USER_PW_RESET_AJAX!}";
+                    let ajaxData = $("#procForm").serializeArray();
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.rslt) commons.util.blockUIReload();
+                            });
+                    });
+                });
+            },
+            /** 수정 화면 이동 */
+            mdfForm: function() {
+                commons.util.blockUISubmit("#procForm", "${Url.USER_MDF_FORM!}");
+            },
+            /** 삭제 처리 (ajax) */
+            delAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.del"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${Url.USER_DEL_AJAX!}";
+                    let ajaxData = $("#procForm").serializeArray();
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.rslt) Page.list();
+                            });
+                    });
+                });
+            },
+            /** 목록 화면 이동 */
+            list: function() {
+                const listUrl = "${Url.EXPTR_REQST_LIST!}<#if isMdf!false>?isBackToList=Y</#if>";
+                commons.util.blockUIReplace(listUrl);
+            }
+        }
+    })();
+</script>

@@ -1,20 +1,30 @@
 <#--
   -- 사용자 관리 > 계정 및 권한 관리 > 등록 화면
   -->
+
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
+
+<!--include:: script modules -->
+<#include "/view/user/_user_scripts.ftlh">
+<#include "/view/user/reqst/_user_reqst_scripts.ftlh">
 
 <#assign isReg = (isReg!false)>
 <#assign isMdf = (isMdf!false)>
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
-                commons.validate.noSpaces(".no-space");         // 공백 자동 제거
-                commons.validate.toLowerCase("#userId");        // 자동 대문자->소문자처리
-                commons.validate.cttpc("#cttpc");               // 연락처 포맷
+                /* jquery :: validation */
+                UserReqst.initValidateForm();
+                // 공백 자동 제거
+                commons.validate.noSpaces(".no-space");
+                // 자동 대문자->소문자처리
+                commons.validate.toLowerCase("#userId");
+                // 연락처 포맷
+                commons.validate.cttpc("#cttpc");
 
                 // 권한 유효성검사 바꿀때마다 지우기
                 $("#authCd").on("change", function() {
@@ -38,125 +48,14 @@
                 }, function(){
                     $("#acsIpListSpan").hide()
                 });
-
                 // 접속IP tagify
                 User.tagifyAcsIp();
-
-                /** jquery :: validation */
-                $(function(){
-                    $("#userReqstForm").validate({
-                        submitHandler: function() {
-                            if ($("#useAcsIpYn").is(":checked") && $("#acsIpListStr").val() === "") {
-                                Swal.fire("접속 IP는 최소 한 개 이상 입력해야 합니다.");
-                                return false;
-                            }
-                            Swal.fire({
-                                text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                showCancelButton: true,
-                            }).then(function(result) {
-                                if (!result.value) return;
-                                Page.regAjax();
-                            });
-                        },
-                        errorPlacement : function(error, element) {
-                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                        },
-                        ignore: [],         // hidden 필드도 검증하기 위함
-                        rules: {
-                            userId: { minlength:4, maxlength:16 },
-                            ipDupChckPassed: { dupChck:true },
-                            password: { minlength:9, maxlength:20, regex:commons.validate.pwRegex },
-                            passwordCf: { equalTo:"#password", maxlength:20 },
-                        },
-                        messages: {
-                            userId: { minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
-                            ipDupChckPassed: { dupChck:"아이디 중복 체크는 필수 항목입니다." },
-                            password: { minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
-                            passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
-                        },
-                    });
-                });
-                $.validator.addMethod("dupChck", function(value) {
-                    return (value === "Y");
-                });
-                $.validator.addMethod("regex", function(value, element, regex) {
-                    const regExp = new RegExp(regex);
-                    return (this.optional(element) || regExp.test(value));
-                });
             },
-            /** 등록/수정 처리(Ajax) */
-            regAjax: function() {
-                const url = "${SiteUrl.USER_REQST_REG_AJAX!}";
-                let ajaxData = new FormData($("#userReqstForm")[0]);
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
-                    Swal.fire({ text: res.message })
-                        .then(function() {
-                            if (res.rslt) Page.main();
-                        });
-                });
-            },
-            return: function() {
-                Swal.fire({
-                    text: "메인 화면으로 이동합니다.\n(현재까지 입력한 내용은 사라집니다.)\n계속하겠습니까?",
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (result.value) Page.main();
-                });
-            },
-            main: function() {
-                commons.util.blockUIReplace("${SiteUrl.MAIN!}");
-            }
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });
-
-    const User = function() {
-        return {
-            /** 아이디 중복 체크(Ajax) */
-            tagifyAcsIp: function() {
-                // 접속IP tagify
-                const acsIpInput = document.querySelector("#acsIpListStr");
-                new Tagify(acsIpInput, {
-                    maxTags: 5,
-                    pattern: commons.validate.ipv4regex,
-                    keepInvalidTags: false,
-                    skipInvalid: true,
-                    duplicates: false,
-                    editTags: {
-                        clicks: 2,
-                        keepInvalid: false      // if after editing, tag is invalid, auto-revert
-                    },
-                });
-            },
-            /** 아이디 중복 체크(Ajax) */
-            idDupChckAjax: function() {
-                const userIdValidSpan = $("#userId_valid_span");
-                let userId = $("#userId").val();
-                const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
-                if (!idRegex.test(userId)) {
-                    userIdValidSpan.text("아이디가 형식에 맞지 않습니다.").removeClass("text-success").addClass("text-danger");
-                    return false;
-                }
-                const url = "${SiteUrl.USER_ID_DUP_CHK_AJAX!}";
-                let ajaxData = { "userId": userId };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    userIdValidSpan.text(res.message);
-                    if (res.rslt) {
-                        userIdValidSpan.removeClass("text-danger").addClass("text-success");
-                        $("#ipDupChckPassed").val("Y");
-                        $("#ipDupChckPassed_valid_span").text("");
-                        $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
-                    } else {
-                        userIdValidSpan.removeClass("text-success").addClass("text-danger");
-                        $("#ipDupChckPassed").val("N");
-                    }
-                });
-            },
-        }
-    }();
 </script>
 <style>
     @media (max-width: 768px) {
@@ -176,7 +75,7 @@
                 <!-- breadcrumb -->
                 <ol class="breadcrumb text-muted fs-6 fw-semibold">
                     <li class="breadcrumb-item">
-                        <a href="javascript:void(0);" onclick="Page.return();"
+                        <a href="javascript:void(0);" onclick="UserReqst.return();"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메인 화면으로 돌아갑니다.">
                             <i class="bi bi-house-fill fs-4 me-1 text-primary"></i>
                         </a>
@@ -419,7 +318,7 @@
                     <i class="bi bi-pencil-square"></i>신규계정 신청
                 </button>
                 <button type="button" class="btn btn-sm btn-light"
-                        onclick="Page.return();"
+                        onclick="UserReqst.return();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="메인 화면으로 돌아갑니다.">
                     <i class="bi bi-backspace"></i>돌아가기
                 </button>

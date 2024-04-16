@@ -10,40 +10,18 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/user/_user_scripts.ftlh">
+
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
             },
-            /** 목록 검색 */
-            search: function() {
-                $("#listForm #pageNo").val(1);
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.USER_LIST!}?actionTyCd=SEARCH");
-            },
-            /** 등록 화면 이동 */
-            regForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.USER_REG_FORM!}");
-            },
-            /** 상세 화면 이동 */
-            dtl: function(userNo) {
-                $("#procForm #userNo").val(userNo);
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.USER_DTL!}");
-            },
-            /** 엑셀 다운로드 */
-            xlsxDownload: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.download"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    commons.util.blockUIFileDownload();
-                    $("#listForm").attr("action", "${SiteUrl.USER_LIST_XLSX_DOWNLOAD!}").submit();
-                });
-            }
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });
@@ -92,7 +70,7 @@
                 <#assign divideCfYn = prevCfYn?? && user.cfYn! != prevCfYn>
                 <#assign divideRetireYn = prevRetireYn?? && user.retireYn! != prevRetireYn>
                 <#assign divide = divideCfYn || divideRetireYn>
-                <tr class="<#if user.isMe!false>bg-light</#if> bg-hover-secondary <#if divide>border-top-5</#if>" onclick="Page.dtl(${user.userNo!});">
+                <tr class="<#if user.isMe!false>bg-light</#if> bg-hover-secondary <#if divide>border-top-5</#if>" onclick="User.dtl(${user.userNo!});">
                     <td class="text-center hidden-table">
                         ${user.rnum}
                     </td>
@@ -174,10 +152,10 @@
     <!-- pagination::begin -->
     <#include "/view/_component/_pagination.ftlh">
     <!-- pagination::end -->
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="userNo" id="userNo" />
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="userNo" id="userNo" />
+</form>
 
 </@layout.layout>
