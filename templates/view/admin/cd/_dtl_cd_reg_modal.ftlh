@@ -2,6 +2,7 @@
  -- 상세 코드(dtl_cd) 등록/수정 Modal
  -- @included_in : cl_cd_dtl
  -->
+
 <div class="modal fade" id="dtl_cd_reg_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">

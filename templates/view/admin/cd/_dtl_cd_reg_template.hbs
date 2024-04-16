@@ -2,6 +2,7 @@
  -- 상세 코드(dtl_cd) 등록/수정 Template
  -- @included_in : _dtl_cd_reg_modal.ftlh
  -->
+
 <script type="text/x-handlebars-template" id="dtl_cd_reg_template">
     <input type="hidden" name="clCd" value="{{clCd}}">
     <input type="hidden" name="regYn" id="regYn" value="{{#if (notExists dtlCd)}}Y{{/if}}{{#if (exists dtlCd)}}N{{/if}}">

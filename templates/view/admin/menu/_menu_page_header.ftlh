@@ -1,7 +1,8 @@
 <#--
- -- 활동 로그 목록 > 검색 영역 Header
+ -- 메뉴(menu) > 검색 영역 Header
  -- @included_in : menu_page.ftlh
  -->
+
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
@@ -26,7 +27,7 @@
     <!-- button starts -->
     <div>
         <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "Page.search();" />
+        <@component.btn_header_search "Menu.search();" />
     </div>
     <div>
         <!-- 버튼:: 등록 화면 이동하기 -->
@@ -34,7 +35,7 @@
     </div>
     <div>
         <!-- 버튼:: 정렬순서 -->
-        <@component.btn_header_sort_ordr "Page.sortOrdr();" />
+        <@component.btn_header_sort_ordr "Menu.sortOrdr();" />
     </div>
 </form>
 

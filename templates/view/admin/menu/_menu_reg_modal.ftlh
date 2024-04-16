@@ -1,7 +1,8 @@
 <#--
- -- 분류 코드(CL_CD) > 상세 Modal
+ -- 메뉴(menu) > 상세 Modal
  -- @included_in : menu_page.ftlh
  -->
+
 <div class="modal fade" id="menu_reg_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -37,5 +38,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/admin/menu/_menu_reg_template.hbs">

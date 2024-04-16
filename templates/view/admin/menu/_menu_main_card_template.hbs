@@ -1,7 +1,8 @@
 <#--
- -- 메뉴 > 카드 Template
+ -- 메뉴(menu) > 카드 Template
  -- @included_in : menu_page.ftlh
  -->
+
 <script type="text/x-handlebars-template" id="menu_main_card_template">
     <li class="col-4 list-unstyled p-5 sortable-item draggable-main" style="{{borderColor}}"
          id="{{menuNo}}" data-type="{{menuTyCd}}" upper-menu-no="{{upperMenuNo}}">
@@ -17,7 +18,7 @@
                     </div>
                     <!-- ↓의도된것 -->
                     <i class="{{icon}} text-info fs-3 ms-8"></i>
-                    <h2 class="mx-2 mb-0 text-info cursor-pointer text-underline-dotted" onclick="Menu.mdfForm('{{menuNo}}');"
+                    <h2 class="mx-2 mb-0 text-info cursor-pointer text-underline-dotted" onclick="Menu.mdfModal('{{menuNo}}');"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
                         <span class="title {{#if (equals state.useYn "Y")}}strikethrough{{/if}}">
                             {{menuNm}}  // {{#if (exists sortOrdr)}}{{sortOrdr}}{{else}}@{{@index}}{{/if}} //   {{sortOrdr}}_{{@index}}

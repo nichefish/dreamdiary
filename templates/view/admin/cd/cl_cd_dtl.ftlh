@@ -15,6 +15,7 @@
     const Page = function() {
         return {
             init: function () {
+                /** init : Draggable */
                 DtlCd.initDraggable();
             },
         }

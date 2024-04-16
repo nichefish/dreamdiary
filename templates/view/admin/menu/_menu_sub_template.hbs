@@ -1,7 +1,8 @@
 <#--
- -- 메뉴 > 하위메뉴 Template
+ -- 메뉴(menu) > 하위메뉴 Template
  -- @included_in : menu_page.ftlh
  -->
+
 <script type="text/x-handlebars-template" id="menu_sub_template">
     <li class="list-unstyled sortable-item draggable-sub" style="{{borderColor}}"
          id="{{menuNo}}" data-type="{{menuTyCd}}" upper-menu-no="{{upperMenuNo}}">
@@ -20,7 +21,7 @@
                     <span class="menu-bullet">
                     <span class="bullet bullet-dot vertical-middle"></span>
                 {{/if}}
-                <div class="mx-2 mb-0 text-dark cursor-pointer text-underline-dotted" onclick="Menu.mdfForm('{{menuNo}}');"
+                <div class="mx-2 mb-0 text-dark cursor-pointer text-underline-dotted" onclick="Menu.mdfModal('{{menuNo}}');"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
                     <span class="title {{#if (equals state.useYn "Y")}}strikethrough{{/if}}">
                         {{menuNm}}
