@@ -9,7 +9,7 @@
             initDraggable: function() {
                 const containers = document.querySelectorAll(".draggable-zone");
                 if (containers.length === 0) return false;
-                Page.swappable = new Draggable.Sortable(containers, {
+                DtlCd.swappable = new Draggable.Sortable(containers, {
                     draggable: ".draggable",
                     handle: ".draggable .draggable-handle",
                     mirror: {

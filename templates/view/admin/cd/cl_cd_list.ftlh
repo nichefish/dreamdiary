@@ -16,7 +16,7 @@
 <#include "/view/admin/cd/_cl_cd_scripts.ftlh">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function() {
                 /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
@@ -25,8 +25,7 @@
                 ClCd.initDraggable();
             },
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });

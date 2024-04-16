@@ -7,7 +7,7 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
                 /** jquery :: validation */
@@ -16,8 +16,7 @@
                 commons.validate.onlyNum(".number");
             },
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });

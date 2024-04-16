@@ -14,7 +14,7 @@
             initDraggable: function() {
                 const mainContainers = document.querySelectorAll(".draggable-zone-main");
                 if (mainContainers.length === 0) return false;
-                Page.mainSwappable = new Draggable.Sortable(mainContainers, {
+                Menu.mainSwappable = new Draggable.Sortable(mainContainers, {
                     draggable: ".draggable-main",
                     handle: ".draggable-main .draggable-handle-main",
                     mirror: {
@@ -32,7 +32,7 @@
 
                 const subContainers = document.querySelectorAll(".draggable-zone-sub");
                 if (subContainers.length === 0) return false;
-                Page.subSwappable = new Draggable.Sortable(subContainers, {
+                Menu.subSwappable = new Draggable.Sortable(subContainers, {
                     draggable: ".draggable-sub",
                     handle: ".draggable-sub .draggable-handle-sub",
                     mirror: {
