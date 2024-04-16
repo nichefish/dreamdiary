@@ -11,6 +11,9 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/notice/_notice_scripts.ftlh">
+
 <script>
     const Page = function() {
         return {
@@ -24,10 +27,6 @@
         Page.init();
     });
 </script>
-
-<form name="procForm" id="procForm">
-    <input type="hidden" name="postNo" id="postNo" value="" />
-</form>
 
 <!-- #include:: component:: 태그 클릭 필터링 -->
 <#include "/view/_component/tag/_tag_list_header.ftlh">
@@ -188,13 +187,13 @@
     <!-- pagination::end -->
 </div>
 
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="" />
+</form>
+
+<!--include:: Modals-->
 <#include "/view/notice/_notice_dtl_modal.ftlh">
-
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
-
 <#include "/view/_component/atch_file/_atch_file_list_modal.ftlh">
-
-<!--include:: script modules -->
-<#include "/view/notice/_notice_scripts.ftlh">
 
 </@layout.layout>

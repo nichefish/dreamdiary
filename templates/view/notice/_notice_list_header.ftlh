@@ -34,7 +34,7 @@
         <!-- 버튼:: 목록 검색 -->
         <@component.btn_header_search "Notice.search();" />
         <!-- 버튼:: 내 글 보기 -->
-        <@component.btn_header_mypapr "Notice" MY_PAPR!false />
+        <@component.btn_header_mypapr "Notice.myPapr();" MY_PAPR!false />
     </div>
     <div>
         <!-- 버튼:: 등록 화면 이동하기 -->

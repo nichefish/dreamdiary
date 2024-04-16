@@ -15,6 +15,9 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/notice/_notice_scripts.ftlh">
+
 <script>
     /** tinymce 글접기 토글 테스트중... */
     $(document).ready(function() {
@@ -73,7 +76,7 @@
                                     showCancelButton: true,
                                 }).then(function(result) {
                                     if (!result.value) return;
-                                    Page.regAjax();
+                                    Notice.regAjax();
                                 });
                             }
                         },
@@ -83,29 +86,6 @@
                         ignore: [],         // hidden 필드도 검증하기 위함
                     });
                 });
-            },
-            /** submit */
-            submit: function() {
-                tinymce.activeEditor.save();
-                Page.submitMode = "submit";
-                $("#noticeRegForm").submit();
-            },
-            /** 미리보기 팝업 호출 */
-            preview: function() {
-                tinymce.activeEditor.save();
-                Page.submitMode = "preview";
-                $("#noticeRegForm").submit();
-            },
-            /** 등록/수정 처리(Ajax) */
-            regAjax: function () {
-                let ajaxData = new FormData($("#noticeRegForm")[0]);
-                const url = " <#if isMdf>${Url.NOTICE_MDF_AJAX!}<#else>${Url.NOTICE_REG_AJAX!}</#if>";
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
-                    Swal.fire({ text: res.message })
-                        .then(function() {
-                            if (res.rslt) Page.list();
-                        });
-                }, 'block');
             },
         }
     }();
@@ -248,12 +228,12 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-between">
         <!-- 버튼 :: 미리보기 -->
-        <@component.btn_preview_pop "Page" />
+        <@component.btn_preview_pop "Notice.preview();" />
         <div>
             <!-- 버튼 :: 저장하기 -->
-            <@component.btn_post_save "Page" />
+            <@component.btn_post_submit "Notice.submit();" />
             <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "Notice" />
+            <@component.btn_post_toList "Notice.list();" />
         </div>
     </div>
 </div>
@@ -262,8 +242,5 @@
 <#include "/view/_component/atch_file/_atch_file_area.ftlh">
 <!-- #include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
-
-<!--include:: script modules -->
-<#include "/view/notice/_notice_scripts.ftlh">
 
 </@layout.layout>

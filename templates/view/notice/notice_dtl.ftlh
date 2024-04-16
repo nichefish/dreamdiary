@@ -6,9 +6,9 @@
 
 <@layout.layout toolbar=toolbar!"">
 
-<form name="procForm" id="procForm">
-    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-</form>
+<!--include:: script modules -->
+<#include "/view/notice/_notice_scripts.ftlh">
+
 <div class="card post">
     <!--begin::Question-->
     <div class="mb-0">
@@ -47,18 +47,19 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
         <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_mdf "Notice" post isMngr />
+        <@component.btn_post_modify "Notice.mdfForm();" post isMngr />
         <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "Notice" post isMngr />
+        <@component.btn_post_delete "Notice.delAjax();" post isMngr />
         <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "Notice" />
+        <@component.btn_post_toList "Notice.list();" />
     </div>
 
     <!-- 댓글 영역 -->
     <#include "/view/_component/comment/_comment_area.ftlh">
 </div>
 
-<!--include:: script modules -->
-<#include "/view/notice/_notice_scripts.ftlh">
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+</form>
 
 </@layout.layout>

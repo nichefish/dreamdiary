@@ -10,9 +10,6 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
-                //
-            },
             close: function() {
                 window.close();
             }
@@ -20,9 +17,6 @@
     })();
 </script>
 
-<form name="procForm" id="procForm">
-    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-</form>
 <div class="card post">
     <!--begin::Question-->
     <div class="mb-0">
@@ -48,5 +42,9 @@
         <@component.btn_preview_close "Page" />
     </div>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+</form>
 
 </@layout.layout>

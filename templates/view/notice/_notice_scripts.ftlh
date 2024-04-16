@@ -1,6 +1,5 @@
 <#--
   -- 공지사항(notice) : 모듈 스크립트 분리
-  -- @included_in : notice_list.ftlh
   -->
 
 <script>
@@ -17,10 +16,6 @@
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
-            /** 전체 목록 조회 */
-            resetSearch: function() {
-                commons.util.blockUIReplace("${Url.NOTICE_LIST!}");
-            },
             /** 엑셀 다운로드 */
             xlsxDownload: function() {
                 Swal.fire({
@@ -35,6 +30,29 @@
             /** 등록 화면 이동 */
             regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.NOTICE_REG_FORM!}");
+            },
+            /** submit */
+            submit: function() {
+                if (tinymce !== undefined) tinymce.activeEditor.save();
+                Notice.submitMode = "submit";
+                $("#noticeRegForm").submit();
+            },
+            /** 미리보기 팝업 호출 */
+            preview: function() {
+                if (tinymce !== undefined) tinymce.activeEditor.save();
+                Notice.submitMode = "preview";
+                $("#noticeRegForm").submit();
+            },
+            /** 등록/수정 처리(Ajax) */
+            regAjax: function () {
+                let ajaxData = new FormData($("#noticeRegForm")[0]);
+                const url = " <#if isMdf!false>${Url.NOTICE_MDF_AJAX!}<#else>${Url.NOTICE_REG_AJAX!}</#if>";
+                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                    Swal.fire({ text: res.message })
+                        .then(function() {
+                            if (res.rslt) Notice.list();
+                        });
+                }, 'block');
             },
             /** 상세 화면 이동 */
             dtl: function(postNo) {
@@ -77,7 +95,7 @@
             },
             /** 목록 화면 이동 */
             list: function() {
-                const listUrl = "${Url.NOTICE_LIST!}<#if isMdf>?isBackToList=Y</#if>";
+                const listUrl = "${Url.NOTICE_LIST!}<#if isMdf!false>?isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);
             }
         }
