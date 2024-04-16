@@ -1,7 +1,8 @@
 <#--
-  -- 활동 로그 목록 > 검색 영역 Header
-  -- @included_in : log_actvty_list_header
+  -- 활동 로그(log_actvty) > 목록 검색 영역 Header
+  -- @included_in : log_actvty_list.ftlh
   -->
+
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
@@ -32,11 +33,11 @@
     </div>
     <div>
         <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "Page.search();" />
+        <@component.btn_header_search "LogActvty.search();" />
     </div>
     <div>
         <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "Page.xlsxDownload();" />
+        <@component.btn_header_xlsx_download "LogActvty.xlsxDownload();" />
     </div>
 </form>
 

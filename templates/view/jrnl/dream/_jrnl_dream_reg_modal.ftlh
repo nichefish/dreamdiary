@@ -53,6 +53,7 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/jrnl/dream/_jrnl_dream_reg_header_template.hbs">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_template.hbs">

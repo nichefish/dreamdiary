@@ -1,6 +1,7 @@
 <#--
-  -- 활동 로그 목록 화면
+  -- 활동 로그(log_actvty) > 목록 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->
@@ -19,36 +20,7 @@
             },
             /** 사용자별 로그 페이지로 이동 */
             logStatsUserList: function() {
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_STATS_USER_LIST!}");
-            },
-            /** 상세 모달 팝업 호출 */
-            dtlAjax: function (logActvtyNo) {
-                event.stopPropagation();
-                const url = "${SiteUrl.LOG_ACTVTY_DTL_AJAX!}";
-                let ajaxData = { "logActvtyNo": logActvtyNo };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltObj, "log_actvty_dtl", "show");
-                });
-            },
-            /** 목록 검색 */
-            search: function() {
-                $("#listForm #pageNo").val(1);
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_ACTVTY_LIST!}?actionTyCd=SEARCH");
-            },
-            /** 엑셀 다운로드 */
-            xlsxDownload: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.download"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    commons.util.blockUIFileDownload();
-                    $("#listForm").attr("action", "${SiteUrl.LOG_ACTVTY_LIST_XLSX_DOWNLOAD!}").submit();
-                });
+                commons.util.blockUISubmit("#listForm", "${Url.LOG_STATS_USER_LIST!}");
             }
         }
     }();
@@ -112,7 +84,7 @@
         <!--begin::Table body-->
         <tbody class="text-gray-600">
             <#list logActvtyList![] as log>
-                <tr class="cursor-pointer <#if log.isJobUser!false>bg-fxd-list</#if>" onclick="Page.dtlAjax('${log.logActvtyNo!}');">
+                <tr class="cursor-pointer <#if log.isJobUser!false>bg-fxd-list</#if>" onclick="LogActvty.dtlAjax('${log.logActvtyNo!}');">
                     <td class="text-center hidden-table">${log.rnum!}</td>
                     <td class="text-center">
                         ${log.logDt!"-"}
@@ -178,5 +150,8 @@
 <!--end::Card-->
 
 <#include "/view/log/actvty/_log_actvty_dtl_modal.ftlh">
+
+<!--include:: script modules -->
+<#include "/view/log/actvty/_log_actvty_scripts.ftlh">
 
 </@layout.layout>

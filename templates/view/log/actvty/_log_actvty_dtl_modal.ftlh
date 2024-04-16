@@ -1,7 +1,8 @@
 <#--
-  -- 활동 로그 > 상세 Modal
-  -- @included_in : log_actvty_list
+  -- 활동 로그(log_actvty) > 상세 Modal
+  -- @included_in : log_actvty_list.ftlh
   -->
+
 <div class="modal fade" id="log_actvty_dtl_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -25,5 +26,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/log/actvty/_log_actvty_dtl_template.hbs">

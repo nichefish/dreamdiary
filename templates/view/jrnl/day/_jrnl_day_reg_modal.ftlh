@@ -33,5 +33,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/jrnl/day/_jrnl_day_reg_template.hbs">

@@ -55,8 +55,8 @@
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 
 <!--include:: script modules -->
-<#include "/view/jrnl/day/jrnl_day_module.ftlh">
-<#include "/view/jrnl/dream/jrnl_dream_module.ftlh">
+<#include "/view/jrnl/day/jrnl_day_scripts.ftlh">
+<#include "/view/jrnl/dream/jrnl_dream_scripts.ftlh">
 
 <!--include:: Dream - Aside-->
 <#include "/view/jrnl/day/_jrnl_day_aside_base.ftlh">
