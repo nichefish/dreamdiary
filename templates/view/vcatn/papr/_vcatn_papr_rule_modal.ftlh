@@ -1,8 +1,9 @@
 <#--
-  -- 휴가계획서 > 휴가규칙 Modal
-  -- @included_in : vcatn_papr_list_header
-  -- @included_in : vcatn_papr_reg_form
+  -- 휴가계획서(vcatn_papr) > 휴가규칙 Modal
+  -- @included_in : vcatn_papr_list.ftlh
+  -- @included_in : vcatn_papr_reg_form.ftlh
   -->
+
 <div class="modal fade" id="vcatn_papr_rule_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">

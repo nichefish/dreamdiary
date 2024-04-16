@@ -1,6 +1,7 @@
 <#--
-  -- 휴가계획서 > 목록 화면
+  -- 휴가계획서(vcatn_papr) > 목록 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->
@@ -10,48 +11,14 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/vcatn/papr/_vcatn_papr_scripts.ftlh">
+
 <script>
     const Page = function() {
         return {
             init: function () {
                 commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
-            },
-            /** 목록 검색 */
-            search: function () {
-                $("#listForm #pageNo").val(1);
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.VCATN_PAPR_LIST!}?actionTyCd=SEARCH");
-            },
-            /** 내가 작성한 글 보기 */
-            myPapr: function () {
-                const url = "${SiteUrl.VCATN_PAPR_LIST!}";
-                let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
-                commons.util.blockUIReplace(url + param);
-            },
-            /** 전체 목록 조회 */
-            resetSearch: function() {
-                commons.util.blockUIReplace("${SiteUrl.VCATN_PAPR_LIST!}");
-            },
-            /** 등록 화면 이동 */
-            regForm: function () {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.VCATN_PAPR_REG_FORM!}");
-            },
-            /** 상세 화면 이동 */
-            dtl: function (postNo) {
-                $("#procForm #postNo").val(postNo);
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.VCATN_PAPR_DTL!}");
-            },
-            /** 상세 모달 팝업 호출 */
-            dtlAjax: function (postNo) {
-                event.stopPropagation();
-                const url = "${SiteUrl.VCATN_PAPR_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltObj, "vcatn_papr_dtl", "show");
-                });
             },
         }
     }();
@@ -90,14 +57,14 @@
         <tbody class="cursor-pointer">
             <!-- 공지사항 상단고정 목록 -->
             <#list vcatnPaprFxdList![] as post>
-                <tr class="bg-fxd-list <#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
+                <tr class="bg-fxd-list <#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary" onclick="VcatnPapr.dtl('${post.postNo!}');">
                     <td class="text-center hidden-table">
                         ${post.rnum!"-"}
                     </td>
                     <td class="text-start title-fxd">
                         <div class="d-flex align-items-center justify-content-between">
                             <span>
-                                <a href="${SiteUrl.VCATN_PAPR_DTL!}?postNo=${post.postNo!}" class="title-fxd">
+                                <a href="${Url.VCATN_PAPR_DTL!}?postNo=${post.postNo!}" class="title-fxd">
                                     <span class="pe-4">(작성예시)</span>
                                     <#list post.schdulList![] as schdul>
                                         <span class="pe-4">
@@ -116,7 +83,7 @@
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="VcatnPapr.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </td>
@@ -153,14 +120,14 @@
                 </tr>
             </#list>
             <#list vcatnPaprList![] as post>
-                <tr class="<#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
+                <tr class="<#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary" onclick="VcatnPapr.dtl('${post.postNo!}');">
                     <td class="text-center hidden-table">
                         ${post.rnum!}
                     </td>
                     <td class="text-start">
                         <div class="d-flex align-items-center justify-content-between">
                             <span>
-                                <a href="${SiteUrl.VCATN_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
+                                <a href="${Url.VCATN_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
                                     <#list post.schdulList as schdul>
                                         <span class="pe-4">
                                             <span class="ctgr-span ctgr-gray">${schdul.vcatnNm!}</span>
@@ -178,7 +145,7 @@
                             </span>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="VcatnPapr.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </td>
@@ -214,17 +181,16 @@
         </tbody>
     </table>
     <#include "/view/_component/_pagination.ftlh">
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" />
-    </form>
 </div>
 <!--end::post-->
 
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" />
+</form>
+
+<!--include:: Modals-->
 <#include "/view/vcatn/papr/_vcatn_papr_dtl_modal.ftlh">
-
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
-
 <#include "/view/_component/atch_file/_atch_file_list_modal.ftlh">
 
 </@layout.layout>

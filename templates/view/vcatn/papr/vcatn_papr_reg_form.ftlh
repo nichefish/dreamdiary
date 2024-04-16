@@ -1,6 +1,7 @@
 <#--
-  -- 휴가계획서 > 등록 화면
+  -- 휴가계획서(vcatn_papr) > 등록 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js?${releaseDate!}"></script>
@@ -11,6 +12,9 @@
 <#assign isMdf = (isMdf!false)>
 
 <@layout.layout toolbar=toolbar!"">
+
+<!--include:: script modules -->
+<#include "/view/vcatn/papr/_vcatn_papr_scripts.ftlh">
 
 <script>
     const Page = function() {
@@ -40,7 +44,7 @@
                                 showCancelButton: true,
                             }).then(function(result) {
                                 if (!result.value) return;
-                                Page.<#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax();
+                                VcatnPapr.regAjax();
                             });
                         },
                         errorPlacement: function (error, element) {
@@ -83,26 +87,6 @@
                     $(endSelectorStr).val("");
                 }
             },
-            /** 등록/수정 처리(Ajax) */
-            <#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax: function() {
-                const url = "<#if isReg>${SiteUrl.VCATN_PAPR_REG_AJAX!}</#if><#if isMdf>${SiteUrl.VCATN_PAPR_MDF_AJAX!}</#if>";
-                let ajaxData = new FormData($("#vcatnPaprRegForm")[0]);
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
-                    Swal.fire({ text: res.message })
-                        .then(function() {
-                            if (res.rslt) Page.list();
-                        });
-                });
-            },
-            /** submit */
-            submit: function() {
-                $("#vcatnPaprRegForm").submit();
-            },
-            /** 목록 화면 이동 */
-            list: function() {
-                const listUrl = "${SiteUrl.VCATN_PAPR_LIST!}<#if isMdf>?isBackToList=Y</#if>";
-                commons.util.blockUIReplace(listUrl);
-            },
             /**
              * 휴가등록 부분 추가
              */
@@ -126,34 +110,34 @@
              */
             addVcatnInfoItemList: function() {
                 <#if vcatn?? && (post.schdulList)?has_content>
-                let reqstItemIdx, tableTmpl, str, vcatnCdSelectDiv;
-                <#list post.schdulList![] as item>
-                reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=vcatnItemId", "vcatnItemId");		// elmt, selector, elmtId
-                tableTmpl = "<div class='row shadow-sm' id='itemContainer" + reqstItemIdx + "'>" + $("#vcatn_reg_item_template").html() + "</div>";
-                str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
-                $("#vcatnListDiv").append(str);
+                    let reqstItemIdx, tableTmpl, str, vcatnCdSelectDiv;
+                    <#list post.schdulList![] as item>
+                    reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=vcatnItemId", "vcatnItemId");		// elmt, selector, elmtId
+                    tableTmpl = "<div class='row shadow-sm' id='itemContainer" + reqstItemIdx + "'>" + $("#vcatn_reg_item_template").html() + "</div>";
+                    str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
+                    $("#vcatnListDiv").append(str);
 
-                // 휴가사유 세팅
-                $("#vcatnResn" + reqstItemIdx).val(`${(item.vcatnResn)!}`);
-                // 휴가분류 selectbox 세팅
-                vcatnCdSelectDiv = $("#vcatnCdSelectDiv" + reqstItemIdx).children('select').children('option');
-                vcatnCdSelectDiv.each(function (idx, elmt) {
-                    if (elmt.value === "${(item.vcatnCd)!}") $(elmt).attr("selected", "selected");
-                });
-                //반차일 경우 selectbox 안보이게
-                if ('${item.vcatnCd}' == "AM_HALF" || '${item.vcatnCd}' == "PM_HALF") {
-                    Page.delEndDt(reqstItemIdx);
-                }
-                commons.datepicker.singleDatePicker("#bgnDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.bgnDt)}", function() {
-                    Page.delEndDt(reqstItemIdx);
-                    Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
-                });
-                commons.datepicker.singleDatePicker("#endDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.endDt)}", function() {
-                    if ($("#endDt"+reqstItemIdx).val() !== "") {
-                        Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                    // 휴가사유 세팅
+                    $("#vcatnResn" + reqstItemIdx).val(`${(item.vcatnResn)!}`);
+                    // 휴가분류 selectbox 세팅
+                    vcatnCdSelectDiv = $("#vcatnCdSelectDiv" + reqstItemIdx).children('select').children('option');
+                    vcatnCdSelectDiv.each(function (idx, elmt) {
+                        if (elmt.value === "${(item.vcatnCd)!}") $(elmt).attr("selected", "selected");
+                    });
+                    //반차일 경우 selectbox 안보이게
+                    if ('${item.vcatnCd}' == "AM_HALF" || '${item.vcatnCd}' == "PM_HALF") {
+                        Page.delEndDt(reqstItemIdx);
                     }
-                });
-                </#list>
+                    commons.datepicker.singleDatePicker("#bgnDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.bgnDt)}", function() {
+                        Page.delEndDt(reqstItemIdx);
+                        Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                    });
+                    commons.datepicker.singleDatePicker("#endDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.endDt)}", function() {
+                        if ($("#endDt"+reqstItemIdx).val() !== "") {
+                            Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                        }
+                    });
+                    </#list>
                 </#if>
             },
             /** 추가항목 영역 삭제 */
@@ -219,7 +203,9 @@
 
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
-            <@component.btn_post_save "Page" />
+            <@component.btn_post_submit "VcatnPapr.submit();" />
+            <!-- 버튼 :: 목록으로 가기 -->
+            <@component.btn_post_toList "VcatnPapr.list();" />
         </div>
     </form>
     <!--end:Form-->

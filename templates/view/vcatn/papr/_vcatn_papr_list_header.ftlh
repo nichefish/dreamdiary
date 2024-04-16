@@ -1,5 +1,5 @@
 <#--
-  -- 휴가계획서 > 목록 검색 Header
+  -- 휴가계획서(vcatn_papr) > 목록 검색 Header
   -- @included_in : vcatn_papr_list
   -->
 
@@ -18,18 +18,18 @@
     </div>
     <div>
         <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "Page.search();" />
+        <@component.btn_header_search "VcatnPapr.search();" />
     </div>
     <div>
         <!-- 버튼:: 내 글 보기 -->
-        <@component.btn_header_mypapr "Page" MY_PAPR!false />
+        <@component.btn_header_mypapr "VcatnPapr.myPapr();" MY_PAPR!false />
     </div>
     <div>
         <!-- 버튼:: 등록 화면 이동하기 -->
-        <@component.btn_header_reg_form "Page.regForm();" />
+        <@component.btn_header_reg_form "VcatnPapr.regForm();" />
     </div>
     <div>
         <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "Page.xlsxDownload();" />
+        <@component.btn_header_xlsx_download "VcatnPapr.xlsxDownload();" />
     </div>
 </form>

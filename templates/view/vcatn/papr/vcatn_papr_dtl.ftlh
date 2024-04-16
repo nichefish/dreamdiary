@@ -1,59 +1,13 @@
 <#--
-  -- 휴가계획서 > 상세 화면
+  -- 휴가계획서(vcatn_papr) > 상세 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 
-<script>
-    const Page = function() {
-        return {
-            init: function () {
-                commons.validate.noSpaces(".no-space");        // 공백 자동 제거
-            },
-            /** 관리자 확인 여부 변경 (Ajax) */
-            cfAjax: function() {
-                const url = "${SiteUrl.VCATN_PAPR_CF_AJAX!}";
-                let ajaxData = $("#procForm").serializeArray();
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                    Swal.fire({ text: res.message })
-                        .then(function() {
-                            if (res.rslt) commons.util.blockUIReload();
-                        });
-                });
-            },
-            /** 수정 화면 이동 */
-            mdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.VCATN_PAPR_MDF_FORM!}");
-            },
-            /** 삭제 처리 (ajax) */
-            delAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.VCATN_PAPR_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) Page.list();
-                            });
-                    });
-                });
-            },
-            /** 목록 화면 이동 */
-            list: function() {
-                commons.util.blockUIReplace("${SiteUrl.VCATN_PAPR_LIST!}?isBackToList=Y");
-            }
-        }
-    }();
-
-    $(document).ready(function () {
-        Page.init();
-    });
-</script>
+<!--include:: script modules -->
+<#include "/view/vcatn/papr/_vcatn_papr_scripts.ftlh">
 
 <div class="card post">
     <!--begin::cn-->
@@ -128,7 +82,7 @@
                         <span class="text-muted me-10">
                             미확인<i class="bi bi-dash text-muted"></i>
                         </span>
-                        <button class="btn btn-sm btn-primary" onclick="Page.cfAjax();">확인하기</button>
+                        <button class="btn btn-sm btn-primary" onclick="VcatnPapr.cfAjax();">확인하기</button>
                     <#else>
                         <button class="btn btn-sm btn-success" disabled>
                             확인완료<i class="bi bi-check success"></i>
@@ -144,9 +98,9 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
         <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_mdf "Page" post isMngr />
+        <@component.btn_post_modify "VcatnPapr.mdfForm();" post isMngr />
         <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "Page" post isMngr />
+        <@component.btn_post_delete "VcatnPapr.delAjax();" post isMngr />
         <!-- 등록자: 수정,삭제 가능, 관리자: 삭제 가능, 확인 시: 삭제만 가능 -->
 <#--        <#if post.isRegstr!false && (post.cfYn)! == "N">
             <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
@@ -155,16 +109,16 @@
             </button>
         </#if>-->
         <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "Page" />
+        <@component.btn_post_toList "VcatnPapr.list();" />
     </div>
 
     <!-- 댓글 영역 -->
     <#include "/view/_component/comment/_comment_area.ftlh">
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
-        <input type="hidden" name="contentType" id="contentType" value="${post.contentType!}"/>
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
+    <input type="hidden" name="contentType" id="contentType" value="${post.contentType!}"/>
+</form>
 
 </@layout.layout>

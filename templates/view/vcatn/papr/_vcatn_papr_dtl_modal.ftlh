@@ -1,7 +1,8 @@
 <#--
-  -- 휴가계획서 > 상세 Modal
-  -- @included_in : vcatn_papr_list
+  -- 휴가계획서(vcatn_papr) > 상세 Modal
+  -- @included_in : vcatn_papr_list.ftlh
   -->
+
 <div class="modal fade" id="vcatn_papr_dtl_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -25,5 +26,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/vcatn/papr/_vcatn_papr_dtl_template.hbs">
