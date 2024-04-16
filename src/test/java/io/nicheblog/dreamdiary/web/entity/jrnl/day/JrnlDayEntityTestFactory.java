@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -22,7 +21,6 @@ public class JrnlDayEntityTestFactory {
         return JrnlDayEntity.builder()
                 .postNo(0)
                 .contentType(ContentType.JRNL_DAY.key)
-                .jrnlDt(DateUtils.asDate("2000-01-01"))
                 .build();
     }
 }

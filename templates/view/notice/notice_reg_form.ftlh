@@ -57,7 +57,7 @@
                 }, function () {
                     $("#trgetTopicSpan").hide();
                 });
-                <#if isReg>
+                <#if isReg!false>
                     $("#jandiYn").click();
                 </#if>
             },

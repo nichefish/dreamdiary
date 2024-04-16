@@ -33,11 +33,11 @@
                 }, function () {
                     $("#trgetTopicSpan").hide();
                 });
-                <#if isReg>
+                <#if isReg!false>
                     $("#jandiYn").trigger("click");
                 </#if>
 
-                <#if isReg>
+                <#if isReg!false>
                     /** 휴가 추가 폼 기본 뿌리기 */
                     Page.addVcatnInfoRegItem();
                 <#elseif isMdf!false>
@@ -53,11 +53,11 @@
                     $("#lineDiv"+idx).css("visibility", "hidden");
                     $("#endDtDiv"+idx).css("visibility", "hidden");
                     $("#endDt"+idx).val($("#bgnDt"+idx).val());
-                    $("#endDt"+idx+"Span").empty().css("visibility", "hidden");
+                    $("#endDt"+idx+"_valid_span").empty().css("visibility", "hidden");
                 } else {
                     $("#lineDiv"+idx).css("visibility", "visible");
                     $("#endDtDiv"+idx).css("visibility", "visible");
-                    $("#endDt"+idx+"Span").css("visibility", "visible");
+                    $("#endDt"+idx+"_valid_span").css("visibility", "visible");
                 }
             },
             /** 시작일 이전 날짜 선택 불가 */

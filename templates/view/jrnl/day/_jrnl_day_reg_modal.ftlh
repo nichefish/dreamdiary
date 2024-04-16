@@ -22,7 +22,7 @@
                 <!-- 버튼 영역 -->
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-sm btn-primary me-2"
-                            onclick="JrnlDay.regAjax();"
+                            onclick="JrnlDay.submit();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
                         <i class="bi bi-pencil-square"></i>저장
                     </button>

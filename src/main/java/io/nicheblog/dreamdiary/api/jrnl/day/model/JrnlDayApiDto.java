@@ -40,6 +40,7 @@ public class JrnlDayApiDto
     private Integer mnth;
     /** 대략일자 (날짜미상시 해당일자 이후에 표기) */
     private String aprxmtDt;
+
     /** 저널 꿈 목록 */
     private List<JrnlDreamDto> jrnlDreamList;
 

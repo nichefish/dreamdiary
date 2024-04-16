@@ -6,10 +6,7 @@ import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +15,7 @@ import java.util.Map;
 /**
  * JrnlDaySpec
  * <pre>
- *  저널 일자 목록 검색인자 세팅 Specification
+ *  저널 일자 목록 검색인자 세팅 Specification.
  * </pre>
  *
  * @author nichefish
@@ -28,6 +25,21 @@ import java.util.Map;
 @Log4j2
 public class JrnlDaySpec
         implements BaseClsfSpec<JrnlDayEntity> {
+
+    /**
+     * 조회 후처리:: 정렬 순서 변경
+     * 날짜 오름차순 정렬, jrnlDt 부재시 aprxmtDt 사용
+     */
+    @Override
+    public void postQuery(
+            Root<JrnlDayEntity> root,
+            CriteriaQuery<?> query,
+            CriteriaBuilder builder
+    ) {
+        List<Order> order = new ArrayList<>();
+        order.add(builder.asc(builder.coalesce(root.get("jrnlDt"), root.get("aprxmtDt"))));
+        query.orderBy(order);
+    }
 
     /**
      * 인자별로 구체적인 검색 조건 세팅

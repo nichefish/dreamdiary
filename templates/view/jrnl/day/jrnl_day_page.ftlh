@@ -17,14 +17,15 @@
 <link rel="stylesheet" type="text/css" href="/css/dream.css?${releaseDate!}" />
 
 <!--include:: script modules -->
-<#include "/view/jrnl/day/jrnl_day_scripts.ftlh">
-<#include "/view/jrnl/dream/jrnl_dream_scripts.ftlh">
+<#include "/view/jrnl/day/_jrnl_day_scripts.ftlh">
+<#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
 
 <script>
     const Page = function() {
         return {
             init: function () {
-                JrnlDay.init();
+                JrnlDay.listAjax();
+                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 JrnlDream.init();
             },
         }
@@ -37,11 +38,10 @@
 <!--begin::Card-->
 <div class="card post">
     <div class="card-body p-9">
-            <!--end::Table head-->
-            <!--begin::Table body-->
-            <div id="jrnl_day_list_div">
-                <!-- handlebars template goes in here -->
-            </div>
+        <!--end::Table head-->
+        <!--begin::Table body-->
+        <div id="jrnl_day_list_div">
+            <!-- handlebars template goes in here -->
         </div>
         <!-- pagination::begin -->
         <#include "/view/_component/_pagination.ftlh">

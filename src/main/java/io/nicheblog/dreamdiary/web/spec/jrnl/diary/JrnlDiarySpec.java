@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.spec.jrnl.dream;
+package io.nicheblog.dreamdiary.web.spec.jrnl.diary;
 
 import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * JrnlDreamSpec
+ * JrnlDiarySpec
  * <pre>
- *  저널 꿈 목록 검색인자 세팅 Specification.
+ *  저널 일기 목록 검색인자 세팅 Specification.
  * </pre>
  *
  * @author nichefish
@@ -26,8 +26,8 @@ import java.util.Map;
  */
 @Component
 @Log4j2
-public class JrnlDreamSpec
-        implements BasePostSpec<JrnlDreamEntity> {
+public class JrnlDiarySpec
+        implements BasePostSpec<JrnlDiaryEntity> {
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
@@ -35,7 +35,7 @@ public class JrnlDreamSpec
     @Override
     public List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
-            final Root<JrnlDreamEntity> root,
+            final Root<JrnlDiaryEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
 

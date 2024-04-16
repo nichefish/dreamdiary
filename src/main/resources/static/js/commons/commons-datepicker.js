@@ -50,7 +50,7 @@ commons.datepicker = (function() {
             $elmt.val(option.startDate);
             $elmt.daterangepicker(option, function(start) {
                 $elmt.val(start.format(format));
-                let $errorSpan = $("#"+id+"Span");
+                let $errorSpan = $("#"+id+"_valid_span");
                 if (commons.util.isNotEmpty($errorSpan)) $errorSpan.empty();
                 if (commons.util.isNotEmpty(func)) func(start);
             });

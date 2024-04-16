@@ -25,11 +25,11 @@
                 commons.validate.cttpc("#cttpc");
 
                 // 권한 유효성검사 바꿀때마다 지우기
-                $("#authCd").on("change", function() {
-                    if ($(this).val() !== "") $("#authCd_valid_span").text("");
+                $("#authCd").change(function() {
+                    $("#authCd").valid(); // 체크박스 상태 변경시 details 필드 재검증
                 });
 
-                <#if isReg>
+                <#if isReg!false>
                     // 등록화면:: 사용자 ID 변경입력시 중복체크 통과여부 초기화
                     $("#userId").on("keyup", function() {
                         $("#userId_valid_span").empty();
@@ -112,11 +112,11 @@
         <!--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2">
-                <div class="fw-bold col-form-label text-lg-center text-sm-end <#if isReg>required</#if>">
+                <div class="fw-bold col-form-label text-lg-center text-sm-end <#if isReg!false>required</#if>">
                     <label for="userId">아이디</label>
                 </div>
             </div>
-            <#if isReg>
+            <#if isReg!false>
                 <div class="col-xl-2 col-8">
                     <input type="text" class="form-control form-control-solid required no-space" name="userId" id="userId" value="${user.userId!}" maxlength="16" />
                     <div class="form-text">(※영문소문자, 숫자 포함 4~16자)</div>
@@ -139,7 +139,7 @@
                 </div>
             </#if>
         </div>
-        <#if isReg>
+        <#if isReg!false>
             <!--begin::Row-->
             <div class="row mb-4">
                 <div class="col-xl-2">

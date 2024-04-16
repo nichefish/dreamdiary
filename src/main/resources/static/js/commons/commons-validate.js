@@ -133,7 +133,7 @@ commons.validate = (function() {
         replaceIpv4Cidr: function (selectorStr) {
             commons.validate.replaceBlankRegex(selectorStr, commons.validate.nonNumDotAndSlashRegex);
             $(selectorStr).on("blur", function() {
-                let $errorSpan = $("#" + $(this).attr("id") + "Span");
+                let $errorSpan = $("#" + $(this).attr("id") + "_valid_span");
                 if (!commons.validate.ipv4regex.test($(this).val()) && !commons.validate.ipv4CidrRegex.test($(this).val())) {
                     $(this).val("");
                     if (commons.util.is$Present($errorSpan)) $errorSpan.empty().addClass("text-danger").text("유효하지 않은 IP 주소입니다.");
@@ -236,7 +236,7 @@ commons.validate = (function() {
          */
         clearErrorSpan: function() {
             $(".required").each(function(idx, elmt) {
-                $("#" + $(elmt).attr("id") + "Span").empty();
+                $("#" + $(elmt).attr("id") + "_valid_span").empty();
             });
         },
 

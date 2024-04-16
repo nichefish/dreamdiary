@@ -30,7 +30,8 @@ public interface JrnlDayMapstruct
     @Override
     @Named("toDto")
     @Mapping(target = "jrnlDt", expression = "java(DateUtils.asStr(entity.getJrnlDt(), DatePtn.DATE))")
-    JrnlDayDto.DTL toDto(final JrnlDayEntity entity) throws Exception;
+    @Mapping(target = "aprxmtDt", expression = "java(DateUtils.asStr(entity.getAprxmtDt(), DatePtn.DATE))")
+    JrnlDayDto toDto(final JrnlDayEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
@@ -38,6 +39,7 @@ public interface JrnlDayMapstruct
     @Override
     @Named("toListDto")
     @Mapping(target = "jrnlDt", expression = "java(DateUtils.asStr(entity.getJrnlDt(), DatePtn.DATE))")
+    @Mapping(target = "aprxmtDt", expression = "java(DateUtils.asStr(entity.getAprxmtDt(), DatePtn.DATE))")
     JrnlDayDto toListDto(final JrnlDayEntity entity) throws Exception;
 
     /**
@@ -45,12 +47,15 @@ public interface JrnlDayMapstruct
      */
     @Override
     @Mapping(target = "jrnlDt", expression = "java(DateUtils.asDate(dto.getJrnlDt()))")
+    @Mapping(target = "aprxmtDt", expression = "java(DateUtils.asDate(dto.getAprxmtDt()))")
     JrnlDayEntity toEntity(final JrnlDayDto dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
      */
     @Override
+    @Mapping(target = "jrnlDt", expression = "java(DateUtils.asDate(dto.getJrnlDt()))")
+    @Mapping(target = "aprxmtDt", expression = "java(DateUtils.asDate(dto.getAprxmtDt()))")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(final JrnlDayDto dto, final @MappingTarget JrnlDayEntity entity) throws Exception;
 }

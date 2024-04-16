@@ -64,7 +64,7 @@
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 let ajaxData = new FormData($("#exptrReqstRegForm")[0]);
-                const url = "<#if isReg>${Url.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_REQST_MDF_AJAX!}</#if>";
+                const url = "<#if isReg!false>${Url.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_REQST_MDF_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

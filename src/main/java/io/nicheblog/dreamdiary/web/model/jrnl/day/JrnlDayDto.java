@@ -45,17 +45,9 @@ public class JrnlDayDto
 
     /** 저널 일자 */
     private String jrnlDt;
-
     /** 날짜미상 여부 (Y/N) */
     @Builder.Default
     private String dtUnknownYn = "N";
-
-    /** 년도 */
-    private Integer yy;
-
-    /** 월 */
-    private Integer mnth;
-
     /** 대략일자 (날짜미상시 해당일자 이후에 표기) */
     private String aprxmtDt;
 
@@ -65,26 +57,6 @@ public class JrnlDayDto
     @Override
     public Integer getKey() {
         return this.postNo;
-    }
-
-    /* ----- */
-
-    @Getter
-    @Setter
-    @SuperBuilder(toBuilder = true)
-    @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    public static class DTL extends JrnlDayDto {
-
-    }
-
-    @Getter
-    @Setter
-    @SuperBuilder(toBuilder = true)
-    @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    public static class LIST extends JrnlDayDto {
-        //
     }
 
     /* ----- */

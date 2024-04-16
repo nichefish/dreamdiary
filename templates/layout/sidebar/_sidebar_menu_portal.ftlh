@@ -29,8 +29,8 @@
                 <!-- NOTICE -->
                 <@menu.noSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.NOTICE />
 
-                <!-- DREAM -->
-                <@menu.extendedSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.DREAM />
+                <!-- JRNL -->
+                <@menu.extendedSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.JRNL />
 
                 <!-- BOARD -->
                 <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.BOARD />

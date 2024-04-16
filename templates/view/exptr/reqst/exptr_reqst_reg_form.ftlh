@@ -40,7 +40,7 @@
                 }, function() {
                     $("#trgetTopicSpan").hide();
                 });
-                <#if isReg>
+                <#if isReg!false>
                     $("#jandiYn").click();
                 </#if>
             },
@@ -158,7 +158,7 @@
             <!--end::Label-->
             <!--begin::Form control-->
             <div class="mb-3">
-                <textarea class="form-control required" rows="10" placeholder="내용을 입력하세요" name="cn" id="tinymce_cn"><#if isReg>${(exptrReqstTmplat.cn)!}</#if>${post.cn!}</textarea>
+                <textarea class="form-control required" rows="10" placeholder="내용을 입력하세요" name="cn" id="tinymce_cn"><#if isReg!false>${(exptrReqstTmplat.cn)!}</#if>${post.cn!}</textarea>
             </div>
             <!--end::Form control-->
             <div id="tinymce_cnSpan"></div>

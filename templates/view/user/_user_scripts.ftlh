@@ -27,7 +27,7 @@
                     },
                     ignore: [],         // hidden 필드도 검증하기 위함
                     rules: {
-                        <#if isReg>
+                        <#if isReg!false>
                         userId: { minlength:4, maxlength:16 },
                         ipDupChckPassed: { dupChck:true },
                         password: { minlength:9, maxlength:20, regex:commons.validate.pwRegex },
@@ -35,7 +35,7 @@
                         </#if>
                     },
                     messages: {
-                        <#if isReg>
+                        <#if isReg!false>
                         userId: { minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
                         ipDupChckPassed: { dupChck:"아이디 중복 체크는 필수 항목입니다." },
                         password: { minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
@@ -113,7 +113,7 @@
             },
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
-                const url = "<#if isReg>${Url.USER_REG_AJAX!}</#if><#if isMdf!false>${Url.USER_MDF_AJAX!}</#if>";
+                const url = "<#if isReg!false>${Url.USER_REG_AJAX!}</#if><#if isMdf!false>${Url.USER_MDF_AJAX!}</#if>";
                 let ajaxData = new FormData($("#userRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })

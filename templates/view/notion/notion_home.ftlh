@@ -13,7 +13,8 @@
         return {
             /** init */
             init: function () {
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
 
                 const domain = "";
                 const pageId ="";

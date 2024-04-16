@@ -36,14 +36,34 @@ public class JrnlDayService
     public JrnlDayRepository getRepository() {
         return this.jrnlDayRepository;
     }
-
     @Override
     public JrnlDayMapstruct getMapstruct() {
         return this.jrnlDayMapstruct;
     }
-
     @Override
     public JrnlDaySpec getSpec() {
         return this.jrnlDaySpec;
     }
+
+    /**
+     * 신청 전처리:: 메소드 분리
+     */
+    @Override
+    public void preRegist(final JrnlDayDto jrnlDay) throws Exception {
+        // 날짜미상여부 N시 대략일자 무효화
+        if ("Y".equals(jrnlDay.getDtUnknownYn())) jrnlDay.setJrnlDt("");
+        if ("N".equals(jrnlDay.getDtUnknownYn())) jrnlDay.setAprxmtDt("");
+
+    }
+
+    /**
+     * 수정 전처리:: 메소드 분리
+     */
+    @Override
+    public void preModify(final JrnlDayDto jrnlDay) throws Exception {
+        // 날짜미상여부 N시 대략일자 무효화
+        if ("Y".equals(jrnlDay.getDtUnknownYn())) jrnlDay.setJrnlDt("");
+        if ("N".equals(jrnlDay.getDtUnknownYn())) jrnlDay.setAprxmtDt("");
+    }
+
 }

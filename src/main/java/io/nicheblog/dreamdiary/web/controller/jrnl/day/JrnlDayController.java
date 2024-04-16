@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
@@ -15,9 +14,6 @@ import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDaySearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -31,7 +27,7 @@ import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
-import java.util.Map;
+import java.util.List;
 
 /**
  * JrnlDayController
@@ -109,11 +105,10 @@ public class JrnlDayController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-            Sort sort = Sort.by(Sort.Direction.ASC, "jrnlDt");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            Page<JrnlDayDto> jrnlDayList = jrnlDayService.getPageDto(searchParamMap, pageRequest);
-            ajaxResponse.setRsltList(jrnlDayList.getContent());
+            // 목록 조회 및 응답에 추가
+            List<JrnlDayDto> jrnlDayList = jrnlDayService.getListDto(searchParam);
+            ajaxResponse.setRsltList(jrnlDayList);
+
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

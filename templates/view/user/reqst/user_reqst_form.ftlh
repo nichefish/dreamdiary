@@ -27,8 +27,8 @@
                 commons.validate.cttpc("#cttpc");
 
                 // 권한 유효성검사 바꿀때마다 지우기
-                $("#authCd").on("change", function() {
-                    if ($(this).val() !== "") $("#authCd_valid_span").text("");
+                $("#authCd").change(function() {
+                    $("#authCd").valid(); // 체크박스 상태 변경시 details 필드 재검증
                 });
 
                 // 등록화면:: 사용자 ID 변경입력시 중복체크 통과여부 초기화

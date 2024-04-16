@@ -21,7 +21,7 @@
                 commons.validate.onlyNumAndComma(".num");
 
                 Page.itemIdx = ${(post.itemList![])?size};
-                <#if isReg>
+                <#if isReg!false>
                     Page.setTitle();
                 <#elseif isMdf!false>
                     Page.addExptrPrsnlItemList();
@@ -165,14 +165,14 @@
                 Page.setTotAmt();
             },
             /** 등록/수정 처리(Ajax) */
-            <#if isReg>reg</#if><#if isMdf!false>mdf</#if>Ajax: function() {
+            <#if isReg!false>reg</#if><#if isMdf!false>mdf</#if>Ajax: function() {
                 // DTO에서 integer로 받으므로 콤마 처리되어 있던 값 수동으로 처리
                 $("input[name$='.exptrAmtStr']").each(function(idx, item) {
                     let index = $(item).attr("id").replace("exptrAmt", "");
                     $("input[name='itemList["+index+"].exptrAmt']").val($(item).val().replace(/,/gi, ""));
                 });
                 let ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
-                const url = "<#if isReg>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
+                const url = "<#if isReg!false>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -222,7 +222,7 @@
 
         <div class="card-header border-0 pt-6">
             <div class="d-flex justify-content-left align-items-center">
-                <#if isReg>
+                <#if isReg!false>
                     <div class="position-relative min-w-125px me-md-2">
                         <select name="yy" id="yy" class="form-select form-select-solid" onchange="Page.setTitle(); Page.validateYyMnth();">
                             <#if (prevYy)! != (currYy)!>

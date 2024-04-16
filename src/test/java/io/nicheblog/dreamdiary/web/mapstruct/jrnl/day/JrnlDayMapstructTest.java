@@ -29,7 +29,8 @@ class JrnlDayMapstructTest {
     @Test
     void toEntity_checkBasic() throws Exception {
         // Given::
-        JrnlDayDto.DTL jrnlDayDto = JrnlDayDtoTestFactory.createJrnlDayDtlDto();
+        JrnlDayDto jrnlDayDto = JrnlDayDtoTestFactory.createJrnlDayDtlDto();
+        jrnlDayDto.setJrnlDt("2020-01-01");
 
         // When::
         JrnlDayEntity jrnlDayEntity = jrnlDayMapstruct.toEntity(jrnlDayDto);
@@ -38,6 +39,28 @@ class JrnlDayMapstructTest {
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
         assertNotNull(jrnlDayEntity);
         assertEquals(jrnlDayEntity.getJrnlDt(), DateUtils.asDate(jrnlDayEntity.getJrnlDt()));
+    }
+
+    /**
+     * toEntity 검증 :: 대락일자
+     */
+    @Test
+    void toEntity_checkAprxmtDt() throws Exception {
+        // Given::
+        JrnlDayDto jrnlDayDto = JrnlDayDtoTestFactory.createJrnlDayDtlDto();
+        // 대략일자 세팅
+        jrnlDayDto.setDtUnknownYn("Y");
+        jrnlDayDto.setAprxmtDt("2020-01-01");
+
+        // When::
+        JrnlDayEntity jrnlDayEntity = jrnlDayMapstruct.toEntity(jrnlDayDto);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(jrnlDayEntity);
+        // 대략일자 여부
+        assertEquals(jrnlDayEntity.getDtUnknownYn(), jrnlDayDto.getDtUnknownYn());
+        assertEquals(jrnlDayEntity.getAprxmtDt(), DateUtils.asDate(jrnlDayDto.getAprxmtDt()));
     }
 
     /* ----- */
@@ -49,9 +72,10 @@ class JrnlDayMapstructTest {
     void toDto_checkBasic() throws Exception {
         // Given::
         JrnlDayEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
+        jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));
 
         // When::
-        JrnlDayDto.DTL jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
+        JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
 
         // Then::
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
@@ -59,4 +83,24 @@ class JrnlDayMapstructTest {
         assertEquals(jrnlDayDto.getJrnlDt(), DateUtils.asStr(jrnlDayEntity.getJrnlDt(), DatePtn.DATE));
     }
 
+    /**
+     * toDto 검증
+     */
+    @Test
+    void toDto_checkAprxmtDt() throws Exception {
+        // Given::
+        JrnlDayEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
+        // 대략일자 세팅
+        jrnlDayEntity.setDtUnknownYn("Y");
+        jrnlDayEntity.setAprxmtDt(DateUtils.asDate("2020-01-01"));
+
+        // When::
+        JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(jrnlDayEntity);
+        assertEquals(jrnlDayDto.getDtUnknownYn(), jrnlDayEntity.getDtUnknownYn());
+        assertEquals(jrnlDayDto.getAprxmtDt(), DateUtils.asStr(jrnlDayEntity.getAprxmtDt(), DatePtn.DATE));
+    }
 }

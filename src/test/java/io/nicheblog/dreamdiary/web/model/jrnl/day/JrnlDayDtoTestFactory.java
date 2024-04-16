@@ -17,11 +17,10 @@ public class JrnlDayDtoTestFactory {
     /**
      * 저널 일자 Dto 생성
      */
-    public static JrnlDayDto.DTL createJrnlDayDtlDto() throws Exception {
-        return JrnlDayDto.DTL.builder()
+    public static JrnlDayDto createJrnlDayDtlDto() throws Exception {
+        return JrnlDayDto.builder()
                 .postNo(0)
                 .contentType(ContentType.NOTICE.key)
-                .jrnlDt("2000-01-01")
                 .build();
     }
 }

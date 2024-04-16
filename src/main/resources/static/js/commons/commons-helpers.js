@@ -57,9 +57,11 @@
         return value;
     });
 
+    /** select 선택 */
     Handlebars.registerHelper("selectedIf", function(value) {
         return value ? "selected" : "";
     });
+    /** check 선택 */
     Handlebars.registerHelper("checkedIf", function(value) {
         return value ? "checked" : "";
     })
@@ -109,6 +111,10 @@
         return "style=" + type + ":" + (value ? yColor : nColor) + ";";
     }
     Handlebars.registerHelper("checkedStyle", checkedStyleFunc);
+
+    Handlebars.registerHelper("concat", function(value1, value2) {
+        return value1 + "" + value2;
+    });
 
     /** 날짜 포맷팅 */
     Handlebars.registerHelper("dateformat", function(value, pattern) {
