@@ -11,25 +11,26 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
+
                 // 해당 월 총합 구하기
                 for (let i = 1; i <= 12; i++) {
                     $("#mnthSumSpan"+i).text(commons.util.getReqstItemTotSum("id^=mnth"+i+"__").toLocaleString());
                 }
-
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
             },
             /** 조회 년도 변경 */
             statsYy: function() {
                 let statsYy = $("#statsYy option:selected").val();
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS_PAGE}?statsYy="+statsYy);
+                commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE}?statsYy="+statsYy);
             },
             /** 상세 화면 이동 */
             statsDtl: function(postNo) {
                 $("#postNo").val(postNo);
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_STATS_DTL!}");
+                commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_STATS_DTL!}");
             },
             /** 엑셀 다운로드 */
             xlsxDownload: function() {
@@ -39,12 +40,11 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     commons.util.blockUIFileDownload();
-                    $("#listForm").attr("action", "${SiteUrl.EXPTR_PRSNL_STATS_XLSX_DOWNLOAD!}").submit();
+                    $("#listForm").attr("action", "${Url.EXPTR_PRSNL_STATS_XLSX_DOWNLOAD!}").submit();
                 });
             }
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });
@@ -128,10 +128,10 @@
         <!-- pagination::begin -->
         <!-- pagination::end -->
     </div>
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" />
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" />
+</form>
 
 </@layout.layout>

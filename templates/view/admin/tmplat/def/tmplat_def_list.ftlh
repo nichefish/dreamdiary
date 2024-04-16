@@ -1,6 +1,7 @@
 <#--
- -- 템플릿 관리 > 목록 화면
+ -- 템플릿 관리(tmplat) > 목록 화면
  -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->
@@ -11,25 +12,22 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
             },
             /** 목록 검색 */
             search: function() {
                 $("#listForm #pageNo").val(1);
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.TMPLAT_DEF_LIST!}?actionTyCd=SEARCH");
+                commons.util.blockUISubmit("#listForm", "${Url.TMPLAT_DEF_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
             myPapr: function () {
-                const url = "${SiteUrl.TMPLAT_DEF_LIST!}";
+                const url = "${Url.TMPLAT_DEF_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
-            },
-            /** 전체 목록 조회 */
-            resetSearch: function() {
-                commons.util.blockUIReplace("${SiteUrl.NOTICE_LIST!}");
             },
             /** 등록 화면 이동 */
             regForm: function() {
@@ -44,12 +42,12 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     $("#clCdRegForm #regYn").val("Y");
-                    const url = "${SiteUrl.TMPLAT_DEF_REG_AJAX!}";
+                    const url = "${Url.TMPLAT_DEF_REG_AJAX!}";
                     let ajaxData = $("#clCdRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReplace("${SiteUrl.CL_CD_LIST!}");
+                                if (res.rslt) commons.util.blockUIReplace("${Url.CL_CD_LIST!}");
                             });
                     });
                 });
@@ -57,12 +55,12 @@
             /** 상세 화면 이동 */
             dtl: function(postNo) {
                 $("#procForm #postNo").val(postNo);
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.TMPLAT_DEF_DTL!}");
+                commons.util.blockUISubmit("#procForm", "${Url.TMPLAT_DEF_DTL!}");
             },
             /** 상세 모달 팝업 호출 */
             dtlAjax: function (postNo) {
                 event.stopPropagation();
-                const url = "${SiteUrl.TMPLAT_DEF_DTL_AJAX!}";
+                const url = "${Url.TMPLAT_DEF_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
@@ -73,16 +71,12 @@
                 });
             },
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });
 </script>
 
-<form name="procForm" id="procForm">
-    <input type="hidden" name="postNo" id="postNo" value=""/>
-</form>
 <div class="card post">
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
         <!--begin::Table head-->
@@ -185,6 +179,10 @@
     <#include "/view/_component/_pagination.ftlh">
     <!-- pagination::end -->
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value=""/>
+</form>
 
 <#include "/view/admin/tmplat/def/_tmplat_def_reg_modal.ftlh">
 <#include "/view/admin/tmplat/def/_tmplat_def_dtl_modal.ftlh">

@@ -6,7 +6,7 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
                 Page.emptyListToggle();        // 추가추가 개수 0개인지 체크
@@ -26,14 +26,14 @@
             },
             /** PDF 인쇄 화면 출력 */
             pdfPop: function() {
-                const url = "${SiteUrl.EXPTR_PRSNL_PAPR_PDF_POP!}?postNo="+$("#postNo").val();
+                const url = "${Url.EXPTR_PRSNL_PAPR_PDF_POP!}?postNo="+$("#postNo").val();
                 const popupNm = '경비지출서 팝업';
                 const options = 'width=1280,height=1440,top=0,left=270';
                 commons.util.popup(url, popupNm, options);
             },
             /** 수정 화면 이동 */
             mdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
+                commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_PAPR_MDF_FORM!}");
             },
             /** 영수증 원본 제출 체크 */
             orgnlRciptAjax: function(exptrPrsnlItemNo, orgnlRciptYn) {
@@ -42,7 +42,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX!}";
+                    const url = "${Url.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX!}";
                     let ajaxData = { "postNo": '${post.postNo!}', "exptrPrsnlItemNo": exptrPrsnlItemNo, "orgnlRciptYn": orgnlRciptYn };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -64,7 +64,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_PRSNL_STATS_CF_AJAX!}";
+                    const url = "${Url.EXPTR_PRSNL_STATS_CF_AJAX!}";
                     let ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -81,7 +81,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_PRSNL_PAPR_DEL_AJAX!}";
+                    const url = "${Url.EXPTR_PRSNL_PAPR_DEL_AJAX!}";
                     let ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -93,7 +93,7 @@
             },
             /** 목록 화면 이동 */
             stats: function() {
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS_PAGE!}");
+                commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE!}");
             },
             /** PDF 다운로드 */
             pdfDownload: function() {
@@ -103,7 +103,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     commons.util.blockUIFileDownload();
-                    $("#procForm").attr("action", "${SiteUrl.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD!}").submit();
+                    $("#procForm").attr("action", "${Url.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD!}").submit();
                 });
             },
             /** 지출항목 반려 처리 (Ajax) */
@@ -111,7 +111,7 @@
                 $("#exptrPrsnlItemNo").val($("#exptrPrsnlItemNo"+idx).val());
                 $("#rjectYn").val(rjectYn);
                 if (rjectYn === "Y") $("#rjectResn").val($("#rjectResnShow").val());
-                const url = "${SiteUrl.EXPTR_PRSNL_STATS_RJECT!}";
+                const url = "${Url.EXPTR_PRSNL_STATS_RJECT!}";
                 let ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
@@ -121,7 +121,7 @@
                 });
             }
         }
-    }();
+    })();
 
     $(document).ready(function() {
         Page.init();
@@ -309,15 +309,6 @@
         <!--end::Card footer-->
     </div>
     <!--end:Form-->
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-        <input type="hidden" name="exptrPrsnlItemNo" id="exptrPrsnlItemNo" />
-        <input type="hidden" name="orgnlRciptYn" id="orgnlRciptYn" />
-        <input type="hidden" name="rjectYn" id="rjectYn" />
-        <input type="hidden" name="rjectResn" id="rjectResn" />
-        <input type="hidden" name="mngrYn" value="Y">
-    </form>
 </div>
 <!--end::Card-->
 
@@ -331,6 +322,15 @@
     <#include "/view/_component/comment/_comment_area.ftlh">
 </div>
 <!--end::Card-->
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+    <input type="hidden" name="exptrPrsnlItemNo" id="exptrPrsnlItemNo" />
+    <input type="hidden" name="orgnlRciptYn" id="orgnlRciptYn" />
+    <input type="hidden" name="rjectYn" id="rjectYn" />
+    <input type="hidden" name="rjectResn" id="rjectResn" />
+    <input type="hidden" name="mngrYn" value="Y">
+</form>
 
 <#include "/view/exptr/prsnl/stats/_exptr_prsnl_stats_dtl_rject_resn_modal.ftlh">
 

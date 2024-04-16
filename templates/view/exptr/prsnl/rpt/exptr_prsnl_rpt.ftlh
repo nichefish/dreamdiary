@@ -6,16 +6,17 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
             },
             /** 조회 년도 변경 */
             statsYyMnth: function() {
                 let statsYy = $("#statsYy option:selected").val();
                 let statsMnth = $("#statsMnth option:selected").val();
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_RPT_ITEMS}?statsYy="+statsYy+"&statsMnth="+statsMnth);
+                commons.util.blockUIReplace("${Url.EXPTR_PRSNL_RPT_ITEMS}?statsYy="+statsYy+"&statsMnth="+statsMnth);
             },
             /** 엑셀 다운로드 */
             xlsxDownload: function() {
@@ -25,12 +26,11 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     commons.util.blockUIFileDownload();
-                    $("#listForm").attr("action", "${SiteUrl.EXPTR_PRSNL_RPT_XLSX_DOWNLOAD!}").submit();
+                    $("#listForm").attr("action", "${Url.EXPTR_PRSNL_RPT_XLSX_DOWNLOAD!}").submit();
                 });
             }
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });
@@ -221,11 +221,11 @@
             </table>
         </div>
     </div>
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value=""/>
-        <input type="hidden" name="prevYn" id="prevYn" value="N"/>
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value=""/>
+    <input type="hidden" name="prevYn" id="prevYn" value="N"/>
+</form>
 
 </@layout.layout>

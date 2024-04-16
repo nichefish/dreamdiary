@@ -11,7 +11,7 @@
                 $("#vcatnPaprRegForm").validate({
                     submitHandler: function () {
                         Swal.fire({
-                            text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                            text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
                             showCancelButton: true,
                         }).then(function(result) {
                             if (!result.value) return;
@@ -44,7 +44,7 @@
             },
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
-                const url = "<#if isReg>${Url.VCATN_PAPR_REG_AJAX!}</#if><#if isMdf>${Url.VCATN_PAPR_MDF_AJAX!}</#if>";
+                const url = "<#if isReg>${Url.VCATN_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.VCATN_PAPR_MDF_AJAX!}</#if>";
                 let ajaxData = new FormData($("#vcatnPaprRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })

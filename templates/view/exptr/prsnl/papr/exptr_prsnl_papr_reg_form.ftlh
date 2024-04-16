@@ -23,7 +23,7 @@
                 Page.itemIdx = ${(post.itemList![])?size};
                 <#if isReg>
                     Page.setTitle();
-                <#elseif isMdf>
+                <#elseif isMdf!false>
                     Page.addExptrPrsnlItemList();
                     Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
                     commons.util.addComma(".num");
@@ -165,14 +165,14 @@
                 Page.setTotAmt();
             },
             /** 등록/수정 처리(Ajax) */
-            <#if isReg>reg</#if><#if isMdf>mdf</#if>Ajax: function() {
+            <#if isReg>reg</#if><#if isMdf!false>mdf</#if>Ajax: function() {
                 // DTO에서 integer로 받으므로 콤마 처리되어 있던 값 수동으로 처리
                 $("input[name$='.exptrAmtStr']").each(function(idx, item) {
                     let index = $(item).attr("id").replace("exptrAmt", "");
                     $("input[name='itemList["+index+"].exptrAmt']").val($(item).val().replace(/,/gi, ""));
                 });
                 let ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
-                const url = "<#if isReg>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
+                const url = "<#if isReg>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -248,7 +248,7 @@
                     <div class="position-relative w-md-200px pt-2 me-md-2">
                         <h4>경비지출서</h4>
                     </div>
-                <#elseif isMdf>
+                <#elseif isMdf!false>
                     <input type="hidden" name="yy" id="yy" value="${post.yy!}">
                     <input type="hidden" name="mnth" id="mnth" value="${post.mnth!}">
                     <div class="position-relative me-md-2">
@@ -274,7 +274,7 @@
                 <!--end::Toolbar-->
             </div>
         </div>
-        <#if isMdf>
+        <#if isMdf!false>
             <div class="row ps-10 mt-2">
                 <div class="col-lg-1 col-3 d-flex align-items-center">
                     <label class="text-gray-700 fs-6 fw-bolder cursor-help"

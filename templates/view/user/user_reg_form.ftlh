@@ -53,7 +53,7 @@
                 User.tagifyAcsIp();
 
                 // 프로필 정보 / 인사정보 창 활성화
-                <#if isMdf>
+                <#if isMdf!false>
                     <#if user.profl??>
                         UserProfl.enableUserProfl();
                     </#if>
@@ -132,7 +132,7 @@
                     <input type="hidden" name="ipDupChckPassed" id="ipDupChckPassed" value="N"/>
                 </div>
             </#if>
-            <#if isMdf>
+            <#if isMdf!false>
                 <div class="col-xl-2">
                     <input type="hidden" class="form-control form-control-solid" name="userId" id="userId" value="${user.userId!}" maxlength="16" autocomplete="off" />
                     <div class="fw-bold col-form-label text-start">${user.userId!}</div>

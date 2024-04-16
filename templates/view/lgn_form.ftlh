@@ -2,6 +2,7 @@
   -- 로그인 화면
   -- (사이드바 없음)
   -->
+
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -78,7 +79,7 @@
     }
 </style>
 
-<!--begin::Root-->
+<!--begin::LgnPage-->
 <div class="w-lg-500px rounded mt-20 p-10 p-lg-15 mx-auto my-auto">
     <div class="aside-logo flex-column-auto mb-20" style="height:105px;">
         <!-- -->
@@ -88,6 +89,7 @@
         <span class="px-2">${Url.DOMAIN!}</span>
         <i class="bi bi-stars fs-2 text-dark"></i>
     </div>
+    <!--begin::Form-->
     <form class="form w-100 pe-14" name="lgnForm" id="lgnForm" method="post">
         <div class="mb-5">
             <label class="form-label fs-6 fw-bolder" for="userId">아이디</label>

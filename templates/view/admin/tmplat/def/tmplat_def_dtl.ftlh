@@ -1,19 +1,20 @@
 <#--
- -- 템플릿 관리 > 상세 화면
+ -- 템플릿 관리(tmplat) > 상세 화면
  -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
                 //
             },
             /** 수정 화면 이동 */
             mdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_MDF_FORM!}");
+                commons.util.blockUISubmit("#procForm", "${Url.NOTICE_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
             delAjax: function() {
@@ -22,7 +23,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.NOTICE_DEL_AJAX!}";
+                    const url = "${Url.NOTICE_DEL_AJAX!}";
                     let ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -34,16 +35,13 @@
             },
             /** 목록 화면 이동 */
             list: function() {
-                const listUrl = "${SiteUrl.NOTICE_LIST!}?isBackToList=Y";
+                const listUrl = "${Url.NOTICE_LIST!}?isBackToList=Y";
                 commons.util.blockUIReplace(listUrl);
             }
         }
-    }();
+    })();
 </script>
 
-<form name="procForm" id="procForm">
-    <input type="hidden" name="postNo" id="postNo" value="${tmplat.postNo!}" />
-</form>
 <div class="card post">
     <!--begin::Question-->
     <div class="mb-0">
@@ -124,16 +122,20 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
         <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_mdf "Page" post isMngr />
+        <@component.btn_post_modify "Page.mdfForm();" post isMngr />
         <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "Page" post isMngr />
+        <@component.btn_post_delete "Page.delAjax();" post isMngr />
         <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "Page" />
+        <@component.btn_post_toList "Page.list();" />
     </div>
 
     <!-- 댓글 영역 -->
     <#assign post = tmplat>
     <#include "/view/_component/comment/_comment_area.ftlh">
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${tmplat.postNo!}" />
+</form>
 
 </@layout.layout>

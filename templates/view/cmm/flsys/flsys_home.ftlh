@@ -6,16 +6,17 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             /** init */
             init: function () {
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
 
                 Flsys.flsysListAjax(Flsys.currPath);
             },
         }
-    }();
+    })();
 
     $(document).ready(function() {
         Page.init();
@@ -27,9 +28,6 @@
 <div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
     <div class="col-6 mb-md-5 mb-xl-10">
         <div class="card post">
-            <form name="procForm" id="procForm" method="get">
-                <input type="hidden" name="logSysNo" id="logSysNo" />
-            </form>
             <!--begin::Card header 검색+헤더 UI -->
             <#include "/view/cmm/flsys/_flsys_home_header.ftlh">
 
@@ -72,6 +70,10 @@
         </div>
     </div>
 </div>
+
+<form name="procForm" id="procForm" method="get">
+    <input type="hidden" name="logSysNo" id="logSysNo" />
+</form>
 
 <#include "/view/cmm/flsys/_flsys_list_template.hbs">
 

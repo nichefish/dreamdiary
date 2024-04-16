@@ -65,7 +65,7 @@
     }
 </style>
 
-<div class="card post">
+<div class="card post w-75 mx-auto my-auto">
     <div class="row mb-8 p-0">
         <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"

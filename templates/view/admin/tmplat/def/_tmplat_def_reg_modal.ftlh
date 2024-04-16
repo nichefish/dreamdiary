@@ -1,7 +1,8 @@
 <#--
- -- 템플릿 관리 > 등록 Modal
+ -- 템플릿 관리(tmplat) > 등록 Modal
  -- @included_in : cl_cd_list
  -->
+
 <div class="modal fade" id="tmplat_def_reg_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -32,5 +33,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/admin/tmplat/def/_tmplat_def_reg_template.hbs">

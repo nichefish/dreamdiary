@@ -40,7 +40,7 @@
                 <#if isReg>
                     /** 휴가 추가 폼 기본 뿌리기 */
                     Page.addVcatnInfoRegItem();
-                <#elseif isMdf>
+                <#elseif isMdf!false>
                     <#if (post.schdulList)?has_content>
                         Page.addVcatnInfoItemList();      // 기존 항목에 대하여 행 쭈루룩 추가
                     </#if>

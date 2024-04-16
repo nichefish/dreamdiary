@@ -15,7 +15,7 @@
                             return false;
                         }
                         Swal.fire({
-                            text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                            text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
                             showCancelButton: true,
                         }).then(function(result) {
                             if (!result.value) return;
@@ -113,7 +113,7 @@
             },
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
-                const url = "<#if isReg>${Url.USER_REG_AJAX!}</#if><#if isMdf>${Url.USER_MDF_AJAX!}</#if>";
+                const url = "<#if isReg>${Url.USER_REG_AJAX!}</#if><#if isMdf!false>${Url.USER_MDF_AJAX!}</#if>";
                 let ajaxData = new FormData($("#userRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })

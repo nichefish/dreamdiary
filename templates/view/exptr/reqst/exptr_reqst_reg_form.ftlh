@@ -99,7 +99,8 @@
                 <span id="titleSpan"></span>
             </div>
         </div>
-        <div class="row <#if isMdf>mb-2</#if>">
+        <!--begin::Row-->
+        <div class="row <#if isMdf!false>mb-2</#if>">
             <div class="col-lg-1 col-3 d-flex align-items-center">
                 <label class="text-gray-700 fs-6 fw-bolder cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 글은 페이지에 상관없이&#10;항상 목록의 상단에 노출됩니다.">
@@ -128,7 +129,8 @@
                 </select>
             </div>
         </div>
-        <#if isMdf>
+        <#if isMdf!false>
+            <!--begin::Row-->
             <div class="row">
                 <div class="col-lg-1 col-3 d-flex align-items-center">
                     <label class="text-gray-700 fs-6 fw-bolder cursor-help"
@@ -144,7 +146,9 @@
                 </div>
             </div>
         </#if>
+
         <div class="separator my-8"></div>
+
         <div class="d-flex flex-column mb-8">
             <!--begin::Label-->
             <label class="mb-2" for="tinymce_cn">

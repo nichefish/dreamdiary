@@ -95,7 +95,7 @@
                 <span id="titleSpan"></span>
             </div>
         </div>
-        <div class="row <#if isMdf>mb-2</#if>">
+        <div class="row <#if isMdf!false>mb-2</#if>">
             <div class="col-lg-1 col-3 d-flex align-items-center">
                 <label class="text-gray-700 fs-6 fw-bolder cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" title="해당 글은 굵은 글씨, 아이콘 및 눈에 띄는 색상으로 강조됩니다.">
@@ -148,7 +148,7 @@
                 </select>
             </div>
         </div>
-        <#if isMdf>
+        <#if isMdf!false>
             <div class="row">
                 <div class="col-lg-1 col-3 d-flex align-items-center">
                     <label class="text-gray-700 fs-6 fw-bolder cursor-help"

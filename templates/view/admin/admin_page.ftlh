@@ -8,20 +8,20 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
                 //
             },
             /** 휴일정보 : url, data 받아서 ajax 호출 */
             hldyAjax: function() {
-                const url = "${ApiUrl.API_HLDY_GET!}";
+                const url = "${Url.API_HLDY_GET!}";
                 let ajaxData = { "yy" : $("#hldyYy option:selected").val() };
                 Page.ajax(url, ajaxData);
             },
             /** NOTION : url, data 받아서 ajax 호출 */
             notionAjax: function() {
-                const url = "${ApiUrl.API_NOTION_GET!}";
+                const url = "${Url.API_NOTION_GET!}";
                 let ajaxData = { "dataType": $("#dataType").val(), "dataId": $("#dataId").val() };
                 commons.util.blockUIAjax(url, 'get', data, function(res) {
                     if (res.result) Swal.fire(JSON.stringify(res));
@@ -37,14 +37,14 @@
             },
             /** 사이트 관리 페이지로 이동 */
             adminPage: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.ADMIN_PAGE!}");
+                commons.util.blockUISubmit("#procForm", "${Url.ADMIN_PAGE!}");
             },
             /** 코드 관리 페이지로 이동 */
             cdList: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.CL_CD_LIST!}");
+                commons.util.blockUISubmit("#procForm", "${Url.CL_CD_LIST!}");
             },
         }
-    }();
+    })();
 </script>
 
 <!--begin::Tab -->
@@ -86,10 +86,10 @@
                 </div>
                 <div class="col-xl-3">
                     <div class="mt-1">
-                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CHCK_AJAX!}');">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${Url.CACHE_CHCK_AJAX!}');">
                             현재 캐시 조회
                         </button>
-                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${SiteUrl.CACHE_CLEAR_AJAX!}');">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${Url.CACHE_CLEAR_AJAX!}');">
                             사이트 캐시 초기화
                         </button>
                     </div>
@@ -216,7 +216,9 @@
     </div>
 </div>
 <!--end::Card-->
+
 <form name="procForm" id="procForm" method="get">
+
 </form>
 
 <!--include:: Dream - Aside-->
