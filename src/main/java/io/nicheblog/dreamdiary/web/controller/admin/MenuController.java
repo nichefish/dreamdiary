@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -8,7 +9,6 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.SiteUrl;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
 import io.nicheblog.dreamdiary.web.model.admin.MenuParam;
 import io.nicheblog.dreamdiary.web.model.admin.MenuSearchParam;
@@ -50,7 +50,7 @@ public class MenuController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = SiteUrl.MENU_PAGE;             // 기본 URL
+    private final String baseUrl = Url.MENU_PAGE;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.MENU;        // 작업 카테고리 (로그 적재용)
 
@@ -60,7 +60,7 @@ public class MenuController
     /**
      * 관리자 > 메뉴 관리 > 메뉴 관리 화면 조회
      */
-    @GetMapping(SiteUrl.MENU_PAGE)
+    @GetMapping(Url.MENU_PAGE)
     public String menuPage(
             @ModelAttribute("searchParam") MenuSearchParam searchParam,
             final LogActvtyParam logParam,
@@ -79,7 +79,7 @@ public class MenuController
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             rsltMsg = MessageUtils.getExceptionMsg(e);
-            MessageUtils.alertMessage(rsltMsg, SiteUrl.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
             publisher.publishEvent(new LogActvtyEvent(this, logParam));        // 활동 로그
             log.info("isSuccess: " + isSuccess + ", rsltMsg: " + rsltMsg);
@@ -92,7 +92,7 @@ public class MenuController
      * 메뉴 관리 등록/수정 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {SiteUrl.MENU_REG_AJAX, SiteUrl.MENU_MDF_AJAX})
+    @PostMapping(value = {Url.MENU_REG_AJAX, Url.MENU_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuRegAjax(
@@ -134,7 +134,7 @@ public class MenuController
      * 메뉴 관리 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.MENU_DTL_AJAX)
+    @GetMapping(Url.MENU_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuDtlAjax(
@@ -173,7 +173,7 @@ public class MenuController
      * 메뉴 관리 (메인) 목록 조회 (Ajax)
      * (사용자USER, )관리자MNGR만 접근 가능)
      */
-    @GetMapping(SiteUrl.MENU_MAIN_LIST_AJAX)
+    @GetMapping(Url.MENU_MAIN_LIST_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> mainMenuListAjax(
@@ -212,7 +212,7 @@ public class MenuController
     /**
      * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
      */
-    @PostMapping(SiteUrl.MENU_SORT_ORDR_AJAX)
+    @PostMapping(Url.MENU_SORT_ORDR_AJAX)
     @ResponseBody
     public AjaxResponse menuSortOrdrAjax(
             @RequestBody MenuParam menuParam,
@@ -244,7 +244,7 @@ public class MenuController
      * 메뉴 관리 삭제 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(SiteUrl.MENU_DEL_AJAX)
+    @PostMapping(Url.MENU_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> menuDelAjax(
