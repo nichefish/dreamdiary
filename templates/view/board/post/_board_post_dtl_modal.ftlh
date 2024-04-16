@@ -1,7 +1,8 @@
 <#--
-  -- 게시판 > 상세 Modal
+  -- 게시판(board_post) > 상세 Modal
   -- @included_in : board_post_list
   -->
+
 <div class="modal fade" id="board_post_dtl_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -25,5 +26,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/board/post/_board_post_dtl_template.hbs">

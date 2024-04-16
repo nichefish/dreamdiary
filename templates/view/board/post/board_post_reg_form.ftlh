@@ -1,7 +1,8 @@
 <#--
-  -- 게시판 > 등록/수정 화면
+  -- 게시판(board_post) > 등록/수정 화면
   -- tinyMCE 정책 때문에 문서 최상단에 <!DOCTYPE html> 추가
   -->
+
 <!DOCTYPE html>
 <#import "/layout/layout.ftlh" as layout >
 
@@ -14,11 +15,16 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/board/post/_board_post_scripts.ftlh">
+
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
-                /** tinymce init */
+                /* jquery :: validation */
+                BoardPost.initValidateForm()
+                /* tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
 
                 commons.validate.noSpaces(".no-space");        // 공백 자동 제거
@@ -33,67 +39,9 @@
                 }, function () {
                     $("#trgetTopicSpan").hide();
                 });
-
-                /** jquery :: validation */
-                $(function () {
-                    $("#postRegForm").validate({
-                        submitHandler: function () {
-                            if (Page.submitMode === "preview") {
-                                const popupNm = "preview";
-                                const options = 'width=1280,height=1440,top=0,left=270';
-                                commons.util.popup("", popupNm, options);
-                                let popupUrl = "${SiteUrl.BOARD_POST_REG_PREVIEW_POP!}";
-                                $("#postRegForm").attr("action", popupUrl).attr("target", popupNm);
-                                return true;
-                            } else if (Page.submitMode === "submit") {
-                                $("#postRegForm").removeAttr("action");
-                                Swal.fire({
-                                    text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                    showCancelButton: true,
-                                }).then(function(result) {
-                                    if (!result.value) return;
-                                    Page.<#if isMdf>mdf<#else>reg</#if>Ajax();
-                                });
-                            }
-                        },
-                        errorPlacement: function(error, element) {
-                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                        },
-                        ignore: [],         // hidden 필드도 검증하기 위함
-                    });
-                });
             },
-            /** submit */
-            submit: function() {
-                tinymce.activeEditor.save();
-                Page.submitMode = "submit";
-                $("#postRegForm").submit();
-            },
-            /** 미리보기 팝업 호출 */
-            preview: function() {
-                tinymce.activeEditor.save();
-                Page.submitMode = "preview";
-                $("#postRegForm").submit();
-            },
-            /** 등록/수정 처리(Ajax) */
-            <#if isMdf>mdf<#else>reg</#if>Ajax: function() {
-                let ajaxData = new FormData($("#postRegForm")[0]);
-                const url = "<#if isMdf>${SiteUrl.BOARD_POST_MDF_AJAX!}<#else>${SiteUrl.BOARD_POST_REG_AJAX!}</#if>";
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
-                    Swal.fire({ text: res.message })
-                        .then(function() {
-                            if (res.rslt) Page.list();
-                        });
-                });
-            },
-            /** 목록 화면 이동 */
-            list: function() {
-                const listUrl = "${SiteUrl.BOARD_POST_LIST!}?boardCd=${boardCd!}<#if isMdf>&isBackToList=Y</#if>";
-                commons.util.blockUIReplace(listUrl);
-            }
         }
-    }();
-
+    })();
     $(document).ready(function () {
         Page.init();
     });
@@ -215,12 +163,12 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-between">
         <!-- 버튼 :: 미리보기 -->
-        <@component.btn_preview_pop "Page" />
+        <@component.btn_preview_pop "BoardPost.preview();" />
         <div>
             <!-- 버튼 :: 저장하기 -->
-            <@component.btn_post_save "Page" />
+            <@component.btn_post_submit "BoardPost.submit();" />
             <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "Page" />
+            <@component.btn_post_toList "BoardPost.list();" />
         </div>
     </div>
 </div>

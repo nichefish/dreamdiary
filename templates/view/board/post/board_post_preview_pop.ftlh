@@ -1,6 +1,7 @@
 <#--
-  -- 게시판 > 상세 화면
+  -- 게시판(board_post) > 상세 화면
   -->
+
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -8,9 +9,6 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
-                //
-            },
             close: function() {
                 window.close();
             }
@@ -42,11 +40,11 @@
         <!-- 버튼:: 팝업 닫기 -->
         <@component.btn_preview_close "Page" />
     </div>
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-        <input type="hidden" name="boardCd" id="boardCd" value="${post.boardCd!}" />
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+    <input type="hidden" name="boardCd" id="boardCd" value="${post.boardCd!}" />
+</form>
 
 </@layout.layout>

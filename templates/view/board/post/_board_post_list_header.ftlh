@@ -1,5 +1,5 @@
 <#--
-  -- 게시판 > 목록 툴바 Header
+  -- 게시판(board_post) > 목록 툴바 Header
   -- @included_in : board_post_list
   -->
 
@@ -33,19 +33,19 @@
     </div>
     <!-- 버튼:: 목록 검색 -->
     <div>
-        <@component.btn_header_search "Page.search();" />
+        <@component.btn_header_search "BoardPost.search();" />
     </div>
     <!-- 버튼:: 내 글 보기 -->
     <div>
-        <@component.btn_header_mypapr "Page" MY_PAPR!false />
+        <@component.btn_header_mypapr "BoardPost.myPapr();" MY_PAPR!false />
     </div>
     <!-- 버튼:: 등록하기 -->
     <div>
         <!-- 버튼:: 등록 화면 이동하기 -->
-        <@component.btn_header_reg_form "Page.regForm();" />
+        <@component.btn_header_reg_form "BoardPost.regForm();" />
     </div>
     <div>
         <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "Page.xlsxDownload();" />
+        <@component.btn_header_xlsx_download "BoardPost.xlsxDownload();" />
     </div>
 </form>

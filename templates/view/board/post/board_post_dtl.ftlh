@@ -1,16 +1,17 @@
 <#--
-  -- 게시판 > 상세 화면
+  -- 게시판(board_post) > 상세 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/board/post/_board_post_scripts.ftlh">
+
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
-            init: function () {
-                //
-            },
             /**
              * 노션Notion 모달 페이지 호출
              */
@@ -32,34 +33,8 @@
 
                 $("#notion_page_modal").modal("show");
             },
-            /** 수정 화면 이동 */
-            mdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.BOARD_POST_MDF_FORM!}");
-            },
-            /** 삭제 처리 (ajax) */
-            delAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.BOARD_POST_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) Page.list();
-                            });
-                    });
-                });
-            },
-            /** 목록 화면 이동 */
-            list: function() {
-                const listUrl = "${SiteUrl.BOARD_POST_LIST!}?boardCd=${boardCd!}&isBackToList=Y"
-                commons.util.blockUIReplace(listUrl);
-            },
         }
-    }();
+    })();
 </script>
 
 <div class="card post">
@@ -102,20 +77,20 @@
     <!-- 버튼 영역 -->
     <div class="d-flex justify-content-end">
         <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_mdf "Page" post isMngr />
+        <@component.btn_post_modify "BoardPost.mdfForm();" post isMngr />
         <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "Page" post isMngr />
+        <@component.btn_post_delete "BoardPost.delAjax();" post isMngr />
         <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "Page" />
+        <@component.btn_post_toList "BoardPost.list();" />
     </div>
 
     <!-- 댓글 영역 -->
     <#include "/view/_component/comment/_comment_area.ftlh">
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
-        <input type="hidden" name="boardCd" id="boardCd" value="${post.boardCd!}" />
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
+    <input type="hidden" name="boardCd" id="boardCd" value="${post.boardCd!}" />
+</form>
 
 </@layout.layout>
