@@ -23,58 +23,16 @@
 <#include "/view/admin/menu/_menu_scripts.ftlh">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
-            colorArray: ['#185ADB','#FFC107','#00ADB5','#7952B3','#FFD93D','#4D96FF','#8479E1','#332FD0','#9254C8','#E15FED','#6EDCD9','#4D77FF','#5463FF','#533E85','#FFD32D','#008E89','#03045E','#1C658C','#E15FED','#A97155'],
-            menuContainer: "#total_menu_board",
-            initIdx: 0,
             init: function () {
-                Menu.init();
-
                 Page.updt();
 
-                const mainContainers = document.querySelectorAll(".draggable-zone-main");
-                if (mainContainers.length === 0) return false;
-                Page.mainSwappable = new Draggable.Sortable(mainContainers, {
-                    draggable: ".draggable-main",
-                    handle: ".draggable-main .draggable-handle-main",
-                    mirror: {
-                        //appendTo: selector,
-                        appendTo: "body",
-                        constrainDimensions: true
-                    },
-                }).on('drag:start', (event) => {
-                    const $card = $(event.data.source).find(".card");
-                    $card.addClass('dragging');
-                }).on('drag:stop', (event) => {
-                    const $card = $(event.data.source).find(".card");
-                    $card.removeClass('dragging');
-                });
-
-                const subContainers = document.querySelectorAll(".draggable-zone-sub");
-                if (subContainers.length === 0) return false;
-                Page.subSwappable = new Draggable.Sortable(subContainers, {
-                    draggable: ".draggable-sub",
-                    handle: ".draggable-sub .draggable-handle-sub",
-                    mirror: {
-                        //appendTo: selector,
-                        appendTo: "body",
-                        constrainDimensions: true
-                    },
-                }).on('drag:start', (event) => {
-                    $(event.data.source).addClass('dragging');
-                }).on('drag:stop', (event) => {
-                    const id = $(event.data.source).attr("id");
-                    setTimeout(() => {
-                        const $newLi = $("li#"+id);
-                        const $newParent = $newLi.parents("li.sortable-item");
-                        const newParentId = $newParent.closest("li.sortable-item").attr('id');
-                        $newLi.attr('upper-menu-no', newParentId);
-                        $newLi.removeClass('dragging').addClass("draggable-modified");
-                    }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
-                });
+                /** jquery :: validation */
+                Menu.initValidateForm();
+                /* init : Draggable */
+                Menu.initDraggable();
             },
-
             /**
              * 트리 구조 데이터 리로드 및 새로 그리기
              */
@@ -90,8 +48,19 @@
                     if (!Array.isArray(mainMenuList) || mainMenuList.length < 1) return;
                     mainMenuList.forEach(function(mainMenu) {
                         commons.util.handlebarsAppend(mainMenu, "menu_main_card");
-                        Menu.drawSubMenu(mainMenu);
+                        Page.drawSubMenu(mainMenu);
                     });
+                });
+            },
+            /** 서브메뉴 처리 :: 자기 자신을 그리고 각각의 서브메뉴에 대해서 재귀호출 */
+            drawSubMenu: function(upperMenu) {
+                // 서브메뉴 돌면서 재귀호출
+                let subMenuList = upperMenu.subMenuList;
+                if (!Array.isArray(subMenuList) || subMenuList.length <1) return;
+                let menuNo = upperMenu.menuNo;
+                subMenuList.forEach(function(subMenu) {
+                    commons.util.handlebarsAppendTo(subMenu, "menu_sub", "menu_sub_"+menuNo);
+                    Page.drawSubMenu(subMenu);
                 });
             },
             drawTree: function() {
@@ -107,26 +76,8 @@
                 //     $(jstreeContainer).jstree(true).refresh(false, true);
                 // });
             },
-            /** 정렬순서 저장 */
-            sortOrdr: function() {
-                let orderData = [];
-                document.querySelectorAll('.sortable-item').forEach((item, index) => {
-                    orderData.push({ "menuNo": Number($(item).attr("id")), "upperMenuNo": Number($(item).attr("upper-menu-no")), "state": { "sortOrdr": index }});
-                });
-                const url = "${Url.MENU_SORT_ORDR_AJAX!}";
-                let ajaxData = { "sortOrdr": orderData };
-                commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
-                    if (res.result) {
-                        if (commons.util.isNotEmpty(res.message)) {
-                            Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
-                        } else {
-                            commons.util.blockUIReload();
-                        }
-                    }
-                });
-            }
         }
-    }();
+    })();
     $(document).ready(function() {
         Page.init();
     });
