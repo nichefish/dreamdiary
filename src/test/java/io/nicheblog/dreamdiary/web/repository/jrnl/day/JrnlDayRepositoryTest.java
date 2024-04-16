@@ -1,10 +1,10 @@
-package io.nicheblog.dreamdiary.web.repository.dream.day;
+package io.nicheblog.dreamdiary.web.repository.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
-import io.nicheblog.dreamdiary.web.entity.dream.DreamDayEntity;
-import io.nicheblog.dreamdiary.web.entity.dream.day.DreamDayEntityTestFactory;
-import io.nicheblog.dreamdiary.web.repository.dream.DreamDayRepository;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntityTestFactory;
+import io.nicheblog.dreamdiary.web.repository.jrnl.day.JrnlDayRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * DreamDayRepositoryTest
+ * JrnlDayRepositoryTest
  * <pre>
- *  DreamDayRepository 테스트 모듈
+ *  JrnlDayRepository 테스트 모듈
  * </pre>
  *
  * @author nichefish
@@ -34,12 +34,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Import(TestAuditConfig.class)
 @ActiveProfiles("test")
 @Log4j2
-class DreamDayRepositoryTest {
+class JrnlDayRepositoryTest {
 
     @Autowired
     private TestEntityManager testEntityManager;
     @Autowired
-    private DreamDayRepository dreamDayRepository;
+    private JrnlDayRepository jrnlDayRepository;
 
     /**
      * regist 테스트
@@ -47,11 +47,11 @@ class DreamDayRepositoryTest {
     @Test
     public void testRegist() throws Exception {
         // Given::
-        DreamDayEntity dreamDay = DreamDayEntityTestFactory.createDreamDay();
+        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.createJrnlDay();
 
         // When::
-        Integer rsltId = dreamDayRepository.save(dreamDay).getPostNo();
-        DreamDayEntity rslt = dreamDayRepository.findById(rsltId).orElse(null);
+        Integer rsltId = jrnlDayRepository.save(jrnlDay).getPostNo();
+        JrnlDayEntity rslt = jrnlDayRepository.findById(rsltId).orElse(null);
 
         // Then::
         assertNotNull(rslt);

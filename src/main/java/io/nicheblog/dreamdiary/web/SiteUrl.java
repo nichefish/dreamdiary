@@ -1,17 +1,14 @@
 package io.nicheblog.dreamdiary.web;
 
 /**
- * WebSiteMenu
+ * SiteUrl
  * <pre>
- *  공통 상수 :: 사이트 메뉴 번호, 이름, URL 정의
+ *  공통 상수 :: 웹 사이트 URL 정의
  * </pre>
  *
  * @author nichefish
  */
 public interface SiteUrl {
-
-    /** 도메인 */
-    String DOMAIN = "dreamdiary.nicheblog.io";
 
     /** 메인 */
     String ROOT = "/";
@@ -28,16 +25,17 @@ public interface SiteUrl {
 
     String TEST_PAGE = Prefix.ADMIN + "/testPage.do";
 
-    /** 꿈 일자 */
-    String DREAM_DAY_PAGE = Prefix.DREAM_DAY + "/dreamDayPage.do";
-    String DREAM_DAY_REG_AJAX = Prefix.DREAM_DAY + "/dreamDayRegAjax.do";
-    String DREAM_DAY_DTL_AJAX = Prefix.DREAM_DAY + "/dreamDayListAjax.do";
-    String DREAM_DAY_MDF_AJAX = Prefix.DREAM_DAY + "/dreamDayMdfAjax.do";
-    String DREAM_DAY_DEL_AJAX = Prefix.DREAM_DAY + "/dreamDayListAjax.do";
+    /** 저널 일자 */
+    String JRNL_DAY_PAGE = Prefix.JRNL_DAY + "/jrnlDayPage.do";
+    String JRNL_DAY_LIST_AJAX = Prefix.JRNL_DAY + "/jrnlDayListAjax.do";
+    String JRNL_DAY_REG_AJAX = Prefix.JRNL_DAY + "/jrnlDayRegAjax.do";
+    String JRNL_DAY_DTL_AJAX = Prefix.JRNL_DAY + "/jrnlDayDtlAjax.do";
+    String JRNL_DAY_MDF_AJAX = Prefix.JRNL_DAY + "/jrnlDayMdfAjax.do";
+    String JRNL_DAY_DEL_AJAX = Prefix.JRNL_DAY + "/jrnlDayDelAjax.do";
 
-    /** 꿈 조각 */
-    String DREAM_PIECE_REG_AJAX = Prefix.DREAM_PIECE + "/dreamPieceRegAjax.do";
-    String DREAM_PIECE_MDF_AJAX = Prefix.DREAM_PIECE + "/dreamPieceMdfAjax.do";
+    /** 저널 꿈 */
+    String JRNL_DREAM_REG_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamRegAjax.do";
+    String JRNL_DREAM_MDF_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamMdfAjax.do";
 
     /** 공지사항 */
     String NOTICE_LIST = Prefix.NOTICE + "/noticeList.do";
@@ -279,11 +277,17 @@ public interface SiteUrl {
         /* 공지사항 (notice) */
         String NOTICE = "/notice";
 
-        String DREAM = "/dream";
+        /* 저널 (jrnl) */
+        String JRNL = "/jrnl";
+        // 저널 일자
         String DAY = "/day";
-        String DREAM_DAY = DREAM + DAY;
-        String PIECE = "/piece";
-        String DREAM_PIECE = DREAM + PIECE;
+        String JRNL_DAY = JRNL + DAY;
+        // 저널 꿈
+        String DREAM = "/dream";
+        String JRNL_DREAM = JRNL + DREAM;
+        // 저널 일기
+        String DIARY = "/diary";
+        String JRNL_DIARY = JRNL + DIARY;
 
         /* 일반게시판 (board) */
         String BOARD = "/board";

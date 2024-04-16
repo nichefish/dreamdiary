@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web;
 
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
 import org.springframework.stereotype.Component;
@@ -34,7 +35,7 @@ public class SiteMenu {
             SiteTopMenu.LGN,
             TOP_MENU_IDX,
             "로그인",
-            SiteUrl.AUTH_LGN_FORM
+            Url.AUTH_LGN_FORM
     );
 
     // 공통화면 :: 신규계정 신청
@@ -42,7 +43,7 @@ public class SiteMenu {
             SiteTopMenu.USER_REQST,
             TOP_MENU_IDX,
             "신규계정 신청",
-            SiteUrl.AUTH_LGN_FORM
+            Url.AUTH_LGN_FORM
     );
 
     // 공통화면 :: 메인
@@ -50,7 +51,7 @@ public class SiteMenu {
             SiteTopMenu.MAIN,
             TOP_MENU_IDX,
             "메인",
-            SiteUrl.MAIN
+            Url.MAIN
     );
 
     // 공통화면 :: 메인 (관리자)
@@ -58,7 +59,7 @@ public class SiteMenu {
             SiteTopMenu.ADMIN_MAIN,
             TOP_MENU_IDX,
             "메인",
-            SiteUrl.ADMIN_MAIN
+            Url.ADMIN_MAIN
     );
 
     // 공통화면 :: 에러
@@ -66,7 +67,7 @@ public class SiteMenu {
             SiteTopMenu.ERROR,
             TOP_MENU_IDX,
             "ERROR",
-            SiteUrl.ERROR
+            Url.ERROR
     );
 
     // 공통화면 :: 내 정보
@@ -74,7 +75,7 @@ public class SiteMenu {
             SiteTopMenu.MAIN,
             TOP_MENU_IDX,
             "내 정보",
-            SiteUrl.USER_MY_DTL
+            Url.USER_MY_DTL
     );
 
     /* ----- */
@@ -84,7 +85,7 @@ public class SiteMenu {
             SiteTopMenu.NOTICE,
             TOP_MENU_IDX,
             "공지사항",
-            SiteUrl.NOTICE_LIST
+            Url.NOTICE_LIST
     );
 
     // 대메뉴 :: 꿈
@@ -92,18 +93,18 @@ public class SiteMenu {
             SiteTopMenu.DREAM,
             TOP_MENU_IDX,
             "꿈 관리",
-            SiteUrl.DREAM_DAY_PAGE,
-            List.of(SubMenu.DREAM_DAY, SubMenu.DREAM_DAY_CAL)
+            Url.JRNL_DAY_PAGE,
+            List.of(SubMenu.JRNL_DAY, SubMenu.JRNL_DAY_CAL)
     );
-    public static SiteAcsInfo DREAM_DAY = SubMenu.DREAM_DAY;
-    public static SiteAcsInfo DREAM_DAY_CAL = SubMenu.DREAM_DAY_CAL;
+    public static SiteAcsInfo JRNL_DAY = SubMenu.JRNL_DAY;
+    public static SiteAcsInfo JRNL_DAY_CAL = SubMenu.JRNL_DAY_CAL;
 
     // 대메뉴 :: 일반게시판
     public static SiteAcsInfo BOARD = new SiteAcsInfo(
             SiteTopMenu.BOARD,
             TOP_MENU_IDX,
             "일반게시판",
-            SiteUrl.BOARD_POST_LIST
+            Url.BOARD_POST_LIST
     );
 
     // 대메뉴 :: 일정
@@ -111,7 +112,7 @@ public class SiteMenu {
             SiteTopMenu.SCHDUL,
             TOP_MENU_IDX,
             "일정",
-            SiteUrl.SCHDUL_CAL,
+            Url.SCHDUL_CAL,
             List.of(SubMenu.SCHDUL_CAL, SubMenu.VCATN_PAPR)
     );
     public static SiteAcsInfo SCHDUL_CAL = SubMenu.SCHDUL_CAL;
@@ -122,7 +123,7 @@ public class SiteMenu {
             SiteTopMenu.EXPTR,
             TOP_MENU_IDX,
             "경비",
-            SiteUrl.EXPTR_PRSNL_PAPR_LIST,
+            Url.EXPTR_PRSNL_PAPR_LIST,
             List.of(SubMenu.EXPTR_PRSNL_PAPR, SubMenu.EXPTR_REQST)
     );
     public static SiteAcsInfo EXPTR_PRSNL_PAPR = SubMenu.EXPTR_PRSNL_PAPR;
@@ -133,7 +134,7 @@ public class SiteMenu {
             SiteTopMenu.USER,
             TOP_MENU_IDX,
             "사용자 관리",
-            SiteUrl.AUTH_LGN_FORM,
+            Url.AUTH_LGN_FORM,
             List.of(SubMenu.USER_INFO)
     );
     public static SiteAcsInfo USER_INFO = SubMenu.USER_INFO;
@@ -143,7 +144,7 @@ public class SiteMenu {
             SiteTopMenu.VCATN_ADMIN,
             TOP_MENU_IDX,
             "일정",
-            SiteUrl.SCHDUL_CAL,
+            Url.SCHDUL_CAL,
             List.of(SubMenu.VCATN_STATS, SubMenu.VCATN_SCHDUL)
     );
     public static SiteAcsInfo VCATN_STATS = SubMenu.VCATN_STATS;
@@ -154,7 +155,7 @@ public class SiteMenu {
             SiteTopMenu.EXPTR_ADMIN,
             TOP_MENU_IDX,
             "경비",
-            SiteUrl.EXPTR_PRSNL_PAPR_LIST,
+            Url.EXPTR_PRSNL_PAPR_LIST,
             List.of(SubMenu.EXPTR_PRSNL_RPT, SubMenu.EXPTR_PRSNL_STATS)
     );
     public static SiteAcsInfo EXPTR_PRSNL_RPT = SubMenu.EXPTR_PRSNL_RPT;
@@ -165,7 +166,7 @@ public class SiteMenu {
             SiteTopMenu.ADMIN,
             TOP_MENU_IDX,
             "사이트 관리",
-            SiteUrl.AUTH_LGN_FORM,
+            Url.AUTH_LGN_FORM,
             List.of(SubMenu.ADMIN_PAGE, SubMenu.LGN_POLICY, SubMenu.MENU, SubMenu.BOARD_DEF, SubMenu.TMPLAT, SubMenu.POPUP, SubMenu.CD)
     );
     public static SiteAcsInfo ADMIN_PAGE = SubMenu.ADMIN_PAGE;
@@ -181,7 +182,7 @@ public class SiteMenu {
             SiteTopMenu.ADMIN,
             TOP_MENU_IDX,
             "로그 관리",
-            SiteUrl.AUTH_LGN_FORM,
+            Url.AUTH_LGN_FORM,
             List.of(SubMenu.LOG_ACTVTY, SubMenu.LOG_SYS)
     );
     public static SiteAcsInfo LOG_ACTVTY = SubMenu.LOG_ACTVTY;
@@ -192,19 +193,19 @@ public class SiteMenu {
      */
     public interface SubMenu {
 
-        // 소메뉴 :: 꿈 일자
-        SiteAcsInfo DREAM_DAY = new SiteAcsInfo(
+        // 소메뉴 :: 저널 일자
+        SiteAcsInfo JRNL_DAY = new SiteAcsInfo(
                 SiteTopMenu.DREAM,
                 "01",
-                "꿈 일자",
-                SiteUrl.DREAM_DAY_PAGE
+                "저널 일자",
+                Url.JRNL_DAY_PAGE
         );
         // 소메뉴 :: 꿈 달력
-        SiteAcsInfo DREAM_DAY_CAL = new SiteAcsInfo(
+        SiteAcsInfo JRNL_DAY_CAL = new SiteAcsInfo(
                 SiteTopMenu.DREAM,
                 "02",
                 "꿈 달력",
-                SiteUrl.DREAM_DAY_PAGE
+                Url.JRNL_DAY_PAGE
         );
 
         // 소메뉴 :: 경비지출서
@@ -212,14 +213,14 @@ public class SiteMenu {
                 SiteTopMenu.EXPTR,
                 "01",
                 "경비지출서",
-                SiteUrl.EXPTR_PRSNL_PAPR_LIST
+                Url.EXPTR_PRSNL_PAPR_LIST
         );
         // 소메뉴 :: 물품구매/경조사비 신청
         SiteAcsInfo EXPTR_REQST = new SiteAcsInfo(
                 SiteTopMenu.EXPTR,
                 "02",
                 "물품구매/경조사비 신청",
-                SiteUrl.EXPTR_REQST_LIST
+                Url.EXPTR_REQST_LIST
         );
 
         // 소메뉴 :: 일정
@@ -227,14 +228,14 @@ public class SiteMenu {
                 SiteTopMenu.SCHDUL,
                 "01",
                 "일정 달력",
-                SiteUrl.SCHDUL_CAL
+                Url.SCHDUL_CAL
         );
         // 소메뉴 :: 휴가계획서
         SiteAcsInfo VCATN_PAPR = new SiteAcsInfo(
                 SiteTopMenu.SCHDUL,
                 "02",
                 "휴가계획서",
-                SiteUrl.VCATN_PAPR_LIST
+                Url.VCATN_PAPR_LIST
         );
 
         /* 사용자 관리 */
@@ -243,7 +244,7 @@ public class SiteMenu {
                 SiteTopMenu.USER,
                 "01",
                 "계정 관리",
-                SiteUrl.USER_LIST
+                Url.USER_LIST
         );
 
         /* 휴가 관리 */
@@ -252,14 +253,14 @@ public class SiteMenu {
                 SiteTopMenu.VCATN_ADMIN,
                 "01",
                 "년도별 휴가관리",
-                SiteUrl.VCATN_STATS_YY
+                Url.VCATN_STATS_YY
         );
         // 소메뉴 :: 휴가사용일자
         SiteAcsInfo VCATN_SCHDUL = new SiteAcsInfo(
                 SiteTopMenu.VCATN_ADMIN,
                 "02",
                 "휴가사용일자",
-                SiteUrl.VCATN_SCHDUL_LIST
+                Url.VCATN_SCHDUL_LIST
         );
 
         /* 경비 관리 */
@@ -268,14 +269,14 @@ public class SiteMenu {
                 SiteTopMenu.EXPTR_ADMIN,
                 "01",
                 "월간지출내역",
-                SiteUrl.EXPTR_PRSNL_RPT_ITEMS
+                Url.EXPTR_PRSNL_RPT_ITEMS
         );
         // 소메뉴 :: 경비지출누적집계
         SiteAcsInfo EXPTR_PRSNL_STATS = new SiteAcsInfo(
                 SiteTopMenu.EXPTR_ADMIN,
                 "02",
                 "경비지출누적집계",
-                SiteUrl.EXPTR_PRSNL_STATS_PAGE
+                Url.EXPTR_PRSNL_STATS_PAGE
         );
 
         /* 사이트 관리 */
@@ -284,49 +285,49 @@ public class SiteMenu {
                 SiteTopMenu.ADMIN,
                 "01",
                 "사이트 관리",
-                SiteUrl.ADMIN_PAGE
+                Url.ADMIN_PAGE
         );
         // 소메뉴 :: 로그인 정책 관리
         SiteAcsInfo LGN_POLICY = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
                 "01",
                 "로그인 정책 관리",
-                SiteUrl.LGN_POLICY_FORM
+                Url.LGN_POLICY_FORM
         );
         // 소메뉴 :: 메뉴 관리
         SiteAcsInfo MENU = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
                 "02",
                 "메뉴 관리",
-                SiteUrl.MENU_PAGE
+                Url.MENU_PAGE
         );
         // 소메뉴 :: 게시판 관리
         SiteAcsInfo BOARD_DEF = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
                 "03",
                 "게시판 관리",
-                SiteUrl.BOARD_DEF_LIST
+                Url.BOARD_DEF_LIST
         );
         // 소메뉴 :: 템플릿 관리
         SiteAcsInfo TMPLAT = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
                 "05",
                 "템플릿 관리",
-                SiteUrl.TMPLAT_DEF_LIST
+                Url.TMPLAT_DEF_LIST
         );
         // 소메뉴 :: 팝업 관리
         SiteAcsInfo POPUP = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
                 "06",
                 "팝업 관리",
-                SiteUrl.POPUP_LIST
+                Url.POPUP_LIST
         );
         // 소메뉴 :: 코드 관리
         SiteAcsInfo CD = new SiteAcsInfo(
                 SiteTopMenu.ADMIN,
                 "07",
                 "코드 관리",
-                SiteUrl.CL_CD_LIST
+                Url.CL_CD_LIST
         );
 
         /* 로그 관리 */
@@ -335,14 +336,14 @@ public class SiteMenu {
                 SiteTopMenu.LOG,
                 "01",
                 "활동 로그",
-                SiteUrl.LOG_ACTVTY_LIST
+                Url.LOG_ACTVTY_LIST
         );
         // 소메뉴 :: 시스템 로그
         SiteAcsInfo LOG_SYS = new SiteAcsInfo(
                 SiteTopMenu.LOG,
                 "02",
                 "시스템 로그",
-                SiteUrl.LOG_SYS_LIST
+                Url.LOG_SYS_LIST
         );
     }
 

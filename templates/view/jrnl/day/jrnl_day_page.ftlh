@@ -1,12 +1,13 @@
 <#--
-  -- 꿈 관리 : ASIDE (우측 사이드바)
-  -- @included_in : dream_day_page
+  -- 저널 일자 : ASIDE (우측 사이드바)
+  -- @included_in : jrnl_day_page
   -->
+
 <#import "/layout/layout_with_aside.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->
 <#assign toolbar>
-    <#include "/view/dream/day/_dream_day_page_header.ftlh">
+    <#include "/view/jrnl/day/_jrnl_day_page_header.ftlh">
 </#assign>
 
 <@layout.layout toolbar=toolbar!"">
@@ -19,10 +20,14 @@
     const Page = function() {
         return {
             init: function () {
-                //
+                JrnlDay.init();
+                JrnlDream.init();
             },
         }
     }();
+    $(document).ready(function() {
+        Page.init();
+    })
 </script>
 
 <!--begin::Card-->
@@ -30,7 +35,7 @@
     <div class="card-body p-9">
             <!--end::Table head-->
             <!--begin::Table body-->
-            <div id="dream_day_list_div">
+            <div id="jrnl_day_list_div">
                 <!-- handlebars template goes in here -->
             </div>
         </div>
@@ -40,16 +45,20 @@
     </div>
 
     <form name="procForm" id="procForm">
-        <input type="hidden" name="dreamDayNo" id="dreamDayNo" />
+        <input type="hidden" name="jrnlDayNo" id="jrnlDayNo" />
     </form>
 </div>
 <!--end::Card-->
 
-<#include "/view/dream/day/_dream_day_list_template.hbs">
-<#include "/view/dream/day/_dream_day_reg_modal.ftlh">
-<#include "/view/dream/piece/_dream_piece_reg_modal.ftlh">
+<#include "/view/jrnl/day/_jrnl_day_list_template.hbs">
+<#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
+<#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
+
+<!--include:: script modules -->
+<#include "/view/jrnl/day/jrnl_day_script.ftlh">
+<#include "/view/jrnl/dream/jrnl_dream_script.ftlh">
 
 <!--include:: Dream - Aside-->
-<#include "/view/dream/day/_dream_day_aside_base.ftlh">
+<#include "/view/jrnl/day/_jrnl_day_aside_base.ftlh">
 
 </@layout.layout>

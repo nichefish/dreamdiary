@@ -1,7 +1,8 @@
-<!--
-  -- 꿈 관리 : ASIDE (우측 사이드바)
-  -- @included_in : layout
+<#--
+  -- 저널 일자 : ASIDE (우측 사이드바)
+  -- @included_in : jrnl_day_page.ftlh
   -->
+
 <!--begin::aside-->
 <div id="kt_app_aside" class="app-aside flex-column mt-7"
      data-kt-drawer="true"
@@ -22,7 +23,7 @@
          data-kt-scroll-offset="5px"
          data-kt-scroll-save-state="true">
 
-        <!--begin::Aside1-->
+        <!--begin::Aside-->
         <div class="card card-reset card-p-0">
             <!--begin::Header-->
             <div class="card-header min-h-auto mb-5">
@@ -91,7 +92,7 @@
                 <!--end::Body-->
             </div>
         </div>
-        <!--end::Aside1-->
+        <!--end::Aside-->
     </div>
     <!--end::Aside wrapper-->
 </div>
