@@ -1,6 +1,7 @@
 <#--
-  -- 경비 > 경비지출서 > 목록 화면
+  -- 경비지출서(exptr_prsnl_papr) > 목록 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <#-- 툴바 버튼 추가 -->
@@ -10,85 +11,18 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<!--include:: script modules -->
+<#include "/view/exptr/prsnl/papr/_exptr_prsnl_papr_scripts.ftlh">
+
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
-                commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
-            },
-            /** 목록 검색 */
-            search: function () {
-                $("#listForm #pageNo").val(1);
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}?actionTyCd=SEARCH");
-            },
-            /** 내가 작성한 글 보기 */
-            myPapr: function () {
-                const url = "${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}";
-                let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
-                commons.util.blockUIReplace(url + param);
-            },
-            /** 전체 목록 조회 */
-            resetSearch: function() {
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}");
-            },
-            /** 상세 화면 이동 */
-            dtl: function (postNo) {
-                $("#procForm #postNo").val(postNo);
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_DTL!}");
-            },
-            /** 등록 전 점검 + 등록 화면 이동 (Ajax) */
-            // TODO: 로직 더 단순화할 수 있을 것 같은데???
-            regForm: function() {
-                $("#prevYn").val("N");
-                const url = "${SiteUrl.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX!}";
-                commons.util.blockUIAjax(url, 'post', "", function(res) {
-                    if (!res.rsltMap) return;
-                    // 중복 코드 감소를 위한 함수 정의
-                    const checkAndRedirect = (data) => {
-                        if (monthData && monthData.cfYn !== "Y") {
-                            const message = "이미 등록중인 글(" + monthData.yy + "년 " + monthData.mnth + " +월)이 있습니다. 해당 글로 이동하시겠습니까?";
-                            if (confirm(message)) {
-                                $("#postNo").val(monthData.postNo);
-                                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
-                                return true;
-                            }
-                        }
-                        return false;
-                    };
-
-                    let {prevMnth, currMnth} = res.rsltMap;
-                    // 확인된 결과에 따라 처리
-                    if (prevMnth?.cfYn === "Y" && currMnth?.cfYn === "Y") {
-                        alert("<@spring.message 'view.post.prsnl.alreadyCompt'/>");
-                        return;
-                    }
-                    if (checkAndRedirect(prevMnth, 'prev') || checkAndRedirect(currMnth, 'curr')) return;
-
-                    // 여기까지 실행됐다는 것은 둘 다 진행중인 글이 없다는 것을 의미
-                    if (!prevMnth || !currMnth) {
-                        $("#prevYn").val(prevMnth ? "N" : "Y");
-                        commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_REG_FORM!}");
-                    } else {
-                        alert("경비지출서는 각 월당 한 개만 작성할 수 있습니다.");
-                    }
-                });
-            },
-            /** 개별 영수증 PDF 취합 다운로드 */
-            pdfDownload: function(postNo) {
-                event.stopPropagation();
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.download"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    commons.util.blockUIFileDownload();
-                    $("#postNo").val(postNo);
-                    $("#procForm").attr("action", "${SiteUrl.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD!}").submit();
-                });
+                /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
+                commons.util.initSortTable();
             },
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });
@@ -129,10 +63,10 @@
             <#assign divideYy = listYy?? && (post.yy?number lt listYy)>
             <#assign divideMnth = listMnth?? && (post.mnth?number lt listMnth)>
             <tr class="bg-hover-secondary<#if post.isRegstr!false> bg-fxd-list</#if> <#if divideYy || divideMnth>border-top-5</#if>"
-                onclick="Page.dtl('${post.postNo!}')">
+                onclick="ExptrPrsnlPapr.dtl('${post.postNo!}')">
                 <td class="text-center hidden-table">${post.rnum!}</td>
                 <td class="text-start" role="button">
-                    <a href="${SiteUrl.EXPTR_PRSNL_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
+                    <a href="${Url.EXPTR_PRSNL_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
                         ${post.title!"-"}
                     </a>
                     <!-- 목록 댓글 표시 -->
@@ -148,7 +82,7 @@
                             <img src="${(post.managtrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
                         </div>
                     </#if>
-                    <span role="button" onclick="Page.dtl('${post.postNo!}');">
+                    <span role="button" onclick="ExptrPrsnlPapr.dtl('${post.postNo!}');">
                         ${post.regstrNm!"-"}
                     </span>
                     <#if post.isRegstr!false>
@@ -176,7 +110,7 @@
                 <td class="text-center col-form-label hidden-table">
                     <a class="badge badge-secondary p-2 btn-white blank blink-slow"
                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
-                        <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="Page.pdfDownload('${post.postNo}');"></i>
+                        <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="ExptrPrsnlPapr.pdfDownload('${post.postNo}');"></i>
                     </a>
                 </td>
                 <td class="text-center hidden-table">
@@ -204,12 +138,12 @@
     <!-- pagination::begin -->
     <#include "/view/_component/_pagination.ftlh">
     <!-- pagination::end -->
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value=""/>
-        <input type="hidden" name="prevYn" id="prevYn" value="N"/>
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value=""/>
+    <input type="hidden" name="prevYn" id="prevYn" value="N"/>
+</form>
 
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
 

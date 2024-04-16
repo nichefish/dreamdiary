@@ -1,7 +1,8 @@
 <#--
-  -- 경비 > 경비지출서 > 등록/수정 화면
+  -- 경비지출서(exptr_prsnl_papr) > 등록/수정 화면
   -- TODO: Handlebars로 교체하기
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <#assign isReg = isReg!false>
@@ -12,10 +13,11 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
-                commons.validate.noSpaces(".no-space");        // 공백 자동 제거
+                // 공백 자동 제거
+                commons.validate.noSpaces(".no-space");
                 commons.validate.onlyNumAndComma(".num");
 
                 Page.itemIdx = ${(post.itemList![])?size};
@@ -31,27 +33,8 @@
                     commons.util.chckboxLabel("managtDtUpdtYn", "변경//미변경", "blue//gray");
                 </#if>
 
-                /** jquery :: validation */
-                $(function () {
-                    $("#exptrPrsnlRegForm").validate({
-                        submitHandler: function () {
-                            Swal.fire({
-                                text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                showCancelButton: true,
-                            }).then(function(result) {
-                                if (!result.value) return;
-                                // disabled된 selectbox 값을 풀어준다.
-                                $("input").removeAttr("disabled");
-                                $("select").removeAttr("disabled");
-                                Page.<#if isMdf>mdf<#else>reg</#if>Ajax();
-                            });
-                        },
-                        errorPlacement: function (error, element) {
-                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                        },
-                        ignore: []         // hidden 필드도 검증하기 위함
-                    });
-                });
+                /* jquery :: validation */
+                ExptrPrsnlPapr.initValidateForm();
             },
             /** 제목 자동설정 */
             setTitle: function() {
@@ -61,7 +44,7 @@
             },
             /** 년도/월 등록 가능한지 검사 */
             validateYyMnth: function() {
-                const url = "${SiteUrl.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
+                const url = "${Url.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
                 let ajaxData = {"yy": $("#yy").val(), "mnth": $("#mnth").val()};
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     let rsltObj = res.rsltObj;
@@ -75,7 +58,7 @@
                         Swal.fire("이미 등록중인 글이 있습니다. 해당 글로 이동합니다.")
                             .then(function() {
                                 $("#postNo").val(rsltObj.postNo);
-                                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
+                                commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_PAPR_MDF_FORM!}");
                             });
                     }
                 });
@@ -124,7 +107,7 @@
              */
             addExptrPrsnlItemList: function() {
                 // TODO: API 응답 JSON으로 받아와서 handlebars로 그려버리기
-                const url = "${SiteUrl.EXPTR_PRSNL_ITEM_LIST_AJAX!}";
+                const url = "${Url.EXPTR_PRSNL_ITEM_LIST_AJAX!}";
                 let ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
@@ -189,15 +172,15 @@
                     $("input[name='itemList["+index+"].exptrAmt']").val($(item).val().replace(/,/gi, ""));
                 });
                 let ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
-                const url = "<#if isReg>${SiteUrl.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf>${SiteUrl.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
+                const url = "<#if isReg>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (!res.rslt) return;
                             if ($("#mngrYn").val() === "Y") {
-                                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS_PAGE!}")
+                                commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE!}")
                             } else
-                                Page.list();
+                                ExptrPrsnlPapr.list();
                         });
                 });
             },
@@ -207,18 +190,8 @@
             setTotAmt: function() {
                 $("#totAmt").val(commons.util.getReqstItemTotSum("id^=exptrAmt").toLocaleString());
             },
-            /** 목록 화면 이동 */
-            list: function() {
-                const listUrl = "${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}?isBackToList=Y";
-                commons.util.blockUIReplace(listUrl);
-            },
-            /** 이전 화면 이동 */
-            stats: function() {
-                commons.util.blockUIReplace("${SiteUrl.EXPTR_PRSNL_STATS_PAGE!}");
-            }
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Page.init();
     });
@@ -378,22 +351,22 @@
         </button>
         <#if mngrYn! == "Y">
             <button type="button" class="btn btn-light"
-                    onclick="Page.stats();"
+                    onclick="ExptrPrsnlPapr.stats();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.prev"/>">
                 <i class="bi bi-list"></i>뒤로가기
             </button>
         <#else>
             <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "Page" />
+            <@component.btn_post_toList "ExptrPrsnlPapr.list();" />
         </#if>
     </div>
     <!--end::Card footer-->
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
-    </form>
 </div>
 <!--end::Card-->
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
+</form>
 
 <#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_reg_template.hbs">
 <#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_reg_rcipt_template.ftlh">

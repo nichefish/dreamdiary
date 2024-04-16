@@ -1,6 +1,7 @@
 <#--
-  -- 경비 > 경비지출서 상세 화면
+  -- 경비지출서(exptr_prsnl_papr) 상세 화면
   -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -14,28 +15,7 @@
             },
             /** 관리 페이지로 이동 */
             statsPage: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_STATS_DTL!}");
-            },
-            /** 수정 화면 이동 */
-            mdfForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.EXPTR_PRSNL_PAPR_MDF_FORM!}");
-            },
-            /** 삭제 처리 (ajax) */
-            delAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_PRSNL_PAPR_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) Page.list();
-                            });
-                    });
-                });
+                commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_STATS_DTL!}");
             },
             /** 추가추가 개수 0개인지 체크 */
             emptyListToggle: function() {
@@ -52,7 +32,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX!}";
+                    const url = "${Url.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX!}";
                     let ajaxData = { "postNo": '${post.postNo!}', "exptrPrsnlItemNo": exptrPrsnlItemNo, "orgnlRciptYn": orgnlRciptYn };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -64,7 +44,7 @@
             },
             /** PDF 인쇄 화면 출력 */
             pdfPop: function() {
-                const url = "${SiteUrl.EXPTR_PRSNL_PAPR_PDF_POP!}?postNo="+$("#postNo").val();
+                const url = "${Url.EXPTR_PRSNL_PAPR_PDF_POP!}?postNo="+$("#postNo").val();
                 const popupNm = '경비지출서 팝업';
                 const options = 'width=1280,height=1440,top=0,left=270';
                 commons.util.popup(url, popupNm, options);
@@ -77,14 +57,9 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     commons.util.blockUIFileDownload();
-                    $("#procForm").attr("action", "${SiteUrl.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD!}").submit();
+                    $("#procForm").attr("action", "${Url.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD!}").submit();
                 });
             },
-            /** 목록 화면 이동 */
-            list: function() {
-                const listUrl = "${SiteUrl.EXPTR_PRSNL_PAPR_LIST!}?isBackToList=Y";
-                commons.util.blockUIReplace(listUrl);
-            }
         }
     }();
 
@@ -282,30 +257,30 @@
             <!-- 등록자만 수정 가능, 등록자+관리자도 삭제 가능 -->
             <#if (post.isRegstr!false && (post.cfYn!"N") != "Y")>
                 <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                        onclick="Page.mdfForm();"
+                        onclick="ExptrPrsnlPapr.mdfForm();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
                     수정
                 </button>
             </#if>
             <#if (((post.isRegstr)!false || isMngr) && (post.cfYn!"N") != "Y")>
                 <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
-                        onclick="Page.delAjax();"
+                        onclick="ExptrPrsnlPapr.delAjax();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                     <i class="bi bi-trash"></i>삭제
                 </button>
             </#if>
             <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "Page" />
+            <@component.btn_post_toList "ExptrPrsnlPapr.list(); />
         </div>
 
         <!-- 댓글 영역 -->
         <#include "/view/_component/comment/_comment_area.ftlh">
     </div>
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
+</form>
 
 <#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_reg_rcipt_template.ftlh">
 <#include "/view/exptr/prsnl/papr/_exptr_prsnl_item_rject_template.ftlh">

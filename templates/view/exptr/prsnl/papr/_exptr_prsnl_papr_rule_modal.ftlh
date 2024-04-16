@@ -1,8 +1,9 @@
 <#--
-  -- 경비 > 경비지출서 > 경비지출서 작성 규칙 Modal
+  -- 경비지출서(exptr_prsnl_papr) > 경비지출서 작성 규칙 Modal
   -- @included_in : exptr_prsnl_papr_list_header
   -- @included_in : exptr_prsnl_papr_reg_form
   -->
+
 <div class="modal fade" id="exptr_prsnl_rule_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">

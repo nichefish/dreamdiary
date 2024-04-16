@@ -1,7 +1,8 @@
 <#--
-  -- 경비 > 경비지출서 > 목록 툴바 Header
+  -- 경비지출서(exptr_prsnl_papr) > 목록 툴바 Header
   -- @included_in : exptr_prsnl_papr_list
   -->
+
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
@@ -33,18 +34,18 @@
     </div>
     <div>
         <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "Page.search();" />
+        <@component.btn_header_search "ExptrPrsnlPapr.search();" />
     </div>
     <div>
         <!-- 버튼:: 내 글 보기 -->
-        <@component.btn_header_mypapr "Page" MY_PAPR!false />
+        <@component.btn_header_mypapr "ExptrPrsnlPapr.myPapr();" MY_PAPR!false />
     </div>
     <div>
         <!-- 버튼:: 등록 화면 이동하기 -->
-        <@component.btn_header_reg_form "Page.regForm();" />
+        <@component.btn_header_reg_form "ExptrPrsnlPapr.regForm();" />
     </div>
     <div>
         <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "Page.xlsxDownload();" />
+        <@component.btn_header_xlsx_download "ExptrPrsnlPapr.xlsxDownload();" />
     </div>
 </form>

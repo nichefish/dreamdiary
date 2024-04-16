@@ -1,8 +1,9 @@
 <#--
-  -- 경비 > 경비지출서 > 영수증 Template
+  -- 경비지출서(exptr_prsnl_papr) > 영수증 Template
   -- @included_in : exptr_prsnl_papr_reg_form
   -- @included_in : exptr_prsnl_papr_dtl
   -->
+
 <script>
     const Rcipt = function() {
         return {
@@ -16,7 +17,7 @@
                     if (this.value !== "") {
                         if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
                         if (!commons.validate.fileExtnChck(this, "jpg|jpeg|png")) return false;      // fileExtnChck
-                        const url = "${SiteUrl.FILE_UPLOAD_AJAX!}";
+                        const url = "${Url.FILE_UPLOAD_AJAX!}";
                         let ajaxData = new FormData($("#exptrPrsnlRciptForm")[0]);
                         commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                             Swal.fire({ text: res.message })
@@ -47,7 +48,7 @@
                         if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
                         if (!commons.validate.fileExtnChck(this, "jpg|jpeg|png")) return false;      // fileExtnChck
                         $("#exptrPrsnlItemNo_upload").val(exptrPrsnlItemNo);
-                        const url = "${SiteUrl.EXPTR_PRSNL_ITEM_RCIPT_UPLOAD_AJAX!}";
+                        const url = "${Url.EXPTR_PRSNL_ITEM_RCIPT_UPLOAD_AJAX!}";
                         let ajaxData = new FormData($("#exptrPrsnlRciptForm")[0]);
                         commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                             Swal.fire({ text: res.message })

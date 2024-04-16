@@ -1,6 +1,7 @@
 <#--
-  -- 경비 > 경비지출서 > 상세 팝업 (출력용)
+  -- 경비지출서(exptr_prsnl_papr) > 상세 팝업 (출력용)
   -->
+
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -137,10 +138,10 @@
             </table>
         </form>
     </div>
-
-    <form name="procForm" id="procForm">
-        <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
-    </form>
 </div>
+
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}"/>
+</form>
 
 </@layout.layout>
