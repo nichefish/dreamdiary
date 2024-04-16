@@ -16,54 +16,6 @@
             init: function () {
                 commons.util.initSortTable();       // 모든 table 헤더에 클릭 이벤트를 설정한다.
             },
-            /** 목록 검색 */
-            search: function() {
-                $("#listForm #pageNo").val(1);
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.NOTICE_LIST!}?actionTyCd=SEARCH");
-            },
-            /** 내가 작성한 글 보기 */
-            myPapr: function () {
-                const url = "${SiteUrl.NOTICE_LIST!}";
-                let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
-                commons.util.blockUIReplace(url + param);
-            },
-            /** 전체 목록 조회 */
-            resetSearch: function() {
-                commons.util.blockUIReplace("${SiteUrl.NOTICE_LIST!}");
-            },
-            /** 등록 화면 이동 */
-            regForm: function() {
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_REG_FORM!}");
-            },
-            /** 상세 화면 이동 */
-            dtl: function(postNo) {
-                $("#procForm #postNo").val(postNo);
-                commons.util.blockUISubmit("#procForm", "${SiteUrl.NOTICE_DTL!}");
-            },
-            /** 상세 모달 팝업 호출 */
-            dtlAjax: function (postNo) {
-                event.stopPropagation();
-                const url = "${SiteUrl.NOTICE_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltObj, "notice_dtl", "show");
-                });
-            },
-            /** 엑셀 다운로드 */
-            xlsxDownload: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.download"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    commons.util.blockUIFileDownload();
-                    $("#listForm").attr("action", "${SiteUrl.NOTICE_LIST_XLSX_DOWNLOAD!}").submit();
-                });
-            }
         }
     }();
 
@@ -108,14 +60,14 @@
         <tbody>
         <!-- 공지사항 상단고정 목록 -->
         <#list noticeFxdList![] as post>
-            <tr class="bg-fxd-list bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
+            <tr class="bg-fxd-list bg-hover-secondary" onclick="Notice.dtl('${post.postNo!}');">
                 <td class="text-center hidden-table">
                     -
                 </td>
                 <td class="text-start title-fxd <#if post.tagStrList??>pb-4</#if>">
                     <div class="row d-flex align-items-center justify-content-between">
                         <div class="col-xl-8 col-12">
-                            <a href="${SiteUrl.NOTICE_DTL!}?postNo=${post.postNo!}"
+                            <a href="${Url.NOTICE_DTL!}?postNo=${post.postNo!}"
                                class="title-fxd vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
@@ -140,7 +92,7 @@
                             <!-- 모달 팝업 표시 -->
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" title="모달 팝업으로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${post.postNo!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Notice.dtlAjax('${post.postNo!}');"></i>
                             </a>
                         </div>
                     </div>
@@ -166,14 +118,14 @@
         </#list>
         <!-- 공지사항 목록 -->
         <#list noticeList![] as post>
-            <tr class="bg-hover-secondary" onclick="Page.dtl('${post.postNo!}');">
+            <tr class="bg-hover-secondary" onclick="Notice.dtl('${post.postNo!}');">
                 <td class="text-center hidden-table">
                     ${post.rnum!}
                 </td>
                 <td class="text-start <#if post.tagStrList??>pb-4</#if>">
                     <div class="row d-flex align-items-center justify-content-between">
                         <div class="col-xl-8 col-12">
-                            <a href="${SiteUrl.NOTICE_DTL!}?postNo=${post.postNo!}"
+                            <a href="${Url.NOTICE_DTL!}?postNo=${post.postNo!}"
                                class="text-dark vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold text-danger</#if>">
                                 <#if (post.ctgrNm!"") != "">
                                     <span class="ctgr-span ctgr-gray">${post.ctgrNm!}</span>
@@ -197,7 +149,7 @@
                             <@component.list_tag post />
                             <!-- 모달 팝업 표시 -->
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                               onclick="Page.dtlAjax('${post.postNo!}');"
+                               onclick="Notice.dtlAjax('${post.postNo!}');"
                                data-bs-toggle="tooltip" data-bs-placement="top" title="모달 팝업으로 보기">
                                 <i class="bi bi-stickies fs-5 text-noti opacity-hover"></i>
                             </a>
@@ -240,5 +192,8 @@
 <#include "/view/_component/comment/_comment_list_modal.ftlh">
 
 <#include "/view/_component/atch_file/_atch_file_list_modal.ftlh">
+
+<!--include:: script modules -->
+<#include "/view/notice/_notice_scripts.ftlh">
 
 </@layout.layout>
