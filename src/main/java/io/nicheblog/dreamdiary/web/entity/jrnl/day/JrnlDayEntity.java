@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * JrnlDayEntity
  * <pre>
  *  저널 일자 Entity.
- *  Entity that contains each distinct dream day.
+ *  Single Day that contains each distinct dream/diary.
  * </pre>
  *
  * @author nichefish

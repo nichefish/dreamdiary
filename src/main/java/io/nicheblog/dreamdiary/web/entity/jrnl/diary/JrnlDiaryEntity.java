@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.jrnl.dream;
+package io.nicheblog.dreamdiary.web.entity.jrnl.diary;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
@@ -15,10 +15,10 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 /**
- * JrnlDreamEntity
+ * JrnlDiaryEntity
  * <pre>
- *  저널 꿈 Entity.
- *  Entity that contains each distinct dream.
+ *  저널 일기 Entity.
+ *  Entity that contains each distinct diary.
  * </pre>
  *
  * @author nichefish
@@ -32,13 +32,13 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE jrnl_dream SET del_yn = 'Y' WHERE post_no = ?")
-public class JrnlDreamEntity
+@SQLDelete(sql = "UPDATE jrnl_diary SET del_yn = 'Y' WHERE post_no = ?")
+public class JrnlDiaryEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.JRNL_DREAM;
+    private static final ContentType CONTENT_TYPE = ContentType.JRNL_DIARY;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
@@ -46,7 +46,7 @@ public class JrnlDreamEntity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_no")
-    @Comment("저널 꿈 고유 번호")
+    @Comment("저널 일기 고유 번호")
     private Integer postNo;
 
     /** 게시판 분류 코드 */
@@ -70,16 +70,6 @@ public class JrnlDreamEntity
     @Column(name = "edit_compt_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("편집완료 여부")
     private String editComptYn = "N";
-
-    /** 타인 꿈 여부 (Y/N) */
-    @Builder.Default
-    @Column(name = "else_dream_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("타인 꿈 여부")
-    private String elseDreamYn = "N";
-
-    /** 꿈꾼이(타인) 이름 */
-    @Column(name = "else_dreamer_nm", length = 64)
-    private String elseDreamerNm;
 
     /* ----- */
 

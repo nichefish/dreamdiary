@@ -21,7 +21,7 @@ public class JrnlDayEntityTestFactory {
     public static JrnlDayEntity createJrnlDay() throws Exception {
         return JrnlDayEntity.builder()
                 .postNo(0)
-                .contentType(ContentType.NOTICE.key)
+                .contentType(ContentType.JRNL_DAY.key)
                 .jrnlDt(DateUtils.asDate("2000-01-01"))
                 .build();
     }

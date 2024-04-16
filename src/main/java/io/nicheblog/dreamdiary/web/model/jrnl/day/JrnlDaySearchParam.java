@@ -6,7 +6,7 @@ import lombok.*;
 /**
  * JrnlDaySearchParam
  * <pre>
- *  저널 일자 목록 검색 파라미터 Dto
+ *  저널 일자 목록 검색 파라미터 Dto.
  * </pre>
  *
  * @author nichefish

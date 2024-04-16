@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.jrnl.dream;
+package io.nicheblog.dreamdiary.web.model.jrnl.diary;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
@@ -10,12 +10,10 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-
 /**
- * JrnlDreamDto
+ * JrnlDiaryDto
  * <pre>
- *  저널 꿈 Dto.
+ *  저널 일기 Dto.
  * </pre>
  *
  * @author nichefish
@@ -28,12 +26,12 @@ import javax.persistence.Column;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class JrnlDreamDto
+public class JrnlDiaryDto
         extends BasePostDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.JRNL_DREAM;
+    private static final ContentType CONTENT_TYPE = ContentType.JRNL_DIARY;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
@@ -51,12 +49,6 @@ public class JrnlDreamDto
     /** 편집완료 여부 (Y/N) */
     @Builder.Default
     private String editComptYn = "N";
-    /** 타인 꿈 여부 (Y/N) */
-    @Builder.Default
-    private String elseDreamYn = "N";
-    /** 꿈꾼이(타인) 이름 */
-    @Column(name = "ELSE_DREAMER_NM", length = 64)
-    private String elseDreamerNm;
 
     @Override
     public Integer getKey() {
@@ -65,11 +57,11 @@ public class JrnlDreamDto
 
     /* ----- */
 
-    public static class DTL extends JrnlDreamDto {
+    public static class DTL extends JrnlDiaryDto {
 
     }
 
-    public static class LIST extends JrnlDreamDto {
+    public static class LIST extends JrnlDiaryDto {
         //
     }
 

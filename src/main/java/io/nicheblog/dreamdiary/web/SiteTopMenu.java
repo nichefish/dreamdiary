@@ -24,7 +24,7 @@ public enum SiteTopMenu {
     // PORTAL
     MAIN("00", "0000", "메인", "", false),
     NOTICE("01", "0100", "공지사항", "notice", false),
-    DREAM("02", "0200", "꿈 관리", "dream", false),
+    JRNL("02", "0200", "일지", "journal", false),
     BOARD("03", "0300", "일반게시판", "board", false),
     SCHDUL("04", "0400", "일정", "schedule", false),
     EXPTR("05", "0500", "경비", "expenditure", false),

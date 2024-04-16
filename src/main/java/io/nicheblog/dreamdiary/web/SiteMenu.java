@@ -88,16 +88,15 @@ public class SiteMenu {
             Url.NOTICE_LIST
     );
 
-    // 대메뉴 :: 꿈
-    public static SiteAcsInfo DREAM = new SiteAcsInfo(
-            SiteTopMenu.DREAM,
+    // 대메뉴 :: 저널
+    public static SiteAcsInfo JRNL = new SiteAcsInfo(
+            SiteTopMenu.JRNL,
             TOP_MENU_IDX,
-            "꿈 관리",
+            "저널",
             Url.JRNL_DAY_PAGE,
-            List.of(SubMenu.JRNL_DAY, SubMenu.JRNL_DAY_CAL)
+            List.of(SubMenu.JRNL_DAY)
     );
     public static SiteAcsInfo JRNL_DAY = SubMenu.JRNL_DAY;
-    public static SiteAcsInfo JRNL_DAY_CAL = SubMenu.JRNL_DAY_CAL;
 
     // 대메뉴 :: 일반게시판
     public static SiteAcsInfo BOARD = new SiteAcsInfo(
@@ -195,16 +194,9 @@ public class SiteMenu {
 
         // 소메뉴 :: 저널 일자
         SiteAcsInfo JRNL_DAY = new SiteAcsInfo(
-                SiteTopMenu.DREAM,
+                SiteTopMenu.JRNL,
                 "01",
                 "저널 일자",
-                Url.JRNL_DAY_PAGE
-        );
-        // 소메뉴 :: 꿈 달력
-        SiteAcsInfo JRNL_DAY_CAL = new SiteAcsInfo(
-                SiteTopMenu.DREAM,
-                "02",
-                "꿈 달력",
                 Url.JRNL_DAY_PAGE
         );
 

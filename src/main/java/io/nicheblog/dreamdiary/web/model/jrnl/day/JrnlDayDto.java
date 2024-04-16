@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * JrnlDayDto
  * <pre>
- *  저널 일자 Dto
+ *  저널 일자 Dto.
  * </pre>
  *
  * @author nichefish
