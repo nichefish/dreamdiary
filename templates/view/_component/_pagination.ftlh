@@ -3,7 +3,7 @@
  -- @included_in : 페이징이 있는 목록 페이지들
  -->
 <script>
-    const Pagination = function() {
+    const Pagination = (function() {
         return {
             init: function() {
                 /** 페이지 개수 selectbox 세팅 */
@@ -33,8 +33,7 @@
                 return Math.floor(offset / newPageSize) + 1;
             }
         }
-    }();
-
+    })();
     $(document).ready(function () {
         Pagination.init();
     });

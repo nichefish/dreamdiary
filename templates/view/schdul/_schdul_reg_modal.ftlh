@@ -2,6 +2,7 @@
   -- 일정 > 전체 일정 > 일정 등록 Modal
   -- @included_in : schdul_cal
   -->
+
 <div class="modal fade" id="schdul_reg_modal" tabindex="-1" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -57,6 +58,7 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/schdul/_schdul_reg_template.hbs">
 <#include "/view/schdul/_schdul_reg_prtcpnt_template.hbs">

@@ -2,6 +2,7 @@
   -- 일정 > 전체 일정 화면 (달력) 헤더
   -- @included_in : schdul_cal
   -->
+
 <style>
     @media (max-width: 768px) {
         .card-header {
@@ -48,7 +49,7 @@
             </label>
         </a>
     </div>
-    <a href="${SiteUrl.VCATN_PAPR_REG_FORM!}" class="btn btn-sm btn-primary"
+    <a href="${Url.VCATN_PAPR_REG_FORM!}" class="btn btn-sm btn-primary"
        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="휴가계획서 등록 화면으로&#10;이동합니다.">
         <i class="fas fa-plus"></i>휴가 등록
     </a>

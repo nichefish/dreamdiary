@@ -2,6 +2,7 @@
   -- 일정 > 전체 일정 > 상세 조회 Modal
   -- @included_in : schdul_cal
   -->
+
 <div class="modal fade" id="schdul_dtl_modal" tabindex="-1" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -65,5 +66,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/schdul/_schdul_dtl_template.hbs">
