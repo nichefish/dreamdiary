@@ -17,9 +17,11 @@
 <#include "/view/vcatn/papr/_vcatn_papr_scripts.ftlh">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
+                /* jquery :: validation */
+                VcatnPapr.initValidateForm();
                 // 첨부파일 영역 0개인지 체크
                 AtchFile.atchFileListToggle();
 
@@ -34,24 +36,6 @@
                 <#if isReg>
                     $("#jandiYn").trigger("click");
                 </#if>
-
-                /** jquery :: validation */
-                $(function () {
-                    $("#vcatnPaprRegForm").validate({
-                        submitHandler: function () {
-                            Swal.fire({
-                                text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                showCancelButton: true,
-                            }).then(function(result) {
-                                if (!result.value) return;
-                                VcatnPapr.regAjax();
-                            });
-                        },
-                        errorPlacement: function (error, element) {
-                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                        },
-                    });
-                });
 
                 <#if isReg>
                     /** 휴가 추가 폼 기본 뿌리기 */
@@ -150,8 +134,7 @@
                 }
             }
         }
-    }();
-
+    })();
     $(document).ready(function () {
         Page.init();
     });
