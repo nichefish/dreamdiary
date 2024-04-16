@@ -1,7 +1,8 @@
 <#--
-  -- 분류 코드(CL_CD) > 목록 툴바 Header
+  -- 저널 일자(jrnl_day) > 목록 툴바 Header
   -- @included_in : cl_cd_list
   -->
+
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
@@ -44,7 +45,7 @@
     </div>
     <div>
         <!-- 버튼:: 등록 모달 호출하기 -->
-        <@component.btn_header_reg_modal "Page.regModal();" />
+        <@component.btn_header_reg_modal "JrnlDay.regModal();" />
     </div>
 </form>
 <!--end::Header-->

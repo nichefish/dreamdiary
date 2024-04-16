@@ -1,5 +1,5 @@
 <#--
-  -- 저널 일자 : ASIDE (우측 사이드바)
+  -- 저널 일자 : 페이지
   -- @included_in : jrnl_day_page
   -->
 
@@ -55,8 +55,8 @@
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 
 <!--include:: script modules -->
-<#include "/view/jrnl/day/jrnl_day_script.ftlh">
-<#include "/view/jrnl/dream/jrnl_dream_script.ftlh">
+<#include "/view/jrnl/day/jrnl_day_module.ftlh">
+<#include "/view/jrnl/dream/jrnl_dream_module.ftlh">
 
 <!--include:: Dream - Aside-->
 <#include "/view/jrnl/day/_jrnl_day_aside_base.ftlh">
