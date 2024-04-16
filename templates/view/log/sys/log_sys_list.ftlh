@@ -1,5 +1,5 @@
 <#--
-  -- 활동 로그 목록 화면
+  -- 시스템 로그(log_sys) > 목록 화면
   -->
 <#import "/layout/layout.ftlh" as layout >
 
@@ -19,7 +19,7 @@
             /** 목록 검색 */
             search: function() {
                 $("#listForm #pageNo").val(1);
-                commons.util.blockUISubmit("#listForm", "${SiteUrl.LOG_SYS_LIST!}?actionTyCd=SEARCH");
+                commons.util.blockUISubmit("#listForm", "${Url.LOG_SYS_LIST!}?actionTyCd=SEARCH");
             },
         }
     }();

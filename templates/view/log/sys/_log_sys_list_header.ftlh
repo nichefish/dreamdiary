@@ -1,7 +1,8 @@
 <#--
-  -- 활동 로그 목록 > 검색 영역 Header
-  -- @included_in : log_sys_list_header
+  -- 시스템 로그(log_sys) > 목록 검색 영역 Header
+  -- @included_in : log_sys_list.ftlh
   -->
+
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
