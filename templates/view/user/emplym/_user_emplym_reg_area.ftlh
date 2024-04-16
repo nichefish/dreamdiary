@@ -1,7 +1,8 @@
 <#--
-  -- 사용자 관리 > 계정 및 권한 관리 > 등록 > 사용자(직원) 정보 추가 Template
+  -- 사용자 인사정보(user_emplym) > 추가 Template
   -- @included_in : user_reg_form
   -->
+
 <script>
     const UserEmplym = (function() {
         return {
@@ -53,5 +54,6 @@
         }
     })();
 </script>
+
 <!-- include:: Handlebars template -->
 <#include "/view/user/emplym/_user_emplym_reg_template.hbs">

@@ -1,7 +1,8 @@
 <#--
-  -- 사용자 관리 > 계정 및 권한 관리 > 등록 > 사용자(직원) 정보 추가 Template
+  -- 사용자 프로필 정보(user_profl) > 추가 Template
   -- @included_in : user_reg_form
   -->
+
 <!--begin::Menu separator-->
 <div class="separator my-2"></div>
 <!--end::Menu separator-->
