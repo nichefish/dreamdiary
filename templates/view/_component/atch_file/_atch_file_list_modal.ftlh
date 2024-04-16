@@ -1,21 +1,17 @@
 <#--
- -- 게시판 > 태그 전체 목록 Modal
- -- @included_in : board_post_list
- -- @included_in : board_post_dtl
+ -- 첨부파일 목록 조회 Modal
  -->
+
 <script>
-    const AtchFileList = function() {
+    const AtchFileList = (function() {
         return {
-            init: function() {
-                //
-            },
             /**
              * 첨부파일 추가추가
              * (reqstItemIdx는 어차피 한 페이지 내에서 고유하므로 따로 처리해줄 필요 없다.)
              */
             modal: function(atchFileNo) {
                 event.stopPropagation();
-                const url = "${SiteUrl.FILE_INFO_LIST_AJAX!}";
+                const url = "${Url.FILE_INFO_LIST_AJAX!}";
                 let ajaxData = { "atchFileNo": atchFileNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
@@ -28,8 +24,7 @@
                 });
             },
         }
-    }();
-
+    })();
     $(document).ready(function () {
         AtchFileList.init();
     });
@@ -58,5 +53,6 @@
         </div>
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/_component/atch_file/_atch_file_list_template.hbs">

@@ -2,8 +2,9 @@
  -- 레이아웃 > 첨부파일 모듈
  -- @included_in : 파일 첨부 기능이 있는 페이지들
  -->
+
 <script>
-    const AtchFile = function() {
+    const AtchFile = (function() {
         return {
             init: function() {
                 AtchFile.atchFileListToggle();     // 첨부파일 영역 0개인지 체크
@@ -63,8 +64,7 @@
                 });
             }
         }
-    }();
-
+    })();
     $(document).ready(function () {
         AtchFile.init();
     });

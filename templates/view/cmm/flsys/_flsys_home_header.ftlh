@@ -2,8 +2,9 @@
   -- 활동 로그 목록 > 검색 영역 Header
   -- @included_in : log_sys_list_header
   -->
+
 <script>
-    const Flsys = function() {
+    const Flsys = (function() {
         return {
             currPath: "${Constant.HOME_FLSYS!}",
             refCnt: 0,
@@ -26,7 +27,7 @@
             },
             /** 목록 조회 (ajax) */
             flsysListAjax: function(filePath) {
-                const url = "${SiteUrl.FLSYS_LIST_AJAX!}";
+                const url = "${Url.FLSYS_LIST_AJAX!}";
                 let ajaxData = { "filePath": filePath };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) {
@@ -50,7 +51,7 @@
             },
             /** 탐색기로 열기 */
             openInExplorer: function(filePath, objectTy) {
-                const url = "${SiteUrl.FLSYS_OPEN_IN_EXPLORER_AJAX!}";
+                const url = "${Url.FLSYS_OPEN_IN_EXPLORER_AJAX!}";
                 let ajaxData = { "filePath": filePath, "objectTy": objectTy };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) {
@@ -69,7 +70,7 @@
                     if (!result.value) return;
                     commons.util.blockUIFileDownload();
                     $("#flsysForm #filePath").val(filePath);
-                    $("#flsysForm").attr("action", "${SiteUrl.FLSYS_FILE_DOWNLOAD!}").submit();
+                    $("#flsysForm").attr("action", "${Url.FLSYS_FILE_DOWNLOAD!}").submit();
                 });
             },
             /** vod 재생 */
@@ -95,7 +96,7 @@
             },
             /** 실행하기 */
             fileExec: function(filePath) {
-                const url = "${SiteUrl.FLSYS_FILE_EXEC_AJAX!}";
+                const url = "${Url.FLSYS_FILE_EXEC_AJAX!}";
                 let ajaxData = { "filePath": filePath };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) {
@@ -105,8 +106,9 @@
                 });
             }
         }
-    }();
+    })();
 </script>
+
 <form name="flsysForm" id="flsysForm" method="get">
     <input type="hidden" name="filePath" id="filePath">
 </form>

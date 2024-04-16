@@ -2,6 +2,7 @@
  -- 레이아웃 > 댓글 모듈
  -- @included_in : 댓글 기능이 있는 페이지들
  -->
+
 <script>
     const Comment = (function() {
         return {
@@ -16,7 +17,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.COMMENT_REG_AJAX!}";
+                    const url = "${Url.COMMENT_REG_AJAX!}";
                     let ajaxData = $("#commentRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -55,7 +56,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.COMMENT_MDF_AJAX!}";
+                    const url = "${Url.COMMENT_MDF_AJAX!}";
                     let ajaxData = $("#commentMdfForm" + postNo).serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -72,7 +73,7 @@
                     showCancelButton: true,
                 }).then(function (result) {
                     if (!result.value) return;
-                    const url = "${SiteUrl.COMMENT_DEL_AJAX!}";
+                    const url = "${Url.COMMENT_DEL_AJAX!}";
                     let ajaxData = { "postNo": postNo, "actvtyCtgrCd": "${actvtyCtgrCd!}" };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })

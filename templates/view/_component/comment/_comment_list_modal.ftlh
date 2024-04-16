@@ -2,20 +2,15 @@
  -- 댓글 목록 Modal
  -- @included_in : 댓글 미리보기 기능이 있는 페이지들
  -->
+
 <script>
-    const CommentList = function() {
+    const CommentList = (function() {
         return {
-            init: function() {
-                //
-            },
-            /**
-             * 첨부파일 추가추가
-             * (reqstItemIdx는 어차피 한 페이지 내에서 고유하므로 따로 처리해줄 필요 없다.)
-             */
+            /** 댓글 목록 모달 호출 */
             modal: function(postNo) {
                 event.stopPropagation();
                 $("#commentProcForm #refPostNo").val(postNo);
-                const url = "${SiteUrl.COMMENT_LIST_AJAX!}";
+                const url = "${Url.COMMENT_LIST_AJAX!}";
                 let ajaxData = $("#commentProcForm").serializeArray();
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
@@ -28,18 +23,9 @@
                 });
             },
         }
-    }();
-
-    $(document).ready(function () {
-        CommentList.init();
-    });
+    })();
 </script>
 
-<form name="procForm" id="commentProcForm">
-    <input type="hidden" name="refPostNo" id="refPostNo" value="" />
-    <input type="hidden" name="refContentType" value="${contentType!}" />
-    <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" />
-</form>
 <div class="modal fade" id="comment_list_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -63,5 +49,12 @@
         </div>
     </div>
 </div>
+
+<form name="procForm" id="commentProcForm">
+    <input type="hidden" name="refPostNo" id="refPostNo" value="" />
+    <input type="hidden" name="refContentType" value="${contentType!}" />
+    <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" />
+</form>
+
 <!-- include:: Handlebars template -->
 <#include "/view/_component/comment/_comment_list_template.hbs">

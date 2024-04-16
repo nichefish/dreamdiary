@@ -20,7 +20,7 @@
                         } else if (Page.submitMode === "submit") {
                             $("#postRegForm").removeAttr("action");
                             Swal.fire({
-                                text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                                text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
                                 showCancelButton: true,
                             }).then(function(result) {
                                 if (!result.value) return;
@@ -65,7 +65,7 @@
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 let ajaxData = new FormData($("#postRegForm")[0]);
-                const url = "<#if isMdf>${Url.BOARD_POST_MDF_AJAX!}<#else>${Url.BOARD_POST_REG_AJAX!}</#if>";
+                const url = "<#if isMdf!false>${Url.BOARD_POST_MDF_AJAX!}<#else>${Url.BOARD_POST_REG_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -114,7 +114,7 @@
             },
             /** 목록 화면 이동 */
             list: function() {
-                const listUrl = "${Url.BOARD_POST_LIST!}?boardCd=${boardCd!}<#if isMdf>&isBackToList=Y</#if>";
+                const listUrl = "${Url.BOARD_POST_LIST!}?boardCd=${boardCd!}<#if isMdf!false>&isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);
             }
         }

@@ -20,7 +20,7 @@
                         } else if (Page.submitMode === "submit") {
                             $("#exptrReqstRegForm").removeAttr("action");
                             Swal.fire({
-                                text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                                text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
                                 showCancelButton: true,
                             }).then(function(result) {
                                 if (!result.value) return;
@@ -64,7 +64,7 @@
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 let ajaxData = new FormData($("#exptrReqstRegForm")[0]);
-                const url = "<#if isReg>${Url.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf>${Url.EXPTR_REQST_MDF_AJAX!}</#if>";
+                const url = "<#if isReg>${Url.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_REQST_MDF_AJAX!}</#if>";
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

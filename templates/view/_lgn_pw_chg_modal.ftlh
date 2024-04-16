@@ -57,10 +57,6 @@
             },
         }
     })();
-    /** 페이지 초기화시 처리 */
-    $(document).ready(function() {
-        PwChg.init();
-    });
 </script>
 <div class="modal fade" tabindex="-1" id="lgn_pw_chg_modal" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md modal-dialog-centered">

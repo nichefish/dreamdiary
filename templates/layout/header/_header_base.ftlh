@@ -2,9 +2,10 @@
  -- 레이아웃 > 헤더 (base)
  -- @included_in : layout.ftlh
  -->
+
 <script>
     /** 레이아웃 */
-    const Layout = function() {
+    const Layout = (function() {
         return {
             init: function() {
                 // 모든 버튼에 딜레이 기능 추가
@@ -17,8 +18,8 @@
                 // 사용자/관리자 전환
                 $("#userMode").on("change", function() {
                     let mode = $(this).val();
-                    if (mode === "${Constant.AUTH_USER!}") location.replace("${SiteUrl.MAIN!}");
-                    if (mode === "${Constant.AUTH_MNGR!}") location.replace("${SiteUrl.ADMIN_MAIN!}");
+                    if (mode === "${Constant.AUTH_USER!}") location.replace("${Url.MAIN!}");
+                    if (mode === "${Constant.AUTH_MNGR!}") location.replace("${Url.ADMIN_MAIN!}");
                 });
 
                 /** 현재 접속중인 메뉴 활성화 로직 */
@@ -34,7 +35,7 @@
             },
             /** 내 정보 상세 페이지 이동 */
             myInfoDtl: function () {
-                location.replace("${SiteUrl.USER_MY_DTL!}");
+                location.replace("${Url.USER_MY_DTL!}");
             },
             /** 로그아웃 처림 */
             lgout: function() {
@@ -43,12 +44,11 @@
                     showCancelButton: true,
                 }).then(function (result) {
                     if (!result.value) return;
-                    location.replace("${SiteUrl.AUTH_LGOUT!}");
+                    location.replace("${Url.AUTH_LGOUT!}");
                 });
             }
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Layout.init();
     });

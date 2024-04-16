@@ -11,14 +11,14 @@
                 $("#exptrPrsnlRegForm").validate({
                     submitHandler: function () {
                         Swal.fire({
-                            text: <#if isMdf><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                            text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
                             showCancelButton: true,
                         }).then(function(result) {
                             if (!result.value) return;
                             // disabled된 selectbox 값을 풀어준다.
                             $("input").removeAttr("disabled");
                             $("select").removeAttr("disabled");
-                            Page.<#if isMdf>mdf<#else>reg</#if>Ajax();
+                            Page.<#if isMdf!false>mdf<#else>reg</#if>Ajax();
                         });
                     },
                     errorPlacement: function (error, element) {

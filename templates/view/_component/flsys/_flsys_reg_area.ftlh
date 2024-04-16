@@ -2,6 +2,7 @@
  -- 레이아웃 > 첨부파일 모듈
  -- @included_in : 파일 첨부 기능이 있는 페이지들
  -->
+
 <!--begin::Row-->
 <div class="row">
     <div>
@@ -27,5 +28,6 @@
     <div id="flsys_ref_div" class="mb-8">
     </div>
 </div>
+
 <!-- include:: Handlebars template -->
 <#include "/view/_component/flsys/_flsys_reg_template.hbs">
