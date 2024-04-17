@@ -50,6 +50,9 @@ public class JrnlDiaryDto
     @Builder.Default
     private String editComptYn = "N";
 
+    /** 저널 일자 */
+    private String jrnlDt;
+
     @Override
     public Integer getKey() {
         return this.postNo;

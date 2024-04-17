@@ -6,13 +6,14 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * JrnlDreamEntity
@@ -60,6 +61,13 @@ public class JrnlDreamEntity
     @Column(name = "jrnl_day_no")
     @Comment("저널 일자 번호")
     private Integer jrnlDayNo;
+
+    /** 저널 일자 정보 */
+    @ManyToOne
+    @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("저널 일자 정보")
+    private JrnlDayEntity jrnlDay;
 
     /** 순번 */
     @Column(name = "idx", columnDefinition = "INT DEFAULT 1")

@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -53,6 +54,9 @@ public class JrnlDayDto
 
     /** 저널 꿈 목록 */
     private List<JrnlDreamDto> jrnlDreamList;
+
+    /** 저널 일기 목록 */
+    private List<JrnlDiaryDto> jrnlDairyList;
 
     @Override
     public Integer getKey() {

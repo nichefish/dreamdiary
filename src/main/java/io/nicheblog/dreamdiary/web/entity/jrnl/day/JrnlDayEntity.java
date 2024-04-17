@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
@@ -105,6 +106,15 @@ public class JrnlDayEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("댓글 목록")
     private List<JrnlDreamEntity> jrnlDreamList;
+
+    /** 저널 일기 목록 */
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.SELECT)
+    @OrderBy("idx ASC")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("댓글 목록")
+    private List<JrnlDiaryEntity> jrnlDiaryList;
 
     /* ----- */
 

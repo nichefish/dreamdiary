@@ -1,8 +1,5 @@
-package io.nicheblog.dreamdiary.api.jrnl.day.controller;
+package io.nicheblog.dreamdiary.web.controller.jrnl.diary;
 
-import io.nicheblog.dreamdiary.api.jrnl.day.model.JrnlDayApiDto;
-import io.nicheblog.dreamdiary.api.jrnl.day.model.JrnlDayApiSearchParam;
-import io.nicheblog.dreamdiary.api.jrnl.day.service.JrnlDayApiService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -10,62 +7,65 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
+import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Nullable;
 import javax.annotation.Resource;
-import java.util.Map;
+import javax.validation.Valid;
+import java.security.InvalidParameterException;
 
 /**
- * JrnlDayApiController
+ * JrnlDiaryController
  * <pre>
- *  API:: 저널 일자 조회 API controller
+ *  저널 꿈 Controller
  * </pre>
  *
  * @author nichefish
  * @extends BaseControllerImpl
- * TODO: 외부 호출시 토큰 인증 추가하기
  */
-@RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
-@Log4j2
-@Tag(name = "저널 일자 API", description = "잔디 메신저 API입니다.")
-public class JrnlDayApiController
+@Controller
+public class JrnlDiaryController
         extends BaseControllerImpl {
 
     @Getter
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;      // 작업 카테고리 (로그 적재용)
+    private final String baseUrl = Url.JRNL_DAY_PAGE;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlDayApiService")
-    private JrnlDayApiService jrnlDayApiService;
+    @Resource(name = "jrnlDiaryService")
+    private JrnlDiaryService jrnlDiaryService;
 
     /**
-     * API:: 저널 일자 목록 조회 (Ajax)
+     * 저널 꿈 등록/수정 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @Operation(
-            summary = "저널 일자 목록 조회",
-            description = "저널 일자 목록을 조회한다."
+            summary = "저널 꿈 등록/수정",
+            description = "저널 꿈 정보를 등록/수정한다."
     )
-    @GetMapping(value = {Url.API_JRNL_DAY_LIST_AJAX})
+    @PostMapping(value = {Url.JRNL_DIARY_REG_AJAX, Url.JRNL_DIARY_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayListAjax(
-            JrnlDayApiSearchParam searchParam,
+    public ResponseEntity<AjaxResponse> jrnlDiaryRegAjax(
+            final @Valid JrnlDiaryDto jrnlDiary,
+            final @RequestParam("postNo") @Nullable Integer key,
             final LogActvtyParam logParam,
-            final ModelMap model
+            final MultipartHttpServletRequest request,
+            final BindingResult bindingResult
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -73,13 +73,14 @@ public class JrnlDayApiController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-            Sort sort = Sort.by(Sort.Direction.ASC, "jrnlDt");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            Page<JrnlDayApiDto> jrnlDayList = jrnlDayApiService.getPageDto(searchParamMap, pageRequest);
-            ajaxResponse.setRsltList(jrnlDayList.getContent());
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            // Validation
+            if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록 및 수정 처리
+            boolean isReg = key == null;
+            JrnlDiaryDto result = isReg ? jrnlDiaryService.regist(jrnlDiary, request) : jrnlDiaryService.modify(jrnlDiary, request);
+
+            isSuccess = (result.getPostNo() != null);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
@@ -87,6 +88,7 @@ public class JrnlDayApiController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
+            logParam.setCn(jrnlDiary.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -95,18 +97,13 @@ public class JrnlDayApiController
     }
 
     /**
-     * API:: 저널 일자 상세 조회 (Ajax)
+     * 저널 일자 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @Operation(
-            summary = "저널 일자 목록 조회",
-            description = "저널 일자 목록을 조회한다."
-    )
-    @GetMapping(value = {Url.API_JRNL_DAY_DTL_AJAX})
+    @GetMapping(value = {Url.JRNL_DIARY_DTL_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayDtlAjax(
-            JrnlDayApiSearchParam searchParam,
+    public ResponseEntity<AjaxResponse> jrnlDiaryDtlAjax(
             final @RequestParam("postNo") Integer key,
             final LogActvtyParam logParam
     ) {
@@ -117,7 +114,7 @@ public class JrnlDayApiController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            JrnlDayApiDto rslt = jrnlDayApiService.getDtlDto(key);
+            JrnlDiaryDto rslt = jrnlDiaryService.getDtlDto(key);
             ajaxResponse.setRsltObj(rslt);
 
             isSuccess = (rslt.getPostNo() != null);
@@ -135,6 +132,5 @@ public class JrnlDayApiController
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
-
 
 }

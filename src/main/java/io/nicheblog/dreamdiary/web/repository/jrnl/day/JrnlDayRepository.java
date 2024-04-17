@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * JrnlDayRepository
  * <pre>
- *  꿈일자 Repository 인터페이스
+ *  꿈일자 Repository 인터페이스.
  * </pre>
  *
  * @author nichefish

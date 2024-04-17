@@ -45,7 +45,7 @@ public class JrnlDayController
     @Getter
     private final String baseUrl = Url.JRNL_DAY_PAGE;             // 기본 URL
     @Getter
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;        // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "jrnlDayService")
     private JrnlDayService jrnlDayService;

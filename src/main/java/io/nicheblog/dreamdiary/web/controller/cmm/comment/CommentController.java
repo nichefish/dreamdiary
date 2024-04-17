@@ -46,7 +46,7 @@ public class CommentController
         extends BaseControllerImpl {
 
     @Getter
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DREAM;      // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DEFAULT;      // 작업 카테고리 (로그 적재용)
 
     @Resource(name = "commentService")
     private CommentService commentService;

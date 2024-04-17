@@ -21,7 +21,7 @@ commons.tinymce = (function() {
             let options = {
                 selector: selectorStr,
                 editor_encoding: "raw",
-                height: "360px !important",
+                height: "540px !important",
                 menubar: false,
                 branding: false,
                 statusbar: false,
@@ -29,8 +29,8 @@ commons.tinymce = (function() {
                 convert_urls: false,
                 /* textpattern */
                 plugins: 'help quickbars searchreplace link autolink pageembed table lists advlist checklist emoticons hr visualchars visualblocks pagebreak code codesample',
-                toolbar1: 'undo redo | searchreplace | styles styleselect fontselect fontsizeselect | bold italic underline strikethrough | forecolor backcolor | align | visualchars visualblocks pagebreak | code codesample | help',
-                toolbar2: 'emoticons custom_image link pageembed | hr | numlist bullist checklist moreless | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+                toolbar1: 'undo redo | searchreplace | styles styleselect fontselect fontsizeselect | bold italic underline strikethrough | forecolor backcolor | align | code codesample | help',
+                toolbar2: 'emoticons custom_image link pageembed | hr | numlist bullist checklist moreless | visualchars visualblocks pagebreak | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
                 contextmenu: 'link custom_image lists table',
                 /* https://www.tiny.cloud/docs/plugins/opensource/textpattern/
                 textpattern_patterns: [

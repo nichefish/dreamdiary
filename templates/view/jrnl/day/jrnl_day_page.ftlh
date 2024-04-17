@@ -19,6 +19,7 @@
 <!--include:: script modules -->
 <#include "/view/jrnl/day/_jrnl_day_scripts.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
+<#include "/view/jrnl/diary/_jrnl_diary_scripts.ftlh">
 
 <script>
     const Page = function() {
@@ -26,7 +27,6 @@
             init: function () {
                 JrnlDay.listAjax();
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
-                JrnlDream.init();
             },
         }
     }();
@@ -58,6 +58,7 @@
 <#include "/view/jrnl/day/_jrnl_day_list_template.hbs">
 <#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
+<#include "/view/jrnl/diary/_jrnl_diary_reg_modal.ftlh">
 
 <!--include:: Aside-->
 <#include "/view/jrnl/day/_jrnl_day_aside_base.ftlh">

@@ -1,34 +1,34 @@
 <#--
-  -- 저널 꿈(jrnl_dream) : 모듈 스크립트 분리
+  -- 저널 일기(jrnl_diary) : 모듈 스크립트 분리
   -->
 
 <script>
-    const JrnlDream = (function() {
+    const JrnlDiary = (function() {
         return {
             /** form validation init */
             initValidateForm: function() {
                 /* jquery :: validation */
-                commons.validate.validateForm("#jrnlDreamRegForm", JrnlDream.regAjax);
+                commons.validate.validateForm("#jrnlDiaryRegForm", JrnlDiary.regAjax);
             },
-            /** 저널 꿈 등록 모달 팝업 호출 */
+            /** 저널 일기 등록 모달 팝업 호출 */
             regModal: function(jrnlDayNo, jrnlDt) {
                 let obj = { "jrnlDayNo": jrnlDayNo, "jrnlDt": jrnlDt };
-                commons.util.handlebarsTemplate(obj, "jrnl_dream_reg_header");
-                commons.util.handlebarsTemplate(obj, "jrnl_dream_reg", "show");
+                commons.util.handlebarsTemplate(obj, "jrnl_diary_reg_header");
+                commons.util.handlebarsTemplate(obj, "jrnl_diary_reg", "show");
 
                 /* jquery :: validation */
-                JrnlDream.initValidateForm();
+                JrnlDiary.initValidateForm();
 
                 // tinymce editor reset
                 tinymce.EditorManager.editors.splice(2, 2);     //removing second element in array.
-                delete tinymce.EditorManager.editors['tinymce_jrnlDreamCn'];     //deleting respective textarea id from array
+                delete tinymce.EditorManager.editors['tinymce_jrnlDiaryCn'];     //deleting respective textarea id from array
                 if (commons.util.isNotEmpty(tinyMCE.activeEditor)) tinyMCE.activeEditor.setContent("");
-                commons.tinymce.init('#tinymce_jrnlDreamCn', commons.tinymce.imgRegFunc);
+                commons.tinymce.init('#tinymce_jrnlDiaryCn', commons.tinymce.imgRegFunc);
             },
             /** 이관 submit */
             submit: function() {
-                tinymce.get("tinymce_jrnlDreamCn").save();
-                $("#jrnlDreamRegForm").submit();
+                tinymce.get("tinymce_jrnlDiaryCn").save();
+                $("#jrnlDiaryRegForm").submit();
             },
             /** 등록 */
             regAjax: function() {
@@ -37,8 +37,8 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${Url.JRNL_DREAM_REG_AJAX!}";
-                    let ajaxData = new FormData($("#jrnlDreamRegForm")[0]);
+                    const url = "${Url.JRNL_DIARY_REG_AJAX!}";
+                    let ajaxData = new FormData($("#jrnlDiaryRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -49,7 +49,7 @@
             },
             /** 저널 꿈 수정 모달 팝업 호출 */
             mdfModal: function(postNo) {
-                const url = "${Url.JRNL_DREAM_DTL_AJAX!}";
+                const url = "${Url.JRNL_DIARY_DTL_AJAX!}";
                 let ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
                     if (!res.rslt) {
@@ -62,13 +62,13 @@
                     commons.util.handlebarsTemplate(rsltObj, "jrnl_dream_reg", "show");
 
                     /* jquery :: validation */
-                    JrnlDream.initValidateForm();
+                    JrnlDiary.initValidateForm();
 
                     // tinymce editor reset
                     tinymce.EditorManager.editors.splice(2, 2);     //removing second element in array.
-                    delete tinymce.EditorManager.editors['tinymce_jrnlDreamCn'];     //deleting respective textarea id from array
+                    delete tinymce.EditorManager.editors['tinymce_jrnlDiaryCn'];     //deleting respective textarea id from array
                     if (commons.util.isNotEmpty(tinyMCE.activeEditor)) tinyMCE.activeEditor.setContent("");
-                    commons.tinymce.init('#tinymce_jrnlDreamCn', commons.tinymce.imgRegFunc);
+                    commons.tinymce.init('#tinymce_jrnlDiaryCn', commons.tinymce.imgRegFunc);
                 });
             },
         }

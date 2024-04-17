@@ -58,6 +58,9 @@ public class JrnlDreamDto
     @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
 
+    /** 저널 일자 */
+    private String jrnlDt;
+
     @Override
     public Integer getKey() {
         return this.postNo;

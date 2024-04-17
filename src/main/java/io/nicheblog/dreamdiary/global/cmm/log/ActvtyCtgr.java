@@ -29,8 +29,11 @@ public enum ActvtyCtgr {
     ADMIN("관리"),
     CACHE("캐시"),
 
+    // NOTICE
     NOTICE("공지사항"),
-    DREAM("꿈 관리"),
+
+    // JRNL
+    JRNL("꿈 관리"),
     BOARD_POST("일반게시판"),
 
     VCATN_PAPR("휴가계획서"),
@@ -44,6 +47,7 @@ public enum ActvtyCtgr {
     
     TAG("태그"),
 
+    // USER
     USER("사용자 관리"),
     USER_MY("내 정보 관리"),
     USER_REQST("신규계정 신청"),
