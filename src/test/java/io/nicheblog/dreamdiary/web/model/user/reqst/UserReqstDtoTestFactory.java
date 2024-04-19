@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.web.model.user.reqst;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
@@ -21,6 +23,8 @@ import java.util.List;
 @UtilityClass
 @ActiveProfiles("test")
 public class UserReqstDtoTestFactory {
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * 사용자 신청 정보 Dto 객체 생성
@@ -57,5 +61,13 @@ public class UserReqstDtoTestFactory {
         dto.setProfl(profl);
         dto.setEmplym(emplym);
         return dto;
+    }
+
+    /**
+     * 사용자 계정 신청 JSON 문자열 생성
+     */
+    public static String createUserReqstJson() throws JsonProcessingException {
+        UserReqstDto userReqstDto = createUserReqst();
+        return objectMapper.writeValueAsString(userReqstDto);
     }
 }
