@@ -20,7 +20,7 @@ import java.io.File;
 public class BaseControllerTestHelper {
 
     /** 뷰 템플릿 파일 존재여부 체크 */
-    public boolean viewExists(String viewName) {
+    public boolean viewFileExists(String viewName) {
         log.info("viewName: {}", viewName);
         String viewPath = "templates" + viewName + ".ftlh";
         File file = new File(viewPath);
