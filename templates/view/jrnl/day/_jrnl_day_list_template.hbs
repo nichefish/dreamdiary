@@ -43,6 +43,46 @@
                 </div>
             </div>
             <div class="row jrnl-dreams p-5">
+                {{#if (exists jrnlDiaryList)}}
+                    저널 일기
+                {{/if}}
+                {{#each jrnlDiaryList}}
+                    <div class="row jrnl-dream">
+                        <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between" style="width:85px;">
+                            <div>
+                                # {{idx}}
+                            </div>
+                        </div>
+                        <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-start h-75" style="width:10px;">&nbsp;</div>
+                        <div class="col py-3 jrnl-dream-cn">
+                            {{{cn}}}
+                        </div>
+                        <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-start h-75" style="width:10px;">&nbsp;</div>
+                        <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
+                            <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                    onclick="JrnlDream.mdfModal({{postNo}}, '{{#if (exists jrnlDt)}}{{jrnlDt}}{{else}}{{aprxmtDt}}{{/if}}');"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
+                                <i class="bi bi-pencil-square p-0"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-light-danger btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                    onclick="JrnlDream.delAjax({{postNo}});"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.del"/>">
+                                <i class="bi bi-trash p-0"></i>
+                            </button>
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="row jrnl-dream">
+                        <div class="col-1 text-center" style="width:85px;">-</div>
+                        <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-start h-75" style="width:10px;">&nbsp;</div>
+                        <div class="col-10 py-3 jrnl-dream-cn">
+                            저널 일지 정보가 없습니다.
+                        </div>
+                    </div>
+                {{/each}}
+                {{#if (exists jrnlDiaryList)}}
+                    저널 일기
+                {{/if}}
                 {{#each jrnlDreamList}}
                     <div class="row jrnl-dream">
                         <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between" style="width:85px;">

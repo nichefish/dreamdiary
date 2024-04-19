@@ -67,7 +67,7 @@
                     // tinymce editor reset
                     tinymce.EditorManager.editors.splice(2, 2);     //removing second element in array.
                     delete tinymce.EditorManager.editors['tinymce_jrnlDreamCn'];     //deleting respective textarea id from array
-                    if (commons.util.isNotEmpty(tinyMCE.activeEditor)) tinyMCE.activeEditor.setContent("");
+                    if (commons.util.isNotEmpty(tinyMCE.activeEditor)) tinyMCE.activeEditor.setContent(rsltObj.cn);
                     commons.tinymce.init('#tinymce_jrnlDreamCn', commons.tinymce.imgRegFunc);
                 });
             },

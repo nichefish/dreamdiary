@@ -54,9 +54,8 @@ public class JrnlDayDto
 
     /** 저널 꿈 목록 */
     private List<JrnlDreamDto> jrnlDreamList;
-
     /** 저널 일기 목록 */
-    private List<JrnlDiaryDto> jrnlDairyList;
+    private List<JrnlDiaryDto> jrnlDiaryList;
 
     @Override
     public Integer getKey() {

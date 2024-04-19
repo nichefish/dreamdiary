@@ -4,10 +4,16 @@ import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntityTestFactory;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntityTestFactory;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntityTestFactory;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDtoTestFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -86,7 +92,7 @@ class JrnlDayMapstructTest {
     }
 
     /**
-     * toDto 검증
+     * toDto 검증 :: 대략일자
      */
     @Test
     void toDto_checkAprxmtDt() throws Exception {
@@ -104,5 +110,45 @@ class JrnlDayMapstructTest {
         assertNotNull(jrnlDayEntity);
         assertEquals(jrnlDayDto.getDtUnknownYn(), jrnlDayEntity.getDtUnknownYn());
         assertEquals(jrnlDayDto.getAprxmtDt(), DateUtils.asStr(jrnlDayEntity.getAprxmtDt(), DatePtn.DATE));
+    }
+
+    /**
+     * toDto 검증 :: dreamList
+     */
+    @Test
+    void toDto_checkDreamList() throws Exception {
+        // Given::
+        JrnlDayEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
+        JrnlDreamEntity aa = JrnlDreamEntityTestFactory.createJrnlDream();
+        JrnlDreamEntity bb = JrnlDreamEntityTestFactory.createJrnlDream();
+        jrnlDayEntity.setJrnlDreamList(List.of(aa, bb));
+
+        // When::
+        JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(jrnlDayDto);
+        assertNotNull(jrnlDayDto.getJrnlDreamList());
+    }
+
+    /**
+     * toDto 검증 :: diaryList
+     */
+    @Test
+    void toDto_checkDiaryList() throws Exception {
+        // Given::
+        JrnlDayEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
+        JrnlDiaryEntity aa = JrnlDiaryEntityTestFactory.createJrnlDiary();
+        JrnlDiaryEntity bb = JrnlDiaryEntityTestFactory.createJrnlDiary();
+        jrnlDayEntity.setJrnlDiaryList(List.of(aa, bb));
+
+        // When::
+        JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(jrnlDayDto);
+        assertNotNull(jrnlDayDto.getJrnlDiaryList());
     }
 }

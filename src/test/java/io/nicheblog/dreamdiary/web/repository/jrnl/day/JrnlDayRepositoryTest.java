@@ -5,6 +5,12 @@ import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntityTestFactory;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntityTestFactory;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntityTestFactory;
+import io.nicheblog.dreamdiary.web.repository.jrnl.diary.JrnlDiaryRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.dream.JrnlDreamRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +21,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+
+import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -40,6 +48,10 @@ class JrnlDayRepositoryTest {
     private TestEntityManager testEntityManager;
     @Autowired
     private JrnlDayRepository jrnlDayRepository;
+    @Autowired
+    private JrnlDreamRepository jrnlDreamRepository;
+    @Autowired
+    private JrnlDiaryRepository jrnlDiaryRepository;
 
     /**
      * regist 테스트
@@ -61,5 +73,59 @@ class JrnlDayRepositoryTest {
         assertNotNull(rslt.getRegDt());
         assertNotNull(rslt.getRegstrId());
         assertEquals(rslt.getRegstrId(), "test_user");
+    }
+
+    /**
+     * jrnlDream subentity select 테스트
+     * 1. 메인엔티티 등록, 2. 서브엔티티 등록 후 3. 메인엔티티 재조회
+     */
+    @Test
+    @Transactional
+    public void testGetDreamList() throws Exception {
+        // Given::
+        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.createJrnlDay();
+        jrnlDay.setJrnlDt(DateUtils.asDate("2000-01-01"));
+        JrnlDayEntity rslt = jrnlDayRepository.saveAndFlush(jrnlDay);
+        Integer rsltId = rslt.getPostNo();
+
+        // When::
+        // 저널 꿈 regist
+        JrnlDreamEntity jrnlDream = JrnlDreamEntityTestFactory.createJrnlDream();
+        jrnlDream.setJrnlDayNo(rsltId);
+        jrnlDreamRepository.saveAndFlush(jrnlDream);
+        jrnlDayRepository.refresh(rslt);
+
+        // Then::
+        assertNotNull(rslt);
+        assertNotNull(rsltId);
+        // jrnlDream
+        assertNotNull(rslt.getJrnlDreamList());
+    }
+
+    /**
+     * jrnlDiary subentity select 테스트
+     * 1. 메인엔티티 등록, 2. 서브엔티티 등록 후 3. 메인엔티티 재조회
+     */
+    @Test
+    @Transactional
+    public void testGetDiaryList() throws Exception {
+        // Given::
+        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.createJrnlDay();
+        jrnlDay.setJrnlDt(DateUtils.asDate("2000-01-01"));
+        JrnlDayEntity rslt = jrnlDayRepository.saveAndFlush(jrnlDay);
+        Integer rsltId = rslt.getPostNo();
+
+        // When::
+        // 저널 꿈 regist
+        JrnlDiaryEntity jrnlDiary = JrnlDiaryEntityTestFactory.createJrnlDiary();
+        jrnlDiary.setJrnlDayNo(rsltId);
+        jrnlDiaryRepository.saveAndFlush(jrnlDiary);
+        jrnlDayRepository.refresh(rslt);
+
+        // Then::
+        assertNotNull(rslt);
+        assertNotNull(rsltId);
+        // jrnlDiary
+        assertNotNull(rslt.getJrnlDiaryList());
     }
 }
