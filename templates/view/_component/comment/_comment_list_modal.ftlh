@@ -32,7 +32,7 @@
             <!-- 영역:: 모달 헤더 -->
             <@component.modal_header "댓글 목록 조회" />
             <!-- 영역:: 모달 내용 -->
-            <div class="modal-body modal-mbl-body mb-5">
+            <div class="modal-body modal-mbl-body my-5">
                 <div class="table-responsive-sm">
                     <div class="row" id="comment_list_div">
                         <!-- handlebars template goes in here -->

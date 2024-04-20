@@ -38,7 +38,7 @@ class JrnlDayMapstructTest {
     void toEntity_checkBasic() throws Exception {
         // Given::
         JrnlDayDto jrnlDayDto = JrnlDayDtoTestFactory.createJrnlDayDtlDto();
-        jrnlDayDto.setJrnlDt("2020-01-01");
+        jrnlDayDto.setJrnlDt("2000-01-01");
 
         // When::
         JrnlDayEntity jrnlDayEntity = jrnlDayMapstruct.toEntity(jrnlDayDto);
@@ -58,7 +58,7 @@ class JrnlDayMapstructTest {
         JrnlDayDto jrnlDayDto = JrnlDayDtoTestFactory.createJrnlDayDtlDto();
         // 대략일자 세팅
         jrnlDayDto.setDtUnknownYn("Y");
-        jrnlDayDto.setAprxmtDt("2020-01-01");
+        jrnlDayDto.setAprxmtDt("2000-01-01");
 
         // When::
         JrnlDayEntity jrnlDayEntity = jrnlDayMapstruct.toEntity(jrnlDayDto);
@@ -103,7 +103,7 @@ class JrnlDayMapstructTest {
         JrnlDayEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
         // 대략일자 세팅
         jrnlDayEntity.setDtUnknownYn("Y");
-        jrnlDayEntity.setAprxmtDt(DateUtils.asDate("2020-01-01"));
+        jrnlDayEntity.setAprxmtDt(DateUtils.asDate("2000-01-01"));
 
         // When::
         JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);

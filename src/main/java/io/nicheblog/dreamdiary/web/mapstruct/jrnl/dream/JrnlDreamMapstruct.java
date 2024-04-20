@@ -29,7 +29,7 @@ public interface JrnlDreamMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "jrnlDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
+    @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
     JrnlDreamDto toDto(final JrnlDreamEntity entity) throws Exception;
 
     /**
@@ -37,7 +37,7 @@ public interface JrnlDreamMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "jrnlDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
+    @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
     JrnlDreamDto toListDto(final JrnlDreamEntity entity) throws Exception;
 
     /**

@@ -33,7 +33,7 @@ class JrnlDiaryMapstructTest {
     void toDto_checkBasic() throws Exception {
         // Given::
         JrnlDayEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
-        jrnlDayEntity.setJrnlDt(DateUtils.asDate("2020-01-01"));
+        jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));
 
         JrnlDiaryEntity jrnlDiaryEntity = JrnlDiaryEntityTestFactory.createJrnlDiary();
         jrnlDiaryEntity.setJrnlDay(jrnlDayEntity);
@@ -44,6 +44,6 @@ class JrnlDiaryMapstructTest {
         // Then::
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
         assertNotNull(jrnlDiaryDto);
-        assertEquals(jrnlDiaryDto.getJrnlDt(), DateUtils.asStr(jrnlDiaryEntity.getJrnlDay().getJrnlDt(), DatePtn.DATE));
+        assertEquals(jrnlDiaryDto.getStdrdDt(), DateUtils.asStr(jrnlDiaryEntity.getJrnlDay().getJrnlDt(), DatePtn.DATE));
     }
 }

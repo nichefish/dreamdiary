@@ -9,7 +9,7 @@
             <!-- 영역:: 모달 헤더 -->
             <@component.modal_header "저널 일자 저장" />
             <!-- 영역:: 모달 내용 -->
-            <div class="modal-body modal-mbl-body mb-5">
+            <div class="modal-body modal-mbl-body my-5">
                 <div class="table-responsive-sm">
                     <form name="jrnlDayRegForm" id="jrnlDayRegForm" class="form" enctype="multipart/form-data">
                         <div id="jrnl_day_reg_div">

@@ -135,7 +135,7 @@
             <!-- 영역:: 모달 헤더 -->
             <@component.modal_header "파일시스템 메타 정보 저장" />
             <!-- 영역:: 모달 내용 -->
-            <div class="modal-body modal-mbl-body mb-5">
+            <div class="modal-body modal-mbl-body my-5">
                 <div class="table-responsive-sm">
                     <form class="form" name="flsysMetaRegForm" id="flsysMetaRegForm">
                         <div id="flsys_meta_reg_div">

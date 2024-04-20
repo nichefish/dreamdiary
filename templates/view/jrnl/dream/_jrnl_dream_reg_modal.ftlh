@@ -9,7 +9,7 @@
             <!-- 영역:: 모달 헤더 -->
             <@component.modal_header "저널 꿈 저장" />
             <!-- 영역:: 모달 내용 -->
-            <div class="modal-body modal-mbl-body mb-5">
+            <div class="modal-body modal-mbl-body my-5">
                 <div class="table-responsive-sm">
                     <form name="jrnlDreamRegForm" id="jrnlDreamRegForm" class="form" enctype="multipart/form-data">
                         <div id="jrnl_dream_reg_header_div">
@@ -17,10 +17,10 @@
                         </div>
                         <!--begin::Row-->
                         <div class="row mb-4">
-                            <div class="col-2">
-                                <div class="fs-6 col-form-label text-center fw-bold">
-                                    <label for="tinymce_infrEventInvsCn">조사내용<em class="text-danger">*</em></label>
-                                </div>
+                            <div class="col-12">
+                                <label class="d-flex align-items-center mb-2" for="title">
+                                    <span class="text-gray-700 fs-6 fw-bolder">내용</span>
+                                </label>
                             </div>
                             <div class="col-12">
                                 <textarea name="cn" id="tinymce_jrnlDreamCn" class="form-control form-control-solid h-100px required"></textarea>

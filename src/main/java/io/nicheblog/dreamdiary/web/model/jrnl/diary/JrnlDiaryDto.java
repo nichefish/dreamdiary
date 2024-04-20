@@ -43,6 +43,8 @@ public class JrnlDiaryDto
 
     /** 저널 일자 번호 */
     private Integer jrnlDayNo;
+    /** 저널 기준일자 */
+    private String stdrdDt;
     /** 순번 */
     private Integer idx;
 
@@ -50,22 +52,9 @@ public class JrnlDiaryDto
     @Builder.Default
     private String editComptYn = "N";
 
-    /** 저널 일자 */
-    private String jrnlDt;
-
     @Override
     public Integer getKey() {
         return this.postNo;
-    }
-
-    /* ----- */
-
-    public static class DTL extends JrnlDiaryDto {
-
-    }
-
-    public static class LIST extends JrnlDiaryDto {
-        //
     }
 
     /* ----- */

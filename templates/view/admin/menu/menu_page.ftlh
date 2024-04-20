@@ -11,9 +11,6 @@
 
 <@layout.layout toolbar=toolbar!"">
 
-<!--include:: script modules -->
-<#include "/view/admin/menu/_menu_scripts.ftlh">
-
 <link rel="stylesheet" type="text/css" href="/lib/jstree/css/style.min.css?${releaseDate!}" />
 <script type="text/javascript" src="/lib/jstree/js/jstree.min.js?${releaseDate!}"></script>
 <script type="text/javascript" src="/js/commons/commons-jstree.js?${releaseDate!}"></script>
@@ -40,11 +37,11 @@
                 // 메인 메뉴 그리기
                 const url = "${Url.MENU_MAIN_LIST_AJAX!}";
                 commons.util.blockUIAjax(url, 'get', null, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let mainMenuList = res.rsltList;
+                    const mainMenuList = res.rsltList;
                     if (!Array.isArray(mainMenuList) || mainMenuList.length < 1) return;
                     mainMenuList.forEach(function(mainMenu) {
                         commons.util.handlebarsAppend(mainMenu, "menu_main_card");
@@ -70,7 +67,7 @@
                 // 부서 조회
                 // let deptUrl = "/manage/user/totalOrgnztChartAjax";
                 // commons.util.blockUIAjax(deptUrl, "get", {}, function(res) {
-                //     if (!res.result) return;
+                //     if (!res.rslt) return;
                 //     $(jstreeContainer).jstree(true).settings.core.data = res.rsltList;
                 //     $(jstreeContainer).jstree(true).settings.core.expand_selected_onload = true;
                 //     $(jstreeContainer).jstree(true).refresh(false, true);

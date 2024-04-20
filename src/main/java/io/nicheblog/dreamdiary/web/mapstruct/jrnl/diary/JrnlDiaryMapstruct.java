@@ -29,7 +29,7 @@ public interface JrnlDiaryMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "jrnlDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
+    @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
     JrnlDiaryDto toDto(final JrnlDiaryEntity entity) throws Exception;
 
     /**
@@ -37,7 +37,7 @@ public interface JrnlDiaryMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "jrnlDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
+    @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
     JrnlDiaryDto toListDto(final JrnlDiaryEntity entity) throws Exception;
 
     /**

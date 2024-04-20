@@ -55,8 +55,8 @@
                     <!--begin:Menu sub-->
                     <div class="menu-sub menu-sub-accordion">
                         <@menu.outer_menu siteMenu=SiteMenu.ADMIN_PAGE />
+                        <@menu.outer_menu siteMenu=SiteMenu.MENU />
                         <@menu.inner_menu siteMenu=SiteMenu.LGN_POLICY />
-                        <@menu.inner_menu siteMenu=SiteMenu.MENU />
                         <@menu.inner_menu siteMenu=SiteMenu.BOARD_DEF />
                         <@menu.inner_menu siteMenu=SiteMenu.TMPLAT />
                         <@menu.inner_menu siteMenu=SiteMenu.POPUP />

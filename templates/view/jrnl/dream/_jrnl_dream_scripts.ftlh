@@ -11,8 +11,8 @@
                 commons.validate.validateForm("#jrnlDreamRegForm", JrnlDream.regAjax);
             },
             /** 저널 꿈 등록 모달 팝업 호출 */
-            regModal: function(jrnlDayNo, jrnlDt) {
-                let obj = { "jrnlDayNo": jrnlDayNo, "jrnlDt": jrnlDt };
+            regModal: function(jrnlDayNo, stdrdDt) {
+                let obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
                 commons.util.handlebarsTemplate(obj, "jrnl_dream_reg_header");
                 commons.util.handlebarsTemplate(obj, "jrnl_dream_reg", "show");
 

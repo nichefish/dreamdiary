@@ -10,7 +10,7 @@
             <!-- 영역:: 모달 헤더 -->
             <@component.modal_header "사이트맵" />
             <!-- 영역:: 모달 내용 -->
-            <div class="modal-body modal-mbl-body mb-5">
+            <div class="modal-body modal-mbl-body my-5">
                 <div id="sitemap_div">
                     <div class="row mt-2 mb-6">
                         <div class="col-4">
@@ -51,11 +51,11 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <div class="cursor-pointer <#if (listUrl! == SiteUrl.NOTICE_LIST!)>fw-bold border-bottom</#if>"
-                                    onclick="location.replace('${SiteUrl.NOTICE_LIST!}')">
+                                <div class="cursor-pointer <#if (listUrl! == Url.NOTICE_LIST!)>fw-bold border-bottom</#if>"
+                                    onclick="location.replace('${Url.NOTICE_LIST!}')">
                                     공지사항
                                 </div>
-                                <#if (listUrl! == SiteUrl.NOTICE_LIST!)>
+                                <#if (listUrl! == Url.NOTICE_LIST!)>
                                     <div class="ms-2 cursor-help blink-fast"
                                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="현재 위치입니다.">
                                         <i class="bi bi-pin-map-fill blink-fast"></i>
@@ -70,13 +70,13 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <div class="<#if (listUrl! == SiteUrl.BOARD_POST_LIST!)>fw-bold border-bottom</#if>">
+                                <div class="<#if (listUrl! == Url.BOARD_POST_LIST!)>fw-bold border-bottom</#if>">
                                     일반게시판
                                 </div>
                             </div>
                             <#list boardDefList![] as boardDef>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="${SiteUrl.BOARD_POST_LIST!}?boardCd=${boardDef.boardCd!}">
+                                    <a class="menu-link" href="${Url.BOARD_POST_LIST!}?boardCd=${boardDef.boardCd!}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>

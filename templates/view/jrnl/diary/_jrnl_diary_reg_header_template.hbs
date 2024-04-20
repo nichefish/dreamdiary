@@ -8,21 +8,32 @@
     <input type="hidden" name="jrnlDayNo" value="{{jrnlDayNo}}">
 
     <!--begin::Input group-->
-    <div class="row row-cols-lg-2 mb-4">
-        <div class="col-xl-2 col-2 text-center">
-            <label class="col-form-label fs-6 fw-bold">저널 일자</label>
+    <div class="row d-flex mb-8">
+        <div class="col-2">
+            <label class="d-flex align-items-center mb-2" for="title">
+                <span class="text-gray-700 fs-6 fw-bolder">저널 일자</span>
+            </label>
         </div>
-        <div class="col-xl-3 col-5 col-form-label">
-            <i class="bi bi-calendar"></i> {{jrnlDt}}
+        <div class="col-2 fs-6">
+            <i class="bi bi-calendar3"></i> {{stdrdDt}}
         </div>
     </div>
     <!--begin::Input group-->
-    <div class="row row-cols-lg-2 mb-4">
-        <div class="col-xl-2 col-2 text-center">
-            <label class="col-form-label fs-6 fw-bold mb-2">제목</label>
+    <div class="row d-flex mb-8">
+        <div class="col-12">
+            <label class="d-flex align-items-center mb-2" for="title">
+                <span class="text-gray-700 fs-6 fw-bolder">제목</span>
+                <span class="text-gray-500 fs-9">(최대 50자)</span>
+            </label>
         </div>
-        <div class="col-xl-10 col-5">
-            <input class="form-control form-control-solid" name="title" id="title"  value="{{title}}" placeholder="제목" />
+        <div class="col-lg-2">
+            <select name="ctgrCd" id="ctgrCd" class="form-select form-select-solid">
+                <option value="">--글분류--</option>
+            </select>
+        </div>
+        <div class="col-lg-10">
+            <input type="text" class="form-control required" name="title" maxlength='50' id="title" value="{{title}}" placeholder="제목" />
+            <div id="title_valid_span"></div>
         </div>
     </div>
 </script>

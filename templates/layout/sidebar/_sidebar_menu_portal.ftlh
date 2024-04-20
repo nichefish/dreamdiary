@@ -30,7 +30,7 @@
                 <@menu.noSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.NOTICE />
 
                 <!-- JRNL -->
-                <@menu.extendedSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.JRNL />
+                <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.JRNL />
 
                 <!-- BOARD -->
                 <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.BOARD />

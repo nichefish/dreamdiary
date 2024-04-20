@@ -45,6 +45,8 @@ public class JrnlDreamDto
 
     /** 저널 일자 번호 */
     private Integer jrnlDayNo;
+    /** 저널 기준일자 */
+    private String stdrdDt;
     /** 순번 */
     private Integer idx;
 
@@ -57,9 +59,6 @@ public class JrnlDreamDto
     /** 꿈꾼이(타인) 이름 */
     @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
-
-    /** 저널 일자 */
-    private String jrnlDt;
 
     @Override
     public Integer getKey() {
