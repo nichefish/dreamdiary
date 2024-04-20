@@ -1,36 +1,39 @@
 <#--
-  -- 물품구매/경조사비 신청(exptr_reqst) > 상세 화면
-  -->
+ * 물품구매/경조사비 신청(exptr_reqst) > 상세 화면
+ -->
 
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 
-<!--include:: script modules -->
+<#--include::script modules-->
 <#include "/view/exptr/reqst/_exptr_reqst_scripts.ftlh">
 
 <div class="card post">
-    <!--begin::Question-->
-    <div class="mb-0">
-        <!-- 게시물post 헤더 제목 영역 -->
-        <@component.post_title post />
+    <#--begin::Card body-->
+    <div class="card-body">
+        <#--begin::title-->
+        <div class="mb-0">
+            <!-- 게시물post 헤더 제목 영역 -->
+            <@component.post_title post />
 
-        <!-- 게시물post 헤더 메타 영역 -->
-        <@component.post_meta_preview post />
+            <!-- 게시물post 헤더 메타 영역 -->
+            <@component.post_meta_preview post />
 
-        <div class="separator separator-dashed border-gray-300 my-8"></div>
+            <div class="separator separator-dashed border-gray-300 my-8"></div>
 
-        <!--begin::cn-->
-        <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-            ${post.cn?no_esc}
+            <#--begin::cn-->
+            <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
+                ${post.cn?no_esc}
+            </div>
+
+            <div class="separator separator-dashed border-gray-300 mb-8"></div>
+
+            <!-- #include: 첨부파일 표시 영역 -->
+            <#include "/view/_component/atch_file/_atch_file_dtl_area.ftlh">
         </div>
-
-        <div class="separator separator-dashed border-gray-300 mb-8"></div>
-
-        <!-- #include: 첨부파일 표시 영역 -->
-        <#include "/view/_component/atch_file/_atch_file_dtl_area.ftlh">
-
     </div>
+
     <div class="separator separator-dashed border-gray-300 my-8"></div>
 
     <!-- 열람자 표시 영역 -->
@@ -65,20 +68,20 @@
                 </div>
             </div>
         </div>
-        <!--end:Form-->
-        <!--end::Card body-->
-        <!--begin::Card footer-->
         <div class="separator separator-dashed border-gray-300 my-8"></div>
     </#if>
 
-    <!-- 버튼 영역 -->
-    <div class="d-flex justify-content-end">
-        <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_modify "ExptrReqst.mdfForm();" post isMngr />
-        <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "ExptrReqst.delAjax();" post isMngr />
-        <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "ExptrReqst.list();" />
+    <!--begin::Card footer-->
+    <div class="card-footer">
+        <!-- 버튼 영역 -->
+        <div class="d-flex justify-content-end">
+            <!-- 버튼 :: 수정하기 -->
+            <@component.btn_post_modify "ExptrReqst.mdfForm();" post isMngr />
+            <!-- 버튼 :: 삭제하기 -->
+            <@component.btn_post_delete "ExptrReqst.delAjax();" post isMngr />
+            <!-- 버튼 :: 목록으로 가기 -->
+            <@component.btn_post_toList "ExptrReqst.list();" />
+        </div>
     </div>
 
     <!-- 댓글 영역 -->

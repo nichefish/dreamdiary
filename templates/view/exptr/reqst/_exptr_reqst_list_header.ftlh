@@ -1,7 +1,7 @@
 <#--
-  -- 물품구매/경조사비 신청(exptr_reqst) > 목록 툴바 Header
-  -- @included_in : exptr_reqst_list
-  -->
+ * 물품구매/경조사비 신청(exptr_reqst) > 목록 툴바 Header
+ * @included_in : exptr_reqst_list
+ -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
@@ -37,4 +37,3 @@
         <@component.btn_header_xlsx_download "ExptrReqst.xlsxDownload();" />
     </div>
 </form>
-<!--end::Header-->

@@ -10,14 +10,14 @@
                 /* jquery :: validation */
                 $("#exptrReqstRegForm").validate({
                     submitHandler: function() {
-                        if (Page.submitMode === "preview") {
+                        if (ExptrReqst.submitMode === "preview") {
                             const popupNm = "preview";
                             const options = 'width=1280,height=1440,top=0,left=270';
                             commons.util.popup("", popupNm, options);
                             let popupUrl = "${Url.EXPTR_REQST_REG_PREVIEW_POP!}";
                             $("#exptrReqstRegForm").attr("action", popupUrl).attr("target", popupNm);
                             return true;
-                        } else if (Page.submitMode === "submit") {
+                        } else if (ExptrReqst.submitMode === "submit") {
                             $("#exptrReqstRegForm").removeAttr("action");
                             Swal.fire({
                                 text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
