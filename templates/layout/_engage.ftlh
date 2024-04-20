@@ -5,7 +5,7 @@
  -->
 
 <div class="app-engage" id="kt_app_engage">
-    <!--begin::Prebuilts toggle-->
+    <#--begin::Prebuilts toggle-->
     <a href="https://preview.keenthemes.com/metronic8" target="_blank" class="app-engage-btn hover-dark">
         <i class="ki-duotone ki-abstract-41 fs-1 pt-1 mb-2">
             <span class="path1"></span>
@@ -15,7 +15,7 @@
     </a>
     <!--end::Prebuilts toggle-->
 
-    <!--begin::Get help-->
+    <#--begin::Get help-->
     <a href="https://devs.keenthemes.com" target="_blank" class="app-engage-btn hover-primary">
         <i class="ki-duotone ki-like-shapes fs-1 pt-1 mb-2">
             <span class="path1"></span>
@@ -25,7 +25,7 @@
     </a>
     <!--end::Get help-->
 
-    <!--begin::Prebuilts toggle-->
+    <#--begin::Prebuilts toggle-->
     <a href="https://1.envato.market/EA4JP" target="_blank" class="app-engage-btn hover-success">
         <i class="ki-duotone ki-basket fs-2 pt-1 mb-2">
             <span class="path1"></span>
