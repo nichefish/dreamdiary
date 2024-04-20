@@ -17,10 +17,10 @@ REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES 
 -- 필수 :: 수정권한 분류코드 추가
 REPLACE INTO CMM_CL_CD (cl_cd, cl_cd_nm, cl_cd_dc) VALUES ('MDFABLE_CD', '수정권한', '수정권한 코드');
 -- 필수 :: 수정권한 상세코드 추가
-REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'REGSTR', '등록자', '등록자', '1');
-REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'MNGR', '관리자', '관리자', '2');
-REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'USER', '사용자', '사용자', '3');
-REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'ALL', '전체', '전체', '99');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'REGSTR', '등록자', '등록자만 수정 가능', '1');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'MNGR', '관리자', '관리자만 수정 가능', '2');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'USER', '사용자', '사용자만 수정 가능', '3');
+REPLACE INTO CMM_DTL_CD (cl_cd, dtl_cd, dtl_cd_nm, dtl_cd_dc, sort_ordr) VALUES ('MDFABLE_CD', 'ALL', '전체', '전체 수정 가능', '99');
 
 -- -----------------------
 

@@ -104,7 +104,7 @@ commons.tinymce = (function() {
                     let ajaxData = new FormData($("#tinymceImageForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         if (commons.util.isNotEmpty(res.message)) alert(res.message);
-                        if (res.result === true) {
+                        if (res.rslt) {
                             let fileInfo = res.rsltObj;
                             let imgTag = "<img src='" + fileInfo.url + "' data-mce-src='" + fileInfo.url + "' data-originalFileName='" + fileInfo.orgnFileNm + "' >";
                             tinymce.execCommand('mceInsertContent', true, imgTag);

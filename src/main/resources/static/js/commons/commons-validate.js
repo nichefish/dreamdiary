@@ -45,10 +45,10 @@ commons.validate = (function() {
         /** 정규식: 숫자 및 영문 대소문자 빼고 나머지 */
         nonEngNumRegex: /[^A-Za-z0-9]/g,
 
-        /** 정규식: 숫자 및 영문 대문자 언더바 (코드 정보에 사용) */
-        cdRegex: /[^A-Z0-9_]/g,
-        /** 정규식: 숫자 및 영문 대문자 언더바 빼고 나머지 (코드 정보에 사용) */
-        nonCdRegex: /[^A-Z0-9_]/g,
+        /** 정규식: 숫자 및 영문 대소문자 언더바 (코드 정보에 사용) */
+        cdRegex: /[^A-Za-z0-9_]/g,
+        /** 정규식: 숫자 및 영문 대소문자 언더바 빼고 나머지 (코드 정보에 사용) */
+        nonCdRegex: /[^A-Za-z0-9_]/g,
 
         /** 정규식: IP주소(v4) */
         ipv4regex: /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
@@ -78,7 +78,7 @@ commons.validate = (function() {
          * 정규식에 해당시 공백처리 (onkeyup)
          * @param: selectorStr, regex
          */
-        replaceBlankRegex: function (selectorStr, regex) {
+        replaceBlankIfMatches: function (selectorStr, regex) {
             if ($(selectorStr) === undefined) return;
             commons.validate.noSpaces(selectorStr);
             $(selectorStr).on("keyup", function() {
@@ -91,7 +91,7 @@ commons.validate = (function() {
          * @param: selectorStr
          */
         onlyNum: function (selectorStr) {
-            return commons.validate.replaceBlankRegex(selectorStr, commons.validate.nonNumRegex);
+            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonNumRegex);
         },
 
         /**
@@ -99,7 +99,7 @@ commons.validate = (function() {
          * @param: selectorStr
          */
         onlyDt: function (selectorStr) {
-            return commons.validate.replaceBlankRegex(selectorStr, commons.validate.nonDtRegex);
+            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonDtRegex);
         },
 
         /**
@@ -107,7 +107,7 @@ commons.validate = (function() {
          * @param: selectorStr
          */
         onlyNumAndDot: function (selectorStr) {
-            return commons.validate.replaceBlankRegex(selectorStr, commons.validate.nonNumAndDotRegex);
+            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonNumAndDotRegex);
         },
 
         /**
@@ -115,7 +115,7 @@ commons.validate = (function() {
          * @param: selectorStr
          */
         onlyNumAndComma: function (selectorStr) {
-            return commons.validate.replaceBlankRegex(selectorStr, commons.validate.nonNumAndCommaRegex);
+            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonNumAndCommaRegex);
         },
 
         /**
@@ -123,7 +123,7 @@ commons.validate = (function() {
          * @param: selectorStr
          */
         onlyEngNum: function (selectorStr) {
-            return commons.validate.replaceBlankRegex(selectorStr, commons.validate.nonEngNumRegex);
+            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonEngNumRegex);
         },
 
         /**
@@ -131,7 +131,7 @@ commons.validate = (function() {
          * @param: selectorStr
          */
         replaceIpv4Cidr: function (selectorStr) {
-            commons.validate.replaceBlankRegex(selectorStr, commons.validate.nonNumDotAndSlashRegex);
+            commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonNumDotAndSlashRegex);
             $(selectorStr).on("blur", function() {
                 let $errorSpan = $("#" + $(this).attr("id") + "_valid_span");
                 if (!commons.validate.ipv4regex.test($(this).val()) && !commons.validate.ipv4CidrRegex.test($(this).val())) {

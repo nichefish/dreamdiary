@@ -102,6 +102,48 @@ public class ClCdController
     }
 
     /**
+     * 분류 코드(CL_CD) 관리(useYn=N 포함) 등록/수정 (Ajax)
+     * (관리자MNGR만 접근 가능)
+     */
+    @PostMapping(value = {Url.CL_CD_REG_AJAX, Url.CL_CD_MDF_AJAX})
+    @Secured({Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> clCdRegAjax(
+            final @Valid ClCd clCd,
+            final @RequestParam("regYn") String regYn,
+            final LogActvtyParam logParam,
+            final BindingResult bindingResult
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // Validation
+            if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            // 등록/수정 처리
+            boolean isReg = "Y".equals(regYn);
+            ClCd rsDto = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd);
+
+            isSuccess = (rsDto.getClCd() != null);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setCn(clCd.toString());
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
      * 분류 코드(CL_CD) 관리(useYn=N 포함) 상세 화면 조회
      * (관리자MNGR만 접근 가능)
      */
@@ -137,49 +179,6 @@ public class ClCdController
         }
 
         return "/view/admin/cd/cl_cd_dtl";
-    }
-
-    /**
-     * 분류 코드(CL_CD) 관리(useYn=N 포함) 등록/수정 (Ajax)
-     * (관리자MNGR만 접근 가능)
-     */
-    @PostMapping(value = {Url.CL_CD_REG_AJAX, Url.CL_CD_MDF_AJAX})
-    @Secured({Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> clCdRegAjax(
-            final @Valid ClCd clCd,
-            final String key,
-            final LogActvtyParam logParam,
-            final @RequestParam("regYn") String regYn,
-            final BindingResult bindingResult
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            // 등록/수정 처리
-            boolean isReg = "Y".equals(regYn);
-            ClCd rsDto = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd);
-
-            isSuccess = (rsDto.getClCd() != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn(clCd.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
     /**

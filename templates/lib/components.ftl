@@ -5,7 +5,7 @@
   -- @author: nichefish
   -->
 
-<!-- page elements -->
+<!--include::page elements-->
 <#include "/view/_component/_page_elements.ftlh">
 
 <!-- list-table items -->
@@ -13,11 +13,14 @@
 <!-- buttons -->
 <#include "/view/_component/_post_buttons.ftlh">
 
-<!-- header_components -->
+<!-- modal_elements -->
+<#include "/view/_component/_modal_elements.ftlh">
+
+<!-- header_elements -->
 <#include "/view/_component/_list_header_elements.ftlh">
 
 <!-- in progress... -->
-<#include "/view/_component/post/_post_module.ftlh">
+<#include "/view/_component/_post_module.ftlh">
 
 <!-- in progress... -->
 <#include "/view/_component/_clsf_module.ftlh">
