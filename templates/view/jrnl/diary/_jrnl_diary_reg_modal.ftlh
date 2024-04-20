@@ -41,7 +41,7 @@
                 <i class="bi bi-pencil-square"></i>저장
             </button>
             <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
