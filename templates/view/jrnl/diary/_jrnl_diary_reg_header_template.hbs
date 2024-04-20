@@ -1,13 +1,13 @@
 <#--
-  -- 저널 일기(jrnl_diary) > 등록/수정 에디터 상단 Template
-  -- @included_in : _jrnl_diary_reg_modal.ftlh
-  -->
+ * 저널 일기(jrnl_diary) > 등록/수정 에디터 상단 Template
+ * @included_in : _jrnl_diary_reg_modal.ftlh
+ -->
 
 <script type="text/x-handlebars-template" id="jrnl_diary_reg_header_template">
     <input type="hidden" name="postNo" value="{{postNo}}">
     <input type="hidden" name="jrnlDayNo" value="{{jrnlDayNo}}">
 
-    <!--begin::Input group-->
+    <#--begin::Row-->
     <div class="row d-flex mb-8">
         <div class="col-2">
             <label class="d-flex align-items-center mb-2" for="title">
@@ -18,7 +18,7 @@
             <i class="bi bi-calendar3"></i> {{stdrdDt}}
         </div>
     </div>
-    <!--begin::Input group-->
+    <#--begin::Row-->
     <div class="row d-flex mb-8">
         <div class="col-12">
             <label class="d-flex align-items-center mb-2" for="title">

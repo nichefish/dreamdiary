@@ -1,58 +1,50 @@
 <#--
-  -- 저널 일기(jrnl_diary) > 등록/수정 Modal
-  -- @included_in : jrnl_day_page.ftlh
-  -->
+ * 저널 일기(jrnl_diary) > 등록/수정 Modal
+ * @included_in : jrnl_day_page.ftlh
+ -->
 
-<div class="modal fade" id="jrnl_diary_reg_modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <!-- 영역:: 모달 헤더 -->
-            <@component.modal_header "저널 일기 저장" />
-            <!-- 영역:: 모달 내용 -->
-            <div class="modal-body modal-mbl-body my-5">
-                <div class="table-responsive-sm">
-                    <form name="jrnlDiaryRegForm" id="jrnlDiaryRegForm" class="form" enctype="multipart/form-data">
-                        <div id="jrnl_diary_reg_header_div">
-                            <!-- contents -->
-                        </div>
-                        <!--begin::Row-->
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <label class="d-flex align-items-center mb-2" for="title">
-                                    <span class="text-gray-700 fs-6 fw-bolder">내용</span>
-                                </label>
-                            </div>
-                            <div class="col-12">
-                                <textarea name="cn" id="tinymce_jrnlDiaryCn" class="form-control form-control-solid h-100px required"></textarea>
-                            </div>
-                        </div>
-                        <div class="row mb-4 error-msg-span">
-                            <div class="col-2"></div>
-                            <div class="col-8">
-                                <div id="tinymce_jrnlDiaryCn_valid_span"></div>
-                            </div>
-                        </div>
-                        <div id="jrnl_diary_reg_div">
-                            <!-- contents -->
-                        </div>
-                    </form>
+<#import "/layout/modal_layout.ftlh" as modal>
+
+<@modal.layout id="jrnl_diary_reg" size="xl">
+    <!--begin::Modal Header-->
+    <@component.modal_header "저널 일기 저장" />
+    <!--begin::Modal Body-->
+    <div class="modal-body modal-mbl-body my-5">
+        <form name="jrnlDiaryRegForm" id="jrnlDiaryRegForm" class="form" enctype="multipart/form-data">
+            <div id="jrnl_diary_reg_header_div">
+                <!-- contents -->
+            </div>
+            <#--begin::Row-->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <label class="d-flex align-items-center mb-2" for="title">
+                        <span class="text-gray-700 fs-6 fw-bolder">내용</span>
+                    </label>
+                </div>
+                <div class="col-12">
+                    <textarea name="cn" id="tinymce_jrnlDiaryCn" class="form-control form-control-solid h-100px required"></textarea>
+                    <div id="tinymce_jrnlDiaryCn_valid_span"></div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <!-- 버튼 영역 -->
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-sm btn-primary me-2"
-                            onclick="JrnlDiary.submit();"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                        <i class="bi bi-pencil-square"></i>저장
-                    </button>
-                    <!-- 버튼:: 모달 닫기 -->
-                    <@component.btn_modal_close />
-                </div>
+            <div id="jrnl_diary_reg_div">
+                <!-- contents -->
             </div>
+        </form>
+    </div>
+    <!--begin::Modal Footer-->
+    <div class="modal-footer">
+        <!-- 버튼 영역 -->
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-sm btn-primary me-2"
+                    onclick="JrnlDiary.submit();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
+                <i class="bi bi-pencil-square"></i>저장
+            </button>
+            <!-- 버튼:: 모달 닫기 -->
+            <@component.btn_modal_close />
         </div>
     </div>
-</div>
+</@modal.layout>
 
 <!-- include:: Handlebars template -->
 <#include "/view/jrnl/diary/_jrnl_diary_reg_header_template.hbs">

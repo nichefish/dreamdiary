@@ -1,6 +1,6 @@
 <#--
-  -- 저널 일기(jrnl_diary) : 모듈 스크립트 분리
-  -->
+ * 저널 일기(jrnl_diary) : 스크립트 모듈 분리
+ -->
 
 <script>
     const JrnlDiary = (function() {

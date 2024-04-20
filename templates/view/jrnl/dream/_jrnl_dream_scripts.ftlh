@@ -1,6 +1,6 @@
 <#--
-  -- 저널 꿈(jrnl_dream) : 모듈 스크립트 분리
-  -->
+ * 저널 꿈(jrnl_dream) : 스크립트 모듈 분리
+ -->
 
 <script>
     const JrnlDream = (function() {

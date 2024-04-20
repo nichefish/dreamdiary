@@ -1,6 +1,6 @@
 <#--
-  -- 로그인 정책(lgn_policy) : 모듈 스크립트 분리
-  -->
+ * 로그인 정책(lgn_policy) : 스크립트 모듈 분리
+ -->
 
 <script>
     const LgnPolicy = (function() {
@@ -21,12 +21,6 @@
                         pwChgDy: { maxlength:3 },
                         pwForReset: { minlength:8, maxlength:16 },
                     },
-                    messages: {
-                        lgnLockDy: { maxlength:"장기간 미로그인 잠금일수는 {0}자 이하로 입력해야 합니다." },
-                        lgnTryLmt: { maxlength:"로그인 제한 횟수는 {0}자 이하로 입력해야 합니다." },
-                        pwChgDy: { maxlength:"비밀번호 변경 일수는 {0}자 이하로 입력해야 합니다." },
-                        pwForReset: { minlength:"비밀번호 초기화 설정값은 {0}자 이상으4로 입력해야 합니다.", maxlength:"비밀번호 초기화 설정값은 {0}자 이상으로 입력해야 합니다." }
-                    }
                 });
             },
             /** 등록 또는 수정 처리(Ajax) */
