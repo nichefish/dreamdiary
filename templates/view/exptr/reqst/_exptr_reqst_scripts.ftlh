@@ -1,6 +1,6 @@
 <#--
-  -- 물품구매/경조사비 신청(exptr_reqst) : 모듈 스크립트 분리
-  -->
+ * 물품구매/경조사비 신청(exptr_reqst) : 스크립트 모듈 분리
+ -->
 
 <script>
     const ExptrReqst = (function() {
