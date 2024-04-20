@@ -1,19 +1,16 @@
 <#--
-  -- 파일시스템 메타(flsys_meta) > 상세 Modal
-  -- @included_in : log_actvty_list
-  -->
+ * 파일시스템 메타(flsys_meta) > 상세 Modal
+ -->
 
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="flsys_meta_dtl" size="xl">
-    <!--Begin::Modal Header-->
+    <!--begin::Modal Header-->
     <@component.modal_header "파일시스템 메타 정보 조회" />
-    <!--Begin::Modal Body-->
+    <!--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
-        <div class="table-responsive-sm">
-            <div id="flsys_meta_dtl_div">
-                <!-- contents -->
-            </div>
+        <div id="flsys_meta_dtl_div">
+            <!-- contents -->
         </div>
     </div>
     <!--begin::Modal Footer-->
