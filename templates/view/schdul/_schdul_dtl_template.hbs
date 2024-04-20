@@ -1,9 +1,10 @@
 <#--
-  -- 일정 > 전체 일정 > 상세 조회 Template
-  -- @included_in : schdul_cal
-  -->
+ * 일정 > 전체 일정 > 상세 조회 Template
+ * @included_in : schdul_cal
+ -->
 
 <script type="text/x-handlebars-template" id="schdul_dtl_template">
+    <#--begin::Row-->
     <div class="row mb-3">
         <div class="col-xl-2 col-3 col-form-label">
             <i class="bi bi-justify-left fs-5 me-1"></i>
@@ -14,18 +15,18 @@
         </div>
     </div>
     {{#unless (equals schdulCd "HLDY")}}
-    <!--begin::Input group-->
-    <div class="row mb-3">
-        <div class="col-xl-2 col-3 col-form-label">
-            <i class="bi bi-people fs-5 me-1"></i>
-            <label class="fs-6 fw-bold mb-2">참여자</label>
+        <#--begin::Row-->
+        <div class="row mb-3">
+            <div class="col-xl-2 col-3 col-form-label">
+                <i class="bi bi-people fs-5 me-1"></i>
+                <label class="fs-6 fw-bold mb-2">참여자</label>
+            </div>
+            <div class="col-xl-10 col-9 col-form-label">
+                {{ifEmpty prtcpnt "-"}}
+            </div>
         </div>
-        <div class="col-xl-10 col-9 col-form-label">
-            {{ifEmpty prtcpnt "-"}}
-        </div>
-    </div>
     {{/unless}}
-    <!--begin::Input group-->
+    <#--begin::Row-->
     <div class="row mb-3">
         <div class="col-xl-2 col-3 col-form-label">
             <i class="bi bi-info-circle fs-5 me-1"></i>
@@ -35,7 +36,7 @@
             <div class="div-textarea-smp h-auto min-h-100px">{{cn}}</div>
         </div>
     </div>
-    <!--begin::Input group-->
+    <#--begin::Row-->
     <div class="row row-cols-lg-2 mb-3">
         <div class="col-xl-2 col-3 col-form-label">
             <i class="bi bi-calendar3 fs-5 me-1"></i>
