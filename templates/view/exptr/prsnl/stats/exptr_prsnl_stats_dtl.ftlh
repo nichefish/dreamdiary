@@ -1,6 +1,7 @@
 <#--
-  -- 경비 관리 > 경비지출누적집계 > 상세 화면
-  -->
+ * 경비 관리 > 경비지출누적집계 > 상세 화면
+ -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -55,7 +56,7 @@
             /** 지출항목 반려 팝업 호출 */
             rjectModal: function(idx) {
                 $("#modal_idx").val(idx);
-                $("#modal_rject_resn").modal("show");
+                $("#rject_resn_modal").modal("show");
             },
             /** 취합완료 처리 (Ajax) */
             cfAjax: function() {
@@ -129,9 +130,9 @@
 </script>
 
 <div class="card post">
-    <!--begin::Card body-->
+    <#--begin::Card body-->
     <div class="mb-0">
-        <!--begin::Form-->
+        <#--begin::Form-->
         <form class="form">
             <div class="d-flex align-items-center mb-9">
                 <!--begin::Title-->
@@ -154,7 +155,9 @@
             <div class="separator my-2"></div>
             <!--end::Menu separator-->
             <div class="table-responsive-sm">
+                <#--begin::Table-->
                 <table class="table align-middle table-row-dashed fs-small gy-5">
+                    <#--begin::Table head-->
                     <thead>
                         <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                             <th class="col-xl-1 col-2 text-center wb-keepall w-10">날짜</th>
@@ -173,6 +176,7 @@
                             <th class="min-w-120px text-center wb-keepall">처리</th>
                         </tr>
                     </thead>
+                    <#--begin::Table body-->
                     <tbody id="exptr_prsnl_item_reg_div">
                         <#list post.itemList![] as exptr>
                             <tr<#if (exptr.rjectYn!"N") == "Y"> class="bg-light-danger strikethrough text-muted"</#if>>
@@ -259,11 +263,13 @@
                             </#if>
                         </#list>
                     </tbody>
+                    <#--begin::Table body-->
                     <tbody id="empty_list_div">
                         <tr>
                             <td colspan="8" class="text-center">지출항목이 없습니다.</td>
                         </tr>
                     </tbody>
+                    <#--begin::Table body-->
                     <tbody id="sumDiv">
                         <tr class="bg-light">
                             <td colspan="3" class="text-center"></td>

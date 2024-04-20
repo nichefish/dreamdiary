@@ -1,6 +1,6 @@
 <#--
-  -- 경비 관리 > 경비지출누적집계 > 경비지출누적집계 화면
-  -->
+ * 경비 관리 > 경비지출누적집계 > 경비지출누적집계 화면
+ -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <div>

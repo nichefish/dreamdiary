@@ -1,9 +1,10 @@
 <#--
-  -- 경비 관리 > 경비지출누적집계 > 경비지출누적집계 화면
-  -->
+ * 경비 관리 > 경비지출누적집계 > 경비지출누적집계 화면
+ -->
+
 <#import "/layout/layout.ftlh" as layout >
 
-<#-- 툴바 버튼 추가 -->
+<#--toolbar::버튼 추가-->
 <#assign toolbar>
     <#include "/view/exptr/prsnl/stats/_exptr_prsnl_stats_header.ftlh">
 </#assign>
@@ -51,10 +52,11 @@
 </script>
 
 <div class="card post">
-    <!--begin::Card Body-->
+    <#--begin::Card Body-->
     <div class="card-body pt-0">
+        <#--begin::Table-->
         <table class="table table-hover align-middle table-row-dashed fs-small gy-5 table-fixed">
-            <!--begin::Table head-->
+            <#--begin::Table head-->
             <thead>
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                     <th class="w-90px text-center wb-keepall">구분</th>
@@ -65,8 +67,7 @@
                     </#list>
                 </tr>
             </thead>
-            <!--end::Table head-->
-            <!--begin::Table body-->
+            <#--begin::Table body-->
             <tbody>
                 <#list statsList![] as stats>
                     <tr>
@@ -114,8 +115,8 @@
                     </tr>
                 </#list>
             </tbody>
+            <#--begin::Table footer-->
             <tfoot>
-                <!--end::Table row-->
                 <tr class="bg-light">
                     <td colspan="2" class="text-center"></td>
                     <td class="text-center fw-bold">합계</td>
