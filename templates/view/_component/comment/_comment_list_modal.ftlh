@@ -33,10 +33,8 @@
     <@component.modal_header "댓글 목록 조회" />
     <!--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
-        <div class="table-responsive-sm">
-            <div class="row" id="comment_list_div">
-                <!-- handlebars template goes in here -->
-            </div>
+        <div class="row" id="comment_list_div">
+            <!-- handlebars template goes in here -->
         </div>
     </div>
     <!--begin::Modal Footer-->
@@ -44,7 +42,7 @@
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
             <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
