@@ -1,13 +1,14 @@
 <#--
-  -- 사용자 인사정보(user_emplym) > 조회 영역
-  -- @included_in : user_dtl.ftlh
-  -->
+ * 사용자 인사정보(user_emplym) > 조회 영역
+ * @included_in : user_dtl.ftlh
+ -->
 
 <!--begin::Menu separator-->
 <div class="separator my-2"></div>
 <!--end::Menu separator-->
 
-<div class="card-body p-9">
+<#--begin::Card body-->
+<div class="card-body">
     <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
