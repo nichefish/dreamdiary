@@ -1,6 +1,7 @@
 <#--
-  -- 활동 로그 목록 화면
+  -- 파일시스템(flsys) > 홈
   -->
+
 <#import "/layout/layout_with_aside.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -88,7 +89,7 @@
 <#include "/view/_component/tag/_tag_dtl_post_list_template.hbs">
 <#include "/view/_component/tag/_tag_list_modal.ftlh">
 
-<!--include:: Dream - Aside-->
+<#--include:: Dream - Aside-->
 <#include "/view/cmm/flsys/_flsys_aside_base.ftlh">
 
 </@layout.layout>
