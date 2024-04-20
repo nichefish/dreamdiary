@@ -1,7 +1,7 @@
 <#--
-  -- 게시판(board_post) > 상세 Template
-  -- @included_in : _board_post_dtl_modal.ftlh
-  -->
+ * 게시판(board_post) > 상세 Template
+ * @included_in : _board_post_dtl_modal.ftlh
+ -->
 
 <script type="text/x-handlebars-template" id="board_post_dtl_template">
     <!--begin::Head-->
@@ -55,6 +55,6 @@
         {{{cn}}}
     </div>
 
-    <#-- 첨부파일 영역 -->
+    <!--begin::AtchFile-->
     <#include "/view/_component/atch_file/_atch_file_partial.hbs">
 </script>

@@ -1,6 +1,6 @@
 <#--
-  -- 게시판(board_post) : 모듈 스크립트 분리
-  -->
+ * 게시판(board_post) : 스크립트 모듈 분리
+ -->
 
 <script>
     const BoardPost = (function() {
