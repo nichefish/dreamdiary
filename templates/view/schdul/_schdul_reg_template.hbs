@@ -1,15 +1,16 @@
 <#--
-  -- 일정 > 전체 일정 > 일정 등록 Template
-  -- @included_in : schdul_cal
-  -->
+ * 일정 > 전체 일정 > 일정 등록 Template
+ * @included_in : schdul_cal
+ -->
 
 <script type="text/x-handlebars-template" id="schdul_reg_template">
     <input type="hidden" name="postNo" id="postNo" value="{{postNo}}">
     <input type="hidden" name="prvtYn" id="prvtYn" value="{{#if isPrvt}}Y{{else}}N{{/if}}">
-    <!--begin::Input group-->
+
+    <#--begin::Row-->
     <div class="row mb-3">
         <div class="col-xl-2 col-2">
-            <label class="col-form-label text-center fs-6 fw-bold required mb-2">제목</label>
+            <label class="col-form-label text-center fs-6 fw-bold required">제목</label>
         </div>
         <div class="col-xl-3 col-4">
             <select name="schdulCd" id="schdulCd" class="form-select form-select-solid required" onchange="Schdul.schdulCd(this);">
@@ -24,20 +25,14 @@
                     {{/if}}
                 </#list>
             </select>
+            <span id="schdulCd_valid_span"></span>
         </div>
         <div class="col-xl-7 col-6">
             <input type="text" class="form-control form-control-solid required" placeholder="제목" name="title" id="title" maxlength="120" value="{{title}}" />
-        </div>
-        <div class="col-xl-2 col-2">
-        </div>
-        <div class="col-xl-3 col-4">
-            <span id="schdulCdSpan"></span>
-        </div>
-        <div class="col-xl-7 col-6">
-            <span id="titleSpan"></span>
+            <span id="title_valid_span"></span>
         </div>
     </div>
-    <!--begin::Input group-->
+    <#--begin::Row-->
     <div class="row mb-3">
         <div class="col-xl-2 col-2 d-flex align-items-center justify-content-between">
             <label class="col-form-label text-center fs-6 fw-bold" for="prtcpnt">
@@ -70,7 +65,7 @@
             <!-- handlebars template goes in here -->
         </div>
     </div>
-    <!--begin::Input group-->
+    <#--begin::Row-->
     <div class="row mb-3">
         <div class="col-xl-2 col-2">
             <label class="col-form-label text-center fs-6 fw-bold mb-2" for="cn">내용</label>
@@ -78,13 +73,8 @@
         <div class="col-xl-10 col-10">
             <textarea name="cn" id="cn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500">{{cn}}</textarea>
         </div>
-        <div class="col-xl-2 col-2">
-        </div>
-        <div class="col-xl-10 col-10">
-            <span id="cnSpan"></span>
-        </div>
     </div>
-    <!--begin::Input group-->
+    <#--begin::Row-->
     <div class="row row-cols-lg-2 mb-3">
         <div class="col-xl-2 col-2">
             <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">일정</label>
@@ -92,17 +82,12 @@
         <div class="col-xl-5 col-5">
             <label class="fs-6 mt-3 mb-2 required" for="bgnDt">시작일</label>
             <input class="form-control form-control-solid required" name="bgnDt" id="bgnDt" placeholder="시작일" value="{{bgnDt}}" readonly/>
+            <div id="bgnDt_valid_span"></div>
         </div>
         <div class="col-xl-5 col-5" id="endDtDiv">
             <label class="fs-6 mt-3 mb-2" for="endDt">종료일</label>
             <input class="form-control form-control-solid" name="endDt" id="endDt" placeholder="종료일" value="{{endDt}}" readonly />
-        </div>
-        <div class="col-xl-2 col-2 col-form-label"></div>
-        <div class="col-xl-5 col-5">
-            <span id="bgnDtSpan"></span>
-        </div>
-        <div class="col-xl-5 col-5">
-            <span id="endDtSpan" class="text-noti">※미입력시 시작일자와 같게끔 처리됩니다.</span>
+            <div id="endDtSpan" class="text-noti">※미입력시 시작일자와 같게끔 처리됩니다.</div>
         </div>
     </div>
     {{^if isPrvt}}
