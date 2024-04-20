@@ -1,6 +1,6 @@
 <#--
-  -- 로그인 화면 > 비밀번호 변경 : 스크립트 모듈 분리
-  -->
+ * 로그인 화면 > 비밀번호 변경 : 스크립트 모듈 분리
+ -->
 
 <script>
     const PwChg = (function() {
@@ -46,7 +46,7 @@
                         text: res.message
                     }).then(function() {
                         $("#lgnPwChgForm")[0].reset();
-                        if (res.result) {
+                        if (res.rslt) {
                             $("#userId").val(userId);
                             $("#password").val(password);
                             Page.lgn();
