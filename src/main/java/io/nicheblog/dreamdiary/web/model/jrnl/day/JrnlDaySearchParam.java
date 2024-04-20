@@ -20,14 +20,8 @@ import lombok.*;
 public class JrnlDaySearchParam
         extends BaseSearchParam {
 
-    /**
-     * 글분류 코드
-     */
-    private String ctgrCd;
-    /**
-     * 제목
-     */
-    private String title;
-
-
+    /** 년도 */
+    private Integer yy;
+    /** 제목 */
+    private Integer mnth;
 }

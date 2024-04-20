@@ -3,6 +3,24 @@
   -- @included_in : jrnl_day_page.ftlh
   -->
 
+<script>
+    const JrnlDayAside = (function() {
+        return {
+            yyMnth: function (obj) {
+                // 쿠키 설정하기
+                const id = $(obj).attr("id");
+                let cookieOptions = {
+                    path: "/jrnl/day/",
+                    expires: commons.date.getCurrDateAddDay(36135)
+                };
+                $.cookie("jrnl_" + id, $(obj).val(), cookieOptions);
+                // 목록 조회
+                JrnlDay.listAjax();
+                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+            },
+        }
+    })();
+</script>
 <!--begin::aside-->
 <div id="kt_app_aside" class="app-aside flex-column mt-7"
      data-kt-drawer="true"
@@ -40,31 +58,29 @@
             </div>
             <!--end::Header-->
             <!--begin::Body-->
-            <div class="card-body">
+            <div class="card-body" id="jrnl_aside">
                 <!--begin::Form-->
-                <div class="mb-7 d-flex gap-4">
-                    <div>
+                <div class="mb-7 d-flex justify-content-between gap-4">
+                    <div class="col">
                         <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">년도</span>
-                        <select class="form-select" aria-label="Select example">
-                            <option>모든 년도</option>
-                            <option value="1">Grace Green</option>
-                            <option value="2">Nick LOgan</option>
-                            <option value="3">Carles Nilson</option>
-                            <option value="1">Alice Danchik</option>
-                            <option value="2">Harris Bold</option>
-                            <option value="3">Carles Nilson</option>
+                        <select name="yy" id="yy" class="form-select" aria-label="Select example"
+                                onchange="JrnlDayAside.yyMnth(this);">
+                            <option value="">모든 년도</option>
+                            <#assign currYy = DateUtils.getCurrYy()?number />
+                            <#assign startYy = 2011 />
+                            <#list currYy..startYy as year>
+                                <option value="${year}">${year}</option>
+                            </#list>
                         </select>
                     </div>
-                    <div>
+                    <div class="col">
                         <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">월</span>
-                        <select class="form-select" aria-label="Select example">
-                            <option>모든 년도</option>
-                            <option value="1">Grace Green</option>
-                            <option value="2">Nick LOgan</option>
-                            <option value="3">Carles Nilson</option>
-                            <option value="1">Alice Danchik</option>
-                            <option value="2">Harris Bold</option>
-                            <option value="3">Carles Nilson</option>
+                        <select name="mnth" id="mnth" class="form-select" aria-label="Select example"
+                                onchange="JrnlDayAside.yyMnth(this);">
+                            <option value="">모든 월</option>
+                            <#list 1..12 as mnth>
+                                <option value="${mnth}">${mnth}</option>
+                            </#list>
                         </select>
                     </div>
                 </div>

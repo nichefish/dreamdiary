@@ -324,7 +324,7 @@ public class UserService
     //        } else {
     //            // 양력일 경우
     //            String brthMnthDy = brthdy.substring(4);
-    //            String thisBrthdy = DateUtils.getCurrYearStr() + brthMnthDy;
+    //            String thisBrthdy = DateUtils.getCurrYyStr() + brthMnthDy;
     //            if (!todayStr.equals(thisBrthdy)) continue;
     //            brthdyUserList.add(user);
     //        }

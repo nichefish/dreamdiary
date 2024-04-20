@@ -105,7 +105,7 @@
             </div>
             <div class="col-xl-1">
                 <select name="hldyYy" id="hldyYy" class="form-select form-select-solid">
-                    <#assign currYy = DateUtils.getCurrYearStr()!>
+                    <#assign currYy = DateUtils.getCurrYyStr()!>
                     <#assign prevYy = ((currYy?number)-1)?c>
                     <#assign nextYy = ((currYy?number)+1)?c>
                     <option value="${prevYy!}">${prevYy!}</option>

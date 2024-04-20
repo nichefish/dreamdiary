@@ -137,9 +137,9 @@ public class VcatnPaprService
      */
     public List<VcatnStatsYyDto> getVcatnYyList() throws Exception {
         String minYyStr = vcatnPaprRepository.selectMinYy();
-        int minYy = (minYyStr != null) ? Integer.parseInt(minYyStr) : DateUtils.getCurrYear();
+        int minYy = (minYyStr != null) ? Integer.parseInt(minYyStr) : DateUtils.getCurrYy();
         List<VcatnStatsYyDto> yyList = new ArrayList<>();
-        int currYy = DateUtils.getCurrYear();
+        int currYy = DateUtils.getCurrYy();
         for (int yy = minYy; yy <= currYy; yy++) {     // 최저년도~현재년도. 현재년도는 항상 들어가도록
             yyList.add(vcatnStatsYyService.getVcatnYyDtDto(Integer.toString(yy)));
         }

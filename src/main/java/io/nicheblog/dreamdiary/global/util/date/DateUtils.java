@@ -127,7 +127,7 @@ public class DateUtils
     /**
      * 현재 년도"yyyy"(int) 반환
      */
-    public static Integer getCurrYear() throws Exception {
+    public static Integer getCurrYy() throws Exception {
         return Calendar.getInstance(Constant.TZ_SEOUL, Constant.LC_KO)
                        .get(Calendar.YEAR);
     }
@@ -135,8 +135,8 @@ public class DateUtils
     /**
      * 현재 년도"yyyy" 문자열로 반환
      */
-    public static String getCurrYearStr() throws Exception {
-        return Integer.toString(getCurrYear());
+    public static String getCurrYyStr() throws Exception {
+        return Integer.toString(getCurrYy());
     }
 
     /**
@@ -180,7 +180,7 @@ public class DateUtils
      * 현재 년도"yyyy"/월"MM" 세트 반환 (인덱스 대신 실제 월로 반환 = 1월=0 -> 1로 변환)
      */
     public static Integer[] getCurrYyMnth() throws Exception {
-        return new Integer[]{getCurrYear(), Calendar.getInstance(Constant.TZ_SEOUL, Constant.LC_KO)
+        return new Integer[]{getCurrYy(), Calendar.getInstance(Constant.TZ_SEOUL, Constant.LC_KO)
                                                     .get(Calendar.MONTH) + 1};
     }
 
@@ -323,41 +323,31 @@ public class DateUtils
     }
 
     /**
-     * 날짜 받아서 요일(숫자) 반환
+     * 날짜 받아서 요일(문자) 반환
      */
-    public static Integer getDayOfWeek(final Object date) throws Exception {
+    public static String getDayOfWeekChinese(final Object date) throws Exception {
+        Integer idx = getDayOfWeekIdx(date);
+        return DayOfWeek.asChinese(idx);
+    }
+
+    /**
+     * 날짜 받아서 요일(문자) 반환
+     */
+    public static String getDayOfWeekKor(final Object date) throws Exception {
+        Integer idx = getDayOfWeekIdx(date);
+        return DayOfWeek.asKorean(idx);
+    }
+
+    /**
+     * 날짜 받아서 요일(숫자) 반환
+     * "1은 일요일, 7은 토요일을 나타냅니다."
+     */
+    public static Integer getDayOfWeekIdx(final Object date) throws Exception {
         Date asDate = asDate(date);
         if (asDate == null) return null;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(asDate);
-        // "1은 일요일, 7은 토요일을 나타냅니다."
         return calendar.get(Calendar.DAY_OF_WEEK);
-    }
-
-    /**
-     * 날짜 받아서 요일(한글) 반환
-     */
-    public static String getDayOfWeekStr(final Object date) throws Exception {
-        Integer dayOfWeek = getDayOfWeek(date);
-        if (dayOfWeek == null) return null;
-        switch (dayOfWeek) {
-            case 1:
-                return "일";
-            case 2:
-                return "월";
-            case 3:
-                return "화";
-            case 4:
-                return "수";
-            case 5:
-                return "목";
-            case 6:
-                return "금";
-            case 7:
-                return "토";
-            default:
-                return null;
-        }
     }
 
     /**
@@ -393,7 +383,7 @@ public class DateUtils
     /** 날짜 받아서 주말여부 반환 */
     public static Boolean isWeekend(final Object date) throws Exception {
         return Arrays.asList(1, 7)
-                .contains(DateUtils.getDayOfWeek(date));
+                .contains(DateUtils.getDayOfWeekIdx(date));
     }
 
     /** 두 날짜를 받아서 같은날짜 여부 반환 */

@@ -36,7 +36,7 @@
             /** 목록 조회 */
             listAjax: function() {
                 const url = "${Url.JRNL_DAY_LIST_AJAX!}";
-                let ajaxData = {};
+                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

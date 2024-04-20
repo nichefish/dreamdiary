@@ -21,7 +21,7 @@ commons.tinymce = (function() {
             let options = {
                 selector: selectorStr,
                 editor_encoding: "raw",
-                height: "540px !important",
+                height: 540,
                 menubar: false,
                 branding: false,
                 statusbar: false,

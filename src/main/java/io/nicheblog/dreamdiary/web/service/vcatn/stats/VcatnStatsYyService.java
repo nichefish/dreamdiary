@@ -40,9 +40,9 @@ public class VcatnStatsYyService {
      */
     public Boolean regVcatnYyDt() throws Exception {
         // 매년 1월1일에 다음단위(0301~0228)것 등록
-        String yyStr = DateUtils.getCurrYearStr();
+        String yyStr = DateUtils.getCurrYyStr();
         Date startDt = DateUtils.asDate(yyStr + "0301");
-        String nextYyStr = Integer.toString(DateUtils.getCurrYear() + 1);
+        String nextYyStr = Integer.toString(DateUtils.getCurrYy() + 1);
         Date endDt = DateUtils.getDateAddDay(DateUtils.asDate(nextYyStr + "0301"), -1);
         VcatnStatsYyEntity entity = new VcatnStatsYyEntity(yyStr, startDt, endDt);
         vcatnStatsYyRepository.save(entity);

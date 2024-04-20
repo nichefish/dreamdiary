@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.web.controller.user.reqst;
 
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.controller.BaseControllerTestHelper;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDtoTestFactory;

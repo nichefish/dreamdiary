@@ -81,7 +81,7 @@ class JrnlDayControllerTest {
 
         String viewName = Objects.requireNonNull(result.getModelAndView()).getViewName();
         assertNotNull(viewName, "View name is null");
-        assertTrue(BaseControllerTestHelper.viewExists(viewName), "View template does not exist: " + viewName);
+        assertTrue(BaseControllerTestHelper.viewFileExists(viewName), "View template file does not exist: " + viewName);
     }
 
     // mockMvc.perform(get(Url.JRNL_DAY_PAGE)

@@ -89,6 +89,9 @@ class JrnlDayMapstructTest {
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
         assertNotNull(jrnlDayEntity);
         assertEquals(jrnlDayDto.getJrnlDt(), DateUtils.asStr(jrnlDayEntity.getJrnlDt(), DatePtn.DATE));
+        assertNotNull(jrnlDayDto.getJrnlDtWeekDay());
+        assertEquals(jrnlDayDto.getJrnlDtWeekDay(), "土");
+        assertEquals(jrnlDayDto.getStdrdDt(), jrnlDayDto.getJrnlDt());
     }
 
     /**
@@ -110,6 +113,7 @@ class JrnlDayMapstructTest {
         assertNotNull(jrnlDayEntity);
         assertEquals(jrnlDayDto.getDtUnknownYn(), jrnlDayEntity.getDtUnknownYn());
         assertEquals(jrnlDayDto.getAprxmtDt(), DateUtils.asStr(jrnlDayEntity.getAprxmtDt(), DatePtn.DATE));
+        assertEquals(jrnlDayDto.getStdrdDt(), jrnlDayDto.getAprxmtDt());
     }
 
     /**

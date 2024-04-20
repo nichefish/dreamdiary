@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -46,11 +47,15 @@ public class JrnlDayDto
 
     /** 저널 일자 */
     private String jrnlDt;
+    /** 저널 일자 요일 */
+    private String jrnlDtWeekDay;
     /** 날짜미상 여부 (Y/N) */
     @Builder.Default
     private String dtUnknownYn = "N";
     /** 대략일자 (날짜미상시 해당일자 이후에 표기) */
     private String aprxmtDt;
+    /** 기준일자 (저널일자 또는 대략일자) */
+    private String stdrdDt;
 
     /** 저널 꿈 목록 */
     private List<JrnlDreamDto> jrnlDreamList;
@@ -60,6 +65,14 @@ public class JrnlDayDto
     @Override
     public Integer getKey() {
         return this.postNo;
+    }
+
+    /* ----- */
+
+    /** 기준일자 */
+    public String getStdrdDt() {
+        if (!StringUtils.isEmpty(this.jrnlDt)) return jrnlDt;
+        return aprxmtDt;
     }
 
     /* ----- */

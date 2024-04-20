@@ -178,7 +178,7 @@ public class SchdulCalService {
     //        if ("Y".equals(user.getRetireYn())) continue;
     //        String brthdyStr = user.getBrthdy();
     //        if (StringUtils.isEmpty(brthdyStr)) continue;
-    //        String thisBrthdyStr = DateUtils.getCurrYearStr() + brthdyStr.substring(4);
+    //        String thisBrthdyStr = DateUtils.getCurrYyStr() + brthdyStr.substring(4);
     //        // 음력 / 양력 구분해서 적용
     //        if ("Y".equals(user.getLunarYn())) {
     //            // 음력일 경우 = 1) 올해의 음력 생일 날짜 구해서 양력으로 변환

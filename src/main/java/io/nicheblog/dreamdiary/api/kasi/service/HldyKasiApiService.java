@@ -49,7 +49,7 @@ public class HldyKasiApiService {
      * API:: 한국천문연구원(KASI):: 휴일 정보 조회
      */
     public List<HldyKasiApiItemDto> getHldyList(final String yyParam) throws Exception {
-        String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYearStr();
+        String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYyStr();
         RestTemplate restTemplate = new RestTemplate();
         List<HldyKasiApiItemDto> rsItems = new ArrayList<>();
         try {

@@ -139,9 +139,9 @@ public class ExptrPrsnlPaprService
      */
     public List<String> getExptrPrsnlYyList() throws Exception {
         String minYyStr = exptrPrsnlPaprRepository.selectMinYy();
-        int minYy = (minYyStr != null) ? Integer.parseInt(minYyStr) : DateUtils.getCurrYear();
+        int minYy = (minYyStr != null) ? Integer.parseInt(minYyStr) : DateUtils.getCurrYy();
         List<String> yyList = new ArrayList<>();
-        int currYy = DateUtils.getCurrYear();
+        int currYy = DateUtils.getCurrYy();
         for (int yy = minYy - 1; yy <= currYy; yy++) {     // 최저년도~현재년도. 현재년도는 항상 들어가도록
             yyList.add(Integer.toString(yy));
         }

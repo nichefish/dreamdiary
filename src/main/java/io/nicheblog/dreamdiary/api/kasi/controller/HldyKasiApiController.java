@@ -71,7 +71,7 @@ public class HldyKasiApiController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYearStr();
+            String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYyStr();
             // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
             hldyKasiApiService.delHldyList(yyStr);
             List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);

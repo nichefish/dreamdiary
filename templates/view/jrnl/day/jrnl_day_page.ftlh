@@ -22,14 +22,20 @@
 <#include "/view/jrnl/diary/_jrnl_diary_scripts.ftlh">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
             init: function () {
+                // 쿠키 설정하기
+                let yyCookie = $.cookie("jrnl_yy");
+                let mnthCookie = $.cookie("jrnl_mnth");
+                if (yyCookie !== undefined) $("#jrnl_aside #yy").val(yyCookie);
+                if (yyCookie !== undefined) $("#jrnl_aside #mnth").val(mnthCookie);
+                // 목록 조회
                 JrnlDay.listAjax();
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
             },
         }
-    }();
+    })();
     $(document).ready(function() {
         Page.init();
     })
