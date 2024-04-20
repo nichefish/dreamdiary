@@ -1,11 +1,11 @@
 <#--
-  -- 시스템 로그(log_sys) : 모듈 스크립트 분리
-  -->
+ * 시스템 로그(log_sys) : 스크립트 모듈 분리
+ -->
 
 <script>
-    const LogSys = function() {
+    const LogSys = (function() {
         return {
             // TODO:
         }
-    }();
+    })();
 </script>

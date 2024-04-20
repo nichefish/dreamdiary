@@ -1,7 +1,7 @@
 <#--
-  -- 활동 로그(log_actvty) > 상세 모달 Template
-  -- @included_in : _log_actvty_dtl_modal.ftlh
-  -->
+ * 활동 로그(log_actvty) > 상세 모달 Template
+ * @included_in : _log_actvty_dtl_modal.ftlh
+ -->
 
 <script type="text/x-handlebars-template" id="log_actvty_dtl_template">
     <!--begin::Question-->
@@ -43,7 +43,8 @@
         <div class="separator separator-dashed border-gray-300 my-8"></div>
         <!--begin::Question-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-            <div class="row mb-4">      <!--begin::Row-->
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-4">
                     <div class="col-form-label text-center fs-6 fw-bold">로그유형</div>
                 </div>
@@ -51,23 +52,26 @@
                     actvtyCtgrCd: {{actvtyCtgrNm}}  //  actionTyCd: {{actionTyNm}}
                 </div>
             </div>
-            <div class="row mb-4">      <!--begin::Row-->
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-4">
                     <div class="col-form-label text-center fs-6 fw-bold">작업자</div>
                 </div>
                 <div class="col-xl-10 col-8 col-form-label">
                     {{userId}}
                 </div>
-           </div>
-           <div class="row mb-4">      <!--begin::Row-->
-                <div class="col-xl-2 col-4">
-                    <div class="col-form-label text-center fs-6 fw-bold">작업일시</div>
-                </div>
-                <div class="col-xl-10 col-8 col-form-label">
-                    {{logDt}}
-                </div>
-           </div>
-            <div class="row mb-4">      <!--begin::Row-->
+            </div>
+            <#--begin::Row-->
+            <div class="row mb-4">
+                 <div class="col-xl-2 col-4">
+                     <div class="col-form-label text-center fs-6 fw-bold">작업일시</div>
+                 </div>
+                 <div class="col-xl-10 col-8 col-form-label">
+                     {{logDt}}
+                 </div>
+            </div>
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-4">
                     <div class="col-form-label text-center fs-6 fw-bold">작업 IP</div>
                 </div>
@@ -75,7 +79,8 @@
                     {{ipAddr}}
                 </div>
             </div>
-           <div class="row mb-4">      <!--begin::Row-->
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-4">
                     <div class="col-form-label text-center fs-6 fw-bold">URL</div>
                 </div>
@@ -83,16 +88,18 @@
                     <div>{{url}}</div>
                     <div>referer: {{referer}}</div>
                 </div>
-           </div>
-           <div class="row mb-4">      <!--begin::Row-->
+            </div>
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-4">
                     <div class="col-form-label text-center fs-6 fw-bold">파라미터</div>
                 </div>
                 <div class="col-xl-10 col-8 col-form-label">
                     {{param}}
                 </div>
-           </div>
-            <div class="row mb-4">      <!--begin::Row-->
+            </div>
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-4">
                     <div class="col-form-label text-center fs-6 fw-bold">작업내용</div>
                 </div>
@@ -100,7 +107,8 @@
                     {{cn}}
                 </div>
             </div>
-            <div class="row mb-4">      <!--begin::Row-->
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-4">
                     <div class="col-form-label text-center fs-6 fw-bold">작업결과</div>
                 </div>
@@ -109,7 +117,8 @@
                     <div>{{rsltMsg}}</div>
                 </div>
             </div>
-            <div class="row mb-4">      <!--begin::Row-->
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-4">
                     <div class="col-form-label text-center fs-6 fw-bold">익셉션</div>
                 </div>

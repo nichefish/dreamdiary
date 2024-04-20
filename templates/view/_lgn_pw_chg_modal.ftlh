@@ -6,7 +6,7 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="lgn_pw_chg" size="md">
-    <!--Begin::Modal Header-->
+    <!--begin::Modal Header-->
     <div class="modal-header" style="background-color:#41416e;">
         <h2 class="modal-title text-light">비밀번호 변경</h2>
         <!--begin::Close-->
@@ -20,7 +20,7 @@
         </div>
         <!--end::Close-->
     </div>
-    <!--Begin::Modal Body-->
+    <!--begin::Modal Body-->
     <div class="modal-body">
         <form name="lgnPwChgForm" id="lgnPwChgForm" class="form">
             <div id="lgn_pw_chg_div">

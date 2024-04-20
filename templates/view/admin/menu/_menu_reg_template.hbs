@@ -1,6 +1,6 @@
 <#--
- -- 메뉴(menu) > 카드 Template
- -- @included_in : menu_page.ftlh
+ * 메뉴(menu) > 카드 Template
+ * @included_in : menu_page.ftlh
  -->
 
 <script type="text/x-handlebars-template" id="menu_reg_template">
@@ -63,6 +63,18 @@
         </div>
         <div class="col-2"></div>
         <div class="col-10"><span id="iconSpan"></span></div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2 text-center">
+            <label for="url" class="col-form-label fw-bold">
+                메뉴 URL
+            </label>
+        </div>
+        <div class="col-10">
+            <input type="text" name="url" id="url" class="form-control d-inline-block number required" value="{{url}}">
+        </div>
+        <div class="col-2"></div>
+        <div class="col-10"><span id="urlSpan"></span></div>
     </div>
     <div class="row mb-3">
         <div class="col-2 text-center">

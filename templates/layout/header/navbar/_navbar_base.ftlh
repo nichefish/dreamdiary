@@ -1,30 +1,30 @@
 <!--
- -- 레이아웃 > 헤더 > 네비게이션 바 (base)
- -- @included_in : layout/header/_header_base.ftlh
+ * 레이아웃 > 헤더 > 네비게이션 바 (base)
+ * @included_in : layout/header/_header_base.ftlh
  -->
 
 <!--begin::Navbar-->
 <div class="app-navbar flex-shrink-0">
-    <!--include::Notion-->
+    <#--include::Notion-->
     <#include "/layout/header/navbar/_navbar_notion.ftlh">
 
-    <!--include::Flsys-->
+    <#--include::Flsys-->
     <#include "/layout/header/navbar/_navbar_flsys.ftlh">
 
     <!--begin::Separator-->
     <span class="my-6 border-gray-300 border-start ms-3 mx-2"></span>
     <!--end::Separator-->
 
-    <!--include::테스트 페이지 -->
+    <#--include::테스트 페이지 -->
     <#include "/layout/header/navbar/_navbar_test_page.ftlh">
 
-    <!--include::태그클라우드 -->
+    <#--include::태그클라우드 -->
     <#include "/layout/header/navbar/_navbar_tag_cloud.ftlh">
 
-    <!--include::사이트맵 -->
+    <#--include::사이트맵 -->
     <#include "/layout/header/navbar/_navbar_sitemap.ftlh">
 
-    <!--include::검색 -->
+    <#--include::검색 -->
     <#include "/layout/header/navbar/_navbar_search.ftlh">
 
     <!--begin::Separator-->

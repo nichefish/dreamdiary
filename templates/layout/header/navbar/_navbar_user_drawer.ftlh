@@ -1,7 +1,8 @@
 <!--
- -- 레이아웃 > 탑바
- -- @included_in : layout
+ * 레이아웃 > 사용자 정보 Drawer
+ * @included_in : layout
  -->
+
 <!--begin::user drawer-->
 <div id="kt_drawer_chat" class="bg-body"
      data-kt-drawer="true"
@@ -50,7 +51,7 @@
             <!--end::Card toolbar-->
         </div>
         <!--end::Card header-->
-        <!--begin::Card body-->
+        <#--begin::Card body-->
         <div class="card-body" id="kt_drawer_chat_messenger_body">
             <!--begin::내 정보-->
             <div class="d-flex align-items-center">

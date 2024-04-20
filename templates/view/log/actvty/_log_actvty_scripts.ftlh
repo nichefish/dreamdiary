@@ -1,9 +1,9 @@
 <#--
-  -- 활동 로그(log_actvty) : 모듈 스크립트 분리
-  -->
+ * 활동 로그(log_actvty) : 스크립트 모듈 분리
+ -->
 
 <script>
-    const LogActvty = function() {
+    const LogActvty = (function() {
         return {
             /** 목록 검색 */
             search: function() {
@@ -35,5 +35,5 @@
                 });
             },
         }
-    }();
+    })();
 </script>
