@@ -73,6 +73,18 @@ commons.tinymce = (function() {
             tinymce.init(options);
         },
         /**
+         * tinymce 에디터 준비되면 컨텐츠 세팅
+         */
+        setContentWhenReady: function(editorNm, cn) {
+            const editor = tinymce.get(editorNm);
+            if (editor && editor.initialized) {
+                editor.setContent(cn);
+            } else {
+                // 초기화가 완료될 때까지 재귀적으로 시도
+                setTimeout(() => commons.tinymce.setContentWhenReady(editorNm, cn), 50);
+            }
+        },
+        /**
          * tinymce 에디터 destroy
          */
         destroy: function(selector) {

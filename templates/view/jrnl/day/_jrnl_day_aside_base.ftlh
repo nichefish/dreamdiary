@@ -42,17 +42,31 @@
             <!--begin::Body-->
             <div class="card-body">
                 <!--begin::Form-->
-                <div class="mb-7">
-                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Agents</span>
-                    <select class="form-select" aria-label="Select example">
-                        <option>Any agent</option>
-                        <option value="1">Grace Green</option>
-                        <option value="2">Nick LOgan</option>
-                        <option value="3">Carles Nilson</option>
-                        <option value="1">Alice Danchik</option>
-                        <option value="2">Harris Bold</option>
-                        <option value="3">Carles Nilson</option>
-                    </select>
+                <div class="mb-7 d-flex gap-4">
+                    <div>
+                        <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">년도</span>
+                        <select class="form-select" aria-label="Select example">
+                            <option>모든 년도</option>
+                            <option value="1">Grace Green</option>
+                            <option value="2">Nick LOgan</option>
+                            <option value="3">Carles Nilson</option>
+                            <option value="1">Alice Danchik</option>
+                            <option value="2">Harris Bold</option>
+                            <option value="3">Carles Nilson</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">월</span>
+                        <select class="form-select" aria-label="Select example">
+                            <option>모든 년도</option>
+                            <option value="1">Grace Green</option>
+                            <option value="2">Nick LOgan</option>
+                            <option value="3">Carles Nilson</option>
+                            <option value="1">Alice Danchik</option>
+                            <option value="2">Harris Bold</option>
+                            <option value="3">Carles Nilson</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="mb-7">
                     <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Groups</span>

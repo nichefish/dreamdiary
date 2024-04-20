@@ -20,10 +20,8 @@
                 JrnlDiary.initValidateForm();
 
                 // tinymce editor reset
-                tinymce.EditorManager.editors.splice(2, 2);     //removing second element in array.
-                delete tinymce.EditorManager.editors['tinymce_jrnlDiaryCn'];     //deleting respective textarea id from array
-                if (commons.util.isNotEmpty(tinyMCE.activeEditor)) tinyMCE.activeEditor.setContent("");
                 commons.tinymce.init('#tinymce_jrnlDiaryCn', commons.tinymce.imgRegFunc);
+                commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", "");
             },
             /** 이관 submit */
             submit: function() {
@@ -58,17 +56,15 @@
                     }
                     const rsltObj = res.rsltObj;
 
-                    commons.util.handlebarsTemplate(rsltObj, "jrnl_dream_reg_header");
-                    commons.util.handlebarsTemplate(rsltObj, "jrnl_dream_reg", "show");
+                    commons.util.handlebarsTemplate(rsltObj, "jrnl_diary_reg_header");
+                    commons.util.handlebarsTemplate(rsltObj, "jrnl_diary_reg", "show");
 
                     /* jquery :: validation */
                     JrnlDiary.initValidateForm();
 
                     // tinymce editor reset
-                    tinymce.EditorManager.editors.splice(2, 2);     //removing second element in array.
-                    delete tinymce.EditorManager.editors['tinymce_jrnlDiaryCn'];     //deleting respective textarea id from array
-                    if (commons.util.isNotEmpty(tinyMCE.activeEditor)) tinyMCE.activeEditor.setContent(rsltObj.cn);
                     commons.tinymce.init('#tinymce_jrnlDiaryCn', commons.tinymce.imgRegFunc);
+                    commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", rsltObj.cn);
                 });
             },
         }
