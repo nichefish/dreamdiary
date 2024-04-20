@@ -10,13 +10,13 @@
         <!--begin::Head-->
         <div class="row mb-4">
             <!--begin::Title-->
-            <div class="col-2 col-form-label">
-                <span class="cursor-help"
+            <div class="col-2 col-form-label text-center">
+                <label class="cursor-help fw-bold required"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                       title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드를&#10;입력합니다.&#10;(등록 후 수정할 수 없습니다.)">
                     분류코드
-                </span>
-                <em class="text-danger">*</em>
+                    <i class="bi bi-question-circle"></i>
+                </label>
             </div>
             <div class="col-10">
                 <input type="text" class="form-control {{#isMdf}}bg-secondary{{/isMdf}}" name="clCd" id="clCd" value="{{clCd}}" {{#isMdf}}readonly{{/isMdf}}
@@ -26,13 +26,13 @@
         </div>
         <div class="row mb-4">
             <!--begin::Title-->
-            <div class="col-2 col-form-label">
-                <span class="cursor-help"
+            <div class="col-2 col-form-label text-center">
+                <label class="cursor-help fw-bold required"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                       title="외부적으로 사용되는&#10;코드 이름을 입력합니다.">
                     분류코드명
-                </span>
-                <em class="text-danger pe-1">*</em>
+                    <i class="bi bi-question-circle"></i>
+                </label>
             </div>
             <div class="col-10">
                 <input type="text" class="form-control" name="clCdNm" value="{{clCdNm}}">
@@ -41,8 +41,10 @@
         </div>
         <div class="row mb-4">
             <!--begin::Title-->
-            <div class="col-2 col-form-label">
-                분류코드 설명<em class="text-danger">*</em>
+            <div class="col-2 col-form-label text-center">
+                <label class="fw-bold required">
+                    분류코드 설명
+                </label>
             </div>
             <div class="col-10">
                 <textarea class="form-control h-75px" name="clCdDc">{{clCdDc}}</textarea>
@@ -51,8 +53,10 @@
         </div>
         <div class="row mb-4">
             <!--begin::Title-->
-            <div class="col-2 col-form-label">
-                사용 여부
+            <div class="col-2 col-form-label text-center">
+                <label class="fw-bold">
+                    사용 여부
+                </label>
             </div>
             <div class="col-10">
                 <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
