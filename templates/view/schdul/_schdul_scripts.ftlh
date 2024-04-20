@@ -1,6 +1,6 @@
 <#--
-  -- 일정(schdul) : 모듈 스크립트 분리
-  -->
+ * 일정(schdul) : 스크립트 모듈 분리
+ -->
 
 <script>
     const Schdul = (function() {
@@ -70,6 +70,10 @@
                     $("#endDtSpan").show();
                 }
             },
+            /** submit */
+            submit: function() {
+                $("#schdulRegForm").submit();
+            },
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 const url = "${Url.SCHDUL_REG_AJAX!}";
@@ -92,13 +96,13 @@
                     }
                     let obj = res.rsltObj;
                     commons.util.handlebarsTemplate(obj, "schdul_dtl", "show");
-                    Schdul.postNo = obj.postNo;
+                    Schdul.key = obj.postNo;
                 });
             },
             /** 수정 폼 오픈 */
-            mdfForm: function() {
+            mdfModal: function(key) {
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
-                let ajaxData = { "postNo": Schdul.postNo };
+                let ajaxData = { "postNo": key };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -121,14 +125,14 @@
                 });
             },
             /** 삭제 처리 (ajax) */
-            delAjax: function() {
+            delAjax: function(key) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.SCHDUL_DEL_AJAX!}";
-                    let ajaxData = { "postNo" : Schdul.postNo }
+                    let ajaxData = { "postNo" : key }
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
