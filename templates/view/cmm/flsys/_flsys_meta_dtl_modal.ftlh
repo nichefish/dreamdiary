@@ -15,12 +15,17 @@
     </div>
     <!--begin::Modal Footer-->
     <div class="modal-footer">
-        <div id="flsys_meta_dtl_btn_div">
-            <!-- handlebars template goes in here -->
+        <!-- 버튼 영역 -->
+        <div class="d-flex justify-content-end">
+            <!-- 버튼:: 수정 모달 호출 -->
+            <@component.modal_btn_modify "FlsysMeta.mdfModal(FlsysMeta.key);" />
+            <!-- 버튼:: 삭제 -->
+            <@component.modal_btn_delete "Schdul.delAjax(FlsysMeta.key);" />
+            <!-- 버튼:: 모달 닫기 -->
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
 
 <!-- include:: Handlebars template -->
 <#include "/view/cmm/flsys/_flsys_meta_dtl_template.hbs">
-<#include "/view/cmm/flsys/_flsys_meta_dtl_btn_template.hbs">

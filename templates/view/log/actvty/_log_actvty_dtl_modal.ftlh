@@ -21,7 +21,7 @@
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
             <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
