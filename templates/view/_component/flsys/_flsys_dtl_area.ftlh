@@ -1,8 +1,8 @@
 <#--
- -- 레이아웃 > 첨부파일 모듈
- -- @included_in : 파일 첨부 기능이 있는 페이지들
+ * 레이아웃 > 파일시스템 참조 표시 영역
  -->
-<!--begin::Row-->
+
+<#--begin::Row-->
 <#if (post.flsysRefList)?has_content>
     <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
         <div class="col-xl-1 col-form-label fs-6 fw-bold px-5 cursor-help"

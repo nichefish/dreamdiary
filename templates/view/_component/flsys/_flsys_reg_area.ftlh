@@ -1,9 +1,8 @@
 <#--
- -- 레이아웃 > 첨부파일 모듈
- -- @included_in : 파일 첨부 기능이 있는 페이지들
+ * 레이아웃 > 파일시스템 참조 추가 영역
  -->
 
-<!--begin::Row-->
+<#--begin::Row-->
 <div class="row">
     <div>
         <label class="mb-2 d-block">
