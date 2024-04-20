@@ -1,7 +1,7 @@
 <#--
-  -- 에러 페이지 : 404 NOT FOUND
-  -- (사이드바 없음)
-  -->
+ * 에러 페이지 : 404 NOT FOUND
+ * (사이드바 없음)
+ -->
 
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 
