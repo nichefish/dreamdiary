@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-lg-10">
                     <input type="text" class="form-control required" name="title" maxlength='50' id="title" value="${post.title!}"/>
-                    <span id="titleSpan"></span>
+                    <span id="title_valid_span"></span>
                 </div>
             </div>
             <#--begin::Row-->

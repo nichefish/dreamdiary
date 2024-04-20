@@ -10,14 +10,14 @@
                 /* jquery :: validation */
                 $("#noticeRegForm").validate({
                     submitHandler: function () {
-                        if (Page.submitMode === "preview") {
+                        if (Notice.submitMode === "preview") {
                             const popupNm = "preview";
                             const options = 'width=1280,height=1440,top=0,left=270';
                             commons.util.popup("", popupNm, options);
                             let popupUrl = "${Url.NOTICE_REG_PREVIEW_POP!}";
                             $("#noticeRegForm").attr("action", popupUrl).attr("target", popupNm);
                             return true;
-                        } else if (Page.submitMode === "submit") {
+                        } else if (Notice.submitMode === "submit") {
                             $("#noticeRegForm").removeAttr("action");
                             Swal.fire({
                                 text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
