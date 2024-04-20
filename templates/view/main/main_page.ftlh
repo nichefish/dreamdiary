@@ -1,6 +1,6 @@
 <#--
-  -- 메인 화면 화면
-  -->
+ * 메인 화면 화면
+ -->
 
 <#import "/layout/layout.ftlh" as layout >
 
