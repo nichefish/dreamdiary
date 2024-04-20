@@ -1431,7 +1431,7 @@ $.validator.addMethod( "stateUS", function( value, element, options ) {
 // TODO check if value starts with <, otherwise don't try stripping anything
 $.validator.addMethod( "strippedminlength", function( value, element, param ) {
 	return $( value ).text().length >= param;
-}, $.validator.format( "Please enter at least {0} characters." ) );
+}, $.validator.format( "{0}자 이상으로 입력해야 합니다." ) );
 
 $.validator.addMethod( "time", function( value, element ) {
 	return this.optional( element ) || /^([01]\d|2[0-3]|[0-9])(:[0-5]\d){1,2}$/.test( value );
