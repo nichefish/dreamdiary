@@ -188,7 +188,7 @@
 <!--end::Advance form-->
 
 <div class="card post">
-    <#--begin::Header-->
+    <#--begin::Card header-->
     <div class="card-header min-h-auto mb-5">
         <!--begin::Tab -->
         <ul class="nav nav-tabs nav-tabs-line ps-5 mt-5">
