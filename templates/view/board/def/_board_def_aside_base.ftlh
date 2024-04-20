@@ -1,6 +1,6 @@
 <!--
- * 파일시스템 : ASIDE (우측 사이드바)
- * @included_in : flsys_home.ftlh
+ * 게시판 관리 : ASIDE (우측 사이드바)
+ * @included_in : board_def_list.ftlh
  -->
 
 <#--begin::aside-->
@@ -25,7 +25,7 @@
 
         <#--begin::Aside1-->
         <div class="card card-reset card-p-0">
-            <#--begin::Header-->
+            <#--begin::Card header-->
             <div class="card-header min-h-auto mb-5">
                 <h3 class="card-title text-gray-900 fw-bold fs-3">※ 예약 게시판 코드 목록</h3>
                 <div class="card-toolbar">
