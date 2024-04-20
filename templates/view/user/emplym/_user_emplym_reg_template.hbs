@@ -1,10 +1,11 @@
 <#--
-  -- 사용자 인사정보(user_emplym) > Template
-  -- (freemarker 맥락 하에서 쓰이므로 freemarker 형식으로 데이터 바인딩)
-  -- @included_in : user_reg_form
-  -->
+ * 사용자 인사정보(user_emplym) > Template
+ * (freemarker 맥락 하에서 쓰이므로 freemarker 형식으로 데이터 바인딩)
+ * @included_in : user_reg_form
+ -->
+
 <script type="text/x-handlebars-template" id="user_emplym_template">
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
             <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center required">
@@ -21,7 +22,7 @@
             <div id="userNm_valid_span">
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
             <div class="fw-bold col-form-label text-sm-start text-lg-center required">
@@ -54,7 +55,7 @@
             </select>
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
             <div class="fw-bold col-form-label text-sm-start text-lg-center required">
@@ -72,7 +73,7 @@
             <span id="cttpc_valid_span"></span>
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
             <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center">
@@ -111,7 +112,7 @@
             <div id="emplymCd_valid_span"></div>
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
             <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center "><label for="rankCd">직급</label></div>
@@ -134,7 +135,7 @@
             </div>
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
             <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center required">
@@ -193,7 +194,7 @@
             <div class="text-noti form-text mt-0">※퇴사일 정보가 입력되지 않은 계정은 '현재 직원' 대상 로직에 포함됩니다.</div>
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2">
             <div class="fs-6 fw-bold col-form-label text-sm-start text-lg-center ">
@@ -213,7 +214,7 @@
             <input type="text" class="form-control form-control-solid" name="emplym.acntNo" id="acntNo" value="${(user.emplym.acntNo)!}"
                    maxlength="40" placeholder="계좌번호"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="급여계좌 계좌번호를&#10;입력합니다.">
-            <div id="acntNoSpan"></div>
+            <div id="acntNo_valid_span"></div>
         </div>
     </div>
 
