@@ -1,7 +1,7 @@
 <#--
-  -- 공지사항(notice) > 목록 툴바 Header
-  -- @included_in : notice_list.ftlh
-  -->
+ * 공지사항(notice) > 목록 툴바 Header
+ * @included_in : notice_list.ftlh
+ -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">

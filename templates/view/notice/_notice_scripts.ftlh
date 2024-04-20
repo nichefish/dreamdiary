@@ -1,6 +1,6 @@
 <#--
-  -- 공지사항(notice) : 모듈 스크립트 분리
-  -->
+ * 공지사항(notice) : 스크립트 모듈 분리
+ -->
 
 <script>
     const Notice = (function() {
