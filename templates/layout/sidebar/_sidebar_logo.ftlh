@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 사이드바 로고
- -- @included_in : layout
+ * 레이아웃 > 사이드바 로고
+ * @included_in : layout
  -->
 
 <!--begin::Logo-->

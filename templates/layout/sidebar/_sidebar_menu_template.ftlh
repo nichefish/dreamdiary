@@ -1,11 +1,8 @@
 <!--
- -- 레이아웃 > 기본 레이아웃
- -- @included_in : aside/_aside_menu_portal
- -- @included_in : aside/_aside_menu_admin
+ * 레이아웃 > 기본 레이아웃
+ * @included_in : aside/_aside_menu_portal
+ * @included_in : aside/_aside_menu_admin
  -->
-
-
-
 
 <#macro noSubMenu topMenuNo siteMenu>
     <div class="menu-item">

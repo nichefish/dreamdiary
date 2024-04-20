@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 사이드바 base
- -- @included_in : layout
+ * 레이아웃 > 사이드바 base
+ * @included_in : layout
  -->
 
 <!--begin::Sidebar-->

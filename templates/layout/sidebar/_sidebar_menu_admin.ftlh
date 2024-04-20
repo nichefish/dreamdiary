@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 사이드바 메뉴 (관리자)
- -- @included_in : aside/_aside_base
+ * 레이아웃 > 사이드바 메뉴 (관리자)
+ * @included_in : aside/_aside_base
  -->
 <#import "/layout/sidebar/_sidebar_menu_template.ftlh" as menu >
 

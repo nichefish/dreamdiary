@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 사이드바 푸터
- -- @included_in : aside/_aside_base
+ * 레이아웃 > 사이드바 푸터
+ * @included_in : aside/_aside_base
  -->
 
 <!--begin::Sidebar/Footer-->
