@@ -9,7 +9,7 @@
 <#macro btn_post_modify func post isMngr>
     <#if post.isRegstr>
         <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                onclick="${func}"
+                onclick="${func!}"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
             <i class="bi bi-pencil-square"></i>(내 글)수정
         </button>
@@ -19,20 +19,20 @@
         <#if post.mdfable! == (Constant.MDFABLE_MNGR)>
             <#if isMngr!false>
                 <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                        onclick="${func}"
+                        onclick="${func!}"
                         data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                     <i class="bi bi-pencil-square"></i>(관리자+)수정
                 </button>
             </#if>
         <#elseif post.mdfable! == (Constant.MDFABLE_USER)>
             <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                    onclick="${func}"
+                    onclick="${func!}"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(사용자+)수정
             </button>
         <#elseif post.mdfable! == (Constant.MDFABLE_ALL)>
             <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                    onclick="${func}"
+                    onclick="${func!}"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(전체+)수정
             </button>
@@ -41,7 +41,7 @@
         <!-- 1. mdfable 항목 미사용시 : 등록자/관리자만 수정 가능 -->
         <#if isMngr!false>
             <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
-                    onclick="${closerNm}.mdfForm();"
+                    onclick="${func!}"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.page.mdf"/>">
                 <i class="bi bi-pencil-square"></i>(관리자+)수정
             </button>
@@ -55,13 +55,13 @@
 <#macro btn_post_delete func post isMngr>
     <#if post.isRegstr>
         <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
-                onclick="${func}"
+                onclick="${func!}"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
             <i class="bi bi-trash"></i>(내 글)삭제
         </button>
     <#elseif isMngr!false>
         <button type="button" class="btn btn-sm btn-light btn-active-danger me-2 btn-sm"
-                onclick="${func}"
+                onclick="${func!}"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="<@spring.message "bs.tooltip.del"/>">
             <i class="bi bi-trash"></i>(관리자+)삭제
         </button>
@@ -118,32 +118,8 @@
  -->
 <#macro btn_preview_close closerNm>
     <button type="button" class="btn btn-sm btn-light"
-            onclick="${closerNm}.close();"
+            onclick="${closerNm!}.close();"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="팝업 창을 닫습니다.">
         <i class="bi bi-list"></i>닫기
-    </button>
-</#macro>
-
-<!--
- * 버튼 : 미리보기 모달 닫기
- -->
-<#macro modal_header title>
-    <div class="modal-header">
-        <h5 class="modal-title">[${title!}]</h5>
-        <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" aria-label="Close"
-             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close"/>">
-            <i class="fas fa-times"></i>
-        </div>
-        <!--end::Close-->
-    </div>
-</#macro>
-
-<!--
- * 버튼 : 미리보기 모달 닫기
- -->
-<#macro btn_modal_close>
-    <button type="button" class="btn btn-sm btn-light"
-            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close"/>">
-        <i class="bi bi-x"></i>닫기
     </button>
 </#macro>
