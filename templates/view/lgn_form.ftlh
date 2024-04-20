@@ -149,6 +149,7 @@
 </div>
 <#if isCredentialExpired!false || needsPwReset!false>
     <#include "/view/_lgn_pw_chg_modal.ftlh">
+    <#include "/view/_lgn_pw_chg_scripts.ftlh">
 </#if>
 
 </@layout.layout>
