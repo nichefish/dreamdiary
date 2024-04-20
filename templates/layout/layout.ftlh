@@ -63,9 +63,9 @@
                                 <!--begin::Content container-->
                                 <div id="kt_app_content_container" class="app-container container-fluid">
 
-                                    <!-- Actual Page Contents Starts Here!!! -->
+                                    <#-- Actual Page Contents Starts Here!!! -->
                                     <#nested>
-                                    <!-- Actual Page Contents Ends Here!!! -->
+                                    <#-- Actual Page Contents Ends Here!!! -->
 
                                 </div>
                                 <!--end::Content container-->
