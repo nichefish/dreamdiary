@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS board_post(
 CREATE TABLE IF NOT EXISTS comment (
     -- CLSF
     post_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '댓글 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'comment' COMMENT '게시판 코드',
+    content_type VARCHAR(32) DEFAULT 'COMMENT' COMMENT '게시판 코드',
     --
     ref_post_no INT COMMENT '참초 글 번호',
     ref_content_type VARCHAR(30) COMMENT '참조 컨텐츠 타입',

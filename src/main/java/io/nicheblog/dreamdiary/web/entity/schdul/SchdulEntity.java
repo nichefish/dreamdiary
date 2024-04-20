@@ -69,7 +69,8 @@ public class SchdulEntity
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    @Column(name = "content_type")
+    @Column(name = "content_type", columnDefinition = "VARCHAR(50) DEFAULT 'SCHDUL'")
+    @Comment("컨텐츠 타입")
     private String contentType = CONTENT_TYPE.key;
 
     /* ----- */

@@ -12,7 +12,7 @@
 CREATE TABLE IF NOT EXISTS jrnl_day (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '저널 일자 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'jrnl_day' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'JRNL_DAY' COMMENT '컨텐츠 타입',
     --
     jrnl_dt DATE COMMENT '저널 일자',
     dt_unknown_yn CHAR(1) DEFAULT 'N' COMMENT '날짜미상 여부 (Y/N)',
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS jrnl_day (
 CREATE TABLE IF NOT EXISTS jrnl_dream (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '저널 꿈 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'jrnl_dream' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'JRNL_DREAM' COMMENT '컨텐츠 타입',
     --
     jrnl_day_no INT COMMENT '저널 일자 번호',
     idx INT DEFAULT 1 COMMENT '저널 꿈 인덱스',
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS jrnl_dream (
 CREATE TABLE IF NOT EXISTS jrnl_diary (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '저널 일기 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'jrnl_diary' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'JRNL_DIARY' COMMENT '컨텐츠 타입',
     --
     jrnl_day_no INT COMMENT '저널 일자 번호',
     idx INT DEFAULT 1 COMMENT '저널 일기 인덱스',

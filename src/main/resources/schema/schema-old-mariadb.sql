@@ -12,7 +12,7 @@
 CREATE TABLE IF NOT EXISTS notice (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'notice' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'NOTICE' COMMENT '컨텐츠 타입',
     --
     popup_yn CHAR(1) DEFAULT 'N' COMMENT '팝업 여부 (Y/N)',
     -- POST
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS notice (
 CREATE TABLE IF NOT EXISTS vcatn_papr (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'vcatn_papr' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'VCATN_PAPR' COMMENT '컨텐츠 타입',
     --
     cf_yn CHAR(1) DEFAULT 'N' COMMENT '취합완료 여부 (Y/N)',
     -- POST
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS vcatn_stats_yy (
 CREATE TABLE IF NOT EXISTS schdul (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'schdul' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'SCHDUL' COMMENT '컨텐츠 타입',
     --
     schdul_cd VARCHAR(30) COMMENT '일정 코드',
     bgn_dt DATETIME DEFAULT NULL COMMENT '시작일자',
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS schdul_prtcpnt (
 CREATE TABLE IF NOT EXISTS exptr_prsnl_papr (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'exptr_prsnl_papr' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'EXPTR_PRSNL_PAPR' COMMENT '컨텐츠 타입',
     --
     yy VARCHAR(4) COMMENT '년도',
     mnth VARCHAR(2) COMMENT '월',
@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS EXPTR_PRSNL_ITEM (
 CREATE TABLE IF NOT EXISTS exptr_reqst(
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'exptr_reqst' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'EXPTR_REQST' COMMENT '컨텐츠 타입',
     --
     cf_yn CHAR(1) DEFAULT 'N' COMMENT '처리완료 여부 (Y/N/X)'
     -- POST

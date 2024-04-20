@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS tmplat_txt (
 CREATE TABLE IF NOT EXISTS flsys_meta (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
-    content_type VARCHAR(32) DEFAULT 'schdul' COMMENT '컨텐츠 타입',
+    content_type VARCHAR(32) DEFAULT 'FLSYS_META' COMMENT '컨텐츠 타입',
     --
     file_path VARCHAR(500) UNIQUE COMMENT '파일 경로',
     upper_file_path VARCHAR(500),

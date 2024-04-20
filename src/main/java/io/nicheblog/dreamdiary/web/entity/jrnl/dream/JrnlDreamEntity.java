@@ -52,7 +52,8 @@ public class JrnlDreamEntity
 
     /** 게시판 분류 코드 */
     @Builder.Default
-    @Column(name = "content_type")
+    @Column(name = "content_type", columnDefinition = "VARCHAR(50) DEFAULT 'JRNL_DREAM'")
+    @Comment("컨텐츠 타입")
     private String contentType = CONTENT_TYPE.key;
 
     /* ----- */
