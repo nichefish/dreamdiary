@@ -1,7 +1,7 @@
 <#--
-  -- 게시판 > 직원연락처 Modal (슬기로운 회사생활)
-  -- @included_in : board_post_list
-  -->
+ * 게시판 > 직원연락처 Modal (슬기로운 회사생활)
+ * @included_in : board_post_list
+ -->
 
 <#import "/layout/modal_layout.ftlh" as modal>
 

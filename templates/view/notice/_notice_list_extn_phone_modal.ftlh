@@ -1,7 +1,7 @@
 <#--
-  -- 게시판 > 내선번호 관련 Modal (슬기로운 회사생활)
-  -- @included_in : board_post_list
-  -->
+ * 게시판 > 내선번호 관련 Modal (슬기로운 회사생활)
+ * @included_in : board_post_list
+ -->
 
 <#import "/layout/modal_layout.ftlh" as modal>
 
