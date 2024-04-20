@@ -19,9 +19,20 @@
                         lgnLockDy: { maxlength:3 },
                         lgnTryLmt: { maxlength:3 },
                         pwChgDy: { maxlength:3 },
-                        pwForReset: { minlength:8, maxlength:16 },
+                        pwForReset: { minlength:8, maxlength:20, regex:commons.validate.pwRegex },
+                    },
+                    messages: {
+                        pwForReset: { regex:"비밀번호가 형식에 맞지 않습니다." },
                     },
                 });
+                $.validator.addMethod("regex", function(value, element, regex) {
+                    const regExp = new RegExp(regex);
+                    return (this.optional(element) || regExp.test(value));
+                });
+            },
+            /** submit */
+            submit: function() {
+                $("#lgnPolicyForm").submit();
             },
             /** 등록 또는 수정 처리(Ajax) */
             regAjax: function() {
@@ -35,7 +46,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReplace("${Url.LGN_POLICY_FORM!}");
+                                if (res.rslt) commons.util.blockUIReplace("${Url.LGN_POLICY_FORM!}");
                             });
                     });
                 });

@@ -6,6 +6,9 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<#--include::script modules-->
+<#include "/view/admin/lgn_policy/_lgn_policy_scripts.ftlh">
+
 <script>
     const Page = (function() {
         return {
@@ -23,17 +26,19 @@
 </script>
 
 <div class="card post">
-    <!--begin::Form-->
-    <form name="lgnPolicyForm" id="lgnPolicyForm" class="form">
-        <input type="hidden" name="lgnPolicyNo" value="${lgnPolicy.lgnPolicyNo!}">
-        <!--begin::Card body-->
-        <div class="card-body p-9">
-            <div class="row">      <!--begin::Row-->
+    <#--begin::Card body-->
+    <div class="card-body">
+        <!--begin::Form-->
+        <form name="lgnPolicyForm" id="lgnPolicyForm" class="form">
+            <input type="hidden" name="lgnPolicyNo" value="${lgnPolicy.lgnPolicyNo!}">
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-form-label fs-6 fw-bold">
                     <label for="lgnLockDy">장기간 미로그인 잠금일수</label>
                 </div>
                 <div class="col-xl-1">
                     <input type="text" class="form-control form-control-solid text-end required number" name="lgnLockDy" id="lgnLockDy" value="${lgnPolicy.lgnLockDy!}" maxlength="3"/>
+                    <div id="lgnLockDy_valid_span"></div>
                 </div>
                 <div class="col-xl-1 col-form-label w-5">
                     일
@@ -43,18 +48,14 @@
                     (로그인 성공시 카운트 초기화)
                 </div>
             </div>
-            <div class="row mb-8">      <!-- errorMsgSpan -->
-                <div class="col-xl-2"></div>
-                <div class="col-xl-10">
-                    <div id="lgnLockDySpan"></div>
-                </div>
-            </div>
-            <div class="row">           <!--begin::Row-->
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-form-label fs-6 fw-bold">
                     <label for="lgnTryLmt">로그인 제한 횟수</label>
                 </div>
                 <div class="col-xl-1">
                     <input type="text" class="form-control form-control-solid text-end required number" name="lgnTryLmt" id="lgnTryLmt" value="${lgnPolicy.lgnTryLmt!}" maxlength="3" />
+                    <div id="lgnTryLmt_valid_span"></div>
                 </div>
                 <div class="col-xl-1 col-form-label w-5">
                     회
@@ -64,18 +65,14 @@
                     (로그인 성공시 카운트 초기화)
                 </div>
             </div>
-            <div class="row mb-8">      <!-- errorMsgSpan -->
-                <div class="col-xl-2"></div>
-                <div class="col-xl-10">
-                    <div id="lgnTryLmtSpan"></div>
-                </div>
-            </div>
-            <div class="row">           <!--begin::Row-->
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-form-label fs-6 fw-bold">
                     <label for="pwChgDy">비밀번호 변경 일수</label>
                 </div>
                 <div class="col-xl-1">
                     <input type="text" class="form-control form-control-solid text-end required number" name="pwChgDy" id="pwChgDy" value="${lgnPolicy.pwChgDy!}" maxlength="3" />
+                    <div id="pwChgDy_valid_span"></div>
                 </div>
                 <div class="col-xl-1 col-form-label w-5">
                     일
@@ -85,43 +82,29 @@
                     (비밀번호 변경시 카운트 초기화)
                 </div>
             </div>
-            <div class="row mb-8">      <!-- errorMsgSpan -->
-                <div class="col-xl-2"></div>
-                <div class="col-xl-10">
-                    <div id="pwChgDySpan"></div>
-                </div>
-            </div>
-            <div class="row">           <!--begin::Row-->
+            <#--begin::Row-->
+            <div class="row mb-4">
                 <div class="col-xl-2 col-form-label fs-6 fw-bold">
                     <label for="pwForReset">비밀번호 초기화 설정값</label>
                 </div>
                 <div class="col-xl-2">
                     <input type="password" class="form-control form-control-solid required" name="pwForReset" id="pwForReset" value="${lgnPolicy.pwForReset!}" maxlength="16" />
+                    <div id="pwForReset_valid_span"></div>
                 </div>
                 <div class="col-xl-8 text-noti">
                     ※ 계정 '비밀번호 초기화'시 초기값으로 설정할 비밀번호<br/>
                     ※ 개인에게 초기화 비밀번호 발급시 변경 필수 + 평소 주기적으로 변경 요망
                 </div>
             </div>
-            <div class="row mb-8">      <!-- errorMsgSpan -->
-                <div class="col-xl-2"></div>
-                <div class="col-xl-10">
-                    <div id="pwForResetSpan"></div>
-                </div>
-            </div>
-            <!--end::Row-->
-        </div>
-        <!--end::Card body-->
-        <!--begin::Card footer-->
-        <div class="card-footer d-flex justify-content-end py-6 px-9">
-            <button type="button" class="btn btn-primary" id="lgnPolicyMdfBtn"
-                    onclick="commons.util.submit('#lgnPolicyForm');"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                <i class="bi bi-save"></i>저장
-            </button>
-        </div>
-        <!--end::Card footer-->
-    </form>
+        </form>
+    </div>
+    <!--begin::Card footer-->
+    <div class="card-footer">
+        <!-- 버튼 영역 -->
+        <div class="d-flex justify-content-end">
+        <!-- 버튼 :: 저장하기 -->
+        <@component.btn_post_submit "LgnPolicy.submit();" />
+    </div>
 </div>
 <!--end::Card-->
 
