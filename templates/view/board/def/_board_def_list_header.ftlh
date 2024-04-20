@@ -1,7 +1,7 @@
 <#--
-  -- 게시판 정의(board_def) > 목록 툴바 Header
-  -- @included_in : board_def_list
-  -->
+ * 게시판 정의(board_def) > 목록 툴바 Header
+ * @included_in : board_def_list
+ -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <div>
