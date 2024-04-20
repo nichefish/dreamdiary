@@ -1,5 +1,5 @@
 <#--
- -- 분류 코드(CL_CD) > 상세 화면
+ * 분류 코드(CL_CD) > 상세 화면
  -->
 <#import "/layout/layout.ftlh" as layout >
 
@@ -28,31 +28,31 @@
 </script>
 
 <div class="card post">
-    <!--begin::Question-->
-    <div class="mb-0">
-        <!--begin::Head-->
-        <div class="d-flex align-items-center mb-9">
-            <!--begin::Title-->
-            <div class="col-12">
-                <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
-                    ${clCd.clCd!} (${clCd.clCdNm!})
-                </h1>
-            </div>
-            <!--end::Title-->
-        </div>
-        <!--end::Head-->
-        <!--end::Foot-->
-        <div class="separator separator-dashed border-gray-300 my-8"></div>
+    <#--begin::Card body-->
+    <div class="card-body">
         <!--begin::Question-->
-        <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-            ${clCd.clCdDc?no_esc}
+        <div class="mb-0">
+            <!--begin::Head-->
+            <div class="d-flex align-items-center mb-9">
+                <!--begin::Title-->
+                <div class="col-12">
+                    <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
+                        ${clCd.clCd!} (${clCd.clCdNm!})
+                    </h1>
+                </div>
+                <!--end::Title-->
+            </div>
+            <!--end::Head-->
+            <!--end::Foot-->
+            <div class="separator separator-dashed border-gray-300 my-8"></div>
+            <!--begin::Question-->
+            <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
+                ${clCd.clCdDc?no_esc}
+            </div>
         </div>
     </div>
-
-    <div class="separator separator-dashed border-gray-300 my-8"></div>
-
-    <!-- 버튼 영역 -->
-    <div class="d-flex justify-content-end">
+    <!--begin::Card footer-->
+    <div class="card-footer d-flex justify-content-end">
         <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
                 onclick="ClCd.mdfModal();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드 수정 팝업을&#10;호출합니다.">
@@ -67,9 +67,10 @@
         <!-- 버튼 :: 목록으로 가기 -->
         <@component.btn_post_toList "ClCd.list();" />
     </div>
+</div>
 
-    <div class="separator separator-dashed border-gray-300 my-8"></div>
-
+<div class="card post">
+    <!--begin::Card header-->
     <div class="card-header border-0 pt-6">
         <div class="d-flex justify-content-left align-items-center">
             <h5>상세 코드 목록</h5>
@@ -94,7 +95,8 @@
             <!--end::Toolbar-->
         </div>
     </div>
-    <div>
+    <#--begin::Card body-->
+    <div class="card-body">
         <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
             <#--begin::Table head-->
             <thead>
