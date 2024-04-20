@@ -1,7 +1,7 @@
 <#--
-  -- 게시판(board_post) > 목록 툴바 Header
-  -- @included_in : board_post_list
-  -->
+ * 게시판(board_post) > 목록 툴바 Header
+ * @included_in : board_post_list
+ -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>      <!-- 게시판 검색에선 꼭 있어야 한다. -->
@@ -39,7 +39,6 @@
     <div>
         <@component.btn_header_mypapr "BoardPost.myPapr();" MY_PAPR!false />
     </div>
-    <!-- 버튼:: 등록하기 -->
     <div>
         <!-- 버튼:: 등록 화면 이동하기 -->
         <@component.btn_header_reg_form "BoardPost.regForm();" />

@@ -86,9 +86,11 @@ public class BoardDefController
             model.addAttribute("boardDefMngList", boardDefMngList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(boardDefMngList));
             // 코드 정보 모델에 추가
-            cdService.setModelCdData(Constant.POST_CD, model);
+            cdService.setModelCdData(Constant.BOARD_DEF_RSRVD_CD, model);
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+            // 코드 정보 모델에 추가
+            cdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
