@@ -1,6 +1,6 @@
 <#--
-  -- 사용자 인사정보(user_emplym) > 추가 Template
-  -- @included_in : user_reg_form
+  -- 사용자 인사정보(user_emplym) > 조회 영역
+  -- @included_in : user_dtl.ftlh
   -->
 
 <!--begin::Menu separator-->
@@ -8,7 +8,7 @@
 <!--end::Menu separator-->
 
 <div class="card-body p-9">
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">직원명</div>
@@ -17,7 +17,7 @@
             ${(user.emplym.userNm)!"-"}
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">업무용 이메일</div>
@@ -26,7 +26,7 @@
             ${user.emplym.emplymEmail!}
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">업무용 연락처</div>
@@ -35,7 +35,7 @@
             ${user.emplym.emplymCttpc!}
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">소속</div>
@@ -44,7 +44,7 @@
             ${user.emplym.cmpyNm!} / ${user.emplym.teamNm!} / ${user.emplym.emplymNm!}
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">직급</div>
@@ -53,7 +53,7 @@
             ${user.emplym.cmpyNm!} / ${user.emplym.teamNm!} / ${user.emplym.emplymNm!}
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">입사일</div>
@@ -62,7 +62,7 @@
             ${user.emplym.ecnyDt!} / ${user.emplym.retireYn!} / ${user.emplym.retireDt!}
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">급여 계좌 정보</div>

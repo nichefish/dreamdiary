@@ -1,6 +1,6 @@
 <#--
-  -- 사용자 프로필 정보(user_profl) > 추가 Template
-  -- @included_in : user_reg_form
+  -- 사용자 프로필 정보(user_profl) > 조회 영역
+  -- @included_in : user_dtl.ftlh
   -->
 
 <!--begin::Menu separator-->
@@ -8,7 +8,7 @@
 <!--end::Menu separator-->
 
 <div class="card-body p-9">
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">주소</div>
@@ -17,7 +17,7 @@
             ${user.profl.addr!"-"} / ${user.profl.zipcode!"-"}
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">생년월일</div>
@@ -29,7 +29,7 @@
             </#if>
         </div>
     </div>
-    <!--begin::Row-->
+    <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-xl-2 col-4">
             <div class="col-form-label text-center fw-bold">시용자 프로필</div>
