@@ -9,7 +9,7 @@
     <#assign isMngr = isMngr!false>
     <#assign isMngrMode = isMngrMode!false>
 
-    <!--include::Head-->
+    <#--include::Head-->
     <#include "/layout/_head.ftlh">
 
     <!--begin::Body-->
@@ -26,7 +26,7 @@
           data-kt-app-footer-fixed="true"
           class="app-default" >
 
-    <!--include::Head-->
+    <#--include::Head-->
     <#include "/layout/_page_loader.ftlh">
 
         <!--begin::App-->
@@ -61,7 +61,7 @@
                         </div>
                         <!--end::Content wrapper-->
 
-                        <!--include:: Footer-->
+                        <#--include:: Footer-->
                         <#include "/layout/footer/_footer_base.ftlh">
                     </div>
                     <!--end:::Main-->
@@ -78,7 +78,7 @@
         <#include "/layout/_scrolltop.ftlh">
 
         <!--begin::Modals (include modals here)-->
-        <!--end::Modals-->
+        <!--end::modals-->
 
         <script>
             $(document).ready(function() {

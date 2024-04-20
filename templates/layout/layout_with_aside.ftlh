@@ -10,7 +10,7 @@
     <#assign isMngr = isMngr!false>
     <#assign isMngrMode = isMngrMode!false>
 
-    <!--include::Head-->
+    <#--include::Head-->
     <#include "/layout/_head.ftlh">
 
     <!--begin::Body-->
@@ -33,7 +33,7 @@
 
           class="app-default" >
 
-    <!--include::PageLoader-->
+    <#--include::PageLoader-->
         <#include "/layout/_page_loader.ftlh">
 
         <!--begin::App-->
@@ -42,13 +42,13 @@
             <!--begin::Page-->
             <div class="app-page  flex-column flex-column-fluid" id="kt_app_page">
 
-                <!--include:: Header-->
+                <#--include:: Header-->
                 <#include "/layout/header/_header_base.ftlh">
 
                 <!--begin::Wrapper-->
                 <div class="app-wrapper  flex-column flex-row-fluid" id="kt_app_wrapper">
 
-                    <!--include:: Sidebar-->
+                    <#--include:: Sidebar-->
                     <#include "/layout/sidebar/_sidebar_base.ftlh">
 
                     <!--begin::Main-->
@@ -57,7 +57,7 @@
                         <!--begin::Content wrapper-->
                         <div class="d-flex flex-column flex-column-fluid">
 
-                            <!--include:: Sidebar-->
+                            <#--include:: Sidebar-->
                             <#include "/layout/toolbar/_toolbar_base.ftlh">
 
                             <!--begin::Content-->
@@ -76,7 +76,7 @@
                         </div>
                         <!--end::Content wrapper-->
 
-                        <!--include:: Footer-->
+                        <#--include:: Footer-->
                         <#include "/layout/footer/_footer_base.ftlh">
 
                     </div>
@@ -91,7 +91,7 @@
         </div>
         <!--end::App-->
 
-        <!--include:: Scrolltop-->
+        <#--include:: Scrolltop-->
         <#include "/layout/_scrolltop.ftlh">
 
         <!--begin::Modals (include modals here)-->
@@ -99,9 +99,9 @@
             <#include "/component/notice/_notice_popup_modal.ftlh">
             <#include "/layout/topbar/_topbar_sitemap_modal.ftlh">
         </#if>
-        <!--include:: User-My-Drawer-->
+        <#--include:: User-My-Drawer-->
         <#include "/layout/header/navbar/_navbar_user_drawer.ftlh">
-        <!--end::Modals-->
+        <!--end::modals-->
 
         <script>
             $(document).ready(function() {
