@@ -7,7 +7,7 @@
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
 
-<!--include:: script modules -->
+<#--include:: script modules -->
 <#include "/view/admin/cd/_cl_cd_scripts.ftlh">
 <#include "/view/admin/cd/_dtl_cd_scripts.ftlh">
 
@@ -96,101 +96,99 @@
     </div>
     <div>
         <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
-            <!--begin::Table head-->
+            <#--begin::Table head-->
             <thead>
-            <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted">
-                <th class="col-1 text-center wb-keepall w-8">번호</th>
-                <th class="col-2 text-center wb-keepall">
-                    <span class="cursor-help"
-                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                          title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드입니다.&#10;(등록 후 수정할 수 없습니다.)">
-                        상세코드
-                    </span>
-                </th>
-                <th class="col-2 text-center wb-keepall">
-                    <span class="cursor-help"
-                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                          title="외부적으로 사용되는&#10;코드 이름입니다.">
-                        상세 코드명
-                    </span>
-                </th>
-                <th class="col-4 text-center wb-keepall">상세코드 설명</th>
-                <th class="col-1 text-center wb-keepall">
-                    <span class="cursor-help"
-                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                          title="표시될 순서를 입력합니다.&#10;순서가 겹칠 경우&#10;내부 로직에 따라 정렬됩니다.">
-                        정렬 순서
-                    </span>
-                </th>
-                <th class="col-1 text-center wb-keepall">
-                    <span class="cursor-help"
-                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                          title="'사용'으로 체크된 코드만&#10;실제 코드 사용시 조회됩니다.">
-                        사용 여부
-                    </span>
-                </th>
-                <th class="text-center wb-keepall w-8">-</th>
-            </tr>
+                <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted">
+                    <th class="col-1 text-center wb-keepall w-8">번호</th>
+                    <th class="col-2 text-center wb-keepall">
+                        <span class="cursor-help"
+                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                              title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드입니다.&#10;(등록 후 수정할 수 없습니다.)">
+                            상세코드
+                        </span>
+                    </th>
+                    <th class="col-2 text-center wb-keepall">
+                        <span class="cursor-help"
+                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                              title="외부적으로 사용되는&#10;코드 이름입니다.">
+                            상세 코드명
+                        </span>
+                    </th>
+                    <th class="col-4 text-center wb-keepall">상세코드 설명</th>
+                    <th class="col-1 text-center wb-keepall">
+                        <span class="cursor-help"
+                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                              title="표시될 순서를 입력합니다.&#10;순서가 겹칠 경우&#10;내부 로직에 따라 정렬됩니다.">
+                            정렬 순서
+                        </span>
+                    </th>
+                    <th class="col-1 text-center wb-keepall">
+                        <span class="cursor-help"
+                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                              title="'사용'으로 체크된 코드만&#10;실제 코드 사용시 조회됩니다.">
+                            사용 여부
+                        </span>
+                    </th>
+                    <th class="text-center wb-keepall w-8">-</th>
+                </tr>
             </thead>
-            <!--end::Table head-->
-            <!--begin::Table body-->
+            <#--begin::Table body-->
             <tbody class="draggable-zone">
-            <#list clCd.dtlCdList![] as dtlCd>
-                <tr class="sortable-item draggable bg-hover-secondary" id="${dtlCd.dtlCd!}" onclick="DtlCd.mdfModal('${dtlCd.dtlCd!}');">
-                    <td class="text-center">
-                        <div class="draggable-handle cursor-move pt-2"
-                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
-                            <i class="ki-duotone ki-abstract-14 fs-2x">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </div>
-                    </td>
-                    <td class="text-start ps-10 cursor-pointer">
-                        <span class="fw-bold border-bottom">
-                            ${dtlCd.dtlCd!}
-                        </span>
-                    </td>
-                    <td class="text-start ps-10">
-                        <span class="border-bottom">
-                            ${dtlCd.dtlCdNm!}
-                        </span>
-                    </td>
-                    <td class="text-start ps-10">
-                        ${dtlCd.dtlCdDc!}
-                    </td>
-                    <td class="text-center">
-                        ${dtlCd.sortOrdr!}
-                    </td>
-                    <td class="text-center">
-                        <#if (dtlCd.useYn!"Y") == "Y">
-                            <div class="badge badge-success cursor-pointer"
-                                 onclick="DtlCd.unuseAjax('${dtlCd.dtlCd!}');"
-                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
-                                <i class="bi bi-check text-light blink-slow"></i>사용
+                <#list clCd.dtlCdList![] as dtlCd>
+                    <tr class="sortable-item draggable bg-hover-secondary" id="${dtlCd.dtlCd!}" onclick="DtlCd.mdfModal('${dtlCd.dtlCd!}');">
+                        <td class="text-center">
+                            <div class="draggable-handle cursor-move pt-2"
+                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
+                                <i class="ki-duotone ki-abstract-14 fs-2x">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
                             </div>
-                        <#else>
-                            <div class="badge badge-secondary btn-white cursor-pointer"
-                                 onclick="DtlCd.useAjax('${dtlCd.dtlCd!}');"
-                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
-                                <i class="bi bi-x blink-slow"></i>미사용
+                        </td>
+                        <td class="text-start ps-10 cursor-pointer">
+                            <span class="fw-bold border-bottom">
+                                ${dtlCd.dtlCd!}
+                            </span>
+                        </td>
+                        <td class="text-start ps-10">
+                            <span class="border-bottom">
+                                ${dtlCd.dtlCdNm!}
+                            </span>
+                        </td>
+                        <td class="text-start ps-10">
+                            ${dtlCd.dtlCdDc!}
+                        </td>
+                        <td class="text-center">
+                            ${dtlCd.sortOrdr!}
+                        </td>
+                        <td class="text-center">
+                            <#if (dtlCd.useYn!"Y") == "Y">
+                                <div class="badge badge-success cursor-pointer"
+                                     onclick="DtlCd.unuseAjax('${dtlCd.dtlCd!}');"
+                                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
+                                    <i class="bi bi-check text-light blink-slow"></i>사용
+                                </div>
+                            <#else>
+                                <div class="badge badge-secondary btn-white cursor-pointer"
+                                     onclick="DtlCd.useAjax('${dtlCd.dtlCd!}');"
+                                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="클릭하여 사용 상태를&#10;변경합니다.">
+                                    <i class="bi bi-x blink-slow"></i>미사용
+                                </div>
+                            </#if>
+                        </td>
+                        <td class="text-center">
+                            <div class="badge badge-danger badge-outlined cursor-pointer"
+                                 onclick="DtlCd.delAjax('${dtlCd.dtlCd!}')"
+                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
+                                <i class="bi bi-trash text-danger fs-7 blink-slow"></i>삭제
                             </div>
-                        </#if>
-                    </td>
-                    <td class="text-center">
-                        <div class="badge badge-danger badge-outlined cursor-pointer"
-                             onclick="DtlCd.delAjax('${dtlCd.dtlCd!}')"
-                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
-                            <i class="bi bi-trash text-danger fs-7 blink-slow"></i>삭제
-                        </div>
-                    </td>
-                </tr>
-            <#else>
-                <tr>
-                    <td colspan=8" class="text-center"><@spring.message "view.list.empty"/></td>
-                </tr>
-            </#list>
-            <!--end::Table row-->
+                        </td>
+                    </tr>
+                <#else>
+                    <tr>
+                        <td colspan=8" class="text-center"><@spring.message "view.list.empty"/></td>
+                    </tr>
+                </#list>
             </tbody>
         </table>
     </div>
@@ -200,7 +198,7 @@
     <input type="hidden" name="clCd" id="clCd" value="${clCd.clCd!}" />
 </form>
 
-<!--include:: Modals-->
+<#--include::modals-->
 <#include "/view/admin/cd/_cl_cd_reg_modal.ftlh">
 <#include "/view/admin/cd/_dtl_cd_reg_modal.ftlh">
 

@@ -12,7 +12,7 @@
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
 
-<!--include:: script modules -->
+<#--include:: script modules -->
 <#include "/view/admin/cd/_cl_cd_scripts.ftlh">
 
 <script>
@@ -34,21 +34,24 @@
 <div class="card post">
     <!--begin::Card Body-->
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
-        <!--begin::Table head-->
+        <#--begin::Table head-->
         <thead>
             <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted">
-                <th class="col-1 text-center wb-keepall w-8 hidden-table">번호</th>
+                <th class="col-1 text-center wb-keepall cursor-help w-8 hidden-table"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
+                    정렬
+                    <i class="bi bi-question-circle"></i>
+                </th>
                 <th class="col-2 text-center wb-keepall">분류코드</th>
-                <th class="col-2 text-center wb-keepall">분류코드명</th>
                 <th class="col-4 text-center wb-keepall">분류코드 설명</th>
                 <th class="col-1 text-center wb-keepall">상세코드 수</th>
                 <th class="col-1 text-center wb-keepall">사용 여부</th>
                 <th class="col-1 text-center wb-keepall">-</th>
             </tr>
         </thead>
-        <!--end::Table head-->
-        <!--begin::Table body-->
+        <#--begin::Table body-->
         <tbody class="draggable-zone">
+            <#--begin::목록-->
             <#list clCdList![] as clCd>
                 <tr class="sortable-item draggable bg-hover-secondary" id="${clCd.clCd!}" onclick="ClCd.dtl('${clCd.clCd!}');">
                     <td class="text-center hidden-table">
@@ -60,17 +63,13 @@
                             </i>
                         </div>
                     </td>
-                    <td class="text-start px-6 cursor-pointer">
-                        ${clCd.clCd!}
+                    <td class="text-start px-6 cursor-pointer fw-bold text-gray-700">
+                        <span>${clCd.clCdNm!}</span>
+                        <span class="ms-1">(${clCd.clCd!})</span>
                         <a class="badge badge-secondary ms-2 p-2 btn-white blank blink-slow float-end"
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
                             <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="ClCd.dtlAjax('${clCd.clCd!}');"></i>
                         </a>
-                    </td>
-                    <td class="text-start ps-6">
-                        <span class="border-bottom">
-                            ${clCd.clCdNm!}
-                        </span>
                     </td>
                     <td class="text-start ps-6 hidden-table">
                         ${clCd.clCdDc!}
@@ -109,7 +108,6 @@
                     <td colspan=8" class="text-center"><@spring.message "view.list.empty"/></td>
                 </tr>
             </#list>
-            <!--end::Table row-->
         </tbody>
     </table>
     <!-- pagination::begin -->
@@ -121,7 +119,7 @@
     <input type="hidden" id="clCd" name="clCd" />
 </form>
 
-<!--include:: Modals-->
+<#--include::modals-->
 <#include "/view/admin/cd/_cl_cd_reg_modal.ftlh">
 <#include "/view/admin/cd/_cl_cd_dtl_modal.ftlh">
 
