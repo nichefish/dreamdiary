@@ -119,7 +119,7 @@ public final class Constant
     public static final String EXPTR_REQST_CTGR_CD = "EXPTR_REQST_CTGR_CD";   // 물품구매 및 경조사비 신청 글분류 코드
     public static final String JANDI_TOPIC_CD = "JANDI_TOPIC_CD";   // 잔디 토픽 코드
 
-    public static final String POST_CD = "POST_CD";                 // 게시판 코드 (예약어)
+    public static final String BOARD_DEF_RSRVD_CD = "BOARD_DEF_RSRVD_CD";                 // 게시판 코드 (예약어)
 
     public static final String YY_CD = "YY_CD";                 // 사용자 권한 코드
     public static final String MNTH_CD = "MNTH_CD";                 // 사용자 권한 코드
