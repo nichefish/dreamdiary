@@ -1,8 +1,11 @@
 <#--
- -- clsf(댓글, 태그, 조치, 열람) 모듈 관련 컴포넌트
- -- @included_in : lib/components.ftl
+ * clsf(댓글, 태그, 조치, 열람) 모듈 관련 컴포넌트
+ * @included_in : lib/components.ftl
  -->
-<!-- 열람자 정보 표시 영역 -->
+
+<#--
+ * 열람자 정보 표시 영역
+ -->
 <#macro viewer_area post >
     <#if isMngr>
         <div class="row mb-5">
@@ -22,14 +25,13 @@
                 </#if>
             </div>
         </div>
-        <!--end:Form-->
-        <!--end::Card body-->
-        <!--begin::Card footer-->
         <div class="separator separator-dashed border-gray-300 my-8"></div>
     </#if>
 </#macro>
 
-<!-- 조치자 정보 표시 영역 -->
+<#--
+ * 조치자 정보 표시 영역
+ -->
 <#macro managtr_area post >
     <!--end::Foot-->
     <#if post.managt?? && post.managt.list?? && post.managt.list?size gt 1>
@@ -64,6 +66,9 @@
     </#if>
 </#macro>
 
+<#--
+ * 잔디 알림 발송 영역
+ -->
 <#macro jandi_reg_area labelwidth jandiTopic>
     <div class="row h-50px">
         <div class="col-lg-${labelwidth} col-3 d-flex align-items-center width33">

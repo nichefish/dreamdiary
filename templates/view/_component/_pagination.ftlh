@@ -1,7 +1,8 @@
 <#--
- -- 레이아웃 > 페이지네이션 모듈
- -- @included_in : 페이징이 있는 목록 페이지들
+ * 레이아웃 > 페이지네이션 모듈
+ * @included_in : 페이징이 있는 목록 페이지들
  -->
+
 <script>
     const Pagination = (function() {
         return {
@@ -62,7 +63,7 @@
             </div>
         </div>
     </#if>
-    <div class="row pagging">
+    <div class="row paging">
         <ul class="pagination">
             <#if paginationInfo??>
                 <li class="page-item previous <#if paginationInfo.isFirstPage!false>disabled</#if>">

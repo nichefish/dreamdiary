@@ -1,10 +1,12 @@
 <#--
- -- 수정 권한mdfable 관련 컴포넌트
- -- @included_in : lib/components.ftl
+ * 게시물 요소 관련 컴포넌트
+ * @included_in : lib/components.ftl
  -->
 
+<#--
+ * 게시물 상세 :: 타이틀
+ -->
 <#macro post_title post>
-    <!--begin::Head-->
     <div class="d-flex align-items-center mb-9">
         <!--begin::Title-->
         <div class="col-12">
@@ -18,12 +20,13 @@
                  </span>
             </h1>
         </div>
-        <!--end::Title-->
     </div>
 </#macro>
 
+<#--
+ * 게시물 상세 :: 타이틀 메타
+ -->
 <#macro post_meta post>
-    <!--begin::Foot-->
     <div class="d-flex flex-stack flex-wrap mb-3">
         <!--begin::Author-->
         <div class="d-flex align-items-center">
@@ -63,19 +66,19 @@
                     </#if>
                 </span>
             </div>
-            <!--end::Name-->
         </div>
-        <!--end::Author-->
         <!--begin::Info-->
         <div class="d-flex align-items-center py-1">
             <a href="#answers" data-kt-scroll-toggle="true"
                class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${(post.comment.cnt)!0}</a>
             <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${post.hitCnt!}</button>
         </div>
-        <!--end::Info-->
     </div>
 </#macro>
 
+<#--
+ * 게시물 상세 :: 타이틀 메타 (미리보기 버전)
+ -->
 <#macro post_meta_preview post>
     <!--begin::Foot-->
     <div class="d-flex flex-stack flex-wrap mb-3">
@@ -95,22 +98,19 @@
                     ${DateUtils.getCurrDtStr()!}
                 </span>
             </div>
-            <!--end::Name-->
         </div>
-        <!--end::Author-->
         <!--begin::Info-->
         <div class="d-flex align-items-center py-1">
             <a href="#answers" data-kt-scroll-toggle="true"
                class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${(post.comment.cnt)!0}</a>
             <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${(post.hitCnt)!0}</button>
         </div>
-        <!--end::Info-->
     </div>
 </#macro>
 
-
-
-
+<#--
+ * 게시물 상세 :: 타이틀 메타 (프린트 버전)
+ -->
 <#macro post_meta_print post>
     <!--begin::Foot-->
     <div class="d-flex flex-stack flex-wrap mb-3">
@@ -130,9 +130,7 @@
                         ${post.regDt!}
                     </span>
             </div>
-            <!--end::Name-->
         </div>
-        <!--end::Author-->
         <!--begin::Info-->
         <div class="d-flex align-items-center py-1">
             <button type="button" class="btn btn-sm btn-primary px-4 me-2"
@@ -148,7 +146,6 @@
                 조회수 ${post.hitCnt!}
             </button>
         </div>
-        <!--end::Info-->
     </div>
 </#macro>
 

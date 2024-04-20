@@ -1,6 +1,6 @@
 <#--
- -- 목록 테이블 관련 컴포넌트
- -- @included_in : lib/components.ftl
+ * 목록 테이블 관련 컴포넌트
+ * @included_in : lib/components.ftl
  -->
 
 <!--

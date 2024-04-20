@@ -1,10 +1,10 @@
 <#--
- -- 버튼 관련 컴포넌트
- -- @included_in : lib/components.ftl
+ * 버튼 관련 컴포넌트
+ * @included_in : lib/components.ftl
  -->
 
 <!--
- * 버튼 : 권한/수정권한(mdfable0에 따른 수정 버튼
+ * 버튼 : 권한/수정권한(mdfable)에 따른 수정 버튼
  -->
 <#macro btn_post_modify func post isMngr>
     <#if post.isRegstr>

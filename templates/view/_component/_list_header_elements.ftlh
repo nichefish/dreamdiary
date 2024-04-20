@@ -1,6 +1,6 @@
 <#--
- -- 목록 헤더 관련 컴포넌트
- -- @included_in : lib/components.ftl
+ * 목록 헤더 관련 컴포넌트
+ * @included_in : lib/components.ftl
  -->
 
 <!--
@@ -64,7 +64,7 @@
  -->
 <#macro input_header_searchKeyword param>
     <span class="position-relative">
-        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+        <#--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
         <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
@@ -122,7 +122,6 @@
  * 버튼 : 등록 모달 호출
  -->
 <#macro btn_header_reg_modal func>
-    <!-- 버튼:: 등록하기 -->
     <button type="button" class="btn btn-sm btn-primary"
             onclick="${func}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
@@ -134,7 +133,6 @@
  * 버튼 : 정렬 순서 조정
  -->
 <#macro btn_header_sort_ordr func>
-    <!-- 버튼:: 등록하기 -->
     <button type="button" class="btn btn-sm btn-primary"
             onclick="${func}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
