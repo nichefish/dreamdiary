@@ -1,7 +1,6 @@
 <#--
-  -- 활동 로그 > 상세 Modal
-  -- @included_in : log_actvty_list
-  -->
+ * 파일시스템 메타(flsys_meta) : 스크립트 모듈 분리
+ -->
 
 <script>
     const Meta = (function() {

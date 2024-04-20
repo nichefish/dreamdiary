@@ -1,6 +1,6 @@
 <#--
-  -- 파일시스템(flsys) > 홈
-  -->
+ * 파일시스템(flsys) > 홈
+ -->
 
 <#import "/layout/layout_with_aside.ftlh" as layout >
 
@@ -44,7 +44,6 @@
                 </li>
             </ul>
             <!--end: Tab-->
-            <!--begin::Table-->
             <div class="d-flex align-items-center my-4">
                 <i class="bi bi-folder2-open text-primary"></i>
                 <div class="text-muted fw-bold ms-2" id="flsys_home_header_path">

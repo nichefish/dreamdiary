@@ -1,22 +1,19 @@
 <#--
-  -- 파일시스템 메타(flsys_meta) > 등록 Modal
-  -- @included_in : log_actvty_list
-  -->
+ * 파일시스템 메타(flsys_meta) > 등록 Modal
+ -->
 
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="flsys_meta_reg" size="xl">
-    <!--Begin::Modal Header-->
+    <!--begin::Modal Header-->
     <@component.modal_header "파일시스템 메타 정보 저장" />
-    <!--Begin::Modal Body-->
+    <!--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
-        <div class="table-responsive-sm">
-            <form class="form" name="flsysMetaRegForm" id="flsysMetaRegForm">
-                <div id="flsys_meta_reg_div">
-                    <!-- contents -->
-                </div>
-            </form>
-        </div>
+        <form class="form" name="flsysMetaRegForm" id="flsysMetaRegForm">
+            <div id="flsys_meta_reg_div">
+                <!-- contents -->
+            </div>
+        </form>
     </div>
     <!--begin::Modal Footer-->
     <div class="modal-footer">
@@ -33,7 +30,7 @@
                         </span>
             </button>
             <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
