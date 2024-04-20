@@ -5,6 +5,11 @@
 <script>
     const DtlCd = (function() {
         return {
+            /** form validation init */
+            initValidateForm: function() {
+                /* jquery :: validation */
+                commons.validate.validateForm("#dtlCdRegForm", DtlCd.regAjax);
+            },
             /** Draggable 컴포넌트 init */
             initDraggable: function() {
                 const containers = document.querySelectorAll(".draggable-zone");
@@ -30,11 +35,17 @@
             /** 상세코드 등록 팝업 호출 */
             regModal: function() {
                 commons.util.handlebarsTemplate({ "clCd": $("#clCd").val() }, "dtl_cd_reg", "show");
-                commons.validate.replaceBlankRegex("#dtlCdRegForm dtlCd");
-                commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
-                commons.validate.onlyNum("#dtlCdRegForm #sortOrdr");
                 commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                commons.validate.replaceBlankIfMatches("#dtlCdRegForm #dtlCd", commons.validate.nonCdRegex);
+                commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
+                /* jquery :: validation */
+                DtlCd.initValidateForm();
+                // template에 있는 tooltip들 활성화
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            },
+            /** submit */
+            submit: function() {
+                $("#dtlCdRegForm").submit();
             },
             /** 상세코드 등록 (Ajax) */
             regAjax: function() {
@@ -43,7 +54,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    $("#clCdRegForm #regYn").val("Y");
+                    $("#dtlCdRegForm #regYn").val("Y");
                     const url = "${Url.DTL_CD_REG_AJAX!}";
                     let ajaxData = $("#dtlCdRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
@@ -59,18 +70,18 @@
                 const url = "${Url.DTL_CD_DTL_AJAX!}";
                 let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
                     let rsltObj = res.rsltObj;
                     rsltObj.isMdf = true;
                     commons.util.handlebarsTemplate(rsltObj, "dtl_cd_reg", "show");
-                    commons.validate.replaceBlankRegex("#dtlCdRegForm #dtlCd");
-                    commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
-                    commons.validate.onlyNum("#dtlCdRegForm #sortOrdr");
                     commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                    /* jquery :: validation */
+                    DtlCd.initValidateForm();
+                    // template에 있는 tooltip들 활성화
+                    $('[data-bs-toggle="tooltip"]').tooltip();
                 });
             },
             /** 사용으로 변경 (Ajax) */
@@ -86,7 +97,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -104,7 +115,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -118,7 +129,7 @@
                 const url = "${Url.DTL_CD_SORT_ORDR_AJAX!}";
                 let ajaxData = { "sortOrdr": orderData };
                 commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
-                    if (res.result) {
+                    if (res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) {
                             Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
                         } else {
@@ -140,7 +151,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.result) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });

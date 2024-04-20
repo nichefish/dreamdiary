@@ -12,7 +12,7 @@
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
 
-<#--include:: script modules -->
+<#--include::script modules-->
 <#include "/view/admin/cd/_cl_cd_scripts.ftlh">
 
 <script>
@@ -57,12 +57,15 @@
                 <#list clCdList![] as clCd>
                     <tr class="sortable-item draggable bg-hover-secondary" id="${clCd.clCd!}" onclick="ClCd.dtl('${clCd.clCd!}');">
                         <td class="text-center hidden-table">
-                            <div class="draggable-handle cursor-move pt-2"
+                            <div class="draggable-handle d-flex-center cursor-move pt-2"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
                                 <i class="ki-duotone ki-abstract-14 fs-2x">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
+                                <span class="text-muted ms-2">
+                                    ${(clCd.state.sortOrdr)!"-"}
+                                </span>
                             </div>
                         </td>
                         <td class="text-start px-6 cursor-pointer fw-bold text-gray-700">
@@ -80,7 +83,7 @@
                             ${clCd.dtlCdCnt!0}
                         </td>
                         <td class="text-center hidden-table">
-                            <#if (clCd.useYn!"Y") == "Y">
+                            <#if ((clCd.state.useYn)!"N") == "Y">
                                 <div class="badge badge-success cursor-pointer"
                                      onclick="ClCd.unuseAjax('${clCd.clCd}');"
                                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"

@@ -1,34 +1,29 @@
 <#--
- -- 분류 코드(cl_cd) > 등록 Modal
- -- @included_in : cl_cd_list
+ * 분류 코드(cl_cd) > 등록 Modal
+ * @included_in : cl_cd_list
  -->
 
-<#import "/layout/modal_layout.ftlh" as modal >
+<#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="cl_cd_reg" size="lg">
-    <!--Begin::Modal Header-->
+    <!--begin::Modal Header-->
     <@component.modal_header "분류코드 저장" />
-    <!--Begin::Modal Body-->
+    <!--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
-        <div class="table-responsive-sm">
-            <form name="clCdRegForm" id="clCdRegForm">
-                <div id="cl_cd_reg_div">
-                    <!-- contents -->
-                </div>
-            </form>
-        </div>
+        <form name="clCdRegForm" id="clCdRegForm">
+            <div id="cl_cd_reg_div">
+                <!-- contents -->
+            </div>
+        </form>
     </div>
     <!--begin::Modal Footer-->
     <div class="modal-footer">
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-sm btn-primary me-2"
-                    onclick="ClCd.regAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                <i class="bi bi-pencil-square"></i>저장
-            </button>
+            <!-- 버튼:: 저장하기 -->
+            <@component.modal_btn_save "ClCd.submit();" />
             <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>

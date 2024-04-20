@@ -5,10 +5,10 @@
 
 <script type="text/x-handlebars-template" id="dtl_cd_reg_template">
     <input type="hidden" name="clCd" value="{{clCd}}">
-    <input type="hidden" name="regYn" id="regYn" value="{{#if (notExists dtlCd)}}Y{{/if}}{{#if (exists dtlCd)}}N{{/if}}">
+    <input type="hidden" name="regYn" value="{{#if (notExists dtlCd)}}Y{{/if}}{{#if (exists dtlCd)}}N{{/if}}">
 
     <#--begin::Row-->
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-3 col-form-label text-center">
             <span class="cursor-help fw-bold required"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
@@ -25,14 +25,14 @@
             </div>
             {{/if}}
             {{#if (notExists dtlCd)}}
-                <input type="text" name="dtlCd" id="dtlCd" class="form-control form-control-solid required" value="{{dtlCd}}" maxlength="10">
+                <input type="text" name="dtlCd" id="dtlCd" class="form-control form-control-solid required" value="{{dtlCd}}" maxlength="20">
+                <div class="text-noti">※영문 대문자 및 숫자만 가능, 1~20자</div>
+                <div id="dtlCd_valid_span"></div>
             {{/if}}
-            <div class="text-noti">※영문 대문자 및 숫자만 가능, 1~20자</div>
-            <div id="dtlCd_valid_span"></div>
         </div>
     </div>
     <#--begin::Row-->
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-3 col-form-label text-center">
             <label class="cursor-help fw-bold required"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
@@ -59,17 +59,16 @@
     <div class="row mb-4">
         <div class="col-3 col-form-label text-center">
             <label class="cursor-help fw-bold"
-                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                  title="'사용'으로 체크된 코드만&#10;실제 코드 사용시 조회됩니다.">
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="'사용'으로 체크된 코드만&#10;실제 코드 사용시 조회됩니다.">
                 사용 여부
                 <i class="bi bi-question-circle"></i>
             </label>
         </div>
         <div class="col-9 text-center d-flex align-items-center">
             <div class="form-check form-switch form-check-custom form-check-solid">
-                <input class="form-check-input" type="checkbox" value="Y" name="useYn" id="useYn" {{checkedIf (trueFalse useYn "Y//N")}} />
-                <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedStyle (trueFalse useYn "Y//N") "color" "blue//gray"}}>
-                    {{#if (trueFalse useYn "N//Y")}}미{{/if}}사용
+                <input class="form-check-input" type="checkbox" value="Y" name="state.useYn" id="useYn" {{checkedIf (trueFalse state.useYn "Y//N")}} />
+                <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedStyle (trueFalse state.useYn "Y//N") "color" "blue//gray"}}>
+                    {{#if (trueFalse state.useYn "N//Y")}}미{{/if}}사용
                 </label>
             </div>
         </div>

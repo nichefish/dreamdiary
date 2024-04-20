@@ -5,6 +5,11 @@
 <script>
     const ClCd = (function() {
         return {
+            /** form validation init */
+            initValidateForm: function() {
+                /* jquery :: validation */
+                commons.validate.validateForm("#clCdRegForm", ClCd.regAjax);
+            },
             /** Draggable 컴포넌트 init */
             initDraggable: function() {
                 const containers = document.querySelectorAll(".draggable-zone");
@@ -34,10 +39,18 @@
             },
             /** 등록 팝업 호출 */
             regModal: function() {
+                /* jquery :: validation */
+                ClCd.initValidateForm();
                 commons.util.handlebarsTemplate({}, "cl_cd_reg", "show");
                 commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                commons.validate.replaceBlankRegex("#clCdRegForm #clCd");
+                commons.validate.replaceBlankIfMatches("#clCdRegForm #clCd", commons.validate.nonCdRegex);
                 commons.validate.toUpperCase("#clCdRegForm #clCd");
+                // template에 있는 tooltip들 활성화
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            },
+            /** submit */
+            submit: function() {
+                $("#clCdRegForm").submit();
             },
             /** 등록 또는 수정 처리(Ajax) */
             regAjax: function() {
@@ -74,12 +87,13 @@
                         return false;
                     }
                     commons.util.handlebarsTemplate(res.rsltObj, "cl_cd_dtl", "show");
+                    ClCd.key = clCd;
                 });
             },
-            /** 수정 화면 이동 */
-            mdfModal: function() {
+            /** 수정 모달 호출 */
+            mdfModal: function(clCd) {
                 const url = "${Url.CL_CD_DTL_AJAX!}";
-                let ajaxData = { "clCd": $("#clCd").val() };
+                let ajaxData = { "clCd": clCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -88,9 +102,12 @@
                     let rsltObj = res.rsltObj;
                     rsltObj.isMdf = true;
                     commons.util.handlebarsTemplate(rsltObj, "cl_cd_reg", "show");
+                    $('#cl_cd_dtl_modal').modal('hide');
+                    /* jquery :: validation */
+                    ClCd.initValidateForm();
                     commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                    commons.validate.replaceBlankRegex("#clCdRegForm #clCd");
-                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                    // template에 있는 tooltip들 활성화
+                    $('[data-bs-toggle="tooltip"]').tooltip();
                 });
             },
             /** 사용으로 변경 (Ajax) */

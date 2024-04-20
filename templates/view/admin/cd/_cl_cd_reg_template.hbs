@@ -5,67 +5,71 @@
 
 <script type="text/x-handlebars-template" id="cl_cd_reg_template">
     <input type="hidden" class="form-control" name="regYn" id="regYn" value="{{#isMdf}}N{{/isMdf}}">
-    <!--begin::Question-->
-    <div class="mb-0">
-        <!--begin::Head-->
-        <div class="row mb-4">
-            <!--begin::Title-->
-            <div class="col-2 col-form-label text-center">
-                <label class="cursor-help fw-bold required"
-                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                      title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드를&#10;입력합니다.&#10;(등록 후 수정할 수 없습니다.)">
-                    분류코드
-                    <i class="bi bi-question-circle"></i>
-                </label>
-            </div>
-            <div class="col-10">
-                <input type="text" class="form-control {{#isMdf}}bg-secondary{{/isMdf}}" name="clCd" id="clCd" value="{{clCd}}" {{#isMdf}}readonly{{/isMdf}}
-                    {{#isMdf}}data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="분류코드는 수정할 수 없습니다."{{/isMdf}}>
-            </div>
-            <!--end::Title-->
+    <#--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-3 col-form-label text-center">
+            <label class="cursor-help fw-bold required"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                  title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드를&#10;입력합니다.&#10;(등록 후 수정할 수 없습니다.)">
+                분류코드
+                <i class="bi bi-question-circle"></i>
+            </label>
         </div>
-        <div class="row mb-4">
-            <!--begin::Title-->
-            <div class="col-2 col-form-label text-center">
-                <label class="cursor-help fw-bold required"
-                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                      title="외부적으로 사용되는&#10;코드 이름을 입력합니다.">
-                    분류코드명
-                    <i class="bi bi-question-circle"></i>
-                </label>
-            </div>
-            <div class="col-10">
-                <input type="text" class="form-control" name="clCdNm" value="{{clCdNm}}">
-            </div>
-            <!--end::Title-->
-        </div>
-        <div class="row mb-4">
-            <!--begin::Title-->
-            <div class="col-2 col-form-label text-center">
-                <label class="fw-bold required">
-                    분류코드 설명
-                </label>
-            </div>
-            <div class="col-10">
-                <textarea class="form-control h-75px" name="clCdDc">{{clCdDc}}</textarea>
-            </div>
-            <!--end::Title-->
-        </div>
-        <div class="row mb-4">
-            <!--begin::Title-->
-            <div class="col-2 col-form-label text-center">
-                <label class="fw-bold">
-                    사용 여부
-                </label>
-            </div>
-            <div class="col-10">
-                <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
-                    <input class="form-check-input ms-3" type="checkbox" value="Y" name="useYn" id="useYn" />
-                    <label class="form-check-label fw-bold ms-3" for="useYn" id="useYnLabel">미사용</label>
+        <div class="col-4">
+            {{#if (exists clCd)}}
+                <div class="col-form-label">
+                    <span class="text-noti fw-bold ps-1">{{clCd}}</span>
+                    <input type="hidden" name="dtlCd" value="{{clCd}}">
                 </div>
-            </div>
-            <!--end::Title-->
+            {{else}}
+                <input type="text" class="form-control form-control-solid required" name="clCd" id="clCd" value="{{clCd}}" maxlength="20">
+                <div class="text-noti">※영문 대문자 및 숫자만 가능, 1~20자</div>
+                <div id="clCd_valid_span"></div>
+            {{/if}}
         </div>
-        <!--end::Head-->
+    </div>
+    <#--begin::Row-->
+    <div class="row mb-3">
+        <div class="col-3 col-form-label text-center">
+            <label class="cursor-help fw-bold required"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                  title="외부적으로 사용되는&#10;코드 이름을 입력합니다.">
+                분류코드명
+                <i class="bi bi-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-9">
+            <input type="text" class="form-control form-control-solid required" name="clCdNm" id="clCdNm" value="{{clCdNm}}">
+            <div id="clCdNm_valid_span"></div>
+        </div>
+    </div>
+    <#--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-3 col-form-label text-center">
+            <label class="fw-bold">
+                분류코드 설명
+            </label>
+        </div>
+        <div class="col-9">
+            <textarea class="form-control form-control-solid h-75px" name="clCdDc">{{clCdDc}}</textarea>
+        </div>
+    </div>
+    <#--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-3 col-form-label text-center">
+            <label class="cursor-help fw-bold"
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="'사용'으로 체크된 코드만&#10;실제 코드 사용시 조회됩니다.">
+                사용 여부
+                <i class="bi bi-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-9">
+            <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
+                <input class="form-check-input" type="checkbox" value="Y" name="state.useYn" id="useYn" {{checkedIf (trueFalse state.useYn "Y//N")}} />
+                <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedStyle (trueFalse state.useYn "Y//N") "color" "blue//gray"}}>
+                    {{#if (trueFalse state.useYn "N//Y")}}미{{/if}}사용
+                </label>
+            </div>
+        </div>
     </div>
 </script>

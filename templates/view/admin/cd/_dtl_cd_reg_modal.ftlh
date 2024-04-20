@@ -3,12 +3,12 @@
  -- @included_in : cl_cd_dtl
  -->
 
-<#import "/layout/modal_layout.ftlh" as modal >
+<#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="dtl_cd_reg" size="lg">
-    <!--Begin::Modal Header-->
+    <!--begin::Modal Header-->
     <@component.modal_header "상세코드 저장" />
-    <!--Begin::Modal Body-->
+    <!--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <form name="dtlCdRegForm" id="dtlCdRegForm">
             <div id="dtl_cd_reg_div">
@@ -20,13 +20,10 @@
     <div class="modal-footer">
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-sm btn-primary me-2"
-                    onclick="DtlCd.regAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                <i class="bi bi-pencil-square"></i>저장
-            </button>
+            <!-- 버튼:: 저장하기 -->
+            <@component.modal_btn_save "DtlCd.submit();" />
             <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
