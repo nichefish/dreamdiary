@@ -13,10 +13,10 @@
      data-kt-drawer-direction="start"
      data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
 
-    <!--include::Logo image and toggle-->
+    <#--include::Logo image and toggle-->
     <#include "/layout/sidebar/_sidebar_logo.ftlh">
 
-    <!--include::Menu-->
+    <#--include::Menu-->
     <!--사용자/관리자에 따라 사이드메뉴 다르게 첨부-->
     <#if isMngrMode>
         <#include "/layout/sidebar/_sidebar_menu_admin.ftlh">
@@ -24,7 +24,7 @@
         <#include "/layout/sidebar/_sidebar_menu_portal.ftlh">
     </#if>
 
-    <!--include::Footer-->
+    <#--include::Footer-->
     <#include "/layout/sidebar/_sidebar_footer.ftlh">
 </div>
 <!--end::Sidebar-->
