@@ -102,8 +102,9 @@
     <div class="card-footer">
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
-        <!-- 버튼 :: 저장하기 -->
-        <@component.btn_post_submit "LgnPolicy.submit();" />
+            <!-- 버튼 :: 저장하기 -->
+            <@component.btn_post_submit "LgnPolicy.submit();" />
+        </div>
     </div>
 </div>
 <!--end::Card-->
