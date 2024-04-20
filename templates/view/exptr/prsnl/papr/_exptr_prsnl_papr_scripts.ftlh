@@ -1,6 +1,6 @@
 <#--
-  -- 경비지출서(exptr_prsnl_papr) : 모듈 스크립트 분리
-  -->
+ * 경비지출서(exptr_prsnl_papr) : 스크립트 모듈 분리
+ -->
 
 <script>
     const ExptrPrsnlPapr = (function() {
