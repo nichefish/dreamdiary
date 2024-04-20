@@ -1,10 +1,10 @@
 <#--
- -- 로그인 화면 > 공지사항 Modal
- -- TODO:
+ * 공지사항 팝업 : 스크립트 모듈 분리
  -->
+
 <script>
     /** 공지사항 팝업 관련 */
-    const NoticePopup = function() {
+    const NoticePopup = (function() {
         return {
             init: function() {
                 /** 로그인 공지 목록 조회 */
@@ -13,7 +13,7 @@
             },
             /** 팝업 목록 조회 및 처리 */
             showNoticePopupAjax() {
-                // const url = "${SiteUrl.NOTICE_POPUP_LIST_AJAX!}";
+                // const url = "${Url.NOTICE_POPUP_LIST_AJAX!}";
                 // commons.util.blockUISyncAjax(url, 'post', null, function(res) {
                 //     if (commons.util.isNotEmpty(res.rsltList)) {
                 //         let rsltList = res.rsltList;
@@ -34,11 +34,11 @@
                     NoticePopup.popupIdx++;
                     return NoticePopup.showNoticePopup();
                 }
-                const url = "${SiteUrl.NOTICE_DTL_AJAX!}";
+                const url = "${Url.NOTICE_DTL_AJAX!}";
                 let obj = NoticePopup.popupList[NoticePopup.popupIdx];
                 let ajaxData = { "postNo": obj.postNo };
                 commons.util.blockUISyncAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.result) {
+                    if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
@@ -84,32 +84,5 @@
                 $("#notice_popup_modal").modal("hide");
             },
         }
-    }();
-
-    $(document).ready(function() {
-        NoticePopup.init();
-    });
+    })();
 </script>
-<div class="modal fade" id="notice_popup_modal" data-bs-keyboard="false" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <!-- 영역:: 모달 헤더 -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="lgnNotifyModalLongTitle">[공지사항 팝업]</h5>
-                <div class="btn btn-sm btn-icon btn-active-light-primary ms-2"
-                     onclick="NoticePopup.closeBtnFunc();" aria-label="Close">
-                    <i class="fas fa-times"></i>
-                </div>
-                <!--end::Close-->
-            </div>
-            <!-- 영역:: 모달 내용 -->
-            <div class="modal-body modal-mbl-body mb-5">
-                <div id="notice_popup_div">
-                    <!-- handlebars template goes in here -->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- include:: Handlebars template -->
-<#include "/component/notice/_notice_popup_template.hbs">

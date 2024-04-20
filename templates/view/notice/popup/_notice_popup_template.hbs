@@ -1,7 +1,8 @@
 <#--
- -- 공지사항 조회 Template
- -- @included_in : _notice_popup_modal.ftlh
+ * 공지사항 팝업 조회 Template
+ * @included_in : _notice_popup_modal.ftlh
  -->
+
 <script type="text/x-handlebars-template" id="notice_popup_template">
     <div class="table-responsive-sm">
         <!-- contents -->
@@ -51,12 +52,13 @@
                     {{{cn}}}
                 </div>
 
-                <#-- 첨부파일 영역 -->
+                <!--begin::AtchFile-->
                 <#include "/view/_component/atch_file/_atch_file_partial.hbs">
             </div>
 
             <div class="separator separator-dashed border-gray-300 my-8"></div>
 
+            <!--begin::Modal Footer-->
             <div class="modal-footer">
                 <div class="d-flex align-items-center me-10 text-muted"
                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="선택한 기간 동안&#10;이 팝업을 열지 않습니다.">
