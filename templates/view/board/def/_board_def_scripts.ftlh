@@ -1,6 +1,6 @@
 <#--
-  -- 게시판 정의(board_def) : 모듈 스크립트 분리
-  -->
+ * 게시판 정의(board_def) : 스크립트 모듈 분리
+ -->
 
 <script>
     const BoardDef = (function() {
@@ -32,10 +32,14 @@
                 commons.util.handlebarsTemplate({}, "board_def_reg", "show");
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 commons.validate.validateForm("#boardDefRegForm");
-                commons.validate.replaceBlankRegex("#boardDefRegForm .cddata");
+                commons.validate.replaceBlankIfMatches("#boardDefRegForm .cddata", commons.validate.nonCdRegex);
                 commons.validate.onlyEngNum("#boardDefRegForm .cddata");
                 // commons.validate.toUpperCase("#boardDefRegForm .cddata");
                 commons.validate.onlyNum(".number");
+            },
+            /** submit */
+            submit: function() {
+                $("#boardDefRegForm").submit();
             },
             /** 등록 (ajax) */
             regAjax: function() {
@@ -79,14 +83,14 @@
                 });
             },
             /** 사용으로 변경 (Ajax) */
-            useAjax: function(boardCd) {
+            useAjax: function(key) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.use"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = '${Url.BOARD_DEF_USE_AJAX!}';
-                    let ajaxData = { "boardCd": boardCd };
+                    let ajaxData = { "boardCd": key };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -96,14 +100,14 @@
                 });
             },
             /** 미사용으로 변경 (Ajax) */
-            unuseAjax: function(boardCd) {
+            unuseAjax: function(key) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.unuse"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = '${Url.BOARD_DEF_UNUSE_AJAX!}';
-                    let ajaxData = { "boardCd": boardCd };
+                    let ajaxData = { "boardCd": key };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -113,14 +117,14 @@
                 });
             },
             /** 삭제 처리 (ajax) */
-            delAjax: function(boardCd) {
+            delAjax: function(key) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.BOARD_DEF_DEL_AJAX!}";
-                    let ajaxData = { "boardCd": boardCd };
+                    let ajaxData = { "boardCd": key };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
