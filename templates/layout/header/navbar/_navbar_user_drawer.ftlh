@@ -1,5 +1,5 @@
 <!--
- * 레이아웃 > 사용자 정보 Drawer
+ * 레이아웃 > 탑바 > 사용자 정보 Drawer
  * @included_in : layout
  -->
 

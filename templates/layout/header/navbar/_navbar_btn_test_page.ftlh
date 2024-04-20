@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 탑바
- -- @included_in : layout/topbar
+ * 레이아웃 > 탑바 > 테스트 페이지 버튼
+ * @included_in : layout/topbar
  -->
 <div class="app-navbar-item mx-1">
     <div class="d-flex align-items-center">

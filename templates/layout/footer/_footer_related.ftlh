@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 푸터 > 관련 사이트
- -- @included_in : layout/footer/_footer_base.ftlh
+ * 레이아웃 > 푸터 > 관련 사이트
+ * @included_in : layout/footer/_footer_base.ftlh
  -->
 
 <!--begin::Footer-Related-->

@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 탑바
- -- @included_in : layout/topbar
+ * 레이아웃 > 탑바 > 사이트맵 버튼
+ * @included_in : layout/topbar
  -->
 <div class="app-navbar-item mx-1">
     <div class="d-flex align-items-center">

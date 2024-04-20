@@ -6,26 +6,26 @@
 <!--begin::Navbar-->
 <div class="app-navbar flex-shrink-0">
     <#--include::Notion-->
-    <#include "/layout/header/navbar/_navbar_notion.ftlh">
+    <#include "/layout/header/navbar/_navbar_btn_notion.ftlh">
 
     <#--include::Flsys-->
-    <#include "/layout/header/navbar/_navbar_flsys.ftlh">
+    <#include "/layout/header/navbar/_navbar_btn_flsys.ftlh">
 
     <!--begin::Separator-->
     <span class="my-6 border-gray-300 border-start ms-3 mx-2"></span>
     <!--end::Separator-->
 
     <#--include::테스트 페이지 -->
-    <#include "/layout/header/navbar/_navbar_test_page.ftlh">
+    <#include "/layout/header/navbar/_navbar_btn_test_page.ftlh">
 
     <#--include::태그클라우드 -->
-    <#include "/layout/header/navbar/_navbar_tag_cloud.ftlh">
+    <#include "/layout/header/navbar/_navbar_btn_tag_cloud.ftlh">
 
     <#--include::사이트맵 -->
-    <#include "/layout/header/navbar/_navbar_sitemap.ftlh">
+    <#include "/layout/header/navbar/_navbar_btn_sitemap.ftlh">
 
     <#--include::검색 -->
-    <#include "/layout/header/navbar/_navbar_search.ftlh">
+    <#include "/layout/header/navbar/_navbar_btn_search.ftlh">
 
     <!--begin::Separator-->
     <span class="my-6 border-gray-300 border-start ms-2 me-6"></span>

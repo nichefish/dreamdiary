@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 탑바 > 노션 메뉴 버튼
- -- @included_in : layout/topbar
+ * 레이아웃 > 탑바 > 노션 메뉴 버튼
+ * @included_in : layout/topbar
  -->
 
 <div class="app-navbar-item align-items-stretch mx-1">
