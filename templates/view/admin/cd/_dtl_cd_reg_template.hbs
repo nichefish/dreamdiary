@@ -25,8 +25,8 @@
             </div>
             {{/if}}
             {{#if (notExists dtlCd)}}
-                <input type="text" name="dtlCd" id="dtlCd" class="form-control form-control-solid required" value="{{dtlCd}}" maxlength="20">
-                <div class="text-noti">※영문 대문자 및 숫자만 가능, 1~20자</div>
+                <input type="text" name="dtlCd" id="dtlCd" class="form-control form-control-solid required" value="{{dtlCd}}" maxlength="30">
+                <div class="text-noti">※영문 대문자 및 숫자만 가능, 1~30자</div>
                 <div id="dtlCd_valid_span"></div>
             {{/if}}
         </div>

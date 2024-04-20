@@ -116,7 +116,7 @@
                         <span class="cursor-help"
                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                               title="외부적으로 사용되는&#10;코드 이름입니다.">
-                            상세 코드명
+                            상세코드명
                         </span>
                     </th>
                     <th class="col-4 text-center wb-keepall">상세코드 설명</th>
