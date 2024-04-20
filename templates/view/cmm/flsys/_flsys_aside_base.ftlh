@@ -25,7 +25,7 @@
 
         <#--begin::Aside1-->
         <div class="card card-reset card-p-0">
-            <#--begin::Header-->
+            <#--begin::Card header-->
             <div class="card-header min-h-auto mb-5">
                 <h3 class="card-title text-gray-900 fw-bold fs-3">Filters</h3>
                 <#--begin::Toolbar-->
