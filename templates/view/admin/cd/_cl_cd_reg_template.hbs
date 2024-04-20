@@ -4,7 +4,8 @@
  -->
 
 <script type="text/x-handlebars-template" id="cl_cd_reg_template">
-    <input type="hidden" class="form-control" name="regYn" id="regYn" value="{{#isMdf}}N{{/isMdf}}">
+    <input type="hidden" name="regYn" value="{{#if (notExists clCd)}}Y{{/if}}{{#if (exists clCd)}}N{{/if}}">
+
     <#--begin::Row-->
     <div class="row mb-4">
         <div class="col-3 col-form-label text-center">
@@ -19,7 +20,7 @@
             {{#if (exists clCd)}}
                 <div class="col-form-label">
                     <span class="text-noti fw-bold ps-1">{{clCd}}</span>
-                    <input type="hidden" name="dtlCd" value="{{clCd}}">
+                    <input type="hidden" name="clCd" value="{{clCd}}">
                 </div>
             {{else}}
                 <input type="text" class="form-control form-control-solid required" name="clCd" id="clCd" value="{{clCd}}" maxlength="20">
