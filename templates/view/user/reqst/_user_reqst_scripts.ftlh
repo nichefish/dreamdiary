@@ -1,5 +1,5 @@
 <#--
-  -- 사용자 신청(user_reqst) : 모듈 스크립트 분리
+  -- 사용자 신청(user_reqst) : 스크립트 모듈 분리
   -->
 
 <script>
@@ -33,10 +33,9 @@
                         passwordCf: { equalTo:"#password", maxlength:20 },
                     },
                     messages: {
-                        userId: { minlength:"아이디는 {0}자 이상으로 입력해야 합니다.", maxlength:"아이디는 {0}자 이하로 입력해야 합니다." },
                         ipDupChckPassed: { dupChck:"아이디 중복 체크는 필수 항목입니다." },
-                        password: { minlength:"비밀번호는 {0}자 이상으로 입력해야 합니다.", maxlength:"비밀번호는 {0}자 이하로 입력해야 합니다.", regex:"비밀번호가 형식에 맞지 않습니다." },
-                        passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다.", maxlength:"비밀번호 확인은 {}자 이하로 입력해야 합니다." },
+                        password: { regex:"비밀번호가 형식에 맞지 않습니다." },
+                        passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다." },
                     },
                 });
                 $.validator.addMethod("dupChck", function(value) {
@@ -67,7 +66,7 @@
                     if (result.value) UserReqst.main();
                 });
             },
-            /** 메인 화면으로 돌아가기 */
+            /** 메인 화면으로 이동 */
             main: function() {
                 commons.util.blockUIReplace("${Url.MAIN!}");
             }
