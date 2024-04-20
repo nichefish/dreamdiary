@@ -1,6 +1,6 @@
 <#--
- -- 댓글 목록 Modal
- -- @included_in : 댓글 미리보기 기능이 있는 페이지들
+ * 댓글 목록 Modal
+ * @included_in : 댓글 미리보기 기능이 있는 페이지들
  -->
 
 <script>
@@ -26,29 +26,28 @@
     })();
 </script>
 
-<div class="modal fade" id="comment_list_modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <!-- 영역:: 모달 헤더 -->
-            <@component.modal_header "댓글 목록 조회" />
-            <!-- 영역:: 모달 내용 -->
-            <div class="modal-body modal-mbl-body my-5">
-                <div class="table-responsive-sm">
-                    <div class="row" id="comment_list_div">
-                        <!-- handlebars template goes in here -->
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <!-- 버튼 영역 -->
-                <div class="d-flex justify-content-end">
-                    <!-- 버튼:: 모달 닫기 -->
-                    <@component.btn_modal_close />
-                </div>
+<#import "/layout/modal_layout.ftlh" as modal>
+
+<@modal.layout id="comment_list" size="xl">
+    <!--begin::Modal Header-->
+    <@component.modal_header "댓글 목록 조회" />
+    <!--begin::Modal Body-->
+    <div class="modal-body modal-mbl-body my-5">
+        <div class="table-responsive-sm">
+            <div class="row" id="comment_list_div">
+                <!-- handlebars template goes in here -->
             </div>
         </div>
     </div>
-</div>
+    <!--begin::Modal Footer-->
+    <div class="modal-footer">
+        <!-- 버튼 영역 -->
+        <div class="d-flex justify-content-end">
+            <!-- 버튼:: 모달 닫기 -->
+            <@component.btn_modal_close />
+        </div>
+    </div>
+</@modal.layout>
 
 <form name="procForm" id="commentProcForm">
     <input type="hidden" name="refPostNo" id="refPostNo" value="" />
