@@ -1,8 +1,8 @@
 <#--
- -- 레이아웃 > NOTION 참조 ID
- -- @included_in : 파일 첨부 기능이 있는 페이지들
+ * 레이아웃 > NOTION 참조 ID
  -->
-<!--begin::Row-->
+
+<#--begin::Row-->
 <div class="row mb-6">
     <div class="col-12">
         <label class="mb-2 d-block">
