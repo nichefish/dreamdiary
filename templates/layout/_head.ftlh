@@ -1,35 +1,24 @@
 <#--
- -- 레이아웃 > head
- -- metronic v8.2.5
- -- @included_in : layout
+ * 레이아웃 > head
+ * metronic v8.2.5
+ * @included_in : layout
  -->
+
 <#setting number_format="c">
 
 <head>
     <title></title>
     <base href="${Url.MAIN!}">
-    <meta name="description" content="
-            The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo,
-            Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions.
-            Grab your copy now and get life-time updates for free.
-        "/>
-    <meta name="keywords" content="
-            metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js,
-            Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates,
-            free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button,
-            bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon
-        "/>
+    <meta name="description" content="${Constant.SITE_DESC!}"/>
+    <meta name="keywords" content="${Constant.SITE_KEYWORDS!}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <meta property="og:locale" content="ko_KR" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Metronic - The World's #1 Selling Bootstrap Admin Template by KeenThemes" />
-    <meta property="og:url" content="https://keenthemes.com/metronic"/>
-    <meta property="og:site_name" content="Metronic by Keenthemes" />
+    <meta property="og:title" content="${Constant.SITE_NM!}" />
+    <meta property="og:url" content="${Url.DOMAIN!}"/>
+    <meta property="og:site_name" content="${Constant.SITE_NM!}" />
     <link rel="shortcut icon" href="/favicon.ico" />
-
-<#--    <!--Fonts(used by all pages) &ndash;&gt;
-    <link rel="stylesheet" type="text/css" href="/css/font.css?family=Poppins:300,400,500,600,700" />-->
 
     <!--Metronic:: Gloabl Css Bundle(used by all pages) -->
     <link rel="stylesheet" type="text/css" href="/metronic/assets/plugins/global/plugins.bundle.css?${releaseDate!}" />
@@ -37,7 +26,6 @@
     <!--Fonts:: Gloabl Css Bundle(used by all pages) -->
     <link rel="stylesheet" type="text/css" href="/lib/fontawesome/css/fontawesome.css?${releaseDate!}" />
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-icon/bootstrap-icons.css?${releaseDate!}" />
-
 
     <!--My:: Gloabl Css Bundle(used by all pages) -->
     <link rel="stylesheet" type="text/css" href="/css/commons.css?${releaseDate!}" />
@@ -65,6 +53,3 @@
     <script type="text/javascript" src="/js/commons/commons-datepicker.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/commons/commons-helpers.js?${releaseDate!}"></script>
 </head>
-
-<!--
--->

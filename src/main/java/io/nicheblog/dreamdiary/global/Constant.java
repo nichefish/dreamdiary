@@ -29,6 +29,10 @@ public final class Constant
 
     public static final String CHARSET_UTF_8 = "UTF-8";
 
+    public static final String SITE_NM = "dreamdiary";
+    public static final String SITE_DESC = "'tis my site!";
+    public static final String SITE_KEYWORDS = "dream, diary, journal";
+
     public static final String PAGE_LGN = "로그인";
     public static final String PAGE_MAIN = "메인";
     public static final String PAGE_LIST = "목록 조회";

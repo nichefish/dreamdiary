@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 기본 레이아웃 (사이드바 제거 버전)
- -- metronic v8.2.5
+ * 레이아웃 > 기본 레이아웃 (사이드바 제거 버전)
+ * metronic v8.2.5
  -->
 
 <#macro layout toolbar>
@@ -89,7 +89,7 @@
         <!--end::App-->
 
         <#--include:: Engage-->
-        <#include "/layout/_engage.ftlh">
+        <#include "/layout/engage/_engage.ftlh">
 
         <#--include:: Scrolltop-->
         <#include "/layout/_scrolltop.ftlh">

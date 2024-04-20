@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 툴바
- -- @included_in : layout
+ * 레이아웃 > 툴바
+ * @included_in : layout
  -->
 
 <!--begin::Toolbar-->

@@ -1,7 +1,7 @@
 <#--
- -- 레이아웃 > head
- -- metronic v8.2.5
- -- @included_in : layout
+ * 레이아웃 > engage
+ * metronic v8.2.5
+ * @included_in : layout
  -->
 
 <div class="app-engage" id="kt_app_engage">

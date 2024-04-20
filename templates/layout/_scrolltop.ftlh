@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > _scrolltop
- -- @included_in : layout
+ * 레이아웃 > _scrolltop
+ * @included_in : layout
  -->
 
 <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">

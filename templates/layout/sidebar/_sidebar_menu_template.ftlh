@@ -1,5 +1,5 @@
 <!--
- * 레이아웃 > 기본 레이아웃
+ * 레이아웃 > 메뉴 그리기 템플릿
  * @included_in : aside/_aside_menu_portal
  * @included_in : aside/_aside_menu_admin
  -->

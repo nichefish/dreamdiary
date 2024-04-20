@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 팝업 레이아웃
- -- metronic v8.2.5
+ * 레이아웃 > 팝업 레이아웃
+ * metronic v8.2.5
  -->
 
 <#macro layout toolbar>

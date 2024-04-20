@@ -1,6 +1,6 @@
 <!--
- -- 레이아웃 > 기본 레이아웃 (aside(우측 사이드바) 추가 버전)
- -- metronic v8.2.5
+ * 레이아웃 > 기본 레이아웃 (aside(우측 사이드바) 추가 버전)
+ * metronic v8.2.5
  -->
 
 <#macro layout toolbar>
