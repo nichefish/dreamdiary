@@ -1,31 +1,30 @@
 <#--
-  -- 휴가계획서(vcatn_papr) > 상세 Modal
-  -- @included_in : vcatn_papr_list.ftlh
-  -->
+ * 휴가계획서(vcatn_papr) > 상세 Modal
+ * @included_in : vcatn_papr_list.ftlh
+ -->
 
-<div class="modal fade" id="vcatn_papr_dtl_modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <!-- 영역:: 모달 헤더 -->
-            <@component.modal_header "휴가계획서" />
-            <!-- 영역:: 모달 내용 -->
-            <div class="modal-body modal-mbl-body my-5">
-                <div class="table-responsive-sm">
-                    <div id="vcatn_papr_dtl_div">
-                        <!-- contents -->
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <!-- 버튼 영역 -->
-                <div class="d-flex justify-content-end">
-                    <!-- 버튼:: 모달 닫기 -->
-                    <@component.btn_modal_close />
-                </div>
+<#import "/layout/modal_layout.ftlh" as modal>
+
+<@modal.layout id="vcatn_papr_dtl" size="xl">
+    <!--begin::Modal Header-->
+    <@component.modal_header "휴가계획서" />
+    <!--begin::Modal Body-->
+    <div class="modal-body modal-mbl-body my-5">
+        <div class="table-responsive-sm">
+            <div id="vcatn_papr_dtl_div">
+                <!-- contents -->
             </div>
         </div>
     </div>
-</div>
+    <#--begin::Modal Footer-->
+    <div class="modal-footer">
+        <!-- 버튼 영역 -->
+        <div class="d-flex justify-content-end">
+            <!-- 버튼:: 모달 닫기 -->
+            <@component.modal_btn_close />
+        </div>
+    </div>
+</@modal.layout>
 
 <!-- include:: Handlebars template -->
 <#include "/view/vcatn/papr/_vcatn_papr_dtl_template.hbs">
