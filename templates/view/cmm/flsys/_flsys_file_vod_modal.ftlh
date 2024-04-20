@@ -1,14 +1,13 @@
 <#--
-  -- 활동 로그 > 상세 Modal
-  -- @included_in : log_actvty_list
-  -->
+ * 파일시스템(flsys) > vod Modal
+ -->
 
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="flsys_file_vod" size="xl">
-    <!--Begin::Modal Header-->
+    <!--begin::Modal Header-->
     <@component.modal_header "파일시스템 메타 정보 조회" />
-    <!--Begin::Modal Body-->
+    <!--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div id="flsys_file_vod_div">
             <!-- contents -->
@@ -19,7 +18,7 @@
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
             <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>

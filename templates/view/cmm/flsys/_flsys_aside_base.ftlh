@@ -1,7 +1,7 @@
 <!--
-  -- 파일시스템 : ASIDE (우측 사이드바)
-  -- @included_in : flsys_home.ftlh
-  -->
+ * 파일시스템(flsys) : ASIDE (우측 사이드바)
+ * @included_in : flsys_home.ftlh
+ -->
 
 <#--begin::aside-->
 <div id="kt_app_aside" class="app-aside flex-column mt-7"
