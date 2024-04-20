@@ -3,15 +3,15 @@
   -- @included_in : board_post_list
   -->
 
-<#import "/layout/modal_layout.ftlh" as modal >
+<#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="extn_phone" size="xl">
-    <!--Begin::Modal Header-->
+    <!--begin::Modal Header-->
     <@component.modal_header "내선번호" />
-    <!--Begin::Modal Body-->
+    <!--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div class="table-responsive-sm">
-            <!--begin::Table-->
+            <#--begin::Table-->
             <table class="table table-row-bordered table-row-gray-300 gy-2 align-middle fs-small">
                 <#--begin::Table body-->
                 <tbody>
@@ -40,7 +40,7 @@
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
             <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>

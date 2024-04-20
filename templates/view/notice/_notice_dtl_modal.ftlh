@@ -3,12 +3,12 @@
   -- @included_in : notice_list.ftlh
   -->
 
-<#import "/layout/modal_layout.ftlh" as modal >
+<#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="notice_dtl" size="xl">
-    <!--Begin::Modal Header-->
+    <!--begin::Modal Header-->
     <@component.modal_header "공지사항 조회" />
-    <!--Begin::Modal Body-->
+    <!--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div id="notice_dtl_div">
             <!-- contents -->
@@ -19,7 +19,7 @@
         <!-- 버튼 영역 -->
         <div class="d-flex justify-content-end">
             <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
