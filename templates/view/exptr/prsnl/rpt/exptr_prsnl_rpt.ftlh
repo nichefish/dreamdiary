@@ -1,6 +1,7 @@
 <#--
-  -- 경비 관리 > 월간지출내역 화면
-  -->
+ * 경비 관리 > 월간지출내역 화면
+ -->
+
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
@@ -37,6 +38,7 @@
 </script>
 
 <div class="card post">
+    <#--begin::Card header-->
     <div class="card-header border-0 pt-6">
         <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
             <div class="d-flex align-items-center">
@@ -76,11 +78,13 @@
 
     <div class="separator separator-dashed border-gray-300 mt-5 mb-10"></div>
 
+    <#--begin::Card body-->
     <div class="card-body pt-0">
         <h3>전체 리스트</h3>
         <div class="card pt-5">
+            <#--begin::Table-->
             <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
-                <!--begin::Table head-->
+                <#--begin::Table head-->
                 <thead>
                     <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted">
                         <th class="text-center wb-keepall w-10">지출일</th>
@@ -94,8 +98,7 @@
                         <th class="text-center wb-keepall w-5 hidden-table">원본</th>
                     </tr>
                 </thead>
-                <!--end::Table head-->
-                <!--begin::Table body-->
+                <#--begin::Table body-->
                 <tbody>
                     <#list exptrRptItemList![] as exptr>
                         <tr>
@@ -130,9 +133,8 @@
                             <td colspan="9" class="text-center"><@spring.message "view.list.empty"/></td>
                         </tr>
                     </#list>
-                <!--end::Table row-->
                 </tbody>
-                <!--begin::Table body-->
+                <#--begin::Table footer-->
                 <tfoot>
                     <tr class="bg-light">
                         <td colspan="5" class="text-center"></td>
@@ -141,7 +143,6 @@
                         </td>
                         <td colspan="3"></td>
                     </tr>
-                    <!--end::Table row-->
                 </tfoot>
             </table>
         </div>
@@ -152,8 +153,9 @@
 
         <h3>집계</h3>
         <div class="card pt-5">
+            <#--begin::Table-->
             <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
-                <!--begin::Table head-->
+                <#--begin::Table head-->
                 <thead>
                     <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted">
                         <th class="text-center wb-keepall w-10">소속</th>
@@ -167,8 +169,7 @@
                         </#list>
                     </tr>
                 </thead>
-                <!--end::Table head-->
-                <!--begin::Table body-->
+                <#--begin::Table body-->
                 <tbody>
                     <#list exptrRptSmList![] as exptr>
                         <tr>
@@ -204,8 +205,8 @@
                             <td colspan="6" class="text-center"><@spring.message "view.list.empty"/></td>
                         </tr>
                     </#list>
-                <!--end::Table row-->
                 </tbody>
+                <#--begin::Table footer-->
                 <tfoot>
                     <tr class="bg-light">
                         <td colspan="3" class="text-center"></td>
