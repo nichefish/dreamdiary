@@ -1,7 +1,7 @@
 <#--
-  -- 저널 일자(jrnl_day) : ASIDE (우측 사이드바)
-  -- @included_in : jrnl_day_page.ftlh
-  -->
+ * 저널 일자(jrnl_day) : ASIDE (우측 사이드바)
+ * @included_in : jrnl_day_page.ftlh
+ -->
 
 <script>
     const JrnlDayAside = (function() {
@@ -21,7 +21,8 @@
         }
     })();
 </script>
-<!--begin::aside-->
+
+<#--begin::aside-->
 <div id="kt_app_aside" class="app-aside flex-column mt-7"
      data-kt-drawer="true"
      data-kt-drawer-name="app-aside"
@@ -31,7 +32,7 @@
      data-kt-drawer-direction="end"
      data-kt-drawer-toggle="#kt_app_aside_toggle">
 
-    <!--begin::Aside wrapper-->
+    <#--begin::Aside wrapper-->
     <div id="kt_app_aside_wrapper" class="hover-scroll-y px-5 mx-5 my-5"
          data-kt-scroll="true"
          data-kt-scroll-activate="true"
@@ -41,12 +42,12 @@
          data-kt-scroll-offset="5px"
          data-kt-scroll-save-state="true">
 
-        <!--begin::Aside-->
+        <#--begin::Aside-->
         <div class="card card-reset card-p-0">
-            <!--begin::Header-->
+            <#--begin::Card header-->
             <div class="card-header min-h-auto mb-5">
                 <h3 class="card-title text-gray-900 fw-bold fs-3">Filters</h3>
-                <!--begin::Toolbar-->
+                <#--begin::Toolbar-->
                 <div class="card-toolbar">
                     <a href="#" class="btn btn-sm btn-icon btn-color-gray-500 btn-light">
                         <i class="ki-duotone ki-magnifier fs-3">
@@ -57,9 +58,9 @@
                 </div>
             </div>
             <!--end::Header-->
-            <!--begin::Body-->
+            <#--begin::Body-->
             <div class="card-body" id="jrnl_aside">
-                <!--begin::Form-->
+                <#--begin::Form-->
                 <div class="mb-7 d-flex justify-content-between gap-4">
                     <div class="col">
                         <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">년도</span>
@@ -113,7 +114,7 @@
                     <input type="text" class="form-control" placeholder="Your Email" />
                 </div>
                 <!--end::Form-->
-                <!--begin::Action-->
+                <#--begin::Action-->
                 <div class="d-flex flex-column">
                     <a href="#" class="btn btn-primary mb-4 p-3">Default</a>
                     <a href="#" class="btn btn-secondary btn-color-gray-700 p-3">View more</a>

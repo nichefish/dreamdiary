@@ -1,7 +1,7 @@
 <#--
-  -- 저널 일자(jrnl_day) > 목록 툴바 Header
-  -- @included_in : jrnl_day_page.ftlh
-  -->
+ * 저널 일자(jrnl_day) > 목록 툴바 Header
+ * @included_in : jrnl_day_page.ftlh
+ -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
@@ -11,22 +11,6 @@
         <@component.header_datepicker searchParam "searchStartDt" "" />
         <!-- 인풋:: datepicker -->
         <@component.header_datepicker searchParam "searchEndDt" "today" />
-    </div>
-    <div>
-        <select name="yy" id="yy" class="form-select form-select-sm form-select-solid">
-            <option value="">년도</option>
-            <#list YY_CD![] as yy>
-                <option value="${yy.dtlCd!}" label="${yy.dtlCdNm!}" ${fn.selected(searchParam.yy!, yy.dtlCd!)} />
-            </#list>
-        </select>
-    </div>
-    <div>
-        <select name="mnth" id="mnth" class="form-select form-select-sm form-select-solid">
-            <option value="">월</option>
-            <#list MNTH_CD![] as mnth>
-                <option value="${mnth.dtlCd!}" label="${mnth.dtlCdNm!}" ${fn.selected(searchParam.mnth!, mnth.dtlCd!)} />
-            </#list>
-        </select>
     </div>
     <div>
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
