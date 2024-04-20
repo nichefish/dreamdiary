@@ -1,7 +1,7 @@
 <#--
-  -- 공지사항(notice) > 상세 Modal
-  -- @included_in : notice_list.ftlh
-  -->
+ * 공지사항(notice) > 상세 Modal
+ * @included_in : notice_list.ftlh
+ -->
 
 <#import "/layout/modal_layout.ftlh" as modal>
 
