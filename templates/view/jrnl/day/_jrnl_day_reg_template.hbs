@@ -11,7 +11,7 @@
         <div class="col-xl-2 col-2 d-flex-center">
             <label class="fs-6 fw-bold mb-2 required" for="jrnlDt">날짜</label>
         </div>
-        <div class="col-xl-2 col-5 d-flex flex-column {{#if (equals dtUnknownYn "Y")}}d-none{{/if}}" id="jrnlDtDiv">
+        <div class="col-xl-2 col-5 d-flex flex-column {{#ifYn dtUnknownYn}}d-none{{/ifYn}}" id="jrnlDtDiv">
             <div class="d-flex align-items-center mt-1">
                 <span class="menu-icon me-md-2 vertical-middle">
                     <label for="jrnlDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>
@@ -23,14 +23,14 @@
         <div class="col-xl-2 col-5 d-flex flex-column align-items-center col-form-label">
             <div class="form-check form-switch form-check-custom form-check-solid"
                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="날짜 미상시 입력한 대략일자 위치로 정렬됩니다.">
-                <label class="form-check-label cursor-pointer" for="dtUnknownYn" id="dtUnknownYnLabel" {{checkedStyle (trueFalse dtUnknownYn "Y//N") "color" "blue//gray"}}>
+                <label class="form-check-label cursor-pointer" for="dtUnknownYn" id="dtUnknownYnLabel" {{checkedYnStyle dtUnknownYn "color" "blue//gray"}}>
                     날짜미상
                 </label>
                 <i class="bi bi-question-circle cursor-pointer ms-1 me-5"></i>
-                <input class="form-check-input" type="checkbox" value="Y" name="dtUnknownYn" id="dtUnknownYn" {{checkedIf (trueFalse dtUnknownYn "Y//N")}} />
+                <input class="form-check-input" type="checkbox" value="Y" name="dtUnknownYn" id="dtUnknownYn" {{checkedYn dtUnknownYn}} />
             </div>
         </div>
-        <div class="col-xl-3 col-5 {{#unless (equals dtUnknownYn "Y")}}d-none{{/unless}}" id="aprxmtDtDiv">
+        <div class="col-xl-3 col-5 {{^ifYn dtUnknownYn}}d-none{{/ifYn}}" id="aprxmtDtDiv">
             <div class="d-flex align-items-center mt-1">
                 <span class="menu-icon me-md-2 vertical-middle">
                     <label for="searchStartDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>

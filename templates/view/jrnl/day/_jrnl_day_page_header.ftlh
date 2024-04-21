@@ -16,7 +16,7 @@
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
             <option value="clCd">분류코드</option>
             <option value="clCdNm">분류코드명</option>
-            <option value="clCdDc">분류코드 설명</option>
+            <option value="dc">분류코드 설명</option>
         </select>
     </div>
     <div>

@@ -18,9 +18,9 @@
         </div>
         <div class="col-xl-2 col-5 pt-2">
             <div class="form-check form-switch form-check-custom form-check-solid">
-                <input class="form-check-input" type="checkbox" value="Y" name="useYn" id="useYn" {{checkedIf (trueFalse useYn "Y//N")}} />
-                <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedStyle (trueFalse useYn "Y//N") "color" "blue//gray"}}>
-                    {{#if (trueFalse useYn "N//Y")}}미{{/if}}사용
+                <input class="form-check-input" type="checkbox" value="Y" name="useYn" id="useYn" {{checkedYn useYn}} />
+                <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedYnStyle useYn "color" "blue//gray"}}>
+                    {{^ifYn useYn}}미{{/ifYn}}사용
                 </label>
             </div>
         </div>
