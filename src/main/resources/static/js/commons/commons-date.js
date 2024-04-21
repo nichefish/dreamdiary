@@ -250,7 +250,7 @@ commons.date = (function() {
          * 시작일 종료일 계산 
          * 앞선 날이 뒷날보다 더 앞쪽인지, 순서가 제대로 되었는지 반환
          */
-        dateCompare: function(beginSelectorStr, endSelectorStr) {
+        isBefore: function(beginSelectorStr, endSelectorStr) {
             const begin = $(beginSelectorStr).val();
             const end = $(endSelectorStr).val();
             const beginCompareDate = commons.date.asDate(begin);
