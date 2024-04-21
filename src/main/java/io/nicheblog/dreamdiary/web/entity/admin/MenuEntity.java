@@ -87,6 +87,26 @@ public class MenuEntity
     @Comment("아이콘")
     private String icon;
 
+    /** 하위메뉴 확장유형 코드 */
+    @Column(name = "menu_sub_extend_ty_cd")
+    @Comment("하위메뉴 확장유형 코드")
+    private String menuSubExtendTyCd;
+
+    /** 메뉴 구분 코드 정보 (복합키 조인) */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'MENU_SUB_EXTEND_TY_CD\'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "menu_sub_extend_ty_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
+    })
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("메뉴 구분 코드 정보")
+    private DtlCdEntity menuSubExtendTyCdInfo;
+
+    /** 하위메뉴 확장유형 이름 */
+    @Transient
+    private String menuSubExtendTyNm;
+
     /** 셀프 참조 :: 상위메뉴 조회 */
     @ManyToOne
     @JoinColumn(name = "upper_menu_no", referencedColumnName = "menu_no", insertable = false, updatable = false)

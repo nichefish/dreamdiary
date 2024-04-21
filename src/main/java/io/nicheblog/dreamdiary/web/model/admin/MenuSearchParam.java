@@ -14,11 +14,16 @@ import lombok.*;
  */
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@AllArgsConstructor
 public class MenuSearchParam
         extends BaseSearchParam {
 
-    //
+    /** 메뉴 유형 코드 */
+    private String menuTyCd;
+    /** 사용 여부 (Y/N) */
+    private String useYn;
 }

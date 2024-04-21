@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.MenuEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.MenuMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
+import io.nicheblog.dreamdiary.web.model.admin.MenuSearchParam;
 import io.nicheblog.dreamdiary.web.repository.admin.MenuRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.MenuSpec;
 import lombok.extern.log4j.Log4j2;
@@ -83,13 +84,35 @@ public class MenuService
     }
 
     /**
-     * 메인메뉴(사용자) 조회
+     * 정렬 순서 업데이트
+     */
+    @Transactional
+    public boolean sortOrdr(List<MenuDto> sortOrdr) throws Exception {
+        if (CollectionUtils.isEmpty(sortOrdr)) return true;
+        sortOrdr.forEach(dto -> {
+            try {
+                MenuEntity e = this.getDtlEntity(dto.getMenuNo());
+                e.getState().setSortOrdr(dto.getState().getSortOrdr());
+                this.updt(e);
+            } catch (Exception ex) {
+                ex.getStackTrace();
+                // 로그 기록, 예외 처리 등
+                throw new RuntimeException(ex);
+            }
+        });
+        return true;
+    }
+
+    /* ----- */
+
+    /**
+     * 사이드바 메뉴 (useYn=Y) 조회
      */
     public Page<MenuDto> getUserMenuList() throws Exception {
-        Map<String, Object> searchParamMap = new HashMap<>() {{
-            put("menuTyCd", "main");
-            put("menuNo", "00000000");
-        }};
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(MenuSearchParam.builder()
+                .menuTyCd(Constant.MENU_TY_MAIN)
+                .useYn("Y")
+                .build());
         Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
         PageRequest pageRequest = PageRequest.of(0, 99, sort);
         Page<MenuEntity> menuMainEntityPage = this.getPageEntity(searchParamMap, pageRequest);
@@ -110,23 +133,4 @@ public class MenuService
         return this.pageEntityToDto(menuMainEntityPage);
     }
 
-    /**
-     * 정렬 순서 업데이트
-     */
-    @Transactional
-    public boolean sortOrdr(List<MenuDto> sortOrdr) throws Exception {
-        if (CollectionUtils.isEmpty(sortOrdr)) return true;
-        sortOrdr.forEach(dto -> {
-            try {
-                MenuEntity e = this.getDtlEntity(dto.getMenuNo());
-                e.getState().setSortOrdr(dto.getState().getSortOrdr());
-                this.updt(e);
-            } catch (Exception ex) {
-                ex.getStackTrace();
-                // 로그 기록, 예외 처리 등
-                throw new RuntimeException(ex);
-            }
-        });
-        return true;
-    }
 }
