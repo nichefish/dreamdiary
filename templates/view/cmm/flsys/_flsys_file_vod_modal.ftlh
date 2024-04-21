@@ -1,5 +1,5 @@
 <#--
- * 파일시스템(flsys) > vod Modal
+ * 파일시스템(flsys) > vod 상세 Modal
  -->
 
 <#import "/layout/modal_layout.ftlh" as modal>
