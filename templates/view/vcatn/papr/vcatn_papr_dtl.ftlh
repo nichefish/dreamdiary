@@ -53,7 +53,7 @@
                                         <span href="javascript:void(0);" class="fs-5 fw-bolder text-gray-700 mx-3">
                                             ${item.vcatnNm!}
                                         </span>
-                                        <div class="fs-7 text-muted">${item.vcatnResn!}</div>
+                                        <div class="fs-7 text-muted">${item.resn!}</div>
                                     </div>
                                 </div>
                             </div>

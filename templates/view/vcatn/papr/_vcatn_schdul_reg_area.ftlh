@@ -1,15 +1,14 @@
 <#--
- * 휴가계획서(vcatn_papr) > 개별휴가항목 폼 추가추가 Template
- * @included_in : vcatn_papr_reg_form
+ * 휴가계획서(vcatn_papr) > 등록 화면
  -->
 
-<div id="vcatn_schdul_reg_template" hidden>
-    <div class="card border-0 mb-2" id="itemContainer{{idx}}">
-        <input type="hidden" class="form-control form-control-solid" name="schdulList[{{idx}}].vcatnSchdulNo" id="vcatnSchdulNo{{idx}}" value="{{vcatnSchdulNo}}"/>
+<#list post.schdulList![] as schdul>
+    <div class="card border-0 mb-2" id="itemContainer${schdul?index}">
+        <input type="hidden" class="form-control form-control-solid" name="schdulList[${schdul?index}].vcatnSchdulNo" id="vcatnSchdulNo${schdul?index}" value="${schdul.vcatnSchdulNo!}"/>
 
         <#--begin::Card header-->
         <div class="card-header border-0 d-flex justify-content-end min-h-auto">
-            <div class="btn btn-sm btn-icon btn-active-color-primary mx-5" onclick="Page.delSpan({{idx}});">
+            <div class="btn btn-sm btn-icon btn-active-color-primary mx-5" onclick="Page.delSpan(${schdul?index});">
                 <span class="svg-icon svg-icon-1 align-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
@@ -21,15 +20,15 @@
         <#--begin::Card body-->
         <div class="card-body scroll-y px-10">
             <div class="row g-9">
-                <div class="col-md-2" id="vcatnCdSelectDiv{{idx}}">
+                <div class="col-md-2" id="vcatnCdSelectDiv${schdul?index}">
                     <label class="required fs-6 fw-bold mb-2">휴가분류</label>
-                    <select class="form-select form-select-solid w-180px required" onchange="Page.delEndDt({{idx}})" name="schdulList[{{idx}}].vcatnCd" id="vcatnCd{{idx}}" data-hide-search="true">
+                    <select class="form-select form-select-solid w-180px required" onchange="Page.delEndDt(${schdul?index})" name="schdulList[${schdul?index}].vcatnCd" id="vcatnCd${schdul?index}" data-hide-search="true">
                         <option value="">휴가 분류</option>
                         <#list VCATN_CD![] as vcatnCd>
-                            <option value="${vcatnCd.dtlCd!}" id="${vcatnCd.dtlCd!}">[${vcatnCd.dtlCdNm!}]</option>
+                            <option value="${vcatnCd.dtlCd!}" ${fn.selected(schdul.vcatnCd!, vcatnCd.dtlCd)}>[${vcatnCd.dtlCdNm!}]</option>
                         </#list>
                     </select>
-                    <div id="vcatnCd{{idx}}_valid_span"></div>
+                    <div id="vcatnCd${schdul?index}_valid_span"></div>
                 </div>
                 <div class="col-md-5 d-flex flex-column">
                     <label class="required fs-6 fw-bold mb-2">휴가일</label>
@@ -47,18 +46,18 @@
                                               fill="black"/>
                                     </svg>
                                 </span>
-                                <input class="form-control form-control-solid ps-12 required w-100" name="schdulList[{{idx}}].bgnDt" id="bgnDt{{idx}}"
-                                       autocomplete="off" onchange="Page.delEndDt({{idx}})" placeholder="휴가 시작일" readonly />
+                                <input class="form-control form-control-solid ps-12 required w-100" name="schdulList[${schdul?index}].bgnDt" id="bgnDt${schdul?index}"
+                                       autocomplete="off" onchange="Page.delEndDt(${schdul?index})" placeholder="휴가 시작일" value="${schdul.bgnDt!}" readonly />
                             </div>
-                            <div id="bgnDt{{idx}}_valid_span"></div>
+                            <div id="bgnDt${schdul?index}_valid_span"></div>
                         </div>
-                        <span class="col-1 svg-icon svg-icon-muted svg-icon-2hx lineDiv" id="lineDiv{{idx}}">
+                        <span class="col-1 svg-icon svg-icon-muted svg-icon-2hx lineDiv" id="lineDiv${schdul?index}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vertical-middle">
                                 <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
                             </svg>
                         </span>
                         <div class="col d-flex flex-column">
-                            <div class="position-relative d-flex align-items-center" id="endDtDiv{{idx}}">
+                            <div class="position-relative d-flex align-items-center" id="endDtDiv${schdul?index}">
                                 <span class="svg-icon svg-icon-2 position-absolute mx-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                         <path opacity="0.3"
@@ -70,20 +69,20 @@
                                               fill="black"/>
                                     </svg>
                                 </span>
-                                <input name="schdulList[{{idx}}].endDt" id="endDt{{idx}}" autocomplete="off"
-                                       class="form-control form-control-solid ps-12 required w-100"
-                                       placeholder="휴가 종료일" readonly onchange="Page.delEndDt({{idx}})" />
+                                <input name="schdulList[${schdul?index}].endDt" id="endDt${schdul?index}" class="form-control form-control-solid ps-12 required w-100"
+                                       onchange="Page.delEndDt(${schdul?index})"
+                                       autocomplete="off" placeholder="휴가 종료일" value="${schdul.endDt!}" readonly />
                             </div>
-                            <div id="endDt{{idx}}_valid_span"></div>
+                            <div id="endDt${schdul?index}_valid_span"></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <label class="fs-6 fw-bold mb-2" for="resn{{idx}}">사유</label>
-                    <textarea name="schdulList[{{idx}}].resn" id="resn{{idx}}"
-                              class="form-control form-control-solid" rows="2"  maxlength="500" placeholder="내용을 입력하세요"></textarea>
+                    <label class="fs-6 fw-bold mb-2" for="resn${schdul?index}">사유</label>
+                    <textarea name="schdulList[${schdul?index}].resn" id="resn${schdul?index}"
+                              class="form-control form-control-solid" rows="2"  maxlength="500" placeholder="내용을 입력하세요">${schdul.resn!}</textarea>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</#list>

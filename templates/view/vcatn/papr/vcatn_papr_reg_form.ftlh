@@ -4,8 +4,6 @@
 
 <#import "/layout/layout.ftlh" as layout >
 
-<script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js?${releaseDate!}"></script>
-<script type="text/javascript" src="/js/commons/commons-tinymce.js?${releaseDate!}"></script>
 <script type="text/javascript" src="/lib/prism/js/prism.js?${releaseDate!}"></script>
 
 <#assign isReg = (isReg!false)>
@@ -21,6 +19,9 @@
         return {
             idx: 0,
             init: function () {
+                // 추가추가에 사용할 인덱스 설정
+                Page.idx = ${(post.schdulList![])?size};
+
                 /* jquery :: validation */
                 VcatnPapr.initValidateForm();
                 // 첨부파일 영역 0개인지 체크
@@ -41,10 +42,6 @@
                 <#if isReg!false>
                     /** 휴가 추가 폼 기본 뿌리기 */
                     Page.addVcatnSchdul();
-                <#elseif isMdf!false>
-                    <#if (post.schdulList)?has_content>
-                        Page.addVcatnInfoItemList();      // 기존 항목에 대하여 행 쭈루룩 추가
-                    </#if>
                 </#if>
             },
             isHalf: function(idx) {
@@ -67,7 +64,7 @@
             noBefore: function(beginSelectorStr, endSelectorStr, idx) {
                 if (Page.isHalf(idx)) {
                     $(endSelectorStr).val($(beginSelectorStr).val());
-                } else if (result === false && $(endSelectorStr).val() !== "") {
+                } else if ($(endSelectorStr).val() !== "") {
                     Swal.fire("휴가일을 다시 설정해 주세요.");
                     $(endSelectorStr).val("");
                 }
@@ -87,12 +84,6 @@
                         Page.noBefore("#bgnDt"+idx, "#endDt"+idx, idx);
                     }
                 });
-            },
-            /**
-             * 사용자 정보 추가항목 영역 기존 정보 목록 추가
-             */
-            addVcatnInfoItemList: function() {
-
             },
             /** 추가항목 영역 삭제 */
             delSpan: function(idx) {
@@ -127,7 +118,7 @@
         <input type="hidden" name="cfYn" value="${post.cfYn!"N"}">
 
         <!--end::Input group-->
-        <div id="vcatn_schdul_reg_div" class="mb-8">
+        <div class="mb-8">
             <label class="mb-2">
                 <span class="text-gray-700 fs-6 fw-bolder">휴가등록</span>
             </label>
@@ -136,7 +127,13 @@
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="휴가 일정을 추가합니다.">
                 <i class="fas fa-plus"></i>추가
             </a>
-            <span class="text-noti fs-7 ps-5">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다. (포함해서 올려도 상관없음)  </span>
+            <span class="text-noti fs-7 ps-5">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다. (포함해서 올려도 상관없음)</span>
+            <!-- vcatnSchduls -->
+            <div id="vcatn_schdul_reg_div" class="mb-8">
+                <!--휴가 목록-->
+                <#include "/view/vcatn/papr/_vcatn_schdul_reg_area.ftlh">
+                <!-- vcatnSchdulList goes in here -->
+            </div>
         </div>
 
         <!-- #include:: component:: 첨부파일 추가추가 영역 -->
