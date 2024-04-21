@@ -117,7 +117,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function (res) {
                         Swal.fire({text: res.message})
                             .then(function () {
-                                if (res.rslt) Page.list();
+                                if (res.rslt) Notice.list();
                             });
                     });
                 });
