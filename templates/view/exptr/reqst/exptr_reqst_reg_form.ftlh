@@ -93,7 +93,7 @@
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="글분류를 선택합니다.">
                         <option value="">--글분류--</option>
                         <#list EXPTR_REQST_CTGR_CD![] as ctgr>
-                            <option value="${ctgr.dtlCd!}" id="${ctgr.dtlCd!}" <#if ctgr.dtlCd == (post.ctgrCd)!>selected="selected"</#if>>[${ctgr.dtlCdNm!}]</option>
+                            <option value="${ctgr.dtlCd!}" <#if ctgr.dtlCd == (post.ctgrCd)!>selected="selected"</#if>>[${ctgr.dtlCdNm!}]</option>
                         </#list>
                     </select>
                 </div>
