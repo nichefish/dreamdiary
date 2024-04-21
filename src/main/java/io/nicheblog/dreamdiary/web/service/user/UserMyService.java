@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.web.service.user;
 
-import io.nicheblog.dreamdiary.global.auth.model.PwChgParam;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
+import io.nicheblog.dreamdiary.web.model.user.UserPwChgParam;
 import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,14 +38,10 @@ public class UserMyService {
     /**
      * 비밀번호 만료시 비밀번호 변경 (미로그인 상태)
      */
-    public Boolean lgnPwChg(final PwChgParam param) throws Exception {
-        return this.lgnPwChg(param.getUserId(), param.getCurrPw(), param.getNewPw());
-    }
-
-    /**
-     * 비밀번호 만료시 비밀번호 변경 :: 메소드 분리
-     */
-    public Boolean lgnPwChg(final String userId, final String currPw, final String newPw) throws Exception {
+    public Boolean lgnPwChg(final UserPwChgParam param) throws Exception {
+        final String userId = param.getUserId();
+        final String currPw = param.getCurrPw();
+        final String newPw = param.getNewPw();
 
         UserEntity userEntity = userService.getDtlEntity(userId);
 

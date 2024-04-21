@@ -6,10 +6,10 @@
 
 -- -----------------------
 
--- 저널 결산(연간) (jrnl_summary)
+-- 저널 결산(연간) (jrnl_sumry)
 -- @extends: BasePostEntity
 -- @uses: CommentEmbed
-CREATE TABLE IF NOT EXISTS jrnl_summary (
+CREATE TABLE IF NOT EXISTS jrnl_sumry (
     -- CLSF
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '저널 일자 번호 (PK)',
     content_type VARCHAR(32) DEFAULT 'JRNL_DAY' COMMENT '컨텐츠 타입',

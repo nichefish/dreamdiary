@@ -52,6 +52,17 @@ class ParamModule {
      */
     public static PageRequest getPageRequest(
             final BaseSearchParam searchParam,
+            final String sortParam
+    ) throws Exception {
+
+        return getPageRequest(searchParam, sortParam, null);
+    }
+
+    /**
+     * 공통 > pageSize, pageNo로 페이징 요청 정보 생성
+     */
+    public static PageRequest getPageRequest(
+            final BaseSearchParam searchParam,
             final String sortParam,
             final ModelMap model
     ) throws Exception {
@@ -77,6 +88,16 @@ class ParamModule {
         }
         int pageIdx = pageNo - 1;
         return PageRequest.of(pageIdx, pageSize, sort);
+    }
+
+    /**
+     * 공통 > pageSize, pageNo로 페이징 요청 정보 생성
+     */
+    public static PageRequest getPageRequest(
+            final BaseSearchParam searchParam,
+            final Sort sort
+    ) throws Exception {
+        return getPageRequest(searchParam, sort, null);
     }
 
     /**
