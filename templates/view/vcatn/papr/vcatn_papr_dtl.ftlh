@@ -1,115 +1,120 @@
 <#--
-  -- 휴가계획서(vcatn_papr) > 상세 화면
-  -->
+ * 휴가계획서(vcatn_papr) > 상세 화면
+ -->
 
 <#import "/layout/layout.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 
-<!--include:: script modules -->
+<#--include::script modules-->
 <#include "/view/vcatn/papr/_vcatn_papr_scripts.ftlh">
 
 <div class="card post">
-    <!--begin::cn-->
-    <div class="mb-0">
-        <!--begin::Head-->
-        <div class="d-flex align-items-center mb-9">
-            <!--begin::Title-->
-            <div class="col-12">
-                <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
-                    <#list post.schdulList![] as item>
-                        <span class="fw-bolder fs-2 ctgr-span ctgr-gray">
-                            ${item.vcatnNm!}
-                        </span>
-                        <span href="javascript:void(0);" class="fw-bolder mx-3">
-                            ${(item.bgnDt)!}<#if item.bgnDt != item.endDt> ~ ${(item.endDt)!}</#if>
-                        </span>
-                    </#list>
-                </h1>
+    <#--begin::Card body-->
+    <div class="card-body">
+        <#--begin::cn-->
+        <div class="mb-0">
+            <#--begin::Head-->
+            <div class="d-flex align-items-center mb-9">
+                <#--begin::Title-->
+                <div class="col-12">
+                    <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
+                        <#list post.schdulList![] as item>
+                            <span class="fw-bolder fs-2 ctgr-span ctgr-gray">
+                                ${item.vcatnNm!}
+                            </span>
+                            <span href="javascript:void(0);" class="fw-bolder mx-3">
+                                ${(item.bgnDt)!}<#if item.bgnDt != item.endDt> ~ ${(item.endDt)!}</#if>
+                            </span>
+                        </#list>
+                    </h1>
+                </div>
+                <!--end::Title-->
             </div>
-            <!--end::Title-->
-        </div>
-        <!--end::Head-->
+            <!--end::Head-->
 
-        <!-- 게시물post 헤더 메타 (+프린트) 영역 -->
-        <@component.post_meta_print post />
+            <!-- 게시물post 헤더 메타 (+프린트) 영역 -->
+            <@component.post_meta_print post />
 
-        <div class="separator separator-dashed border-gray-300 my-8"></div>
+            <div class="separator separator-dashed border-gray-300 my-8"></div>
 
-        <!--begin::cn-->
-        <#if post.schdulList?has_content>
-            <div class="row mb-4">
-                <div class="col-form-label">
-                    <#list post.schdulList![] as item>
-                        <div class="row d-flex flex-column mx-5 my-4">
-                            <div class="d-flex align-items-center position-relative mb-1">
-                                <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
-                                <div class="fw-bold ms-5">
-                                    <span class="fs-5 fw-bolder text-dark">
-                                        ${(item.bgnDt)!}<#if item.bgnDt != item.endDt> ~ ${(item.endDt)!}</#if>
-                                    </span>
-                                    <span href="javascript:void(0);" class="fs-5 fw-bolder text-gray-700 mx-3">
-                                        ${item.vcatnNm!}
-                                    </span>
-                                    <div class="fs-7 text-muted">${item.vcatnResn!}</div>
+            <#--begin::cn-->
+            <#if post.schdulList?has_content>
+                <div class="row mb-4">
+                    <div class="col-form-label">
+                        <#list post.schdulList![] as item>
+                            <div class="row d-flex flex-column mx-5 my-4">
+                                <div class="d-flex align-items-center position-relative mb-1">
+                                    <div class="position-absolute top-0 start-0 rounded h-100 bg-secondary w-4px"></div>
+                                    <div class="fw-bold ms-5">
+                                        <span class="fs-5 fw-bolder text-dark">
+                                            ${(item.bgnDt)!}<#if item.bgnDt != item.endDt> ~ ${(item.endDt)!}</#if>
+                                        </span>
+                                        <span href="javascript:void(0);" class="fs-5 fw-bolder text-gray-700 mx-3">
+                                            ${item.vcatnNm!}
+                                        </span>
+                                        <div class="fs-7 text-muted">${item.vcatnResn!}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </#list>
-                    <span class="text-noti fs-7 ps-5">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다. (포함해서 올려도 상관없음)</span>
+                        </#list>
+                        <span class="text-noti fs-7 ps-5">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다. (포함해서 올려도 상관없음)</span>
+                    </div>
                 </div>
-            </div>
-        </#if>
+            </#if>
 
-        <!-- #include: 첨부파일 표시 영역 -->
-        <#include "/view/_component/atch_file/_atch_file_dtl_area.ftlh">
+            <!-- #include: 첨부파일 표시 영역 -->
+            <#include "/view/_component/atch_file/_atch_file_dtl_area.ftlh">
 
-    </div>
-
-    <div class="separator separator-dashed border-gray-300 my-8"></div>
-
-    <!-- 열람자 표시 영역 -->
-    <@component.viewer_area post />
-
-    <#if isMngr>
-        <div class="row mb-5">
-            <div class="col-xl-2">
-                <div class="col-form-label fs-6 fw-bold mx-5">관리자 확인</div>
-            </div>
-            <div class="col-xl-10">
-                <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
-                    <#if post.cfYn == "N">
-                        <span class="text-muted me-10">
-                            미확인<i class="bi bi-dash text-muted"></i>
-                        </span>
-                        <button class="btn btn-sm btn-primary" onclick="VcatnPapr.cfAjax();">확인하기</button>
-                    <#else>
-                        <button class="btn btn-sm btn-success" disabled>
-                            확인완료<i class="bi bi-check success"></i>
-                        </button>
-                        <span class="ms-3 text-success">확인 처리되었습니다.</span>
-                    </#if>
-                </div>
-            </div>
         </div>
-        <div class="separator separator-dashed border-gray-300 my-8"></div>
-    </#if>
 
-    <!-- 버튼 영역 -->
-    <div class="d-flex justify-content-end">
-        <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_modify "VcatnPapr.mdfForm();" post isMngr />
-        <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "VcatnPapr.delAjax();" post isMngr />
-        <!-- 등록자: 수정,삭제 가능, 관리자: 삭제 가능, 확인 시: 삭제만 가능 -->
-<#--        <#if post.isRegstr!false && (post.cfYn)! == "N">
-            <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
-                <i class="bi bi-pencil-square"></i>수정
-            </button>
-        </#if>-->
-        <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "VcatnPapr.list();" />
+        <div class="separator separator-dashed border-gray-300 my-8"></div>
+
+        <!-- 열람자 표시 영역 -->
+        <@component.viewer_area post />
+
+        <#if isMngr>
+            <div class="row mb-5">
+                <div class="col-xl-2">
+                    <div class="col-form-label fs-6 fw-bold mx-5">관리자 확인</div>
+                </div>
+                <div class="col-xl-10">
+                    <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
+                        <#if post.cfYn == "N">
+                            <span class="text-muted me-10">
+                                미확인<i class="bi bi-dash text-muted"></i>
+                            </span>
+                            <button class="btn btn-sm btn-primary" onclick="VcatnPapr.cfAjax();">확인하기</button>
+                        <#else>
+                            <button class="btn btn-sm btn-success" disabled>
+                                확인완료<i class="bi bi-check success"></i>
+                            </button>
+                            <span class="ms-3 text-success">확인 처리되었습니다.</span>
+                        </#if>
+                    </div>
+                </div>
+            </div>
+            <div class="separator separator-dashed border-gray-300 my-8"></div>
+        </#if>
+    </div>
+    <!--begin::Card footer-->
+    <div class="card-footer">
+        <!-- 버튼 영역 -->
+        <div class="d-flex justify-content-end">
+            <!-- 버튼 :: 수정하기 -->
+            <@component.btn_post_modify "VcatnPapr.mdfForm();" post isMngr />
+            <!-- 버튼 :: 삭제하기 -->
+            <@component.btn_post_delete "VcatnPapr.delAjax();" post isMngr />
+            <!-- 등록자: 수정,삭제 가능, 관리자: 삭제 가능, 확인 시: 삭제만 가능 -->
+    <#--        <#if post.isRegstr!false && (post.cfYn)! == "N">
+                <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.mdf"/>">
+                    <i class="bi bi-pencil-square"></i>수정
+                </button>
+            </#if>-->
+            <!-- 버튼 :: 목록으로 가기 -->
+            <@component.btn_post_toList "VcatnPapr.list();" />
+        </div>
     </div>
 
     <!-- 댓글 영역 -->
