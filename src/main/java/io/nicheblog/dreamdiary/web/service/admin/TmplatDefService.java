@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatDefEntity;
@@ -47,5 +48,13 @@ public class TmplatDefService
     @Override
     public TmplatDefMapstruct getMapstruct() {
         return this.tmplatDefMapstruct;
+    }
+
+    /**
+     * 등록 전처리
+     */
+    @Override
+    public void preRegist(final TmplatDefDto tmplatDef) {
+        if (tmplatDef.getState() == null) tmplatDef.setState(new StateCmpstn());
     }
 }
