@@ -1,7 +1,7 @@
 <#--
-  -- 휴가일자(vcatn_schdul) > 휴가사용일자 화면
-  -- @included_in : vcatn_schdul_list.ftlh
-  -->
+ * 휴가일자(vcatn_schdul) > 휴가사용일자 화면
+ * @included_in : vcatn_schdul_list.ftlh
+ -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="post" >
     <div>
@@ -21,7 +21,7 @@
     </div>
     <div>
         <!-- 버튼:: 등록 화면 이동하기 -->
-        <@component.btn_header_reg_form "VcatnSchdul.regForm();" />
+        <@component.btn_header_reg_form "VcatnSchdul.regModal();" />
     </div>
     <div>
         <!-- 버튼:: 엑셀 다운로드하기 -->

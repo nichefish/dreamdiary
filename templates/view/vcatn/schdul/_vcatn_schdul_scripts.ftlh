@@ -1,6 +1,6 @@
 <#--
-  -- 휴가일자(vcatn_schdul) : 모듈 스크립트 분리
-  -->
+ * 휴가일자(vcatn_schdul) : 스크립트 모듈 분리
+ -->
 
 <script>
     const VcatnSchdul = function() {
@@ -10,13 +10,43 @@
                 commons.util.blockUIReplace("${Url.VCATN_SCHDUL_LIST!}?statsYy=" + $(obj).val());
             },
             /** 등록 팝업 호출 */
-            regForm: function() {
-                $("#vcatn_schdul_reg_modal").modal("show");
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+            regModal: function() {
+                commons.util.handlebarsTemplate({}, "vcatn_schdul_reg", "show");
+                // template에 있는 tooltip들 활성화
+                $('[data-bs-toggle="tooltip"]').tooltip();
+                commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", null, function() {
+                    VcatnSchdul.propEndDt();
+                    VcatnSchdul.noBefore("#bgnDt", "#endDt");
+                });
+                commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD", null, function() {
+                    if ($("#endDt").val() !== "") VcatnSchdul.noBefore("#bgnDt", "#endDt");
+                });
+            },
+            /** 반차 여부 */
+            isHalf: function(idx) {
+                if (idx === undefined) idx = "";
+                const vcatnCd = $("#vcatnCd" + idx).children('option:selected').val();
+                return vcatnCd === "${Constant.VCATN_AM_HALF}" || vcatnCd === "${Constant.VCATN_PM_HALF}";
+            },
+            /** 시작일 이전 날짜 선택 불가 */
+            noBefore: function(beginSelectorStr, endSelectorStr, idx) {
+                if (VcatnSchdul.isHalf(idx)) {
+                    $(endSelectorStr).val($(beginSelectorStr).val());
+                } else {
+                    const isBefore = commons.date.isBefore(beginSelectorStr, endSelectorStr);
+                    if (!isBefore && $(endSelectorStr).val() !== "") {
+                        Swal.fire("휴가일을 다시 설정해 주세요.");
+                        $(endSelectorStr).val("");
+                    }
+                }
+            },
+            /** submit */
+            submit: function() {
+                $("#vcantSchdulRegForm").submit();
             },
             /** 등록 또는 수정 처리(Ajax) */
             regAjax: function() {
-                let ajaxData = new FormData($("#vcantDyRegForm")[0]);
+                let ajaxData = new FormData($("#vcantSchdulRegForm")[0]);
                 let isReg = ($("#vcatnSchdulNo").val() === "");
                 const url = isReg ? '${Url.VCATN_SCHDUL_REG_AJAX!}' : '${Url.VCATN_SCHDUL_MDF_AJAX!}';
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
@@ -26,26 +56,17 @@
                         });
                 });
             },
-            /** 유효성검사:: 시작일 이전 날짜 선택 불가하게 막기 */
-            noBefore: function(beginSelectorStr, endSelectorStr) {
-                let result = commons.date.dateCompare(beginSelectorStr, endSelectorStr);
-                let select = $("#vcatnCd").children('option:selected').val();
-                if (select === "AM_HALF" || select === "PM_HALF") {
-                    $(endSelectorStr).val($(beginSelectorStr).val());
-                } else if (result === false && $(endSelectorStr).val() !== "") {
-                    Swal.fire("접속 IP는 최소 한 개 이상 입력해야 합니다.");
-                    $(endSelectorStr).val("");
-                }
-            },
-            /** 반차 선택 시 종료일 안보이게 막기 */
-            delEndDt: function() {
-                let selected = $("#vcatnCd").children('option:selected').val();
-                if (selected === "AM_HALF" || selected === "PM_HALF") {
-                    $("#endDtDiv").attr("style", "display:none !important");        // 강제로 !important 적용
-                    $("#endDt").val($("#bgnDt").val());
-                    $("#endDtSpan").empty();
+            /** 반차 선택 시 종료일 안보이게 */
+            propEndDt: function(idx) {
+                if (idx === undefined) idx = "";
+                if (VcatnSchdul.isHalf(idx)) {
+                    $("#lineDiv"+idx).addClass("d-none");
+                    $("#endDtDiv"+idx).addClass("d-none");
+                    $("#endDt"+idx).val($("#bgnDt"+idx).val());
+                    $("#endDt"+idx+"_valid_span").empty();
                 } else {
-                    $("#endDtDiv").show();
+                    $("#lineDiv"+idx).removeClass("d-none");
+                    $("#endDtDiv"+idx).removeClass("d-none");
                 }
             },
             /** 수정 팝업 호출 (ajax) */
@@ -62,7 +83,7 @@
                     $("#vcatnCd").val(rsltObj.vcatnCd);
                     $("#bgnDt").val(rsltObj.bgnDt);
                     $("#endDt").val(rsltObj.endDt);
-                    $("#vcatnResn").val(rsltObj.vcatnResn);
+                    $("#resn").val(rsltObj.resn);
                     $("#vcatnRm").val(rsltObj.vcatnRm);
                     $("#vcatn_schdul_reg_modal").modal("show");
                 });
