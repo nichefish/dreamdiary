@@ -49,7 +49,7 @@
              * 휴가등록 부분 추가
              */
             addVcatnSchdul: function() {
-                const idx = Page.idx;
+                const idx = Page.idx++;
                 commons.util.handlebarsAppend({ "idx": idx }, "vcatn_schdul_reg");
                 commons.datepicker.singleDatePicker("#bgnDt" + idx, "yyyy-MM-DD", null, function() {
                     VcatnSchdul.propEndDt(idx);
