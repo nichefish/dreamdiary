@@ -5,13 +5,13 @@
 
 <@layout.layout toolbar=toolbar!"">
 
-<!--include:: script modules -->
+<#--include::script modules-->
 <#include "/view/user/_user_scripts.ftlh">
 
 <div class="card post">
-    <!--begin::Card body-->
-    <div class="card-body p-9">
-        <!--begin::Row-->
+    <#--begin::Card body-->
+    <div class="card-body">
+        <#--begin::Row-->
         <div class="row mb-1">
             <div class="col-xl-2 col-4 d-flex-center">
                 <label class="fw-bold">승인여부</label>
@@ -40,11 +40,9 @@
             </div>
         </div>
 
-        <!--begin::Menu separator-->
         <div class="separator my-8"></div>
-        <!--end::Menu separator-->
 
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2 col-4 d-flex-center">
                 <label class="fw-bold">아이디</label>
@@ -69,7 +67,7 @@
                 <div class="col-xl-6 col-12"> (${user.regDt!})</div>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2 d-flex-center">
                 <label class="fw-bold">비밀번호</label>
@@ -83,7 +81,7 @@
             <div class="col-xl-8">
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2 col-4">
                 <div class="col-form-label text-center fw-bold">
@@ -101,7 +99,7 @@
                 </#list>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2 col-4">
                 <div class="col-form-label text-center fw-bold">
@@ -112,7 +110,7 @@
                 ${user.nickNm!}
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2 col-4">
                 <div class="col-form-label text-center fw-bold">
@@ -123,7 +121,7 @@
                 ${user.email!}
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2 col-4">
                 <div class="col-form-label text-center fw-bold">
@@ -134,7 +132,7 @@
                 ${user.cttpc!}
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2 col-4">
                 <div class="col-form-label text-center fw-bold">잠금여부</div>
@@ -151,7 +149,7 @@
                 </#if>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2 col-4">
                 <div class="col-form-label text-center fw-bold">
@@ -179,7 +177,7 @@
                 </div>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row">
             <div class="col-xl-2 col-4">
                 <div class="col-form-label text-center fw-bold">계정 설명</div>
