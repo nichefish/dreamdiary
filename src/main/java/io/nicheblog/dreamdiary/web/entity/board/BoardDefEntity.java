@@ -57,6 +57,10 @@ public class BoardDefEntity
     @Comment("게시판 글분류 코드")
     private String ctgrClCd;
 
+    /** 설명 */
+    @Column(name = "dc", length=2000)
+    private String dc;
+
     /* ----- */
 
     /** 상태 관리 모듈 (위임) */

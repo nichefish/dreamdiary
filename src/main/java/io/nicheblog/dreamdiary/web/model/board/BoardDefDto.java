@@ -36,6 +36,8 @@ public class BoardDefDto
     private String menuNo;
     /** 글분류 분류 코드 */
     private String ctgrClCd;
+    /** 설명 */
+    private String dc;
 
     /* ----- */
 
