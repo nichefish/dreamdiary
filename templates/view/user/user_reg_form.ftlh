@@ -5,11 +5,8 @@
 
 <@layout.layout toolbar=toolbar!"">
 
-<!--include:: script modules -->
+<#--include::script modules-->
 <#include "/view/user/_user_scripts.ftlh">
-
-<#assign isReg = (isReg!false)>
-<#assign isMdf = (isMdf!false)>
 
 <script>
     const Page = (function() {
@@ -53,13 +50,11 @@
                 User.tagifyAcsIp();
 
                 // 프로필 정보 / 인사정보 창 활성화
-                <#if isMdf!false>
-                    <#if user.profl??>
-                        UserProfl.enableUserProfl();
-                    </#if>
-                    <#if user.emplym??>
-                        UserEmplym.enableUserEmplym();
-                    </#if>
+                <#if user.profl??>
+                    UserProfl.enableUserProfl();
+                </#if>
+                <#if user.emplym??>
+                    UserEmplym.enableUserEmplym();
                 </#if>
             },
         }
@@ -109,7 +104,7 @@
     <form name="userRegForm" id="userRegForm" class="form mt-10" method="post" enctype="multipart/form-data">
         <input type="hidden" name="userNo" value="${user.userNo!}">
         <input type="hidden" name="atchFileNo" value="${user.atchFileNo!}">
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-lg-center text-sm-end <#if isReg!false>required</#if>">
@@ -140,7 +135,7 @@
             </#if>
         </div>
         <#if isReg!false>
-            <!--begin::Row-->
+            <#--begin::Row-->
             <div class="row mb-4">
                 <div class="col-xl-2">
                     <div class="fw-bold col-form-label text-lg-center text-sm-end  required">
@@ -163,7 +158,7 @@
                 </div>
             </div>
         </#if>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-lg-center text-sm-end required">
@@ -185,7 +180,7 @@
                 <div id="authCd_valid_span"></div>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
         <div class="row mb-4" id="nickNmShowDiv" <#if user.userInfo??>style="display:none;"</#if>>
             <div class="col-xl-2">
@@ -204,7 +199,7 @@
                 <span id="nickNm_valid_span"></span>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-sm-start text-lg-center required">
@@ -237,7 +232,7 @@
                 </select>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-sm-start text-lg-center">
@@ -253,7 +248,7 @@
                 <span id="cttpc_valid_span"></span>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-lg-center text-sm-start ">
@@ -275,11 +270,11 @@
                 <div id="acsIpListSpan" class="mt-2 mb-0" <#if !(user.useAcsIp!false)>style=display:none;"</#if>>
                     <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off" value="${user.acsIpListStr!}" />
                     <div class="form-text text-noti">(※최대 5개)</div>
-                    <div id="acsIpListStrSpan"></div>
+                    <div id="acsIpListStr_valid_span"></div>
                 </div>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-4">
             <div class="col-xl-2">
                 <div class="fw-bold col-form-label text-sm-start text-lg-center">
