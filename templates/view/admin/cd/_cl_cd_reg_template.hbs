@@ -20,7 +20,7 @@
             <select name="clCtgrCd" id="clCtgrCd" class="form-select form-select-solid">
                 <option value="">--글분류--</option>
                 <#list CL_CTGR_CD![] as ctgr>
-                    <option value="${ctgr.dtlCd!}" id="${ctgr.dtlCd!}" {{#if (equals clCtgrCd "${ctgr.dtlCd}")}}"selected"{{/if}}>[${ctgr.dtlCdNm!}]</option>
+                    <option value="${ctgr.dtlCd!}" {{#if (equals clCtgrCd "${ctgr.dtlCd!}")}}selected{{/if}}>[${ctgr.dtlCdNm!}]</option>
                 </#list>
             </select>
         </div>

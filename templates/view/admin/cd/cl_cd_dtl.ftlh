@@ -37,6 +37,11 @@
                 <!--begin::Title-->
                 <div class="col-12">
                     <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
+                        <#if clCd.clCtgrNm??>
+                            <span class="fw-bolder fs-2 ctgr-span ctgr-imprtc">
+                                ${clCd.clCtgrNm!}
+                            </span>
+                        </#if>
                         ${clCd.clCd!} (${clCd.clCdNm!})
                     </h1>
                 </div>

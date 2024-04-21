@@ -10,6 +10,11 @@
         <div class="col-12">
             <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
             <span class="vertical-middle">
+                {{#if (exists clCtgrNm)}}
+                    <span class="fw-bolder fs-2 ctgr-span ctgr-imprtc">
+                        {{clCtgrNm}}
+                    </span>
+                {{/if}}
                 <span class="fw-bold">{{clCdNm}}</span> (<span class="border-bottom">{{clCd}}</span>)
             </span>
             </h1>

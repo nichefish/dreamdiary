@@ -69,6 +69,11 @@
                             </div>
                         </td>
                         <td class="text-start px-6 cursor-pointer fw-bold text-gray-700">
+                            <#if clCd.clCtgrNm??>
+                                <span class="fw-bolder fs-2 ctgr-span ctgr-imprtc">
+                                    ${clCd.clCtgrNm!}
+                                </span>
+                            </#if>
                             <span>${clCd.clCdNm!}</span>
                             <span class="ms-1">(${clCd.clCd!})</span>
                             <a class="badge badge-secondary ms-2 p-2 btn-white blank blink-slow float-end"
