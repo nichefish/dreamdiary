@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.PopupMapstruct;
@@ -43,6 +44,14 @@ public class PopupService
     @Override
     public PopupMapstruct getMapstruct() {
         return this.popupMapstruct;
+    }
+
+    /**
+     * 등록 전처리
+     */
+    @Override
+    public void preRegist(final PopupDto popup) {
+        if (popup.getState() == null) popup.setState(new StateCmpstn());
     }
 
     /**
