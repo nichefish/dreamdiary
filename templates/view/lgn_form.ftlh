@@ -1,7 +1,7 @@
 <#--
-  -- 로그인 화면
-  -- (사이드바 없음)
-  -->
+ * 로그인 화면
+ * (사이드바 없음)
+ -->
 
 <#import "/layout/layout_without_sidebar.ftlh" as layout >
 

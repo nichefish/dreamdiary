@@ -89,7 +89,7 @@
                     <select name="ctgrCd" id="ctgrCd" class="form-select form-select-solid">
                         <option value="">--글분류--</option>
                         <#list NOTICE_CTGR_CD![] as ctgr>
-                            <option value="${ctgr.dtlCd!}" id="${ctgr.dtlCd!}" <#if ctgr.dtlCd == (post.ctgrCd)!>selected="selected"</#if>>[${ctgr.dtlCdNm!}]</option>
+                            <option value="${ctgr.dtlCd!}" <#if ctgr.dtlCd == (post.ctgrCd)!>selected="selected"</#if>>[${ctgr.dtlCdNm!}]</option>
                         </#list>
                     </select>
                 </div>
