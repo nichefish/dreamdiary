@@ -18,7 +18,7 @@ public class ClCdEntityTestFactory {
     /**
      * 분류코드 Entity 생성
      */
-    public static ClCdEntity createClCdEntity() throws Exception {
+    public static ClCdEntity createClCd() throws Exception {
         return ClCdEntity.builder()
                 .clCd("test")
                 .clCdNm("테스트_분류코드")
