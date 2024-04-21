@@ -13,6 +13,7 @@
 
 <#--include::script modules-->
 <#include "/view/vcatn/papr/_vcatn_papr_scripts.ftlh">
+<#include "/view/vcatn/schdul/_vcatn_schdul_scripts.ftlh">
 
 <script>
     const Page = (function() {
@@ -44,34 +45,6 @@
                     Page.addVcatnSchdul();
                 </#if>
             },
-            isHalf: function(idx) {
-                const vcatnCd = $("#vcatnCd" + idx).children('option:selected').val();
-                return vcatnCd === "AM_HALF" || vcatnCd === "PM_HALF";
-            },
-            /** 반차 선택 시 종료일 안보이게 */
-            propEndDt: function(idx) {
-                if (Page.isHalf(idx)) {
-                    $("#lineDiv"+idx).css("visibility", "hidden");
-                    $("#endDtDiv"+idx).css("visibility", "hidden");
-                    $("#endDt"+idx).val($("#bgnDt"+idx).val());
-                    $("#endDt"+idx+"_valid_span").empty();
-                } else {
-                    $("#lineDiv"+idx).css("visibility", "visible");
-                    $("#endDtDiv"+idx).css("visibility", "visible");
-                }
-            },
-            /** 시작일 이전 날짜 선택 불가 */
-            noBefore: function(beginSelectorStr, endSelectorStr, idx) {
-                if (Page.isHalf(idx)) {
-                    $(endSelectorStr).val($(beginSelectorStr).val());
-                } else {
-                    const isBefore = commons.date.isBefore(beginSelectorStr, endSelectorStr);
-                    if (!isBefore && $(endSelectorStr).val() !== "") {
-                        Swal.fire("휴가일을 다시 설정해 주세요.");
-                        $(endSelectorStr).val("");
-                    }
-                }
-            },
             /**
              * 휴가등록 부분 추가
              */
@@ -79,13 +52,11 @@
                 const idx = Page.idx;
                 commons.util.handlebarsAppend({ "idx": idx }, "vcatn_schdul_reg");
                 commons.datepicker.singleDatePicker("#bgnDt" + idx, "yyyy-MM-DD", null, function() {
-                    Page.propEndDt(idx);
-                    Page.noBefore("#bgnDt"+idx, "#endDt"+Page.idx, idx);
+                    VcatnSchdul.propEndDt(idx);
+                    VcatnSchdul.noBefore("#bgnDt"+idx, "#endDt"+idx, idx);
                 });
                 commons.datepicker.singleDatePicker("#endDt"+idx, "yyyy-MM-DD", null, function() {
-                    if ($("#endDt"+idx).val() !== "") {
-                        Page.noBefore("#bgnDt"+idx, "#endDt"+idx, idx);
-                    }
+                    if ($("#endDt"+idx).val() !== "") VcatnSchdul.noBefore("#bgnDt"+idx, "#endDt"+idx, idx);
                 });
             },
             /** 추가항목 영역 삭제 */

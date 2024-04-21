@@ -23,7 +23,7 @@
             <div class="row g-9">
                 <div class="col-md-2" id="vcatnCdSelectDiv{{idx}}">
                     <label class="required fs-6 fw-bold mb-2">휴가분류</label>
-                    <select class="form-select form-select-solid w-180px required" onchange="Page.delEndDt({{idx}})" name="schdulList[{{idx}}].vcatnCd" id="vcatnCd{{idx}}" data-hide-search="true">
+                    <select class="form-select form-select-solid w-180px required" onchange="VcatnSchdul.propEndDt({{idx}})" name="schdulList[{{idx}}].vcatnCd" id="vcatnCd{{idx}}" data-hide-search="true">
                         <option value="">휴가 분류</option>
                         <#list VCATN_CD![] as vcatnCd>
                             <option value="${vcatnCd.dtlCd!}" id="${vcatnCd.dtlCd!}">[${vcatnCd.dtlCdNm!}]</option>
@@ -48,7 +48,7 @@
                                     </svg>
                                 </span>
                                 <input class="form-control form-control-solid ps-12 required w-100" name="schdulList[{{idx}}].bgnDt" id="bgnDt{{idx}}"
-                                       autocomplete="off" onchange="Page.delEndDt({{idx}})" placeholder="휴가 시작일" readonly />
+                                       autocomplete="off" onchange="VcatnSchdul.propEndDt({{idx}})" placeholder="휴가 시작일" readonly />
                             </div>
                             <div id="bgnDt{{idx}}_valid_span"></div>
                         </div>
@@ -72,7 +72,7 @@
                                 </span>
                                 <input name="schdulList[{{idx}}].endDt" id="endDt{{idx}}" autocomplete="off"
                                        class="form-control form-control-solid ps-12 required w-100"
-                                       placeholder="휴가 종료일" readonly onchange="Page.delEndDt({{idx}})" />
+                                       placeholder="휴가 종료일" readonly onchange="VcatnSchdul.propEndDt({{idx}})" />
                             </div>
                             <div id="endDt{{idx}}_valid_span"></div>
                         </div>

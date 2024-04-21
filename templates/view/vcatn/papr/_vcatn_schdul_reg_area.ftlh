@@ -24,7 +24,7 @@
             <div class="row g-9">
                 <div class="col-md-2" id="vcatnCdSelectDiv${schdul?index}">
                     <label class="required fs-6 fw-bold mb-2">휴가분류</label>
-                    <select class="form-select form-select-solid w-180px required" onchange="Page.delEndDt(${schdul?index})" name="schdulList[${schdul?index}].vcatnCd" id="vcatnCd${schdul?index}" data-hide-search="true">
+                    <select class="form-select form-select-solid w-180px required" onchange="VcatnSchdul.propEndDt(${schdul?index})" name="schdulList[${schdul?index}].vcatnCd" id="vcatnCd${schdul?index}" data-hide-search="true">
                         <option value="">휴가 분류</option>
                         <#list VCATN_CD![] as vcatnCd>
                             <option value="${vcatnCd.dtlCd!}" ${fn.selected(schdul.vcatnCd!, vcatnCd.dtlCd)}>[${vcatnCd.dtlCdNm!}]</option>
@@ -49,7 +49,7 @@
                                     </svg>
                                 </span>
                                 <input class="form-control form-control-solid ps-12 required w-100" name="schdulList[${schdul?index}].bgnDt" id="bgnDt${schdul?index}"
-                                       autocomplete="off" onchange="Page.delEndDt(${schdul?index})" placeholder="휴가 시작일" value="${schdul.bgnDt!}" readonly />
+                                       autocomplete="off" onchange="VcatnSchdul.propEndDt(${schdul?index})" placeholder="휴가 시작일" value="${schdul.bgnDt!}" readonly />
                             </div>
                             <div id="bgnDt${schdul?index}_valid_span"></div>
                         </div>
@@ -72,7 +72,7 @@
                                     </svg>
                                 </span>
                                 <input name="schdulList[${schdul?index}].endDt" id="endDt${schdul?index}" class="form-control form-control-solid ps-12 required w-100"
-                                       onchange="Page.delEndDt(${schdul?index})"
+                                       onchange="VcatnSchdul.propEndDt(${schdul?index})"
                                        autocomplete="off" placeholder="휴가 종료일" value="${schdul.endDt!}" readonly />
                             </div>
                             <div id="endDt${schdul?index}_valid_span"></div>
