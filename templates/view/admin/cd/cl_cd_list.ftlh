@@ -77,7 +77,7 @@
                             </a>
                         </td>
                         <td class="text-start ps-6 hidden-table">
-                            ${clCd.clCdDc!}
+                            ${clCd.dc!}
                         </td>
                         <td class="text-center hidden-table">
                             ${clCd.dtlCdCnt!0}

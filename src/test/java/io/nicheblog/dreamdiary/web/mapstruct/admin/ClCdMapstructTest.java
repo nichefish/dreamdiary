@@ -1,11 +1,10 @@
-package io.nicheblog.dreamdiary.web.mapstruct.notice;
+package io.nicheblog.dreamdiary.web.mapstruct.admin;
 
 import io.nicheblog.dreamdiary.global.TestConstant;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntityTestFactory;
+import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDto;
 import io.nicheblog.dreamdiary.web.entity.BaseEntityTestFactoryHelper;
-import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
-import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntityTestFactory;
-import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
-import io.nicheblog.dreamdiary.web.model.notice.NoticeDtoTestFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -13,17 +12,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * NoticeMapstructTest
+ * ClCdMapstructTest
  * <pre>
- *  공지사항 Mapstruct 매핑 테스트 모듈
+ *  분류코드 관리 Mapstruct 매핑 테스트 모듈
  * </pre>
  *
  * @author nichefish
  */
 @ActiveProfiles("test")
-class NoticeMapstructTest {
+class ClCdMapstructTest {
 
-    private final NoticeMapstruct noticeMapstruct = NoticeMapstruct.INSTANCE;
+    private final ClCdMapstruct clCdMapstruct = ClCdMapstruct.INSTANCE;
 
     /**
      * toEntity 검증
@@ -31,14 +30,32 @@ class NoticeMapstructTest {
     @Test
     void toEntity_checkBasic() throws Exception {
         // Given::
-        NoticeDto.DTL noticeDto = NoticeDtoTestFactory.createNoticeDtlDto();
+        ClCdEntity clCdEntity = ClCdEntityTestFactory.createClCd();
+        clCdEntity.setClCtgrCd("test_cl_ctgr_cd");
 
         // When::
-        NoticeEntity noticeEntity = noticeMapstruct.toEntity(noticeDto);
+        ClCdDto dto = clCdMapstruct.toDto(clCdEntity);
 
         // Then::
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(noticeEntity);
+        assertNotNull(dto);
+    }
+
+    /**
+     * toDto 검증
+     */
+    @Test
+    void toDto_checkBasic() throws Exception {
+        // Given::
+        ClCdEntity clCdEntity = ClCdEntityTestFactory.createClCd();
+        clCdEntity.setClCtgrCd("test_cl_ctgr_cd");
+
+        // When::
+        ClCdDto dto = clCdMapstruct.toDto(clCdEntity);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(dto);
     }
 
     /**
@@ -47,14 +64,14 @@ class NoticeMapstructTest {
     @Test
     void testToDto_checkAuditor() throws Exception {
         // Given::
-        NoticeEntity noticeEntity = NoticeEntityTestFactory.createNotice();
+        ClCdEntity clCdEntity = ClCdEntityTestFactory.createClCd();
         // 등록자
-        BaseEntityTestFactoryHelper.setRegstrInfo(noticeEntity);
+        BaseEntityTestFactoryHelper.setRegstrInfo(clCdEntity);
         // 수정자
-        BaseEntityTestFactoryHelper.setMdfusrInfo(noticeEntity);
+        BaseEntityTestFactoryHelper.setMdfusrInfo(clCdEntity);
 
         // When::
-        NoticeDto dto = noticeMapstruct.toDto(noticeEntity);
+        ClCdDto dto = clCdMapstruct.toDto(clCdEntity);
 
         // Then::
         assertNotNull(dto);
@@ -67,5 +84,4 @@ class NoticeMapstructTest {
         assertEquals(dto.getMdfusrNm(), TestConstant.TEST_MDFUSR_NM);
         assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
     }
-
 }

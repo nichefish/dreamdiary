@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.mapstruct.jrnl.day;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.BaseEntityTestFactoryHelper;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntityTestFactory;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
@@ -92,6 +94,33 @@ class JrnlDayMapstructTest {
         assertNotNull(jrnlDayDto.getJrnlDtWeekDay());
         assertEquals(jrnlDayDto.getJrnlDtWeekDay(), "土");
         assertEquals(jrnlDayDto.getStdrdDt(), jrnlDayDto.getJrnlDt());
+    }
+
+    /**
+     * toDto 검증 :: 등록자/수정자 정보 체크
+     */
+    @Test
+    void testToDto_checkAuditor() throws Exception {
+        // Given::
+        JrnlDayEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
+        // 등록자
+        BaseEntityTestFactoryHelper.setRegstrInfo(jrnlDayEntity);
+        // 수정자
+        BaseEntityTestFactoryHelper.setMdfusrInfo(jrnlDayEntity);
+
+        // When::
+        JrnlDayDto dto = jrnlDayMapstruct.toDto(jrnlDayEntity);
+
+        // Then::
+        assertNotNull(dto);
+        // 등록자
+        assertEquals(dto.getRegstrId(), TestConstant.TEST_REGSTR_ID);
+        assertEquals(dto.getRegstrNm(), TestConstant.TEST_REGSTR_NM);
+        assertEquals(dto.getRegDt(), "2000-01-01 00:00:00");
+        // 수정자
+        assertEquals(dto.getMdfusrId(), TestConstant.TEST_MDFUSR_ID);
+        assertEquals(dto.getMdfusrNm(), TestConstant.TEST_MDFUSR_NM);
+        assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
     }
 
     /**

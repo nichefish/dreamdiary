@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditRegEntity;
@@ -26,8 +27,8 @@ public class BaseEntityTestFactoryHelper {
         if (!(obj instanceof BaseAuditRegEntity)) return;
 
         ((BaseAuditRegEntity) obj).setRegDt(DateUtils.asDate("2000-01-01"));
-        ((BaseAuditRegEntity) obj).setRegstrId("test_reg_user");
-        ((BaseAuditRegEntity) obj).setRegstrInfo(AuditorInfo.builder().userId("test_reg_user").nickNm("test_reg_nick_nm").build());
+        ((BaseAuditRegEntity) obj).setRegstrId(TestConstant.TEST_REGSTR_ID);
+        ((BaseAuditRegEntity) obj).setRegstrInfo(AuditorInfo.builder().userId(TestConstant.TEST_REGSTR_ID).nickNm(TestConstant.TEST_REGSTR_NM).build());
     }
 
     /**
@@ -37,7 +38,7 @@ public class BaseEntityTestFactoryHelper {
         if (!(obj instanceof BaseAuditEntity)) return;
 
         ((BaseAuditEntity) obj).setMdfDt(DateUtils.asDate("2000-01-01"));
-        ((BaseAuditEntity) obj).setMdfusrId("test_mdf_user");
-        ((BaseAuditEntity) obj).setMdfusrInfo(AuditorInfo.builder().userId("test_mdf_user").nickNm("test_mdf_nick_nm").build());
+        ((BaseAuditEntity) obj).setMdfusrId(TestConstant.TEST_MDFUSR_ID);
+        ((BaseAuditEntity) obj).setMdfusrInfo(AuditorInfo.builder().userId(TestConstant.TEST_MDFUSR_ID).nickNm(TestConstant.TEST_MDFUSR_NM).build());
     }
 }

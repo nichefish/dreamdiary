@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.jrnl.day;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
@@ -72,7 +73,7 @@ class JrnlDayRepositoryTest {
         // audit
         assertNotNull(rslt.getRegDt());
         assertNotNull(rslt.getRegstrId());
-        assertEquals(rslt.getRegstrId(), "test_user");
+        assertEquals(rslt.getRegstrId(), TestConstant.TEST_AUDITOR);
     }
 
     /**

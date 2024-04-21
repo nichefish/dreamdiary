@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.global.cmm.cd.service;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.mapstruct.CdMapstruct;
-import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
+import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.cmm.cd.repository.CdRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
@@ -45,12 +45,12 @@ public class CdService {
      * Cacheable (key:: #clCd)
      */
     @Cacheable(cacheNames = "cdDtoListByClCd", key = "#clCd", condition = "#clCd!=null")
-    public List<DtlCd> getCdListByClCd(final String clCd) throws Exception {
+    public List<DtlCdDto> getCdListByClCd(final String clCd) throws Exception {
         if (StringUtils.isEmpty(clCd)) return null;
         // 코드 목록 조회 (entity level)
         List<DtlCdEntity> rsDtlCdList = this.getCdEntityListByClCd(clCd);
         // Entity -> Dto
-        List<DtlCd> rsDtlCdDtoList = new ArrayList<>();
+        List<DtlCdDto> rsDtlCdDtoList = new ArrayList<>();
         for (DtlCdEntity dtlCdEntity : rsDtlCdList) {
             rsDtlCdDtoList.add(cdMapstruct.toDto(dtlCdEntity));
         }

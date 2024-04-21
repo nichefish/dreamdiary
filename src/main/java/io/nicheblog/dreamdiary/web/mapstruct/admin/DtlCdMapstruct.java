@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
+import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -18,7 +18,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DtlCdMapstruct
-        extends BaseCrudMapstruct<DtlCd, DtlCd, DtlCdEntity> {
+        extends BaseCrudMapstruct<DtlCdDto, DtlCdDto, DtlCdEntity> {
 
     DtlCdMapstruct INSTANCE = Mappers.getMapper(DtlCdMapstruct.class);
 
@@ -27,25 +27,25 @@ public interface DtlCdMapstruct
      */
     @Override
     @Named("toDto")
-    DtlCd toDto(final DtlCdEntity entity) throws Exception;
+    DtlCdDto toDto(final DtlCdEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
     @Named("toListDto")
-    DtlCd toListDto(final DtlCdEntity entity) throws Exception;
+    DtlCdDto toListDto(final DtlCdEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
-    DtlCdEntity toEntity(final DtlCd dto) throws Exception;
+    DtlCdEntity toEntity(final DtlCdDto dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(final DtlCd dto, final @MappingTarget DtlCdEntity entity) throws Exception;
+    void updateFromDto(final DtlCdDto dto, final @MappingTarget DtlCdEntity entity) throws Exception;
 }

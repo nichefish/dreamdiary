@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.jrnl.diary;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
@@ -58,6 +59,6 @@ class JrnlDiaryRepositoryTest {
         // audit
         assertNotNull(rslt.getRegDt());
         assertNotNull(rslt.getRegstrId());
-        assertEquals(rslt.getRegstrId(), "test_user");
+        assertEquals(rslt.getRegstrId(), TestConstant.TEST_AUDITOR);
     }
 }

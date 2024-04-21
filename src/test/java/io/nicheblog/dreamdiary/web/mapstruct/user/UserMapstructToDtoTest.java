@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.auth.Auth;
 import io.nicheblog.dreamdiary.web.entity.BaseEntityTestFactoryHelper;
 import io.nicheblog.dreamdiary.web.entity.user.*;
@@ -71,12 +72,12 @@ class UserMapstructToDtoTest {
         // Then::
         assertNotNull(dto);
         // 등록자
-        assertEquals(dto.getRegstrId(), "test_reg_user");
-        assertEquals(dto.getRegstrNm(), "test_reg_nick_nm");
+        assertEquals(dto.getRegstrId(), TestConstant.TEST_REGSTR_ID);
+        assertEquals(dto.getRegstrNm(), TestConstant.TEST_REGSTR_NM);
         assertEquals(dto.getRegDt(), "2000-01-01 00:00:00");
         // 수정자
-        assertEquals(dto.getMdfusrId(), "test_mdf_user");
-        assertEquals(dto.getMdfusrNm(), "test_mdf_nick_nm");
+        assertEquals(dto.getMdfusrId(), TestConstant.TEST_MDFUSR_ID);
+        assertEquals(dto.getMdfusrNm(), TestConstant.TEST_MDFUSR_NM);
         assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
     }
 
@@ -214,12 +215,12 @@ class UserMapstructToDtoTest {
         // Then::
         assertNotNull(dto);
         // 등록자
-        assertEquals(dto.getRegstrId(), "test_reg_user");
-        assertEquals(dto.getRegstrNm(), "test_reg_nick_nm");
+        assertEquals(dto.getRegstrId(), TestConstant.TEST_REGSTR_ID);
+        assertEquals(dto.getRegstrNm(), TestConstant.TEST_REGSTR_NM);
         assertEquals(dto.getRegDt(), "2000-01-01 00:00:00");
         // 수정자
-        assertEquals(dto.getMdfusrId(), "test_mdf_user");
-        assertEquals(dto.getMdfusrNm(), "test_mdf_nick_nm");
+        assertEquals(dto.getMdfusrId(), TestConstant.TEST_MDFUSR_ID);
+        assertEquals(dto.getMdfusrNm(), TestConstant.TEST_MDFUSR_NM);
         assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
     }
 

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * CdMapstructTest
  * <pre>
- *  분류코드 Mapstruct 매핑 테스트 모듈
+ *  코드 Mapstruct 매핑 테스트 모듈
  *  (단순 코드 조회용이므로 auditor 정보 매핑 상속받지 않음)
  * </pre>
  *

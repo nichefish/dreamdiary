@@ -47,7 +47,7 @@
             <div class="separator separator-dashed border-gray-300 my-8"></div>
             <!--begin::Question-->
             <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-                ${clCd.clCdDc?no_esc}
+                ${clCd.dc?no_esc}
             </div>
         </div>
     </div>
@@ -164,7 +164,7 @@
                             </span>
                         </td>
                         <td class="text-start ps-10">
-                            ${dtlCd.dtlCdDc!}
+                            ${dtlCd.dc!}
                         </td>
                         <td class="text-center">
                             ${dtlCd.sortOrdr!}

@@ -38,12 +38,12 @@ public class DtlCdEntity
 
     /** 상세코드 */
     @Id
-    @Column(name = "dtl_cd")
+    @Column(name = "dtl_cd", length=50)
     private String dtlCd;
 
     /** 공통코드 */
     @Id
-    @Column(name = "cl_cd")
+    @Column(name = "cl_cd", length=50)
     private String clCd;
 
     /** 분류코드 정보 */
@@ -53,12 +53,12 @@ public class DtlCdEntity
     private ClCdEntity clCdInfo;
 
     /** 상세코드이름 */
-    @Column(name = "dtl_cd_nm")
+    @Column(name = "dtl_cd_nm", length=50)
     private String dtlCdNm;
 
     /** 상세코드설명 */
-    @Column(name = "dtl_cd_dc")
-    private String dtlCdDc;
+    @Column(name = "dc", length=2000)
+    private String dc;
 
     /* ---- */
 

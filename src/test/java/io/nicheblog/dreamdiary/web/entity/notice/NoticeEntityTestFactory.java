@@ -19,7 +19,7 @@ public class NoticeEntityTestFactory {
     /**
      * 공지사항 Entity 생성
      */
-    public static NoticeEntity createNoticeEntity() throws Exception {
+    public static NoticeEntity createNotice() throws Exception {
         return NoticeEntity.builder()
                 .postNo(0)
                 .contentType(ContentType.NOTICE.key)

@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
-import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
+import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
@@ -27,8 +27,8 @@ import java.util.List;
  */
 @Service("clCdService")
 public class ClCdService
-        implements BaseCrudService<ClCd, ClCd, String, ClCdEntity, ClCdRepository, ClCdSpec, ClCdMapstruct>,
-                   BaseStateService<ClCd, ClCd, String, ClCdEntity, ClCdRepository, ClCdSpec, ClCdMapstruct> {
+        implements BaseCrudService<ClCdDto, ClCdDto, String, ClCdEntity, ClCdRepository, ClCdSpec, ClCdMapstruct>,
+                   BaseStateService<ClCdDto, ClCdDto, String, ClCdEntity, ClCdRepository, ClCdSpec, ClCdMapstruct> {
 
     @Resource(name = "clCdRepository")
     private ClCdRepository clCdRepository;
@@ -56,7 +56,7 @@ public class ClCdService
      * 등록 전처리
      */
     @Override
-    public void preRegist(final ClCd clCd) {
+    public void preRegist(final ClCdDto clCd) {
         if (clCd.getState() == null) clCd.setState(new StateCmpstn());
     }
 
@@ -64,7 +64,7 @@ public class ClCdService
      * 정렬 순서 업데이트
      */
     @Transactional
-    public boolean sortOrdr(List<ClCd> sortOrdr) throws Exception {
+    public boolean sortOrdr(List<ClCdDto> sortOrdr) throws Exception {
         if (CollectionUtils.isEmpty(sortOrdr)) return true;
         sortOrdr.forEach(dto -> {
             try {

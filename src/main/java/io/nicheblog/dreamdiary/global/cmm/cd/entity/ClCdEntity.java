@@ -1,17 +1,19 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.entity;
 
-import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
+import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,20 +45,40 @@ public class ClCdEntity
     @PostLoad
     private void onLoad() {
         this.dtlCdCnt = (CollectionUtils.isEmpty(this.dtlCdList)) ? 0 : this.dtlCdList.size();
+        if (this.clCtgrCdInfo != null) this.clCtgrNm = this.clCtgrCdInfo.getDtlCdNm();
     }
 
     /** 분류코드 */
     @Id
-    @Column(name = "cl_cd")
+    @Column(name = "cl_cd", length=50)
     private String clCd;
 
     /** 분류코드 이름 */
     @Column(name = "cl_cd_nm")
     private String clCdNm;
 
+    /** 분류코드 분류 코드 */
+    @Column(name = "cl_ctgr_cd", length=50)
+    private String clCtgrCd;
+
+    /** 분류코드 코드 정보 (복합키 조인) */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.CL_CTGR_CD + "\'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "cl_ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
+    })
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("분류코드 코드 정보")
+    private DtlCdEntity clCtgrCdInfo;
+
+    /** 분류코드 분류 코드명 */
+    @Transient
+    private String clCtgrNm;
+
     /** 분류코드 설명 */
-    @Column(name = "cl_cd_dc")
-    private String clCdDc;
+    @Column(name = "dc", length=2000)
+    private String dc;
 
     /** 분류코드 정보 */
     @OneToMany
@@ -76,12 +98,12 @@ public class ClCdEntity
     /**
      * 상세코드 dto 목록 반환
      */
-    public List<DtlCd> getDtlCdDtoList() throws Exception {
+    public List<DtlCdDto> getDtlCdDtoList() throws Exception {
         if (CollectionUtils.isEmpty(this.dtlCdList)) return null;
-        List<DtlCd> dtlCdDtoList = new ArrayList<>();
+        List<DtlCdDto> dtlCdDtoList = new ArrayList<>();
         long i = 1;
         for (DtlCdEntity dtlCdEntity : this.dtlCdList) {
-            DtlCd dto = DtlCdMapstruct.INSTANCE.toDto(dtlCdEntity);
+            DtlCdDto dto = DtlCdMapstruct.INSTANCE.toDto(dtlCdEntity);
             dto.setRnum(i++);
             dtlCdDtoList.add(dto);
         }

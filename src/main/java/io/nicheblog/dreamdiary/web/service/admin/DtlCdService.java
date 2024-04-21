@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.service.admin;
 
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
-import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
+import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
@@ -27,8 +27,8 @@ import java.util.List;
  */
 @Service("dtlCdService")
 public class DtlCdService
-        implements BaseCrudService<DtlCd, DtlCd, DtlCdKey, DtlCdEntity, DtlCdRepository, DtlCdSpec, DtlCdMapstruct>,
-                   BaseStateService<DtlCd, DtlCd, DtlCdKey, DtlCdEntity, DtlCdRepository, DtlCdSpec, DtlCdMapstruct> {
+        implements BaseCrudService<DtlCdDto, DtlCdDto, DtlCdKey, DtlCdEntity, DtlCdRepository, DtlCdSpec, DtlCdMapstruct>,
+                   BaseStateService<DtlCdDto, DtlCdDto, DtlCdKey, DtlCdEntity, DtlCdRepository, DtlCdSpec, DtlCdMapstruct> {
 
     @Resource(name = "dtlCdRepository")
     private DtlCdRepository dtlCdRepository;
@@ -56,7 +56,7 @@ public class DtlCdService
      * 정렬 순서 업데이트
      */
     @Transactional
-    public boolean sortOrdr(List<DtlCd> sortOrdr) throws Exception {
+    public boolean sortOrdr(List<DtlCdDto> sortOrdr) throws Exception {
         if (CollectionUtils.isEmpty(sortOrdr)) return true;
         sortOrdr.forEach(dto -> {
             try {

@@ -83,6 +83,9 @@ public final class Constant
     public static final String IS_MDF = "isMdf";
     public static final String LIST_URL = "listUrl";
 
+    /* 분류 분류 코드 */
+    public static final String CL_CTGR_CD = "CL_CTGR_CD";
+
     /* 소속(팀) 코드 */
     public static final String TEAM_CD = "TEAM_CD";
 

@@ -2,7 +2,8 @@ package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCd;
+import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDto;
+import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -54,6 +55,8 @@ public class ClCdController
 
     @Resource(name = "clCdService")
     private ClCdService clCdService;
+    @Resource(name = "cdService")
+    private CdService cdService;
 
     /**
      * 분류 코드(CL_CD) 관리(useYn=N 포함) 목록 화면 조회
@@ -79,11 +82,13 @@ public class ClCdController
             Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회
-            Page<ClCd> clCdList = clCdService.getPageDto(searchParam, pageRequest);
+            Page<ClCdDto> clCdList = clCdService.getPageDto(searchParam, pageRequest);
             model.addAttribute("clCdList", clCdList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(clCdList));
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+            // 코드 데이터 모델에 추가
+            cdService.setModelCdData(Constant.CL_CTGR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -109,7 +114,7 @@ public class ClCdController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> clCdRegAjax(
-            final @Valid ClCd clCd,
+            final @Valid ClCdDto clCd,
             final @RequestParam("regYn") String regYn,
             final LogActvtyParam logParam,
             final BindingResult bindingResult
@@ -124,7 +129,7 @@ public class ClCdController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = "Y".equals(regYn);
-            ClCd rsDto = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd);
+            ClCdDto rsDto = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd);
 
             isSuccess = (rsDto.getClCd() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -162,8 +167,10 @@ public class ClCdController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            ClCd cmmClCd = clCdService.getDtlDto(clCd);
+            ClCdDto cmmClCd = clCdService.getDtlDto(clCd);
             model.addAttribute("clCd", cmmClCd);
+            // 코드 데이터 모델에 추가
+            cdService.setModelCdData(Constant.CL_CTGR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -199,7 +206,7 @@ public class ClCdController
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            ClCd cmmClCd = clCdService.getDtlDto(clCd);
+            ClCdDto cmmClCd = clCdService.getDtlDto(clCd);
             ajaxResponse.setRsltObj(cmmClCd);
 
             isSuccess = true;

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ClCd
+ * ClCdDto
  * <pre>
  *  분류코드(clCd) Dto
  *  ※분류코드(cl_cd) = 상위 분류코드. 상세코드(dtl_cd)를 1:N 묶음으로 관리한다.
@@ -29,7 +29,7 @@ import java.util.List;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClCd
+public class ClCdDto
         extends BaseAuditDto
         implements StateCmpstnModule, Identifiable<String> {
 
@@ -41,10 +41,12 @@ public class ClCd
     /** 분류코드이름 */
     private String clCdNm;
     /** 분류코드설명 */
-    private String clCdDc;
+    private String dc;
+    /** 분류 분류코드명 */
+    private String clCtgrNm;
 
     /** 상세코드 목록 */
-    List<DtlCd> dtlCdList;
+    List<DtlCdDto> dtlCdList;
 
     /** 상세코드 개수 */
     @Builder.Default
@@ -58,7 +60,7 @@ public class ClCd
     public List<DtlCdEntity> getDtlCdEntityList() throws Exception {
         if (CollectionUtils.isEmpty(this.dtlCdList)) return null;
         List<DtlCdEntity> dtlCdEntityList = new ArrayList<>();
-        for (DtlCd dtlCd : this.dtlCdList) {
+        for (DtlCdDto dtlCd : this.dtlCdList) {
             DtlCdEntity entity = DtlCdMapstruct.INSTANCE.toEntity(dtlCd);
             dtlCdEntityList.add(entity);
         }

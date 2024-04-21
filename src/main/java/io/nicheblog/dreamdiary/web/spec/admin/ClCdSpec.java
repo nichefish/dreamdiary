@@ -45,7 +45,7 @@ public class ClCdSpec
                 // LIKE 검색
                 case "clCd":
                 case "clCdNm":
-                case "clCdDc":
+                case "dc":
                     Expression<String> keyExp = root.get(key);
                     predicate.add(builder.like(keyExp, "%" + searchParamMap.get(key) + "%"));
                     continue;

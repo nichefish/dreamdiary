@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.web.controller.admin;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
-import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCd;
+import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -69,7 +69,7 @@ public class DtlCdController
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            DtlCd dtlCdDto = dtlCdService.getDtlDto(cmmDtlKey);
+            DtlCdDto dtlCdDto = dtlCdService.getDtlDto(cmmDtlKey);
             ajaxResponse.setRsltObj(dtlCdDto);
 
             isSuccess = true;
@@ -96,7 +96,7 @@ public class DtlCdController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdRegAjax(
-            final @Valid DtlCd dtlCd,
+            final @Valid DtlCdDto dtlCd,
             final LogActvtyParam logParam,
             final @RequestParam("regYn") String regYn,
             final BindingResult bindingResult
@@ -111,7 +111,7 @@ public class DtlCdController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = "Y".equals(regYn);
-            DtlCd result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd);
+            DtlCdDto result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd);
             
             isSuccess = (result.getDtlCd() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -257,7 +257,7 @@ public class DtlCdController
             // 목록 조회
             Map<String, Object> searchParam = new HashMap<String, Object>();
             searchParam.put("clCd", clCd);
-            List<DtlCd> dtlCdList = dtlCdService.getListDto(searchParam);
+            List<DtlCdDto> dtlCdList = dtlCdService.getListDto(searchParam);
             ajaxResponse.setRsltList(dtlCdList);
 
             isSuccess = true;

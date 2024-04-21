@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class DtlCd
+public class DtlCdDto
         extends BaseAuditDto
         implements StateCmpstnModule, Identifiable<DtlCdKey> {
 
@@ -36,7 +36,7 @@ public class DtlCd
     /** 상세코드이름 */
     private String dtlCdNm;
     /** 상세코드설명 */
-    private String dtlCdDc;
+    private String dc;
     /** 분류코드 */
     private String clCd;
 
