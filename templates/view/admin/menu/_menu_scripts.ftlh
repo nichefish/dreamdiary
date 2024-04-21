@@ -58,12 +58,22 @@
                 event.stopPropagation();
                 let obj = { "menuTyCd": menuTyCd, "upperMenuNo": upperMenuNo, "upperMenuNm": upperMenuNm };
                 commons.util.handlebarsTemplate(obj, "menu_reg", "show");
+                Menu.initValidateForm();
             },
             /** 아이콘 새로고침 */
             refreshIcon: function() {
                 const $iconClassElmt = $("#menuRegForm #icon");
                 if (!$iconClassElmt.length) return;
                 $("#menuRegForm #menu_icon_div").html($iconClassElmt.val());
+            },
+            /** 하위메뉴 존재여부에 따라 url 영역 표시 */
+            toggleUrlSpan: function(obj) {
+                const menuSubExtendTyCd = $(obj).val();
+                if (menuSubExtendTyCd !== "NO_SUB") {
+                    $("#url_div").addClass("d-none");
+                } else {
+                    $("#url_div").removeClass("d-none");
+                }
             },
             /** submit */
             submit: function() {
@@ -97,6 +107,7 @@
                         return false;
                     }
                     commons.util.handlebarsTemplate(res.rsltObj, "menu_reg", "show");
+                    Menu.initValidateForm();
                 });
             },
             /** 삭제 처리 (ajax) */

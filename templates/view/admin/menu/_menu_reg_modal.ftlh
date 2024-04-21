@@ -10,7 +10,7 @@
     <@component.modal_header "메뉴 저장" />
     <!--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
-        <form name="menuRegForm" id="menuRegForm" class="form-horizontal">
+        <form name="menuRegForm" id="menuRegForm">
             <div id="menu_reg_div">
                 <!-- contents -->
             </div>

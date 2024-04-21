@@ -8,7 +8,9 @@
     <input type="hidden" name="menuNo" id="menuNo" value="{{menuNo}}" placeholder="menuNo">
     <input type="hidden" name="menuTyCd" id="menuTyCd" value="{{menuTyCd}}" placeholder="menuTyCd">
     <input type="hidden" name="upperMenuNo" id="upperMenuNo" value="{{upperMenuNo}}" placeholder="upperMenuNo">
-    <div class="row mb-3">
+
+    <#--begin::Row-->
+    <div class="row mb-4">
         <div class="col-2 text-center">
             <label for="menuNm" class="col-form-label fw-bold">
                 상위메뉴 이름
@@ -24,7 +26,8 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3">
+    <#--begin::Row-->
+    <div class="row mb-4">
         <div class="col-2 text-center">
             <label for="menuNm" class="col-form-label fw-bold required">
                 메뉴 이름
@@ -35,14 +38,20 @@
             <span id="menuNm_valid_span"></span>
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="col-2 d-flex-center">
-            <label for="menuNm" class="col-form-label fw-bold required">
+    <#--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-2 text-center">
+            <label for="menuNm" class="cursor-help col-form-label fw-bold"
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                   title="사이드바에서 메뉴 옆에 표시될 아이콘을 입력합니다.&#10;(미입력시 기본 · 으로 표현됩니다.)">
                 메뉴 아이콘
+                <i class="bi bi-question-circle"></i>
             </label>
         </div>
         <div class="col-1 d-flex-center w-5">
-            <div id="menu_icon_div">
+            <div id="menu_icon_div" class="cursor-pointer"
+                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                 title="아이콘 미리보기입니다.">
                 {{#if (exists icon)}}
                     {{{icon}}}
                 {{else}}
@@ -52,7 +61,7 @@
         </div>
         <div class="col-8">
             <textarea name="icon" id="icon"
-                      class="form-control form-control-sm form-control-solid d-block required" rows="2"  maxlength="200" placeholder="아이콘 html을 입력하세요.">{{icon}}</textarea>
+                      class="form-control form-control-solid d-block required" rows="3" maxlength="200" placeholder="아이콘 html을 입력하세요.">{{icon}}</textarea>
             <div id="icon_valid_span" class="ps-2"></div>
         </div>
         <div class="col-1 d-flex align-items-center">
@@ -62,25 +71,38 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3">
+    <#--begin::Row-->
+    <div class="row mb-4">
+        <div class="col-2 text-center">
+            <label for="url" class="cursor-help col-form-label fw-bold required"
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                   title="사이드바에서 하위 메뉴를&#10;표현할 방법을 선택합니다.">
+                하위메뉴<br />표시 방식
+                <i class="bi bi-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-3">
+            <select class="form-select form-select-solid required" name="menuSubExtendTyCd" id="menuSubExtendTyCd" onchange="Menu.toggleUrlSpan(this);">
+                <option value="">----</option>
+                <#list MENU_SUB_EXTEND_TY_CD![] as menuSubExtend>
+                    <option value="${menuSubExtend.dtlCd!}" {{selectedIf (equals menuSubExtendTyCd "${menuSubExtend.dtlCd!}")}}>
+                        ${menuSubExtend.dtlCdNm!}
+                    </option>
+                </#list>
+            </select>
+            <div id="menuSubExtendTyCd_valid_span"></div>
+        </div>
+    </div>
+    <#--begin::Row-->
+    <div class="row mb-4 {{^if (equals menuSubExtendTyCd "NO_SUB")}}d-none{{/if}}" id="url_div">
         <div class="col-2 text-center">
             <label for="url" class="col-form-label fw-bold">
                 메뉴 URL
             </label>
         </div>
         <div class="col-10">
-            <input type="text" name="url" id="url" class="form-control required" value="{{url}}">
+            <input type="text" name="url" id="url" class="form-control" value="{{url}}">
             <div id="url_valid_span"></div>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 text-center">
-            <label for="url" class="col-form-label fw-bold">
-                하위메뉴<br />표시 방식
-            </label>
-        </div>
-        <div class="col-10">
-            TODO: 펼치기 / 확장
         </div>
     </div>
 
