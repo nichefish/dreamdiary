@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.controller;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.auth.model.PwChgParam;
+import io.nicheblog.dreamdiary.web.model.user.UserPwChgParam;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -96,7 +96,7 @@ public class LgnController
     @ResponseBody
     public ResponseEntity<AjaxResponse> lgnPwChgAjax(
             final LogActvtyParam logParam,
-            final @Valid PwChgParam pwChgParam,
+            final @Valid UserPwChgParam userPwChgParam,
             final BindingResult bindingResult
     ) {
 
@@ -108,7 +108,7 @@ public class LgnController
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 비밀번호 변경 처리
-            isSuccess = userMyService.lgnPwChg(pwChgParam);
+            isSuccess = userMyService.lgnPwChg(userPwChgParam);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
