@@ -10,6 +10,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +41,11 @@ public class ClCdDto
     private String clCd;
     /** 분류코드이름 */
     private String clCdNm;
-    /** 분류코드설명 */
+    /** 설명 */
     private String dc;
-    /** 분류 분류코드명 */
+    /** 분류코드 분류 코드 */
+    private String clCtgrCd;
+    /** 분류코드 분류코드명 */
     private String clCtgrNm;
 
     /** 상세코드 목록 */

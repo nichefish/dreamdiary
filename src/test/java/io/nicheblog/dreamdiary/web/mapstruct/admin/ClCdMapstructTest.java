@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntityTestFactory;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDto;
+import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDtoTestFactory;
 import io.nicheblog.dreamdiary.web.entity.BaseEntityTestFactoryHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -56,6 +57,23 @@ class ClCdMapstructTest {
         // Then::
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
         assertNotNull(dto);
+    }
+
+    /**
+     * toDto 검증 :: 기본 체크
+     */
+    @Test
+    void testToEntity_checkBasic() throws Exception {
+        // Given::
+        ClCdDto clCdDto = ClCdDtoTestFactory.createClCdDtlDto();
+        clCdDto.setClCtgrCd("test_cl_ctgr_cd");
+
+        // When::
+        ClCdEntity entity = clCdMapstruct.toEntity(clCdDto);
+
+        // Then::
+        assertNotNull(entity);
+        assertNotNull(entity.getClCtgrCd());
     }
 
     /**
