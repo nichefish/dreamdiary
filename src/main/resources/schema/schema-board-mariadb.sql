@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS board_def (
     board_nm VARCHAR(120) COMMENT '게시판 이름',
     ctgr_cl_cd VARCHAR(30) COMMENT '분류 코드',
     menu_no VARCHAR(10) COMMENT '메뉴 번호',
+    dc VARCHAR(2000) COMMENT '설명',
     -- STATE (module)
     sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
     use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
