@@ -22,7 +22,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-public class Sequence
+public class SequenceEntity
         implements Serializable {
 
     /** 시퀀스 번호 (PK) */
