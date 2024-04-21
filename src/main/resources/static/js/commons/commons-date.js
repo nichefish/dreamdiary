@@ -247,13 +247,14 @@ commons.date = (function() {
         },
 
         /**
-         * 시작일 종료일 계산
+         * 시작일 종료일 계산 
+         * 앞선 날이 뒷날보다 더 앞쪽인지, 순서가 제대로 되었는지 반환
          */
         dateCompare: function(beginSelectorStr, endSelectorStr) {
-            let begin = $(beginSelectorStr).val();
-            let end = $(endSelectorStr).val();
-            let beginCompareDate = commons.date.asDate(begin);
-            let endCompareDate = commons.date.asDate(end);
+            const begin = $(beginSelectorStr).val();
+            const end = $(endSelectorStr).val();
+            const beginCompareDate = commons.date.asDate(begin);
+            const endCompareDate = commons.date.asDate(end);
             if (commons.util.isEmpty(beginCompareDate) || commons.util.isEmpty(endCompareDate)) return null;
             return beginCompareDate.getTime() <= endCompareDate.getTime();
         },
