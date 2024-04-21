@@ -1,5 +1,6 @@
 <#--
- * 휴가계획서(vcatn_papr) > 등록 화면
+ * 휴가계획서(vcatn_papr) > 휴가 일정 등록(추가추가) 영역
+ * @included_in : vcatn_papr_reg_form.ftlh
  -->
 
 <#list post.schdulList![] as schdul>
@@ -32,7 +33,7 @@
                     <div id="vcatnCd${schdul?index}_valid_span"></div>
                 </div>
                 <div class="col-md-5 d-flex flex-column">
-                    <label class="required fs-6 fw-bold mb-2">휴가일</label>
+                    <label class="required fs-6 fw-bold mb-2" for="bgnDt${schdul?index}">휴가일</label>
                     <div class="row">
                         <div class="col d-flex flex-column">
                             <div class="position-relative d-flex align-items-center">
