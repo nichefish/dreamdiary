@@ -60,12 +60,11 @@ public class VcatnPaprDto
         return this.schdulList.stream()
                 .map(vcatnSchdulDto -> {
                     String vcatnCd = vcatnSchdulDto.getVcatnCd();
-                    if (Constant.VCATN_AM_HALF.equals(vcatnCd)) {
+                    boolean isHalf = Constant.VCATN_AM_HALF.equals(vcatnCd) || Constant.VCATN_PM_HALF.equals(vcatnCd);
+                    if (isHalf) {
+                        // 반차일 경우 시작일 = 종료일
                         vcatnSchdulDto.setBgnDt(vcatnSchdulDto.getBgnDt() + " 09:00:00");
-                        vcatnSchdulDto.setEndDt(vcatnSchdulDto.getEndDt() + " 14:00:00");
-                    } else if (Constant.VCATN_PM_HALF.equals(vcatnCd)) {
-                        vcatnSchdulDto.setBgnDt(vcatnSchdulDto.getBgnDt() + " 14:00:00");
-                        vcatnSchdulDto.setEndDt(vcatnSchdulDto.getEndDt() + " 18:00:00");
+                        vcatnSchdulDto.setEndDt(vcatnSchdulDto.getBgnDt() + " 14:00:00");
                     } else {
                         vcatnSchdulDto.setBgnDt(vcatnSchdulDto.getBgnDt() + " 01:00:00");
                         vcatnSchdulDto.setEndDt(vcatnSchdulDto.getEndDt() + " 23:59:59");
