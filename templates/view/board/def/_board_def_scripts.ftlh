@@ -5,6 +5,11 @@
 <script>
     const BoardDef = (function() {
         return {
+            /** form validation init */
+            initValidateForm: function() {
+                /* jquery :: validation */
+                commons.validate.validateForm("#boardDefRegForm", BoardDef.regAjax);
+            },
             /** Draggable 컴포넌트 init */
             initDraggable: function() {
                 const containers = document.querySelectorAll(".draggable-zone");
@@ -31,10 +36,9 @@
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "board_def_reg", "show");
                 $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 commons.validate.validateForm("#boardDefRegForm");
                 commons.validate.replaceBlankIfMatches("#boardDefRegForm .cddata", commons.validate.nonCdRegex);
-                commons.validate.onlyEngNum("#boardDefRegForm .cddata");
-                // commons.validate.toUpperCase("#boardDefRegForm .cddata");
                 commons.validate.onlyNum(".number");
             },
             /** submit */
@@ -56,6 +60,25 @@
                                 if (res.rslt) commons.util.blockUIReload();
                             });
                     });
+                });
+            },
+            /** 수정 모달 호출 */
+            mdfModal: function(boardCd) {
+                const url = "${Url.BOARD_DEF_DTL_AJAX!}";
+                let ajaxData = { "boardCd": boardCd };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    let rsltObj = res.rsltObj;
+                    rsltObj.isMdf = true;
+                    commons.util.handlebarsTemplate(rsltObj, "board_def_reg", "show");
+                    /* jquery :: validation */
+                    BoardDef.initValidateForm();
+                    commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
+                    // template에 있는 tooltip들 활성화
+                    $('[data-bs-toggle="tooltip"]').tooltip();
                 });
             },
             /** 항목 수정 모달 호출 */

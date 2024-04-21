@@ -22,6 +22,8 @@
             init: function () {
                 /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
                 commons.util.initSortTable();
+                /* jquery :: validation */
+                BoardDef.initValidateForm();
                 /* init : Draggable */
                 BoardDef.initDraggable();
             },
@@ -51,10 +53,9 @@
             <thead>
                 <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 text-muted">
                     <th class="col-1 text-center wb-keepall w-5 hidden-table">번호</th>
-                    <th class="col-lg-2 col-2 text-center wb-keepall">게시판 이름</th>
-                    <th class="col-lg-1 col-6 text-center wb-keepall">게시판 코드</th>
-                    <th class="col-2 text-center wb-keepall w-15">글분류코드</th>
-                    <th class="col-1 text-center wb-keepall w-10">메뉴 번호</th>
+                    <th class="col-lg-3 col-8 text-center wb-keepall">게시판 코드</th>
+                    <th class="col-1 text-center wb-keepall w-15">글분류코드</th>
+                    <th class="col-4 text-center wb-keepall">게시판 설명</th>
                     <th class="col-1 text-center wb-keepall w-10">글 갯수</th>
                     <th class="col-1 text-center wb-keepall w-5">사용 여부</th>
                     <th class="col-1 text-center wb-keepall w-5">-</th>
@@ -65,42 +66,31 @@
                 <#list boardDefMngList![] as boardDef>
                     <tr class="sortable-item draggable" id="${boardDef.boardCd!}">
                         <td class="text-center hidden-table">
-                            <div class="draggable-handle cursor-move pt-2"
+                            <div class="draggable-handle d-flex-center cursor-move pt-2"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
                                 <i class="ki-duotone ki-abstract-14 fs-2x">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
+                                <span class="text-muted ms-2">
+                                    ${(boardDef.state.sortOrdr)!"-"}
+                                </span>
                             </div>
                         </td>
-                        <td class="text-start ps-15">
-                            <b>${boardDef.boardNm!}</b>
-                            <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard"
+                        <td class="text-start ps-15 fw-bold text-gray-700">
+                            <span class="fw-bold">${boardDef.boardNm!}</span>
+                            <span class="ms-1">(${boardDef.boardCd!})</span>
+                            <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                title="항목 수정 팝업을 호출합니다.">
-                                <i class="bi bi-pencil-square fs-5 text-noti" onclick="BoardDef.mdfItemForm('${boardDef.boardCd!}', 'boardNm', '게시판 이름', '${boardDef.boardNm!}');"></i>
+                                <i class="bi bi-pencil-square fs-5 text-noti" onclick="BoardDef.mdfModal('${boardDef.boardCd!}');"></i>
                             </a>
                         </td>
-                        <td class="text-start ps-15">
-                            <b class="cursor-help"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                               title="해당 게시판에 등록된 게시물이 있을 경우, 게시판 코드는 변경 불가능합니다.">
-                                ${boardDef.boardCd!}
-                            </b>
-                        </td>
-                        <td class="text-start ps-10 hidden-table">
+                        <td class="text-center hidden-table text-gray-700">
                             ${boardDef.ctgrClCd!}
-                            <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목 수정 팝업을 호출합니다.">
-                                <i class="bi bi-pencil-square fs-5 text-noti" onclick="BoardDef.mdfItemForm('${boardDef.boardCd!}', 'ctgrClCd', '글분류 코드', '${boardDef.ctgrClCd!}');"></i>
-                            </a>
                         </td>
-                        <td class="text-start hidden-table">
-                            ${boardDef.menuNo!}
-                            <a class="badge badge-secondary ms-2 p-2 btn-primary blank blink-slowcard"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="항목 수정 팝업을 호출합니다.">
-                                <i class="bi bi-pencil-square fs-5 text-noti" onclick="BoardDef.mdfItemForm('${boardDef.boardCd!}', 'menuNo', '메뉴 번호', '${boardDef.menuNo!}');"></i>
-                            </a>
+                        <td class="text-center hidden-table">
+                            <div class="w-100 text-truncate">${boardDef.dc!}</div>
                         </td>
                         <td class="text-center hidden-table">
                             -
@@ -141,7 +131,6 @@
 </form>
 
 <#--include::modals-->
-<#include "/view/board/def/_board_def_mdf_item_modal.ftlh">
 <#include "/view/board/def/_board_def_reg_modal.ftlh">
 
 <#--include:: Aside-->

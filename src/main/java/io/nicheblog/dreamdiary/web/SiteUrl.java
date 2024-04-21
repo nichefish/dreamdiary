@@ -113,6 +113,7 @@ public interface SiteUrl {
     /** 게시판 관리 */
     String BOARD_DEF_LIST = Prefix.BOARD_DEF + "/boardDefList.do";
     String BOARD_DEF_REG_AJAX = Prefix.BOARD_DEF + "/boardDefRegAjax.do";
+    String BOARD_DEF_DTL_AJAX = Prefix.BOARD_DEF + "/boardDefDtlAjax.do";
     String BOARD_DEF_MDF_ITEM_AJAX = Prefix.BOARD_DEF + "/boardDefMdfItemAjax.do";
     String BOARD_DEF_DEL_AJAX = Prefix.BOARD_DEF + "/boardDefDelAjax.do";
     String BOARD_DEF_USE_AJAX = Prefix.BOARD_DEF + "/boardDefUseAjax.do";

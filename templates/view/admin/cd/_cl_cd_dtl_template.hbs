@@ -67,12 +67,12 @@
                         {{sortOrdr}}
                     </td>
                     <td class="text-center">
-                        <span class="text-{{#if (trueFalse useYn "Y//N")}}success{{else}}muted{{/if}}">
-                            {{#if (trueFalse useYn "Y//N")}}
+                        <span class="text-{{#ifYn useYn}}success{{else}}muted{{/ifYn}}">
+                            {{#ifYn useYn}}
                                 사용<i class="bi bi-check text-success"></i>
                             {{else}}
                                 미사용<i class="bi bi-dash text-muted"></i>
-                            {{/if}}
+                            {{/ifYn}}
                         </span>
                     </td>
                 </tr>

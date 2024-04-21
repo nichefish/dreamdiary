@@ -10,7 +10,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.util.CollectionUtils;
 
-import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -62,13 +62,20 @@
         return value ? "selected" : "";
     });
     /** check 선택 */
+    Handlebars.registerHelper("checkedYn", function(value) {
+        return "Y" === value ? "checked" : "";
+    })
     Handlebars.registerHelper("checkedIf", function(value) {
         return value ? "checked" : "";
-    })
+    });
     Handlebars.registerHelper("numberFormat", function(value) {
         if (commons.util.isEmpty(value)) return;
         return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     });
+
+    Handlebars.registerHelper("ifYn", function(value, options) {
+        return "Y" === value ? options.fn(this) : options.inverse(this);;
+    })
 
     let truefalseFunc = function(value, ynValues, options) {
         // 기본값 null일 때 true로 간주하는 옵션
@@ -85,7 +92,7 @@
         // 기본값 null일 때 true로 간주하는 옵션
         let defaultTrue = options.hash["default"] || false;
         if (defaultTrue && commons.util.isEmpty(value)) return true;
-        // 비교결과 반환
+        // 비교결과 반환 :: 일부러 느슨한 비교
         return (value == compareValue);
     }
     let notEqualsFunc = function(value, compareValue, options) {
@@ -104,13 +111,19 @@
     Handlebars.registerHelper("checkedLabel", checkedLabelFunc);
 
     let checkedStyleFunc = function(value, type, ynColors, options) {
-        let separator = "//";
+        const separator = "//";
         let idx = ynColors.indexOf(separator);
         let yColor = ynColors.substring(0, idx);
         let nColor = ynColors.substring(idx + 2);
         return "style=" + type + ":" + (value ? yColor : nColor) + ";";
     }
+    let checkedYnStyleFunc = function(value, type, ynColors, options) {
+        return checkedStyleFunc(value === "Y", type, ynColors, options);
+    }
     Handlebars.registerHelper("checkedStyle", checkedStyleFunc);
+
+    Handlebars.registerHelper("checkedYnStyle", checkedYnStyleFunc);
+
 
     Handlebars.registerHelper("concat", function(value1, value2) {
         return value1 + "" + value2;

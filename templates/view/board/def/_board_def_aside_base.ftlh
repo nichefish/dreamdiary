@@ -47,7 +47,7 @@
 
                 <div class="separator my-8"></div>
 
-                <#--begin::Card widget 20-->
+                <#--begin::Table-->
                 <table class="table align-middle table-row-dashed fs-small gy-4 table-fixed mb-3">
                     <#--begin::Table head-->
                     <thead>

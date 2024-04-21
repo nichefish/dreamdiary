@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.board;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.web.SiteMenu;
@@ -85,6 +86,14 @@ public class BoardDefService
     public SiteAcsInfo getBoardMenu(final String boardCd) throws Exception {
         BoardDefEntity boardDef = this.getDtlEntity(boardCd);
         return boardDefMapstruct.toMenu(boardDef);
+    }
+
+    /**
+     * 등록 전처리
+     */
+    @Override
+    public void preRegist(final BoardDefDto boardDef) {
+        if (boardDef.getState() == null) boardDef.setState(new StateCmpstn());
     }
 
     /**
