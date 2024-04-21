@@ -1,7 +1,7 @@
 <#--
-  -- 활동 로그(log_actvty) > 목록 검색 영역 Header
-  -- @included_in : log_actvty_list.ftlh
-  -->
+ * 활동 로그(log_actvty) > 목록 검색 영역 Header
+ * @included_in : log_actvty_list.ftlh
+ -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
