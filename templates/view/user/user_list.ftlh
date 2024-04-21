@@ -149,7 +149,7 @@
                 </#list>
             </tbody>
         </table>
-</div>
+    </div>
     <!--begin::Card footer-->
     <div class="card-footer">
         <!-- pagination::begin -->
