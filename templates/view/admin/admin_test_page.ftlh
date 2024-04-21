@@ -1,5 +1,5 @@
 <#--
- -- 테스트 화면
+ * 테스트 화면
  -->
 <#import "/layout/layout.ftlh" as layout >
 
@@ -24,14 +24,14 @@
                 const url = "${Url.API_NOTION_GET!}";
                 let ajaxData = { "dataType": $("#dataType").val(), "dataId": $("#dataId").val() };
                 commons.util.blockUIAjax(url, 'get', data, function(res) {
-                    if (res.result) Swal.fire(JSON.stringify(res));
+                    if (res.rslt) Swal.fire(JSON.stringify(res));
                     Swal.fire({ text: res.message });
                 });
             },
             /** url, data 받아서 ajax 호출 */
             ajax: function(url, data) {
                 commons.util.blockUIAjax(url, 'post', data, function(res) {
-                    if (res.result) Swal.fire(JSON.stringify(res));
+                    if (res.rslt) Swal.fire(JSON.stringify(res));
                     Swal.fire({ text: res.message });
                 });
             },
@@ -77,8 +77,9 @@
         </li>
     </ul>
 
-    <div class="card-body p-9">
-        <!--begin::Row-->
+    <#--begin::Card body-->
+    <div class="card-body">
+        <#--begin::Row-->
         <div class="row mb-8">
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label"><label>사이트 캐시 관리</label></div>
@@ -98,7 +99,7 @@
                 <p class="mb-0 ps-4">시스템을 통하지 않은(ex.DB 직접입력) 변동사항이 발생했을 경우 수동 업데이트</p>
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-8">
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label"><label for="hldyYy">한국천문연구원 특일정보 API</label></div>
@@ -122,7 +123,7 @@
                 ※ 해당 년도 공휴일 정보 API 조회 :: 시스템에서 누락된 경우 수동 업데이트
             </div>
         </div>
-        <!--begin::Row-->
+        <#--begin::Row-->
         <div class="row mb-8">
             <div class="col-xl-2">
                 <div class="fs-6 fw-bold col-form-label"><label for="hldyYy">NOTION API 테스트</label></div>
