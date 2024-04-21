@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.user;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.experimental.UtilityClass;
@@ -21,7 +22,7 @@ public class UserDtoTestFactory {
     public static UserDto.DTL createUserDtlDto() {
         // 갹체 생성
         return UserDto.DTL.builder()
-                .userId("test_user")
+                .userId(TestConstant.TEST_USER)
                 .password("test_password")
                 .nickNm("test_nick_nm")
                 .emailId("test_email_id")

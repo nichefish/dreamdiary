@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.user.emplym;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
@@ -22,7 +23,7 @@ public class UserEmplymEntityTestFactory {
     public static UserEmplymEntity createUserEmplymEntity() throws Exception {
         // 갹체 생성
         return UserEmplymEntity.builder()
-                .userNm("test_user")
+                .userNm(TestConstant.TEST_USER)
                 .cmpyCd("test_cmpy_cd")
                 .teamCd("test_team_cd")
                 .emplymCd("test_emplym_cd")

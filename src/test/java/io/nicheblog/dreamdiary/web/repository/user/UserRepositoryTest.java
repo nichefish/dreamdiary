@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.repository.user;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
@@ -62,7 +63,7 @@ class UserRepositoryTest {
         // audit
         assertNotNull(rslt.getRegDt());
         assertNotNull(rslt.getRegstrId());
-        assertEquals(rslt.getRegstrId(), "test_user");
+        assertEquals(rslt.getRegstrId(), TestConstant.TEST_AUDITOR);
         // 항목 체크
         assertEquals(rslt.getUserId(), user.getUserId());
     }

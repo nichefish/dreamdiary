@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.model.user.reqst;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
@@ -32,7 +33,7 @@ public class UserReqstDtoTestFactory {
     public static UserReqstDto createUserReqst() {
         // 갹체 생성
         return UserReqstDto.builder()
-                .userId("test_user")
+                .userId(TestConstant.TEST_USER)
                 .password("test_password")
                 // 권한:: 운영 로직에선 변환 전 서비스단에서 할당하여 넣어줌.
                 .authList(List.of(UserAuthRoleDto.builder().authCd(Constant.AUTH_USER).build()))

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.user;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.experimental.UtilityClass;
@@ -24,7 +25,7 @@ public class UserEntityTestFactory {
     public static UserEntity createUser() throws Exception {
         // 갹체 생성
         return UserEntity.builder()
-                .userId("test_user")
+                .userId(TestConstant.TEST_USER)
                 .password("test_password_encoded")
                 .nickNm("test_nick_nm")
                 .email("test_email_id@test_email_domain")
