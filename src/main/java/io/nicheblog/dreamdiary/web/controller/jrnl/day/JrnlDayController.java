@@ -211,7 +211,7 @@ public class JrnlDayController
     }
 
     /**
-     * 저널 일자 상세 조회 (Ajax)
+     * 저널 일자 삭제 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {Url.JRNL_DAY_DEL_AJAX})
@@ -227,7 +227,7 @@ public class JrnlDayController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 게시판 정보 조회
+            // 삭제 처리
             isSuccess = jrnlDayService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

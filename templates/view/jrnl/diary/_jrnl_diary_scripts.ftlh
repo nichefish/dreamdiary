@@ -18,7 +18,8 @@
 
                 /* jquery :: validation */
                 JrnlDiary.initValidateForm();
-
+                // checkbox init
+                commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                 // tinymce editor reset
                 commons.tinymce.init('#tinymce_jrnlDiaryCn', commons.tinymce.imgRegFunc);
                 commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", "");
@@ -61,10 +62,28 @@
 
                     /* jquery :: validation */
                     JrnlDiary.initValidateForm();
-
+                    // checkbox init
+                    commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                     // tinymce editor reset
                     commons.tinymce.init('#tinymce_jrnlDiaryCn', commons.tinymce.imgRegFunc);
                     commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", rsltObj.cn);
+                });
+            },
+            /** 삭제 (ajax) */
+            delAjax: function(postNo) {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.del"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${Url.JRNL_DIARY_DEL_AJAX!}";
+                    let ajaxData = { "postNo": postNo };
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.rslt) commons.util.blockUIReload();;
+                            });
+                    });
                 });
             },
         }

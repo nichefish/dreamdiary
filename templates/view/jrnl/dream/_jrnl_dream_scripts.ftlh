@@ -67,6 +67,23 @@
                     commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", rsltObj.cn);
                 });
             },
+            /** 삭제 (ajax) */
+            delAjax: function(postNo) {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.del"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${Url.JRNL_DREAM_DEL_AJAX!}";
+                    let ajaxData = { "postNo": postNo };
+                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (res.rslt) commons.util.blockUIReload();;
+                            });
+                    });
+                });
+            },
         }
     })();
 </script>

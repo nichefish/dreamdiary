@@ -132,5 +132,39 @@ public class JrnlDreamController
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
+
+    /**
+     * 저널 일기 삭제 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @PostMapping(value = {Url.JRNL_DREAM_DEL_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> jrnlDreamDelAjax(
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 삭제 처리
+            isSuccess = jrnlDreamService.delete(key);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
     
 }

@@ -37,11 +37,13 @@ public interface SiteUrl {
     String JRNL_DREAM_REG_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamRegAjax.do";
     String JRNL_DREAM_DTL_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamDtlAjax.do";
     String JRNL_DREAM_MDF_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamMdfAjax.do";
+    String JRNL_DREAM_DEL_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamDelAjax.do";
 
     /** 저널 일기 */
     String JRNL_DIARY_REG_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryRegAjax.do";
     String JRNL_DIARY_DTL_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryDtlAjax.do";
     String JRNL_DIARY_MDF_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryMdfAjax.do";
+    String JRNL_DIARY_DEL_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryDelAjax.do";
 
     /** 공지사항 */
     String NOTICE_LIST = Prefix.NOTICE + "/noticeList.do";
