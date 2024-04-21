@@ -18,8 +18,23 @@
 </#macro>
 
 <!--
-* 모달::버튼::등록/수정
--->
+ * 모달:: 타이틀 영역 (다크)
+ -->
+<#macro modal_header_dark title>
+    <div class="modal-header" style="background-color:#41416e;">
+        <h5 class="modal-title">[${title!}]</h5>
+        <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" aria-label="Close"
+             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close"/>">
+            <i class="fas fa-times"></i>
+        </div>
+        <!--end::Close-->
+    </div>
+</#macro>
+
+
+<!--
+ * 모달::버튼::등록/수정
+ -->
 <#macro modal_btn_save func>
     <button type="button" class="btn btn-sm btn-primary me-2"
             onclick="${func!}"
@@ -33,8 +48,8 @@
 </#macro>
 
 <!--
-* 버튼 : 수정 모달 호출
--->
+ * 버튼 : 수정 모달 호출
+ -->
 <#macro modal_btn_modify func>
     <button type="button" class="btn btn-sm btn-active-primary"
             onclick="${func!}"
@@ -44,8 +59,8 @@
 </#macro>
 
 <!--
-* 버튼 : 삭제
--->
+ * 버튼 : 삭제
+ -->
 <#macro modal_btn_delete func>
     <button type="button" class="btn btn-sm btn-light btn-active-danger"
             onclick="${func!}"
