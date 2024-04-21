@@ -50,7 +50,7 @@ public class JrnlDreamEntity
     @Comment("저널 꿈 고유 번호")
     private Integer postNo;
 
-    /** 게시판 분류 코드 */
+    /** 컨텐츠 타입 */
     @Builder.Default
     @Column(name = "content_type", columnDefinition = "VARCHAR(50) DEFAULT 'JRNL_DREAM'")
     @Comment("컨텐츠 타입")
