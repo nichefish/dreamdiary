@@ -32,9 +32,8 @@
         </div>
         <div class="col-10">
             <input type="text" name="menuNm" id="menuNm" class="form-control d-inline-block required" value="{{menuNm}}">
+            <span id="menuNm_valid_span"></span>
         </div>
-        <div class="col-2"></div>
-        <div class="col-6"><span id="menuNmSpan"></span></div>
     </div>
     <div class="row mb-3">
         <div class="col-2 d-flex-center">
@@ -54,6 +53,7 @@
         <div class="col-8 d-flex align-items-center text-center">
             <textarea name="icon" id="icon"
                       class="form-control form-control-sm form-control-solid required" rows="2"  maxlength="200" placeholder="아이콘 html을 입력하세요.">{{icon}}</textarea>
+            <div id="icon_valid_span"></div>
         </div>
         <div class="col-1 d-flex align-items-center">
             <div class="btn btn-sm btn-icon btn-light-primary" onclick="Menu.refreshIcon();"
@@ -61,8 +61,6 @@
                 <i class="bi bi-arrow-repeat"></i>
             </div>
         </div>
-        <div class="col-2"></div>
-        <div class="col-10"><span id="iconSpan"></span></div>
     </div>
     <div class="row mb-3">
         <div class="col-2 text-center">
@@ -71,22 +69,19 @@
             </label>
         </div>
         <div class="col-10">
-            <input type="text" name="url" id="url" class="form-control d-inline-block number required" value="{{url}}">
+            <input type="text" name="url" id="url" class="form-control" value="{{url}}">
+            <div id="url_valid_span"></div>
         </div>
-        <div class="col-2"></div>
-        <div class="col-10"><span id="urlSpan"></span></div>
     </div>
     <div class="row mb-3">
         <div class="col-2 text-center">
             <label for="url" class="col-form-label fw-bold">
-                메뉴 URL
+                하위메뉴<br />표시 방식
             </label>
         </div>
         <div class="col-10">
-            <input type="text" name="url" id="url" class="form-control d-inline-block number required" value="{{url}}">
+            TODO: 펼치기 / 확장
         </div>
-        <div class="col-2"></div>
-        <div class="col-10"><span id="urlSpan"></span></div>
     </div>
 
     <div class="separator my-8"></div>
@@ -97,7 +92,7 @@
         </div>
         <div class="col-10">
             <div class="form-check col-form-label">
-                <input class="form-check-input" type="checkbox" name="state.useYn" id="useYn" value="Y" {{#if (equals state.useYn "Y")}}checked{{/if}}>
+                <input class="form-check-input" type="checkbox" name="state.useYn" id="useYn" value="Y" {{checkedYn state.useYn}}>
                 <label class="form-check-label" for="useYn">메뉴 숨김</label>
             </div>
         </div>

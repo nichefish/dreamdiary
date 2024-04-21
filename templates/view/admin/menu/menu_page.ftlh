@@ -4,7 +4,7 @@
 
 <#import "/layout/layout.ftlh" as layout >
 
-<#-- 툴바 버튼 추가 -->
+<#--toolbar::버튼 추가-->
 <#assign toolbar>
     <#include "/view/admin/menu/_menu_page_header.ftlh">
 </#assign>
@@ -16,7 +16,7 @@
 <script type="text/javascript" src="/js/commons/commons-jstree.js?${releaseDate!}"></script>
 <script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
 
-<!--include:: script modules -->
+<#--include::script modules-->
 <#include "/view/admin/menu/_menu_scripts.ftlh">
 
 <script>

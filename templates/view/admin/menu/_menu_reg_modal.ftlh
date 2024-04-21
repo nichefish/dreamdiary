@@ -18,18 +18,10 @@
     </div>
     <!--begin::Modal Footer-->
     <div class="modal-footer flex-end">
-        <button type="button" class="btn btn-primary" onclick="commons.util.submit('#menuRegForm');"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-            <i class="bi bi-pencil-square"></i>
-            <span class="indicator-label">저장</span>
-            <span class="indicator-progress">
-                Please wait...
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
-        </button>
-        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close">
-            닫기
-        </button>
+        <!-- 버튼:: 저장하기 -->
+        <@component.modal_btn_save "Menu.submit();" />
+        <!-- 버튼:: 모달 닫기 -->
+        <@component.modal_btn_close />
     </div>
 </@modal.layout>
 

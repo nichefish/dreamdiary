@@ -23,7 +23,7 @@
                 {{/if}}
                 <div class="mx-2 mb-0 text-dark cursor-pointer text-underline-dotted" onclick="Menu.mdfModal('{{menuNo}}');"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
-                    <span class="title {{#if (equals state.useYn "Y")}}strikethrough{{/if}}">
+                    <span class="title {{#ifYn state.useYn}}strikethrough{{/ifYn}}">
                         {{menuNm}}
                     </span>
                 </div>

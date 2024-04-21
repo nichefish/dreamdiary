@@ -65,6 +65,10 @@
                 if (!$iconClassElmt.length) return;
                 $("#menuRegForm #menu_icon_div").html($iconClassElmt.val());
             },
+            /** submit */
+            submit: function() {
+                $("#menuRegForm").submit();
+            },
             /** 메뉴 정보 등록/수정 */
             regAjax: function() {
                 Swal.fire({
