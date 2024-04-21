@@ -1,12 +1,5 @@
 package io.nicheblog.dreamdiary.global;
 
-import io.nicheblog.dreamdiary.api.ApiConstant;
-import io.nicheblog.dreamdiary.global.auth.AuthConstant;
-import lombok.AllArgsConstructor;
-
-import java.util.Locale;
-import java.util.TimeZone;
-
 /**
  * TestConstant
  * <pre>
@@ -17,4 +10,6 @@ import java.util.TimeZone;
  */
 public final class TestConstant {
 
+    public static final String TEST_AUDITOR = "test_auditor";
+    public static final String TEST_USER = "test_user";
 }

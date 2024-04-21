@@ -20,7 +20,7 @@ public class ClCdEntityTestFactory {
      */
     public static ClCdEntity createClCd() throws Exception {
         return ClCdEntity.builder()
-                .clCd("test")
+                .clCd("test_cl_cd")
                 .clCdNm("테스트_분류코드")
                 .dc("설명")
                 .build();

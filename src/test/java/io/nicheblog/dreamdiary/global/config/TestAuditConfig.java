@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.config;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
@@ -24,6 +25,6 @@ public class TestAuditConfig {
      */
     @Bean
     public AuditorAware<String> auditorProvider() {
-        return () -> Optional.of("test_user"); // 테스트 사용자 이름
+        return () -> Optional.of(TestConstant.TEST_AUDITOR); // 테스트 사용자 이름
     }
 }
