@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
@@ -58,6 +59,14 @@ public class MenuService
     @Override
     public MenuMapstruct getMapstruct() {
         return this.menuMapstruct;
+    }
+
+    /**
+     * 등록 전처리
+     */
+    @Override
+    public void preRegist(final MenuDto menu) {
+        if (menu.getState() == null) menu.setState(new StateCmpstn());
     }
 
     /**
