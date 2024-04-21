@@ -1,6 +1,6 @@
 <#--
-  -- 휴가계획서(vcatn_papr) : 모듈 스크립트 분리
-  -->
+ * 휴가계획서(vcatn_papr) : 스크립트 모듈 분리
+ -->
 
 <script>
     const VcatnPapr = (function() {
@@ -98,7 +98,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) Page.list();
+                                if (res.rslt) VcatnPapr.list();
                             });
                     });
                 });

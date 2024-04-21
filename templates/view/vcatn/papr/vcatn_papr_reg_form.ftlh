@@ -1,6 +1,6 @@
 <#--
-  -- 휴가계획서(vcatn_papr) > 등록 화면
-  -->
+ * 휴가계획서(vcatn_papr) > 등록 화면
+ -->
 
 <#import "/layout/layout.ftlh" as layout >
 
@@ -13,12 +13,13 @@
 
 <@layout.layout toolbar=toolbar!"">
 
-<!--include:: script modules -->
+<#--include::script modules-->
 <#include "/view/vcatn/papr/_vcatn_papr_scripts.ftlh">
 
 <script>
     const Page = (function() {
         return {
+            idx: 0,
             init: function () {
                 /* jquery :: validation */
                 VcatnPapr.initValidateForm();
@@ -39,32 +40,32 @@
 
                 <#if isReg!false>
                     /** 휴가 추가 폼 기본 뿌리기 */
-                    Page.addVcatnInfoRegItem();
+                    Page.addVcatnSchdul();
                 <#elseif isMdf!false>
                     <#if (post.schdulList)?has_content>
                         Page.addVcatnInfoItemList();      // 기존 항목에 대하여 행 쭈루룩 추가
                     </#if>
                 </#if>
             },
+            isHalf: function(idx) {
+                const vcatnCd = $("#vcatnCd" + idx).children('option:selected').val();
+                return vcatnCd === "AM_HALF" || vcatnCd === "PM_HALF";
+            },
             /** 반차 선택 시 종료일 안보이게 */
-            delEndDt: function(idx) {
-                let result = $("#vcatnCd" + idx).children('option:selected').val();
-                if (result === "AM_HALF" || result === "PM_HALF") {
+            propEndDt: function(idx) {
+                if (Page.isHalf(idx)) {
                     $("#lineDiv"+idx).css("visibility", "hidden");
                     $("#endDtDiv"+idx).css("visibility", "hidden");
                     $("#endDt"+idx).val($("#bgnDt"+idx).val());
-                    $("#endDt"+idx+"_valid_span").empty().css("visibility", "hidden");
+                    $("#endDt"+idx+"_valid_span").empty();
                 } else {
                     $("#lineDiv"+idx).css("visibility", "visible");
                     $("#endDtDiv"+idx).css("visibility", "visible");
-                    $("#endDt"+idx+"_valid_span").css("visibility", "visible");
                 }
             },
             /** 시작일 이전 날짜 선택 불가 */
             noBefore: function(beginSelectorStr, endSelectorStr, idx) {
-                let result = commons.date.dateCompare(beginSelectorStr, endSelectorStr);
-                let selected = $("#vcatnCd" + idx).children('option:selected').val();
-                if (selected === "AM_HALF" || selected === "PM_HALF") {
+                if (Page.isHalf(idx)) {
                     $(endSelectorStr).val($(beginSelectorStr).val());
                 } else if (result === false && $(endSelectorStr).val() !== "") {
                     Swal.fire("휴가일을 다시 설정해 주세요.");
@@ -74,18 +75,16 @@
             /**
              * 휴가등록 부분 추가
              */
-            addVcatnInfoRegItem: function() {
-                let reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=vcatnItemId", "vcatnItemId");// elmt, selector, elmtId
-                let tableTmpl = "<div class='card shadow-sm mb-5' style='width:100%' id='itemContainer" + reqstItemIdx + "'>" + $("#vcatn_reg_item_template").html() + "</div>";
-                let str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
-                $("#vcatnListDiv").append(str);
-                commons.datepicker.singleDatePicker("#bgnDt"+reqstItemIdx, "yyyy-MM-DD", null, function() {
-                    Page.delEndDt(reqstItemIdx);
-                    Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+            addVcatnSchdul: function() {
+                const idx = Page.idx;
+                commons.util.handlebarsAppend({ "idx": idx }, "vcatn_schdul_reg");
+                commons.datepicker.singleDatePicker("#bgnDt" + idx, "yyyy-MM-DD", null, function() {
+                    Page.propEndDt(idx);
+                    Page.noBefore("#bgnDt"+idx, "#endDt"+Page.idx, idx);
                 });
-                commons.datepicker.singleDatePicker("#endDt"+reqstItemIdx, "yyyy-MM-DD", null, function() {
-                    if ($("#endDt"+reqstItemIdx).val() !== "") {
-                        Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
+                commons.datepicker.singleDatePicker("#endDt"+idx, "yyyy-MM-DD", null, function() {
+                    if ($("#endDt"+idx).val() !== "") {
+                        Page.noBefore("#bgnDt"+idx, "#endDt"+idx, idx);
                     }
                 });
             },
@@ -93,45 +92,11 @@
              * 사용자 정보 추가항목 영역 기존 정보 목록 추가
              */
             addVcatnInfoItemList: function() {
-                <#if vcatn?? && (post.schdulList)?has_content>
-                    let reqstItemIdx, tableTmpl, str, vcatnCdSelectDiv;
-                    <#list post.schdulList![] as item>
-                    reqstItemIdx = commons.util.getReqstItemIdx("span", "id^=vcatnItemId", "vcatnItemId");		// elmt, selector, elmtId
-                    tableTmpl = "<div class='row shadow-sm' id='itemContainer" + reqstItemIdx + "'>" + $("#vcatn_reg_item_template").html() + "</div>";
-                    str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
-                    $("#vcatnListDiv").append(str);
 
-                    // 휴가사유 세팅
-                    $("#vcatnResn" + reqstItemIdx).val(`${(item.vcatnResn)!}`);
-                    // 휴가분류 selectbox 세팅
-                    vcatnCdSelectDiv = $("#vcatnCdSelectDiv" + reqstItemIdx).children('select').children('option');
-                    vcatnCdSelectDiv.each(function (idx, elmt) {
-                        if (elmt.value === "${(item.vcatnCd)!}") $(elmt).attr("selected", "selected");
-                    });
-                    //반차일 경우 selectbox 안보이게
-                    if ('${item.vcatnCd}' == "AM_HALF" || '${item.vcatnCd}' == "PM_HALF") {
-                        Page.delEndDt(reqstItemIdx);
-                    }
-                    commons.datepicker.singleDatePicker("#bgnDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.bgnDt)}", function() {
-                        Page.delEndDt(reqstItemIdx);
-                        Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
-                    });
-                    commons.datepicker.singleDatePicker("#endDt" + reqstItemIdx, "yyyy-MM-DD", "${(item.endDt)}", function() {
-                        if ($("#endDt"+reqstItemIdx).val() !== "") {
-                            Page.noBefore("#bgnDt"+reqstItemIdx, "#endDt"+reqstItemIdx, reqstItemIdx);
-                        }
-                    });
-                    </#list>
-                </#if>
             },
             /** 추가항목 영역 삭제 */
             delSpan: function(idx) {
-                if ($("#vcatnItemId" + idx).val() === "") {
-                    $("div#itemContainer" + idx).remove();
-                } else {
-                    $("#delYn" + idx).val("Y");
-                    $("div#itemContainer" + idx).hide();
-                }
+                $("div#itemContainer" + idx).remove();
             }
         }
     })();
@@ -140,7 +105,7 @@
     });
 </script>
 
-<!--begin::Row-->
+<#--begin::Row-->
 <div class="row">
     <div class="col-12 d-flex justify-content-end align-items-center mt-4">
         <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1"
@@ -162,12 +127,12 @@
         <input type="hidden" name="cfYn" value="${post.cfYn!"N"}">
 
         <!--end::Input group-->
-        <div id="vcatnListDiv" class="mb-8">
+        <div id="vcatn_schdul_reg_div" class="mb-8">
             <label class="mb-2">
                 <span class="text-gray-700 fs-6 fw-bolder">휴가등록</span>
             </label>
             <a href="javascript:void(0);" class="btn btn-light-primary btn-sm me-2 mb-2 m-lg-2 justify-content-end mb-5"
-               onclick="Page.addVcatnInfoRegItem();"
+               onclick="Page.addVcatnSchdul();"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="휴가 일정을 추가합니다.">
                 <i class="fas fa-plus"></i>추가
             </a>
@@ -195,11 +160,11 @@
 </div>
 <!--end::post-->
 
+<#include "/view/vcatn/papr/_vcatn_schdul_reg_template.hbs">
+
 <!-- #include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/atch_file/_atch_file_area.ftlh">
 <!-- #include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
-
-<#include "/view/vcatn/papr/_vcatn_papr_reg_item_template.ftlh">
 
 </@layout.layout>
