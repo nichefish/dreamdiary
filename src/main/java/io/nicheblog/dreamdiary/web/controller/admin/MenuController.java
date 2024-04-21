@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.controller.admin;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -56,6 +57,8 @@ public class MenuController
 
     @Resource(name = "menuService")
     private MenuService menuService;
+    @Resource(name = "cdService")
+    private CdService cdService;
 
     /**
      * 관리자 > 메뉴 관리 > 메뉴 관리 화면 조회
@@ -73,7 +76,8 @@ public class MenuController
         boolean isSuccess = false;
         String rsltMsg = null;
         try {
-            // TODO:
+            // 코드 데이터 모델에 추가
+            cdService.setModelCdData(Constant.MENU_SUB_EXTEND_TY_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

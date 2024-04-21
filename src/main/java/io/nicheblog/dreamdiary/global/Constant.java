@@ -86,6 +86,17 @@ public final class Constant
     /* 분류 분류 코드 */
     public static final String CL_CTGR_CD = "CL_CTGR_CD";
 
+    /** 하위메뉴 확장 유형 코드 */
+    public static final String MENU_SUB_EXTEND_TY_CD = "MENU_SUB_EXTEND_TY_CD";
+    @AllArgsConstructor
+    public enum MenuSubExtendTy {
+        EXTEND("우측으로 확장"),
+        LIST("하단에 목록 표시"),
+        NO_SUB("하위메뉴 없음");
+
+        public final String desc;
+    }
+
     /* 소속(팀) 코드 */
     public static final String TEAM_CD = "TEAM_CD";
 
