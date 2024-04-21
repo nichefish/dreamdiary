@@ -1,10 +1,10 @@
 <#--
-  -- 경비지출서(exptr_prsnl_papr) > 등록/수정 Template
-  -- @included_in : exptr_prsnl_papr_reg_form, exptr_prsnl_papr_dtl_form
-  -->
+ * 경비지출서(exptr_prsnl_papr) > 등록/수정 Template
+ * @included_in : exptr_prsnl_papr_reg_form, exptr_prsnl_papr_dtl_form
+ -->
 
 <script type="text/x-handlebars-template" id="exptr_prsnl_item_reg_template">
-    <tr id="itemContainer{{rnum}}" {{#if (equals rjectYn "Y")}}class="bg-light-danger"{{/if}}>
+    <tr id="itemContainer{{rnum}}" {{#ifYn rjectYn}}class="bg-light-danger"{{/ifYn}}>
         <td>
             <div class="d-flex align-items-center">
                 <span class="svg-icon svg-icon-2 position-absolute mx-4 d-sm-block hidden-table">
@@ -17,14 +17,14 @@
                     </svg>
                 </span>
                 <span class="ps-12 hidden-table"></span>
-                <input type="text" class="form-control form-control-solid required {{#if (equals rjectYn "Y")}}strikethrough{{/if}}"
+                <input type="text" class="form-control form-control-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
                        name="itemList[{{rnum}}].exptrDt" id="exptrDt{{rnum}}" placeholder="날짜" value="{{exptrDt}}" readonly />
             </div>
             <div id="exptrDt{{rnum}}Span"></div>
         </td>
         <td>
-            <select class="form-select form-select-solid required {{#if (equals rjectYn "Y")}}strikethrough{{/if}}"
-                    name="itemList[{{rnum}}].exptrCd" id="exptrCd{{rnum}}" {{#if (equals rjectYn "Y")}}readonly{{/if}}>
+            <select class="form-select form-select-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
+                    name="itemList[{{rnum}}].exptrCd" id="exptrCd{{rnum}}" {{#ifYn rjectYn}}readonly{{/ifYn}}>
                 <option value="">--지출구분--</option>
                 <#list EXPTR_CD![] as exptrCd>
                     <option value="${exptrCd.dtlCd!}" id="${exptrCd.dtlCd!}" {{selectedIf (equals exptrCd "${exptrCd.dtlCd!}")}}>
@@ -35,15 +35,15 @@
             <div id="exptrCd{{rnum}}Span"></div>
         </td>
         <td>
-            <input type="text" class="form-control form-control-solid required {{#if (equals rjectYn "Y")}}strikethrough{{/if}}"
+            <input type="text" class="form-control form-control-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
                    name="itemList[{{rnum}}].exptrCn" id="exptrCn{{rnum}}" maxlength="200" placeholder="지출내역" value="{{exptrCn}}">
             <div id="exptrCn{{rnum}}Span"></div>
         </td>
         <td>
             <div class="d-flex align-items-center">
-                <input type="text" class="form-control form-control-solid num required text-end {{#if (equals rjectYn "Y")}}strikethrough{{/if}}"
+                <input type="text" class="form-control form-control-solid num required text-end {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
                        name="itemList[{{rnum}}].exptrAmtStr" id="exptrAmt{{rnum}}" placeholder="총 금액" maxlength="9" value="{{numberFormat exptrAmt}}"
-                       onchange="Page.setTotAmt();" {{#if (equals rjectYn "Y")}}readonly{{/if}}>
+                       onchange="Page.setTotAmt();" {{#ifYn rjectYn}}readonly{{/ifYn}}>
                 <input type="hidden" name="itemList[{{rnum}}].exptrAmt">
                 <span class="menu-icon mx-2 vertical-middle">원</span>
             </div>
@@ -60,13 +60,13 @@
                 -->
         </td>
         <td id="rmRjectDiv{{rnum}}" class="d-flex">
-            {{#if (equals rjectYn "Y")}}
+            {{#ifYn rjectYn}}
                 <span class="col-1 text-center mt-3">반려:</span>
                 <input type="text" class="form-control form-control-solid"
                        name="itemList[{{rnum}}].rjectResn" id="rjectResn{{rnum}}" maxlength="200" value="{{rjectResn}}" readonly>
-            {{/if}}
-            <input type="text" class="form-control form-control-solid {{#if (equals rjectYn "Y")}}strikethrough{{/if}}"
-                   name="itemList[{{rnum}}].exptrRm" id="exptrRm{{rnum}}" maxlength="300" placeholder="인원 및 비고" value="{{exptrRm}}" {{#if (equals rjectYn "Y")}}readonly{{/if}}>
+            {{/ifYn}}
+            <input type="text" class="form-control form-control-solid {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
+                   name="itemList[{{rnum}}].exptrRm" id="exptrRm{{rnum}}" maxlength="300" placeholder="인원 및 비고" value="{{exptrRm}}" {{#ifYn rjectYn}}readonly{{/ifYn}}>
         </td>
         <td class="text-center">
             {{#unless (exists atchFileDtlNo)}}

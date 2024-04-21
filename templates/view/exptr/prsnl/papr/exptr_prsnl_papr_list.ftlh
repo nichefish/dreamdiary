@@ -4,14 +4,14 @@
 
 <#import "/layout/layout.ftlh" as layout >
 
-<#-- 툴바 버튼 추가 -->
+<#--toolbar::버튼 추가-->
 <#assign toolbar>
     <#include "/view/exptr/prsnl/papr/_exptr_prsnl_papr_list_header.ftlh">
 </#assign>
 
 <@layout.layout toolbar=toolbar!"">
 
-<!--include:: script modules -->
+<#--include::script modules-->
 <#include "/view/exptr/prsnl/papr/_exptr_prsnl_papr_scripts.ftlh">
 
 <script>
@@ -41,8 +41,9 @@
 </div>
 
 <div class="card post">
+    <#--begin::Table-->
     <table class="table align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
-        <!--begin::Table head-->
+        <#--begin::Table head-->
         <thead>
             <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted">
                 <th class="text-center wb-keepall w-10 hidden-table">번호</th>
@@ -55,83 +56,81 @@
                 <th class="text-center wb-keepall hidden-table">취합여부</th>
             </tr>
         </thead>
-        <!--end::Table head-->
-        <!--begin::Table body-->
+        <#--begin::Table body-->
         <tbody>
-        <#list exptrPrsnlList![] as post>
-            <!-- 년도 또는 월이 넘어가면 구분 간격 표시 -->
-            <#assign divideYy = listYy?? && (post.yy?number lt listYy)>
-            <#assign divideMnth = listMnth?? && (post.mnth?number lt listMnth)>
-            <tr class="bg-hover-secondary<#if post.isRegstr!false> bg-fxd-list</#if> <#if divideYy || divideMnth>border-top-5</#if>"
-                onclick="ExptrPrsnlPapr.dtl('${post.postNo!}')">
-                <td class="text-center hidden-table">${post.rnum!}</td>
-                <td class="text-start" role="button">
-                    <a href="${Url.EXPTR_PRSNL_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
-                        ${post.title!"-"}
-                    </a>
-                    <!-- 목록 댓글 표시 -->
-                    <@component.list_comment post />
-                    <!-- 새 글이면 'N' 표시 -->
-                    <#if post.isNew>
-                        <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
-                    </#if>
-                </td>
-                <td class="text-center">
-                    <#if (post.managtrInfo.proflImgUrl)??>
-                        <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
-                            <img src="${(post.managtrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
-                        </div>
-                    </#if>
-                    <span role="button" onclick="ExptrPrsnlPapr.dtl('${post.postNo!}');">
-                        ${post.regstrNm!"-"}
-                    </span>
-                    <#if post.isRegstr!false>
-                        <span class="badge badge-secondary opacity-75 mx-1 fs-9">나</span>
-                    </#if>
-                </td>
-                <td class="text-end hidden-table">
-                    <span role="button">${post.totAmt!?string.number}원 (${post.itemCnt!?string.number}건)</span>
-                </td>
-                <td class="text-center hidden-table">
-                    <span class="cursor-help"
-                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성일:&#10;${post.regDt!"-"}">
-                        ${post.managtDt!}
-                    </span>
-                </td>
-                <td class="text-center hidden-table">
-                    <#if post.itemCnt == 0>
-                        - / -
-                    <#else>
-                        <span class="text-${post.atchRciptStus.classNm}">${post.atchRciptStus.nm}</span>
-                        /
-                        <span class="text-${post.orgnlRciptStus.classNm}">${post.orgnlRciptStus.nm}</span>
-                    </#if>
-                </td>
-                <td class="text-center col-form-label hidden-table">
-                    <a class="badge badge-secondary p-2 btn-white blank blink-slow"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
-                        <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="ExptrPrsnlPapr.pdfDownload('${post.postNo}');"></i>
-                    </a>
-                </td>
-                <td class="text-center hidden-table">
-                    <#if post.cfYn! == "Y">
-                        <span class="text-success">
-                            취합<i class="bi bi-check text-success"></i>
+            <#list exptrPrsnlList![] as post>
+                <!-- 년도 또는 월이 넘어가면 구분 간격 표시 -->
+                <#assign divideYy = listYy?? && (post.yy?number lt listYy)>
+                <#assign divideMnth = listMnth?? && (post.mnth?number lt listMnth)>
+                <tr class="bg-hover-secondary<#if post.isRegstr!false> bg-fxd-list</#if> <#if divideYy || divideMnth>border-top-5</#if>"
+                    onclick="ExptrPrsnlPapr.dtl('${post.postNo!}')">
+                    <td class="text-center hidden-table">${post.rnum!}</td>
+                    <td class="text-start" role="button">
+                        <a href="${Url.EXPTR_PRSNL_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
+                            ${post.title!"-"}
+                        </a>
+                        <!-- 목록 댓글 표시 -->
+                        <@component.list_comment post />
+                        <!-- 새 글이면 'N' 표시 -->
+                        <#if post.isNew>
+                            <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
+                        </#if>
+                    </td>
+                    <td class="text-center">
+                        <#if (post.managtrInfo.proflImgUrl)??>
+                            <div class="btn btn-icon btn-active-light-primary position-relative w-15px h-15px w-md-20px h-md-20px me-1">
+                                <img src="${(post.managtrInfo.proflImgUrl)!}" class="img-thumbnail p-0 w-100" />
+                            </div>
+                        </#if>
+                        <span role="button" onclick="ExptrPrsnlPapr.dtl('${post.postNo!}');">
+                            ${post.regstrNm!"-"}
                         </span>
-                    <#else>
-                        -
-                    </#if>
-                </td>
-            </tr>
-            <!-- 년도 또는 월 저장 -->
-            <#assign listYy = post.yy?number />
-            <#assign listMnth = post.mnth?number />
-        <#else>
-            <tr>
-                <td colspan="7" class="text-center"><@spring.message "view.list.empty"/></td>
-            </tr>
-        </#list>
-        <!--end::Table row-->
+                        <#if post.isRegstr!false>
+                            <span class="badge badge-secondary opacity-75 mx-1 fs-9">나</span>
+                        </#if>
+                    </td>
+                    <td class="text-end hidden-table">
+                        <span role="button">${post.totAmt!?string.number}원 (${post.itemCnt!?string.number}건)</span>
+                    </td>
+                    <td class="text-center hidden-table">
+                        <span class="cursor-help"
+                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성일:&#10;${post.regDt!"-"}">
+                            ${post.managtDt!}
+                        </span>
+                    </td>
+                    <td class="text-center hidden-table">
+                        <#if post.itemCnt == 0>
+                            - / -
+                        <#else>
+                            <span class="text-${post.atchRciptStus.classNm}">${post.atchRciptStus.nm}</span>
+                            /
+                            <span class="text-${post.orgnlRciptStus.classNm}">${post.orgnlRciptStus.nm}</span>
+                        </#if>
+                    </td>
+                    <td class="text-center col-form-label hidden-table">
+                        <a class="badge badge-secondary p-2 btn-white blank blink-slow"
+                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="첨부파일">
+                            <i class="bi bi-file-earmark-arrow-down fs-5 text-info opacity-hover" onclick="ExptrPrsnlPapr.pdfDownload('${post.postNo}');"></i>
+                        </a>
+                    </td>
+                    <td class="text-center hidden-table">
+                        <#if post.cfYn! == "Y">
+                            <span class="text-success">
+                                취합<i class="bi bi-check text-success"></i>
+                            </span>
+                        <#else>
+                            -
+                        </#if>
+                    </td>
+                </tr>
+                <!-- 년도 또는 월 저장 -->
+                <#assign listYy = post.yy?number />
+                <#assign listMnth = post.mnth?number />
+            <#else>
+                <tr>
+                    <td colspan="7" class="text-center"><@spring.message "view.list.empty"/></td>
+                </tr>
+            </#list>
         </tbody>
     </table>
 

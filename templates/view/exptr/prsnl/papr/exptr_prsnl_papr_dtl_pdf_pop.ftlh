@@ -28,21 +28,20 @@
             }
         }
     }();
-
     $(document).ready(function() {
         Page.init();
     });
 </script>
 
 <div class="card post page">
-    <!--begin::Question-->
+    <#--begin::Question-->
     <div class="mb-0">
-        <!--begin::Head-->
+        <#--begin::Head-->
         <form class="form">
             <input type="hidden" name="postNo" value="${post.postNo!}">
             <input type="hidden" name="title" id="title" readonly>
             <div class="d-flex align-items-center mb-9">
-                <!--begin::Title-->
+                <#--begin::Title-->
                 <div class="col-12 d-flex">
                     <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
                         ${post.title}
@@ -59,9 +58,9 @@
                 </div>
             </div>
             <div class="d-flex flex-stack flex-wrap mb-3">
-                <!--begin::Author-->
+                <#--begin::Author-->
                 <div class="d-flex align-items-center">
-                    <!--begin::Name-->
+                    <#--begin::Name-->
                     <div class="d-flex flex-column align-items-start justify-content-center">
                         <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">${post.regstrNm!"-"}</span>
                         <span class="text-muted fs-7 lh-1">${post.regDt!}</span>
@@ -69,7 +68,7 @@
                     <!--end::Name-->
                 </div>
                 <!--end::Author-->
-                <!--begin::Info-->
+                <#--begin::Info-->
                 <div class="d-flex align-items-center py-1">
                     <button type="button" class="btn btn-sm btn-primary px-4 me-2" onclick="Page.print();">
                         <i class="bi bi-printer"></i>출력
@@ -77,11 +76,12 @@
                 </div>
                 <!--end::Info-->
             </div>
-            <!--begin::Menu separator-->
-            <div class="separator separator-dashed border-gray-300 my-8"></div>
-            <!--end::Menu separator-->
 
+            <div class="separator separator-dashed border-gray-300 my-8"></div>
+
+            <#--begin::Table-->
             <table class="table align-middle table-row-dashed fs-small gy-5" id="kt_customers_table">
+                <#--begin::Table head-->
                 <thead>
                     <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                         <th class="col-2 min-w-100px text-center wb-keepall">날짜</th>
@@ -91,6 +91,7 @@
                         <th class="min-w-150px text-center wb-keepall">인원 및 비고</th>
                     </tr>
                 </thead>
+                <#--begin::Table body-->
                 <tbody id="exptr_prsnl_item_reg_div">
                     <#list post.itemList![] as exptr>
                         <tr<#if (exptr.rjectYn!"N") == "Y"> class="bg-light-danger strikethrough text-muted"</#if>>
@@ -121,11 +122,13 @@
                         </#if>
                     </#list>
                 </tbody>
+                <#--begin::Table body-->
                 <tbody id="empty_list_div">
                     <tr>
                         <td colspan="7" class="text-center">지출항목이 없습니다.</td>
                     </tr>
                 </tbody>
+                <#--begin::Table body-->
                 <tbody id="sumDiv">
                     <tr class="bg-light">
                         <td colspan="3" class="text-center">

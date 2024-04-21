@@ -1,7 +1,7 @@
 <#--
-  -- 경비지출서(exptr_prsnl_papr) > 등록/수정 화면
-  -- TODO: Handlebars로 교체하기
-  -->
+ * 경비지출서(exptr_prsnl_papr) > 등록/수정 화면
+ * TODO: Handlebars로 교체하기
+ -->
 
 <#import "/layout/layout.ftlh" as layout >
 
@@ -197,7 +197,7 @@
     });
 </script>
 
-<!--begin::Row-->
+<#--begin::Row-->
 <div class="row">
     <div class="col-12 d-flex justify-content-end align-items-center mt-4">
         <button type="button" class="btn btn-sm btn-secondary btn-active-primary mx-1"
@@ -294,7 +294,9 @@
         <div class="separator separator-dashed border-gray-300 my-8"></div>
         <!--end::Separator-->
         <div class="table-responsive">
+            <#--begin::Table-->
             <table class="table align-middle fs-6 gy-5 hoverTable" id="exptr_prsnl_table">
+                <#--begin::Table head-->
                 <thead>
                     <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted border-bottom">
                         <th class="col-xl-2 col-2 min-w-125px max-w-125px text-center wb-keepall">날짜</th>
@@ -314,14 +316,17 @@
                         <th class="col-2 min-w-50px text-center wb-keepall"></th>
                     </tr>
                 </thead>
+                <#--begin::Table body-->
                 <tbody id="exptr_prsnl_item_reg_div">
                     <!-- 추가추가 -->
                 </tbody>
+                <#--begin::Table body-->
                 <tbody id="empty_list_div">
                     <tr>
                         <td colspan="7" class="text-center">지출 항목을 추가해주세요.</td>
                     </tr>
                 </tbody>
+                <#--begin::Table body-->
                 <tbody id="sumDiv">
                     <tr class="bg-light">
                         <td colspan="3" class="text-center"></td>
