@@ -50,10 +50,10 @@
                 {{/if}}
             </div>
         </div>
-        <div class="col-8 d-flex align-items-center text-center">
+        <div class="col-8">
             <textarea name="icon" id="icon"
-                      class="form-control form-control-sm form-control-solid required" rows="2"  maxlength="200" placeholder="아이콘 html을 입력하세요.">{{icon}}</textarea>
-            <div id="icon_valid_span"></div>
+                      class="form-control form-control-sm form-control-solid d-block required" rows="2"  maxlength="200" placeholder="아이콘 html을 입력하세요.">{{icon}}</textarea>
+            <div id="icon_valid_span" class="ps-2"></div>
         </div>
         <div class="col-1 d-flex align-items-center">
             <div class="btn btn-sm btn-icon btn-light-primary" onclick="Menu.refreshIcon();"
@@ -69,7 +69,7 @@
             </label>
         </div>
         <div class="col-10">
-            <input type="text" name="url" id="url" class="form-control" value="{{url}}">
+            <input type="text" name="url" id="url" class="form-control required" value="{{url}}">
             <div id="url_valid_span"></div>
         </div>
     </div>

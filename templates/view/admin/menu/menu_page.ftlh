@@ -19,6 +19,16 @@
 <#--include::script modules-->
 <#include "/view/admin/menu/_menu_scripts.ftlh">
 
+<style>
+    div.card > ul > li {
+        padding-top: 1.2em;
+        padding-bottom: 1.2em;
+    }
+    div.card > ul > li:not(:first-child) {
+        border-top: 2px solid #e0e0e0;
+    }
+</style>
+
 <script>
     const Page = (function() {
         return {
