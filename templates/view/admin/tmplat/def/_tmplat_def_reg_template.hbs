@@ -11,11 +11,10 @@
         <div class="row mb-4">
             <!--begin::Title-->
             <div class="col-2 col-form-label">
-                <span class="cursor-help"
+                <label class="cursor-help required"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드를&#10;입력합니다.&#10;(등록 후 수정할 수 없습니다.)">
                     템플릿 정의 코드
-                </span>
-                <em class="text-danger">*</em>
+                </label>
             </div>
             <div class="col-10">
                 <input type="text" class="form-control {{#isMdf}}bg-secondary{{/isMdf}}" name="tmplatDefCd" id="tmplatDefCd" value="{{clCd}}" {{#isMdf}}readonly{{/isMdf}}
@@ -26,11 +25,10 @@
         <div class="row mb-4">
             <!--begin::Title-->
             <div class="col-2 col-form-label">
-                <span class="cursor-help"
+                <label class="cursor-help required"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="외부적으로 사용되는&#10;코드 이름을 입력합니다.">
                     템플릿 정의명
-                </span>
-                <em class="text-danger pe-1">*</em>
+                </label>
             </div>
             <div class="col-10">
                 <input type="text" class="form-control" name="tmplatDefNm" id="tmplatDefNm" value="{{clCdNm}}">
@@ -53,7 +51,7 @@
                 템플릿 정의 설명
             </div>
             <div class="col-10">
-                <textarea class="form-control h-75px" name="clCdDc">{{clCdDc}}</textarea>
+                <textarea class="form-control h-75px" name="dc">{{dc}}</textarea>
             </div>
             <!--end::Title-->
         </div>

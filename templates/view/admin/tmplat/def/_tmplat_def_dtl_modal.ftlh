@@ -1,23 +1,29 @@
 <#--
- -- 템플릿 관리(tmplat) > 상세 Modal
+ -- 템플릿 정의(tmplat) > 상세 Modal
  -- @included_in : notice_list
  -->
 
-<div class="modal fade" id="templat_def_dtl_modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <!-- 영역:: 모달 헤더 -->
-            <@component.modal_header "공지사항" />
-            <div class="modal-body modal-mbl-body my-5">
-                <div class="table-responsive-sm">
-                    <div id="templat_def_dtl_div">
-                        <!-- contents -->
-                    </div>
-                </div>
+<#import "/layout/modal_layout.ftlh" as modal>
+
+<@modal.layout id="tmplat_def_dtl" size="xl">
+    <!--begin::Modal Header-->
+    <@component.modal_header "템플릿 정의" />
+    <div class="modal-body modal-mbl-body my-5">
+        <div class="table-responsive-sm">
+            <div id="tmplat_def_dtl_div">
+                <!-- contents -->
             </div>
         </div>
     </div>
-</div>
+    <!--begin::Modal Footer-->
+    <div class="modal-footer">
+        <!-- 버튼 영역 -->
+        <div class="d-flex justify-content-end">
+            <!-- 버튼:: 모달 닫기 -->
+            <@component.modal_btn_close />
+        </div>
+    </div>
+</@modal.layout>
 
 <!-- include:: Handlebars template -->
 <#include "/view/admin/tmplat/def/_tmplat_def_dtl_template.hbs">
