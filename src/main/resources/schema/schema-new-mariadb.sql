@@ -95,6 +95,7 @@ CREATE TABLE IF NOT EXISTS menu (
     menu_nm VARCHAR(200) COMMENT '메뉴명',
     url VARCHAR(500) COMMENT '연결 URL',
     icon VARCHAR(200) COMMENT '아이콘',
+    menu_sub_extend_ty_cd VARCHAR(50) COMMENT '하위메뉴 확장 유형 코드',
     -- STATE
     sort_ordr INT DEFAULT 0 COMMENT '정렬 순서',
     use_yn CHAR(1) DEFAULT 'Y' COMMENT '사용 여부 (Y/N)',
