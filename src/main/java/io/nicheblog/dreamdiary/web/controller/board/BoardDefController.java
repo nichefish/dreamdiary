@@ -149,6 +149,43 @@ public class BoardDefController
     }
 
     /**
+     * 게시판 정의 상세 화면 조회 (ajax)
+     * (관리자MNGR만 접근 가능)
+     */
+    @GetMapping(Url.BOARD_DEF_DTL_AJAX)
+    @Secured({Constant.ROLE_MNGR})
+    public ResponseEntity<AjaxResponse> boardDefDtlAjax(
+            final LogActvtyParam logParam,
+            final @RequestParam("boardCd") String boardCd
+    ) throws Exception {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 객체 조회 및 응답에 추가
+            BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
+            ajaxResponse.setRsltObj(boardDef);
+
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, baseUrl);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
      * 게시판 정의 항목 수정 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
