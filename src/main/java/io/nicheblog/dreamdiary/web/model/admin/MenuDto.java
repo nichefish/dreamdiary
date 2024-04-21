@@ -43,6 +43,10 @@ public class MenuDto
     private String url;
     /** 아이콘 (bootstrap icon 또는 font-awesome) TODO: svg? */
     private String icon;
+    /** 하위메뉴 확장유형 코드 */
+    private String menuSubExtendTyCd;
+    /** 하위메뉴 확장유형 이름 */
+    private String menuSubExtendTyNm;
 
     /** 폴더(중메뉴) 여부 */
     private String dirYn;

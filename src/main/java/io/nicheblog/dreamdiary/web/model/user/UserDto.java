@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +34,10 @@ public class UserDto
     /** 사용자 고유 번호 (PK) */
     protected Integer userNo;
     /** 아이디 */
+    @NotEmpty
     protected String userId;
     /** 표시이름 */
+    @NotEmpty
     protected String nickNm;
     /** 프로필 이미지 URL */
     protected String proflImgUrl;
@@ -42,8 +45,10 @@ public class UserDto
     /** 이메일 */
     protected String email;
     /** E-mail ID */
+    @NotEmpty
     protected String emailId;
     /** E-mail 뒷부분 */
+    @NotEmpty
     protected String emailDomain;
     /** 연락처 */
     protected String cttpc;

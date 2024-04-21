@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.jrnl.summary;
+package io.nicheblog.dreamdiary.web.entity.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
@@ -15,7 +15,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 /**
- * JrnlSummaryEntity
+ * JrnlSumryEntity
  * <pre>
  *  저널 결산 Entity.
  * </pre>
@@ -24,7 +24,7 @@ import javax.persistence.*;
  * @extends BaseCrudEntity
  */
 @Entity
-@Table(name = "jrnl_summary")
+@Table(name = "jrnl_sumry")
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -32,12 +32,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE jrnl_summary SET del_yn = 'Y' WHERE post_no = ?")
-public class JrnlSummaryEntity
+public class JrnlSumryEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.JRNL_SUMMARY;
+    private static final ContentType CONTENT_TYPE = ContentType.JRNL_SUMRY;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 

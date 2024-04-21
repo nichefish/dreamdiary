@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth.model;
+package io.nicheblog.dreamdiary.web.model.user;
 
 import io.nicheblog.dreamdiary.global.validator.CmmRegex;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
- * PwChgParam
+ * UserPwChgParam
  * <pre>
  *  패스워드 변경 파라미터
  *  (spring-boot-starter-validation dependency 추가 필요)
@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PwChgParam {
+public class UserPwChgParam {
 
     /** 사용자 ID */
     @NotEmpty

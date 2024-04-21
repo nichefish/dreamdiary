@@ -26,7 +26,7 @@
                     <select class="form-select form-select-solid w-180px required" onchange="VcatnSchdul.propEndDt({{idx}})" name="schdulList[{{idx}}].vcatnCd" id="vcatnCd{{idx}}" data-hide-search="true">
                         <option value="">휴가 분류</option>
                         <#list VCATN_CD![] as vcatnCd>
-                            <option value="${vcatnCd.dtlCd!}" id="${vcatnCd.dtlCd!}">[${vcatnCd.dtlCdNm!}]</option>
+                            <option value="${vcatnCd.dtlCd!}">[${vcatnCd.dtlCdNm!}]</option>
                         </#list>
                     </select>
                     <div id="vcatnCd{{idx}}_valid_span"></div>

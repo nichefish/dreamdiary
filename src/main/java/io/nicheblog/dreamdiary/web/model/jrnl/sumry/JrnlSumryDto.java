@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.jrnl.summary;
+package io.nicheblog.dreamdiary.web.model.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
@@ -11,7 +11,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * JrnlSummaryDto
+ * JrnlSumryDto
  * <pre>
  *  저널 결산 Dto.
  * </pre>
@@ -26,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class JrnlSummaryDto
+public class JrnlSumryDto
         extends BasePostDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
