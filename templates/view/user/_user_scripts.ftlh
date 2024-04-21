@@ -191,14 +191,14 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) Page.list();
+                                if (res.rslt) User.list();
                             });
                     });
                 });
             },
             /** 목록 화면 이동 */
             list: function() {
-                const listUrl = "${Url.EXPTR_REQST_LIST!}<#if isMdf!false>?isBackToList=Y</#if>";
+                const listUrl = "${Url.USER_LIST!}<#if isMdf!false>?isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);
             }
         }
