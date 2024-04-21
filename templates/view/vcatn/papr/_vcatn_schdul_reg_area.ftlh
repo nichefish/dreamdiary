@@ -4,7 +4,8 @@
 
 <#list post.schdulList![] as schdul>
     <div class="card border-0 mb-2" id="itemContainer${schdul?index}">
-        <input type="hidden" class="form-control form-control-solid" name="schdulList[${schdul?index}].vcatnSchdulNo" id="vcatnSchdulNo${schdul?index}" value="${schdul.vcatnSchdulNo!}"/>
+        <input type="hidden" class="form-control form-control-solid" name="schdulList[${schdul?index}].vcatnSchdulNo" value="${schdul.vcatnSchdulNo!}"/>
+        <input type="hidden" class="form-control form-control-solid" name="schdulList[${schdul?index}].refPostNo" value="${post.postNo!}"/>
 
         <#--begin::Card header-->
         <div class="card-header border-0 d-flex justify-content-end min-h-auto">

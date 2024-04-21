@@ -64,9 +64,12 @@
             noBefore: function(beginSelectorStr, endSelectorStr, idx) {
                 if (Page.isHalf(idx)) {
                     $(endSelectorStr).val($(beginSelectorStr).val());
-                } else if ($(endSelectorStr).val() !== "") {
-                    Swal.fire("휴가일을 다시 설정해 주세요.");
-                    $(endSelectorStr).val("");
+                } else {
+                    const isBefore = commons.date.isBefore(beginSelectorStr, endSelectorStr);
+                    if (!isBefore && $(endSelectorStr).val() !== "") {
+                        Swal.fire("휴가일을 다시 설정해 주세요.");
+                        $(endSelectorStr).val("");
+                    }
                 }
             },
             /**
