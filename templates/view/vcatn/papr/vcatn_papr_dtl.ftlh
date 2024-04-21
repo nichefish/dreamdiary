@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                         </#list>
-                        <span class="text-noti fs-7 ps-5">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다. (포함해서 올려도 상관없음)</span>
+                        <span class="text-noti fs-7 ps-5">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다.</span>
                     </div>
                 </div>
             </#if>

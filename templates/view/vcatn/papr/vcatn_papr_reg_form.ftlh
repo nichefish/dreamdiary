@@ -130,7 +130,7 @@
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="휴가 일정을 추가합니다.">
                 <i class="fas fa-plus"></i>추가
             </a>
-            <span class="text-noti fs-7 ps-5">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다. (포함해서 올려도 상관없음)</span>
+            <span class="text-noti fs-7 ps-5">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다.</span>
             <!-- vcatnSchduls -->
             <div id="vcatn_schdul_reg_div" class="mb-8">
                 <!--휴가 목록-->
