@@ -137,7 +137,7 @@
             },
             /** 체크박스 쿠키 설정 */
             chkbxProp: function(obj) {
-                let checkedYn = $(obj).prop("checked") ? "Y" : "N";
+                const checkedYn = $(obj).prop("checked") ? "Y" : "N";
                 let cookieOptions = { "expires": commons.date.getCurrDateAddDay(36135) };
                 $.cookie($(obj).attr("id"), checkedYn, cookieOptions);
                 Page.refreshEventList(Page.calDt);

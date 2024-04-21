@@ -17,9 +17,13 @@
                 <option value="">--구분--</option>
                 <#list SCHDUL_CD![] as topic>
                     {{#if isPrvt}}
-                        {{#unless (equals "${topic.dtlCd!}" "HLDY")}} {{#unless (equals "${topic.dtlCd!}" "CEREMONY")}} {{#unless (equals "${topic.dtlCd!}" "TLCMMT")}}
-                            <option value="${topic.dtlCd!}" id="${topic.dtlCd!}" {{selectedIf (equals schdulCd "${topic.dtlCd!}")}} >[${topic.dtlCdNm!}]</option>
-                        {{/unless}} {{/unless}} {{/unless}}
+                        {{#unless (equals "${topic.dtlCd!}" "HLDY")}}
+                            {{#unless (equals "${topic.dtlCd!}" "CEREMONY")}}
+                                {{#unless (equals "${topic.dtlCd!}" "TLCMMT")}}
+                                    <option value="${topic.dtlCd!}" id="${topic.dtlCd!}" {{selectedIf (equals schdulCd "${topic.dtlCd!}")}} >[${topic.dtlCdNm!}]</option>
+                                {{/unless}}
+                            {{/unless}}
+                        {{/unless}}
                     {{else}}
                         <option value="${topic.dtlCd!}" id="${topic.dtlCd!}" {{selectedIf (equals schdulCd "${topic.dtlCd!}")}} >[${topic.dtlCdNm!}]</option>
                     {{/if}}
