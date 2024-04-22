@@ -67,7 +67,9 @@ public class AuthUtils {
      * 현재 사용자 인증여부 세션에서 조회해서 반환
      */
     public static Boolean isAuthenticated() {
-        return SecurityContextHolder.getContext().getAuthentication() != null;
+        boolean isAuthenticated = SecurityContextHolder.getContext().getAuthentication() != null;
+        if (!isAuthenticated) log.info("isAuthenticated: {}", isAuthenticated);
+        return isAuthenticated;
     }
 
     /**

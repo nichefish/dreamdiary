@@ -53,7 +53,7 @@ public class ErrorPageController
             if (statusCode == HttpStatus.FORBIDDEN.value()) return "/view/error/error_access_denied";
             if (statusCode == HttpStatus.NOT_FOUND.value()) return "/view/error/error_not_found";
         }
-        return "/error/error_page";
+        return "/view/error/error_page";
     }
 
     /**
