@@ -1,10 +1,7 @@
 package io.nicheblog.dreamdiary.global.auth.config;
 
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.auth.handler.DreamdiaryAuthenticationProvider;
-import io.nicheblog.dreamdiary.global.auth.handler.LgnFailureHandler;
-import io.nicheblog.dreamdiary.global.auth.handler.LgnSuccessHandler;
-import io.nicheblog.dreamdiary.global.auth.handler.LgoutHandler;
+import io.nicheblog.dreamdiary.global.auth.handler.*;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +43,8 @@ public class WebSecurityConfig {
     private LgnFailureHandler lgnFailureHandler;
     @Resource(name = "lgnSuccessHandler")
     private LgnSuccessHandler lgnSuccessHandler;
+    @Resource(name = "ajaxAwareAuthenticationEntryPoint")
+    private AjaxAwareAuthenticationEntryPoint ajaxAwareAuthenticationEntryPoint;
     @Resource(name = "lgoutHandler")
     private LgoutHandler lgoutHandler;
     @Value("${springdoc.api-docs.path:}")
@@ -166,8 +165,9 @@ public class WebSecurityConfig {
                     .addLogoutHandler(lgoutHandler)
                     .invalidateHttpSession(true);
 
-            // 403(권한없는 주소 접근) 예외처리 핸들링
+            // 401/403 예외처리 핸들링
             http.exceptionHandling()
+                    .authenticationEntryPoint(ajaxAwareAuthenticationEntryPoint)
                     .accessDeniedPage(Url.ERROR_ACCESS_DENIED);
         }
     }

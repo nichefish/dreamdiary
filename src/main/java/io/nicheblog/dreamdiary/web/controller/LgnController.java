@@ -80,11 +80,12 @@ public class LgnController
     }
 
     /**
-     * GET으로 로그인/로그아웃 페이지 접근시 로그인 화면으로 리다이렉트
+     * GET으로 로그인 처리/로그아웃 페이지 접근시 로그인 화면으로 리다이렉트
      */
     @GetMapping({ Url.AUTH_LGN_PROC, Url.AUTH_LGOUT})
     public String authRedirection() {
 
+        log.info("'get' access in lgnProc!");
         return "redirect:" + Url.AUTH_LGN_FORM;
     }
 

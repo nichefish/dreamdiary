@@ -4,6 +4,23 @@
 #release date. should be changed manually for each deployment
 release-date: 20240215
 
+spring:
+  #( local // dev // stg // prod // test )
+  profiles:
+      active: dev
+  mail:
+      host: smtp.example.com
+      port: 587
+      username: user@example.com
+      password: password
+      protocol: smtp
+      properties:
+        smtp:
+            auth: true
+            starttls:
+                enable: true
+      default-encoding: UTF-8
+
 #AES128 secret key; 16 chars
 aes128:
     secret-key: "0000000000000000"
@@ -29,25 +46,6 @@ api:
     kasi:
         serviceKey: "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
         api-url : "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo"
-
-
-spring:
-    #( local // dev // stg // prod // test )
-    profiles:
-        active: dev
-    mail:
-        host: smtp.example.com
-        port: 587
-        username: user@example.com
-        password: password
-        protocol: smtp
-        properties:
-            smtp:
-                auth: true
-                starttls:
-                    enable: true
-        default-encoding: UTF-8
-
 
 logging:
     level:

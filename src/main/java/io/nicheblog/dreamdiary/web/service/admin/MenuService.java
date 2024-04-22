@@ -108,15 +108,13 @@ public class MenuService
     /**
      * 사이드바 메뉴 (useYn=Y) 조회
      */
-    public Page<MenuDto> getUserMenuList() throws Exception {
+    public List<MenuDto> getUserMenuList() throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(MenuSearchParam.builder()
                 .menuTyCd(Constant.MENU_TY_MAIN)
                 .useYn("Y")
                 .build());
         Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
-        PageRequest pageRequest = PageRequest.of(0, 99, sort);
-        Page<MenuEntity> menuMainEntityPage = this.getPageEntity(searchParamMap, pageRequest);
-        return this.pageEntityToDto(menuMainEntityPage);
+        return this.getListDto(searchParamMap, sort);
     }
 
     /**

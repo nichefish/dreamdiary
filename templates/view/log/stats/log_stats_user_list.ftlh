@@ -75,12 +75,10 @@
             </a>
         </li>
     </ul>
-    <!--end: Tab-->
-    <!--begin::Table-->
+    <#--begin::Table-->
     <table class="table table-hover align-middle table-row-dashed fs-small gy-5 table-fixed hoverTable mb-3">
-        <!--begin::Table head-->
+        <#--begin::Table head-->
         <thead>
-            <!--begin::Table row-->
             <tr class="text-start text-muted fs-7 text-uppercase gs-0">
                 <th class="col-xl-1 col-4 text-center wb-keepall w-10 hidden-table">번호</th>
                 <th class="col-3 min-w-125px text-center wb-keepall hidden-table">작업자</th>
@@ -90,10 +88,8 @@
                 <th class="col-xl-4 col-5 min-w-80px text-center wb-keepall">작업내용</th>
                 <th class="col-xl-1 text-center wb-keepall hidden-table">작업결과</th>
             </tr>
-            <!--end::Table row-->
         </thead>
-        <!--end::Table head-->
-        <!--begin::Table body-->
+        <#--begin::Table body-->
         <tbody class="text-gray-600">
             <#list logStatsUserList![] as user>
                 <tr >
