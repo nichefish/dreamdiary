@@ -80,7 +80,7 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();;
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
@@ -125,7 +125,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();;
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });
