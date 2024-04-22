@@ -44,7 +44,7 @@ configurations {
  */
 tasks.bootJar {
     enabled = true
-    mainClass = 'io.dreamdiary.DreamdiaryApplication'
+    mainClass = 'io.nicheblog.dreamdiary.DreamdiaryApplication'
     duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 }
 
@@ -105,6 +105,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    /** UUID */
+    implementation group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '5.0.0'
 
     /** Swagger: springdoc */
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.7.0'

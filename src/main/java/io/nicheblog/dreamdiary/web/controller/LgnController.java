@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.web.controller;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.web.model.user.UserPwChgParam;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -11,6 +10,7 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.user.UserPwChgParam;
 import io.nicheblog.dreamdiary.web.service.user.UserMyService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;

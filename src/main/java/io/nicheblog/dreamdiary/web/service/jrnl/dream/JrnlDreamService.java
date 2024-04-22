@@ -46,4 +46,13 @@ public class JrnlDreamService
     public JrnlDreamSpec getSpec() {
         return this.jrnlDreamSpec;
     }
+
+    /**
+     * 등록 전처리
+     */
+    @Override
+    public void preRegist(final JrnlDreamDto jrnlDream) {
+        Integer lastIndex = jrnlDreamRepository.findLastIndexByJrnlDay(jrnlDream.getJrnlDayNo()).orElse(0);
+        jrnlDream.setIdx(lastIndex + 1);
+    }
 }

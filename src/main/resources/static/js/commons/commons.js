@@ -8,24 +8,31 @@
  * (노출식 모듈 패턴 적용 :: commons.util.enterKey("#userId") 이런식으로 사용)
  */
 if (typeof commons === 'undefined') { var commons = {}; }
+$(document).ajaxComplete(function(event, xhr, settings) {
+    const isHtmlReturned = xhr.getResponseHeader("Content-Type") && xhr.getResponseHeader("Content-Type").indexOf("text/html") !== -1;
+    if (isHtmlReturned) {
+        // ajax 응답으로 HTML이 반환되면 로그인 페이지로 이동
+        window.location.href = "/auth/lgnForm.do";
+    }
+});
 (function($) {
     // 인증만료로 ajax 실패시 로그인 페이지로 이동
     $.ajaxSetup({
-        error: function(xhr, status, err) {
+        error: function(xhr) {
             if (xhr.status === 401) {   // ACCESS DENIED
                 if (commons.util.hasSwal()) {
                     Swal.fire("접근이 거부되었습니다. (ACCESS DENIED)");
                 } else {
                     alert("접근이 거부되었습니다. (ACCESS DENIED)");
                 }
-                location.replace("/auth/lgnForm.do");
+                window.location.href = "/auth/lgnForm.do";
             } else if (xhr.status === 403) {
                 if (commons.util.hasSwal()) {
                     Swal.fire("접근이 거부되었습니다. (FORBIDDEN)");
                 } else {
                     alert("접근이 거부되었습니다. (FORBIDDEN)");
                 }
-                location.replace("/auth/lgnForm.do");
+                window.location.href = "/auth/lgnForm.do";
             }
             // location.replace("/lgnForm.do");
         }

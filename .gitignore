@@ -18,3 +18,5 @@
 !/log/.logfile_path.md
 /upfile/public/*
 /upfile/secured/*
+/ssh-key-2024-04-22.key
+/ssh-key-2024-04-22.key.pub

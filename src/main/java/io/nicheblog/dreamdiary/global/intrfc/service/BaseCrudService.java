@@ -42,6 +42,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
     /**
      * default: 게시물 등록 (dto level)
      */
+    @Transactional
     default Dto regist(final Dto dto) throws Exception {
         // 등록 전처리
         this.preRegist(dto);
@@ -62,6 +63,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
     /**
      * default: 게시물 bulk-insert (entity level)
      */
+    @Transactional
     default boolean registAll(final List<Entity> entityList) {
         Repository repository = this.getRepository();
         repository.saveAllAndFlush(entityList);
@@ -92,6 +94,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
     /**
      * default: 게시물 수정 (dto level)
      */
+    @Transactional
     default Dto modify(final Dto dto) throws Exception {
         // 수정 전처리
         this.preModify(dto);

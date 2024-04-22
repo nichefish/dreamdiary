@@ -46,4 +46,13 @@ public class JrnlDiaryService
     public JrnlDiarySpec getSpec() {
         return this.jrnlDiarySpec;
     }
+
+    /**
+     * 등록 전처리
+     */
+    @Override
+    public void preRegist(final JrnlDiaryDto jrnlDiary) {
+        Integer lastIndex = jrnlDiaryRepository.findLastIndexByJrnlDay(jrnlDiary.getJrnlDayNo()).orElse(0);
+        jrnlDiary.setIdx(lastIndex + 1);
+    }
 }

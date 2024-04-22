@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.transaction.Transactional;
 import java.io.Serializable;
 
 /**
@@ -26,6 +27,7 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
     /**
      * default: 게시물 등록 (Multipart)
      */
+    @Transactional
     default Dto regist(final Dto dto, final MultipartHttpServletRequest request) throws Exception {
         // 파일 영역 처리
         Integer atchFileNo = dto.getAtchFileNo();
@@ -37,6 +39,7 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
     /**
      * default: 게시물 수정 (Multipart)
      */
+    @Transactional
     default Dto modify(final Dto dto, final MultipartHttpServletRequest request) throws Exception {
         // 파일 영역 처리
         Integer atchFileNo = dto.getAtchFileNo();
