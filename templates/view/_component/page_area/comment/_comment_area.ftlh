@@ -3,97 +3,12 @@
  * @included_in : 댓글 기능이 있는 페이지들
  -->
 
-<script>
-    const Comment = (function() {
-        return {
-            init: function () {
-                /** jquery :: validation */
-                commons.validate.validateForm("#commentRegForm", Comment.regAjax);
-            },
-            /** 댓글 입력 처리 (ajax) */
-            regAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.reg"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${Url.COMMENT_REG_AJAX!}";
-                    let ajaxData = $("#commentRegForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 댓글 수정 폼 생성 */
-            mdfForm: function(postNo) {
-                $("#commentDtlSpan" + postNo).hide();
-                let str = $("#commentMdfTemplate").html().replace(/__INDEX__/g, postNo);
-                $("#commentSpan" + postNo).append(str);
-                $("#commentMdfCn" + postNo).html($("#commentCnSpanDiv" + postNo).html());
-                $("#showMdfBtnDiv" + postNo).hide();
-                $("#mdfSaveBtnDiv" + postNo).show();
-                commons.validate.validateForm("#commentMdfForm", Comment.mdfAjax);
-            },
-            /** 댓글 수정 폼 닫기 */
-            closeMdfForm: function(postNo) {
-                $("#commentDtlSpan" + postNo).show();
-                $("#commentSpan" + postNo).empty();
-                $("#commentMdfCn" + postNo).empty();
-                $("#showMdfBtnDiv" + postNo).show();
-                $("#mdfSaveBtnDiv" + postNo).hide();
-            },
-            /** 댓글 수정 처리 (ajax) */
-            mdfAjax: function(postNo) {
-                if (commons.util.isEmpty($("#commentMdfCn" + postNo), "value")) {
-                    Swal.fire("댓글 내용을 입력해주세요.");
-                    return false;
-                }
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.mdf"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${Url.COMMENT_MDF_AJAX!}";
-                    let ajaxData = $("#commentMdfForm" + postNo).serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
-            /** 댓글 삭제 처리 (ajax) */
-            delAjax: function(postNo) {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.del"/>,
-                    showCancelButton: true,
-                }).then(function (result) {
-                    if (!result.value) return;
-                    const url = "${Url.COMMENT_DEL_AJAX!}";
-                    let ajaxData = { "postNo": postNo, "actvtyCtgrCd": "${actvtyCtgrCd!}" };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            }
-        }
-    })();
-
-    $(document).ready(function() {
-        Comment.init();
-    });
-</script>
+<#--include::script modules-->
+<#include "/view/_component/page_area/comment/_comment_scripts.ftlh">
 
 <div class="separator separator-dashed mt-8"></div>
 
-<div id="commentArea">
+<div id="comment_area">
     <a id="answers" data-kt-scroll-offset="{default: 100, lg: 125}"></a>
     <h2 class="fw-bolder text-gray-900 my-8 mx-5">댓글(${(post.comment.cnt)!0})</h2>
     <#list post.comment.list![] as comment>
@@ -161,8 +76,9 @@
         </div>
     </#list>
 
+    <div class="separator separator-dashed my-6 mt-8"></div>
+
     <div class="row mx-5">
-        <div class="separator separator-dashed my-6 mt-8"></div>
         <div class="row ">
             <div class="col-xl-1">
                 <div class="fs-6 fw-bold col-form-label vertical-center">
@@ -174,28 +90,19 @@
                     ${authInfo.nickNm!}
                 </div>
             </div>
-            <div class="col-xl-11">
-                <form name="commentRegForm" id="commentRegForm" class="form">
-                    <input type="hidden" name="postNo" />
-                    <input type="hidden" name="refPostNo" value="${post.postNo!}" />
-                    <input type="hidden" name="refContentType" value="${post.contentType!}" />
-                    <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" >
-                    <div class="row">
-                        <div class="col-xl-11 form-group mb-2">
-                            <textarea name="cn" id="commentRegCn" class="form-control required" rows="2" maxlength="10000" placeholder="댓글 작성..." data-kt-autosize="true"
-                                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 내용을 입력합니다."></textarea>
-                            <div id="commentRegCnSpan"></div>
+            <div class="row col-xl-11">
+                <div class="col-xl-11">
+                    <#--begin::Form-->
+                    <form name="commentRegForm" id="commentRegForm" class="form">
+                        <div id="comment_reg_div">
+                            <#--handlebar template goes in here-->
                         </div>
-                        <div class="col-xl-1">
-                            <button type="button" class="btn btn-sm btn-primary me-2"
-                                    onclick="commons.util.submit('#commentRegForm');"
-                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글을 등록합니다.">
-                                <i class="bi bi-pencil-square"></i>
-                                등록
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="col-xl-1 col-form-label">
+                    <#--페이지:: 버튼: 저장하기-->
+                    <@component.post_btn_submit "Comment.submit();" />
+                </div>
             </div>
         </div>
     </div>
@@ -203,6 +110,7 @@
 
 <div class="col-xl-10" id="commentMdfTemplate" hidden>
     <div class="fs-6 fw-bold col-form-label p-0">
+        <#--begin::Form-->
         <form name="commentMdfForm" id="commentMdfForm__INDEX__" class="form">
             <input type="hidden" name="postNo" id="postNo__INDEX__" value="__INDEX__"/>
             <input type="hidden" name="refPostNo" value="${post.postNo!}" />
@@ -218,3 +126,5 @@
         <!--end:Form-->
     </div>
 </div>
+
+<#include "/view/_component/page_area/comment/_comment_reg_template.hbs">

@@ -69,23 +69,3 @@
         AtchFile.init();
     });
 </script>
-
-<!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-<div id="atchFileTemplate" style="display:none;">
-    <!--atchCtrl :: CRUD -->
-    <input type="hidden" name="atchCtrl__INDEX__" id="atchCtrl__INDEX__" value="C" size="5"/>
-    <!--fileSn :: nullable-->
-    <input type="hidden" name="fileSn__INDEX__" value="fileSn__INDEX__" size="5"/>
-    <div hidden>
-        <input type="file" class="file" name="atchFile__INDEX__" id="atchFile__INDEX__" onchange="return false;"/>
-    </div>
-    <div class="col-xl-10 text-sm-start">
-        <!--fileNm :: to display-->
-        <i class="fas fa-file-download fs-15 me-3"></i> <span id="fileNm__INDEX__" ></span>
-        <button type="button" class="badge badge-light btn-primary badge-outlined mx-2"
-                onclick="AtchFile.delNewFileSpan('__INDEX__');"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.file.del"/>">
-            삭제
-        </button>
-    </div>
-</div>

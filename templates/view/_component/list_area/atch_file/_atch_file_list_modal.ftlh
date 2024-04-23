@@ -1,5 +1,5 @@
 <#--
- * 첨부파일 목록 조회 Modal
+ * 목록 > 첨부파일 조회 Modal
  -->
 
 <script>
@@ -49,4 +49,4 @@
 </@modal.layout>
 
 <#--include:: Handlebars template-->
-<#include "/view/_component/atch_file/_atch_file_list_template.hbs">
+<#include "/view/_component/list_area/atch_file/_atch_file_list_template.hbs">
