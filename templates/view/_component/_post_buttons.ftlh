@@ -116,7 +116,7 @@
 <!--
  * 버튼 : 미리보기 팝업 닫기
  -->
-<#macro post_btn_preview_close closerNm>
+<#macro popup_btn_preview_close closerNm>
     <button type="button" class="btn btn-sm btn-light"
             onclick="${closerNm!}.close();"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="팝업 창을 닫습니다.">
