@@ -187,23 +187,22 @@
             </div>
         </div>
     </div>
-
+    <#--페이지:: 사용자 프로필 정보 영역-->
     <#if user.profl??>
         <#include "/view/user/profl/_user_profl_dtl_area.ftlh">
     </#if>
-
+    <#--페이지:: 사용자 인사정보 영역-->
     <#if user.emplym??>
         <#include "/view/user/emplym/_user_emplym_dtl_area.ftlh">
     </#if>
-
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <!-- 버튼 :: 수정하기 -->
-        <@component.btn_post_modify "User.mdfForm();" user isMngr />
-        <!-- 버튼 :: 삭제하기 -->
-        <@component.btn_post_delete "User.delAjax();" user isMngr />
-        <!-- 버튼 :: 목록으로 가기 -->
-        <@component.btn_post_toList "User.list();" />
+        <#--페이지:: 버튼: 수정하기-->
+        <@component.post_btn_modify "User.mdfForm();" user isMngr />
+        <#--페이지:: 버튼: 삭제하기-->
+        <@component.post_btn_delete "User.delAjax();" user isMngr />
+        <#--페이지:: 버튼: 목록으로 가기-->
+        <@component.post_btn_toList "User.list();" />
     </div>
     <!--end::Card footer-->
 </div>
