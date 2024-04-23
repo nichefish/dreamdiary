@@ -9,15 +9,24 @@
   padding-bottom: 2rem !important;
 }
 
-.jrnl-dream {
+.jrnl-item {
   display: flex !important;
   flex-direction: row !important;
   justify-content: start;
   align-items: center;
 }
 
+.jrnl-diary-cn {
+  align-items: center;
+}
+.jrnl-diary-cn p {
+  margin-top: 0.1rem !important;
+  margin-bottom: 0.1rem !important;
+}
+
 .jrnl-dream-cn {
   align-items: center;
+  color: rgba(75, 0, 130, 0.8);
 }
 .jrnl-dream-cn p {
   margin-top: 0.1rem !important;

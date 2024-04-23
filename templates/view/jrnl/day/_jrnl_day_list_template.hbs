@@ -42,22 +42,22 @@
                     </button>
                 </div>
             </div>
-            <div class="row jrnl-dreams p-5">
+            <div class="row p-5">
                 {{#if (exists jrnlDiaryList)}}
-                    <label class="d-flex align-items-center mb-2" for="title">
+                    <label class="d-flex align-items-center my-2" for="title">
                         <span class="text-gray-700 fs-6 ps-5 fw-bolder">
                             일기
                             <i class="bi bi-book fs-4 pe-1"></i>
                         </span>
                     </label>
                     {{#each jrnlDiaryList}}
-                        <div class="row jrnl-dream">
+                        <div class="row jrnl-item">
                             <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:85px;">
                                 <div>
                                     # {{idx}}
                                 </div>
                             </div>
-                            <div class="col py-3 jrnl-dream-cn">
+                            <div class="col py-3 jrnl-diary-cn">
                                 {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-75px d-flex-center">!중요</div>{{/ifYn}}
                                 {{{cn}}}
                             </div>
@@ -78,14 +78,14 @@
                     {{/each}}
                 {{/if}}
                 {{#if (exists jrnlDreamList)}}
-                    <label class="d-flex align-items-center mb-2" for="title">
+                    <label class="d-flex align-items-center my-2" for="title">
                         <span class="text-gray-700 fs-6 ps-5 fw-bolder">
                             꿈
                             <i class="bi bi-moon-stars fs-4 pe-1"></i>
                         </span>
                     </label>
                     {{#each jrnlDreamList}}
-                        <div class="row jrnl-dream">
+                        <div class="row jrnl-item">
                             <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:85px;">
                                 <div>
                                     # {{idx}}
