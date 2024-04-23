@@ -34,14 +34,14 @@
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div class="row" id="comment_list_div">
-            <!-- handlebars template goes in here -->
+            <#--handlebars template goes in here-->
         </div>
     </div>
     <#--begin::Modal Footer-->
     <div class="modal-footer">
         <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <#--버튼:: 모달 닫기-->
+            <#--모달:: 버튼: 모달 닫기-->
             <@component.modal_btn_close />
         </div>
     </div>

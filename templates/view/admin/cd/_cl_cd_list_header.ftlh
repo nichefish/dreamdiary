@@ -14,20 +14,20 @@
         </select>
     </div>
     <div>
-        <!-- 인풋:: searchKeyword -->
-        <@component.input_header_searchKeyword searchParam />
+        <#--헤더:: 인풋: searchKeyword-->
+        <@component.header_input_searchKeyword searchParam />
     </div>
     <div>
-        <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "ClCd.search();" />
+        <#--헤더:: 버튼: 목록 검색-->
+        <@component.header_btn_search "ClCd.search();" />
     </div>
     <div>
-        <!-- 버튼:: 등록 모달 호출하기 -->
-        <@component.btn_header_reg_modal "ClCd.regModal();" />
+        <#--헤더:: 버튼: 등록 모달 호출하기-->
+        <@component.header_btn_reg_modal "ClCd.regModal();" />
     </div>
     <div>
-        <!-- 버튼:: 정렬순서 -->
-        <@component.btn_header_sort_ordr "ClCd.sortOrdr();" />
+        <#--헤더:: 버튼: 정렬순서 저장-->
+        <@component.header_btn_sort_ordr "ClCd.sortOrdr();" />
     </div>
 </form>
 <!--end::Header-->

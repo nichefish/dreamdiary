@@ -10,15 +10,15 @@
     <input type="hidden" name="tags" id="tags">
     <!-- search-param starts -->
     <div>
-        <!-- 인풋:: datepicker -->
+        <#--헤더:: 인풋: datepicker-->
         <@component.header_datepicker searchParam "searchStartDt" "" />
-        <!-- 인풋:: datepicker -->
+        <#--헤더:: 인풋: datepicker-->
         <@component.header_datepicker searchParam "searchEndDt" "today" />
     </div>
     <#if POST_CTGR_CD??>
         <div>
-            <!-- 인풋:: ctgrCd -->
-            <@component.input_header_ctgrCd searchParam POST_CTGR_CD![] />
+            <#--헤더:: 인풋: 글분류 코드-->
+            <@component.header_input_ctgrCd searchParam POST_CTGR_CD![] />
         </div>
     </#if>
     <div>
@@ -28,23 +28,23 @@
         </select>
     </div>
     <div>
-    <!-- 인풋:: searchKeyword -->
-        <@component.input_header_searchKeyword searchParam />
-    </div>
-    <!-- 버튼:: 목록 검색 -->
-    <div>
-        <@component.btn_header_search "BoardPost.search();" />
-    </div>
-    <!-- 버튼:: 내 글 보기 -->
-    <div>
-        <@component.btn_header_mypapr "BoardPost.myPapr();" MY_PAPR!false />
+        <#--헤더:: 인풋: searchKeyword-->
+        <@component.header_input_searchKeyword searchParam />
     </div>
     <div>
-        <!-- 버튼:: 등록 화면 이동하기 -->
-        <@component.btn_header_reg_form "BoardPost.regForm();" />
+        <#--헤더:: 버튼: 목록 검색-->
+        <@component.header_btn_search "BoardPost.search();" />
     </div>
     <div>
-        <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "BoardPost.xlsxDownload();" />
+        <#--헤더:: 버튼: 내 글 보기-->
+        <@component.header_btn_mypapr "BoardPost.myPapr();" MY_PAPR!false />
+    </div>
+    <div>
+        <#--헤더:: 버튼: 등록 화면 이동하기-->
+        <@component.header_btn_reg_form "BoardPost.regForm();" />
+    </div>
+    <div>
+        <#--헤더:: 버튼: 엑셀 다운로드하기-->
+        <@component.header_btn_xlsx_download "BoardPost.xlsxDownload();" />
     </div>
 </form>
