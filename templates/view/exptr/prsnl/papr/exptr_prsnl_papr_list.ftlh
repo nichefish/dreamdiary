@@ -134,9 +134,9 @@
         </tbody>
     </table>
 
-    <!-- pagination::begin -->
+    <#--pagination::begin-->
     <#include "/view/_component/_pagination.ftlh">
-    <!-- pagination::end -->
+    <#--pagination::end-->
 </div>
 
 <form name="procForm" id="procForm">

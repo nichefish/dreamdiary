@@ -47,7 +47,7 @@ public class BaseExceptionlHandler {
      * Ajax 요청과 페이지뷰 요청을 구분하여 응답을 내려준다.
      */
     private Object handleException(Exception e, WebRequest request, HttpStatus status) {
-        return handleException(e, request, status, "/view/error_page");
+        return handleException(e, request, status, "/view/error/error_page");
     }
     private Object handleException(Exception e, WebRequest request, HttpStatus status, String view) {
         String errorMsg = MessageUtils.getExceptionMsg(e);
@@ -61,7 +61,7 @@ public class BaseExceptionlHandler {
             AjaxResponse ajaxResponse = new AjaxResponse(false, errorMsg);
             return new ResponseEntity<>(ajaxResponse, status);
         }
-        ModelAndView modelAndView = new ModelAndView(view);
+        ModelAndView modelAndView = new ModelAndView("forward:" + view);
         modelAndView.addObject("errorMsg", errorMsg);
         return modelAndView;
     }

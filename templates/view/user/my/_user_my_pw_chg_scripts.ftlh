@@ -32,17 +32,11 @@
                         },
                     });
                 });
-                $.validator.addMethod("regex", function(value, element, regex) {
-                    let regExp = new RegExp(regex);
-                    return (this.optional(element) || regExp.test(value));
-                });
             },
             /** 내 비밀번호 수정 팝업 호출 */
             myPwChgModal: function() {
                 const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
                 commons.util.handlebarsTemplate(data, "user_my_pw_chg", "show");
-                // template에 있는 tooltip들 활성화
-                $('[data-bs-toggle="tooltip"]').tooltip();
             },
             /** submit */
             submit: function() {

@@ -6,25 +6,25 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="vcatn_papr_dtl" size="xl">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <@component.modal_header "휴가계획서" />
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div class="table-responsive-sm">
             <div id="vcatn_papr_dtl_div">
-                <!-- contents -->
+                <#--Handlebars template goes in here-->
             </div>
         </div>
     </div>
     <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼:: 모달 닫기 -->
+            <#--버튼:: 모달 닫기-->
             <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
 
-<!-- include:: Handlebars template -->
+<#--include:: Handlebars template-->
 <#include "/view/vcatn/papr/_vcatn_papr_dtl_template.hbs">
