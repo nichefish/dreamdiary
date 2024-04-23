@@ -1,16 +1,16 @@
 <#--
- -- 태그 관련파일 묶음
- -- @included_in : board_post_list
+ * 태그 관련파일 묶음
+ * @included_in : board_post_list
  -->
 <script>
-    const Tag = function() {
+    const Tag = (function() {
         return {
             init: function () {
                 //
             },
             dtlAjax: function(tagNo) {
                 event.stopPropagation();
-                const url = "${SiteUrl.TAG_DTL_AJAX!}";
+                const url = "${Url.TAG_DTL_AJAX!}";
                 let ajaxData = { "tagNo": tagNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
@@ -22,7 +22,6 @@
                     // 태그 글 목록
                     commons.util.handlebarsTemplate(res.rsltList, "tag_dtl_post_list");
                     $("#board_tag_list_modal").modal("hide");
-                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 });
             },
             /** 태그로 글 목록 검색 */
@@ -34,7 +33,7 @@
             },
             /** 전체 태그 목록 조회 */
             listAjax: function() {
-                const url = "${SiteUrl.TAG_LIST_AJAX!}";
+                const url = "${Url.TAG_LIST_AJAX!}";
                 let ajaxData = { "contentType": $("#contentType").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
@@ -44,12 +43,10 @@
                     // 태그 상세 정보
                     commons.util.handlebarsTemplate(res.rsltList, "board_tag_list", "show");
                     $("#board_tag_dtl_modal").modal("hide");
-                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 });
             },
         }
-    }();
-
+    })();
     $(document).ready(function() {
         Tag.init();
     });
