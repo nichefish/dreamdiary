@@ -6,7 +6,9 @@
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
+
     <div>
+        <#--헤더:: 인풋: 년도-->
         <select name="yy" id="yy" class="form-select form-select-sm form-select-solid">
             <option value="">년도</option>
             <#list YY_CD![] as yy>
@@ -15,6 +17,7 @@
         </select>
     </div>
     <div>
+        <#--헤더:: 인풋: 월-->
         <select name="mnth" id="mnth" class="form-select form-select-sm form-select-solid">
             <option value="">월</option>
             <#list MNTH_CD![] as mnth>
@@ -23,6 +26,7 @@
         </select>
     </div>
     <div>
+        <#--헤더:: 인풋: searchType-->
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
             <option value="title" label="제목" ${fn.selected(searchParam.searchType!, "title")} />
             <option value="nickNm" label="작성자" ${fn.selected(searchParam.searchType!, "nickNm")} />

@@ -8,7 +8,7 @@
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
     <input type="hidden" name="tags" id="tags">
-    <!-- search-param starts -->
+
     <div>
         <#--헤더:: 인풋: datepicker-->
         <@component.header_datepicker searchParam "searchStartDt" "" />
@@ -22,6 +22,7 @@
         </div>
     </#if>
     <div>
+        <#--헤더:: 인풋: searchType-->
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
             <option value="title" label="제목" ${fn.selected(searchParam.searchType!, "제목")} />
             <option value="nickNm" label="작성자" ${fn.selected(searchParam.searchType!, "작성자")} />

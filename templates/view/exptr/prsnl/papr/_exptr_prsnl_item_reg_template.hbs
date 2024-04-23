@@ -24,10 +24,10 @@
         </td>
         <td>
             <select class="form-select form-select-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
-                    name="itemList[{{rnum}}].exptrCd" id="exptrCd{{rnum}}" {{#ifYn rjectYn}}readonly{{/ifYn}}>
+                    name="itemList[{{rnum}}].exptrCd" {{#ifYn rjectYn}}readonly{{/ifYn}}>
                 <option value="">--지출구분--</option>
                 <#list EXPTR_CD![] as exptrCd>
-                    <option value="${exptrCd.dtlCd!}" id="${exptrCd.dtlCd!}" {{selectedIf (equals exptrCd "${exptrCd.dtlCd!}")}}>
+                    <option value="${exptrCd.dtlCd!}" {{selectedIf (equals exptrCd "${exptrCd.dtlCd!}")}}>
                         ${exptrCd.dtlCdNm!}
                     </option>
                 </#list>
