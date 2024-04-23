@@ -6,9 +6,9 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="exptr_reqst_exmpl" size="xl">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <@component.modal_header "물품구매/경조사비 신청 작성 안내" />
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div class="table-responsive-sm">
             <h4 class="text-start mt-10">[물품구매 요청]</h4>
@@ -68,9 +68,9 @@
     </div>
     <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼:: 모달 닫기 -->
+            <#--버튼:: 모달 닫기-->
             <@component.modal_btn_close />
         </div>
     </div>
