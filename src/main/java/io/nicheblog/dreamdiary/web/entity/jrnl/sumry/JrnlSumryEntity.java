@@ -50,7 +50,7 @@ public class JrnlSumryEntity
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    @Column(name = "content_type", columnDefinition = "VARCHAR(50) DEFAULT 'JRNL_DIARY'")
+    @Column(name = "content_type", columnDefinition = "VARCHAR(50) DEFAULT 'JRNL_SUMRY'")
     @Comment("컨텐츠 타입")
     private String contentType = CONTENT_TYPE.key;
 

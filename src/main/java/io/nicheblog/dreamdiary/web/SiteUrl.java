@@ -45,6 +45,14 @@ public interface SiteUrl {
     String JRNL_DIARY_MDF_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryMdfAjax.do";
     String JRNL_DIARY_DEL_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryDelAjax.do";
 
+    /** 저널 결산 */
+    String JRNL_SUMRY_PAGE = Prefix.JRNL_SUMRY + "/jrnlSumryPage.do";
+    String JRNL_SUMRY_LIST_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryListAjax.do";
+    String JRNL_SUMRY_REG_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryRegAjax.do";
+    String JRNL_SUMRY_DTL_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryDtlAjax.do";
+    String JRNL_SUMRY_MDF_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryMdfAjax.do";
+    String JRNL_SUMRY_DEL_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryDelAjax.do";
+
     /** 공지사항 */
     String NOTICE_LIST = Prefix.NOTICE + "/noticeList.do";
     String NOTICE_REG_FORM = Prefix.NOTICE + "/noticeRegForm.do";
@@ -297,6 +305,9 @@ public interface SiteUrl {
         // 저널 일기
         String DIARY = "/diary";
         String JRNL_DIARY = JRNL + DIARY;
+        // 저널 결산
+        String SUMRY = "/sumry";
+        String JRNL_SUMRY = JRNL + SUMRY;
 
         /* 일반게시판 (board) */
         String BOARD = "/board";

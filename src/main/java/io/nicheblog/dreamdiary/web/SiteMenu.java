@@ -18,7 +18,8 @@ import java.util.List;
  * @author nichefish
  */
 @Component
-public class SiteMenu {
+public class SiteMenu
+    implements SiteAdminMenu {
 
     @Resource(name = "boardDefService")
     private BoardDefService boardDefService;
@@ -54,14 +55,6 @@ public class SiteMenu {
             Url.MAIN
     );
 
-    // 공통화면 :: 메인 (관리자)
-    public static SiteAcsInfo ADMIN_MAIN = new SiteAcsInfo(
-            SiteTopMenu.ADMIN_MAIN,
-            TOP_MENU_IDX,
-            "메인",
-            Url.ADMIN_MAIN
-    );
-
     // 공통화면 :: 에러
     public static SiteAcsInfo ERROR = new SiteAcsInfo(
             SiteTopMenu.ERROR,
@@ -94,9 +87,10 @@ public class SiteMenu {
             TOP_MENU_IDX,
             "저널",
             Url.JRNL_DAY_PAGE,
-            List.of(SubMenu.JRNL_DAY)
+            List.of(SubMenu.JRNL_DAY, SubMenu.JRNL_SUMRY)
     );
     public static SiteAcsInfo JRNL_DAY = SubMenu.JRNL_DAY;
+    public static SiteAcsInfo JRNL_SUMRY = SubMenu.JRNL_SUMRY;
 
     // 대메뉴 :: 일반게시판
     public static SiteAcsInfo BOARD = new SiteAcsInfo(
@@ -128,65 +122,6 @@ public class SiteMenu {
     public static SiteAcsInfo EXPTR_PRSNL_PAPR = SubMenu.EXPTR_PRSNL_PAPR;
     public static SiteAcsInfo EXPTR_REQST = SubMenu.EXPTR_REQST;
 
-    // 대메뉴 :: 사용자 관리
-    public static SiteAcsInfo USER = new SiteAcsInfo(
-            SiteTopMenu.USER,
-            TOP_MENU_IDX,
-            "사용자 관리",
-            Url.AUTH_LGN_FORM,
-            List.of(SubMenu.USER_INFO)
-    );
-    public static SiteAcsInfo USER_INFO = SubMenu.USER_INFO;
-
-    // 대메뉴 :: 휴가 관리
-    public static SiteAcsInfo VCATN_ADMIN = new SiteAcsInfo(
-            SiteTopMenu.VCATN_ADMIN,
-            TOP_MENU_IDX,
-            "일정",
-            Url.SCHDUL_CAL,
-            List.of(SubMenu.VCATN_STATS, SubMenu.VCATN_SCHDUL)
-    );
-    public static SiteAcsInfo VCATN_STATS = SubMenu.VCATN_STATS;
-    public static SiteAcsInfo VCATN_SCHDUL = SubMenu.VCATN_SCHDUL;
-
-    // 대메뉴 :: 경비 관리
-    public static SiteAcsInfo EXPTR_ADMIN = new SiteAcsInfo(
-            SiteTopMenu.EXPTR_ADMIN,
-            TOP_MENU_IDX,
-            "경비",
-            Url.EXPTR_PRSNL_PAPR_LIST,
-            List.of(SubMenu.EXPTR_PRSNL_RPT, SubMenu.EXPTR_PRSNL_STATS)
-    );
-    public static SiteAcsInfo EXPTR_PRSNL_RPT = SubMenu.EXPTR_PRSNL_RPT;
-    public static SiteAcsInfo EXPTR_PRSNL_STATS = SubMenu.EXPTR_PRSNL_STATS;
-
-    // 대메뉴 :: 사이트 관리
-    public static SiteAcsInfo ADMIN = new SiteAcsInfo(
-            SiteTopMenu.ADMIN,
-            TOP_MENU_IDX,
-            "사이트 관리",
-            Url.AUTH_LGN_FORM,
-            List.of(SubMenu.ADMIN_PAGE, SubMenu.LGN_POLICY, SubMenu.MENU, SubMenu.BOARD_DEF, SubMenu.TMPLAT, SubMenu.POPUP, SubMenu.CD)
-    );
-    public static SiteAcsInfo ADMIN_PAGE = SubMenu.ADMIN_PAGE;
-    public static SiteAcsInfo LGN_POLICY = SubMenu.LGN_POLICY;
-    public static SiteAcsInfo MENU = SubMenu.MENU;
-    public static SiteAcsInfo BOARD_DEF = SubMenu.BOARD_DEF;
-    public static SiteAcsInfo TMPLAT = SubMenu.TMPLAT;
-    public static SiteAcsInfo POPUP = SubMenu.POPUP;
-    public static SiteAcsInfo CD = SubMenu.CD;
-
-    // 대메뉴 :: 로그 관리
-    public static SiteAcsInfo LOG = new SiteAcsInfo(
-            SiteTopMenu.ADMIN,
-            TOP_MENU_IDX,
-            "로그 관리",
-            Url.AUTH_LGN_FORM,
-            List.of(SubMenu.LOG_ACTVTY, SubMenu.LOG_SYS)
-    );
-    public static SiteAcsInfo LOG_ACTVTY = SubMenu.LOG_ACTVTY;
-    public static SiteAcsInfo LOG_SYS = SubMenu.LOG_SYS;
-
     /**
      * 서브메뉴 정보
      */
@@ -198,6 +133,13 @@ public class SiteMenu {
                 "01",
                 "저널 일자",
                 Url.JRNL_DAY_PAGE
+        );
+        // 소메뉴 :: 저널 결산
+        SiteAcsInfo JRNL_SUMRY = new SiteAcsInfo(
+                SiteTopMenu.JRNL,
+                "02",
+                "저널 결산",
+                Url.JRNL_SUMRY_PAGE
         );
 
         // 소메뉴 :: 경비지출서
@@ -228,114 +170,6 @@ public class SiteMenu {
                 "02",
                 "휴가계획서",
                 Url.VCATN_PAPR_LIST
-        );
-
-        /* 사용자 관리 */
-        // 소메뉴 :: 사용자 정보
-        SiteAcsInfo USER_INFO = new SiteAcsInfo(
-                SiteTopMenu.USER,
-                "01",
-                "계정 관리",
-                Url.USER_LIST
-        );
-
-        /* 휴가 관리 */
-        // 소메뉴 :: 경비지출누적집계
-        SiteAcsInfo VCATN_STATS = new SiteAcsInfo(
-                SiteTopMenu.VCATN_ADMIN,
-                "01",
-                "년도별 휴가관리",
-                Url.VCATN_STATS_YY
-        );
-        // 소메뉴 :: 휴가사용일자
-        SiteAcsInfo VCATN_SCHDUL = new SiteAcsInfo(
-                SiteTopMenu.VCATN_ADMIN,
-                "02",
-                "휴가사용일자",
-                Url.VCATN_SCHDUL_LIST
-        );
-
-        /* 경비 관리 */
-        // 소메뉴 :: 월간지출내역
-        SiteAcsInfo EXPTR_PRSNL_RPT = new SiteAcsInfo(
-                SiteTopMenu.EXPTR_ADMIN,
-                "01",
-                "월간지출내역",
-                Url.EXPTR_PRSNL_RPT_ITEMS
-        );
-        // 소메뉴 :: 경비지출누적집계
-        SiteAcsInfo EXPTR_PRSNL_STATS = new SiteAcsInfo(
-                SiteTopMenu.EXPTR_ADMIN,
-                "02",
-                "경비지출누적집계",
-                Url.EXPTR_PRSNL_STATS_PAGE
-        );
-
-        /* 사이트 관리 */
-        // 소메뉴 :: 사이트 관리
-        SiteAcsInfo ADMIN_PAGE = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                "01",
-                "사이트 관리",
-                Url.ADMIN_PAGE
-        );
-        // 소메뉴 :: 로그인 정책 관리
-        SiteAcsInfo LGN_POLICY = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                "01",
-                "로그인 정책 관리",
-                Url.LGN_POLICY_FORM
-        );
-        // 소메뉴 :: 메뉴 관리
-        SiteAcsInfo MENU = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                "02",
-                "메뉴 관리",
-                Url.MENU_PAGE
-        );
-        // 소메뉴 :: 게시판 관리
-        SiteAcsInfo BOARD_DEF = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                "03",
-                "게시판 관리",
-                Url.BOARD_DEF_LIST
-        );
-        // 소메뉴 :: 템플릿 관리
-        SiteAcsInfo TMPLAT = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                "05",
-                "템플릿 관리",
-                Url.TMPLAT_DEF_LIST
-        );
-        // 소메뉴 :: 팝업 관리
-        SiteAcsInfo POPUP = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                "06",
-                "팝업 관리",
-                Url.POPUP_LIST
-        );
-        // 소메뉴 :: 코드 관리
-        SiteAcsInfo CD = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                "07",
-                "코드 관리",
-                Url.CL_CD_LIST
-        );
-
-        /* 로그 관리 */
-        // 소메뉴 :: 활동 로그
-        SiteAcsInfo LOG_ACTVTY = new SiteAcsInfo(
-                SiteTopMenu.LOG,
-                "01",
-                "활동 로그",
-                Url.LOG_ACTVTY_LIST
-        );
-        // 소메뉴 :: 시스템 로그
-        SiteAcsInfo LOG_SYS = new SiteAcsInfo(
-                SiteTopMenu.LOG,
-                "02",
-                "시스템 로그",
-                Url.LOG_SYS_LIST
         );
     }
 
