@@ -13,7 +13,6 @@
              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close"/>">
             <i class="fas fa-times"></i>
         </div>
-        <!--end::Close-->
     </div>
 </#macro>
 
@@ -27,13 +26,11 @@
              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close"/>">
             <i class="fas fa-times"></i>
         </div>
-        <!--end::Close-->
     </div>
 </#macro>
 
-
 <!--
- * 모달::버튼::등록/수정
+ * 모달:: 버튼::등록/수정
  -->
 <#macro modal_btn_save func>
     <button type="button" class="btn btn-sm btn-primary me-2"
@@ -48,7 +45,7 @@
 </#macro>
 
 <!--
- * 버튼 : 수정 모달 호출
+ * 모달:: 버튼::수정 모달 호출
  -->
 <#macro modal_btn_modify func>
     <button type="button" class="btn btn-sm btn-active-primary"
@@ -59,7 +56,7 @@
 </#macro>
 
 <!--
- * 버튼 : 삭제
+ * 모달:: 버튼::삭제
  -->
 <#macro modal_btn_delete func>
     <button type="button" class="btn btn-sm btn-light btn-active-danger"
@@ -70,7 +67,7 @@
 </#macro>
 
 <!--
- * 버튼 : 모달 닫기
+ * 모달:: 버튼::모달 닫기
  -->
 <#macro modal_btn_close>
     <button type="button" class="btn btn-sm btn-light"
