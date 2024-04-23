@@ -164,26 +164,6 @@
                 Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
                 Page.setTotAmt();
             },
-            /** 등록/수정 처리(Ajax) */
-            <#if isReg!false>reg</#if><#if isMdf!false>mdf</#if>Ajax: function() {
-                // DTO에서 integer로 받으므로 콤마 처리되어 있던 값 수동으로 처리
-                $("input[name$='.exptrAmtStr']").each(function(idx, item) {
-                    let index = $(item).attr("id").replace("exptrAmt", "");
-                    $("input[name='itemList["+index+"].exptrAmt']").val($(item).val().replace(/,/gi, ""));
-                });
-                let ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
-                const url = "<#if isReg!false>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
-                    Swal.fire({ text: res.message })
-                        .then(function() {
-                            if (!res.rslt) return;
-                            if ($("#mngrYn").val() === "Y") {
-                                commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE!}")
-                            } else
-                                ExptrPrsnlPapr.list();
-                        });
-                });
-            },
             /**
              * 사용자 정보 추가항목 영역 합계 구하기
              */
@@ -211,149 +191,146 @@
 
 <!-- class 속성이 덮어씌워지지 않아서 스타일 지정 -->
 <div class="card post" style="margin-top:15px !important;">
-    <!--begin:Form-->
-    <form name="exptrPrsnlRegForm" id="exptrPrsnlRegForm" class="form">
-        <input type="hidden" name="postNo" value="${post.postNo!}">
-        <input type="hidden" name="mngrYn" id="mngrYn" value="${mngrYn!}">
-        <input type="hidden" name="title" id="title" value="${post.title!}">
-        <input type="hidden" name="atchFileNo" value="${post.atchFileNo!}">
-        <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
-        <input type="hidden" name="cfYn" value="${post.cfYn!"N"}">
+    <#--begin::Card body-->
+    <div class="card-body">
+        <!--begin:Form-->
+        <form name="exptrPrsnlRegForm" id="exptrPrsnlRegForm" class="form">
+            <input type="hidden" name="postNo" value="${post.postNo!}">
+            <input type="hidden" name="mngrYn" id="mngrYn" value="${mngrYn!}">
+            <input type="hidden" name="title" id="title" value="${post.title!}">
+            <input type="hidden" name="atchFileNo" value="${post.atchFileNo!}">
+            <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
+            <input type="hidden" name="cfYn" value="${post.cfYn!"N"}">
 
-        <div class="card-header border-0 pt-6">
-            <div class="d-flex justify-content-left align-items-center">
-                <#if isReg!false>
-                    <div class="position-relative min-w-125px me-md-2">
-                        <select name="yy" id="yy" class="form-select form-select-solid" onchange="Page.setTitle(); Page.validateYyMnth();">
-                            <#if (prevYy)! != (currYy)!>
-                                <option value="${((prevYy!0)?c)?string}"<#if isPrevMnthY> selected="selected"</#if>>
-                                    ${((prevYy!0)?c)?string}년
+            <div class="card-header border-0 pt-6">
+                <div class="d-flex justify-content-left align-items-center">
+                    <#if isReg!false>
+                        <div class="position-relative min-w-125px me-md-2">
+                            <select name="yy" id="yy" class="form-select form-select-solid" onchange="Page.setTitle(); Page.validateYyMnth();">
+                                <#if (prevYy)! != (currYy)!>
+                                    <option value="${((prevYy!0)?c)?string}"<#if isPrevMnthY> selected="selected"</#if>>
+                                        ${((prevYy!0)?c)?string}년
+                                    </option>
+                                </#if>
+                                <option value="${((currYy!0)?c)?string}"<#if !isPrevMnthY> selected="selected"</#if>>
+                                    ${((currYy!0)?c)?string}년
                                 </option>
-                            </#if>
-                            <option value="${((currYy!0)?c)?string}"<#if !isPrevMnthY> selected="selected"</#if>>
-                                ${((currYy!0)?c)?string}년
-                            </option>
-                        </select>
+                            </select>
+                        </div>
+                        <div class="position-relative me-md-2">
+                            <select name="mnth" id="mnth" class="form-select form-select-solid" onchange="Page.setTitle(); Page.validateYyMnth();">
+                                <option value="${((prevMnth!0)?c)?string}"<#if isPrevMnthY> selected="selected"</#if>>
+                                    ${prevMnth!}월
+                                </option>
+                                <option value="${((currMnth!0)?c)?string}"<#if !isPrevMnthY> selected="selected"</#if>>
+                                    ${currMnth!}월
+                                </option>
+                            </select>
+                        </div>
+                        <div class="position-relative w-md-200px pt-2 me-md-2">
+                            <h4>경비지출서</h4>
+                        </div>
+                    <#elseif isMdf!false>
+                        <input type="hidden" name="yy" id="yy" value="${post.yy!}">
+                        <input type="hidden" name="mnth" id="mnth" value="${post.mnth!}">
+                        <div class="position-relative me-md-2">
+                            <div class="fs-2 fw-bold col-form-label text-center">
+                                <h4>${post.title!}</h4>
+                            </div>
+                        </div>
+                    </#if>
+                </div>
+                <div class="card-title text-end">
+                    <div class="d-flex align-items-center position-relative my-1">
                     </div>
-                    <div class="position-relative me-md-2">
-                        <select name="mnth" id="mnth" class="form-select form-select-solid" onchange="Page.setTitle(); Page.validateYyMnth();">
-                            <option value="${((prevMnth!0)?c)?string}"<#if isPrevMnthY> selected="selected"</#if>>
-                                ${prevMnth!}월
-                            </option>
-                            <option value="${((currMnth!0)?c)?string}"<#if !isPrevMnthY> selected="selected"</#if>>
-                                ${currMnth!}월
-                            </option>
-                        </select>
+                </div>
+                <div class="card-toolbar">
+                    <!--begin::Toolbar-->
+                    <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                        <button type="button" class="btn btn-sm btn-primary"
+                                onclick="Page.addExptrPrsnlItem();"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="지출내역 행을 추가합니다.">
+                            <i class="fas fa-plus"></i>지출내역 추가
+                        </button>
                     </div>
-                    <div class="position-relative w-md-200px pt-2 me-md-2">
-                        <h4>경비지출서</h4>
+                    <!--end::Toolbar-->
+                </div>
+            </div>
+            <#if isMdf!false>
+                <div class="row ps-10 mt-2">
+                    <div class="col-lg-1 col-3 d-flex align-items-center">
+                        <label class="text-gray-700 fs-6 fw-bolder cursor-help"
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="미설정시 수정 일자가&#10;기존 일자로 유지됩니다.&#10;(기본 : ON)">
+                            수정일자 변경
+                        </label>
                     </div>
-                <#elseif isMdf!false>
-                    <input type="hidden" name="yy" id="yy" value="${post.yy!}">
-                    <input type="hidden" name="mnth" id="mnth" value="${post.mnth!}">
-                    <div class="position-relative me-md-2">
-                        <div class="fs-2 fw-bold col-form-label text-center">
-                            <h4>${post.title!}</h4>
+                    <div class="col-lg-2 col-9 d-flex align-items-center">
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input ms-3" type="checkbox" value="Y" name="managtDtUpdtYn" id="managtDtUpdtYn" checked="checked" />
+                            <label class="form-check-label fw-bold ms-3" for="managtDtUpdtYn" id="managtDtUpdtYnLabel" style="color:blue;">변경</label>
                         </div>
                     </div>
-                </#if>
-            </div>
-            <div class="card-title text-end">
-                <div class="d-flex align-items-center position-relative my-1">
                 </div>
+            </#if>
+            <!--begin::Separator-->
+            <div class="separator separator-dashed border-gray-300 my-8"></div>
+            <!--end::Separator-->
+            <div class="table-responsive">
+                <#--begin::Table-->
+                <table class="table align-middle fs-6 gy-5 hoverTable" id="exptr_prsnl_table">
+                    <#--begin::Table head-->
+                    <thead>
+                        <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted border-bottom">
+                            <th class="col-xl-2 col-2 min-w-125px max-w-125px text-center wb-keepall">날짜</th>
+                            <th class="col-xl-1 col-2 min-w-100px text-center wb-keepall" style="width:9% !important">
+                                <span class="hidden-table">지출</span>구분
+                            </th>
+                            <th class="col-xl-2 col-2 min-w-100px text-center wb-keepall">
+                                <span class="hidden-table">지출</span>내역
+                            </th>
+                            <th class="col-xl-1 col-2 min-w-125px text-center wb-keepall">금액</th>
+                            <th class="col-xl-5 col-4 min-w-250px text-center wb-keepall">
+                                <span class="hidden-table">인원 및 </span>비고
+                            </th>
+                            <th class="col-1 min-w-50px text-center wb-keepall">
+                                영수증<span class="hidden-table"> 첨부</span>
+                            </th>
+                            <th class="col-2 min-w-50px text-center wb-keepall"></th>
+                        </tr>
+                    </thead>
+                    <#--begin::Table body-->
+                    <tbody id="exptr_prsnl_item_reg_div">
+                        <!-- 추가추가 -->
+                    </tbody>
+                    <#--begin::Table body-->
+                    <tbody id="empty_list_div">
+                        <tr>
+                            <td colspan="7" class="text-center">지출 항목을 추가해주세요.</td>
+                        </tr>
+                    </tbody>
+                    <#--begin::Table body-->
+                    <tbody id="sumDiv">
+                        <tr class="bg-light">
+                            <td colspan="3" class="text-center"></td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <input type="text" class="form-control form-control-solid number text-end" id="totAmt" placeholder="금액(원)" readonly>
+                                    <span class="menu-icon mx-2 vertical-middle">원</span>
+                                </div>
+                            </td>
+                            <td colspan="3" class="text-center"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="card-toolbar">
-                <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    <button type="button" class="btn btn-sm btn-primary"
-                            onclick="Page.addExptrPrsnlItem();"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="지출내역 행을 추가합니다.">
-                        <i class="fas fa-plus"></i>지출내역 추가
-                    </button>
-                </div>
-                <!--end::Toolbar-->
-            </div>
-        </div>
-        <#if isMdf!false>
-            <div class="row ps-10 mt-2">
-                <div class="col-lg-1 col-3 d-flex align-items-center">
-                    <label class="text-gray-700 fs-6 fw-bolder cursor-help"
-                           data-bs-toggle="tooltip" data-bs-placement="top" title="미설정시 수정 일자가&#10;기존 일자로 유지됩니다.&#10;(기본 : ON)">
-                        수정일자 변경
-                    </label>
-                </div>
-                <div class="col-lg-2 col-9 d-flex align-items-center">
-                    <div class="form-check form-switch form-check-custom form-check-solid">
-                        <input class="form-check-input ms-3" type="checkbox" value="Y" name="managtDtUpdtYn" id="managtDtUpdtYn" checked="checked" />
-                        <label class="form-check-label fw-bold ms-3" for="managtDtUpdtYn" id="managtDtUpdtYnLabel" style="color:blue;">변경</label>
-                    </div>
-                </div>
-            </div>
-        </#if>
-        <!--begin::Separator-->
-        <div class="separator separator-dashed border-gray-300 my-8"></div>
-        <!--end::Separator-->
-        <div class="table-responsive">
-            <#--begin::Table-->
-            <table class="table align-middle fs-6 gy-5 hoverTable" id="exptr_prsnl_table">
-                <#--begin::Table head-->
-                <thead>
-                    <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 fw-bolder text-muted border-bottom">
-                        <th class="col-xl-2 col-2 min-w-125px max-w-125px text-center wb-keepall">날짜</th>
-                        <th class="col-xl-1 col-2 min-w-100px text-center wb-keepall" style="width:9% !important">
-                            <span class="hidden-table">지출</span>구분
-                        </th>
-                        <th class="col-xl-2 col-2 min-w-100px text-center wb-keepall">
-                            <span class="hidden-table">지출</span>내역
-                        </th>
-                        <th class="col-xl-1 col-2 min-w-125px text-center wb-keepall">금액</th>
-                        <th class="col-xl-5 col-4 min-w-250px text-center wb-keepall">
-                            <span class="hidden-table">인원 및 </span>비고
-                        </th>
-                        <th class="col-1 min-w-50px text-center wb-keepall">
-                            영수증<span class="hidden-table"> 첨부</span>
-                        </th>
-                        <th class="col-2 min-w-50px text-center wb-keepall"></th>
-                    </tr>
-                </thead>
-                <#--begin::Table body-->
-                <tbody id="exptr_prsnl_item_reg_div">
-                    <!-- 추가추가 -->
-                </tbody>
-                <#--begin::Table body-->
-                <tbody id="empty_list_div">
-                    <tr>
-                        <td colspan="7" class="text-center">지출 항목을 추가해주세요.</td>
-                    </tr>
-                </tbody>
-                <#--begin::Table body-->
-                <tbody id="sumDiv">
-                    <tr class="bg-light">
-                        <td colspan="3" class="text-center"></td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <input type="text" class="form-control form-control-solid number text-end" id="totAmt" placeholder="금액(원)" readonly>
-                                <span class="menu-icon mx-2 vertical-middle">원</span>
-                            </div>
-                        </td>
-                        <td colspan="3" class="text-center"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- 추가추가 -->
-    </form>
+            <!-- 추가추가 -->
+        </form>
+    </div>
+    <#--begin::Card footer-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-primary mx-2"
-                onclick="commons.util.submit('#exptrPrsnlRegForm');"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-            <i class="bi bi-pencil-square"></i>
-            <span class="indicator-label">저장</span>
-            <span class="indicator-progress">
-                Please wait...
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
-        </button>
+        <#--페이지:: 버튼: 저장하기-->
+        <@component.post_btn_submit "ExptrPrsnlPapr.submit();" />
+        <#--페이지:: 버튼: 관리 화면으로 돌아가기-->
         <#if mngrYn! == "Y">
             <button type="button" class="btn btn-light"
                     onclick="ExptrPrsnlPapr.stats();"
@@ -361,8 +338,8 @@
                 <i class="bi bi-list"></i>뒤로가기
             </button>
         <#else>
-            <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "ExptrPrsnlPapr.list();" />
+            <#--페이지:: 버튼: 목록으로 가기-->
+            <@component.post_btn_toList "ExptrPrsnlPapr.list();" />
         </#if>
     </div>
     <!--end::Card footer-->

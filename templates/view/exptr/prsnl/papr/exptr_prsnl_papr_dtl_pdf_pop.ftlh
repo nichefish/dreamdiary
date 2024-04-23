@@ -34,12 +34,10 @@
 </script>
 
 <div class="card post page">
-    <#--begin::Question-->
-    <div class="mb-0">
-        <#--begin::Head-->
-        <form class="form">
-            <input type="hidden" name="postNo" value="${post.postNo!}">
-            <input type="hidden" name="title" id="title" readonly>
+    <#--begin::Card body-->
+    <div class="card-body">
+        <#--begin::title-->
+        <div class="mb-0">
             <div class="d-flex align-items-center mb-9">
                 <#--begin::Title-->
                 <div class="col-12 d-flex">
@@ -76,70 +74,70 @@
                 </div>
                 <!--end::Info-->
             </div>
+        </div>
 
-            <div class="separator separator-dashed border-gray-300 my-8"></div>
+        <div class="separator separator-dashed border-gray-300 my-8"></div>
 
-            <#--begin::Table-->
-            <table class="table align-middle table-row-dashed fs-small gy-5" id="kt_customers_table">
-                <#--begin::Table head-->
-                <thead>
-                    <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                        <th class="col-2 min-w-100px text-center wb-keepall">날짜</th>
-                        <th class="col-2 min-w-100px text-center wb-keepall">지출구분</th>
-                        <th class="min-w-150px text-center wb-keepall">지출내역</th>
-                        <th class="w-12 min-w-75px text-center wb-keepall">금액</th>
-                        <th class="min-w-150px text-center wb-keepall">인원 및 비고</th>
-                    </tr>
-                </thead>
-                <#--begin::Table body-->
-                <tbody id="exptr_prsnl_item_reg_div">
-                    <#list post.itemList![] as exptr>
-                        <tr<#if (exptr.rjectYn!"N") == "Y"> class="bg-light-danger strikethrough text-muted"</#if>>
-                            <td class="text-center">
-                                ${exptr.exptrDt!}
-                            </td>
-                            <td class="text-center">
-                                ${exptr.exptrTyNm!}
-                            </td>
-                            <td class="text-center">
-                                ${exptr.exptrCn!}
-                            </td>
-                            <td class="text-end pe-6">
-                                <#if (exptr.rjectYn!"N") != "Y">
-                                    <input type="hidden" id="exptrAmtSpan${exptr?index}" value="${exptr.exptrAmt!}">
-                                </#if>
-                                ${exptr.exptrAmt!?number?string.number}원
-                            </td>
-                            <td class="text-start ps-6">
-                                ${exptr.exptrRm!}
-                            </td>
-                        </tr>
-                        <#if (exptr.rjectYn!"N") == "Y">
-                            <tr class="bg-light-danger">
-                                <td class="py-2"></td>
-                                <td colspan="6" class="py-2 ps-10">반려사유: ${exptr.rjectResn!}</td>
-                            </tr>
-                        </#if>
-                    </#list>
-                </tbody>
-                <#--begin::Table body-->
-                <tbody id="empty_list_div">
-                    <tr>
-                        <td colspan="7" class="text-center">지출항목이 없습니다.</td>
-                    </tr>
-                </tbody>
-                <#--begin::Table body-->
-                <tbody id="sumDiv">
-                    <tr class="bg-light">
-                        <td colspan="3" class="text-center">
-                        <td colspan="1" class="text-end pe-6">
-                            합계 : <span id="totAmt">-</span>원
+        <#--begin::cn-->
+        <table class="table align-middle table-row-dashed fs-small gy-5" id="kt_customers_table">
+            <#--begin::Table head-->
+            <thead>
+                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                    <th class="col-2 min-w-100px text-center wb-keepall">날짜</th>
+                    <th class="col-2 min-w-100px text-center wb-keepall">지출구분</th>
+                    <th class="min-w-150px text-center wb-keepall">지출내역</th>
+                    <th class="w-12 min-w-75px text-center wb-keepall">금액</th>
+                    <th class="min-w-150px text-center wb-keepall">인원 및 비고</th>
+                </tr>
+            </thead>
+            <#--begin::Table body-->
+            <tbody id="exptr_prsnl_item_reg_div">
+                <#list post.itemList![] as exptr>
+                    <tr<#if (exptr.rjectYn!"N") == "Y"> class="bg-light-danger strikethrough text-muted"</#if>>
+                        <td class="text-center">
+                            ${exptr.exptrDt!}
                         </td>
-                        <td colspan="3" class="text-center">
+                        <td class="text-center">
+                            ${exptr.exptrTyNm!}
+                        </td>
+                        <td class="text-center">
+                            ${exptr.exptrCn!}
+                        </td>
+                        <td class="text-end pe-6">
+                            <#if (exptr.rjectYn!"N") != "Y">
+                                <input type="hidden" id="exptrAmtSpan${exptr?index}" value="${exptr.exptrAmt!}">
+                            </#if>
+                            ${exptr.exptrAmt!?number?string.number}원
+                        </td>
+                        <td class="text-start ps-6">
+                            ${exptr.exptrRm!}
+                        </td>
                     </tr>
-                </tbody>
-            </table>
-        </form>
+                    <#if (exptr.rjectYn!"N") == "Y">
+                        <tr class="bg-light-danger">
+                            <td class="py-2"></td>
+                            <td colspan="6" class="py-2 ps-10">반려사유: ${exptr.rjectResn!}</td>
+                        </tr>
+                    </#if>
+                </#list>
+            </tbody>
+            <#--begin::Table body-->
+            <tbody id="empty_list_div">
+                <tr>
+                    <td colspan="7" class="text-center">지출항목이 없습니다.</td>
+                </tr>
+            </tbody>
+            <#--begin::Table body-->
+            <tbody id="sumDiv">
+                <tr class="bg-light">
+                    <td colspan="3" class="text-center">
+                    <td colspan="1" class="text-end pe-6">
+                        합계 : <span id="totAmt">-</span>원
+                    </td>
+                    <td colspan="3" class="text-center">
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
