@@ -5,22 +5,21 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="notice_popup" size="xl">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <div class="modal-header">
         <h5 class="modal-title" id="lgnNotifyModalLongTitle">[공지사항 팝업]</h5>
         <div class="btn btn-sm btn-icon btn-active-light-primary ms-2"
              onclick="NoticePopup.closeBtnFunc();" aria-label="Close">
             <i class="fas fa-times"></i>
         </div>
-        <!--end::Close-->
     </div>
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div id="notice_popup_div">
-            <!-- handlebars template goes in here -->
+            <#--handlebars template goes in here-->
         </div>
     </div>
-    <!--begin::Modal Footer-->
+    <#--begin::Modal Footer-->
     <div class="modal-footer flex-end">
         <button type="reset" class="btn btn-light me-3" aria-label="Close"
                 onclick="NoticePopup.closeBtnFunc();">
@@ -29,5 +28,5 @@
     </div>
 </@modal.layout>
 
-<!-- include:: Handlebars template -->
+<#--include:: Handlebars template-->
 <#include "/component/notice/popup/_notice_popup_template.hbs">

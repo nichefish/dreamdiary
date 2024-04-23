@@ -62,7 +62,6 @@
                     $("#jrnlDtDiv").removeClass("d-none");
                     $("#aprxmtDtDiv").addClass("d-none");
                 });
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
             },
             /** submit */
             submit: function() {
@@ -110,7 +109,6 @@
                         $("#jrnlDtDiv").removeClass("d-none");
                         $("#aprxmtDtDiv").addClass("d-none");
                     });
-                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 });
             },
             /** 삭제 */

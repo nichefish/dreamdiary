@@ -25,10 +25,6 @@
                         pwForReset: { regex:"비밀번호가 형식에 맞지 않습니다." },
                     },
                 });
-                $.validator.addMethod("regex", function(value, element, regex) {
-                    const regExp = new RegExp(regex);
-                    return (this.optional(element) || regExp.test(value));
-                });
             },
             /** submit */
             submit: function() {

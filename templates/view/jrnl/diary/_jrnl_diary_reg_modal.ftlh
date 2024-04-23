@@ -6,13 +6,13 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="jrnl_diary_reg" size="xl">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <@component.modal_header "저널 일기 저장" />
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <form name="jrnlDiaryRegForm" id="jrnlDiaryRegForm" class="form" enctype="multipart/form-data">
             <div id="jrnl_diary_reg_header_div">
-                <!-- contents -->
+                <#--Handlebars template goes in here-->
             </div>
             <#--begin::Row-->
             <div class="row mb-4">
@@ -27,25 +27,22 @@
                 </div>
             </div>
             <div id="jrnl_diary_reg_div">
-                <!-- contents -->
+                <#--Handlebars template goes in here-->
             </div>
         </form>
     </div>
-    <!--begin::Modal Footer-->
+    <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-sm btn-primary me-2"
-                    onclick="JrnlDiary.submit();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                <i class="bi bi-pencil-square"></i>저장
-            </button>
-            <!-- 버튼:: 모달 닫기 -->
+            <#--버튼:: 저장하기-->
+            <@component.modal_btn_save "JrnlDiary.submit();" />
+            <#--버튼:: 모달 닫기-->
             <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
 
-<!-- include:: Handlebars template -->
+<#--include:: Handlebars template-->
 <#include "/view/jrnl/diary/_jrnl_diary_reg_header_template.hbs">
 <#include "/view/jrnl/diary/_jrnl_diary_reg_template.hbs">

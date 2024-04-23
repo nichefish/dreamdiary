@@ -6,10 +6,10 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="crdt_user_cttpc" size="xl">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <div class="modal-header">
         <h5 class="modal-title" id="crdtUserCttpcModalLongTitle">[직원 연락처 목록]</h5>
-        <!--begin::Close-->
+        <#--begin::Close-->
         <button type="button" class="btn btn-sm btn-light-primary me-md-2 ms-auto"
                 onclick="Page.cttpcXlsxDownload();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">
@@ -18,9 +18,9 @@
         <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
             <i class="fas fa-times"></i>
         </div>
-        <!--end::Close-->
+        <#--end::Close-->
     </div>
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div class="table-responsive-sm">
             <#--begin::Table-->
@@ -50,11 +50,11 @@
             </table>
         </div>
     </div>
-    <!--begin::Modal Footer-->
+    <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼:: 모달 닫기 -->
+            <#--버튼:: 모달 닫기-->
             <@component.modal_btn_close />
         </div>
     </div>

@@ -3,21 +3,21 @@
  -->
 
 <script>
-    const PwChg = (function() {
+    const LgnPwChg = (function() {
         return {
             /** 비밀번호 변경 팝업 호출 */
             pwChgModal: function() {
                 const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
                 commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
                 /* jquery :: validation */
-                PwChg.initValidateForm();
+                LgnPwChg.initValidateForm();
             },
             /** form validation init */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#lgnPwChgForm").validate({
                     submitHandler: function() {
-                        PwChg.lgnPwChgAjax();
+                        LgnPwChg.lgnPwChgAjax();
                     },
                     errorPlacement : function(error, element) {
                         commons.validate.errorSpan(error, element);        // 공통 함수로 분리
@@ -32,10 +32,10 @@
                         newPwCf: { equalTo: "변경할 비밀번호에 입력한 값과 동일하게 입력해야 합니다." }
                     },
                 });
-                $.validator.addMethod("regex", function(value, element, regex) {
-                    const regExp = new RegExp(regex);
-                    return (this.optional(element) || regExp.test(value));
-                });
+            },
+            /** submit */
+            submit: function() {
+                $("#lgnPwChgForm").submit();
             },
             /** 비밀번호 수정 처리(Ajax) */
             lgnPwChgAjax: function() {
