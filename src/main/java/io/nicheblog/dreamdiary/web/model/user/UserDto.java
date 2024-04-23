@@ -56,7 +56,6 @@ public class UserDto
     /** 사용자 권한 정보 */
     protected List<UserAuthRoleDto> authList;
     /** 사용자 권한 정보(문자열) */
-    @NotEmpty
     protected List<String> authStrList;
 
     /** 사용자 정보 (위임) */
@@ -102,6 +101,7 @@ public class UserDto
         private String password;
 
         /** 사용자 권한 정보(문자열) (multiselect parameter) */
+        @NotEmpty
         private String authListStr;
 
         /** 계정 설명 (관리자용) */
