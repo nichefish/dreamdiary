@@ -12,8 +12,6 @@
             /** 등록 팝업 호출 */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "vcatn_schdul_reg", "show");
-                // template에 있는 tooltip들 활성화
-                $('[data-bs-toggle="tooltip"]').tooltip();
                 commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", null, function() {
                     VcatnSchdul.propEndDt();
                     VcatnSchdul.noBefore("#bgnDt", "#endDt");

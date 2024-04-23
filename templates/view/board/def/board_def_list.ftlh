@@ -35,7 +35,7 @@
 </script>
 
 <div class="card post">
-    <!--begin::Card header-->
+    <#--begin::Card header-->
     <div class="card-header">
         <div class="mt-3 fs-5 fw-bold">
             <span class="opacity-75 me-5 cursor-help"

@@ -6,7 +6,7 @@
 <!--
  * 버튼 : 권한/수정권한(mdfable)에 따른 수정 버튼
  -->
-<#macro btn_post_modify func post isMngr>
+<#macro post_btn_modify func post isMngr>
     <#if post.isRegstr>
         <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
                 onclick="${func!}"
@@ -52,7 +52,7 @@
 <!--
  * 버튼 : 권한에 따른 삭제 버튼
  -->
-<#macro btn_post_delete func post isMngr>
+<#macro post_btn_delete func post isMngr>
     <#if post.isRegstr>
         <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
                 onclick="${func!}"
@@ -71,7 +71,7 @@
 <!--
  * 버튼 : 목록으로 가기 버튼
  -->
-<#macro btn_post_toList func>
+<#macro post_btn_toList func>
     <button type="button" class="btn btn-sm btn-light"
             onclick="${func!}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.page.list"/>">
@@ -85,7 +85,7 @@
 <!--
  * 버튼 : 글 작성 전 미리보기 팝업 호출
  -->
-<#macro btn_preview_pop func>
+<#macro post_btn_preview_pop func>
     <button type="button" class="btn btn-sm btn-primary mx-2"
             onclick="${func!}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
@@ -101,7 +101,7 @@
 <!--
  * 버튼 : 글 저장 / 취소
  -->
-<#macro btn_post_submit func>
+<#macro post_btn_submit func>
     <button type="button" class="btn btn-sm btn-primary mx-2"
             onclick="${func!}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
@@ -116,7 +116,7 @@
 <!--
  * 버튼 : 미리보기 팝업 닫기
  -->
-<#macro btn_preview_close closerNm>
+<#macro post_btn_preview_close closerNm>
     <button type="button" class="btn btn-sm btn-light"
             onclick="${closerNm!}.close();"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="팝업 창을 닫습니다.">
