@@ -166,40 +166,39 @@
                 <!--end::Form control-->
                 <div id="tinymce_cn_valid_span"></div>
             </div>
-            <#--begin::Menu separator-->
-            <div class="separator my-2"></div>
-            <!--end::Menu separator-->
 
-            <!-- #include:: component:: 첨부파일 추가추가 영역 -->
+            <div class="separator my-2"></div>
+
+            <#--페이지:: 첨부파일 추가추가 영역-->
             <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
 
             <div class="separator my-8"></div>
 
-            <!-- 잔디 알림 발송 영역 -->
+            <#--잔디 알림 발송 영역-->
             <@component.jandi_reg_area 1 "EXPTR_REQST" />
         </form>
     </div>
 
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-between">
-            <!-- 버튼 :: 미리보기 -->
-            <@component.btn_preview_pop "ExptrReqst.preview();" />
+            <#--페이지:: 버튼: 미리보기-->
+            <@component.post_btn_preview_pop "ExptrReqst.preview();" />
             <div>
-                <!-- 버튼 :: 저장하기 -->
-                <@component.btn_post_submit "ExptrReqst.submit();" />
-                <!-- 버튼 :: 목록으로 가기 -->
-                <@component.btn_post_toList "ExptrReqst.list();" />
+                <#--페이지:: 버튼: 저장하기-->
+                <@component.post_btn_submit "ExptrReqst.submit();" />
+                <#--페이지:: 버튼: 목록으로 가기-->
+                <@component.post_btn_toList "ExptrReqst.list();" />
             </div>
         </div>
     </div>
 </div>
 <!--end::Card-->
 
-<!-- #include:: component:: 첨부파일 추가 영역 template-->
+<#--include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/atch_file/_atch_file_area.ftlh">
-<!-- #include:: component:: tinymce 이미지 추가 영역 template-->
+<#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 
 </@layout.layout>
