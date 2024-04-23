@@ -126,8 +126,6 @@
                 </tr>
             </tfoot>
         </table>
-        <!-- pagination::begin -->
-        <!-- pagination::end -->
     </div>
 </div>
 
