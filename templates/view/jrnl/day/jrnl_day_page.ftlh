@@ -30,9 +30,12 @@
                 let mnthCookie = $.cookie("jrnl_mnth");
                 if (yyCookie !== undefined) $("#jrnl_aside #yy").val(yyCookie);
                 if (yyCookie !== undefined) $("#jrnl_aside #mnth").val(mnthCookie);
+                // 아무 쿠키도 없을경우 전체 데이터 로딩을 막기 위해 올해 년도 세팅
+                if (yyCookie === undefined && mnthCookie === undefined) $("#jrnl_aside #yy").val(commons.date.getCurrYyStr());
                 // 목록 조회
                 JrnlDay.listAjax();
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                // template에 있는 tooltip들 활성화
+                $("[data-bs-toggle='tooltip']").tooltip();
             },
         }
     })();

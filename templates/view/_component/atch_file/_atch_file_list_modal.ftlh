@@ -25,31 +25,28 @@
             },
         }
     })();
-    $(document).ready(function () {
-        AtchFileList.init();
-    });
 </script>
 
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="atch_file_list" size="lg">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <@component.modal_header "첨부파일 목록 조회" />
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div class="row" id="atch_file_list_div">
-            <!-- contents -->
+            <#--Handlebars template goes in here-->
         </div>
     </div>
-    <!--begin::Modal Footer-->
+    <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼:: 모달 닫기 -->
+            <#--버튼:: 모달 닫기-->
             <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
 
-<!-- include:: Handlebars template -->
+<#--include:: Handlebars template-->
 <#include "/view/_component/atch_file/_atch_file_list_template.hbs">

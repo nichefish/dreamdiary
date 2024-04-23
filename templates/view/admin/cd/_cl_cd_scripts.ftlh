@@ -39,14 +39,12 @@
             },
             /** 등록 팝업 호출 */
             regModal: function() {
+                commons.util.handlebarsTemplate({}, "cl_cd_reg", "show");
                 /* jquery :: validation */
                 ClCd.initValidateForm();
-                commons.util.handlebarsTemplate({}, "cl_cd_reg", "show");
                 commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 commons.validate.replaceBlankIfMatches("#clCdRegForm #clCd", commons.validate.nonCdRegex);
                 commons.validate.toUpperCase("#clCdRegForm #clCd");
-                // template에 있는 tooltip들 활성화
-                $('[data-bs-toggle="tooltip"]').tooltip();
             },
             /** submit */
             submit: function() {
@@ -106,8 +104,6 @@
                     /* jquery :: validation */
                     ClCd.initValidateForm();
                     commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                    // template에 있는 tooltip들 활성화
-                    $('[data-bs-toggle="tooltip"]').tooltip();
                 });
             },
             /** 사용으로 변경 (Ajax) */

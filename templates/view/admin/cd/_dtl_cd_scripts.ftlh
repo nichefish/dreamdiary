@@ -35,13 +35,11 @@
             /** 상세코드 등록 팝업 호출 */
             regModal: function() {
                 commons.util.handlebarsTemplate({ "clCd": $("#clCd").val() }, "dtl_cd_reg", "show");
+                /* jquery :: validation */
+                DtlCd.initValidateForm();
                 commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 commons.validate.replaceBlankIfMatches("#dtlCdRegForm #dtlCd", commons.validate.nonCdRegex);
                 commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
-                /* jquery :: validation */
-                DtlCd.initValidateForm();
-                // template에 있는 tooltip들 활성화
-                $('[data-bs-toggle="tooltip"]').tooltip();
             },
             /** submit */
             submit: function() {
@@ -77,11 +75,9 @@
                     let rsltObj = res.rsltObj;
                     rsltObj.isMdf = true;
                     commons.util.handlebarsTemplate(rsltObj, "dtl_cd_reg", "show");
-                    commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                     /* jquery :: validation */
                     DtlCd.initValidateForm();
-                    // template에 있는 tooltip들 활성화
-                    $('[data-bs-toggle="tooltip"]').tooltip();
+                    commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 });
             },
             /** 사용으로 변경 (Ajax) */

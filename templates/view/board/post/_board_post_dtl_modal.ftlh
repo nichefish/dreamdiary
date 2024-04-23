@@ -6,23 +6,23 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="board_post_dtl" size="xl">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <@component.modal_header "일반게시판" />
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div id="board_post_dtl_div">
-            <!-- contents -->
+            <#--Handlebars template goes in here-->
         </div>
     </div>
-    <!--begin::Modal Footer-->
+    <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼:: 모달 닫기 -->
+            <#--버튼:: 모달 닫기-->
             <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
 
-<!-- include:: Handlebars template -->
+<#--include:: Handlebars template-->
 <#include "/view/board/post/_board_post_dtl_template.hbs">

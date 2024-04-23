@@ -35,9 +35,9 @@
             /** 등록 모달 호출 */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "board_def_reg", "show");
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                /* jquery :: validation */
+                BoardDef.initValidateForm();
                 commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                commons.validate.validateForm("#boardDefRegForm");
                 commons.validate.replaceBlankIfMatches("#boardDefRegForm .cddata", commons.validate.nonCdRegex);
                 commons.validate.onlyNum(".number");
             },
@@ -77,8 +77,6 @@
                     /* jquery :: validation */
                     BoardDef.initValidateForm();
                     commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                    // template에 있는 tooltip들 활성화
-                    $('[data-bs-toggle="tooltip"]').tooltip();
                 });
             },
             /** 항목 수정 모달 호출 */
