@@ -50,7 +50,7 @@
 <!--
  * 인풋 : ctgrCd (select)
  -->
-<#macro input_header_ctgrCd param cd>
+<#macro header_input_ctgrCd param cd>
     <select name="ctgrCd" id="ctgrCd" class="form-select form-select-sm form-select-solid">
         <option value="">글머리</option>
         <#list cd![] as ctgr>
@@ -62,7 +62,7 @@
 <!--
  * 인풋 : searchKeyword
  -->
-<#macro input_header_searchKeyword param>
+<#macro header_input_searchKeyword param>
     <span class="position-relative">
         <#--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
         <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
@@ -71,7 +71,7 @@
                 <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="gray" />
             </svg>
         </span>
-        <!--end::Svg Icon-->
+        <#--end::Svg Icon-->
         <input type="text" class="form-control form-control-sm form-control-solid fs-7 ps-10"
                name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30" value="${(param.searchKeyword)!}" />
     </span>
@@ -80,7 +80,7 @@
 <!--
  * 버튼 : 목록 헤더 검색
  -->
-<#macro btn_header_search func>
+<#macro header_btn_search func>
     <button type="submit" class="btn btn-sm btn-primary"
             onclick="${func}">
         <i class="bi bi-search"></i>검색
@@ -90,7 +90,7 @@
 <!--
  * 버튼 : 내 글 보기
  -->
-<#macro btn_header_mypapr func myPapr>
+<#macro header_btn_mypapr func myPapr>
     <#if myPapr == false>
         <div class="btn btn-sm btn-light-primary btn-outlined"
              onclick="${func}"
@@ -109,7 +109,7 @@
 <!--
  * 버튼 : 등록 화면 이동
  -->
-<#macro btn_header_reg_form func>
+<#macro header_btn_reg_form func>
     <!-- 버튼:: 등록하기 -->
     <button type="button" class="btn btn-sm btn-primary"
             onclick="${func}"
@@ -121,7 +121,7 @@
 <!--
  * 버튼 : 등록 모달 호출
  -->
-<#macro btn_header_reg_modal func>
+<#macro header_btn_reg_modal func>
     <button type="button" class="btn btn-sm btn-primary"
             onclick="${func}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
@@ -132,7 +132,7 @@
 <!--
  * 버튼 : 정렬 순서 조정
  -->
-<#macro btn_header_sort_ordr func>
+<#macro header_btn_sort_ordr func>
     <button type="button" class="btn btn-sm btn-primary"
             onclick="${func}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
@@ -143,7 +143,7 @@
 <!--
  * 버튼 : 엑셀 다운로드
  -->
-<#macro btn_header_xlsx_download func>
+<#macro header_btn_xlsx_download func>
     <button type="button" class="btn btn-sm btn-light-primary"
             onclick="${func}"
             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="데이터를 엑셀 파일로&#10;다운로드합니다.">

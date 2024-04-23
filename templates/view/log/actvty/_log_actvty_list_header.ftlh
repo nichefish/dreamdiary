@@ -8,13 +8,12 @@
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
     <!-- datepicker -->
     <div>
-        <!-- 인풋:: datepicker -->
+        <#--헤더:: 인풋: datepicker-->
         <@component.header_datepicker searchParam "searchStartDt" "" />
-        <!-- 인풋:: datepicker -->
+        <#--헤더:: 인풋: datepicker-->
         <@component.header_datepicker searchParam "searchEndDt" DateUtils.parser.eDateParseStr(DateUtils.getCurrDate()) />
     </div>
     <div>
-        <!--begin::Select-->
         <select name="rslt" id="rslt" class="form-select form-select-sm form-select-solid" data-hide-search="true">
             <option value="">작업결과</option>
             <option value="true" label="성공" ${fn.selected(searchParam.rslt!, "true")} />
@@ -28,16 +27,16 @@
         </select>
     </div>
     <div>
-        <!-- 인풋:: searchKeyword -->
-        <@component.input_header_searchKeyword searchParam />
+        <#--헤더:: 인풋: searchKeyword-->
+        <@component.header_input_searchKeyword searchParam />
     </div>
     <div>
-        <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "LogActvty.search();" />
+        <#--헤더:: 버튼: 목록 검색-->
+        <@component.header_btn_search "LogActvty.search();" />
     </div>
     <div>
-        <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "LogActvty.xlsxDownload();" />
+        <#--헤더:: 버튼: 엑셀 다운로드하기-->
+        <@component.header_btn_xlsx_download "LogActvty.xlsxDownload();" />
     </div>
 </form>
 
