@@ -6,9 +6,9 @@
 <#--
  * 게시물 상세 :: 타이틀
  -->
-<#macro post_title post>
+<#macro post_header_title post>
     <div class="d-flex align-items-center mb-9">
-        <!--begin::Title-->
+        <#--begin::title-->
         <div class="col-12">
             <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
                 <#if (((post.imprtcYn)!"N") == "Y")!false>
@@ -26,7 +26,7 @@
 <#--
  * 게시물 상세 :: 타이틀 메타
  -->
-<#macro post_meta post>
+<#macro post_header_meta post>
     <div class="d-flex flex-stack flex-wrap mb-3">
         <!--begin::Author-->
         <div class="d-flex align-items-center">
@@ -79,7 +79,7 @@
 <#--
  * 게시물 상세 :: 타이틀 메타 (미리보기 버전)
  -->
-<#macro post_meta_preview post>
+<#macro post_header_meta_preview post>
     <!--begin::Foot-->
     <div class="d-flex flex-stack flex-wrap mb-3">
         <!--begin::Author-->
@@ -111,7 +111,7 @@
 <#--
  * 게시물 상세 :: 타이틀 메타 (프린트 버전)
  -->
-<#macro post_meta_print post>
+<#macro post_header_meta_with_print post>
     <!--begin::Foot-->
     <div class="d-flex flex-stack flex-wrap mb-3">
         <!--begin::Author-->

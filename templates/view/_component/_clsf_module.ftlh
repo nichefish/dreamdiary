@@ -6,7 +6,7 @@
 <#--
  * 열람자 정보 표시 영역
  -->
-<#macro viewer_area post >
+<#macro post_viewer_area post >
     <#if isMngr>
         <div class="row mb-5">
             <div class="col-xl-1">
@@ -32,7 +32,7 @@
 <#--
  * 조치자 정보 표시 영역
  -->
-<#macro managtr_area post >
+<#macro post_header_managtr_area post >
     <!--end::Foot-->
     <#if post.managt?? && post.managt.list?? && post.managt.list?size gt 1>
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
