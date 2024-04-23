@@ -5,35 +5,27 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="flsys_meta_reg" size="xl">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <@component.modal_header "파일시스템 메타 정보 저장" />
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <form class="form" name="flsysMetaRegForm" id="flsysMetaRegForm">
             <div id="flsys_meta_reg_div">
-                <!-- contents -->
+                <#--Handlebars template goes in here-->
             </div>
         </form>
     </div>
-    <!--begin::Modal Footer-->
+    <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-sm btn-primary"
-                    onclick="commons.util.submit('#flsysMetaRegForm');"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                <i class="bi bi-pencil-square"></i>
-                <span class="indicator-label">저장</span>
-                <span class="indicator-progress">
-                            Please wait...
-                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                        </span>
-            </button>
-            <!-- 버튼:: 모달 닫기 -->
+            <#--모달:: 버튼: 저장하기-->
+            <@component.modal_btn_save "FlsysMeta.submit();" />
+            <#--모달:: 버튼: 모달 닫기-->
             <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>
 
-<!-- include:: Handlebars template -->
+<#--include:: Handlebars template-->
 <#include "/view/cmm/flsys/_flsys_meta_reg_template.hbs">
