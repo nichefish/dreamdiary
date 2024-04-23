@@ -135,7 +135,7 @@
     </table>
 
     <#--pagination::begin-->
-    <#include "/view/_component/_pagination.ftlh">
+    <#include "/view/_component/list_area/_pagination.ftlh">
     <#--pagination::end-->
 </div>
 
@@ -144,6 +144,6 @@
     <input type="hidden" name="prevYn" id="prevYn" value="N"/>
 </form>
 
-<#include "/view/_component/comment/_comment_list_modal.ftlh">
+<#include "/view/_component/list_area/comment/_comment_list_modal.ftlh">
 
 </@layout.layout>

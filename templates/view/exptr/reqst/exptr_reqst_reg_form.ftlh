@@ -170,7 +170,7 @@
             <div class="separator my-2"></div>
 
             <#--페이지:: 첨부파일 추가추가 영역-->
-            <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
+            <#include "/view/_component/page_area/atch_file/_atch_file_reg_area.ftlh">
 
             <div class="separator my-8"></div>
 
@@ -196,8 +196,6 @@
 </div>
 <!--end::Card-->
 
-<#--include:: component:: 첨부파일 추가 영역 template-->
-<#include "/view/_component/atch_file/_atch_file_area.ftlh">
 <#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 

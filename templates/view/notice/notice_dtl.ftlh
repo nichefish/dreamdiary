@@ -34,14 +34,14 @@
         <#--begin::meta-->
         <div class="mb-0">
             <#--페이지:: 첨부파일 표시 영역-->
-            <#include "/view/_component/atch_file/_atch_file_dtl_area.ftlh">
+            <#include "/view/_component/page_area/atch_file/_atch_file_dtl_area.ftlh">
 
             <#--페이지:: 파일시스템 참조 표시 영역-->
 
             <#--페이지:: 노션 참조 표시 영역-->
 
             <#--페이지:: 태그 표시 영역-->
-            <#include "/view/_component/tag/_tag_dtl_area.ftlh">
+            <#include "/view/_component/page_area/tag/_tag_dtl_area.ftlh">
 
             <#--페이지:: 열람자 표시 영역-->
             <@component.post_viewer_area post />
@@ -59,7 +59,7 @@
             <@component.post_btn_toList "Notice.list();" />
         </div>
         <#--페이지:: 댓글 영역-->
-        <#include "/view/_component/comment/_comment_area.ftlh">
+        <#include "/view/_component/page_area/comment/_comment_area.ftlh">
     </div>
 </div>
 
