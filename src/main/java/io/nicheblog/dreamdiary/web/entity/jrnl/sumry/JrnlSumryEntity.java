@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
@@ -33,7 +34,7 @@ import javax.persistence.*;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE jrnl_summary SET del_yn = 'Y' WHERE post_no = ?")
 public class JrnlSumryEntity
-        extends BasePostEntity
+        extends BaseClsfEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
@@ -57,8 +58,27 @@ public class JrnlSumryEntity
     /* ----- */
 
     /** 결산 년도 */
-    @Column(name = "yy")
+    @Column(name = "yy", unique = true)
     private Integer yy;
+
+    /** 꿈 일수 */
+    @Column(name = "dream_day_cnt")
+    private Integer dreamDayCnt;
+
+    /** 꿈 갯수 */
+    @Column(name = "dream_cnt")
+    private Integer dreamCnt;
+
+    /** 일기 일수 */
+    @Column(name = "diary_day_cnt")
+    private Integer diaryDayCnt;
+
+    /* ----- */
+
+    /** 생성자 */
+    public JrnlSumryEntity(Integer yy) {
+        this.yy = yy;
+    }
 
     /* ----- */
 

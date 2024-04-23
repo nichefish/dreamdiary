@@ -55,10 +55,6 @@
 </div>
 <!--end::Card-->
 
-<form name="procForm" id="procForm">
-    <input type="hidden" name="jrnlDayNo" id="jrnlDayNo" />
-</form>
-
 <#--include:: Aside-->
 <#include "/view/jrnl/day/_jrnl_day_aside_base.ftlh">
 

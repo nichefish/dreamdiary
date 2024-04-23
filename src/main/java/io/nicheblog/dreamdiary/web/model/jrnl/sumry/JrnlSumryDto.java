@@ -43,6 +43,12 @@ public class JrnlSumryDto
 
     /** 결산 년도 */
     private Integer yy;
+    /** 꿈 일수 */
+    private Integer dreamDayCnt;
+    /** 꿈 갯수 */
+    private Integer dreamCnt;
+    /** 일기 일수 */
+    private Integer diaryDayCnt;
 
     @Override
     public Integer getKey() {

@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.sumry;
 
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.summary.JrnlSumryMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 @Service("jrnlSumryService")
 @Log4j2
 public class JrnlSumryService
-        implements BaseMultiCrudService<JrnlSumryDto, JrnlSumryDto, Integer, JrnlSumryEntity, JrnlSumryRepository, JrnlSumrySpec, JrnlSumryMapstruct> {
+        implements BaseReadonlyService<JrnlSumryDto, JrnlSumryDto, Integer, JrnlSumryEntity, JrnlSumryRepository, JrnlSumrySpec, JrnlSumryMapstruct> {
 
     private final JrnlSumryMapstruct jrnlSumryMapstruct = JrnlSumryMapstruct.INSTANCE;
 
@@ -43,5 +43,46 @@ public class JrnlSumryService
     @Override
     public JrnlSumrySpec getSpec() {
         return this.jrnlSumrySpec;
+    }
+
+    /**
+     * 총 결산 생성
+     */
+    public Boolean makeTotalSumry(Integer yy) {
+        this.makeDreamSumry(yy);
+        this.makeDiarySumry(yy);
+        return true;
+    }
+
+    /**
+     * 꿈 결산 생성
+     */
+    public Boolean makeDreamSumry(Integer yy) {
+
+        // 해당 년도 결산 정보 조회
+        JrnlSumryEntity sumry = jrnlSumryRepository.findByYy(yy).orElse(new JrnlSumryEntity(yy));
+
+        // 해당 년도 꿈 일자 조회해서 갱신
+        Integer dreamDayCntByYy = jrnlSumryRepository.getDreamDayCntByYy(yy);
+        sumry.setDreamCnt(dreamDayCntByYy);
+        // 해당 년도 꿈 조회해서 갱신
+        Integer dreamCntByYy = jrnlSumryRepository.getDreamCntByYy(yy);
+        sumry.setDreamCnt(dreamCntByYy);
+
+        return true;
+    }
+
+    /**
+     * 일기 결산 생성
+     */
+    public Boolean makeDiarySumry(Integer yy) {
+        // 해당 년도 결산 정보 조회
+        JrnlSumryEntity sumry = jrnlSumryRepository.findByYy(yy).orElse(new JrnlSumryEntity(yy));
+
+        // 해당 년도 일기 일자 조회해서 갱신
+        Integer diaryCntByYy = jrnlSumryRepository.getDiaryDayCntByYy(yy);
+        sumry.setDiaryDayCnt(diaryCntByYy);
+
+        return true;
     }
 }

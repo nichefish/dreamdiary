@@ -1,18 +1,12 @@
 <#--
- * 저널 일자(jrnl_day) > 목록 툴바 Header
- * @included_in : jrnl_day_page.ftlh
+ * 저널 일자(jrnl_sumry) > 목록 툴바 Header
+ * @included_in : jrnl_sumry_page.ftlh
  -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
 
-    <div>
-        <#--헤더:: 인풋: datepicker-->
-        <@component.header_datepicker searchParam "searchStartDt" "" />
-        <#--헤더:: 인풋: datepicker-->
-        <@component.header_datepicker searchParam "searchEndDt" "today" />
-    </div>
     <div>
         <#--헤더:: 인풋: searchType-->
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
@@ -27,10 +21,14 @@
     </div>
     <div>
         <#--헤더:: 버튼: 목록 검색-->
-        <@component.header_btn_search "JrnlDay.search();" />
+        <@component.header_btn_search "JrnlSumry.search();" />
     </div>
     <div>
-        <#--헤더:: 버튼: 등록 모달 호출하기-->
-        <@component.header_btn_reg_modal "JrnlDay.regModal();" />
+        <#--헤더:: 버튼: 결산 동기화-->
+        <button type="button" class="btn btn-sm btn-primary"
+                onclick="JrnlSumry.makeSumryAjax();"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="선택 년도에 대한 결산 정보를 생성합니다.">
+            <i class="fas fa-plus"></i>결산 생성
+        </button>
     </div>
 </form>

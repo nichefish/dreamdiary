@@ -48,10 +48,8 @@ public interface SiteUrl {
     /** 저널 결산 */
     String JRNL_SUMRY_PAGE = Prefix.JRNL_SUMRY + "/jrnlSumryPage.do";
     String JRNL_SUMRY_LIST_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryListAjax.do";
-    String JRNL_SUMRY_REG_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryRegAjax.do";
     String JRNL_SUMRY_DTL_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryDtlAjax.do";
-    String JRNL_SUMRY_MDF_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryMdfAjax.do";
-    String JRNL_SUMRY_DEL_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryDelAjax.do";
+    String JRNL_SUMRY_MAKE_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryMakeTotalAjax.do";
 
     /** 공지사항 */
     String NOTICE_LIST = Prefix.NOTICE + "/noticeList.do";
