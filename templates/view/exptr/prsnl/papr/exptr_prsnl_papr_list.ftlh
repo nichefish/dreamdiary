@@ -28,7 +28,7 @@
     });
 </script>
 
-<!-- #include:: component:: 태그 클릭 필터링 -->
+<#--#include:: component:: 태그 클릭 필터링-->
 <#include "/view/_component/tag/_tag_list_header.ftlh">
 
 <div class="position-relative me-md-2 searchType">
@@ -69,9 +69,9 @@
                         <a href="${Url.EXPTR_PRSNL_PAPR_DTL!}?postNo=${post.postNo!}" class="text-dark">
                             ${post.title!"-"}
                         </a>
-                        <!-- 목록 댓글 표시 -->
+                        <#--목록:: 댓글 표시-->
                         <@component.list_comment post />
-                        <!-- 새 글이면 'N' 표시 -->
+                        <#--목록:: 새 글이면 'N' 표시-->
                         <#if post.isNew>
                             <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
                         </#if>
