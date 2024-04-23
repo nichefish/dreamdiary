@@ -1,9 +1,10 @@
 <#--
- -- 레이아웃 > 첨부파일 모듈
- -- @included_in : 파일 첨부 기능이 있는 페이지들
+ * 레이아웃 > 첨부파일 모듈
+ * @included_in : 파일 첨부 기능이 있는 페이지들
  -->
+
 <script>
-    const Tags = function() {
+    const Tags = (function() {
         return {
             init: function () {
                 // 게시물 태그 tagify
@@ -27,14 +28,13 @@
                 });
             }
         }
-    }();
-
+    })();
     $(document).ready(function () {
         Tags.init();
     });
 </script>
 
-<!--begin::Row-->
+<#--begin::Row-->
 <div class="row">
     <div id="board_tag_list_div">
         <label class="mb-2">
