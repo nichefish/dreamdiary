@@ -190,7 +190,7 @@
 <div class="card post">
     <#--begin::Card header-->
     <div class="card-header min-h-auto mb-5">
-        <!--begin::Tab -->
+        <#--begin::Tab-->
         <ul class="nav nav-tabs nav-tabs-line ps-5 mt-5">
             <li class="nav-item">
                 <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1">
@@ -212,8 +212,10 @@
     </div>
     <#--begin::Card body-->
     <div class="card-body">
-        <!--begin::Calendar::FullCalendar goes in here!!!-->
-        <div id="full_calendar_app"></div>
+        <!--begin::Calendar-->
+        <div id="full_calendar_app">
+            <!--FullCalendar goes in here!!!-->
+        </div>
         <!--end::Calendar-->
     </div>
     <!--end::Card body-->
