@@ -65,6 +65,7 @@
 
 <#--begin::Card body-->
 <div id="exptrPrsnlRciptTemplate" hidden>
+    <#--begin::Form-->
     <form name="exptrPrsnlRciptForm" id="exptrPrsnlRciptForm" class="form" enctype="multipart/form-data">
         <input type="file" class="file" name="atchFile0" id="atchFile0" />
         <input type="hidden" name="exptrPrsnlItemNo" id="exptrPrsnlItemNo_upload">

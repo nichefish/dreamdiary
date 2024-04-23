@@ -18,7 +18,7 @@
                             // disabled된 selectbox 값을 풀어준다.
                             $("input").removeAttr("disabled");
                             $("select").removeAttr("disabled");
-                            Page.<#if isMdf!false>mdf<#else>reg</#if>Ajax();
+                            ExptrPrsnlPapr.regAjax();
                         });
                     },
                     errorPlacement: function (error, element) {
@@ -87,6 +87,30 @@
                     }
                 });
             },
+            /** submit */
+            submit: function() {
+                $("#exptrPrsnlRegForm").submit();
+            },
+            /** 등록/수정 처리(Ajax) */
+            regAjax: function() {
+                // DTO에서 integer로 받으므로 콤마 처리되어 있던 값 수동으로 처리
+                $("input[name$='.exptrAmtStr']").each(function(idx, item) {
+                    let index = $(item).attr("id").replace("exptrAmt", "");
+                    $("input[name='itemList["+index+"].exptrAmt']").val($(item).val().replace(/,/gi, ""));
+                });
+                let ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
+                const url = "<#if isReg!false>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
+                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                    Swal.fire({ text: res.message })
+                        .then(function() {
+                            if (!res.rslt) return;
+                            if ($("#mngrYn").val() === "Y") {
+                                commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE!}")
+                            } else
+                                ExptrPrsnlPapr.list();
+                        });
+                });
+            },
             /** 상세 화면 이동 */
             dtl: function (postNo) {
                 $("#procForm #postNo").val(postNo);
@@ -108,7 +132,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) Page.list();
+                                if (res.rslt) ExptrPrsnlPapr.list();
                             });
                     });
                 });
