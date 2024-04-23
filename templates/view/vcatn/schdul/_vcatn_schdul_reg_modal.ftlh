@@ -17,6 +17,7 @@
                 <div class="text-noti fs-small">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다.</div>
             </div>
         </div>
+        <#--begin::Form-->
         <form name="vcantSchdulRegForm" id="vcantSchdulRegForm" class="form" enctype="multipart/form-data">
             <div id="vcatn_schdul_reg_div">
                 <#--Handlebars template goes in here-->

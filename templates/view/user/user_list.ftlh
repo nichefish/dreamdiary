@@ -28,25 +28,6 @@
 </script>
 
 <div class="card post">
-    <!--begin::Tab -->
-    <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
-        <li class="nav-item">
-            <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.crdtUserList();">
-                <span class="nav-icon">
-                    <i class="bi bi-sort-down-alt"></i>
-                </span>
-                <span class="nav-text">재직 인원</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.nonCrdtUserList();">
-                <span class="nav-icon">
-                    <i class="bi bi-people"></i>
-                </span>
-                <span class="nav-text">비재직 인원</span>
-            </a>
-        </li>
-    </ul>
     <#--begin::Card body-->
     <div class="card-body">
         <#--begin::Table-->
@@ -150,11 +131,11 @@
             </tbody>
         </table>
     </div>
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- pagination::begin -->
+        <#--pagination::begin-->
         <#include "/view/_component/_pagination.ftlh">
-        <!-- pagination::end -->
+        <#--pagination::end-->
     </div>
 </div>
 

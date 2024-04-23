@@ -9,7 +9,7 @@
         <input type="hidden" class="form-control form-control-solid" name="schdulList[${schdul?index}].refPostNo" value="${post.postNo!}"/>
 
         <#--begin::Card header-->
-        <div class="card-header border-0 d-flex justify-content-end min-h-auto">
+        <div class="card-header border-0 d-flex justify-content-end mt-2 min-h-auto">
             <div class="btn btn-sm btn-icon btn-active-color-primary mx-5" onclick="Page.delSpan(${schdul?index});">
                 <span class="svg-icon svg-icon-1 align-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -20,7 +20,7 @@
             </div>
         </div>
         <#--begin::Card body-->
-        <div class="card-body scroll-y px-10">
+        <div class="card-body scroll-y pt-0">
             <div class="row g-9">
                 <div class="col-md-2" id="vcatnCdSelectDiv${schdul?index}">
                     <label class="required fs-6 fw-bold mb-2">휴가분류</label>

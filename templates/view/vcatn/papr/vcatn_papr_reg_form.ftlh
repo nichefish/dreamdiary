@@ -83,18 +83,12 @@
 </div>
 <!-- class 속성이 덮어씌워지지 않아서 스타일 지정 -->
 <div class="card post" style="margin-top:15px !important;">
-    <!--begin:Form-->
-    <form id="vcatnPaprRegForm" class="form" enctype="multipart/form-data">
-        <input type="hidden" name="postNo" value="${post.postNo!}">
-        <input type="hidden" name="title" id="title" value="${post.title!}"/>
-        <input type="hidden" name="atchFileNo" value="${post.atchFileNo!}">
-        <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
-        <input type="hidden" name="cfYn" value="${post.cfYn!"N"}">
-
-        <!--end::Input group-->
-        <div class="mb-8">
-            <label class="mb-2">
-                <span class="text-gray-700 fs-6 fw-bolder">휴가등록</span>
+    <#--begin::Card body-->
+    <div class="card-body">
+        <!--begin::header-->
+        <div class="mb-2">
+            <label class="mb-2 text-gray-700 fs-6 fw-bolder">
+                휴가 등록
             </label>
             <a href="javascript:void(0);" class="btn btn-light-primary btn-sm me-2 mb-2 m-lg-2 justify-content-end mb-5"
                onclick="Page.addVcatnSchdul();"
@@ -102,40 +96,50 @@
                 <i class="fas fa-plus"></i>추가
             </a>
             <span class="text-noti fs-7 ps-5">※주말 및 공휴일은 자동으로 휴가일자 산정에서 제외됩니다.</span>
-            <!-- vcatnSchduls -->
-            <div id="vcatn_schdul_reg_div" class="mb-8">
-                <!--휴가 목록-->
-                <#include "/view/vcatn/papr/_vcatn_schdul_reg_area.ftlh">
-                <!-- vcatnSchdulList goes in here -->
+        </div>
+
+        <!--begin:Form-->
+        <form name="vcatnPaprRegForm" id="vcatnPaprRegForm" class="form" enctype="multipart/form-data">
+            <input type="hidden" name="postNo" value="${post.postNo!}">
+            <input type="hidden" name="title" id="title" value="${post.title!}"/>
+            <input type="hidden" name="atchFileNo" value="${post.atchFileNo!}">
+            <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
+            <input type="hidden" name="cfYn" value="${post.cfYn!"N"}">
+
+            <div class="mb-8">
+                <!-- vcatnSchduls -->
+                <div id="vcatn_schdul_reg_div" class="mb-8">
+                    <!--휴가 목록-->
+                    <#include "/view/vcatn/papr/_vcatn_schdul_reg_area.ftlh">
+                    <!-- vcatnSchdulList goes in here -->
+                </div>
             </div>
-        </div>
 
-        <!-- #include:: component:: 첨부파일 추가추가 영역 -->
-        <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
+            <#--페이지:: 첨부파일 추가추가 영역-->
+            <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
 
-        <div class="separator my-8"></div>
-
-        <!-- 잔디 알림 발송 영역 -->
-        <@component.jandi_reg_area 1 "VCATN" />
-
-        <div class="separator my-8 w-"></div>
-
-        <!-- 버튼 영역 -->
+            <#--페이지:: 잔디 알림 발송 영역-->
+            <@component.jandi_reg_area 1 "VCATN" />
+        </form>
+    </div>
+    <#--begin::Card footer-->
+    <div class="card-footer">
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <@component.btn_post_submit "VcatnPapr.submit();" />
-            <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "VcatnPapr.list();" />
+            <#--페이지:: 버튼: 저장하기-->
+            <@component.post_btn_submit "VcatnPapr.submit();" />
+            <#--페이지:: 버튼: 목록으로 가기-->
+            <@component.post_btn_toList "VcatnPapr.list();" />
         </div>
-    </form>
-    <!--end:Form-->
+    </div>
 </div>
 <!--end::post-->
 
 <#include "/view/vcatn/papr/_vcatn_schdul_reg_template.hbs">
 
-<!-- #include:: component:: 첨부파일 추가 영역 template-->
+<#--include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/atch_file/_atch_file_area.ftlh">
-<!-- #include:: component:: 첨부파일 추가 영역 template-->
+<#--include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 
 </@layout.layout>
