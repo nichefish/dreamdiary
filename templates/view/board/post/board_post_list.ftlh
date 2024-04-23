@@ -89,10 +89,7 @@
                                     <#--목록:: 태그 표시-->
                                     <@component.list_tag post />
                                     <#--목록:: 모달 팝업 열기 버튼 표시-->
-                                    <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                        <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="BoardPost.dtlAjax('${post.postNo!}');"></i>
-                                    </a>
+                                    <@component.list_dtl_modal post "BoardPost.dtlAjax" />
                                 </div>
                             </div>
                         </td>
@@ -146,10 +143,7 @@
                                     <#--목록:: 태그 표시-->
                                     <@component.list_tag post />
                                     <#--목록:: 모달 팝업 열기 버튼 표시-->
-                                    <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                        <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="BoardPost.dtlAjax('${post.postNo!}');"></i>
-                                    </a>
+                                    <@component.list_dtl_modal post "BoardPost.dtlAjax" />
                                 </div>
                             </div>
                         </td>

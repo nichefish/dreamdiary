@@ -90,10 +90,8 @@
                                         <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
                                     </#if>
                                 </span>
-                                <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                    <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="ExptrReqst.dtlAjax('${post.postNo!}');"></i>
-                                </a>
+                                <#--목록:: 모달 팝업 열기 버튼 표시-->
+                                <@component.list_dtl_modal post "ExptrReqst.dtlAjax" />
                             </div>
                         </td>
                         <td class="text-center col-form-label hidden-table">
@@ -162,10 +160,8 @@
                                         <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
                                     </#if>
                                 </span>
-                                <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
-                                    <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="ExptrReqst.dtlAjax('${post.postNo!}');"></i>
-                                </a>
+                                <#--목록:: 모달 팝업 열기 버튼 표시-->
+                                <@component.list_dtl_modal post "ExptrReqst.dtlAjax" />
                             </div>
                         </td>
                         <td class="text-center col-form-label hidden-table">
