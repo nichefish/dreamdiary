@@ -29,23 +29,23 @@
         </select>
     </div>
     <div>
-        <!-- 인풋:: searchKeyword -->
-        <@component.input_header_searchKeyword searchParam />
+        <#--헤더:: 인풋: searchKeyword-->
+        <@component.header_input_searchKeyword searchParam />
     </div>
     <div>
-        <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "ExptrPrsnlPapr.search();" />
+        <#--헤더:: 버튼: 목록 검색-->
+        <@component.header_btn_search "ExptrPrsnlPapr.search();" />
     </div>
     <div>
-        <!-- 버튼:: 내 글 보기 -->
-        <@component.btn_header_mypapr "ExptrPrsnlPapr.myPapr();" MY_PAPR!false />
+        <#--헤더:: 버튼: 내 글 보기-->
+        <@component.header_btn_mypapr "ExptrPrsnlPapr.myPapr();" MY_PAPR!false />
     </div>
     <div>
-        <!-- 버튼:: 등록 화면 이동하기 -->
-        <@component.btn_header_reg_form "ExptrPrsnlPapr.regForm();" />
+        <#--헤더:: 버튼: 등록 화면 이동하기-->
+        <@component.header_btn_reg_form "ExptrPrsnlPapr.regForm();" />
     </div>
     <div>
-        <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "ExptrPrsnlPapr.xlsxDownload();" />
+        <#--헤더:: 버튼: 엑셀 다운로드하기-->
+        <@component.header_btn_xlsx_download "ExptrPrsnlPapr.xlsxDownload();" />
     </div>
 </form>

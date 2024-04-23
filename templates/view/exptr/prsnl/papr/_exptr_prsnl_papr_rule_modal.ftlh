@@ -7,9 +7,9 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="exptr_prsnl_rule" size="xl">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <@component.modal_header "경비지출서 작성 안내" />
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <#--begin::Table-->
         <div class="table-responsive-sm">
@@ -40,9 +40,9 @@
     </div>
     <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼:: 모달 닫기 -->
+            <#--모달:: 버튼: 모달 닫기-->
             <@component.modal_btn_close />
         </div>
     </div>
