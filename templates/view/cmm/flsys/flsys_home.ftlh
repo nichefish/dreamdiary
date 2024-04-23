@@ -32,7 +32,7 @@
             <!--begin::Card header 검색+헤더 UI -->
             <#include "/view/cmm/flsys/_flsys_home_header.ftlh">
 
-            <!--begin::Tab -->
+            <#--begin::Tab-->
             <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
                 <li class="nav-item">
                     <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Flsys.activateTab(this); Flsys.flsysListAjax('${HOME_FLSYS!}');">
@@ -57,7 +57,7 @@
             </div>
 
             <div id="flsys_list_div">
-                <!-- Handlebars Template goes in here -->
+                <#--Handlebars template goes in here-->
             </div>
             <!--end::Table-->
         </div>

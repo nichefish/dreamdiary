@@ -47,7 +47,7 @@
     </div>
 
     <div id="react_notion_root">
-        <!-- Handlebars Template goes in here -->
+        <#--Handlebars template goes in here-->
     </div>
 </div>
 <!--end::Card-->
