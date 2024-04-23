@@ -31,18 +31,19 @@
 <#--#include:: component:: 태그 클릭 필터링-->
 <#include "/view/_component/tag/_tag_list_header.ftlh">
 
-<button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#crdt_user_cttpc_modal').modal('show');"
-        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원 연락처 팝업을 호출합니다.">
-    <i class="bi bi-telephone"></i>직원 연락처
-</button>
-<#include "/view/notice/_notice_list_crdt_user_cttpc_modal.ftlh">
-<button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#extn_phone_modal').modal('show');"
-        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내선전화 관련 안내 팝업을&#10;호출합니다.">
-    <i class="bi bi-telephone"></i>내선전화 관련
-</button>
-<#include "/view/notice/_notice_list_extn_phone_modal.ftlh">
-
 <div class="card post">
+    <div class="card-header">
+        <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#crdt_user_cttpc_modal').modal('show');"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="직원 연락처 팝업을 호출합니다.">
+            <i class="bi bi-telephone"></i>직원 연락처
+        </button>
+        <#include "/view/notice/_notice_list_crdt_user_cttpc_modal.ftlh">
+        <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1" onclick="$('#extn_phone_modal').modal('show');"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내선전화 관련 안내 팝업을&#10;호출합니다.">
+            <i class="bi bi-telephone"></i>내선전화 관련
+        </button>
+        <#include "/view/notice/_notice_list_extn_phone_modal.ftlh">
+    </div>
     <#--begin::Card body-->
     <div class="card-body">
         <#--begin::Table-->
@@ -105,10 +106,8 @@
                             <@component.list_managtr post />
                         </td>
                         <td class="text-center hidden-table">
-                            <span class="cursor-help"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성일:&#10;${post.regDt!"-"}">
-                                ${post.managt.managtDt!}
-                            </span>
+                            <#--목록:: 최종수정일 표시-->
+                            <@component.list_managtDt post />
                         </td>
                         <td class="text-center hidden-table">
                             ${post.hitCnt!0?string.number}
@@ -160,10 +159,8 @@
                             <@component.list_managtr post />
                         </td>
                         <td class="text-center hidden-table">
-                            <span class="cursor-help"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성일:&#10;${post.regDt!"-"}">
-                                ${post.managt.managtDt!}
-                            </span>
+                            <#--목록:: 최종수정일 표시-->
+                            <@component.list_managtDt post />
                         </td>
                         <td class="text-center hidden-table">
                             ${post.hitCnt!0?string.number}

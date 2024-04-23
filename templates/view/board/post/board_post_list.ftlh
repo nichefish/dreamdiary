@@ -102,10 +102,8 @@
                             <@component.list_managtr post />
                         </td>
                         <td class="text-center hidden-table">
-                            <span class="cursor-help"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성일:&#10;${post.regDt!"-"}">
-                                ${post.managtDt!}
-                            </span>
+                            <#--목록:: 최종수정일 표시-->
+                            <@component.list_managtDt post />
                         </td>
                         <td class="text-center hidden-table">
                             ${post.hitCnt!0?string.number}
@@ -156,10 +154,8 @@
                             <@component.list_managtr post />
                         </td>
                         <td class="text-center hidden-table">
-                            <span class="cursor-help"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성일:&#10;${post.regDt!"-"}">
-                                ${post.managtDt!}
-                            </span>
+                            <#--목록:: 최종수정일 표시-->
+                            <@component.list_managtDt post />
                         </td>
                         <td class="text-center hidden-table">
                             ${post.hitCnt!0?string.number}

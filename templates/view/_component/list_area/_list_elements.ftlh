@@ -59,6 +59,16 @@
 </#macro>
 
 <!--
+* 목록 등록일시(조치일시) 표시
+-->
+<#macro list_managtDt post >
+    <span class="cursor-help"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="최초 작성일:&#10;${post.regDt!"-"}">
+        ${post.managt.managtDt!}
+    </span>
+</#macro>
+
+<!--
  * 목록 첨부파일 영역 표시
  -->
 <#macro list_atch_file post >
