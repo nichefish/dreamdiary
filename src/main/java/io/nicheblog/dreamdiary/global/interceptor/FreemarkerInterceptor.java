@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
+import io.nicheblog.dreamdiary.web.service.admin.MenuService;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,8 @@ public class FreemarkerInterceptor
 
     @Resource
     private HttpSession session;
+    @Resource(name = "menuService")
+    private MenuService menuService;
 
     @Value("${release-date:20000101}")
     private String releaseDate;
@@ -46,7 +49,7 @@ public class FreemarkerInterceptor
             final @NotNull HttpServletResponse response,
             final @NotNull Object handler,
             final ModelAndView mav
-    ) {
+    ) throws Exception {
 
         /* model 정보 없을시 처리하지 않음 */
         if (mav == null) return;

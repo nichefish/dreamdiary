@@ -4,6 +4,11 @@
 
 <#import "/layout/layout.ftlh" as layout >
 
+<#--toolbar::버튼 추가-->
+<#assign toolbar>
+    <#include "/view/exptr/prsnl/rpt/_exptr_prsnl_rpt_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -38,46 +43,6 @@
 </script>
 
 <div class="card post">
-    <#--begin::Card header-->
-    <div class="card-header border-0 pt-6">
-        <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
-            <div class="d-flex align-items-center">
-                <div class="position-relative w-md-100px me-md-2"
-                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
-                    <select name="statsYy" id="statsYy" class="form-select form-select-solid" onchange="Page.statsYyMnth();">
-                        <#list yyList![] as yy>
-                            <option value="${yy}" label="${yy}년" ${fn.selected(statsYy!, yy)} />
-                        </#list>
-                    </select>
-                </div>
-                <div class="position-relative pt-2 me-md-2 pe-2">
-                    <h4><label for="statsYy">년</label></h4>
-                </div>
-                <div class="position-relative w-md-75px me-md-2"
-                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 월을 변경합니다.">
-                    <select name="statsMnth" id="statsMnth" class="form-select form-select-solid" onchange="Page.statsYyMnth();">
-                        <#list ["1","2","3","4","5","6","7","8","9","10","11","12"] as mnth>
-                            <option value="${mnth}" label="${mnth}월" ${fn.selected(statsMnth!, mnth)} />
-                        </#list>
-                    </select>
-                </div>
-                <div class="position-relative w-md-100px pt-2 me-md-2">
-                    <h4><label for="statsMnth">월 지출내역</label></h4>
-                </div>
-            </div>
-        </form>
-        <div class="card-title text-end">
-            <div class="d-flex align-items-center position-relative my-1">
-            </div>
-        </div>
-        <div class="card-toolbar">
-            <!-- 버튼:: 엑셀 다운로드하기 -->
-            <@component.btn_header_xlsx_download "Page.xlsxDownload();" />
-        </div>
-    </div>
-
-    <div class="separator separator-dashed border-gray-300 mt-5 mb-10"></div>
-
     <#--begin::Card body-->
     <div class="card-body pt-0">
         <h3>전체 리스트</h3>
