@@ -28,7 +28,7 @@
     });
 </script>
 
-<!-- #include:: component:: 태그 클릭 필터링 -->
+<#--#include:: component:: 태그 클릭 필터링-->
 <#include "/view/_component/tag/_tag_list_header.ftlh">
 
 <button type="button" class="btn btn-sm btn-light btn-active-secondary mx-1"
@@ -76,9 +76,9 @@
                                             </span>
                                         </#list>
                                     </a>
-                                    <!-- 목록 댓글 표시 -->
+                                    <#--목록:: 댓글 표시-->
                                     <@component.list_comment post />
-                                    <!-- 새 글이면 'N' 표시 -->
+                                    <#--목록:: 새 글이면 'N' 표시-->
                                     <#if post.isNew>
                                         <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
                                     </#if>
@@ -90,7 +90,7 @@
                             </div>
                         </td>
                         <td class="text-center col-form-label hidden-table">
-                            <!-- 목록 첨부파일 표시 -->
+                            <#--목록:: 첨부파일 모달 열기 버튼 표시-->
                             <@component.list_atch_file post />
                         </td>
                         <td class="text-center ">
@@ -139,9 +139,9 @@
                                             </span>
                                         </#list>
                                     </a>
-                                    <!-- 목록 댓글 표시 -->
+                                    <#--목록:: 댓글 표시-->
                                     <@component.list_comment post />
-                                    <!-- 새 글이면 'N' 표시 -->
+                                    <#--목록:: 새 글이면 'N' 표시-->
                                     <#if post.isNew>
                                         <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
                                     </#if>
@@ -153,11 +153,11 @@
                             </div>
                         </td>
                         <td class="text-center col-form-label hidden-table">
-                            <!-- 목록 첨부파일 표시 -->
+                            <#--목록:: 첨부파일 모달 열기 버튼 표시-->
                             <@component.list_atch_file post />
                         </td>
                         <td class="text-center ">
-                            <!-- 목록 최종수정자 표시 -->
+                            <#--목록:: 최종수정자 표시-->
                             <@component.list_managtr post />
                         </td>
                         <td class="text-center hidden-table">
@@ -184,11 +184,11 @@
             </tbody>
         </table>
     </div>
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- pagination::begin -->
+        <#--pagination::begin-->
         <#include "/view/_component/_pagination.ftlh">
-        <!-- pagination::end -->
+        <#--pagination::end-->
     </div>
 </div>
 

@@ -18,7 +18,7 @@
     <div class="card w-500px rounded-0" id="kt_drawer_chat_messenger">
         <#--begin::Card header-->
         <div class="card-header pe-5 bg-primary" id="kt_drawer_chat_messenger_header">
-            <!--begin::Title-->
+            <#--begin::title-->
             <div class="card-title">
                 <div class="btn btn-icon btn-primary position-relative w-30px h-30px w-md-40px h-md-40px">
                     <#if (authInfo.proflImgUrl)??>

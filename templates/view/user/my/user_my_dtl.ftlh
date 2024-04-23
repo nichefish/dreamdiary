@@ -27,7 +27,7 @@
 <div class="card post">
     <#--begin::Card body-->
     <div class="card-body">
-        <!--begin::Form-->
+        <#--begin::Form-->
         <form class="form">
             <input type="hidden" name="userNo" value="${user.userNo!}">
             <#--begin::Card body-->
@@ -59,7 +59,7 @@
                                     <i class="fas fa-user-circle fs-2 blink"></i>
                                 </span>
                             </#if>
-                            <!--end::Svg Icon-->
+                            <#--end::Svg Icon-->
                         </div>
                         ${user.userId!}
                     </div>

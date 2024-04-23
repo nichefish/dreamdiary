@@ -44,7 +44,7 @@
             <#include "/view/_component/tag/_tag_dtl_area.ftlh">
 
             <#--페이지:: 열람자 표시 영역-->
-            <@component.viewer_area post />
+            <@component.post_viewer_area post />
         </div>
     </div>
     <#--begin::Card footer-->

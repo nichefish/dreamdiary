@@ -69,7 +69,7 @@
             <#include "/view/_component/atch_file/_atch_file_dtl_area.ftlh">
 
             <#--페이지:: 열람자 표시 영역-->
-            <@component.viewer_area post />
+            <@component.post_viewer_area post />
 
             <#--페이지:: 관리자 확인 영역-->
             <#if isMngr>
