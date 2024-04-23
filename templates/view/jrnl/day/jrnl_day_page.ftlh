@@ -50,7 +50,7 @@
     <div class="card-body">
         <#--begin::Table body-->
         <div id="jrnl_day_list_div">
-            <!-- handlebars template goes in here -->
+            <#--handlebars template goes in here-->
         </div>
     </div>
 </div>

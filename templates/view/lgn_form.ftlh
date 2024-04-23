@@ -25,7 +25,7 @@
                 </#if>
                 // 조건 일치시 비밀번호 변경 팝업 호출
                 <#if isCredentialExpired!false || needsPwReset!false>
-                    PwChg.pwChgModal();
+                    LgnPwChg.pwChgModal();
                 </#if>
 
                 /* jquery :: validation */

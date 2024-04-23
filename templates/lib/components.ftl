@@ -17,7 +17,7 @@
 <#include "/view/_component/_modal_elements.ftlh">
 
 <!-- header_elements -->
-<#include "/view/_component/_list_header_elements.ftlh">
+<#include "/view/_component/_header_elements.ftlh">
 
 <!-- in progress... -->
 <#include "/view/_component/_post_module.ftlh">

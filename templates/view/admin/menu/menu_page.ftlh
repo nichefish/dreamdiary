@@ -91,7 +91,7 @@
 </script>
 
 <div class="row mt-2 mb-6 px-10 draggable-zone-main" id="menu_main_card_div">
-    <!-- handlebars template goes in here -->
+    <#--handlebars template goes in here-->
 </div>
 <!--end::Card-->
 

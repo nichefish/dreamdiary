@@ -63,7 +63,8 @@
             /** 내 휴가 사용현황 조회 */
             myVcatnList: function() {
                 $("#user_my_dtl_vcatn_list").modal("show");
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                // template에 있는 tooltip들 활성화
+                $("[data-bs-toggle='tooltip']").tooltip();
             }
         }
     })();

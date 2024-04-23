@@ -143,11 +143,11 @@
             <!--end::Table body-->
         </table>
     </div>
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- pagination::begin -->
+        <#--pagination::begin-->
         <#include "/view/_component/_pagination.ftlh">
-        <!-- pagination::end -->
+        <#--pagination::end-->
     </div>
 </div>
 <!--end::Card-->

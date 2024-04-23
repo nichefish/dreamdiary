@@ -30,4 +30,3 @@
         <@component.header_btn_sort_ordr "ClCd.sortOrdr();" />
     </div>
 </form>
-<!--end::Header-->
