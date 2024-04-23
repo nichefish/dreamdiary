@@ -18,9 +18,9 @@
     </div>
     <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <#--버튼:: 저장하기-->
+        <#--모달:: 버튼: 저장하기-->
         <@component.modal_btn_save "LgnPwChg.submit();" />
-        <#--버튼:: 모달 닫기-->
+        <#--모달:: 버튼: 모달 닫기-->
         <@component.modal_btn_close />
     </div>
 </@modal.layout>

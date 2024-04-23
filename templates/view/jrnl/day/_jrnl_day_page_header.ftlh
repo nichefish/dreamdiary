@@ -7,9 +7,9 @@
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
     <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
     <div>
-        <!-- 인풋:: datepicker -->
+        <#--헤더:: 인풋: datepicker-->
         <@component.header_datepicker searchParam "searchStartDt" "" />
-        <!-- 인풋:: datepicker -->
+        <#--헤더:: 인풋: datepicker-->
         <@component.header_datepicker searchParam "searchEndDt" "today" />
     </div>
     <div>
@@ -20,16 +20,15 @@
         </select>
     </div>
     <div>
-        <!-- 인풋:: searchKeyword -->
-        <@component.input_header_searchKeyword searchParam />
+        <#--헤더:: 인풋: searchKeyword-->
+        <@component.header_input_searchKeyword searchParam />
     </div>
     <div>
-        <!-- 버튼:: 목록 검색 -->
-        <@component.btn_header_search "Page.search();" />
+        <#--헤더:: 버튼: 목록 검색-->
+        <@component.header_btn_search "Page.search();" />
     </div>
     <div>
-        <!-- 버튼:: 등록 모달 호출하기 -->
-        <@component.btn_header_reg_modal "JrnlDay.regModal();" />
+        <#--헤더:: 버튼: 등록 모달 호출하기-->
+        <@component.header_btn_reg_modal "JrnlDay.regModal();" />
     </div>
 </form>
-<!--end::Header-->
