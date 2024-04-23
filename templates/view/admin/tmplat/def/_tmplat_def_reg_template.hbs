@@ -1,15 +1,16 @@
 <#--
- -- 템플릿 관리(tmplat) > 등록 Template
- -- @included_in : _tmplat_def_reg_modal.ftlh
+ * 템플릿 관리(tmplat) > 등록 Template
+ * @included_in : _tmplat_def_reg_modal.ftlh
  -->
 
 <script type="text/x-handlebars-template" id="tmplat_def_reg_template">
     <input type="hidden" class="form-control" name="tmplatDefNo" id="tmplatDefNo">
-    <!--begin::Question-->
+
+    <!--begin::title-->
     <div class="mb-0">
-        <!--begin::Head-->
+        <#--begin::Head-->
         <div class="row mb-4">
-            <!--begin::Title-->
+            <#--begin::title-->
             <div class="col-2 col-form-label">
                 <label class="cursor-help required"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드를&#10;입력합니다.&#10;(등록 후 수정할 수 없습니다.)">
@@ -23,7 +24,7 @@
             <!--end::Title-->
         </div>
         <div class="row mb-4">
-            <!--begin::Title-->
+            <#--begin::title-->
             <div class="col-2 col-form-label">
                 <label class="cursor-help required"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="외부적으로 사용되는&#10;코드 이름을 입력합니다.">
@@ -36,7 +37,7 @@
             <!--end::Title-->
         </div>
         <div class="row mb-4">
-            <!--begin::Title-->
+            <#--begin::title-->
             <div class="col-2 col-form-label">
                 템플릿 구분 코드
             </div>
@@ -46,7 +47,7 @@
             <!--end::Title-->
         </div>
         <div class="row mb-4">
-            <!--begin::Title-->
+            <#--begin::title-->
             <div class="col-2 col-form-label">
                 템플릿 정의 설명
             </div>
@@ -56,7 +57,7 @@
             <!--end::Title-->
         </div>
         <div class="row mb-4">
-            <!--begin::Title-->
+            <#--begin::title-->
             <div class="col-2 col-form-label">
                 사용여부
             </div>
@@ -70,7 +71,7 @@
         </div>
         <!--end::Head-->
         <div class="row mb-4">
-            <!--begin::Title-->
+            <#--begin::title-->
             <div class="col-2 col-form-label">
                 정렬 순서
             </div>

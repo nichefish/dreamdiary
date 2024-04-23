@@ -65,6 +65,10 @@
                 if (!$iconClassElmt.length) return;
                 $("#menuRegForm #menu_icon_div").html($iconClassElmt.val());
             },
+            /** submit */
+            submit: function() {
+                $("#tmplatDefRegForm").submit();
+            },
             /** 메뉴 정보 등록/수정 */
             regAjax: function() {
                 Swal.fire({
@@ -74,7 +78,7 @@
                     if (!result.value) return;
                     let isReg = $("#menuRegForm #menuNo").val() === "";
                     const url = isReg ? "${Url.MENU_REG_AJAX!}" : "${Url.MENU_MDF_AJAX!}";
-                    let ajaxData = $("#menuRegForm").serializeArray();
+                    let ajaxData = $("#tmplatDefRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
