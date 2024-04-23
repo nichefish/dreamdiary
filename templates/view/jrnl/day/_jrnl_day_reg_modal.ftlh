@@ -10,6 +10,7 @@
     <@component.modal_header "저널 일자 저장" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
+        <#--begin::Form-->
         <form name="jrnlDayRegForm" id="jrnlDayRegForm" class="form" enctype="multipart/form-data">
             <div id="jrnl_day_reg_div">
                 <#--Handlebars template goes in here-->

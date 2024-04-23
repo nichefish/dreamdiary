@@ -10,6 +10,7 @@
     <@component.modal_header "게시판 정의 저장" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
+        <#--begin::Form-->
         <form name="boardDefRegForm" id="boardDefRegForm">
             <div id="board_def_reg_div">
                 <#--Handlebars template goes in here-->

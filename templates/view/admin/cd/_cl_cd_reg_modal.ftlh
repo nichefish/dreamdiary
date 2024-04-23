@@ -10,6 +10,7 @@
     <@component.modal_header "분류코드 저장" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
+        <#--begin::Form-->
         <form name="clCdRegForm" id="clCdRegForm">
             <div id="cl_cd_reg_div">
                 <#--Handlebars template goes in here-->

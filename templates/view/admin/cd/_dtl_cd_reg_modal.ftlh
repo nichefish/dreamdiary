@@ -10,6 +10,7 @@
     <@component.modal_header "상세코드 저장" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
+        <#--begin::Form-->
         <form name="dtlCdRegForm" id="dtlCdRegForm">
             <div id="dtl_cd_reg_div">
                 <#--Handlebars template goes in here-->

@@ -10,6 +10,7 @@
     <@component.modal_header_dark "비밀번호 변경" />
     <#--begin::Modal Body-->
     <div class="modal-body">
+        <#--begin::Form-->
         <form name="lgnPwChgForm" id="lgnPwChgForm" class="form">
             <div id="lgn_pw_chg_div">
                 <#--handlebars template goes in here-->

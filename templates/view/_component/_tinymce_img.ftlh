@@ -4,6 +4,7 @@
  -->
 
 <div id="tinymceImageTemplate" hidden>
+    <#--begin::Form-->
     <form name="tinymceImageForm" id="tinymceImageForm" class="form" enctype="multipart/form-data">
         <input type="file" class="file" name="atchFile0" id="atchFile0" onchange="return false;"/>
     </form>

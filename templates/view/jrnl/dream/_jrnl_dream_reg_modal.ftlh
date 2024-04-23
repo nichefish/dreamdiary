@@ -10,6 +10,7 @@
     <@component.modal_header "저널 꿈 저장" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
+        <#--begin::Form-->
         <form name="jrnlDreamRegForm" id="jrnlDreamRegForm" class="form" enctype="multipart/form-data">
             <div id="jrnl_dream_reg_header_div">
                 <#--Handlebars template goes in here-->
@@ -17,7 +18,7 @@
             <#--begin::Row-->
             <div class="row mb-4">
                 <div class="col-12">
-                    <label class="d-flex align-items-center mb-2" for="title">
+                    <label class="d-flex align-items-center mb-2" for="tinymce_jrnlDreamCn">
                         <span class="text-gray-700 fs-6 fw-bolder">내용</span>
                     </label>
                 </div>
