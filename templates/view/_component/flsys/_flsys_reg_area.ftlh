@@ -28,5 +28,5 @@
     </div>
 </div>
 
-<!-- include:: Handlebars template -->
+<#--include:: Handlebars template-->
 <#include "/view/_component/flsys/_flsys_reg_template.hbs">

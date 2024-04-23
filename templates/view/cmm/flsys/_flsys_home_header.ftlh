@@ -1,7 +1,7 @@
 <#--
-  -- 활동 로그 목록 > 검색 영역 Header
-  -- @included_in : log_sys_list_header
-  -->
+ * 파일시스템(flsys) > 검색 영역 Header
+ * @included_in : flsys_home.ftlh
+ -->
 
 <script>
     const Flsys = (function() {
@@ -40,8 +40,8 @@
                     Flsys.currPath = rsltObj.filePath;
                     $("#absolute_path_div").text(rsltObj.filePath);
                     commons.util.handlebarsTemplate(rsltObj, "flsys_home_header_path");
-
-                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                    // template에 있는 tooltip들 활성화
+                    $("[data-bs-toggle='tooltip']").tooltip();
                     // $('.modal').modal('hide');
                 });
             },
@@ -115,9 +115,10 @@
 
 <#--
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
+    <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
+    <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
+
     <div class="d-flex align-items-center">
-        <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
-        <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
         <!-- datePicker &ndash;&gt;
         <div class="position-relative">
             <span class="menu-icon me-md-2 vertical-middle">
@@ -145,7 +146,7 @@
             </select>
         </div>
         <div class="position-relative w-md-200px me-md-2">
-            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg&ndash;&gt;
+            <#--begin::Svg Icon | path: icons/duotune/general/gen021.svg&ndash;&gt;
             <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
