@@ -21,17 +21,17 @@
     <div class="card-body">
         <#--begin::title-->
         <div class="mb-0">
-            <#--페이지:: 헤더 제목 영역-->
-            <@component.post_title post />
-            <#--페이지:: 미리보기 헤더 메타 영역-->
-            <@component.post_meta_preview post />
+            <#--페이지:: 헤더: 제목 영역-->
+            <@component.post_header_title post />
+            <#--페이지:: 헤더: 미리보기 메타 영역-->
+            <@component.post_header_meta_preview post />
+        </div>
 
-            <div class="separator separator-dashed border-gray-300 my-8"></div>
+        <div class="separator separator-dashed border-gray-300 my-8"></div>
 
-            <#--begin::cn-->
-            <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-                ${post.cn?no_esc}
-            </div>
+        <#--begin::cn-->
+        <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
+            ${post.cn?no_esc}
         </div>
     </div>
     <#--begin::Card footer-->

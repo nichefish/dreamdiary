@@ -28,9 +28,8 @@
                 });
             },
             /** 일정 등록 모달 호출 */
-            regForm: function() {
+            regModal: function() {
                 commons.util.handlebarsTemplate({}, "schdul_reg", "show");
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray");
                 commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD");
                 commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD");
@@ -45,9 +44,8 @@
                 Schdul.addPrtcpnt();
             },
             /** 일정 등록 모달 호출 */
-            prvtRegForm: function() {
+            prvtRegModal: function() {
                 commons.util.handlebarsTemplate({ "isPrvt": true }, "schdul_reg", "show");
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD");
                 commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD");
             },

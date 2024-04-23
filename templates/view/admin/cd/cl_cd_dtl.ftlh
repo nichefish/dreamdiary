@@ -30,11 +30,11 @@
 <div class="card post">
     <#--begin::Card body-->
     <div class="card-body">
-        <!--begin::Question-->
+        <#--begin::title-->
         <div class="mb-0">
-            <!--begin::Head-->
+            <#--begin::Head-->
             <div class="d-flex align-items-center mb-9">
-                <!--begin::Title-->
+                <#--begin::title-->
                 <div class="col-12">
                     <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
                         <#if clCd.clCtgrNm??>
@@ -45,40 +45,40 @@
                         ${clCd.clCd!} (${clCd.clCdNm!})
                     </h1>
                 </div>
-                <!--end::Title-->
-            </div>
-            <!--end::Head-->
-            <!--end::Foot-->
-            <div class="separator separator-dashed border-gray-300 my-8"></div>
-            <!--begin::Question-->
-            <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-                ${clCd.dc?no_esc}
             </div>
         </div>
+
+        <div class="separator separator-dashed border-gray-300 my-8"></div>
+
+        <!--begin::cn-->
+        <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6 min-h-150px">
+            ${clCd.dc?no_esc}
+        </div>
     </div>
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
+            <#--페이지:: 버튼: 수정 모달 호출-->
             <button type="button" class="btn btn-sm btn-light btn-active-primary me-2"
                     onclick="ClCd.mdfModal('${clCd.clCd!}');"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드 수정 팝업을&#10;호출합니다.">
                 <i class="bi bi-pencil-square"></i>수정
             </button>
-            <!-- 등록자 또는 관리자가 삭제 가능 -->
+            <#--페이지:: 버튼: 등록자 또는 관리자가 삭제 가능-->
             <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
                     onclick="ClCd.delAjax('${clCd.clCd!}');"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="구분 코드를 삭제합니다.">
                 <i class="bi bi-trash"></i>삭제
             </button>
-            <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "ClCd.list();" />
+            <#--페이지:: 버튼: 목록으로 가기-->
+            <@component.post_btn_toList "ClCd.list();" />
         </div>
     </div>
 </div>
 
 <div class="card post">
-    <!--begin::Card header-->
+    <#--begin::Card header-->
     <div class="card-header border-0 pt-6">
         <div class="d-flex justify-content-left align-items-center">
             <h5>상세 코드 목록</h5>
@@ -97,8 +97,8 @@
                 </button>
             </div>
             <div>
-                <!-- 버튼:: 정렬순서 -->
-                <@component.btn_header_sort_ordr "DtlCd.sortOrdr();" />
+                <#--헤더:: 버튼: 정렬순서 저장-->
+                <@component.header_btn_sort_ordr "DtlCd.sortOrdr();" />
             </div>
             <!--end::Toolbar-->
         </div>
