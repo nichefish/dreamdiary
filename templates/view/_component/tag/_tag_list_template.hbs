@@ -1,13 +1,12 @@
 <#--
- -- 게시판 > 태그 전체 목록 Template
- -- @included_in : board_post_list
- -- @included_in : board_post_dtl
+ * 게시판 > 태그 전체 목록 Template
  -->
+
 <script type="text/x-handlebars-template" id="board_tag_list_template">
     <div class="card mt-0 py-4">
-        <!--begin::Question-->
+        <!--begin::title-->
         <div class="mb-0">
-            <!--begin::Head-->
+            <#--begin::Head-->
             <div class="d-flex align-items-center justify-content-between">
                 <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
                     <span class="vertical-middle">
@@ -17,7 +16,7 @@
             </div>
             <!--end::Head-->
             <div class="separator separator-dashed border-gray-300 my-2"></div>
-            <!--begin::Head-->
+            <#--begin::Head-->
             <div class="d-flex align-items-center mb-4 py-4">
                 {{#each this}}
                     <span class="ctgr-span ctgr-gray cursor-pointer"
