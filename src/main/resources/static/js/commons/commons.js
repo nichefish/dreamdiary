@@ -671,7 +671,8 @@ commons.util = (function() {
             $("#"+templateStr+"_div").empty().append(actual);
             if (show === "show") {
                 $("#"+templateStr+"_modal").modal("show");
-                $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+                // template에 있는 tooltip들 활성화
+                $("[data-bs-toggle='tooltip']").tooltip();
             }
         },
         handlebarsAppend: function(data, templateStr) {
@@ -679,14 +680,16 @@ commons.util = (function() {
             let template = Handlebars.compile($("#"+templateStr+"_template").html().replaceAll("`", ""));
             let actual = template(data);
             $("#"+templateStr+"_div").append(actual);
-            $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+            // template에 있는 tooltip들 활성화
+            $("[data-bs-toggle='tooltip']").tooltip();
         },
         handlebarsAppendTo: function(data, templateId, trgetElmtId) {
             if (data === undefined || data === null) data = {};
             let template = Handlebars.compile($("#"+templateId+"_template").html().replaceAll("`", ""));
             let actual = template(data);
             $("#"+trgetElmtId).append(actual);
-            $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
+            // template에 있는 tooltip들 활성화
+            $("[data-bs-toggle='tooltip']").tooltip();
         },
 
         /**
@@ -695,7 +698,7 @@ commons.util = (function() {
         delayBtn: function(elmt, sec) {
             if (elmt instanceof jQuery) elmt = elmt[0];
             if (elmt === undefined) return;
-            if (sec === undefined) sec = 1;
+            if (sec === undefined) sec = 2;
             elmt.disabled = true;
             setTimeout(function(){ elmt.disabled=false; }, sec * 1000);
         },

@@ -3,13 +3,18 @@
  * @namespace: commons.validate
  * @author: nichefish
  * @since: 2022-06-27
- * @last-modified: 2022-08-04
- * @last-modieied-by: nichefish
  * @dependency: jquery.validate.js
  * 공통 - 유효성 검사 관련 함수 모듈
  * (노출식 모듈 패턴 적용 :: commons.validate.noSpaces("#id") 이런식으로 사용)
  */
 if (typeof commons === 'undefined') { var commons = {}; }
+// 글로벌 정규 표현식 검증 메소드 추가
+$(function() {
+    $.validator.addMethod("regex", function(value, element, regex) {
+        const regExp = new RegExp(regex);
+        return this.optional(element) || regExp.test(value);
+    });
+});
 commons.validate = (function() {
     return {
 

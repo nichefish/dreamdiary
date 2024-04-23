@@ -91,7 +91,7 @@ commons.date = (function() {
         /**
          * 헌재 년도 반환
          */
-        getCurrYearStr: function() {
+        getCurrYyStr: function() {
             return new Date().getFullYear();
         },
 
