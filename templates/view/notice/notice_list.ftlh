@@ -79,7 +79,7 @@
                                     <#if (((post.imprtcYn)!"N") == "Y")!false>
                                         <span class="fs-4 blink">&#128680;</span>
                                     </#if>
-                                    <!-- 목록 수정권한 표시 -->
+                                    <#--목록:: 수정권한 표시-->
                                     <@component.mdfable post />
                                     <#--목록:: 댓글 표시-->
                                     <@component.list_comment post />
@@ -137,7 +137,7 @@
                                     <#if (((post.imprtcYn)!"N") == "Y")!false>
                                         <span class="fs-4 blink">&#128680;</span>
                                     </#if>
-                                    <!-- 목록 수정권한 표시 -->
+                                    <#--목록:: 수정권한 표시-->
                                     <@component.mdfable post />
                                     <#--목록:: 댓글 표시-->
                                     <@component.list_comment post />

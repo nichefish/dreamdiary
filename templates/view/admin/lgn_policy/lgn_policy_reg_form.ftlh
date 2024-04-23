@@ -28,7 +28,7 @@
 <div class="card post">
     <#--begin::Card body-->
     <div class="card-body">
-        <!--begin::Form-->
+        <#--begin::Form-->
         <form name="lgnPolicyForm" id="lgnPolicyForm" class="form">
             <input type="hidden" name="lgnPolicyNo" value="${lgnPolicy.lgnPolicyNo!}">
             <#--begin::Row-->
@@ -98,12 +98,12 @@
             </div>
         </form>
     </div>
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼 :: 저장하기 -->
-            <@component.btn_post_submit "LgnPolicy.submit();" />
+            <#--페이지:: 버튼: 저장하기-->
+            <@component.post_btn_submit "LgnPolicy.submit();" />
         </div>
     </div>
 </div>
