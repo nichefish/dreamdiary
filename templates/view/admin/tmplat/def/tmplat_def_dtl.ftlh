@@ -45,11 +45,11 @@
 <div class="card post">
     <#--begin::Card body-->
     <div class="card-body">
-        <!--begin::title-->
+        <#--begin::title-->
         <div class="mb-0">
-            <!--begin::Head-->
+            <#--begin::Head-->
             <div class="d-flex align-items-center mb-9">
-                <!--begin::Title-->
+                <#--begin::title-->
                 <div class="col-12">
                     <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
                         <#if (((tmplat.imprtcYn)!"N") == "Y")!false><span class="badge badge-danger me-2">중요</span></#if>
@@ -59,9 +59,7 @@
                          </span>
                     </h1>
                 </div>
-                <!--end::Title-->
             </div>
-            <!--end::Head-->
             <!--begin::Foot-->
             <div class="d-flex flex-stack flex-wrap mb-3">
                 <!--begin::Author-->
@@ -71,23 +69,25 @@
                         <span class="text-gray-800 fs-6 fw-bold lh-1 mb-2">${tmplat.regstrNm!"-"}</span>
                         <span class="text-muted fs-7 lh-1">${tmplat.regDt!}</span>
                     </div>
-                    <!--end::Name-->
                 </div>
-                <!--end::Author-->
                 <!--begin::Info-->
                 <div class="d-flex align-items-center py-1">
                     <a href="#answers" data-kt-scroll-toggle="true"
                        class="btn btn-sm btn-outline btn-outline-dashed btn-outline-default px-4 me-2">댓글 ${tmplat.commentCnt!}</a>
                     <button class="btn btn-sm btn-light px-4 me-2 disabled">조회수 ${tmplat.hitCnt}</button>
                 </div>
-                <!--end::Info-->
             </div>
-            <!--end::Foot-->
-            <div class="separator separator-dashed border-gray-300 my-8"></div>
-            <!--begin::Question-->
-            <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6">
-                ${tmplat.cn?no_esc}
-            </div>
+        </div>
+
+        <div class="separator separator-dashed border-gray-300 my-8"></div>
+
+        <!--begin::cn-->
+        <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6 min-h-150px">
+            ${tmplat.cn?no_esc}
+        </div>
+
+        <#--begin::meta-->
+        <div class="mb-0">
             <#if (tmplat.atchFileInfo.atchFileList)?has_content>
                 <div class="d-flex flex-stack flex-wrap mb-3 bg-light">
                     <div class="col-xl-1">
@@ -112,29 +112,25 @@
                     </div>
                 </div>
             </#if>
+
+            <#--페이지:: 열람자 표시 영역-->
+            <@component.post_viewer_area post />
         </div>
-
-        <div class="separator separator-dashed border-gray-300 my-8"></div>
-
-        <!-- 열람자 표시 영역 -->
-        <@component.viewer_area post />
-
-        <div class="separator separator-dashed border-gray-300 my-8"></div>
     </div>
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼 :: 수정하기 -->
-            <@component.btn_post_modify "Page.mdfForm();" post isMngr />
-            <!-- 버튼 :: 삭제하기 -->
-            <@component.btn_post_delete "Page.delAjax();" post isMngr />
-            <!-- 버튼 :: 목록으로 가기 -->
-            <@component.btn_post_toList "Page.list();" />
+            <#--페이지:: 버튼: 수정하기-->
+            <@component.post_btn_modify "Page.mdfForm();" post isMngr />
+            <#--페이지:: 버튼: 삭제하기-->
+            <@component.post_btn_delete "Page.delAjax();" post isMngr />
+            <#--페이지:: 버튼: 목록으로 가기-->
+            <@component.post_btn_toList "Page.list();" />
         </div>
     </div>
 
-    <!-- 댓글 영역 -->
+    <#--페이지:: 댓글 영역-->
     <#assign post = tmplat>
     <#include "/view/_component/comment/_comment_area.ftlh">
 </div>

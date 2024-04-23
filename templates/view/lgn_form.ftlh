@@ -90,7 +90,7 @@
         <i class="bi bi-stars fs-2 text-dark"></i>
     </div>
     <#--begin::Form-->
-    <form class="form w-100 pe-14" name="lgnForm" id="lgnForm" method="post">
+    <form name="lgnForm" id="lgnForm" class="w-100 pe-14" method="post">
         <div class="mb-5">
             <label class="form-label fs-6 fw-bolder" for="userId">아이디</label>
             <input type="text" name="userId" id="userId" class="form-control form-control-lg enter required"

@@ -34,36 +34,6 @@
 </script>
 
 <div class="card post">
-    <#--begin::Card header-->
-    <div class="card-header">
-        <!--begin::Tab -->
-        <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
-            <li class="nav-item">
-                <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1">
-                    <span class="nav-icon">
-                        <i class="bi bi-sort-down-alt"></i>
-                    </span>
-                    <span class="nav-text">전체 로그</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.logStatsUserList();">
-                    <span class="nav-icon">
-                        <i class="bi bi-people"></i>
-                    </span>
-                    <span class="nav-text">사용자별</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.logStatsUserList();">
-                    <span class="nav-icon">
-                        <i class="bi bi-grid-1x2"></i>
-                    </span>
-                    <span class="nav-text">기능별</span>
-                </a>
-            </li>
-        </ul>
-    </div>
     <#--begin::Card body-->
     <div class="card-body">
         <#--begin::Table-->

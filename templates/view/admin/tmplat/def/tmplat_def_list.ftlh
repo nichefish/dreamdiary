@@ -110,9 +110,9 @@
                                 <#if (((tmplat.imprtcYn)!"N") == "Y")!false>
                                     <span class="fs-1">&#128680;</span>
                                 </#if>
-                                <!-- 목록 수정권한 표시 -->
+                                <#--목록:: 수정권한 표시-->
                                 <@component.mdfable post />
-                                <!-- 목록 댓글 표시 -->
+                                <#--목록:: 댓글 표시-->
                                 <@component.list_comment post />
                             </a>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
@@ -147,9 +147,9 @@
                             <#if (((tmplat.imprtcYn)!"N") == "Y")!false>
                                 <span class="fs-1">&#128680;</span>
                             </#if>
-                            <!-- 목록 수정권한 표시 -->
+                            <#--목록:: 수정권한 표시-->
                             <@component.mdfable post />
-                            <!-- 목록 댓글 표시 -->
+                            <#--목록:: 댓글 표시-->
                             <@component.list_comment post />
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
@@ -176,11 +176,11 @@
             </tbody>
         </table>
     </div>
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- pagination::begin -->
+        <#--pagination::begin-->
         <#include "/view/_component/_pagination.ftlh">
-        <!-- pagination::end -->
+        <#--pagination::end-->
     </div>
 </div>
 

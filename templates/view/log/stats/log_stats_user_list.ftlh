@@ -3,6 +3,11 @@
   -->
 <#import "/layout/layout.ftlh" as layout >
 
+<#--toolbar::버튼 추가-->
+<#assign toolbar>
+    <#include "/view/log/stats/_log_stats_user_list_header.ftlh">
+</#assign>
+
 <@layout.layout toolbar=toolbar!"">
 
 <script>
@@ -44,37 +49,6 @@
 </script>
 
 <div class="card post">
-    <!--begin::Card header 검색+헤더 UI -->
-    <#include "/view/log/stats/_log_stats_user_list_header.ftlh">
-
-    <!--begin::Tab -->
-    <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
-        <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.logActvtyList();">
-                <span class="nav-icon">
-                    <i class="bi bi-sort-down-alt"></i>
-                </span>
-                <span class="nav-text">전체 로그</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_2">
-                <span class="nav-icon">
-                    <i class="bi bi-people"></i>
-                </span>
-                <span class="nav-text">사용자별</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3"
-               onclick="Page.logStatsUserList();">
-                <span class="nav-icon">
-                    <i class="bi bi-grid-1x2"></i>
-                </span>
-                <span class="nav-text">기능별</span>
-            </a>
-        </li>
-    </ul>
     <#--begin::Card body-->
     <div class="card-body">
         <#--begin::Table-->
@@ -188,7 +162,7 @@
         </table>
     </div>
     <#--begin::Card footer-->
-        <div class="card-footer">
+    <div class="card-footer">
         <#--pagination::begin-->
         <#include "/view/_component/_pagination.ftlh">
         <#--pagination::end-->
