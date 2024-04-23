@@ -14,6 +14,7 @@
 <div class="card post">
     <#--begin::Card body-->
     <div class="card-body">
+        <#--begin::Form-->
         <form name="vcatnStatsForm" id="vcatnStatsForm" class="d-flex align-items-center flex-nowrap gap-2" enctype="multipart/form-data" method="post" >
             <input type="hidden" name="bgnDt" id="bgnDt" value="${(vcatnYy.bgnDt)!}">
             <input type="hidden" name="endDt" id="endDt" value="${(vcatnYy.endDt)!}">
@@ -123,13 +124,12 @@
             </table>
         </form>
     </div>
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-primary me-2" onclick="Page.updt();">
-                <i class="bi bi-pencil-square"></i>저장
-            </button>
+            <#--페이지:: 버튼: 저장하기-->
+            <@component.post_btn_submit "Page.updt();" />
         </div>
     </div>
 </div>

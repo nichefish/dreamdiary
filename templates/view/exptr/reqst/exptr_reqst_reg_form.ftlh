@@ -174,7 +174,7 @@
 
             <div class="separator my-8"></div>
 
-            <#--잔디 알림 발송 영역-->
+            <#--페이지:: 잔디 알림 발송 영역-->
             <@component.jandi_reg_area 1 "EXPTR_REQST" />
         </form>
     </div>
