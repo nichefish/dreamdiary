@@ -3,23 +3,14 @@
  -->
 
 <script>
-    const Meta = (function() {
+    const FlsysMeta = (function() {
         return {
             init: function() {
                 /** jquery :: validation */
-                $(function () {
-                    $("#flsysMetaRegForm").validate({
-                        submitHandler: function () {
-                            Meta.regAjax();
-                        },
-                        errorPlacement: function (error, element) {
-                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                        }
-                    });
-                });
+                commons.validate.validateForm("#flsysMetaRegForm", FlsysMeta.regAjax);
             },
             /** 등록 모달 조회 */
-            regForm: function(filePath) {
+            regModal: function(filePath) {
                 let obj = { "filePath": filePath, "upperFilePath": Flsys.currPath };
                 commons.util.handlebarsTemplate(obj, "flsys_meta_reg", "show");
 
@@ -37,6 +28,10 @@
                         keepInvalid: false      // if after editing, tag is invalid, auto-revert
                     },
                 });
+            },
+            /** 메타정보 등록 (Ajax) */
+            submit: function() {
+                $("#flsysMetaRegForm").submit();
             },
             /** 메타정보 등록 (Ajax) */
             regAjax: function() {
@@ -64,12 +59,11 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.rsltObj, "flsys_meta_dtl_btn");
                     commons.util.handlebarsTemplate(res.rsltObj, "flsys_meta_dtl", "show");
                 });
             },
             /** 등록 모달 조회 */
-            mdfForm: function(postNo) {
+            mdfModal: function(postNo) {
                 const url = "${Url.FLSYS_META_DTL_AJAX!}";
                 let ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
@@ -80,6 +74,7 @@
                     let rsltObj = res.rsltObj;
                     $("#flsys_meta_dtl_modal").modal("hide");
                     commons.util.handlebarsTemplate(rsltObj, "flsys_meta_reg", "show");
+                    FlsysMeta.key = postNo;
 
                     /** tagify */
                     let tagInput = document.querySelector("#tagListStr");
@@ -104,7 +99,6 @@
                             keepInvalid: false      // if after editing, tag is invalid, auto-revert
                         },
                     });
-                    $('[data-bs-toggle="tooltip"]').tooltip();      // template에 있는 tooltip들 활성화
                 });
             },
             /** 메타정보 삭제 (Ajax) */
@@ -124,7 +118,4 @@
             },
         }
     })();
-    $(document).ready(function() {
-        Meta.init();
-    });
 </script>
