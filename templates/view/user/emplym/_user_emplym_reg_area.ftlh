@@ -1,7 +1,7 @@
 <#--
-  -- 사용자 인사정보(user_emplym) > 추가 Template
-  -- @included_in : user_reg_form
-  -->
+ * 사용자 인사정보(user_emplym) > 추가 Template
+ * @included_in : user_reg_form
+ -->
 
 <script>
     const UserEmplym = (function() {
@@ -10,7 +10,8 @@
             enableUserEmplym: function() {
                 // 영역 표시
                 commons.util.handlebarsTemplate({}, "user_emplym");
-                $('[data-bs-toggle="tooltip"]').tooltip();
+                // template에 있는 tooltip들 활성화
+                $("[data-bs-toggle='tooltip']").tooltip();
                 // 버튼 교체 :: 툴팁 작동 유지 위해 속성만 교체
                 let $btn = $("#userEmplymBtn");
                 $btn.removeClass("btn-primary").addClass("btn-danger");
@@ -18,10 +19,11 @@
                 $btn.attr("onclick", "UserEmplym.disableUserEmplym();");
                 $btn.attr("title", "직원 인사정보를&#10;삭제합니다.");
 
-                commons.validate.cttpc("#cttpc");              // 전화번호 형식 유효성 검사
+                // 전화번호 형식 유효성 검사
+                commons.validate.cttpc("#emplymCttpc");
                 // 이메일 도메인 select시 자동입력
-                $("#emailDomainSelect").on("change", function() {
-                    $("#emailDomain").val($(this).val());
+                $("#emplymEmailDomainSelect").on("change", function() {
+                    $("#emplymEmailDomain").val($(this).val());
                 });
 
                 // 직급 변경시 '사원'일 때만 수습여부 영역 출력 + 수습여부 초기화
@@ -55,5 +57,5 @@
     })();
 </script>
 
-<!-- include:: Handlebars template -->
+<#--include:: Handlebars template-->
 <#include "/view/user/emplym/_user_emplym_reg_template.hbs">

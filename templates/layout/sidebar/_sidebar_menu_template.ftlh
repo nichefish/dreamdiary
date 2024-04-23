@@ -39,7 +39,7 @@
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion hover show" id="${siteMenu.topMenuNo}">
         <span class="menu-link <#if isNotTopMenu>text-inverse-light</#if> mb-1">
             <span class="menu-icon">
-                <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
+                <#--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
                 <span class="svg-icon svg-icon-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-calendar-date-fill" viewBox="0 0 16 16">
@@ -47,7 +47,7 @@
                         <path d="M16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-6.664-1.21c-1.11 0-1.656-.767-1.703-1.407h.683c.043.37.387.82 1.051.82.844 0 1.301-.848 1.305-2.164h-.027c-.153.414-.637.79-1.383.79-.852 0-1.676-.61-1.676-1.77 0-1.137.871-1.809 1.797-1.809 1.172 0 1.953.734 1.953 2.668 0 1.805-.742 2.871-2 2.871zm-2.89-5.435v5.332H5.77V8.079h-.012c-.29.156-.883.52-1.258.777V8.16a12.6 12.6 0 0 1 1.313-.805h.632z"/>
                     </svg>
                 </span>
-                <!--end::Svg Icon-->
+                <#--end::Svg Icon-->
             </span>
             <span class="menu-title">${siteMenu.menuNm!}</span>
             <span class="menu-arrow"></span>
@@ -82,7 +82,7 @@
 
         <span class="menu-link <#if isNotTopMenu>text-inverse-light</#if>">
             <span class="menu-icon">
-                <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
+                <#--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
                 <span class="svg-icon svg-icon-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-calendar-date-fill" viewBox="0 0 16 16">
@@ -90,7 +90,7 @@
                         <path d="M16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-6.664-1.21c-1.11 0-1.656-.767-1.703-1.407h.683c.043.37.387.82 1.051.82.844 0 1.301-.848 1.305-2.164h-.027c-.153.414-.637.79-1.383.79-.852 0-1.676-.61-1.676-1.77 0-1.137.871-1.809 1.797-1.809 1.172 0 1.953.734 1.953 2.668 0 1.805-.742 2.871-2 2.871zm-2.89-5.435v5.332H5.77V8.079h-.012c-.29.156-.883.52-1.258.777V8.16a12.6 12.6 0 0 1 1.313-.805h.632z"/>
                     </svg>
                 </span>
-                <!--end::Svg Icon-->
+                <#--end::Svg Icon-->
             </span>
             <span class="menu-title">${siteMenu.menuNm!}</span>
             <span class="menu-arrow"></span>
