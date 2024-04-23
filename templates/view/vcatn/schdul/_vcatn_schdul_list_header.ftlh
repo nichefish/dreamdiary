@@ -3,8 +3,9 @@
  * @included_in : vcatn_schdul_list.ftlh
  -->
 
-<form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="post" >
+<form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get" >
     <div>
+        <#--헤더:: 인풋: 년도 선택-->
         <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy"
                 onchange="VcatnSchdul.chgYy(this);"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
@@ -20,12 +21,12 @@
         <span class="text-gray-600 align-center">■ 연차 사용 기간 : ${(vcatnYy.bgnDt)!} ~ ${(vcatnYy.endDt)!}</span>
     </div>
     <div>
-        <!-- 버튼:: 등록 화면 이동하기 -->
-        <@component.btn_header_reg_form "VcatnSchdul.regModal();" />
+        <#--헤더:: 버튼: 등록 화면 이동하기-->
+        <@component.header_btn_reg_form "VcatnSchdul.regModal();" />
     </div>
     <div>
-        <!-- 버튼:: 엑셀 다운로드하기 -->
-        <@component.btn_header_xlsx_download "VcatnSchdul.xlsxDownload();" />
+        <#--헤더:: 버튼: 엑셀 다운로드하기-->
+        <@component.header_btn_xlsx_download "VcatnSchdul.xlsxDownload();" />
     </div>
 </form>
 
