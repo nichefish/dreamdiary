@@ -39,6 +39,13 @@
                     $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
                 });
 
+                // 전화번호 형식 유효성 검사
+                commons.validate.cttpc("#cttpc");
+                // 이메일 도메인 select시 자동입력
+                $("#emailDomainSelect").on("change", function() {
+                    $("#emailDomain").val($(this).val());
+                });
+
                 // 접속IP 사용 여부 클릭시 글씨 변경 + 입력창 토글 :: 메소드 분리
                 commons.util.chckboxLabel("useAcsIpYn", "사용//미사용", "blue//gray", function(){
                     $("#acsIpListSpan").show()
@@ -94,7 +101,7 @@
 
     <#--begin::Body-->
     <div class="card-body">
-        <!--begin::Form-->
+        <#--begin::Form-->
         <form name="userReqstForm" id="userReqstForm" class="form" method="post" enctype="multipart/form-data">
             <input type="hidden" name="userNo" value="${user.userNo!}">
             <input type="hidden" name="atchFileNo" value="${user.atchFileNo!}">
@@ -274,22 +281,21 @@
                 </div>
             </div>
 
-
-            <!-- 사용자 프로필 정보 영역 -->
+            <#--사용자 프로필 정보 영역-->
             <div id="user_profl_div">
-                <!-- handlebars template goes in here -->
+                <#--handlebars template goes in here-->
             </div>
 
-            <!-- 사용자 인사정보 정보 영역 -->
+            <#--사용자 인사정보 영역-->
             <div id="user_emplym_div">
-                <!-- handlebars template goes in here -->
+                <#--handlebars template goes in here-->
             </div>
         </form>
     </div>
 
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-between">
             <div>
                 <div class="d-flex gap-2">
@@ -328,7 +334,7 @@
     </div>
 </div>
 
-<#include "/view/user/profl/_user_profl_reg_area.ftlh">       <!-- 사용자 프로필 정보 영역 -->
-<#include "/view/user/emplym/_user_emplym_reg_area.ftlh">       <!-- 사용자 인사정보 영역 -->
+<#include "/view/user/profl/_user_profl_reg_area.ftlh">       <#--사용자 프로필 정보 영역-->
+<#include "/view/user/emplym/_user_emplym_reg_area.ftlh">       <#--사용자 인사정보 영역-->
 
 </@layout.layout>

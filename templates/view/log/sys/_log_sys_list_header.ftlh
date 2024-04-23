@@ -1,7 +1,7 @@
 <#--
-  -- 시스템 로그(log_sys) > 목록 검색 영역 Header
-  -- @included_in : log_sys_list.ftlh
-  -->
+ * 시스템 로그(log_sys) > 목록 검색 영역 Header
+ * @included_in : log_sys_list.ftlh
+ -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
     <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
@@ -14,7 +14,7 @@
         <@component.header_datepicker searchParam "searchEndDt" DateUtils.parser.eDateParseStr(DateUtils.getCurrDate()) />
     </div>
     <div>
-        <!--begin::Select-->
+        <#--헤더:: 인풋: 작업결과-->
         <select name="rslt" id="rslt" class="form-select form-select-sm form-select-solid">
             <option value="">작업결과</option>
             <option value="true" label="성공" ${fn.selected(searchParam.rslt!, "true")} />
@@ -22,6 +22,7 @@
         </select>
     </div>
     <div>
+        <#--헤더:: 인풋: searchType-->
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
             <option value="nickNm">이름</option>
             <option value="userId">아이디</option>

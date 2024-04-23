@@ -39,11 +39,11 @@
 
     <div class="separator separator-dashed border-gray-300 my-8"></div>
 
-    <!--begin::Card footer-->
+    <#--begin::Card footer-->
     <div class="card-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼:: 팝업 닫기 -->
+            <#--버튼:: 팝업 닫기-->
             <@component.btn_preview_close "Page" />
         </div>
     </div>
