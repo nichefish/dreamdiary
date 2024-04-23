@@ -18,9 +18,9 @@
     </div>
     <#--begin::Modal Footer-->
     <div class="modal-footer flex-end">
-        <#--버튼:: 저장하기-->
+        <#--모달:: 버튼: 저장하기-->
         <@component.modal_btn_save "Menu.submit();" />
-        <#--버튼:: 모달 닫기-->
+        <#--모달:: 버튼: 모달 닫기-->
         <@component.modal_btn_close />
     </div>
 </@modal.layout>

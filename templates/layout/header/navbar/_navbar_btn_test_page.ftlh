@@ -2,16 +2,16 @@
  * 레이아웃 > 탑바 > 테스트 페이지 버튼
  * @included_in : layout/topbar
  -->
+
 <div class="app-navbar-item mx-1">
     <div class="d-flex align-items-center">
-        <!--begin::Notifications-->
         <div class="btn btn-icon btn-active-light-primary blink position-relative w-30px h-30px w-md-40px h-md-40px"
              data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-dismiss="click"
              title="(개발자) 테스트&#10;화면으로 이동합니다."
              onclick="location.replace('${Url.TEST_PAGE!}');">
-            <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+            <#--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
             <span class="svg-primary svg-icon svg-icon-1">
-                <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/keenthemes/metronic/docs/core/html/src/media/icons/duotune/abstract/abs026.svg-->
+                <#--begin::Svg Icon | path: /var/www/preview.keenthemes.com/keenthemes/metronic/docs/core/html/src/media/icons/duotune/abstract/abs026.svg-->
                 <span class="svg-icon svg-icon-muted svg-icon-1hx">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                         <title>(개발자) 테스트&#10;화면으로 이동합니다.</title>
@@ -21,10 +21,9 @@
                         </g>
                     </svg>
                 </span>
-                <!--end::Svg Icon-->
+                <#--end::Svg Icon-->
             </span>
-            <!--end::Svg Icon-->
+            <#--end::Svg Icon-->
         </div>
-        <!--end::Notifications-->
     </div>
 </div>
