@@ -9,7 +9,7 @@
             init: function() {
                 /** 페이지 개수 selectbox 세팅 */
                 <#if paginationInfo??>
-                const pageSize = "${pageSize!}";
+                    const pageSize = "${pageSize!}";
                     $("#pageSizeSelect option").each(function (idx, elmt) {
                         if ($(elmt).val() === pageSize) $(elmt).attr("selected", "selected");
                     });

@@ -1,5 +1,5 @@
 <#--
- -- 레이아웃 > NOTION 참조 ID
+ * 레이아웃 > NOTION 참조 ID
  -->
 
 <#--begin::Row-->

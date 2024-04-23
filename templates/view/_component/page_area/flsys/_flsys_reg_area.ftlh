@@ -29,4 +29,4 @@
 </div>
 
 <#--include:: Handlebars template-->
-<#include "/view/_component/flsys/_flsys_reg_template.hbs">
+<#include "/view/_component/page_area/flsys/_flsys_reg_template.hbs">
