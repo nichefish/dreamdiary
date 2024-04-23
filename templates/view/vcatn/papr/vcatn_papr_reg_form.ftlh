@@ -116,7 +116,7 @@
             </div>
 
             <#--페이지:: 첨부파일 추가추가 영역-->
-            <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
+            <#include "/view/_component/page_area/atch_file/_atch_file_reg_area.ftlh">
 
             <#--페이지:: 잔디 알림 발송 영역-->
             <@component.jandi_reg_area 1 "VCATN" />
@@ -137,8 +137,6 @@
 
 <#include "/view/vcatn/papr/_vcatn_schdul_reg_template.hbs">
 
-<#--include:: component:: 첨부파일 추가 영역 template-->
-<#include "/view/_component/atch_file/_atch_file_area.ftlh">
 <#--include:: component:: 첨부파일 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 
