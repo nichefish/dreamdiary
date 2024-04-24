@@ -14,6 +14,7 @@
                     expires: commons.date.getCurrDateAddDay(36135)
                 };
                 $.cookie("jrnl_" + id, $(obj).val(), cookieOptions);
+                if ($("#mnth").val() === "") return;
                 // 목록 조회
                 JrnlDay.listAjax();
                 // template에 있는 tooltip들 활성화
