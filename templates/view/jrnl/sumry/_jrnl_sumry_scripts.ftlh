@@ -8,6 +8,10 @@
             /** 등록 화면 호출 */
             makeSumryAjax: function(yy) {
                 if (yy === undefined) yy = $("#listForm #yy").val();
+                if (commons.util.isEmpty(yy)) {
+                    alert("yy는 필수 항목입니다.");
+                    return false;
+                }
                 const url = "${Url.JRNL_SUMRY_MAKE_AJAX!}";
                 const ajaxData = { "yy": yy };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {

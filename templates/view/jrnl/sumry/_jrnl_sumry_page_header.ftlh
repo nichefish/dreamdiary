@@ -1,5 +1,5 @@
 <#--
- * 저널 일자(jrnl_sumry) > 목록 툴바 Header
+ * 저널 결산(jrnl_sumry) > 목록 툴바 Header
  * @included_in : jrnl_sumry_page.ftlh
  -->
 
@@ -9,10 +9,13 @@
 
     <div>
         <#--헤더:: 인풋: searchType-->
-        <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
-            <option value="clCd">분류코드</option>
-            <option value="clCdNm">분류코드명</option>
-            <option value="dc">분류코드 설명</option>
+        <select name="yy" id="yy" class="form-select" aria-label="Select example">
+            <option value="">모든 년도</option>
+            <#assign currYy = DateUtils.getCurrYy()?number />
+            <#assign startYy = 2011 />
+            <#list currYy..startYy as year>
+                <option value="${year}">${year}</option>
+            </#list>
         </select>
     </div>
     <div>

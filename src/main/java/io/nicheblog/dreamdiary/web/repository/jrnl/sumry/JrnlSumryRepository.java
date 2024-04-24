@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.repository.jrnl.summary;
+package io.nicheblog.dreamdiary.web.repository.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
@@ -27,7 +27,7 @@ public interface JrnlSumryRepository
     /**
      * 년도별 꿈 일자 개수 조회
      */
-    @Query("SELECT COUNT(day.postNo) " +
+    @Query("SELECT COUNT(distinct day.postNo) " +
             "FROM JrnlDayEntity day " +
             "INNER JOIN JrnlDreamEntity dream ON day.postNo = dream.jrnlDayNo " +
             "WHERE YEAR(CASE WHEN day.dtUnknownYn = 'Y' THEN day.aprxmtDt ELSE day.jrnlDt END) = :yy")
@@ -45,7 +45,7 @@ public interface JrnlSumryRepository
     /**
      * 년도별 일기 일자 개수 조회
      */
-    @Query("SELECT COUNT(day.postNo) " +
+    @Query("SELECT COUNT(distinct day.postNo) " +
             "FROM JrnlDayEntity day " +
             "INNER JOIN JrnlDiaryEntity diary ON day.postNo = diary.jrnlDayNo " +
             "WHERE YEAR(CASE WHEN day.dtUnknownYn = 'Y' THEN day.aprxmtDt ELSE day.jrnlDt END) = :yy")

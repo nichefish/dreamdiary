@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.jrnl.dream;
+package io.nicheblog.dreamdiary.web.model.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
@@ -10,12 +10,10 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-
 /**
- * JrnlDreamDto
+ * JrnlSumryCnDto
  * <pre>
- *  저널 꿈 Dto.
+ *  저널 결산 내용 Dto.
  * </pre>
  *
  * @author nichefish
@@ -28,7 +26,7 @@ import javax.persistence.Column;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-public class JrnlDreamDto
+public class JrnlSumryCnDto
         extends BasePostDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
@@ -43,22 +41,10 @@ public class JrnlDreamDto
 
     /* ----- */
 
-    /** 저널 일자 번호 */
-    private Integer jrnlDayNo;
-    /** 저널 기준일자 */
-    private String stdrdDt;
+    /** 저널 결산 번호  */
+    private Integer jrnlSumryNo;
     /** 순번 */
     private Integer idx;
-
-    /** 편집완료 여부 (Y/N) */
-    @Builder.Default
-    private String editComptYn = "N";
-    /** 타인 꿈 여부 (Y/N) */
-    @Builder.Default
-    private String elseDreamYn = "N";
-    /** 꿈꾼이(타인) 이름 */
-    @Column(name = "ELSE_DREAMER_NM", length = 64)
-    private String elseDreamerNm;
 
     @Override
     public Integer getKey() {

@@ -1,5 +1,5 @@
 <#--
- * 레이아웃 > 첨부파일 모듈
+ * 레이아웃 > 태그 모듈
  -->
 
 <#if post.tag?? && post.tag.tagStrList?has_content>

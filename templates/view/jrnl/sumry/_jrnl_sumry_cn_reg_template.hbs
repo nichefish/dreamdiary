@@ -1,0 +1,38 @@
+<#--
+ * 저널 결산 내용(jrnl_sumry_cn) > 등록/수정 Template
+ * @included_in : _jrnl_sumry_cn_reg_modal.ftlh
+ * TODO: 작업중
+ -->
+
+<script type="text/x-handlebars-template" id="jrnl_sumry_cn_reg_template">
+    <#--begin::Row-->
+    <div class="row row-cols-lg-2 mb-3">
+        <div class="col-xl-2 col-2">
+            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="jrnlDt">저널 일자</label>
+        </div>
+        <div class="col-xl-3 col-5">
+            <input class="form-control form-control-solid" name="jrnlDt" id="jrnlDt" placeholder="저널 일자" value="{{jrnlDt}}" disabled />
+        </div>
+        <div class="col-xl-2 col-5">
+            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">날짜미상</label>
+        </div>
+        <div class="col-xl-2 col-5 pt-2">
+            <div class="form-check form-switch form-check-custom form-check-solid">
+                <input class="form-check-input" type="checkbox" value="Y" name="useYn" id="useYn" {{checkedYn useYn}} />
+                <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedYnStyle state.useYn "color" "blue//gray"}}>
+                    {{^ifYn useYn}}미{{/ifYn}}사용
+                </label>
+            </div>
+        </div>
+        <div class="col-xl-1 col-1 pt-2">
+            <input class="form-control form-control-solid" name="yy" id="yy" placeholder="년도" value="{{jrnlDt}}" readonly/>
+        </div>
+        <div class="col-xl-1 col-1 pt-2">
+            <input class="form-control form-control-solid" name="mnth" id="mnth" placeholder="월" value="{{jrnlDt}}" readonly/>
+        </div>
+        <div class="col-xl-2 col-2 col-form-label"></div>
+        <div class="col-xl-5 col-5">
+            <span id="bgnDtSpan"></span>
+        </div>
+    </div>
+</script>

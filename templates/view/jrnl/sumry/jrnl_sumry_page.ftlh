@@ -17,6 +17,7 @@
 
 <#--include::script modules-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_scripts.ftlh">
+<#include "/view/jrnl/sumry/_jrnl_sumry_cn_scripts.ftlh">
 
 <script>
     const Page = (function() {
@@ -31,31 +32,39 @@
     })
 </script>
 
-<!--begin::Card-->
-<div class="card post">
-    <#--begin::Card body-->
-    <div class="card-body">
-        <#--begin::Table body-->
-        <div id="jrnl_sumry_list_div">
-            <#list jrnlSumryList![] as jrnlSumry>
-                <div class="row jrnl-sumry">
-                    <div class="row jrnl-sumry-header">
-                        <div class="col-1 d-flex align-items-center fs-5 fw-bold">
-                            <i class="bi bi-calendar3 fs-6 me-2"></i>
-                            ${jrnlSumry.yy!}
-                        </div>
-                    </div>
+<#list jrnlSumryList![] as jrnlSumry>
+    <!--begin::Card-->
+    <div class="card post">
+        <#--begin::Card body-->
+        <div class="card-body">
+            <#--begin::Table body-->
+            <div class="row jrnl-sumry">
+                <div class="col-1 d-flex align-items-center">
+                    <i class="bi bi-calendar3 fs-6 me-2"></i>
+                    <span class="fs-5 fw-bold me-1">${jrnlSumry.yy!}</span> 년 결산
                 </div>
-            </#list>
+                <div class="col-1 d-flex align-items-center">
+                    <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
+                            onclick="JnrlSumryCn.regModal(${jrnlSumry.postNo});"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
+                        <i class="bi bi-pencil-square p-0"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row jrnl-sumry">
+                <div class="col-1 d-flex align-items-center fs-5 fw-bold">
+                    ${jrnlSumry.dreamDayCnt!} / ${jrnlSumry.dreamCnt!} / ${jrnlSumry.diaryDayCnt!}
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<!--end::Card-->
+    <!--end::Card-->
+</#list>
 
 <#--include:: Aside-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_aside_base.ftlh">
 
 <#--include::modals-->
-<#include "/view/jrnl/sumry/_jrnl_sumry_list_template.hbs">
+<#include "/view/jrnl/sumry/_jrnl_sumry_cn_reg_modal.ftlh">
 
 </@layout.layout>

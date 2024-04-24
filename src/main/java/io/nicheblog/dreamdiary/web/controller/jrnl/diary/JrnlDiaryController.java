@@ -31,7 +31,7 @@ import java.security.InvalidParameterException;
 /**
  * JrnlDiaryController
  * <pre>
- *  저널 꿈 Controller
+ *  저널 일기 Controller
  * </pre>
  *
  * @author nichefish
@@ -50,7 +50,7 @@ public class JrnlDiaryController
     private JrnlDiaryService jrnlDiaryService;
 
     /**
-     * 저널 꿈 등록/수정 처리 (Ajax)
+     * 저널 일기 등록/수정 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @Operation(
@@ -97,7 +97,7 @@ public class JrnlDiaryController
     }
 
     /**
-     * 저널 일자 상세 조회 (Ajax)
+     * 저널 일기 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @GetMapping(value = {Url.JRNL_DIARY_DTL_AJAX})
