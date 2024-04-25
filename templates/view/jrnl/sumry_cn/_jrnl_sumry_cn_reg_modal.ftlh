@@ -7,7 +7,7 @@
 
 <@modal.layout id="jrnl_sumry_cn_reg" size="xl">
     <#--begin::Modal Header-->
-    <@component.modal_header "저널 일기 저장" />
+    <@component.modal_header "저널 결산 내용 저장" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <#--begin::Form-->
@@ -45,5 +45,5 @@
 </@modal.layout>
 
 <#--include:: Handlebars template-->
-<#include "/view/jrnl/sumry/_jrnl_sumry_cn_reg_header_template.hbs">
-<#include "/view/jrnl/sumry/_jrnl_sumry_cn_reg_template.hbs">
+<#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_header_template.hbs">
+<#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_template.hbs">

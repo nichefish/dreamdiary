@@ -11,8 +11,8 @@
                 commons.validate.validateForm("#jrnlSumryCnRegForm", JrnlSumryCn.regAjax);
             },
             /** 저널 일기 등록 모달 팝업 호출 */
-            regModal: function(jrnlDayNo, stdrdDt) {
-                let obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
+            regModal: function(jrnlSumryNo, yy) {
+                let obj = { "jrnlSumryNo": jrnlSumryNo, "yy": yy };
                 commons.util.handlebarsTemplate(obj, "jrnl_sumry_cn_reg_header");
                 commons.util.handlebarsTemplate(obj, "jrnl_sumry_cn_reg", "show");
 
@@ -41,7 +41,7 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                // if (res.rslt) commons.util.blockUIReload();
+                                if (res.rslt) commons.util.blockUIReload();
                             });
                     });
                 });

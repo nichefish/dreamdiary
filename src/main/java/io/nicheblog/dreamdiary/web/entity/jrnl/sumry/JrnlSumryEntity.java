@@ -1,18 +1,20 @@
 package io.nicheblog.dreamdiary.web.entity.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import java.util.List;
 
 /**
  * JrnlSumryEntity
@@ -33,7 +35,7 @@ import javax.persistence.*;
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE jrnl_summary SET del_yn = 'Y' WHERE post_no = ?")
 public class JrnlSumryEntity
-        extends BaseClsfEntity
+        extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
@@ -53,6 +55,15 @@ public class JrnlSumryEntity
     @Column(name = "content_type", columnDefinition = "VARCHAR(50) DEFAULT 'JRNL_SUMRY'")
     @Comment("컨텐츠 타입")
     private String contentType = CONTENT_TYPE.key;
+
+    /** 저널 결산 내용 목록 */
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "jrnl_sumry_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.SELECT)
+    @OrderBy("idx ASC")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("저널 결산 내용 목록")
+    private List<JrnlSumryCnEntity> sumryCnList;
 
     /* ----- */
 

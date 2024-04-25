@@ -37,7 +37,7 @@ public class JrnlSumryCnEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
-    private static final ContentType CONTENT_TYPE = ContentType.JRNL_SUMRY;
+    private static final ContentType CONTENT_TYPE = ContentType.JRNL_SUMRY_CN;
     /** 필수(Override): 글분류 코드 */
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 

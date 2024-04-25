@@ -10,6 +10,8 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 /**
  * JrnlSumryDto
  * <pre>
@@ -49,6 +51,9 @@ public class JrnlSumryDto
     private Integer dreamCnt;
     /** 일기 일수 */
     private Integer diaryDayCnt;
+
+    /** 저널 결산 내용 목록 */
+    private List<JrnlSumryCnDto> sumryCnList;
 
     @Override
     public Integer getKey() {

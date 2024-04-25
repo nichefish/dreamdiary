@@ -1,7 +1,7 @@
 <#--
-  -- Freemarker 커스텀 함수들을 정의한다.
-  -- @author: nichefish
-  -->
+ * Freemarker 커스텀 함수들을 정의한다.
+ * @author: nichefish
+ -->
 
 <#--
  * selected
@@ -18,8 +18,8 @@
 </#function>
 
 <#--
-  -- checked: 두 값이 같으면 checked를 리턴한다.
-  -->
+ * checked: 두 값이 같으면 checked를 리턴한다.
+ -->
 <#function checked var1="" var2="">
 	<#if !var1?? || !var2??>
 		<#return "">
@@ -31,8 +31,8 @@
 </#function>
 
 <#--
-  -- closerNm: 전달받은 javascript 함수에서 네임스페이스를 추출한다.
-  -->
+ * closerNm: 전달받은 javascript 함수에서 네임스페이스를 추출한다.
+ -->
 <#function closerNm func>
 	<#local parts = func?split(".")>
 	<#local beforeLastDot = "">
@@ -42,4 +42,12 @@
 		</#if>
 	</#list>
 	<#return beforeLastDot>
+</#function>
+
+<#--
+ * markdown: 전달받은 텍스트를 마크다운 처리한다. (커스텀 로직)
+ -->
+<#function markdown text>
+	<#local newText = text?replace(r'--(.*?)--', r'<span class="gray">\1</span>', 'r')>
+	<#return newText?replace(r'"(.*?)"', r'<span class="highlight">\1</span>', 'r')>
 </#function>

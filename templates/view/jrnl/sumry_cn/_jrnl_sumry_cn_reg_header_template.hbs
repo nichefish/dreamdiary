@@ -5,17 +5,17 @@
 
 <script type="text/x-handlebars-template" id="jrnl_sumry_cn_reg_header_template">
     <input type="hidden" name="postNo" value="{{postNo}}">
-    <input type="hidden" name="jrnlDayNo" value="{{jrnlDayNo}}">
+    <input type="hidden" name="jrnlSumryNo" value="{{jrnlSumryNo}}">
 
     <#--begin::Row-->
     <div class="row d-flex mb-8">
         <div class="col-2">
             <label class="d-flex align-items-center mb-2" for="title">
-                <span class="text-gray-700 fs-6 fw-bolder">저널 일자</span>
+                <span class="text-gray-700 fs-6 fw-bolder">저널 결산 년도</span>
             </label>
         </div>
         <div class="col-2 fs-6">
-            <i class="bi bi-calendar3"></i> {{stdrdDt}}
+            <i class="bi bi-calendar3"></i> {{yy}}년
         </div>
     </div>
     <#--begin::Row-->

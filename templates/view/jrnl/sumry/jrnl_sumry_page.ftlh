@@ -17,7 +17,7 @@
 
 <#--include::script modules-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_scripts.ftlh">
-<#include "/view/jrnl/sumry/_jrnl_sumry_cn_scripts.ftlh">
+<#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_scripts.ftlh">
 
 <script>
     const Page = (function() {
@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-1 d-flex align-items-center">
                     <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
-                            onclick="JnrlSumryCn.regModal(${jrnlSumry.postNo});"
+                            onclick="JrnlSumryCn.regModal(${jrnlSumry.postNo!}, '${jrnlSumry.yy!}');"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
                         <i class="bi bi-pencil-square p-0"></i>
                     </button>
@@ -56,6 +56,13 @@
                     ${jrnlSumry.dreamDayCnt!} / ${jrnlSumry.dreamCnt!} / ${jrnlSumry.diaryDayCnt!}
                 </div>
             </div>
+            <div class="row jrnl-sumry-cn">
+                <#list jrnlSumry.sumryCnList![] as sumryCn>
+                    <div class="col-12 d-flex align-items-center fs-5 fw-bold">
+                        ${sumryCn.cn?no_esc} -
+                    </div>
+                </#list>
+            </div>
         </div>
     </div>
     <!--end::Card-->
@@ -65,6 +72,6 @@
 <#include "/view/jrnl/sumry/_jrnl_sumry_aside_base.ftlh">
 
 <#--include::modals-->
-<#include "/view/jrnl/sumry/_jrnl_sumry_cn_reg_modal.ftlh">
+<#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_modal.ftlh">
 
 </@layout.layout>

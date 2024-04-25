@@ -135,6 +135,18 @@
         return commons.date.asStr(value, pattern);
     });
 
+    /** 주어진 텍스트를 마크다운 처리한다. (커스텀 로직) */
+    Handlebars.registerHelper("markdown", function(text) {
+        // 일반 큰따옴표로 묶인 부분을 하이라이트 색상으로 표시
+        const highlightPattern = new RegExp('"(.*?)"', 'g');
+        let highlightedText = text.replace(highlightPattern, '<span class="text-primary">"$1"</span>');
+
+        // 이중 대시로 묶인 부분을 회색으로 표시
+        const grayPattern = new RegExp('(--)(.*?)(--)', 'g');
+        let grayText = highlightedText.replace(grayPattern, "<span class=\'text-muted\'>$1$2$3</span>");
+        return new Handlebars.SafeString(grayText);
+    });
+
     /*    let placeholderFunc = function(value, options) {
             let placeholder = options.hash["default"] || 0;
             return commons.util.isEmpty(value) ? placeholder : value;
