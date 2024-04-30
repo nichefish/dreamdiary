@@ -47,18 +47,30 @@
                     <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
                             onclick="JrnlSumryCn.regModal(${jrnlSumry.postNo!}, '${jrnlSumry.yy!}');"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
-                        <i class="bi bi-pencil-square p-0"></i>
+                        <i class="bi bi-book fs-4 pe-1"></i>
+                        저널 결산 내용 등록
                     </button>
                 </div>
-            </div>
-            <div class="row jrnl-sumry">
-                <div class="col-1 d-flex align-items-center fs-5 fw-bold">
-                    ${jrnlSumry.dreamDayCnt!} / ${jrnlSumry.dreamCnt!} / ${jrnlSumry.diaryDayCnt!}
+                <div class="col-2 d-flex align-items-center fs-5">
+                    <div class="text-gray-700 d-flex-center me-5">
+                        <span class="fw-bold me-2">
+                            꿈
+                        </span>
+                        <i class="bi bi-moon-stars fs-4 me-2"></i>
+                        (<span class="text-underline-dotted ms-1">${jrnlSumry.dreamDayCnt!}</span>일 / <span class="text-underline-dotted ms-1">${jrnlSumry.dreamCnt!}</span>개)
+                    </div>
+                    <div class="text-gray-700 d-flex-center">
+                        <span class="fw-bold me-2">
+                            일기
+                        </span>
+                        <i class="bi bi-book fs-4 me-2"></i>
+                        (<span class="text-underline-dotted ms-1">${jrnlSumry.diaryDayCnt!}</span>일)
+                    </div>
                 </div>
             </div>
-            <div class="row jrnl-sumry-cn">
+            <div class="row jrnl-item mt-5">
                 <#list jrnlSumry.sumryCnList![] as sumryCn>
-                    <div class="col-12 d-flex align-items-center fs-5 fw-bold">
+                    <div class="row jrnl-sumry-cn">
                         ${sumryCn.cn?no_esc} -
                     </div>
                 </#list>

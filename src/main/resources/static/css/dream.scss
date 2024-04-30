@@ -16,6 +16,7 @@
     justify-content: start;
     align-items: center;
 }
+
 .jrnl-diary-cn {
     align-items: center;
     p {
@@ -28,6 +29,14 @@
 
     p {
         color: rgba(95,0,130,0.8);
+        margin-top: 0.1rem !important;
+        margin-bottom: 0.1rem !important;
+    }
+}
+
+.jrnl-sumry-cn {
+    align-items: center;
+    p {
         margin-top: 0.1rem !important;
         margin-bottom: 0.1rem !important;
     }
