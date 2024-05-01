@@ -155,7 +155,7 @@ public class UserEmplymEntity
     private String apntcYn = "N";
 
     /** 입사일 */
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Column(name = "ecny_dt")
     @Comment("입사일")
@@ -168,7 +168,7 @@ public class UserEmplymEntity
     private String retireYn = "N";
 
     /** 퇴사일 */
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Column(name = "retire_dt")
     @Comment("퇴사일")

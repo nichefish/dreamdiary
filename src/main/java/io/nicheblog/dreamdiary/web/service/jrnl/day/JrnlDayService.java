@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.day.JrnlDayMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
@@ -10,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * JrnlDayService
@@ -46,6 +48,26 @@ public class JrnlDayService
     }
 
     /**
+     * 중복 체크 (정상시 true / 중복시 false)
+     */
+    public boolean dupChck(JrnlDayDto jrnlDay) throws Exception {
+        boolean isDtUnknown = "Y".equals(jrnlDay.getDtUnknownYn());
+        if (isDtUnknown) return false;
+        Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
+        Integer isDup = jrnlDayRepository.countByJrnlDt(jrnlDt);
+        return isDup > 0;
+    }
+
+    /**
+     * 중복시 해당하는 키값 반환
+     */
+    public Integer getDupKey(JrnlDayDto jrnlDay) throws Exception {
+        Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
+        JrnlDayEntity existingEntity = jrnlDayRepository.findByJrnlDt(jrnlDt);
+        return existingEntity.getPostNo();
+    }
+
+    /**
      * 신청 전처리:: 메소드 분리
      */
     @Override
@@ -53,7 +75,6 @@ public class JrnlDayService
         // 날짜미상여부 N시 대략일자 무효화
         if ("Y".equals(jrnlDay.getDtUnknownYn())) jrnlDay.setJrnlDt("");
         if ("N".equals(jrnlDay.getDtUnknownYn())) jrnlDay.setAprxmtDt("");
-
     }
 
     /**

@@ -151,8 +151,15 @@ public class JrnlDayController
         try {
             // Validation
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
-            // 등록 및 수정 처리
+            // 등록 및 수정 처리 (중복체크)
             boolean isReg = key == null;
+            if (isReg) {
+                boolean isDup = jrnlDayService.dupChck(jrnlDay);
+                if (isDup) {
+                    jrnlDay.setPostNo(jrnlDayService.getDupKey(jrnlDay));
+                    isReg = false;
+                }
+            }
             JrnlDayDto result = isReg ? jrnlDayService.regist(jrnlDay, request) : jrnlDayService.modify(jrnlDay, request);
 
             isSuccess = (result.getPostNo() != null);

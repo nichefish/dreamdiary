@@ -71,7 +71,7 @@ public class JrnlDayEntity
 
     /** 저널 일자 */
     @Column(name = "jrnl_dt")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Comment("저널 일자")
     private Date jrnlDt;
@@ -94,7 +94,7 @@ public class JrnlDayEntity
 
     /** 대략일자 (날짜미상시 해당일자 이후에 표기) */
     @Column(name = "aprxmt_dt")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = DateUtils.PTN_DATE)
     @Comment("대략일자 (날짜미상시 해당일자 이후에 표기)")
     private Date aprxmtDt;

@@ -2,14 +2,12 @@ package io.nicheblog.dreamdiary.web.spec.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +26,20 @@ import java.util.Map;
 @Log4j2
 public class JrnlSumrySpec
         implements BaseClsfSpec<JrnlSumryEntity> {
+
+    /**
+     * 조회 후처리:: 정렬 순서 변경 (년도 내림차순 정렬)
+     */
+    @Override
+    public void postQuery(
+            Root<JrnlSumryEntity> root,
+            CriteriaQuery<?> query,
+            CriteriaBuilder builder
+    ) {
+        List<Order> order = new ArrayList<>();
+        order.add(builder.desc(root.get("yy")));
+        query.orderBy(order);
+    }
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
