@@ -32,6 +32,14 @@
     })
 </script>
 
+<!--begin::Card-->
+<div class="card post">
+    <#--begin::Card body-->
+    <div class="card-body">
+        ${totalSumry.dreamDayCnt!} / ${totalSumry.dreamCnt!} / ${totalSumry.diaryDayCnt!}
+
+    </div>
+</div>
 <#list jrnlSumryList![] as jrnlSumry>
     <!--begin::Card-->
     <div class="card post">

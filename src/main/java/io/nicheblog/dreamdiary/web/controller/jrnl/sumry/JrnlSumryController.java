@@ -62,6 +62,9 @@ public class JrnlSumryController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
+            // 전체 통계 조회
+            JrnlSumryDto totalSumry = jrnlSumryService.getTotalSumry();
+            model.addAttribute("totalSumry", totalSumry);
             // 목록 조회 및 모델에 추가
             List<JrnlSumryDto> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
             model.addAttribute("jrnlSumryList", jrnlSumryList);
@@ -176,7 +179,7 @@ public class JrnlSumryController
         String rsltMsg = "";
         try {
             // 삭제 처리
-            isSuccess = jrnlSumryService.makeTotalSumry(yy);
+            isSuccess = jrnlSumryService.makeSumry(yy);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

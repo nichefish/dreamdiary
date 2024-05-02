@@ -48,9 +48,9 @@ public class JrnlSumryService
     }
 
     /**
-     * 총 결산 생성
+     * 년도를 받아서 해당 년도 결산 생성
      */
-    public Boolean makeTotalSumry(Integer yy) {
+    public Boolean makeSumry(Integer yy) {
         // 해당 년도 결산 정보 조회
         JrnlSumryEntity sumry = jrnlSumryRepository.findByYy(yy).orElse(new JrnlSumryEntity(yy));
 
@@ -67,5 +67,23 @@ public class JrnlSumryService
         jrnlSumryRepository.save(sumry);
 
         return true;
+    }
+
+    /**
+     * 결산 정보를 취합해서 총 결산 생성
+     */
+    public JrnlSumryDto getTotalSumry() {
+        JrnlSumryDto totalSumry = new JrnlSumryDto();
+        // 해당 년도 꿈 일자 조회해서 갱신
+        Integer dreamDayCntByYy = jrnlSumryRepository.getTotalDreamDayCnt();
+        totalSumry.setDreamDayCnt(dreamDayCntByYy);
+        // 해당 년도 꿈 조회해서 갱신
+        Integer dreamCntByYy = jrnlSumryRepository.getTotalDreamCnt();
+        totalSumry.setDreamCnt(dreamCntByYy);
+        // 해당 년도 일기 일자 조회해서 갱신
+        Integer diaryCntByYy = jrnlSumryRepository.getTotalDiaryDayCnt();
+        totalSumry.setDiaryDayCnt(diaryCntByYy);
+
+        return totalSumry;
     }
 }

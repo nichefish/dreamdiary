@@ -51,4 +51,24 @@ public interface JrnlSumryRepository
             "WHERE YEAR(CASE WHEN day.dtUnknownYn = 'Y' THEN day.aprxmtDt ELSE day.jrnlDt END) = :yy")
     Integer getDiaryDayCntByYy(Integer yy);
 
+    /**
+     * 전체 꿈 일자 개수 조회
+     */
+    @Query("SELECT COALESCE(SUM(sumry.dreamDayCnt), 0) " +
+            "FROM JrnlSumryEntity sumry ")
+    Integer getTotalDreamDayCnt();
+
+    /**
+     * 전체 꿈 개수 조회
+     */
+    @Query("SELECT COALESCE(SUM(sumry.dreamCnt), 0) " +
+            "FROM JrnlSumryEntity sumry ")
+    Integer getTotalDreamCnt();
+
+    /**
+     * 전체 일기 일자 개수 조회
+     */
+    @Query("SELECT COALESCE(SUM(sumry.postNo), 0) " +
+            "FROM JrnlSumryEntity sumry ")
+    Integer getTotalDiaryDayCnt();
 }

@@ -81,18 +81,18 @@
 
 <!--begin::LgnPage-->
 <div class="w-lg-500px rounded mt-20 p-10 p-lg-15 mx-auto my-auto">
-    <div class="aside-logo flex-column-auto mb-20" style="height:105px;">
+    <div class="aside-logo flex-column-auto pb-5 mb-20">
         <!-- -->
     </div>
-    <div class="d-flex justify-content-center fs-4 mb-4 pe-10 fw-bold ls-1 blink">
-        <i class="bi bi-cloud-moon fs-2 text-dark"></i>
+    <div class="d-flex justify-content-center fs-4 mb-15 text-secondary fw-bold ls-1">
+        <i class="bi bi-cloud-moon fs-2"></i>
         <span class="px-2">${Url.DOMAIN!}</span>
-        <i class="bi bi-stars fs-2 text-dark"></i>
+        <i class="bi bi-stars fs-2"></i>
     </div>
     <#--begin::Form-->
-    <form name="lgnForm" id="lgnForm" class="w-100 pe-14" method="post">
+    <form name="lgnForm" id="lgnForm" class="w-100 opacity-75" method="post">
         <div class="mb-5">
-            <label class="form-label fs-6 fw-bolder" for="userId">아이디</label>
+            <label class="form-label fs-6 text-secondary fw-bolder" for="userId">아이디</label>
             <input type="text" name="userId" id="userId" class="form-control form-control-lg enter required"
                    autocomplete="off" maxlength="20" placeholder="아이디를 입력하세요."
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="아이디를 입력하세요." />
@@ -104,7 +104,7 @@
             </div>
         </div>
         <div>
-            <label class="form-label fw-bolder fs-6 mb-1" for="password">비밀번호</label>
+            <label class="form-label text-secondary fw-bolder fs-6 mb-1" for="password">비밀번호</label>
             <input type="password" name="password" id="password" class="form-control form-control-lg enter required"
                    autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호를 입력하세요." />
@@ -118,7 +118,7 @@
         <div class="me-2 float-end">
             <label class="form-check form-check-custom form-check-solid" for="${REMEMBER_ME_PARAM!}"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="현재 브라우저에서&#10;로그인 상태를 유지합니다.">
-                <span class="form-check-label text-dark me-2">
+                <span class="form-check-label text-secondary me-2">
                     로그인 상태 유지
                 </span>
                 <input type="checkbox" class="form-check-input" id="${REMEMBER_ME_PARAM!}" name="${REMEMBER_ME_PARAM!}">
