@@ -179,7 +179,7 @@ public class JrnlSumryController
         String rsltMsg = "";
         try {
             // 삭제 처리
-            isSuccess = jrnlSumryService.makeSumry(yy);
+            isSuccess = jrnlSumryService.makeYySumry(yy);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

@@ -90,8 +90,8 @@
         <i class="bi bi-stars fs-2"></i>
     </div>
     <#--begin::Form-->
-    <form name="lgnForm" id="lgnForm" class="w-100 opacity-75" method="post">
-        <div class="mb-5">
+    <form name="lgnForm" id="lgnForm" class="w-100" method="post">
+        <div class="opacity-75 mb-5">
             <label class="form-label fs-6 text-secondary fw-bolder" for="userId">아이디</label>
             <input type="text" name="userId" id="userId" class="form-control form-control-lg enter required"
                    autocomplete="off" maxlength="20" placeholder="아이디를 입력하세요."
@@ -103,7 +103,7 @@
                 <span id="userId_valid_span" class="text-danger"></span>
             </div>
         </div>
-        <div>
+        <div class="opacity-75">
             <label class="form-label text-secondary fw-bolder fs-6 mb-1" for="password">비밀번호</label>
             <input type="password" name="password" id="password" class="form-control form-control-lg enter required"
                    autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."

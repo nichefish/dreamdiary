@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.summary.JrnlSumryMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
@@ -50,7 +51,7 @@ public class JrnlSumryService
     /**
      * 년도를 받아서 해당 년도 결산 생성
      */
-    public Boolean makeSumry(Integer yy) {
+    public Boolean makeYySumry(Integer yy) {
         // 해당 년도 결산 정보 조회
         JrnlSumryEntity sumry = jrnlSumryRepository.findByYy(yy).orElse(new JrnlSumryEntity(yy));
 
@@ -70,6 +71,21 @@ public class JrnlSumryService
     }
 
     /**
+     * 전체 년도에 대한 결산 생성
+     */
+    public void makeTotalYySumry() throws Exception {
+        int currYy = DateUtils.getCurrYy();
+        int startYy = 2011;
+        for (int yy = startYy; yy <= currYy; yy++) {
+            try {
+                this.makeYySumry(yy);
+            } catch (Exception e) {
+                log.warn("Error creating annual summary for {}", yy);
+            }
+        }
+    }
+
+    /**
      * 결산 정보를 취합해서 총 결산 생성
      */
     public JrnlSumryDto getTotalSumry() {
@@ -86,4 +102,6 @@ public class JrnlSumryService
 
         return totalSumry;
     }
+
+
 }
