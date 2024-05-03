@@ -26,6 +26,6 @@ public interface JrnlSumryCnRepository
     @Query("SELECT MAX(cn.idx) " +
             "FROM JrnlSumryCnEntity cn " +
             "INNER JOIN JrnlSumryEntity sumry ON cn.jrnlSumryNo = sumry.postNo " +
-            "WHERE sumry.postNo = :jrnlSumryNo")
-    Optional<Integer> findLastIndexByJrnlSumry(final @Param("jrnlSumryNo") Integer jrnlSumryNo);
+            "WHERE sumry.postNo = :jrnlSumryNo AND sumry.ctgrCd = :jrnlSumryTyCd")
+    Optional<Integer> findLastIndexByJrnlSumryAndSumryTy(final @Param("jrnlSumryNo") Integer jrnlSumryNo, final @Param("jrnlSumryTyCd") String jrnlSumryTyCd);
 }

@@ -52,7 +52,10 @@ public class JrnlSumryCnService
      */
     @Override
     public void preRegist(final JrnlSumryCnDto jrnlSumryCn) {
-        Integer lastIndex = jrnlSumryCnRepository.findLastIndexByJrnlSumry(jrnlSumryCn.getJrnlSumryNo()).orElse(0);
+        // 인덱스(정렬순서) 처리
+        Integer jrnlSumryNo = jrnlSumryCn.getJrnlSumryNo();
+        String jrnlSumryTyCd = jrnlSumryCn.getCtgrCd();
+        Integer lastIndex = jrnlSumryCnRepository.findLastIndexByJrnlSumryAndSumryTy(jrnlSumryNo, jrnlSumryTyCd).orElse(0);
         jrnlSumryCn.setIdx(lastIndex + 1);
     }
 }

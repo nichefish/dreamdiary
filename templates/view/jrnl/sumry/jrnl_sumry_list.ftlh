@@ -87,7 +87,4 @@
 <#--include:: Aside-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_aside_base.ftlh">
 
-<#--include::modals-->
-<#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_modal.ftlh">
-
 </@layout.layout>

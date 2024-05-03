@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.controller.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
@@ -43,6 +44,8 @@ public class JrnlSumryController
 
     @Resource(name = "jrnlSumryService")
     private JrnlSumryService jrnlSumryService;
+    @Resource(name = "cdService")
+    private CdService cdService;
 
     /**
      * 저널 결산 화면 조회
@@ -144,6 +147,8 @@ public class JrnlSumryController
             // 객체 조회 및 모델에 추가
             JrnlSumryDto rsltDto = jrnlSumryService.getDtlDto(key);
             model.addAttribute("post", rsltDto);
+            // 코드 데이터 모델에 추가
+            cdService.setModelCdData(Constant.JRNL_SUMRY_TY_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

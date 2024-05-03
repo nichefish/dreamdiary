@@ -52,6 +52,7 @@ public class JrnlDiaryService
      */
     @Override
     public void preRegist(final JrnlDiaryDto jrnlDiary) {
+        // 인덱스(정렬순서) 처리
         Integer lastIndex = jrnlDiaryRepository.findLastIndexByJrnlDay(jrnlDiary.getJrnlDayNo()).orElse(0);
         jrnlDiary.setIdx(lastIndex + 1);
     }

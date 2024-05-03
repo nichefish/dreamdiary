@@ -52,6 +52,7 @@ public class JrnlDreamService
      */
     @Override
     public void preRegist(final JrnlDreamDto jrnlDream) {
+        // 인덱스(정렬순서) 처리
         Integer lastIndex = jrnlDreamRepository.findLastIndexByJrnlDay(jrnlDream.getJrnlDayNo()).orElse(0);
         jrnlDream.setIdx(lastIndex + 1);
     }
