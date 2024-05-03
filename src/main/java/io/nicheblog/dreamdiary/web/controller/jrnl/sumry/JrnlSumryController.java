@@ -37,7 +37,7 @@ public class JrnlSumryController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = Url.JRNL_SUMRY_PAGE;             // 기본 URL
+    private final String baseUrl = Url.JRNL_SUMRY_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
@@ -48,7 +48,7 @@ public class JrnlSumryController
      * 저널 결산 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(Url.JRNL_SUMRY_PAGE)
+    @GetMapping(Url.JRNL_SUMRY_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String jrnlSumryPage(
             @ModelAttribute("searchParam") JrnlSumrySearchParam searchParam,
@@ -66,7 +66,7 @@ public class JrnlSumryController
             JrnlSumryDto totalSumry = jrnlSumryService.getTotalSumry();
             model.addAttribute("totalSumry", totalSumry);
             // 목록 조회 및 모델에 추가
-            List<JrnlSumryDto> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
+            List<JrnlSumryDto.LIST> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
             model.addAttribute("jrnlSumryList", jrnlSumryList);
 
             isSuccess = true;
@@ -82,7 +82,7 @@ public class JrnlSumryController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/sumry/jrnl_sumry_page";
+        return "/view/jrnl/sumry/jrnl_sumry_list";
     }
 
     /**
@@ -104,7 +104,7 @@ public class JrnlSumryController
         String rsltMsg = "";
         try {
             // 목록 조회 및 응답에 추가
-            List<JrnlSumryDto> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
+            List<JrnlSumryDto.LIST> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
             ajaxResponse.setRsltList(jrnlSumryList);
 
             isSuccess = true;

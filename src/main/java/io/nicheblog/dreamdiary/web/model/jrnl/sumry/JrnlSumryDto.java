@@ -52,12 +52,31 @@ public class JrnlSumryDto
     /** 일기 일수 */
     private Integer diaryDayCnt;
 
-    /** 저널 결산 내용 목록 */
-    private List<JrnlSumryCnDto> sumryCnList;
-
     @Override
     public Integer getKey() {
         return this.postNo;
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @ToString(callSuper = true)
+    public static class DTL extends JrnlSumryDto {
+
+        /** 저널 결산 내용 목록 */
+        private List<JrnlSumryCnDto> sumryCnList;
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @ToString(callSuper = true)
+    public static class LIST extends JrnlSumryDto {
+        //
     }
 
     /* ----- */

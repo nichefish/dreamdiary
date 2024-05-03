@@ -6,7 +6,7 @@
 
 <#--toolbar::버튼 추가-->
 <#assign toolbar>
-    <#include "/view/jrnl/sumry/_jrnl_sumry_page_header.ftlh">
+    <#include "/view/jrnl/sumry/_jrnl_sumry_list_header.ftlh">
 </#assign>
 
 <@layout.layout toolbar=toolbar!"">
@@ -75,13 +75,6 @@
                         (<span class="text-underline-dotted ms-1">${jrnlSumry.diaryDayCnt!}</span>일)
                     </div>
                 </div>
-            </div>
-            <div class="row jrnl-item mt-5">
-                <#list jrnlSumry.sumryCnList![] as sumryCn>
-                    <div class="row jrnl-sumry-cn">
-                        ${sumryCn.cn?no_esc} -
-                    </div>
-                </#list>
             </div>
         </div>
     </div>

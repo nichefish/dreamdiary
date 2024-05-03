@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.mapstruct.jrnl.summary;
+package io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;

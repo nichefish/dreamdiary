@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.web.service.jrnl.sumry;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.jrnl.summary.JrnlSumryMapstruct;
+import io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry.JrnlSumryMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.JrnlSumryRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.sumry.JrnlSumrySpec;
@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 @Service("jrnlSumryService")
 @Log4j2
 public class JrnlSumryService
-        implements BaseReadonlyService<JrnlSumryDto, JrnlSumryDto, Integer, JrnlSumryEntity, JrnlSumryRepository, JrnlSumrySpec, JrnlSumryMapstruct> {
+        implements BaseReadonlyService<JrnlSumryDto.DTL, JrnlSumryDto.LIST, Integer, JrnlSumryEntity, JrnlSumryRepository, JrnlSumrySpec, JrnlSumryMapstruct> {
 
     private final JrnlSumryMapstruct jrnlSumryMapstruct = JrnlSumryMapstruct.INSTANCE;
 

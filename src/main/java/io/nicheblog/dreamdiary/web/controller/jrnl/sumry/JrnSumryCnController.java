@@ -42,7 +42,7 @@ public class JrnSumryCnController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = Url.JRNL_SUMRY_PAGE;             // 기본 URL
+    private final String baseUrl = Url.JRNL_SUMRY_LIST;             // 기본 URL
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 

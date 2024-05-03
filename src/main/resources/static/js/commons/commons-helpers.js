@@ -139,7 +139,7 @@
     Handlebars.registerHelper("markdown", function(text) {
         // 일반 큰따옴표로 묶인 부분을 하이라이트 색상으로 표시
         const highlightPattern = new RegExp('"(.*?)"', 'g');
-        let highlightedText = text.replace(highlightPattern, '<span class="text-primary">"$1"</span>');
+        let highlightedText = text.replace(highlightPattern, '<span class="text-dialog">"$1"</span>');
 
         // 이중 대시로 묶인 부분을 회색으로 표시
         const grayPattern = new RegExp('(--)(.*?)(--)', 'g');

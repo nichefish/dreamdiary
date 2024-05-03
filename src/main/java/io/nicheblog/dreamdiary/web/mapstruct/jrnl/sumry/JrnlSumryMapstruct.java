@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.mapstruct.jrnl.summary;
+package io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
@@ -20,7 +20,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface JrnlSumryMapstruct
-        extends BaseClsfMapstruct<JrnlSumryDto, JrnlSumryDto, JrnlSumryEntity> {
+        extends BaseClsfMapstruct<JrnlSumryDto.DTL, JrnlSumryDto.LIST, JrnlSumryEntity> {
 
     JrnlSumryMapstruct INSTANCE = Mappers.getMapper(JrnlSumryMapstruct.class);
 
@@ -29,25 +29,25 @@ public interface JrnlSumryMapstruct
      */
     @Override
     @Named("toDto")
-    JrnlSumryDto toDto(final JrnlSumryEntity entity) throws Exception;
+    JrnlSumryDto.DTL toDto(final JrnlSumryEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
     @Named("toListDto")
-    JrnlSumryDto toListDto(final JrnlSumryEntity entity) throws Exception;
+    JrnlSumryDto.LIST toListDto(final JrnlSumryEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
-    JrnlSumryEntity toEntity(final JrnlSumryDto dto) throws Exception;
+    JrnlSumryEntity toEntity(final JrnlSumryDto.DTL dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(final JrnlSumryDto dto, final @MappingTarget JrnlSumryEntity entity) throws Exception;
+    void updateFromDto(final JrnlSumryDto.DTL dto, final @MappingTarget JrnlSumryEntity entity) throws Exception;
 }

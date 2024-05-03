@@ -139,7 +139,7 @@ public class SiteMenu
                 SiteTopMenu.JRNL,
                 "02",
                 "저널 결산",
-                Url.JRNL_SUMRY_PAGE
+                Url.JRNL_SUMRY_LIST
         );
 
         // 소메뉴 :: 경비지출서
