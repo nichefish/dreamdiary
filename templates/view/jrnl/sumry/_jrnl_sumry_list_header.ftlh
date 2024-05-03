@@ -29,9 +29,9 @@
     <div>
         <#--헤더:: 버튼: 결산 동기화-->
         <button type="button" class="btn btn-sm btn-primary"
-                onclick="JrnlSumry.makeSumryAjax();"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="선택 년도에 대한 결산 정보를 생성합니다.">
-            <i class="fas fa-plus"></i>결산 생성
+                onclick="JrnlSumry.makeTotalSumryAjax();"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="전체 년도에 대한 결산 정보를 갱신합니다.">
+            <i class="bi bi-arrow-repeat"></i>전체 결산 갱신
         </button>
     </div>
 </form>

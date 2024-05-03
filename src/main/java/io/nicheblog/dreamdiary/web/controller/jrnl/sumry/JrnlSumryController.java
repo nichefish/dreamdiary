@@ -124,6 +124,45 @@ public class JrnlSumryController
     }
 
     /**
+     * 저널 결산 상세 화면 조회
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @RequestMapping(value = Url.JRNL_SUMRY_DTL)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    public String jrnlSumryDtl(
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam,
+            final ModelMap model
+    ) throws Exception {
+
+        /* 사이트 메뉴 설정 */
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_SUMRY.setAcsPageInfo(Constant.PAGE_DTL));
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 객체 조회 및 모델에 추가
+            JrnlSumryDto rsltDto = jrnlSumryService.getDtlDto(key);
+            model.addAttribute("post", rsltDto);
+
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, baseUrl);
+        } finally {
+            // 로그 관련 처리
+            logParam.setCn("key: " + key.toString());
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return "/view/jrnl/sumry/jrnl_sumry_dtl";
+    }
+    
+    /**
      * 저널 결산 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
@@ -141,8 +180,8 @@ public class JrnlSumryController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 객체 조회 및 모델에 추가
-            JrnlSumryDto rslt = jrnlSumryService.getDtlDto(key);
+            // 객체 조회 및 응답에 추가
+            JrnlSumryDto.DTL rslt = jrnlSumryService.getDtlDto(key);
             ajaxResponse.setRsltObj(rslt);
 
             isSuccess = (rslt.getPostNo() != null);
@@ -168,7 +207,7 @@ public class JrnlSumryController
     @PostMapping(value = {Url.JRNL_SUMRY_MAKE_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlSumryDelAjax(
+    public ResponseEntity<AjaxResponse> jrnlSumryMakeAjax(
             final @RequestParam("yy") Integer yy,
             final LogActvtyParam logParam
     ) {
@@ -180,6 +219,39 @@ public class JrnlSumryController
         try {
             // 삭제 처리
             isSuccess = jrnlSumryService.makeYySumry(yy);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 저널 결산 생성 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @PostMapping(value = {Url.JRNL_SUMRY_MAKE_TOTAL_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> jrnlSumryMakeTotalAjax(
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 삭제 처리
+            isSuccess = jrnlSumryService.makeTotalYySumry();
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

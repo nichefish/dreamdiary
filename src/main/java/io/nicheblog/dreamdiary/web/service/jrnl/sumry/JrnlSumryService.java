@@ -73,7 +73,7 @@ public class JrnlSumryService
     /**
      * 전체 년도에 대한 결산 생성
      */
-    public void makeTotalYySumry() throws Exception {
+    public Boolean makeTotalYySumry() throws Exception {
         int currYy = DateUtils.getCurrYy();
         int startYy = 2011;
         for (int yy = startYy; yy <= currYy; yy++) {
@@ -83,6 +83,8 @@ public class JrnlSumryService
                 log.warn("Error creating annual summary for {}", yy);
             }
         }
+
+        return true;
     }
 
     /**
