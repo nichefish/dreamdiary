@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryCnEntity;
@@ -8,6 +9,9 @@ import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryCnDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * JrnlSumryCnMapstruct
@@ -18,7 +22,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseClsfMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
 public interface JrnlSumryCnMapstruct
         extends BaseClsfMapstruct<JrnlSumryCnDto, JrnlSumryCnDto, JrnlSumryCnEntity> {
 
@@ -29,6 +33,7 @@ public interface JrnlSumryCnMapstruct
      */
     @Override
     @Named("toDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     JrnlSumryCnDto toDto(final JrnlSumryCnEntity entity) throws Exception;
 
     /**
@@ -36,7 +41,23 @@ public interface JrnlSumryCnMapstruct
      */
     @Override
     @Named("toListDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     JrnlSumryCnDto toListDto(final JrnlSumryCnEntity entity) throws Exception;
+
+    /**
+     * EntityList to DtoList
+     */
+    default List<JrnlSumryCnDto> toDtoList(List<JrnlSumryCnEntity> entityList) {
+        return entityList.stream()
+                .map(entity -> {
+                    try {
+                        return JrnlSumryCnMapstruct.INSTANCE.toDto(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 
     /**
      * Dto -> Entity

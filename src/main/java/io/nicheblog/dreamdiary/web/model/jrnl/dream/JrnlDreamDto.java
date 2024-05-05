@@ -7,10 +7,12 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
+import java.util.Date;
 
 /**
  * JrnlDreamDto
@@ -30,7 +32,7 @@ import javax.persistence.Column;
 @ToString(callSuper = true)
 public class JrnlDreamDto
         extends BasePostDto
-        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, Comparable<JrnlDreamDto> {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_DREAM;
@@ -60,9 +62,22 @@ public class JrnlDreamDto
     @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
 
+    /* ----- */
+
     @Override
     public Integer getKey() {
         return this.postNo;
+    }
+
+    /**
+     * 날짜 오름차순 정렬
+     */
+    @SneakyThrows
+    @Override
+    public int compareTo(JrnlDreamDto other) {
+        Date thisDate = DateUtils.asDate(this.stdrdDt);
+        Date otherDate = DateUtils.asDate(other.stdrdDt);
+        return thisDate.compareTo(otherDate);
     }
 
     /* ----- */

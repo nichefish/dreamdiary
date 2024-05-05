@@ -52,6 +52,8 @@ public class JrnlDiaryDto
     @Builder.Default
     private String editComptYn = "N";
 
+    /* ----- */
+
     @Override
     public Integer getKey() {
         return this.postNo;

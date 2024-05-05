@@ -10,6 +10,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * JrnlDreamService
@@ -57,5 +60,16 @@ public class JrnlDreamService
             Integer lastIndex = jrnlDreamRepository.findLastIndexByJrnlDay(jrnlDream.getJrnlDayNo()).orElse(0);
             jrnlDream.setIdx(lastIndex + 1);
         }
+    }
+
+    /**
+     * 특정 년도의 중요 꿈 목록 조회
+     */
+    public List<JrnlDreamDto> getImprtcDreamList(Integer yy) throws Exception {
+        Map<String, Object> searchParamMap = new HashMap<>() {{
+            put("yy", yy);
+            put("imprtcYn", "Y");
+        }};
+        return this.getListDto(searchParamMap);
     }
 }

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.jrnl.diary;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
@@ -18,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseClsfMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
 public interface JrnlDiaryMapstruct
         extends BaseClsfMapstruct<JrnlDiaryDto, JrnlDiaryDto, JrnlDiaryEntity> {
 
@@ -30,6 +31,7 @@ public interface JrnlDiaryMapstruct
     @Override
     @Named("toDto")
     @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     JrnlDiaryDto toDto(final JrnlDiaryEntity entity) throws Exception;
 
     /**
@@ -38,6 +40,7 @@ public interface JrnlDiaryMapstruct
     @Override
     @Named("toListDto")
     @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     JrnlDiaryDto toListDto(final JrnlDiaryEntity entity) throws Exception;
 
     /**

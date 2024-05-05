@@ -13,6 +13,7 @@
 <#--include::script modules-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_scripts.ftlh">
 <#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_scripts.ftlh">
+<#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
 
 <script>
     const Page = (function() {
@@ -88,7 +89,7 @@
                         </div>
                     </div>
                     <div class="col py-3 jrnl-sumry-cn">
-                        ${(sumryCn.cn!"-")?no_esc}
+                        ${(sumryCn.markdownCn!"-")?no_esc}
                     </div>
                     <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
                     <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
@@ -121,7 +122,7 @@
                         </div>
                     </div>
                     <div class="col py-3 jrnl-sumry-cn">
-                        ${(sumryCn.cn!"-")?no_esc}
+                        ${(sumryCn.markdownCn!"-")?no_esc}
                     </div>
                     <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
                     <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
@@ -138,6 +139,37 @@
                     </div>
                 </div>
             </#list>
+            <label class="d-flex align-items-center my-2" for="title">
+                <span class="text-gray-700 fs-6 ps-5 fw-bolder">
+                    중요한 꿈
+                    <i class="bi bi-moon-stars fs-4 pe-1"></i>
+                </span>
+            </label>
+            <#list imprtcDreamList![] as dream>
+                <div class="row jrnl-item">
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:130px;">
+                        <div>
+                            <i class="bi bi-calendar3"></i> ${dream.stdrdDt!}
+                        </div>
+                    </div>
+                    <div class="col py-3 jrnl-sumry-cn">
+                        ${(dream.markdownCn!"-")?no_esc}
+                    </div>
+                    <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
+                        <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                onclick="JrnlDream.mdfModal(${dream.postNo!}, '${dream.stdrdDt!}');"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
+                            <i class="bi bi-pencil-square p-0"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-light-danger btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                onclick="JrnlDream.delAjax(${dream.postNo!});"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.del"/>">
+                            <i class="bi bi-trash p-0"></i>
+                        </button>
+                    </div>
+                </div>
+            </#list>
         </div>
     </div>
 </div>
@@ -146,3 +178,4 @@
 
 <#--include::modals-->
 <#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_modal.ftlh">
+<#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">

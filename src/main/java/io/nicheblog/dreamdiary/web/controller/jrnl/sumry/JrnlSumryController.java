@@ -10,8 +10,10 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumrySearchParam;
+import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryService;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,6 +47,8 @@ public class JrnlSumryController
 
     @Resource(name = "jrnlSumryService")
     private JrnlSumryService jrnlSumryService;
+    @Resource(name = "jrnlDreamService")
+    private JrnlDreamService jrnlDreamService;
     @Resource(name = "cdService")
     private CdService cdService;
 
@@ -146,6 +151,12 @@ public class JrnlSumryController
             // 객체 조회 및 모델에 추가
             JrnlSumryDto rsltDto = jrnlSumryService.getDtlDto(key);
             model.addAttribute("post", rsltDto);
+            // 중요 꿈 목록 조회
+            Integer yy = rsltDto.getYy();
+            List<JrnlDreamDto> imprtcDreamList = jrnlDreamService.getImprtcDreamList(yy);
+            Collections.sort(imprtcDreamList);
+            model.addAttribute("imprtcDreamList", imprtcDreamList);
+
             // 코드 데이터 모델에 추가
             cdService.setModelCdData(Constant.JRNL_SUMRY_TY_CD, model);
 

@@ -46,6 +46,8 @@ public class JrnlSumryCnDto
     /** 순번 */
     private Integer idx;
 
+    /* ----- */
+
     @Override
     public Integer getKey() {
         return this.postNo;
