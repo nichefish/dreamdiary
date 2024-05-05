@@ -139,6 +139,8 @@
                     </div>
                 </div>
             </#list>
+        </div>
+        <div class="row p-5">
             <label class="d-flex align-items-center my-2" for="title">
                 <span class="text-gray-700 fs-6 ps-5 fw-bolder">
                     중요한 꿈
@@ -147,13 +149,24 @@
             </label>
             <#list imprtcDreamList![] as dream>
                 <div class="row jrnl-item">
-                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:130px;">
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:135px;">
                         <div>
                             <i class="bi bi-calendar3"></i> ${dream.stdrdDt!}
                         </div>
                     </div>
                     <div class="col py-3 jrnl-sumry-cn">
                         ${(dream.markdownCn!"-")?no_esc}
+                        <#if dream.tag.list??>
+                            <div class="ms-2 mt-3">
+                                <#list dream.tag.list as tag>
+                                <span class="text-muted cursor-pointer pe-1" onclick="Tag.dtlAjax(${tag.refTagNo!});"
+                                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                                      title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
+                                        #<span class="border-bottom text-primary fw-lighter opacity-hover">${tag.tagNm!}</span>
+                                    </span>
+                                </#list>
+                            </div>
+                        </#if>
                     </div>
                     <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
                     <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">

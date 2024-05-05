@@ -75,7 +75,6 @@
 
 <#--include::modals-->
 <#include "/view/jrnl/day/_jrnl_day_list_template.hbs">
-<#include "/view/jrnl/dream/_jrnl_dream_tag_list_template.hbs">
 <#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 <#include "/view/jrnl/diary/_jrnl_diary_reg_modal.ftlh">
