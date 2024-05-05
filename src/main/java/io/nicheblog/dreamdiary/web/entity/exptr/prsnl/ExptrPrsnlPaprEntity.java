@@ -4,9 +4,7 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
-import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.CmmStus;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlItemDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,7 +15,6 @@ import javax.persistence.Entity;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -175,18 +172,6 @@ public class ExptrPrsnlPaprEntity
     private CmmStus orgnlRciptStus;
 
     /* ----- */
-
-    /**
-     * 개별내역 목록을 Dto로 변환해서 반환
-     */
-    public List<ExptrPrsnlItemDto> getItemDtoList() throws Exception {
-        if (CollectionUtils.isEmpty(this.itemList)) return null;
-        List<ExptrPrsnlItemDto> entityList = new ArrayList<>();
-        for (ExptrPrsnlItemEntity item : itemList) {
-            entityList.add(ExptrPrsnlItemMapstruct.INSTANCE.toDto(item));
-        }
-        return entityList;
-    }
 
     /**
      * 서브엔티티 List 처리를 위한 Setter Override

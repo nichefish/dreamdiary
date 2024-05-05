@@ -29,7 +29,7 @@ public interface ExptrPrsnlPaprMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "itemList", expression = "java(entity.getItemDtoList())")
+    @Mapping(target = "itemList", expression = "java(ExptrPrsnlItemMapstruct.INSTANCE.toDtoList(entity.getItemList()))")
     ExptrPrsnlPaprDto.DTL toDto(final ExptrPrsnlPaprEntity entity) throws Exception;
 
     /**
@@ -37,7 +37,7 @@ public interface ExptrPrsnlPaprMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "itemList", expression = "java(entity.getItemDtoList())")
+    @Mapping(target = "itemList", expression = "java(ExptrPrsnlItemMapstruct.INSTANCE.toDtoList(entity.getItemList()))")
     ExptrPrsnlPaprDto.LIST toListDto(final ExptrPrsnlPaprEntity entity) throws Exception;
 
     /**

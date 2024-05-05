@@ -11,6 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * ExptrPrsnlItemMapstruct
  * <pre>
@@ -46,6 +49,21 @@ public interface ExptrPrsnlItemMapstruct
     @Mapping(target = "atchFileAt", expression = "java(StringUtils.isNotEmpty(dto.getAtchFileDtlNo()) ? \"Y\" : \"N\")")
     @Mapping(target = "orgnlRciptAt", source = "orgnlRciptYn")
     ExptrPrsnlRptItemXlsxDto toRptItemXlsxDto(final ExptrPrsnlRptItemDto dto) throws Exception;
+
+    /**
+     * EntityList to DtoList
+     */
+    default List<ExptrPrsnlItemDto> toDtoList(List<ExptrPrsnlItemEntity> entityList) {
+        return entityList.stream()
+                .map(entity -> {
+                    try {
+                        return this.toDto(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 
     /**
      * Dto -> Entity
