@@ -35,8 +35,22 @@
 <div class="card post">
     <#--begin::Card body-->
     <div class="card-body">
-        ${totalSumry.dreamDayCnt!} / ${totalSumry.dreamCnt!} / ${totalSumry.diaryDayCnt!}
-
+        <div class="d-flex fs-5">
+            <div class="text-gray-700 d-flex-center me-5">
+                <span class="fw-bold me-2">
+                    전체 꿈
+                </span>
+                <i class="bi bi-moon-stars fs-4 me-2"></i>
+                (<span class="text-underline-dotted ms-1">${totalSumry.dreamDayCnt!}</span>일 / <span class="text-underline-dotted ms-1">${totalSumry.dreamCnt!}</span>개)
+            </div>
+            <div class="text-gray-700 d-flex-center">
+                <span class="fw-bold me-2">
+                    전체 일기
+                </span>
+                <i class="bi bi-book fs-4 me-2"></i>
+                (<span class="text-underline-dotted ms-1">${totalSumry.diaryDayCnt!}</span>일)
+            </div>
+        </div>
     </div>
 </div>
 <#list jrnlSumryList![] as jrnlSumry>

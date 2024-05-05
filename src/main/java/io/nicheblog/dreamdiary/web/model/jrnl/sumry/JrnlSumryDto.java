@@ -65,8 +65,10 @@ public class JrnlSumryDto
     @ToString(callSuper = true)
     public static class DTL extends JrnlSumryDto {
 
-        /** 저널 결산 내용 목록 */
-        private List<JrnlSumryCnDto> sumryCnList;
+        /** 저널 결산 내용 (일기) 목록 */
+        private List<JrnlSumryCnDto> sumryCnDiaryList;
+        /** 저널 결산 내용 (꿈) 목록 */
+        private List<JrnlSumryCnDto> sumryCnDreamList;
     }
 
     @Getter

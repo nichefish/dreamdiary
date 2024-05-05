@@ -56,14 +56,25 @@ public class JrnlSumryEntity
     @Comment("컨텐츠 타입")
     private String contentType = CONTENT_TYPE.key;
 
-    /** 저널 결산 내용 목록 */
+    /** 저널 결산 내용 (일기) 목록 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "jrnl_sumry_no", referencedColumnName = "post_no", insertable = false, updatable = false)
     @Fetch(FetchMode.SELECT)
+    @Where(clause = "ctgr_cd = 'DIARY'")
     @OrderBy("idx ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("저널 결산 내용 목록")
-    private List<JrnlSumryCnEntity> sumryCnList;
+    private List<JrnlSumryCnEntity> sumryCnDiaryList;
+
+    /** 저널 결산 내용 (꿈) 목록 */
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "jrnl_sumry_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.SELECT)
+    @Where(clause = "ctgr_cd = 'DREAM'")
+    @OrderBy("idx ASC")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("저널 결산 내용 목록")
+    private List<JrnlSumryCnEntity> sumryCnDreamList;
 
     /* ----- */
 

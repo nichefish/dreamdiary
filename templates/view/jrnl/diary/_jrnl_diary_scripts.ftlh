@@ -18,6 +18,8 @@
 
                 /* jquery :: validation */
                 JrnlDiary.initValidateForm();
+                /* tagify */
+                commons.util.tagify("#tagListStr");
                 // checkbox init
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                 // tinymce editor reset
@@ -62,6 +64,8 @@
 
                     /* jquery :: validation */
                     JrnlDiary.initValidateForm();
+                    /* tagify */
+                    commons.util.tagify("#tagListStr");
                     // checkbox init
                     commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                     // tinymce editor reset

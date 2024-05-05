@@ -11,5 +11,5 @@ REPLACE INTO auth_role(auth_cd, auth_nm, auth_level, top_auth_cd, sort_ordr, use
 REPLACE INTO auth_role(auth_cd, auth_nm, auth_level, top_auth_cd, sort_ordr, use_yn, regstr_id) VALUES ('DEV', '개발자', 99, null, 99, 'Y', 'system');
 
 -- 필수 :: (복합키) 시퀀스 정보 추가
-REPLACE INTO CMM_SEQEUCE(SEQ_ID, SEQ_NM, SEQ_VAL) VALUES (1, 'POST_NO', 1);
+REPLACE INTO cmm_seqeuce(SEQ_ID, SEQ_NM, SEQ_VAL) VALUES (1, 'POST_NO', 1);
 

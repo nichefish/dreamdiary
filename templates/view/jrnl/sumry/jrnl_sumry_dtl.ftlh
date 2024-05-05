@@ -76,15 +76,48 @@
         <div class="row p-5">
             <label class="d-flex align-items-center my-2" for="title">
                 <span class="text-gray-700 fs-6 ps-5 fw-bolder">
+                    일기
+                    <i class="bi bi-book fs-4 pe-1"></i>
+                </span>
+            </label>
+            <#list post.sumryCnDiaryList![] as sumryCn>
+                <div class="row jrnl-item">
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:85px;">
+                        <div>
+                            # ${sumryCn.idx!}
+                        </div>
+                    </div>
+                    <div class="col py-3 jrnl-sumry-cn">
+                        ${(sumryCn.cn!"-")?no_esc}
+                    </div>
+                    <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
+                        <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                onclick="JrnlSumryCn.mdfModal(${sumryCn.postNo!});"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
+                            <i class="bi bi-pencil-square p-0"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-light-danger btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                onclick="JrnlSumryCn.delAjax(${sumryCn.postNo!});"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.del"/>">
+                            <i class="bi bi-trash p-0"></i>
+                        </button>
+                    </div>
+                </div>
+            </#list>
+        </div>
+        <div class="row p-5">
+            <label class="d-flex align-items-center my-2" for="title">
+                <span class="text-gray-700 fs-6 ps-5 fw-bolder">
                     꿈
                     <i class="bi bi-moon-stars fs-4 pe-1"></i>
                 </span>
             </label>
-            <#list post.sumryCnList![] as sumryCn>
+            <#list post.sumryCnDreamList![] as sumryCn>
                 <div class="row jrnl-item">
                     <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:85px;">
                         <div>
-                            # ${sumryCn?counter}
+                            # ${sumryCn.idx!}
                         </div>
                     </div>
                     <div class="col py-3 jrnl-sumry-cn">

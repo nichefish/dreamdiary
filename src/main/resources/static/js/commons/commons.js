@@ -702,5 +702,24 @@ commons.util = (function() {
             elmt.disabled = true;
             setTimeout(function(){ elmt.disabled=false; }, sec * 1000);
         },
+
+        /**
+         * tagify
+         */
+        tagify: function(selectorStr) {
+            // 게시물 태그 tagify
+            let boardTagInput = document.querySelector(selectorStr);
+            new Tagify(boardTagInput, {
+                maxTags: 10,
+                // 특수문자 제외?몇몇개만 허용?
+                keepInvalidTags: false,
+                skipInvalid: true,
+                duplicates: false,
+                editTags: {
+                    clicks: 2,
+                    keepInvalid: false      // if after editing, tag is invalid, auto-revert
+                },
+            });
+        }
     }
 })();

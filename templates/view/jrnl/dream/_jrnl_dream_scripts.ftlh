@@ -18,7 +18,8 @@
 
                 /* jquery :: validation */
                 JrnlDream.initValidateForm();
-
+                /* tagify */
+                commons.util.tagify("#tagListStr");
                 // tinymce editor init
                 commons.tinymce.init('#tinymce_jrnlDreamCn', commons.tinymce.imgRegFunc);
                 commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", "");
@@ -61,7 +62,8 @@
 
                     /* jquery :: validation */
                     JrnlDream.initValidateForm();
-
+                    /* tagify */
+                    commons.util.tagify("#tagListStr");
                     // tinymce editor reset
                     commons.tinymce.init('#tinymce_jrnlDreamCn', commons.tinymce.imgRegFunc);
                     commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", rsltObj.cn);

@@ -143,8 +143,13 @@
 
         // 이중 대시로 묶인 부분을 회색으로 표시
         const grayPattern = new RegExp('(--)(.*?)(--)', 'g');
-        let grayText = highlightedText.replace(grayPattern, "<span class=\'text-muted\'>$1$2$3</span>");
-        return new Handlebars.SafeString(grayText);
+        let grayText = highlightedText.replace(grayPattern, "<span class=\'text-muted\'>-$2-</span>");
+
+        // !! !! 로 묶인 부분을 빨간색으로 표시하되, !! !! 제거
+        const redPattern = new RegExp('!!(.*?)!!', 'g');
+        let redText = grayText.replace(redPattern, "<span class='text-danger'>$1</span>");
+
+        return new Handlebars.SafeString(redText);
     });
 
     /*    let placeholderFunc = function(value, options) {

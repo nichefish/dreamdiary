@@ -6,33 +6,15 @@
 
 <script type="text/x-handlebars-template" id="jrnl_dream_reg_template">
     <#--begin::Row-->
-    <div class="row row-cols-lg-2 mb-3">
-        <div class="col-xl-2 col-2">
-            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="jrnlDt">저널 일자</label>
+    <div class="row">
+        <div id="board_tag_list_div">
+            <label class="mb-2">
+                <span class="text-gray-700 fs-6 fw-bolder">태그</span>
+                <span class="text-gray-500 fs-9 mx-2">※ 태그는 최대 10개, 50자까지 추가 가능합니다.</span>
+            </label>
         </div>
-        <div class="col-xl-3 col-5">
-            <input class="form-control form-control-solid" name="jrnlDt" id="jrnlDt" placeholder="저널 일자" value="{{jrnlDt}}" disabled />
-        </div>
-        <div class="col-xl-2 col-5">
-            <label class="col-form-label text-center fs-6 fw-bold mb-2" for="schdulResn">날짜미상</label>
-        </div>
-        <div class="col-xl-2 col-5 pt-2">
-            <div class="form-check form-switch form-check-custom form-check-solid">
-                <input class="form-check-input" type="checkbox" value="Y" name="useYn" id="useYn" {{checkedYn useYn}} />
-                <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedYnStyle useYn "color" "blue//gray"}}>
-                    {{^ifYn useYn}}미{{/ifYn}}사용
-                </label>
-            </div>
-        </div>
-        <div class="col-xl-1 col-1 pt-2">
-            <input class="form-control form-control-solid" name="yy" id="yy" placeholder="년도" value="{{jrnlDt}}" readonly/>
-        </div>
-        <div class="col-xl-1 col-1 pt-2">
-            <input class="form-control form-control-solid" name="mnth" id="mnth" placeholder="월" value="{{jrnlDt}}" readonly/>
-        </div>
-        <div class="col-xl-2 col-2 col-form-label"></div>
-        <div class="col-xl-5 col-5">
-            <span id="bgnDtSpan"></span>
+        <div class="col-xl-12 text-sm-start" id="tagSpan">
+            <input name="tag.tagListStr" id="tagListStr" class="form-control form-control-solid no-space" autocomplete="off" value="{{tag.tagListStr}}"/>
         </div>
     </div>
 </script>

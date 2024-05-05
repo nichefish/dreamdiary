@@ -40,7 +40,7 @@
     })();
     $(document).ready(function() {
         Page.init();
-    })
+    });
 </script>
 
 <!--begin::Card-->

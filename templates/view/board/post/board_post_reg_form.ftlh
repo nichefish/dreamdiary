@@ -26,9 +26,10 @@
                 BoardPost.initValidateForm()
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
-
-                commons.validate.noSpaces(".no-space");        // 공백 자동 제거
-
+                /* tagify */
+                commons.util.tagify("#tagListStr");
+                // 공백 자동 제거
+                commons.validate.noSpaces(".no-space");
                 // 상단고정 여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("fxdYn", "고정//해제", "blue//gray");
                 // 수정일자변경여부 클릭시 글씨 변경

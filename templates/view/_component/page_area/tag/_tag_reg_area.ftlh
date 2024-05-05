@@ -2,37 +2,6 @@
  * 레이아웃 > 태그 모듈
  -->
 
-<script>
-    const Tags = (function() {
-        return {
-            init: function () {
-                // 게시물 태그 tagify
-                let boardTagInput = document.querySelector("#tagListStr");
-                <#if (isMdf!false)>
-                    <#if post.tag??>
-                        boardTagInput.value = "${post.tag.tagListStr!}";
-                    </#if>
-                </#if>
-                new Tagify(boardTagInput, {
-                    maxTags: 10,
-                    // pattern: commons.validate.ipv4regex,
-                    // 특수문자 제외?몇몇개만 허용?
-                    keepInvalidTags: false,
-                    skipInvalid: true,
-                    duplicates: false,
-                    editTags: {
-                        clicks: 2,
-                        keepInvalid: false      // if after editing, tag is invalid, auto-revert
-                    },
-                });
-            }
-        }
-    })();
-    $(document).ready(function () {
-        Tags.init();
-    });
-</script>
-
 <#--begin::Row-->
 <div class="row">
     <div id="board_tag_list_div">
