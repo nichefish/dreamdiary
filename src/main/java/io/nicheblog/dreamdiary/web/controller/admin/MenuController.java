@@ -182,8 +182,7 @@ public class MenuController
     @ResponseBody
     public ResponseEntity<AjaxResponse> mainMenuListAjax(
             @ModelAttribute("searchParam") MenuSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final ModelMap model
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -193,7 +192,7 @@ public class MenuController
         try {
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
             // 목록 조회 및 응답에 추가
             Page<MenuDto> menuList = menuService.getMainMenuList(searchParam, pageRequest);
             ajaxResponse.setRsltList(menuList.getContent());

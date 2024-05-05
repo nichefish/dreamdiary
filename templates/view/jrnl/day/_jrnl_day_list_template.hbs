@@ -65,7 +65,7 @@
                                         {{#tag.list}}
                                             <span class="text-muted cursor-pointer pe-1" onclick="Tag.dtlAjax({{tag.refTagNo}});"
                                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                                                  title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
+                                                  title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
                                                 #<span class="border-bottom text-primary fw-lighter opacity-hover">{{tagNm}}</span>
                                             </span>
                                         {{/tag.list}}
@@ -106,11 +106,11 @@
                                 {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-75px d-flex-center">!중요</div>{{/ifYn}}
                                 {{{markdown cn}}}
                                 {{#if (exists tag.list)}}
-                                    <div class="mt-4">
+                                    <div class="ms-2 mt-4">
                                         {{#tag.list}}
                                             <span class="text-muted cursor-pointer pe-1" onclick="Tag.dtlAjax({{tag.refTagNo}});"
                                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                                                  title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
+                                                  title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
                                                 #<span class="border-bottom text-primary fw-lighter opacity-hover">{{tagNm}}</span>
                                             </span>
                                         {{/tag.list}}
@@ -140,14 +140,15 @@
                                 </div>
                             </div>
                             <div class="col py-3 jrnl-dream-cn">
+                                {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-75px d-flex-center">!중요</div>{{/ifYn}}
                                 <div class="ctgr-span ctgr-imprtc w-75px d-flex-center">({{elseDreamerNm}} 꿈)</div>
                                 {{{markdown cn}}}
                                 {{#if (exists tag.list)}}
-                                    <div class="mt-4">
+                                    <div class="ms-2 mt-4">
                                         {{#tag.list}}
                                             <span class="text-muted cursor-pointer pe-1" onclick="Tag.dtlAjax({{tag.refTagNo}});"
                                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                                                  title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
+                                                  title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
                                                 #<span class="border-bottom text-primary fw-lighter opacity-hover">{{tagNm}}</span>
                                             </span>
                                         {{/tag.list}}

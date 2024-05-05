@@ -264,7 +264,7 @@ public class NoticeController
      * 공지사항 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = Url.NOTICE_DTL)
+    @RequestMapping(Url.NOTICE_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeDtl(
             final @RequestParam("postNo") Integer key,
@@ -349,7 +349,7 @@ public class NoticeController
      * 공지사항 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = Url.NOTICE_MDF_FORM)
+    @RequestMapping(Url.NOTICE_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeMdfForm(
             final @RequestParam("postNo") Integer key,
@@ -439,8 +439,7 @@ public class NoticeController
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticePopupListAjax(
             final NoticeSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final ModelMap model
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

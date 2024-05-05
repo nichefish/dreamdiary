@@ -22,7 +22,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -64,8 +63,7 @@ public class JrnlDayApiController
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlDayListAjax(
             JrnlDayApiSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final ModelMap model
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -75,7 +73,7 @@ public class JrnlDayApiController
         try {
             Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
             Sort sort = Sort.by(Sort.Direction.ASC, "jrnlDt");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
             Page<JrnlDayApiDto> jrnlDayList = jrnlDayApiService.getPageDto(searchParamMap, pageRequest);
             ajaxResponse.setRsltList(jrnlDayList.getContent());
             isSuccess = true;

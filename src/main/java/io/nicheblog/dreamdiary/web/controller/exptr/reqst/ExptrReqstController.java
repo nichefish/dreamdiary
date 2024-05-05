@@ -252,7 +252,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = Url.EXPTR_REQST_DTL)
+    @RequestMapping(Url.EXPTR_REQST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstDtl(
             final @RequestParam("postNo") Integer key,
@@ -337,7 +337,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = Url.EXPTR_REQST_MDF_FORM)
+    @RequestMapping(Url.EXPTR_REQST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstMdfForm(
             final @RequestParam("postNo") Integer key,

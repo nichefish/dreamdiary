@@ -22,7 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,8 +59,7 @@ public class CommentController
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentListAjax(
             @ModelAttribute("searchParam") CommentSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final ModelMap model
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -71,7 +69,7 @@ public class CommentController
         try {
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
             // 목록 조회 및 응답에 추가
             Page<CommentDto.LIST> commentList = commentService.getPageDto(searchParam, pageRequest);
             ajaxResponse.setRsltList(commentList.getContent());

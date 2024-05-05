@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
@@ -9,8 +10,10 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDaySearchParam;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
@@ -49,6 +52,8 @@ public class JrnlDayController
 
     @Resource(name = "jrnlDayService")
     private JrnlDayService jrnlDayService;
+    @Resource(name = "tagService")
+    private TagService tagService;
 
     /**
      * 저널 일자 화면 조회
@@ -96,8 +101,7 @@ public class JrnlDayController
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlDayListAjax(
             JrnlDaySearchParam searchParam,
-            final LogActvtyParam logParam,
-            final ModelMap model
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -236,6 +240,44 @@ public class JrnlDayController
         try {
             // 삭제 처리
             isSuccess = jrnlDayService.delete(key);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 저널 태그 목록 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @GetMapping(value = {Url.JRNL_DREAM_TAG_LIST_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> jrnlDreamTagListAjax(
+            JrnlDaySearchParam searchParam,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 목록 조회 및 응답에 추가
+            searchParam.setContentType(ContentType.JRNL_DREAM.key);
+            List<TagDto> jrnlDreamTagList = tagService.getListDto(searchParam);
+            ajaxResponse.setRsltList(jrnlDreamTagList);
+
+            isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
