@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -57,10 +58,12 @@ public class JrnlDayDto
     /** 기준일자 (저널일자 또는 대략일자) */
     private String stdrdDt;
 
-    /** 저널 꿈 목록 */
-    private List<JrnlDreamDto> jrnlDreamList;
     /** 저널 일기 목록 */
     private List<JrnlDiaryDto> jrnlDiaryList;
+    /** 저널 꿈 목록 */
+    private List<JrnlDreamDto> jrnlDreamList;
+    /** 저널 꿈 (타인) 목록 */
+    private List<JrnlDreamDto> jrnlElseDreamList;
 
     @Override
     public Integer getKey() {
@@ -73,6 +76,10 @@ public class JrnlDayDto
     public String getStdrdDt() {
         if (!StringUtils.isEmpty(this.jrnlDt)) return jrnlDt;
         return aprxmtDt;
+    }
+    /** 꿈 목록 보유여부 */
+    public Boolean getHasDreamList() {
+        return !CollectionUtils.isEmpty(this.jrnlDreamList) || !CollectionUtils.isEmpty(this.jrnlElseDreamList);
     }
 
     /* ----- */

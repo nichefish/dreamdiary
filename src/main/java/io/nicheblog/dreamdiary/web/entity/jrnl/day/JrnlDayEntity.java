@@ -99,15 +99,6 @@ public class JrnlDayEntity
     @Comment("대략일자 (날짜미상시 해당일자 이후에 표기)")
     private Date aprxmtDt;
 
-    /** 저널 꿈 목록 */
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
-    @Fetch(FetchMode.SELECT)
-    @OrderBy("idx ASC")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("댓글 목록")
-    private List<JrnlDreamEntity> jrnlDreamList;
-
     /** 저널 일기 목록 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
@@ -116,6 +107,27 @@ public class JrnlDayEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("댓글 목록")
     private List<JrnlDiaryEntity> jrnlDiaryList;
+
+    /** 저널 꿈 목록 */
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.SELECT)
+    @Where(clause = "else_dream_yn = 'N'")
+    @OrderBy("idx ASC")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("댓글 목록")
+    private List<JrnlDreamEntity> jrnlDreamList;
+
+    /** 저널 꿈 (타인) 목록 */
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.SELECT)
+    @Where(clause = "else_dream_yn = 'Y'")
+    @OrderBy("idx ASC")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("댓글 목록")
+    private List<JrnlDreamEntity> jrnlElseDreamList;
+
 
     /* ----- */
 
