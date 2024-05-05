@@ -45,7 +45,9 @@ public interface CommentMapstruct
     @Override
     CommentEntity toEntity(final CommentDto.DTL dto) throws Exception;
 
-
+    /**
+     * Dto -> Entity
+     */
     CommentEntity toEntity(final CommentDto.LIST dto) throws Exception;
 
     /**

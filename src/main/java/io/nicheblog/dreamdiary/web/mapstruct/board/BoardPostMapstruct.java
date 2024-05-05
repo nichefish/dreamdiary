@@ -56,7 +56,6 @@ public interface BoardPostMapstruct
      */
     @Override
     @Mapping(target = "contentType", source = "boardCd")
-    // @Mapping(target = "tagList", expression = "java(dto.getTagEntityList())")
     BoardPostEntity toEntity(final BoardPostDto.DTL dto) throws Exception;
 
     /**
@@ -65,6 +64,5 @@ public interface BoardPostMapstruct
     @Override
     @Mapping(target = "contentType", source = "boardCd")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    // @Mapping(target = "tagList", expression = "java(dto.getTagEntityList())")
     void updateFromDto(final BoardPostDto.DTL dto, final @MappingTarget BoardPostEntity entity) throws Exception;
 }

@@ -7,6 +7,9 @@ import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * ContentTagMapstruct
  * <pre>
@@ -40,10 +43,24 @@ public interface ContentTagMapstruct
     ContentTagDto toListDto(final ContentTagEntity entity) throws Exception;
 
     /**
+     * EntityList to DtoList
+     */
+    default List<ContentTagDto> toDtoList(List<ContentTagEntity> entityList) {
+        return entityList.stream()
+                .map(entity -> {
+                    try {
+                        return this.toDto(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Dto -> Entity
      */
     @Override
-    // @Mapping(target = "tag", expression = "java(TagMapstruct.INSTANCE.toEntity(dto.getTag()))")
     ContentTagEntity toEntity(final ContentTagDto dto) throws Exception;
 
     /**

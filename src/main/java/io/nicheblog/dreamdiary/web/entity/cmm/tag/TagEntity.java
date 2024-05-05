@@ -1,8 +1,6 @@
 package io.nicheblog.dreamdiary.web.entity.cmm.tag;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * TagEntity
@@ -70,21 +67,5 @@ public class TagEntity
      */
     public TagEntity(final String tagNm) {
         this.tagNm = tagNm;
-    }
-
-    /**
-     * entityList -> dtoList
-     */
-    public List<ContentTagDto> getContentTagDtoList() throws Exception {
-        if (CollectionUtils.isEmpty(this.contentTagList)) return null;
-        return this.contentTagList.stream()
-                .map(entity -> {
-                    try {
-                        return ContentTagMapstruct.INSTANCE.toDto(entity);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
     }
 }

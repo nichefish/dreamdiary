@@ -28,7 +28,7 @@ public interface TagMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "contentTagList", expression = "java(entity.getContentTagDtoList())")
+    @Mapping(target = "contentTagList", expression = "java(ContentTagMapstruct.INSTANCE.toDtoList(entity.getContentTagList()))")
     TagDto toDto(final TagEntity entity) throws Exception;
 
     /**
@@ -41,7 +41,7 @@ public interface TagMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "contentTagList", expression = "java(entity.getContentTagDtoList())")
+    @Mapping(target = "contentTagList", expression = "java(ContentTagMapstruct.INSTANCE.toDtoList(entity.getContentTagList()))")
     TagDto toListDto(final TagEntity entity) throws Exception;
 
     /**

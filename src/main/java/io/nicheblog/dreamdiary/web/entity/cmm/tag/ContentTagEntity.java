@@ -63,7 +63,7 @@ public class ContentTagEntity
     private String refContentType;
 
     /** 태그 정보 */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ref_tag_no", referencedColumnName = "tag_no", updatable = false, insertable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     private TagSmpEntity tag;
@@ -81,44 +81,4 @@ public class ContentTagEntity
         this.refPostNo = clsfKey.getPostNo();
         this.refContentType = clsfKey.getContentType();
     }
-
-    /**
-     * entityList -> dtoList
-     */
-    // public List<BoardPostTagDto> getPostTagDtoList() throws Exception {
-    //     if (CollectionUtils.isEmpty(this.postTagList)) return null;
-    //     List<BoardPostTagDto> dtoList = new ArrayList<>();
-    //     for (BoardPostTagEntity e : this.postTagList) {
-    //         BoardPostTagDto d = BoardPostTagMapstruct.INSTANCE.toDto(e);
-    //         dtoList.add(d);
-    //     }
-    //     return dtoList;
-    // }
-
-    /**
-     * entityList -> postList
-     */
-    // public List<BoardPostDto> getPostDtoList() throws Exception {
-    //     if (CollectionUtils.isEmpty(this.postTagList)) return null;
-    //     List<BoardPostDto> postList = new ArrayList<>();
-    //     for (BoardPostTagEntity e : this.postTagList) {
-    //         BoardPostTagDto d = BoardPostTagMapstruct.INSTANCE.toDto(e);
-    //         if (d.getPost() != null) postList.add(d.getPost());
-    //     }
-    //     return postList;
-    // }
-
-    /**
-     * entityList -> postList
-     */
-    // public List<NoticeDto> getNoticeDtoList() throws Exception {
-    //     if (CollectionUtils.isEmpty(this.postTagList)) return null;
-    //     List<NoticeDto> noticeList = new ArrayList<>();
-    //     for (BoardPostTagEntity e : this.postTagList) {
-    //         BoardPostTagDto d = BoardPostTagMapstruct.INSTANCE.toDto(e);
-    //         if (d.getNotice() != null) noticeList.add(d.getNotice());
-    //     }
-    //     return noticeList;
-    // }
-
 }

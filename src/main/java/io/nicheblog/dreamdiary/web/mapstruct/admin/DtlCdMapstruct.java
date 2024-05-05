@@ -48,7 +48,7 @@ public interface DtlCdMapstruct
         return entityList.stream()
                 .map(entity -> {
                     try {
-                        DtlCdDto dto = DtlCdMapstruct.INSTANCE.toDto(entity);
+                        DtlCdDto dto = this.toDto(entity);
                         dto.setRnum(i.getAndIncrement());
                         return dto;
                     } catch (Exception e) {
@@ -78,7 +78,7 @@ public interface DtlCdMapstruct
         return dtoList.stream()
                 .map(dto -> {
                     try {
-                        return DtlCdMapstruct.INSTANCE.toEntity(dto);
+                        return this.toEntity(dto);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
