@@ -8,7 +8,24 @@
             /** form validation init */
             initValidateForm: function() {
                 /* jquery :: validation */
-                commons.validate.validateForm("#jrnlDreamRegForm", JrnlDream.regAjax);
+                $("#jrnlDreamRegForm").validate({
+                    submitHandler: function() {
+                        JrnlDream.regAjax();
+                    },
+                    errorPlacement : function(error, element) {
+                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
+                    },
+                    rules: {
+                        elseDreamerNm: {
+                            required: function() {
+                                return $("#jrnlDreamRegForm #elseDreamYn").prop(":checked", false);
+                            }
+                        },
+                    },
+                });
+                $("#elseDreamYn").change(function() {
+                    $("#elseDreamerNm").valid(); // 체크박스 상태 변경시 details 필드 재검증
+                });
             },
             /** 저널 꿈 등록 모달 팝업 호출 */
             regModal: function(jrnlDayNo, stdrdDt) {
@@ -20,7 +37,6 @@
                 JrnlDream.initValidateForm();
                 /* tagify */
                 commons.util.tagify("#tagListStr");
-
                 // checkbox init
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                 // checkbox init
@@ -68,11 +84,18 @@
 
                     commons.util.handlebarsTemplate(rsltObj, "jrnl_dream_reg_header");
                     commons.util.handlebarsTemplate(rsltObj, "jrnl_dream_reg", "show");
-
                     /* jquery :: validation */
                     JrnlDream.initValidateForm();
                     /* tagify */
                     commons.util.tagify("#tagListStr");
+                    // checkbox init
+                    commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
+                    // checkbox init
+                    commons.util.chckboxLabel("elseDreamYn", "해당//미해당", "blue//gray", function() {
+                        $("#elseDreamerNmDiv").removeClass("d-none");
+                    }, function() {
+                        $("#elseDreamerNmDiv").addClass("d-none");
+                    });
                     // tinymce editor reset
                     commons.tinymce.init('#tinymce_jrnlDreamCn', commons.tinymce.imgRegFunc);
                     commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", rsltObj.cn);
