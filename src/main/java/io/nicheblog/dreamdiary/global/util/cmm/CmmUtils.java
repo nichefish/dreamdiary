@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * CmmUtils
@@ -197,5 +199,35 @@ public class CmmUtils {
             strList.add(jArray.getJSONObject(i).getString("value"));
         }
         return strList;
+    }
+
+    /**
+     * 공통 > 마크다운 처리
+     */
+    public static String markdown(String text) {
+        // 일반 큰따옴표로 묶인 부분을 하이라이트 색상으로 표시
+        Pattern highlightPattern = Pattern.compile("\"(.*?)\"");
+        Matcher highlightMatcher = highlightPattern.matcher(text);
+        while (highlightMatcher.find()) {
+            String group = highlightMatcher.group(1);
+            text = text.replace("\"" + group + "\"", "<span class=\"text-dialog\">\"" + group + "\"</span>");
+        }
+
+        // 이중 대시로 묶인 부분을 회색으로 표시
+        Pattern grayPattern = Pattern.compile("--(.*?)(--)");
+        Matcher grayMatcher = grayPattern.matcher(text);
+        while (grayMatcher.find()) {
+            String group = grayMatcher.group(1);
+            text = text.replace("--" + group + "--", "<span class='text-muted'>-" + group + "-</span>");
+        }
+
+        // !! !! 로 묶인 부분을 빨간색으로 표시하되, !! !! 제거
+        Pattern redPattern = Pattern.compile("!!(.*?)!!");
+        Matcher redMatcher = redPattern.matcher(text);
+        while (redMatcher.find()) {
+            String group = redMatcher.group(1);
+            text = text.replace("!!" + group + "!!", "<span class='text-danger'>" + group + "</span>");
+        }
+        return text;
     }
 }

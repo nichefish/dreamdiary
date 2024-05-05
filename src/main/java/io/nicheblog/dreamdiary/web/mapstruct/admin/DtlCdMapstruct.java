@@ -6,6 +6,10 @@ import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+
 /**
  * DtlCdMapstruct
  * <pre>
@@ -37,6 +41,24 @@ public interface DtlCdMapstruct
     DtlCdDto toListDto(final DtlCdEntity entity) throws Exception;
 
     /**
+     * EntityList to DtoList
+     */
+    default List<DtlCdDto> toDtoList(List<DtlCdEntity> entityList) {
+        AtomicLong i = new AtomicLong(1);
+        return entityList.stream()
+                .map(entity -> {
+                    try {
+                        DtlCdDto dto = DtlCdMapstruct.INSTANCE.toDto(entity);
+                        dto.setRnum(i.getAndIncrement());
+                        return dto;
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Dto -> Entity
      */
     @Override
@@ -48,4 +70,19 @@ public interface DtlCdMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(final DtlCdDto dto, final @MappingTarget DtlCdEntity entity) throws Exception;
+
+    /**
+     * DtoList to EntityList
+     */
+    default List<DtlCdEntity> toEntityList(List<DtlCdDto> dtoList) {
+        return dtoList.stream()
+                .map(dto -> {
+                    try {
+                        return DtlCdMapstruct.INSTANCE.toEntity(dto);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 }

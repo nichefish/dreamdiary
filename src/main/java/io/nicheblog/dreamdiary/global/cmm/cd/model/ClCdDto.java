@@ -1,16 +1,12 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.model;
 
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
-import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,21 +49,6 @@ public class ClCdDto
     /** 상세코드 개수 */
     @Builder.Default
     private Integer dtlCdCnt = 0;
-
-    /* --- */
-
-    /**
-     * 상세코드 entity 목록 반환
-     */
-    public List<DtlCdEntity> getDtlCdEntityList() throws Exception {
-        if (CollectionUtils.isEmpty(this.dtlCdList)) return null;
-        List<DtlCdEntity> dtlCdEntityList = new ArrayList<>();
-        for (DtlCdDto dtlCd : this.dtlCdList) {
-            DtlCdEntity entity = DtlCdMapstruct.INSTANCE.toEntity(dtlCd);
-            dtlCdEntityList.add(entity);
-        }
-        return dtlCdEntityList;
-    }
 
     /* ----- */
 

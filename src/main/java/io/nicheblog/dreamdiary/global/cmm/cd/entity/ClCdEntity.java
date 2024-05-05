@@ -1,11 +1,9 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.entity;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
-import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -15,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -96,22 +93,7 @@ public class ClCdEntity
     /* ----- */
 
     /**
-     * 상세코드 dto 목록 반환
-     */
-    public List<DtlCdDto> getDtlCdDtoList() throws Exception {
-        if (CollectionUtils.isEmpty(this.dtlCdList)) return null;
-        List<DtlCdDto> dtlCdDtoList = new ArrayList<>();
-        long i = 1;
-        for (DtlCdEntity dtlCdEntity : this.dtlCdList) {
-            DtlCdDto dto = DtlCdMapstruct.INSTANCE.toDto(dtlCdEntity);
-            dto.setRnum(i++);
-            dtlCdDtoList.add(dto);
-        }
-        return dtlCdDtoList;
-    }
-
-    /** 서브엔티티 List 처리를 위한 Setter */
-    /**
+     * 서브엔티티 List 처리를 위한 Setter
      * 한 번 Entity가 생성된 이후부터는 새 List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
      */
     public void setDtlCdList(final List<DtlCdEntity> dtlCdList) {

@@ -3,8 +3,6 @@ package io.nicheblog.dreamdiary.web.mapstruct.admin;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
-import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -18,7 +16,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ClCdMapstruct
         extends BaseCrudMapstruct<ClCdDto, ClCdDto, ClCdEntity> {
 
@@ -29,7 +27,7 @@ public interface ClCdMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "dtlCdList", expression = "java(entity.getDtlCdDtoList())")
+    @Mapping(target = "dtlCdList", expression = "java(DtlCdMapstruct.INSTANCE.toDtoList(entity.getDtlCdList()))")
     ClCdDto toDto(final ClCdEntity entity) throws Exception;
 
     /**
@@ -43,7 +41,7 @@ public interface ClCdMapstruct
      * Dto -> Entity
      */
     @Override
-    @Mapping(target = "dtlCdList", expression = "java(dto.getDtlCdEntityList())")
+    @Mapping(target = "dtlCdList", expression = "java(DtlCdMapstruct.INSTANCE.toEntityList(dto.getDtlCdList()))")
     ClCdEntity toEntity(final ClCdDto dto) throws Exception;
 
     /**
@@ -51,6 +49,6 @@ public interface ClCdMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "dtlCdList", expression = "java(dto.getDtlCdEntityList())")
+    @Mapping(target = "dtlCdList", expression = "java(DtlCdMapstruct.INSTANCE.toEntityList(dto.getDtlCdList()))")
     void updateFromDto(final ClCdDto dto, final @MappingTarget ClCdEntity entity) throws Exception;
 }
