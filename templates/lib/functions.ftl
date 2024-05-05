@@ -44,10 +44,3 @@
 	<#return beforeLastDot>
 </#function>
 
-<#--
- * markdown: 전달받은 텍스트를 마크다운 처리한다. (커스텀 로직)
- -->
-<#function markdown text>
-	<#local newText = text?replace(r'--(.*?)--', r'<span class="gray">\1</span>', 'r')>
-	<#return newText?replace(r'"(.*?)"', r'<span class="highlight">\1</span>', 'r')>
-</#function>

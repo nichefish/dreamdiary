@@ -27,6 +27,8 @@ public class BasePostDto
     protected String title;
     /** 내용 */
     protected String cn;
+    /** 마크다운 처리된 내용 */
+    private String markdownCn;
 
     /** 글분류 코드 */
     protected String ctgrClCd;
