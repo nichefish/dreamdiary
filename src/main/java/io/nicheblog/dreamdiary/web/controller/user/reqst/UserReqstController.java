@@ -61,7 +61,7 @@ public class UserReqstController
      * 계정 정보 신청 화면 조회
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @RequestMapping(value = Url.USER_REQST_REG_FORM)
+    @RequestMapping(Url.USER_REQST_REG_FORM)
     public String userReqstRegForm(
             final LogActvtyParam logParam,
             final ModelMap model

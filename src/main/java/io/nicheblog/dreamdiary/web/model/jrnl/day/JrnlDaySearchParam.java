@@ -24,4 +24,7 @@ public class JrnlDaySearchParam
     private Integer yy;
     /** 제목 */
     private Integer mnth;
+
+    /** 컨텐츠 타입 */
+    private String contentType;
 }

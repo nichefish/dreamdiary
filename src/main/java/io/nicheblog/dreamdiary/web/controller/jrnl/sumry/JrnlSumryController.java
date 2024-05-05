@@ -97,8 +97,7 @@ public class JrnlSumryController
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlSumryListAjax(
             JrnlSumrySearchParam searchParam,
-            final LogActvtyParam logParam,
-            final ModelMap model
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

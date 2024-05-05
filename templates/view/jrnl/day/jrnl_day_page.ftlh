@@ -33,15 +33,30 @@
                 if (yyCookie === undefined && mnthCookie === undefined) $("#jrnl_aside #yy").val(commons.date.getCurrYyStr());
                 // 목록 조회
                 JrnlDay.listAjax();
+                // Page.tagListAjax();
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
             },
+            // tagListAjax: function() {
+            //     const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
+            //     let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
+            //     commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+            //         if (!res.rslt) {
+            //             if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+            //             return false;
+            //         }
+            //         commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_tag_list");
+            //     });
+            // }
         }
     })();
     $(document).ready(function() {
         Page.init();
     });
 </script>
+
+<#--#include:: component:: 태그 클릭 필터링-->
+<#include "/view/_component/tag/_tag_list_header.ftlh">
 
 <!--begin::Card-->
 <div class="card post">
@@ -60,6 +75,7 @@
 
 <#--include::modals-->
 <#include "/view/jrnl/day/_jrnl_day_list_template.hbs">
+<#include "/view/jrnl/dream/_jrnl_dream_tag_list_template.hbs">
 <#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 <#include "/view/jrnl/diary/_jrnl_diary_reg_modal.ftlh">

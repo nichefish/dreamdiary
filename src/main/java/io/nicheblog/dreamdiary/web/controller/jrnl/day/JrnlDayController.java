@@ -75,6 +75,8 @@ public class JrnlDayController
         try {
             // 년도 추가
             model.addAttribute("yy", null);
+            // 컨텐츠 타입에 맞는 태그 목록 조회
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.JRNL_DREAM));
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

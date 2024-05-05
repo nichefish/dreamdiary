@@ -61,10 +61,10 @@ public class TagService
     /**
      * 컨텐츠 타입에 해당하는 태그만 INNER-JOIN으로 조회
      */
-    public List<TagDto> getContentSpecificTagList(ContentType contentType) throws Exception {
+    public List<TagDto> getContentSpecificTagList(ContentType contentType) {
         return this.getContentSpecificTagList(contentType.key);
     }
-    public List<TagDto> getContentSpecificTagList(String contentType) throws Exception {
+    public List<TagDto> getContentSpecificTagList(String contentType) {
         List<TagEntity> contentSpeficitTagList = tagRepository.findAll(tagSpec.getContentSpecificTag(contentType));
         return contentSpeficitTagList.stream()
                 .map(entity -> {

@@ -44,7 +44,7 @@ public class NotionController
     private final String NOTION_PUBLIC = "";
 
     /**
-     * 파일시스템 화면 조회
+     * 노션 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(Url.NOTION_HOME)

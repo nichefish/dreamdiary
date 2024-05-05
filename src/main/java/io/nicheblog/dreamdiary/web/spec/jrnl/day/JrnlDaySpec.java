@@ -58,7 +58,7 @@ public class JrnlDaySpec
         // Use jrnlDt if available, otherwise aprxmtDt
         Expression<Date> jrnlDtExp = root.get("jrnlDt");
         Expression<Date> aprxmtDtExp = root.get("aprxmtDt");
-        Expression<Date> effectiveDateExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
+        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -72,12 +72,12 @@ public class JrnlDaySpec
                     predicate.add(builder.lessThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "yy":
-                    Expression<Integer> yearExp = builder.function("YEAR", Integer.class, effectiveDateExp);
+                    Expression<Integer> yearExp = builder.function("YEAR", Integer.class, effectiveDtExp);
                     predicate.add(builder.equal(yearExp, searchParamMap.get(key)));
                     continue;
                 case "mnth":
-                    // Month filter: Extract month from effectiveDateExp and compare with 'mnth'
-                    Expression<Integer> monthExp = builder.function("MONTH", Integer.class, effectiveDateExp);
+                    // Month filter: Extract month from effectiveDtExp and compare with 'mnth'
+                    Expression<Integer> monthExp = builder.function("MONTH", Integer.class, effectiveDtExp);
                     predicate.add(builder.equal(monthExp, searchParamMap.get(key)));
                     continue;
                 default:

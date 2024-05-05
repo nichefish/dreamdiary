@@ -2,16 +2,17 @@ package io.nicheblog.dreamdiary.web.spec.cmm.tag;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * TagSpec
@@ -40,6 +41,37 @@ public class TagSpec
     }
 
     /**
+     * default: 검색 조건 목록 반환
+     */
+    @Override
+    public Specification<TagEntity> searchWith(final Map<String, Object> searchParamMap) {
+        // filter
+        searchParamMap.remove("backToList");
+        searchParamMap.remove("actvtyCtgr");
+
+        String contentType = (String) searchParamMap.get("contentType");
+
+        return (root, query, builder) -> {
+            List<Predicate> predicate = new ArrayList<>();
+
+            try {
+                // basePredicte 먼저 처리 후 나머지에 대해 처리
+                predicate = getPredicateWithParams(searchParamMap, root, builder);
+                // 저널 꿈 관련 처리
+                if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+                    // Root<JrnlDreamEntity> dreamRoot = query.from(JrnlDreamEntity.class);
+                    // List<Predicate> jrnlDreamPredicate = getJrnlDreamPredicate(searchParamMap, root, dreamRoot, builder);
+                    // predicate.addAll(jrnlDreamPredicate);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.postQuery(root, query, builder);
+            return builder.and(predicate.toArray(new Predicate[0]));
+        };
+    }
+
+    /**
      * 인자별로 구체적인 검색 조건 세팅
      */
     @Override
@@ -54,6 +86,9 @@ public class TagSpec
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
+                case "contentType":
+                    Join<TagEntity, ContentTagEntity> contentTagList = root.join("contentTagList", JoinType.INNER);
+                    predicate.add(builder.equal(contentTagList.get("refContentType"), searchParamMap.get(key)));
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
                     try {
@@ -82,19 +117,57 @@ public class TagSpec
     /** 
      * 컨텐츠 타입에 맞는 태그 목록 조회 
      */
-    public Specification<TagEntity> getContentSpecificTag(ContentType contentType) {
-        return this.getContentSpecificTag(contentType.key);
-    }
     public Specification<TagEntity> getContentSpecificTag(String contentType) {
-        return (root, query, builder) -> {
-            List<Predicate> predicate = new ArrayList<>();
-            try {
-                Join<TagEntity, ContentTagEntity> contentTagList = root.join("contentTagList", JoinType.INNER);
-                predicate.add(builder.equal(contentTagList.get("refContentType"), contentType));
-            } catch (Exception e) {
-                e.printStackTrace();
+        Map<String, Object> searchParamMap = new HashMap<>(){{
+            put("contentType", contentType);
+        }};
+        return this.searchWith(searchParamMap);
+    }
+
+    /**
+     * 컨텐츠 타입에 맞는 꿈 태그 목록 조회
+     */
+    public List<Predicate> getJrnlDreamPredicate(
+            final Map<String, Object> searchParamMap,
+            final Root<TagEntity> root,
+            final Root<JrnlDreamEntity> dreamRoot,
+            final CriteriaBuilder builder
+    ) throws Exception {
+
+        List<Predicate> predicate = new ArrayList<>();
+        
+        // 태그 조인
+        // Join<TagEntity, ContentTagEntity> contentTagList = root.join("contentTagList", JoinType.INNER);
+        Join<JrnlDreamEntity, ContentTagEntity> contentTag = dreamRoot.join("tag").join("list", JoinType.INNER);
+
+        // jrnlDay 날짜로 검색
+        Join<JrnlDreamEntity, JrnlDayEntity> jrnlDayJoin = dreamRoot.join("jrnlDay", JoinType.INNER);
+        Expression<Date> jrnlDtExp = jrnlDayJoin.get("jrnlDt");
+        Expression<Date> aprxmtDtExp = jrnlDayJoin.get("aprxmtDt");
+        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
+
+        // 파라미터 비교
+        for (String key : searchParamMap.keySet()) {
+            switch (key) {
+                case "searchStartDt":
+                    // 기간 검색
+                    predicate.add(builder.greaterThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
+                    continue;
+                case "searchEndDt":
+                    // 기간 검색
+                    predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
+                    continue;
+                case "yy":
+                    Expression<Integer> yearExp = builder.function("YEAR", Integer.class, effectiveDtExp);
+                    predicate.add(builder.equal(yearExp, searchParamMap.get(key)));
+                    continue;
+                case "mnth":
+                    // Month filter: Extract month from effectiveDtExp and compare with 'mnth'
+                    Expression<Integer> monthExp = builder.function("MONTH", Integer.class, effectiveDtExp);
+                    predicate.add(builder.equal(monthExp, searchParamMap.get(key)));
+                    continue;
             }
-            return builder.and(predicate.toArray(new Predicate[0]));
-        };
+        }
+        return predicate;
     }
 }
