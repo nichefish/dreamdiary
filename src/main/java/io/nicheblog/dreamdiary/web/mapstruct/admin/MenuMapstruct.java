@@ -53,7 +53,7 @@ public interface MenuMapstruct
         return entityList.stream()
                 .map(entity -> {
                     try {
-                        return MenuMapstruct.INSTANCE.toDto(entity);
+                        return this.toDto(entity);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
