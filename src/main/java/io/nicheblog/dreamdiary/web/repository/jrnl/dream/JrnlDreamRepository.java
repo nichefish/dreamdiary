@@ -26,6 +26,6 @@ public interface JrnlDreamRepository
     @Query("SELECT MAX(dream.idx) " +
             "FROM JrnlDreamEntity dream " +
             "INNER JOIN JrnlDayEntity day ON dream.jrnlDayNo = day.postNo " +
-            "WHERE dream.jrnlDayNo = :jrnlDayNo")
+            "WHERE dream.jrnlDayNo = :jrnlDayNo AND NOT(dream.elseDreamerNm = 'Y')")
     Optional<Integer> findLastIndexByJrnlDay(final @Param("jrnlDayNo") Integer jrnlDayNo);
 }

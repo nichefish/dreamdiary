@@ -60,6 +60,17 @@
                             <div class="col py-3 jrnl-diary-cn">
                                 {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-75px d-flex-center">!중요</div>{{/ifYn}}
                                 {{{cn}}}
+                                {{#if (exists tag.list)}}
+                                    <div class="mt-4">
+                                        {{#tag.list}}
+                                            <span class="text-muted cursor-pointer pe-1" onclick="Tag.dtlAjax({{tag.refTagNo}});"
+                                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                                                  title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
+                                                #<span class="border-bottom text-primary fw-lighter opacity-hover">{{tagNm}}</span>
+                                            </span>
+                                        {{/tag.list}}
+                                    </div>
+                                {{/if}}
                             </div>
                             <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
                             <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
@@ -93,7 +104,19 @@
                             </div>
                             <div class="col py-3 jrnl-dream-cn">
                                 {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-75px d-flex-center">!중요</div>{{/ifYn}}
+                                {{#ifYn elseDreamYn}}<div class="ctgr-span ctgr-imprtc w-75px d-flex-center">({{elseDreamerNm}} 꿈)</div>{{/ifYn}}
                                 {{{markdown cn}}}
+                                {{#if (exists tag.list)}}
+                                    <div class="mt-4">
+                                        {{#tag.list}}
+                                            <span class="text-muted cursor-pointer pe-1" onclick="Tag.dtlAjax({{tag.refTagNo}});"
+                                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                                                  title="해당 태그가 등록된 게시물 목록&#10;팝업을 호출합니다.">
+                                                #<span class="border-bottom text-primary fw-lighter opacity-hover">{{tagNm}}</span>
+                                            </span>
+                                        {{/tag.list}}
+                                    </div>
+                                {{/if}}
                             </div>
                             <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
                             <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">

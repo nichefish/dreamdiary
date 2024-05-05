@@ -1,12 +1,15 @@
 package io.nicheblog.dreamdiary.web.controller.jrnl.dream;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
@@ -81,6 +84,10 @@ public class JrnlDreamController
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+            if (isSuccess) {
+                // 태그 처리 :: 메인 로직과 분리
+                publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), jrnlDream.tag));
+            }
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
@@ -153,6 +160,10 @@ public class JrnlDreamController
             // 삭제 처리
             isSuccess = jrnlDreamService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            if (isSuccess) {
+                // 태그 처리 :: 메인 로직과 분리
+                publisher.publishEvent(new TagProcEvent(this, new BaseClsfKey(key, ContentType.JRNL_DREAM)));
+            }
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);

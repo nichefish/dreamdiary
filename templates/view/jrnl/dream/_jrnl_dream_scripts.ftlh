@@ -20,6 +20,15 @@
                 JrnlDream.initValidateForm();
                 /* tagify */
                 commons.util.tagify("#tagListStr");
+
+                // checkbox init
+                commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
+                // checkbox init
+                commons.util.chckboxLabel("elseDreamYn", "해당//미해당", "blue//gray", function() {
+                    $("#elseDreamerNmDiv").removeClass("d-none");
+                }, function() {
+                    $("#elseDreamerNmDiv").addClass("d-none");
+                });
                 // tinymce editor init
                 commons.tinymce.init('#tinymce_jrnlDreamCn', commons.tinymce.imgRegFunc);
                 commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", "");
