@@ -4,21 +4,17 @@ import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
-import io.nicheblog.dreamdiary.web.mapstruct.admin.MenuMapstruct;
-import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.annotations.*;
 
 import javax.persistence.Entity;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -123,20 +119,6 @@ public class MenuEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("하위메뉴 목록 조회")
     private List<MenuEntity> subMenuList;
-
-    /* ----- */
-
-    /**
-     * 하위메뉴 DTO 목록 반환
-     */
-    public List<MenuDto> getSubMenuDtoList() throws Exception {
-        if (CollectionUtils.isEmpty(this.subMenuList)) return new ArrayList<>();
-        List<MenuDto> subMenuDtoList = new ArrayList<>();
-        for (MenuEntity e : this.subMenuList) {
-            subMenuDtoList.add(MenuMapstruct.INSTANCE.toDto(e));
-        }
-        return subMenuDtoList;
-    }
 
     /* ----- */
 

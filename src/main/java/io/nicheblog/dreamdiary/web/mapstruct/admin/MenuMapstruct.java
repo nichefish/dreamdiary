@@ -8,6 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+
 /**
  * MenuMapstruct
  * <pre>
@@ -28,7 +32,7 @@ public interface MenuMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "subMenuList", expression = "java(entity.getSubMenuDtoList())")
+    @Mapping(target = "subMenuList", expression = "java(toDtoList(entity.getSubMenuList()))")
     @Mapping(target = "upperMenuNm", expression = "java(entity.getUpperMenu() != null ? entity.getUpperMenu().getMenuNm() : null)")
     MenuDto toDto(final MenuEntity entity) throws Exception;
 
@@ -37,9 +41,25 @@ public interface MenuMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "subMenuList", expression = "java(entity.getSubMenuDtoList())")
+    @Mapping(target = "subMenuList", expression = "java(toDtoList(entity.getSubMenuList()))")
     @Mapping(target = "upperMenuNm", expression = "java(entity.getUpperMenu() != null ? entity.getUpperMenu().getMenuNm() : null)")
     MenuDto toListDto(final MenuEntity entity) throws Exception;
+
+    /**
+     * EntityList to DtoList
+     */
+    default List<MenuDto> toDtoList(List<MenuEntity> entityList) {
+        AtomicLong i = new AtomicLong(1);
+        return entityList.stream()
+                .map(entity -> {
+                    try {
+                        return MenuMapstruct.INSTANCE.toDto(entity);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 
     /**
      * Dto -> Entity
