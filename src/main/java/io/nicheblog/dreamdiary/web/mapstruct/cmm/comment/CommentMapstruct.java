@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.comment;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
@@ -21,7 +21,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface CommentMapstruct
-        extends BaseCrudMapstruct<CommentDto.DTL, CommentDto.LIST, CommentEntity> {
+        extends BasePostMapstruct<CommentDto.DTL, CommentDto.LIST, CommentEntity> {
 
     CommentMapstruct INSTANCE = Mappers.getMapper(CommentMapstruct.class);
 

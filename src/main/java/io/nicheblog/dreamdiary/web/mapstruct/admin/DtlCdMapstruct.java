@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -44,6 +45,7 @@ public interface DtlCdMapstruct
      * EntityList to DtoList
      */
     default List<DtlCdDto> toDtoList(List<DtlCdEntity> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) return null;
         AtomicLong i = new AtomicLong(1);
         return entityList.stream()
                 .map(entity -> {
@@ -70,19 +72,4 @@ public interface DtlCdMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(final DtlCdDto dto, final @MappingTarget DtlCdEntity entity) throws Exception;
-
-    /**
-     * DtoList to EntityList
-     */
-    default List<DtlCdEntity> toEntityList(List<DtlCdDto> dtoList) {
-        return dtoList.stream()
-                .map(dto -> {
-                    try {
-                        return this.toEntity(dto);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
 }

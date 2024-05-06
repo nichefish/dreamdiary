@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.entity.exptr.prsnl;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
 import io.nicheblog.dreamdiary.web.model.cmm.CmmStus;
@@ -106,6 +107,17 @@ public class ExptrPrsnlPaprEntity
     @Column(name = "content_type", columnDefinition = "VARCHAR(50) DEFAULT 'EXPTR_PRSNL_PAPR'")
     @Comment("컨텐츠 타입")
     private String contentType = CONTENT_TYPE.key;
+
+    /** 글분류 코드 정보 */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'EXPTR_PRSNL_PAPR_CTGR_CD'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
+    })
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("경비지출서 글분류 코드 정보")
+    protected DtlCdEntity ctgrCdInfo;
 
     /* ----- */
 

@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.cmm.flsys;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.flsys.FlsysMetaEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
@@ -19,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
 public interface FlsysMetaMapstruct
-        extends BaseClsfMapstruct<FlsysMetaDto, FlsysMetaDto, FlsysMetaEntity> {
+        extends BasePostMapstruct<FlsysMetaDto, FlsysMetaDto, FlsysMetaEntity> {
 
     FlsysMetaMapstruct INSTANCE = Mappers.getMapper(FlsysMetaMapstruct.class);
 

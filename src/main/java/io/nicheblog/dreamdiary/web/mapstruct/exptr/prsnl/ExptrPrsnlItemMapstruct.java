@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptItemXlsxDt
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,6 +55,7 @@ public interface ExptrPrsnlItemMapstruct
      * EntityList to DtoList
      */
     default List<ExptrPrsnlItemDto> toDtoList(List<ExptrPrsnlItemEntity> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) return null;
         return entityList.stream()
                 .map(entity -> {
                     try {

@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +47,7 @@ public interface ContentTagMapstruct
      * EntityList to DtoList
      */
     default List<ContentTagDto> toDtoList(List<ContentTagEntity> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) return null;
         return entityList.stream()
                 .map(entity -> {
                     try {
