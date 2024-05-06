@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.schdul;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
@@ -20,7 +20,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class})
 public interface SchdulMapstruct
-        extends BaseClsfMapstruct<SchdulDto, SchdulDto, SchdulEntity> {
+        extends BasePostMapstruct<SchdulDto, SchdulDto, SchdulEntity> {
 
     SchdulMapstruct INSTANCE = Mappers.getMapper(SchdulMapstruct.class);
 

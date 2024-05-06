@@ -73,6 +73,17 @@ public class SchdulEntity
     @Comment("컨텐츠 타입")
     private String contentType = CONTENT_TYPE.key;
 
+    /** 글분류 코드 정보 */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'SCHDUL_CD'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
+    })
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("일정 분류 코드 정보")
+    protected DtlCdEntity ctgrCdInfo;
+
     /* ----- */
 
     /** 출처 (ex.KASI) */

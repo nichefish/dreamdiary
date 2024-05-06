@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulXlsxDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +52,7 @@ public interface VcatnSchdulMapstruct
      * EntityList to DtoList
      */
     default List<VcatnSchdulDto> toDtoList(List<VcatnSchdulEntity> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) return null;
         return entityList.stream()
                 .map(entity -> {
                     try {
@@ -88,6 +90,7 @@ public interface VcatnSchdulMapstruct
      * DtoList to EntityList
      */
     default List<VcatnSchdulEntity> toEntityList(List<VcatnSchdulDto> dtoList) {
+        if (CollectionUtils.isEmpty(dtoList)) return null;
         return dtoList.stream()
                 .map(dto -> {
                     String vcatnCd = dto.getVcatnCd();

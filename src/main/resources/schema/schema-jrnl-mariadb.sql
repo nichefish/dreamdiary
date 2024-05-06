@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS jrnl_dream (
     edit_compt_yn CHAR(1) DEFAULT 'N' COMMENT '편집완료 여부 (Y/N)',
     else_dream_yn CHAR(1) DEFAULT 'N' COMMENT '타인 꿈 여부 (Y/N)',
     else_dreamer_nm VARCHAR(64) COMMENT '꿈꾼이 이름',
+    halluc_yn CHAR(1) DEFAULT  'N' COMMENT '입면환각 여부 (Y/N)',
     -- POST
     title VARCHAR(200) COMMENT '제목',
     cn LONGTEXT COMMENT '내용',
