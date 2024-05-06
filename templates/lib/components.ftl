@@ -14,7 +14,7 @@
 <#include "/view/_component/page_area/_page_buttons.ftlh">
 
 <!-- modal_elements -->
-<#include "/view/_component/_modal_elements.ftlh">
+<#include "/view/_component/modal/_modal_elements.ftlh">
 
 <!-- header_elements -->
 <#include "/view/_component/_header_elements.ftlh">

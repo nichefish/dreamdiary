@@ -31,7 +31,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE jrnl_summary_cn SET del_yn = 'Y' WHERE post_no = ?")
+@SQLDelete(sql = "UPDATE jrnl_sumry_cn SET del_yn = 'Y' WHERE post_no = ?")
 public class JrnlSumryCnEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule {
