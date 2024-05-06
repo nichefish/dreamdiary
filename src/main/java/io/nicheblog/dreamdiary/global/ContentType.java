@@ -19,7 +19,7 @@ public enum ContentType {
     // 저널
     JRNL_DAY("JRNL_DAY", "저널 일자"),
     JRNL_DREAM("JRNL_DREAM", "저널 꿈"),
-    JRNL_DIARY("JRNL_DREAM", "저널 일기"),
+    JRNL_DIARY("JRNL_DIARY", "저널 일기"),
     JRNL_SUMRY("JRNL_SUMRY", "저널 결산"),
     JRNL_SUMRY_CN("JRNL_SUMRY_CN", "저널 결산 내용"),
     // 일정

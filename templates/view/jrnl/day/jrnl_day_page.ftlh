@@ -51,10 +51,21 @@
 <#--<#include "/view/_component/tag/_tag_list_header.ftlh">-->
 
 <#--begin::Tags-->
+<hr class="my-6 text-muted" />
 <div class="d-flex align-items-center mb-6 ms-4">
-    <div class="col-1 ms-4 me-6 text-center fs-6"><b>태그 : </b></div>
-    <div class="col-10" id="jrnl_dream_tag_list_div">
+    <div class="col-1 ms-4 me-6 text-center fs-6">
+        <b>태그 : </b>
+    </div>
+    <div class="col" id="jrnl_dream_tag_list_div">
         <#--handlebars template goes in here-->
+    </div>
+    <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
+    <div class="col-1 ms-4 me-6 text-center fs-6 w-50px">
+        <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                onclick=""
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
+            <i class="bi bi-tag pe-0"></i>
+        </button>
     </div>
 </div>
 
