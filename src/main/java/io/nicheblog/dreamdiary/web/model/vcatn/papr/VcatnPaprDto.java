@@ -1,19 +1,14 @@
 package io.nicheblog.dreamdiary.web.model.vcatn.papr;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
-import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.vcatn.schdul.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * VcatnPaprDto
@@ -52,31 +47,6 @@ public class VcatnPaprDto
     protected List<VcatnSchdulDto> schdulList;
 
     /* ----- */
-
-    /** sublist 변환 */
-    public List<VcatnSchdulEntity> getSchdulEntityList() throws Exception {
-        if (CollectionUtils.isEmpty(this.schdulList)) return null;
-
-        return this.schdulList.stream()
-                .map(vcatnSchdulDto -> {
-                    String vcatnCd = vcatnSchdulDto.getVcatnCd();
-                    boolean isHalf = Constant.VCATN_AM_HALF.equals(vcatnCd) || Constant.VCATN_PM_HALF.equals(vcatnCd);
-                    if (isHalf) {
-                        // 반차일 경우 시작일 = 종료일
-                        vcatnSchdulDto.setBgnDt(vcatnSchdulDto.getBgnDt() + " 09:00:00");
-                        vcatnSchdulDto.setEndDt(vcatnSchdulDto.getBgnDt() + " 14:00:00");
-                    } else {
-                        vcatnSchdulDto.setBgnDt(vcatnSchdulDto.getBgnDt() + " 01:00:00");
-                        vcatnSchdulDto.setEndDt(vcatnSchdulDto.getEndDt() + " 23:59:59");
-                    }
-                    try {
-                        return VcatnSchdulMapstruct.INSTANCE.toEntity(vcatnSchdulDto);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
 
     @Override
     public Integer getKey() {

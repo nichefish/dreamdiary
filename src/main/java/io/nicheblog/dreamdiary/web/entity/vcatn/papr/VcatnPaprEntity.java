@@ -78,18 +78,6 @@ public class VcatnPaprEntity
     /* ----- */
 
     /**
-     * itemList안의 내용을 dto로 꺼내오기
-     */
-    public List<VcatnSchdulDto> getVcatnSchdulDtoList() throws Exception {
-        List<VcatnSchdulDto> vcatnSchdulDtoList = new ArrayList<>();
-        for (VcatnSchdulEntity entity : this.schdulList) {
-            VcatnSchdulDto dto = VcatnSchdulMapstruct.INSTANCE.toDto(entity);
-            vcatnSchdulDtoList.add(dto);
-        }
-        return vcatnSchdulDtoList;
-    }
-
-    /**
      * 서브엔티티 List 처리를 위한 Setter Override
      * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
      */
