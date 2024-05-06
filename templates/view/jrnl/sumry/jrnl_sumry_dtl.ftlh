@@ -151,7 +151,7 @@
                         <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between ps-10 me-4 h-75" style="width:85px;">
                             &nbsp;
                         </div>
-                        <div class="col ms-8 text-noti">
+                        <div class="col ms-10 text-noti">
                             <#list sumryCn.comment.list![] as comment>
                                 <div class="row pb-1">
                                     ${(comment.cn!)?no_esc}
@@ -193,8 +193,8 @@
                     <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
                         <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
                                 onclick="Comment.regModal(${dream.postNo!}, 'JRNL_DREAM');"
-                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
-                            <i class="bi bi-pencil-square p-0"></i>
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 <@spring.message "bs.tooltip.modal.reg"/>">
+                            <i class="bi bi-chat-left-dots p-0"></i>
                         </button>
                     </div>
                     <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
@@ -211,6 +211,20 @@
                         </button>
                     </div>
                 </div>
+                <#if dream.comment.list??>
+                    <div class="row py-2">
+                        <div class="col-1 jrnl-dream-cn" style="width:135px;">
+                            &nbsp;
+                        </div>
+                        <div class="col ms-10 text-noti">
+                            <#list dream.comment.list![] as comment>
+                                <div class="row pb-1">
+                                    ${(comment.cn!)?no_esc}
+                                </div>
+                            </#list>
+                        </div>
+                    </div>
+                </#if>
             </#list>
         </div>
     </div>
