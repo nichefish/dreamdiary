@@ -65,7 +65,7 @@
                         </td>
                         <td class="text-start title-fxd <#if post.tagStrList??>pb-4</#if>">
                             <div class="row d-flex align-items-center justify-content-between">
-                                <div class="col-xl-8 col-12">
+                                <div class="col-xl-8 col-12 d-flex align-items-center">
                                     <a href="${Url.BOARD_POST_DTL!}?boardCd=${post.boardCd!}&postNo=${post.postNo!}&notionPageId=${post.notionPageId!}"
                                        class="title-fxd vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
                                         <#if (post.ctgrNm!"") != "">
@@ -74,7 +74,7 @@
                                         ${post.title!}
                                     </a>
                                     <#if (((post.imprtcYn)!"N") == "Y")!false>
-                                        <span class="fs-4 blink">&#128680;</span>
+                                        <span class="fs-4 blink ms-1">&#128680;</span>
                                     </#if>
                                     <#--목록:: 수정권한 표시-->
                                     <@component.mdfable post />
@@ -117,7 +117,7 @@
                         </td>
                         <td class="text-start <#if post.tagStrList??>pb-4</#if>">
                             <div class="row d-flex align-items-center justify-content-between align-items-center">
-                                <div class="col-xl-8 col-12">
+                                <div class="col-xl-8 col-12 d-flex align-items-center">
                                     <a href="${Url.BOARD_POST_DTL!}?boardCd=${post.boardCd!}&postNo=${post.postNo!}&notionPageId=${post.notionPageId!}"
                                        class="text-dark vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold text-danger</#if>">
                                         <#if (post.ctgrNm!"") != "">
@@ -126,7 +126,7 @@
                                         ${post.title!}
                                     </a>
                                     <#if (((post.imprtcYn)!"N") == "Y")!false>
-                                        <span class="fs-4 blink">&#128680;</span>
+                                        <span class="fs-4 blink ms-1">&#128680;</span>
                                     </#if>
                                     <#--목록:: 수정권한 표시-->
                                     <@component.mdfable post />
