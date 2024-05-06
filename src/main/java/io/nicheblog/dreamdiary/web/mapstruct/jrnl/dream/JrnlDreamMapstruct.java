@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
@@ -21,7 +21,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
 public interface JrnlDreamMapstruct
-        extends BaseClsfMapstruct<JrnlDreamDto, JrnlDreamDto, JrnlDreamEntity> {
+        extends BasePostMapstruct<JrnlDreamDto, JrnlDreamDto, JrnlDreamEntity> {
 
     JrnlDreamMapstruct INSTANCE = Mappers.getMapper(JrnlDreamMapstruct.class);
 

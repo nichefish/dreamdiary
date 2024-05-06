@@ -147,4 +147,16 @@ public class MapstructHelper {
                 .anyMatch(e -> !AuthUtils.getLgnUserId().equals(e.getRegstrId()));
     }
 
+    /**
+     * Map Post Fields
+     */
+    public static <Entity extends BaseClsfEntity, Dto extends BaseClsfDto> void mapPostFields(Entity entity, Dto dto) {
+        // AUDIT :: 공통 필드 매핑 로직
+        if (entity instanceof BasePostEntity && dto instanceof BasePostDto) {
+            if (((BasePostEntity) entity).getCtgrCdInfo() != null) {
+                ((BasePostDto) dto).setCtgrNm(((BasePostEntity) entity).getCtgrCdInfo().getDtlCdNm());
+            }
+        }
+    }
+
 }

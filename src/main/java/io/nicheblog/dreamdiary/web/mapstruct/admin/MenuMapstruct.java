@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -49,6 +50,7 @@ public interface MenuMapstruct
      * EntityList to DtoList
      */
     default List<MenuDto> toDtoList(List<MenuEntity> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) return null;
         AtomicLong i = new AtomicLong(1);
         return entityList.stream()
                 .map(entity -> {

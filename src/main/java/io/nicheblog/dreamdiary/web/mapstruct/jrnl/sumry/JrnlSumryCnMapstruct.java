@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryCnDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
 public interface JrnlSumryCnMapstruct
-        extends BaseClsfMapstruct<JrnlSumryCnDto, JrnlSumryCnDto, JrnlSumryCnEntity> {
+        extends BasePostMapstruct<JrnlSumryCnDto, JrnlSumryCnDto, JrnlSumryCnEntity> {
 
     JrnlSumryCnMapstruct INSTANCE = Mappers.getMapper(JrnlSumryCnMapstruct.class);
 
@@ -48,6 +49,7 @@ public interface JrnlSumryCnMapstruct
      * EntityList to DtoList
      */
     default List<JrnlSumryCnDto> toDtoList(List<JrnlSumryCnEntity> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) return null;
         return entityList.stream()
                 .map(entity -> {
                     try {

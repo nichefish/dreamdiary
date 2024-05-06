@@ -19,6 +19,7 @@
 <#include "/view/jrnl/day/_jrnl_day_scripts.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
 <#include "/view/jrnl/diary/_jrnl_diary_scripts.ftlh">
+<#include "/view/_component/modal/comment/_comment_scripts.ftlh">
 
 <script>
     const Page = (function() {
@@ -78,5 +79,6 @@
 <#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 <#include "/view/jrnl/diary/_jrnl_diary_reg_modal.ftlh">
+<#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>

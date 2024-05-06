@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry;
 
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
@@ -20,7 +20,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
 public interface JrnlSumryMapstruct
-        extends BaseClsfMapstruct<JrnlSumryDto.DTL, JrnlSumryDto.LIST, JrnlSumryEntity> {
+        extends BasePostMapstruct<JrnlSumryDto.DTL, JrnlSumryDto.LIST, JrnlSumryEntity> {
 
     JrnlSumryMapstruct INSTANCE = Mappers.getMapper(JrnlSumryMapstruct.class);
 

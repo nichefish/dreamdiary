@@ -62,6 +62,11 @@ public class JrnlDreamDto
     @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
 
+    /** 입면환각 여부 (Y/N) */
+    @Builder.Default
+    private String hallucYn = "N";
+
+
     /* ----- */
 
     @Override

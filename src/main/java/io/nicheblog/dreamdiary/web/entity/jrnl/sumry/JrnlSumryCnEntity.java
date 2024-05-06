@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
@@ -8,10 +9,10 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
 
 /**
@@ -38,8 +39,6 @@ public class JrnlSumryCnEntity
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_SUMRY_CN;
-    /** 필수(Override): 글분류 코드 */
-    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 저널 꿈 고유 번호 (PK) */
     @Id
@@ -53,6 +52,17 @@ public class JrnlSumryCnEntity
     @Column(name = "content_type", columnDefinition = "VARCHAR(50) DEFAULT 'JRNL_SUMRY'")
     @Comment("컨텐츠 타입")
     private String contentType = CONTENT_TYPE.key;
+
+    /** 글분류 코드 정보 */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'JRNL_SUMRY_CN_CTGR_CD'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
+    })
+    @Fetch(value = FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("저널 결산 내용 글분류 코드 정보")
+    protected DtlCdEntity ctgrCdInfo;
 
     /* ----- */
 
