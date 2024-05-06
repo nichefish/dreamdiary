@@ -41,7 +41,6 @@ public interface ClCdMapstruct
      * Dto -> Entity
      */
     @Override
-    @Mapping(target = "dtlCdList", expression = "java(DtlCdMapstruct.INSTANCE.toEntityList(dto.getDtlCdList()))")
     ClCdEntity toEntity(final ClCdDto dto) throws Exception;
 
     /**
@@ -49,6 +48,5 @@ public interface ClCdMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "dtlCdList", expression = "java(DtlCdMapstruct.INSTANCE.toEntityList(dto.getDtlCdList()))")
     void updateFromDto(final ClCdDto dto, final @MappingTarget ClCdEntity entity) throws Exception;
 }

@@ -40,6 +40,8 @@
                 // checkbox init
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                 // checkbox init
+                commons.util.chckboxLabel("hallucYn", "입면환각//해당없음", "blue//gray");
+                // checkbox init
                 commons.util.chckboxLabel("elseDreamYn", "해당//미해당", "blue//gray", function() {
                     $("#elseDreamerNmDiv").removeClass("d-none");
                 }, function() {
@@ -90,6 +92,8 @@
                     commons.util.tagify("#tagListStr");
                     // checkbox init
                     commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
+                    // checkbox init
+                    commons.util.chckboxLabel("hallucYn", "입면환각//해당없음", "blue//gray");
                     // checkbox init
                     commons.util.chckboxLabel("elseDreamYn", "해당//미해당", "blue//gray", function() {
                         $("#elseDreamerNmDiv").removeClass("d-none");
