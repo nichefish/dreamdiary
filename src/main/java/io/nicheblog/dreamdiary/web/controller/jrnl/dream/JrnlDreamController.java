@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamSearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
@@ -30,6 +31,8 @@ import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * JrnlDreamController
@@ -177,5 +180,42 @@ public class JrnlDreamController
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
-    
+
+    /**
+     * 저널 꿈 태그 상세 (해당 태그 꿈 목록) 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @GetMapping(value = {Url.JRNL_DREAM_TAG_DTL_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> jrnlDayListAjax(
+            JrnlDreamSearchParam searchParam,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 목록 조회 및 응답에 추가
+            List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.getListDto(searchParam);
+            Collections.sort(jrnlDreamList);
+            ajaxResponse.setRsltList(jrnlDreamList);
+
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
 }

@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.spec.jrnl.dream;
 
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
 import lombok.extern.log4j.Log4j2;
@@ -26,6 +28,18 @@ import java.util.Map;
 @Log4j2
 public class JrnlDreamSpec
         implements BasePostSpec<JrnlDreamEntity> {
+
+    /**
+     * 조회 후처리:: 정렬 순서 변경
+     */
+    @Override
+    public void postQuery(
+            Root<JrnlDreamEntity> root,
+            CriteriaQuery<?> query,
+            CriteriaBuilder builder
+    ) {
+        query.distinct(true);
+    }
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
@@ -67,6 +81,13 @@ public class JrnlDreamSpec
                     // Month filter: Extract month from effectiveDtExp and compare with 'mnth'
                     Expression<Integer> monthExp = builder.function("MONTH", Integer.class, effectiveDtExp);
                     predicate.add(builder.equal(monthExp, searchParamMap.get(key)));
+                    continue;
+                case "tagNo":
+                    // 특정 태그된 꿈만 조회
+                    Join<JrnlDreamEntity, TagEmbed> tagJoin = root.join("tag");
+                    Join<TagEmbed, ContentTagEntity> contentTagJoin = tagJoin.join("list", JoinType.INNER);
+                    Expression<Integer> refTagNoExp = contentTagJoin.get("refTagNo");
+                    predicate.add(builder.equal(refTagNoExp, searchParamMap.get(key)));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색

@@ -8,7 +8,7 @@
  -->
 <#macro modal_header title>
     <div class="modal-header">
-        <h5 class="modal-title">[${title!}]</h5>
+        <h5 id="modal_title" class="modal-title">[${title!}]</h5>
         <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" aria-label="Close"
              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close"/>">
             <i class="fas fa-times"></i>
@@ -21,7 +21,7 @@
  -->
 <#macro modal_header_dark title>
     <div class="modal-header" style="background-color:#41416e;">
-        <h5 class="modal-title">[${title!}]</h5>
+        <h5 id="modal_title" class="modal-title">[${title!}]</h5>
         <div class="btn btn-sm btn-icon btn-active-light-primary ms-2" aria-label="Close"
              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close"/>">
             <i class="fas fa-times"></i>

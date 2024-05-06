@@ -138,6 +138,35 @@ public class TagService
     }
 
     /**
+     * css 사이즈 계산한 태그 목록 조회
+     */
+    public List<TagDto> getSizedListDto(Map<String, Object> searchParamMap) throws Exception {
+        List<TagDto> tagList = this.getListDto(searchParamMap);
+        int maxSize = this.calcMaxSize(tagList);
+        final int MIN_SIZE = 1; // 최소 크기
+        final int MAX_SIZE = 9; // 최대 크기
+        return tagList.stream()
+                .peek(dto -> {
+                    double ratio = (double) dto.getSize() / maxSize; // 사용 빈도의 비율 계산
+                    int size = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
+                    dto.setTagClass("ts-"+size);
+                })
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 최대 사용빈도 계산한 태그 목록 조회
+     */
+    public int calcMaxSize(List<TagDto> tagList) {
+        int maxFrequency = 0;
+        for (TagDto tag : tagList) {
+            maxFrequency = Math.max(maxFrequency, tag.getSize());
+        }
+        return maxFrequency;
+    }
+
+    /**
      * 게시판 태그 목록 Page<Entity>->Page<Dto> 변환
      */
     // @Override

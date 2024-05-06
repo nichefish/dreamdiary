@@ -39,7 +39,7 @@ public interface SiteUrl {
     String JRNL_DREAM_MDF_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamMdfAjax.do";
     String JRNL_DREAM_DEL_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamDelAjax.do";
 
-    String JRNL_DREAM_TAG_LIST_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamTagListAjax.do";
+    String JRNL_DREAM_TAG_DTL_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamTagDtlAjax.do";
 
     /** 저널 일기 */
     String JRNL_DIARY_REG_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryRegAjax.do";
@@ -55,11 +55,14 @@ public interface SiteUrl {
     String JRNL_SUMRY_MAKE_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryMakeAjax.do";
     String JRNL_SUMRY_MAKE_TOTAL_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryMakeTotalAjax.do";
 
-    /** 저널 결산 */
+    /** 저널 결산 내용 */
     String JRNL_SUMRY_CN_REG_AJAX = Prefix.JRNL_SUMRY_CN + "/jrnlSumryCnRegAjax.do";
     String JRNL_SUMRY_CN_DTL_AJAX = Prefix.JRNL_SUMRY_CN + "/jrnlSumryCnDtlAjax.do";
     String JRNL_SUMRY_CN_MDF_AJAX = Prefix.JRNL_SUMRY_CN + "/jrnlSumryCnMdfAjax.do";
     String JRNL_SUMRY_CN_DEL_AJAX = Prefix.JRNL_SUMRY_CN + "/jrnlSumryCnDelAjax.do";
+
+    /** 저널 태그 */
+    String JRNL_TAG_PAGE = Prefix.JRNL_TAG + "/jrnlTagPage.do";
 
     /** 공지사항 */
     String NOTICE_LIST = Prefix.NOTICE + "/noticeList.do";
@@ -317,6 +320,9 @@ public interface SiteUrl {
         String SUMRY = "/sumry";
         String JRNL_SUMRY = JRNL + SUMRY;
         String JRNL_SUMRY_CN = JRNL_SUMRY + "/cn";
+        // 저널 태그
+        String TAG = "/tag";
+        String JRNL_TAG = JRNL + TAG;
 
         /* 일반게시판 (board) */
         String BOARD = "/board";
@@ -347,7 +353,6 @@ public interface SiteUrl {
         String EXPTR_REQST = EXPTR + REQST;
 
         String COMMENT = "/comment";
-        String TAG = "/tag";
 
         String LGN_POLICY = "/lgnPolicy";
 

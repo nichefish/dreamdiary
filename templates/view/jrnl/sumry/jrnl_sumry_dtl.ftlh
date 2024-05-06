@@ -14,6 +14,7 @@
 <#include "/view/jrnl/sumry/_jrnl_sumry_scripts.ftlh">
 <#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_scripts.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
+<#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
 <#include "/view/_component/modal/comment/_comment_scripts.ftlh">
 
 <script>
@@ -92,8 +93,8 @@
                     <div class="col py-3 jrnl-sumry-cn">
                         ${(sumryCn.markdownCn!"-")?no_esc}
                     </div>
-                    <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
-                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
+                    <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between w-50px gap-1">
                         <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
                                 onclick="JrnlSumryCn.mdfModal(${sumryCn.postNo!});"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
@@ -132,15 +133,15 @@
                     <div class="col py-3 jrnl-sumry-cn">
                         ${(sumryCn.markdownCn!"-")?no_esc}
                     </div>
-                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between w-50px gap-1">
                         <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
                                 onclick="Comment.regModal(${sumryCn.postNo!}, 'JRNL_SUMRY_CN');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 <@spring.message "bs.tooltip.modal.reg"/>">
                             <i class="bi bi-chat-left-dots p-0"></i>
                         </button>
                     </div>
-                    <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
-                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
+                    <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between w-50px gap-1">
                         <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
                                 onclick="JrnlSumryCn.mdfModal(${sumryCn.postNo!});"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
@@ -170,8 +171,27 @@
     </div>
 </div>
 
-<#--#include:: component:: 태그 클릭 필터링-->
-<#include "/view/_component/tag/_tag_list_header.ftlh">
+<hr class="my-6 text-muted" />
+<div class="d-flex align-items-center mb-6 ms-4">
+    <div class="col-1 ms-4 me-6 text-center fs-6">
+        <b>태그 : </b>
+    </div>
+    <div class="col" id="jrnl_dream_tag_list_div">
+        <#list tagList![] as tag>
+            <span class="py-2 me-3 cursor-pointer opacity-hover"
+                  onclick="JrnlTag.tagDtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">
+                <span class="${tag.tagClass!}">
+                    ${tag.tagNm!}
+                </span>
+                <span class="fs-9 text-noti fw-normal" style="margin-left:-0.25em;">${tag.dreamSize!}</span>
+            </span>
+        </#list>
+    </div>
+    <div class="col-1 ms-4 me-6 text-center fs-6 w-50px">
+
+    </div>
+</div>
 
 <!--begin::Card-->
 <div class="card post">
@@ -206,15 +226,15 @@
                             </div>
                         </#if>
                     </div>
-                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between w-50px gap-1">
                         <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
                                 onclick="Comment.regModal(${dream.postNo!}, 'JRNL_DREAM');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 <@spring.message "bs.tooltip.modal.reg"/>">
                             <i class="bi bi-chat-left-dots p-0"></i>
                         </button>
                     </div>
-                    <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75" style="width:10px;">&nbsp;</div>
-                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between gap-1" style="width:50px;">
+                    <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
+                    <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between w-50px gap-1">
                         <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
                                 onclick="JrnlDream.mdfModal(${dream.postNo!}, '${dream.stdrdDt!}');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
@@ -251,4 +271,6 @@
 <#--include::modals-->
 <#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
+<#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
+<#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
 <#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">

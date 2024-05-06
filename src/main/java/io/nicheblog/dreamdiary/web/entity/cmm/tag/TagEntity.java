@@ -39,6 +39,7 @@ public class TagEntity
     @PostLoad
     private void onLoad() {
         this.size = CollectionUtils.isEmpty(this.contentTagList) ? 0 : this.contentTagList.size();
+        this.dreamSize = CollectionUtils.isEmpty(this.contentTagList) ? 0 : this.contentTagList.size();
     }
 
     /** 태그 번호 (PK) */
@@ -65,6 +66,10 @@ public class TagEntity
     /** 태그 크기 (=컨텐츠 개수) */
     @Transient
     private Integer size;
+    /** 태그 크기 (=꿈 개수) */
+    @Transient
+    private Integer dreamSize;
+
 
     /* ----- */
 

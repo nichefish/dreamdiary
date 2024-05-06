@@ -28,6 +28,10 @@ public interface BasePostSpec<Entity extends BasePostEntity>
      */
     @Override
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
+        // filter
+        searchParamMap.remove("backToList");
+        searchParamMap.remove("actvtyCtgr");
+
         return (root, query, builder) -> {
             List<Predicate> basePredicate = new ArrayList<>();
             List<Predicate> clsfPredicate = new ArrayList<>();

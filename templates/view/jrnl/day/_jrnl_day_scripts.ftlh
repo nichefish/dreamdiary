@@ -47,8 +47,8 @@
             },
             /** 목록에 따른 태그 조회 */
             tagListAjax: function() {
-                const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
+                const url = "${Url.TAG_LIST_AJAX!}";
+                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val(), "contentType": "JRNL_DREAM" };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

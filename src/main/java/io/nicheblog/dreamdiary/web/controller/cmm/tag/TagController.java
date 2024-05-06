@@ -51,7 +51,7 @@ public class TagController
      */
 
     /**
-     * 게시판 태그 전체 목록 조회 (Ajax)
+     * 태그 전체 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @RequestMapping(Url.TAG_LIST_AJAX)
@@ -69,7 +69,7 @@ public class TagController
         String rsltMsg = "";
         try {
             // 전체 태그 목록 조회 (태그클라우드)
-            List<TagDto> tagList = tagService.getListDto(searchParamMap);
+            List<TagDto> tagList = tagService.getSizedListDto(searchParamMap);
             ajaxResponse.setRsltList(tagList);
 
             isSuccess = true;

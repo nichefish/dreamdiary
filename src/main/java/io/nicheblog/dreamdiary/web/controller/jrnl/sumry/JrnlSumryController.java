@@ -168,7 +168,7 @@ public class JrnlSumryController
                 put("contentType", ContentType.JRNL_DREAM.key);
                 put("yy", yy);
             }};
-            List<TagDto> jrnlDreamTagList = tagService.getListDto(searchParamMap);
+            List<TagDto> jrnlDreamTagList = tagService.getSizedListDto(searchParamMap);
             model.addAttribute("tagList", jrnlDreamTagList);
 
             // 코드 데이터 모델에 추가

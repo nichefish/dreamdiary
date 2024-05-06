@@ -24,7 +24,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class TagDto
         extends BaseCrudDto
-        implements Identifiable<Integer> {
+        implements Identifiable<Integer>, Comparable<TagDto> {
 
     /** 태그 번호 (PK) */
     private Integer tagNo;
@@ -39,6 +39,13 @@ public class TagDto
     /** 태그 크기 (=컨텐츠 개수) */
     @Builder.Default
     private Integer size = 0;
+    /** 태그 크기 (=컨텐츠 개수) */
+    @Builder.Default
+    private Integer dreamSize = 0;
+
+    /** 글자 크기 클래스 */
+    private String tagClass;
+
 
     /* ----- */
 
@@ -52,5 +59,16 @@ public class TagDto
     @Override
     public Integer getKey() {
         return this.tagNo;
+    }
+
+    /**
+     * 날짜 오름차순 정렬
+     */
+    @SneakyThrows
+    @Override
+    public int compareTo(TagDto other) {
+        String thisTagNm = this.getTagNm();
+        String otherTagNm = other.getTagNm();
+        return thisTagNm.compareTo(otherTagNm);
     }
 }
