@@ -5,8 +5,8 @@
 <#if tagList?? && tagList?has_content>
     <hr class="my-6 text-muted" />
     <div class="d-flex align-items-center mb-6 ms-4">
-        <div class="ms-4 me-6"><b>태그 : </b></div>
-        <div>
+        <div class="col-1 ms-4 me-6 text-center fs-6"><b>태그 : </b></div>
+        <div class="col-10">
             <#list tagList![] as tag>
                 <span class="ctgr-span ctgr-gray cursor-pointer opacity-hover" onclick="Tag.search('${tag.tagNo!}');"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">

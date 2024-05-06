@@ -67,6 +67,21 @@
             <div>
                 <label class="text-gray-700 fs-6 fw-bolder cursor-help"
                        data-bs-toggle="tooltip" data-bs-placement="top" title="입면환각입니다.">
+                    악몽 여부
+                    <i class="bi bi-question-circle"></i>
+                </label>
+                <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
+                    <input class="form-check-input" type="checkbox" value="Y" name="nhtmrYn" id="nhtmrYn" {{checkedYn hallucYn}} />
+                    <label class="form-check-label fw-bold fs-6 ms-3" for="nhtmrYn" id="nhtmrYnLabel" {{{checkedYnStyle hallucYn "color" "red//gray"}}}>
+                        {{#ifYn hallucYn}}악몽{{else}}해당없음{{/ifYn}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+            <div>
+                <label class="text-gray-700 fs-6 fw-bolder cursor-help"
+                       data-bs-toggle="tooltip" data-bs-placement="top" title="입면환각입니다.">
                     입면환각 여부
                     <i class="bi bi-question-circle"></i>
                 </label>

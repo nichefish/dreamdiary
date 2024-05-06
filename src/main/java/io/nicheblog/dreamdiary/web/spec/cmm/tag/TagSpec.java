@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -59,9 +60,8 @@ public class TagSpec
                 predicate = getPredicateWithParams(searchParamMap, root, builder);
                 // 저널 꿈 관련 처리
                 if (ContentType.JRNL_DREAM.key.equals(contentType)) {
-                    // Root<JrnlDreamEntity> dreamRoot = query.from(JrnlDreamEntity.class);
-                    // List<Predicate> jrnlDreamPredicate = getJrnlDreamPredicate(searchParamMap, root, dreamRoot, builder);
-                    // predicate.addAll(jrnlDreamPredicate);
+                    List<Predicate> jrnlDreamPredicate = getJrnlDreamPredicate(searchParamMap, root, builder);
+                    predicate.addAll(jrnlDreamPredicate);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -130,20 +130,17 @@ public class TagSpec
     public List<Predicate> getJrnlDreamPredicate(
             final Map<String, Object> searchParamMap,
             final Root<TagEntity> root,
-            final Root<JrnlDreamEntity> dreamRoot,
             final CriteriaBuilder builder
     ) throws Exception {
 
         List<Predicate> predicate = new ArrayList<>();
         
         // 태그 조인
-        // Join<TagEntity, ContentTagEntity> contentTagList = root.join("contentTagList", JoinType.INNER);
-        Join<JrnlDreamEntity, ContentTagEntity> contentTag = dreamRoot.join("tag").join("list", JoinType.INNER);
-
-        // jrnlDay 날짜로 검색
-        Join<JrnlDreamEntity, JrnlDayEntity> jrnlDayJoin = dreamRoot.join("jrnlDay", JoinType.INNER);
-        Expression<Date> jrnlDtExp = jrnlDayJoin.get("jrnlDt");
-        Expression<Date> aprxmtDtExp = jrnlDayJoin.get("aprxmtDt");
+        Join<TagEntity, JrnlDreamTagEntity> jrnlDreamTagList = root.join("jrnlDreamTagList", JoinType.INNER);
+        Join<JrnlDreamTagEntity, JrnlDreamEntity> jrnlDream = jrnlDreamTagList.join("jrnlDream", JoinType.INNER);
+        Join<JrnlDreamTagEntity, JrnlDayEntity> jrnlDay = jrnlDream.join("jrnlDay", JoinType.INNER);
+        Expression<Date> jrnlDtExp = jrnlDay.get("jrnlDt");
+        Expression<Date> aprxmtDtExp = jrnlDay.get("aprxmtDt");
         Expression<Date> effectiveDtExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
 
         // 파라미터 비교

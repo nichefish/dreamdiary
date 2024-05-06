@@ -155,9 +155,7 @@
                 </div>
                 <#if sumryCn.comment.list??>
                     <div class="row py-2">
-                        <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between ps-10 me-4 h-75" style="width:85px;">
-                            &nbsp;
-                        </div>
+                        <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between ps-10 me-4 h-75" style="width:85px;"></div>
                         <div class="col ms-10 text-noti">
                             <#list sumryCn.comment.list![] as comment>
                                 <div class="row pb-1">
@@ -171,6 +169,9 @@
         </div>
     </div>
 </div>
+
+<#--#include:: component:: 태그 클릭 필터링-->
+<#include "/view/_component/tag/_tag_list_header.ftlh">
 
 <!--begin::Card-->
 <div class="card post">

@@ -84,11 +84,17 @@ public class JrnlDreamEntity
     @Column(name = "idx", columnDefinition = "INT DEFAULT 1")
     private Integer idx;
 
-    /** 편집완료 여부 (Y/N) */
+    /** 악몽 여부 (Y/N) */
     @Builder.Default
-    @Column(name = "edit_compt_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("편집완료 여부")
-    private String editComptYn = "N";
+    @Column(name = "nhtmr_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("악몽 여부")
+    private String nhtmrYn = "N";
+
+    /** 입면환각 여부 (Y/N) */
+    @Builder.Default
+    @Column(name = "halluc_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("입면환각 여부")
+    private String hallucYn = "N";
 
     /** 타인 꿈 여부 (Y/N) */
     @Builder.Default
@@ -99,12 +105,6 @@ public class JrnlDreamEntity
     /** 꿈꾼이(타인) 이름 */
     @Column(name = "else_dreamer_nm", length = 64)
     private String elseDreamerNm;
-
-    /** 입면환각 여부 (Y/N) */
-    @Builder.Default
-    @Column(name = "halluc_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
-    @Comment("입면환각 여부")
-    private String hallucYn = "N";
 
     /* ----- */
 

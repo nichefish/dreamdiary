@@ -52,20 +52,20 @@ public class JrnlDreamDto
     /** 순번 */
     private Integer idx;
 
-    /** 편집완료 여부 (Y/N) */
+    /** 악몽 여부 (Y/N) */
     @Builder.Default
-    private String editComptYn = "N";
+    private String nhtmrYn = "N";
+
+    /** 입면환각 여부 (Y/N) */
+    @Builder.Default
+    private String hallucYn = "N";
+
     /** 타인 꿈 여부 (Y/N) */
     @Builder.Default
     private String elseDreamYn = "N";
     /** 꿈꾼이(타인) 이름 */
     @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
-
-    /** 입면환각 여부 (Y/N) */
-    @Builder.Default
-    private String hallucYn = "N";
-
 
     /* ----- */
 

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.controller.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -10,9 +11,11 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumrySearchParam;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryService;
 import lombok.Getter;
@@ -25,7 +28,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * JrnlSumryController
@@ -49,6 +54,8 @@ public class JrnlSumryController
     private JrnlSumryService jrnlSumryService;
     @Resource(name = "jrnlDreamService")
     private JrnlDreamService jrnlDreamService;
+    @Resource(name = "tagService")
+    private TagService tagService;
     @Resource(name = "cdService")
     private CdService cdService;
 
@@ -156,6 +163,13 @@ public class JrnlSumryController
             List<JrnlDreamDto> imprtcDreamList = jrnlDreamService.getImprtcDreamList(yy);
             Collections.sort(imprtcDreamList);
             model.addAttribute("imprtcDreamList", imprtcDreamList);
+            // 태그 목록 조회
+            Map<String, Object> searchParamMap = new HashMap<>() {{
+                put("contentType", ContentType.JRNL_DREAM.key);
+                put("yy", yy);
+            }};
+            List<TagDto> jrnlDreamTagList = tagService.getListDto(searchParamMap);
+            model.addAttribute("tagList", jrnlDreamTagList);
 
             // 코드 데이터 모델에 추가
             cdService.setModelCdData(Constant.JRNL_SUMRY_TY_CD, model);

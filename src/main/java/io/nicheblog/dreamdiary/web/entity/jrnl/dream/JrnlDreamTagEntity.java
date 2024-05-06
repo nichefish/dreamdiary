@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.web.entity.jrnl.dream;
 
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagSmpEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +34,55 @@ import javax.persistence.*;
 @Where(clause = "ref_content_type='JRNL_DREAM' AND del_yn='N'")
 @SQLDelete(sql = "UPDATE content_tag SET del_yn = 'Y' WHERE content_tag_no = ?")
 public class JrnlDreamTagEntity
-        extends ContentTagEntity {
+        extends BaseCrudEntity {
+
+    @PostLoad
+    private void onLoad() {
+        // 태그 이름 세팅
+        if (this.tag != null) this.tagNm = this.tag.getTagNm();
+    }
+
+    /** 컨텐츠 태그 번호 (PK) */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "content_tag_no")
+    @Comment("컨텐츠 태그 번호 (PK)")
+    private Integer contentTagNo;
+
+    /** 참조 태그 번호 */
+    @Column(name = "ref_tag_no")
+    @Comment("참조 태그 번호")
+    private Integer refTagNo;
+
+    /** 참조 글 번호 */
+    @Column(name = "ref_post_no")
+    @Comment("참조 글 번호")
+    private Integer refPostNo;
+
+    /** 참조 컨텐츠 타입 */
+    @Column(name = "ref_content_type")
+    @Comment("참조 컨텐츠 타입")
+    private String refContentType;
+
+    /** 태그 정보 */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ref_tag_no", referencedColumnName = "tag_no", updatable = false, insertable = false)
+    @NotFound(action = NotFoundAction.IGNORE)
+    private TagSmpEntity tag;
+
+    @Transient
+    private String tagNm;
+
+    /* ----- */
+
+    /**
+     * 생성자
+     */
+    public JrnlDreamTagEntity(Integer refTagNo, BaseClsfKey clsfKey) {
+        this.refTagNo = refTagNo;
+        this.refPostNo = clsfKey.getPostNo();
+        this.refContentType = clsfKey.getContentType();
+    }
 
     /** 참조 컨텐츠  */
     @ManyToOne(fetch = FetchType.EAGER)

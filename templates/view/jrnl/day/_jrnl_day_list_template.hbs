@@ -95,9 +95,7 @@
                         </div>
                         {{#if (exists comment.list)}}
                             <div class="row py-2">
-                                <div class="col-1 jrnl-dream-cn" style="width:85px;">
-                                    &nbsp;
-                                </div>
+                                <div class="col-1 jrnl-dream-cn" style="width:85px;"></div>
                                 <div class="col ms-10 text-noti">
                                     {{#each comment.list}}
                                         <div class="row pb-1">
@@ -125,6 +123,7 @@
                             </div>
                             <div class="col py-3 jrnl-dream-cn {{#ifYn imprtcYn}}bg-secondary{{/ifYn}}">
                                 {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-auto">!중요</div>{{/ifYn}}
+                                {{#ifYn nhtmrYn}}<div class="ctgr-span ctgr-imprtc w-auto d-flex-center">!악몽</div>{{/ifYn}}
                                 {{#ifYn hallucYn}}<div class="ctgr-span ctgr-gray w-auto">!입면환각</div>{{/ifYn}}
                                 {{{markdown cn}}}
                                 {{#if (exists tag.list)}}
@@ -162,9 +161,7 @@
                         </div>
                         {{#if (exists comment.list)}}
                             <div class="row py-2">
-                                <div class="col-1 jrnl-dream-cn" style="width:85px;">
-                                    &nbsp;
-                                </div>
+                                <div class="col-1 jrnl-dream-cn" style="width:85px;"></div>
                                 <div class="col ms-10 text-noti">
                                     {{#each comment.list}}
                                         <div class="row pb-1">
@@ -184,6 +181,7 @@
                             </div>
                             <div class="col py-3 jrnl-dream-cn bg-secondary">
                                 {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-auto d-flex-center">!중요</div>{{/ifYn}}
+                                {{#ifYn nhtmrYn}}<div class="ctgr-span ctgr-imprtc w-auto d-flex-center">!악몽</div>{{/ifYn}}
                                 <div class="ctgr-span ctgr-gray w-auto d-flex-center">({{elseDreamerNm}} 꿈)</div>
                                 {{{markdown cn}}}
                                 {{#if (exists tag.list)}}
@@ -221,9 +219,7 @@
                         </div>
                         {{#if (exists comment.list)}}
                             <div class="row py-2">
-                                <div class="col-1 py-3 jrnl-dream-cn" style="width:85px;">
-                                    &nbsp;
-                                </div>
+                                <div class="col-1 py-3 jrnl-dream-cn" style="width:85px;"></div>
                                 <div class="col ms-10 text-noti">
                                     {{#each comment.list}}
                                         <div class="row pb-1">
@@ -237,6 +233,6 @@
                 {{/if}}
             </div>
         </div>
-        <div class="separator separator-dashed border-gray-300 my-8"></div>
+        <div class="separator separator-dashed border-gray-300 my-5"></div>
     {{/each}}
 </script>

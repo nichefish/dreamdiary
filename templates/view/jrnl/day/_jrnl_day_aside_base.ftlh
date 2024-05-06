@@ -17,6 +17,7 @@
                 if ($("#mnth").val() === "") return;
                 // 목록 조회
                 JrnlDay.listAjax();
+                JrnlDay.tagListAjax();
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
             },

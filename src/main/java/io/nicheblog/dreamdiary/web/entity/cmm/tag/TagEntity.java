@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.entity.cmm.tag;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,11 @@ public class TagEntity
     /** 컨텐츠 태그 */
     @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
     private List<ContentTagEntity> contentTagList;
+
+    /** 저널 꿈 태그 */
+    @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
+    @Where(clause = "ref_content_type = 'JRNL_DREAM'")
+    private List<JrnlDreamTagEntity> jrnlDreamTagList;
 
     /** 태그 크기 (=컨텐츠 개수) */
     @Transient
