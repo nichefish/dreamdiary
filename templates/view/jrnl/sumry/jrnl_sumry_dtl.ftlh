@@ -108,6 +108,13 @@
                 </div>
             </#list>
         </div>
+    </div>
+</div>
+
+<!--begin::Card-->
+<div class="card post">
+    <#--begin::Card body-->
+    <div class="card-body">
         <div class="row p-5">
             <label class="d-flex align-items-center my-2" for="title">
                 <span class="text-gray-700 fs-6 ps-5 fw-bolder">
@@ -162,6 +169,13 @@
                 </#if>
             </#list>
         </div>
+    </div>
+</div>
+
+<!--begin::Card-->
+<div class="card post">
+    <#--begin::Card body-->
+    <div class="card-body">
         <div class="row p-5">
             <label class="d-flex align-items-center my-2" for="title">
                 <span class="text-gray-700 fs-6 ps-5 fw-bolder">
@@ -170,13 +184,14 @@
                 </span>
             </label>
             <#list imprtcDreamList![] as dream>
-                <div class="row jrnl-item">
+                <div class="row jrnl-item my-2">
                     <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:135px;">
                         <div>
                             <i class="bi bi-calendar3"></i> ${dream.stdrdDt!}
                         </div>
                     </div>
-                    <div class="col py-3 jrnl-sumry-cn">
+                    <div class="col py-3 jrnl-sumry-cn bg-secondary">
+                        <#if (dream.hallucYn == 'Y')><div class="ctgr-span ctgr-gray w-auto">!입면환각</div></#if>
                         ${(dream.markdownCn!"-")?no_esc}
                         <#if dream.tag.list??>
                             <div class="ms-2 mt-3">

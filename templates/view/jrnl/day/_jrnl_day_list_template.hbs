@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="col jrnl-diary-cn">
-                                {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-60px d-flex-center">!중요</div>{{/ifYn}}
+                                {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-auto d-flex-center">!중요</div>{{/ifYn}}
                                 {{{cn}}}
                                 {{#if (exists tag.list)}}
                                     <div class="ms-2 mt-3">
@@ -124,8 +124,8 @@
                                 </div>
                             </div>
                             <div class="col py-3 jrnl-dream-cn {{#ifYn imprtcYn}}bg-secondary{{/ifYn}}">
-                                {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-60px">!중요</div>{{/ifYn}}
-                                {{#ifYn hallucYn}}<div class="ctgr-span ctgr-gray w-85px">!입면환각</div>{{/ifYn}}
+                                {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-auto">!중요</div>{{/ifYn}}
+                                {{#ifYn hallucYn}}<div class="ctgr-span ctgr-gray w-auto">!입면환각</div>{{/ifYn}}
                                 {{{markdown cn}}}
                                 {{#if (exists tag.list)}}
                                     <div class="ms-2 mt-3">
@@ -182,9 +182,9 @@
                                     -
                                 </div>
                             </div>
-                            <div class="col py-3 jrnl-dream-cn">
-                                {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-60px d-flex-center">!중요</div>{{/ifYn}}
-                                <div class="ctgr-span ctgr-imprtc w-85px d-flex-center">({{elseDreamerNm}} 꿈)</div>
+                            <div class="col py-3 jrnl-dream-cn bg-secondary">
+                                {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-auto d-flex-center">!중요</div>{{/ifYn}}
+                                <div class="ctgr-span ctgr-gray w-auto d-flex-center">({{elseDreamerNm}} 꿈)</div>
                                 {{{markdown cn}}}
                                 {{#if (exists tag.list)}}
                                     <div class="ms-2 mt-3">
