@@ -60,7 +60,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 수정 화면 이동 */
@@ -95,7 +95,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 미사용으로 변경 (Ajax) */
@@ -113,7 +113,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 정렬순서 저장 */
@@ -132,7 +132,7 @@
                             commons.util.blockUIReload();
                         }
                     }
-                });
+                }, "block");
             },
             /** 삭제 처리 (ajax) */
             delAjax: function(dtlCd) {
@@ -149,7 +149,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
         }
