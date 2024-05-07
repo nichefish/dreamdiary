@@ -70,7 +70,7 @@
                         .then(function() {
                             if (res.rslt) ExptrReqst.list();
                         });
-                });
+                }, "block");
             },
             /** 상세 화면 이동 */
             dtl: function (postNo) {
@@ -105,7 +105,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 항목 미처리 (Ajax) */
@@ -122,7 +122,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 수정 화면 이동 */
@@ -143,7 +143,7 @@
                             .then(function() {
                                 if (res.rslt) ExptrReqst.list();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 목록 화면 이동 */

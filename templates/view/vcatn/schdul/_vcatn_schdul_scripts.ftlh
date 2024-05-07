@@ -52,7 +52,7 @@
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();
                         });
-                });
+                }, "block");
             },
             /** 반차 선택 시 종료일 안보이게 */
             propEndDt: function(idx) {
@@ -112,7 +112,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             }
         }

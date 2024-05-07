@@ -24,7 +24,7 @@
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();
                         });
-                });
+                }, "block");
             },
             /** 전체 년도 결산 갱신 */
             makeTotalSumryAjax: function() {
@@ -34,7 +34,7 @@
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();
                         });
-                });
+                }, "block");
             },
         }
     })();

@@ -44,7 +44,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReplace("${Url.LGN_POLICY_FORM!}");
                             });
-                    });
+                    }, "block");
                 });
             }
         }

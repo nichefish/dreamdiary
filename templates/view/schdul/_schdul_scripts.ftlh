@@ -81,7 +81,7 @@
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();
                         });
-                });
+                }, "block");
             },
             /** 상세 모달 호출 (Ajax) */
             dtlAjax: function(postNo) {
@@ -136,7 +136,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             }
         }

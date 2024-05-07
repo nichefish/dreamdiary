@@ -59,7 +59,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 수정 모달 호출 */
@@ -79,30 +79,6 @@
                     commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 });
             },
-            /** 항목 수정 모달 호출 */
-            mdfItemForm: function(boardCd, mdfItem, mdfItemNm, mdfItemVal) {
-                event.stopPropagation();
-                // 태그 상세 정보
-                let data = { "boardCd": boardCd, "mdfItem": mdfItem, "mdfItemNm": mdfItemNm, "mdfItemVal": mdfItemVal };
-                commons.util.handlebarsTemplate(data, "board_def_mdf_item", "show");
-            },
-            /** 항목 수정 (Ajax) */
-            mdfItemAjax: function() {
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.mdf"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = '${Url.BOARD_DEF_MDF_ITEM_AJAX!}';
-                    let ajaxData = $("#boardDefMdfItemForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
-                            });
-                    });
-                });
-            },
             /** 사용으로 변경 (Ajax) */
             useAjax: function(key) {
                 Swal.fire({
@@ -117,7 +93,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 미사용으로 변경 (Ajax) */
@@ -134,7 +110,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 삭제 처리 (ajax) */
@@ -151,7 +127,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 정렬순서 저장 */
@@ -170,7 +146,7 @@
                             commons.util.blockUIReload();
                         }
                     }
-                });
+                }, "block");
             }
         }
     })();

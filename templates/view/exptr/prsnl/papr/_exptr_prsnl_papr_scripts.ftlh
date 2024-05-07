@@ -109,7 +109,7 @@
                             } else
                                 ExptrPrsnlPapr.list();
                         });
-                });
+                }, "block");
             },
             /** 상세 화면 이동 */
             dtl: function (postNo) {
@@ -134,7 +134,7 @@
                             .then(function() {
                                 if (res.rslt) ExptrPrsnlPapr.list();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 목록 화면 이동 */

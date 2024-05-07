@@ -81,7 +81,7 @@
                         .then(function () {
                             if (res.rslt) Notice.list();
                         });
-                }, 'block');
+                }, "block");
             },
             /** 상세 화면 이동 */
             dtl: function (postNo) {
@@ -119,7 +119,7 @@
                             .then(function () {
                                 if (res.rslt) Notice.list();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 목록 화면 이동 */

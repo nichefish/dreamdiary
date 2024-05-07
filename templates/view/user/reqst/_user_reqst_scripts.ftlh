@@ -51,7 +51,7 @@
                         .then(function() {
                             if (res.rslt) UserReqst.main();
                         });
-                });
+                }, "block");
             },
             /** 메인 화면으로 돌아가기 */
             return: function() {

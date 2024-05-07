@@ -113,7 +113,7 @@
                         .then(function() {
                             if (res.rslt) User.list();
                         });
-                });
+                }, "block");
             },
             /** 상세 화면 이동 */
             dtl: function(userNo) {
@@ -134,7 +134,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 승인취소 처리 (ajax) */
@@ -151,7 +151,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 패스워드 초기화 */
@@ -168,7 +168,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 수정 화면 이동 */
@@ -189,7 +189,7 @@
                             .then(function() {
                                 if (res.rslt) User.list();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 목록 화면 이동 */

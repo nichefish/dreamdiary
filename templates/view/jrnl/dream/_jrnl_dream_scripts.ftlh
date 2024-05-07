@@ -124,8 +124,8 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
-                }, "block");
+                    }, "block");
+                });
             },
         }
     })();

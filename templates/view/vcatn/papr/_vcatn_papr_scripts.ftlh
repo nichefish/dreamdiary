@@ -51,7 +51,7 @@
                         .then(function() {
                             if (res.rslt) VcatnPapr.list();
                         });
-                });
+                }, "block");
             },
             /** 상세 화면 이동 */
             dtl: function (postNo) {
@@ -84,7 +84,7 @@
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();
                         });
-                });
+                }, "block");
             },
             /** 삭제 처리 (ajax) */
             delAjax: function() {
@@ -100,7 +100,7 @@
                             .then(function() {
                                 if (res.rslt) VcatnPapr.list();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 목록 화면 이동 */

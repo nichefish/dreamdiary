@@ -45,7 +45,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 저널 꿈 수정 모달 팝업 호출 */
@@ -87,7 +87,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
         }

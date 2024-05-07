@@ -6,15 +6,19 @@
 <script>
     const JrnlDayAside = (function() {
         return {
-            yyMnth: function (obj) {
+            yy: function () {
+                $("#jrnl_aside #mnth").val("");
+                commons.util.handlebarsTemplate({}, "jrnl_day_list");
+            },
+            mnth: function () {
                 // 쿠키 설정하기
-                const id = $(obj).attr("id");
                 let cookieOptions = {
                     path: "/jrnl/day/",
                     expires: commons.date.getCurrDateAddDay(36135)
                 };
-                $.cookie("jrnl_" + id, $(obj).val(), cookieOptions);
-                if ($("#mnth").val() === "") return;
+                $.cookie("jrnl_yy", $("#jrnl_aside #yy").val(), cookieOptions);
+                if ($("#jrnl_aside #mnth").val() === "") return;
+                $.cookie("jrnl_mnth", $("#jrnl_aside #mnth").val(), cookieOptions);
                 // 목록 조회
                 JrnlDay.listAjax();
                 JrnlDay.tagListAjax();
@@ -68,8 +72,8 @@
                     <div class="col">
                         <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">년도</span>
                         <select name="yy" id="yy" class="form-select" aria-label="Select example"
-                                onchange="JrnlDayAside.yyMnth(this);">
-                            <option value="">모든 년도</option>
+                                onchange="JrnlDayAside.yy();">
+                            <option value="">------</option>
                             <#assign currYy = DateUtils.getCurrYy()?number />
                             <#assign startYy = 2011 />
                             <#list currYy..startYy as year>
@@ -80,8 +84,8 @@
                     <div class="col">
                         <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">월</span>
                         <select name="mnth" id="mnth" class="form-select" aria-label="Select example"
-                                onchange="JrnlDayAside.yyMnth(this);">
-                            <option value="">모든 월</option>
+                                onchange="JrnlDayAside.mnth();">
+                            <option value="">------</option>
                             <#list 1..12 as mnth>
                                 <option value="${mnth}">${mnth}</option>
                             </#list>

@@ -71,7 +71,7 @@
                         .then(function() {
                             if (res.rslt) BoardPost.list();
                         });
-                });
+                }, "block");
             },
             /** 상세 화면 이동 */
             dtl: function (postNo) {
@@ -109,7 +109,7 @@
                             .then(function() {
                                 if (res.rslt) BoardPost.list();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 목록 화면 이동 */

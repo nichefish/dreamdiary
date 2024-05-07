@@ -84,7 +84,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 수정 모달 팝업 호출 */
@@ -113,7 +113,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 정렬순서 저장 */
@@ -132,7 +132,7 @@
                             commons.util.blockUIReload();
                         }
                     }
-                });
+                }, "block");
             },
             /** 목록 검색 */
             search: function() {

@@ -95,8 +95,8 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
-                }, "block");
+                    }, "block");
+                });
             },
             /** 등록 화면 호출 */
             mdfModal: function(postNo) {
@@ -139,8 +139,8 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
-                }, "block");
+                    }, "block");
+                });
             },
         }
     })();
