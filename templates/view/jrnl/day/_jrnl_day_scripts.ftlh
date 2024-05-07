@@ -35,8 +35,10 @@
             },
             /** 목록 조회 */
             listAjax: function() {
+                const mnth = $("#jrnl_aside #mnth").val();
+                if (commons.util.isEmpty(mnth)) return;
                 const url = "${Url.JRNL_DAY_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
+                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": mnth };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -94,7 +96,7 @@
                                 if (res.rslt) commons.util.blockUIReload();
                             });
                     });
-                });
+                }, "block");
             },
             /** 등록 화면 호출 */
             mdfModal: function(postNo) {
@@ -138,7 +140,7 @@
                                 if (res.rslt) commons.util.blockUIReload();
                             });
                     });
-                });
+                }, "block");
             },
         }
     })();

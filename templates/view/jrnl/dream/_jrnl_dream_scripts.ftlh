@@ -65,7 +65,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    // const isReg =
+                    // const isReg = $("#jrnlDreamRegForm #postNo").val() != "";
                     const url = "${Url.JRNL_DREAM_REG_AJAX!}";
                     let ajaxData = new FormData($("#jrnlDreamRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
@@ -73,7 +73,7 @@
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
                             });
-                    });
+                    }, "block");
                 });
             },
             /** 저널 꿈 수정 모달 팝업 호출 */
@@ -125,7 +125,7 @@
                                 if (res.rslt) commons.util.blockUIReload();
                             });
                     });
-                });
+                }, "block");
             },
         }
     })();

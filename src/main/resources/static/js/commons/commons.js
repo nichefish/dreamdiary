@@ -39,34 +39,28 @@ $(document).ajaxComplete(function(event, xhr, settings) {
     });
 })(jQuery);
 commons.util = (function() {
-    /** blockUI wrapped by try-catch */
-    function fnBlockUI() {
-        // let blockUI = new KTBlockUI();
-        try {
-            $.blockUI({
-                message: `<div class="flex-column py-2 bg-dark bg-opacity-25">
-                    <span class="spinner-border text-primary" role="status"></span>
-                    <span class="text-muted fs-6 fw-semibold mt-5">Loading...</span>
-                </div>`
-            });
-        } catch (error) {
-            console.log("blockUI is not defined.");
-        }
-    }
-    function fnUnblockUI() {
-        try {
-            setTimeout($.unblockUI(), 1500);    // 1.5초간 딜레이
-        } catch(error) {
-            console.log("blockUI is not defined.");
-        }
-    }
-
     return {
-        fnBlockUI: function() {
-            fnBlockUI();
+        /** blockUI wrapped by try-catch */
+        blockUI: function() {
+            // let blockUI = new KTBlockUI();
+            try {
+                $.blockUI({
+                    message: `<div class="flex-column py-2 bg-dark bg-opacity-25">
+                        <span class="spinner-border text-primary" role="status"></span>
+                        <span class="text-muted fs-6 fw-semibold mt-5">Loading...</span>
+                    </div>`
+                });
+            } catch (error) {
+                console.log("blockUI is not defined.");
+            }
         },
-        fnUnblockUI: function() {
-            fnUnblockUI();
+        /** blockUI wrapped by try-catch */
+        unblockUI: function() {
+            try {
+                setTimeout($.unblockUI(), 1500);    // 1.5초간 딜레이
+            } catch(error) {
+                console.log("blockUI is not defined.");
+            }
         },
         hasSwal: function () {
             return (typeof Swal !== 'undefined');
@@ -240,11 +234,11 @@ commons.util = (function() {
          * @depdendency: blockUI (optional)
          */
         blockUIFileDownload: (function() {
-            fnBlockUI();
+            commons.util.blockUI();
             let downloadTimer = setInterval(function () {
-                let token = commons.util.getCookie("FILE_CREATE_SUCCESS");
+                const token = commons.util.getCookie("FILE_CREATE_SUCCESS");
                 if (token === "TRUE") {
-                    fnUnblockUI();
+                    commons.util.unblockUI();
                     clearInterval(downloadTimer);
                 }
             }, 1000);
@@ -256,12 +250,12 @@ commons.util = (function() {
          * @depdendency: blockUI (optional)
          */
         blockUIRequest: (function() {
-            fnBlockUI();
-            let downloadTimer = setInterval(function () {
-                let token = commons.util.getCookie("RESPONSE_SUCCESS");
+            commons.util.blockUI();
+            let requestTimer = setInterval(function () {
+                const token = commons.util.getCookie("RESPONSE_SUCCESS");
                 if (token === "TRUE") {
-                    fnUnblockUI();
-                    clearInterval(downloadTimer);
+                    commons.util.unblockUI();
+                    clearInterval(requestTimer);
                 }
             }, 1000);
         }),
@@ -272,7 +266,8 @@ commons.util = (function() {
          * @depdendency: blockUI (optional)
          */
         blockUIReload: (function() {
-            commons.util.blockUIRequest();
+            commons.util.blockUI();
+            commons.util.closeModal();
             location.reload();
         }),
 
@@ -282,7 +277,8 @@ commons.util = (function() {
          * @depdendency: blockUI (optional)
          */
         blockUIReplace: (function(url) {
-            commons.util.blockUIRequest();
+            commons.util.blockUI();
+            commons.util.closeModal();
             location.replace(url);
         }),
 
@@ -293,6 +289,7 @@ commons.util = (function() {
          */
         blockUISubmit: (function(formSelector, actionUrl, prefunc) {
             commons.util.blockUIRequest();
+            commons.util.closeModal();
             commons.util.submit(formSelector, actionUrl, prefunc);
         }),
 
@@ -301,13 +298,13 @@ commons.util = (function() {
          * @depdendency: blockUI (optional)
          */
         ajax: function(option, func, continueBlock) {
-            fnBlockUI();
+            commons.util.blockUI();
             $.ajax(
                 option
             ).done(function(res) {
                 if (commons.util.isNotEmpty(func)) {
                     let isSuccess = func(res);
-                    if (!isSuccess) fnUnblockUI();
+                    if (!isSuccess) commons.util.unblockUI();
                 }
             }).fail(function (data) {
                 if (commons.util.hasSwal()) {
@@ -321,9 +318,9 @@ commons.util = (function() {
                 } else {
                     alert("처리에 실패했습니다.");
                 }
-                fnUnblockUI();
+                commons.util.unblockUI();
             }).always(function () {
-                if (continueBlock !== 'block') fnUnblockUI();
+                if (continueBlock !== 'block') commons.util.unblockUI();
             });
         },
 
@@ -720,6 +717,13 @@ commons.util = (function() {
                     keepInvalid: false      // if after editing, tag is invalid, auto-revert
                 },
             });
+        },
+
+        /**
+         * 전체 모달 닫기
+         */
+        closeModal: function() {
+            $('.modal').modal('hide');
         }
     }
 })();
