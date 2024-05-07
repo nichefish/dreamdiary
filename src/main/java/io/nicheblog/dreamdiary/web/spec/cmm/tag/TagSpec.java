@@ -100,7 +100,10 @@ public class TagSpec
         }
         return predicate;
     }
-
+    
+    /**
+     * 연관관계 없는 태그 조회
+     */
     public Specification<TagEntity> getNoRefTags() {
         return (root, query, builder) -> {
             List<Predicate> predicate = new ArrayList<>();

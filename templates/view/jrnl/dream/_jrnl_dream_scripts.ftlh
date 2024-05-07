@@ -65,6 +65,7 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
+                    // const isReg =
                     const url = "${Url.JRNL_DREAM_REG_AJAX!}";
                     let ajaxData = new FormData($("#jrnlDreamRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {

@@ -118,7 +118,7 @@ public class TagService
     /**
      * 기존 컨텐츠 태그 전부 삭제:: 메소드 분리
      */
-    private void delExistingContentTags(BaseClsfKey clsfKey) throws Exception {
+    public void delExistingContentTags(BaseClsfKey clsfKey) throws Exception {
         // 2. 글번호 + 태그번호를 받아와서 기존 태그 목록 조회
         Map<String, Object> searchParamMap = new HashMap(){{
             put("refPostNo", clsfKey.getPostNo());

@@ -29,11 +29,14 @@ public class TagEventListener {
 
         // 태그 객체 없이 키값만 넘어오면? 컨텐츠 삭제.
         boolean isContentDelete = (event.getTagCmpstn() == null);
-        if (!isContentDelete) {
+        if (isContentDelete) {
+            // 기존 컨텐츠-태그 전부 삭제
+            tagService.delExistingContentTags(event.getClsfKey());
+        } else {
             // 태그 처리
             tagService.procTags(event.getClsfKey(), event.getTagCmpstn());
         }
-        // 태그테이블 refresh (연관관계 없는 태그 삭제0
+        // 태그테이블 refresh (연관관계 없는 태그 삭제)
         tagService.deleteNoRefTags();
     }
 }

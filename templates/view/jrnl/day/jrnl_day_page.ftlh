@@ -87,11 +87,11 @@
 <#--include::modals-->
 <#include "/view/jrnl/day/_jrnl_day_list_template.hbs">
 <#include "/view/jrnl/dream/_jrnl_dream_tag_list_template.hbs">
+<#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
+<#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
 <#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 <#include "/view/jrnl/diary/_jrnl_diary_reg_modal.ftlh">
-<#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
-<#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
 <#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>
