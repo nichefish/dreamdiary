@@ -14,6 +14,8 @@
   flex-direction: row !important;
   justify-content: start;
   align-items: center;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
 }
 
 .jrnl-diary-cn {

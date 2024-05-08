@@ -9,6 +9,7 @@
             yy: function () {
                 $("#jrnl_aside #mnth").val("");
                 commons.util.handlebarsTemplate({}, "jrnl_day_list");
+                commons.util.handlebarsTemplate({}, "jrnl_dream_tag_list");
             },
             mnth: function () {
                 // 쿠키 설정하기
