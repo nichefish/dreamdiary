@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -86,6 +87,13 @@ public class TagService
         if (tagCmpstn == null) return;
         List<String> tagStrList = tagCmpstn.getParsedTagList();
         if (CollectionUtils.isEmpty(tagStrList)) return;
+
+        // 기존 태그와 컨텐츠 태그가 동일하면 리턴
+        List<String> existingTagStrList = contentTagService.getTagStrListByClsfKey(clsfKey);
+        boolean isSame = tagStrList.size() == existingTagStrList.size() && new HashSet<>(tagStrList).containsAll(existingTagStrList);
+        if (isSame) return;
+        
+        // TODO: 세심하게 뭐가 있고 뭐가 없는지 구분해서 처리하기?
 
         // 1, 마스터 태그 처리 (메소드 분리)
         List<TagEntity> rsList = this.masterTagProc(tagStrList);
