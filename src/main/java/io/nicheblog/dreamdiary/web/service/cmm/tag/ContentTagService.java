@@ -8,10 +8,12 @@ import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.ContentTagRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.ContentTagSpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,16 +45,17 @@ public class ContentTagService
     public ContentTagRepository getRepository() {
         return this.contentTagRepository;
     }
-
     @Override
     public ContentTagSpec getSpec() {
         return this.contentTagSpec;
     }
-
     @Override
     public ContentTagMapstruct getMapstruct() {
         return this.tagMapstruct;
     }
+
+    @Autowired
+    private EntityManager entityManager;
 
     /**
      * 특정 게시물에 대한 컨텐츠 태그 목록 조회 
@@ -67,5 +70,24 @@ public class ContentTagService
         return entityList.stream()
                 .map(ContentTagEntity::getTagNm)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * obsolete된 기존 컨텐츠 태그 삭제:: 메소드 분리
+     */
+    public void delObsoleteContentTags(BaseClsfKey clsfKey, List<String> obsoleteTagList) {
+        contentTagRepository.deleteObsoleteContentTags(clsfKey.getPostNo(), clsfKey.getContentType(), obsoleteTagList);
+    }
+
+    /**
+     * 기존 컨텐츠 태그 전부 삭제:: 메소드 분리
+     */
+    public void delExistingContentTags(BaseClsfKey clsfKey) throws Exception {
+        // 2. 글번호 + 태그번호를 받아와서 기존 태그 목록 조회
+        Map<String, Object> searchParamMap = new HashMap(){{
+            put("refPostNo", clsfKey.getPostNo());
+            put("refContentType", clsfKey.getContentType());
+        }};
+        this.deleteAll(searchParamMap);
     }
 }

@@ -15,10 +15,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import javax.transaction.Transactional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -81,28 +79,33 @@ public class TagService
     /**
      * 컨텐츠 태그 처리
      */
+    @Transactional
     public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) throws Exception {
 
         // 태그객체 또는 태그 문자열이 넘어오지 않았으면? 리턴.
         if (tagCmpstn == null) return;
-        List<String> tagStrList = tagCmpstn.getParsedTagList();
-        if (CollectionUtils.isEmpty(tagStrList)) return;
+        List<String> newTagStrList = tagCmpstn.getParsedTagList();
+        if (CollectionUtils.isEmpty(newTagStrList)) return;
 
         // 기존 태그와 컨텐츠 태그가 동일하면 리턴
         List<String> existingTagStrList = contentTagService.getTagStrListByClsfKey(clsfKey);
-        boolean isSame = tagStrList.size() == existingTagStrList.size() && new HashSet<>(tagStrList).containsAll(existingTagStrList);
+        boolean isSame = newTagStrList.size() == existingTagStrList.size() && new HashSet<>(newTagStrList).containsAll(existingTagStrList);
         if (isSame) return;
         
-        // TODO: 세심하게 뭐가 있고 뭐가 없는지 구분해서 처리하기?
+        // 1, 추가해야 할 마스터 태그 처리 (메소드 분리)
+        // 새로운 태그 목록에서 기존 태그 목록을 빼면 추가해야 할 태그들이 나옴
+        Set<String> newTagSet = new HashSet<>(newTagStrList);
+        existingTagStrList.forEach(newTagSet::remove);
+        List<TagEntity> rsList = this.addMasterTag(new ArrayList<>(newTagSet));
 
-        // 1, 마스터 태그 처리 (메소드 분리)
-        List<TagEntity> rsList = this.masterTagProc(tagStrList);
+        // 2. 삭제해야 할 태그 삭제
+        // 기존 태그 목록에서 새로운 태그 목록을 빼면 삭제해야 할 태그들이 나옴
+        Set<String> obsoleteTagSet = new HashSet<>(existingTagStrList);
+        newTagStrList.forEach(obsoleteTagSet::remove);
+        contentTagService.delObsoleteContentTags(clsfKey, new ArrayList<>(obsoleteTagSet));
 
-        // 2. 기존 컨텐츠-태그 전부 삭제
-        this.delExistingContentTags(clsfKey);
-
-        // 3. 컨텐츠-태그를 처리해준다.
-        List<ContentTagEntity> contentTagList = rsList.stream()
+        // 3. 추가해야 할 컨텐츠-태그를 처리해준다.
+            List<ContentTagEntity> contentTagList = rsList.stream()
                 .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
                 .collect(Collectors.toList());
         contentTagService.registAll(contentTagList);
@@ -114,7 +117,7 @@ public class TagService
     /**
      * 마스터 태그 처리:: 메소드 분리
      */
-    List<TagEntity> masterTagProc(List<String> tagStrList) {
+    List<TagEntity> addMasterTag(List<String> tagStrList) {
         List<TagEntity> tagEntityList = tagStrList.stream()
                 .distinct() // 중복된 태그 문자열 제거
                 .map(tagStr -> tagRepository.findByTagNm(tagStr)
@@ -124,18 +127,6 @@ public class TagService
     }
 
     /**
-     * 기존 컨텐츠 태그 전부 삭제:: 메소드 분리
-     */
-    public void delExistingContentTags(BaseClsfKey clsfKey) throws Exception {
-        // 2. 글번호 + 태그번호를 받아와서 기존 태그 목록 조회
-        Map<String, Object> searchParamMap = new HashMap(){{
-            put("refPostNo", clsfKey.getPostNo());
-            put("refContentType", clsfKey.getContentType());
-        }};
-        contentTagService.deleteAll(searchParamMap);
-    }
-
-    /** 
      * 연관관계 없는 마스터 태그 삭제
      */
     public Boolean deleteNoRefTags() {

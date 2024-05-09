@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.handler;
 
 import io.nicheblog.dreamdiary.web.event.TagProcEvent;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.ContentTagService;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -18,8 +19,10 @@ import javax.annotation.Resource;
 @Component
 public class TagEventListener {
 
-    @Resource
+    @Resource(name="tagService")
     private TagService tagService;
+    @Resource(name="contentTagService")
+    private ContentTagService contentTagService;
 
     /**
      * 태그 처리
@@ -31,7 +34,7 @@ public class TagEventListener {
         boolean isContentDelete = (event.getTagCmpstn() == null);
         if (isContentDelete) {
             // 기존 컨텐츠-태그 전부 삭제
-            tagService.delExistingContentTags(event.getClsfKey());
+            contentTagService.delExistingContentTags(event.getClsfKey());
         } else {
             // 태그 처리
             tagService.procTags(event.getClsfKey(), event.getTagCmpstn());
