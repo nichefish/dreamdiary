@@ -32,7 +32,11 @@
             ajax: function(url, data) {
                 commons.util.blockUIAjax(url, 'post', data, function(res) {
                     if (res.rslt) Swal.fire(JSON.stringify(res));
-                    Swal.fire({ text: res.message });
+                    Swal.fire({ text: res.message })
+                        .then(function() {
+                            if (res.rsltList) Swal.fire(JSON.stringify(res.rsltList));
+                            if (res.rsltObj) Swal.fire(JSON.stringify(res.rsltObj));
+                        });
                 });
             },
             /** 사이트 관리 페이지로 이동 */

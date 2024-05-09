@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.service.cmm.tag;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
@@ -82,7 +83,7 @@ public class TagService
      * 컨텐츠 태그 처리
      */
     @Transactional
-    @CacheEvict(value={"jrnlDreamTagDtl", "jrnlDreamSizedTagList"}, allEntries = true)
+    @CacheEvict(value={"jrnlDayList", "jrnlDreamTagDtl", "jrnlDreamSizedTagList"}, allEntries = true)
     public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) throws Exception {
 
         // 태그객체 또는 태그 문자열이 넘어오지 않았으면? 리턴.
@@ -166,9 +167,9 @@ public class TagService
      * css 사이즈 계산한 태그 목록 조회
      * 태그 1개 = 1. 그 외엔 2~9
      */
-    @Cacheable(value="jrnlDreamSizedTagList", key="#searchParamMap.hashCode()")
-    public List<TagDto> getDreamSizedListDto(Map<String, Object> searchParamMap) throws Exception {
-        List<TagDto> tagList = this.getListDto(searchParamMap);
+    @Cacheable(value="jrnlDreamSizedTagList", key="#searchParam.hashCode()")
+    public List<TagDto> getDreamSizedListDto(BaseSearchParam searchParam) throws Exception {
+        List<TagDto> tagList = this.getListDto(searchParam);
         int maxSize = this.calcMaxDreamSize(tagList);
         final int MIN_SIZE = 2; // 최소 크기
         final int MAX_SIZE = 9; // 최대 크기

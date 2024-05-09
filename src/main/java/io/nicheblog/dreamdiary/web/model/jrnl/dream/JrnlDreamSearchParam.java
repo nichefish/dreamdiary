@@ -22,7 +22,7 @@ public class JrnlDreamSearchParam
 
     /** 년도 */
     private Integer yy;
-    /** 제목 */
+    /** 월 */
     private Integer mnth;
 
     /** 컨텐츠 타입 */

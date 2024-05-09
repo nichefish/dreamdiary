@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.comment.CommentRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.comment.CommentSpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,14 +38,28 @@ public class CommentService
     public CommentRepository getRepository() {
         return this.commentRepository;
     }
-
     @Override
     public CommentMapstruct getMapstruct() {
         return this.commentMapstruct;
     }
-
     @Override
     public CommentSpec getSpec() {
         return this.commentSpec;
+    }
+
+    @CacheEvict(value="jrnlDayList", allEntries = true)
+    @Override
+    public void postRegist(final CommentEntity rslt) throws Exception {
+        //
+    }
+    @CacheEvict(value="jrnlDayList", allEntries = true)
+    @Override
+    public void postModify(final CommentEntity rslt) throws Exception {
+        //
+    }
+    @CacheEvict(value="jrnlDayList", allEntries = true)
+    @Override
+    public void postDelete(final CommentEntity rslt) throws Exception {
+        //
     }
 }

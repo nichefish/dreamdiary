@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.dream.JrnlDreamRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamSpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -81,5 +82,21 @@ public class JrnlDreamService
     public List<JrnlDreamDto> jrnlDreamTagDtl(final BaseSearchParam searchParam) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         return this.getListDto(searchParamMap);
+    }
+
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    @Override
+    public void postRegist(final JrnlDreamEntity rslt) throws Exception {
+        //
+    }
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    @Override
+    public void postModify(final JrnlDreamEntity rslt) throws Exception {
+        //
+    }
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    @Override
+    public void postDelete(final JrnlDreamEntity rslt) throws Exception {
+        //
     }
 }

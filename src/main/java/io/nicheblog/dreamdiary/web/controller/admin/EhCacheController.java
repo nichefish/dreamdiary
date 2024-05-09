@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.Cache;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -56,7 +57,7 @@ public class EhCacheController
         String rsltMsg = "";
         try {
             // 현재 활성 중인 캐시(name) 목록 조회 :: 성공시 처리완료목록으로 출력
-            List<String> activeCacheList = EhCacheUtils.chckActiveCaches();
+            List<Cache> activeCacheList = EhCacheUtils.chckActiveCaches();
             ajaxResponse.setRsltList(activeCacheList);
 
             isSuccess = true;
@@ -91,7 +92,7 @@ public class EhCacheController
         String rsltMsg = "";
         try {
             // 목록 조회 및 초기화
-            List<String> activeCacheList = EhCacheUtils.chckActiveCaches();
+            List<String> activeCacheList = EhCacheUtils.chckActiveCacheNm();
             ajaxResponse.setRsltList(activeCacheList);
             
             isSuccess = EhCacheUtils.clearAllCaches();

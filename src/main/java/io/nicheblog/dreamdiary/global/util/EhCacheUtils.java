@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.util;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * EhCacheUtils
@@ -36,8 +38,18 @@ public class EhCacheUtils {
     /**
      * 캐시 목록 조회
      */
-    public static List<String> chckActiveCaches() {
+    public static List<String> chckActiveCacheNm() {
         return new ArrayList<>(cacheManager.getCacheNames());
+    }
+
+    /**
+     * 캐시 목록 조회
+     */
+    public static List<Cache> chckActiveCaches() {
+        return cacheManager.getCacheNames()
+                .stream()
+                .map(cacheName -> cacheManager.getCache(cacheName))
+                .collect(Collectors.toList());
     }
 
     /**

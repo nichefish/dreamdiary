@@ -136,7 +136,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
     /**
      * default: 게시물 삭제 전처리
      */
-    default void preDelete(final Entity e) {
+    default void preDelete(final Entity e) throws Exception {
         // 기본 공백, 필요시 각 함수에서 Override
     }
 
@@ -155,7 +155,17 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
         this.preDelete(e);
 
         repository.delete(e);
+
+        this.postDelete(e);
+
         return true;
+    }
+
+    /**
+     * default: 게시물 삭제 후처리
+     */
+    default void postDelete(final Entity e) throws Exception {
+        // 기본 공백, 필요시 각 함수에서 Override
     }
 
     /**

@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.diary.JrnlDiaryRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.diary.JrnlDiarySpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,12 +37,10 @@ public class JrnlDiaryService
     public JrnlDiaryRepository getRepository() {
         return this.jrnlDiaryRepository;
     }
-
     @Override
     public JrnlDiaryMapstruct getMapstruct() {
         return this.jrnlDiaryMapstruct;
     }
-
     @Override
     public JrnlDiarySpec getSpec() {
         return this.jrnlDiarySpec;
@@ -55,5 +54,21 @@ public class JrnlDiaryService
         // 인덱스(정렬순서) 처리
         Integer lastIndex = jrnlDiaryRepository.findLastIndexByJrnlDay(jrnlDiary.getJrnlDayNo()).orElse(0);
         jrnlDiary.setIdx(lastIndex + 1);
+    }
+
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    @Override
+    public void postRegist(final JrnlDiaryEntity rslt) throws Exception {
+        //
+    }
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    @Override
+    public void postModify(final JrnlDiaryEntity rslt) throws Exception {
+        //
+    }
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    @Override
+    public void postDelete(final JrnlDiaryEntity rslt) throws Exception {
+        //
     }
 }

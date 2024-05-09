@@ -55,6 +55,7 @@ public class JrnlSumryService
     }
 
     /** 목록 조회 위해 구현체로 pullUp */
+    @Override
     @Cacheable(value="jrnlSumryList")
     public List<JrnlSumryDto.LIST> getListDto(final BaseSearchParam searchParam) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);

@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.day;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.day.JrnlDayMapstruct;
@@ -8,10 +10,14 @@ import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.day.JrnlDayRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.day.JrnlDaySpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * JrnlDayService
@@ -47,6 +53,14 @@ public class JrnlDayService
         return this.jrnlDaySpec;
     }
 
+    /** 목록 조회 위해 구현체로 pullUp */
+    @Override
+    @Cacheable(value="jrnlDayList", key="#searchParam.getYy() + '_' + #searchParam.getMnth()")
+    public List<JrnlDayDto> getListDto(final BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getListDto(searchParamMap);
+    }
+
     /**
      * 중복 체크 (정상시 true / 중복시 false)
      */
@@ -71,6 +85,7 @@ public class JrnlDayService
      * 신청 전처리:: 메소드 분리
      */
     @Override
+    @CacheEvict(value={"jrnlDayList"}, allEntries = true)
     public void preRegist(final JrnlDayDto jrnlDay) throws Exception {
         // 날짜미상여부 N시 대략일자 무효화
         if ("Y".equals(jrnlDay.getDtUnknownYn())) {
@@ -83,6 +98,12 @@ public class JrnlDayService
             jrnlDay.setYy(jrnlDay.getJrnlDt().substring(0, 4));
             jrnlDay.setMnth(jrnlDay.getJrnlDt().substring(5, 7));
         }
+    }
+
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    @Override
+    public void postRegist(final JrnlDayEntity rslt) throws Exception {
+        //
     }
 
     /**
@@ -103,4 +124,15 @@ public class JrnlDayService
         }
     }
 
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    @Override
+    public void postModify(final JrnlDayEntity rslt) throws Exception {
+        //
+    }
+
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    @Override
+    public void postDelete(final JrnlDayEntity rslt) throws Exception {
+        //
+    }
 }

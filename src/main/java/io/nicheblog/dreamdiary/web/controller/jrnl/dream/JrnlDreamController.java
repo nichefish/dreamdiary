@@ -203,7 +203,7 @@ public class JrnlDreamController
         String rsltMsg = "";
         try {
             // 전체 태그 목록 조회 (태그클라우드)
-            List<TagDto> tagList = tagService.getDreamSizedListDto(searchParamMap);
+            List<TagDto> tagList = tagService.getDreamSizedListDto(searchParam);
             ajaxResponse.setRsltList(tagList);
 
             isSuccess = true;
