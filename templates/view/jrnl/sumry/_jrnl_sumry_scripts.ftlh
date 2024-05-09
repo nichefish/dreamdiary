@@ -10,6 +10,10 @@
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
             },
+            /** 목록 화면 이동 */
+            list: function (postNo) {
+                commons.util.blockUIReplace("${Url.JRNL_SUMRY_LIST!}");
+            },
             /** 특정 년도 결산 생성 */
             makeYySumryAjax: function(yy) {
                 if (yy === undefined) yy = $("#listForm #yy").val();

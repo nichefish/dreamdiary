@@ -17,6 +17,9 @@
 
 <#--include::script modules-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_scripts.ftlh">
+<#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
+<#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
+<#include "/view/_component/modal/comment/_comment_scripts.ftlh">
 
 <script>
     const Page = (function() {
@@ -35,21 +38,29 @@
 <div class="card post">
     <#--begin::Card body-->
     <div class="card-body">
-        <div class="d-flex fs-5">
-            <div class="text-gray-700 d-flex-center me-5">
-                <span class="fw-bold me-2">
-                    전체 꿈
-                </span>
-                <i class="bi bi-moon-stars fs-4 me-2"></i>
-                (<span class="text-underline-dotted ms-1">${totalSumry.dreamDayCnt!}</span>일 / <span class="text-underline-dotted ms-1">${totalSumry.dreamCnt!}</span>개)
+        <div class="d-flex justify-content-between fs-5">
+            <div class="d-flex fs-5">
+                <div class="text-gray-700 d-flex-center me-5">
+                    <span class="fw-bold me-2">
+                        전체 꿈
+                    </span>
+                    <i class="bi bi-moon-stars fs-4 me-2"></i>
+                    (<span class="text-underline-dotted ms-1">${totalSumry.dreamDayCnt!}</span>일 / <span class="text-underline-dotted ms-1">${totalSumry.dreamCnt!}</span>개)
+                </div>
+                <div class="text-gray-700 d-flex-center">
+                    <span class="fw-bold me-2">
+                        전체 일기
+                    </span>
+                    <i class="bi bi-book fs-4 me-2"></i>
+                    (<span class="text-underline-dotted ms-1">${totalSumry.diaryDayCnt!}</span>일)
+                </div>
             </div>
-            <div class="text-gray-700 d-flex-center">
-                <span class="fw-bold me-2">
-                    전체 일기
-                </span>
-                <i class="bi bi-book fs-4 me-2"></i>
-                (<span class="text-underline-dotted ms-1">${totalSumry.diaryDayCnt!}</span>일)
-            </div>
+
+            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                    onclick="JrnlTag.dreamTagListAllAjax();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
+                <i class="bi bi-tag pe-0"></i>
+            </button>
         </div>
     </div>
 </div>
@@ -100,5 +111,9 @@
 
 <#--include:: Aside-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_aside_base.ftlh">
+<#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
+<#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
+<#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
+<#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>
