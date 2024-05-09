@@ -82,7 +82,7 @@ public class TagService
      * 컨텐츠 태그 처리
      */
     @Transactional
-    @CacheEvict(value="dreamSizedTagList", allEntries = true)
+    @CacheEvict(value={"jrnlDreamTagDtl", "jrnlDreamSizedTagList"}, allEntries = true)
     public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) throws Exception {
 
         // 태그객체 또는 태그 문자열이 넘어오지 않았으면? 리턴.
@@ -166,7 +166,7 @@ public class TagService
      * css 사이즈 계산한 태그 목록 조회
      * 태그 1개 = 1. 그 외엔 2~9
      */
-    @Cacheable(value="dreamSizedTagList", key="#searchParamMap.hashCode()")
+    @Cacheable(value="jrnlDreamSizedTagList", key="#searchParamMap.hashCode()")
     public List<TagDto> getDreamSizedListDto(Map<String, Object> searchParamMap) throws Exception {
         List<TagDto> tagList = this.getListDto(searchParamMap);
         int maxSize = this.calcMaxDreamSize(tagList);

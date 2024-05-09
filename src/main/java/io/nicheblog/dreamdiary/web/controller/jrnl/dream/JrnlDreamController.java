@@ -240,7 +240,7 @@ public class JrnlDreamController
         String rsltMsg = "";
         try {
             // 목록 조회 및 응답에 추가
-            List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.getListDto(searchParam);
+            List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.jrnlDreamTagDtl(searchParam);
             Collections.sort(jrnlDreamList);
             ajaxResponse.setRsltList(jrnlDreamList);
 

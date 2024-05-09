@@ -1,12 +1,15 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.dream;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.dream.JrnlDreamRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamSpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,12 +42,10 @@ public class JrnlDreamService
     public JrnlDreamRepository getRepository() {
         return this.jrnlDreamRepository;
     }
-
     @Override
     public JrnlDreamMapstruct getMapstruct() {
         return this.jrnlDreamMapstruct;
     }
-
     @Override
     public JrnlDreamSpec getSpec() {
         return this.jrnlDreamSpec;
@@ -70,6 +71,15 @@ public class JrnlDreamService
             put("yy", yy);
             put("imprtcYn", "Y");
         }};
+        return this.getListDto(searchParamMap);
+    }
+
+    /**
+     * 특정 태그의 관련 꿈 목록 조회
+     */
+    @Cacheable(value="jrnlDreamTagDtl", key="#searchParam.hashCode()")
+    public List<JrnlDreamDto> jrnlDreamTagDtl(final BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         return this.getListDto(searchParamMap);
     }
 }
