@@ -65,22 +65,6 @@
                 commons.util.blockUISubmit("#procForm", "${Url.USER_REG_FORM!}");
             },
             /** 아이디 중복 체크(Ajax) */
-            tagifyAcsIp: function() {
-                // 접속IP tagify
-                const acsIpInput = document.querySelector("#acsIpListStr");
-                new Tagify(acsIpInput, {
-                    maxTags: 5,
-                    pattern: commons.validate.ipv4regex,
-                    keepInvalidTags: false,
-                    skipInvalid: true,
-                    duplicates: false,
-                    editTags: {
-                        clicks: 2,
-                        keepInvalid: false      // if after editing, tag is invalid, auto-revert
-                    },
-                });
-            },
-            /** 아이디 중복 체크(Ajax) */
             idDupChckAjax: function() {
                 const userIdValidSpan = $("#userId_valid_span");
                 let userId = $("#userId").val();

@@ -234,6 +234,8 @@ public class CmmUtils {
     }
 
     public static String procText(String text) {
+
+        // " " 로 묶인 부분을 색상 처리
         Pattern highlightPattern = Pattern.compile("\"(.*?)\"");
         Matcher highlightMatcher = highlightPattern.matcher(text);
         while (highlightMatcher.find()) {
@@ -241,7 +243,7 @@ public class CmmUtils {
             text = text.replace("\"" + group + "\"", "<span class=\"text-dialog\">\"" + group + "\"</span>");
         }
 
-        // 이중 대시로 묶인 부분을 회색으로 표시
+        // -- -- 로 묶인 부분을 회색으로 표시하되, - - 처리
         Pattern grayPattern = Pattern.compile("--(.*?)(--)");
         Matcher grayMatcher = grayPattern.matcher(text);
         while (grayMatcher.find()) {
@@ -255,6 +257,14 @@ public class CmmUtils {
         while (redMatcher.find()) {
             String group = redMatcher.group(1);
             text = text.replace("!!" + group + "!!", "<span class='text-danger'>" + group + "</span>");
+        }
+
+        // __ __ 로 묶인 부분을 밑줄 처리하되, __ __ 제거
+        Pattern underlinePattern = Pattern.compile("__(.*?)__");
+        Matcher underlineMatcher = underlinePattern.matcher(text);
+        while (underlineMatcher.find()) {
+            String group = underlineMatcher.group(1);
+            text = text.replace("__" + group + "__", "<span style='text-decoration: underline;'>" + group + "</span>");
         }
 
         return text;

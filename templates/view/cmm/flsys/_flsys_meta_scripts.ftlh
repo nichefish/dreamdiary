@@ -15,19 +15,7 @@
                 commons.util.handlebarsTemplate(obj, "flsys_meta_reg", "show");
 
                 /** tagify */
-                let tagInput = document.querySelector("#tagListStr");
-                new Tagify(tagInput, {
-                    maxTags: 5,
-                    // pattern: commons.validate.ipv4regex,
-                    // 특수문자 제외?몇몇개만 허용?
-                    keepInvalidTags: false,
-                    skipInvalid: true,
-                    duplicates: false,
-                    editTags: {
-                        clicks: 2,
-                        keepInvalid: false      // if after editing, tag is invalid, auto-revert
-                    },
-                });
+                commons.util.tagify("#tagListStr");
             },
             /** 메타정보 등록 (Ajax) */
             submit: function() {
@@ -77,28 +65,7 @@
                     FlsysMeta.key = postNo;
 
                     /** tagify */
-                    let tagInput = document.querySelector("#tagListStr");
-                    let tagStrList = rsltObj.tagStrList;
-                    if (rsltObj.tagStrList !== undefined && rsltObj.tagStrList.length > 0) {
-                        let tagifyStr = "";
-                        tagStrList.forEach(function(item) {
-                            tagifyStr += item + ",";
-                        });
-                        tagifyStr.replace(/,$/, '');     // 마지막에 쉼표가 있을 경우 제거
-                        tagInput.value = tagifyStr;
-                    }
-                    new Tagify(tagInput, {
-                        maxTags: 5,
-                        // pattern: commons.validate.ipv4regex,
-                        // 특수문자 제외?몇몇개만 허용?
-                        keepInvalidTags: false,
-                        skipInvalid: true,
-                        duplicates: false,
-                        editTags: {
-                            clicks: 2,
-                            keepInvalid: false      // if after editing, tag is invalid, auto-revert
-                        },
-                    });
+                    commons.util.tagify("#tagListStr");
                 });
             },
             /** 메타정보 삭제 (Ajax) */

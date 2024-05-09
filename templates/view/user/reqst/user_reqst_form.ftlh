@@ -52,8 +52,8 @@
                 }, function(){
                     $("#acsIpListSpan").hide()
                 });
-                // 접속IP tagify
-                User.tagifyAcsIp();
+                /* 접속IP tagify */
+                commons.util.tagify("#acsIpListStr");
             },
         }
     })();

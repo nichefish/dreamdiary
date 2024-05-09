@@ -53,7 +53,9 @@ CREATE TABLE IF NOT EXISTS jrnl_sumry_cn (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N'
+    del_yn CHAR(1) DEFAULT 'N',
+    -- CONSTRAINT
+    INDEX (jrnl_sumry_no)
 ) COMMENT = '저널 결산 내용';
 
 -- 저널 일자 (jrnl_day)
@@ -110,7 +112,9 @@ CREATE TABLE IF NOT EXISTS jrnl_dream (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N'
+    del_yn CHAR(1) DEFAULT 'N',
+    -- CONSTRAINT
+    INDEX (jrnl_day_no)
 ) COMMENT = '저널 꿈';
 
 -- 저널 일기 (jrnl_diary)
@@ -139,5 +143,7 @@ CREATE TABLE IF NOT EXISTS jrnl_diary (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N'
+    del_yn CHAR(1) DEFAULT 'N',
+    -- CONSTRAINT
+    INDEX (jrnl_day_no)
 ) COMMENT = '저널 일기';

@@ -36,7 +36,9 @@ CREATE TABLE IF NOT EXISTS user (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    INDEX (user_id)
 ) COMMENT = '사용자 계정';
 
 -- -----------------------
@@ -59,7 +61,7 @@ CREATE TABLE IF NOT EXISTS auth_role (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     FOREIGN KEY (top_auth_cd) REFERENCES auth_role(auth_cd)
-    ) COMMENT = '권한';
+) COMMENT = '권한';
 
 -- 사용자 권한 (user_auth_role)
 -- @extends: BaseCrudEntity
@@ -70,7 +72,10 @@ CREATE TABLE user_auth_role (
     -- AUDIT
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
-    FOREIGN KEY(user_no) REFERENCES user (user_no), FOREIGN KEY(auth_cd) REFERENCES auth_role (auth_cd)
+    FOREIGN KEY(user_no) REFERENCES user (user_no),
+    FOREIGN KEY(auth_cd) REFERENCES auth_role (auth_cd),
+    INDEX (user_no),
+    INDEX (auth_cd)
 ) COMMENT = '사용자 권한';
 
 -- -----------------------

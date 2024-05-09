@@ -81,7 +81,9 @@ CREATE TABLE IF NOT EXISTS vcatn_schdul (
     rm VARCHAR(500) DEFAULT NULL COMMENT '비고',
     user_id VARCHAR(20) DEFAULT NULL COMMENT '사용자 ID (관리자 등록시 적용)',
     -- AUDIT
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    INDEX (ref_post_no)
 ) COMMENT = '휴가일정';
 
 -- 휴가사용가능일자 (vcatn_stats)
@@ -145,7 +147,8 @@ CREATE TABLE IF NOT EXISTS schdul_prtcpnt (
     -- AUDIT
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
-    FOREIGN KEY(ref_post_no) REFERENCES schdul (post_no)
+    FOREIGN KEY(ref_post_no) REFERENCES schdul (post_no),
+    INDEX (ref_post_no)
 ) COMMENT = '일정 참여자';
 
 -- ---------- --
@@ -186,7 +189,7 @@ CREATE TABLE IF NOT EXISTS exptr_prsnl_papr (
 -- 경비지출 항목 (exptr_prsnl_item)
 -- 경비지출서(exptr_prsnl_papr)에 1:N으로 귀속된다.
 -- @extends: BaseCurdEntity
-CREATE TABLE IF NOT EXISTS EXPTR_PRSNL_ITEM (
+CREATE TABLE IF NOT EXISTS exptr_prsnl_item (
     exptr_prsnl_item_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '경비지출 항목 번호 (PK)',
     ref_post_no INT COMMENT '참조 글 번호',
     exptr_dt DATE COMMENT '지출일시',
@@ -200,7 +203,9 @@ CREATE TABLE IF NOT EXISTS EXPTR_PRSNL_ITEM (
     atch_file_dtl_no INT COMMENT '영수증 파일 번호',
     orgnl_rcipt_yn CHAR(1) DEFAULT 'N',
     -- AUDIT
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    INDEX (ref_post_no)
 ) COMMENT = '경비지출항목';
 
 -- ---------- --
