@@ -301,11 +301,8 @@
                 </div>
             </div>
             <div class="gap-2">
-                <button type="button" class="btn btn-primary me-2"
-                        onclick="commons.util.submit('#userRegForm');"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.save"/>">
-                    <i class="bi bi-pencil-square"></i>저장
-                </button>
+                <#--페이지:: 버튼: 저장하기-->
+                <@component.post_btn_submit "commons.util.submit('#userRegForm');" />
                 <#--페이지:: 버튼: 목록으로 가기-->
                 <@component.post_btn_toList "User.list();" />
             </div>

@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.sumry;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry.JrnlSumryMapstruct;
@@ -8,9 +10,13 @@ import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.JrnlSumryRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.sumry.JrnlSumrySpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * JrnlSumryService
@@ -48,9 +54,17 @@ public class JrnlSumryService
         return this.jrnlSumrySpec;
     }
 
+    /** 목록 조회 위해 구현체로 pullUp */
+    @Cacheable(value="jrnlSumryList")
+    public List<JrnlSumryDto.LIST> getListDto(final BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getListDto(searchParamMap);
+    }
+
     /**
      * 년도를 받아서 해당 년도 결산 생성
      */
+    @CacheEvict(value={"jrnlSumryList", "jrnlTotalSumry"}, allEntries = true)
     public Boolean makeYySumry(Integer yy) {
         // 해당 년도 결산 정보 조회
         JrnlSumryEntity sumry = jrnlSumryRepository.findByYy(yy).orElse(new JrnlSumryEntity(yy));
@@ -73,6 +87,7 @@ public class JrnlSumryService
     /**
      * 전체 년도에 대한 결산 생성
      */
+    @CacheEvict(value={"jrnlSumryList", "jrnlTotalSumry"}, allEntries = true)
     public Boolean makeTotalYySumry() throws Exception {
         int currYy = DateUtils.getCurrYy();
         int startYy = 2011;
@@ -90,6 +105,7 @@ public class JrnlSumryService
     /**
      * 결산 정보를 취합해서 총 결산 생성
      */
+    @Cacheable(value="jrnlTotalSumry")
     public JrnlSumryDto getTotalSumry() {
         JrnlSumryDto totalSumry = new JrnlSumryDto();
         // 해당 년도 꿈 일자 조회해서 갱신

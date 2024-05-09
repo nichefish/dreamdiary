@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 
 /**
  * GlobalExceptionlHandler
@@ -61,7 +62,7 @@ public class BaseExceptionlHandler {
             AjaxResponse ajaxResponse = new AjaxResponse(false, errorMsg);
             return new ResponseEntity<>(ajaxResponse, status);
         }
-        ModelAndView modelAndView = new ModelAndView("forward:" + view);
+        ModelAndView modelAndView = new ModelAndView(view);
         modelAndView.addObject("errorMsg", errorMsg);
         return modelAndView;
     }

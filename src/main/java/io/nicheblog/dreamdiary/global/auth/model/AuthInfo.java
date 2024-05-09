@@ -114,6 +114,7 @@ public class AuthInfo
         return this.authList.stream()
                 .map(entity -> {
                     try {
+                        if (Constant.AUTH_DEV.equals(entity.getAuthCd())) return new SimpleGrantedAuthority(Constant.ROLE_MNGR);
                         return new SimpleGrantedAuthority("ROLE_" + entity.getAuthCd());
                     } catch (Exception e) {
                         throw new RuntimeException(e);

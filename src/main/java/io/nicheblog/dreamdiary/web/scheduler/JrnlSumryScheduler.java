@@ -40,7 +40,10 @@ public class JrnlSumryScheduler {
         LogSysParam logParam = new LogSysParam();
         String rsltMsg = "";
         try {
+            // 결산 생성
             jrnlSumryService.makeTotalYySumry();
+            // 캐시 재생성 위해 조회
+            jrnlSumryService.getTotalSumry();
         } catch (Exception e) {
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);

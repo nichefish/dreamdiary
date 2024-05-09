@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.web.repository.cmm.tag.ContentTagRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.ContentTagSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -82,6 +83,7 @@ public class ContentTagService
     /**
      * 기존 컨텐츠 태그 전부 삭제:: 메소드 분리
      */
+    @CacheEvict(value="dreamSizedTagList", allEntries = true)
     public void delExistingContentTags(BaseClsfKey clsfKey) throws Exception {
         // 2. 글번호 + 태그번호를 받아와서 기존 태그 목록 조회
         Map<String, Object> searchParamMap = new HashMap(){{

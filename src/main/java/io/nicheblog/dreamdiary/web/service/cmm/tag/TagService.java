@@ -12,6 +12,8 @@ import io.nicheblog.dreamdiary.web.repository.cmm.tag.TagRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.TagSpec;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -80,6 +82,7 @@ public class TagService
      * 컨텐츠 태그 처리
      */
     @Transactional
+    @CacheEvict(value="dreamSizedTagList", allEntries = true)
     public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) throws Exception {
 
         // 태그객체 또는 태그 문자열이 넘어오지 않았으면? 리턴.
@@ -117,7 +120,7 @@ public class TagService
     /**
      * 마스터 태그 처리:: 메소드 분리
      */
-    List<TagEntity> addMasterTag(List<String> tagStrList) {
+    public List<TagEntity> addMasterTag(List<String> tagStrList) {
         List<TagEntity> tagEntityList = tagStrList.stream()
                 .distinct() // 중복된 태그 문자열 제거
                 .map(tagStr -> tagRepository.findByTagNm(tagStr)
@@ -129,11 +132,10 @@ public class TagService
     /**
      * 연관관계 없는 마스터 태그 삭제
      */
-    public Boolean deleteNoRefTags() {
+    public void deleteNoRefTags() {
         List<TagEntity> entity = tagRepository.findAll(tagSpec.getNoRefTags());
         tagRepository.deleteAll(entity);
 
-        return true;
     }
 
     /**
@@ -164,6 +166,7 @@ public class TagService
      * css 사이즈 계산한 태그 목록 조회
      * 태그 1개 = 1. 그 외엔 2~9
      */
+    @Cacheable(value="dreamSizedTagList", key="#searchParamMap.hashCode()")
     public List<TagDto> getDreamSizedListDto(Map<String, Object> searchParamMap) throws Exception {
         List<TagDto> tagList = this.getListDto(searchParamMap);
         int maxSize = this.calcMaxDreamSize(tagList);
@@ -183,7 +186,6 @@ public class TagService
                 .sorted()
                 .collect(Collectors.toList());
     }
-
 
     /**
      * 최대 사용빈도 계산한 태그 목록 조회
