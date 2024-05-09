@@ -9,6 +9,12 @@ import io.nicheblog.dreamdiary.global.validator.CmmRegex;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
+import org.jsoup.select.Elements;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -204,8 +210,30 @@ public class CmmUtils {
     /**
      * 공통 > 마크다운 처리
      */
-    public static String markdown(String text) {
+    public static String markdown(String htmlContent) {
+        Document document = Jsoup.parseBodyFragment(htmlContent);
+        Elements paragraphs = document.select("p");
+        for (Element paragraph : paragraphs) {
+            // <p> 태그 내의 모든 자식 노드를 순회
+            for (Node child : paragraph.childNodes()) {
+                if (child instanceof TextNode) {
+                    // 텍스트 노드의 경우, 마크다운 변환 로직을 적용
+                    TextNode textNode = (TextNode) child;
+                    String text = textNode.getWholeText();
+                    String processedText = procText(text); // 변환된 텍스트 처리
+                    if (text.equals(processedText)) continue;
+                    // 텍스트 노드에 HTML 코드를 직접 삽입
+                    textNode.before(processedText);
+                    textNode.remove();
+                }
+            }
+        }
+
         // 일반 큰따옴표로 묶인 부분을 하이라이트 색상으로 표시
+        return document.body().html(); // 변경된 HTML 반환
+    }
+
+    public static String procText(String text) {
         Pattern highlightPattern = Pattern.compile("\"(.*?)\"");
         Matcher highlightMatcher = highlightPattern.matcher(text);
         while (highlightMatcher.find()) {
@@ -228,6 +256,9 @@ public class CmmUtils {
             String group = redMatcher.group(1);
             text = text.replace("!!" + group + "!!", "<span class='text-danger'>" + group + "</span>");
         }
+
         return text;
     }
 }
+
+

@@ -22,7 +22,7 @@
                 $.cookie("jrnl_mnth", $("#jrnl_aside #mnth").val(), cookieOptions);
                 // 목록 조회
                 JrnlDay.listAjax();
-                JrnlDay.tagListAjax();
+                JrnlTag.dreamTagListAjax();
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
             },

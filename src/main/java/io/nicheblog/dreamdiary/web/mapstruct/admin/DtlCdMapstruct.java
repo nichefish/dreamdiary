@@ -42,25 +42,6 @@ public interface DtlCdMapstruct
     DtlCdDto toListDto(final DtlCdEntity entity) throws Exception;
 
     /**
-     * EntityList to DtoList
-     */
-    default List<DtlCdDto> toDtoList(List<DtlCdEntity> entityList) {
-        if (CollectionUtils.isEmpty(entityList)) return null;
-        AtomicLong i = new AtomicLong(1);
-        return entityList.stream()
-                .map(entity -> {
-                    try {
-                        DtlCdDto dto = this.toDto(entity);
-                        dto.setRnum(i.getAndIncrement());
-                        return dto;
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
-
-    /**
      * Dto -> Entity
      */
     @Override

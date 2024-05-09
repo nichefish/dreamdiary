@@ -91,6 +91,7 @@
                         </div>
                     </div>
                     <div class="col py-3 jrnl-sumry-cn">
+                        <#if sumryCn.title??><div class="d-inline-block fw-bold">${sumryCn.title!}</div></#if>
                         ${(sumryCn.markdownCn!"-")?no_esc}
                     </div>
                     <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
@@ -131,6 +132,7 @@
                         </div>
                     </div>
                     <div class="col py-3 jrnl-sumry-cn">
+                        <#if sumryCn.title??><div class="d-inline-block fw-bold">${sumryCn.title!}</div></#if>
                         ${(sumryCn.markdownCn!"-")?no_esc}
                     </div>
                     <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between w-50px gap-1">
@@ -212,7 +214,9 @@
                         </div>
                     </div>
                     <div class="col py-3 jrnl-sumry-cn bg-secondary">
+                        <#if (dream.nhtmrYn == 'Y')><div class="ctgr-span ctgr-imprtc w-auto">!악몽</div></#if>
                         <#if (dream.hallucYn == 'Y')><div class="ctgr-span ctgr-gray w-auto">!입면환각</div></#if>
+                        <#if dream.title??><div class="d-inline-block fw-bold">${dream.title!}</div></#if>
                         ${(dream.markdownCn!"-")?no_esc}
                         <#if dream.tag.list??>
                             <div class="ms-2 mt-3">

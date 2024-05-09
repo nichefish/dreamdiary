@@ -5,6 +5,11 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 /**
  * BaseCrudMapstruct
@@ -24,6 +29,25 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
      */
     @Named("toListDto")
     ListDto toListDto(final Entity e) throws Exception;
+
+    /**
+     * EntityList to DtoList
+     */
+    default List<Dto> toDtoList(List<Entity> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) return null;
+        AtomicLong i = new AtomicLong(1);
+        return entityList.stream()
+                .map(entity -> {
+                    try {
+                        Dto dto = this.toDto(entity);
+                        dto.setRnum(i.getAndIncrement());
+                        return dto;
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 
     /* ----- */
 

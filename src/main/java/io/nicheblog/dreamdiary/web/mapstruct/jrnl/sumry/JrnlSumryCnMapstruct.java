@@ -9,10 +9,6 @@ import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryCnDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * JrnlSumryCnMapstruct
@@ -44,22 +40,6 @@ public interface JrnlSumryCnMapstruct
     @Named("toListDto")
     @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     JrnlSumryCnDto toListDto(final JrnlSumryCnEntity entity) throws Exception;
-
-    /**
-     * EntityList to DtoList
-     */
-    default List<JrnlSumryCnDto> toDtoList(List<JrnlSumryCnEntity> entityList) {
-        if (CollectionUtils.isEmpty(entityList)) return null;
-        return entityList.stream()
-                .map(entity -> {
-                    try {
-                        return JrnlSumryCnMapstruct.INSTANCE.toDto(entity);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
 
     /**
      * Dto -> Entity

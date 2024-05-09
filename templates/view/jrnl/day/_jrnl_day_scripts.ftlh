@@ -47,18 +47,6 @@
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_day_list");
                 });
             },
-            /** 목록에 따른 태그 조회 */
-            tagListAjax: function() {
-                const url = "${Url.TAG_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val(), "contentType": "JRNL_DREAM" };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_tag_list");
-                });
-            },
             /** 등록 화면 호출 */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "jrnl_day_reg", "show");

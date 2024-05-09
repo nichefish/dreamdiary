@@ -7,11 +7,6 @@ import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 /**
  * MenuMapstruct
@@ -45,23 +40,6 @@ public interface MenuMapstruct
     @Mapping(target = "subMenuList", expression = "java(toDtoList(entity.getSubMenuList()))")
     @Mapping(target = "upperMenuNm", expression = "java(entity.getUpperMenu() != null ? entity.getUpperMenu().getMenuNm() : null)")
     MenuDto toListDto(final MenuEntity entity) throws Exception;
-
-    /**
-     * EntityList to DtoList
-     */
-    default List<MenuDto> toDtoList(List<MenuEntity> entityList) {
-        if (CollectionUtils.isEmpty(entityList)) return null;
-        AtomicLong i = new AtomicLong(1);
-        return entityList.stream()
-                .map(entity -> {
-                    try {
-                        return this.toDto(entity);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
 
     /**
      * Dto -> Entity

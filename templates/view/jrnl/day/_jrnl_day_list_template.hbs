@@ -59,7 +59,8 @@
                             </div>
                             <div class="col jrnl-diary-cn">
                                 {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-auto d-flex-center">!중요</div>{{/ifYn}}
-                                {{{markdown cn}}}
+                                {{#if (exists title)}}<div class="d-inline-block fw-bold">{{title}}</div>{{/if}}
+                                {{{markdownCn}}}
                                 {{#if (exists tag.list)}}
                                     <div class="ms-2 mt-3">
                                         {{#tag.list}}
@@ -125,7 +126,8 @@
                                 {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-auto">!중요</div>{{/ifYn}}
                                 {{#ifYn nhtmrYn}}<div class="ctgr-span ctgr-imprtc w-auto d-flex-center">!악몽</div>{{/ifYn}}
                                 {{#ifYn hallucYn}}<div class="ctgr-span ctgr-gray w-auto">!입면환각</div>{{/ifYn}}
-                                {{{markdown cn}}}
+                                {{#if (exists title)}}<div class="d-inline-block fw-bold">{{title}}</div>{{/if}}
+                                {{{markdownCn}}}
                                 {{#if (exists tag.list)}}
                                     <div class="ms-2 mt-3">
                                         {{#tag.list}}
@@ -183,7 +185,8 @@
                                 {{#ifYn imprtcYn}}<div class="ctgr-span ctgr-imprtc w-auto d-flex-center">!중요</div>{{/ifYn}}
                                 {{#ifYn nhtmrYn}}<div class="ctgr-span ctgr-imprtc w-auto d-flex-center">!악몽</div>{{/ifYn}}
                                 <div class="ctgr-span ctgr-gray w-auto d-flex-center">({{elseDreamerNm}} 꿈)</div>
-                                {{{markdown cn}}}
+                                {{#if (exists title)}}<div class="d-inline-block fw-bold">{{title}}</div>{{/if}}
+                                {{{markdownCn}}}
                                 {{#if (exists tag.list)}}
                                     <div class="ms-2 mt-3">
                                         {{#tag.list}}

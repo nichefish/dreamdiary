@@ -4,6 +4,8 @@ import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.jrnl.diary.JrnlDiaryMapstruct;
+import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
@@ -23,6 +25,8 @@ public interface JrnlDayMapstruct
         extends BaseClsfMapstruct<JrnlDayDto, JrnlDayDto, JrnlDayEntity> {
 
     JrnlDayMapstruct INSTANCE = Mappers.getMapper(JrnlDayMapstruct.class);
+    JrnlDiaryMapstruct jrnlDiaryMapstruct = JrnlDiaryMapstruct.INSTANCE;
+    JrnlDreamMapstruct jrnlDreamMapstruct = JrnlDreamMapstruct.INSTANCE;
 
     /**
      * Entity -> Dto
@@ -33,6 +37,9 @@ public interface JrnlDayMapstruct
     @Mapping(target = "jrnlDtWeekDay", expression = "java(entity.getJrnlDt() != null ? DateUtils.getDayOfWeekChinese(entity.getJrnlDt()) : null)")
     @Mapping(target = "aprxmtDt", expression = "java(DateUtils.asStr(entity.getAprxmtDt(), DatePtn.DATE))")
     @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getDtUnknownYn()) ? entity.getAprxmtDt() : entity.getJrnlDt(), DatePtn.DATE))")
+    @Mapping(target = "jrnlDiaryList", expression = "java(jrnlDiaryMapstruct.toDtoList(entity.getJrnlDiaryList()))")
+    @Mapping(target = "jrnlDreamList", expression = "java(jrnlDreamMapstruct.toDtoList(entity.getJrnlDreamList()))")
+    @Mapping(target = "jrnlElseDreamList", expression = "java(jrnlDreamMapstruct.toDtoList(entity.getJrnlElseDreamList()))")
     JrnlDayDto toDto(final JrnlDayEntity entity) throws Exception;
 
     /**
@@ -44,6 +51,9 @@ public interface JrnlDayMapstruct
     @Mapping(target = "jrnlDtWeekDay", expression = "java(entity.getJrnlDt() != null ? DateUtils.getDayOfWeekChinese(entity.getJrnlDt()) : null)")
     @Mapping(target = "aprxmtDt", expression = "java(DateUtils.asStr(entity.getAprxmtDt(), DatePtn.DATE))")
     @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getDtUnknownYn()) ? entity.getAprxmtDt() : entity.getJrnlDt(), DatePtn.DATE))")
+    @Mapping(target = "jrnlDiaryList", expression = "java(jrnlDiaryMapstruct.toDtoList(entity.getJrnlDiaryList()))")
+    @Mapping(target = "jrnlDreamList", expression = "java(jrnlDreamMapstruct.toDtoList(entity.getJrnlDreamList()))")
+    @Mapping(target = "jrnlElseDreamList", expression = "java(jrnlDreamMapstruct.toDtoList(entity.getJrnlElseDreamList()))")
     JrnlDayDto toListDto(final JrnlDayEntity entity) throws Exception;
 
     /**

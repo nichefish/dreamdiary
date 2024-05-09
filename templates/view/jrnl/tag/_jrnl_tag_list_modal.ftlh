@@ -7,7 +7,7 @@
 
 <@modal.layout id="jrnl_tag_list" size="xl">
     <#--begin::Modal Header-->
-    <@component.modal_header "태그 전체 목록" />
+    <@component.modal_header "저널 태그 전체 목록" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div id="jrnl_tag_list_div">

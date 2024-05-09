@@ -49,22 +49,6 @@ public interface VcatnSchdulMapstruct
     VcatnSchdulDto toListDto(final VcatnSchdulEntity entity) throws Exception;
 
     /**
-     * EntityList to DtoList
-     */
-    default List<VcatnSchdulDto> toDtoList(List<VcatnSchdulEntity> entityList) {
-        if (CollectionUtils.isEmpty(entityList)) return null;
-        return entityList.stream()
-                .map(entity -> {
-                    try {
-                        return this.toDto(entity);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
-
-    /**
      * Dto -> DyXlsxDto
      */
     // @Mapping(target = "vcatnExprDy", expression = "java(Double.toString(dto.getVcatnExprDy()))")
