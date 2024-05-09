@@ -54,10 +54,8 @@ public class JrnlDreamSpec
         List<Predicate> predicate = new ArrayList<>();
 
         // expressions
-        Expression<Date> regDtExp = root.get("regDt");
-
-        // Use jrnlDt if available, otherwise aprxmtDt
         Join<JrnlDreamEntity, JrnlDayEntity> jrnlDay = root.join("jrnlDay", JoinType.INNER);
+        // Use jrnlDt if available, otherwise aprxmtDt
         Expression<Date> jrnlDtExp = jrnlDay.get("jrnlDt");
         Expression<Date> aprxmtDtExp = jrnlDay.get("aprxmtDt");
         Expression<Date> effectiveDtExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
@@ -67,20 +65,15 @@ public class JrnlDreamSpec
             switch (key) {
                 case "searchStartDt":
                     // 기간 검색
-                    predicate.add(builder.greaterThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
+                    predicate.add(builder.greaterThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "searchEndDt":
                     // 기간 검색
-                    predicate.add(builder.lessThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
+                    predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "yy":
-                    Expression<Integer> yearExp = builder.function("YEAR", Integer.class, effectiveDtExp);
-                    predicate.add(builder.equal(yearExp, searchParamMap.get(key)));
-                    continue;
                 case "mnth":
-                    // Month filter: Extract month from effectiveDtExp and compare with 'mnth'
-                    Expression<Integer> monthExp = builder.function("MONTH", Integer.class, effectiveDtExp);
-                    predicate.add(builder.equal(monthExp, searchParamMap.get(key)));
+                    predicate.add(builder.equal(jrnlDay.get(key), searchParamMap.get(key)));
                     continue;
                 case "tagNo":
                     // 특정 태그된 꿈만 조회

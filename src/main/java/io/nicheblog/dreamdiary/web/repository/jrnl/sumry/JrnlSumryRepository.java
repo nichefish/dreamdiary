@@ -30,7 +30,7 @@ public interface JrnlSumryRepository
     @Query("SELECT COUNT(distinct day.postNo) " +
             "FROM JrnlDayEntity day " +
             "INNER JOIN JrnlDreamEntity dream ON day.postNo = dream.jrnlDayNo " +
-            "WHERE YEAR(CASE WHEN day.dtUnknownYn = 'Y' THEN day.aprxmtDt ELSE day.jrnlDt END) = :yy")
+            "WHERE day.yy = :yy")
     Integer getDreamDayCntByYy(Integer yy);
 
     /**
@@ -39,7 +39,7 @@ public interface JrnlSumryRepository
     @Query("SELECT COUNT(dream.postNo) " +
             "FROM JrnlDreamEntity dream " +
             "INNER JOIN JrnlDayEntity day ON dream.jrnlDayNo = day.postNo " +
-            "WHERE YEAR(CASE WHEN day.dtUnknownYn = 'Y' THEN day.aprxmtDt ELSE day.jrnlDt END) = :yy")
+            "WHERE day.yy = :yy")
     Integer getDreamCntByYy(Integer yy);
 
     /**
@@ -48,7 +48,7 @@ public interface JrnlSumryRepository
     @Query("SELECT COUNT(distinct day.postNo) " +
             "FROM JrnlDayEntity day " +
             "INNER JOIN JrnlDiaryEntity diary ON day.postNo = diary.jrnlDayNo " +
-            "WHERE YEAR(CASE WHEN day.dtUnknownYn = 'Y' THEN day.aprxmtDt ELSE day.jrnlDt END) = :yy")
+            "WHERE day.yy = :yy")
     Integer getDiaryDayCntByYy(Integer yy);
 
     /**

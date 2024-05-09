@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS comment (
     mdf_dt DATETIME COMMENT '수정일시',
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
-    INDEX (ref_post_no)
+    INDEX (ref_post_no, ref_content_type)
 ) COMMENT = '게시판 댓글';
 
 -- ---------- --
@@ -114,8 +114,7 @@ CREATE TABLE IF NOT EXISTS content_tag (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     FOREIGN KEY (ref_tag_no) REFERENCES tag(tag_no),
-    INDEX (ref_post_no),
-    INDEX (ref_tag_no)
+    INDEX (ref_post_no, ref_content_type)
 ) COMMENT = '컨텐츠 태그';
 
 -- ---------- --
@@ -131,7 +130,7 @@ CREATE TABLE IF NOT EXISTS managtr (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
-    INDEX (ref_post_no)
+    INDEX (ref_post_no, ref_content_type)
 ) COMMENT = '작업자';
 
 -- ---------- --
@@ -147,6 +146,6 @@ CREATE TABLE IF NOT EXISTS viewer (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
-    INDEX (ref_post_no)
+    INDEX (ref_post_no, ref_content_type)
 ) COMMENT = '열람자';
 

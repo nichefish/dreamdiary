@@ -58,6 +58,11 @@ public class JrnlDayDto
     /** 기준일자 (저널일자 또는 대략일자) */
     private String stdrdDt;
 
+    /** 년도 */
+    private String yy;
+    /** 월 */
+    private String mnth;
+
     /** 저널 일기 목록 */
     private List<JrnlDiaryDto> jrnlDiaryList;
     /** 저널 꿈 목록 */

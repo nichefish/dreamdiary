@@ -137,7 +137,7 @@ public class TagSpec
     ) throws Exception {
 
         List<Predicate> predicate = new ArrayList<>();
-        
+
         // 태그 조인
         Join<TagEntity, JrnlDreamTagEntity> jrnlDreamTagList = root.join("jrnlDreamTagList", JoinType.INNER);
         Join<JrnlDreamTagEntity, JrnlDreamEntity> jrnlDream = jrnlDreamTagList.join("jrnlDream", JoinType.INNER);
@@ -158,14 +158,8 @@ public class TagSpec
                     predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "yy":
-                    Expression<Integer> yearExp = builder.function("YEAR", Integer.class, effectiveDtExp);
-                    predicate.add(builder.equal(yearExp, searchParamMap.get(key)));
-                    continue;
                 case "mnth":
-                    // Month filter: Extract month from effectiveDtExp and compare with 'mnth'
-                    Expression<Integer> monthExp = builder.function("MONTH", Integer.class, effectiveDtExp);
-                    predicate.add(builder.equal(monthExp, searchParamMap.get(key)));
-                    continue;
+                    predicate.add(builder.equal(jrnlDay.get(key), searchParamMap.get(key)));
             }
         }
         return predicate;

@@ -53,8 +53,6 @@ public class JrnlDaySpec
 
         List<Predicate> predicate = new ArrayList<>();
 
-        // expressions
-        Expression<Date> regDtExp = root.get("regDt");
         // Use jrnlDt if available, otherwise aprxmtDt
         Expression<Date> jrnlDtExp = root.get("jrnlDt");
         Expression<Date> aprxmtDtExp = root.get("aprxmtDt");
@@ -65,20 +63,11 @@ public class JrnlDaySpec
             switch (key) {
                 case "searchStartDt":
                     // 기간 검색
-                    predicate.add(builder.greaterThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
+                    predicate.add(builder.greaterThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "searchEndDt":
                     // 기간 검색
-                    predicate.add(builder.lessThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
-                    continue;
-                case "yy":
-                    Expression<Integer> yearExp = builder.function("YEAR", Integer.class, effectiveDtExp);
-                    predicate.add(builder.equal(yearExp, searchParamMap.get(key)));
-                    continue;
-                case "mnth":
-                    // Month filter: Extract month from effectiveDtExp and compare with 'mnth'
-                    Expression<Integer> monthExp = builder.function("MONTH", Integer.class, effectiveDtExp);
-                    predicate.add(builder.equal(monthExp, searchParamMap.get(key)));
+                    predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
