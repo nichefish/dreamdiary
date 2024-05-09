@@ -47,18 +47,19 @@ public class CommentService
         return this.commentSpec;
     }
 
-    @CacheEvict(value="jrnlDayList", allEntries = true)
     @Override
+    @CacheEvict(value="jrnlDayList", allEntries = true)
     public void postRegist(final CommentEntity rslt) throws Exception {
         //
     }
-    @CacheEvict(value="jrnlDayList", allEntries = true)
+
     @Override
+    @CacheEvict(value="jrnlDayList", allEntries = true)
     public void postModify(final CommentEntity rslt) throws Exception {
         //
     }
-    @CacheEvict(value="jrnlDayList", allEntries = true)
     @Override
+    @CacheEvict(value="jrnlDayList", allEntries = true)
     public void postDelete(final CommentEntity rslt) throws Exception {
         //
     }
