@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS jrnl_day (
     -- CONSTRAINT
     INDEX (jrnl_dt),
     INDEX (aprxmt_dt),
+    INDEX (yy)
     INDEX (yy, mnth)
 ) COMMENT = '저널 일자';
 
