@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryCnDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.JrnlSumryCnRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.sumry.JrnlSumryCnSpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,12 +37,10 @@ public class JrnlSumryCnService
     public JrnlSumryCnRepository getRepository() {
         return this.jrnlSumryCnRepository;
     }
-
     @Override
     public JrnlSumryCnMapstruct getMapstruct() {
         return this.jrnlSumryCnMapstruct;
     }
-
     @Override
     public JrnlSumryCnSpec getSpec() {
         return this.jrnlSumryCnSpec;
@@ -57,5 +56,21 @@ public class JrnlSumryCnService
         String jrnlSumryTyCd = jrnlSumryCn.getCtgrCd();
         Integer lastIndex = jrnlSumryCnRepository.findLastIndexByJrnlSumryAndSumryTy(jrnlSumryNo, jrnlSumryTyCd).orElse(0);
         jrnlSumryCn.setIdx(lastIndex + 1);
+    }
+
+    @CacheEvict(value="jrnlSumryDtl", key="#rslt.getJrnlSumryNo()")
+    @Override
+    public void postRegist(final JrnlSumryCnEntity rslt) throws Exception {
+        //
+    }
+    @CacheEvict(value="jrnlSumryDtl", key="#rslt.getJrnlSumryNo()")
+    @Override
+    public void postModify(final JrnlSumryCnEntity rslt) throws Exception {
+        //
+    }
+    @CacheEvict(value="jrnlSumryDtl", key="#rslt.getJrnlSumryNo()")
+    @Override
+    public void postDelete(final JrnlSumryCnEntity rslt) throws Exception {
+        //
     }
 }

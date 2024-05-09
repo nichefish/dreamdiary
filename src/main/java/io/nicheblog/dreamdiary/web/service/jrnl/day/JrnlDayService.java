@@ -53,7 +53,9 @@ public class JrnlDayService
         return this.jrnlDaySpec;
     }
 
-    /** 목록 조회 위해 구현체로 pullUp */
+    /**
+     * 캐시 사용 위해 구현체로 pullUp
+     */
     @Override
     @Cacheable(value="jrnlDayList", key="#searchParam.getYy() + '_' + #searchParam.getMnth()")
     public List<JrnlDayDto> getListDto(final BaseSearchParam searchParam) throws Exception {

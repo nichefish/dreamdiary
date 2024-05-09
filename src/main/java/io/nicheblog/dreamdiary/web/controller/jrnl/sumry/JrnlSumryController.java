@@ -170,7 +170,6 @@ public class JrnlSumryController
             }};
             List<TagDto> jrnlDreamTagList = tagService.getSizedListDto(searchParamMap);
             model.addAttribute("tagList", jrnlDreamTagList);
-
             // 코드 데이터 모델에 추가
             cdService.setModelCdData(Constant.JRNL_SUMRY_TY_CD, model);
 

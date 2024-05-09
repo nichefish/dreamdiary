@@ -56,18 +56,20 @@ public class JrnlDiaryService
         jrnlDiary.setIdx(lastIndex + 1);
     }
 
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
     @Override
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
     public void postRegist(final JrnlDiaryEntity rslt) throws Exception {
         //
     }
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+
     @Override
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
     public void postModify(final JrnlDiaryEntity rslt) throws Exception {
         //
     }
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+
     @Override
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
     public void postDelete(final JrnlDiaryEntity rslt) throws Exception {
         //
     }

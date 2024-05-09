@@ -43,18 +43,16 @@ public class JrnlSumryService
     public JrnlSumryRepository getRepository() {
         return this.jrnlSumryRepository;
     }
-
     @Override
     public JrnlSumryMapstruct getMapstruct() {
         return this.jrnlSumryMapstruct;
     }
-
     @Override
     public JrnlSumrySpec getSpec() {
         return this.jrnlSumrySpec;
     }
 
-    /** 목록 조회 위해 구현체로 pullUp */
+    /** 캐시 사용 위해 구현체로 pullUp */
     @Override
     @Cacheable(value="jrnlSumryList")
     public List<JrnlSumryDto.LIST> getListDto(final BaseSearchParam searchParam) throws Exception {
@@ -65,7 +63,7 @@ public class JrnlSumryService
     /**
      * 년도를 받아서 해당 년도 결산 생성
      */
-    @CacheEvict(value={"jrnlSumryList", "jrnlTotalSumry"}, allEntries = true)
+    @CacheEvict(value={"jrnlTotalSumry", "jrnlSumryList", "jrnlSumryDtl"}, allEntries = true)
     public Boolean makeYySumry(Integer yy) {
         // 해당 년도 결산 정보 조회
         JrnlSumryEntity sumry = jrnlSumryRepository.findByYy(yy).orElse(new JrnlSumryEntity(yy));
@@ -88,7 +86,7 @@ public class JrnlSumryService
     /**
      * 전체 년도에 대한 결산 생성
      */
-    @CacheEvict(value={"jrnlSumryList", "jrnlTotalSumry"}, allEntries = true)
+    @CacheEvict(value={"jrnlTotalSumry", "jrnlSumryList", "jrnlSumryDtl"}, allEntries = true)
     public Boolean makeTotalYySumry() throws Exception {
         int currYy = DateUtils.getCurrYy();
         int startYy = 2011;
@@ -122,5 +120,11 @@ public class JrnlSumryService
         return totalSumry;
     }
 
-
+    /**
+     * 캐시 사용 위해 구현체로 pullUp
+     */
+    @Cacheable(value="jrnlSumryDtl", key = "#key")
+    public JrnlSumryDto.DTL getSumryDtl(final Integer key) throws Exception {
+        return this.getDtlDto(key);
+    }
 }

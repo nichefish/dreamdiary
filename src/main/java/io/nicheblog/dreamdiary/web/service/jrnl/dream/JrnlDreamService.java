@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -67,6 +68,7 @@ public class JrnlDreamService
     /**
      * 특정 년도의 중요 꿈 목록 조회
      */
+    @Cacheable(value="imprtcDreamList", key="#yy")
     public List<JrnlDreamDto> getImprtcDreamList(Integer yy) throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("yy", yy);
@@ -84,18 +86,29 @@ public class JrnlDreamService
         return this.getListDto(searchParamMap);
     }
 
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
     @Override
+    @Caching(evict = {
+            @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()"),
+            @CacheEvict(value="imprtcDreamList", key="#rslt.getYy()")
+    })
     public void postRegist(final JrnlDreamEntity rslt) throws Exception {
         //
     }
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+
     @Override
+    @Caching(evict = {
+            @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()"),
+            @CacheEvict(value="imprtcDreamList", key="#rslt.getYy()")
+    })
     public void postModify(final JrnlDreamEntity rslt) throws Exception {
         //
     }
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+
     @Override
+    @Caching(evict = {
+            @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()"),
+            @CacheEvict(value="imprtcDreamList", key="#rslt.getYy()")
+    })
     public void postDelete(final JrnlDreamEntity rslt) throws Exception {
         //
     }
