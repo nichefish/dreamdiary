@@ -65,7 +65,9 @@ CREATE TABLE IF NOT EXISTS vcatn_papr (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    INDEX (regstr_id),
 ) COMMENT = '휴가계획서';
 
 -- 휴가 일정 (vcatn_schdul)
@@ -83,7 +85,7 @@ CREATE TABLE IF NOT EXISTS vcatn_schdul (
     -- AUDIT
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
-    INDEX (ref_post_no)
+    INDEX (ref_post_no),
 ) COMMENT = '휴가일정';
 
 -- 휴가사용가능일자 (vcatn_stats)
@@ -183,7 +185,9 @@ CREATE TABLE IF NOT EXISTS exptr_prsnl_papr (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
+    -- CONSTRAINT
+    INDEX (regstr_id),
 ) COMMENT = '경비지출서';
 
 -- 경비지출 항목 (exptr_prsnl_item)

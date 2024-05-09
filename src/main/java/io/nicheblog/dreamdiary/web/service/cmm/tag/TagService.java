@@ -138,17 +138,23 @@ public class TagService
 
     /**
      * css 사이즈 계산한 태그 목록 조회
+     * 태그 1개 = 1. 그 외엔 2~9
      */
     public List<TagDto> getSizedListDto(Map<String, Object> searchParamMap) throws Exception {
         List<TagDto> tagList = this.getListDto(searchParamMap);
         int maxSize = this.calcMaxSize(tagList);
-        final int MIN_SIZE = 1; // 최소 크기
+        final int MIN_SIZE = 2; // 최소 크기
         final int MAX_SIZE = 9; // 최대 크기
         return tagList.stream()
                 .peek(dto -> {
-                    double ratio = (double) dto.getSize() / maxSize; // 사용 빈도의 비율 계산
-                    int size = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
-                    dto.setTagClass("ts-"+size);
+                    int size = dto.getSize();
+                    if (size == 1) {
+                        dto.setTagClass("ts-1");
+                    } else {
+                        double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
+                        int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
+                        dto.setTagClass("ts-"+tagSize);
+                    }
                 })
                 .sorted()
                 .collect(Collectors.toList());
@@ -156,17 +162,23 @@ public class TagService
 
     /**
      * css 사이즈 계산한 태그 목록 조회
+     * 태그 1개 = 1. 그 외엔 2~9
      */
     public List<TagDto> getDreamSizedListDto(Map<String, Object> searchParamMap) throws Exception {
         List<TagDto> tagList = this.getListDto(searchParamMap);
         int maxSize = this.calcMaxDreamSize(tagList);
-        final int MIN_SIZE = 1; // 최소 크기
+        final int MIN_SIZE = 2; // 최소 크기
         final int MAX_SIZE = 9; // 최대 크기
         return tagList.stream()
                 .peek(dto -> {
-                    double ratio = (double) dto.getDreamSize() / maxSize; // 사용 빈도의 비율 계산
-                    int size = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
-                    dto.setTagClass("ts-"+size);
+                    int size = dto.getDreamSize();
+                    if (size == 1) {
+                        dto.setTagClass("ts-1");
+                    } else {
+                        double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
+                        int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
+                        dto.setTagClass("ts-"+tagSize);
+                    }
                 })
                 .sorted()
                 .collect(Collectors.toList());
