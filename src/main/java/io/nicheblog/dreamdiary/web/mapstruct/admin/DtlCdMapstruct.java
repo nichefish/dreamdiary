@@ -5,11 +5,6 @@ import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 /**
  * DtlCdMapstruct
