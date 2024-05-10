@@ -20,13 +20,41 @@
 
 .jrnl-diary-cn, .jrnl-dream-cn, .jrnl-sumry-cn {
     align-items: center;
-    blockquote {
-        margin-left: 0.5rem;
-        color: #4e4e4e;
-    }
     p {
         margin-top: 0.1rem !important;
         margin-bottom: 0.1rem !important;
+    }
+}
+.jrnl-diary-cn, .jrnl-sumry-cn {
+    blockquote {
+        width: auto;
+        position: relative;
+        padding-top: 0.75rem;
+        padding-left: 1rem;
+        color: #8e8e8e;
+        &::before {
+            color: #ccc;
+            font-size: 3em;
+            position: absolute;
+            content: "“";
+            top: 0;
+            left: 0.5rem;
+        }
+        p:first-child {
+            padding-left: 1rem;
+        }
+        p:last-child {
+            position: relative;
+            display: inline;
+            &::after {
+                color: #ccc;
+                font-size: 3em;
+                position: absolute;
+                content: "”";
+                bottom: -2rem;
+                right: -1.25rem;
+            }
+        }
     }
 }
 .jrnl-dream-cn {

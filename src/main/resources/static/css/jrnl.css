@@ -20,13 +20,40 @@
 .jrnl-diary-cn, .jrnl-dream-cn, .jrnl-sumry-cn {
   align-items: center;
 }
-.jrnl-diary-cn blockquote, .jrnl-dream-cn blockquote, .jrnl-sumry-cn blockquote {
-  margin-left: 0.5rem;
-  color: #4e4e4e;
-}
 .jrnl-diary-cn p, .jrnl-dream-cn p, .jrnl-sumry-cn p {
   margin-top: 0.1rem !important;
   margin-bottom: 0.1rem !important;
+}
+
+.jrnl-diary-cn blockquote, .jrnl-sumry-cn blockquote {
+  width: auto;
+  position: relative;
+  padding-top: 0.75rem;
+  padding-left: 1rem;
+  color: #8e8e8e;
+}
+.jrnl-diary-cn blockquote::before, .jrnl-sumry-cn blockquote::before {
+  color: #ccc;
+  font-size: 3em;
+  position: absolute;
+  content: "“";
+  top: 0;
+  left: 0.5rem;
+}
+.jrnl-diary-cn blockquote p:first-child, .jrnl-sumry-cn blockquote p:first-child {
+  padding-left: 1rem;
+}
+.jrnl-diary-cn blockquote p:last-child, .jrnl-sumry-cn blockquote p:last-child {
+  position: relative;
+  display: inline;
+}
+.jrnl-diary-cn blockquote p:last-child::after, .jrnl-sumry-cn blockquote p:last-child::after {
+  color: #ccc;
+  font-size: 3em;
+  position: absolute;
+  content: "”";
+  bottom: -2rem;
+  right: -1.25rem;
 }
 
 .jrnl-dream-cn p {
