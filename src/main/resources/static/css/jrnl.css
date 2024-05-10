@@ -17,29 +17,20 @@
   margin-bottom: 0.75rem !important;
 }
 
-.jrnl-diary-cn {
+.jrnl-diary-cn, .jrnl-dream-cn, .jrnl-sumry-cn {
   align-items: center;
 }
-.jrnl-diary-cn p {
+.jrnl-diary-cn blockquote, .jrnl-dream-cn blockquote, .jrnl-sumry-cn blockquote {
+  margin-left: 0.5rem;
+  color: #4e4e4e;
+}
+.jrnl-diary-cn p, .jrnl-dream-cn p, .jrnl-sumry-cn p {
   margin-top: 0.1rem !important;
   margin-bottom: 0.1rem !important;
 }
 
-.jrnl-dream-cn {
-  align-items: center;
-}
 .jrnl-dream-cn p {
   color: rgba(95, 0, 130, 0.8);
-  margin-top: 0.1rem !important;
-  margin-bottom: 0.1rem !important;
 }
 
-.jrnl-sumry-cn {
-  align-items: center;
-}
-.jrnl-sumry-cn p {
-  margin-top: 0.1rem !important;
-  margin-bottom: 0.1rem !important;
-}
-
-/*# sourceMappingURL=dream.css.map */
+/*# sourceMappingURL=jrnl.css.map */

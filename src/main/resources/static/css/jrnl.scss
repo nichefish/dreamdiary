@@ -18,26 +18,19 @@
     margin-bottom: 0.75rem !important;
 }
 
-.jrnl-diary-cn {
+.jrnl-diary-cn, .jrnl-dream-cn, .jrnl-sumry-cn {
     align-items: center;
+    blockquote {
+        margin-left: 0.5rem;
+        color: #4e4e4e;
+    }
     p {
         margin-top: 0.1rem !important;
         margin-bottom: 0.1rem !important;
     }
 }
 .jrnl-dream-cn {
-    align-items: center;
     p {
         color: rgba(95,0,130,0.8);
-        margin-top: 0.1rem !important;
-        margin-bottom: 0.1rem !important;
-    }
-}
-
-.jrnl-sumry-cn {
-    align-items: center;
-    p {
-        margin-top: 0.1rem !important;
-        margin-bottom: 0.1rem !important;
     }
 }

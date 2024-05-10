@@ -8,7 +8,7 @@
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?20230908"></script>
-<link rel="stylesheet" type="text/css" href="/css/dream.css?${releaseDate!}" />
+<link rel="stylesheet" type="text/css" href="/css/jrnl.css?${releaseDate!}" />
 
 <#--include::script modules-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_scripts.ftlh">
