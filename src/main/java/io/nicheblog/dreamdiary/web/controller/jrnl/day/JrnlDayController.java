@@ -162,7 +162,7 @@ public class JrnlDayController
                     isReg = false;
                 }
             }
-            JrnlDayDto result = isReg ? jrnlDayService.regist(jrnlDay, request) : jrnlDayService.modify(jrnlDay, request);
+            JrnlDayDto result = isReg ? jrnlDayService.registWithCache(jrnlDay, request) : jrnlDayService.modifyWithCache(jrnlDay, request);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

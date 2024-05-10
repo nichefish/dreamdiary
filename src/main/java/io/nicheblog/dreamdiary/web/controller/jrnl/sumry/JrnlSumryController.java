@@ -161,17 +161,20 @@ public class JrnlSumryController
             JrnlSumryDto rsltDto = key != null ? jrnlSumryService.getSumryDtl(key) : yyParam != null ? jrnlSumryService.getDtlDtoByYy(yyParam) : null;
             model.addAttribute("post", rsltDto);
             // 중요 꿈 목록 조회
-            Integer yy = rsltDto.getYy();
-            List<JrnlDreamDto> imprtcDreamList = jrnlDreamService.getImprtcDreamList(yy);
-            Collections.sort(imprtcDreamList);
-            model.addAttribute("imprtcDreamList", imprtcDreamList);
-            // 태그 목록 조회
-            Map<String, Object> searchParamMap = new HashMap<>() {{
-                put("contentType", ContentType.JRNL_DREAM.key);
-                put("yy", yy);
-            }};
-            List<TagDto> jrnlDreamTagList = tagService.getSizedListDto(searchParamMap);
-            model.addAttribute("tagList", jrnlDreamTagList);
+            if (rsltDto != null) {
+                Integer yy = rsltDto.getYy();
+                List<JrnlDreamDto> imprtcDreamList = jrnlDreamService.getImprtcDreamList(yy);
+                Collections.sort(imprtcDreamList);
+                model.addAttribute("imprtcDreamList", imprtcDreamList);
+
+                // 태그 목록 조회
+                Map<String, Object> searchParamMap = new HashMap<>() {{
+                    put("contentType", ContentType.JRNL_DREAM.key);
+                    put("yy", yy);
+                }};
+                List<TagDto> jrnlDreamTagList = tagService.getSizedListDto(searchParamMap);
+                model.addAttribute("tagList", jrnlDreamTagList);
+            }
             // 코드 데이터 모델에 추가
             cdService.setModelCdData(Constant.JRNL_SUMRY_TY_CD, model);
 
@@ -184,7 +187,7 @@ public class JrnlSumryController
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setCn("key: " + key.toString());
+            logParam.setCn("key: " + (key != null ? key.toString() : yyParam));
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

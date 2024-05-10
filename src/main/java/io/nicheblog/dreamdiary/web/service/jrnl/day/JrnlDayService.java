@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -57,7 +58,7 @@ public class JrnlDayService
      * 캐시 사용 위해 구현체로 pullUp
      */
     @Override
-    @Cacheable(value="jrnlDayList", key="#searchParam.getYy() + '_' + #searchParam.getMnth()")
+    @Cacheable(value="jrnlDayList", key="#searchParam.getYy() + \"_\" + #searchParam.getMnth()")
     public List<JrnlDayDto> getListDto(final BaseSearchParam searchParam) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         return this.getListDto(searchParamMap);
@@ -83,29 +84,23 @@ public class JrnlDayService
         return existingEntity.getPostNo();
     }
 
+    @CacheEvict(value="jrnlDayList", key="#jrnlDay.getYy() + '_' + #jrnlDay.getMnth()")
+    public JrnlDayDto registWithCache(JrnlDayDto jrnlDay, MultipartHttpServletRequest request) throws Exception {
+        return this.regist(jrnlDay, request);
+    }
+
     /**
      * 신청 전처리:: 메소드 분리
      */
     @Override
-    @CacheEvict(value={"jrnlDayList"}, allEntries = true)
     public void preRegist(final JrnlDayDto jrnlDay) throws Exception {
-        // 날짜미상여부 N시 대략일자 무효화
-        if ("Y".equals(jrnlDay.getDtUnknownYn())) {
-            jrnlDay.setJrnlDt("");
-            jrnlDay.setYy(jrnlDay.getAprxmtDt().substring(0, 4));
-            jrnlDay.setMnth(jrnlDay.getAprxmtDt().substring(5, 7));
-        }
-        if ("N".equals(jrnlDay.getDtUnknownYn())) {
-            jrnlDay.setAprxmtDt("");
-            jrnlDay.setYy(jrnlDay.getJrnlDt().substring(0, 4));
-            jrnlDay.setMnth(jrnlDay.getJrnlDt().substring(5, 7));
-        }
+        // 년도/월 세팅:: 메소드 분리
+        this.setYyMnth(jrnlDay);
     }
 
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
-    @Override
-    public void postRegist(final JrnlDayEntity rslt) throws Exception {
-        //
+    @CacheEvict(value="jrnlDayList", key="#jrnlDay.getYy() + '_' + #jrnlDay.getMnth()")
+    public JrnlDayDto modifyWithCache(JrnlDayDto jrnlDay, MultipartHttpServletRequest request) throws Exception {
+        return this.modify(jrnlDay, request);
     }
 
     /**
@@ -113,6 +108,14 @@ public class JrnlDayService
      */
     @Override
     public void preModify(final JrnlDayDto jrnlDay) throws Exception {
+        // 년도/월 세팅:: 메소드 분리
+        this.setYyMnth(jrnlDay);
+    }
+
+    /**
+     * 년도/월 세팅:: 메소드 분리
+     */
+    public void setYyMnth(final JrnlDayDto jrnlDay) throws Exception {
         // 날짜미상여부 N시 대략일자 무효화
         if ("Y".equals(jrnlDay.getDtUnknownYn())) {
             jrnlDay.setJrnlDt("");
@@ -126,15 +129,12 @@ public class JrnlDayService
         }
     }
 
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
+    /**
+     * 되나? 확인하기
+     */
     @Override
-    public void postModify(final JrnlDayEntity rslt) throws Exception {
-        //
-    }
-
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()")
-    @Override
+    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + \"_\" + #rslt.getMnth()")
     public void postDelete(final JrnlDayEntity rslt) throws Exception {
-        //
+        log.info("evict evict key: {}", rslt.getYy() + "_" + rslt.getMnth());
     }
 }

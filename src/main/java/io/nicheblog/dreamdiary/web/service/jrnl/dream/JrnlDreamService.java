@@ -88,7 +88,7 @@ public class JrnlDreamService
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()"),
+            @CacheEvict(value="jrnlDayList", key="#rslt.getJrnlDay().getYy() + \"_\" + #rslt.getJrnlDay().getMnth()"),
             @CacheEvict(value="imprtcDreamList", key="#rslt.getYy()")
     })
     public void postRegist(final JrnlDreamEntity rslt) throws Exception {
@@ -97,7 +97,7 @@ public class JrnlDreamService
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()"),
+            @CacheEvict(value="jrnlDayList", key="#rslt.getJrnlDay().getYy() + \"_\" + #rslt.getJrnlDay().getMnth()"),
             @CacheEvict(value="imprtcDreamList", key="#rslt.getYy()")
     })
     public void postModify(final JrnlDreamEntity rslt) throws Exception {
@@ -106,7 +106,7 @@ public class JrnlDreamService
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + '_' + #rslt.getMnth()"),
+            @CacheEvict(value="jrnlDayList", key="#rslt.getJrnlDay().getYy() + \"_\" + #rslt.getJrnlDay().getMnth()"),
             @CacheEvict(value="imprtcDreamList", key="#rslt.getYy()")
     })
     public void postDelete(final JrnlDreamEntity rslt) throws Exception {
