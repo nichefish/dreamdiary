@@ -73,7 +73,19 @@
     <#--begin::Card footer-->
     <div class="card-footer">
         <#--버튼 영역-->
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end gap-3">
+            <div class="col-1 w-auto">
+                <select class="form-select form-select-solid text-end"
+                        onchange="JrnlSumry.dtlByYy(this.value)"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">>
+                    <#assign currYy = DateUtils.getCurrYy()?number />
+                    <#assign startYy = 2011 />
+                    <#list currYy..startYy as year>
+                        <option value="${year}" ${fn.selected(post.yy!, year)}>${year}년 결산</option>
+                    </#list>
+                    <option value="2010">2010년 이전 결산</option>
+                </select>
+            </div>
             <#--페이지:: 버튼: 목록으로 가기-->
             <@component.post_btn_toList "JrnlSumry.list();" />
         </div>
@@ -199,7 +211,7 @@
         </#list>
     </div>
     <div class="col-1 ms-4 me-6 text-center fs-6 w-50px">
-
+        <!-- -->
     </div>
 </div>
 
@@ -278,7 +290,10 @@
     </div>
 </div>
 
-</@layout.layout>
+<form name="procForm" id="procForm">
+    <input type="hidden" name="postNo" id="postNo" value="" />
+    <input type="hidden" name="yy" id="yy" value="" />
+</form>
 
 <#--include::modals-->
 <#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_modal.ftlh">
@@ -286,3 +301,5 @@
 <#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
 <#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
+
+</@layout.layout>

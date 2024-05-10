@@ -183,9 +183,7 @@
 </form>
 
 <#include "/view/board/post/_board_post_dtl_modal.ftlh">
-
 <#include "/view/_component/list_area/comment/_comment_list_modal.ftlh">
-
 <#include "/view/_component/list_area/atch_file/_atch_file_list_modal.ftlh">
 
 </@layout.layout>

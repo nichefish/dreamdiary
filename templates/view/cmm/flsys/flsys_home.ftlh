@@ -76,14 +76,10 @@
 </form>
 
 <#include "/view/cmm/flsys/_flsys_list_template.hbs">
-
 <#include "/view/cmm/flsys/_flsys_file_vod_modal.ftlh">
-
 <#include "/view/cmm/flsys/_flsys_home_header_path_template.hbs">
-
 <#include "/view/cmm/flsys/_flsys_meta_reg_modal.ftlh">
 <#include "/view/cmm/flsys/_flsys_meta_dtl_modal.ftlh">
-
 <#include "/view/_component/tag/_tag_dtl_modal.ftlh">
 <#include "/view/_component/tag/_tag_dtl_post_list_template.hbs">
 <#include "/view/_component/tag/_tag_list_modal.ftlh">

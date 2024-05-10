@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.JrnlSumryCnRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.sumry.JrnlSumryCnSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -58,18 +59,29 @@ public class JrnlSumryCnService
         jrnlSumryCn.setIdx(lastIndex + 1);
     }
 
-    @CacheEvict(value="jrnlSumryDtl", key="#rslt.getJrnlSumryNo()")
     @Override
+    @Caching(evict = {
+            @CacheEvict(value="jrnlSumryDtl", key="#rslt.getJrnlSumryNo()"),
+            @CacheEvict(value="jrnlSumryDtlByYy", key="#rslt.getYy()")
+    })
     public void postRegist(final JrnlSumryCnEntity rslt) throws Exception {
         //
     }
-    @CacheEvict(value="jrnlSumryDtl", key="#rslt.getJrnlSumryNo()")
+
     @Override
+    @Caching(evict = {
+            @CacheEvict(value="jrnlSumryDtl", key="#rslt.getJrnlSumryNo()"),
+            @CacheEvict(value="jrnlSumryDtlByYy", key="#rslt.getYy()")
+    })
     public void postModify(final JrnlSumryCnEntity rslt) throws Exception {
         //
     }
-    @CacheEvict(value="jrnlSumryDtl", key="#rslt.getJrnlSumryNo()")
+
     @Override
+    @Caching(evict = {
+            @CacheEvict(value="jrnlSumryDtl", key="#rslt.getJrnlSumryNo()"),
+            @CacheEvict(value="jrnlSumryDtlByYy", key="#rslt.getYy()")
+    })
     public void postDelete(final JrnlSumryCnEntity rslt) throws Exception {
         //
     }

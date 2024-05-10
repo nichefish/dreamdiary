@@ -12,11 +12,13 @@ import io.nicheblog.dreamdiary.web.spec.jrnl.sumry.JrnlSumrySpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * JrnlSumryService
@@ -63,7 +65,10 @@ public class JrnlSumryService
     /**
      * 년도를 받아서 해당 년도 결산 생성
      */
-    @CacheEvict(value={"jrnlTotalSumry", "jrnlSumryList", "jrnlSumryDtl"}, allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value={"jrnlTotalSumry", "jrnlSumryList"}, allEntries = true),
+            @CacheEvict(value="jrnlSumryDtlByYy", key="#rslt.getYy()")
+    })
     public Boolean makeYySumry(Integer yy) {
         // 해당 년도 결산 정보 조회
         JrnlSumryEntity sumry = jrnlSumryRepository.findByYy(yy).orElse(new JrnlSumryEntity(yy));
@@ -126,5 +131,15 @@ public class JrnlSumryService
     @Cacheable(value="jrnlSumryDtl", key = "#key")
     public JrnlSumryDto.DTL getSumryDtl(final Integer key) throws Exception {
         return this.getDtlDto(key);
+    }
+
+    /**
+     * 캐시 사용 위해 구현체로 pullUp
+     */
+    @Cacheable(value="jrnlSumryDtlByYy", key = "#yy")
+    public JrnlSumryDto getDtlDtoByYy(Integer yy) throws Exception {
+        Optional<JrnlSumryEntity> entityWrapper = jrnlSumryRepository.findByYy(yy);
+        if (entityWrapper.isEmpty()) return null;
+        return jrnlSumryMapstruct.toDto(entityWrapper.get());
     }
 }

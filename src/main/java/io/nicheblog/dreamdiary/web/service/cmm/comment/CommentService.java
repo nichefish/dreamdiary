@@ -48,18 +48,18 @@ public class CommentService
     }
 
     @Override
-    @CacheEvict(value="jrnlDayList", allEntries = true)
+    @CacheEvict(value={"jrnlDayList", "imprtcDreamList"}, allEntries = true)
     public void postRegist(final CommentEntity rslt) throws Exception {
         //
     }
 
     @Override
-    @CacheEvict(value="jrnlDayList", allEntries = true)
+    @CacheEvict(value={"jrnlDayList", "imprtcDreamList"}, allEntries = true)
     public void postModify(final CommentEntity rslt) throws Exception {
         //
     }
     @Override
-    @CacheEvict(value="jrnlDayList", allEntries = true)
+    @CacheEvict(value={"jrnlDayList", "imprtcDreamList"}, allEntries = true)
     public void postDelete(final CommentEntity rslt) throws Exception {
         //
     }

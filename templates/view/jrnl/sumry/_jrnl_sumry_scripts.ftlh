@@ -10,6 +10,11 @@
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
             },
+            dtlByYy: function (yy) {
+                $("#procForm #yy").val(yy);
+                console.log("yy: ", yy);
+                commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
+            },
             /** 목록 화면 이동 */
             list: function (postNo) {
                 commons.util.blockUIReplace("${Url.JRNL_SUMRY_LIST!}");

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS jrnl_sumry (
     post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '저널 결산 번호 (PK)',
     content_type VARCHAR(32) DEFAULT 'JRNL_SUMRY' COMMENT '컨텐츠 타입',
     --
-    yy INT COMMENT '결산 년도',
+    yy INT UNIQUE COMMENT '결산 년도',
     dream_day_cnt INT DEFAULT 0 COMMENT '꿈 일수',
     dream_cnt INT DEFAULT 0 COMMENT '꿈 개수',
     diary_day_cnt INT DEFAULT 0 COMMENT '일기 일수',

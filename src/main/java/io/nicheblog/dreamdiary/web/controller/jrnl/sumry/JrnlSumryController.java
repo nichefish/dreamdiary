@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.HashMap;
@@ -144,7 +145,8 @@ public class JrnlSumryController
     @RequestMapping(value = Url.JRNL_SUMRY_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String jrnlSumryDtl(
-            final @RequestParam("postNo") Integer key,
+            final @RequestParam("postNo") @Nullable Integer key,
+            final @RequestParam("yy") @Nullable Integer yyParam,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
@@ -156,7 +158,7 @@ public class JrnlSumryController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            JrnlSumryDto rsltDto = jrnlSumryService.getDtlDto(key);
+            JrnlSumryDto rsltDto = key != null ? jrnlSumryService.getSumryDtl(key) : yyParam != null ? jrnlSumryService.getDtlDtoByYy(yyParam) : null;
             model.addAttribute("post", rsltDto);
             // 중요 꿈 목록 조회
             Integer yy = rsltDto.getYy();
