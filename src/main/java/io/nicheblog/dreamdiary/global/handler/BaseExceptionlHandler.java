@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
 
 /**
  * GlobalExceptionlHandler

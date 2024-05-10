@@ -6,10 +6,6 @@ import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * ContentTagMapstruct
