@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.web.spec.cmm.comment.CommentSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 
@@ -47,20 +48,27 @@ public class CommentService
         return this.commentSpec;
     }
 
-    @Override
+    /**
+     * 등록 :: 캐시 처리
+     */
     @CacheEvict(value={"jrnlDayList", "imprtcDreamList"}, allEntries = true)
-    public void postRegist(final CommentEntity rslt) throws Exception {
-        //
+    public CommentDto.DTL registWithCache(final CommentDto.DTL dto, final MultipartHttpServletRequest request) throws Exception {
+        return this.regist(dto, request);
     }
 
-    @Override
+    /**
+     * 수정 :: 캐시 처리
+     */
     @CacheEvict(value={"jrnlDayList", "imprtcDreamList"}, allEntries = true)
-    public void postModify(final CommentEntity rslt) throws Exception {
-        //
+    public CommentDto.DTL modifyWithCache(final CommentDto.DTL dto, final MultipartHttpServletRequest request) throws Exception {
+        return this.modify(dto, request);
     }
-    @Override
+
+    /**
+     * 삭제 :: 캐시 처리
+     */
     @CacheEvict(value={"jrnlDayList", "imprtcDreamList"}, allEntries = true)
-    public void postDelete(final CommentEntity rslt) throws Exception {
-        //
+    public Boolean deleteWithCache(final Integer key) throws Exception {
+        return this.delete(key);
     }
 }
