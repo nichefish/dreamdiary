@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.service.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
-import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.day.JrnlDayMapstruct;
@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * JrnlDayService
@@ -55,13 +54,11 @@ public class JrnlDayService
     }
 
     /**
-     * 캐시 사용 위해 구현체로 pullUp
+     * 목록 조회 (dto level) :: 캐시 처리
      */
-    @Override
     @Cacheable(value="jrnlDayList", key="#searchParam.getYy() + \"_\" + #searchParam.getMnth()")
-    public List<JrnlDayDto> getListDto(final BaseSearchParam searchParam) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-        return this.getListDto(searchParamMap);
+    public List<JrnlDayDto> getListDtoWithCache(final BaseSearchParam searchParam) throws Exception {
+        return this.getListDto(searchParam);
     }
 
     /**
@@ -84,13 +81,8 @@ public class JrnlDayService
         return existingEntity.getPostNo();
     }
 
-    @CacheEvict(value="jrnlDayList", key="#jrnlDay.getYy() + '_' + #jrnlDay.getMnth()")
-    public JrnlDayDto registWithCache(JrnlDayDto jrnlDay, MultipartHttpServletRequest request) throws Exception {
-        return this.regist(jrnlDay, request);
-    }
-
     /**
-     * 신청 전처리:: 메소드 분리
+     * 등록 전처리:: 메소드 분리
      */
     @Override
     public void preRegist(final JrnlDayDto jrnlDay) throws Exception {
@@ -98,9 +90,12 @@ public class JrnlDayService
         this.setYyMnth(jrnlDay);
     }
 
-    @CacheEvict(value="jrnlDayList", key="#jrnlDay.getYy() + '_' + #jrnlDay.getMnth()")
-    public JrnlDayDto modifyWithCache(JrnlDayDto jrnlDay, MultipartHttpServletRequest request) throws Exception {
-        return this.modify(jrnlDay, request);
+    /**
+     * 등록 후처리:: 메소드 분리
+     */
+    @Override
+    public void postRegist(final JrnlDayEntity rslt) throws Exception {
+        EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
     }
 
     /**
@@ -110,6 +105,14 @@ public class JrnlDayService
     public void preModify(final JrnlDayDto jrnlDay) throws Exception {
         // 년도/월 세팅:: 메소드 분리
         this.setYyMnth(jrnlDay);
+    }
+
+    /**
+     * 수정 후처리:: 메소드 분리
+     */
+    @Override
+    public void postModify(final JrnlDayEntity rslt) throws Exception {
+        EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
     }
 
     /**
@@ -130,11 +133,10 @@ public class JrnlDayService
     }
 
     /**
-     * 되나? 확인하기
+     * 삭제 후처리:: 메소드 분리
      */
     @Override
-    @CacheEvict(value="jrnlDayList", key="#rslt.getYy() + \"_\" + #rslt.getMnth()")
     public void postDelete(final JrnlDayEntity rslt) throws Exception {
-        log.info("evict evict key: {}", rslt.getYy() + "_" + rslt.getMnth());
+        EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
     }
 }

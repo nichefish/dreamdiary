@@ -55,15 +55,25 @@ public class EhCacheUtils {
     /**
      * 캐시 이름의 특정 키 evict
      */
-    public static void evictSingleCacheValue(final String cacheName, final String cacheKey) {
-        Objects.requireNonNull(cacheManager.getCache(cacheName)).evict(cacheKey);
+    public static void evictCache(final String cacheName, final String cacheKey) {
+        Cache cache = cacheManager.getCache(cacheName);
+        if (cache == null) {
+            log.info("cache name {} does not exists.", cacheName);
+            return;
+        }
+        cache.evict(cacheKey);
     }
 
     /**
      * 캐시 이름으로 해당 캐시 evict
      */
-    public static void evictAllCacheValues(final String cacheName) {
-        Objects.requireNonNull(cacheManager.getCache(cacheName)).clear();
+    public static void evictCacheAll(final String cacheName) {
+        Cache cache = cacheManager.getCache(cacheName);
+        if (cache == null) {
+            log.info("cache name {} does not exists.", cacheName);
+            return;
+        }
+        cache.clear();
     }
 
     /**

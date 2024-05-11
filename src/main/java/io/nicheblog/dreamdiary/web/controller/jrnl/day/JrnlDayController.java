@@ -11,7 +11,6 @@ import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDaySearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
@@ -50,8 +49,6 @@ public class JrnlDayController
 
     @Resource(name = "jrnlDayService")
     private JrnlDayService jrnlDayService;
-    @Resource(name = "tagService")
-    private TagService tagService;
 
     /**
      * 저널 일자 화면 조회
@@ -108,7 +105,7 @@ public class JrnlDayController
         String rsltMsg = "";
         try {
             // 목록 조회 및 응답에 추가
-            List<JrnlDayDto> jrnlDayList = jrnlDayService.getListDto(searchParam);
+            List<JrnlDayDto> jrnlDayList = jrnlDayService.getListDtoWithCache(searchParam);
             ajaxResponse.setRsltList(jrnlDayList);
 
             isSuccess = true;
@@ -162,7 +159,7 @@ public class JrnlDayController
                     isReg = false;
                 }
             }
-            JrnlDayDto result = isReg ? jrnlDayService.registWithCache(jrnlDay, request) : jrnlDayService.modifyWithCache(jrnlDay, request);
+            JrnlDayDto result = isReg ? jrnlDayService.regist(jrnlDay, request) : jrnlDayService.modify(jrnlDay, request);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
