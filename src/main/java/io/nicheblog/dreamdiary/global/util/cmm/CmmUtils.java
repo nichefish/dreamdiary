@@ -213,9 +213,18 @@ public class CmmUtils {
     public static String markdown(String htmlContent) {
         Document document = Jsoup.parseBodyFragment(htmlContent);
         Elements paragraphs = document.select("p");
-        for (Element paragraph : paragraphs) {
+        procNodes(paragraphs);
+        Elements lis = document.select("li");
+        procNodes(lis);
+
+        // 일반 큰따옴표로 묶인 부분을 하이라이트 색상으로 표시
+        return document.body().html(); // 변경된 HTML 반환
+    }
+
+    public static void procNodes(Elements elements) {
+        for (Element elmt : elements) {
             // <p> 태그 내의 모든 자식 노드를 순회
-            for (Node child : paragraph.childNodes()) {
+            for (Node child : elmt.childNodes()) {
                 if (child instanceof TextNode) {
                     // 텍스트 노드의 경우, 마크다운 변환 로직을 적용
                     TextNode textNode = (TextNode) child;
@@ -228,9 +237,6 @@ public class CmmUtils {
                 }
             }
         }
-
-        // 일반 큰따옴표로 묶인 부분을 하이라이트 색상으로 표시
-        return document.body().html(); // 변경된 HTML 반환
     }
 
     public static String procText(String text) {

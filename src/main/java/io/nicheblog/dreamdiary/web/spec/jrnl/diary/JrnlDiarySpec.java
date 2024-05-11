@@ -2,14 +2,13 @@ package io.nicheblog.dreamdiary.web.spec.jrnl.diary;
 
 import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,18 +41,26 @@ public class JrnlDiarySpec
         List<Predicate> predicate = new ArrayList<>();
 
         // expressions
-        Expression<Date> regDtExp = root.get("regDt");
+        Join<JrnlDreamEntity, JrnlDayEntity> jrnlDay = root.join("jrnlDay", JoinType.INNER);
+        // Use jrnlDt if available, otherwise aprxmtDt
+        Expression<Date> jrnlDtExp = jrnlDay.get("jrnlDt");
+        Expression<Date> aprxmtDtExp = jrnlDay.get("aprxmtDt");
+        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
                 case "searchStartDt":
                     // 기간 검색
-                    predicate.add(builder.greaterThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
+                    predicate.add(builder.greaterThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "searchEndDt":
                     // 기간 검색
-                    predicate.add(builder.lessThanOrEqualTo(regDtExp, DateUtils.asDate(searchParamMap.get(key))));
+                    predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
+                    continue;
+                case "yy":
+                case "mnth":
+                    predicate.add(builder.equal(jrnlDay.get(key), searchParamMap.get(key)));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
