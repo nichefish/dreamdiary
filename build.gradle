@@ -91,6 +91,8 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-apt'
 
+    /** cache */
+    implementation 'org.ehcache:ehcache:3.10.8'
     /** IntelliJ 전용 annotation */
     implementation 'org.jetbrains:annotations:16.0.3'
 

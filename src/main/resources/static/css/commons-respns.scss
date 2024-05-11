@@ -31,16 +31,13 @@
     .post {
         padding: 10px !important;
     }
-    .searchType {
-        margin-right:5px;
-    }
     .buttons {
         margin-top:10px;
     }
     #searchType {
         width:85px;
     }
-    .width33 {
+    .width-33 {
         width: 33%;
     }
     .margins{
@@ -93,6 +90,7 @@
         font-size: x-small !important;
         font-weight: bold !important;
         vertical-align: middle !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
     }
 }
 
@@ -132,5 +130,6 @@
         font-size: small !important;
         font-weight: bold !important;
         vertical-align: middle !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
     }
 }
