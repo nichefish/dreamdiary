@@ -24,6 +24,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
@@ -104,8 +105,9 @@ public class CommentController
             final @Valid CommentDto.DTL comment,
             final @RequestParam("postNo") @Nullable Integer key,
             final CommentParam param,
-            final LogActvtyParam logParam,
-            final BindingResult bindingResult
+            final MultipartHttpServletRequest request,
+            final BindingResult bindingResult,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -117,7 +119,7 @@ public class CommentController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록 및 수정 처리
             boolean isReg = (key == null);
-            CommentDto result = isReg ? commentService.regist(comment) : commentService.modify(comment);
+            CommentDto result = isReg ? commentService.registWithCache(comment, request) : commentService.modifyWithCache(comment, request);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -154,7 +156,7 @@ public class CommentController
         String rsltMsg = "";
         try {
             // 삭제 처리
-            isSuccess = commentService.delete(key);
+            isSuccess = commentService.deleteWithCache(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
