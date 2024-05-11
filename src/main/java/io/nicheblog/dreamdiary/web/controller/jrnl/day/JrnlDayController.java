@@ -197,7 +197,7 @@ public class JrnlDayController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            JrnlDayDto rslt = jrnlDayService.getDtlDto(key);
+            JrnlDayDto rslt = jrnlDayService.getDtlDtoWithCache(key);
             ajaxResponse.setRsltObj(rslt);
 
             isSuccess = (rslt.getPostNo() != null);

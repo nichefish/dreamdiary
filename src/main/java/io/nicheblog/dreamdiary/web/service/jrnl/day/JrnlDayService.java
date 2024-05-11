@@ -10,10 +10,8 @@ import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.day.JrnlDayRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.day.JrnlDaySpec;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -82,7 +80,7 @@ public class JrnlDayService
     }
 
     /**
-     * 등록 전처리:: 메소드 분리
+     * 등록 전처리 :: override
      */
     @Override
     public void preRegist(final JrnlDayDto jrnlDay) throws Exception {
@@ -91,7 +89,7 @@ public class JrnlDayService
     }
 
     /**
-     * 등록 후처리:: 메소드 분리
+     * 등록 후처리 :: override
      */
     @Override
     public void postRegist(final JrnlDayEntity rslt) throws Exception {
@@ -99,7 +97,15 @@ public class JrnlDayService
     }
 
     /**
-     * 수정 전처리:: 메소드 분리
+     * 상세 조회 (dto level) :: 캐시 처리
+     */
+    @Cacheable(value="jrnlDayDtlDto", key="#key")
+    public JrnlDayDto getDtlDtoWithCache(Integer key) throws Exception {
+        return this.getDtlDto(key);
+    }
+
+    /**
+     * 수정 전처리 :: override
      */
     @Override
     public void preModify(final JrnlDayDto jrnlDay) throws Exception {
@@ -108,15 +114,16 @@ public class JrnlDayService
     }
 
     /**
-     * 수정 후처리:: 메소드 분리
+     * 수정 후처리 :: override
      */
     @Override
     public void postModify(final JrnlDayEntity rslt) throws Exception {
         EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
+        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getPostNo().toString());
     }
 
     /**
-     * 년도/월 세팅:: 메소드 분리
+     * 년도/월 세팅 :: 메소드 분리
      */
     public void setYyMnth(final JrnlDayDto jrnlDay) throws Exception {
         // 날짜미상여부 N시 대략일자 무효화
@@ -133,10 +140,11 @@ public class JrnlDayService
     }
 
     /**
-     * 삭제 후처리:: 메소드 분리
+     * 삭제 후처리 :: override
      */
     @Override
     public void postDelete(final JrnlDayEntity rslt) throws Exception {
         EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
+        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getPostNo().toString());
     }
 }

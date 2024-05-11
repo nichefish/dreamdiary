@@ -55,10 +55,19 @@ public class CommentService
     @Override
     public void postRegist(final CommentEntity rslt) throws Exception {
         String contentType = rslt.getContentType();
-        if (ContentType.JRNL_DREAM.key.equals(contentType) || ContentType.JRNL_DIARY.key.equals(contentType)) {
+        if (ContentType.JRNL_DIARY.key.equals(contentType)) {
+            // jrnl_day
             EhCacheUtils.evictCacheAll("jrnlDayList");
+            // jrnl_diary
+            EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo().toString());
+            EhCacheUtils.evictCacheAll("imprtcDiaryList");
+        }
+        if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+            // jrnl_day
+            EhCacheUtils.evictCacheAll("jrnlDayList");
+            // jrnl_dream
+            EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo().toString());
             EhCacheUtils.evictCacheAll("imprtcDreamList");
-            EhCacheUtils.evictCacheAll("jrnlDiaryDtlDto");
         }
     }
 
@@ -68,10 +77,19 @@ public class CommentService
     @Override
     public void postModify(final CommentEntity rslt) throws Exception {
         String contentType = rslt.getContentType();
-        if (ContentType.JRNL_DREAM.key.equals(contentType) || ContentType.JRNL_DIARY.key.equals(contentType)) {
+        if (ContentType.JRNL_DIARY.key.equals(contentType)) {
+            // jrnl_day
             EhCacheUtils.evictCacheAll("jrnlDayList");
+            // jrnl_diary
+            EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo().toString());
+            EhCacheUtils.evictCacheAll("imprtcDiaryList");
+        }
+        if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+            // jrnl_day
+            EhCacheUtils.evictCacheAll("jrnlDayList");
+            // jrnl_dream
+            EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo().toString());
             EhCacheUtils.evictCacheAll("imprtcDreamList");
-            EhCacheUtils.evictCacheAll("jrnlDiaryDtlDto");
         }
     }
 
@@ -81,10 +99,19 @@ public class CommentService
     @Override
     public void postDelete(final CommentEntity rslt) throws Exception {
         String contentType = rslt.getContentType();
-        if (ContentType.JRNL_DREAM.key.equals(contentType) || ContentType.JRNL_DIARY.key.equals(contentType)) {
+        if (ContentType.JRNL_DIARY.key.equals(contentType)) {
+            // jrnl_day
             EhCacheUtils.evictCacheAll("jrnlDayList");
+            // jrnl_diary
+            EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo().toString());
+            EhCacheUtils.evictCacheAll("imprtcDiaryList");
+        }
+        if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+            // jrnl_day
+            EhCacheUtils.evictCacheAll("jrnlDayList");
+            // jrnl_dream
+            EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo().toString());
             EhCacheUtils.evictCacheAll("imprtcDreamList");
-            EhCacheUtils.evictCacheAll("jrnlDiaryDtlDto");
         }
     }
 }
