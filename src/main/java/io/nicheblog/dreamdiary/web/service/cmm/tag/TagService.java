@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
@@ -84,7 +85,6 @@ public class TagService
      * 컨텐츠 태그 처리
      */
     @Transactional
-    @CacheEvict(value={"jrnlDayList", "jrnlDreamTagDtl", "jrnlDreamSizedTagList"}, allEntries = true)
     public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) throws Exception {
 
         // 태그객체 또는 태그 문자열이 넘어오지 않았으면? 리턴.
@@ -110,10 +110,7 @@ public class TagService
         contentTagService.delObsoleteContentTags(clsfKey, new ArrayList<>(obsoleteTagSet));
 
         // 3. 추가해야 할 컨텐츠-태그를 처리해준다.
-            List<ContentTagEntity> contentTagList = rsList.stream()
-                .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
-                .collect(Collectors.toList());
-        contentTagService.registAll(contentTagList);
+        contentTagService.procContentTags(clsfKey, rsList);
 
         // 4. 연관관계 없는 마스터 태그 삭제
         this.deleteNoRefTags();

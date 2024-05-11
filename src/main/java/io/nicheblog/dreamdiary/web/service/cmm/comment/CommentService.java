@@ -54,21 +54,8 @@ public class CommentService
      */
     @Override
     public void postRegist(final CommentEntity rslt) throws Exception {
-        String contentType = rslt.getContentType();
-        if (ContentType.JRNL_DIARY.key.equals(contentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
-            // jrnl_diary
-            EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo().toString());
-            EhCacheUtils.evictCacheAll("imprtcDiaryList");
-        }
-        if (ContentType.JRNL_DREAM.key.equals(contentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
-            // jrnl_dream
-            EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo().toString());
-            EhCacheUtils.evictCacheAll("imprtcDreamList");
-        }
+        // 관련 캐시 처리
+        this.evictClsfCache(rslt);
     }
 
     /**
@@ -76,21 +63,8 @@ public class CommentService
      */
     @Override
     public void postModify(final CommentEntity rslt) throws Exception {
-        String contentType = rslt.getContentType();
-        if (ContentType.JRNL_DIARY.key.equals(contentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
-            // jrnl_diary
-            EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo().toString());
-            EhCacheUtils.evictCacheAll("imprtcDiaryList");
-        }
-        if (ContentType.JRNL_DREAM.key.equals(contentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
-            // jrnl_dream
-            EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo().toString());
-            EhCacheUtils.evictCacheAll("imprtcDreamList");
-        }
+        // 관련 캐시 처리
+        this.evictClsfCache(rslt);
     }
 
     /**
@@ -98,19 +72,27 @@ public class CommentService
      */
     @Override
     public void postDelete(final CommentEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        this.evictClsfCache(rslt);
+    }
+
+    /**
+     * 관련 캐시 처리
+     */
+    public void evictClsfCache(final CommentEntity rslt) {
         String contentType = rslt.getContentType();
         if (ContentType.JRNL_DIARY.key.equals(contentType)) {
             // jrnl_day
             EhCacheUtils.evictCacheAll("jrnlDayList");
             // jrnl_diary
-            EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo().toString());
+            EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo());
             EhCacheUtils.evictCacheAll("imprtcDiaryList");
         }
         if (ContentType.JRNL_DREAM.key.equals(contentType)) {
             // jrnl_day
             EhCacheUtils.evictCacheAll("jrnlDayList");
             // jrnl_dream
-            EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo().toString());
+            EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo());
             EhCacheUtils.evictCacheAll("imprtcDreamList");
         }
     }

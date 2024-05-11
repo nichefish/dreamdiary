@@ -55,6 +55,9 @@ public class EhCacheUtils {
     /**
      * 캐시 이름의 특정 키 evict
      */
+    public static void evictCache(final String cacheName, final Integer cacheKey) {
+        evictCache(cacheName, cacheKey.toString());
+    }
     public static void evictCache(final String cacheName, final String cacheKey) {
         Cache cache = cacheManager.getCache(cacheName);
         if (cache == null) {
