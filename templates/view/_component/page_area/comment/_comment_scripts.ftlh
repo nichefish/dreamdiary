@@ -28,8 +28,8 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.COMMENT_REG_AJAX!}";
-                    let ajaxData = $("#commentRegForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    let ajaxData = new FormData($("#commentRegForm")[0]);
+                    commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();

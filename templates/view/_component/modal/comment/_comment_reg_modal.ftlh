@@ -10,7 +10,7 @@
     <@component.modal_header "댓글 저장" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
-        <form name="commentRegForm" id="commentRegForm" class="form">
+        <form name="commentRegForm" id="commentRegForm" enctype="multipart/form-data">
             <div class="row" id="comment_reg_div">
                 <#--handlebars template goes in here-->
             </div>

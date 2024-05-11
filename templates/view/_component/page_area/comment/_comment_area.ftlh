@@ -93,7 +93,7 @@
             <div class="row col-xl-11">
                 <div class="col-xl-11">
                     <#--begin::Form-->
-                    <form name="commentRegForm" id="commentRegForm" class="form">
+                    <form name="commentRegForm" id="commentRegForm" enctype="multipart/form-data">
                         <div id="comment_reg_div">
                             <#--handlebar template goes in here-->
                         </div>

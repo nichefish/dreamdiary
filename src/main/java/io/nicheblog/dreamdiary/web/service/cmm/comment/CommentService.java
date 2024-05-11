@@ -74,21 +74,23 @@ public class CommentService
     public void postDelete(final CommentEntity rslt) throws Exception {
         // 관련 캐시 처리
         this.evictClsfCache(rslt);
+
+        // TODO: 관련 엔티티 삭제?
     }
 
     /**
      * 관련 캐시 처리
      */
     public void evictClsfCache(final CommentEntity rslt) {
-        String contentType = rslt.getContentType();
-        if (ContentType.JRNL_DIARY.key.equals(contentType)) {
+        String refContentType = rslt.getRefContentType();
+        if (ContentType.JRNL_DIARY.key.equals(refContentType)) {
             // jrnl_day
             EhCacheUtils.evictCacheAll("jrnlDayList");
             // jrnl_diary
             EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo());
             EhCacheUtils.evictCacheAll("imprtcDiaryList");
         }
-        if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+        if (ContentType.JRNL_DREAM.key.equals(refContentType)) {
             // jrnl_day
             EhCacheUtils.evictCacheAll("jrnlDayList");
             // jrnl_dream

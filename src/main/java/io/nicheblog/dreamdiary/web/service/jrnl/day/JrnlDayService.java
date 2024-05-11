@@ -147,6 +147,8 @@ public class JrnlDayService
     public void postDelete(final JrnlDayEntity rslt) throws Exception {
         // 관련 캐시 처리
         this.evictRelatedCache(rslt);
+
+        // TODO: 관련 엔티티 삭제?
     }
 
     /**

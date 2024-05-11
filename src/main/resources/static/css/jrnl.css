@@ -33,10 +33,12 @@
   color: #8e8e8e;
 }
 .jrnl-diary-cn blockquote::before, .jrnl-sumry-cn blockquote::before {
-  color: #ccc;
-  font-size: 3em;
   position: absolute;
-  content: "“";
+  color: #ccc;
+  content: "\f10d";
+  font-family: "Font Awesome 6 Free"; /* Font Awesome 폰트 패밀리 */
+  font-size: 1.25em;
+  font-weight: 900;
   top: 0;
   left: 0.5rem;
 }
@@ -48,12 +50,14 @@
   display: inline;
 }
 .jrnl-diary-cn blockquote p:last-child::after, .jrnl-sumry-cn blockquote p:last-child::after {
-  color: #ccc;
-  font-size: 3em;
   position: absolute;
-  content: "”";
-  bottom: -2rem;
-  right: -1.25rem;
+  color: #ccc;
+  content: "\f10e";
+  font-family: "Font Awesome 6 Free"; /* Font Awesome 폰트 패밀리 */
+  font-size: 1.25em;
+  font-weight: 900;
+  bottom: 0.1rem;
+  right: -1.5rem;
 }
 
 .jrnl-dream-cn p {
