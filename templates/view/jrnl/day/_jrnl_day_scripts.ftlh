@@ -67,9 +67,9 @@
             },
             /** 아이콘 새로고침 */
             refreshIcon: function() {
-                const $iconClassElmt = $("#jrnlDayRegForm #icon");
+                const $iconClassElmt = $("#jrnlDayRegForm #weather");
                 if (!$iconClassElmt.length) return;
-                $("#jrnlDayRegForm #jrnl_day_icon_div").html($iconClassElmt.val());
+                $("#jrnlDayRegForm #weather_icon_div").html($iconClassElmt.val());
             },
             /** submit */
             submit: function() {
