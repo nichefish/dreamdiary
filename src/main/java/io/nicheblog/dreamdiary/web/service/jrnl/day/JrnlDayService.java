@@ -93,7 +93,8 @@ public class JrnlDayService
      */
     @Override
     public void postRegist(final JrnlDayEntity rslt) throws Exception {
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
     }
 
     /**
@@ -118,8 +119,8 @@ public class JrnlDayService
      */
     @Override
     public void postModify(final JrnlDayEntity rslt) throws Exception {
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
-        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getPostNo().toString());
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
     }
 
     /**
@@ -144,7 +145,15 @@ public class JrnlDayService
      */
     @Override
     public void postDelete(final JrnlDayEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
+    }
+
+    /**
+     * 관련 캐시 처리 :: 메소드 분리
+     */
+    public void evictRelatedCache(final JrnlDayEntity rslt) {
         EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
-        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getPostNo().toString());
+        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getPostNo());
     }
 }

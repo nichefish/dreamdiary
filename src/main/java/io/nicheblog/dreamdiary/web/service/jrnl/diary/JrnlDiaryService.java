@@ -80,11 +80,8 @@ public class JrnlDiaryService
      */
     @Override
     public void postRegist(final JrnlDiaryEntity rslt) throws Exception {
-        // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
-        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo().toString());
-        // jrnl_diary
-        EhCacheUtils.evictCache("imprtcDiaryList", rslt.getJrnlDay().getYy().toString());
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
     }
 
     /**
@@ -100,12 +97,8 @@ public class JrnlDiaryService
      */
     @Override
     public void postModify(final JrnlDiaryEntity rslt) throws Exception {
-        // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
-        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo().toString());
-        // jrnl_diary
-        EhCacheUtils.evictCache("imprtcDiaryList", rslt.getJrnlDay().getYy().toString());
-        EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getPostNo().toString());
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
     }
 
     /**
@@ -113,11 +106,19 @@ public class JrnlDiaryService
      */
     @Override
     public void postDelete(final JrnlDiaryEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
+    }
+
+    /**
+     * 관련 캐시 처리 :: 메소드 분리
+     */
+    public void evictRelatedCache(final JrnlDiaryEntity rslt) {
         // jrnl_day
         EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
-        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo().toString());
+        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo());
         // jrnl_diary
-        EhCacheUtils.evictCache("imprtcDiaryList", rslt.getJrnlDay().getYy().toString());
-        EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getPostNo().toString());
+        EhCacheUtils.evictCache("imprtcDiaryList", rslt.getJrnlDay().getYy());
+        EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getPostNo());
     }
 }

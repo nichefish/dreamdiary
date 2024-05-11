@@ -64,11 +64,8 @@ public class JrnlSumryCnService
      */
     @Override
     public void postRegist(final JrnlSumryCnEntity rslt) throws Exception {
-        // jrnl_sumry
-        EhCacheUtils.evictCache("jrnlSumryDtl", rslt.getJrnlSumryNo().toString());
-        EhCacheUtils.evictCache("jrnlSumryDtlByYy", rslt.getJrnlSumry().getYy().toString());
-        // jrnl_sumry_cn
-        EhCacheUtils.evictCache("jrnlSumryCnDtlDto", rslt.getPostNo().toString());
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
     }
 
     /**
@@ -84,11 +81,8 @@ public class JrnlSumryCnService
      */
     @Override
     public void postModify(final JrnlSumryCnEntity rslt) throws Exception {
-        // jrnl_sumry
-        EhCacheUtils.evictCache("jrnlSumryDtl", rslt.getJrnlSumryNo().toString());
-        EhCacheUtils.evictCache("jrnlSumryDtlByYy", rslt.getJrnlSumry().getYy().toString());
-        // jrnl_sumry_cn
-        EhCacheUtils.evictCache("jrnlSumryCnDtlDto", rslt.getPostNo().toString());
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
     }
 
     /**
@@ -96,10 +90,18 @@ public class JrnlSumryCnService
      */
     @Override
     public void postDelete(final JrnlSumryCnEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
+    }
+
+    /**
+     * 관련 캐시 처리 :: 메소드 분리
+     */
+    public void evictRelatedCache(final JrnlSumryCnEntity rslt) {
         // jrnl_sumry
-        EhCacheUtils.evictCache("jrnlSumryDtl", rslt.getJrnlSumryNo().toString());
-        EhCacheUtils.evictCache("jrnlSumryDtlByYy", rslt.getJrnlSumry().getYy().toString());
+        EhCacheUtils.evictCache("jrnlSumryDtl", rslt.getJrnlSumryNo());
+        EhCacheUtils.evictCache("jrnlSumryDtlByYy", rslt.getJrnlSumry().getYy());
         // jrnl_sumry_cn
-        EhCacheUtils.evictCache("jrnlSumryCnDtlDto", rslt.getPostNo().toString());
+        EhCacheUtils.evictCache("jrnlSumryCnDtlDto", rslt.getPostNo());
     }
 }

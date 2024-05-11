@@ -93,11 +93,9 @@ public class JrnlDreamService
      */
     @Override
     public void postRegist(final JrnlDreamEntity rslt) throws Exception {
-        // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
-        // jrnl_dream
-        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo().toString());
-        EhCacheUtils.evictCache("imprtcDreamList", rslt.getJrnlDay().getYy().toString());
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
+        EhCacheUtils.evictCache("imprtcDreamList", rslt.getJrnlDay().getYy());
     }
 
     /**
@@ -113,12 +111,8 @@ public class JrnlDreamService
      */
     @Override
     public void postModify(final JrnlDreamEntity rslt) throws Exception {
-        // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
-        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo().toString());
-        // jrnl_dream
-        EhCacheUtils.evictCache("imprtcDreamList", rslt.getJrnlDay().getYy().toString());
-        EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getPostNo().toString());
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
     }
 
     /**
@@ -126,11 +120,19 @@ public class JrnlDreamService
      */
     @Override
     public void postDelete(final JrnlDreamEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
+    }
+
+    /**
+     * 관련 캐시 처리 :: 메소드 분리
+     */
+    public void evictRelatedCache(final JrnlDreamEntity rslt) {
         // jrnl_day
         EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
-        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo().toString());
+        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo());
         // jrnl_dream
-        EhCacheUtils.evictCache("imprtcDreamList", rslt.getJrnlDay().getYy().toString());
-        EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getPostNo().toString());
+        EhCacheUtils.evictCache("imprtcDreamList", rslt.getJrnlDay().getYy());
+        EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getPostNo());
     }
 }
