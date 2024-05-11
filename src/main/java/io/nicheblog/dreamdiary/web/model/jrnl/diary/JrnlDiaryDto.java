@@ -7,8 +7,11 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Date;
 
 /**
  * JrnlDiaryDto
@@ -28,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 public class JrnlDiaryDto
         extends BasePostDto
-        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, Comparable<JrnlDiaryDto>  {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_DIARY;
@@ -57,6 +60,17 @@ public class JrnlDiaryDto
     @Override
     public Integer getKey() {
         return this.postNo;
+    }
+
+    /**
+     * 날짜 오름차순 정렬
+     */
+    @SneakyThrows
+    @Override
+    public int compareTo(JrnlDiaryDto other) {
+        Date thisDate = DateUtils.asDate(this.stdrdDt);
+        Date otherDate = DateUtils.asDate(other.stdrdDt);
+        return thisDate.compareTo(otherDate);
     }
 
     /* ----- */
