@@ -119,7 +119,7 @@ public class CommentController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록 및 수정 처리
             boolean isReg = (key == null);
-            CommentDto result = isReg ? commentService.registWithCache(comment, request) : commentService.modifyWithCache(comment, request);
+            CommentDto result = isReg ? commentService.regist(comment, request) : commentService.modify(comment, request);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -156,7 +156,7 @@ public class CommentController
         String rsltMsg = "";
         try {
             // 삭제 처리
-            isSuccess = commentService.deleteWithCache(key);
+            isSuccess = commentService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

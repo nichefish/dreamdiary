@@ -1,15 +1,15 @@
 package io.nicheblog.dreamdiary.web.service.cmm.comment;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.comment.CommentRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.comment.CommentSpec;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 
@@ -19,6 +19,7 @@ import javax.annotation.Resource;
  *  게시판 댓글 서비스 모듈
  *  ※게시판 댓글(board_comment) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
  * </pre>
+ * TODO: 좀 더 섬세하게 캐시를 다루는 방법?
  *
  * @author nichefish
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
@@ -49,26 +50,41 @@ public class CommentService
     }
 
     /**
-     * 등록 :: 캐시 처리
+     * 등록 후처리 :: override
      */
-    @CacheEvict(value={"jrnlDayList", "imprtcDreamList"}, allEntries = true)
-    public CommentDto.DTL registWithCache(final CommentDto.DTL dto, final MultipartHttpServletRequest request) throws Exception {
-        return this.regist(dto, request);
+    @Override
+    public void postRegist(final CommentEntity rslt) throws Exception {
+        String contentType = rslt.getContentType();
+        if (ContentType.JRNL_DREAM.key.equals(contentType) || ContentType.JRNL_DIARY.key.equals(contentType)) {
+            EhCacheUtils.evictCacheAll("jrnlDayList");
+            EhCacheUtils.evictCacheAll("imprtcDreamList");
+            EhCacheUtils.evictCacheAll("jrnlDiaryDtlDto");
+        }
     }
 
     /**
-     * 수정 :: 캐시 처리
+     * 수정 후처리 :: override
      */
-    @CacheEvict(value={"jrnlDayList", "imprtcDreamList"}, allEntries = true)
-    public CommentDto.DTL modifyWithCache(final CommentDto.DTL dto, final MultipartHttpServletRequest request) throws Exception {
-        return this.modify(dto, request);
+    @Override
+    public void postModify(final CommentEntity rslt) throws Exception {
+        String contentType = rslt.getContentType();
+        if (ContentType.JRNL_DREAM.key.equals(contentType) || ContentType.JRNL_DIARY.key.equals(contentType)) {
+            EhCacheUtils.evictCacheAll("jrnlDayList");
+            EhCacheUtils.evictCacheAll("imprtcDreamList");
+            EhCacheUtils.evictCacheAll("jrnlDiaryDtlDto");
+        }
     }
 
     /**
-     * 삭제 :: 캐시 처리
+     * 삭제 후처리 :: override
      */
-    @CacheEvict(value={"jrnlDayList", "imprtcDreamList"}, allEntries = true)
-    public Boolean deleteWithCache(final Integer key) throws Exception {
-        return this.delete(key);
+    @Override
+    public void postDelete(final CommentEntity rslt) throws Exception {
+        String contentType = rslt.getContentType();
+        if (ContentType.JRNL_DREAM.key.equals(contentType) || ContentType.JRNL_DIARY.key.equals(contentType)) {
+            EhCacheUtils.evictCacheAll("jrnlDayList");
+            EhCacheUtils.evictCacheAll("imprtcDreamList");
+            EhCacheUtils.evictCacheAll("jrnlDiaryDtlDto");
+        }
     }
 }
