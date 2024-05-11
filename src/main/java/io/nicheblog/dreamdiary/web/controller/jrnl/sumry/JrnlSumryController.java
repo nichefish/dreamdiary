@@ -12,10 +12,10 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
-import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumrySearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
+import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryService;
 import lombok.Getter;
@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +52,8 @@ public class JrnlSumryController
 
     @Resource(name = "jrnlSumryService")
     private JrnlSumryService jrnlSumryService;
+    @Resource(name = "jrnlDiaryService")
+    private JrnlDiaryService jrnlDiaryService;
     @Resource(name = "jrnlDreamService")
     private JrnlDreamService jrnlDreamService;
     @Resource(name = "tagService")
@@ -160,20 +161,20 @@ public class JrnlSumryController
             // 객체 조회 및 모델에 추가
             JrnlSumryDto rsltDto = key != null ? jrnlSumryService.getSumryDtl(key) : yyParam != null ? jrnlSumryService.getDtlDtoByYy(yyParam) : null;
             model.addAttribute("post", rsltDto);
-            // 중요 꿈 목록 조회
             if (rsltDto != null) {
                 Integer yy = rsltDto.getYy();
-                List<JrnlDreamDto> imprtcDreamList = jrnlDreamService.getImprtcDreamList(yy);
-                Collections.sort(imprtcDreamList);
-                model.addAttribute("imprtcDreamList", imprtcDreamList);
+                // 중요 일기 목록 조회
+                model.addAttribute("imprtcDiaryList", jrnlDiaryService.getImprtcDiaryList(yy));
+                // 중요 꿈 목록 조회
+                model.addAttribute("imprtcDreamList", jrnlDreamService.getImprtcDreamList(yy));
 
-                // 태그 목록 조회
+                // 꿈 태그 목록 조회
                 Map<String, Object> searchParamMap = new HashMap<>() {{
                     put("contentType", ContentType.JRNL_DREAM.key);
                     put("yy", yy);
                 }};
-                List<TagDto> jrnlDreamTagList = tagService.getSizedListDto(searchParamMap);
-                model.addAttribute("tagList", jrnlDreamTagList);
+                List<TagDto> jrnlDreamTagList = tagService.getDreamSizedListDto(searchParamMap);
+                model.addAttribute("dreamTagList", jrnlDreamTagList);
             }
             // 코드 데이터 모델에 추가
             cdService.setModelCdData(Constant.JRNL_SUMRY_TY_CD, model);

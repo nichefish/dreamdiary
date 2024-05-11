@@ -31,7 +31,7 @@
                     $("#jrnl_tag_dtl_modal").modal("hide");
                 });
             },
-            tagDtlAjax: function(tagNo, tagNm) {
+            dreamTagDtlAjax: function(tagNo, tagNm) {
                 const url = "${Url.JRNL_DREAM_TAG_DTL_AJAX!}";
                 let ajaxData = { "tagNo": tagNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {

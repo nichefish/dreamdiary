@@ -7,7 +7,7 @@
     {{#each this}}
         <div class="row jrnl-day">
             <div class="row jrnl-day-header">
-                <div class="col-1 d-flex align-items-center fs-5 fw-bold">
+                <div class="col-1 d-flex align-items-center fs-5 fw-bold w-auto">
                     <i class="bi bi-calendar3 fs-6 me-2"></i>
                     {{stdrdDt}}
                     {{#if (exists jrnlDt)}}
@@ -16,6 +16,7 @@
                         <i class='bi bi-exclamation-circle cursor-pointer text-noti blink fs-7 ms-1'
                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="불확실한 일자입니다."></i>
                     {{/if}}
+                    {{{weather}}}
                 </div>
                 <div class="col d-flex align-items-center gap-2">
                     <button type="button" class="btn btn-sm btn-light-primary btn-outlined ps-4 pe-3 py-2 cursor-pointer"
@@ -133,7 +134,7 @@
                                     <div class="ms-2 mt-3">
                                         {{#tag.list}}
                                             <span class="text-muted cursor-pointer pe-1"
-                                                  onclick="JrnlTag.tagDtlAjax({{refTagNo}}, '{{tagNm}}');"
+                                                  onclick="JrnlTag.dreamTagDtlAjax({{refTagNo}}, '{{tagNm}}');"
                                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                                   title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
                                                 #<span class="border-bottom text-primary fw-lighter opacity-hover">{{tagNm}}</span>
@@ -193,7 +194,7 @@
                                     <div class="ms-2 mt-3">
                                         {{#tag.list}}
                                             <span class="text-muted cursor-pointer pe-1"
-                                                  onclick="JrnlTag.tagDtlAjax({{refTagNo}}, '{{tagNm}}');"
+                                                  onclick="JrnlTag.dreamTagDtlAjax({{refTagNo}}, '{{tagNm}}');"
                                                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                                   title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
                                                 #<span class="border-bottom text-primary fw-lighter opacity-hover">{{tagNm}}</span>

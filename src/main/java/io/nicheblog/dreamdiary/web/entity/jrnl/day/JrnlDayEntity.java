@@ -99,6 +99,11 @@ public class JrnlDayEntity
     @Comment("대략일자 (날짜미상시 해당일자 이후에 표기)")
     private Date aprxmtDt;
 
+    /** 날씨 */
+    @Column(name = "weather")
+    @Comment("날씨")
+    private String weather;
+
     /** 저널 일기 목록 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)

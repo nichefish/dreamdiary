@@ -8,9 +8,15 @@ import io.nicheblog.dreamdiary.web.repository.jrnl.diary.JrnlDiaryRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.diary.JrnlDiarySpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * JrnlDiaryService
@@ -56,20 +62,43 @@ public class JrnlDiaryService
         jrnlDiary.setIdx(lastIndex + 1);
     }
 
+    /**
+     * 특정 년도의 중요 일기 목록 조회
+     */
+    @Cacheable(value="imprtcDiaryList", key="#yy")
+    public List<JrnlDiaryDto> getImprtcDiaryList(Integer yy) throws Exception {
+        Map<String, Object> searchParamMap = new HashMap<>() {{
+            put("yy", yy);
+            put("imprtcYn", "Y");
+        }};
+        List<JrnlDiaryDto> imprtcDiaryList = this.getListDto(searchParamMap);
+        Collections.sort(imprtcDiaryList);
+        return imprtcDiaryList;
+    }
+
     @Override
-    @CacheEvict(value="jrnlDayList", key="#rslt.getJrnlDay().getYy() + \"_\" + #rslt.getJrnlDay().getMnth()")
+    @Caching(evict = {
+            @CacheEvict(value="jrnlDayList", key="#rslt.getJrnlDay().getYy() + \"_\" + #rslt.getJrnlDay().getMnth()"),
+            @CacheEvict(value="imprtcDiaryList", key="#rslt.getYy()")
+    })
     public void postRegist(final JrnlDiaryEntity rslt) throws Exception {
         //
     }
 
     @Override
-    @CacheEvict(value="jrnlDayList", key="#rslt.getJrnlDay().getYy() + \"_\" + #rslt.getJrnlDay().getMnth()")
+    @Caching(evict = {
+            @CacheEvict(value="jrnlDayList", key="#rslt.getJrnlDay().getYy() + \"_\" + #rslt.getJrnlDay().getMnth()"),
+            @CacheEvict(value="imprtcDiaryList", key="#rslt.getYy()")
+    })
     public void postModify(final JrnlDiaryEntity rslt) throws Exception {
         //
     }
 
     @Override
-    @CacheEvict(value="jrnlDayList", key="#rslt.getJrnlDay().getYy() + \"_\" + #rslt.getJrnlDay().getMnth()")
+    @Caching(evict = {
+            @CacheEvict(value="jrnlDayList", key="#rslt.getJrnlDay().getYy() + \"_\" + #rslt.getJrnlDay().getMnth()"),
+            @CacheEvict(value="imprtcDiaryList", key="#rslt.getYy()")
+    })
     public void postDelete(final JrnlDiaryEntity rslt) throws Exception {
         //
     }

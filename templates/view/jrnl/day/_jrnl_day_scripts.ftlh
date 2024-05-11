@@ -65,6 +65,12 @@
                     $("#aprxmtDtDiv").addClass("d-none");
                 });
             },
+            /** 아이콘 새로고침 */
+            refreshIcon: function() {
+                const $iconClassElmt = $("#jrnlDayRegForm #icon");
+                if (!$iconClassElmt.length) return;
+                $("#jrnlDayRegForm #jrnl_day_icon_div").html($iconClassElmt.val());
+            },
             /** submit */
             submit: function() {
                 $("#jrnlDayRegForm").submit();

@@ -63,6 +63,9 @@ public class JrnlDayDto
     /** 월 */
     private String mnth;
 
+    /** 날씨 */
+    private String weather;
+
     /** 저널 일기 목록 */
     private List<JrnlDiaryDto> jrnlDiaryList;
     /** 저널 꿈 목록 */

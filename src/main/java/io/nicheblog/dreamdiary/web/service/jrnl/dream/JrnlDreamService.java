@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +75,9 @@ public class JrnlDreamService
             put("yy", yy);
             put("imprtcYn", "Y");
         }};
-        return this.getListDto(searchParamMap);
+        List<JrnlDreamDto> imprtcDreamList = this.getListDto(searchParamMap);
+        Collections.sort(imprtcDreamList);
+        return imprtcDreamList;
     }
 
     /**
