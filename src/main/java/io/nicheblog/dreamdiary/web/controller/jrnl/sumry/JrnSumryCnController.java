@@ -121,7 +121,7 @@ public class JrnSumryCnController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            JrnlSumryCnDto rslt = jrnlSumryCnService.getDtlDto(key);
+            JrnlSumryCnDto rslt = jrnlSumryCnService.getDtlDtoWithCache(key);
             ajaxResponse.setRsltObj(rslt);
 
             isSuccess = (rslt.getPostNo() != null);

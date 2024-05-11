@@ -48,7 +48,7 @@ public class FlsysMetaService
     }
 
     /**
-     * 파일시스템 메타 등록 전처리
+     * 등록 전처리 :: override
      */
     @Override
     public void preRegist(final FlsysMetaDto flsysMetaDto) throws Exception {

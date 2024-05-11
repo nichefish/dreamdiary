@@ -71,6 +71,13 @@ public class JrnlSumryCnEntity
     @Comment("저널 결산 번호")
     private Integer jrnlSumryNo;
 
+    /** 저널 결산 번호  */
+    @ManyToOne
+    @JoinColumn(name = "jrnl_sumry_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Comment("저널 일자 정보")
+    private JrnlSumryEntity jrnlSumry;
+
     /** 순번 */
     @Column(name = "idx", columnDefinition = "INT DEFAULT 1")
     private Integer idx;

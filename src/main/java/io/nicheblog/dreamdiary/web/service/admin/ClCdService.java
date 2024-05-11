@@ -53,7 +53,7 @@ public class ClCdService
     }
 
     /**
-     * 등록 전처리
+     * 등록 전처리 :: override
      */
     @Override
     public void preRegist(final ClCdDto clCd) {

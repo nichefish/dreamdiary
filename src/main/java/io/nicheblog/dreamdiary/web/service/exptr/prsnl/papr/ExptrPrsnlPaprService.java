@@ -117,7 +117,7 @@ public class ExptrPrsnlPaprService
     }
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 등록 전처리
+     * 경비 관리 > 경비지출서 > 경비지출서 등록 전처리 :: override
      */
     @Override
     public void preRegist(final ExptrPrsnlPaprDto.DTL exptrPrsnlPaprDto) {
