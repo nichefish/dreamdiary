@@ -1,17 +1,16 @@
 package io.nicheblog.dreamdiary.web.entity.cmm.tag;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -49,12 +48,10 @@ public class TagEntity
 
     /** 컨텐츠 태그 */
     @OneToMany(mappedBy = "tag", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @Where(clause = "ref_content_type != 'JRNL_DREAM'")
+    @NotFound(action = NotFoundAction.IGNORE)
     private List<ContentTagEntity> contentTagList;
-
-    /** 저널 꿈 태그 */
-    @OneToMany(mappedBy = "tag", fetch = FetchType.EAGER)
-    @Where(clause = "ref_content_type = 'JRNL_DREAM'")
-    private List<JrnlDreamTagEntity> jrnlDreamTagList;
 
     /* ----- */
 
