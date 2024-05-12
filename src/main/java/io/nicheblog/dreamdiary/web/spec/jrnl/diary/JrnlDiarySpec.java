@@ -41,11 +41,8 @@ public class JrnlDiarySpec
         List<Predicate> predicate = new ArrayList<>();
 
         // expressions
-        Join<JrnlDreamEntity, JrnlDayEntity> jrnlDay = root.join("jrnlDay", JoinType.INNER);
-        // Use jrnlDt if available, otherwise aprxmtDt
-        Expression<Date> jrnlDtExp = jrnlDay.get("jrnlDt");
-        Expression<Date> aprxmtDtExp = jrnlDay.get("aprxmtDt");
-        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
+        Join<JrnlDreamEntity, JrnlDayEntity> jrnlDayJoin = root.join("jrnlDay", JoinType.INNER);
+        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -59,11 +56,12 @@ public class JrnlDiarySpec
                     predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "yy":
-                    predicate.add(builder.equal(jrnlDay.get(key), searchParamMap.get(key)));
+                    predicate.add(builder.equal(jrnlDayJoin.get(key), searchParamMap.get(key)));
                     continue;
                 case "mnth":
+                    // 99 = 모든 월
                     Integer mnth = (Integer) searchParamMap.get(key);
-                    if (mnth != 99) predicate.add(builder.equal(jrnlDay.get(key), mnth));
+                    if (mnth != 99) predicate.add(builder.equal(jrnlDayJoin.get(key), mnth));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
