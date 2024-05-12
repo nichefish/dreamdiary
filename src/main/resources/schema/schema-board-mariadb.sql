@@ -114,6 +114,7 @@ CREATE TABLE IF NOT EXISTS content_tag (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     FOREIGN KEY (ref_tag_no) REFERENCES tag(tag_no),
+    INDEX (ref_content_type),
     INDEX (ref_post_no, ref_content_type)
 ) COMMENT = '컨텐츠 태그';
 
