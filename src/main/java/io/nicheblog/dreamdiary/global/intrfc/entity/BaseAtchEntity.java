@@ -6,10 +6,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * BaseAtchEntity
@@ -35,7 +32,7 @@ public class BaseAtchEntity
     protected Integer atchFileNo;
 
     /** 첨부파일 정보 */
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "atch_file_no", referencedColumnName = "atch_file_no", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     protected AtchFileEntity atchFileInfo;
