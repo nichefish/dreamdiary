@@ -29,12 +29,6 @@ import javax.persistence.Transient;
 public class BasePostEntity
         extends BaseClsfEntity {
 
-    /**
-     * 필수(Override): 글분류 코드
-     * !상속받은 클래스에서 재정의하기
-     */
-    private static final String CTGR_CL_CD = "DEFAULT_CTGR_CL_CD";
-
     /** 제목 */
     @Column(name = "title")
     protected String title;

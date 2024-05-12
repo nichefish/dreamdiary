@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
-import io.nicheblog.dreamdiary.global.ContentType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -25,9 +24,6 @@ import javax.persistence.Transient;
 @AllArgsConstructor
 public class BaseClsfEntity
         extends BaseAtchEntity {
-
-    /** 필수: 컨텐츠 타입 */
-    protected static final String CONTENT_TYPE = ContentType.DEFAULT.name();
 
     /**
      * 글 번호 (POST_NO, PK)
