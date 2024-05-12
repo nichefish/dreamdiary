@@ -77,6 +77,7 @@ public class DataSourceConfig
         final HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.physical_naming_strategy", SpringPhysicalNamingStrategy.class.getName()); // 네이밍
         properties.put("hibernate.implicit_naming_strategy", SpringImplicitNamingStrategy.class.getName()); // 네이밍
+        properties.put("hibernate.enable_lazy_load_no_trans", "true");
         em.setJpaPropertyMap(properties);
         em.afterPropertiesSet();
 
