@@ -44,6 +44,7 @@ public class UserAcsIpEntity
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_no", referencedColumnName = "user_no")
     @Fetch(FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 정보")
     private UserEntity user;
 
