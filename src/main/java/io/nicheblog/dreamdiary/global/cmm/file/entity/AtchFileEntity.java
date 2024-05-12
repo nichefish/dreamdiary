@@ -44,7 +44,7 @@ public class AtchFileEntity
 
     /** 첨부파일 상세 목록 */
     @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "atch_file_no")
     @Fetch(FetchMode.SELECT)
     @OrderBy("fileSn ASC")
