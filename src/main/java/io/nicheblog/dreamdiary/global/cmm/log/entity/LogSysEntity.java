@@ -53,7 +53,7 @@ public class LogSysEntity
     protected String userId = Constant.SYSTEM_ACNT;
 
     /** 작업자 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -62,7 +62,6 @@ public class LogSysEntity
 
     /** 작업일시 */
     @CreatedDate
-    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
     @Column(name = "log_dt", updatable = false)

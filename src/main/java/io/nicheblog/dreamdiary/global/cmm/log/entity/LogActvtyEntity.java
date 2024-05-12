@@ -65,7 +65,7 @@ public class LogActvtyEntity
     protected String userId;
 
     /** 작업자 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -73,7 +73,6 @@ public class LogActvtyEntity
 
     /** 작업일시 */
     @CreatedDate
-    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)
     @Column(name = "log_dt", updatable = false)
@@ -118,7 +117,7 @@ public class LogActvtyEntity
     private String url;
 
     /** 작업 URL 정보 */
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "url", referencedColumnName = "url", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)

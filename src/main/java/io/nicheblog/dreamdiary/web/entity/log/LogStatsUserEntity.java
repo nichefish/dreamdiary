@@ -59,8 +59,9 @@ public class LogStatsUserEntity
     /**
      * 활동(접속) 목록
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "log_user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    @Fetch(value = FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("활동(접속) 목록")
     private List<LogActvtyEntity> actvtyList;
