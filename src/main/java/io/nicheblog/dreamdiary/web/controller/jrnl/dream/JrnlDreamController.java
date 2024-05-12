@@ -11,11 +11,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
-import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamSearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
@@ -24,16 +20,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 /**
  * JrnlDreamController
@@ -55,8 +51,6 @@ public class JrnlDreamController
 
     @Resource(name = "jrnlDreamService")
     private JrnlDreamService jrnlDreamService;
-    @Resource(name = "tagService")
-    private TagService tagService;
 
     /**
      * 저널 꿈 등록/수정 처리 (Ajax)
@@ -170,82 +164,6 @@ public class JrnlDreamController
                 // 태그 처리 :: 메인 로직과 분리
                 publisher.publishEvent(new TagProcEvent(this, new BaseClsfKey(key, ContentType.JRNL_DREAM)));
             }
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
-
-    /**
-     * 태그 전체 목록 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
-     */
-    @RequestMapping(Url.JRNL_DREAM_TAG_LIST_AJAX)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> tagListAjax(
-            @ModelAttribute("searchParam") TagSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final @RequestParam Map<String, Object> searchParamMap
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 전체 태그 목록 조회 (태그클라우드)
-            List<TagDto> tagList = tagService.getDreamSizedListDto(searchParam);
-            ajaxResponse.setRsltList(tagList);
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
-
-    /**
-     * 저널 꿈 태그 상세 (해당 태그 꿈 목록) 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
-     */
-    @GetMapping(value = {Url.JRNL_DREAM_TAG_DTL_AJAX})
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayListAjax(
-            JrnlDreamSearchParam searchParam,
-            final LogActvtyParam logParam
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 목록 조회 및 응답에 추가
-            List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.jrnlDreamTagDtl(searchParam);
-            Collections.sort(jrnlDreamList);
-            ajaxResponse.setRsltList(jrnlDreamList);
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);

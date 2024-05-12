@@ -63,7 +63,7 @@ public class JrnlDiarySpec
                     continue;
                 case "mnth":
                     Integer mnth = (Integer) searchParamMap.get(key);
-                    if (mnth != 99) predicate.add(builder.equal(root.get(key), mnth));
+                    if (mnth != 99) predicate.add(builder.equal(jrnlDay.get(key), mnth));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색

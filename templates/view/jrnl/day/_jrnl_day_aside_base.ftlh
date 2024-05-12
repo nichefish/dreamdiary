@@ -8,8 +8,8 @@
         return {
             yy: function () {
                 $("#jrnl_aside #mnth").val("");
-                commons.util.handlebarsTemplate({}, "jrnl_day_list");
-                commons.util.handlebarsTemplate({}, "jrnl_dream_tag_list");
+                commons.util.handlebarsTemplate(null, "jrnl_day_list");
+                commons.util.handlebarsTemplate([], "jrnl_dream_tag_list");
             },
             mnth: function () {
                 // 쿠키 설정하기
@@ -90,7 +90,7 @@
                             <#list 1..12 as mnth>
                                 <option value="${mnth}">${mnth}</option>
                             </#list>
-                            <option value="99">전체 년도</option>
+                            <option value="99">전체 월</option>
                         </select>
                     </div>
                 </div>

@@ -162,7 +162,7 @@ public class TagSpec
                     continue;
                 case "mnth":
                     Integer mnth = (Integer) searchParamMap.get(key);
-                    if (mnth != 99) predicate.add(builder.equal(root.get(key), mnth));
+                    if (mnth != 99) predicate.add(builder.equal(jrnlDay.get(key), mnth));
             }
         }
         return predicate;

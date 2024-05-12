@@ -76,7 +76,7 @@ public class JrnlDreamSpec
                     continue;
                 case "mnth":
                     Integer mnth = (Integer) searchParamMap.get(key);
-                    if (mnth != 99) predicate.add(builder.equal(root.get(key), mnth));
+                    if (mnth != 99) predicate.add(builder.equal(jrnlDay.get(key), mnth));
                     continue;
                 case "tagNo":
                     // 특정 태그된 꿈만 조회
