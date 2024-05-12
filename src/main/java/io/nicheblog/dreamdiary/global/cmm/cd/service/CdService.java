@@ -45,7 +45,7 @@ public class CdService {
      * Cacheable (key:: #clCd)
      */
     @Cacheable(cacheNames = "cdDtoListByClCd", key = "#clCd", condition = "#clCd!=null")
-    public List<DtlCdDto> getCdListByClCd(final String clCd) throws Exception {
+    public List<DtlCdDto> getCdDtoListByClCd(final String clCd) throws Exception {
         if (StringUtils.isEmpty(clCd)) return null;
         // 코드 목록 조회 (entity level)
         List<DtlCdEntity> rsDtlCdList = this.getCdEntityListByClCd(clCd);
@@ -61,7 +61,7 @@ public class CdService {
      * 공통 > 코드 정보 model에 추가 (가독성+편의상 분리)
      */
     public void setModelCdData(final String clCd, final ModelMap model) throws Exception {
-        model.addAttribute(clCd, this.getCdListByClCd(clCd));
+        model.addAttribute(clCd, this.getCdDtoListByClCd(clCd));
     }
 
     /**

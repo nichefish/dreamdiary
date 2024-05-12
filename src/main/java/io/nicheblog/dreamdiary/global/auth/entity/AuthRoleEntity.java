@@ -58,7 +58,7 @@ public class AuthRoleEntity
     /** 하위 권한 정보 */
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "auth_cd", referencedColumnName = "top_auth_cd", insertable = false, updatable = false)
-    @Fetch(value = FetchMode.SELECT)
+    @Fetch(value = FetchMode.JOIN)
     @OrderBy("state.sortOrdr ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("하위 권한 정보")

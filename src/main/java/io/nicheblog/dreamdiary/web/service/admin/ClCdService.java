@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.ClCdMapstruct;
 import io.nicheblog.dreamdiary.web.repository.admin.ClCdRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.ClCdSpec;
@@ -41,12 +42,10 @@ public class ClCdService
     public ClCdRepository getRepository() {
         return this.clCdRepository;
     }
-
     @Override
     public ClCdSpec getSpec() {
         return this.clCdSpec;
     }
-
     @Override
     public ClCdMapstruct getMapstruct() {
         return this.clCdMapstruct;
@@ -58,6 +57,41 @@ public class ClCdService
     @Override
     public void preRegist(final ClCdDto clCd) {
         if (clCd.getState() == null) clCd.setState(new StateCmpstn());
+    }
+
+    /**
+     * 등록 후처리 :: override
+     */
+    @Override
+    public void postRegist(final ClCdEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
+    }
+
+    /**
+     * 수정 후처리 :: override
+     */
+    @Override
+    public void postModify(final ClCdEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
+    }
+
+    /**
+     * 삭제 후처리 :: override
+     */
+    @Override
+    public void postDelete(final ClCdEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        this.evictRelatedCache(rslt);
+    }
+
+    /**
+     * 관련 캐시 처리 :: 메소드 분리
+     */
+    public void evictRelatedCache(final ClCdEntity rslt) {
+        EhCacheUtils.evictCache("cdEntityListByClCd", rslt.getClCd());
+        EhCacheUtils.evictCache("cdDtoListByClCd", rslt.getClCd());
     }
 
     /**
