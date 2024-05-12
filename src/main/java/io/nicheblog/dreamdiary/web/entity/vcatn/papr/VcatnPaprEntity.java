@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * VcatnPaprEntity
  * <pre>
- *  휴가계획서 Entity
+ *  휴가계획서 Entity.
  * </pre>
  *
  * @author nichefish
@@ -70,7 +70,7 @@ public class VcatnPaprEntity
     /** 휴가 일정 목록 */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumnOrFormula(column = @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no"))
-    @Fetch(FetchMode.JOIN)
+    @Fetch(FetchMode.SELECT)
     @BatchSize(size = 10)
     @OrderBy("bgnDt ASC")
     @NotFound(action = NotFoundAction.IGNORE)
