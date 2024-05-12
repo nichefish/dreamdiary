@@ -1,8 +1,10 @@
 package io.nicheblog.dreamdiary.web.service.user;
 
+import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
@@ -103,6 +105,10 @@ public class UserMyService {
         rsUserEntity.setProflImgUrl(url);
         Integer rsId = userRepository.saveAndFlush(rsUserEntity)
                                      .getUserNo();
+
+        // 관련 캐시 처리
+        EhCacheUtils.clearL2Cache(AuditorInfo.class);
+
         return (rsId != null);
     }
 
@@ -116,6 +122,10 @@ public class UserMyService {
         rsUserEntity.setProflImgUrl(null);
         Integer rsId = userRepository.saveAndFlush(rsUserEntity)
                                      .getUserNo();
+
+        // 관련 캐시 처리
+        EhCacheUtils.clearL2Cache(AuditorInfo.class);
+
         return (rsId != null);
     }
 }

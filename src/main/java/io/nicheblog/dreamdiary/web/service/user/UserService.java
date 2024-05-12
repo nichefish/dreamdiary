@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.service.user;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
@@ -50,12 +52,10 @@ public class UserService
     public UserRepository getRepository() {
         return this.userRepository;
     }
-
     @Override
     public UserSpec getSpec() {
         return this.userSpec;
     }
-
     @Override
     public UserMapstruct getMapstruct() {
         return this.userMapstruct;
@@ -94,6 +94,24 @@ public class UserService
             userDto.setUseAcsIpYn("N");
             userDto.setAcsIpListStr(null);
         }
+    }
+
+    /**
+     * 수정 후처리 :: override
+     */
+    @Override
+    public void postModify(final UserEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        EhCacheUtils.clearL2Cache(AuditorInfo.class);
+    }
+
+    /**
+     * 삭제 후처리 :: override
+     */
+    @Override
+    public void postDelete(final UserEntity rslt) throws Exception {
+        // 관련 캐시 처리
+        EhCacheUtils.clearL2Cache(AuditorInfo.class);
     }
 
     /**
