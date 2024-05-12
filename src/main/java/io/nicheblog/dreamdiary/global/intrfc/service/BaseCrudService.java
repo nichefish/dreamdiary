@@ -180,6 +180,15 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
         List<Entity> entityList = this.getListEntity(searchParamMap);
         Repository repository = this.getRepository();
         repository.deleteAll(entityList);
+
+        this.postDeleteAll(entityList);
         return true;
+    }
+
+    /**
+     * default: 게시물 bulk 삭제 후처리
+     */
+    default void postDeleteAll(List<Entity> entityList) {
+        // 기본 공백, 필요시 각 함수에서 Override
     }
 }
