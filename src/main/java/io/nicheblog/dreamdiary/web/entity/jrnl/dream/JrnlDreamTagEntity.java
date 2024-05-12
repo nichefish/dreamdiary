@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.entity.jrnl.dream;
 
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagSmpEntity;
 import lombok.AllArgsConstructor;
@@ -73,21 +72,9 @@ public class JrnlDreamTagEntity
     @Transient
     private String tagNm;
 
-    /* ----- */
-
-    /**
-     * 생성자
-     */
-    public JrnlDreamTagEntity(Integer refTagNo, BaseClsfKey clsfKey) {
-        this.refTagNo = refTagNo;
-        this.refPostNo = clsfKey.getPostNo();
-        this.refContentType = clsfKey.getContentType();
-    }
-
-    /** 참조 컨텐츠  */
+    /** 참조 컨텐츠 (저널 꿈)  */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no", insertable = false, updatable = false)
-    @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("저널 꿈 정보")
     private JrnlDreamEntity jrnlDream;
