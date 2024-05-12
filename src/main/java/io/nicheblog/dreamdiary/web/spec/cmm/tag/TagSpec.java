@@ -1,19 +1,17 @@
 package io.nicheblog.dreamdiary.web.spec.cmm.tag;
 
-import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
-import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * TagSpec
@@ -39,36 +37,6 @@ public class TagSpec
             CriteriaBuilder builder
     ) {
         query.distinct(true);
-    }
-
-    /**
-     * default: 검색 조건 목록 반환
-     */
-    @Override
-    public Specification<TagEntity> searchWith(final Map<String, Object> searchParamMap) {
-        // filter
-        searchParamMap.remove("backToList");
-        searchParamMap.remove("actvtyCtgr");
-
-        String contentType = (String) searchParamMap.get("contentType");
-
-        return (root, query, builder) -> {
-            List<Predicate> predicate = new ArrayList<>();
-
-            try {
-                // basePredicte 먼저 처리 후 나머지에 대해 처리
-                predicate = getPredicateWithParams(searchParamMap, root, builder);
-                // 저널 꿈 관련 처리
-                if (ContentType.JRNL_DREAM.key.equals(contentType)) {
-                    List<Predicate> jrnlDreamPredicate = getJrnlDreamPredicate(searchParamMap, root, builder);
-                    predicate.addAll(jrnlDreamPredicate);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            this.postQuery(root, query, builder);
-            return builder.and(predicate.toArray(new Predicate[0]));
-        };
     }
 
     /**
@@ -125,47 +93,5 @@ public class TagSpec
             put("contentType", contentType);
         }};
         return this.searchWith(searchParamMap);
-    }
-
-    /**
-     * 컨텐츠 타입에 맞는 꿈 태그 목록 조회
-     */
-    public List<Predicate> getJrnlDreamPredicate(
-            final Map<String, Object> searchParamMap,
-            final Root<TagEntity> root,
-            final CriteriaBuilder builder
-    ) throws Exception {
-
-        List<Predicate> predicate = new ArrayList<>();
-
-        // 태그 조인
-        Join<TagEntity, JrnlDreamTagEntity> jrnlDreamTagJoin = root.join("jrnlDreamTagList", JoinType.INNER);
-        Join<JrnlDreamTagEntity, JrnlDreamEntity> jrnlDreamJoin = jrnlDreamTagJoin.join("jrnlDream", JoinType.INNER);
-        Join<JrnlDreamTagEntity, JrnlDayEntity> jrnlDayJoin = jrnlDreamJoin.join("jrnlDay", JoinType.INNER);
-        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
-
-        // 파라미터 비교
-        for (String key : searchParamMap.keySet()) {
-            switch (key) {
-                case "searchStartDt":
-                    // 기간 검색
-                    predicate.add(builder.greaterThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
-                    continue;
-                case "searchEndDt":
-                    // 기간 검색
-                    predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
-                    continue;
-                case "yy":
-                    predicate.add(builder.equal(jrnlDayJoin.get(key), searchParamMap.get(key)));
-                    continue;
-                case "mnth":
-                    // 99 = 모든 월
-                    Integer mnth = (Integer) searchParamMap.get(key);
-                    if (mnth != 99) {
-                        predicate.add(builder.equal(jrnlDayJoin.get(key), mnth));
-                    }
-            }
-        }
-        return predicate;
     }
 }

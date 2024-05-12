@@ -49,8 +49,9 @@ public class TmplatTxtEntity
     private String tmplatDefCd;
 
     /** 템플릿 정의 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tmplat_def_cd", referencedColumnName = "tmplat_def_cd", insertable = false, updatable = false)
+    @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("템플릿 정의 정보")
     private TmplatDefEntity tmplatDefInfo;
@@ -68,7 +69,7 @@ public class TmplatTxtEntity
     private String ctgrCd;
 
     /** 템플릿 구분 코드 정보 (복합키 조인) */
-    // @ManyToOne
+    // @ManyToOne(fetch = FetchType.EAGER)
     // @JoinColumnsOrFormulas({
     //     @JoinColumnOrFormula(formula=@JoinFormula(value="'"+Constant.EXPTR_REQST_CTGR_CD+"'", referencedColumnName="CL_CD")),
     //     @JoinColumnOrFormula(column=@JoinColumn(name="TMPLAT_CL_CD", referencedColumnName="DTL_CD", insertable=false, updatable=false))
