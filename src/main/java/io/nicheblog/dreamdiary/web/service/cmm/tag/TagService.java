@@ -4,7 +4,10 @@ import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamContentTagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.TagRepository;
@@ -106,6 +109,10 @@ public class TagService
 
         // 4. 연관관계 없는 마스터 태그 삭제
         this.deleteNoRefTags();
+
+        // L2 캐시 클리어
+        EhCacheUtils.clearL2Cache(JrnlDreamTagEntity.class);
+        EhCacheUtils.clearL2Cache(JrnlDreamContentTagEntity.class);
     }
 
     /**

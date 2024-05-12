@@ -4,10 +4,14 @@ import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamContentTagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.ContentTagRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.ContentTagSpec;
 import lombok.extern.log4j.Log4j2;
@@ -82,14 +86,33 @@ public class ContentTagService
      */
     public void procContentTags(BaseClsfKey clsfKey, List<TagEntity> rsList) {
         List<ContentTagEntity> contentTagList = rsList.stream()
-                .map(tag -> {
-                    return new ContentTagEntity(tag.getTagNo(), clsfKey);
-                })
+                .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
                 .collect(Collectors.toList());
         this.registAll(contentTagList);
 
         // 관련 캐시 클리어
         this.evictClsfCache(clsfKey);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void postRegistAll(List<ContentTagEntity> entityList) {
+        entityList.stream().peek(entity -> {
+            Integer tagNo = entity.getRefTagNo();
+            try {
+                int currYy = DateUtils.getCurrYy();
+                for (int yy = 2010; yy <= currYy; yy++) {
+                    for (int mnth = 1; mnth < 13; mnth++ ) {
+                        EhCacheUtils.evictCache("countDreamSize", tagNo + "_" + yy + "_" + mnth);
+                    }
+                }
+                EhCacheUtils.evictCache("countDreamSize", tagNo + "_9999_99");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
     
     /**
@@ -108,6 +131,27 @@ public class ContentTagService
     }
 
     /**
+     *
+     */
+    @Override
+    public void postDeleteAll(List<ContentTagEntity> entityList) {
+        entityList.stream().peek(entity -> {
+            Integer tagNo = entity.getRefTagNo();
+            try {
+                int currYy = DateUtils.getCurrYy();
+                for (int yy = 2010; yy <= currYy; yy++) {
+                    for (int mnth = 1; mnth < 13; mnth++ ) {
+                        EhCacheUtils.evictCache("countDreamSize", tagNo + "_" + yy + "_" + mnth);
+                    }
+                }
+                EhCacheUtils.evictCache("countDreamSize", tagNo + "_9999_99");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    /**
      * clsfKey로 관련 캐시 처리
      */
     public void evictClsfCache(BaseClsfKey clsfKey) {
@@ -120,16 +164,28 @@ public class ContentTagService
             EhCacheUtils.evictCache("jrnlDiaryDtlDto", postNo);
         }
         if (ContentType.JRNL_DREAM.key.equals(contentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
             // jrnl_dream
             EhCacheUtils.evictCache("jrnlDreamDtlDto", postNo);
-            EhCacheUtils.evictCacheAll("jrnlDreamSizedTagList");
+            JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
+            assert jrnlDream != null;
+            Integer yy = jrnlDream.getYy();
+            Integer mnth = jrnlDream.getMnth();
+            // jrnl_dream_tag
             EhCacheUtils.evictCacheAll("jrnlDreamTagDtl");
+            EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_" + mnth);
+            EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_99");
+            // jrnl_day
+            EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
+            EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
         }
         if (ContentType.JRNL_SUMRY_CN.key.equals(contentType)) {
             // jrnl_sumry_cn
             EhCacheUtils.evictCache("jrnlSumryCnDtlDto", postNo);
         }
+
+        EhCacheUtils.evictCacheAll("countDreamSize");
+
+        EhCacheUtils.clearL2Cache(JrnlDreamTagEntity.class);
+        EhCacheUtils.clearL2Cache(JrnlDreamContentTagEntity.class);
     }
 }

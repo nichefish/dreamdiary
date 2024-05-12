@@ -1,11 +1,12 @@
 package io.nicheblog.dreamdiary.web.spec.jrnl.dream;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDaySmpEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamContentTagEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamSmpEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -56,10 +57,11 @@ public class JrnlDreamTagSpec
 
         // 태그 조인
         Join<TagEntity, JrnlDreamContentTagEntity> jrnlDreamTagJoin = root.join("jrnlDreamTagList", JoinType.INNER);
-        Join<JrnlDreamContentTagEntity, JrnlDreamEntity> jrnlDreamJoin = jrnlDreamTagJoin.join("jrnlDream", JoinType.INNER);
-        Join<JrnlDreamContentTagEntity, JrnlDayEntity> jrnlDayJoin = jrnlDreamJoin.join("jrnlDay", JoinType.INNER);
+        Join<JrnlDreamContentTagEntity, JrnlDreamSmpEntity> jrnlDreamJoin = jrnlDreamTagJoin.join("jrnlDream", JoinType.INNER);
+        Join<JrnlDreamSmpEntity, JrnlDaySmpEntity> jrnlDayJoin = jrnlDreamJoin.join("jrnlDay", JoinType.INNER);
         Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
 
+        predicate.add(builder.equal(jrnlDreamTagJoin.get("refContentType"), ContentType.JRNL_DREAM.key));
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
@@ -72,14 +74,14 @@ public class JrnlDreamTagSpec
                     predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "yy":
-                    predicate.add(builder.equal(jrnlDayJoin.get(key), searchParamMap.get(key)));
+                    // 9999 = 모든 년
+                    Integer yy = (Integer) searchParamMap.get(key);
+                    if (yy != 9999) predicate.add(builder.equal(jrnlDayJoin.get(key), yy));
                     continue;
                 case "mnth":
                     // 99 = 모든 월
                     Integer mnth = (Integer) searchParamMap.get(key);
-                    if (mnth != 99) {
-                        predicate.add(builder.equal(jrnlDayJoin.get(key), mnth));
-                    }
+                    if (mnth != 99) predicate.add(builder.equal(jrnlDayJoin.get(key), mnth));
             }
         }
         return predicate;

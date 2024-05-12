@@ -69,6 +69,11 @@ public class JrnlDaySpec
                     // 기간 검색
                     predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
+                case "yy":
+                    // 9999 = 모든 년
+                    Integer yy = (Integer) searchParamMap.get(key);
+                    if (yy != 9999) predicate.add(builder.equal(root.get(key), yy));
+                    continue;
                 case "mnth":
                     Integer mnth = (Integer) searchParamMap.get(key);
                     if (mnth != 99) predicate.add(builder.equal(root.get(key), mnth));

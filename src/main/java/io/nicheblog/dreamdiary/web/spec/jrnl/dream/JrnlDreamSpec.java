@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDaySmpEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -54,7 +54,7 @@ public class JrnlDreamSpec
         List<Predicate> predicate = new ArrayList<>();
 
         // expressions
-        Join<JrnlDreamEntity, JrnlDayEntity> jrnlDayJoin = root.join("jrnlDay", JoinType.INNER);
+        Join<JrnlDreamEntity, JrnlDaySmpEntity> jrnlDayJoin = root.join("jrnlDay", JoinType.INNER);
         Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
 
         // 파라미터 비교
@@ -69,7 +69,9 @@ public class JrnlDreamSpec
                     predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "yy":
-                    predicate.add(builder.equal(jrnlDayJoin.get(key), searchParamMap.get(key)));
+                    // 9999 = 모든 년
+                    Integer yy = (Integer) searchParamMap.get(key);
+                    if (yy != 9999) predicate.add(builder.equal(jrnlDayJoin.get(key), yy));
                     continue;
                 case "mnth":
                     // 99 = 모든 월

@@ -66,8 +66,19 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
     @Transactional
     default boolean registAll(final List<Entity> entityList) {
         Repository repository = this.getRepository();
-        repository.saveAllAndFlush(entityList);
+        List<Entity> rsEntityList = repository.saveAllAndFlush(entityList);
+
+        // 벌크 등록 후처리
+        this.postRegistAll(rsEntityList);
+        
         return true;
+    }
+
+    /**
+     * default: 게시물 bulk 등록 후처리
+     */
+    default void postRegistAll(List<Entity> entityList) {
+        // 기본 공백, 필요시 각 함수에서 Override
     }
 
     /**
@@ -181,6 +192,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
         Repository repository = this.getRepository();
         repository.deleteAll(entityList);
 
+        // 벌크 삭제 후처리
         this.postDeleteAll(entityList);
         return true;
     }

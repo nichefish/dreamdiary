@@ -7,7 +7,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
-import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDaySmpEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -79,7 +79,7 @@ public class JrnlDiaryEntity
     @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("저널 일자 정보")
-    private JrnlDayEntity jrnlDay;
+    private JrnlDaySmpEntity jrnlDay;
 
     /** 순번 */
     @Column(name = "idx", columnDefinition = "INT DEFAULT 1")

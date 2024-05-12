@@ -6,11 +6,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -31,6 +32,8 @@ import java.util.List;
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE tag SET del_yn = 'Y' WHERE tag_no = ?")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class JrnlDreamTagEntity
         extends BaseCrudEntity {
 
@@ -51,13 +54,4 @@ public class JrnlDreamTagEntity
     @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
     private List<JrnlDreamContentTagEntity> jrnlDreamTagList;
-
-    /* ----- */
-
-    /**
-     * 생성자
-     */
-    public JrnlDreamTagEntity(final String tagNm) {
-        this.tagNm = tagNm;
-    }
 }

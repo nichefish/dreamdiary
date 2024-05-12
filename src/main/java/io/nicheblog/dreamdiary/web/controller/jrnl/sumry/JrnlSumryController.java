@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.controller.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
@@ -28,9 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * JrnlSumryController
@@ -169,11 +166,7 @@ public class JrnlSumryController
                 model.addAttribute("imprtcDreamList", jrnlDreamService.getImprtcDreamList(yy));
 
                 // 꿈 태그 목록 조회
-                Map<String, Object> searchParamMap = new HashMap<>() {{
-                    put("contentType", ContentType.JRNL_DREAM.key);
-                    put("yy", yy);
-                }};
-                List<TagDto> jrnlDreamTagList = jrnlDreamTagService.getDreamSizedListDto(searchParamMap);
+                List<TagDto> jrnlDreamTagList = jrnlDreamTagService.getDreamSizedListDto(yy, 99);
                 model.addAttribute("dreamTagList", jrnlDreamTagList);
             }
             // 코드 데이터 모델에 추가

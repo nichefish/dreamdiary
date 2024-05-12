@@ -62,6 +62,13 @@
     <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
     <div class="col-1 ms-4 me-6 text-center fs-6 w-50px">
         <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                onclick="JrnlTag.hideSingleTag('#jrnl_dream_tag_list_div');"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="1개짜리 태그를 숨기고 보입니다.">
+            <i class="bi bi-tag pe-0"></i>
+        </button>
+    </div>
+    <div class="col-1 ms-4 me-6 text-center fs-6 w-50px">
+        <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                 onclick="JrnlTag.dreamTagListAllAjax();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
             <i class="bi bi-tag pe-0"></i>

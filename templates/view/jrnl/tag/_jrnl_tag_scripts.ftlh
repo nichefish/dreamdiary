@@ -8,7 +8,7 @@
             /** 목록에 따른 꿈 태그 조회 */
             dreamTagListAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val(), "contentType": "JRNL_DREAM" };
+                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -20,7 +20,7 @@
             /** 목록에 따른 꿈 태그 (전체) 조회 */
             dreamTagListAllAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
-                let ajaxData = { "contentType": "JRNL_DREAM" };
+                let ajaxData = { "yy": 9999, "mnth":99 };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -56,6 +56,9 @@
                     $("#header_tag_nm").text(tagNm);
                     $("#jrnl_tag_list_modal").modal("hide");
                 });
+            },
+            hideSingleTag(selectorDiv) {
+                $(selectorDiv + " span.ts-1").parent().toggle();
             },
         }
     })();

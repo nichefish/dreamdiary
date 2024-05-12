@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -32,6 +33,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Where(clause = "ref_content_type='JRNL_DREAM' AND del_yn='N'")
 @SQLDelete(sql = "UPDATE content_tag SET del_yn = 'Y' WHERE content_tag_no = ?")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class JrnlDreamContentTagEntity
         extends BaseCrudEntity {
 
@@ -80,5 +83,5 @@ public class JrnlDreamContentTagEntity
     @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("저널 꿈 정보")
-    private JrnlDreamEntity jrnlDream;
+    private JrnlDreamSmpEntity jrnlDream;
 }

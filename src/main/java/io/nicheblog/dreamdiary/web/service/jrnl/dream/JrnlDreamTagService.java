@@ -1,8 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.dream;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
-import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
@@ -13,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,14 +54,13 @@ public class JrnlDreamTagService
      * css 사이즈 계산한 태그 목록 조회
      * 태그 1개 = 1. 그 외엔 2~9
      */
-    public List<TagDto> getDreamSizedListDto(BaseSearchParam searchParam) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-        return this.getDreamSizedListDto(searchParamMap);
-    }
-    @Cacheable(value="jrnlDreamSizedTagList", key="#searchParamMap.hashCode()")
-    public List<TagDto> getDreamSizedListDto(Map<String, Object> searchParamMap) throws Exception {
-
-        // 저널 꿈 DTO 목록 조회 :: 메소드 분리
+    @Cacheable(value="jrnlDreamSizedTagList", key="#yy + \"_\" + #mnth")
+    public List<TagDto> getDreamSizedListDto(Integer yy, Integer mnth) throws Exception {
+        // 저널 꿈 태그 DTO 목록 조회
+        Map<String, Object> searchParamMap = new HashMap<>() {{
+            put("yy", yy);
+            put("mnth", mnth);
+        }};
         List<TagDto> tagList = this.getListDto(searchParamMap);
 
         int maxSize = this.calcMaxSize(tagList, searchParamMap);
@@ -99,6 +97,10 @@ public class JrnlDreamTagService
         return maxFrequency;
     }
 
+    /**
+     * 꿈 태그별 크기 조회
+     */
+    @Cacheable(value="countDreamSize", key="#tagNo + \"_\" + #yy + \"_\" + #mnth")
     public Integer countDreamSize(Integer tagNo, Integer yy, Integer mnth) {
         return jrnlDreamTagRepository.countDreamSize(tagNo, yy, mnth);
     }

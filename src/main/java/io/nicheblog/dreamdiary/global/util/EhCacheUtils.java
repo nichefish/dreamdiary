@@ -58,6 +58,26 @@ public class EhCacheUtils {
     }
 
     /**
+     * 캐시에서 키를 기반으로 오브젝트를 가져오는 메서드
+     * @param cacheName 캐시 이름
+     * @param cacheKey 캐시 키
+     * @return 캐시에서 가져온 오브젝트, 캐시에 해당 키가 없는 경우 null 반환
+     */
+    public static Object getObjectFromCache(String cacheName, Object cacheKey) {
+        Cache cache = cacheManager.getCache(cacheName);
+        if (cache == null) {
+            log.info("Cache with name {} does not exist.", cacheName);
+            return null;
+        }
+        Cache.ValueWrapper valueWrapper = cache.get(cacheKey);
+        if (valueWrapper == null) {
+            log.info("Object with key {} does not exist in cache {}.", cacheKey, cacheName);
+            return null;
+        }
+        return valueWrapper.get();
+    }
+
+    /**
      * 캐시 이름의 특정 키 evict
      */
     public static void evictCache(final String cacheName, final Integer cacheKey) {

@@ -22,12 +22,12 @@ public interface JrnlDreamTagRepository
     /**
      * 년도/월별 저널 꿈 태그 개수 조회
      */
-
     @Query("SELECT COUNT(contentTag.contentTagNo) " +
-            "FROM TagEntity tag " +
-            "INNER JOIN JrnlDreamContentTagEntity contentTag ON tag.tagNo = contentTag.refTagNo " +
+            "FROM JrnlDreamContentTagEntity contentTag " +
             "INNER JOIN JrnlDreamEntity dream ON contentTag.refPostNo = dream.postNo " +
             "INNER JOIN JrnlDayEntity day ON dream.jrnlDayNo = day.postNo " +
-            "WHERE day.yy = :yy AND (:mnth IS NULL OR day.mnth = :mnth) AND tag.tagNo = :tagNo")
+            "WHERE contentTag.refTagNo = :tagNo " +
+            " AND (:yy IS NULL OR day.yy = :yy OR :yy = 9999) " +
+            " AND (:mnth IS NULL OR day.mnth = :mnth OR :mnth = 99)")
     Integer countDreamSize(Integer tagNo, Integer yy, Integer mnth);
 }
