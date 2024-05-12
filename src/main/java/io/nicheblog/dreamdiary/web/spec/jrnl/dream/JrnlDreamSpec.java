@@ -72,8 +72,11 @@ public class JrnlDreamSpec
                     predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "yy":
-                case "mnth":
                     predicate.add(builder.equal(jrnlDay.get(key), searchParamMap.get(key)));
+                    continue;
+                case "mnth":
+                    Integer mnth = (Integer) searchParamMap.get(key);
+                    if (mnth != 99) predicate.add(builder.equal(root.get(key), mnth));
                     continue;
                 case "tagNo":
                     // 특정 태그된 꿈만 조회

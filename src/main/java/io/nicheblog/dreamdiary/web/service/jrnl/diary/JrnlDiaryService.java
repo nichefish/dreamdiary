@@ -118,6 +118,7 @@ public class JrnlDiaryService
     public void evictRelatedCache(final JrnlDiaryEntity rslt) {
         // jrnl_day
         EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
+        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo());
         // jrnl_diary
         EhCacheUtils.evictCache("imprtcDiaryList", rslt.getJrnlDay().getYy());

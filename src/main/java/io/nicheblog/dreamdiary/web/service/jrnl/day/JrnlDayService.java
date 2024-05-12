@@ -156,6 +156,7 @@ public class JrnlDayService
      */
     public void evictRelatedCache(final JrnlDayEntity rslt) {
         EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
+        EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getPostNo());
     }
 }

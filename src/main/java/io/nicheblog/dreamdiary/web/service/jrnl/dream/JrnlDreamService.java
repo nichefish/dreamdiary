@@ -132,6 +132,7 @@ public class JrnlDreamService
     public void evictRelatedCache(final JrnlDreamEntity rslt) {
         // jrnl_day
         EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
+        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo());
         // jrnl_dream
         EhCacheUtils.evictCache("imprtcDreamList", rslt.getJrnlDay().getYy());
