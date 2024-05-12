@@ -104,7 +104,7 @@ public class MenuEntity
     private String menuSubExtendTyNm;
 
     /** 셀프 참조 :: 상위메뉴 조회 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "upper_menu_no", referencedColumnName = "menu_no", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
