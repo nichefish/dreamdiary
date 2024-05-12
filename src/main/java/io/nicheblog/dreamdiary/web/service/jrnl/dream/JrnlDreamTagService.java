@@ -1,0 +1,86 @@
+package io.nicheblog.dreamdiary.web.service.jrnl.dream;
+
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
+import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
+import io.nicheblog.dreamdiary.web.repository.cmm.tag.TagRepository;
+import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * JrnlDreamTagService
+ * <pre>
+ *  저널 꿈 태그 서비스 모듈 (태그 서비스에서 파생)
+ * </pre>
+ *
+ * @author nichefish
+ * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ */
+@Service("jrnlDreamTagService")
+@Log4j2
+public class JrnlDreamTagService {
+
+    @Resource(name = "tagService")
+    private TagService tagService;
+    @Resource(name = "tagRepository")
+    private TagRepository tagRepository;
+
+    /**
+     * css 사이즈 계산한 태그 목록 조회
+     * 태그 1개 = 1. 그 외엔 2~9
+     */
+    public List<TagDto> getDreamSizedListDto(BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getDreamSizedListDto(searchParamMap);
+    }
+    @Cacheable(value="jrnlDreamSizedTagList", key="#searchParamMap.hashCode()")
+    public List<TagDto> getDreamSizedListDto(Map<String, Object> searchParamMap) throws Exception {
+        // 저널 꿈 DTO 목록 조회 :: 메소드 분리
+        List<TagDto> tagList = tagService.getListDto(searchParamMap);
+
+        int maxSize = this.calcMaxDreamSize(tagList, searchParamMap);
+        final int MIN_SIZE = 2; // 최소 크기
+        final int MAX_SIZE = 9; // 최대 크기
+        return tagList.stream()
+                .peek(dto -> {
+                    int size = dto.getDreamSize();
+                    if (size == 1) {
+                        dto.setTagClass("ts-1");
+                    } else {
+                        double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
+                        int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
+                        dto.setTagClass("ts-"+tagSize);
+                    }
+                })
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 최대 사용빈도 계산한 꿈 태그 목록 조회
+     */
+    public Integer calcMaxDreamSize(List<TagDto> tagList, Map<String, Object> searchParamMap) {
+        Integer yy = (Integer) searchParamMap.get("yy");
+        Integer mnth = (Integer) searchParamMap.get("mnth");
+
+        int maxFrequency = 0;
+        for (TagDto tag : tagList) {
+            Integer dreamSize = this.countDreamSize(tag.getTagNo(), yy, mnth);
+            tag.setDreamSize(dreamSize);
+            maxFrequency = Math.max(maxFrequency, dreamSize);
+        }
+        return maxFrequency;
+    }
+
+    // @Cacheable(value="countDreamSize", key="#tagNo + \"_\" + #yy + \"\" + #mnth")
+    public Integer countDreamSize(Integer tagNo, Integer yy, Integer mnth) {
+        return tagRepository.countDreamSize(tagNo, yy, mnth);
+    }
+}
