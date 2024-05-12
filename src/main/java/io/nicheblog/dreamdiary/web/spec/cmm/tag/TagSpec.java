@@ -87,8 +87,8 @@ public class TagSpec
         for (String key : searchParamMap.keySet()) {
             switch (key) {
                 case "contentType":
-                    Join<TagEntity, ContentTagEntity> contentTagList = root.join("contentTagList", JoinType.INNER);
-                    predicate.add(builder.equal(contentTagList.get("refContentType"), searchParamMap.get(key)));
+                    Join<TagEntity, ContentTagEntity> contentTagJoin = root.join("contentTagList", JoinType.INNER);
+                    predicate.add(builder.equal(contentTagJoin.get("refContentType"), searchParamMap.get(key)));
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
                     try {
@@ -108,8 +108,8 @@ public class TagSpec
         return (root, query, builder) -> {
             List<Predicate> predicate = new ArrayList<>();
             try {
-                Join<TagEntity, ContentTagEntity> contentTagList = root.join("contentTagList", JoinType.INNER);
-                predicate.add(builder.isNull(contentTagList));
+                Join<TagEntity, ContentTagEntity> contentTagJoin = root.join("contentTagList", JoinType.INNER);
+                predicate.add(builder.isNull(contentTagJoin));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -139,12 +139,10 @@ public class TagSpec
         List<Predicate> predicate = new ArrayList<>();
 
         // 태그 조인
-        Join<TagEntity, JrnlDreamTagEntity> jrnlDreamTagList = root.join("jrnlDreamTagList", JoinType.INNER);
-        Join<JrnlDreamTagEntity, JrnlDreamEntity> jrnlDream = jrnlDreamTagList.join("jrnlDream", JoinType.INNER);
-        Join<JrnlDreamTagEntity, JrnlDayEntity> jrnlDay = jrnlDream.join("jrnlDay", JoinType.INNER);
-        Expression<Date> jrnlDtExp = jrnlDay.get("jrnlDt");
-        Expression<Date> aprxmtDtExp = jrnlDay.get("aprxmtDt");
-        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
+        Join<TagEntity, JrnlDreamTagEntity> jrnlDreamTagJoin = root.join("jrnlDreamTagList", JoinType.INNER);
+        Join<JrnlDreamTagEntity, JrnlDreamEntity> jrnlDreamJoin = jrnlDreamTagJoin.join("jrnlDream", JoinType.INNER);
+        Join<JrnlDreamTagEntity, JrnlDayEntity> jrnlDayJoin = jrnlDreamJoin.join("jrnlDay", JoinType.INNER);
+        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -158,11 +156,14 @@ public class TagSpec
                     predicate.add(builder.lessThanOrEqualTo(effectiveDtExp, DateUtils.asDate(searchParamMap.get(key))));
                     continue;
                 case "yy":
-                    predicate.add(builder.equal(jrnlDay.get(key), searchParamMap.get(key)));
+                    predicate.add(builder.equal(jrnlDayJoin.get(key), searchParamMap.get(key)));
                     continue;
                 case "mnth":
+                    // 99 = 모든 월
                     Integer mnth = (Integer) searchParamMap.get(key);
-                    if (mnth != 99) predicate.add(builder.equal(jrnlDay.get(key), mnth));
+                    if (mnth != 99) {
+                        predicate.add(builder.equal(jrnlDayJoin.get(key), mnth));
+                    }
             }
         }
         return predicate;
