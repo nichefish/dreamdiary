@@ -109,8 +109,8 @@ public class UserProflSpec
             final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
-        Join<UserProflEntity, DtlCdEntity> rankCd = root.join("rankCdInfo", JoinType.LEFT);
-        order.add(builder.desc(rankCd.get("state").get("sortOrdr")));
+        Join<UserProflEntity, DtlCdEntity> rankCdJoin = root.join("rankCdInfo", JoinType.LEFT);
+        order.add(builder.desc(rankCdJoin.get("state").get("sortOrdr")));
         order.add(builder.asc(root.get("ecnyDt")));
         return order;
     }
