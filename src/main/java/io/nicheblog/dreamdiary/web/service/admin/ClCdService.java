@@ -1,8 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
@@ -94,8 +92,8 @@ public class ClCdService
     public void evictRelatedCache(final ClCdEntity rslt) {
         EhCacheUtils.evictCache("cdEntityListByClCd", rslt.getClCd());
         EhCacheUtils.evictCache("cdDtoListByClCd", rslt.getClCd());
-        EhCacheUtils.clearL2Cache(ClCdEntity.class);
-        EhCacheUtils.clearL2Cache(DtlCdEntity.class);
+        // 연관된 모든 엔티티의 캐시 클리어
+        EhCacheUtils.clearL2Cache();
     }
 
     /**
