@@ -29,7 +29,7 @@ import java.util.Date;
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "vcatnPaprInfo", callSuper = true)
+@ToString(exclude = "vcatnPapr", callSuper = true)
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE vcatn_schdul SET del_yn = 'Y' WHERE vcatn_schdul_no = ?")
 public class VcatnSchdulEntity
@@ -42,10 +42,10 @@ public class VcatnSchdulEntity
         this.userNm = this.getVcatnUserNm();        // return 용이성 때문에 메소드 분리
     }
     private String getVcatnUserNm() {
-        boolean isPaprSubmitted = this.vcatnPaprInfo != null;
+        boolean isPaprSubmitted = this.vcatnPapr != null;
         if (isPaprSubmitted) {
-            if (this.vcatnPaprInfo.getRegstrInfo() == null) return null;
-            return this.vcatnPaprInfo.getRegstrInfo().getNickNm();
+            if (this.vcatnPapr.getRegstrInfo() == null) return null;
+            return this.vcatnPapr.getRegstrInfo().getNickNm();
         }
         boolean isRegByMngr = this.userInfo != null;
         if (isRegByMngr) return this.userInfo.getNickNm();
@@ -64,7 +64,7 @@ public class VcatnSchdulEntity
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("휴가계획서 정보")
-    private VcatnPaprEntity vcatnPaprInfo;
+    private VcatnPaprEntity vcatnPapr;
 
     /** 글 번호 */
     @Column(name = "ref_post_no")

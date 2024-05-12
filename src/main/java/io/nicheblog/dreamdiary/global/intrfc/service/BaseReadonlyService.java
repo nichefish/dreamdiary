@@ -168,7 +168,6 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
      */
     default List<ListDto> listEntityToDto(final List<Entity> entityList) throws Exception {
         Mapstruct mapstruct = this.getMapstruct();
-        AtomicInteger counter = new AtomicInteger(0);
         return entityList.stream()
                 .map(entity -> {
                     try {

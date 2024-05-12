@@ -107,7 +107,7 @@ public class UserSpec
     ) {
 
         List<Predicate> predicate = new ArrayList<>();
-        Join<UserEntity, UserProflEntity> userProfl = root.join("userProfl", JoinType.LEFT);
+        Join<UserEntity, UserProflEntity> proflJoin = root.join("userProfl", JoinType.LEFT);
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -115,14 +115,14 @@ public class UserSpec
                 // 사용자 정보 존재 "hasUserProfl" 체크시 조인결과 있는 목록만 반환
                 case "hasUserProfl":
                     if ((Boolean) searchParamMap.get(key)) {
-                        predicate.add(builder.isNotNull(userProfl.get("userProflNo")));
+                        predicate.add(builder.isNotNull(proflJoin.get("userProflNo")));
                     }
                     continue;
                     // 이름 = LIKE 검색
                 case "cmpyCd":
                 case "rankCd":
                 case "teamCd":
-                    predicate.add(builder.equal(userProfl.get(key), searchParamMap.get(key)));
+                    predicate.add(builder.equal(proflJoin.get(key), searchParamMap.get(key)));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
@@ -147,17 +147,17 @@ public class UserSpec
     ) throws Exception {
         List<Predicate> predicate = new ArrayList<>();
         // JOIN 조건 세팅
-        Join<UserEntity, UserEmplymEntity> emplym = root.join("emplym", JoinType.INNER);
+        Join<UserEntity, UserEmplymEntity> emplymJoin = root.join("emplym", JoinType.INNER);
         // 2. 기간조건 :: 해당 년도 내에 근무내역이 있음 (입사일 // 퇴사일)
         // 퇴사일 :: 퇴사 안했거나 or 비교일 내에 퇴사했거나
         Date startDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(startDtStr));
-        Predicate notRetired = builder.isNull(emplym.get("retireDt"));
-        Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(emplym.get("retireDt"), startDay);
+        Predicate notRetired = builder.isNull(emplymJoin.get("retireDt"));
+        Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(emplymJoin.get("retireDt"), startDay);
         predicate.add(builder.or(notRetired, retiredAfterFirstDay));
         // 입사일 :: 비교일보다 전에 입사
         Date endDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(endDtStr));
-        Predicate hasEcnyDt = builder.isNotNull(emplym.get("ecnyDt"));
-        Predicate enteredBeforeEndDay = builder.lessThanOrEqualTo(emplym.get("ecnyDt"), endDay);
+        Predicate hasEcnyDt = builder.isNotNull(emplymJoin.get("ecnyDt"));
+        Predicate enteredBeforeEndDay = builder.lessThanOrEqualTo(emplymJoin.get("ecnyDt"), endDay);
         predicate.add(builder.and(hasEcnyDt, enteredBeforeEndDay));
         return predicate;
     }
@@ -173,9 +173,9 @@ public class UserSpec
     ) throws Exception {
         List<Predicate> predicate = getCrdtUser(startDtStr, endDtStr, root, builder);
         // JOIN 조건 세팅
-        Join<UserEntity, UserEmplymEntity> emplym = root.join("emplym", JoinType.INNER);
-        Join<UserEntity, UserProflEntity> profl = root.join("profl", JoinType.INNER);
-        predicate.add(builder.equal(profl.get("brthdy"), DateUtils.asDate(startDtStr)));
+        Join<UserEntity, UserEmplymEntity> emplymJoin = root.join("emplym", JoinType.INNER);
+        Join<UserEntity, UserProflEntity> proflJoin = root.join("profl", JoinType.INNER);
+        predicate.add(builder.equal(proflJoin.get("brthdy"), DateUtils.asDate(startDtStr)));
         return predicate;
     }
 
@@ -187,10 +187,10 @@ public class UserSpec
             final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
-        Join<UserEntity, UserEmplymEntity> emplym = root.join("emplym", JoinType.INNER);
-        Join<UserEmplymEntity, DtlCdEntity> rankCdInfo = emplym.join("rankCdInfo", JoinType.INNER);
-        order.add(builder.desc(rankCdInfo.get("state").get("sortOrdr")));
-        order.add(builder.asc(emplym.get("ecnyDt")));
+        Join<UserEntity, UserEmplymEntity> emplymJoin = root.join("emplym", JoinType.INNER);
+        Join<UserEmplymEntity, DtlCdEntity> rankCdJoin = emplymJoin.join("rankCdInfo", JoinType.INNER);
+        order.add(builder.desc(rankCdJoin.get("state").get("sortOrdr")));
+        order.add(builder.asc(emplymJoin.get("ecnyDt")));
         return order;
     }
 }

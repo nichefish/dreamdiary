@@ -70,8 +70,8 @@ public interface BaseClsfSpec<Entity extends BaseClsfEntity>
                         List<Integer> refTagNoList = (List<Integer>) searchParamMap.get(key);
                         if (CollectionUtils.isEmpty(refTagNoList)) continue;
                         // 태그 검색
-                        Join<NoticeEntity, ContentTagEntity> contentTag = root.join("tag").join("list", JoinType.INNER);
-                        Expression<String> contentTagExp = contentTag.get("refTagNo");
+                        Join<NoticeEntity, ContentTagEntity> contentTagJoin = root.join("tag").join("list", JoinType.INNER);
+                        Expression<String> contentTagExp = contentTagJoin.get("refTagNo");
                         predicate.add(contentTagExp.in(refTagNoList)); // IN 절 사용
                     } catch (Exception e) {
                         e.printStackTrace();

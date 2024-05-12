@@ -37,7 +37,7 @@ public class VcatnSchdulSpec
             final CriteriaBuilder builder
     ) throws Exception {
         List<Predicate> predicate = new ArrayList<>();
-        Join<VcatnSchdulEntity, VcatnPaprEntity> vcatnPapr = root.join("vctnPaprInfo", JoinType.LEFT);
+        Join<VcatnSchdulEntity, VcatnPaprEntity> vcatnPaprJoin = root.join("vctnPapr", JoinType.LEFT);
 
         // expressions
         Expression<Date> endDtExp = root.get("endDt");
@@ -48,7 +48,7 @@ public class VcatnSchdulSpec
             switch (key) {
                 // 휴가계획서 등록자 혹은 수동등록대상자
                 case "userId":
-                    Predicate papr = builder.equal(vcatnPapr.get("regstrId"), searchParamMap.get(key));
+                    Predicate papr = builder.equal(vcatnPaprJoin.get("regstrId"), searchParamMap.get(key));
                     Predicate manual = builder.equal(root.get("userId"), searchParamMap.get(key));
                     predicate.add(builder.or(papr, manual));
                     continue;
