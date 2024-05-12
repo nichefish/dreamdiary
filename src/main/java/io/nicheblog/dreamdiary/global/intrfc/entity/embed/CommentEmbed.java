@@ -1,8 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.springframework.util.CollectionUtils;
@@ -11,7 +9,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * CommentEmbed
@@ -55,22 +52,4 @@ public class CommentEmbed
     /** 댓글 존재 여부 */
     @Transient
     private Boolean hasComment;
-
-    /* ----- */
-
-    /**
-     * 댓글 :: List<Entity> -> List<Dto> 반환
-     */
-    public List<CommentDto.LIST> getDtoList() {
-        if (CollectionUtils.isEmpty(this.list)) return null;
-        return this.list.stream()
-                .map(entity -> {
-                    try {
-                        return CommentMapstruct.INSTANCE.toListDto(entity);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
 }
