@@ -1,22 +1,16 @@
 package io.nicheblog.dreamdiary.web.entity.jrnl.day;
 
-import io.nicheblog.dreamdiary.api.jrnl.dream.mapstruct.JrnlDreamApiMapstruct;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamMapstruct;
-import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.OrderBy;
@@ -24,7 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * JrnlDayEntity
@@ -47,7 +40,7 @@ import java.util.stream.Collectors;
 @SQLDelete(sql = "UPDATE jrnl_day SET del_yn = 'Y' WHERE post_no = ?")
 public class JrnlDayEntity
         extends BaseClsfEntity
-        implements CommentEmbedModule, TagEmbedModule {
+        implements TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_DAY;
@@ -108,6 +101,7 @@ public class JrnlDayEntity
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
     @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 10)
     @OrderBy("idx ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("댓글 목록")
@@ -117,6 +111,7 @@ public class JrnlDayEntity
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
     @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 10)
     @Where(clause = "else_dream_yn = 'N'")
     @OrderBy("idx ASC")
     @NotFound(action = NotFoundAction.IGNORE)
@@ -127,46 +122,14 @@ public class JrnlDayEntity
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
     @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 10)
     @Where(clause = "else_dream_yn = 'Y'")
     @OrderBy("idx ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("댓글 목록")
     private List<JrnlDreamEntity> jrnlElseDreamList;
 
-
     /* ----- */
-
-    public List<JrnlDreamDto> getJrnlDreamDtoList() {
-        if (CollectionUtils.isEmpty(this.jrnlDreamList)) return null;
-        return this.jrnlDreamList.stream()
-                .map(entity -> {
-                    try {
-                        return JrnlDreamMapstruct.INSTANCE.toDto(entity);
-                    } catch (Exception e) {
-                        throw new RuntimeException("객체 변환 중 에러가 발생했습니다.", e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
-
-    public List<JrnlDreamDto> getJrnlDreamApiDtoList() {
-        if (CollectionUtils.isEmpty(this.jrnlDreamList)) return null;
-        return this.jrnlDreamList.stream()
-                .map(entity -> {
-                    try {
-                        return JrnlDreamApiMapstruct.INSTANCE.toDto(entity);
-                    } catch (Exception e) {
-                        throw new RuntimeException("객체 변환 중 에러가 발생했습니다.", e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
-
-    /* ----- */
-
-    /** 댓글 정보 모듈 (위임) */
-    @Embedded
-    public CommentEmbed comment;
 
     /** 태그 정보 모듈 (위임) */
     @Embedded
