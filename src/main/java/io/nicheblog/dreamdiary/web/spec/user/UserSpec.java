@@ -107,7 +107,7 @@ public class UserSpec
     ) {
 
         List<Predicate> predicate = new ArrayList<>();
-        Join<UserEntity, UserProflEntity> proflJoin = root.join("userProfl", JoinType.LEFT);
+        Join<UserEntity, UserProflEntity> proflJoin = root.join("profl", JoinType.LEFT);
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {

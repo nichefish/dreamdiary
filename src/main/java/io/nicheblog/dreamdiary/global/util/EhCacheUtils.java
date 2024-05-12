@@ -90,6 +90,7 @@ public class EhCacheUtils {
             return;
         }
         cache.evict(cacheKey);
+        log.info("cache name {} evicted.", cacheName);
     }
 
     /**
@@ -102,6 +103,7 @@ public class EhCacheUtils {
             return;
         }
         cache.clear();
+        log.info("cache name {} cleared.", cacheName);
     }
 
     /**

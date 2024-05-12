@@ -13,6 +13,7 @@ import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.ContentTagRepository;
+import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.ContentTagSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,8 @@ public class ContentTagService
     private ContentTagRepository contentTagRepository;
     @Resource(name = "contentTagSpec")
     private ContentTagSpec contentTagSpec;
+    @Resource(name = "jrnlDreamService")
+    private JrnlDreamService jrnlDreamService;
 
     @Override
     public ContentTagRepository getRepository() {
@@ -84,7 +87,7 @@ public class ContentTagService
     /**
      * 컨텐츠 태그 처리
      */
-    public void procContentTags(BaseClsfKey clsfKey, List<TagEntity> rsList) {
+    public void procContentTags(BaseClsfKey clsfKey, List<TagEntity> rsList) throws Exception {
         List<ContentTagEntity> contentTagList = rsList.stream()
                 .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
                 .collect(Collectors.toList());
@@ -99,13 +102,15 @@ public class ContentTagService
      */
     @Override
     public void postRegistAll(List<ContentTagEntity> entityList) {
-        entityList.stream().peek(entity -> {
+        entityList.forEach(entity -> {
             Integer tagNo = entity.getRefTagNo();
             try {
                 int currYy = DateUtils.getCurrYy();
                 for (int yy = 2010; yy <= currYy; yy++) {
                     for (int mnth = 1; mnth < 13; mnth++ ) {
-                        EhCacheUtils.evictCache("countDreamSize", tagNo + "_" + yy + "_" + mnth);
+                        String cacheKey = tagNo + "_" + yy + "_" + mnth;
+                        log.info("evict content_tag key: {}", cacheKey);
+                        EhCacheUtils.evictCache("countDreamSize", cacheKey);
                     }
                 }
                 EhCacheUtils.evictCache("countDreamSize", tagNo + "_9999_99");
@@ -135,7 +140,7 @@ public class ContentTagService
      */
     @Override
     public void postDeleteAll(List<ContentTagEntity> entityList) {
-        entityList.stream().peek(entity -> {
+        entityList.forEach(entity -> {
             Integer tagNo = entity.getRefTagNo();
             try {
                 int currYy = DateUtils.getCurrYy();
@@ -154,7 +159,7 @@ public class ContentTagService
     /**
      * clsfKey로 관련 캐시 처리
      */
-    public void evictClsfCache(BaseClsfKey clsfKey) {
+    public void evictClsfCache(BaseClsfKey clsfKey) throws Exception {
         String contentType = clsfKey.getContentType();
         Integer postNo = clsfKey.getPostNo();
         if (ContentType.JRNL_DIARY.key.equals(contentType)) {
@@ -167,13 +172,14 @@ public class ContentTagService
             // jrnl_dream
             EhCacheUtils.evictCache("jrnlDreamDtlDto", postNo);
             JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
-            assert jrnlDream != null;
+            if (jrnlDream == null) jrnlDream = jrnlDreamService.getDtlDto(postNo);
             Integer yy = jrnlDream.getYy();
             Integer mnth = jrnlDream.getMnth();
             // jrnl_dream_tag
             EhCacheUtils.evictCacheAll("jrnlDreamTagDtl");
             EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_" + mnth);
             EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_99");
+            EhCacheUtils.evictCache("jrnlDreamSizedTagList",  "9999_99");
             // jrnl_day
             EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
             EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
@@ -182,8 +188,6 @@ public class ContentTagService
             // jrnl_sumry_cn
             EhCacheUtils.evictCache("jrnlSumryCnDtlDto", postNo);
         }
-
-        EhCacheUtils.evictCacheAll("countDreamSize");
 
         EhCacheUtils.clearL2Cache(JrnlDreamTagEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDreamContentTagEntity.class);

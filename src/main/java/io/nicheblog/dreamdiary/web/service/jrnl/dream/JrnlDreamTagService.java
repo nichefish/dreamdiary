@@ -7,7 +7,9 @@ import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.dream.JrnlDreamTagRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamTagSpec;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,6 +39,13 @@ public class JrnlDreamTagService
     @Resource(name = "jrnlDreamTagSpec")
     private JrnlDreamTagSpec jrnlDreamTagSpec;
 
+    @Autowired
+    private ApplicationContext context;
+
+    private JrnlDreamTagService getSelf() {
+        return context.getBean(JrnlDreamTagService.class);
+    }
+
     @Override
     public JrnlDreamTagRepository getRepository() {
         return this.jrnlDreamTagRepository;
@@ -50,6 +59,15 @@ public class JrnlDreamTagService
         return this.tagMapstruct;
     }
 
+    @Cacheable(value="jrnlDreamTagList", key="#yy + \"_\" + #mnth")
+    public List<TagDto> getListDtoWithCache(Integer yy, Integer mnth) throws Exception {
+        Map<String, Object> searchParamMap = new HashMap<>() {{
+            put("yy", yy);
+            put("mnth", mnth);
+        }};
+        return this.getSelf().getListDto(searchParamMap);
+    }
+
     /**
      * css 사이즈 계산한 태그 목록 조회
      * 태그 1개 = 1. 그 외엔 2~9
@@ -57,13 +75,9 @@ public class JrnlDreamTagService
     @Cacheable(value="jrnlDreamSizedTagList", key="#yy + \"_\" + #mnth")
     public List<TagDto> getDreamSizedListDto(Integer yy, Integer mnth) throws Exception {
         // 저널 꿈 태그 DTO 목록 조회
-        Map<String, Object> searchParamMap = new HashMap<>() {{
-            put("yy", yy);
-            put("mnth", mnth);
-        }};
-        List<TagDto> tagList = this.getListDto(searchParamMap);
+        List<TagDto> tagList = this.getSelf().getListDtoWithCache(yy, mnth);
 
-        int maxSize = this.calcMaxSize(tagList, searchParamMap);
+        int maxSize = this.calcMaxSize(tagList, yy, mnth);
         final int MIN_SIZE = 2; // 최소 크기
         final int MAX_SIZE = 9; // 최대 크기
         return tagList.stream()
@@ -84,13 +98,11 @@ public class JrnlDreamTagService
     /**
      * 최대 사용빈도 계산한 꿈 태그 목록 조회
      */
-    public Integer calcMaxSize(List<TagDto> tagList, Map<String, Object> searchParamMap) {
-        Integer yy = (Integer) searchParamMap.get("yy");
-        Integer mnth = (Integer) searchParamMap.get("mnth");
-
+    public Integer calcMaxSize(List<TagDto> tagList, Integer yy, Integer mnth) {
         int maxFrequency = 0;
         for (TagDto tag : tagList) {
-            Integer dreamSize = this.countDreamSize(tag.getTagNo(), yy, mnth);
+            // 캐싱 처리 위해 셀프 프록시
+            Integer dreamSize = this.getSelf().countDreamSize(tag.getTagNo(), yy, mnth);
             tag.setDreamSize(dreamSize);
             maxFrequency = Math.max(maxFrequency, dreamSize);
         }

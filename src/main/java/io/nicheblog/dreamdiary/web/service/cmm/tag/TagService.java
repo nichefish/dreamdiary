@@ -10,7 +10,9 @@ import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.TagRepository;
+import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.TagSpec;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
@@ -43,6 +45,8 @@ public class TagService
     private TagRepository tagRepository;
     @Resource(name = "tagSpec")
     private TagSpec tagSpec;
+    @Resource(name = "jrnlDreamService")
+    private JrnlDreamService jrnlDreamService;
 
     @Override
     public TagRepository getRepository() {
@@ -96,19 +100,22 @@ public class TagService
         // 새로운 태그 목록에서 기존 태그 목록을 빼면 추가해야 할 태그들이 나옴
         Set<String> newTagSet = new HashSet<>(newTagStrList);
         existingTagStrList.forEach(newTagSet::remove);
-        List<TagEntity> rsList = this.addMasterTag(new ArrayList<>(newTagSet));
+        List<TagEntity> rsList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(newTagSet)) {
+            rsList = this.addMasterTag(new ArrayList<>(newTagSet), clsfKey);
+        }
 
         // 2. 삭제해야 할 태그 삭제
         // 기존 태그 목록에서 새로운 태그 목록을 빼면 삭제해야 할 태그들이 나옴
         Set<String> obsoleteTagSet = new HashSet<>(existingTagStrList);
         newTagStrList.forEach(obsoleteTagSet::remove);
-        contentTagService.delObsoleteContentTags(clsfKey, new ArrayList<>(obsoleteTagSet));
+        if (CollectionUtils.isNotEmpty(obsoleteTagSet)) contentTagService.delObsoleteContentTags(clsfKey, new ArrayList<>(obsoleteTagSet));
 
         // 3. 추가해야 할 컨텐츠-태그를 처리해준다.
-        contentTagService.procContentTags(clsfKey, rsList);
+        if (CollectionUtils.isNotEmpty(rsList)) contentTagService.procContentTags(clsfKey, rsList);
 
         // 4. 연관관계 없는 마스터 태그 삭제
-        this.deleteNoRefTags();
+        // this.deleteNoRefTags();
 
         // L2 캐시 클리어
         EhCacheUtils.clearL2Cache(JrnlDreamTagEntity.class);
@@ -118,12 +125,35 @@ public class TagService
     /**
      * 마스터 태그 처리:: 메소드 분리
      */
-    public List<TagEntity> addMasterTag(List<String> tagStrList) {
+    public List<TagEntity> addMasterTag(List<String> tagStrList, BaseClsfKey clsfKey) {
+
+        String contentType = clsfKey.getContentType();
         List<TagEntity> tagEntityList = tagStrList.stream()
                 .distinct() // 중복된 태그 문자열 제거
                 .map(tagStr -> tagRepository.findByTagNm(tagStr)
-                        .orElseGet(() -> new TagEntity(tagStr))) // 데이터베이스에서 태그 조회, 없으면 새 객체 생성
+                        .orElseGet(() -> {
+                            if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+                                // jrnl_dream
+                                Integer postNo = clsfKey.getPostNo();
+                                EhCacheUtils.evictCache("jrnlDreamDtlDto", postNo);
+                                JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
+                                if (jrnlDream == null) {
+                                    try {
+                                        jrnlDream = jrnlDreamService.getDtlDto(postNo);
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                                Integer yy = jrnlDream.getYy();
+                                Integer mnth = jrnlDream.getMnth();
+                                EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_" + mnth);
+                                EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_99");
+                                EhCacheUtils.evictCache("jrnlDreamTagList", "9999_99");
+                            }
+                            return new TagEntity(tagStr);
+                        })) // 데이터베이스에서 태그 조회, 없으면 새 객체 생성
                 .collect(Collectors.toList());
+
         return tagRepository.saveAllAndFlush(tagEntityList);
     }
 
