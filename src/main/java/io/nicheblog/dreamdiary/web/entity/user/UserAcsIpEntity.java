@@ -6,12 +6,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * UserAcsIpEntity
@@ -42,8 +41,9 @@ public class UserAcsIpEntity
     private Integer userAcsIpNo;
 
     /** 사용자 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_no", referencedColumnName = "user_no")
+    @Fetch(FetchMode.JOIN)
     @Comment("사용자 정보")
     private UserEntity user;
 

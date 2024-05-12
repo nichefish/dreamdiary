@@ -42,8 +42,9 @@ public class SchdulPrtcpntEntity
     private Integer schdulPrtcpntNo;
 
     /** 일정 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no")
+    @Fetch(FetchMode.JOIN)
     @Comment("일정 정보")
     private SchdulEntity schdul;
 
@@ -53,7 +54,7 @@ public class SchdulPrtcpntEntity
     private String userId;
 
     /** 참여자 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)

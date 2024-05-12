@@ -55,7 +55,7 @@ public class VcatnPaprEntity
     private String contentType = CONTENT_TYPE.key;
 
     /** 글분류 코드 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "'VCATN_PAPR_CTGR_CD'", referencedColumnName = "cl_cd")),
             @JoinColumnOrFormula(column = @JoinColumn(name = "ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
@@ -104,15 +104,12 @@ public class VcatnPaprEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
-
     /** 태그 정보 모듈 (위임) */
     @Embedded
     public TagEmbed tag;
-
     /** 조치 정보 모듈 (위임) */
     @Embedded
     public ManagtEmbed managt;
-
     /** 열람자 정보 모듈 (위임) */
     @Embedded
     public ViewerEmbed viewer;

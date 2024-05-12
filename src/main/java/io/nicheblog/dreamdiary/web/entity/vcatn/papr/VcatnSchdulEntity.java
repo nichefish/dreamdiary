@@ -60,8 +60,9 @@ public class VcatnSchdulEntity
     private Integer vcatnSchdulNo;
 
     /** 휴가계획서 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("휴가계획서 정보")
     private VcatnPaprEntity vcatnPapr;
@@ -77,7 +78,7 @@ public class VcatnSchdulEntity
     private String vcatnCd;
 
     /** 휴가 분류 코드 정보 (복합키 조인) */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "\'" + Constant.VCATN_CD + "\'", referencedColumnName = "cl_cd")),
             @JoinColumnOrFormula(column = @JoinColumn(name = "vcatn_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
@@ -116,7 +117,7 @@ public class VcatnSchdulEntity
     private String userId;
 
     /** 휴가자 정보 (관리자 등록시 적용) */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)

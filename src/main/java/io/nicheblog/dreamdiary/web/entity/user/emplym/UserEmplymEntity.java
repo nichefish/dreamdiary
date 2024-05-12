@@ -55,8 +55,9 @@ public class UserEmplymEntity
     private Integer userEmplymNo;
 
     /** 사용자 정보 (FK) */
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_no", referencedColumnName = "user_no")
+    @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("계정 정보")
     private UserEntity user;
@@ -82,7 +83,7 @@ public class UserEmplymEntity
     private String cmpyCd;
 
     /** 소속(회사) 코드 정보 (복합키 조인) */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula=@JoinFormula(value="'"+ Constant.CMPY_CD+"'", referencedColumnName="cl_cd")),
             @JoinColumnOrFormula(column=@JoinColumn(name="cmpy_cd", referencedColumnName="dtl_cd", insertable=false, updatable=false))
@@ -100,7 +101,7 @@ public class UserEmplymEntity
     private String teamCd;
 
     /** 소속(팀) 코드 정보 (복합키 조인) */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula=@JoinFormula(value="'"+ Constant.TEAM_CD+"'", referencedColumnName="cl_cd")),
             @JoinColumnOrFormula(column=@JoinColumn(name="team_cd", referencedColumnName="dtl_cd", insertable=false, updatable=false))
@@ -118,7 +119,7 @@ public class UserEmplymEntity
     private String emplymCd;
 
     /** 재직구분 코드 정보 (복합키 조인) */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula=@JoinFormula(value="'"+ Constant.RANK_CD+"'", referencedColumnName="cl_cd")),
             @JoinColumnOrFormula(column=@JoinColumn(name="emplym_cd", referencedColumnName="dtl_cd", insertable=false, updatable=false))
@@ -136,7 +137,7 @@ public class UserEmplymEntity
     private String rankCd;
 
     /** 직급 코드 정보 (복합키 조인) */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
         @JoinColumnOrFormula(formula=@JoinFormula(value="'"+ Constant.RANK_CD+"'", referencedColumnName="cl_cd")),
         @JoinColumnOrFormula(column=@JoinColumn(name="rank_cd", referencedColumnName="dtl_cd", insertable=false, updatable=false))

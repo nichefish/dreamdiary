@@ -46,8 +46,9 @@ public class UserAuthRoleEntity
     private Integer userAuthRoleNo;
 
     /** 사용자 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_no", referencedColumnName = "user_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 정보")
     private UserEntity user;
@@ -58,7 +59,7 @@ public class UserAuthRoleEntity
     private String authCd;
 
     /** 권한 정보 매핑 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "auth_cd", referencedColumnName = "auth_cd", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)

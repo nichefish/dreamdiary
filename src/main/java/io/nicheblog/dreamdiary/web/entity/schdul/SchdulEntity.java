@@ -128,7 +128,7 @@ public class SchdulEntity
     private String prvtYn = "N";
 
     /** 참여자 정보 */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no")
     @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
