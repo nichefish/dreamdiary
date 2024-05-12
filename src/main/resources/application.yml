@@ -17,9 +17,9 @@ spring:
     #    resources:
     #        add-mappings: false
     #        static-locations: "classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/"
-    cache:
-        jcache:
-            config: classpath:ehcache.yml
+    #cache:
+    #    jcache:
+    #        config: classpath:ehcache.yml
 
     freemarker:
         #template-loader-path: classpath:/templates/
