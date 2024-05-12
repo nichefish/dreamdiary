@@ -74,8 +74,9 @@ public class JrnlDiaryEntity
     private Integer jrnlDayNo;
 
     /** 저널 일자 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("저널 일자 정보")
     private JrnlDayEntity jrnlDay;
