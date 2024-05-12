@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -34,6 +35,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE comment SET del_yn = 'Y' WHERE post_no = ?")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CommentEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule {

@@ -97,5 +97,7 @@ public class CommentService
             EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo());
             EhCacheUtils.evictCacheAll("imprtcDreamList");
         }
+
+        EhCacheUtils.clearL2Cache(CommentEntity.class);
     }
 }

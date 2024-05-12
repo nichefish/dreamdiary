@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.CommentEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -15,7 +16,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {CommentMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface CommentEmbedMapstruct
         extends BaseMapstruct<CommentCmpstn, CommentEmbed> {
 
@@ -25,14 +26,13 @@ public interface CommentEmbedMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "list", expression = "java(entity.getDtoList())")
+    @Mapping(target = "list", expression = "java(CommentMapstruct.INSTANCE.toDtoList(entity.getList()))")
     CommentCmpstn toDto(final CommentEmbed entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
-    @Mapping(target = "list", expression = "java(dto.getEntityList())")
     CommentEmbed toEntity(final CommentCmpstn dto) throws Exception;
 
     /**
