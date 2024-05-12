@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.admin;
 
+import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdKey;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
@@ -93,6 +94,8 @@ public class DtlCdService
     public void evictRelatedCache(final DtlCdEntity rslt) {
         EhCacheUtils.evictCache("cdEntityListByClCd", rslt.getClCd());
         EhCacheUtils.evictCache("cdDtoListByClCd", rslt.getClCd());
+        EhCacheUtils.clearL2Cache(ClCdEntity.class);
+        EhCacheUtils.clearL2Cache(DtlCdEntity.class);
     }
 
     /**

@@ -4,12 +4,13 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 
@@ -30,6 +31,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AuditorInfo
         implements Serializable {
 

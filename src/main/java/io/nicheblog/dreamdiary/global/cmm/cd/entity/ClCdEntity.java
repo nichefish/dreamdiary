@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.Entity;
@@ -35,6 +36,8 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @Where(clause = "del_yn='N'")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ClCdEntity
         extends BaseAuditEntity
         implements StateEmbedModule {

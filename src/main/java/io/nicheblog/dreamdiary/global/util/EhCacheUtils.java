@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.util;
 
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.SessionFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
@@ -26,13 +27,17 @@ public class EhCacheUtils {
 
     @Resource(name="cacheManager")
     CacheManager manager;
+    @Resource
+    private SessionFactory factory;
 
     private static CacheManager cacheManager;
+    private static SessionFactory sessionFactory;
 
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
         cacheManager = manager;
+        sessionFactory = factory;
     }
 
     /**
@@ -86,5 +91,21 @@ public class EhCacheUtils {
         cacheManager.getCacheNames()
                 .forEach(cacheName -> Objects.requireNonNull(cacheManager.getCache(cacheName)).clear());
         return true;
+    }
+
+    /**
+     * Hibernate Second Level 캐시 특정 엔티티 삭제
+     */
+    public static void clearL2Cache(Class<?> clazz) {
+        org.hibernate.Cache cache = sessionFactory.getCache();
+        cache.evictEntityData(clazz);
+    }
+
+    /**
+     * Hibernate Second Level 캐시 전체 삭제
+     */
+    public static void clearL2Cache() {
+        org.hibernate.Cache cache = sessionFactory.getCache();
+        cache.evictAllRegions();
     }
 }
