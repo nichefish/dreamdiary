@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -36,12 +35,6 @@ import java.util.List;
 public class TagEntity
         extends BaseCrudEntity {
 
-    @PostLoad
-    private void onLoad() {
-        this.size = CollectionUtils.isEmpty(this.contentTagList) ? 0 : this.contentTagList.size();
-        this.dreamSize = CollectionUtils.isEmpty(this.contentTagList) ? 0 : this.contentTagList.size();
-    }
-
     /** 태그 번호 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,21 +48,13 @@ public class TagEntity
     private String tagNm;
 
     /** 컨텐츠 태그 */
-    @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tag", fetch = FetchType.EAGER)
     private List<ContentTagEntity> contentTagList;
 
     /** 저널 꿈 태그 */
-    @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tag", fetch = FetchType.EAGER)
     @Where(clause = "ref_content_type = 'JRNL_DREAM'")
     private List<JrnlDreamTagEntity> jrnlDreamTagList;
-
-    /** 태그 크기 (=컨텐츠 개수) */
-    @Transient
-    private Integer size;
-    /** 태그 크기 (=꿈 개수) */
-    @Transient
-    private Integer dreamSize;
-
 
     /* ----- */
 
