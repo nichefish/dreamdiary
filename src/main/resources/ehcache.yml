@@ -1,6 +1,0 @@
-caches:
-    preloadedCache:
-        cacheLoaderFactory:
-            class: com.example.PreloadCacheLoaderFactory
-        heap: 100MB
-        timeToLiveSeconds: 3600
