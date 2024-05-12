@@ -54,7 +54,7 @@ public class SchdulSpec
     ) throws Exception {
 
         List<Predicate> predicate = new ArrayList<>();
-        Join<SchdulEntity, SchdulPrtcpntEntity> prtcpntList;
+        Join<SchdulEntity, SchdulPrtcpntEntity> prtcpntJoin;
         // expressions
         Expression<Date> endDtExp = root.get("endDt");
         Expression<Date> bgnDtExp = root.get("bgnDt");
@@ -89,8 +89,8 @@ public class SchdulSpec
                 case "getPrvtOnly":
                     // 개인 일정 조회
                     predicate.add(builder.equal(prvtYnExp, "Y"));
-                    prtcpntList = root.join("prtcpntList", JoinType.INNER);
-                    predicate.add(builder.equal(prtcpntList.get("userId"), AuthUtils.getLgnUserId()));
+                    prtcpntJoin = root.join("prtcpntList", JoinType.INNER);
+                    predicate.add(builder.equal(prtcpntJoin.get("userId"), AuthUtils.getLgnUserId()));
                     continue;
                 case "indtChked":
                     // 내근 조회
@@ -113,8 +113,8 @@ public class SchdulSpec
                 // case "myPaprChked":
                 //     // 내가 속한 일정 조회
                 //     if ("Y".equals(searchParamMap.get(key))) {
-                //         prtcpntList = root.join("prtcpntList", JoinType.INNER);
-                //         predicate.add(builder.equal(prtcpntList.get("userId"), AuthUtils.getLgnUserId()));
+                //         prtcpntJoin = root.join("prtcpntList", JoinType.INNER);
+                //         predicate.add(builder.equal(prtcpntJoin.get("userId"), AuthUtils.getLgnUserId()));
                 //     }
                 //     continue;
                 case "searchKeyword":
