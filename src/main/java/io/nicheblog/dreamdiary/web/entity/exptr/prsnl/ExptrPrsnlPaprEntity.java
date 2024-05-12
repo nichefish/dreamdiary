@@ -142,7 +142,7 @@ public class ExptrPrsnlPaprEntity
     private Integer rciptFileNo;
 
     /** 경비지출 항목 목록 */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no")
     @Fetch(FetchMode.SELECT)
     @OrderBy("exptrDt ASC")

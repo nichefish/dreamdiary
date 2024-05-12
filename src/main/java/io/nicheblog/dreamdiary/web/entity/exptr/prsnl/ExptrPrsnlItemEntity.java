@@ -52,8 +52,9 @@ public class ExptrPrsnlItemEntity
     private Integer refPostNo;
 
     /** 개인경비 취합 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("개인경비 취합 정보")
     private ExptrPrsnlPaprEntity exptrPrsnlInfo;
@@ -104,8 +105,9 @@ public class ExptrPrsnlItemEntity
     private Integer atchFileDtlNo;
 
     /** 첨부파일(상세) 정보 */
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "atch_file_dtl_no", referencedColumnName = "atch_file_dtl_no", insertable = false, updatable = false)
+    @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("첨부파일(상세) 정보")
     private AtchFileDtlEntity atchFileDtlInfo;
