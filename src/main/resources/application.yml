@@ -45,6 +45,7 @@ spring:
                     order_updates: true
                 legacy_limit_handler: true
                 default_batch_fetch_size: 1000
+                enable_lazy_load_no_trans: true
         open-in-view: true
 
     jackson:
