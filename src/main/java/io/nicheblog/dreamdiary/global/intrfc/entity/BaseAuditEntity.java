@@ -47,7 +47,7 @@ public class BaseAuditEntity
     protected Date mdfDt;
 
     /** 수정자 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mdfusr_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
