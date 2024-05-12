@@ -14,9 +14,9 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumrySearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
+import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamTagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryService;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -56,8 +56,8 @@ public class JrnlSumryController
     private JrnlDiaryService jrnlDiaryService;
     @Resource(name = "jrnlDreamService")
     private JrnlDreamService jrnlDreamService;
-    @Resource(name = "tagService")
-    private TagService tagService;
+    @Resource(name = "jrnlDreamTagService")
+    private JrnlDreamTagService jrnlDreamTagService;
     @Resource(name = "cdService")
     private CdService cdService;
 
@@ -173,7 +173,7 @@ public class JrnlSumryController
                     put("contentType", ContentType.JRNL_DREAM.key);
                     put("yy", yy);
                 }};
-                List<TagDto> jrnlDreamTagList = tagService.getDreamSizedListDto(searchParamMap);
+                List<TagDto> jrnlDreamTagList = jrnlDreamTagService.getDreamSizedListDto(searchParamMap);
                 model.addAttribute("dreamTagList", jrnlDreamTagList);
             }
             // 코드 데이터 모델에 추가

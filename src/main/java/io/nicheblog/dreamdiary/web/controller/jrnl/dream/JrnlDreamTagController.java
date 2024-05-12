@@ -12,8 +12,8 @@ import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamSearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
+import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamTagService;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * JrnlDreamTagController
@@ -46,8 +45,8 @@ public class JrnlDreamTagController
 
     @Resource(name = "jrnlDreamService")
     private JrnlDreamService jrnlDreamService;
-    @Resource(name = "tagService")
-    private TagService tagService;
+    @Resource(name = "jrnlDreamTagService")
+    private JrnlDreamTagService jrnlDreamTagService;
 
     /**
      * 태그 전체 목록 조회 (Ajax)
@@ -58,8 +57,7 @@ public class JrnlDreamTagController
     @ResponseBody
     public ResponseEntity<AjaxResponse> tagListAjax(
             @ModelAttribute("searchParam") TagSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final @RequestParam Map<String, Object> searchParamMap
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -68,7 +66,7 @@ public class JrnlDreamTagController
         String rsltMsg = "";
         try {
             // 전체 태그 목록 조회 (태그클라우드)
-            List<TagDto> tagList = tagService.getDreamSizedListDto(searchParam);
+            List<TagDto> tagList = jrnlDreamTagService.getDreamSizedListDto(searchParam);
             ajaxResponse.setRsltList(tagList);
 
             isSuccess = true;
