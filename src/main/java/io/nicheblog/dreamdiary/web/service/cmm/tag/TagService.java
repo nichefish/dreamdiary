@@ -3,11 +3,7 @@ package io.nicheblog.dreamdiary.web.service.cmm.tag;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
-import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
-import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
@@ -15,8 +11,6 @@ import io.nicheblog.dreamdiary.web.repository.cmm.tag.TagRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.TagSpec;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -51,12 +45,10 @@ public class TagService
     public TagRepository getRepository() {
         return this.tagRepository;
     }
-
     @Override
     public TagSpec getSpec() {
         return this.tagSpec;
     }
-
     @Override
     public TagMapstruct getMapstruct() {
         return this.tagMapstruct;
@@ -162,52 +154,12 @@ public class TagService
     }
 
     /**
-     * css 사이즈 계산한 태그 목록 조회
-     * 태그 1개 = 1. 그 외엔 2~9
-     */
-    public List<TagDto> getDreamSizedListDto(BaseSearchParam searchParam) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-        return this.getDreamSizedListDto(searchParamMap);
-    }
-    @Cacheable(value="jrnlDreamSizedTagList", key="#searchParamMap.hashCode()")
-    public List<TagDto> getDreamSizedListDto(Map<String, Object> searchParamMap) throws Exception {
-        List<TagDto> tagList = this.getListDto(searchParamMap);
-        int maxSize = this.calcMaxDreamSize(tagList);
-        final int MIN_SIZE = 2; // 최소 크기
-        final int MAX_SIZE = 9; // 최대 크기
-        return tagList.stream()
-                .peek(dto -> {
-                    int size = dto.getDreamSize();
-                    if (size == 1) {
-                        dto.setTagClass("ts-1");
-                    } else {
-                        double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
-                        int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
-                        dto.setTagClass("ts-"+tagSize);
-                    }
-                })
-                .sorted()
-                .collect(Collectors.toList());
-    }
-
-    /**
      * 최대 사용빈도 계산한 태그 목록 조회
      */
     public int calcMaxSize(List<TagDto> tagList) {
         int maxFrequency = 0;
         for (TagDto tag : tagList) {
             maxFrequency = Math.max(maxFrequency, tag.getSize());
-        }
-        return maxFrequency;
-    }
-
-    /**
-     * 최대 사용빈도 계산한 꿈 태그 목록 조회
-     */
-    public int calcMaxDreamSize(List<TagDto> tagList) {
-        int maxFrequency = 0;
-        for (TagDto tag : tagList) {
-            maxFrequency = Math.max(maxFrequency, tag.getDreamSize());
         }
         return maxFrequency;
     }
