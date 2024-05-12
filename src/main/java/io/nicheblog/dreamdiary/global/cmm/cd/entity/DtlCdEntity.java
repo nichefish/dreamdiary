@@ -50,7 +50,7 @@ public class DtlCdEntity
     private String clCd;
 
     /** 분류코드 정보 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cl_cd", referencedColumnName = "cl_cd", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     private ClCdEntity clCdInfo;
