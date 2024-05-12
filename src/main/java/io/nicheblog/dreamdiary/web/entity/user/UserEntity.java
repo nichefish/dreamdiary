@@ -73,6 +73,8 @@ public class UserEntity
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "user_no")
     @NotFound(action = NotFoundAction.IGNORE)
+    @Fetch(FetchMode.JOIN)
+    @BatchSize(size = 10)
     @Comment("사용자 권한 정보")
     private List<UserAuthRoleEntity> authList;
 
@@ -83,9 +85,10 @@ public class UserEntity
     private String useAcsIpYn = "N";
 
     /** 접속 IP 정보 */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "user_no")
     @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 10)
     @OrderBy("acsIp ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("접속 IP 정보")
@@ -121,7 +124,7 @@ public class UserEntity
     private String cn;
 
     /** 사용자 프로필 정보 */
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_no")
     @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -129,7 +132,7 @@ public class UserEntity
     private UserProflEntity profl;
 
     /** 사용자 인사정보 */
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_no", referencedColumnName = "user_no")
     @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)

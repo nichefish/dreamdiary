@@ -55,7 +55,7 @@ public class VcatnPaprEntity
     private String contentType = CONTENT_TYPE.key;
 
     /** 글분류 코드 정보 */
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "'VCATN_PAPR_CTGR_CD'", referencedColumnName = "cl_cd")),
             @JoinColumnOrFormula(column = @JoinColumn(name = "ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
@@ -70,7 +70,8 @@ public class VcatnPaprEntity
     /** 휴가 일정 목록 */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumnOrFormula(column = @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no"))
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.JOIN)
+    @BatchSize(size = 10)
     @OrderBy("bgnDt ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("휴가 일정 목록")
