@@ -72,8 +72,9 @@ public class JrnlSumryCnEntity
     private Integer jrnlSumryNo;
 
     /** 저널 결산 번호  */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "jrnl_sumry_no", referencedColumnName = "post_no", insertable = false, updatable = false)
+    @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("저널 일자 정보")
     private JrnlSumryEntity jrnlSumry;
