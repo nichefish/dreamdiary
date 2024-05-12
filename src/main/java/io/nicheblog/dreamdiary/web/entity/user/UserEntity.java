@@ -74,7 +74,6 @@ public class UserEntity
     @JoinColumn(name = "user_no")
     @NotFound(action = NotFoundAction.IGNORE)
     @Fetch(FetchMode.JOIN)
-    @BatchSize(size = 10)
     @Comment("사용자 권한 정보")
     private List<UserAuthRoleEntity> authList;
 
@@ -88,7 +87,6 @@ public class UserEntity
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "user_no")
     @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 10)
     @OrderBy("acsIp ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("접속 IP 정보")
