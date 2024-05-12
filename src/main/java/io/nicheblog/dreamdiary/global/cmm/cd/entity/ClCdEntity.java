@@ -81,7 +81,7 @@ public class ClCdEntity
     private String dc;
 
     /** 분류코드 정보 */
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "cl_cd", referencedColumnName = "cl_cd", insertable = false, updatable = false)
     @OrderBy("state.sortOrdr ASC")
     @NotFound(action = NotFoundAction.IGNORE)

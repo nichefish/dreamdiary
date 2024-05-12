@@ -50,8 +50,9 @@ public class AuditorInfo
     private String nickNm;
 
     /** 사용자 권한 정보 */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_no")
+    @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("사용자 권한 정보")
     private List<UserAuthRoleEntity> authList;
