@@ -86,7 +86,7 @@
             </div>
             <div class="col-xl-3">
                 <div class="mt-1">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${Url.CACHE_CHCK_AJAX!}');">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${Url.CACHE_ACTIVE_LIST_AJAX!}');">
                         현재 캐시 조회
                     </button>
                     <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${Url.CACHE_CLEAR_AJAX!}');">

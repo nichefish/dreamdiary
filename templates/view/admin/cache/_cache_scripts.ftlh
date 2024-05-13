@@ -7,7 +7,7 @@
         return {
             /** url, data 받아서 ajax 호출 */
             activeListModal: function(data) {
-                const url = "${Url.CACHE_CHCK_AJAX!}";
+                const url = "${Url.CACHE_ACTIVE_LIST_AJAX!}";
                 commons.util.blockUIAjax(url, 'get', data, function(res) {
                     console.log(res.rsltMap);
                     commons.util.handlebarsTemplate(res.rsltMap, "cache_list", "show");
