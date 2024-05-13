@@ -203,7 +203,7 @@ public interface SiteUrl {
     String FILE_UPLOAD_AJAX = Prefix.FILE + "/fileUploadAjax.do";
 
     /** (공통) 캐시 관리 */
-    String CACHE_CHCK_AJAX = Prefix.CACHE + "/chckActiveCachesAjax.do";
+    String CACHE_ACTIVE_LIST_AJAX = Prefix.CACHE + "/cacheActiveListAjax.do";
     String CACHE_EVICT_AJAX = Prefix.CACHE + "/cacheEvictAjax.do";
     String CACHE_CLEAR_AJAX = Prefix.CACHE + "/cacheClearAjax.do";
 

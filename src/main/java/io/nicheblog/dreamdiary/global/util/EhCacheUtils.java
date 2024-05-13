@@ -49,7 +49,7 @@ public class EhCacheUtils {
     /**
      * 캐시 목록 조회
      */
-    public static List<Cache> chckActiveCaches() {
+    public static List<Cache> getActiveCacheList() {
         return cacheManager.getCacheNames()
                 .stream()
                 .map(cacheName -> cacheManager.getCache(cacheName))
@@ -59,10 +59,10 @@ public class EhCacheUtils {
     /**
      * 캐시 목록 조회
      */
-    public static Map<String, Object> chckActiveCachesJson() {
+    public static Map<String, Object> getActiveCacheMap() {
         Map<String, Object> cacheContents = new HashMap<>();
 
-        chckActiveCaches().stream()
+        getActiveCacheList().stream()
                 .forEach(cache -> {
                     String name = cache.getName();
                     Object object = cache.getNativeCache();

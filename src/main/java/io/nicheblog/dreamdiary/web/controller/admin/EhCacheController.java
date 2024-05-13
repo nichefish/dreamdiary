@@ -46,10 +46,10 @@ public class EhCacheController
      * 사이트 캐시 조회 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.CACHE_CHCK_AJAX)
+    @RequestMapping(Url.CACHE_ACTIVE_LIST_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
-    public ResponseEntity<AjaxResponse> chckActiveCachesAjax(
+    public ResponseEntity<AjaxResponse> cacheActiveListAjax(
             final LogActvtyParam logParam
     ) {
 
@@ -59,7 +59,7 @@ public class EhCacheController
         String rsltMsg = "";
         try {
             // 현재 활성 중인 캐시(name) 목록 조회 :: 성공시 처리완료목록으로 출력
-            Map<String, Object> activeCacheList = EhCacheUtils.chckActiveCachesJson();
+            Map<String, Object> activeCacheList = EhCacheUtils.getActiveCacheMap();
             ajaxResponse.setRsltMap((HashMap<String, Object>) activeCacheList);
 
             isSuccess = true;
