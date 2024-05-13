@@ -81,7 +81,13 @@ public class EhCacheUtils {
      * 캐시 이름의 특정 키 evict
      */
     public static void evictCache(final String cacheName, final Integer cacheKey) {
-        evictCache(cacheName, cacheKey.toString());
+        Cache cache = cacheManager.getCache(cacheName);
+        if (cache == null) {
+            log.info("cache name {} does not exists.", cacheName);
+            return;
+        }
+        cache.evict(cacheKey);
+        log.info("cache name {} (key: {}) evicted.", cacheName, cacheKey);
     }
     public static void evictCache(final String cacheName, final String cacheKey) {
         Cache cache = cacheManager.getCache(cacheName);
@@ -90,7 +96,7 @@ public class EhCacheUtils {
             return;
         }
         cache.evict(cacheKey);
-        log.info("cache name {} evicted.", cacheName);
+        log.info("cache name {} (key: {}) evicted.", cacheName, cacheKey);
     }
 
     /**

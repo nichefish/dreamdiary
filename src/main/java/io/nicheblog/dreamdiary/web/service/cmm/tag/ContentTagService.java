@@ -81,6 +81,28 @@ public class ContentTagService
      * obsolete된 기존 컨텐츠 태그 삭제:: 메소드 분리
      */
     public void delObsoleteContentTags(BaseClsfKey clsfKey, List<String> obsoleteTagList) {
+
+
+        String contentType = clsfKey.getContentType();
+        obsoleteTagList.forEach(tag -> {
+            if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+                // 태그가 삭제되었을 때 태그 목록 캐시 초기화
+                Integer postNo = clsfKey.getPostNo();
+                JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
+                if (jrnlDream == null) {
+                    try {
+                        jrnlDream = jrnlDreamService.getDtlDto(postNo);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                Integer yy = jrnlDream.getYy();
+                Integer mnth = jrnlDream.getMnth();
+                EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_" + mnth);
+                EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_99");
+                EhCacheUtils.evictCache("jrnlDreamTagList", "9999_99");
+            }
+        });
         contentTagRepository.deleteObsoleteContentTags(clsfKey.getPostNo(), clsfKey.getContentType(), obsoleteTagList);
     }
 
@@ -170,11 +192,11 @@ public class ContentTagService
         }
         if (ContentType.JRNL_DREAM.key.equals(contentType)) {
             // jrnl_dream
-            EhCacheUtils.evictCache("jrnlDreamDtlDto", postNo);
             JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
             if (jrnlDream == null) jrnlDream = jrnlDreamService.getDtlDto(postNo);
             Integer yy = jrnlDream.getYy();
             Integer mnth = jrnlDream.getMnth();
+            EhCacheUtils.evictCache("jrnlDreamDtlDto", postNo);
             // jrnl_dream_tag
             EhCacheUtils.evictCacheAll("jrnlDreamTagDtl");
             EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_" + mnth);
@@ -182,6 +204,7 @@ public class ContentTagService
             EhCacheUtils.evictCache("jrnlDreamSizedTagList",  "9999_99");
             // jrnl_day
             EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
+            EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
             EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
         }
         if (ContentType.JRNL_SUMRY_CN.key.equals(contentType)) {
