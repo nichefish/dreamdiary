@@ -7,7 +7,7 @@
 
 <@modal.layout id="cache_list" size="xl">
     <#--begin::Modal Header-->
-    <@component.modal_header "저널 일자 저장" />
+    <@component.modal_header "사이트 캐시 목록 조회" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div id="cache_list_div">

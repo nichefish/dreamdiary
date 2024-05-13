@@ -26,9 +26,6 @@
                  data-kt-menu="true"
                  data-kt-menu-expand="false">
 
-                <!-- USER -->
-                <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.USER />
-
                 <!-- ADMIN -->
                 <div class="menu-item">
                     <div class="menu-content mt-5 pb-2">
@@ -84,6 +81,9 @@
                     <!--end:Menu sub-->
                 </div>
                 <!--end:Menu item-->
+
+                <!-- USER -->
+                <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.USER />
 
                 <!-- LOG -->
                 <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.LOG />

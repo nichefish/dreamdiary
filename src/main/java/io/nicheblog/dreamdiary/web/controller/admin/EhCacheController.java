@@ -78,7 +78,7 @@ public class EhCacheController
     }
 
     /**
-     * 사이트 캐시 조회 (Ajax)
+     * 사이트 캐시 evict (Ajax)
      * (관리자MNGR만 접근 가능)
      */
     @RequestMapping(Url.CACHE_EVICT_AJAX)
