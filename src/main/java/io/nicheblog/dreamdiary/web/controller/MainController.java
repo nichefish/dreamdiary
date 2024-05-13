@@ -59,8 +59,8 @@ public class MainController
 
         // TODO: 접근 권한 통제
 
-        // 메인 화면 꾸밀때까지 사용자 목록 화면으로 리다이렉트
-        return "redirect:" + Url.USER_LIST;
+        // 메인 화면 꾸밀때까지 사이트 관리 화면으로 리다이렉트
+        return "redirect:" + Url.ADMIN_PAGE;
         // return "/view/main/main_page";
     }
 
