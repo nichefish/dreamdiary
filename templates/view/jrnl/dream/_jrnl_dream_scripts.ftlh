@@ -38,6 +38,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
+                    $(".modal").modal("hide");
                     $("#jrnl_day_list_div").empty();
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_list");
                     JrnlDream.inSearchMode = true;
