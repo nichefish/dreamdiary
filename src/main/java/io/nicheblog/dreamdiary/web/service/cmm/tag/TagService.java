@@ -133,9 +133,8 @@ public class TagService
                 .map(tagStr -> tagRepository.findByTagNm(tagStr)
                         .orElseGet(() -> {
                             if (ContentType.JRNL_DREAM.key.equals(contentType)) {
-                                // jrnl_dream
+                                // 새 태그가 추가되었을 때만 태그 목록 캐시 초기화
                                 Integer postNo = clsfKey.getPostNo();
-                                EhCacheUtils.evictCache("jrnlDreamDtlDto", postNo);
                                 JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
                                 if (jrnlDream == null) {
                                     try {
