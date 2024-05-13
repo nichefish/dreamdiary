@@ -6,9 +6,9 @@
 <script type="text/x-handlebars-template" id="jrnl_dream_list_template">
     {{#each this}}
         <div class="row jrnl-item">
-            <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:85px;">
+            <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between border-2 border-gray-300 border-end ps-10 me-4 h-75" style="width:135px;">
                 <div>
-                    # {{idx}}
+                    <i class="bi bi-calendar3"></i> {{stdrdDt}}
                 </div>
             </div>
             <div class="col py-3 jrnl-dream-cn {{#ifYn imprtcYn}}bg-secondary{{/ifYn}}">
@@ -53,7 +53,7 @@
         </div>
         {{#if (exists comment.list)}}
             <div class="row py-2">
-                <div class="col-1 jrnl-dream-cn" style="width:85px;"></div>
+                <div class="col-1 jrnl-dream-cn" style="width:135px;"></div>
                 <div class="col ms-10 text-noti">
                     {{#each comment.list}}
                         <div class="row pb-1">

@@ -42,6 +42,7 @@
                     $("#jrnl_aside #yy").val("");
                     $("#jrnl_aside #mnth").val("");
                     $("#jrnl_day_list_div").empty();
+                    $("#jrnl_dream_tag_list_div").empty();
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_list");
                     JrnlDream.inSearchMode = true;
                 }, "block");

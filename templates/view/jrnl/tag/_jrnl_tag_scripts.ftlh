@@ -44,19 +44,6 @@
                     $("#jrnl_tag_list_modal").modal("hide");
                 });
             },
-            dreamTagDtlYyMnthAjax: function(tagNo, tagNm) {
-                const url = "${Url.JRNL_DREAM_TAG_DTL_AJAX!}";
-                let ajaxData = { "tagNo": tagNo, "yy": $("#yy").val(), "mnth": $("#mnth").val() };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_tag_dtl", "show");
-                    $("#header_tag_nm").text(tagNm);
-                    $("#jrnl_tag_list_modal").modal("hide");
-                });
-            },
             hideSingleTag(selectorDiv) {
                 $(selectorDiv + " span.ts-1").parent().toggle();
             },
