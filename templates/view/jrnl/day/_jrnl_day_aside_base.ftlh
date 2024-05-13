@@ -77,7 +77,7 @@
                         <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">년도</span>
                         <select name="yy" id="yy" class="form-select" aria-label="Select example"
                                 onchange="JrnlDayAside.yy();">
-                            <option value="">------</option>
+                            <option value="">----</option>
                             <#assign currYy = DateUtils.getCurrYy()?number />
                             <#assign startYy = 2011 />
                             <#list currYy..startYy as year>
@@ -89,7 +89,7 @@
                         <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">월</span>
                         <select name="mnth" id="mnth" class="form-select" aria-label="Select example"
                                 onchange="JrnlDayAside.mnth();">
-                            <option value="">------</option>
+                            <option value="">--</option>
                             <#list 1..12 as mnth>
                                 <option value="${mnth}">${mnth}</option>
                             </#list>

@@ -45,6 +45,7 @@
                         return false;
                     }
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_day_list");
+                    $("#jrnl_dream_list_div").empty();
                 }, "block");
             },
             /** 등록 화면 호출 */
