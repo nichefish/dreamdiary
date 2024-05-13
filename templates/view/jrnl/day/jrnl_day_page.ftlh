@@ -34,10 +34,12 @@
                 // 아무 쿠키도 없을경우 전체 데이터 로딩을 막기 위해 올해 년도 세팅
                 if (yyCookie === undefined && mnthCookie === undefined) $("#jrnl_aside #yy").val(commons.date.getCurrYyStr());
                 // 목록 조회
-                JrnlDay.listAjax();
+                JrnlDay.yyMnthListAjax();
                 JrnlTag.dreamTagListAjax();
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
+                // 꿈 키워드 검색에 엔터키 처리
+                commons.util.enterKey("#dreamKeyword", JrnlDream.keywordListAjax);
             },
         }
     })();
@@ -84,6 +86,9 @@
         <div id="jrnl_day_list_div">
             <#--handlebars template goes in here-->
         </div>
+        <div id="jrnl_dream_list_div">
+            <#--handlebars template goes in here-->
+        </div>
     </div>
 </div>
 <!--end::Card-->
@@ -93,6 +98,7 @@
 
 <#--include::modals-->
 <#include "/view/jrnl/day/_jrnl_day_list_template.hbs">
+<#include "/view/jrnl/dream/_jrnl_dream_list_template.hbs">
 <#include "/view/jrnl/dream/_jrnl_dream_tag_list_template.hbs">
 <#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">

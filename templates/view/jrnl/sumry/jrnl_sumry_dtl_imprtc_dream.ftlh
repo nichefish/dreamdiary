@@ -10,7 +10,7 @@
     <div class="col" id="jrnl_dream_tag_list_div">
         <#list dreamTagList![] as tag>
             <span class="py-2 me-3 cursor-pointer opacity-hover"
-                  onclick="JrnlTag.dreamTagDtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
+                  onclick="JrnlTag.dreamTagDtlYyMnthAjax(${tag.tagNo!}, '${tag.tagNm!}');"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">
                 <span class="${tag.tagClass!}">
                     ${tag.tagNm!}

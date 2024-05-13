@@ -34,7 +34,7 @@
                 });
             },
             /** 목록 조회 */
-            listAjax: function() {
+            yyMnthListAjax: function() {
                 const mnth = $("#jrnl_aside #mnth").val();
                 if (commons.util.isEmpty(mnth)) return;
                 const url = "${Url.JRNL_DAY_LIST_AJAX!}";

@@ -10,6 +10,7 @@
                 $("#jrnl_aside #mnth").val("");
                 commons.util.handlebarsTemplate(null, "jrnl_day_list");
                 commons.util.handlebarsTemplate([], "jrnl_dream_tag_list");
+                JrnlDream.inSearchMode = false;
             },
             mnth: function () {
                 // 쿠키 설정하기
@@ -21,8 +22,10 @@
                 if ($("#jrnl_aside #mnth").val() === "") return;
                 $.cookie("jrnl_mnth", $("#jrnl_aside #mnth").val(), cookieOptions);
                 // 목록 조회
-                JrnlDay.listAjax();
+                JrnlDay.yyMnthListAjax();
                 JrnlTag.dreamTagListAjax();
+                //
+                JrnlDream.inSearchMode = false;
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
             },
@@ -68,7 +71,7 @@
             <!--end::Header-->
             <#--begin::Body-->
             <div class="card-body" id="jrnl_aside">
-                <#--begin::Form-->
+                <#--begin::row-->
                 <div class="mb-7 d-flex justify-content-between gap-4">
                     <div class="col">
                         <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">년도</span>
@@ -94,6 +97,18 @@
                         </select>
                     </div>
                 </div>
+                <#--begin::row-->
+                <div class="mb-6">
+                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">꿈 키워드 검색</span>
+                    <div class="d-flex gap-1">
+                        <input type="text" name="dreamKeyword" id="dreamKeyword" class="form-control" placeholder="꿈 키워드 검색" />
+                        <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                                onclick="JrnlDream.keywordListAjax();"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈을 키워드로 검색합니다.">
+                            <i class="bi bi-search pe-0"></i>
+                        </button>
+                    </div>
+                </div>
                 <div class="mb-7">
                     <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Groups</span>
                     <select class="form-select" aria-label="Select example">
@@ -104,18 +119,6 @@
                         <option value="1">Alice Danchik</option>
                         <option value="2">Harris Bold</option>
                         <option value="3">Carles Nilson</option>
-                    </select>
-                </div>
-                <div class="mb-7">
-                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Crated</span>
-                    <select class="form-select" aria-label="Select example">
-                        <option>Any Time</option>
-                        <option value="1">day ago</option>
-                        <option value="2">2 days ago</option>
-                        <option value="3">April 15</option>
-                        <option value="1">April 10</option>
-                        <option value="2">March 30</option>
-                        <option value="3">March 25</option>
                     </select>
                 </div>
                 <div class="mb-6">

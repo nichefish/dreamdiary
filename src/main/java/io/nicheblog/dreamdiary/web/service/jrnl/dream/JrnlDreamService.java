@@ -54,6 +54,15 @@ public class JrnlDreamService
     }
 
     /**
+     * 목록 조회 (dto level) :: 캐시 처리
+     */
+    @Cacheable(value="jrnlDreamList", key="#searchParam.hashCode()")
+    public List<JrnlDreamDto> getListDtoWithCache(final BaseSearchParam searchParam) throws Exception {
+        return this.getListDto(searchParam);
+    }
+
+
+    /**
      * 특정 년도의 중요 꿈 목록 조회
      */
     @Cacheable(value="imprtcDreamList", key="#yy")
@@ -95,7 +104,6 @@ public class JrnlDreamService
     public void postRegist(final JrnlDreamEntity rslt) throws Exception {
         // 관련 캐시 처리
         this.evictRelatedCache(rslt);
-        EhCacheUtils.evictCache("imprtcDreamList", rslt.getJrnlDay().getYy());
     }
 
     /**
@@ -137,5 +145,6 @@ public class JrnlDreamService
         // jrnl_dream
         EhCacheUtils.evictCache("imprtcDreamList", rslt.getJrnlDay().getYy());
         EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getPostNo());
+        EhCacheUtils.evictCacheAll("jrnlDreamList");
     }
 }

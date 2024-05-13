@@ -28,6 +28,9 @@ public class JrnlDreamSearchParam
     /** 컨텐츠 타입 */
     private String contentType;
 
+    /** 꿈 키워드 */
+    private String dreamKeyword;
+
     /** 태그 번호 */
     Integer tagNo;
 }

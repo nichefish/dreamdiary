@@ -78,6 +78,10 @@ public class JrnlDreamSpec
                     Integer mnth = (Integer) searchParamMap.get(key);
                     if (mnth != 99) predicate.add(builder.equal(jrnlDayJoin.get(key), mnth));
                     continue;
+                case "dreamKeyword":
+                    // 내용 like 검색
+                    predicate.add(builder.like(root.get("cn"), "%" + searchParamMap.get(key) + "%"));
+                    continue;
                 case "tagNo":
                     // 특정 태그된 꿈만 조회
                     Join<JrnlDreamEntity, TagEmbed> tagJoin = root.join("tag", JoinType.INNER);

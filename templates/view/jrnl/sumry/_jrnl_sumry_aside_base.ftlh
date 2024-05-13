@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="mb-7">
-                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Groups</span>
+                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">꿈 키워드 검색</span>
                     <select class="form-select" aria-label="Select example">
                         <option>Any group</option>
                         <option value="1">Grace Green</option>
@@ -109,10 +109,6 @@
                         <option value="2">March 30</option>
                         <option value="3">March 25</option>
                     </select>
-                </div>
-                <div class="mb-6">
-                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Email</span>
-                    <input type="text" class="form-control" placeholder="Your Email" />
                 </div>
                 <!--end::Form-->
                 <#--begin::Action-->

@@ -34,6 +34,7 @@ public interface SiteUrl {
     String JRNL_DAY_DEL_AJAX = Prefix.JRNL_DAY + "/jrnlDayDelAjax.do";
 
     /** 저널 꿈 */
+    String JRNL_DREAM_LIST_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamListAjax.do";
     String JRNL_DREAM_REG_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamRegAjax.do";
     String JRNL_DREAM_DTL_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamDtlAjax.do";
     String JRNL_DREAM_MDF_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamMdfAjax.do";

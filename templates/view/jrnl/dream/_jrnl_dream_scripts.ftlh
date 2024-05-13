@@ -27,6 +27,22 @@
                     $("#elseDreamerNm").valid(); // 체크박스 상태 변경시 details 필드 재검증
                 });
             },
+            /** 목록 조회 */
+            keywordListAjax: function() {
+                const keyword = $("#jrnl_aside #dreamKeyword").val();
+                if (commons.util.isEmpty(keyword)) return;
+                const url = "${Url.JRNL_DREAM_LIST_AJAX!}";
+                let ajaxData = { "dreamKeyword": $("#jrnl_aside #dreamKeyword").val() };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    $("#jrnl_day_list_div").empty();
+                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_list");
+                    JrnlDream.inSearchMode = true;
+                }, "block");
+            },
             /** 저널 꿈 등록 모달 팝업 호출 */
             regModal: function(jrnlDayNo, stdrdDt) {
                 let obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
@@ -71,7 +87,10 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
+                                if (res.rslt) {
+                                    if (JrnlDream.inSearchMode) JrnlDream.keywordListAjax();
+                                    else commons.util.blockUIReload();
+                                }
                             });
                     }, "block");
                 });
@@ -122,7 +141,10 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
+                                if (res.rslt) {
+                                    if (JrnlDream.inSearchMode) JrnlDream.keywordListAjax();
+                                    else commons.util.blockUIReload();
+                                }
                             });
                     }, "block");
                 });
