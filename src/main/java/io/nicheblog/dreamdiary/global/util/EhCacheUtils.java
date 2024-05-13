@@ -4,13 +4,12 @@ import lombok.extern.log4j.Log4j2;
 import org.hibernate.SessionFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -58,6 +57,30 @@ public class EhCacheUtils {
     }
 
     /**
+     * 캐시 목록 조회
+     */
+    public static Map<String, Object> chckActiveCachesJson() {
+        Map<String, Object> cacheContents = new HashMap<>();
+
+        chckActiveCaches().stream()
+                .forEach(cache -> {
+                    String name = cache.getName();
+                    Object object = cache.getNativeCache();
+                    com.github.benmanes.caffeine.cache.Cache caffeineCache = (com.github.benmanes.caffeine.cache.Cache) object;
+
+                    Map<Object, Object> obj = caffeineCache.asMap();
+                    Map<Object, Object> cacheValue = new HashMap<>();
+                    obj.keySet().forEach(key -> {
+                        log.info(key);
+                        if (key instanceof SimpleKey) key = "-";
+                        cacheValue.put(key, caffeineCache.getIfPresent(key));
+                    });
+                    cacheContents.put(name, cacheValue);
+                });
+        return cacheContents;
+    }
+
+    /**
      * 캐시에서 키를 기반으로 오브젝트를 가져오는 메서드
      * @param cacheName 캐시 이름
      * @param cacheKey 캐시 키
@@ -80,16 +103,7 @@ public class EhCacheUtils {
     /**
      * 캐시 이름의 특정 키 evict
      */
-    public static void evictCache(final String cacheName, final Integer cacheKey) {
-        Cache cache = cacheManager.getCache(cacheName);
-        if (cache == null) {
-            log.info("cache name {} does not exists.", cacheName);
-            return;
-        }
-        cache.evict(cacheKey);
-        log.info("cache name {} (key: {}) evicted.", cacheName, cacheKey);
-    }
-    public static void evictCache(final String cacheName, final String cacheKey) {
+    public static void evictCache(final String cacheName, final Object cacheKey) {
         Cache cache = cacheManager.getCache(cacheName);
         if (cache == null) {
             log.info("cache name {} does not exists.", cacheName);
