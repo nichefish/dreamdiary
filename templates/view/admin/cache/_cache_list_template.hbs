@@ -1,0 +1,34 @@
+<#--
+ * 캐시 목록 모달 Template
+ * @included_in : admin_page.ftlh
+ -->
+
+<script type="text/x-handlebars-template" id="cache_list_template">
+    <input type="hidden" name="postNo" value="{{postNo}}">
+
+    {{#each this}}
+    <#--begin::Row-->
+    <div class="row row-cols-lg-2 mb-3">
+        <div class="col-xl-3 col-3 d-flex-center">
+            "{{@key}}"
+        </div>
+        <div class="col">
+            {{#each this}}
+                <#--begin::Row-->
+                <div class="row mb-3">
+                    <div class="col d-flex-center">
+                        key: {{@key}}
+                    </div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                onclick="Cache.evictAjax('{{@../key}}', '{{@key}}');"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="캐시를 초기화합니다." >
+                            <i class="bi bi-pencil-square p-0"></i>캐시 초기화
+                        </button>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    {{/each}}
+</script>

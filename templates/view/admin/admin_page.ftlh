@@ -7,6 +7,9 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<#--include::script modules-->
+<#include "/view/admin/cache/_cache_scripts.ftlh">
+
 <script>
     const Page = (function() {
         return {
@@ -90,10 +93,10 @@
                 </div>
                 <div class="col-xl-3">
                     <div class="mt-1">
-                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${Url.CACHE_CHCK_AJAX!}');">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="Cache.activeListModal();">
                             현재 캐시 조회
                         </button>
-                        <button type="button" class="btn btn-sm btn-primary" onclick="Page.ajax('${Url.CACHE_CLEAR_AJAX!}');">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="Cache.clearAllAjax();">
                             사이트 캐시 초기화
                         </button>
                     </div>
@@ -225,5 +228,8 @@
 
 <#--include:: Dream - Aside-->
 <#include "/view/admin/admin_aside_base.ftlh">
+
+<#--include::modals-->
+<#include "/view/admin/cache/_cache_list_modal.ftlh">
 
 </@layout.layout>
