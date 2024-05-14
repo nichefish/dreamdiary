@@ -25,4 +25,14 @@ public class JrnlDayEntityTestFactory {
                 .contentType(ContentType.JRNL_DAY.key)
                 .build();
     }
+
+    /**
+     * 저널 일자 Entity (simple) 생성
+     */
+    public static JrnlDaySmpEntity createJrnlDaySmp() throws Exception {
+        return JrnlDaySmpEntity.builder()
+                .postNo(0)
+                .contentType(ContentType.JRNL_DAY.key)
+                .build();
+    }
 }

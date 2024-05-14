@@ -41,7 +41,10 @@ public class JrnlDreamContentTagEntity
     @PostLoad
     private void onLoad() {
         // 태그 이름 세팅
-        if (this.tag != null) this.tagNm = this.tag.getTagNm();
+        if (this.tag != null) {
+            this.tagNm = this.tag.getTagNm();
+            this.tagCtgr = this.tag.getTagCtgr();
+        }
     }
 
     /** 컨텐츠 태그 번호 (PK) */
@@ -76,6 +79,9 @@ public class JrnlDreamContentTagEntity
     /** 태그 이름 */
     @Transient
     private String tagNm;
+    @Transient
+    /** 태그 카테고리 */
+    private String tagCtgr;
 
     /** 참조 컨텐츠 (저널 꿈)  */
     @ManyToOne(fetch = FetchType.EAGER)

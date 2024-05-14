@@ -705,8 +705,8 @@ commons.util = (function() {
          */
         tagify: function(selectorStr) {
             // 게시물 태그 tagify
-            let boardTagInput = document.querySelector(selectorStr);
-            new Tagify(boardTagInput, {
+            const boardTagInput = document.querySelector(selectorStr);
+            return new Tagify(boardTagInput, {
                 maxTags: 12,
                 // 특수문자 제외?몇몇개만 허용?
                 keepInvalidTags: false,

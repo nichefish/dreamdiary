@@ -4,8 +4,8 @@ import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.BaseEntityTestFactoryHelper;
-import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntityTestFactory;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDaySmpEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntityTestFactory;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
@@ -34,7 +34,7 @@ class JrnlDiaryMapstructTest {
     @Test
     void toDto_checkBasic() throws Exception {
         // Given::
-        JrnlDayEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
+        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDaySmp();
         jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));
 
         JrnlDiaryEntity jrnlDiaryEntity = JrnlDiaryEntityTestFactory.createJrnlDiary();
@@ -56,7 +56,7 @@ class JrnlDiaryMapstructTest {
     void testToDto_checkAuditor() throws Exception {
         // Given::
         JrnlDiaryEntity jrnlDiaryEntity = JrnlDiaryEntityTestFactory.createJrnlDiary();
-        JrnlDayEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
+        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDaySmp();
         jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));
         jrnlDiaryEntity.setJrnlDay(jrnlDayEntity);
         // 등록자
