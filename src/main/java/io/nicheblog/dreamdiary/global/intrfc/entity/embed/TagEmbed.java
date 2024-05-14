@@ -47,22 +47,4 @@ public class TagEmbed
     /** 컨텐츠 태그 문자열 (','로 구분) */
     @Transient
     private String tagListStr;
-
-    /* ----- */
-
-    /**
-     * 태그 :: List<Entity> -> List<Dto> 반환
-     */
-    public List<ContentTagDto> getDtoList() {
-        if (CollectionUtils.isEmpty(this.list)) return null;
-        return this.list.stream()
-                .map(entity -> {
-                    try {
-                        return ContentTagMapstruct.INSTANCE.toDto(entity);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
 }

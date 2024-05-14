@@ -60,12 +60,14 @@ public class TagCmpstn
     public String getTagListStr() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()
+                .sorted()
                 .map(tag -> tag.getTag().getTagNm())
                 .collect(Collectors.joining(","));
     }
     public List<String> getTagStrList() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()
+                .sorted()
                 .map(tag -> tag.getTag().getTagNm())
                 .collect(Collectors.toList());
     }

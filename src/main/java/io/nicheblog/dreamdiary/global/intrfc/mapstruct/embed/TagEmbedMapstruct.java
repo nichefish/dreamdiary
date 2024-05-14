@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -17,7 +18,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, ContentTagMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface TagEmbedMapstruct
         extends BaseMapstruct<TagCmpstn, TagEmbed> {
 
@@ -27,7 +28,7 @@ public interface TagEmbedMapstruct
      * Entity -> Dto
      */
     @Override
-    @Mapping(target = "list", expression = "java(entity.getDtoList())")
+    @Mapping(target = "list", expression = "java(ContentTagMapstruct.INSTANCE.toDtoList(entity.getList()))")
     TagCmpstn toDto(final TagEmbed entity) throws Exception;
 
     /**
