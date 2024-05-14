@@ -708,93 +708,102 @@ commons.util = (function() {
             const tagInput = document.querySelector(selectorStr);
             return new Tagify(tagInput, {
                 maxTags: 12,
-                // 특수문자 제외?몇몇개만 허용?
-                keepInvalidTags: true,
+                keepInvalidTags: false,
                 skipInvalid: true,
-                duplicates: true,
-                // TODO: 태그가 같아도 카테고리가 다르면 가능하도록?
+                // duplicate 허용하고 수동 로직으로 중복 처리
+                duplicates: false,
                 editTags: {
                     clicks: 2,
-                    keepInvalid: false      // if after editing, tag is invalid, auto-revert
+                    // if after editing, tag is invalid, auto-revert
+                    keepInvalid: false
                 },
                 templates: {
-                    tag: function(tagData) {
-                        try {
-                            // 태그 메타데이터 (data)를 문자열로 변환하여 표시
-                            const metaDataString = commons.util.isNotEmpty(tagData.data) ? JSON.stringify(tagData.data): "";
-                            const hasCtgr = commons.util.isNotEmpty(tagData.data) && commons.util.isNotEmpty(tagData.data.ctgr);
-                            const ctgrSpan = hasCtgr ? `<span class="tagify__tag-category text-noti me-1">[${tagData.data.ctgr}]</span>` : "";
-                            return `<tag title="${tagData.value}" contenteditable="false" spellcheck="false" tabindex="-1"
-                                         class="tagify__tag" value="${tagData.value}" data="${metaDataString}">
-                                        <x title="" class="tagify__tag__removeBtn" role="button" aria-label="remove tag"></x>
-                                        <div>
-                                            <!-- 메타데이터 시각화 -->
-                                            ${ctgrSpan}
-                                            <span class="tagify__tag-text">${tagData.value}</span>
-                                        </div>
-                                    </tag>`;
-                        } catch (e) {
-                            return `<tag title="${tagData.value}">${tagData.value}</tag>`;
-                        }
+                    tag: function (tagData) {
+                        // 태그 메타데이터 (data)를 문자열로 변환하여 표시
+                        const ctgr = commons.util.isNotEmpty(tagData.data) ? tagData.data.ctgr : "";
+                        const ctgrSpan = ctgr !== "" ? `<span class="tagify__tag-category text-noti me-1">[${tagData.data.ctgr}]</span>` : "";
+                        return `<tag title="${tagData.value}" contenteditable="false" spellcheck="false" tabindex="-1"
+                                     class="tagify__tag" value="${tagData.value}" data-ctgr="${ctgr}">
+                                    <x title="" class="tagify__tag__removeBtn" role="button" aria-label="remove tag"></x>
+                                    <div>
+                                        <!-- 메타데이터 시각화 -->
+                                        ${ctgrSpan}
+                                        <span class="tagify__tag-text">${tagData.value}</span>
+                                    </div>
+                                </tag>`;
                     }
                 },
-                callbacks: {
-                    add: function(e) {
-                        let tag = e.detail.data;
-                        let isDuplicate = tagify.getTagElms().some(existingTag => {
-                            const existingData = tagify.tagData(existingTag);
-                            const isValueSame = existingData.value === tag.value;
-                            const isCtgrSame = existingData.data && tag.data && existingData.data.ctgr === tag.data.ctgr;
-                            return isValueSame && isCtgrSame;
-                        });
-                        if (isDuplicate) {
-                            tagify.removeTags(tag.value); // 중복된 태그는 제거
-                        }
-                    }
-                }
             });
         },
-        tagifyWithCategory: function(selectorStr) {
-            // 게시물 태그 tagify
+
+        tagifyWithCtgr: function(selectorStr) {
             const tagify = commons.util.tagify(selectorStr);
-            // 카테고리 입력 처리
+            // 태그 카테고리 입력 UI 존재시에만 활성화됨
             const categoryInputContainer = document.querySelector('#tag_ctgr_div');
             const tagCtgrInput = document.querySelector('#tag_ctgr');
             if (!categoryInputContainer || !tagCtgrInput) return tagify;
-            tagify.on('add', function(e) {
+
+            // 수동 중복 체크 위해 중복 제한 제거
+            tagify.settings.duplicates = true;
+
+            // 태그 추가시 카테고리 입력 칸 prompt
+            tagify.on("add", function(e) {
+                const newTag = e.detail.data;
+                const baseTagProc = newTag.data === undefined;
+                if (!baseTagProc) return;
+                // 기본 태그 (카테고리 붙이기 전)
                 categoryInputContainer.style.display = 'block';
-                tagCtgrInput.focus();
-                tagCtgrInput.value = '';  // 이전 카테고리 값 초기화
+                tagCtgrInput.value = '';
                 tagCtgrInput.dataset.tagValue = e.detail.data.value;
+                // setTimeout을 사용하여 포커스 호출 지연
+                setTimeout(() => {
+                    // 새로 추가된 임시 태그 마킹
+                    const lastTagElmt = tagify.getTagElms()[tagify.getTagElms().length - 1];
+                    lastTagElmt.setAttribute('data-marked', 'true');  // 마킹
+                    tagCtgrInput.focus();
+                }, 0);
             });
+            // 카테고리 입력칸에 이벤트리스너 추가 (ESC 또는 탭)
             tagCtgrInput.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape') {
-                    event.preventDefault();  // 탭 이동의 기본 동작을 막음
-                    categoryInputContainer.style.display = 'none';  // 카테고리 입력 필드 숨김
-                    if (tagify.DOM.input) tagify.DOM.input.focus();  // Tagify의 내부 input 요소에 직접 포커스
+                    // ESC = 태그 추가 없이 빠져나감
+                    event.preventDefault();
+                    categoryInputContainer.style.display = 'none';
+                    setTimeout(() => {
+                        if (tagify.DOM.input) tagify.DOM.input.focus();
+                    }, 0);
                 } else if (event.key === 'Tab') {
-                    event.preventDefault();  // 탭 이동의 기본 동작을 막음
-                    const tagCtgr = tagCtgrInput.value;
-                    if (tagCtgr) {
-                        // 태그 수정을 위해 해당 태그를 먼저 찾아 제거
-                        const tagValue = tagCtgrInput.dataset.tagValue;
-                        const existingTag = tagify.getTagElmByValue(tagValue);
-                        if (existingTag) {
-                            tagify.removeTags(existingTag);  // 기존 태그 제거
-                            console.log('Tags after removal:', tagify.value);  // 태그 제거 후 상태 확인
-                        }
-                        // 태그 추가
-                        // 태그 추가 시도
-                        setTimeout(function() {
-                            tagify.addTags([{ value: tagValue, data: { category: tagCtgr } }]);
-                            console.log('Tags after adding:', tagify.value);  // 태그 추가 후 상태 확인
+                    // TAB = 빈칸 아닐시 카테고리 추가
+                    event.preventDefault();
+                    const newCtgr = tagCtgrInput.value;
+                    const markedTags = document.querySelectorAll('[data-marked="true"]');
+                    const newValue = tagCtgrInput.dataset.tagValue;
 
-                            categoryInputContainer.style.display = 'none';  // 카테고리 입력 필드 숨김
-                            if (tagify.DOM.input) tagify.DOM.input.focus();  // Tagify의 내부 input 요소에 직접 포커스
-                        }, 0);
+                    // 중복 체크
+                    // (카테고리 미추가헐 경우 마킹한 임시태그는 이 과정에서 자연스레 없어짐.)
+                    const tags = tagify.getTagElms(); // 모든 태그 DOM 요소 가져오기
+                    let isDuplicate = false;
+                    Array.from(tags).forEach(existingTagElmt => {
+                        const existingTagData = tagify.getSetTagData(existingTagElmt);
+                        console.log("existingTagData: ", existingTagData);
+                        if (existingTagData.value !== newValue) return;
+                        const existingCtgr = existingTagData.data ? existingTagData.data.ctgr : "";
+                        isDuplicate = (existingCtgr === newCtgr);
+                        console.log("isDuplicate: ", isDuplicate);
+                        if (isDuplicate) tagify.removeTags(existingTagElmt);  // 마킹된 태그 제거
+                    });
+                    // 새 태그 추가
+                    tagify.addTags([{ value: newValue, data: { ctgr: newCtgr } }]);
+                    // 카테고리 붙인 걍우 임시 태그를 찾아 제거
+                    if (newCtgr) {
+                        markedTags.forEach(tagElm => {
+                            tagify.removeTags(tagElm);  // 마킹된 태그 제거
+                        });
                     }
                     categoryInputContainer.style.display = 'none';  // 카테고리 입력 필드 숨김
-                    if (tagify.DOM.input) tagify.DOM.input.focus();  // Tagify의 내부 input 요소에 직접 포커스
+                    setTimeout(() => {
+                        if (tagify.DOM.input) tagify.DOM.input.focus();
+                    }, 0);
                 }
             });
             return tagify;
