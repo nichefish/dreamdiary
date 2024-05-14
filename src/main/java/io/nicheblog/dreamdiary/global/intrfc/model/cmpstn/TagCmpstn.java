@@ -1,8 +1,12 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
+import io.nicheblog.dreamdiary.web.model.cmm.BaseTagifyDataDto;
+import io.nicheblog.dreamdiary.web.model.cmm.BaseTagifyDto;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import lombok.*;
@@ -50,7 +54,7 @@ public class TagCmpstn
                 .mapToObj(jArray::getJSONObject)
                 .map(json -> {
                     if (json.getJSONObject("data") == null) return new TagDto(json.getString("value"));
-                    return new TagDto(json.getString("value"), json.getJSONObject("data").getString("category"));
+                    return new TagDto(json.getString("value"), json.getJSONObject("data").getString("ctgr"));
                 })
                 .collect(Collectors.toList());
     }
@@ -78,6 +82,21 @@ public class TagCmpstn
                 .map(tag -> tag.getTag().getTagNm())
                 .collect(Collectors.joining(","));
     }
+    public String getTagListStrWithCtgr() {
+        if (CollectionUtils.isEmpty(this.list)) return null;
+        ObjectMapper mapper = new ObjectMapper();
+        return this.list.stream()
+                .sorted()
+                .map(tag -> {
+                    try {
+                        return mapper.writeValueAsString(new BaseTagifyDto(tag.getTagNm(), new BaseTagifyDataDto(tag.getCtgr())));
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException("Error processing JSON", e);
+                    }
+                })
+                .collect(Collectors.joining(",", "[", "]"));
+    }
+
     public List<String> getTagStrList() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()

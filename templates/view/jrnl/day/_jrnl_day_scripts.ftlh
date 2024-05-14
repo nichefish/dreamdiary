@@ -54,7 +54,7 @@
                         if (commons.util.isNotEmpty(rsltList)) rsltList.reverse();
                     }
                     $("#jrnl_dream_list_div").empty();
-                    $(".modal").modal("hide");
+                    commons.util.closeModal();
                     commons.util.handlebarsTemplate(rsltList, "jrnl_day_list");
                 }, "block");
             },

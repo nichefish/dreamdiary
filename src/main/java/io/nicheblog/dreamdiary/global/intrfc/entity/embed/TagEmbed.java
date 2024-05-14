@@ -1,16 +1,12 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import lombok.*;
 import org.hibernate.annotations.*;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * TagEmbed

@@ -38,11 +38,11 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    $(".modal").modal("hide");
                     $("#jrnl_aside #yy").val("");
                     $("#jrnl_aside #mnth").val("");
                     $("#jrnl_day_list_div").empty();
                     $("#jrnl_dream_tag_list_div").empty();
+                    commons.util.closeModal();
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_list");
                     JrnlDream.inKeywordSearchMode = true;
                 }, "block");
@@ -56,7 +56,7 @@
                 /* jquery :: validation */
                 JrnlDream.initValidateForm();
                 /* tagify */
-                commons.util.tagify("#tagListStr");
+                commons.util.tagifyWithCategory("#tagListStr");
                 // checkbox init
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                 // checkbox init
@@ -85,7 +85,6 @@
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    // const isReg = $("#jrnlDreamRegForm #postNo").val() != "";
                     const url = "${Url.JRNL_DREAM_REG_AJAX!}";
                     let ajaxData = new FormData($("#jrnlDreamRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
@@ -118,7 +117,8 @@
                     /* jquery :: validation */
                     JrnlDream.initValidateForm();
                     /* tagify */
-                    commons.util.tagify("#tagListStr");
+                    commons.util.tagifyWithCategory("#tagListStr");
+
                     // checkbox init
                     commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                     // checkbox init

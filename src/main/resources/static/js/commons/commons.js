@@ -711,7 +711,7 @@ commons.util = (function() {
                 // 특수문자 제외?몇몇개만 허용?
                 keepInvalidTags: true,
                 skipInvalid: true,
-                duplicates: false,
+                duplicates: true,
                 // TODO: 태그가 같아도 카테고리가 다르면 가능하도록?
                 editTags: {
                     clicks: 2,
@@ -722,18 +722,33 @@ commons.util = (function() {
                         try {
                             // 태그 메타데이터 (data)를 문자열로 변환하여 표시
                             const metaDataString = commons.util.isNotEmpty(tagData.data) ? JSON.stringify(tagData.data): "";
-                            const category = commons.util.isNotEmpty(tagData.data) ? "[" + tagData.data.category + "]": "";
+                            const hasCtgr = commons.util.isNotEmpty(tagData.data) && commons.util.isNotEmpty(tagData.data.ctgr);
+                            const ctgrSpan = hasCtgr ? `<span class="tagify__tag-category text-noti me-1">[${tagData.data.ctgr}]</span>` : "";
                             return `<tag title="${tagData.value}" contenteditable="false" spellcheck="false" tabindex="-1"
                                          class="tagify__tag" value="${tagData.value}" data="${metaDataString}">
                                         <x title="" class="tagify__tag__removeBtn" role="button" aria-label="remove tag"></x>
                                         <div>
                                             <!-- 메타데이터 시각화 -->
-                                            <span class="tagify__tag-category text-noti me-1">${category}</span>
+                                            ${ctgrSpan}
                                             <span class="tagify__tag-text">${tagData.value}</span>
                                         </div>
                                     </tag>`;
                         } catch (e) {
                             return `<tag title="${tagData.value}">${tagData.value}</tag>`;
+                        }
+                    }
+                },
+                callbacks: {
+                    add: function(e) {
+                        let tag = e.detail.data;
+                        let isDuplicate = tagify.getTagElms().some(existingTag => {
+                            const existingData = tagify.tagData(existingTag);
+                            const isValueSame = existingData.value === tag.value;
+                            const isCtgrSame = existingData.data && tag.data && existingData.data.ctgr === tag.data.ctgr;
+                            return isValueSame && isCtgrSame;
+                        });
+                        if (isDuplicate) {
+                            tagify.removeTags(tag.value); // 중복된 태그는 제거
                         }
                     }
                 }

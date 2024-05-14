@@ -88,18 +88,18 @@ public class TagService
 
         // 태그객체 또는 태그 문자열이 넘어오지 않았으면? 리턴.
         if (tagCmpstn == null) return;
-        List<TagDto> newTagStrList = tagCmpstn.getParsedTagList();
-        if (CollectionUtils.isEmpty(newTagStrList)) return;
+        List<TagDto> newTagList = tagCmpstn.getParsedTagList();
+        if (CollectionUtils.isEmpty(newTagList)) return;
 
         // 기존 태그와 컨텐츠 태그가 동일하면 리턴
-        List<TagDto> existingTagStrList = contentTagService.getTagStrListByClsfKey(clsfKey);
-        boolean isSame = newTagStrList.size() == existingTagStrList.size() && new HashSet<>(newTagStrList).containsAll(existingTagStrList);
+        List<TagDto> existingTagList = contentTagService.getTagStrListByClsfKey(clsfKey);
+        boolean isSame = newTagList.size() == existingTagList.size() && new HashSet<>(newTagList).containsAll(existingTagList);
         if (isSame) return;
         
         // 1, 추가해야 할 마스터 태그 처리 (메소드 분리)
         // 새로운 태그 목록에서 기존 태그 목록을 빼면 추가해야 할 태그들이 나옴
-        Set<TagDto> newTagSet = new HashSet<>(newTagStrList);
-        existingTagStrList.forEach(newTagSet::remove);
+        Set<TagDto> newTagSet = new HashSet<>(newTagList);
+        existingTagList.forEach(newTagSet::remove);
         List<TagEntity> rsList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(newTagSet)) {
             rsList = this.addMasterTag(new ArrayList<>(newTagSet), clsfKey);
@@ -107,8 +107,8 @@ public class TagService
 
         // 2. 삭제해야 할 태그 삭제
         // 기존 태그 목록에서 새로운 태그 목록을 빼면 삭제해야 할 태그들이 나옴
-        Set<TagDto> obsoleteTagSet = new HashSet<>(existingTagStrList);
-        newTagStrList.forEach(obsoleteTagSet::remove);
+        Set<TagDto> obsoleteTagSet = new HashSet<>(existingTagList);
+        newTagList.forEach(obsoleteTagSet::remove);
         if (CollectionUtils.isNotEmpty(obsoleteTagSet)) contentTagService.delObsoleteContentTags(clsfKey, new ArrayList<>(obsoleteTagSet));
 
         // 3. 추가해야 할 컨텐츠-태그를 처리해준다.
