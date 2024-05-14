@@ -6,10 +6,13 @@
 <script>
     const Comment = (function() {
         return {
-            init: function () {
+            init: function (refreshFunc) {
                 /* jquery :: validation */
                 Comment.initValidateForm();
                 commons.util.handlebarsTemplate({}, "comment_reg");
+                if (refreshFunc !== undefined) {
+                    Comment.refreshFunc = refreshFunc;
+                }
             },
             /** form validation init */
             initValidateForm: function() {
@@ -39,7 +42,12 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
+                                if (!res.rslt) return;
+                                if (Comment.refreshFunc !== undefined) {
+                                    Comment.refreshFunc;
+                                } else {
+                                    commons.util.blockUIReload();
+                                }
                             });
                     });
                 });
@@ -78,7 +86,12 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
+                                if (!res.rslt) return;
+                                if (Comment.refreshFunc !== undefined) {
+                                    Comment.refreshFunc;
+                                } else {
+                                    commons.util.blockUIReload();
+                                }
                             });
                     });
                 });
@@ -95,7 +108,12 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
+                                if (!res.rslt) return;
+                                if (Comment.refreshFunc !== undefined) {
+                                    Comment.refreshFunc;
+                                } else {
+                                    commons.util.blockUIReload();
+                                }
                             });
                     });
                 });
