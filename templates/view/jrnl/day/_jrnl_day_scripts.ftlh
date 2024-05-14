@@ -38,13 +38,16 @@
                 const mnth = $("#jrnl_aside #mnth").val();
                 if (commons.util.isEmpty(mnth)) return;
                 const url = "${Url.JRNL_DAY_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": mnth, "sort": $("#jrnl_aside #sort").val() };
+                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": mnth };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_day_list");
+                    let rsltList = res.rsltList;
+                    let sortStr = $("#jrnl_aside #sort").val();
+                    if (commons.util.isNotEmpty(rsltList) && sortStr === "ASC") rsltList.reverse();
+                    commons.util.handlebarsTemplate(rsltList, "jrnl_day_list");
                     $("#jrnl_dream_list_div").empty();
                 }, "block");
             },
@@ -52,7 +55,6 @@
             sort: function() {
                 let asIs = $("#jrnl_aside #sort").val();
                 let toBe = (asIs !== "ASC") ? "ASC" : "DESC";
-                console.log("toBe: ", toBe);
                 // 쿠키 설정하기
                 let cookieOptions = {
                     path: "/jrnl/day/",
@@ -61,7 +63,28 @@
                 $.cookie("jrnl_day_sort", toBe, cookieOptions);
                 // 값 설정
                 $("#jrnl_aside #sort").val(toBe);
-                JrnlDay.yyMnthListAjax();
+                if (toBe === "DESC") {
+                    $("#sortIcon").removeClass("bi-sort-numeric-down").addClass("bi-sort-numeric-up-alt");
+                } else {
+                    $("#sortIcon").removeClass("bi-sort-numeric-up-alt").addClass("bi-sort-numeric-down");
+                }
+
+                const container = document.querySelector('#jrnl_day_list_div'); // 모든 저널 일자를 포함하는 컨테이너
+                const days = Array.from(container.querySelectorAll('.jrnl-day')); // 모든 'jrnl-day' 요소를 배열로 변환
+                days.sort((a, b) => {
+                    const dateA = new Date(a.querySelector('.jrnl-day-header .col-1').textContent.trim());
+                    const dateB = new Date(b.querySelector('.jrnl-day-header .col-1').textContent.trim());
+                    if (toBe === "ASC") return dateA - dateB; // 날짜를 비교하여 역순 정렬
+                    return dateB - dateA; // 날짜를 비교하여 역순 정렬
+                });
+                // 컨테이너에서 모든 요소를 제거
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                // 정렬된 요소를 다시 컨테이너에 추가
+                days.forEach(day => {
+                    container.appendChild(day);
+                });
             },
             /** 등록 화면 호출 */
             regModal: function() {
