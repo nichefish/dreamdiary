@@ -1,9 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -27,8 +24,10 @@ public class BaseSearchParam
     public static final Integer DEFAULT_PAGE_SIZE = 10;
 
     /** 페이지 번호 (기본값 : 1) */
+    @Builder.Default
     protected Integer pageNo = 1;
     /** 페이지 크기 (기본값 : 10) */
+    @Builder.Default
     protected Integer pageSize = 10;
 
     /** 검색 유형 (검색 키워드와 한 세트) */

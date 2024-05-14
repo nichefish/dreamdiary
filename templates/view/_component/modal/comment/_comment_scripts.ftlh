@@ -44,7 +44,7 @@
                             .then(function() {
                                 if (!res.rslt) return;
                                 if (Comment.refreshFunc !== undefined) {
-                                    Comment.refreshFunc;
+                                    Comment.refreshFunc();
                                 } else {
                                     commons.util.blockUIReload();
                                 }
@@ -88,7 +88,7 @@
                             .then(function() {
                                 if (!res.rslt) return;
                                 if (Comment.refreshFunc !== undefined) {
-                                    Comment.refreshFunc;
+                                    Comment.refreshFunc();
                                 } else {
                                     commons.util.blockUIReload();
                                 }
@@ -110,7 +110,7 @@
                             .then(function() {
                                 if (!res.rslt) return;
                                 if (Comment.refreshFunc !== undefined) {
-                                    Comment.refreshFunc;
+                                    Comment.refreshFunc();
                                 } else {
                                     commons.util.blockUIReload();
                                 }

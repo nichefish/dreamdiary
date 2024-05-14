@@ -46,6 +46,7 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
                         throw new RuntimeException(e);
                     }
                 })
+                .sorted()
                 .collect(Collectors.toList());
     }
 
