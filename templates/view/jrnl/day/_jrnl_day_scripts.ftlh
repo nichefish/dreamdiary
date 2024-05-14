@@ -53,8 +53,9 @@
                         $("#sortIcon").removeClass("bi-sort-numeric-down").addClass("bi-sort-numeric-up-alt");
                         if (commons.util.isNotEmpty(rsltList)) rsltList.reverse();
                     }
-                    commons.util.handlebarsTemplate(rsltList, "jrnl_day_list");
                     $("#jrnl_dream_list_div").empty();
+                    $(".modal").modal("hide");
+                    commons.util.handlebarsTemplate(rsltList, "jrnl_day_list");
                 }, "block");
             },
             /** */

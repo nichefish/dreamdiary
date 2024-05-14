@@ -44,7 +44,7 @@
                     $("#jrnl_day_list_div").empty();
                     $("#jrnl_dream_tag_list_div").empty();
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_list");
-                    JrnlDream.inSearchMode = true;
+                    JrnlDream.inKeywordSearchMode = true;
                 }, "block");
             },
             /** 저널 꿈 등록 모달 팝업 호출 */
@@ -92,7 +92,7 @@
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (!res.rslt) return;
-                                if (JrnlDream.inSearchMode) {
+                                if (JrnlDream.inKeywordSearchMode) {
                                     JrnlDream.keywordListAjax();
                                 } else {
                                     JrnlDay.yyMnthListAjax();
@@ -149,7 +149,7 @@
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (!res.rslt) return;
-                                if (JrnlDream.inSearchMode) {
+                                if (JrnlDream.inKeywordSearchMode) {
                                     JrnlDream.keywordListAjax();
                                 } else {
                                     JrnlDay.yyMnthListAjax();

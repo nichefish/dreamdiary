@@ -10,7 +10,7 @@
                 $("#jrnl_aside #mnth").val("");
                 commons.util.handlebarsTemplate(null, "jrnl_day_list");
                 commons.util.handlebarsTemplate([], "jrnl_dream_tag_list");
-                JrnlDream.inSearchMode = false;
+                JrnlDream.inKeywordSearchMode = false;
             },
             mnth: function () {
                 // 쿠키 설정하기
@@ -26,7 +26,7 @@
                 JrnlDay.yyMnthListAjax();
                 JrnlTag.dreamTagListAjax();
                 //
-                JrnlDream.inSearchMode = false;
+                JrnlDream.inKeywordSearchMode = false;
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
             },
