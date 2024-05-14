@@ -29,6 +29,8 @@ public class TagDto
     /** 태그 번호 (PK) */
     private Integer tagNo;
 
+    /** 태그 카테고리 */
+    private String tagCtgr;
     /** 태그 */
     private String tagNm;
 

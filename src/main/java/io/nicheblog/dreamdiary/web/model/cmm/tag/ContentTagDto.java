@@ -33,6 +33,8 @@ public class ContentTagDto
     /** 참조 컨텐츠 타입 */
     private String refContentType;
 
+    /** 태그 카테고리 */
+    private String tagCtgr;
     /** 태그 정보 */
     private TagDto tag;
 
