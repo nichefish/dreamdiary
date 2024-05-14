@@ -45,8 +45,14 @@
                         return false;
                     }
                     let rsltList = res.rsltList;
+                    // 정렬 처리
                     let sortStr = $("#jrnl_aside #sort").val();
-                    if (commons.util.isNotEmpty(rsltList) && sortStr === "ASC") rsltList.reverse();
+                    if (sortStr === "ASC") {
+                        $("#sortIcon").removeClass("bi-sort-numeric-up-alt").addClass("bi-sort-numeric-down");
+                    } else {
+                        $("#sortIcon").removeClass("bi-sort-numeric-down").addClass("bi-sort-numeric-up-alt");
+                        if (commons.util.isNotEmpty(rsltList)) rsltList.reverse();
+                    }
                     commons.util.handlebarsTemplate(rsltList, "jrnl_day_list");
                     $("#jrnl_dream_list_div").empty();
                 }, "block");
@@ -126,7 +132,7 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
+                                if (res.rslt) JrnlDay.yyMnthListAjax();
                             });
                     }, "block");
                 });
@@ -170,7 +176,7 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) commons.util.blockUIReload();
+                                if (res.rslt) JrnlDay.yyMnthListAjax();
                             });
                     }, "block");
                 });

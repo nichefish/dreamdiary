@@ -79,8 +79,8 @@
     <div class="col-1 ms-4 me-6 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
         <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                 onclick="JrnlDay.sort();"
-                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
-                <i class="bi bi-sort-numeric-down-alt fs-2 pe-0" id="sortIcon"></i>
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="날짜 정렬을 변경합니다.">
+                <i class="bi bi-sort-numeric-up-alt fs-2 pe-0" id="sortIcon"></i>
         </button>
     </div>
 </div>

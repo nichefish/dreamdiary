@@ -21,6 +21,7 @@
                 $.cookie("jrnl_yy", $("#jrnl_aside #yy").val(), cookieOptions);
                 if ($("#jrnl_aside #mnth").val() === "") return;
                 $.cookie("jrnl_mnth", $("#jrnl_aside #mnth").val(), cookieOptions);
+                $("#jrnl_aside #dreamKeyword").val("");
                 // 목록 조회
                 JrnlDay.yyMnthListAjax();
                 JrnlTag.dreamTagListAjax();
