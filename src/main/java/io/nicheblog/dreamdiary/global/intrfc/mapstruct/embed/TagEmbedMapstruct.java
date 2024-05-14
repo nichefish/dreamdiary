@@ -36,7 +36,7 @@ public interface TagEmbedMapstruct
      */
     @Override
     @Mapping(target = "list", expression = "java(dto.getEntityList())")
-    @Mapping(target = "tagStrList", expression = "java(dto.getParsedTagList())")
+    @Mapping(target = "tagStrList", expression = "java(dto.getParsedTagStrList())")
     TagEmbed toEntity(final TagCmpstn dto) throws Exception;
 
     /**

@@ -21,7 +21,8 @@ import java.util.List;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(of = {"ctgr", "tagNm"}, callSuper = false)
+
 public class TagDto
         extends BaseCrudDto
         implements Identifiable<Integer>, Comparable<TagDto> {
@@ -30,7 +31,7 @@ public class TagDto
     private Integer tagNo;
 
     /** 태그 카테고리 */
-    private String tagCtgr;
+    private String ctgr;
     /** 태그 */
     private String tagNm;
 
@@ -56,6 +57,11 @@ public class TagDto
      */
     public TagDto(final String tagNm) {
         this.tagNm = tagNm;
+    }
+
+    public TagDto(final String tagNm, final String ctgr) {
+        this.tagNm = tagNm;
+        this.ctgr = ctgr;
     }
 
     @Override

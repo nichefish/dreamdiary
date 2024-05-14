@@ -43,7 +43,7 @@ public class JrnlDreamContentTagEntity
         // 태그 이름 세팅
         if (this.tag != null) {
             this.tagNm = this.tag.getTagNm();
-            this.tagCtgr = this.tag.getTagCtgr();
+            this.ctgr = this.tag.getCtgr();
         }
     }
 
@@ -81,7 +81,7 @@ public class JrnlDreamContentTagEntity
     private String tagNm;
     @Transient
     /** 태그 카테고리 */
-    private String tagCtgr;
+    private String ctgr;
 
     /** 참조 컨텐츠 (저널 꿈)  */
     @ManyToOne(fetch = FetchType.EAGER)
