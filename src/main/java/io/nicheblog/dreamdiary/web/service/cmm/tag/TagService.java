@@ -88,17 +88,17 @@ public class TagService
 
         // 태그객체 또는 태그 문자열이 넘어오지 않았으면? 리턴.
         if (tagCmpstn == null) return;
-        List<String> newTagStrList = tagCmpstn.getParsedTagList();
+        List<TagDto> newTagStrList = tagCmpstn.getParsedTagList();
         if (CollectionUtils.isEmpty(newTagStrList)) return;
 
         // 기존 태그와 컨텐츠 태그가 동일하면 리턴
-        List<String> existingTagStrList = contentTagService.getTagStrListByClsfKey(clsfKey);
+        List<TagDto> existingTagStrList = contentTagService.getTagStrListByClsfKey(clsfKey);
         boolean isSame = newTagStrList.size() == existingTagStrList.size() && new HashSet<>(newTagStrList).containsAll(existingTagStrList);
         if (isSame) return;
         
         // 1, 추가해야 할 마스터 태그 처리 (메소드 분리)
         // 새로운 태그 목록에서 기존 태그 목록을 빼면 추가해야 할 태그들이 나옴
-        Set<String> newTagSet = new HashSet<>(newTagStrList);
+        Set<TagDto> newTagSet = new HashSet<>(newTagStrList);
         existingTagStrList.forEach(newTagSet::remove);
         List<TagEntity> rsList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(newTagSet)) {
@@ -107,7 +107,7 @@ public class TagService
 
         // 2. 삭제해야 할 태그 삭제
         // 기존 태그 목록에서 새로운 태그 목록을 빼면 삭제해야 할 태그들이 나옴
-        Set<String> obsoleteTagSet = new HashSet<>(existingTagStrList);
+        Set<TagDto> obsoleteTagSet = new HashSet<>(existingTagStrList);
         newTagStrList.forEach(obsoleteTagSet::remove);
         if (CollectionUtils.isNotEmpty(obsoleteTagSet)) contentTagService.delObsoleteContentTags(clsfKey, new ArrayList<>(obsoleteTagSet));
 
@@ -125,12 +125,12 @@ public class TagService
     /**
      * 마스터 태그 처리:: 메소드 분리
      */
-    public List<TagEntity> addMasterTag(List<String> tagStrList, BaseClsfKey clsfKey) {
+    public List<TagEntity> addMasterTag(List<TagDto> tagList, BaseClsfKey clsfKey) {
 
         String contentType = clsfKey.getContentType();
-        List<TagEntity> tagEntityList = tagStrList.stream()
+        List<TagEntity> tagEntityList = tagList.stream()
                 .distinct() // 중복된 태그 문자열 제거
-                .map(tagStr -> tagRepository.findByTagNm(tagStr)
+                .map(tag -> tagRepository.findByTagNmAndCtgr(tag.getTagNm(), tag.getCtgr())
                         .orElseGet(() -> {
                             if (ContentType.JRNL_DREAM.key.equals(contentType)) {
                                 // 새 태그가 추가되었을 때만 태그 목록 캐시 초기화
@@ -149,7 +149,7 @@ public class TagService
                                 EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_99");
                                 EhCacheUtils.evictCache("jrnlDreamTagList", "9999_99");
                             }
-                            return new TagEntity(tagStr);
+                            return new TagEntity(tag.getTagNm(), tag.getCtgr());
                         })) // 데이터베이스에서 태그 조회, 없으면 새 객체 생성
                 .collect(Collectors.toList());
 
