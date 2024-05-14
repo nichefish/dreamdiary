@@ -28,6 +28,7 @@ public interface ContentTagRepository
      */
     @Modifying
     @Query("DELETE FROM ContentTagEntity ct " +
-            "WHERE ct.refPostNo = :postNo AND ct.refContentType = :contentType AND ct.refTagNo IN (SELECT t.tagNo FROM TagEntity t WHERE t.tagNm IN :obsoleteTagList)")
-    void deleteObsoleteContentTags(final @Param("postNo") Integer postNo, final @Param("contentType") String contentType, final @Param("obsoleteTagList") List<String> obsoleteTagList);
+            "WHERE ct.refPostNo = :postNo AND ct.refContentType = :contentType " +
+            "AND EXISTS (SELECT 1 FROM TagEntity t WHERE t.tagNo = ct.refTagNo AND t.tagNm = :tagNm AND t.ctgr = :ctgr)")
+    void deleteObsoleteContentTags(Integer postNo, String contentType, String tagNm, String ctgr);
 }

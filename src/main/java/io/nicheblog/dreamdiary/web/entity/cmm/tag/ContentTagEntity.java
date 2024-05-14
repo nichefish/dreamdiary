@@ -39,7 +39,7 @@ public class ContentTagEntity
         // 태그 이름 세팅
         if (this.tag != null) {
             this.tagNm = this.tag.getTagNm();
-            this.tagCtgr = this.tag.getTagCtgr();
+            this.ctgr = this.tag.getCtgr();
         }
     }
 
@@ -76,7 +76,7 @@ public class ContentTagEntity
     private String tagNm;
     @Transient
     /** 태그 카테고리 */
-    private String tagCtgr;
+    private String ctgr;
 
     /* ----- */
 

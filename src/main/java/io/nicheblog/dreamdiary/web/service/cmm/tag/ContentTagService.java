@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
+import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.ContentTagRepository;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
@@ -65,7 +66,7 @@ public class ContentTagService
     /**
      * 특정 게시물에 대한 컨텐츠 태그 목록 조회 
      */
-    public List<String> getTagStrListByClsfKey(BaseClsfKey clsfKey) {
+    public List<TagDto> getTagStrListByClsfKey(BaseClsfKey clsfKey) {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("refPostNo", clsfKey.getPostNo());
             put("refContentType", clsfKey.getContentType());
@@ -73,14 +74,14 @@ public class ContentTagService
         List<ContentTagEntity> entityList = contentTagRepository.findAll(contentTagSpec.searchWith(searchParamMap));
         if (CollectionUtils.isEmpty(entityList)) return new ArrayList<>();
         return entityList.stream()
-                .map(ContentTagEntity::getTagNm)
+                .map(tag -> new TagDto(tag.getTagNm(), tag.getCtgr()))
                 .collect(Collectors.toList());
     }
 
     /**
      * obsolete된 기존 컨텐츠 태그 삭제:: 메소드 분리
      */
-    public void delObsoleteContentTags(BaseClsfKey clsfKey, List<String> obsoleteTagList) {
+    public void delObsoleteContentTags(BaseClsfKey clsfKey, List<TagDto> obsoleteTagList) {
 
 
         String contentType = clsfKey.getContentType();
@@ -103,7 +104,9 @@ public class ContentTagService
                 EhCacheUtils.evictCache("jrnlDreamTagList", "9999_99");
             }
         });
-        contentTagRepository.deleteObsoleteContentTags(clsfKey.getPostNo(), clsfKey.getContentType(), obsoleteTagList);
+        obsoleteTagList.forEach(tag -> {
+            contentTagRepository.deleteObsoleteContentTags(clsfKey.getPostNo(), contentType, tag.getTagNm(), tag.getCtgr());
+        });
     }
 
     /**

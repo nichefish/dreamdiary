@@ -34,7 +34,7 @@ public class ContentTagDto
     private String refContentType;
 
     /** 태그 카테고리 */
-    private String tagCtgr;
+    private String ctgr;
     /** 태그 정보 */
     private TagDto tag;
 
