@@ -32,9 +32,9 @@ public class ContentTagSpec
      */
     @Override
     public void postQuery(
-            Root<ContentTagEntity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<ContentTagEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
     ) {
         query.distinct(true);
     }

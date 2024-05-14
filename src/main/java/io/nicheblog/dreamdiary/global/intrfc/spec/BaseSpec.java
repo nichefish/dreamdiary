@@ -36,7 +36,7 @@ public interface BaseSpec<Entity> {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            this.postQuery(root, query, builder);
+            this.postQuery(root, query, builder, searchParamMap);
             return builder.and(predicate.toArray(new Predicate[0]));
         };
     }
@@ -67,9 +67,22 @@ public interface BaseSpec<Entity> {
      * default: 조회 후처리 (정렬 순서 변경, distinct 등)
      */
     default void postQuery(
-            Root<Entity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<Entity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder,
+            final Map<String, Object> searchParamMap
+    ) {
+        // 정렬 처리:: 기본 공백, 필요시 각 함수에서 Override
+        this.postQuery(root, query, builder);
+    }
+
+    /**
+     * default: 조회 후처리 (정렬 순서 변경, distinct 등)
+     */
+    default void postQuery(
+            final Root<Entity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
     ) {
         // 정렬 처리:: 기본 공백, 필요시 각 함수에서 Override
     }

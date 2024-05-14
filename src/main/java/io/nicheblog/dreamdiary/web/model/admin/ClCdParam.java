@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.model.admin;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)

@@ -36,9 +36,9 @@ public class JrnlDreamTagSpec
      */
     @Override
     public void postQuery(
-            Root<JrnlDreamTagEntity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<JrnlDreamTagEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
     ) {
         query.distinct(true);
     }

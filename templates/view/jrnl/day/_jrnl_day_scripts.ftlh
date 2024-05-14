@@ -33,12 +33,12 @@
                     $("#aprxmtDt").valid(); // 체크박스 상태 변경시 details 필드 재검증
                 });
             },
-            /** 목록 조회 */
+            /** 년도-월 목록 조회 */
             yyMnthListAjax: function() {
                 const mnth = $("#jrnl_aside #mnth").val();
                 if (commons.util.isEmpty(mnth)) return;
                 const url = "${Url.JRNL_DAY_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": mnth };
+                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": mnth, "sort": $("#jrnl_aside #sort").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -47,6 +47,21 @@
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_day_list");
                     $("#jrnl_dream_list_div").empty();
                 }, "block");
+            },
+            /** */
+            sort: function() {
+                let asIs = $("#jrnl_aside #sort").val();
+                let toBe = (asIs !== "ASC") ? "ASC" : "DESC";
+                console.log("toBe: ", toBe);
+                // 쿠키 설정하기
+                let cookieOptions = {
+                    path: "/jrnl/day/",
+                    expires: commons.date.getCurrDateAddDay(36135)
+                };
+                $.cookie("jrnl_day_sort", toBe, cookieOptions);
+                // 값 설정
+                $("#jrnl_aside #sort").val(toBe);
+                JrnlDay.yyMnthListAjax();
             },
             /** 등록 화면 호출 */
             regModal: function() {

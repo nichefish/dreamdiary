@@ -34,9 +34,9 @@ public class SchdulSpec
      */
     @Override
     public void postQuery(
-            Root<SchdulEntity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<SchdulEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
         order.add(builder.desc(root.get("bgnDt")));

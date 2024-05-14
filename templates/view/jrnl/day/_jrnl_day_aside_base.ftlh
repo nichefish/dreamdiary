@@ -71,6 +71,7 @@
             <!--end::Header-->
             <#--begin::Body-->
             <div class="card-body" id="jrnl_aside">
+                <input type="hidden" name="sort" id="sort">
                 <#--begin::row-->
                 <div class="mb-7 d-flex justify-content-between gap-4">
                     <div class="col">

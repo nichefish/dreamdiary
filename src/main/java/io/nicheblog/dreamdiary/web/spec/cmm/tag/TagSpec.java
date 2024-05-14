@@ -32,9 +32,9 @@ public class TagSpec
      */
     @Override
     public void postQuery(
-            Root<TagEntity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<TagEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
     ) {
         query.distinct(true);
     }

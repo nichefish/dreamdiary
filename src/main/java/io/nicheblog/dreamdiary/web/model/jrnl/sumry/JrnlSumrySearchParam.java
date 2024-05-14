@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * JrnlSumrySearchParam
@@ -14,6 +15,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)

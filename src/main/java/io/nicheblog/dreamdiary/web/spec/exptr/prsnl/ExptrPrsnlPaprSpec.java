@@ -33,9 +33,9 @@ public class ExptrPrsnlPaprSpec
      */
     @Override
     public void postQuery(
-            Root<ExptrPrsnlPaprEntity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<ExptrPrsnlPaprEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
         order.add(builder.desc(root.get("yy")));

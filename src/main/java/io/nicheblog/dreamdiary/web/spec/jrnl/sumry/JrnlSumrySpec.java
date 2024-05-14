@@ -31,9 +31,9 @@ public class JrnlSumrySpec
      */
     @Override
     public void postQuery(
-            Root<JrnlSumryEntity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<JrnlSumryEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
     ) {
         List<Order> order = new ArrayList<>();
         order.add(builder.desc(root.get("yy")));

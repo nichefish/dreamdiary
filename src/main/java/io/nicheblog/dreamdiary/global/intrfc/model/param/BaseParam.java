@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 public class BaseParam {
 

@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.api.jrnl.day.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * JrnlDayApiSearchParam
@@ -13,19 +14,16 @@ import lombok.*;
  */
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class JrnlDayApiSearchParam
         extends BaseSearchParam {
 
-    /**
-     * 글분류 코드
-     */
+    /** 글분류 코드 */
     private String ctgrCd;
-    /**
-     * 제목
-     */
+    /** 제목 */
     private String title;
 
 

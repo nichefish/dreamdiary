@@ -32,9 +32,9 @@ public class BoardDefSpec
      */
     @Override
     public void postQuery(
-            Root<BoardDefEntity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<BoardDefEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
     ) {
         List<Order> orders = new ArrayList<>();
         orders.add(builder.asc(root.get("state").get("sortOrdr")));

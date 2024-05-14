@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.*;
@@ -32,12 +33,18 @@ public class JrnlDaySpec
      */
     @Override
     public void postQuery(
-            Root<JrnlDayEntity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<JrnlDayEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder,
+            final Map<String, Object> searchParamMap
     ) {
         List<Order> order = new ArrayList<>();
-        order.add(builder.asc(builder.coalesce(root.get("jrnlDt"), root.get("aprxmtDt"))));
+        String sortStr = (String) searchParamMap.get("sort");
+        if (StringUtils.isNotEmpty(sortStr) && "DESC".equals(sortStr)) {
+            order.add(builder.desc(builder.coalesce(root.get("jrnlDt"), root.get("aprxmtDt"))));
+        } else {
+            order.add(builder.asc(builder.coalesce(root.get("jrnlDt"), root.get("aprxmtDt"))));
+        }
         query.orderBy(order);
     }
 

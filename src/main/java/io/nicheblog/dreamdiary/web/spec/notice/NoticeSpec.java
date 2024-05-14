@@ -31,9 +31,9 @@ public class NoticeSpec
      */
     @Override
     public void postQuery(
-            Root<NoticeEntity> root,
-            CriteriaQuery<?> query,
-            CriteriaBuilder builder
+            final Root<NoticeEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
     ) {
         query.distinct(true);
     }

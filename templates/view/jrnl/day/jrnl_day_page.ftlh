@@ -28,9 +28,11 @@
             init: function () {
                 // 쿠키 설정하기
                 let yyCookie = $.cookie("jrnl_yy");
-                let mnthCookie = $.cookie("jrnl_mnth");
                 if (yyCookie !== undefined) $("#jrnl_aside #yy").val(yyCookie);
+                let mnthCookie = $.cookie("jrnl_mnth");
                 if (yyCookie !== undefined) $("#jrnl_aside #mnth").val(mnthCookie);
+                let sortCookie = $.cookie("jrnl_day_sort");
+                if (sortCookie !== undefined) $("#jrnl_aside #sort").val(sortCookie);
                 // 아무 쿠키도 없을경우 전체 데이터 로딩을 막기 위해 올해 년도 세팅
                 if (yyCookie === undefined && mnthCookie === undefined) $("#jrnl_aside #yy").val(commons.date.getCurrYyStr());
                 // 목록 조회
@@ -62,18 +64,23 @@
         <#--handlebars template goes in here-->
     </div>
     <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
-    <div class="col-1 ms-4 me-6 text-center fs-6 w-50px">
+    <div class="col-1 ms-4 text-center fs-6 w-auto gap-3">
         <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                 onclick="JrnlTag.hideSingleTag('#jrnl_dream_tag_list_div');"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="1개짜리 태그를 숨기고 보입니다.">
             <i class="bi bi-tag pe-0"></i>
         </button>
-    </div>
-    <div class="col-1 ms-4 me-6 text-center fs-6 w-50px">
         <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                 onclick="JrnlTag.dreamTagListAllAjax();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
             <i class="bi bi-tag pe-0"></i>
+        </button>
+    </div>
+    <div class="col-1 ms-4 me-6 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
+        <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                onclick="JrnlTag.dreamTagListAllAjax();"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
+            <i class="bi bi-sort-up pe-0"></i>
         </button>
     </div>
 </div>

@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.model.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * JrnlDaySearchParam
@@ -14,6 +15,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
@@ -27,4 +29,8 @@ public class JrnlDaySearchParam
 
     /** 컨텐츠 타입 */
     private String contentType;
+
+    /** 정렬 (ASC/DESC) */
+    @Builder.Default
+    private String sort = "ASC";
 }
