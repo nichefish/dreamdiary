@@ -91,10 +91,13 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) {
-                                    if (JrnlDream.inSearchMode) JrnlDream.keywordListAjax();
-                                    else commons.util.blockUIReload();
+                                if (!res.rslt) return;
+                                if (JrnlDream.inSearchMode) {
+                                    JrnlDream.keywordListAjax();
+                                } else {
+                                    JrnlDay.yyMnthListAjax();
                                 }
+                                commons.util.unblockUI();
                             });
                     }, "block");
                 });
@@ -145,10 +148,13 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) {
-                                    if (JrnlDream.inSearchMode) JrnlDream.keywordListAjax();
-                                    else commons.util.blockUIReload();
+                                if (!res.rslt) return;
+                                if (JrnlDream.inSearchMode) {
+                                    JrnlDream.keywordListAjax();
+                                } else {
+                                    JrnlDay.yyMnthListAjax();
                                 }
+                                commons.util.unblockUI();
                             });
                     }, "block");
                 });
