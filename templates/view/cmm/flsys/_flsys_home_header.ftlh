@@ -42,7 +42,6 @@
                     commons.util.handlebarsTemplate(rsltObj, "flsys_home_header_path");
                     // template에 있는 tooltip들 활성화
                     $("[data-bs-toggle='tooltip']").tooltip();
-                    // $('.modal').modal('hide');
                 });
             },
             /** 새로고침 (ajax) */
@@ -82,7 +81,7 @@
             addRef: function(filePath) {
                 let obj = { "filePath": filePath, "refCnt": Flsys.refCnt++ }
                 commons.util.handlebarsAppend(obj, "flsys_ref");
-                $(".modal").modal("hide");
+                commons.util.closeModal();
             },
             /** 기존 첨부파일 삭제 플래그 세팅 */
             delRef: function(obj) {

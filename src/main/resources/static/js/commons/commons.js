@@ -70,7 +70,7 @@ commons.util = (function() {
          * @param: data
          */
         isEmpty: function(data) {
-            let type = typeof(data);
+            const type = typeof(data);
             if (type === 'object') {
                 let isEmpty = false;
                 if (data) {
@@ -130,7 +130,7 @@ commons.util = (function() {
          */
         enterKey: function(selectorStr, func) {
             if (commons.util.is$NotPresent(selectorStr)) return;
-            let $inputs = $(selectorStr);
+            const $inputs = $(selectorStr);
             $inputs.on("keyup", function (key) {
                 if (key.keyCode === 13) {
                     key.preventDefault();
@@ -144,7 +144,7 @@ commons.util = (function() {
          */
         getReqstItemIdx: function(arrElmt, selectorStr, arrElmtId) {
             let reqstItemIdx = 0, elmtId, currentIdx;
-            let reqstDataArr = $(arrElmt + "[" + selectorStr + "]");
+            const reqstDataArr = $(arrElmt + "[" + selectorStr + "]");
             if (commons.util.is$NotPresent(reqstDataArr)) return;
             $(reqstDataArr).each(function (idx, elmt) {
                 elmtId = elmt.id;
@@ -160,14 +160,14 @@ commons.util = (function() {
          * 행 추가 함수에서 해당 input의 값(숫자) 총합 구해서 반환 (.excludeSum 제외)
          */
         getReqstItemTotSum: function(selectorStr) {
-            let reqstDataArr = $("input[" + selectorStr + "]");
+            const reqstDataArr = $("input[" + selectorStr + "]");
             if (commons.util.is$NotPresent(reqstDataArr)) return;
             let reqstItemTotSum = 0, elmtId;
             $(reqstDataArr).each(function (idx, elmt) {
                 elmtId = elmt.id;
                 if (elmtId.indexOf("{") < 0 && !$(elmt).hasClass("excludeSum")) {
-                    let value = $(elmt).val();
-                    let numValue = value.replace(/,/gi, "");
+                    const value = $(elmt).val();
+                    const numValue = value.replace(/,/gi, "");
                     if (value && !isNaN(Number(numValue))) reqstItemTotSum += Number(numValue);
                 }
             });
@@ -179,9 +179,9 @@ commons.util = (function() {
          */
         toNumber: function(selectorStr) {
             if (commons.util.is$NotPresent(selectorStr)) return;
-            let $input = $(selectorStr);
+            const $input = $(selectorStr);
             if ($input.val() === undefined) return;
-            let numValue = Number($(selectorStr).val().replace(/,/gi, ""));
+            const numValue = Number($(selectorStr).val().replace(/,/gi, ""));
             if (!isNaN(numValue)) return numValue;
         },
 
@@ -213,7 +213,7 @@ commons.util = (function() {
          */
         getCookie: function(name) {
             if (document.cookie) {
-                let array = document.cookie.split((escape(name) + '='));
+                const array = document.cookie.split((escape(name) + '='));
                 if (array.length >= 2) {
                     let arraySub = array[1].split(';');
                     return unescape(arraySub[0]);
@@ -235,7 +235,7 @@ commons.util = (function() {
          */
         blockUIFileDownload: (function() {
             commons.util.blockUI();
-            let downloadTimer = setInterval(function () {
+            const downloadTimer = setInterval(function () {
                 const token = commons.util.getCookie("FILE_CREATE_SUCCESS");
                 if (token === "TRUE") {
                     commons.util.unblockUI();
@@ -251,7 +251,7 @@ commons.util = (function() {
          */
         blockUIRequest: (function() {
             commons.util.blockUI();
-            let requestTimer = setInterval(function () {
+            const requestTimer = setInterval(function () {
                 const token = commons.util.getCookie("RESPONSE_SUCCESS");
                 if (token === "TRUE") {
                     commons.util.unblockUI();
@@ -329,7 +329,7 @@ commons.util = (function() {
          * @depdendency: blockUI (optional)
          */
         blockUIAjax: function(url, method, ajaxData, func, continueBlock) {
-            let option = {
+            const option = {
                 url: url,
                 type: method,
                 data: ajaxData,
@@ -344,7 +344,7 @@ commons.util = (function() {
          * @depdendency: blockUI (optional)
          */
         blockUIFileAjax: function(url, ajaxData, func, continueBlock) {
-            let option = {
+            const option = {
                 url: url,
                 type: 'post',
                 data: ajaxData,
@@ -362,7 +362,7 @@ commons.util = (function() {
          * @depdendency: blockUI (optional)
          */
         blockUISyncAjax: function (url, method, ajaxData, func, continueBlock) {
-            let option = {
+            const option = {
                 url: url,
                 type: method,
                 data: ajaxData,
@@ -377,7 +377,7 @@ commons.util = (function() {
          * @depdendency: blockUI (optional)
          */
         blockUIJsonAjax: function(url, method, ajaxData, func, continueBlock) {
-            let option = {
+            const option = {
                 url: url,
                 type: method,
                 data: ajaxData,
@@ -394,13 +394,13 @@ commons.util = (function() {
          */
         resetForm: function(formSelector) {
             if ($(formSelector) === undefined) return;
-            let $form = $(formSelector)[0];
+            const $form = $(formSelector)[0];
             if ($form !== undefined) $form.reset();
         },
 
         /** form submit */
         submit: function(formSelector, actionUrl, prefunc) {
-            let $form = $(formSelector);
+            const $form = $(formSelector);
             if ($form === undefined) {
                 alert("form is not defined.");
                 return false;
@@ -426,9 +426,9 @@ commons.util = (function() {
          */
         initSortTable: function() {
             if (typeof Page === 'undefined') { var Page = {}; }
-            let tables = document.getElementsByTagName("table");
+            const tables = document.getElementsByTagName("table");
             for (let i = 0; i < tables.length; ++i) {
-                let headers = tables[i].getElementsByTagName("th");
+                const headers = tables[i].getElementsByTagName("th");
                 for (let j = 0; j < headers.length; ++j) {
                     // 지역 유효범위에 생성할 중첩 함수
                     (function (table, n) {
@@ -446,7 +446,7 @@ commons.util = (function() {
          * 특정 테이블 헤더에 해당하는 열을 Sort한다.
          */
         sortTableByIdx: function(tableId, colIdx, sortMode) {
-            let table = document.getElementById(tableId);
+            const table = document.getElementById(tableId);
             commons.util.sortTable(table, colIdx, sortMode);
         },
 
@@ -455,7 +455,7 @@ commons.util = (function() {
          */
         sortTable: function(table, n, sortMode) {
             if (table === undefined || table.tBodies === undefined) return;
-            let tbody = table.tBodies[0];
+            const tbody = table.tBodies[0];
             let rows = tbody.getElementsByTagName("tr");
 
             rows = Array.prototype.slice.call(rows, 0);
@@ -485,7 +485,7 @@ commons.util = (function() {
          */
         sortReqstTable: function(table, n, sortMode) {
             if (table === undefined || table.tBodies === undefined) return;
-            let tbody = table.tBodies[0];
+            const tbody = table.tBodies[0];
             let rows = tbody.getElementsByTagName("tr");
 
             rows = Array.prototype.slice.call(rows, 0);
@@ -521,13 +521,13 @@ commons.util = (function() {
                 console.log("체크박스가 정의되지 않았습니다.");
                 return false;
             }
-            let separator = "//";
-            let cnIdx = ynCn.indexOf(separator);
-            let colorIdx = ynColor.indexOf(separator);
-            let yesStr = ynCn.substring(0, cnIdx);
-            let yesColor = ynColor.substring(0, colorIdx);
-            let noStr = ynCn.substring(cnIdx + 2);
-            let noColor = ynColor.substring(colorIdx + 2);
+            const separator = "//";
+            const cnIdx = ynCn.indexOf(separator);
+            const colorIdx = ynColor.indexOf(separator);
+            const yesStr = ynCn.substring(0, cnIdx);
+            const yesColor = ynColor.substring(0, colorIdx);
+            const noStr = ynCn.substring(cnIdx + 2);
+            const noColor = ynColor.substring(colorIdx + 2);
             $chckboxElmt.on("click", function () {
                 if ($chckboxElmt.is(":checked")) {
                     $("#"+attrId+"Label").text(yesStr).css("color", yesColor);
@@ -548,16 +548,16 @@ commons.util = (function() {
             if (value === "") return "";
             if (commons.util.isEmpty(unit)) unit = 1;       // 나눔 단위
             // 숫자값이 넘어오면 걍 콤마 붙인 결과값을(string) 넘겨버린다.
-            let numValue = value.replace(/,/g, "");
-            let isNumber = !isNaN(numValue);
+            const numValue = value.replace(/,/g, "");
+            const isNumber = !isNaN(numValue);
             if (isNumber) {
-                let divided = parseInt(numValue) / unit;
+                const divided = parseInt(numValue) / unit;
                 return Number(divided).toLocaleString();
             }
             // 나머지 경우에는 selector로 간주, keyup시 천단위 콤마 처리한다.
-            let selectorStr = value;
+            const selectorStr = value;
             if (commons.util.is$NotPresent(selectorStr)) return;
-            let $inputs = $(selectorStr);
+            const $inputs = $(selectorStr);
             $inputs.each(function(idx, elmt) {
                 $(elmt).val(commons.util.addComma($(elmt).val(), unit));
                 $(elmt).on("keyup", function() {
@@ -663,8 +663,8 @@ commons.util = (function() {
          */
         handlebarsTemplate: function(data, templateStr, show) {
             if (data === undefined || data === null) data = {};
-            let template = Handlebars.compile($("#"+templateStr+"_template").html().replaceAll("`", ""));
-            let actual = template(data);
+            const template = Handlebars.compile($("#"+templateStr+"_template").html().replaceAll("`", ""));
+            const actual = template(data);
             $("#"+templateStr+"_div").empty().append(actual);
             if (show === "show") {
                 $("#"+templateStr+"_modal").modal("show");
@@ -674,16 +674,16 @@ commons.util = (function() {
         },
         handlebarsAppend: function(data, templateStr) {
             if (data === undefined || data === null) data = {};
-            let template = Handlebars.compile($("#"+templateStr+"_template").html().replaceAll("`", ""));
-            let actual = template(data);
+            const template = Handlebars.compile($("#"+templateStr+"_template").html().replaceAll("`", ""));
+            const actual = template(data);
             $("#"+templateStr+"_div").append(actual);
             // template에 있는 tooltip들 활성화
             $("[data-bs-toggle='tooltip']").tooltip();
         },
         handlebarsAppendTo: function(data, templateId, trgetElmtId) {
             if (data === undefined || data === null) data = {};
-            let template = Handlebars.compile($("#"+templateId+"_template").html().replaceAll("`", ""));
-            let actual = template(data);
+            const template = Handlebars.compile($("#"+templateId+"_template").html().replaceAll("`", ""));
+            const actual = template(data);
             $("#"+trgetElmtId).append(actual);
             // template에 있는 tooltip들 활성화
             $("[data-bs-toggle='tooltip']").tooltip();
@@ -705,25 +705,91 @@ commons.util = (function() {
          */
         tagify: function(selectorStr) {
             // 게시물 태그 tagify
-            const boardTagInput = document.querySelector(selectorStr);
-            return new Tagify(boardTagInput, {
+            const tagInput = document.querySelector(selectorStr);
+            return new Tagify(tagInput, {
                 maxTags: 12,
                 // 특수문자 제외?몇몇개만 허용?
-                keepInvalidTags: false,
+                keepInvalidTags: true,
                 skipInvalid: true,
                 duplicates: false,
+                // TODO: 태그가 같아도 카테고리가 다르면 가능하도록?
                 editTags: {
                     clicks: 2,
                     keepInvalid: false      // if after editing, tag is invalid, auto-revert
                 },
+                templates: {
+                    tag: function(tagData) {
+                        try {
+                            // 태그 메타데이터 (data)를 문자열로 변환하여 표시
+                            const metaDataString = commons.util.isNotEmpty(tagData.data) ? JSON.stringify(tagData.data): "";
+                            const category = commons.util.isNotEmpty(tagData.data) ? "[" + tagData.data.category + "]": "";
+                            return `<tag title="${tagData.value}" contenteditable="false" spellcheck="false" tabindex="-1"
+                                         class="tagify__tag" value="${tagData.value}" data="${metaDataString}">
+                                        <x title="" class="tagify__tag__removeBtn" role="button" aria-label="remove tag"></x>
+                                        <div>
+                                            <!-- 메타데이터 시각화 -->
+                                            <span class="tagify__tag-category text-noti me-1">${category}</span>
+                                            <span class="tagify__tag-text">${tagData.value}</span>
+                                        </div>
+                                    </tag>`;
+                        } catch (e) {
+                            return `<tag title="${tagData.value}">${tagData.value}</tag>`;
+                        }
+                    }
+                }
             });
+        },
+        tagifyWithCategory: function(selectorStr) {
+            // 게시물 태그 tagify
+            const tagify = commons.util.tagify(selectorStr);
+            // 카테고리 입력 처리
+            const categoryInputContainer = document.querySelector('#tag_ctgr_div');
+            const tagCtgrInput = document.querySelector('#tag_ctgr');
+            if (!categoryInputContainer || !tagCtgrInput) return tagify;
+            tagify.on('add', function(e) {
+                categoryInputContainer.style.display = 'block';
+                tagCtgrInput.focus();
+                tagCtgrInput.value = '';  // 이전 카테고리 값 초기화
+                tagCtgrInput.dataset.tagValue = e.detail.data.value;
+            });
+            tagCtgrInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    event.preventDefault();  // 탭 이동의 기본 동작을 막음
+                    categoryInputContainer.style.display = 'none';  // 카테고리 입력 필드 숨김
+                    if (tagify.DOM.input) tagify.DOM.input.focus();  // Tagify의 내부 input 요소에 직접 포커스
+                } else if (event.key === 'Tab') {
+                    event.preventDefault();  // 탭 이동의 기본 동작을 막음
+                    const tagCtgr = tagCtgrInput.value;
+                    if (tagCtgr) {
+                        // 태그 수정을 위해 해당 태그를 먼저 찾아 제거
+                        const tagValue = tagCtgrInput.dataset.tagValue;
+                        const existingTag = tagify.getTagElmByValue(tagValue);
+                        if (existingTag) {
+                            tagify.removeTags(existingTag);  // 기존 태그 제거
+                            console.log('Tags after removal:', tagify.value);  // 태그 제거 후 상태 확인
+                        }
+                        // 태그 추가
+                        // 태그 추가 시도
+                        setTimeout(function() {
+                            tagify.addTags([{ value: tagValue, data: { category: tagCtgr } }]);
+                            console.log('Tags after adding:', tagify.value);  // 태그 추가 후 상태 확인
+
+                            categoryInputContainer.style.display = 'none';  // 카테고리 입력 필드 숨김
+                            if (tagify.DOM.input) tagify.DOM.input.focus();  // Tagify의 내부 input 요소에 직접 포커스
+                        }, 0);
+                    }
+                    categoryInputContainer.style.display = 'none';  // 카테고리 입력 필드 숨김
+                    if (tagify.DOM.input) tagify.DOM.input.focus();  // Tagify의 내부 input 요소에 직접 포커스
+                }
+            });
+            return tagify;
         },
 
         /**
          * 전체 모달 닫기
          */
         closeModal: function() {
-            $('.modal').modal('hide');
+            $(".modal").modal("hide");
         }
     }
 })();
