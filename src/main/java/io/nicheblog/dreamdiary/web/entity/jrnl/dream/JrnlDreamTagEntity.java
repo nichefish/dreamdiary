@@ -45,9 +45,9 @@ public class JrnlDreamTagEntity
     private Integer tagNo;
 
     /** 태그 카테고리 */
-    @Column(name = "tag_ctgr")
+    @Column(name = "ctgr")
     @Comment("태그 카테고리")
-    private String tagCtgr;
+    private String ctgr;
 
     /** 태그 */
     @Column(name = "tag_nm")
