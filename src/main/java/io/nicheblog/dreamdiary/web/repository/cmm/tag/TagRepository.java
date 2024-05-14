@@ -24,4 +24,9 @@ public interface TagRepository
      * 태그명으로 테이블 조회
      */
     Optional<TagEntity> findByTagNm(String tagNo);
+    
+    /**
+     * 태그명 + 카테고리명으로 테이블 조회
+     */
+    Optional<TagEntity> findByTagNmAndCtgr(String tagNm, String ctgr);
 }
