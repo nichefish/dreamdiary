@@ -62,7 +62,7 @@ public class TagDto
     }
 
     /**
-     * 날짜 오름차순 정렬
+     * 태그이름 오름차순 정렬
      */
     @SneakyThrows
     @Override
