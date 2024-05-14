@@ -74,6 +74,7 @@ public class ContentTagEntity
     /** 태그 */
     @Transient
     private String tagNm;
+    @Transient
     /** 태그 카테고리 */
     private String tagCtgr;
 
