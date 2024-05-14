@@ -96,11 +96,14 @@ CREATE TABLE IF NOT EXISTS comment (
 -- @extends: BaseCrudEntity
 CREATE TABLE IF NOT EXISTS tag (
     tag_no INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '태그 번호 (PK)',
-    tag_nm VARCHAR(64) UNIQUE COMMENT '태그',
+    tag_nm VARCHAR(64) COMMENT '태그',
+    ctgr VARCHAR(100) COMMENT '카테고리',
     -- AUDIT
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
-    INDEX (tag_nm)
+    UNIQUE (tag_nm, ctgr),
+    INDEX (tag_nm),
+    INDEX (tag_nm, ctgr)
 ) COMMENT = '태그';
 
 -- 컨텐츠 태그 (content_tag)

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
+import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -32,12 +33,25 @@ public class TagCmpstn
         implements Serializable {
 
     /** Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜. */
-    public List<String> getParsedTagList() {
+    public List<String> getParsedTagStrList() {
         if (StringUtils.isEmpty(this.tagListStr)) return new ArrayList<>();
         JSONArray jArray = new JSONArray(tagListStr);
         return IntStream.range(0, jArray.length())
                 .mapToObj(jArray::getJSONObject)
                 .map(json -> json.getString("value"))
+                .collect(Collectors.toList());
+    }
+
+    /** Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜. */
+    public List<TagDto> getParsedTagList() {
+        if (StringUtils.isEmpty(this.tagListStr)) return new ArrayList<>();
+        JSONArray jArray = new JSONArray(tagListStr);
+        return IntStream.range(0, jArray.length())
+                .mapToObj(jArray::getJSONObject)
+                .map(json -> {
+                    if (json.getJSONObject("data") == null) return new TagDto(json.getString("value"));
+                    return new TagDto(json.getString("value"), json.getJSONObject("data").getString("category"));
+                })
                 .collect(Collectors.toList());
     }
 

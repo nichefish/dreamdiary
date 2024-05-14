@@ -48,7 +48,7 @@
     $(document).ready(function() {
         Page.init();
         // 모달 댓글 모듈 수동 init (refreshFunc 주입(
-        Comment.init(JnrlDay.yyMnthListAjax);
+        Comment.init(JrnlDay.yyMnthListAjax);
     });
 </script>
 
