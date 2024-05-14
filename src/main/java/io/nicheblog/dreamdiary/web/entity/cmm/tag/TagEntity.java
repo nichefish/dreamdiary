@@ -41,6 +41,11 @@ public class TagEntity
     @Comment("태그 번호 (PK)")
     private Integer tagNo;
 
+    /** 태그 카테고리 */
+    @Column(name = "tag_ctgr")
+    @Comment("태그 카테고리")
+    private String tagCtgr;
+
     /** 태그 */
     @Column(name = "tag_nm")
     @Comment("태그")
