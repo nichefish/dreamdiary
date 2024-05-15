@@ -13,6 +13,7 @@
                   onclick="JrnlTag.dreamTagDtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">
                 <span class="${tag.tagClass!}">
+                    <#if tag.ctgr?? && tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>
                     ${tag.tagNm!}
                 </span>
                 <span class="fs-9 text-noti fw-normal" style="margin-left:-0.25em;">${tag.dreamSize!}</span>
@@ -53,6 +54,7 @@
                                     <span class="text-muted cursor-pointer pe-1" onclick="Tag.dtlAjax(${tag.refTagNo!});"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                           title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
+                                        <#if tag.ctgr?? && tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>
                                         #<span class="border-bottom text-primary fw-lighter opacity-hover">${tag.tagNm!}</span>
                                     </span>
                                 </#list>
