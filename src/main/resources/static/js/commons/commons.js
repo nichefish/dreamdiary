@@ -707,7 +707,7 @@ commons.util = (function() {
             // 게시물 태그 tagify
             const tagInput = document.querySelector(selectorStr);
             return new Tagify(tagInput, {
-                maxTags: 12,
+                maxTags: 16,
                 keepInvalidTags: false,
                 skipInvalid: true,
                 // duplicate 허용하고 수동 로직으로 중복 처리
@@ -736,7 +736,7 @@ commons.util = (function() {
             });
         },
 
-        tagifyWithCtgr: function(selectorStr) {
+        tagifyWithCtgr: function(selectorStr, tagCtgrMap) {
             const tagify = commons.util.tagify(selectorStr);
             // 태그 카테고리 입력 UI 존재시에만 활성화됨
             const categoryInputContainer = document.querySelector('#tag_ctgr_div');
@@ -748,18 +748,29 @@ commons.util = (function() {
 
             // 태그 추가시 카테고리 입력 칸 prompt
             tagify.on("add", function(e) {
+                // 기본 태그 (카테고리 붙이기 전) 처리시에만 동작
                 const newTag = e.detail.data;
                 const baseTagProc = newTag.data === undefined;
                 if (!baseTagProc) return;
-                // 기본 태그 (카테고리 붙이기 전)
-                categoryInputContainer.style.display = 'block';
-                tagCtgrInput.value = '';
-                tagCtgrInput.dataset.tagValue = e.detail.data.value;
                 // setTimeout을 사용하여 포커스 호출 지연
                 setTimeout(() => {
                     // 새로 추가된 임시 태그 마킹
-                    const lastTagElmt = tagify.getTagElms()[tagify.getTagElms().length - 1];
-                    lastTagElmt.setAttribute('data-marked', 'true');  // 마킹
+                    const addedTagElmt = tagify.getTagElms()[tagify.getTagElms().length - 1];
+                    addedTagElmt.setAttribute('data-marked', 'true');  // 마킹
+                    // 1. 카테고리 맵 정의시 :: 매핑되는 카테고리가 있으면 태그 입력창 없이 카테고리 자동 추가
+                    const newValue = newTag.value;
+                    if (tagCtgrMap) {
+                        const predefinedCtgr = tagCtgrMap[newTag.value];
+                        if (predefinedCtgr) {
+                            tagify.removeTags(addedTagElmt);
+                            tagify.addTags([{ "value": newValue, "data": { "ctgr": predefinedCtgr } }]);
+                            return; // 추가 처리 중단
+                        }
+                    }
+                    // 2. 카테고리 맵 미정의시 :: 카테고리 입력 칸 prompt
+                    categoryInputContainer.style.display = 'block';
+                    tagCtgrInput.value = '';
+                    tagCtgrInput.dataset.tagValue = newValue;
                     tagCtgrInput.focus();
                 }, 0);
             });
@@ -782,22 +793,18 @@ commons.util = (function() {
                     // 중복 체크
                     // (카테고리 미추가헐 경우 마킹한 임시태그는 이 과정에서 자연스레 없어짐.)
                     const tags = tagify.getTagElms(); // 모든 태그 DOM 요소 가져오기
-                    let isDuplicate = false;
                     Array.from(tags).forEach(existingTagElmt => {
                         const existingTagData = tagify.getSetTagData(existingTagElmt);
-                        console.log("existingTagData: ", existingTagData);
                         if (existingTagData.value !== newValue) return;
                         const existingCtgr = existingTagData.data ? existingTagData.data.ctgr : "";
-                        isDuplicate = (existingCtgr === newCtgr);
-                        console.log("isDuplicate: ", isDuplicate);
-                        if (isDuplicate) tagify.removeTags(existingTagElmt);  // 마킹된 태그 제거
+                        if (existingCtgr === newCtgr) tagify.removeTags(existingTagElmt);  // 마킹된 태그 제거
                     });
                     // 새 태그 추가
-                    tagify.addTags([{ value: newValue, data: { ctgr: newCtgr } }]);
+                    tagify.addTags([{ "value": newValue, "data": { "ctgr": newCtgr } }]);
                     // 카테고리 붙인 걍우 임시 태그를 찾아 제거
                     if (newCtgr) {
-                        markedTags.forEach(tagElm => {
-                            tagify.removeTags(tagElm);  // 마킹된 태그 제거
+                        markedTags.forEach(tagElmt => {
+                            tagify.removeTags(tagElmt);  // 마킹된 태그 제거
                         });
                     }
                     categoryInputContainer.style.display = 'none';  // 카테고리 입력 필드 숨김

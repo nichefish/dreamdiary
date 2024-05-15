@@ -2,6 +2,9 @@
  * 저널 꿈(jrnl_dream) : 스크립트 모듈 분리
  -->
 
+<#--include::script modules-->
+<#include "/view/jrnl/dream/_jrnl_dream_tag.ftlh">
+
 <script>
     const JrnlDream = (function() {
         return {
@@ -56,7 +59,7 @@
                 /* jquery :: validation */
                 JrnlDream.initValidateForm();
                 /* tagify */
-                commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr");
+                commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr", JrnlDreamTag.ctgrMap);
 
                 // checkbox init
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
@@ -96,6 +99,7 @@
                                     JrnlDream.keywordListAjax();
                                 } else {
                                     JrnlDay.yyMnthListAjax();
+                                    JrnlTag.dreamTagListAjax();
                                 }
                                 commons.util.unblockUI();
                             });
@@ -118,7 +122,7 @@
                     /* jquery :: validation */
                     JrnlDream.initValidateForm();
                     /* tagify */
-                    commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr");
+                    commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr", JrnlDreamTag.ctgrMap);
 
                     // checkbox init
                     commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
@@ -154,6 +158,7 @@
                                     JrnlDream.keywordListAjax();
                                 } else {
                                     JrnlDay.yyMnthListAjax();
+                                    JrnlTag.dreamTagListAjax();
                                 }
                                 commons.util.unblockUI();
                             });
