@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS jrnl_day (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     INDEX (jrnl_dt),
     INDEX (aprxmt_dt),
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS jrnl_dream (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     INDEX (jrnl_day_no)
 ) COMMENT = '저널 꿈';
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS jrnl_diary (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     INDEX (jrnl_day_no)
 ) COMMENT = '저널 일기';
@@ -112,6 +112,7 @@ CREATE TABLE IF NOT EXISTS jrnl_sumry (
     dream_day_cnt INT DEFAULT 0 COMMENT '꿈 일수',
     dream_cnt INT DEFAULT 0 COMMENT '꿈 개수',
     diary_day_cnt INT DEFAULT 0 COMMENT '일기 일수',
+    dream_compt_yn CHAR(1) DEFAULT 'N' COMMENT '꿈 기록 완료 여부',
     -- ATCH_FILE
     atch_file_no INT COMMENT '첨부파일 번호',
     -- AUDIT
@@ -119,7 +120,7 @@ CREATE TABLE IF NOT EXISTS jrnl_sumry (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N'
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '저널 결산';
 
 -- 저널 결산 내용 (jrnl_sumry_cn)
@@ -147,7 +148,7 @@ CREATE TABLE IF NOT EXISTS jrnl_sumry_cn (
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N',
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     INDEX (jrnl_sumry_no)
 ) COMMENT = '저널 결산 내용';

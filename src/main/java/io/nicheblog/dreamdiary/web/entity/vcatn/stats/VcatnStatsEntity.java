@@ -57,8 +57,8 @@ public class VcatnStatsEntity {
     @Comment("프로젝트 추가연차")
     private Integer prjctYryc;
 
-    /** 안식주 */
+    /** 안식년차 */
     @Column(name = "refresh_yryc")
-    @Comment("안식주")
+    @Comment("안식년차")
     private Integer refreshYryc;
 }

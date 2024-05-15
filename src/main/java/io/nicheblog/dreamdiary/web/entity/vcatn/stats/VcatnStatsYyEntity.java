@@ -20,7 +20,7 @@ import java.util.Date;
  * @author nichefish
  */
 @Entity
-@Table(name = "VCATN_STATS_YY")
+@Table(name = "vcatn_stats_yy")
 @SuperBuilder(toBuilder = true)
 @Getter
 @Setter
@@ -31,7 +31,7 @@ public class VcatnStatsYyEntity {
 
     /** 년도 */
     @Id
-    @Column(name = "STATS_YY")
+    @Column(name = "stats_yy")
     @Comment("년도")
     private String statsYy;
 
@@ -41,7 +41,7 @@ public class VcatnStatsYyEntity {
     private Date bgnDt;
 
     /** 종료일 */
-    @Column(name = "END_DT")
+    @Column(name = "end_dt")
     @Comment("종료일")
     private Date endDt;
 

@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS flsys_meta (
     content_type VARCHAR(32) DEFAULT 'FLSYS_META' COMMENT '컨텐츠 타입',
     --
     file_path VARCHAR(500) UNIQUE COMMENT '파일 경로',
-    upper_file_path VARCHAR(500),
+    upper_file_path VARCHAR(500) COMMENT '상위 파일 경로',
     -- TITLE
     title VARCHAR(200) COMMENT '제목',
     cn LONGTEXT COMMENT '내용',

@@ -92,11 +92,11 @@ CREATE TABLE IF NOT EXISTS vcatn_schdul (
 CREATE TABLE IF NOT EXISTS vcatn_stats (
     stats_yy INT COMMENT '휴가 년도 (PK)',
     user_id VARCHAR(20) COMMENT '사용자 ID (PK)',
-    cnwk_yy INT DEFAULT 0 COMMENT '사용자 ID (PK)',
-    bs_yryc INT DEFAULT 0 COMMENT '사용자 ID (PK)',
-    cnwk_yryc INT DEFAULT 0 COMMENT '사용자 ID (PK)',
-    prjct_yryc INT DEFAULT 0 COMMENT '사용자 ID (PK)',
-    refresh_yryc INT DEFAULT 0 COMMENT '사용자 ID (PK)',
+    cnwk_yy INT DEFAULT 0 COMMENT '근속년수',
+    bs_yryc INT DEFAULT 0 COMMENT '기본연차',
+    cnwk_yryc INT DEFAULT 0 COMMENT '근속 추가연차',
+    prjct_yryc INT DEFAULT 0 COMMENT '프로젝트 추가연차',
+    refresh_yryc INT DEFAULT 0 COMMENT '안식년차',
     -- CONSTRAINT
     PRIMARY KEY (stats_yy, user_id)
 ) COMMENT = '휴가사용가능일자';
@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS exptr_prsnl_item (
     rject_resn VARCHAR(500) COMMENT '반려사유',
     -- ATCH_FILE
     atch_file_dtl_no INT COMMENT '영수증 파일 번호',
-    orgnl_rcipt_yn CHAR(1) DEFAULT 'N',
+    orgnl_rcipt_yn CHAR(1) DEFAULT 'N' COMMENT '원본 영수증 제출 여부 (Y/N)',
     -- AUDIT
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
