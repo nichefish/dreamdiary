@@ -197,7 +197,6 @@ public class JrnlSumryController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlSumryDtlAjax(
-            JrnlSumrySearchParam searchParam,
             final @RequestParam("postNo") Integer key,
             final LogActvtyParam logParam
     ) {
