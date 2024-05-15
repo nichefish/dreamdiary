@@ -20,3 +20,4 @@
 /upfile/secured/*
 /ssh-key-2024-04-22.key
 /ssh-key-2024-04-22.key.pub
+/templates/view/jrnl/dream/_jrnl_dream_tag.ftlh
