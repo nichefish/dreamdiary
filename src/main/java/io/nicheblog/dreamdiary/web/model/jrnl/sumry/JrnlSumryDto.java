@@ -39,7 +39,7 @@ public class JrnlSumryDto
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    protected String contentType = CONTENT_TYPE.key;
+    private String contentType = CONTENT_TYPE.key;
 
     /* ----- */
 
@@ -51,6 +51,9 @@ public class JrnlSumryDto
     private Integer dreamCnt;
     /** 일기 일수 */
     private Integer diaryDayCnt;
+
+    /** 꿈 기록 완료 여부 (Y/N) */
+    private String dreamComptYn = "N";
 
     @Override
     public Integer getKey() {
