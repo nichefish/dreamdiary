@@ -90,7 +90,17 @@
                         <span class="fw-bold me-2">
                             꿈
                         </span>
-                        <i class="bi bi-moon-stars fs-4 me-2"></i>
+                        <#if jrnlSumry.dreamComptYn! == "Y">
+                            <span class="cursor-help"
+                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈 기록을 완료했습니다.">
+                                <i class="bi bi-moon-stars-fill fs-4 me-2 text-success"></i>
+                                <i class="bi bi-check text-success" style="margin-left:-0.8rem"></i>
+                            </span>
+                        <#else>
+                            <span>
+                                <i class="bi bi-moon-stars fs-4 me-2"></i>
+                            </span>
+                        </#if>
                         (<span class="text-underline-dotted text-primary fw-bold mx-1">${jrnlSumry.dreamDayCnt!}</span>일
                         /
                         <span class="text-underline-dotted text-primary fw-bold mx-1">${jrnlSumry.dreamCnt!}</span>개)

@@ -49,7 +49,17 @@
                     <span class="fw-bold me-2">
                         꿈
                     </span>
-                    <i class="bi bi-moon-stars fs-4 me-2"></i>
+                    <#if post.dreamComptYn! == "Y">
+                        <span class="cursor-help"
+                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈 기록을 완료했습니다.">
+                                <i class="bi bi-moon-stars-fill fs-4 me-2 text-success"></i>
+                                <i class="bi bi-check text-success" style="margin-left:-0.8rem"></i>
+                            </span>
+                    <#else>
+                        <span>
+                                <i class="bi bi-moon-stars fs-4 me-2"></i>
+                            </span>
+                    </#if>
                     (<span class="text-underline-dotted ms-1">${post.dreamDayCnt!}</span>일 / <span class="text-underline-dotted ms-1">${post.dreamCnt!}</span>개)
                 </div>
                 <div class="text-gray-700 d-flex-center">
@@ -66,6 +76,12 @@
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
                     <i class="bi bi-book fs-4 pe-1"></i>
                     저널 결산 내용 등록
+                </button>
+                <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
+                        onclick="JrnlSumry.comptAjax(${post.postNo!});"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
+                    <i class="bi bi-book fs-4 pe-1"></i>
+                    꿈 기록 완료 처리
                 </button>
             </div>
         </div>
