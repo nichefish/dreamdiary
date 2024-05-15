@@ -55,6 +55,7 @@ public interface SiteUrl {
     String JRNL_SUMRY_DTL_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryDtlAjax.do";
     String JRNL_SUMRY_MAKE_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryMakeAjax.do";
     String JRNL_SUMRY_MAKE_TOTAL_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryMakeTotalAjax.do";
+    String JRNL_SUMRY_DREAM_COMPT_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryDreamComptAjax.do";
 
     /** 저널 결산 내용 */
     String JRNL_SUMRY_CN_REG_AJAX = Prefix.JRNL_SUMRY_CN + "/jrnlSumryCnRegAjax.do";
