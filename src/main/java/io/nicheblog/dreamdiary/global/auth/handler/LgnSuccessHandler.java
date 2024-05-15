@@ -40,7 +40,7 @@ public class LgnSuccessHandler
     @Resource(name = "authService")
     private AuthService authService;
     @Resource
-    protected ApplicationEventPublisher publisher;
+    private ApplicationEventPublisher publisher;
     @Resource
     private HttpSession session;
 

@@ -56,7 +56,7 @@ public class NoticeSmpEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("공지사항 글분류 코드 정보")
-    protected DtlCdEntity ctgrCdInfo;
+    private DtlCdEntity ctgrCdInfo;
 
     /* ----- */
 

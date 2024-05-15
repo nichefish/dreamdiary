@@ -46,7 +46,7 @@ public class BoardPostSmpEntity
 
     /** 컨텐츠 타입 :: Override */
     @Column(name = "content_type")
-    protected String contentType;
+    private String contentType;
 
     /* ----- */
 

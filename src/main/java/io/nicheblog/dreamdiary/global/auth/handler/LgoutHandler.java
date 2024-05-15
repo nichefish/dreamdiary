@@ -25,7 +25,7 @@ public class LgoutHandler
         implements LogoutHandler {
 
     @Resource
-    protected ApplicationEventPublisher publisher;
+    private ApplicationEventPublisher publisher;
 
     @Override
     public void logout(

@@ -64,7 +64,7 @@ public class JrnlDiaryEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("저널 일기 글분류 코드 정보")
-    protected DtlCdEntity ctgrCdInfo;
+    private DtlCdEntity ctgrCdInfo;
 
     /* ----- */
 

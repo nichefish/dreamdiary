@@ -30,7 +30,7 @@ public class MailWorker implements Runnable {
 	@Resource(name = "mailService")
 	private MailService mailService;
 	@Resource
-	protected ApplicationEventPublisher publisher;
+	private ApplicationEventPublisher publisher;
 
 	/** 메일 queue */
 	private static final BlockingQueue<MailSendEvent> mailQueue = new LinkedBlockingQueue<>();

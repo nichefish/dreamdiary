@@ -57,7 +57,7 @@ public class FlsysMetaEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("파일시스템 메타 글분류 코드 정보")
-    protected DtlCdEntity ctgrCdInfo;
+    private DtlCdEntity ctgrCdInfo;
 
     /* ----- */
 

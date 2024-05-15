@@ -50,7 +50,7 @@ public class LogSysEntity
     @Builder.Default
     @Column(name = "user_id", length = 20)
     @Comment("작업자 ID")
-    protected String userId = Constant.SYSTEM_ACNT;
+    private String userId = Constant.SYSTEM_ACNT;
 
     /** 작업자 정보 */
     @ManyToOne(fetch = FetchType.EAGER)

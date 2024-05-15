@@ -62,7 +62,7 @@ public class LogActvtyEntity
     @CreatedBy
     @Column(name = "user_id", length = 20)
     @Comment("작업자 ID")
-    protected String userId;
+    private String userId;
 
     /** 작업자 정보 */
     @ManyToOne(fetch = FetchType.EAGER)

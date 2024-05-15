@@ -46,7 +46,7 @@ public class LgnFailureHandler
     @Resource(name = "lgnPolicyService")
     private LgnPolicyService lgnPolicyService;
     @Resource
-    protected ApplicationEventPublisher publisher;
+    private ApplicationEventPublisher publisher;
 
     /**
      * 로그인 실패시 상황별 분기 처리

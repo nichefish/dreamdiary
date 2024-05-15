@@ -59,7 +59,7 @@ public class ExptrReqstEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("물품구매/경조사비 신청 글분류 코드 정보")
-    protected DtlCdEntity ctgrCdInfo;
+    private DtlCdEntity ctgrCdInfo;
 
     /* ----- */
 
