@@ -28,7 +28,7 @@ public class UserStusEmbed {
     /** 잠금여부 */
     @Builder.Default
     @Column(name = "locked_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'Y'")
-    protected String lockedYn = "Y";
+    private String lockedYn = "Y";
 
     /** 마지막 로그인 일시 */
     @DateTimeFormat(pattern = DateUtils.PTN_DATETIME)

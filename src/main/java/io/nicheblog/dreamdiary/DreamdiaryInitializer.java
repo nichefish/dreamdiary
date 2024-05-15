@@ -46,7 +46,7 @@ public class DreamdiaryInitializer
     private LgnPolicyService lgnPolicyService;
 
     @Resource
-    protected ApplicationEventPublisher publisher;
+    private ApplicationEventPublisher publisher;
 
     public final String INIT_TEMP_PW = "123qwe!QA";
 
