@@ -293,4 +293,39 @@ public class JrnlSumryController
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
+
+    /**
+     * 저널 결산 꿈 기록 완료 처리 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @PostMapping(value = {Url.JRNL_SUMRY_DREAM_COMPT_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> jrnlSumryDreamComptAjax(
+            @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 삭제 처리
+            isSuccess = jrnlSumryService.dreamCompt(key);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
 }

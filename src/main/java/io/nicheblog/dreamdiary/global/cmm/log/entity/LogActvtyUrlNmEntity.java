@@ -34,7 +34,7 @@ public class LogActvtyUrlNmEntity
     @Id
     @Column(name = "url", length = 200, updatable = false)
     @Comment("URL (PK)")
-    protected String url;
+    private String url;
 
     /** URL 이름 */
     @Column(name = "url_nm", length = 2000)

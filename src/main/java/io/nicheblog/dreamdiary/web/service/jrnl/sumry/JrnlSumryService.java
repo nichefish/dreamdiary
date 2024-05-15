@@ -142,4 +142,14 @@ public class JrnlSumryService
         if (entityWrapper.isEmpty()) return null;
         return jrnlSumryMapstruct.toDto(entityWrapper.get());
     }
+
+    /**
+     * 저널 결산 꿈 기록 완료 처리
+     */
+    public boolean dreamCompt(Integer key) throws Exception {
+        JrnlSumryEntity entity = this.getDtlEntity(key);
+        entity.setDreamComptYn("Y");
+        jrnlSumryRepository.save(entity);
+        return true;
+    }
 }

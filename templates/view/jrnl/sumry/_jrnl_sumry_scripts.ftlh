@@ -45,6 +45,17 @@
                         });
                 }, "block");
             },
+            /** 꿈 기록 완료 처리 */
+            comptAjax(postNo) {
+                const url = "${Url.JRNL_SUMRY_DREAM_COMPT_AJAX!}";
+                const ajaxData = { "postNo": postNo };
+                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    Swal.fire({ text: res.message })
+                        .then(function() {
+                            if (res.rslt) commons.util.blockUIReload();
+                        });
+                }, "block");
+            }
         }
     })();
 </script>

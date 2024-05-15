@@ -25,5 +25,5 @@ public class NoticeXlsxDto {
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    protected String contentType = ContentType.NOTICE.key;
+    private String contentType = ContentType.NOTICE.key;
 }
