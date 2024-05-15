@@ -33,7 +33,7 @@ import javax.annotation.Resource;
 public class BaseExceptionlHandler {
 
     @Resource
-    protected ApplicationEventPublisher publisher;
+    private ApplicationEventPublisher publisher;
 
     /**
      * 요청이 AJAX 요청인지 확인

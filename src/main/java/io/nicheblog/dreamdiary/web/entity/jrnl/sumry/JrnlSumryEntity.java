@@ -64,9 +64,15 @@ public class JrnlSumryEntity
     @Fetch(value = FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("저널 결산 글분류 코드 정보")
-    protected DtlCdEntity ctgrCdInfo;
+    private DtlCdEntity ctgrCdInfo;
 
     /* ----- */
+
+    /** 꿈 기록 완료 여부 (Y/N) */
+    @Builder.Default
+    @Column(name = "dream_compt_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Comment("꿈 기록 완료 여부 (Y/N)")
+    private String dreamComptYn = "N";
 
     /** 저널 결산 내용 (일기) 목록 */
     @OneToMany(fetch = FetchType.EAGER)
