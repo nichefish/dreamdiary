@@ -30,52 +30,24 @@ public class CommentDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
-    protected static final String CONTENT_TYPE = ContentType.COMMENT.key;
+    private static final String CONTENT_TYPE = ContentType.COMMENT.key;
     /** 필수(Override): 글분류 코드 */
-    protected static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
+    private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    protected String contentType = CONTENT_TYPE;
+    private String contentType = CONTENT_TYPE;
 
     /* ----- */
 
     /** 원글 번호 */
-    protected Integer refPostNo;
+    private Integer refPostNo;
     /** 원글 컨텐츠 타입 */
-    protected String refContentType;
+    private String refContentType;
 
     @Override
     public Integer getKey() {
         return this.postNo;
-    }
-
-    /* ----- */
-
-    /**
-     *
-     */
-    @Getter
-    @Setter
-    @SuperBuilder(toBuilder = true)
-    @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    @ToString(callSuper = true)
-    public static class DTL extends CommentDto {
-
-    }
-
-    /**
-     *
-     */
-    @Getter
-    @Setter
-    @SuperBuilder(toBuilder = true)
-    @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    @ToString(callSuper = true)
-    public static class LIST extends CommentDto {
-        //
     }
 
     /* ----- */

@@ -72,7 +72,7 @@ public class CommentController
             Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
             // 목록 조회 및 응답에 추가
-            Page<CommentDto.LIST> commentList = commentService.getPageDto(searchParam, pageRequest);
+            Page<CommentDto> commentList = commentService.getPageDto(searchParam, pageRequest);
             ajaxResponse.setRsltList(commentList.getContent());
 
             isSuccess = true;
@@ -102,7 +102,7 @@ public class CommentController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentRegAjax(
-            final @Valid CommentDto.DTL comment,
+            final @Valid CommentDto comment,
             final @RequestParam("postNo") @Nullable Integer key,
             final CommentParam param,
             final MultipartHttpServletRequest request,

@@ -21,7 +21,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface CommentMapstruct
-        extends BasePostMapstruct<CommentDto.DTL, CommentDto.LIST, CommentEntity> {
+        extends BasePostMapstruct<CommentDto, CommentDto, CommentEntity> {
 
     CommentMapstruct INSTANCE = Mappers.getMapper(CommentMapstruct.class);
 
@@ -30,30 +30,25 @@ public interface CommentMapstruct
      */
     @Override
     @Named("toDto")
-    CommentDto.DTL toDto(final CommentEntity entity) throws Exception;
+    CommentDto toDto(final CommentEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
      */
     @Override
     @Named("toListDto")
-    CommentDto.LIST toListDto(final CommentEntity entity) throws Exception;
+    CommentDto toListDto(final CommentEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
      */
     @Override
-    CommentEntity toEntity(final CommentDto.DTL dto) throws Exception;
-
-    /**
-     * Dto -> Entity
-     */
-    CommentEntity toEntity(final CommentDto.LIST dto) throws Exception;
+    CommentEntity toEntity(final CommentDto dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(final CommentDto.DTL dto, final @MappingTarget CommentEntity entity) throws Exception;
+    void updateFromDto(final CommentDto dto, final @MappingTarget CommentEntity entity) throws Exception;
 }

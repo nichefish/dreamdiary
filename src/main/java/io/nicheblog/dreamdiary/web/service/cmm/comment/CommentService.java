@@ -27,7 +27,7 @@ import javax.annotation.Resource;
 @Service("commentService")
 @Log4j2
 public class CommentService
-        implements BaseMultiCrudService<CommentDto.DTL, CommentDto.LIST, Integer, CommentEntity, CommentRepository, CommentSpec, CommentMapstruct> {
+        implements BaseMultiCrudService<CommentDto, CommentDto, Integer, CommentEntity, CommentRepository, CommentSpec, CommentMapstruct> {
 
     private final CommentMapstruct commentMapstruct = CommentMapstruct.INSTANCE;
 
