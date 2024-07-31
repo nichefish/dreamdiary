@@ -6,9 +6,9 @@
 <#import "/layout/modal_layout.ftlh" as modal>
 
 <@modal.layout id="sitemap" size="xl">
-    <!--begin::Modal Header-->
+    <#--begin::Modal Header-->
     <@component.modal_header "사이트맵" />
-    <!--begin::Modal Body-->
+    <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div id="sitemap_div">
             <div class="row mt-2 mb-6">
@@ -298,12 +298,12 @@
                 <div class="col-4 ps-5">
                     <div class="d-flex align-items-center">
                         <div class="btn btn-icon btn-active-light-primary position-relative w-30px h-30px w-md-40px h-md-40px">
-                                    <span class="svg-icon svg-icon-muted svg-icon-2qx">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path opacity="0.3" d="M7 20.5L2 17.6V11.8L7 8.90002L12 11.8V17.6L7 20.5ZM21 20.8V18.5L19 17.3L17 18.5V20.8L19 22L21 20.8Z" fill="currentColor"></path>
-                                            <path d="M22 14.1V6L15 2L8 6V14.1L15 18.2L22 14.1Z" fill="currentColor"></path>
-                                        </svg>
-                                    </span>
+                            <span class="svg-icon svg-icon-muted svg-icon-2qx">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.3" d="M7 20.5L2 17.6V11.8L7 8.90002L12 11.8V17.6L7 20.5ZM21 20.8V18.5L19 17.3L17 18.5V20.8L19 22L21 20.8Z" fill="currentColor"></path>
+                                    <path d="M22 14.1V6L15 2L8 6V14.1L15 18.2L22 14.1Z" fill="currentColor"></path>
+                                </svg>
+                            </span>
                         </div>
                         <div>
                             파일 시스템
@@ -313,12 +313,12 @@
             </div>
         </div>
     </div>
-    <!--begin::Modal Footer-->
+    <#--begin::Modal Footer-->
     <div class="modal-footer">
-        <!-- 버튼 영역 -->
+        <#--버튼 영역-->
         <div class="d-flex justify-content-end">
-            <!-- 버튼:: 모달 닫기 -->
-            <@component.btn_modal_close />
+            <#--모달:: 버튼: 모달 닫기-->
+            <@component.modal_btn_close />
         </div>
     </div>
 </@modal.layout>

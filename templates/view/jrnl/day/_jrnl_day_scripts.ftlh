@@ -60,8 +60,9 @@
             },
             /** */
             sort: function() {
-                let asIs = $("#jrnl_aside #sort").val();
-                let toBe = (asIs !== "ASC") ? "ASC" : "DESC";
+                const asIs = $("#jrnl_aside #sort").val();
+                const toBe = (asIs !== "ASC") ? "ASC" : "DESC";
+                console.log("asIs: " + asIs + ", toBe: " + toBe);
                 // 쿠키 설정하기
                 let cookieOptions = {
                     path: "/jrnl/day/",
@@ -75,14 +76,12 @@
                 } else {
                     $("#sortIcon").removeClass("bi-sort-numeric-up-alt").addClass("bi-sort-numeric-down");
                 }
-
                 const container = document.querySelector('#jrnl_day_list_div'); // 모든 저널 일자를 포함하는 컨테이너
                 const days = Array.from(container.querySelectorAll('.jrnl-day')); // 모든 'jrnl-day' 요소를 배열로 변환
                 days.sort((a, b) => {
                     const dateA = new Date(a.querySelector('.jrnl-day-header .col-1').textContent.trim());
                     const dateB = new Date(b.querySelector('.jrnl-day-header .col-1').textContent.trim());
-                    if (toBe === "ASC") return dateA - dateB; // 날짜를 비교하여 역순 정렬
-                    return dateB - dateA; // 날짜를 비교하여 역순 정렬
+                    return (toBe === "ASC") ? dateA - dateB : dateB - dateA;
                 });
                 // 컨테이너에서 모든 요소를 제거
                 while (container.firstChild) {
