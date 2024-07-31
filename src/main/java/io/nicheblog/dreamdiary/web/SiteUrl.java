@@ -48,6 +48,18 @@ public interface SiteUrl {
     String JRNL_DIARY_MDF_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryMdfAjax.do";
     String JRNL_DIARY_DEL_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryDelAjax.do";
 
+    /** 저널 주제 */
+    String JRNL_SBJCT_LIST = Prefix.JRNL_SBJCT + "/jrnlSbjctList.do";
+    String JRNL_SBJCT_REG_FORM = Prefix.JRNL_SBJCT + "/jrnlSbjctRegForm.do";
+    String JRNL_SBJCT_REG_AJAX = Prefix.JRNL_SBJCT + "/jrnlSbjctRegAjax.do";
+    String JRNL_SBJCT_REG_PREVIEW_POP = Prefix.JRNL_SBJCT + "/jrnlSbjctPreviewPop.do";
+
+    String JRNL_SBJCT_DTL = Prefix.JRNL_SBJCT + "/jrnlSbjctDtl.do";
+    String JRNL_SBJCT_DTL_AJAX = Prefix.JRNL_SBJCT + "/jrnlSbjctDtlAjax.do";
+    String JRNL_SBJCT_MDF_FORM = Prefix.JRNL_SBJCT + "/jrnlSbjctMdfForm.do";
+    String JRNL_SBJCT_MDF_AJAX = Prefix.JRNL_SBJCT + "/jrnlSbjctMdfAjax.do";
+    String JRNL_SBJCT_DEL_AJAX = Prefix.JRNL_SBJCT + "/jrnlSbjctDelAjax.do";
+
     /** 저널 결산 */
     String JRNL_SUMRY_LIST = Prefix.JRNL_SUMRY + "/jrnlSumryList.do";
     String JRNL_SUMRY_LIST_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryListAjax.do";
@@ -111,6 +123,13 @@ public interface SiteUrl {
     String COMMENT_REG_AJAX = Prefix.COMMENT + "/commentRegAjax.do";
     String COMMENT_MDF_AJAX = Prefix.COMMENT + "/commentMdfAjax.do";
     String COMMENT_DEL_AJAX = Prefix.COMMENT + "/commentDelAjax.do";
+
+    /** 단락 */
+    String SECTN_LIST_AJAX = Prefix.SECTN + "/sectnListAjax.do";
+    String SECTN_REG_AJAX = Prefix.SECTN + "/sectnRegAjax.do";
+    String SECTN_MDF_AJAX = Prefix.SECTN + "/sectnMdfAjax.do";
+    String SECTN_DEL_AJAX = Prefix.SECTN + "/sectnDelAjax.do";
+
 
     /** 태그 */
     String TAG_CLOUD_PAGE = Prefix.TAG + "/tagCloudPage.do";
@@ -316,6 +335,9 @@ public interface SiteUrl {
         // 저널 일기
         String DIARY = "/diary";
         String JRNL_DIARY = JRNL + DIARY;
+        // 저널 주제
+        String SBJCT = "/sbjct";
+        String JRNL_SBJCT = JRNL + SBJCT;
         // 저널 결산
         String SUMRY = "/sumry";
         String JRNL_SUMRY = JRNL + SUMRY;
@@ -350,6 +372,7 @@ public interface SiteUrl {
         String EXPTR_REQST = EXPTR + REQST;
 
         String COMMENT = "/comment";
+        String SECTN = "/sectn";
         String TAG = "/tag";
 
         String LGN_POLICY = "/lgnPolicy";

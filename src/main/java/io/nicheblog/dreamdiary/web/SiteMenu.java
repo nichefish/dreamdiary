@@ -87,9 +87,10 @@ public class SiteMenu
             TOP_MENU_IDX,
             "저널",
             Url.JRNL_DAY_PAGE,
-            List.of(SubMenu.JRNL_DAY, SubMenu.JRNL_SUMRY)
+            List.of(SubMenu.JRNL_DAY, SubMenu.JRNL_SBJCT, SubMenu.JRNL_SUMRY)
     );
     public static SiteAcsInfo JRNL_DAY = SubMenu.JRNL_DAY;
+    public static SiteAcsInfo JRNL_SBJCT = SubMenu.JRNL_SBJCT;
     public static SiteAcsInfo JRNL_SUMRY = SubMenu.JRNL_SUMRY;
 
     // 대메뉴 :: 일반게시판
@@ -134,10 +135,17 @@ public class SiteMenu
                 "저널 일자",
                 Url.JRNL_DAY_PAGE
         );
+        // 소메뉴 :: 저널 주제
+        SiteAcsInfo JRNL_SBJCT = new SiteAcsInfo(
+                SiteTopMenu.JRNL,
+                "02",
+                "저널 주제",
+                Url.JRNL_SBJCT_LIST
+        );
         // 소메뉴 :: 저널 결산
         SiteAcsInfo JRNL_SUMRY = new SiteAcsInfo(
                 SiteTopMenu.JRNL,
-                "02",
+                "03",
                 "저널 결산",
                 Url.JRNL_SUMRY_LIST
         );
