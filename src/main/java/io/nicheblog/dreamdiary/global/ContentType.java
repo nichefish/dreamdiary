@@ -31,6 +31,7 @@ public enum ContentType {
     EXPTR_REQST("EXPTR_REQST", "물품구매/경조사비 신청"),
 
     //
+    SECTN("SECTN", "단락"),
     COMMENT("COMMENT", "댓글"),
     FLSYS_META("FLSYS_META", "파일시스템 메타");
 
