@@ -44,7 +44,7 @@
                     년 결산
                 </#if>
             </div>
-            <div class="col-2 d-flex align-items-center fs-5">
+            <div class="col d-flex align-items-center fs-5">
                 <div class="text-gray-700 d-flex-center me-5">
                     <span class="fw-bold me-2">
                         꿈
@@ -52,13 +52,13 @@
                     <#if post.dreamComptYn! == "Y">
                         <span class="cursor-help"
                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈 기록을 완료했습니다.">
-                                <i class="bi bi-moon-stars-fill fs-4 me-2 text-success"></i>
-                                <i class="bi bi-check text-success" style="margin-left:-0.8rem"></i>
-                            </span>
+                            <i class="bi bi-moon-stars-fill fs-4 me-2 text-success"></i>
+                            <i class="bi bi-check text-success" style="margin-left:-0.8rem"></i>
+                        </span>
                     <#else>
                         <span>
-                                <i class="bi bi-moon-stars fs-4 me-2"></i>
-                            </span>
+                            <i class="bi bi-moon-stars fs-4 me-2"></i>
+                        </span>
                     </#if>
                     (<span class="text-underline-dotted ms-1">${post.dreamDayCnt!}</span>일 / <span class="text-underline-dotted ms-1">${post.dreamCnt!}</span>개)
                 </div>

@@ -45,7 +45,7 @@ public interface BaseClsfSpec<Entity extends BaseClsfEntity>
             }
             predicate.addAll(basePredicate);
             predicate.addAll(clsfPredicate);
-            this.postQuery(root, query, builder);
+            this.postQuery(root, query, builder, searchParamMap);
             return builder.and(predicate.toArray(new Predicate[0]));
         };
     }

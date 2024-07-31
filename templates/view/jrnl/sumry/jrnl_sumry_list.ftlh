@@ -85,7 +85,7 @@
                         <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="JrnlSumry.dtl(${jrnlSumry.postNo!});"></i>
                     </a>
                 </div>
-                <div class="col-2 d-flex align-items-center fs-5">
+                <div class="col d-flex align-items-center fs-5">
                     <div class="text-gray-700 d-flex-center me-5">
                         <span class="fw-bold me-2">
                             꿈
