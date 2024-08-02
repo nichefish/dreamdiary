@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS jrnl_diary (
 -- @implements: TagEmbed, CommentEmbed
 CREATE TABLE IF NOT EXISTS jrnl_sbjct(
     -- CLSF
-    post_no INT COMMENT '글 번호 (PK)',
+    post_no INT AUTO_INCREMENT PRIMARY KEY COMMENT '글 번호 (PK)',
     content_type VARCHAR(30) COMMENT '게시판 코드 (PK)',
     -- POST
     title VARCHAR(200) COMMENT '제목',
@@ -122,9 +122,7 @@ CREATE TABLE IF NOT EXISTS jrnl_sbjct(
     reg_dt DATETIME DEFAULT NOW() COMMENT '등록일시',
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
-    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
-    -- CONSTRAINT
-    PRIMARY KEY (post_no, content_type)
+    del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
 ) COMMENT = '저널 주제';
 
 -- 저널 결산 (jrnl_sumry)

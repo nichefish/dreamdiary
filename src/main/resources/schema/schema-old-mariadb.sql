@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS notice (
     mdfusr_id VARCHAR(20) COMMENT '수정자 ID',
     mdf_dt DATETIME COMMENT '수정일시',
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)'
-);
+) COMMENT = '공지사항';
 
 -- ---------- --
 

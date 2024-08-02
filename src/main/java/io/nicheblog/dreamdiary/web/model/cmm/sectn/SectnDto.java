@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.cmm.cn;
+package io.nicheblog.dreamdiary.web.model.cmm.sectn;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;

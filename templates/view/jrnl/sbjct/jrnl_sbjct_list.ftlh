@@ -56,7 +56,7 @@
                         <td class="text-start title-fxd <#if post.tagStrList??>pb-4</#if>">
                             <div class="row d-flex align-items-center justify-content-between">
                                 <div class="col-xl-8 col-12 d-flex align-items-center">
-                                    <a href="${Url.NOTICE_DTL!}?postNo=${post.postNo!}"
+                                    <a href="${Url.JRNL_SBJCT_DTL!}?postNo=${post.postNo!}"
                                        class="title-fxd vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
                                         <#if (post.ctgrNm!"") != "">
                                             <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
@@ -101,7 +101,7 @@
                         <td class="text-start <#if post.tagStrList??>pb-4</#if>">
                             <div class="row d-flex align-items-center justify-content-between">
                                 <div class="col-xl-8 col-12 d-flex align-items-center">
-                                    <a href="${Url.NOTICE_DTL!}?postNo=${post.postNo!}"
+                                    <a href="${Url.JRNL_SBJCT_DTL!}?postNo=${post.postNo!}"
                                        class="text-dark vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold text-danger</#if>">
                                         <#if (post.ctgrNm!"") != "">
                                             <span class="ctgr-span ctgr-gray">${post.ctgrNm!}</span>

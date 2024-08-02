@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
-import io.nicheblog.dreamdiary.web.model.cmm.cn.SectnDto;
+import io.nicheblog.dreamdiary.web.model.cmm.sectn.SectnDto;
 import lombok.*;
 
 import java.io.Serializable;

@@ -26,14 +26,14 @@ import javax.persistence.*;
  * @extends BaseAuditEntity
  */
 @Entity
-@Table(name = "cn")
+@Table(name = "sectn")
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE cn SET del_yn = 'Y' WHERE post_no = ?")
+@SQLDelete(sql = "UPDATE sectn SET del_yn = 'Y' WHERE post_no = ?")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class SectnEntity

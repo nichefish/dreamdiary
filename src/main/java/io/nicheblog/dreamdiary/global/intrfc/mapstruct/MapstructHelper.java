@@ -85,6 +85,14 @@ public class MapstructHelper {
             ((CommentCmpstnModule) dto).setComment(cmpstn);
         }
 
+        // 단락 :: 공통 필드 매핑 로직
+        boolean usesSectnModule = (entity instanceof SectnEmbedModule && dto instanceof SectnCmpstnModule);
+        if (usesSectnModule) {
+            SectnEmbed embed = ((SectnEmbedModule) entity).getSectn();
+            SectnCmpstn cmpstn = SectnEmbedMapstruct.INSTANCE.toDto(embed);
+            ((SectnCmpstnModule) dto).setSectn(cmpstn);
+        }
+
         // 태그 :: 공통 필드 매핑 로직
         boolean usesTagModule = (entity instanceof TagEmbedModule && dto instanceof TagCmpstnModule);
         if (usesTagModule) {

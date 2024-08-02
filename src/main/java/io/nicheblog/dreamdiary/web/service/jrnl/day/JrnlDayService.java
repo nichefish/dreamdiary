@@ -112,6 +112,9 @@ public class JrnlDayService
     public void preModify(final JrnlDayDto jrnlDay) throws Exception {
         // 년도/월 세팅:: 메소드 분리
         this.setYyMnth(jrnlDay);
+        // 수정 전 정보 캐시 삭제
+        EhCacheUtils.evictCache("jrnlDayList", jrnlDay.getYy() + "_" + jrnlDay.getMnth());
+        EhCacheUtils.evictCache("jrnlDayList", jrnlDay.getYy() + "_99");
     }
 
     /**

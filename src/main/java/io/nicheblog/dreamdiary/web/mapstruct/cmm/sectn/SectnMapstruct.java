@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.SectnEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.sectn.SectnEntity;
-import io.nicheblog.dreamdiary.web.model.cmm.cn.SectnDto;
+import io.nicheblog.dreamdiary.web.model.cmm.sectn.SectnDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * SectnMapstruct
  * <pre>
- *  일반게시판 단락 MapStruct 기반 Mapper 인터페이스
+ *  단락 MapStruct 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish
