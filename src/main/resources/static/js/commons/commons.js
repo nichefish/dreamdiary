@@ -746,6 +746,9 @@ commons.util = (function() {
             // 수동 중복 체크 위해 중복 제한 제거
             tagify.settings.duplicates = true;
 
+            const metaInfoContainer = document.getElementById('tag_ctgr_select_div');
+            const metaInfoSelect = document.getElementById('tag_ctgr_select');
+
             // 태그 추가시 카테고리 입력 칸 prompt
             tagify.on("add", function(e) {
                 // 기본 태그 (카테고리 붙이기 전) 처리시에만 동작
@@ -754,28 +757,61 @@ commons.util = (function() {
                 if (!baseTagProc) return;
                 // setTimeout을 사용하여 포커스 호출 지연
                 setTimeout(() => {
-                    // 새로 추가된 임시 태그 마킹
+                    // 1. 새로 추가된 임시 태그 마킹
                     const addedTagElmt = tagify.getTagElms()[tagify.getTagElms().length - 1];
                     addedTagElmt.setAttribute('data-marked', 'true');  // 마킹
-                    // 1. 카테고리 맵 정의시 :: 매핑되는 카테고리가 있으면 태그 입력창 없이 카테고리 자동 추가
+
+                    // 2. 카테고리 입력 칸 prompt
                     const newValue = newTag.value;
-                    if (tagCtgrMap) {
-                        const predefinedCtgr = tagCtgrMap[newTag.value];
-                        if (predefinedCtgr) {
-                            tagify.removeTags(addedTagElmt);
-                            tagify.addTags([{ "value": newValue, "data": { "ctgr": predefinedCtgr } }]);
-                            return; // 추가 처리 중단
-                        }
-                    }
-                    // 2. 카테고리 맵 미정의시 :: 카테고리 입력 칸 prompt
                     categoryInputContainer.style.display = 'block';
                     tagCtgrInput.value = '';
                     tagCtgrInput.dataset.tagValue = newValue;
                     tagCtgrInput.focus();
+
+                    // 3. 카테고리 맵 정의시: selectbox 세팅
+                    metaInfoContainer.style.display = 'none';
+                    if (!tagCtgrMap) return;
+                    const predefinedCtgr = tagCtgrMap[newTag.value];
+                    if (!predefinedCtgr) return;
+                    // 초기화 및 직접입력 추가
+                    metaInfoSelect.innerHTML = '<option value="custom">직접입력</option>';
+                    // 사전 정의된 카테고리 옵션 추가
+                    const suggestions = predefinedCtgr;
+                    console.log(suggestions);
+                    suggestions.forEach(function() {
+                        const option = document.createElement('option');
+                        option.value = predefinedCtgr;
+                        option.textContent = predefinedCtgr;
+                        metaInfoSelect.appendChild(option);
+                    });
+                    // 메타정보 컨테이너 표시
+                    metaInfoSelect.size = suggestions.length + 1;
+                    metaInfoContainer.style.display = 'block';
+                    // 자동완성 선택 이벤트 핸들러
+                    metaInfoSelect.onchange = function() {
+                        const selectedCtgr = metaInfoSelect.value;
+                        if (selectedCtgr !== "custom") {
+                            tagify.removeTags(addedTagElmt);
+                            tagify.addTags([{ "value": newValue, "data": { "ctgr": selectedCtgr } }]);
+                            metaInfoContainer.style.display = 'none';  // 선택 후 컨테이너 숨김
+                        } else {
+                            // 직접입력 선택 시 입력 필드로 포커스 이동
+                            categoryInputContainer.style.display = 'block';
+                            tagCtgrInput.value = '';
+                            tagCtgrInput.dataset.tagValue = newValue;
+                            tagCtgrInput.focus();
+                        }
+                    };
                 }, 0);
+            });
+            // 추가된 태그가 제거될 때 ctgr 관련 숨기기
+            tagify.on("remove", function() {
+                metaInfoContainer.style.display = 'none';
+                categoryInputContainer.style.display = 'none';
             });
             // 카테고리 입력칸에 이벤트리스너 추가 (ESC 또는 탭)
             tagCtgrInput.addEventListener('keydown', function(event) {
+                metaInfoContainer.style.display = 'none';
                 if (event.key === 'Escape') {
                     // ESC = 태그 추가 없이 빠져나감
                     event.preventDefault();
