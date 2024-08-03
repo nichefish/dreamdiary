@@ -135,10 +135,10 @@ public class TagController
      * 태그 카테고리 메타 파일 - DB 동기화 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.TAG_SYNC_AJAX)
+    @RequestMapping(Url.TAG_CTGR_SYNC_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> tagSyncAjax(
+    public ResponseEntity<AjaxResponse> tagCtgrSyncAjax(
             @ModelAttribute("searchParam") TagSearchParam searchParam,
             final LogActvtyParam logParam,
             final @RequestParam Map<String, Object> searchParamMap

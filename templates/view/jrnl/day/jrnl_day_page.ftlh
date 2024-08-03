@@ -43,6 +43,16 @@
                 // 꿈 키워드 검색에 엔터키 처리
                 commons.util.enterKey("#dreamKeyword", JrnlDream.keywordListAjax);
             },
+            tagCtgrSyncAjax: function() {
+                const url = "${Url.TAG_CTGR_SYNC_AJAX!}";
+                commons.util.blockUIAjax(url, 'post', {}, function(res) {
+                    Swal.fire({ text: res.message });
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                });
+            }
         }
     })();
     $(document).ready(function() {
@@ -78,11 +88,19 @@
             <i class="bi bi-tag pe-0"></i>
         </button>
     </div>
-    <div class="col-1 ms-4 me-6 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
+    <div class="col-1 ms-2 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
+    <div class="col-1 mx-4 w-auto">
         <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                 onclick="JrnlDay.sort();"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="날짜 정렬을 변경합니다.">
                 <i class="bi bi-sort-numeric-up-alt fs-2 pe-0" id="sortIcon"></i>
+        </button>
+    </div>
+    <div class="col-1 w-auto">
+        <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                onclick="Page.tagCtgrSyncAjax();"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="태그 카테고리 정보를&#10;동기화합니다.">
+            <i class="bi bi-arrow-repeat fs-2 pe-0" id="sortIcon"></i>
         </button>
     </div>
 </div>
