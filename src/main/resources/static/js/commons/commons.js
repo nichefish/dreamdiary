@@ -707,6 +707,7 @@ commons.util = (function() {
             // 게시물 태그 tagify
             const tagInput = document.querySelector(selectorStr);
             return new Tagify(tagInput, {
+                whitelist: [],
                 maxTags: 16,
                 keepInvalidTags: false,
                 skipInvalid: true,
@@ -749,6 +750,12 @@ commons.util = (function() {
             const metaInfoContainer = document.getElementById('tag_ctgr_select_div');
             const metaInfoSelect = document.getElementById('tag_ctgr_select');
 
+            // 태그 자동완성
+            tagify.on("input", function(e) {
+                const value = e.detail.value;
+                tagify.settings.whitelist = Object.keys(tagCtgrMap).filter(tag => tag.startsWith(value));
+                tagify.dropdown.show(value); // Show the suggestions dropdown
+            });
             // 태그 추가시 카테고리 입력 칸 prompt
             tagify.on("add", function(e) {
                 // 기본 태그 (카테고리 붙이기 전) 처리시에만 동작
@@ -773,19 +780,19 @@ commons.util = (function() {
                     if (!tagCtgrMap) return;
                     const predefinedCtgr = tagCtgrMap[newTag.value];
                     if (!predefinedCtgr) return;
+                    const filteredCtgr = predefinedCtgr.filter(item => item !== "");
+                    if (filteredCtgr.length === 0) return;
                     // 초기화 및 직접입력 추가
                     metaInfoSelect.innerHTML = '<option value="custom">직접입력</option>';
                     // 사전 정의된 카테고리 옵션 추가
-                    const suggestions = predefinedCtgr;
-                    console.log(suggestions);
-                    suggestions.forEach(function() {
+                    filteredCtgr.forEach(function(item) {
                         const option = document.createElement('option');
-                        option.value = predefinedCtgr;
-                        option.textContent = predefinedCtgr;
+                        option.value = item;
+                        option.textContent = item;
                         metaInfoSelect.appendChild(option);
                     });
                     // 메타정보 컨테이너 표시
-                    metaInfoSelect.size = suggestions.length + 1;
+                    metaInfoSelect.size = filteredCtgr.length + 1;
                     metaInfoContainer.style.display = 'block';
                     // 자동완성 선택 이벤트 핸들러
                     metaInfoSelect.onchange = function() {

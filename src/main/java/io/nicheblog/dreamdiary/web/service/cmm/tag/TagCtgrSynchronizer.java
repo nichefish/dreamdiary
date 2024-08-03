@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.web.service.cmm.tag;
 
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -27,8 +26,6 @@ import java.util.stream.Collectors;
 @Log4j2
 public class TagCtgrSynchronizer {
 
-    private final TagMapstruct tagMapstruct = TagMapstruct.INSTANCE;
-
     @Resource(name = "tagService")
     private TagService tagService;
 
@@ -41,10 +38,12 @@ public class TagCtgrSynchronizer {
         List<TagEntity> tagList = tagService.getListEntity(new HashMap<>());
 
         Map<String, List<String>> tagCtgryMap = tagList.stream()
-                .filter(tag -> StringUtils.isNotBlank(tag.getCtgr()))
                 .collect(Collectors.groupingBy(
                         TagEntity::getTagNm,
-                        Collectors.mapping(TagEntity::getCtgr, Collectors.toList())
+                        Collectors.mapping(tag -> {
+                            if (StringUtils.isBlank(tag.getCtgr())) return "";
+                            return tag.getCtgr();
+                        }, Collectors.toList())
                 ));
 
         // 각 태그의 카테고리 리스트를 정렬

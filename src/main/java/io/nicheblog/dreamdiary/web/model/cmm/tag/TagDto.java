@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -31,7 +32,8 @@ public class TagDto
     private Integer tagNo;
 
     /** 태그 카테고리 */
-    private String ctgr;
+    @Builder.Default
+    private String ctgr = "";
     /** 태그 */
     private String tagNm;
 
@@ -57,11 +59,11 @@ public class TagDto
      */
     public TagDto(final String tagNm) {
         this.tagNm = tagNm;
+        this.ctgr = "";
     }
-
     public TagDto(final String tagNm, final String ctgr) {
         this.tagNm = tagNm;
-        this.ctgr = ctgr;
+        this.ctgr =  StringUtils.isEmpty(ctgr) ? "" : ctgr;
     }
 
     @Override
