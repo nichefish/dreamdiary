@@ -12,7 +12,7 @@
     <div class="modal-body">
         <#--begin::Form-->
         <form name="myPwChgForm" id="myPwChgForm" class="form">
-            <div class="user_my_pw_chg_div">
+            <div id="user_my_pw_chg_div">
                 <#--handlebars template goes in here-->
             </div>
         </form>

@@ -7,7 +7,7 @@
 <@layout.layout toolbar=toolbar!"">
 
 <#--include::script modules-->
-<#include "/view/user/my/user_my_scripts.ftlh">
+<#include "/view/user/my/_user_my_scripts.ftlh">
 <#include "/view/user/my/_user_my_pw_chg_scripts.ftlh">
 
 <script>
@@ -65,7 +65,8 @@
                 <div class="col-form-label text-center fs-6 fw-bold">비밀번호</div>
             </div>
             <div class="col-xl-2 col-5">
-                <button type="button" class="btn btn-sm btn-secondary" id="pwChgBtn" onclick="UserMyPwChg.myPwChgModal();"
+                <button type="button" class="btn btn-sm btn-secondary"
+                        onclick="UserMyPwChg.myPwChgModal();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호 변경 팝업을&#10;호출합니다.">
                     비밀번호 변경
                 </button>
@@ -77,12 +78,16 @@
                 <div class="col-form-label text-center fs-6 fw-bold"><label for="authNm">권한</label></div>
             </div>
             <div class="col-xl-2 col-8 col-form-label">
-                ${user.authNm!}
-                <#if (user.authCd! == Constant.AUTH_MNGR)>
-                    <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"></i>   <!-- 관리자 -->
-                <#elseif (user.authCd! == Constant.AUTH_USER)>
-                    <i class="bi bi-people-fill ms-1"></i>        <!-- 사용자 -->
-                </#if>
+                <#list user.authList![] as auth>
+                    <#if (auth.authCd! == Constant.AUTH_MNGR)>
+                        <i class="bi bi-person-lines-fill text-info ms-1 opacity-75"></i>   <!-- 관리자 -->
+                    <#elseif (auth.authCd! == Constant.AUTH_USER)>
+                        <i class="bi bi-people-fill ms-1"></i>        <!-- 사용자 -->
+                    <#elseif (auth.authCd! == Constant.AUTH_DEV)>
+                        <i class="bi bi-person-fill-gear ms-1"></i>        <!-- 개발자 -->
+                    </#if>
+                    ${auth.authNm!}
+                </#list>
             </div>
         </div>
         <#--begin::Row-->

@@ -72,7 +72,7 @@
                                             <div class="text-muted fw-bold">${authRole.authNm!}</div>
                                             <div class="badge badge-dark ms-3 opacity-50">${authRole.authLevel!}</div>
                                         <#elseif (authRole.authCd! == Constant.AUTH_DEV)>
-                                            <!-- 사용자 -->
+                                            <!-- 개발자 -->
                                             <i class="bi bi-person-fill-gear text-info fs-2 me-2 opacity-75"
                                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="${authRole.authNm!"-"}"></i>
                                             <div class="text-info fw-bold">${authRole.authNm!}</div>

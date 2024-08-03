@@ -35,7 +35,7 @@
             },
             /** 내 비밀번호 수정 팝업 호출 */
             myPwChgModal: function() {
-                const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
+                const data = { "errorMsg": "${errorMsg!}" };
                 commons.util.handlebarsTemplate(data, "user_my_pw_chg", "show");
             },
             /** submit */
