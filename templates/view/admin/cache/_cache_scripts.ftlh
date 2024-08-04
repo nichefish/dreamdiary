@@ -9,7 +9,6 @@
             activeListModal: function() {
                 const url = "${Url.CACHE_ACTIVE_LIST_AJAX!}";
                 commons.util.blockUIAjax(url, 'get', null, function(res) {
-                    console.log(res.rsltMap);
                     commons.util.handlebarsTemplate(res.rsltMap, "cache_list", "show");
                 });
             },

@@ -62,7 +62,6 @@
             sort: function() {
                 const asIs = $("#jrnl_aside #sort").val();
                 const toBe = (asIs !== "ASC") ? "ASC" : "DESC";
-                console.log("asIs: " + asIs + ", toBe: " + toBe);
                 // 쿠키 설정하기
                 let cookieOptions = {
                     path: "/jrnl/day/",

@@ -1,0 +1,22 @@
+<#--
+ * 저널 태그(jrnl_tag) > 목록 Template
+ * @included_in : _jrnl_tag_list_modal.ftlh
+ -->
+
+<script type="text/x-handlebars-template" id="jrnl_tag_ctgr_template">
+    <div class="btn btn-sm btn-outlined btn-light-secondary text-muted ctgr active" onclick="JrnlTag.dreamTagFilterAll(this);">
+        전체 토글
+        <i class="bi bi-check ctgr"></i>
+    </div>
+
+    <div class="btn btn-sm btn-outlined btn-light-secondary text-muted ctgr defaultCtgr active" onclick="JrnlTag.dreamTagFilter('defaultCtgr');">
+        카테고리 없음
+        <i class="bi bi-check ctgr defaultCtgr"></i>
+    </div>
+    {{#each this}}
+        <div class="btn btn-sm btn-outlined btn-light-secondary text-muted ctgr {{.}} active" onclick="JrnlTag.dreamTagFilter('{{.}}');">
+            {{.}}
+            <i class="bi bi-check ctgr {{.}}"></i>
+        </div>
+    {{/each}}
+</script>

@@ -49,7 +49,7 @@ public interface BasePostSpec<Entity extends BasePostEntity>
             predicate.addAll(basePredicate);
             predicate.addAll(clsfPredicate);
             predicate.addAll(postPredicate);
-            this.postQuery(root, query, builder);
+            this.postQuery(root, query, builder, searchParamMap);
             return builder.and(predicate.toArray(new Predicate[0]));
         };
     }

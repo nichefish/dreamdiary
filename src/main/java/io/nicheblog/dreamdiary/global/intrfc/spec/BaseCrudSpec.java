@@ -41,7 +41,7 @@ public interface BaseCrudSpec<Entity extends BaseCrudEntity>
                 e.printStackTrace();
             }
             predicate.addAll(basePredicate);
-            this.postQuery(root, query, builder);
+            this.postQuery(root, query, builder, searchParamMap);
             return builder.and(predicate.toArray(new Predicate[0]));
         };
     }
