@@ -38,6 +38,10 @@ public class JrnlDreamSpec
             final CriteriaQuery<?> query,
             final CriteriaBuilder builder
     ) {
+        List<Order> order = new ArrayList<>();
+        Join<JrnlDreamEntity, JrnlDaySmpEntity> jrnlDayJoin = root.join("jrnlDay", JoinType.INNER);
+        order.add(builder.desc(builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"))));
+        query.orderBy(order);
         query.distinct(true);
     }
 
