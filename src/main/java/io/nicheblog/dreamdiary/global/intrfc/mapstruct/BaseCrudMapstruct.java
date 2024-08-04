@@ -7,6 +7,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
                         throw new RuntimeException(e);
                     }
                 })
-                .sorted()
+                .sorted(Comparator.comparing(ListDto::getRnum))
                 .collect(Collectors.toList());
     }
 
