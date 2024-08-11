@@ -708,7 +708,7 @@ commons.util = (function() {
             const tagInput = document.querySelector(selectorStr);
             return new Tagify(tagInput, {
                 whitelist: [],
-                maxTags: 16,
+                maxTags: 21,
                 keepInvalidTags: false,
                 skipInvalid: true,
                 // duplicate 허용하고 수동 로직으로 중복 처리
@@ -815,10 +815,15 @@ commons.util = (function() {
             tagify.on("remove", function() {
                 metaInfoContainer.style.display = 'none';
                 categoryInputContainer.style.display = 'none';
+                const markedTags = document.querySelectorAll('[data-marked="true"]');
+                markedTags.forEach(tagElmt => {
+                    tagElmt.removeAttribute('data-marked');
+                });
             });
             // 카테고리 입력칸에 이벤트리스너 추가 (ESC 또는 탭)
             tagCtgrInput.addEventListener('keydown', function(event) {
                 metaInfoContainer.style.display = 'none';
+                const markedTags = document.querySelectorAll('[data-marked="true"]');
                 if (event.key === 'Escape') {
                     // ESC = 태그 추가 없이 빠져나감
                     event.preventDefault();
@@ -826,11 +831,13 @@ commons.util = (function() {
                     setTimeout(() => {
                         if (tagify.DOM.input) tagify.DOM.input.focus();
                     }, 0);
+                    markedTags.forEach(tagElmt => {
+                        tagElmt.removeAttribute('data-marked');
+                    });
                 } else if (event.key === 'Tab') {
                     // TAB = 빈칸 아닐시 카테고리 추가
                     event.preventDefault();
                     const newCtgr = tagCtgrInput.value;
-                    const markedTags = document.querySelectorAll('[data-marked="true"]');
                     const newValue = tagCtgrInput.dataset.tagValue;
 
                     // 중복 체크
@@ -845,11 +852,10 @@ commons.util = (function() {
                     // 새 태그 추가
                     tagify.addTags([{ "value": newValue, "data": { "ctgr": newCtgr } }]);
                     // 카테고리 붙인 걍우 임시 태그를 찾아 제거
-                    if (newCtgr) {
-                        markedTags.forEach(tagElmt => {
-                            tagify.removeTags(tagElmt);  // 마킹된 태그 제거
-                        });
-                    }
+                    markedTags.forEach(tagElmt => {
+                        tagElmt.removeAttribute('data-marked');
+                        if (newCtgr) tagify.removeTags(tagElmt);  // 마킹된 태그 제거
+                    });
                     categoryInputContainer.style.display = 'none';  // 카테고리 입력 필드 숨김
                     setTimeout(() => {
                         if (tagify.DOM.input) tagify.DOM.input.focus();
