@@ -150,6 +150,14 @@ public class SiteMenu
                 Url.JRNL_SUMRY_LIST
         );
 
+        // 소메뉴 :: 태그
+        SiteAcsInfo TAG = new SiteAcsInfo(
+                SiteTopMenu.JRNL,
+                "03",
+                "저널 결산",
+                Url.JRNL_SUMRY_LIST
+        );
+
         // 소메뉴 :: 경비지출서
         SiteAcsInfo EXPTR_PRSNL_PAPR = new SiteAcsInfo(
                 SiteTopMenu.EXPTR,

@@ -31,10 +31,11 @@ public enum SiteTopMenu {
 
     // ADMIN
     ADMIN_MAIN("00", "0000", "메인", "", true),
-    USER("01", "0100", "사용자 관리", "user", true),
-    VCATN_ADMIN("01", "0100", "휴가 관리", "vacation", true),
-    EXPTR_ADMIN("03", "0300", "경비 관리", "expenditure", true),
-    ADMIN("04", "0400", "사이트 관리", "admin", true),
+    ADMIN("01", "0100", "사이트 관리", "admin", true),
+    CONTENT("02", "0200", "컨텐츠 관리", "content", true),
+    USER("03", "0300", "사용자 관리", "user", true),
+    VCATN_ADMIN("04", "0400", "휴가 관리", "vacation", true),
+    EXPTR_ADMIN("05", "0500", "경비 관리", "expenditure", true),
     LOG("09", "0900", "로그 관리", "log", true);
 
     public final String idx;

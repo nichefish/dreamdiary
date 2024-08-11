@@ -42,6 +42,7 @@ public interface SiteUrl {
     String JRNL_DREAM_TAG_LIST_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamTagListAjax.do";
     String JRNL_DREAM_TAG_GROUP_LIST_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamTagGroupListAjax.do";
     String JRNL_DREAM_TAG_DTL_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamTagDtlAjax.do";
+    String JRNL_DREAM_TAG_CTGR_SYNC_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamTagCtgrSyncAjax.do";
 
     /** 저널 일기 */
     String JRNL_DIARY_REG_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryRegAjax.do";
@@ -133,10 +134,11 @@ public interface SiteUrl {
 
 
     /** 태그 */
+
+    String TAG_LIST = Prefix.TAG + "/tagList.do";
     String TAG_CLOUD_PAGE = Prefix.TAG + "/tagCloudPage.do";
     String TAG_LIST_AJAX = Prefix.TAG + "/tagListAjax.do";
     String TAG_DTL_AJAX = Prefix.TAG + "/tagDtlAjax.do";
-    String TAG_CTGR_SYNC_AJAX = Prefix.TAG + "/tagCtgrSyncAjax.do";
 
     /** 로그인 정책 관리 */
     String LGN_POLICY_FORM = Prefix.LGN_POLICY + "/lgnPolicyForm.do";

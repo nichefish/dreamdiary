@@ -25,13 +25,39 @@ public interface SiteAdminMenu {
             Url.ADMIN_MAIN
     );
 
+    // 대메뉴 :: 사이트 관리
+    SiteAcsInfo ADMIN = new SiteAcsInfo(
+            SiteTopMenu.ADMIN,
+            TOP_MENU_IDX,
+            "사이트 관리",
+            Url.AUTH_LGN_FORM,
+            List.of(SubMenu.ADMIN_PAGE, SubMenu.MENU, SubMenu.TMPLAT, SubMenu.POPUP, SubMenu.CD)
+    );
+    SiteAcsInfo ADMIN_PAGE = SubMenu.ADMIN_PAGE;
+    SiteAcsInfo LGN_POLICY = SubMenu.LGN_POLICY;
+    SiteAcsInfo MENU = SubMenu.MENU;
+    SiteAcsInfo TMPLAT = SubMenu.TMPLAT;
+    SiteAcsInfo POPUP = SubMenu.POPUP;
+    SiteAcsInfo CD = SubMenu.CD;
+
+    // 대메뉴 :: 컨텐츠 관리
+    SiteAcsInfo CONTENT = new SiteAcsInfo(
+            SiteTopMenu.CONTENT,
+            TOP_MENU_IDX,
+            "컨텐츠 관리",
+            Url.AUTH_LGN_FORM,
+            List.of(SubMenu.BOARD_DEF, SubMenu.TAG)
+    );
+    SiteAcsInfo BOARD_DEF = SubMenu.BOARD_DEF;
+    SiteAcsInfo TAG = SubMenu.TAG;
+
     // 대메뉴 :: 사용자 관리
     SiteAcsInfo USER = new SiteAcsInfo(
             SiteTopMenu.USER,
             TOP_MENU_IDX,
             "사용자 관리",
             Url.AUTH_LGN_FORM,
-            List.of(SubMenu.USER_INFO)
+            List.of(SubMenu.USER_INFO, SubMenu.LGN_POLICY)
     );
     SiteAcsInfo USER_INFO = SubMenu.USER_INFO;
 
@@ -56,22 +82,6 @@ public interface SiteAdminMenu {
     );
     SiteAcsInfo EXPTR_PRSNL_RPT = SubMenu.EXPTR_PRSNL_RPT;
     SiteAcsInfo EXPTR_PRSNL_STATS = SubMenu.EXPTR_PRSNL_STATS;
-
-    // 대메뉴 :: 사이트 관리
-    SiteAcsInfo ADMIN = new SiteAcsInfo(
-            SiteTopMenu.ADMIN,
-            TOP_MENU_IDX,
-            "사이트 관리",
-            Url.AUTH_LGN_FORM,
-            List.of(SubMenu.ADMIN_PAGE, SubMenu.LGN_POLICY, SubMenu.MENU, SubMenu.BOARD_DEF, SubMenu.TMPLAT, SubMenu.POPUP, SubMenu.CD)
-    );
-    SiteAcsInfo ADMIN_PAGE = SubMenu.ADMIN_PAGE;
-    SiteAcsInfo LGN_POLICY = SubMenu.LGN_POLICY;
-    SiteAcsInfo MENU = SubMenu.MENU;
-    SiteAcsInfo BOARD_DEF = SubMenu.BOARD_DEF;
-    SiteAcsInfo TMPLAT = SubMenu.TMPLAT;
-    SiteAcsInfo POPUP = SubMenu.POPUP;
-    SiteAcsInfo CD = SubMenu.CD;
 
     // 대메뉴 :: 로그 관리
     SiteAcsInfo LOG = new SiteAcsInfo(
@@ -140,8 +150,8 @@ public interface SiteAdminMenu {
         );
         // 소메뉴 :: 로그인 정책 관리
         SiteAcsInfo LGN_POLICY = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                "01",
+                SiteTopMenu.USER,
+                "02",
                 "로그인 정책 관리",
                 Url.LGN_POLICY_FORM
         );
@@ -151,13 +161,6 @@ public interface SiteAdminMenu {
                 "02",
                 "메뉴 관리",
                 Url.MENU_PAGE
-        );
-        // 소메뉴 :: 게시판 관리
-        SiteAcsInfo BOARD_DEF = new SiteAcsInfo(
-                SiteTopMenu.ADMIN,
-                "03",
-                "게시판 관리",
-                Url.BOARD_DEF_LIST
         );
         // 소메뉴 :: 템플릿 관리
         SiteAcsInfo TMPLAT = new SiteAcsInfo(
@@ -179,6 +182,22 @@ public interface SiteAdminMenu {
                 "07",
                 "코드 관리",
                 Url.CL_CD_LIST
+        );
+
+        /* 컨텐츠 관리 */
+        // 소메뉴 :: 게시판 관리
+        SiteAcsInfo BOARD_DEF = new SiteAcsInfo(
+                SiteTopMenu.ADMIN,
+                "01",
+                "게시판 관리",
+                Url.BOARD_DEF_LIST
+        );
+        // 소메뉴 :: 태그 관리
+        SiteAcsInfo TAG = new SiteAcsInfo(
+                SiteTopMenu.CONTENT,
+                "02",
+                "태그 관리",
+                Url.TAG_LIST
         );
 
         /* 로그 관리 */
