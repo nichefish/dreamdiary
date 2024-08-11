@@ -45,7 +45,7 @@ public class AtchFileDtlEntity
     private Integer atchFileNo;
 
     /** 첨부파일 정보 */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "atch_file_no", insertable = false, updatable = false)
     private AtchFileEntity atchFileInfo;
 

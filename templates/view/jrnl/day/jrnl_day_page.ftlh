@@ -44,7 +44,7 @@
                 commons.util.enterKey("#dreamKeyword", JrnlDream.keywordListAjax);
             },
             tagCtgrSyncAjax: function() {
-                const url = "${Url.TAG_CTGR_SYNC_AJAX!}";
+                const url = "${Url.JRNL_DREAM_TAG_CTGR_SYNC_AJAX!}";
                 commons.util.blockUIAjax(url, 'post', {}, function(res) {
                     Swal.fire({ text: res.message });
                     if (!res.rslt) {
@@ -61,6 +61,29 @@
         Comment.init(JrnlDay.yyMnthListAjax);
     });
 </script>
+
+<style>
+    /* 수동 키워드 강조 추가 */
+    .em_소외, .em_적대감, .em_괴롭힘bully, .em_굶주림, .em_광기, .em_장애, .em_공습, .em_홍수 , .em_쫓김, .em_naughty-child, .em_폭력배, .em_드래곤, .em_좀비,.em_벌레, .em_오염, .em_감금, .em_분노, .em_살해, .em_신체강탈자, .em_분열, .em_회피, .em_지각, .em_포스트-아포칼립스, .em_damsel-in-distress {
+        color: red;
+        background-color: rgba(255, 204, 204, 0.1);
+        text-decoration: underline dotted;
+        font-weight: bolder;
+        animation: blink-effect 0.75s step-end infinite;
+        -webkit-animation: blink 0.75s linear infinite;
+    }
+    .em_고고학, .em_사회학, .em_역사학, .em_레인저, .em_아기, .em_탈출, .em_수영, .em_생존, .em_함정, .em_연구실laboratory, .em_책, .em_수로, .em_이사, .em_분리수거, .em_지도 {
+        color: rgba(60, 179, 113, 1);
+        background-color: rgba(230, 255, 240, 1);
+        font-weight: bolder;
+        text-decoration: underline dotted;
+        animation: blink-effect 0.75s step-end infinite;
+        -webkit-animation: blink 0.75s linear infinite;
+    }
+    .em_형, .em_엄마, .em_아빠, .em_단양, .em_보발, .em_별방, .em_제천, .em_유치원, .em_학교, .em_대학교 {
+        color: #bcc5cd !important;
+    }
+</style>
 
 <#--#include:: component:: 태그 클릭 필터링-->
 <!-- 전체 태그 :: 모달 팝업 처리하기-->

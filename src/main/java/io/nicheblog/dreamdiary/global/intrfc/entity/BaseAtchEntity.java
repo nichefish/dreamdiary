@@ -32,7 +32,7 @@ public class BaseAtchEntity
     protected Integer atchFileNo;
 
     /** 첨부파일 정보 */
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "atch_file_no", referencedColumnName = "atch_file_no", insertable = false, updatable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     protected AtchFileEntity atchFileInfo;
