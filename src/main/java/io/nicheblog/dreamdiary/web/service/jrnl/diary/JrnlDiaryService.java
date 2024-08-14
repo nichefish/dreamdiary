@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.diary;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.diary.JrnlDiaryMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
@@ -66,6 +68,15 @@ public class JrnlDiaryService
     }
 
     /**
+     * 특정 태그의 관련 꿈 목록 조회
+     */
+    @Cacheable(value="jrnlDiaryTagDtl", key="#searchParam.hashCode()")
+    public List<JrnlDiaryDto> jrnlDiaryTagDtl(final BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getListDto(searchParamMap);
+    }
+
+    /**
      * 등록 전처리 :: override
      */
     @Override
@@ -116,12 +127,17 @@ public class JrnlDiaryService
      * 관련 캐시 처리 :: 메소드 분리
      */
     public void evictRelatedCache(final JrnlDiaryEntity rslt) {
+        Integer yy = rslt.getJrnlDay().getYy();
+        Integer mnth = rslt.getJrnlDay().getMnth();
         // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_99");
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo());
         // jrnl_diary
-        EhCacheUtils.evictCache("imprtcDiaryList", rslt.getJrnlDay().getYy());
+        EhCacheUtils.evictCache("imprtcDiaryList", yy);
         EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getPostNo());
+        // jrnl_diary_tag
+        EhCacheUtils.evictCache("jrnlDiaryTagList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDiaryTagList", yy + mnth);
     }
 }
