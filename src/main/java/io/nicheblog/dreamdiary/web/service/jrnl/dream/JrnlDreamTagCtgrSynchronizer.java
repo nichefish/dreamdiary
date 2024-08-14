@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * TagCtgrSynchronizer
+ * JrnlDreamTagCtgrSynchronizer
  * <pre>
  *  태그 카테고리 메타 파일-DB 동기화 모듈
  * </pre>

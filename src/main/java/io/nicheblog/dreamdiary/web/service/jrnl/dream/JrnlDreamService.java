@@ -138,13 +138,18 @@ public class JrnlDreamService
      * 관련 캐시 처리 :: 메소드 분리
      */
     public void evictRelatedCache(final JrnlDreamEntity rslt) {
+        Integer yy = rslt.getJrnlDay().getYy();
+        Integer mnth = rslt.getJrnlDay().getMnth();
         // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_" + rslt.getJrnlDay().getMnth());
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getJrnlDay().getYy() + "_99");
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo());
         // jrnl_dream
-        EhCacheUtils.evictCache("imprtcDreamList", rslt.getJrnlDay().getYy());
+        EhCacheUtils.evictCache("imprtcDreamList", yy);
         EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getPostNo());
         EhCacheUtils.evictCacheAll("jrnlDreamList");
+        // jrnl_diary_tag
+        EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDreamTagList", yy + mnth);
     }
 }

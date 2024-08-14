@@ -11,9 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.*;
 
 /**
- * JrnlDreamEntity
+ * JrnlDreamSmpEntity
  * <pre>
- *  저널 꿈 Entity.
+ *  저널 꿈 Entity. (연관관계 간소화)
  *  Entity that contains each distinct dream.
  * </pre>
  *

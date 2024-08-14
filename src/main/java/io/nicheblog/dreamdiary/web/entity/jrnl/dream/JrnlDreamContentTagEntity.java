@@ -17,7 +17,7 @@ import javax.persistence.*;
 /**
  * JrnlDreamTagEntity
  * <pre>
- *  저널 꿈 태그 Entity
+ *  저널 꿈 태그 Entity.
  *  (사용 용이성을 위해 엔티티 분리)
  * </pre>
  *
