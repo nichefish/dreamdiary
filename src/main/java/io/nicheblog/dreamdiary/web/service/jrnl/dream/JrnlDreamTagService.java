@@ -82,7 +82,7 @@ public class JrnlDreamTagService
         final int MAX_SIZE = 9; // 최대 크기
         return tagList.stream()
                 .peek(dto -> {
-                    int size = dto.getDreamSize();
+                    int size = dto.getContentSize();
                     if (size == 1) {
                         dto.setTagClass("ts-1");
                     } else {
@@ -103,7 +103,7 @@ public class JrnlDreamTagService
         for (TagDto tag : tagList) {
             // 캐싱 처리 위해 셀프 프록시
             Integer dreamSize = this.getSelf().countDreamSize(tag.getTagNo(), yy, mnth);
-            tag.setDreamSize(dreamSize);
+            tag.setContentSize(dreamSize);
             maxFrequency = Math.max(maxFrequency, dreamSize);
         }
         return maxFrequency;
@@ -115,5 +115,14 @@ public class JrnlDreamTagService
     @Cacheable(value="countDreamSize", key="#tagNo + \"_\" + #yy + \"_\" + #mnth")
     public Integer countDreamSize(Integer tagNo, Integer yy, Integer mnth) {
         return jrnlDreamTagRepository.countDreamSize(tagNo, yy, mnth);
+    }
+
+    public Map<String, List<TagDto>> getDreamSizedGroupListDto(Integer yy, Integer mnth) throws Exception {
+
+        List<TagDto> tagList = this.getDreamSizedListDto(yy, mnth);
+
+        // 태그를 카테고리별로 그룹화하여 맵으로 반환
+        return tagList.stream()
+                .collect(Collectors.groupingBy(TagDto::getCtgr));
     }
 }

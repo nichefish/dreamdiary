@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * JrnlDreamTagEntity
  * <pre>
- *  저널 꿈 태그 Entity
+ *  저널 꿈 태그 Entity.
  * </pre>
  *
  * @author nichefish

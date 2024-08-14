@@ -39,6 +39,7 @@ public interface SiteUrl {
     String JRNL_DREAM_DTL_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamDtlAjax.do";
     String JRNL_DREAM_MDF_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamMdfAjax.do";
     String JRNL_DREAM_DEL_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamDelAjax.do";
+    /** 저널 꿈 태그 */
     String JRNL_DREAM_TAG_LIST_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamTagListAjax.do";
     String JRNL_DREAM_TAG_GROUP_LIST_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamTagGroupListAjax.do";
     String JRNL_DREAM_TAG_DTL_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamTagDtlAjax.do";
@@ -49,6 +50,11 @@ public interface SiteUrl {
     String JRNL_DIARY_DTL_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryDtlAjax.do";
     String JRNL_DIARY_MDF_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryMdfAjax.do";
     String JRNL_DIARY_DEL_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryDelAjax.do";
+    /** 저널 일기 태그 */
+    String JRNL_DIARY_TAG_LIST_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryTagListAjax.do";
+    String JRNL_DIARY_TAG_GROUP_LIST_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryTagGroupListAjax.do";
+    String JRNL_DIARY_TAG_DTL_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryTagDtlAjax.do";
+    String JRNL_DIARY_TAG_CTGR_SYNC_AJAX = Prefix.JRNL_DIARY + "/jrnlDiaryTagCtgrSyncAjax.do";
 
     /** 저널 주제 */
     String JRNL_SBJCT_LIST = Prefix.JRNL_SBJCT + "/jrnlSbjctList.do";

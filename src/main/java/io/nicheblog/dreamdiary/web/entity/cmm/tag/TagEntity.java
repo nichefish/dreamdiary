@@ -54,7 +54,7 @@ public class TagEntity
     /** 컨텐츠 태그 */
     @OneToMany(mappedBy = "tag", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
-    @Where(clause = "ref_content_type != 'JRNL_DREAM'")
+    @Where(clause = "ref_content_type not in ('JRNL_DREAM', 'JRNL_DIARY')")
     @NotFound(action = NotFoundAction.IGNORE)
     private List<ContentTagEntity> contentTagList;
 

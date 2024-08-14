@@ -46,7 +46,7 @@ public class TagDto
     private Integer size = 0;
     /** 태그 크기 (=컨텐츠 개수) */
     @Builder.Default
-    private Integer dreamSize = 0;
+    private Integer contentSize = 0;
 
     /** 글자 크기 클래스 */
     private String tagClass;
