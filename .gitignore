@@ -22,3 +22,4 @@
 /ssh-key-2024-04-22.key.pub
 /templates/view/jrnl/dream/_jrnl_dream_tag.ftlh
 /templates/view/jrnl/day/_jrnl_day_tag.ftlh
+/templates/view/jrnl/diary/_jrnl_diary_tag.ftlh

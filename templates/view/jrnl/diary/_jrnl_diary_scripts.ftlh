@@ -2,6 +2,9 @@
  * 저널 일기(jrnl_diary) : 스크립트 모듈 분리
  -->
 
+<#--include::script modules-->
+<#include "/view/jrnl/diary/_jrnl_diary_tag.ftlh">
+
 <script>
     const JrnlDiary = (function() {
         return {
