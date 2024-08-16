@@ -54,7 +54,6 @@
                         <@menu.outer_menu siteMenu=SiteMenu.ADMIN_PAGE />
                         <@menu.outer_menu siteMenu=SiteMenu.MENU />
                         <@menu.inner_menu siteMenu=SiteMenu.LGN_POLICY />
-                        <@menu.inner_menu siteMenu=SiteMenu.BOARD_DEF />
                         <@menu.inner_menu siteMenu=SiteMenu.TMPLAT />
                         <@menu.inner_menu siteMenu=SiteMenu.POPUP />
                         <@menu.inner_menu siteMenu=SiteMenu.CD />
@@ -81,6 +80,9 @@
                     <!--end:Menu sub-->
                 </div>
                 <!--end:Menu item-->
+
+                <!-- C0NTENT -->
+                <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.CONTENT />
 
                 <!-- USER -->
                 <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.USER />
