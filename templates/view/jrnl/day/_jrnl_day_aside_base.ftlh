@@ -6,6 +6,22 @@
 <script>
     const JrnlDayAside = (function() {
         return {
+            cookieOptions: {
+                path: "/jrnl/day/",
+                expires: commons.date.getCurrDateAddDay(36135)
+            },
+            init: function() {
+                const pinYyCookie = $.cookie("pin_yy");
+                if (pinYyCookie !== undefined) {
+                    $("#jrnl_aside #yy").val(pinYyCookie);
+                    $("#jrnl_aside #pinYy").text(pinYyCookie);
+                }
+                const pinMnthCookie = $.cookie("pin_mnth");
+                if (pinMnthCookie !== undefined) {
+                    $("#jrnl_aside #mnth").val(pinMnthCookie);
+                    $("#jrnl_aside #pinMnth").text(pinMnthCookie);
+                }
+            },
             today: function() {
                 const todayYy = commons.date.getCurrYyStr();
                 const todayMnth = commons.date.getCurrMnthStr();
@@ -24,13 +40,9 @@
             },
             mnth: function () {
                 // 쿠키 설정하기
-                let cookieOptions = {
-                    path: "/jrnl/day/",
-                    expires: commons.date.getCurrDateAddDay(36135)
-                };
-                $.cookie("jrnl_yy", $("#jrnl_aside #yy").val(), cookieOptions);
+                $.cookie("jrnl_yy", $("#jrnl_aside #yy").val(), JrnlDayAside.cookieOptions);
                 if ($("#jrnl_aside #mnth").val() === "") return;
-                $.cookie("jrnl_mnth", $("#jrnl_aside #mnth").val(), cookieOptions);
+                $.cookie("jrnl_mnth", $("#jrnl_aside #mnth").val(), JrnlDayAside.cookieOptions);
                 $("#jrnl_aside #dreamKeyword").val("");
                 // 목록 조회
                 JrnlDay.yyMnthListAjax();
@@ -41,6 +53,21 @@
                 JrnlDream.inKeywordSearchMode = false;
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
+            },
+            pinpoint: function() {
+                const pinYy = $("#jrnl_aside #yy").val();
+                const pinMnth = $("#jrnl_aside #mnth").val();
+                $.cookie("pin_yy", pinYy, JrnlDayAside.cookieOptions);
+                $.cookie("pin_mnth", pinMnth, JrnlDayAside.cookieOptions);
+                $("#jrnl_aside #pinYy").text(pinYy);
+                $("#jrnl_aside #pinMnth").text(pinMnth);
+            },
+            turnback: function() {
+                const pinYyCookie = $.cookie("pin_yy");
+                if (pinYyCookie !== undefined) $("#jrnl_aside #yy").val(pinYyCookie);
+                const pinMnthCookie = $.cookie("pin_mnth");
+                if (pinMnthCookie !== undefined) $("#jrnl_aside #mnth").val(pinMnthCookie);
+                JrnlDayAside.mnth();
             },
             /** */
             sort: function() {
@@ -123,12 +150,30 @@
                     <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                             onclick="JrnlDayAside.today();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈을 키워드로 검색합니다.">
-                        오늘 일자로 조회하기<i class="bi bi-search ps-2 pe-0"></i>
+                        오늘 일자 조회하기<i class="bi bi-search ps-1 pe-0"></i>
                     </button>
                     <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                             onclick="JrnlDayAside.sort();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="날짜 정렬을 변경합니다.">
                         <i class="bi bi-sort-numeric-up-alt fs-2 pe-0" id="sortIcon"></i>
+                    </button>
+                </div>
+                <#--begin::row-->
+                <div class="mb-4">
+                    <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                            onclick="JrnlDayAside.pinpoint();"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈을 키워드로 검색합니다.">
+                        현재 년월 저장<i class="bi bi-pin-map ps-1 pe-0"></i>
+                    </button>
+                    <span class="px-2">
+                        <span id="pinYy"></span>
+                        <span> / </span>
+                        <span id="pinMnth"></span>
+                    </span>
+                    <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                            onclick="JrnlDayAside.turnback();"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저장된 년월로 이동합니다.">
+                        <i class="bi bi-reply-all"></i>
                     </button>
                 </div>
                 <#--begin::row-->

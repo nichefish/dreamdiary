@@ -35,6 +35,7 @@
                 if (sortCookie !== undefined) $("#jrnl_aside #sort").val(sortCookie);
                 // 아무 쿠키도 없을경우 전체 데이터 로딩을 막기 위해 올해 년도 세팅
                 if (yyCookie === undefined && mnthCookie === undefined) $("#jrnl_aside #yy").val(commons.date.getCurrYyStr());
+                JrnlDayAside.init();
                 // 목록 조회
                 JrnlDay.yyMnthListAjax();
                 // 태그 조회
