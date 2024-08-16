@@ -28,7 +28,7 @@ public class BasePostDto
     /** 내용 */
     protected String cn;
     /** 마크다운 처리된 내용 */
-    private String markdownCn;
+    protected String markdownCn;
 
     /** 글분류 코드 */
     protected String ctgrClCd;
@@ -52,8 +52,8 @@ public class BasePostDto
 
     /** 수정권한 */
     @Builder.Default
-    private String mdfable = Constant.MDFABLE_REGSTR;
+    protected String mdfable = Constant.MDFABLE_REGSTR;
     /** 수정 가능 여부 */
     @Builder.Default
-    private Boolean isMdfable = false;
+    protected Boolean isMdfable = false;
 }

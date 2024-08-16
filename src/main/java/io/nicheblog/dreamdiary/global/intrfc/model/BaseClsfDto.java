@@ -30,13 +30,13 @@ public class BaseClsfDto
 
     /** (수정시) 조치일자 변경하지 않음 변수 */
     @Builder.Default
-    private String managtDtUpdtYn = "N";
+    protected String managtDtUpdtYn = "N";
 
     /* ----- */
 
     /** 새 글 여부 */
     @Builder.Default
-    private Boolean isNew = false;
+    protected Boolean isNew = false;
 
     /**
      * 복합키 객체 반환
