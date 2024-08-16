@@ -737,19 +737,24 @@ commons.util = (function() {
             });
         },
 
+        /**
+         * tagify :: 카테고리 기능 추가
+         */
         tagifyWithCtgr: function(selectorStr, tagCtgrMap) {
             const tagify = commons.util.tagify(selectorStr);
             // 태그 카테고리 입력 UI 존재시에만 활성화됨
-            const categoryInputContainer = document.querySelector('#tag_ctgr_div');
-            const tagCtgrInput = document.querySelector('#tag_ctgr');
+            const parts = selectorStr.split(' ');
+            const tagScope = (parts.length > 1) ? document.querySelector(parts[0]) : document;
+
+            const categoryInputContainer = tagScope.querySelector('#tag_ctgr_div');
+            const tagCtgrInput = tagScope.querySelector('#tag_ctgr');
             if (!categoryInputContainer || !tagCtgrInput) return tagify;
 
             // 수동 중복 체크 위해 중복 제한 제거
             tagify.settings.duplicates = true;
 
-            const metaInfoContainer = document.getElementById('tag_ctgr_select_div');
-            const metaInfoSelect = document.getElementById('tag_ctgr_select');
-
+            const metaInfoContainer = tagScope.querySelector('#tag_ctgr_select_div');
+            const metaInfoSelect = tagScope.querySelector('#tag_ctgr_select');
             // 태그 자동완성
             tagify.on("input", function(e) {
                 const value = e.detail.value;
@@ -815,7 +820,7 @@ commons.util = (function() {
             tagify.on("remove", function() {
                 metaInfoContainer.style.display = 'none';
                 categoryInputContainer.style.display = 'none';
-                const markedTags = document.querySelectorAll('[data-marked="true"]');
+                const markedTags = tagScope.querySelectorAll('[data-marked="true"]');
                 markedTags.forEach(tagElmt => {
                     tagElmt.removeAttribute('data-marked');
                 });
@@ -823,7 +828,7 @@ commons.util = (function() {
             // 카테고리 입력칸에 이벤트리스너 추가 (ESC 또는 탭)
             tagCtgrInput.addEventListener('keydown', function(event) {
                 metaInfoContainer.style.display = 'none';
-                const markedTags = document.querySelectorAll('[data-marked="true"]');
+                const markedTags = tagScope.querySelectorAll('[data-marked="true"]');
                 if (event.key === 'Escape') {
                     // ESC = 태그 추가 없이 빠져나감
                     event.preventDefault();

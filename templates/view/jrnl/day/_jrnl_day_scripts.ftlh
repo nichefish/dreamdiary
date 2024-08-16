@@ -2,6 +2,9 @@
  * 저널 일자(jrnl_day) : 스크립트 모듈 분리
  -->
 
+<#--include::script modules-->
+<#include "/view/jrnl/day/_jrnl_day_tag.ftlh">
+
 <script>
     const JrnlDay = (function() {
         return {
@@ -108,6 +111,8 @@
                     $("#jrnlDtDiv").removeClass("d-none");
                     $("#aprxmtDtDiv").addClass("d-none");
                 });
+                /* tagify */
+                commons.util.tagifyWithCtgr("#jrnlDayRegForm #tagListStr", JrnlDayTag.ctgrMap);
             },
             /** 아이콘 새로고침 */
             refreshIcon: function() {
@@ -161,6 +166,8 @@
                         $("#jrnlDtDiv").removeClass("d-none");
                         $("#aprxmtDtDiv").addClass("d-none");
                     });
+                    /* tagify */
+                    commons.util.tagifyWithCtgr("#jrnlDayRegForm #tagListStr", JrnlDayTag.ctgrMap);
                 });
             },
             /** 삭제 */
