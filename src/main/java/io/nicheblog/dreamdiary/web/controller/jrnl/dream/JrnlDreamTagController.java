@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * JrnlDreamTagController
  * <pre>
- *  저널 꿈 태그 Controller
+ *  저널 꿈 태그 Controller.
  * </pre>
  *
  * @author nichefish

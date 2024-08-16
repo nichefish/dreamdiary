@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * JrnlDreamController
  * <pre>
- *  저널 꿈 Controller
+ *  저널 꿈 Controller.
  * </pre>
  *
  * @author nichefish
