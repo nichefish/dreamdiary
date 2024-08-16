@@ -112,18 +112,11 @@
             </button>
         </div>
         <div class="col-1 ms-2 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
-        <div class="col-1 mx-4 w-auto">
-            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
-                    onclick="JrnlDay.sort();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="날짜 정렬을 변경합니다.">
-                <i class="bi bi-sort-numeric-up-alt fs-2 pe-0" id="sortIcon"></i>
-            </button>
-        </div>
         <div class="col-1 w-auto">
             <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                     onclick="Page.tagCtgrSyncAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="태그 카테고리 정보를&#10;동기화합니다.">
-                <i class="bi bi-arrow-repeat fs-2 pe-0" id="sortIcon"></i>
+                <i class="bi bi-arrow-repeat fs-2 pe-0"></i>
             </button>
         </div>
     </div>

@@ -42,6 +42,39 @@
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
             },
+            /** */
+            sort: function() {
+                const asIs = $("#jrnl_aside #sort").val();
+                const toBe = (asIs !== "ASC") ? "ASC" : "DESC";
+                // 쿠키 설정하기
+                let cookieOptions = {
+                    path: "/jrnl/day/",
+                    expires: commons.date.getCurrDateAddDay(36135)
+                };
+                $.cookie("jrnl_day_sort", toBe, cookieOptions);
+                // 값 설정
+                $("#jrnl_aside #sort").val(toBe);
+                if (toBe === "DESC") {
+                    $("#jrnl_aside #sortIcon").removeClass("bi-sort-numeric-down").addClass("bi-sort-numeric-up-alt");
+                } else {
+                    $("#jrnl_aside #sortIcon").removeClass("bi-sort-numeric-up-alt").addClass("bi-sort-numeric-down");
+                }
+                const container = document.querySelector('#jrnl_day_list_div'); // 모든 저널 일자를 포함하는 컨테이너
+                const days = Array.from(container.querySelectorAll('.jrnl-day')); // 모든 'jrnl-day' 요소를 배열로 변환
+                days.sort((a, b) => {
+                    const dateA = new Date(a.querySelector('.jrnl-day-header .col-1').textContent.trim());
+                    const dateB = new Date(b.querySelector('.jrnl-day-header .col-1').textContent.trim());
+                    return (toBe === "ASC") ? dateA - dateB : dateB - dateA;
+                });
+                // 컨테이너에서 모든 요소를 제거
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+                // 정렬된 요소를 다시 컨테이너에 추가
+                days.forEach(day => {
+                    container.appendChild(day);
+                });
+            },
         }
     })();
 </script>
@@ -86,11 +119,16 @@
             <div class="card-body" id="jrnl_aside">
                 <input type="hidden" name="sort" id="sort">
                 <#--begin::row-->
-                <div class="mb-6">
+                <div class="mb-4">
                     <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                             onclick="JrnlDayAside.today();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈을 키워드로 검색합니다.">
                         오늘 일자로 조회하기<i class="bi bi-search ps-2 pe-0"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                            onclick="JrnlDayAside.sort();"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="날짜 정렬을 변경합니다.">
+                        <i class="bi bi-sort-numeric-up-alt fs-2 pe-0" id="sortIcon"></i>
                     </button>
                 </div>
                 <#--begin::row-->

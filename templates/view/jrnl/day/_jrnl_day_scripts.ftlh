@@ -51,48 +51,15 @@
                     // 정렬 처리
                     let sortStr = $("#jrnl_aside #sort").val();
                     if (sortStr === "ASC") {
-                        $("#sortIcon").removeClass("bi-sort-numeric-up-alt").addClass("bi-sort-numeric-down");
+                        $("#jrnl_aside #sortIcon").removeClass("bi-sort-numeric-up-alt").addClass("bi-sort-numeric-down");
                     } else {
-                        $("#sortIcon").removeClass("bi-sort-numeric-down").addClass("bi-sort-numeric-up-alt");
+                        $("#jrnl_aside #sortIcon").removeClass("bi-sort-numeric-down").addClass("bi-sort-numeric-up-alt");
                         if (commons.util.isNotEmpty(rsltList)) rsltList.reverse();
                     }
                     $("#jrnl_dream_list_div").empty();
                     commons.util.closeModal();
                     commons.util.handlebarsTemplate(rsltList, "jrnl_day_list");
                 }, "block");
-            },
-            /** */
-            sort: function() {
-                const asIs = $("#jrnl_aside #sort").val();
-                const toBe = (asIs !== "ASC") ? "ASC" : "DESC";
-                // 쿠키 설정하기
-                let cookieOptions = {
-                    path: "/jrnl/day/",
-                    expires: commons.date.getCurrDateAddDay(36135)
-                };
-                $.cookie("jrnl_day_sort", toBe, cookieOptions);
-                // 값 설정
-                $("#jrnl_aside #sort").val(toBe);
-                if (toBe === "DESC") {
-                    $("#sortIcon").removeClass("bi-sort-numeric-down").addClass("bi-sort-numeric-up-alt");
-                } else {
-                    $("#sortIcon").removeClass("bi-sort-numeric-up-alt").addClass("bi-sort-numeric-down");
-                }
-                const container = document.querySelector('#jrnl_day_list_div'); // 모든 저널 일자를 포함하는 컨테이너
-                const days = Array.from(container.querySelectorAll('.jrnl-day')); // 모든 'jrnl-day' 요소를 배열로 변환
-                days.sort((a, b) => {
-                    const dateA = new Date(a.querySelector('.jrnl-day-header .col-1').textContent.trim());
-                    const dateB = new Date(b.querySelector('.jrnl-day-header .col-1').textContent.trim());
-                    return (toBe === "ASC") ? dateA - dateB : dateB - dateA;
-                });
-                // 컨테이너에서 모든 요소를 제거
-                while (container.firstChild) {
-                    container.removeChild(container.firstChild);
-                }
-                // 정렬된 요소를 다시 컨테이너에 추가
-                days.forEach(day => {
-                    container.appendChild(day);
-                });
             },
             /** 등록 화면 호출 */
             regModal: function() {
