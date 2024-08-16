@@ -7,10 +7,10 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.tag.TagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -18,10 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -46,12 +44,42 @@ public class TagController
 
     @Resource(name = "tagService")
     private TagService tagService;
-    @Resource(name = "tagCtgrSynchronizer")
-    private TagCtgrSynchronizer tagCtgrSynchronizer;
 
     /**
-     * TODO: 태그클라우드 화면 조회
+     * 저널 태그 관리 화면 조회
+     * (관리자MNGR만 접근 가능)
      */
+    @GetMapping(Url.TAG_LIST)
+    @Secured({Constant.ROLE_MNGR})
+    public String tagList(
+            @ModelAttribute("searchParam") TagSearchParam searchParam,
+            final LogActvtyParam logParam,
+            final ModelMap model
+    ) throws Exception {
+
+        /* 사이트 메뉴 설정 */
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.TAG.setAcsPageInfo(Constant.PAGE_LIST));
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 태그 목록 조회
+
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
+        } finally {
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return "/view/admin/tag/tag_list";
+    }
 
     /**
      * 태그 전체 목록 조회 (Ajax)
@@ -131,40 +159,5 @@ public class TagController
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
-    /**
-     * 태그 카테고리 메타 파일 - DB 동기화 (Ajax)
-     * (관리자MNGR만 접근 가능)
-     */
-    @RequestMapping(Url.TAG_CTGR_SYNC_AJAX)
-    @Secured({Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> tagCtgrSyncAjax(
-            @ModelAttribute("searchParam") TagSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final @RequestParam Map<String, Object> searchParamMap
-    ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 전체 태그 목록 조회 (태그클라우드)
-            tagCtgrSynchronizer.tagSync();
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
 }
