@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * JrnlDreamTagRepository
  * <pre>
- *  게시판 태그 정보 repository 인터페이스
- *  ※게시판 태그(board_tag) = 게시판별 태그 정보. 일반게시판 게시물 태그(board_post_tag)와 1:N으로 연관된다.
+ *  저널 꿈 태그 정보 repository 인터페이스.
  * </pre>
  *
  * @author nichefish

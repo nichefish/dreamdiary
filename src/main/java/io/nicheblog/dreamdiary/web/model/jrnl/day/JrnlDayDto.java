@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import lombok.*;
@@ -12,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +33,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class JrnlDayDto
         extends BaseClsfDto
-        implements Identifiable<Integer>, TagCmpstnModule {
+        implements Identifiable<Integer>, TagCmpstnModule, Comparable<JrnlDayDto>  {
 
     /** 필수: 컨텐츠 타입 */
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_DAY;
@@ -86,6 +88,17 @@ public class JrnlDayDto
     /** 꿈 목록 보유여부 */
     public Boolean getHasDreamList() {
         return !CollectionUtils.isEmpty(this.jrnlDreamList) || !CollectionUtils.isEmpty(this.jrnlElseDreamList);
+    }
+
+    /**
+     * 날짜 오름차순 정렬
+     */
+    @SneakyThrows
+    @Override
+    public int compareTo(JrnlDayDto other) {
+        Date thisDate = DateUtils.asDate(this.getStdrdDt());
+        Date otherDate = DateUtils.asDate(other.getStdrdDt());
+        return thisDate.compareTo(otherDate);
     }
 
     /* ----- */

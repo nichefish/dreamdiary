@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.service.jrnl.day;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.day.JrnlDayMapstruct;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * JrnlDayService
@@ -77,6 +79,15 @@ public class JrnlDayService
         Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
         JrnlDayEntity existingEntity = jrnlDayRepository.findByJrnlDt(jrnlDt);
         return existingEntity.getPostNo();
+    }
+
+    /**
+     * 특정 태그의 관련 꿈 목록 조회
+     */
+    @Cacheable(value="jrnlDayTagDtl", key="#searchParam.hashCode()")
+    public List<JrnlDayDto> jrnlDayTagDtl(final BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.getListDto(searchParamMap);
     }
 
     /**

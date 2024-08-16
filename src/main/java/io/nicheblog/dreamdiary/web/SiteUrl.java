@@ -32,6 +32,11 @@ public interface SiteUrl {
     String JRNL_DAY_DTL_AJAX = Prefix.JRNL_DAY + "/jrnlDayDtlAjax.do";
     String JRNL_DAY_MDF_AJAX = Prefix.JRNL_DAY + "/jrnlDayMdfAjax.do";
     String JRNL_DAY_DEL_AJAX = Prefix.JRNL_DAY + "/jrnlDayDelAjax.do";
+    /** 저널 일자 태그 */
+    String JRNL_DAY_TAG_LIST_AJAX = Prefix.JRNL_DAY + "/jrnlDayTagListAjax.do";
+    String JRNL_DAY_TAG_GROUP_LIST_AJAX = Prefix.JRNL_DAY + "/jrnlDayTagGroupListAjax.do";
+    String JRNL_DAY_TAG_DTL_AJAX = Prefix.JRNL_DAY + "/jrnlDayTagDtlAjax.do";
+    String JRNL_DAY_TAG_CTGR_SYNC_AJAX = Prefix.JRNL_DAY + "/jrnlDayTagCtgrSyncAjax.do";
 
     /** 저널 꿈 */
     String JRNL_DREAM_LIST_AJAX = Prefix.JRNL_DREAM + "/jrnlDreamListAjax.do";

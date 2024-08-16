@@ -1,13 +1,12 @@
-package io.nicheblog.dreamdiary.web.spec.jrnl.diary;
+package io.nicheblog.dreamdiary.web.spec.jrnl.day;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDaySmpEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryContentTagEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiarySmpEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryTagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayTagEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * JrnlDiaryTagSpec
+ * JrnlDayTagSpec
  * <pre>
- *  저널 일기 태그 목록 검색인자 세팅 Specification.
+ *  저널 일자 태그 목록 검색인자 세팅 Specification.
  * </pre>
  *
  * @author nichefish
@@ -28,15 +27,15 @@ import java.util.Map;
  */
 @Component
 @Log4j2
-public class JrnlDiaryTagSpec
-        implements BaseSpec<JrnlDiaryTagEntity> {
+public class JrnlDayTagSpec
+        implements BaseSpec<JrnlDayTagEntity> {
 
     /**
      * 조회 후처리:: 정렬 순서 변경
      */
     @Override
     public void postQuery(
-            final Root<JrnlDiaryTagEntity> root,
+            final Root<JrnlDayTagEntity> root,
             final CriteriaQuery<?> query,
             final CriteriaBuilder builder
     ) {
@@ -49,19 +48,19 @@ public class JrnlDiaryTagSpec
     @Override
     public List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
-            final Root<JrnlDiaryTagEntity> root,
+            final Root<JrnlDayTagEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
 
         List<Predicate> predicate = new ArrayList<>();
 
         // 태그 조인
-        Join<TagEntity, JrnlDiaryContentTagEntity> JrnlDiaryTagJoin = root.join("jrnlDiaryTagList", JoinType.INNER);
-        Join<JrnlDiaryContentTagEntity, JrnlDiarySmpEntity> JrnlDiaryJoin = JrnlDiaryTagJoin.join("jrnlDiary", JoinType.INNER);
-        Join<JrnlDiarySmpEntity, JrnlDaySmpEntity> jrnlDayJoin = JrnlDiaryJoin.join("jrnlDay", JoinType.INNER);
+        Join<TagEntity, JrnlDayContentTagEntity> JrnlDayTagJoin = root.join("jrnlDayTagList", JoinType.INNER);
+        Join<JrnlDayContentTagEntity, JrnlDaySmpEntity> JrnlDayJoin = JrnlDayTagJoin.join("jrnlDay", JoinType.INNER);
+        Join<JrnlDaySmpEntity, JrnlDaySmpEntity> jrnlDayJoin = JrnlDayJoin.join("jrnlDay", JoinType.INNER);
         Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
 
-        predicate.add(builder.equal(JrnlDiaryTagJoin.get("refContentType"), ContentType.JRNL_DIARY.key));
+        predicate.add(builder.equal(JrnlDayTagJoin.get("refContentType"), ContentType.JRNL_DIARY.key));
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {

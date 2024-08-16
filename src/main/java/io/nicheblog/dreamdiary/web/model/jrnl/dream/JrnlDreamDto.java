@@ -84,8 +84,8 @@ public class JrnlDreamDto
     @SneakyThrows
     @Override
     public int compareTo(JrnlDreamDto other) {
-        Date thisDate = DateUtils.asDate(this.stdrdDt);
-        Date otherDate = DateUtils.asDate(other.stdrdDt);
+        Date thisDate = DateUtils.asDate(this.getStdrdDt());
+        Date otherDate = DateUtils.asDate(other.getStdrdDt());
         return thisDate.compareTo(otherDate);
     }
 

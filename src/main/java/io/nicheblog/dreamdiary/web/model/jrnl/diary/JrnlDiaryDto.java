@@ -68,8 +68,8 @@ public class JrnlDiaryDto
     @SneakyThrows
     @Override
     public int compareTo(JrnlDiaryDto other) {
-        Date thisDate = DateUtils.asDate(this.stdrdDt);
-        Date otherDate = DateUtils.asDate(other.stdrdDt);
+        Date thisDate = DateUtils.asDate(this.getStdrdDt());
+        Date otherDate = DateUtils.asDate(other.getStdrdDt());
         return thisDate.compareTo(otherDate);
     }
 

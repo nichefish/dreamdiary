@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * JrnlSbjctRepository
  * <pre>
- *  일반게시판 게시물 Repository 인터페이스
+ *  저널 주제 Repository 인터페이스.
  * </pre>
  *
  * @author nichefish
