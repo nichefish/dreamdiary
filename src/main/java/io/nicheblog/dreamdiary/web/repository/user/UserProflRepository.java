@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * UserProflRepository
  * <pre>
- *  사용자 관리 > 사용자 프로필 Repository
+ *  사용자 관리 > 사용자 프로필 Repository.
  * </pre>
  *
  * @author nichefish
@@ -16,4 +16,5 @@ import org.springframework.stereotype.Repository;
 public interface UserProflRepository
         extends BaseStreamRepository<UserProflEntity, Integer> {
     //
+
 }

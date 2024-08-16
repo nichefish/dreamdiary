@@ -1,4 +1,4 @@
-ㅂpackage io.nicheblog.dreamdiary.global.config;
+package io.nicheblog.dreamdiary.global.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.config.BeanPostProcessor;
