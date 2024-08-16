@@ -31,7 +31,7 @@ import javax.persistence.*;
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Where(clause = "ref_content_type='JRNL_DIARY' AND del_yn='N'")
+@Where(clause = "ref_content_type='JRNL_DAY' AND del_yn='N'")
 @SQLDelete(sql = "UPDATE content_tag SET del_yn = 'Y' WHERE content_tag_no = ?")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

@@ -55,12 +55,11 @@ public class JrnlDayTagSpec
         List<Predicate> predicate = new ArrayList<>();
 
         // 태그 조인
-        Join<TagEntity, JrnlDayContentTagEntity> JrnlDayTagJoin = root.join("jrnlDayTagList", JoinType.INNER);
-        Join<JrnlDayContentTagEntity, JrnlDaySmpEntity> JrnlDayJoin = JrnlDayTagJoin.join("jrnlDay", JoinType.INNER);
-        Join<JrnlDaySmpEntity, JrnlDaySmpEntity> jrnlDayJoin = JrnlDayJoin.join("jrnlDay", JoinType.INNER);
+        Join<TagEntity, JrnlDayContentTagEntity> jrnlDayTagJoin = root.join("jrnlDayTagList", JoinType.INNER);
+        Join<JrnlDayContentTagEntity, JrnlDaySmpEntity> jrnlDayJoin = jrnlDayTagJoin.join("jrnlDay", JoinType.INNER);
         Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
 
-        predicate.add(builder.equal(JrnlDayTagJoin.get("refContentType"), ContentType.JRNL_DIARY.key));
+        predicate.add(builder.equal(jrnlDayTagJoin.get("refContentType"), ContentType.JRNL_DAY.key));
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
