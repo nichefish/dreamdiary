@@ -9,6 +9,8 @@
             yy: function () {
                 $("#jrnl_aside #mnth").val("");
                 commons.util.handlebarsTemplate(null, "jrnl_day_list");
+                commons.util.handlebarsTemplate([], "jrnl_day_tag_list");
+                commons.util.handlebarsTemplate([], "jrnl_diary_tag_list");
                 commons.util.handlebarsTemplate([], "jrnl_dream_tag_list");
                 JrnlDream.inKeywordSearchMode = false;
             },
@@ -24,6 +26,8 @@
                 $("#jrnl_aside #dreamKeyword").val("");
                 // 목록 조회
                 JrnlDay.yyMnthListAjax();
+                JrnlTag.dayTagListAjax();
+                JrnlTag.diaryTagListAjax();
                 JrnlTag.dreamTagListAjax();
                 //
                 JrnlDream.inKeywordSearchMode = false;

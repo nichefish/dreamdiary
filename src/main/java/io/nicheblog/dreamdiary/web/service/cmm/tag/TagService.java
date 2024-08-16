@@ -85,14 +85,12 @@ public class TagService
      */
     @Transactional
     public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) throws Exception {
-
-        // 태그객체 또는 태그 문자열이 넘어오지 않았으면? 리턴.
+        // 태그객체가 넘어오지 않았으면? 리턴.
         if (tagCmpstn == null) return;
-        List<TagDto> newTagList = tagCmpstn.getParsedTagList();
-        if (CollectionUtils.isEmpty(newTagList)) return;
 
         // 기존 태그와 컨텐츠 태그가 동일하면 리턴
         List<TagDto> existingTagList = contentTagService.getTagStrListByClsfKey(clsfKey);
+        List<TagDto> newTagList = tagCmpstn.getParsedTagList();
         boolean isSame = newTagList.size() == existingTagList.size() && new HashSet<>(newTagList).containsAll(existingTagList);
         if (isSame) return;
         

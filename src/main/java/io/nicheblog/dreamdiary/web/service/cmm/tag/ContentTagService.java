@@ -7,13 +7,21 @@ import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayContentTagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayTagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryContentTagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.ContentTagRepository;
+import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
+import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.ContentTagSpec;
 import lombok.extern.log4j.Log4j2;
@@ -47,6 +55,10 @@ public class ContentTagService
     private ContentTagRepository contentTagRepository;
     @Resource(name = "contentTagSpec")
     private ContentTagSpec contentTagSpec;
+    @Resource(name = "jrnlDayService")
+    private JrnlDayService jrnlDayService;
+    @Resource(name = "jrnlDiaryService")
+    private JrnlDiaryService jrnlDiaryService;
     @Resource(name = "jrnlDreamService")
     private JrnlDreamService jrnlDreamService;
 
@@ -81,31 +93,12 @@ public class ContentTagService
     /**
      * obsolete된 기존 컨텐츠 태그 삭제:: 메소드 분리
      */
-    public void delObsoleteContentTags(BaseClsfKey clsfKey, List<TagDto> obsoleteTagList) {
-
-        String contentType = clsfKey.getContentType();
+    public void delObsoleteContentTags(BaseClsfKey clsfKey, List<TagDto> obsoleteTagList) throws Exception {
         obsoleteTagList.forEach(tag -> {
-            if (ContentType.JRNL_DREAM.key.equals(contentType)) {
-                // 태그가 삭제되었을 때 태그 목록 캐시 초기화
-                Integer postNo = clsfKey.getPostNo();
-                JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
-                if (jrnlDream == null) {
-                    try {
-                        jrnlDream = jrnlDreamService.getDtlDto(postNo);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                Integer yy = jrnlDream.getYy();
-                Integer mnth = jrnlDream.getMnth();
-                EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_" + mnth);
-                EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_99");
-                EhCacheUtils.evictCache("jrnlDreamTagList", "9999_99");
-            }
+            contentTagRepository.deleteObsoleteContentTags(clsfKey.getPostNo(), clsfKey.getContentType(), tag.getTagNm(), tag.getCtgr());
         });
-        obsoleteTagList.forEach(tag -> {
-            contentTagRepository.deleteObsoleteContentTags(clsfKey.getPostNo(), contentType, tag.getTagNm(), tag.getCtgr());
-        });
+        // 관련 캐시 삭제
+        this.evictClsfCache(clsfKey);
     }
 
     /**
@@ -153,31 +146,36 @@ public class ContentTagService
             put("refPostNo", clsfKey.getPostNo());
             put("refContentType", clsfKey.getContentType());
         }};
-        this.deleteAll(searchParamMap);
+        List<ContentTagEntity> entityList = this.getListEntity(searchParamMap);
+        this.deleteAll(entityList);
 
-        // 관련 캐시 클리어
-        this.evictClsfCache(clsfKey);
-    }
-
-    /**
-     *
-     */
-    @Override
-    public void postDeleteAll(List<ContentTagEntity> entityList) {
+        String contentType = clsfKey.getContentType();
         entityList.forEach(entity -> {
+            String cacheName = "";
+            if (ContentType.JRNL_DAY.key.equals(contentType)) {
+                cacheName = "countDaySize";
+            } else if (ContentType.JRNL_DIARY.key.equals(contentType)) {
+                cacheName = "countDiarySize";
+            } else if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+                cacheName = "countDreamSize";
+            }
+
             Integer tagNo = entity.getRefTagNo();
             try {
                 int currYy = DateUtils.getCurrYy();
                 for (int yy = 2010; yy <= currYy; yy++) {
                     for (int mnth = 1; mnth < 13; mnth++ ) {
-                        EhCacheUtils.evictCache("countDreamSize", tagNo + "_" + yy + "_" + mnth);
+                        EhCacheUtils.evictCache(cacheName, tagNo + "_" + yy + "_" + mnth);
                     }
                 }
-                EhCacheUtils.evictCache("countDreamSize", tagNo + "_9999_99");
+                EhCacheUtils.evictCache(cacheName, tagNo + "_9999_99");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
+
+        // 관련 캐시 클리어
+        this.evictClsfCache(clsfKey);
     }
 
     /**
@@ -186,34 +184,98 @@ public class ContentTagService
     public void evictClsfCache(BaseClsfKey clsfKey) throws Exception {
         String contentType = clsfKey.getContentType();
         Integer postNo = clsfKey.getPostNo();
-        if (ContentType.JRNL_DIARY.key.equals(contentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
-            // jrnl_dream
-            EhCacheUtils.evictCache("jrnlDiaryDtlDto", postNo);
-        }
-        if (ContentType.JRNL_DREAM.key.equals(contentType)) {
-            // jrnl_dream
-            JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
-            if (jrnlDream == null) jrnlDream = jrnlDreamService.getDtlDto(postNo);
-            Integer yy = jrnlDream.getYy();
-            Integer mnth = jrnlDream.getMnth();
-            EhCacheUtils.evictCache("jrnlDreamDtlDto", postNo);
-            // jrnl_dream_tag
-            EhCacheUtils.evictCacheAll("jrnlDreamTagDtl");
-            EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_" + mnth);
-            EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_99");
-            EhCacheUtils.evictCache("jrnlDreamSizedTagList",  "9999_99");
-            // jrnl_day
-            EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
-            EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
-            EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
-        }
-        if (ContentType.JRNL_SUMRY_CN.key.equals(contentType)) {
+        if (ContentType.JRNL_DAY.key.equals(contentType)) {
+            // 저널 일자 관련 캐시 삭제 :: 메소드 분리
+            this.evictJrnlDayCache(postNo);
+        } else if (ContentType.JRNL_DIARY.key.equals(contentType)) {
+            // 저널 일기 관련 캐시 삭제 :: 메소드 분리
+            this.evictJrnlDiaryCache(postNo);
+        } else if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+            // 저널 꿈 관련 캐시 삭제 :: 메소드 분리
+            this.evictJrnlDreamCache(postNo);
+        } else if (ContentType.JRNL_SUMRY_CN.key.equals(contentType)) {
             // jrnl_sumry_cn
             EhCacheUtils.evictCache("jrnlSumryCnDtlDto", postNo);
         }
 
+    }
+
+    /** 저널 일자 관련 캐시 삭제 :: 메소드 분리 */
+    public void evictJrnlDayCache(Integer postNo) throws Exception {
+        // jrnl_day
+        EhCacheUtils.evictCacheAll("jrnlDayList");
+        // 태그가 삭제되었을 때 태그 목록 캐시 초기화
+        JrnlDayDto jrnlDay = (JrnlDayDto) EhCacheUtils.getObjectFromCache("jrnlDayDtlDto", postNo);
+        if (jrnlDay == null) jrnlDay = jrnlDayService.getDtlDto(postNo);
+        // 년도-월에 따른 캐시 삭제
+        String yy = jrnlDay.getYy();
+        String mnth = jrnlDay.getMnth();
+        // jrnl_day
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDayDtlDto", postNo);
+        // jrnl_day_tag
+        EhCacheUtils.evictCache("jrnlDayTagList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDayTagList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDayTagList", "9999_99");
+        EhCacheUtils.evictCache("jrnlDaySizedTagList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDaySizedTagList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDaySizedTagList",  "9999_99");
+        // L2캐시 처리
+        EhCacheUtils.clearL2Cache(JrnlDayTagEntity.class);
+        EhCacheUtils.clearL2Cache(JrnlDayContentTagEntity.class);
+    }
+
+    /** 저널 일기 관련 캐시 삭제 :: 메소드 분리 */
+    public void evictJrnlDiaryCache(Integer postNo) throws Exception {
+        // jrnl_day
+        EhCacheUtils.evictCacheAll("jrnlDayList");
+        // 태그가 삭제되었을 때 태그 목록 캐시 초기화
+        JrnlDiaryDto jrnlDiary = (JrnlDiaryDto) EhCacheUtils.getObjectFromCache("jrnlDiaryDtlDto", postNo);
+        if (jrnlDiary == null) jrnlDiary = jrnlDiaryService.getDtlDto(postNo);
+        EhCacheUtils.evictCache("jrnlDiaryDtlDto", postNo);
+        // 년도-월에 따른 캐시 삭제
+        Integer yy = jrnlDiary.getYy();
+        Integer mnth = jrnlDiary.getMnth();
+        // jrnl_day
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDayDtlDto", jrnlDiary.getJrnlDayNo());
+        // jrnl_diary_tag
+        EhCacheUtils.evictCache("jrnlDiaryTagList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDiaryTagList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDiaryTagList", "9999_99");
+        EhCacheUtils.evictCache("jrnlDiarySizedTagList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDiarySizedTagList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDiarySizedTagList",  "9999_99");
+        // L2캐시 처리
+        EhCacheUtils.clearL2Cache(JrnlDiaryTagEntity.class);
+        EhCacheUtils.clearL2Cache(JrnlDiaryContentTagEntity.class);
+    }
+
+    /** 저널 꿈 관련 캐시 삭제 :: 메소드 분리 */
+    public void evictJrnlDreamCache(Integer postNo) throws Exception {
+        // jrnl_day
+        EhCacheUtils.evictCacheAll("jrnlDayList");
+        // 태그가 삭제되었을 때 태그 목록 캐시 초기화
+        JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
+        if (jrnlDream == null) jrnlDream = jrnlDreamService.getDtlDto(postNo);
+        EhCacheUtils.evictCache("jrnlDreamDtlDto", postNo);
+        // 년도-월에 따른 캐시 삭제
+        Integer yy = jrnlDream.getYy();
+        Integer mnth = jrnlDream.getMnth();
+        // jrnl_day
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDayDtlDto", jrnlDream.getJrnlDayNo());
+        // jrnl_dream_tag
+        EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDreamTagList", "9999_99");
+        EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDreamSizedTagList",  "9999_99");
+        // L2캐시 처리
         EhCacheUtils.clearL2Cache(JrnlDreamTagEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDreamContentTagEntity.class);
     }
