@@ -53,6 +53,7 @@ public class JrnlSumryDto
     private Integer diaryDayCnt;
 
     /** 꿈 기록 완료 여부 (Y/N) */
+    @Builder.Default
     private String dreamComptYn = "N";
 
     @Override
