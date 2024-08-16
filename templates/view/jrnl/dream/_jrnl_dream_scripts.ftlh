@@ -101,6 +101,7 @@
                                     JrnlDay.yyMnthListAjax();
                                     JrnlTag.dreamTagListAjax();
                                 }
+                                // TODO: 결산 페이지에서 처리시도 처리해 줘야 한다.
                                 commons.util.unblockUI();
                             });
                     }, "block");
