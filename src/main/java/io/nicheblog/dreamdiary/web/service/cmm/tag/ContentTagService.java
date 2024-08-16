@@ -83,7 +83,6 @@ public class ContentTagService
      */
     public void delObsoleteContentTags(BaseClsfKey clsfKey, List<TagDto> obsoleteTagList) {
 
-
         String contentType = clsfKey.getContentType();
         obsoleteTagList.forEach(tag -> {
             if (ContentType.JRNL_DREAM.key.equals(contentType)) {
