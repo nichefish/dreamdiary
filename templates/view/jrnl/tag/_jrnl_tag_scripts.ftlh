@@ -5,6 +5,18 @@
 <script>
     const JrnlTag = (function() {
         return {
+            /** 목록에 따른 일자 태그 조회 */
+            dayTagListAjax: function() {
+                const url = "${Url.JRNL_DAY_TAG_LIST_AJAX!}";
+                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_day_tag_list");
+                });
+            },
             /** 목록에 따른 일기 태그 조회 */
             diaryTagListAjax: function() {
                 const url = "${Url.JRNL_DIARY_TAG_LIST_AJAX!}";

@@ -38,8 +38,9 @@
                 // 목록 조회
                 JrnlDay.yyMnthListAjax();
                 // 태그 조회
-                JrnlTag.dreamTagListAjax();
+                JrnlTag.dayTagListAjax();
                 JrnlTag.diaryTagListAjax();
+                JrnlTag.dreamTagListAjax();
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
                 // 꿈 키워드 검색에 엔터키 처리
@@ -65,26 +66,6 @@
 </script>
 
 <style>
-    /* 수동 키워드 강조 추가 */
-    .em_소외, .em_적대감, .em_괴롭힘bully, .em_굶주림, .em_광기, .em_장애, .em_공습, .em_홍수 , .em_쫓김, .em_naughty-child, .em_폭력배, .em_드래곤, .em_좀비,.em_벌레, .em_오염, .em_감금, .em_분노, .em_살해, .em_신체강탈자, .em_분열, .em_회피, .em_지각, .em_포스트-아포칼립스, .em_damsel-in-distress {
-        color: red;
-        background-color: rgba(255, 204, 204, 0.1);
-        text-decoration: underline dotted;
-        font-weight: bolder;
-        animation: blink-effect 0.75s step-end infinite;
-        -webkit-animation: blink 0.75s linear infinite;
-    }
-    .em_고고학, .em_사회학, .em_역사학, .em_레인저, .em_아기, .em_탈출, .em_수영, .em_생존, .em_함정, .em_연구실laboratory, .em_책, .em_수로, .em_이사, .em_분리수거, .em_지도 {
-        color: rgba(60, 179, 113, 1);
-        background-color: rgba(230, 255, 240, 1);
-        font-weight: bolder;
-        text-decoration: underline dotted;
-        animation: blink-effect 0.75s step-end infinite;
-        -webkit-animation: blink 0.75s linear infinite;
-    }
-    .em_형, .em_엄마, .em_아빠, .em_단양, .em_보발, .em_별방, .em_제천, .em_유치원, .em_학교, .em_대학교 {
-        color: #bcc5cd !important;
-    }
 </style>
 
 <#--#include:: component:: 태그 클릭 필터링-->
@@ -94,6 +75,14 @@
 <#--begin::Tags-->
 <hr class="my-6 text-muted" />
 <div class="mb-6 ms-4">
+    <div class="d-flex align-items-center mb-6 ms-4">
+        <div class="col-1 ms-4 me-6 text-center fs-6">
+            <b>일자 태그 : </b>
+        </div>
+        <div class="col" id="jrnl_day_tag_list_div">
+            <#--handlebars template goes in here-->
+        </div>
+    </div>
     <div class="d-flex align-items-center mb-6 ms-4">
         <div class="col-1 ms-4 me-6 text-center fs-6">
             <b>일기 태그 : </b>
@@ -160,14 +149,15 @@
 
 <#--include::modals-->
 <#include "/view/jrnl/day/_jrnl_day_list_template.hbs">
+<#include "/view/jrnl/day/_jrnl_day_tag_list_template.hbs">
+<#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
 <#include "/view/jrnl/diary/_jrnl_diary_tag_list_template.hbs">
+<#include "/view/jrnl/diary/_jrnl_diary_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_list_template.hbs">
 <#include "/view/jrnl/dream/_jrnl_dream_tag_list_template.hbs">
+<#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
-<#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
-<#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
-<#include "/view/jrnl/diary/_jrnl_diary_reg_modal.ftlh">
 <#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>
