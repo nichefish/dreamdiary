@@ -6,6 +6,14 @@
 <script>
     const JrnlDayAside = (function() {
         return {
+            today: function() {
+                const todayYy = commons.date.getCurrYyStr();
+                const todayMnth = commons.date.getCurrMnthStr();
+                $("#jrnl_aside #yy").val(todayYy);
+                $("#jrnl_aside #mnth").val(todayMnth);
+                console.log(todayMnth);
+                JrnlDayAside.mnth();
+            },
             yy: function () {
                 $("#jrnl_aside #mnth").val("");
                 commons.util.handlebarsTemplate(null, "jrnl_day_list");
@@ -77,6 +85,14 @@
             <#--begin::Body-->
             <div class="card-body" id="jrnl_aside">
                 <input type="hidden" name="sort" id="sort">
+                <#--begin::row-->
+                <div class="mb-6">
+                    <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                            onclick="JrnlDayAside.today();"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈을 키워드로 검색합니다.">
+                        오늘 일자로 조회하기<i class="bi bi-search ps-2 pe-0"></i>
+                    </button>
+                </div>
                 <#--begin::row-->
                 <div class="mb-7 d-flex justify-content-between gap-4">
                     <div class="col">

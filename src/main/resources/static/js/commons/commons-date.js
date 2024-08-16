@@ -96,6 +96,13 @@ commons.date = (function() {
         },
 
         /**
+         * 헌재 월 반환
+         */
+        getCurrMnthStr: function() {
+            return new Date().getMonth() + 1;
+        },
+
+        /**
          * 현재 날짜(시간 제외)에 일수 더해서 날짜 객체로 반환
          * @param: day
          */
