@@ -13,12 +13,10 @@
             init: function() {
                 const pinYyCookie = $.cookie("pin_yy");
                 if (pinYyCookie !== undefined) {
-                    $("#jrnl_aside #yy").val(pinYyCookie);
                     $("#jrnl_aside #pinYy").text(pinYyCookie);
                 }
                 const pinMnthCookie = $.cookie("pin_mnth");
                 if (pinMnthCookie !== undefined) {
-                    $("#jrnl_aside #mnth").val(pinMnthCookie);
                     $("#jrnl_aside #pinMnth").text(pinMnthCookie);
                 }
             },
@@ -166,9 +164,9 @@
                         현재 년월 저장<i class="bi bi-pin-map ps-1 pe-0"></i>
                     </button>
                     <span class="px-2">
-                        <span id="pinYy"></span>
+                        <span id="pinYy" class="text-muted text-underline-dotted">----</span>
                         <span> / </span>
-                        <span id="pinMnth"></span>
+                        <span id="pinMnth" class="text-muted text-underline-dotted">--</span>
                     </span>
                     <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                             onclick="JrnlDayAside.turnback();"
