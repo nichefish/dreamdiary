@@ -82,12 +82,6 @@ spring:
                     ssl:
                         trust: smtp.gmail.com
 
-    data:
-        redis:
-            host: localhost
-            port: 26379
-            password: 1234
-
 server:
     error:
         path: /error
