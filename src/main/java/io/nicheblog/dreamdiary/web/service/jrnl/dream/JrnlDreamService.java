@@ -61,7 +61,6 @@ public class JrnlDreamService
         return this.getListDto(searchParam);
     }
 
-
     /**
      * 특정 년도의 중요 꿈 목록 조회
      */

@@ -1,14 +1,9 @@
 package io.nicheblog.dreamdiary.global.config;
 
 import lombok.SneakyThrows;
-import org.ehcache.jsr107.EhcacheCachingProvider;
-import org.ehcache.xml.XmlConfiguration;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.interceptor.CacheResolver;
-import org.springframework.cache.jcache.JCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -20,19 +15,17 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import javax.annotation.Resource;
-import javax.cache.Caching;
-import java.net.URL;
 
 /**
- * CacheConfig
+ * RedisConfig
  * <pre>
- *  Cache 관련 설정 커스터마이즈
+ *  Redis 관련 Config
  * </pre>
  *
  * @author nichefish
  */
 @Configuration
-public class CacheConfig {
+public class RedisConfig {
 
     @Resource(name = "redisProperty")
     private RedisProperty redisProperty;
@@ -79,28 +72,5 @@ public class CacheConfig {
                 .cacheDefaults(cacheConfiguration);
 
         return builder.build();
-    }
-
-    /**
-     * jCache (=ehCache를 스프링 기본 캐시 인터페이스(jsr-107)에 호환되게끔 변환)
-     */
-    @Bean(name = "jCacheManager")
-    public JCacheCacheManager jCacheCacheManager() {
-        return new JCacheCacheManager(ehCacheManager());
-    }
-
-    /** 기본적으로 ehCache 사용 */
-    @Primary
-    @Bean(name = "ehCacheManager")
-    public javax.cache.CacheManager ehCacheManager() {
-        URL myUrl = getClass().getClassLoader().getResource("ehcache.xml");
-        org.ehcache.config.Configuration xmlConfig = new XmlConfiguration(myUrl);
-        EhcacheCachingProvider provider = (EhcacheCachingProvider) Caching.getCachingProvider("org.ehcache.jsr107.EhcacheCachingProvider");
-        return provider.getCacheManager(provider.getDefaultURI(),  xmlConfig);
-    }
-
-    @Bean
-    public CacheResolver cacheResolver() {
-        return new CustomCacheResolver(jCacheCacheManager(), redisCacheManager());
     }
 }

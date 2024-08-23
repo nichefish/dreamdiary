@@ -110,9 +110,9 @@ public class JrnlDayTagService
     }
 
     /**
-     * 꿈 태그별 크기 조회
+     * 일자 태그별 크기 조회
      */
-    @Cacheable(value="countDiarySize", key="#tagNo + \"_\" + #yy + \"_\" + #mnth")
+    @Cacheable(value="countDaySize", key="#tagNo + \"_\" + #yy + \"_\" + #mnth")
     public Integer countDiarySize(Integer tagNo, Integer yy, Integer mnth) {
         return jrnlDayTagRepository.countDiarySize(tagNo, yy, mnth);
     }
