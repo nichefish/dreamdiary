@@ -118,6 +118,9 @@ dependencies {
     // testImplementation 'org.testng:testng:7.7.0' /** 일부러 4로 설정 */
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    implementation 'jakarta.json:jakarta.json-api:2.0.1'
+    implementation 'org.glassfish:jakarta.json:2.0.1'
+
     /** querydsl */
     implementation 'com.querydsl:querydsl-jpa:4.4.0'
     annotationProcessor 'com.querydsl:querydsl-apt:4.4.0:jpa'
