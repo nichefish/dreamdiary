@@ -39,4 +39,12 @@ spring:
             platform: mariadb
             continue-on-error: true
 
+    data:
+        redis:
+            host: localhost
+            port: 6379
 
+    elasticsearch:
+        username: username
+        password: password
+        uris: [0.0.0.0:1111]
