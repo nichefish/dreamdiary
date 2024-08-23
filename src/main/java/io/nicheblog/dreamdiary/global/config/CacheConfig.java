@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.global.config;
 
 import lombok.SneakyThrows;
-import org.ehcache.xml.XmlConfiguration;
 import org.ehcache.jsr107.EhcacheCachingProvider;
+import org.ehcache.xml.XmlConfiguration;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.interceptor.CacheResolver;
 import org.springframework.cache.jcache.JCacheCacheManager;
@@ -37,6 +37,9 @@ public class CacheConfig {
     @Resource(name = "redisProperty")
     private RedisProperty redisProperty;
 
+    /**
+     * redis 연결이 되지 않아도 구동되게끔 sneakyThrows
+     */
     @Bean
     @SneakyThrows
     public RedisConnectionFactory redisConnectionFactory() {
@@ -63,8 +66,10 @@ public class CacheConfig {
         return redisTemplate;
     }
 
-    @Primary
-    @Bean(name = "cacheManager")
+    /**
+     * redisCache
+     */
+    @Bean(name = "redisCacheManager")
     public CacheManager redisCacheManager() {
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
@@ -76,12 +81,17 @@ public class CacheConfig {
         return builder.build();
     }
 
-    @Bean
+    /**
+     * jCache (=ehCache를 스프링 기본 캐시 인터페이스(jsr-107)에 호환되게끔 변환)
+     */
+    @Bean(name = "jCacheManager")
     public JCacheCacheManager jCacheCacheManager() {
         return new JCacheCacheManager(ehCacheManager());
     }
 
-    @Bean
+    /** 기본적으로 ehCache 사용 */
+    @Primary
+    @Bean(name = "ehCacheManager")
     public javax.cache.CacheManager ehCacheManager() {
         URL myUrl = getClass().getClassLoader().getResource("ehcache.xml");
         org.ehcache.config.Configuration xmlConfig = new XmlConfiguration(myUrl);

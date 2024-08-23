@@ -2,6 +2,8 @@ package io.nicheblog.dreamdiary.global.util;
 
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.interceptor.SimpleKey;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 @Log4j2
 public class EhCacheUtils {
 
-    @Resource(name="cacheManager")
+    @Resource(name="jCacheManager")
     CacheManager manager;
     @Resource
     private SessionFactory factory;
