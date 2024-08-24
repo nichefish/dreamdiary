@@ -6,9 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * RedisiProperty
+ * ElasticProperty
  * <pre>
- *  application.yml에서 Redis 관련 설정값을 가져온다.
+ *  application.yml에서 ElasticSearch 관련 설정값을 가져온다.
  * </pre>
  *
  * @author nichefish
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.elasticsearch")
 @Getter
 @Setter
-public class ElasticsearchProperty {
+public class ElasticProperty {
 
     /** ElasticSearch 사용자 */
     private String username;

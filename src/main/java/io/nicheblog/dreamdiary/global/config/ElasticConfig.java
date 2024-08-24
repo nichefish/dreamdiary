@@ -7,7 +7,7 @@ import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfigurat
 import javax.annotation.Resource;
 
 /**
- * ElasticSearchConfig
+ * ElasticConfig
  * <pre>
  *  ElasticSearch 관련 설정 커스터마이즈
  * </pre>
@@ -15,16 +15,16 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Configuration
-public class ElasticsearchConfig extends ElasticsearchConfiguration {
+public class ElasticConfig extends ElasticsearchConfiguration {
 
-    @Resource(name = "elasticsearchProperty")
-    private ElasticsearchProperty elasticsearchProperty;
+    @Resource(name = "elasticProperty")
+    private ElasticProperty elasticProperty;
 
     @Override
     public ClientConfiguration clientConfiguration() {
         return ClientConfiguration.builder()
-                .connectedTo(elasticsearchProperty.getUris())
-                .withBasicAuth(elasticsearchProperty.getUsername(), elasticsearchProperty.getPassword())
+                .connectedTo(elasticProperty.getUris())
+                .withBasicAuth(elasticProperty.getUsername(), elasticProperty.getPassword())
                 .build();
     }
 }
