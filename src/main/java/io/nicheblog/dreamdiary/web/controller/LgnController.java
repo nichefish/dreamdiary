@@ -83,25 +83,6 @@ public class LgnController
         return "/view/lgn_form";
     }
 
-
-    // TODO: 위치 옮기기
-    @GetMapping(Url.CLEAR_BROWSER_CACHE)
-    @PermitAll
-    public ResponseEntity<AjaxResponse> clearCacheAjax() {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Pragma", "no-cache");
-        headers.add("Expires", "0");
-
-        String rsltMsg = "browser cache cleared.";
-        ajaxResponse.setAjaxResult(true, rsltMsg);
-
-        return new ResponseEntity<>(ajaxResponse, headers, HttpStatus.OK);
-    }
-
     /**
      * GET으로 로그인 처리/로그아웃 페이지 접근시 로그인 화면으로 리다이렉트
      */

@@ -89,7 +89,7 @@ public class WebSecurityConfig {
         public void configure(WebSecurity web) throws Exception {
 
             web.ignoring()
-                    // 로그인 화면 인증 무시
+                    // 로그인 화면, 캐시 클리어 인증 무시
                     .antMatchers(Url.AUTH_LGN_FORM)
                     // static 디렉터리의 하위 파일 목록은 인증 무시(=항상 통과 )
                     .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/public/**")

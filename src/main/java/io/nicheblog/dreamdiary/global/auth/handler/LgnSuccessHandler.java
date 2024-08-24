@@ -71,6 +71,11 @@ public class LgnSuccessHandler
         LogActvtyParam logParam = new LogActvtyParam(true, MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS), ActvtyCtgr.LGN);
         publisher.publishEvent(new LogActvtyEvent(this, logParam));
 
+        // 로그인 성공시 캐시 초기화 처리
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+
         // 이전 페이지 :: 부재시 메인 페이지로 리다이렉트
         // 상속받은 상위 SavedRequestAwareAuthenticationSuccessHandler의 메소드 call
         super.onAuthenticationSuccess(request, response, authentication);

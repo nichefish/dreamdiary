@@ -15,8 +15,6 @@ public interface SiteUrl {
     String MAIN = "/main.do";
     String REACT_MAIN = "/react/main.do";
 
-    String CLEAR_BROWSER_CACHE = "/clear-browser-cache";
-
     /** 로그인 관련 */
     String AUTH_LGN_FORM = Prefix.AUTH + "/lgnForm.do";
     String AUTH_LGN_PROC = Prefix.AUTH + "/lgnProc.do";
