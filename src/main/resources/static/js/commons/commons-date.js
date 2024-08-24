@@ -103,6 +103,16 @@ commons.date = (function() {
         },
 
         /**
+         * 헌재 날짜 반환
+         */
+        getCurrDayStr: function(digits = 1) {
+            return new Date().getDate().toString();
+            // 숫자를 지정된 자릿수로 맞추기
+            if (day.length < digits) day = day.padStart(digits, '0');
+            return day;
+        },
+
+        /**
          * 현재 날짜(시간 제외)에 일수 더해서 날짜 객체로 반환
          * @param: day
          */
