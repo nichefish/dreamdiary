@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.auth.handler;
 
-import io.nicheblog.dreamdiary.global.auth.Auth;
 import io.nicheblog.dreamdiary.global.auth.exception.*;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
