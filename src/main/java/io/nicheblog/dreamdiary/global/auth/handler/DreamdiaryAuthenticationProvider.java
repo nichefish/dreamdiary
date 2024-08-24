@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.auth.handler;
 
+import io.nicheblog.dreamdiary.global.auth.Auth;
 import io.nicheblog.dreamdiary.global.auth.exception.*;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
@@ -61,7 +62,8 @@ public class DreamdiaryAuthenticationProvider
         AuthInfo authInfo = authService.loadUserByUsername(username);
 
         // 계정 존재여부 체크
-        if (authInfo == null) throw new InternalAuthenticationServiceException("internalAuthenticationServiceException");
+        if (authInfo == null)
+            throw new InternalAuthenticationServiceException("internalAuthenticationServiceException");
 
         // 중복 로그인 확인 후 들어왔을 시 바로 패스
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
@@ -83,40 +85,11 @@ public class DreamdiaryAuthenticationProvider
         // 잠금여부 체크
         if ("Y".equals(authInfo.getLockedYn())) throw new LockedException("LockedException");
 
-        // 접속IP 체크
-        if ("Y".equals(authInfo.getUseAcsIpYn())) {
-            List<String> acsIpStrList = authInfo.getAcsIpStrList();
-            if (CollectionUtils.isNotEmpty(acsIpStrList)) {
-                String remoteAddr = AuthUtils.getAcsIpAddr();
-                log.info("logged in remoteAddr: {}", remoteAddr);
+        // 접속IP 체크 :: 메소드 분리
+        if (!this.isAcsIpValid(authInfo)) throw new AcsIpNotAllowedException("허용되지 않은 IP입니다.");
 
-                boolean isAllowedIp = false;
-                // CIDR 체크
-                for (String acsIp : acsIpStrList) {
-                    log.info("comparing remoteIP {} to access-allowed-IP {}...", remoteAddr, acsIp);
-                    boolean isCidr = acsIp.contains("/");
-                    if (!isCidr) {
-                        if (acsIp.equals(remoteAddr)) {
-                            isAllowedIp = true;
-                            break;
-                        }
-                        continue;
-                    }
-                    SubnetUtils subnetUtils = new SubnetUtils(acsIp);
-                    boolean isIpAddrValid = subnetUtils.getInfo().isInRange(remoteAddr);
-                    if (isIpAddrValid) isAllowedIp = true;
-                    break;
-                }
-                if (!isAllowedIp) throw new AcsIpNotAllowedException("허용되지 않은 IP입니다.");
-            }
-        }
-
-        // 비밀번호 변경기간 만료여부 체크
-        LgnPolicyEntity lgnPolicy = lgnPolicyService.getDtlEntity();
-        Integer pwChgDy = lgnPolicy.getPwChgDy();
-        Date pwExprDt = DateUtils.getDateAddDay(authInfo.getPwChgDt(), pwChgDy);
-        boolean isPwExprd = (pwExprDt == null || pwExprDt.compareTo(DateUtils.getCurrDate()) < 0);
-        if (isPwExprd) throw new CredentialsExpiredException("CredentialsExpiredException");
+        // 비밀번호 만료 여부 체크
+        if (!this.isPwExpryValid(authInfo)) throw new CredentialsExpiredException("CredentialsExpiredException");
 
         // 비밀번호 변경 필요 여부 체크
         boolean needsPwReset = "Y".equals(authInfo.getNeedsPwReset());
@@ -127,6 +100,45 @@ public class DreamdiaryAuthenticationProvider
         if (isDupLgn) throw new DupIdLgnException("DupLgnException");
 
         return new UsernamePasswordAuthenticationToken(authInfo, null, authInfo.getAuthorities());
+    }
+    
+    /**
+     * 접속 IP 체크 :: 메소드 분리
+     */
+    public Boolean isAcsIpValid(AuthInfo authInfo) {
+        if (!"Y".equals(authInfo.getUseAcsIpYn())) return true; 
+
+        List<String> acsIpStrList = authInfo.getAcsIpStrList();
+        if (CollectionUtils.isEmpty(acsIpStrList)) return true;
+
+        String remoteAddr = AuthUtils.getAcsIpAddr();
+        log.info("logged in remoteAddr: {}", remoteAddr);
+
+        // 순회하며 IP 체크
+        for (String acsIp : acsIpStrList) {
+            log.info("comparing remoteIP {} to access-allowed-IP {}...", remoteAddr, acsIp);
+            boolean isCidr = acsIp.contains("/");
+            if (!isCidr) {
+                // 단순 IP일 경우: 정확히 일치여부 확인
+                if (acsIp.equals(remoteAddr)) return true;
+            } else {
+                // CIDR일 경우: 범위 체크
+                SubnetUtils subnetUtils = new SubnetUtils(acsIp);
+                boolean isIpAddrWithinValid = subnetUtils.getInfo().isInRange(remoteAddr);
+                if (isIpAddrWithinValid) return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 비밀번호 만료 여부 체크 :: 메소드 분리
+     */
+    public Boolean isPwExpryValid(AuthInfo authInfo) throws Exception {
+        LgnPolicyEntity lgnPolicy = lgnPolicyService.getDtlEntity();
+        Integer pwChgDy = lgnPolicy.getPwChgDy();
+        Date pwExprDt = DateUtils.getDateAddDay(authInfo.getPwChgDt(), pwChgDy);
+        return (pwExprDt == null || pwExprDt.compareTo(DateUtils.getCurrDate()) < 0);
     }
 
     @Override
