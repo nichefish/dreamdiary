@@ -15,8 +15,10 @@ import io.nicheblog.dreamdiary.web.service.user.UserMyService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -56,6 +59,7 @@ public class LgnController
      * 로그인 화면 조회
      */
     @RequestMapping(Url.AUTH_LGN_FORM)
+    @PermitAll
     public String lgnForm(
             final LogActvtyParam logParam,
             final @RequestParam("dupLgnAt") @Nullable String dupLgnAt,
@@ -79,6 +83,25 @@ public class LgnController
         return "/view/lgn_form";
     }
 
+
+    // TODO: 위치 옮기기
+    @GetMapping(Url.CLEAR_BROWSER_CACHE)
+    @PermitAll
+    public ResponseEntity<AjaxResponse> clearCacheAjax() {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        String rsltMsg = "browser cache cleared.";
+        ajaxResponse.setAjaxResult(true, rsltMsg);
+
+        return new ResponseEntity<>(ajaxResponse, headers, HttpStatus.OK);
+    }
+
     /**
      * GET으로 로그인 처리/로그아웃 페이지 접근시 로그인 화면으로 리다이렉트
      */
@@ -94,6 +117,7 @@ public class LgnController
      * (비로그인 사용자도 외부에서 접근 가능)
      */
     @PostMapping(Url.AUTH_LGN_PW_CHG_AJAX)
+    @PermitAll
     @ResponseBody
     public ResponseEntity<AjaxResponse> lgnPwChgAjax(
             final LogActvtyParam logParam,

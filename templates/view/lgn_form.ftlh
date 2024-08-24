@@ -32,6 +32,17 @@
                 commons.validate.validateForm("#lgnForm");
                 // 엔터키 처리
                 commons.util.enterKey(".enter", Page.lgn);
+                // 브라우저 캐시 클리어
+                Page.browserCacheClearAjax();
+            },
+            /**
+             * 브라우저 캐시 클리어 (Ajax)
+             */
+            browserCacheClearAjax: function() {
+                const url = "${Url.CLEAR_BROWSER_CACHE!}";
+                commons.util.blockUIAjax(url, 'get', null, function(res) {
+                    Swal.fire({ text: res.message });
+                }, "block");
             },
             /** 기존 로그인 끊기 팝업 호출 */
             dupLgnAlert: function() {
