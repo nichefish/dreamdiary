@@ -61,16 +61,10 @@ public class DreamdiaryAuthenticationProvider
         AuthInfo authInfo = authService.loadUserByUsername(username);
 
         // 계정 존재여부 체크
-        if (authInfo == null)
-            throw new InternalAuthenticationServiceException("internalAuthenticationServiceException");
+        if (authInfo == null) throw new InternalAuthenticationServiceException("internalAuthenticationServiceException");
 
-        // 중복 로그인 확인 후 들어왔을 시 바로 패스
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String isDupIdLgnProc = request.getParameter("isDupIdLgnProc");
-        if ("Y".equals(isDupIdLgnProc)) {
-            log.info("isDupIdLgnProc!!");
-            return new UsernamePasswordAuthenticationToken(authInfo, null, authInfo.getAuthorities());
-        }
+        // 중복 로그인 '확인'(기존 아이디 끊기) 후 들어왔을 시 바로 패스 :: 메소드 분리
+        if (this.isConfirmedDupLgn()) return new UsernamePasswordAuthenticationToken(authInfo, null, authInfo.getAuthorities());
 
         // password 일치여부 체크
         if (!passwordEncoder.matches(password, authInfo.getPassword())) throw new BadCredentialsException("BadCredentialsException");
@@ -100,7 +94,16 @@ public class DreamdiaryAuthenticationProvider
 
         return new UsernamePasswordAuthenticationToken(authInfo, null, authInfo.getAuthorities());
     }
-    
+
+    /**
+     * 중복 로그인 후 재접속 여부 :: 메소드 분리
+     */
+    public Boolean isConfirmedDupLgn() {
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        String isDupIdLgnProc = request.getParameter("isDupIdLgnProc");
+        return "Y".equals(isDupIdLgnProc);
+    }
+
     /**
      * 접속 IP 체크 :: 메소드 분리
      */
@@ -137,7 +140,8 @@ public class DreamdiaryAuthenticationProvider
         LgnPolicyEntity lgnPolicy = lgnPolicyService.getDtlEntity();
         Integer pwChgDy = lgnPolicy.getPwChgDy();
         Date pwExprDt = DateUtils.getDateAddDay(authInfo.getPwChgDt(), pwChgDy);
-        return (pwExprDt == null || pwExprDt.compareTo(DateUtils.getCurrDate()) < 0);
+        boolean isPwExprd = (pwExprDt == null || pwExprDt.compareTo(DateUtils.getCurrDate()) < 0);
+        return !isPwExprd;
     }
 
     @Override
