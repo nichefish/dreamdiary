@@ -70,7 +70,7 @@
                     (<span class="text-underline-dotted ms-1">${post.diaryDayCnt!}</span>일)
                 </div>
             </div>
-            <div class="col-1 d-flex align-items-center">
+            <div class="col-1 d-flex flex-column align-items-center">
                 <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
                         onclick="JrnlSumryCn.regModal(${post.postNo!}, '${post.yy!}');"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
