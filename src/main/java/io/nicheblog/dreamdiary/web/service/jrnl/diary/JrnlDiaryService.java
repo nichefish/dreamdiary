@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.diary.JrnlDiaryMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.diary.jpa.JrnlDiaryRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.diary.mybatis.JrnlDiaryMapper;
 import io.nicheblog.dreamdiary.web.spec.jrnl.diary.JrnlDiarySpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
@@ -22,7 +23,7 @@ import java.util.Map;
 /**
  * JrnlDiaryService
  * <pre>
- *  저널 꿈 관리 서비스 모듈
+ *  저널 일기 관리 서비스 모듈
  * </pre>
  *
  * @author nichefish
@@ -39,6 +40,8 @@ public class JrnlDiaryService
     private JrnlDiaryRepository jrnlDiaryRepository;
     @Resource(name = "jrnlDiarySpec")
     private JrnlDiarySpec jrnlDiarySpec;
+    @Resource(name = "jrnlDiaryMapper")
+    private JrnlDiaryMapper jrnlDiaryMapper;
 
     @Override
     public JrnlDiaryRepository getRepository() {
@@ -139,5 +142,12 @@ public class JrnlDiaryService
         // jrnl_diary_tag
         EhCacheUtils.evictCache("jrnlDiaryTagList", yy + "_99");
         EhCacheUtils.evictCache("jrnlDiaryTagList", yy + mnth);
+    }
+
+    /**
+     * 삭제 데이터 조회
+     */
+    public JrnlDiaryDto getDeletedDtlDto(Integer postNo) throws Exception {
+        return jrnlDiaryMapper.getDeletedByPostNo(postNo);
     }
 }

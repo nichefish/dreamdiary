@@ -155,6 +155,9 @@ public class JrnlDreamService
         EhCacheUtils.evictCache("jrnlDreamTagList", yy + mnth);
     }
 
+    /**
+     * 삭제 데이터 조회
+     */
     public JrnlDreamDto getDeletedDtlDto(Integer postNo) throws Exception {
         return jrnlDreamMapper.getDeletedByPostNo(postNo);
     }

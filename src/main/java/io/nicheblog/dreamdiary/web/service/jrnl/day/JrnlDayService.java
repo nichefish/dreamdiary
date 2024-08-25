@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.day.JrnlDayMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.day.jpa.JrnlDayRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.day.mybatis.JrnlDayMapper;
 import io.nicheblog.dreamdiary.web.spec.jrnl.day.JrnlDaySpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
@@ -39,6 +40,8 @@ public class JrnlDayService
     private JrnlDayRepository jrnlDayRepository;
     @Resource(name = "jrnlDaySpec")
     private JrnlDaySpec jrnlDaySpec;
+    @Resource(name = "jrnlDayMapper")
+    private JrnlDayMapper jrnlDayMapper;
 
     @Override
     public JrnlDayRepository getRepository() {
@@ -172,5 +175,12 @@ public class JrnlDayService
         EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
         EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getPostNo());
+    }
+
+    /**
+     * 삭제 데이터 조회
+     */
+    public JrnlDayDto getDeletedDtlDto(Integer postNo) throws Exception {
+        return jrnlDayMapper.getDeletedByPostNo(postNo);
     }
 }

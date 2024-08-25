@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 /**
  * JrnlDreamMapper
  * <pre>
- *  로그 통계 관리 MyBatis 기반 Mapper 인터페이스
+ *  저널 꿈 MyBatis 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish
@@ -15,6 +15,8 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface JrnlDreamMapper {
 
-    /** 삭제된 데이터 정보 조회 */
+    /**
+     * 삭제된 데이터 정보 조회
+     */
     JrnlDreamDto getDeletedByPostNo(@Param("postNo") Integer postNo);
 }

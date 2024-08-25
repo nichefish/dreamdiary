@@ -206,7 +206,14 @@ public class ContentTagService
         EhCacheUtils.evictCacheAll("jrnlDayList");
         // 태그가 삭제되었을 때 태그 목록 캐시 초기화
         JrnlDayDto jrnlDay = (JrnlDayDto) EhCacheUtils.getObjectFromCache("jrnlDayDtlDto", postNo);
-        if (jrnlDay == null) jrnlDay = jrnlDayService.getDtlDto(postNo);
+        if (jrnlDay == null) {
+            try {
+                jrnlDay = jrnlDayService.getDtlDto(postNo);
+            } catch (Exception e) {
+                jrnlDay = jrnlDayService.getDeletedDtlDto(postNo);
+                if (jrnlDay == null) return;
+            }
+        }
         // 년도-월에 따른 캐시 삭제
         String yy = jrnlDay.getYy();
         String mnth = jrnlDay.getMnth();
@@ -227,7 +234,14 @@ public class ContentTagService
         EhCacheUtils.evictCacheAll("jrnlDayList");
         // 태그가 삭제되었을 때 태그 목록 캐시 초기화
         JrnlDiaryDto jrnlDiary = (JrnlDiaryDto) EhCacheUtils.getObjectFromCache("jrnlDiaryDtlDto", postNo);
-        if (jrnlDiary == null) jrnlDiary = jrnlDiaryService.getDtlDto(postNo);
+        if (jrnlDiary == null) {
+            try {
+                jrnlDiary = jrnlDiaryService.getDtlDto(postNo);
+            } catch (Exception e) {
+                jrnlDiary = jrnlDiaryService.getDeletedDtlDto(postNo);
+                if (jrnlDiary == null) return;
+            }
+        }
         // 상세 캐시 삭제
         EhCacheUtils.evictCache("jrnlDiaryDtlDto", postNo);
         // 년도-월에 따른 캐시 삭제
