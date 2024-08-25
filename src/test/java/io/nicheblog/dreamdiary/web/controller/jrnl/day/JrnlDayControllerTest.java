@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfoTestFactory;
 import io.nicheblog.dreamdiary.global.config.TestFreemarkerConfig;
 import io.nicheblog.dreamdiary.web.controller.BaseControllerTestHelper;
-import io.nicheblog.dreamdiary.web.repository.jrnl.day.JrnlDayRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.day.jpa.JrnlDayRepository;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
