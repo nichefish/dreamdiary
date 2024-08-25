@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.log;
 
 import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
-import io.nicheblog.dreamdiary.global.cmm.log.repository.LogSysRepository;
+import io.nicheblog.dreamdiary.global.cmm.log.repository.jpa.LogSysRepository;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
 import io.nicheblog.dreamdiary.web.mapstruct.log.LogSysMapstruct;
 import io.nicheblog.dreamdiary.web.model.log.LogSysDto;

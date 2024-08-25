@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.reqst.ExptrReqstMapstruct;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
-import io.nicheblog.dreamdiary.web.repository.exptr.reqst.ExptrReqstRepository;
+import io.nicheblog.dreamdiary.web.repository.exptr.reqst.jpa.ExptrReqstRepository;
 import io.nicheblog.dreamdiary.web.spec.exptr.reqst.ExptrReqstSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

@@ -19,7 +19,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
-import io.nicheblog.dreamdiary.web.repository.cmm.tag.ContentTagRepository;
+import io.nicheblog.dreamdiary.web.repository.cmm.tag.jpa.ContentTagRepository;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
@@ -211,16 +211,11 @@ public class ContentTagService
         String yy = jrnlDay.getYy();
         String mnth = jrnlDay.getMnth();
         // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", postNo);
+        this.evictCacheForPeriod("jrnlDayList", yy, mnth);
         // jrnl_day_tag
-        EhCacheUtils.evictCache("jrnlDayTagList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDayTagList", yy + "_99");
-        EhCacheUtils.evictCache("jrnlDayTagList", "9999_99");
-        EhCacheUtils.evictCache("jrnlDaySizedTagList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDaySizedTagList", yy + "_99");
-        EhCacheUtils.evictCache("jrnlDaySizedTagList",  "9999_99");
+        this.evictCacheForPeriod("jrnlDayTagList", yy, mnth);
+        this.evictCacheForPeriod("jrnlDaySizedTagList", yy, mnth);
         // L2캐시 처리
         EhCacheUtils.clearL2Cache(JrnlDayTagEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDayContentTagEntity.class);
@@ -233,21 +228,17 @@ public class ContentTagService
         // 태그가 삭제되었을 때 태그 목록 캐시 초기화
         JrnlDiaryDto jrnlDiary = (JrnlDiaryDto) EhCacheUtils.getObjectFromCache("jrnlDiaryDtlDto", postNo);
         if (jrnlDiary == null) jrnlDiary = jrnlDiaryService.getDtlDto(postNo);
+        // 상세 캐시 삭제
         EhCacheUtils.evictCache("jrnlDiaryDtlDto", postNo);
         // 년도-월에 따른 캐시 삭제
         Integer yy = jrnlDiary.getYy();
         Integer mnth = jrnlDiary.getMnth();
         // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", jrnlDiary.getJrnlDayNo());
+        this.evictCacheForPeriod("jrnlDayList", yy, mnth);
         // jrnl_diary_tag
-        EhCacheUtils.evictCache("jrnlDiaryTagList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDiaryTagList", yy + "_99");
-        EhCacheUtils.evictCache("jrnlDiaryTagList", "9999_99");
-        EhCacheUtils.evictCache("jrnlDiarySizedTagList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDiarySizedTagList", yy + "_99");
-        EhCacheUtils.evictCache("jrnlDiarySizedTagList",  "9999_99");
+        this.evictCacheForPeriod("jrnlDiaryTagList", yy, mnth);
+        this.evictCacheForPeriod("jrnlDiarySizedTagList", yy, mnth);
         // L2캐시 처리
         EhCacheUtils.clearL2Cache(JrnlDiaryTagEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDiaryContentTagEntity.class);
@@ -257,26 +248,41 @@ public class ContentTagService
     public void evictJrnlDreamCache(Integer postNo) throws Exception {
         // jrnl_day
         EhCacheUtils.evictCacheAll("jrnlDayList");
-        // 태그가 삭제되었을 때 태그 목록 캐시 초기화
+        // 태그가 삭제되었을 때 태그 목록 캐시 초기화 (부재시 삭제 데이터 조회)
         JrnlDreamDto jrnlDream = (JrnlDreamDto) EhCacheUtils.getObjectFromCache("jrnlDreamDtlDto", postNo);
-        if (jrnlDream == null) jrnlDream = jrnlDreamService.getDtlDto(postNo);
+        if (jrnlDream == null) {
+            try {
+                jrnlDream = jrnlDreamService.getDtlDto(postNo);
+            } catch (Exception e) {
+                jrnlDream = jrnlDreamService.getDeletedDtlDto(postNo);
+                if (jrnlDream == null) return;
+            }
+        }
+        // 상세 캐시 삭제
         EhCacheUtils.evictCache("jrnlDreamDtlDto", postNo);
         // 년도-월에 따른 캐시 삭제
         Integer yy = jrnlDream.getYy();
         Integer mnth = jrnlDream.getMnth();
         // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", jrnlDream.getJrnlDayNo());
+        this.evictCacheForPeriod("jrnlDayList", yy, mnth);
         // jrnl_dream_tag
-        EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_99");
-        EhCacheUtils.evictCache("jrnlDreamTagList", "9999_99");
-        EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDreamSizedTagList", yy + "_99");
-        EhCacheUtils.evictCache("jrnlDreamSizedTagList",  "9999_99");
+        this.evictCacheForPeriod("jrnlDreamTagList", yy, mnth);
+        this.evictCacheForPeriod("jrnlDreamSizedTagList", yy, mnth);
         // L2캐시 처리
         EhCacheUtils.clearL2Cache(JrnlDreamTagEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDreamContentTagEntity.class);
+    }
+
+    /**
+     * 캐시 이름에 대해서 기간 캐시 삭제 :: 메소드 분리
+     */
+    private void evictCacheForPeriod(String cacheName, String yy, String mnth) {
+        this.evictCacheForPeriod(cacheName, Integer.parseInt(yy), Integer.parseInt(mnth));
+    }
+    private void evictCacheForPeriod(String cacheName, Integer yy, Integer mnth) {
+        EhCacheUtils.evictCache(cacheName, yy + "_" + mnth);
+        EhCacheUtils.evictCache(cacheName, yy + "_99");
+        EhCacheUtils.evictCache(cacheName, "9999_99");
     }
 }

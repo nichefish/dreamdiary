@@ -7,7 +7,7 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.diary.JrnlDiaryMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.diary.JrnlDiaryRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.diary.jpa.JrnlDiaryRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.diary.JrnlDiarySpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;

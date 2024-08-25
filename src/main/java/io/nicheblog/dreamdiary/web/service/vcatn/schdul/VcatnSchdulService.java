@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.schdul.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
-import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnSchdulRepository;
+import io.nicheblog.dreamdiary.web.repository.vcatn.jpa.VcatnSchdulRepository;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnSchdulSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

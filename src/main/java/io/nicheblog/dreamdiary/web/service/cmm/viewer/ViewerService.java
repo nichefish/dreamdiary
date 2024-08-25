@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.web.service.cmm.viewer;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.web.entity.cmm.viewer.ViewerEntity;
-import io.nicheblog.dreamdiary.web.repository.cmm.viewer.ViewerRepository;
+import io.nicheblog.dreamdiary.web.repository.cmm.viewer.jpa.ViewerRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.viewer.ViewerSpec;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;

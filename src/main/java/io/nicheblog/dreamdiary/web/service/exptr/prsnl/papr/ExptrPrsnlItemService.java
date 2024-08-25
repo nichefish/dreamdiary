@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr;
 
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
-import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.ExptrPrsnlPaprRepository;
+import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.jpa.ExptrPrsnlPaprRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

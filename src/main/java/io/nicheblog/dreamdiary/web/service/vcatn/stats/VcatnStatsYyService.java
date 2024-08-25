@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.vcatn.stats.VcatnStatsYyEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.stats.VcatnStatsYyMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
-import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnStatsYyRepository;
+import io.nicheblog.dreamdiary.web.repository.vcatn.jpa.VcatnStatsYyRepository;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnStatsYySpec;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;

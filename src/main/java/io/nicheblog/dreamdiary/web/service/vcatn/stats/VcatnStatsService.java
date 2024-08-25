@@ -12,7 +12,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsTotalDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
-import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnStatsRepository;
+import io.nicheblog.dreamdiary.web.repository.vcatn.jpa.VcatnStatsRepository;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import io.nicheblog.dreamdiary.web.service.vcatn.schdul.VcatnSchdulService;

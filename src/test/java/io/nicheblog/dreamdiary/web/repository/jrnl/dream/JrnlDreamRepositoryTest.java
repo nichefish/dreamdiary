@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntityTestFactory;
+import io.nicheblog.dreamdiary.web.repository.jrnl.dream.jpa.JrnlDreamRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,7 +8,7 @@ import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.schdul.SchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulDto;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulPrtcpntDto;
-import io.nicheblog.dreamdiary.web.repository.schdul.SchdulRepository;
+import io.nicheblog.dreamdiary.web.repository.schdul.jpa.SchdulRepository;
 import io.nicheblog.dreamdiary.web.spec.schdul.SchdulSpec;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;

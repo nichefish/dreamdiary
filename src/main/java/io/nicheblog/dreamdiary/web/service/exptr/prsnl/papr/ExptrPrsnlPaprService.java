@@ -12,7 +12,7 @@ import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlPaprMapstruct;
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
-import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.ExptrPrsnlPaprRepository;
+import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.jpa.ExptrPrsnlPaprRepository;
 import io.nicheblog.dreamdiary.web.spec.exptr.prsnl.ExptrPrsnlPaprSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

@@ -9,7 +9,7 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.model.user.UserPwChgParam;
-import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
+import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

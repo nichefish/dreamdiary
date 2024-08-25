@@ -7,7 +7,7 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.ClCdMapstruct;
-import io.nicheblog.dreamdiary.web.repository.admin.ClCdRepository;
+import io.nicheblog.dreamdiary.web.repository.admin.jpa.ClCdRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.ClCdSpec;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

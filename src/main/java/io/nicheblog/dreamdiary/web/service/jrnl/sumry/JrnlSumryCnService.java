@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryCnEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry.JrnlSumryCnMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryCnDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.JrnlSumryCnRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.jpa.JrnlSumryCnRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.sumry.JrnlSumryCnSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;

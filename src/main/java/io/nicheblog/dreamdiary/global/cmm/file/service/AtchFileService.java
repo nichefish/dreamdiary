@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.global.cmm.file.service;
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileEntity;
 import io.nicheblog.dreamdiary.global.cmm.file.mapstruct.AtchFileMapstruct;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
-import io.nicheblog.dreamdiary.global.cmm.file.repository.AtchFileRepository;
+import io.nicheblog.dreamdiary.global.cmm.file.repository.jpa.AtchFileRepository;
 import io.nicheblog.dreamdiary.global.cmm.file.spec.AtchFileSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import lombok.extern.log4j.Log4j2;

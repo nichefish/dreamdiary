@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.global.cmm.cd.service;
 import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.mapstruct.CdMapstruct;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
-import io.nicheblog.dreamdiary.global.cmm.cd.repository.CdRepository;
+import io.nicheblog.dreamdiary.global.cmm.cd.repository.jpa.CdRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;

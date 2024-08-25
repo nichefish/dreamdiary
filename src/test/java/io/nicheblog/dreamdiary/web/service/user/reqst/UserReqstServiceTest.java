@@ -8,7 +8,7 @@ import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDtoTestFactory;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDtoTestFactory;
-import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
+import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;

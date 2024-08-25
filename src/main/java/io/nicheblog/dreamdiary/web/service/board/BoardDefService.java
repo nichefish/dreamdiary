@@ -8,7 +8,7 @@ import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.board.BoardDefMapstruct;
 import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
-import io.nicheblog.dreamdiary.web.repository.board.BoardDefRepository;
+import io.nicheblog.dreamdiary.web.repository.board.jpa.BoardDefRepository;
 import io.nicheblog.dreamdiary.web.spec.board.BoardDefSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

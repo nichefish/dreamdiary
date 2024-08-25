@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sbjct.JrnlSbjctEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.sbjct.JrnlSbjctMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.sbjct.JrnlSbjctDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.sbjct.JrnlSbjctRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.sbjct.jpa.JrnlSbjctRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.sbjct.JrnlSbjctSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

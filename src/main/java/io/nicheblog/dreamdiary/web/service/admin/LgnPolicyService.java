@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.web.service.admin;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.LgnPolicyMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.LgnPolicyDto;
-import io.nicheblog.dreamdiary.web.repository.admin.LgnPolicyRepository;
+import io.nicheblog.dreamdiary.web.repository.admin.jpa.LgnPolicyRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

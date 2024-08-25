@@ -10,7 +10,7 @@ import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.user.UserMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
+import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.spec.user.UserSpec;
 import org.apache.commons.lang3.StringUtils;

@@ -10,7 +10,7 @@ import io.nicheblog.dreamdiary.web.entity.admin.MenuEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.MenuMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
 import io.nicheblog.dreamdiary.web.model.admin.MenuSearchParam;
-import io.nicheblog.dreamdiary.web.repository.admin.MenuRepository;
+import io.nicheblog.dreamdiary.web.repository.admin.jpa.MenuRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.MenuSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

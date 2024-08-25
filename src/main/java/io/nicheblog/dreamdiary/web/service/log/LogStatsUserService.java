@@ -7,7 +7,7 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.mapstruct.log.LogStatsUserMapstruct;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserDto;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserIntrfc;
-import io.nicheblog.dreamdiary.web.repository.log.LogStatsUserRepository;
+import io.nicheblog.dreamdiary.web.repository.log.jpa.LogStatsUserRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

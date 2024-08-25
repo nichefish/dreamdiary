@@ -10,7 +10,7 @@ import io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr.VcatnPaprMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
-import io.nicheblog.dreamdiary.web.repository.vcatn.VcatnPaprRepository;
+import io.nicheblog.dreamdiary.web.repository.vcatn.jpa.VcatnPaprRepository;
 import io.nicheblog.dreamdiary.web.service.vcatn.schdul.VcatnSchdulService;
 import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnPaprSpec;

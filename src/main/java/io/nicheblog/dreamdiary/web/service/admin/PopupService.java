@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.PopupMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.PopupDto;
-import io.nicheblog.dreamdiary.web.repository.admin.PopupRepository;
+import io.nicheblog.dreamdiary.web.repository.admin.jpa.PopupRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.PopupSpec;
 import org.springframework.stereotype.Service;
 

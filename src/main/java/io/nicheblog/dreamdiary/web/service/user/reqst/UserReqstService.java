@@ -6,7 +6,7 @@ import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
 import io.nicheblog.dreamdiary.web.mapstruct.user.reqst.UserReqstMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
-import io.nicheblog.dreamdiary.web.repository.user.UserRepository;
+import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;

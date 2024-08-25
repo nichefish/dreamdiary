@@ -8,7 +8,7 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry.JrnlSumryMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.JrnlSumryRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.jpa.JrnlSumryRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.sumry.JrnlSumrySpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;

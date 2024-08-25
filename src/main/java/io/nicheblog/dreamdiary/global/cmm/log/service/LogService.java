@@ -6,8 +6,8 @@ import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.cmm.log.mapstruct.LogMapstruct;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
-import io.nicheblog.dreamdiary.global.cmm.log.repository.LogActvtyRepository;
-import io.nicheblog.dreamdiary.global.cmm.log.repository.LogSysRepository;
+import io.nicheblog.dreamdiary.global.cmm.log.repository.jpa.LogActvtyRepository;
+import io.nicheblog.dreamdiary.global.cmm.log.repository.jpa.LogSysRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 

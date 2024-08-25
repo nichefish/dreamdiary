@@ -41,13 +41,13 @@ import java.util.HashMap;
 @Configuration
 @PropertySource({"classpath:application.yml"})
 @EnableJpaRepositories(
-        basePackages = { "io.nicheblog.dreamdiary.**.repository" },
+        basePackages = { "io.nicheblog.dreamdiary.**.repository.**.jpa", "io.nicheblog.dreamdiary.**.repository.**.querydsl" },
         entityManagerFactoryRef = "entityManagerFactory",
         transactionManagerRef = "transactionManager",
         repositoryBaseClass = BaseRepositoryImpl.class
 )
 @MapperScan(
-        basePackages = { "io.nicheblog.dreamdiary.**.mapper" },
+        basePackages = { "io.nicheblog.dreamdiary.**.repository.**.mybatis" },
         sqlSessionTemplateRef = "sqlSessionTemplate"
 )
 public class DataSourceConfig
@@ -106,7 +106,7 @@ public class DataSourceConfig
     ) throws Exception {
 
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setMapperLocations(applicationContext.getResources("classpath*:**/mapper/sql/*Mapper.xml"));
+        bean.setMapperLocations(applicationContext.getResources("classpath*:**/repository/**/mybatis/*Mapper.xml"));
         bean.setDataSource(dataSource);
         bean.setVfs(SpringBootVFS.class);
         bean.setTypeAliasesPackage("io.nicheblog.dreamdiary.**.model");

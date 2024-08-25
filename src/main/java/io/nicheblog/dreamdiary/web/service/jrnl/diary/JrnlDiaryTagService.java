@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.diary.JrnlDiaryTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.diary.JrnlDiaryTagRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.diary.jpa.JrnlDiaryTagRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.diary.JrnlDiaryTagSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.global.cmm.file.service;
 import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.cmm.file.mapstruct.AtchFileDtlMapstruct;
 import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.repository.AtchFileDtlRepository;
+import io.nicheblog.dreamdiary.global.cmm.file.repository.jpa.AtchFileDtlRepository;
 import io.nicheblog.dreamdiary.global.cmm.file.spec.AtchFileDtlSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;

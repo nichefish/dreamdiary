@@ -5,9 +5,10 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.web.repository.jrnl.dream.mybatis.JrnlDreamMapper;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.dream.JrnlDreamRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.dream.jpa.JrnlDreamRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
@@ -39,6 +40,8 @@ public class JrnlDreamService
     private JrnlDreamRepository jrnlDreamRepository;
     @Resource(name = "jrnlDreamSpec")
     private JrnlDreamSpec jrnlDreamSpec;
+    @Resource(name = "jrnlDreamMapper")
+    private JrnlDreamMapper jrnlDreamMapper;
 
     @Override
     public JrnlDreamRepository getRepository() {
@@ -150,5 +153,9 @@ public class JrnlDreamService
         // jrnl_diary_tag
         EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_99");
         EhCacheUtils.evictCache("jrnlDreamTagList", yy + mnth);
+    }
+
+    public JrnlDreamDto getDeletedDtlDto(Integer postNo) throws Exception {
+        return jrnlDreamMapper.getDeletedByPostNo(postNo);
     }
 }

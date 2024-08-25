@@ -6,7 +6,7 @@ import io.nicheblog.dreamdiary.web.mapstruct.notice.NoticeMapstruct;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeXlsxDto;
-import io.nicheblog.dreamdiary.web.repository.notice.NoticeRepository;
+import io.nicheblog.dreamdiary.web.repository.notice.jpa.NoticeRepository;
 import io.nicheblog.dreamdiary.web.spec.notice.NoticeSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

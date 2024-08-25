@@ -10,7 +10,7 @@ import io.nicheblog.dreamdiary.web.mapstruct.schdul.SchdulCalMapstruct;
 import io.nicheblog.dreamdiary.web.mapstruct.vcatn.schdul.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulCalDto;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulSearchParam;
-import io.nicheblog.dreamdiary.web.repository.schdul.SchdulRepository;
+import io.nicheblog.dreamdiary.web.repository.schdul.jpa.SchdulRepository;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import io.nicheblog.dreamdiary.web.service.vcatn.schdul.VcatnSchdulService;
 import io.nicheblog.dreamdiary.web.spec.schdul.SchdulSpec;

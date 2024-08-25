@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
 import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntityTestFactory;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntityTestFactory;
+import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

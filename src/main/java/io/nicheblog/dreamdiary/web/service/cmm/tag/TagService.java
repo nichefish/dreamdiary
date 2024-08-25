@@ -11,7 +11,7 @@ import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
-import io.nicheblog.dreamdiary.web.repository.cmm.tag.TagRepository;
+import io.nicheblog.dreamdiary.web.repository.cmm.tag.jpa.TagRepository;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.TagSpec;
 import lombok.extern.log4j.Log4j2;

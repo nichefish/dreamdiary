@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.cmm.flsys.FlsysMetaEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.flsys.FlsysMetaMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
-import io.nicheblog.dreamdiary.web.repository.cmm.flsys.FlsysMetaRepository;
+import io.nicheblog.dreamdiary.web.repository.cmm.flsys.jpa.FlsysMetaRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.flsys.FlsysMetaSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

@@ -6,7 +6,7 @@ import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.web.entity.admin.TmplatDefEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.TmplatDefMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatDefDto;
-import io.nicheblog.dreamdiary.web.repository.admin.TmplatDefRepository;
+import io.nicheblog.dreamdiary.web.repository.admin.jpa.TmplatDefRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.TmplatDefSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.global.auth.service;
 import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.global.auth.mapstruct.AuthRoleMapstruct;
 import io.nicheblog.dreamdiary.global.auth.model.AuthRoleDto;
-import io.nicheblog.dreamdiary.global.auth.repository.AuthRoleRepository;
+import io.nicheblog.dreamdiary.global.auth.repository.jpa.AuthRoleRepository;
 import io.nicheblog.dreamdiary.global.auth.spec.AuthRoleSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
 import lombok.extern.log4j.Log4j2;

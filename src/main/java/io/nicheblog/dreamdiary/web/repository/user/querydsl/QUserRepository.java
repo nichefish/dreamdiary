@@ -13,5 +13,5 @@ import java.util.List;
  * @author nichefish
  */
 public interface QUserRepository {
-    List<UserEntity> findByUserTest();
+    List<UserEntity> queryUsersByUserIdTest();
 }

@@ -7,7 +7,7 @@ import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.board.BoardPostEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.board.BoardPostMapstruct;
 import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
-import io.nicheblog.dreamdiary.web.repository.board.BoardPostRepository;
+import io.nicheblog.dreamdiary.web.repository.board.jpa.BoardPostRepository;
 import io.nicheblog.dreamdiary.web.spec.board.BoardPostSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

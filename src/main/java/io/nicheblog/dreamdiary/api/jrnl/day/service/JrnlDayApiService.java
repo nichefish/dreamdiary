@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.api.jrnl.day.mapstruct.JrnlDayApiMapstruct;
 import io.nicheblog.dreamdiary.api.jrnl.day.model.JrnlDayApiDto;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
-import io.nicheblog.dreamdiary.web.repository.jrnl.day.JrnlDayRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.day.jpa.JrnlDayRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.day.JrnlDaySpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

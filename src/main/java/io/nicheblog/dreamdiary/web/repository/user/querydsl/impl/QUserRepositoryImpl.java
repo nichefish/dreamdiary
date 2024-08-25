@@ -16,13 +16,14 @@ import java.util.List;
  *
  * @author nichefish
  */
-public class QUserRepositoryImpl implements QUserRepository {
+public class QUserRepositoryImpl
+        implements QUserRepository {
 
     @Resource
     private JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<UserEntity> findByUserTest() {
+    public List<UserEntity> queryUsersByUserIdTest() {
         QUserEntity user = QUserEntity.userEntity;
         return jpaQueryFactory.selectFrom(user)
                 .where(user.userId.eq("nichefish"))

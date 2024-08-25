@@ -6,7 +6,7 @@ import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.sectn.SectnEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.sectn.SectnMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.sectn.SectnDto;
-import io.nicheblog.dreamdiary.web.repository.cmm.sectn.SectnRepository;
+import io.nicheblog.dreamdiary.web.repository.cmm.sectn.jpa.SectnRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.sectn.SectnSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
