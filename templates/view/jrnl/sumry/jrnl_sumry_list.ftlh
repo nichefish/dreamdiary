@@ -74,16 +74,23 @@
             <div class="row jrnl-sumry">
                 <div class="col-2 d-flex align-items-center">
                     <i class="bi bi-calendar3 fs-6 me-2"></i>
-                    <#if jrnlSumry.title??>
-                        <span class="fs-5 me-1">${jrnlSumry.title!}</span>
-                    <#else>
-                        <span class="fs-5 fw-bold me-1">${jrnlSumry.yy!}</span>
-                        년 결산
-                    </#if>
-                    <a class="badge badge-secondary ms-3 p-2 btn-white bg-hover-white blank blink-slow float-end"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 보기">
-                        <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="JrnlSumry.dtl(${jrnlSumry.postNo!});"></i>
+                    <a class="cursor-pointer text-underline-dotted text-dark"
+                       onclick="JrnlSumry.dtl(${jrnlSumry.postNo!});"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 화면으로 이동">
+                        <#if jrnlSumry.title??>
+                            <span class="fs-5 me-1">${jrnlSumry.title!}</span>
+                        <#else>
+                            <span class="fs-5 fw-bold me-0">${jrnlSumry.yy!}</span>
+                            년 결산
+                        </#if>
                     </a>
+                    <#--TODO: 새 창으로 열기 -->
+                    <#--
+                    <a class="badge badge-secondary ms-3 p-2 btn-white bg-hover-white blank blink-slow float-end"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="새 창으로 보기">
+                        <i class="bi bi-stickies fs-5 text-noti opacity-hover"></i>
+                    </a>
+                    -->
                 </div>
                 <div class="col d-flex align-items-center fs-5">
                     <div class="text-gray-700 d-flex-center me-5">
