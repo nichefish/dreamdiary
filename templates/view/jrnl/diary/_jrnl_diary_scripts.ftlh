@@ -47,7 +47,10 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) JrnlDay.yyMnthListAjax();
+                                if (res.rslt) {
+                                    JrnlDay.yyMnthListAjax();
+                                    JrnlTag.diaryTagListAjax();
+                                }
                             });
                     }, "block");
                 });
@@ -90,7 +93,10 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) JrnlDay.yyMnthListAjax();
+                                if (res.rslt) {
+                                    JrnlDay.yyMnthListAjax();
+                                    JrnlTag.diaryTagListAjax();
+                                }
                             });
                     }, "block");
                 });

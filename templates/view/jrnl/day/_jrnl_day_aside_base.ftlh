@@ -218,30 +218,6 @@
                         </button>
                     </div>
                 </div>
-                <div class="mb-7">
-                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Groups</span>
-                    <select class="form-select" aria-label="Select example">
-                        <option>Any group</option>
-                        <option value="1">Grace Green</option>
-                        <option value="2">Nick LOgan</option>
-                        <option value="3">Carles Nilson</option>
-                        <option value="1">Alice Danchik</option>
-                        <option value="2">Harris Bold</option>
-                        <option value="3">Carles Nilson</option>
-                    </select>
-                </div>
-                <div class="mb-6">
-                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Email</span>
-                    <input type="text" class="form-control" placeholder="Your Email" />
-                </div>
-                <!--end::Form-->
-                <#--begin::Action-->
-                <div class="d-flex flex-column">
-                    <a href="#" class="btn btn-primary mb-4 p-3">Default</a>
-                    <a href="#" class="btn btn-secondary btn-color-gray-700 p-3">View more</a>
-                </div>
-                <!--end::Action-->
-                <!--end::Body-->
             </div>
         </div>
         <!--end::Aside-->

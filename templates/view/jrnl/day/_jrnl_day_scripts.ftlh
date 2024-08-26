@@ -120,7 +120,11 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) JrnlDay.yyMnthListAjax();
+                                if (res.rslt) {
+                                    JrnlDay.yyMnthListAjax();
+                                    // 태그 조회
+                                    JrnlTag.dayTagListAjax();
+                                }
                             });
                     }, "block");
                 });
@@ -166,7 +170,11 @@
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) JrnlDay.yyMnthListAjax();
+                                if (res.rslt) {
+                                    JrnlDay.yyMnthListAjax();
+                                    // 태그 조회
+                                    JrnlTag.dayTagListAjax();
+                                }
                             });
                     }, "block");
                 });

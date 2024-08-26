@@ -47,16 +47,6 @@
                 // 꿈 키워드 검색에 엔터키 처리
                 commons.util.enterKey("#dreamKeyword", JrnlDream.keywordListAjax);
             },
-            tagCtgrSyncAjax: function() {
-                const url = "${Url.JRNL_DREAM_TAG_CTGR_SYNC_AJAX!}";
-                commons.util.blockUIAjax(url, 'post', {}, function(res) {
-                    Swal.fire({ text: res.message });
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                });
-            }
         }
     })();
     $(document).ready(function() {
@@ -83,6 +73,19 @@
         <div class="col" id="jrnl_day_tag_list_div">
             <#--handlebars template goes in here-->
         </div>
+        <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
+        <div class="col-1 ms-4 text-center fs-6 w-auto gap-3">
+            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                    onclick="JrnlTag.hideSingleTag('#jrnl_day_tag_list_div');"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="1개짜리 태그를 숨기고 보입니다.">
+                <i class="bi bi-tag pe-0"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                    onclick="JrnlTag.dayTagListAllAjax();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
+                <i class="bi bi-tag pe-0"></i>
+            </button>
+        </div>
     </div>
     <div class="d-flex align-items-center mb-6 ms-4">
         <div class="col-1 ms-4 me-6 text-center fs-6">
@@ -90,6 +93,19 @@
         </div>
         <div class="col" id="jrnl_diary_tag_list_div">
             <#--handlebars template goes in here-->
+        </div>
+        <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
+        <div class="col-1 ms-4 text-center fs-6 w-auto gap-3">
+            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                    onclick="JrnlTag.hideSingleTag('#jrnl_diary_tag_list_div');"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="1개짜리 태그를 숨기고 보입니다.">
+                <i class="bi bi-tag pe-0"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                    onclick="JrnlTag.diaryTagListAllAjax();"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
+                <i class="bi bi-tag pe-0"></i>
+            </button>
         </div>
     </div>
     <div class="d-flex align-items-center mb-6 ms-4">
@@ -110,14 +126,6 @@
                     onclick="JrnlTag.dreamTagListAllAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
                 <i class="bi bi-tag pe-0"></i>
-            </button>
-        </div>
-        <div class="col-1 ms-2 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
-        <div class="col-1 w-auto">
-            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
-                    onclick="Page.tagCtgrSyncAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="태그 카테고리 정보를&#10;동기화합니다.">
-                <i class="bi bi-arrow-repeat fs-2 pe-0"></i>
             </button>
         </div>
     </div>

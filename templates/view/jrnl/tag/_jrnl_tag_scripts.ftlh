@@ -8,7 +8,7 @@
             /** 목록에 따른 일자 태그 조회 */
             dayTagListAjax: function() {
                 const url = "${Url.JRNL_DAY_TAG_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
+                const ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -17,10 +17,29 @@
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_day_tag_list");
                 });
             },
+            /** 목록에 따른 일자 태그 (전체) 조회 */
+            dayTagListAllAjax: function() {
+                const url = "${Url.JRNL_DAY_TAG_LIST_AJAX!}";
+                const ajaxData = { "yy": 9999, "mnth":99 };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    // 상단에 태그 카테고리 메뉴 생성
+                    const ctgrSet = new Set();
+                    res.rsltList.forEach(item => {
+                        if (item.ctgr) ctgrSet.add(item.ctgr);
+                    });
+                    commons.util.handlebarsTemplate(ctgrSet, "jrnl_tag_ctgr");
+                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_tag_list", "show");
+                    $("#jrnl_tag_dtl_modal").modal("hide");
+                });
+            },
             /** 목록에 따른 일기 태그 조회 */
             diaryTagListAjax: function() {
                 const url = "${Url.JRNL_DIARY_TAG_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
+                const ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -29,10 +48,29 @@
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_diary_tag_list");
                 });
             },
+            /** 목록에 따른 일기 태그 (전체) 조회 */
+            diaryTagListAllAjax: function() {
+                const url = "${Url.JRNL_DIARY_TAG_LIST_AJAX!}";
+                const ajaxData = { "yy": 9999, "mnth":99 };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    // 상단에 태그 카테고리 메뉴 생성
+                    const ctgrSet = new Set();
+                    res.rsltList.forEach(item => {
+                        if (item.ctgr) ctgrSet.add(item.ctgr);
+                    });
+                    commons.util.handlebarsTemplate(ctgrSet, "jrnl_tag_ctgr");
+                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_tag_list", "show");
+                    $("#jrnl_tag_dtl_modal").modal("hide");
+                });
+            },
             /** 목록에 따른 꿈 태그 조회 */
             dreamTagListAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
+                const ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -44,12 +82,13 @@
             /** 목록에 따른 꿈 태그 (전체) 조회 */
             dreamTagListAllAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
-                let ajaxData = { "yy": 9999, "mnth":99 };
+                const ajaxData = { "yy": 9999, "mnth":99 };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
+                    // 상단에 태그 카테고리 메뉴 생성
                     const ctgrSet = new Set();
                     res.rsltList.forEach(item => {
                         if (item.ctgr) ctgrSet.add(item.ctgr);
@@ -62,7 +101,7 @@
             /** 목록에 따른 꿈 태그 (전체) 조회 */
             dreamTagGroupListAllAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
-                let ajaxData = { "yy": 9999, "mnth":99 };
+                const ajaxData = { "yy": 9999, "mnth":99 };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -137,6 +176,19 @@
             hideSingleTag(selectorDiv) {
                 $(selectorDiv + " span.ts-1").parent().toggle();
             },
+            /**
+             * 태그 카테고리 파일을 DB로부터 새로고침한다.
+             */
+            tagCtgrSyncAjax: function() {
+                const url = "${Url.JRNL_TAG_CTGR_SYNC_AJAX!}";
+                commons.util.blockUIAjax(url, 'post', {}, function(res) {
+                    Swal.fire({ text: res.message });
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                });
+            }
         }
     })();
 </script>

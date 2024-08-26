@@ -4,31 +4,14 @@
  -->
 
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get">
-    <input type="hidden" name="pageNo" id="pageNo" value="${searchParam.pageNo!1}">
-    <input type="hidden" name="pageSize" id="pageSize" value="${searchParam.pageSize!10}">
-
-    <div>
-        <#--헤더:: 인풋: datepicker-->
-        <@component.header_datepicker searchParam "searchStartDt" "" />
-        <#--헤더:: 인풋: datepicker-->
-        <@component.header_datepicker searchParam "searchEndDt" "today" />
+    <div class="col-1 w-auto">
+        <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                onclick="JrnlTag.tagCtgrSyncAjax();"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="태그 카테고리 정보를&#10;동기화합니다.">
+            <i class="bi bi-arrow-repeat fs-2 pe-0"></i>
+        </button>
     </div>
-    <div>
-        <#--헤더:: 인풋: searchType-->
-        <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
-            <option value="clCd">분류코드</option>
-            <option value="clCdNm">분류코드명</option>
-            <option value="dc">분류코드 설명</option>
-        </select>
-    </div>
-    <div>
-        <#--헤더:: 인풋: searchKeyword-->
-        <@component.header_input_searchKeyword searchParam />
-    </div>
-    <div>
-        <#--헤더:: 버튼: 목록 검색-->
-        <@component.header_btn_search "JrnlDay.search();" />
-    </div>
+    <div class="col-1 ms-2 me-4 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
     <div>
         <#--헤더:: 버튼: 등록 모달 호출하기-->
         <@component.header_btn_reg_modal "JrnlDay.regModal();" />

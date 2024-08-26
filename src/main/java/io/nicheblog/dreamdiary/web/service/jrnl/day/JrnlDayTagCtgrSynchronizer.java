@@ -57,7 +57,7 @@ public class JrnlDayTagCtgrSynchronizer {
      * 파일 생성 (메소드 분리)
      */
     private void writeToFile(Map<String, List<String>> tagCtgryMap) throws Exception {
-        try (FileWriter fileWriter = new FileWriter("templates/view/jrnl/diary/_jrnl_diary_tag.ftlh")) {
+        try (FileWriter fileWriter = new FileWriter("templates/view/jrnl/day/_jrnl_day_tag.ftlh")) {
             fileWriter.write("<script>\n");
             fileWriter.write("\tconst JrnlDayTag = (function() {\n");
             fileWriter.write("\t\treturn {\n");

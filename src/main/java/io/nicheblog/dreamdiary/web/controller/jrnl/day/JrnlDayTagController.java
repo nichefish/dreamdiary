@@ -13,14 +13,17 @@ import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDaySearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
-import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayTagService;
 import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -37,6 +40,7 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
+@Log4j2
 public class JrnlDayTagController
         extends BaseControllerImpl {
 
@@ -49,8 +53,6 @@ public class JrnlDayTagController
     private JrnlDayService jrnlDayService;
     @Resource(name = "jrnlDayTagService")
     private JrnlDayTagService jrnlDayTagService;
-    @Resource(name = "jrnlDayTagCtgrSynchronizer")
-    private JrnlDayTagCtgrSynchronizer jrnlDayTagCtgrSynchronizer;
 
     /**
      * 저널 일자 태그 전체 목록 조회 (Ajax)
@@ -70,7 +72,7 @@ public class JrnlDayTagController
         String rsltMsg = "";
         try {
             // 전체 태그 목록 조회 (태그클라우드)
-            List<TagDto> tagList = jrnlDayTagService.getDiarySizedListDto(searchParam.getYy(), searchParam.getMnth());
+            List<TagDto> tagList = jrnlDayTagService.getDaySizedListDto(searchParam.getYy(), searchParam.getMnth());
             ajaxResponse.setRsltList(tagList);
 
             isSuccess = true;
@@ -107,7 +109,7 @@ public class JrnlDayTagController
         String rsltMsg = "";
         try {
             // 전체 태그 목록 조회 (태그클라우드)
-            Map<String, List<TagDto>> tagGroupMap = jrnlDayTagService.getDiarySizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
+            Map<String, List<TagDto>> tagGroupMap = jrnlDayTagService.getDaySizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
             ajaxResponse.setRsltMap(tagGroupMap);
 
             isSuccess = true;
@@ -147,43 +149,6 @@ public class JrnlDayTagController
             List<JrnlDayDto> jrnlDayList = jrnlDayService.jrnlDayTagDtl(searchParam);
             Collections.sort(jrnlDayList);
             ajaxResponse.setRsltList(jrnlDayList);
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
-
-    /**
-     * 저널 일자 태그 카테고리 메타 파일 - DB 동기화 (Ajax)
-     * (관리자MNGR만 접근 가능)
-     */
-    @RequestMapping(Url.JRNL_DAY_TAG_CTGR_SYNC_AJAX)
-    @Secured({Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> tagCtgrSyncAjax(
-            @ModelAttribute("searchParam") TagSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final @RequestParam Map<String, Object> searchParamMap
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 전체 태그 목록 조회 (태그클라우드)
-            jrnlDayTagCtgrSynchronizer.tagSync();
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

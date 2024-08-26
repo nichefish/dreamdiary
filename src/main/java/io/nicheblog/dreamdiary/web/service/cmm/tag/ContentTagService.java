@@ -97,8 +97,6 @@ public class ContentTagService
         obsoleteTagList.forEach(tag -> {
             contentTagRepository.deleteObsoleteContentTags(clsfKey.getPostNo(), clsfKey.getContentType(), tag.getTagNm(), tag.getCtgr());
         });
-        // 관련 캐시 삭제
-        this.evictClsfCache(clsfKey);
     }
 
     /**
@@ -109,31 +107,19 @@ public class ContentTagService
                 .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
                 .collect(Collectors.toList());
         this.registAll(contentTagList);
-
-        // 관련 캐시 클리어
-        this.evictClsfCache(clsfKey);
     }
 
     /**
-     *
+     * 컨텐츠 태그 전처리::
      */
     @Override
     public void postRegistAll(List<ContentTagEntity> entityList) {
+        // 태그 개수 캐시 초기화
         entityList.forEach(entity -> {
-            Integer tagNo = entity.getRefTagNo();
-            try {
-                int currYy = DateUtils.getCurrYy();
-                for (int yy = 2010; yy <= currYy; yy++) {
-                    for (int mnth = 1; mnth < 13; mnth++ ) {
-                        String cacheKey = tagNo + "_" + yy + "_" + mnth;
-                        log.info("evict content_tag key: {}", cacheKey);
-                        EhCacheUtils.evictCache("countDreamSize", cacheKey);
-                    }
-                }
-                EhCacheUtils.evictCache("countDreamSize", tagNo + "_9999_99");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            String contentType = entity.getRefContentType();
+            String cacheName = this.getCacheNameByContentType(contentType);
+            Integer tagNo = entity.getRefTagNo();;
+            this.evictCacheForPeriod(cacheName, tagNo);
         });
     }
     
@@ -149,33 +135,45 @@ public class ContentTagService
         List<ContentTagEntity> entityList = this.getListEntity(searchParamMap);
         this.deleteAll(entityList);
 
+        // 태그 개수 캐시 초기화
         String contentType = clsfKey.getContentType();
+        String cacheName = this.getCacheNameByContentType(contentType);
         entityList.forEach(entity -> {
-            String cacheName = "";
-            if (ContentType.JRNL_DAY.key.equals(contentType)) {
-                cacheName = "countDaySize";
-            } else if (ContentType.JRNL_DIARY.key.equals(contentType)) {
-                cacheName = "countDiarySize";
-            } else if (ContentType.JRNL_DREAM.key.equals(contentType)) {
-                cacheName = "countDreamSize";
-            }
-
             Integer tagNo = entity.getRefTagNo();
-            try {
-                int currYy = DateUtils.getCurrYy();
-                for (int yy = 2010; yy <= currYy; yy++) {
-                    for (int mnth = 1; mnth < 13; mnth++ ) {
-                        EhCacheUtils.evictCache(cacheName, tagNo + "_" + yy + "_" + mnth);
-                    }
-                }
-                EhCacheUtils.evictCache(cacheName, tagNo + "_9999_99");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            this.evictCacheForPeriod(cacheName, tagNo);
         });
+    }
 
-        // 관련 캐시 클리어
-        this.evictClsfCache(clsfKey);
+    /**
+     * 콘텐츠 타입에 따른 캐시 이름 반환 :: 메소드 분리
+     */
+    private String getCacheNameByContentType(String contentType) {
+        if (ContentType.JRNL_DAY.key.equals(contentType)) {
+            return "countDaySize";
+        } else if (ContentType.JRNL_DIARY.key.equals(contentType)) {
+            return "countDiarySize";
+        } else if (ContentType.JRNL_DREAM.key.equals(contentType)) {
+            return "countDreamSize";
+        } else {
+            throw new IllegalArgumentException("Unknown content type: " + contentType);
+        }
+    }
+
+    /**
+     * 기간에 따른 컨텐츠 태그 캐시 삭제 :: 메소드 분리
+     */
+    private void evictCacheForPeriod(String cacheName, Integer tagNo) {
+        try {
+            int currYy = DateUtils.getCurrYy();
+            for (int yy = 2010; yy <= currYy; yy++) {
+                for (int mnth = 1; mnth <= 12; mnth++) {
+                    EhCacheUtils.evictCache(cacheName, tagNo + "_" + yy + "_" + mnth);
+                }
+            }
+            EhCacheUtils.evictCache(cacheName, tagNo + "_9999_99");
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to evict cache for tagNo: " + tagNo, e);
+        }
     }
 
     /**
@@ -197,7 +195,6 @@ public class ContentTagService
             // jrnl_sumry_cn
             EhCacheUtils.evictCache("jrnlSumryCnDtlDto", postNo);
         }
-
     }
 
     /** 저널 일자 관련 캐시 삭제 :: 메소드 분리 */

@@ -172,9 +172,14 @@ public class JrnlDayService
      * 관련 캐시 처리 :: 메소드 분리
      */
     public void evictRelatedCache(final JrnlDayEntity rslt) {
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_" + rslt.getMnth());
-        EhCacheUtils.evictCache("jrnlDayList", rslt.getYy() + "_99");
+        Integer yy = rslt.getYy();
+        Integer mnth = rslt.getMnth();
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
+        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
         EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getPostNo());
+        // jrnl_diary_tag
+        EhCacheUtils.evictCache("jrnlDiaryTagList", yy + "_99");
+        EhCacheUtils.evictCache("jrnlDiaryTagList", yy + mnth);
     }
 
     /**

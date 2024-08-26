@@ -13,14 +13,16 @@ import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiarySearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
-import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryTagService;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -49,8 +51,6 @@ public class JrnlDiaryTagController
     private JrnlDiaryService jrnlDiaryService;
     @Resource(name = "jrnlDiaryTagService")
     private JrnlDiaryTagService jrnlDiaryTagService;
-    @Resource(name = "jrnlDiaryTagCtgrSynchronizer")
-    private JrnlDiaryTagCtgrSynchronizer jrnlDiaryTagCtgrSynchronizer;
 
     /**
      * 저널 일기 태그 전체 목록 조회 (Ajax)
@@ -147,43 +147,6 @@ public class JrnlDiaryTagController
             List<JrnlDiaryDto> jrnlDiaryList = jrnlDiaryService.jrnlDiaryTagDtl(searchParam);
             Collections.sort(jrnlDiaryList);
             ajaxResponse.setRsltList(jrnlDiaryList);
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
-    }
-
-    /**
-     * 저널 일기 태그 카테고리 메타 파일 - DB 동기화 (Ajax)
-     * (관리자MNGR만 접근 가능)
-     */
-    @RequestMapping(Url.JRNL_DIARY_TAG_CTGR_SYNC_AJAX)
-    @Secured({Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> tagCtgrSyncAjax(
-            @ModelAttribute("searchParam") TagSearchParam searchParam,
-            final LogActvtyParam logParam,
-            final @RequestParam Map<String, Object> searchParamMap
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 전체 태그 목록 조회 (태그클라우드)
-            jrnlDiaryTagCtgrSynchronizer.tagSync();
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

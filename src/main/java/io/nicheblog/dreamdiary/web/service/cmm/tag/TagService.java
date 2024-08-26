@@ -6,8 +6,6 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamContentTagEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
@@ -111,13 +109,6 @@ public class TagService
 
         // 3. 추가해야 할 컨텐츠-태그를 처리해준다.
         if (CollectionUtils.isNotEmpty(rsList)) contentTagService.procContentTags(clsfKey, rsList);
-
-        // 4. 연관관계 없는 마스터 태그 삭제
-        // this.deleteNoRefTags();
-
-        // L2 캐시 클리어
-        EhCacheUtils.clearL2Cache(JrnlDreamTagEntity.class);
-        EhCacheUtils.clearL2Cache(JrnlDreamContentTagEntity.class);
     }
 
     /**
