@@ -37,6 +37,12 @@ import javax.persistence.*;
 @SQLDelete(sql = "UPDATE comment SET del_yn = 'Y' WHERE post_no = ?")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@NamedEntityGraph(
+        name = "CommentEntity.withCtgrCd",
+        attributeNodes = {
+                @NamedAttributeNode("ctgrCdInfo")
+        }
+)
 public class CommentEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule {
