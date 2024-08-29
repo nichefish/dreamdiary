@@ -35,6 +35,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE jrnl_dream SET del_yn = 'Y' WHERE post_no = ?")
+@NamedEntityGraph(
+        name = "JrnlDreamEntity.withAll",
+        attributeNodes = {
+                @NamedAttributeNode("ctgrCdInfo"),
+                @NamedAttributeNode("jrnlDay")
+        }
+)
 public class JrnlDreamEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule {

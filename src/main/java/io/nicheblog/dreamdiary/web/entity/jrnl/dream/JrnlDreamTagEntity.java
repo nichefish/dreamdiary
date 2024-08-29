@@ -34,6 +34,12 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE tag SET del_yn = 'Y' WHERE tag_no = ?")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@NamedEntityGraph(
+        name = "JrnlDreamTagEntity.withTag",
+        attributeNodes = {
+                @NamedAttributeNode("jrnlDreamTagList"),
+        }
+)
 public class JrnlDreamTagEntity
         extends BaseCrudEntity {
 
@@ -55,8 +61,8 @@ public class JrnlDreamTagEntity
     private String tagNm;
 
     /** 저널 꿈 태그 */
-    @OneToMany(mappedBy = "tag", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
+    @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
     @NotFound(action = NotFoundAction.IGNORE)
     private List<JrnlDreamContentTagEntity> jrnlDreamTagList;
 }

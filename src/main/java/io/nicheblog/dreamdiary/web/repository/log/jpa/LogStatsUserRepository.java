@@ -28,7 +28,7 @@ public interface LogStatsUserRepository
     @Query(
             value = "SELECT t.userId as userId, u.nickNm as userNm, count(t.logActvtyNo) as actvtyCnt " +
                     "FROM LogActvtyEntity t " +
-                    "INNER JOIN UserEntity u ON t.userId = u.userId " +
+                    "INNER JOIN FETCH UserEntity u ON t.userId = u.userId " +
                     "WHERE t.logDt between :searchStartDt and :searchEndDt and u.nickNm != null " +
                     "GROUP BY t.userId"
     )
@@ -42,7 +42,7 @@ public interface LogStatsUserRepository
     @Query(
             value = "SELECT t.userId as userId, u.nickNm as userNm, count(t.logActvtyNo) as actvtyCnt " +
                     "FROM LogActvtyEntity t " +
-                    "LEFT JOIN UserEntity u ON t.userId = u.userId " +
+                    "LEFT JOIN FETCH UserEntity u ON t.userId = u.userId " +
                     "WHERE t.logDt between :searchStartDt and :searchEndDt and u.nickNm = null " +
                     "GROUP BY t.userId"
     )
