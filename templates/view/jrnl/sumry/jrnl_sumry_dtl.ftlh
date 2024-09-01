@@ -108,6 +108,28 @@
     </div>
 </div>
 
+<hr class="my-6 text-muted" />
+<div class="d-flex align-items-center mb-6 ms-4">
+    <div class="col-1 ms-4 me-6 text-center fs-6">
+        <b>일자 태그 : </b>
+    </div>
+    <div class="col" id="jrnl_diary_tag_list_div">
+        <#list dayTagList![] as tag>
+            <span class="py-2 me-3 cursor-pointer opacity-hover"
+                  onclick="JrnlTag.dayTagDtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">
+            <span class="${tag.tagClass!}">
+                ${tag.tagNm!}
+            </span>
+        <span class="fs-9 text-noti fw-normal" style="margin-left:-0.25em;">${tag.contentSize!}</span>
+    </span>
+        </#list>
+    </div>
+    <div class="col-1 ms-4 me-6 text-center fs-6 w-50px">
+        <!-- -->
+    </div>
+</div>
+
 <!--begin::Card-->
 <div class="card post">
     <#--begin::Card body-->

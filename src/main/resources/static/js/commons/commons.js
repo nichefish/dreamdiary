@@ -8,7 +8,7 @@
  * (노출식 모듈 패턴 적용 :: commons.util.enterKey("#userId") 이런식으로 사용)
  */
 if (typeof commons === 'undefined') { var commons = {}; }
-$(document).ajaxComplete(function(event, xhr, settings) {
+$(document).ajaxComplete(function(event, xhr) {
     const isHtmlReturned = xhr.getResponseHeader("Content-Type") && xhr.getResponseHeader("Content-Type").indexOf("text/html") !== -1;
     if (isHtmlReturned) {
         // ajax 응답으로 HTML이 반환되면 로그인 페이지로 이동
@@ -875,6 +875,16 @@ commons.util = (function() {
          */
         closeModal: function() {
             $(".modal").modal("hide");
+        },
+
+        /**
+         * 페이지 상단으로 이동
+         */
+        toPageTop: function() {
+            $('html, body').animate({
+                scrollTop : 0
+            }, 300);
         }
+
     }
 })();

@@ -13,7 +13,9 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumrySearchParam;
+import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayTagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
+import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryTagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamTagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryService;
@@ -53,6 +55,10 @@ public class JrnlSumryController
     private JrnlDiaryService jrnlDiaryService;
     @Resource(name = "jrnlDreamService")
     private JrnlDreamService jrnlDreamService;
+    @Resource(name = "jrnlDayTagService")
+    private JrnlDayTagService jrnlDayTagService;
+    @Resource(name = "jrnlDiaryTagService")
+    private JrnlDiaryTagService jrnlDiaryTagService;
     @Resource(name = "jrnlDreamTagService")
     private JrnlDreamTagService jrnlDreamTagService;
     @Resource(name = "cdService")
@@ -165,6 +171,12 @@ public class JrnlSumryController
                 // 중요 꿈 목록 조회
                 model.addAttribute("imprtcDreamList", jrnlDreamService.getImprtcDreamList(yy));
 
+                // 일자 태그 목록 조회
+                List<TagDto> jrnlDayTagList = jrnlDayTagService.getDaySizedListDto(yy, 99);
+                model.addAttribute("dayTagList", jrnlDayTagList);
+                // 일기 태그 목록 조회
+                List<TagDto> jrnlDiaryTagList = jrnlDiaryTagService.getDiarySizedListDto(yy, 99);
+                model.addAttribute("diaryTagList", jrnlDiaryTagList);
                 // 꿈 태그 목록 조회
                 List<TagDto> jrnlDreamTagList = jrnlDreamTagService.getDreamSizedListDto(yy, 99);
                 model.addAttribute("dreamTagList", jrnlDreamTagList);

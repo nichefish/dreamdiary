@@ -8,7 +8,7 @@
         <b>일기 태그 : </b>
     </div>
     <div class="col" id="jrnl_diary_tag_list_div">
-        <#list diaryList![] as tag>
+        <#list diaryTagList![] as tag>
             <span class="py-2 me-3 cursor-pointer opacity-hover"
                   onclick="JrnlTag.diaryTagDtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">

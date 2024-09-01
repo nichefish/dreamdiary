@@ -55,6 +55,8 @@
                 JrnlDream.inKeywordSearchMode = false;
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
+                // 페이지 상단으로 이동
+                commons.util.toPageTop();
             },
             /** 현재 년/월을 저장한다. */
             pinpoint: function() {
