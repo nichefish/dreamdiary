@@ -40,17 +40,23 @@ public class DreamdiaryApplication {
      */
     private static void loadDotEnvProperties() {
         try {
-            String profile = System.getProperty("spring.profiles.active", "local");
             // 기본 .env 프로퍼티 로드
-            Dotenv dotenv = Dotenv.configure().filename(".env").load();
-            dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
-            log.info("Loaded .env file successfully.");
+            setDotEnvPropertiesByFileNm(".env");
             // 프로필 기반 .env.${profile} 프로퍼티 로드
-            Dotenv profileDotenv = Dotenv.configure().filename(".env." + profile).load();
-            profileDotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
-            log.info("Loaded .env.{} file successfully.", profile);
+            String profile = System.getProperty("spring.profiles.active", "local");
+            String profileEnvFileNm = ".env." + profile;
+            setDotEnvPropertiesByFileNm(profileEnvFileNm);
         } catch (Exception e) {
             log.error("Failed to load .env file for profile: {}", System.getProperty("spring.profiles.active"), e);
         }
+    }
+
+    /**
+     * 프로퍼티 파일 읽어서 시스템 환경 변수 추가 :: 메소드 분리
+     */
+    private static void setDotEnvPropertiesByFileNm(String fileName) {
+        Dotenv dotenv = Dotenv.configure().filename(fileName).load();
+        dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+        log.info("Loaded {} file successfully.", fileName);
     }
 }
