@@ -5,6 +5,9 @@
 server:
     port: 8080
 
+temp-pw:
+    test-pw
+
 spring:
     servlet:
         multipart:

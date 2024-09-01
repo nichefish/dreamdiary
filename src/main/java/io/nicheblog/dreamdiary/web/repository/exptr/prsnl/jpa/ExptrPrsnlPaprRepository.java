@@ -2,9 +2,19 @@ package io.nicheblog.dreamdiary.web.repository.exptr.prsnl.jpa;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * ExptrPrsnlRepository
@@ -18,6 +28,26 @@ import org.springframework.stereotype.Repository;
 @Repository("exptrPrsnlPaprRepository")
 public interface ExptrPrsnlPaprRepository
         extends BaseStreamRepository<ExptrPrsnlPaprEntity, Integer> {
+
+    @Override
+    @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
+    Optional<ExptrPrsnlPaprEntity> findById(Integer key);
+
+    @Override
+    @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
+    Page<ExptrPrsnlPaprEntity> findAll(@Nullable Specification<ExptrPrsnlPaprEntity> spec, Pageable pageable);
+
+    @Override
+    @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
+    List<ExptrPrsnlPaprEntity> findAll(@Nullable Specification<ExptrPrsnlPaprEntity> spec);
+
+    @Override
+    @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
+    List<ExptrPrsnlPaprEntity> findAll(@Nullable Specification<ExptrPrsnlPaprEntity> spec, Sort sort);
+
+    @Override
+    @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
+    Stream<ExptrPrsnlPaprEntity> streamAllBy(@Nullable Specification<ExptrPrsnlPaprEntity> spec);
 
     /**
      * 존재하는 경비지출서 중 최저년도 조회

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.repository.jrnl.day;
+package io.nicheblog.dreamdiary.web.repository.jrnl.day.jpa;
 
 import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;

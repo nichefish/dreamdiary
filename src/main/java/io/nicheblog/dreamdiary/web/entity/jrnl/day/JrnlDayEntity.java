@@ -98,9 +98,9 @@ public class JrnlDayEntity
     private String weather;
 
     /** 저널 일기 목록 */
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 10)
     @OrderBy("idx ASC")
     @NotFound(action = NotFoundAction.IGNORE)
@@ -108,9 +108,9 @@ public class JrnlDayEntity
     private List<JrnlDiaryEntity> jrnlDiaryList;
 
     /** 저널 꿈 목록 */
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 10)
     @Where(clause = "else_dream_yn = 'N'")
     @OrderBy("idx ASC")
@@ -119,9 +119,9 @@ public class JrnlDayEntity
     private List<JrnlDreamEntity> jrnlDreamList;
 
     /** 저널 꿈 (타인) 목록 */
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "jrnl_day_no", referencedColumnName = "post_no", insertable = false, updatable = false)
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 10)
     @Where(clause = "else_dream_yn = 'Y'")
     @OrderBy("idx ASC")

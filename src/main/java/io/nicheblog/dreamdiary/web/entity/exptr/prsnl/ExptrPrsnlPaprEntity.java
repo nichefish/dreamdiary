@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * ExptrPrsnlPaprEntity
  * <pre>
  *  경비관리 > 경비지출서 Entity
- *  ※ 경비지출서(ExptrPrsnlPapr) = 경비지출서. 경비지출항목(ExptrPrsnlItem)을 1:N으로 관리한다.
+ *  ※ 경비지출서(ExptrPrsnlPapr) = 경비지출항목(ExptrPrsnlItem)을 1:N으로 관리한다.
  * </pre>
  *
  * @author nichefish
@@ -37,13 +37,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE exptr_prsnl SET del_yn = 'Y' WHERE post_no = ?")
+@SQLDelete(sql = "UPDATE exptr_prsnl_papr SET del_yn = 'Y' WHERE post_no = ?")
+@NamedEntityGraph(
+        name = "ExptrPrsnlPaprEntity.withCtgrCd",
+        attributeNodes = {
+                @NamedAttributeNode("ctgrCdInfo")
+        }
+)
 public class ExptrPrsnlPaprEntity
         extends BasePostEntity
         implements CommentEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {
 
     @PostLoad
     private void onLoad() {
+        // 영수증 상태 세팅 :: 메소드 분리
+        this.calcRciptStat();
+    }
+
+    /**
+     * 영수증 상태 세팅 :: 메소드 분리
+     */
+    private void calcRciptStat() {
         if (CollectionUtils.isEmpty(this.itemList)) return;
 
         AtomicInteger itemCnt = new AtomicInteger();
@@ -142,9 +156,10 @@ public class ExptrPrsnlPaprEntity
     private Integer rciptFileNo;
 
     /** 경비지출 항목 목록 */
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ref_post_no", referencedColumnName = "post_no")
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 10)
     @OrderBy("exptrDt ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("경비지출 항목 목록")

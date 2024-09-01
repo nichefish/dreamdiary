@@ -1,11 +1,11 @@
-package io.nicheblog.dreamdiary.web.repository.jrnl.dream;
+package io.nicheblog.dreamdiary.web.repository.jrnl.diary.jpa;
 
 import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntityTestFactory;
-import io.nicheblog.dreamdiary.web.repository.jrnl.dream.jpa.JrnlDreamRepository;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntityTestFactory;
+import io.nicheblog.dreamdiary.web.repository.jrnl.diary.jpa.JrnlDiaryRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * JrnlDreamRepositoryTest
+ * JrnlDiaryRepositoryTest
  * <pre>
- *  JrnlDreamRepository 테스트 모듈
+ *  JrnlDiaryRepository 테스트 모듈
  * </pre>
  *
  * @author nichefish
@@ -35,12 +35,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Import(TestAuditConfig.class)
 @ActiveProfiles("test")
 @Log4j2
-class JrnlDreamRepositoryTest {
+class JrnlDiaryRepositoryTest {
 
     @Autowired
     private TestEntityManager testEntityManager;
     @Autowired
-    private JrnlDreamRepository jrnlDreamRepository;
+    private JrnlDiaryRepository jrnlDiaryRepository;
 
     /**
      * regist 테스트
@@ -48,11 +48,11 @@ class JrnlDreamRepositoryTest {
     @Test
     public void testRegist() throws Exception {
         // Given::
-        JrnlDreamEntity jrnlDream = JrnlDreamEntityTestFactory.createJrnlDream();
+        JrnlDiaryEntity jrnlDiary = JrnlDiaryEntityTestFactory.createJrnlDiary();
 
         // When::
-        Integer rsltId = jrnlDreamRepository.save(jrnlDream).getPostNo();
-        JrnlDreamEntity rslt = jrnlDreamRepository.findById(rsltId).orElse(null);
+        Integer rsltId = jrnlDiaryRepository.save(jrnlDiary).getPostNo();
+        JrnlDiaryEntity rslt = jrnlDiaryRepository.findById(rsltId).orElse(null);
 
         // Then::
         assertNotNull(rslt);

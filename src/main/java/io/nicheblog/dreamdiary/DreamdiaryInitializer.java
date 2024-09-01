@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -48,7 +49,8 @@ public class DreamdiaryInitializer
     @Resource
     private ApplicationEventPublisher publisher;
 
-    public final String INIT_TEMP_PW = "123qwe!QA";
+    @Value("${temp-pw:}")
+    public String INIT_TEMP_PW;
 
     /**
      * 프로그램 최초 구동시 수행할 로직
