@@ -13,21 +13,8 @@ spring:
 
     mvc:
         throw-exception-if-no-handler-found: true
-    #web:
-    #    resources:
-    #        add-mappings: false
-    #        static-locations: "classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/"
-    # cache:
-    #     jcache:
-    #         config: classpath:ehcache.xml
-    # cache:
-    #     type: caffeine
-    #     caffeine:
-    #         spec:
-    #             expireAfterWrite: -1
 
     freemarker:
-        #template-loader-path: classpath:/templates/
         template-loader-path: file:templates/
         suffix: .ftlh
         content-type: text/html; charset=utf-8
@@ -67,11 +54,11 @@ spring:
 
     mail:
         default-encoding: UTF-8
-        host: smart.whoismail.net
-        username: webmaster@gmail.com
-        password: _password
-        port: 587
-        protocol: smtp
+        host: ${MAIL_HOST}
+        username: ${MAIL_USERNAME}
+        password: ${MAIL_PASSWORD}
+        port: ${MAIL_PORT}
+        protocol: ${MAIL_PROTOCOL}
         test-connection: false
         properties:
             mail:
