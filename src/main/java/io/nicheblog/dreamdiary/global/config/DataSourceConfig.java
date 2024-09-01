@@ -16,7 +16,6 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -39,11 +38,8 @@ import java.util.HashMap;
  * @author nichefish
  */
 @Configuration
-@PropertySource({"classpath:application.yml"})
 @EnableJpaRepositories(
         basePackages = { "io.nicheblog.dreamdiary.**.repository.**.jpa", "io.nicheblog.dreamdiary.**.repository.**.querydsl" },
-        entityManagerFactoryRef = "entityManagerFactory",
-        transactionManagerRef = "transactionManager",
         repositoryBaseClass = BaseRepositoryImpl.class
 )
 @MapperScan(

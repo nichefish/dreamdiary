@@ -1,7 +1,6 @@
 #application-local.yml
-#로컬
+#로컬(local) 프로필용 설정 파일
 
-#로컬 포트=18081
 server:
     port: ${SERVER_PORT:8080}
 
@@ -17,9 +16,9 @@ spring:
     datasource:
         primary:
             driver-class-name: org.mariadb.jdbc.Driver
-            jdbc-url: ${JDBC_URL?Configuration is required.}
-            username: ${JDBC_USERNAME?Configuration is required.}
-            password: ${JDBC_PASSWORD?Configuration is required.}
+            jdbc-url: ${JDBC_URL}
+            username: ${JDBC_USERNAME}
+            password: ${JDBC_PASSWORD}
     devtools:
         add-properties: true
         livereload:

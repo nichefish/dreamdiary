@@ -1,5 +1,5 @@
 #application.yml
-#공통 사용 설정 모음
+#공용 설정 파일
 
 spring:
     main:
@@ -83,7 +83,7 @@ spring:
                         trust: smtp.gmail.com
 
 system:
-    init-temp-pw: ${INIT_TEMP_PW}
+    init-temp-pw: ${SYSTEM_INIT_TEMP_PW}
 
 server:
     error:

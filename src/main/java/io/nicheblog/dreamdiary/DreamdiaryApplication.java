@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.nicheblog.NicheblogBasePackage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
@@ -25,9 +26,31 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class DreamdiaryApplication {
 
     /**
-     * main
+     * 애플리케이션 메인main 함수
      */
     public static void main(final String[] args) {
+        // 프로필에 따른 .env 로드 :: 메소드 분리
+        loadDotEnvProperties();
+        // 시스템 구동
         SpringApplication.run(DreamdiaryApplication.class, args);
+    }
+
+    /**
+     * 프로필에 따른 dotEnv 설정 :: 메소드 분리
+     */
+    private static void loadDotEnvProperties() {
+        try {
+            String profile = System.getProperty("spring.profiles.active", "local");
+            // 기본 .env 프로퍼티 로드
+            Dotenv dotenv = Dotenv.configure().filename(".env").load();
+            dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+            log.info("Loaded .env file successfully.");
+            // 프로필 기반 .env.${profile} 프로퍼티 로드
+            Dotenv profileDotenv = Dotenv.configure().filename(".env." + profile).load();
+            profileDotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+            log.info("Loaded .env.{} file successfully.", profile);
+        } catch (Exception e) {
+            log.error("Failed to load .env file for profile: {}", System.getProperty("spring.profiles.active"), e);
+        }
     }
 }

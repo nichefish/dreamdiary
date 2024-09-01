@@ -1,5 +1,5 @@
-#application-local.yml
-#prod
+#application-dev.yml
+#개발(dev) 프로필용 설정 파일
 
 #로컬 포트=8080
 server:

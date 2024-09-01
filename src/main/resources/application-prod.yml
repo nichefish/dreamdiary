@@ -1,7 +1,6 @@
 #application-local.yml
-#prod
+#운영(prod) 프로필용 설정 파일
 
-#운영 포트=8999
 server:
     port: ${SERVER_PORT:8999}
 
