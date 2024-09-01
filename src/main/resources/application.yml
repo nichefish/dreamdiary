@@ -82,6 +82,9 @@ spring:
                     ssl:
                         trust: smtp.gmail.com
 
+system:
+    init-temp-pw: ${INIT_TEMP_PW}
+
 server:
     error:
         path: /error
@@ -114,4 +117,3 @@ springdoc:
         path: /api-docs
         #groups:
         #    enabled: true
-

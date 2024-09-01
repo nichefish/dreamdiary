@@ -6,6 +6,7 @@ services:
       - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
       - '2181:2181'
+    restart: always
 
   kafka:
     image: bitnami/kafka:latest
@@ -19,3 +20,24 @@ services:
       - '9092:9092'
     depends_on:
       - zookeeper
+    restart: always
+
+  redis:
+    image: bitnami/redis:latest
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    restart: always
+
+  elasticsearch:
+    image: bitnami/elasticsearch:latest
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    restart: always

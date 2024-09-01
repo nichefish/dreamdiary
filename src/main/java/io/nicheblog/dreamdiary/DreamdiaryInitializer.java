@@ -49,8 +49,8 @@ public class DreamdiaryInitializer
     @Resource
     private ApplicationEventPublisher publisher;
 
-    @Value("${temp-pw:}")
-    public String INIT_TEMP_PW;
+    @Value("${system.init-temp-pw:}")
+    public String SYSTEM_INIT_TEMP_PW;
 
     /**
      * 프로그램 최초 구동시 수행할 로직
@@ -120,7 +120,7 @@ public class DreamdiaryInitializer
         final UserDto.DTL systemAcnt = UserDto.DTL.builder()
                 .nickNm(Constant.SYSTEM_ACNT_NM)
                 .userId(Constant.SYSTEM_ACNT)
-                .password(INIT_TEMP_PW)
+                .password(SYSTEM_INIT_TEMP_PW)
                 .authList(List.of(userAuthRole))
                 .regstrId(Constant.SYSTEM_ACNT)
                 .build();
@@ -171,7 +171,7 @@ public class DreamdiaryInitializer
                 .lgnTryLmt(5)
                 .pwChgDy(90)
                 .lgnLockDy(90)
-                .pwForReset(INIT_TEMP_PW)
+                .pwForReset(SYSTEM_INIT_TEMP_PW)
                 .build();
 
         return lgnPolicyService.regist(lgnPolicy);

@@ -1,26 +1,25 @@
 #application-local.yml
 #prod
 
-#로컬 포트=8080
+#운영 포트=8999
 server:
-    port: 8080
+    port: ${SERVER_PORT:8999}
 
-temp-pw:
-    test-pw
+logging:
+    config: classpath:log4j2-${PROFILE?Configuration is required.}.yml
 
 spring:
     servlet:
         multipart:
-            location: upfile/
+            location: ${MULTIPART_LOCATION?Configuration is required.}
     freemarker:
-        cache: true
+        cache: ${FREEMARKER_CACHE:true}
     datasource:
         primary:
             driver-class-name: org.mariadb.jdbc.Driver
-            #"rewriteBatchedStatements" is needed for batch insert
-            jdbc-url: jdbc:mariadb://_jdbc-url:port/database-name?useSSL=false&useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
-            username: _id
-            password: _password
+            jdbc-url: ${JDBC_URL?Configuration is required.}
+            username: ${JDBC_USERNAME?Configuration is required.}
+            password: ${JDBC_PASSWORD?Configuration is required.}
 
     jpa:
         database: mysql
@@ -31,9 +30,8 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MariaDBDialect
-                generate-ddl: true
                 format_sql: true
-                use_sql_comments: true
+                generate-ddl: true
 
     sql:
         init:
@@ -44,11 +42,12 @@ spring:
 
     data:
         redis:
-            host: localhost
-            port: 6379
+            host: ${REDIS_HOST}
+            port: ${REDIS_PORT}
+            password: ${REDIS_PASSWORD}
 
     kafka:
-        bootstrap-servers: localhost:9092
+        bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER}
         consumer:
             group-id: dreamdiary
             auto-offset-reset: earliest
@@ -59,6 +58,6 @@ spring:
             value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
     elasticsearch:
-        username: username
-        password: password
-        uris: [0.0.0.0:1111]
+        username: ${ELASTIC_USERNAME}
+        password: ${ELASTIC_PASSWORD}
+        uris: ${ELASTIC_URIS}
