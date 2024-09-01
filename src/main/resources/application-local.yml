@@ -57,7 +57,7 @@ spring:
             port: ${REDIS_PORT}
 
     kafka:
-        bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER}
+        bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
         consumer:
             group-id: dreamdiary
             auto-offset-reset: earliest
