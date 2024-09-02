@@ -757,6 +757,7 @@ commons.util = (function() {
             const metaInfoSelect = tagScope.querySelector('#tag_ctgr_select');
             // 태그 자동완성
             tagify.on("input", function(e) {
+                if (!tagCtgrMap) return;
                 const value = e.detail.value;
                 tagify.settings.whitelist = Object.keys(tagCtgrMap).filter(tag => tag.startsWith(value));
                 tagify.dropdown.show(value); // Show the suggestions dropdown

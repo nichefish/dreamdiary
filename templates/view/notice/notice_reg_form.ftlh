@@ -41,7 +41,7 @@
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
                 /* tagify */
-                commons.util.tagify("#tagListStr");
+                commons.util.tagifyWithCtgr("#noticeRegForm #tagListStr");
                 /* 공백 자동 제거 */
                 commons.validate.noSpaces(".no-space");
 

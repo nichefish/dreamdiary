@@ -11,6 +11,16 @@
         </label>
     </div>
     <div class="col-xl-12 text-sm-start" id="tagSpan">
-        <input name="tag.tagListStr" id="tagListStr" class="form-control form-control-solid no-space" autocomplete="off" value="<#if post.tag??>${post.tag.tagListStr!}</#if>"/>
+        <input name="tag.tagListStr" id="tagListStr" class="form-control form-control-solid no-space" autocomplete="off" value="<#if post.tag??>${post.tag.tagListStrWithCtgr!}</#if>"/>
+        <div class="d-flex pt-2 gap-2">
+            <div id="tag_ctgr_select_div" style="display: none; position: relative;">
+                <select id="tag_ctgr_select" class="form-select orm-select-solid py-2">
+                    <option value="custom">직접입력</option>
+                </select>
+            </div>
+            <div id="tag_ctgr_div" style="display:none;">
+                <input type="text" class="form-control form-control-sm form-control-solid w-200px" id="tag_ctgr" placeholder="태그 카테고리를 입력합니다.">
+            </div>
+        </div>
     </div>
 </div>

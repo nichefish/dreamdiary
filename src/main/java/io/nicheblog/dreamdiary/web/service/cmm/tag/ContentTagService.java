@@ -118,6 +118,7 @@ public class ContentTagService
         entityList.forEach(entity -> {
             String contentType = entity.getRefContentType();
             String cacheName = this.getCacheNameByContentType(contentType);
+            if ("".equals(cacheName)) return;
             Integer tagNo = entity.getRefTagNo();;
             this.evictCacheForPeriod(cacheName, tagNo);
         });
@@ -154,9 +155,8 @@ public class ContentTagService
             return "countDiarySize";
         } else if (ContentType.JRNL_DREAM.key.equals(contentType)) {
             return "countDreamSize";
-        } else {
-            throw new IllegalArgumentException("Unknown content type: " + contentType);
         }
+        return "";
     }
 
     /**

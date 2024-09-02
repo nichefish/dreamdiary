@@ -27,9 +27,9 @@
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
                 /* tagify */
-                commons.util.tagify("#tagListStr");
+                commons.util.tagifyWithCtgr("#postRegForm #tagListStr");
                 // 공백 자동 제거
-                commons.validate.noSpaces(".no-space");
+                    commons.validate.noSpaces(".no-space");
                 // 상단고정 여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("fxdYn", "고정//해제", "blue//gray");
                 // 수정일자변경여부 클릭시 글씨 변경
