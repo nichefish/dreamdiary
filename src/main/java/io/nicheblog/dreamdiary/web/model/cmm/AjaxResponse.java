@@ -43,6 +43,9 @@ public class AjaxResponse {
     /** 결과 (문자열) */
     private String rsltStr;
 
+    /** 페이징 정보 */
+    private PaginationInfo pagination;
+
     /* ----- */
 
     /**

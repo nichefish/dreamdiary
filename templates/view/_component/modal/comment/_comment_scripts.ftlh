@@ -32,12 +32,13 @@
             },
             /** 댓글 입력 처리 (ajax) */
             regAjax: function() {
+                const isReg = $("#commentRegForm #postNo").val() === "";
                 Swal.fire({
-                    text: <@spring.message "view.cnfm.reg"/>,
+                    text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${Url.COMMENT_REG_AJAX!}";
+                    const url = isReg ? "${Url.COMMENT_REG_AJAX!}" : "${Url.COMMENT_MDF_AJAX!}";
                     let ajaxData = new FormData($("#commentRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -52,48 +53,20 @@
                     });
                 });
             },
-            /** 댓글 수정 폼 생성 */
-            mdfForm: function(postNo) {
-                $("#commentDtlSpan" + postNo).hide();
-                let str = $("#commentMdfTemplate").html().replace(/__INDEX__/g, postNo);
-                $("#commentSpan" + postNo).append(str);
-                $("#commentMdfCn" + postNo).html($("#commentCnSpanDiv" + postNo).html());
-                $("#showMdfBtnDiv" + postNo).hide();
-                $("#mdfSaveBtnDiv" + postNo).show();
-                commons.validate.validateForm("#commentMdfForm", Comment.mdfAjax);
-            },
-            /** 댓글 수정 폼 닫기 */
-            closeMdfForm: function(postNo) {
-                $("#commentDtlSpan" + postNo).show();
-                $("#commentSpan" + postNo).empty();
-                $("#commentMdfCn" + postNo).empty();
-                $("#showMdfBtnDiv" + postNo).show();
-                $("#mdfSaveBtnDiv" + postNo).hide();
-            },
-            /** 댓글 수정 처리 (ajax) */
-            mdfAjax: function(postNo) {
-                if (commons.util.isEmpty($("#commentMdfCn" + postNo), "value")) {
-                    Swal.fire("댓글 내용을 입력해주세요.");
-                    return false;
-                }
-                Swal.fire({
-                    text: <@spring.message "view.cnfm.mdf"/>,
-                    showCancelButton: true,
-                }).then(function(result) {
-                    if (!result.value) return;
-                    const url = "${Url.COMMENT_MDF_AJAX!}";
-                    let ajaxData = $("#commentMdfForm" + postNo).serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
-                        Swal.fire({ text: res.message })
-                            .then(function() {
-                                if (!res.rslt) return;
-                                if (Comment.refreshFunc !== undefined) {
-                                    Comment.refreshFunc();
-                                } else {
-                                    commons.util.blockUIReload();
-                                }
-                            });
-                    });
+            /** 수정 모달 호출 */
+            mdfModal: function(postNo) {
+                const url = "${Url.COMMENT_DTL_AJAX!}";
+                let ajaxData = { "postNo" : postNo };
+                commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    const rsltObj = res.rsltObj;
+
+                    commons.util.handlebarsTemplate(rsltObj, "comment_reg", "show");
+                    /* jquery :: validation */
+                    Comment.initValidateForm();
                 });
             },
             /** 댓글 삭제 처리 (ajax) */

@@ -56,7 +56,7 @@
                                       title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
                                     #<span class="border-bottom text-primary fw-lighter opacity-hover">
                                         {{#if (exists ctgr)}}<span class="fs-7 text-noti">[{{ctgr}}]</span>{{/if}}
-                                 {{tagNm}}
+                                    {{tagNm}}
                                     </span>
                                 </span>
                             {{/tag.list}}
@@ -99,6 +99,25 @@
                                         {{/tag.list}}
                                     </div>
                                 {{/if}}
+                                {{#if (exists comment.list)}}
+                                    <div class="row ms-1 py-3">
+                                        <div class="col d-flex align-items-center text-noti">
+                                            {{#each comment.list}}
+                                                <div class="div-textarea-smp me-10">- {{cn}}</div>
+                                                <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                                    onclick="Comment.mdfModal({{postNo}});"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
+                                                    <i class="bi bi-pencil-square p-0"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-light-danger btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                                        onclick="Comment.delAjax({{postNo}});"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.del"/>">
+                                                    <i class="bi bi-trash p-0"></i>
+                                                </button>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                {{/if}}
                             </div>
                             <div class="col-1 py-3 jrnl-diary-cn d-flex justify-content-between w-50px gap-1">
                                 <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
@@ -121,16 +140,6 @@
                                 </button>
                             </div>
                         </div>
-                        {{#if (exists comment.list)}}
-                            <div class="row pb-2">
-                                <div class="col-1 jrnl-dream-cn" style="width:85px;"></div>
-                                <div class="col ms-10 text-noti">
-                                    {{#each comment.list}}
-                                        <div class="div-textarea-smp">{{cn}}</div>
-                                    {{/each}}
-                                </div>
-                            </div>
-                        {{/if}}
                     {{/each}}
                 {{/if}}
                 {{#if hasDreamList}}
@@ -169,6 +178,25 @@
                                         {{/tag.list}}
                                     </div>
                                 {{/if}}
+                                {{#if (exists comment.list)}}
+                                    <div class="row ms-1 py-3">
+                                        <div class="col d-flex align-items-center text-noti">
+                                            {{#each comment.list}}
+                                                <div class="div-textarea-smp me-10">- {{cn}}</div>
+                                                <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                                    onclick="Comment.mdfModal({{postNo}});"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
+                                                    <i class="bi bi-pencil-square p-0"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-light-danger btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                                        onclick="Comment.delAjax({{postNo}});"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.del"/>">
+                                                    <i class="bi bi-trash p-0"></i>
+                                                </button>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                {{/if}}
                             </div>
                             <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between w-50px gap-1">
                                 <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
@@ -191,16 +219,6 @@
                                 </button>
                             </div>
                         </div>
-                        {{#if (exists comment.list)}}
-                            <div class="row pb-2">
-                                <div class="col-1 jrnl-dream-cn" style="width:85px;"></div>
-                                <div class="col ms-10 text-noti">
-                                    {{#each comment.list}}
-                                        <div class="div-textarea-smp">{{cn}}</div>
-                                    {{/each}}
-                                </div>
-                            </div>
-                        {{/if}}
                     {{/each}}
                     {{#each jrnlElseDreamList}}
                         <div class="row jrnl-item">
@@ -230,6 +248,25 @@
                                         {{/tag.list}}
                                     </div>
                                 {{/if}}
+                                {{#if (exists comment.list)}}
+                                    <div class="row ms-1 py-3">
+                                        <div class="col d-flex align-items-center text-noti">
+                                            {{#each comment.list}}
+                                                <div class="div-textarea-smp me-10">- {{cn}}</div>
+                                                <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                                    onclick="Comment.mdfModal({{postNo}});"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.modal.mdf"/>">
+                                                    <i class="bi bi-pencil-square p-0"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-light-danger btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                                        onclick="Comment.delAjax({{postNo}});"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 꿈 <@spring.message "bs.tooltip.del"/>">
+                                                    <i class="bi bi-trash p-0"></i>
+                                                </button>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                {{/if}}
                             </div>
                             <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between w-50px gap-1">
                                 <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
@@ -252,18 +289,6 @@
                                 </button>
                             </div>
                         </div>
-                        {{#if (exists comment.list)}}
-                            <div class="row py-2">
-                                <div class="col-1 py-3 jrnl-dream-cn" style="width:85px;"></div>
-                                <div class="col ms-10 text-noti">
-                                    {{#each comment.list}}
-                                        <div class="row pb-1">
-                                            {{{cn}}}
-                                        </div>
-                                    {{/each}}
-                                </div>
-                            </div>
-                        {{/if}}
                     {{/each}}
                 {{/if}}
             </div>

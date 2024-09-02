@@ -84,7 +84,8 @@
             /** 사이드바 기준으로 등록 모달 날짜 계산:: 메소드 분리 */
             validDt: function() {
                 const year = parseInt($("#jrnl_aside #yy").val(), 10);
-                const month = parseInt($("#jrnl_aside #mnth").val(), 10);
+                let month = parseInt($("#jrnl_aside #mnth").val(), 10);
+                if (month === 99) month = 1;
                 let day = parseInt(commons.date.getCurrDayStr(2), 10);
 
                 // 만약 day가 해당 월의 마지막 날을 초과하면 마지막 날로 설정

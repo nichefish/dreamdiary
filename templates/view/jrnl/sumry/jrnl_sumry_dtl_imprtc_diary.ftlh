@@ -13,10 +13,11 @@
                   onclick="JrnlTag.diaryTagDtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">
                 <span class="${tag.tagClass!}">
+                    <#if tag.ctgr?? && tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>
                     ${tag.tagNm!}
                 </span>
-            <span class="fs-9 text-noti fw-normal" style="margin-left:-0.25em;">${tag.contentSize!}</span>
-        </span>
+                <span class="fs-9 text-noti fw-normal" style="margin-left:-0.25em;">${tag.contentSize!}</span>
+            </span>
         </#list>
     </div>
     <div class="col-1 ms-4 me-6 text-center fs-6 w-50px">

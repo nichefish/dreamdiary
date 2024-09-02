@@ -135,6 +135,7 @@ public interface SiteUrl {
     /** 댓글 */
     String COMMENT_LIST_AJAX = Prefix.COMMENT + "/commentListAjax.do";
     String COMMENT_REG_AJAX = Prefix.COMMENT + "/commentRegAjax.do";
+    String COMMENT_DTL_AJAX = Prefix.COMMENT + "/commentDtlAjax.do";
     String COMMENT_MDF_AJAX = Prefix.COMMENT + "/commentMdfAjax.do";
     String COMMENT_DEL_AJAX = Prefix.COMMENT + "/commentDelAjax.do";
 

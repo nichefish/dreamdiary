@@ -138,6 +138,45 @@ public class CommentController
     }
 
     /**
+     * 댓글 상세 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @GetMapping(Url.COMMENT_DTL_AJAX)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> commentDtlAjax(
+            final LogActvtyParam logParam,
+            final CommentParam param,
+            final @RequestParam("postNo") Integer key
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 삭제 처리
+            CommentDto rsDto = commentService.getDtlDto(key);
+            ajaxResponse.setRsltObj(rsDto);
+
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setCn("key: " + key);
+            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
      * 댓글 삭제 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
