@@ -65,12 +65,12 @@ public class JrnlTagController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 전체 태그 목록 조회 (태그클라우드)
-            jrnlDreamTagCtgrSynchronizer.tagSync();
-            // 전체 태그 목록 조회 (태그클라우드)
-            jrnlDiaryTagCtgrSynchronizer.tagSync();
-            // 전체 태그 목록 조회 (태그클라우드)
+            // 저널 일자 태그 동기화
             jrnlDayTagCtgrSynchronizer.tagSync();
+            // 저널 일기 태그 동기화
+            jrnlDiaryTagCtgrSynchronizer.tagSync();
+            // 저널 꿈 태그 동기화
+            jrnlDreamTagCtgrSynchronizer.tagSync();
 
             // 브라우저 캐시 초기화 처리
             response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");

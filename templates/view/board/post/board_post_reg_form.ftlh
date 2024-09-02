@@ -28,12 +28,6 @@
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
                 /* tagify */
                 commons.util.tagifyWithCtgr("#postRegForm #tagListStr");
-                // 공백 자동 제거
-                    commons.validate.noSpaces(".no-space");
-                // 상단고정 여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("fxdYn", "고정//해제", "blue//gray");
-                // 수정일자변경여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("managtDtUpdtYn", "변경//미변경", "blue//gray");
                 // 잔디발송여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function () {
                     $("#trgetTopicSpan").show();
@@ -89,10 +83,7 @@
                     </label>
                 </div>
                 <div class="col-lg-2 col-9 d-flex align-items-center">
-                    <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
-                        <input class="form-check-input ms-3" type="checkbox" value="Y" name="fxdYn" id="fxdYn" <#if (((post.fxdYn)!"N") == "Y")!false>checked="checked"</#if> />
-                        <label class="form-check-label fw-bold ms-3" for="fxdYn" id="fxdYnLabel" style="color:<#if (((post.fxdYn)!"N") == "Y")!false>blue<#else>gray</#if>;"><#if ((post.fxdYn)! == "Y")!false>고정<#else>해제</#if></label>
-                    </div>
+                    <@component.checkbox post "fxdYn" "고정//해제", "blue//gray" "defaultOff" />
                 </div>
                 <div class="col-lg-1 col-3 d-flex align-items-center">
                     <label for="mdfable" class="text-gray-700 fs-6 fw-bolder cursor-help"
@@ -120,10 +111,7 @@
                         </label>
                     </div>
                     <div class="col-lg-2 col-9 d-flex align-items-center">
-                        <div class="form-check form-switch form-check-custom form-check-solid">
-                            <input class="form-check-input ms-3" type="checkbox" value="Y" name="managtDtUpdtYn" id="managtDtUpdtYn" checked="checked" />
-                            <label class="form-check-label fw-bold ms-3" for="managtDtUpdtYn" id="managtDtUpdtYnLabel" style="color:blue;">변경</label>
-                        </div>
+                        <@component.checkbox post "managtDtUpdtYn" "변경//미변경", "blue//gray", "defaultOn" />
                     </div>
                 </div>
             </#if>

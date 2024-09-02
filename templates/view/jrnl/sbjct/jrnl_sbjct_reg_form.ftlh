@@ -42,17 +42,7 @@
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
                 /* tagify */
                 commons.util.tagify("#tagListStr");
-                /* 공백 자동 제거 */
-                commons.validate.noSpaces(".no-space");
 
-                // 중요 여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
-                // 상단고정 여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("fxdYn", "고정//해제", "blue//gray");
-                // 팝업공지여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("popupYn", "노출//해당없음", "blue//gray");
-                // 수정일자변경여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("managtDtUpdtYn", "변경//미변경", "blue//gray");
                 // 잔디발송여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function () {
                     $("#trgetTopicSpan").show();
@@ -110,7 +100,7 @@
                     </label>
                 </div>
                 <div class="col-lg-2 col-9 d-flex align-items-center">
-                    <@component.checkbox post "imprtcYn" "중요//해당없음", "red//gray" />
+                    <@component.checkbox post "imprtcYn" "중요//해당없음", "red//gray" "defaultOff" />
                 </div>
                 <div class="col-lg-1 col-3 d-flex align-items-center">
                     <label class="text-gray-700 fs-6 fw-bolder cursor-help"
@@ -120,17 +110,7 @@
                     </label>
                 </div>
                 <div class="col-lg-2 col-9 d-flex align-items-center">
-                    <div class="form-check form-switch form-check-custom form-check-solid">
-                        <input class="form-check-input ms-3" type="checkbox" value="Y" name="fxdYn" id="fxdYn" <#if (((post.fxdYn)!"N") == "Y")!false>checked="checked"</#if> />
-                        <label class="form-check-label fw-bold ms-3" for="fxdYn" id="fxdYnLabel" style="color:<#if (((post.fxdYn)!"N") == "Y")!false>blue<#else>gray</#if>;"><#if ((post.fxdYn)! == "Y")!false>고정<#else>해제</#if></label>
-                    </div>
-                </div>
-                <div class="col-lg-1 col-3 d-flex align-items-center">
-                    <label class="text-gray-700 fs-6 fw-bolder cursor-help"
-                           data-bs-toggle="tooltip" data-bs-placement="top" title="해당 글은 사이트 접속시&#10;화면에 팝업으로 표출됩니다.">
-                        팝업공지 여부
-                        <i class="bi bi-question-circle"></i>
-                    </label>
+                    <@component.checkbox post "fxdYn" "고정//해제", "blue//gray" "defaultOff" />
                 </div>
                 <div class="col-lg-1 col-3 d-flex align-items-center">
                     <label for="mdfable" class="text-gray-700 fs-6 fw-bolder cursor-help"
@@ -153,17 +133,13 @@
                 <div class="row">
                     <div class="col-lg-1 col-3 d-flex align-items-center">
                         <label class="text-gray-700 fs-6 fw-bolder cursor-help"
-                               data-bs-toggle="tooltip" data-bs-placement="top"
-                               title="미체크시 수정 일자가&#10;기존 일자로 유지됩니다.&#10;(기본 : ON)">
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="미체크시 수정 일자가&#10;기존 일자로 유지됩니다.&#10;(기본 : ON)">
                             수정일자 변경
                             <i class="bi bi-question-circle"></i>
                         </label>
                     </div>
                     <div class="col-lg-2 col-9 d-flex align-items-center">
-                        <div class="form-check form-switch form-check-custom form-check-solid">
-                            <input class="form-check-input ms-3" type="checkbox" value="Y" name="managtDtUpdtYn" id="managtDtUpdtYn" checked="checked" />
-                            <label class="form-check-label fw-bold ms-3" for="managtDtUpdtYn" id="managtDtUpdtYnLabel" style="color:blue;">변경</label>
-                        </div>
+                        <@component.checkbox post "managtDtUpdtYn" "변경//미변경", "blue//gray", "defaultOn" />
                     </div>
                 </div>
             </#if>

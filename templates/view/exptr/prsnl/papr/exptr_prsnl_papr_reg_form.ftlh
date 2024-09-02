@@ -17,7 +17,6 @@
         return {
             init: function () {
                 // 공백 자동 제거
-                commons.validate.noSpaces(".no-space");
                 commons.validate.onlyNumAndComma(".num");
 
                 Page.itemIdx = ${(post.itemList![])?size};
@@ -28,9 +27,6 @@
                     Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
                     commons.util.addComma(".num");
                     Page.setTotAmt();
-
-                    // 수정일자변경여부 클릭시 글씨 변경
-                    commons.util.chckboxLabel("managtDtUpdtYn", "변경//미변경", "blue//gray");
                 </#if>
 
                 /* jquery :: validation */
@@ -262,13 +258,11 @@
                         <label class="text-gray-700 fs-6 fw-bolder cursor-help"
                                data-bs-toggle="tooltip" data-bs-placement="top" title="미설정시 수정 일자가&#10;기존 일자로 유지됩니다.&#10;(기본 : ON)">
                             수정일자 변경
+                            <i class="bi bi-question-circle"></i>
                         </label>
                     </div>
                     <div class="col-lg-2 col-9 d-flex align-items-center">
-                        <div class="form-check form-switch form-check-custom form-check-solid">
-                            <input class="form-check-input ms-3" type="checkbox" value="Y" name="managtDtUpdtYn" id="managtDtUpdtYn" checked="checked" />
-                            <label class="form-check-label fw-bold ms-3" for="managtDtUpdtYn" id="managtDtUpdtYnLabel" style="color:blue;">변경</label>
-                        </div>
+                        <@component.checkbox post "managtDtUpdtYn" "변경//미변경", "blue//gray", "defaultOn" />
                     </div>
                 </div>
             </#if>

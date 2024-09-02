@@ -59,10 +59,10 @@
                     if (!res.rsltMap) return;
                     // 중복 코드 감소를 위한 함수 정의
                     const checkAndRedirect = (data) => {
-                        if (monthData && monthData.cfYn !== "Y") {
-                            const message = "이미 등록중인 글(" + monthData.yy + "년 " + monthData.mnth + " +월)이 있습니다. 해당 글로 이동하시겠습니까?";
+                        if (data && data.cfYn !== "Y") {
+                            const message = "이미 등록중인 글(" + data.yy + "년 " + data.mnth + " +월)이 있습니다. 해당 글로 이동하시겠습니까?";
                             if (confirm(message)) {
-                                $("#postNo").val(monthData.postNo);
+                                $("#postNo").val(data.postNo);
                                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_PAPR_MDF_FORM!}");
                                 return true;
                             }

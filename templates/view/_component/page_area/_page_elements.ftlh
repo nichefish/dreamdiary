@@ -6,17 +6,22 @@
 <!--
  * 체크박스
  -->
-<#macro checkbox param checkboxNm ynLabel ynColor  >
+<#macro checkbox param checkboxNm ynLabel ynColor defaultOn  >
     <script>
         $(document).ready(function() {
-            commons.util.chckboxLabel("${checkboxNm}", "${ynLabel}", "${ynColor}");
-            if ("${param[checkboxNm]!}" == "Y") $("#${checkboxNm}").click();
+            const ynLabel = "${ynLabel}", ynColor = "${ynColor}";
+            commons.util.chckboxLabel("${checkboxNm}", ynLabel, ynColor);
+            const separator = "//";
+            const noStr = ynLabel.substring(ynLabel.indexOf(separator) + 2);
+            const noColor = ynColor.substring(ynColor.indexOf(separator) + 2);
+            $("#${checkboxNm}Label").text(noStr).css("color", noColor);
+            if ("${param[checkboxNm]!}" == "Y" || "${defaultOn}" === "defaultOn") $("#${checkboxNm}").click();
         });
     </script>
     <div class="form-check form-switch form-check-custom form-check-solid">
         <input class="form-check-input ms-3" type="checkbox" value="Y" name="${checkboxNm}" id="${checkboxNm}" />
-        <label class="form-check-label fw-bold ms-3" for="${checkboxNm}" id="${checkboxNm}Label" style="color:<#if param[checkboxNm]! == "Y">blue<#else>gray</#if>;">
-            <#if param[checkboxNm]! != "Y">고정<#else>해제</#if>
+        <label class="form-check-label fw-bold ms-3" for="${checkboxNm}" id="${checkboxNm}Label">
+            <!-- Color and Label procs by javascropt -->
         </label>
     </div>
 </#macro>

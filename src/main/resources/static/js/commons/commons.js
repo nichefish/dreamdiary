@@ -528,12 +528,13 @@ commons.util = (function() {
             const yesColor = ynColor.substring(0, colorIdx);
             const noStr = ynCn.substring(cnIdx + 2);
             const noColor = ynColor.substring(colorIdx + 2);
+            const $labelElmt = $("#"+attrId+"Label");
             $chckboxElmt.on("click", function () {
                 if ($chckboxElmt.is(":checked")) {
-                    $("#"+attrId+"Label").text(yesStr).css("color", yesColor);
+                    $labelElmt.text(yesStr).css("color", yesColor);
                     if (commons.util.isNotEmpty(yFunc)) yFunc();
                 } else {
-                    $("#"+attrId+"Label").text(noStr).css("color", noColor);
+                    $labelElmt.text(noStr).css("color", noColor);
                     if (commons.util.isNotEmpty(nFunc)) nFunc();
                 }
             });

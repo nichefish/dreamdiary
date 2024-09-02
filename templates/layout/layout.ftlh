@@ -116,8 +116,11 @@
 
                 /** 메세지 존재시 출력 */
                 <#if message??>
-                Swal.fire("${message!}");
+                    Swal.fire("${message!}");
                 </#if>
+
+                // 공백 자동 제거
+                commons.validate.noSpaces(".no-space");
             });
         </script>
 

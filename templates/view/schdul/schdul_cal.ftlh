@@ -43,8 +43,6 @@
             init: function () {
                 /* jquery :: validation */
                 Schdul.initValidateForm();
-                // 공백 자동 제거
-                commons.validate.noSpaces(".no-space");
 
                 let chkArr = $("input:checkbox[id^='schdul_chk']");
                 chkArr.each(function(_index, item) {

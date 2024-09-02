@@ -16,8 +16,6 @@
             init: function () {
                 /* jquery :: validation */
                 UserReqst.initValidateForm();
-                // 공백 자동 제거
-                commons.validate.noSpaces(".no-space");
                 // 자동 대문자->소문자처리
                 commons.validate.toLowerCase("#userId");
                 // 연락처 포맷
