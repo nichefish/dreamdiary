@@ -186,6 +186,7 @@ public class NoticeController
         String rsltMsg = "";
         try {
             // 객체 정보 모델에 추가
+            notice.setMarkdownCn(CmmUtils.markdown(notice.getCn()));
             model.addAttribute("post", notice);
 
             isSuccess = true;

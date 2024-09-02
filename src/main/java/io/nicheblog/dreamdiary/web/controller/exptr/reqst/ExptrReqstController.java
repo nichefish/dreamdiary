@@ -177,6 +177,7 @@ public class ExptrReqstController
         String rsltMsg = "";
         try {
             // 객체 모델에 추가
+            exptrReqstDto.setMarkdownCn(CmmUtils.markdown(exptrReqstDto.getCn()));
             model.addAttribute("post", exptrReqstDto);
 
             isSuccess = true;

@@ -194,6 +194,7 @@ public class BoardPostController
         String rsltMsg = "";
         try {
             // 객체 정보 모델에 추가
+            boardPost.setMarkdownCn(CmmUtils.markdown(boardPost.getCn()));
             model.addAttribute("post", boardPost);
 
             isSuccess = true;

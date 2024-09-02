@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.exptr.reqst;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.exptr.reqst.ExptrReqstEntity;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
@@ -17,7 +18,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseClsfMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
 public interface ExptrReqstMapstruct
         extends BasePostMapstruct<ExptrReqstDto.DTL, ExptrReqstDto.LIST, ExptrReqstEntity> {
 
@@ -28,12 +29,14 @@ public interface ExptrReqstMapstruct
      */
     @Override
     @Named("toDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     ExptrReqstDto.DTL toDto(final ExptrReqstEntity entity) throws Exception;
 
     /**
      * Entity -> listDto
      */
     @Named("toListDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     ExptrReqstDto.LIST toListDto(final ExptrReqstEntity entity) throws Exception;
 
     /**
