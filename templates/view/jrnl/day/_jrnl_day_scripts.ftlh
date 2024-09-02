@@ -72,11 +72,13 @@
                 commons.datepicker.singleDatePicker("#aprxmtDt", "yyyy-MM-DD")
                 // 날짜미상 checkbox init
                 commons.util.chckboxLabel("dtUnknownYn", "날짜미상//날짜미상", "blue//gray", function() {
-                    $("#jrnlDtDiv").addClass("d-none");
-                    $("#aprxmtDtDiv").removeClass("d-none");
+                    $("#jrnlDayRegForm #jrnlDtDiv").addClass("d-none");
+                    $("#jrnlDayRegForm #aprxmtDtDiv").removeClass("d-none");
+                    $("#jrnlDayRegForm #aprxmtDt").val($("#jrnlDayRegForm #jrnlDt").val());
                 }, function() {
-                    $("#jrnlDtDiv").removeClass("d-none");
-                    $("#aprxmtDtDiv").addClass("d-none");
+                    $("#jrnlDayRegForm #jrnlDtDiv").removeClass("d-none");
+                    $("#jrnlDayRegForm #aprxmtDtDiv").addClass("d-none");
+                    $("#jrnlDayRegForm #jrnlDt").val($("#jrnlDayRegForm #aprxmtDt").val());
                 });
                 /* tagify */
                 commons.util.tagifyWithCtgr("#jrnlDayRegForm #tagListStr", JrnlDayTag.ctgrMap);
@@ -149,11 +151,13 @@
                     commons.datepicker.singleDatePicker("#aprxmtDt", "yyyy-MM-DD", rsltObj.aprxmtDt);
                     // 날짜미상 checkbox init
                     commons.util.chckboxLabel("dtUnknownYn", "날짜미상//날짜미상", "blue//gray", function() {
-                        $("#jrnlDtDiv").addClass("d-none");
-                        $("#aprxmtDtDiv").removeClass("d-none");
+                        $("#jrnlDayRegForm #jrnlDtDiv").addClass("d-none");
+                        $("#jrnlDayRegForm #aprxmtDtDiv").removeClass("d-none");
+                        $("#jrnlDayRegForm #aprxmtDt").val($("#jrnlDayRegForm #jrnlDt").val());
                     }, function() {
-                        $("#jrnlDtDiv").removeClass("d-none");
-                        $("#aprxmtDtDiv").addClass("d-none");
+                        $("#jrnlDayRegForm #jrnlDtDiv").removeClass("d-none");
+                        $("#jrnlDayRegForm #aprxmtDtDiv").addClass("d-none");
+                        $("#jrnlDayRegForm #jrnlDt").val($("#jrnlDayRegForm #aprxmtDt").val());
                     });
                     /* tagify */
                     commons.util.tagifyWithCtgr("#jrnlDayRegForm #tagListStr", JrnlDayTag.ctgrMap);

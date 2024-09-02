@@ -69,9 +69,9 @@
                                 onchange="JrnlSumryAside.yyMnth(this);">
                             <option value="">모든 년도</option>
                             <#assign currYy = DateUtils.getCurrYy()?number />
-                            <#assign startYy = 2011 />
+                            <#assign startYy = 2010 />
                             <#list currYy..startYy as year>
-                                <option value="${year}">${year}</option>
+                                <option value="${year}"><#if year == 2010>~</#if>${year}년</option>
                             </#list>
                         </select>
                     </div>
