@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.notice;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
@@ -18,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseClsfMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
 public interface NoticeMapstruct
         extends BasePostMapstruct<NoticeDto.DTL, NoticeDto.LIST, NoticeEntity> {
 
@@ -29,6 +30,7 @@ public interface NoticeMapstruct
      */
     @Override
     @Named("toDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     NoticeDto.DTL toDto(final NoticeEntity entity) throws Exception;
 
     /**
@@ -36,6 +38,7 @@ public interface NoticeMapstruct
      */
     @Override
     @Named("toListDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     NoticeDto.LIST toListDto(final NoticeEntity entity) throws Exception;
 
     /**

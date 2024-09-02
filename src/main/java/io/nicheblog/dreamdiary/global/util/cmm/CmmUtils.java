@@ -229,7 +229,7 @@ public class CmmUtils {
                     // 텍스트 노드의 경우, 마크다운 변환 로직을 적용
                     TextNode textNode = (TextNode) child;
                     String text = textNode.getWholeText();
-                    String processedText = procText(text); // 변환된 텍스트 처리
+                    String processedText = procText(text); // 변환된 텍스트 처리 :: 메소드 분리
                     if (text.equals(processedText)) continue;
                     // 텍스트 노드에 HTML 코드를 직접 삽입
                     textNode.before(processedText);
@@ -239,41 +239,73 @@ public class CmmUtils {
         }
     }
 
+    /**
+     * 텍스트 마크다운 처리 :: 메소드 분리
+     **/
     public static String procText(String text) {
+        final int MAX_GROUP_LENGTH = 3000;
 
-        // " " 로 묶인 부분을 색상 처리
-        Pattern highlightPattern = Pattern.compile("\"(.*?)\"");
-        Matcher highlightMatcher = highlightPattern.matcher(text);
-        while (highlightMatcher.find()) {
-            String group = highlightMatcher.group(1);
-            text = text.replace("\"" + group + "\"", "<span class=\"text-dialog\">\"" + group + "\"</span>");
+        // 텍스트를 <pre> 태그 기준으로 분할, <pre> </pre> 사이는 처리하지 않음
+        String[] parts = text.split("(?i)(</?pre>)");
+        StringBuilder result = new StringBuilder();
+        boolean insidePreTag = false;
+        for (String part : parts) {
+            if (part.equalsIgnoreCase("<pre>") || part.equalsIgnoreCase("</pre>")) {
+                result.append(part);
+                insidePreTag = !insidePreTag;
+            } else if (insidePreTag) {
+                result.append(part);
+            } else {
+                // " " 로 묶인 부분을 색상 처리
+                Pattern highlightPattern = Pattern.compile("\"(.*?)\"");
+                Matcher highlightMatcher = highlightPattern.matcher(part);
+                while (highlightMatcher.find()) {
+                    String group = highlightMatcher.group(1);
+                    if (group == null || group.length() > MAX_GROUP_LENGTH) continue;
+                    part = part.replace("\"" + group + "\"", "<span class=\"text-dialog\">\"" + group + "\"</span>");
+                }
+
+                // -- -- 로 묶인 부분을 회색으로 표시하되, - - 처리
+                Pattern grayPattern = Pattern.compile("--(.*?)(--)");
+                Matcher grayMatcher = grayPattern.matcher(part);
+                while (grayMatcher.find()) {
+                    String group = grayMatcher.group(1);
+                    if (group == null || group.length() > MAX_GROUP_LENGTH) continue;
+                    part = part.replace("--" + group + "--", "<span class='text-muted'>-" + group + "-</span>");
+                }
+
+                // !! !! 로 묶인 부분을 빨간색으로 표시하되, !! !! 제거
+                Pattern redPattern = Pattern.compile("!!(.*?)!!");
+                Matcher redMatcher = redPattern.matcher(part);
+                while (redMatcher.find()) {
+                    String group = redMatcher.group(1);
+                    if (group == null || group.length() > MAX_GROUP_LENGTH) continue;
+                    part = part.replace("!!" + group + "!!", "<span class='text-danger'>" + group + "</span>");
+                }
+
+                // __ __ 로 묶인 부분을 밑줄 처리하되, __ __ 제거
+                Pattern underlinePattern = Pattern.compile("__(.*?)__");
+                Matcher underlineMatcher = underlinePattern.matcher(part);
+                while (underlineMatcher.find()) {
+                    String group = underlineMatcher.group(1);
+                    if (group == null || group.length() > MAX_GROUP_LENGTH) continue;
+                    part = part.replace("__" + group + "__", "<span style='text-decoration: underline;'>" + group + "</span>");
+                }
+
+                // || || 로 묶인 부분을 강조 처리하되, || || 제거 및 우측 구분바 추가
+                Pattern pipelinePattern = Pattern.compile("\\|\\|(.*?)\\|\\|");
+                Matcher pipelineMatcher = pipelinePattern.matcher(part);
+                while (pipelineMatcher.find()) {
+                    String group = pipelineMatcher.group(1);
+                    if (group == null || group.length() > MAX_GROUP_LENGTH) continue;
+                    part = part.replace("||" + group + "||", "<span class='text-muted fw-bold border-end border-2 border-gray-400 pe-5 me-3'>" + group + "</span>");
+                }
+
+                result.append(part);
+            }
         }
 
-        // -- -- 로 묶인 부분을 회색으로 표시하되, - - 처리
-        Pattern grayPattern = Pattern.compile("--(.*?)(--)");
-        Matcher grayMatcher = grayPattern.matcher(text);
-        while (grayMatcher.find()) {
-            String group = grayMatcher.group(1);
-            text = text.replace("--" + group + "--", "<span class='text-muted'>-" + group + "-</span>");
-        }
-
-        // !! !! 로 묶인 부분을 빨간색으로 표시하되, !! !! 제거
-        Pattern redPattern = Pattern.compile("!!(.*?)!!");
-        Matcher redMatcher = redPattern.matcher(text);
-        while (redMatcher.find()) {
-            String group = redMatcher.group(1);
-            text = text.replace("!!" + group + "!!", "<span class='text-danger'>" + group + "</span>");
-        }
-
-        // __ __ 로 묶인 부분을 밑줄 처리하되, __ __ 제거
-        Pattern underlinePattern = Pattern.compile("__(.*?)__");
-        Matcher underlineMatcher = underlinePattern.matcher(text);
-        while (underlineMatcher.find()) {
-            String group = underlineMatcher.group(1);
-            text = text.replace("__" + group + "__", "<span style='text-decoration: underline;'>" + group + "</span>");
-        }
-
-        return text;
+        return result.toString();
     }
 }
 

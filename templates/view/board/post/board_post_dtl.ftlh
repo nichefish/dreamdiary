@@ -54,7 +54,7 @@
 
         <#--begin::cn-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6 min-h-150px">
-            ${post.cn?no_esc}
+            ${post.markdownCn?no_esc}
         </div>
 
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
