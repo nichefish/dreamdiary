@@ -53,9 +53,9 @@
                 $("#jrnl_aside #dreamKeyword").val("");
                 // 목록 조회
                 JrnlDay.yyMnthListAjax();
-                JrnlTag.dayTagListAjax();
-                JrnlTag.diaryTagListAjax();
-                JrnlTag.dreamTagListAjax();
+                JrnlDayTag.listAjax();
+                JrnlDiaryTag.listAjax();
+                JrnlDreamTag.listAjax();
                 //
                 JrnlDream.inKeywordSearchMode = false;
                 // template에 있는 tooltip들 활성화

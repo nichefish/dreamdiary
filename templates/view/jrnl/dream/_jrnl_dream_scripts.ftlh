@@ -3,7 +3,7 @@
  -->
 
 <#--include::script modules-->
-<#include "/view/jrnl/dream/_jrnl_dream_tag.ftlh">
+<#include "/view/jrnl/dream/tag/_jrnl_dream_tag_ctgr_map.ftlh">
 
 <script>
     const JrnlDream = (function() {
@@ -59,7 +59,7 @@
                 /* jquery :: validation */
                 JrnlDream.initValidateForm();
                 /* tagify */
-                commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr", JrnlDreamTag.ctgrMap);
+                commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
 
                 // checkbox init
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
@@ -99,7 +99,7 @@
                                     JrnlDream.keywordListAjax();
                                 } else {
                                     JrnlDay.yyMnthListAjax();
-                                    JrnlTag.dreamTagListAjax();
+                                    JrnlDreamTag.listAjax();
                                 }
                                 // TODO: 결산 페이지에서 처리시도 처리해 줘야 한다.
                                 commons.util.unblockUI();
@@ -123,7 +123,7 @@
                     /* jquery :: validation */
                     JrnlDream.initValidateForm();
                     /* tagify */
-                    commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr", JrnlDreamTag.ctgrMap);
+                    commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
 
                     // checkbox init
                     commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
@@ -159,7 +159,7 @@
                                     JrnlDream.keywordListAjax();
                                 } else {
                                     JrnlDay.yyMnthListAjax();
-                                    JrnlTag.dreamTagListAjax();
+                                    JrnlDreamTag.listAjax();
                                 }
                                 commons.util.unblockUI();
                             });

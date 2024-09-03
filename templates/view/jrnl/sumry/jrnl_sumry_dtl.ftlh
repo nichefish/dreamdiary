@@ -116,7 +116,7 @@
     <div class="col" id="jrnl_diary_tag_list_div">
         <#list dayTagList![] as tag>
             <span class="py-2 me-3 cursor-pointer opacity-hover"
-                  onclick="JrnlTag.dayTagDtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
+                  onclick="JrnlTag.dtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">
                 <span class="${tag.tagClass!}">
                     <#if tag.ctgr?? && tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>
@@ -247,7 +247,7 @@
 <#--include::modals-->
 <#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
-<#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
+<#include "/view/jrnl/dream/tag/_jrnl_dream/tag_dtl_modal.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
 <#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 

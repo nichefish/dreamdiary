@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * JrnlDiaryTagCtgrSynchronizer
  * <pre>
- *  저널 일지 태그 카테고리 메타 파일-DB 동기화 모듈
+ *  저널 일기 태그 카테고리 메타 파일-DB 동기화 모듈
  * </pre>
  *
  * @author nichefish
@@ -57,25 +57,33 @@ public class JrnlDiaryTagCtgrSynchronizer {
      * 파일 생성 (메소드 분리)
      */
     private void writeToFile(Map<String, List<String>> tagCtgryMap) throws Exception {
-        try (FileWriter fileWriter = new FileWriter("templates/view/jrnl/diary/_jrnl_diary_tag.ftlh")) {
-            fileWriter.write("<script>\n");
-            fileWriter.write("\tconst JrnlDiaryTag = (function() {\n");
-            fileWriter.write("\t\treturn {\n");
-            fileWriter.write("\t\t\tctgrMap: {\n");
+        String FILE_PATH = "templates/view/jrnl/diary/tag/_jrnl_diary_tag_ctgr_map.ftlh";
+        String MAP_NM = "jrnlDiary";
 
-            for (Map.Entry<String, List<String>> entry : tagCtgryMap.entrySet()) {
-                String tagName = entry.getKey();
-                List<String> ctgrList = entry.getValue();
-                String formattedCategories = ctgrList.stream()
-                        .map(category -> "\"" + category + "\"")
-                        .collect(Collectors.joining(", "));
-                fileWriter.write(String.format("\t\t\t\t\"%s\": [%s],\n", tagName, formattedCategories));
+        try (FileWriter fileWriter = new FileWriter(FILE_PATH)) {
+            fileWriter.write("<script>\n");
+            fileWriter.write("\tif (typeof TagCtgrMap === 'undefined') { var TagCtgrMap = {}; }\n");
+            fileWriter.write("\tTagCtgrMap." + MAP_NM + " = (function() {\n");
+            fileWriter.write("\t\treturn {\n");
+
+            if (tagCtgryMap.isEmpty()) {
+                fileWriter.write("\t\t // tag list is empty. \n");
+            } else {
+                for (Map.Entry<String, List<String>> entry : tagCtgryMap.entrySet()) {
+                    String tagName = entry.getKey();
+                    List<String> ctgrList = entry.getValue();
+                    String formattedCategories = ctgrList.stream()
+                            .map(category -> "\"" + category + "\"")
+                            .collect(Collectors.joining(", "));
+                    fileWriter.write(String.format("\t\t\t\"%s\": [%s],\n", tagName, formattedCategories));
+                }
             }
 
-            fileWriter.write("\t\t\t}\n");
             fileWriter.write("\t\t}\n");
             fileWriter.write("\t})();\n");
             fileWriter.write("</script>\n");
+        } catch (Exception e) {
+            log.error("Failed to write tag category map to file", e);
         }
     }
 }

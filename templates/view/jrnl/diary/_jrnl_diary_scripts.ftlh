@@ -3,7 +3,7 @@
  -->
 
 <#--include::script modules-->
-<#include "/view/jrnl/diary/_jrnl_diary_tag.ftlh">
+<#include "/view/jrnl/diary/tag/_jrnl_diary_tag_ctgr_map.ftlh">
 
 <script>
     const JrnlDiary = (function() {
@@ -49,7 +49,7 @@
                             .then(function() {
                                 if (res.rslt) {
                                     JrnlDay.yyMnthListAjax();
-                                    JrnlTag.diaryTagListAjax();
+                                    JrnlDiaryTag.listAjax();
                                 }
                             });
                     }, "block");
@@ -95,7 +95,7 @@
                             .then(function() {
                                 if (res.rslt) {
                                     JrnlDay.yyMnthListAjax();
-                                    JrnlTag.diaryTagListAjax();
+                                    JrnlDiaryTag.listAjax();
                                 }
                             });
                     }, "block");

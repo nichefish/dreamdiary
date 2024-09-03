@@ -3,7 +3,7 @@
  -->
 
 <#--include::script modules-->
-<#include "/view/jrnl/day/_jrnl_day_tag.ftlh">
+<#include "/view/jrnl/day/tag/_jrnl_day_tag_ctgr_map.ftlh">
 
 <script>
     const JrnlDay = (function() {
@@ -81,7 +81,7 @@
                     $("#jrnlDayRegForm #jrnlDt").val($("#jrnlDayRegForm #aprxmtDt").val());
                 });
                 /* tagify */
-                commons.util.tagifyWithCtgr("#jrnlDayRegForm #tagListStr", JrnlDayTag.ctgrMap);
+                commons.util.tagifyWithCtgr("#jrnlDayRegForm #tagListStr", TagCtgrMap.jrnlDay);
             },
             /** 사이드바 기준으로 등록 모달 날짜 계산:: 메소드 분리 */
             validDt: function() {
@@ -126,7 +126,7 @@
                                 if (res.rslt) {
                                     JrnlDay.yyMnthListAjax();
                                     // 태그 조회
-                                    JrnlTag.dayTagListAjax();
+                                    JrnlDayTag.listAjax();
                                 }
                             });
                     }, "block");
@@ -160,7 +160,7 @@
                         $("#jrnlDayRegForm #jrnlDt").val($("#jrnlDayRegForm #aprxmtDt").val());
                     });
                     /* tagify */
-                    commons.util.tagifyWithCtgr("#jrnlDayRegForm #tagListStr", JrnlDayTag.ctgrMap);
+                    commons.util.tagifyWithCtgr("#jrnlDayRegForm #tagListStr", TagCtgrMap.jrnlDay);
                 });
             },
             /** 삭제 */
@@ -178,7 +178,7 @@
                                 if (res.rslt) {
                                     JrnlDay.yyMnthListAjax();
                                     // 태그 조회
-                                    JrnlTag.dayTagListAjax();
+                                    JrnlDayTag.listAjax();
                                 }
                             });
                     }, "block");

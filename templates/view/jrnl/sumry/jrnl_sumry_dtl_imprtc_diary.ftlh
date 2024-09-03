@@ -10,7 +10,7 @@
     <div class="col" id="jrnl_diary_tag_list_div">
         <#list diaryTagList![] as tag>
             <span class="py-2 me-3 cursor-pointer opacity-hover"
-                  onclick="JrnlTag.diaryTagDtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
+                  onclick="JrnlTag.dtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">
                 <span class="${tag.tagClass!}">
                     <#if tag.ctgr?? && tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>

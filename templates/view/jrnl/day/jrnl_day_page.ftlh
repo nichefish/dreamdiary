@@ -17,8 +17,11 @@
 
 <#--include::script modules-->
 <#include "/view/jrnl/day/_jrnl_day_scripts.ftlh">
+<#include "/view/jrnl/day/tag/_jrnl_day_tag_scripts.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
+<#include "/view/jrnl/dream/tag/_jrnl_dream_tag_scripts.ftlh">
 <#include "/view/jrnl/diary/_jrnl_diary_scripts.ftlh">
+<#include "/view/jrnl/diary/tag/_jrnl_diary_tag_scripts.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
 <#include "/view/_component/modal/comment/_comment_scripts.ftlh">
 
@@ -39,9 +42,9 @@
                 // 목록 조회
                 JrnlDay.yyMnthListAjax();
                 // 태그 조회
-                JrnlTag.dayTagListAjax();
-                JrnlTag.diaryTagListAjax();
-                JrnlTag.dreamTagListAjax();
+                JrnlDayTag.listAjax();
+                JrnlDiaryTag.listAjax();
+                JrnlDreamTag.listAjax();
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
                 // 꿈 키워드 검색에 엔터키 처리
@@ -63,73 +66,8 @@
 <!-- 전체 태그 :: 모달 팝업 처리하기-->
 <#--<#include "/view/_component/tag/_tag_list_header.ftlh">-->
 
-<#--begin::Tags-->
-<hr class="my-6 text-muted" />
-<div class="mb-6 ms-4">
-    <div class="d-flex align-items-center mb-6 ms-4">
-        <div class="col-1 ms-4 me-6 text-center fs-6">
-            <b>일자 태그 : </b>
-        </div>
-        <div class="col" id="jrnl_day_tag_list_div">
-            <#--handlebars template goes in here-->
-        </div>
-        <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
-        <div class="col-1 ms-4 text-center fs-6 w-auto gap-3">
-            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
-                    onclick="JrnlTag.hideSingleTag('#jrnl_day_tag_list_div');"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="1개짜리 태그를 숨기고 보입니다.">
-                <i class="bi bi-tag pe-0"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
-                    onclick="JrnlTag.dayTagListAllAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
-                <i class="bi bi-tag pe-0"></i>
-            </button>
-        </div>
-    </div>
-    <div class="d-flex align-items-center mb-6 ms-4">
-        <div class="col-1 ms-4 me-6 text-center fs-6">
-            <b>일기 태그 : </b>
-        </div>
-        <div class="col" id="jrnl_diary_tag_list_div">
-            <#--handlebars template goes in here-->
-        </div>
-        <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
-        <div class="col-1 ms-4 text-center fs-6 w-auto gap-3">
-            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
-                    onclick="JrnlTag.hideSingleTag('#jrnl_diary_tag_list_div');"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="1개짜리 태그를 숨기고 보입니다.">
-                <i class="bi bi-tag pe-0"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
-                    onclick="JrnlTag.diaryTagListAllAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
-                <i class="bi bi-tag pe-0"></i>
-            </button>
-        </div>
-    </div>
-    <div class="d-flex align-items-center mb-6 ms-4">
-        <div class="col-1 ms-4 me-6 text-center fs-6">
-            <b>꿈 태그 : </b>
-        </div>
-        <div class="col" id="jrnl_dream_tag_list_div">
-            <#--handlebars template goes in here-->
-        </div>
-        <div class="col-1 ms-4 pe-0 border-2 border-gray-300 border-end h-75 w-10px">&nbsp;</div>
-        <div class="col-1 ms-4 text-center fs-6 w-auto gap-3">
-            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
-                    onclick="JrnlTag.hideSingleTag('#jrnl_dream_tag_list_div');"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="1개짜리 태그를 숨기고 보입니다.">
-                <i class="bi bi-tag pe-0"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
-                    onclick="JrnlTag.dreamTagListAllAjax();"
-                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
-                <i class="bi bi-tag pe-0"></i>
-            </button>
-        </div>
-    </div>
-</div>
+<!-- 태그 헤더 :: 파일 분리 -->
+<#include "/view/jrnl/day/tag/_jrnl_day_tag_header.ftlh">
 
 <!--begin::Card-->
 <div class="card post">
@@ -151,14 +89,19 @@
 
 <#--include::modals-->
 <#include "/view/jrnl/day/_jrnl_day_list_template.hbs">
-<#include "/view/jrnl/day/_jrnl_day_tag_list_template.hbs">
 <#include "/view/jrnl/day/_jrnl_day_reg_modal.ftlh">
-<#include "/view/jrnl/diary/_jrnl_diary_tag_list_template.hbs">
+<#include "/view/jrnl/day/tag/_jrnl_day_tag_list_template.hbs">
+<#include "/view/jrnl/day/tag/_jrnl_day_tag_dtl_modal.ftlh">
+
 <#include "/view/jrnl/diary/_jrnl_diary_reg_modal.ftlh">
-<#include "/view/jrnl/dream/_jrnl_dream_list_template.hbs">
-<#include "/view/jrnl/dream/_jrnl_dream_tag_list_template.hbs">
+<#include "/view/jrnl/diary/tag/_jrnl_diary_tag_list_template.hbs">
+<#include "/view/jrnl/diary/tag/_jrnl_diary_tag_dtl_modal.ftlh">
+
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
-<#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
+<#include "/view/jrnl/dream/_jrnl_dream_list_template.hbs">
+<#include "/view/jrnl/dream/tag/_jrnl_dream_tag_list_template.hbs">
+<#include "/view/jrnl/dream/tag/_jrnl_dream_tag_dtl_modal.ftlh">
+
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
 <#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 

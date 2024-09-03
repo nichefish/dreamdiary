@@ -1,7 +1,9 @@
 package io.nicheblog.dreamdiary.web.spec.jrnl.day;
 
+import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -84,6 +86,12 @@ public class JrnlDaySpec
                 case "mnth":
                     Integer mnth = (Integer) searchParamMap.get(key);
                     if (mnth != 99) predicate.add(builder.equal(root.get(key), mnth));
+                    continue;
+                case "tagNo":
+                    // 특정 태그된 꿈만 조회
+                    Join<JrnlDayEntity, TagEmbed> tagJoin = root.join("tag", JoinType.INNER);
+                    Join<TagEmbed, ContentTagEntity> contentTagJoin = tagJoin.join("list", JoinType.INNER);
+                    predicate.add(builder.equal(contentTagJoin.get("refTagNo"), searchParamMap.get(key)));
                     continue;
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
