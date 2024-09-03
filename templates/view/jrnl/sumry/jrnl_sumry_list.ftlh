@@ -17,8 +17,9 @@
 
 <#--include::script modules-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_scripts.ftlh">
-<#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
+<#include "/view/jrnl/dream/tag/_jrnl_dream_tag_scripts.ftlh">
+<#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
 <#include "/view/_component/modal/comment/_comment_scripts.ftlh">
 
 <script>
@@ -59,7 +60,7 @@
             </div>
 
             <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
-                    onclick="JrnlTag.dreamTagListAllAjax();"
+                    onclick="JrnlDreamTag.listAllAjax();"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="헤당 년도 전체 태그 모달 팝업을 호출합니다.">
                 <i class="bi bi-tag pe-0"></i>
             </button>
@@ -132,9 +133,9 @@
 
 <#--include:: Aside-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_aside_base.ftlh">
-<#include "/view/jrnl/tag/_jrnl_tag_dtl_modal.ftlh">
-<#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
+<#include "/view/jrnl/dream/tag/_jrnl_dream_tag_dtl_modal.ftlh">
+<#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
 <#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>

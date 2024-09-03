@@ -12,7 +12,7 @@
 
 <#--include::script modules-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_scripts.ftlh">
-<#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_scripts.ftlh">
+<#include "/view/jrnl/sumry/cn/_jrnl_sumry_cn_scripts.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
 <#include "/view/_component/modal/comment/_comment_scripts.ftlh">
@@ -245,7 +245,7 @@
 </form>
 
 <#--include::modals-->
-<#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_modal.ftlh">
+<#include "/view/jrnl/sumry/cn/_jrnl_sumry_cn_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 <#include "/view/jrnl/dream/tag/_jrnl_dream/tag_dtl_modal.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">

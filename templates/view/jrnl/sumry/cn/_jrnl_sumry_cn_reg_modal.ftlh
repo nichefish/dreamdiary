@@ -45,5 +45,5 @@
 </@modal.layout>
 
 <#--include:: Handlebars template-->
-<#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_header_template.hbs">
-<#include "/view/jrnl/sumry_cn/_jrnl_sumry_cn_reg_template.hbs">
+<#include "/view/jrnl/sumry/cn/_jrnl_sumry_cn_reg_header_template.hbs">
+<#include "/view/jrnl/sumry/cn/_jrnl_sumry_cn_reg_template.hbs">
