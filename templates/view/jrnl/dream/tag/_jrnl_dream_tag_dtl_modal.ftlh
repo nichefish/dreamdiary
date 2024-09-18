@@ -25,7 +25,7 @@
     </div>
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
-        <div id="jrnl_diary_tag_dtl_div">
+bn          <div id="jrnl_dream_tag_dtl_div">
             <#--Handlebars template goes in here-->
         </div>
     </div>
