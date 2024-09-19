@@ -1,10 +1,12 @@
 package io.nicheblog.dreamdiary.web.service.cmm.tag;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
+import io.nicheblog.dreamdiary.web.entity.cmm.tag.QTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
@@ -45,6 +47,9 @@ public class TagService
     private TagSpec tagSpec;
     @Resource(name = "jrnlDreamService")
     private JrnlDreamService jrnlDreamService;
+
+    @Resource
+    private JPAQueryFactory queryFactory;
 
     @Override
     public TagRepository getRepository() {
@@ -187,6 +192,19 @@ public class TagService
             maxFrequency = Math.max(maxFrequency, tag.getSize());
         }
         return maxFrequency;
+    }
+
+    /**
+     * 전체 태그 카테고리 목록 조회
+     */
+    public List<String> getTotalCtgrList() throws Exception {
+        // TODO: 리포지토리 레이어로 분리하기
+        QTagEntity tag = QTagEntity.tagEntity;
+        return queryFactory.select(tag.ctgr)
+                .distinct()
+                .from(tag)
+                .where(tag.ctgr.isNotEmpty())
+                .fetch();
     }
 
     /**
