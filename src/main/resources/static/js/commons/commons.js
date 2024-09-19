@@ -8,7 +8,7 @@
  * (노출식 모듈 패턴 적용 :: commons.util.enterKey("#userId") 이런식으로 사용)
  */
 if (typeof commons === 'undefined') { var commons = {}; }
-// 인증만료/접근불가로 ajax 실패시 로그인 페이지로 이동 (선택)
+// 인증만료/접근불가로 ajax 실패시 로그인 페이지로 이동 또는 머무르기 (선택)
 (function($) {
     $.ajaxSetup({
         error: function(xhr) {
@@ -22,9 +22,9 @@ if (typeof commons === 'undefined') { var commons = {}; }
                     // do nothing... and mark as session expired
                     if ($(".session-expired-message").length > 0) return;
                     // 세션 만료 표시
-                    const $navbar = $(".app-navbar");
-                    const sessionExpiredText = $("<div class='d-flex align-items-center fs-5 text-danger blink me-5'>로그인 세션이 만료되었습니다.</div>")
-                    $navbar.prepend(sessionExpiredText);
+                    const $navbar = $("#kt_app_header_wrapper .app-navbar");
+                    const sessionExpiredText = $("<div class='d-flex align-items-center fs-4 fw-bold text-danger blink me-5'>로그인 세션이 만료되었습니다.</div>")
+                    $navbar.before(sessionExpiredText);
                 });
                 return false;
             } else if (statusCode === 403) {
