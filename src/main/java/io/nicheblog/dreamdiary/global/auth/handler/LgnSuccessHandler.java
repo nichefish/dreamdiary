@@ -58,7 +58,8 @@ public class LgnSuccessHandler
 
         // 사용자 정보 세션에 추가
         AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
-        session.setAttribute("authInfo", authentication.getPrincipal());
+        authInfo.nullifyPasswordInfo();
+        session.setAttribute("authInfo", authInfo);
         session.setAttribute("acsIp", AuthUtils.getAcsIpAddr());
 
         // 최종 로그인 날짜 세팅 및 패스워드오류 카운트 초기화

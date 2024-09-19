@@ -42,7 +42,7 @@ public class AuthInfo
     /** 권한 목록 */
     private List<AuthRoleDto> authList;
 
-    /** * 사용자 이름 */
+    /** 사용자 이름 */
     private String nickNm;
     /** 사용자 정보 ID */
     private Integer userProflNo;
@@ -173,5 +173,10 @@ public class AuthInfo
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    /** 세션 추가 전 패스워드 정보 무효화 */
+    public void nullifyPasswordInfo() {
+        this.password = null;
     }
 }

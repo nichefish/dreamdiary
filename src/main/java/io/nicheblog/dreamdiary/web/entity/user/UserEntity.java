@@ -197,7 +197,6 @@ public class UserEntity
         return this.emplym;
     }
 
-
     /**
      * 등록시 cascade
      */
