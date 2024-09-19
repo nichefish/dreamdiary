@@ -250,25 +250,25 @@ commons.validate = (function() {
          */
         fileExtnChck: function(obj, validExtn) {
             if (!obj) return;
-            let file = obj.files[0];
+            const file = obj.files[0];
             if (typeof (file) == 'undefined') return;
 
-            let filename = file.name;
-            let extn = filename.split('\.').pop();
+            const filename = file.name;
+            const extn = filename.split('.').pop();
             if (extn === filename) extn = "";
 
-            let basicfileFilter = "exe|class|jsp|asp|php|sh|bat|war|jar|java|xml|js|css|html|sql";
+            const basicfileFilter = "exe|class|jsp|asp|php|sh|bat|war|jar|java|xml|js|css|html|sql";
             if (basicfileFilter.indexOf(extn.toLowerCase()) > -1) {
-                alert("파일첨부가 불가능한 파일 형식입니다.");
+                commons.util.swalOrAlert("파일첨부가 불가능한 파일 형식입니다.");
                 $(obj).val("");
                 return false;
             }
 
             // 'validExtn' 인자가 넘어온 경우:: 해당 확장자만 업로드 가능 (기본 필터는 그대로 막힘)
-            if (validExtn !== undefined && validExtn !== "") {
+            if (validExtn && validExtn !== "") {
                 if (validExtn.indexOf(extn.toLowerCase()) < 0) {
-                    let message = validExtn.replace(/\|/g, ", ");
-                    alert(message + " 파일만 첨부 가능합니다.");
+                    const message = validExtn.replace(/\|/g, ", ");
+                    commons.util.swalOrAlert(message + " 파일만 첨부 가능합니다.");
                     $(obj).val("");
                     return false;
                 }
@@ -281,12 +281,13 @@ commons.validate = (function() {
          */
         fileSizeChck: function(obj) {
             if (!obj) return;
-            let fileSizeLimitMb = 50;       // 50MB
-            let fileSizeLimit = 1024 * 1024 * fileSizeLimitMb;
-            let file = obj.files[0];
+            const fileSizeLimitMb = 50;       // 50MB
+            const fileSizeLimit = 1024 * 1024 * fileSizeLimitMb;
+            const file = obj.files[0];
             if (typeof (file) == 'undefined') return;
+
             if (file.size > fileSizeLimit) {
-                alert(fileSizeLimitMb + "MB 이하의 파일만 첨부가능합니다.");
+                commons.util.swalOrAlert(fileSizeLimitMb + "MB 이하의 파일만 첨부가능합니다.");
                 $(obj).val("");
                 return false;
             }

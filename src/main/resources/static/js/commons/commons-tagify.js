@@ -51,7 +51,7 @@ commons.tagify = (function() {
          * tagify init :: 카테고리 기능 추가
          */
         initWithCtgr: function(selectorStr, tagCtgrMap) {
-            const tagify = commons.util.tagify(selectorStr);
+            const tagify = commons.tagify.init(selectorStr);
             // 태그 카테고리 입력 UI 존재시에만 활성화됨
             const parts = selectorStr.split(' ');
             const tagScope = (parts.length > 1) ? document.querySelector(parts[0]) : document;

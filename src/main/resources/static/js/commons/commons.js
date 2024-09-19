@@ -8,70 +8,37 @@
  * (노출식 모듈 패턴 적용 :: commons.util.enterKey("#userId") 이런식으로 사용)
  */
 if (typeof commons === 'undefined') { var commons = {}; }
-$(document).ajaxComplete(function(event, xhr) {
-    const isHtmlReturned = xhr.getResponseHeader("Content-Type") && xhr.getResponseHeader("Content-Type").indexOf("text/html") !== -1;
-    if (isHtmlReturned) {
-        // ajax 응답으로 HTML이 반환되면 로그인 페이지로 이동
-        const msg = "로그인이 해제되었습니다. 메인 화면으로 이동하시겠습니까?";
-        if (commons.util.hasSwal()) {
-            Swal.fire({
-                text: msg,
-                showCancelButton: true,
-            }).then(function() {
-                window.location.href = "/auth/lgnForm.do";
-            });
-        } else {
-            if (confirm(msg)) {
-                window.location.href = "/auth/lgnForm.do";
-            }
-        }
-    }
-});
+// 인증만료/접근불가로 ajax 실패시 로그인 페이지로 이동 (선택)
 (function($) {
-    const lgnFormUrl =  "/auth/lgnForm.do";
-    // 인증만료로 ajax 실패시 로그인 페이지로 이동
     $.ajaxSetup({
-        error: function(event, xhr, ajaxOptions, thrownError) {
-            console.log(xhr);
-            alert("!!!");
-            alert("상태 코드: " + xhr.status); // 상태 코드 출력
-            alert("응답 텍스트: " + xhr.responseText); // 응답 텍스트 출력
-
-            if (xhr.status === 401) {   // ACCESS DENIED
-                if (commons.util.hasSwal()) {
-                    Swal.fire("접근이 거부되었습니다. (ACCESS DENIED)");
-                } else {
-                    alert("접근이 거부되었습니다. (ACCESS DENIED)");
-                }
-                window.location.href = lgnFormUrl;
-            } else if (xhr.status === 403) {
-                if (commons.util.hasSwal()) {
-                    Swal.fire("접근이 거부되었습니다. (FORBIDDEN)");
-                } else {
-                    alert("접근이 거부되었습니다. (FORBIDDEN)");
-                }
-                window.location.href = lgnFormUrl;
-            } else {
-                const msg = "로그인이 해제되었습니다. 메인 화면으로 이동하시겠습니까?";
-                if (commons.util.hasSwal()) {
-                    Swal.fire({
-                        text: msg,
-                        showCancelButton: true,
-                    }).then(function() {
-                        window.location.href = lgnFormUrl;
-                    });
-                } else {
-                    if (confirm(msg)) {
-                        window.location.href = lgnFormUrl;
-                    }
-                }
+        error: function(xhr) {
+            const statusCode = xhr.status;
+            const msg = xhr.responseJSON ? xhr.responseJSON.message : "접근이 거부되었습니다. (ACCESS DENIED)";
+            const lgnFormUrl =  "/auth/lgnForm.do";
+            if (statusCode === 401) {
+                commons.util.swalOrConfirm(msg + "\n로그인 화면으로 돌아갑니다.", function() {
+                    window.location.href = lgnFormUrl;
+                }, function() {
+                    // do nothing...
+                });
+                return false;
+            } else if (statusCode === 403) {
+                commons.util.swalOrAlert("접근이 거부되었습니다. (FORBIDDEN)", function() {
+                    window.location.href = lgnFormUrl;
+                });
+                return false;
             }
+            // 오류 로그 추가
+            console.error("ajax error: ", xhr);
         }
     });
 })(jQuery);
 commons.util = (function() {
     return {
-        /** blockUI wrapped by try-catch */
+        /**
+         * blockUI 관련
+         * blockUI wrapped by try-catch
+         */
         blockUI: function() {
             // let blockUI = new KTBlockUI();
             try {
@@ -85,7 +52,7 @@ commons.util = (function() {
                 console.log("blockUI is not defined.");
             }
         },
-        /** blockUI wrapped by try-catch */
+        /** unblockUI wrapped by try-catch */
         unblockUI: function() {
             try {
                 setTimeout($.unblockUI(), 1500);    // 1.5초간 딜레이
@@ -93,8 +60,62 @@ commons.util = (function() {
                 console.log("blockUI is not defined.");
             }
         },
+        /**
+         * SweetAlert 관련
+         */
         hasSwal: function () {
             return (typeof Swal !== 'undefined');
+        },
+        /**
+         * SweetAlert 존재시 Swal 처리, 없으면 alert
+         * +함수 처리 추가
+         */
+        swalOrAlert: function(msg, func) {
+            if (commons.util.hasSwal()) {
+                if (commons.util.isNotEmpty(func)) {
+                    Swal.fire(msg)
+                        .then(function() {
+                            func();
+                        });
+                } else {
+                    Swal.fire(msg);
+                }
+            } else {
+                alert(msg);
+                if (commons.util.isNotEmpty(func)) func();
+            }
+        },
+        /**
+         * SweetAlert 존재시 Swal 처리, 없으면 confirm
+         * +함수 처리 추가
+         */
+        swalOrConfirm: function(msg, trueFunc, falseFunc) {
+            if (commons.util.hasSwal()) {
+                Swal.fire({
+                    text: msg,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (commons.util.isEmpty(trueFunc)) return;
+                    if (result.value) {
+                        trueFunc();
+                    } else {
+                        if (commons.util.isNotEmpty(falseFunc)) {
+                            falseFunc();
+                        } else {
+                            trueFunc();
+                        }
+                    }
+                });
+            } else {
+                if (confirm(msg)) {
+                    if (commons.util.isEmpty(trueFunc)) return;
+                    if (commons.util.isNotEmpty(falseFunc)) {
+                        falseFunc();
+                    } else {
+                        trueFunc();
+                    }
+                }
+            }
         },
         /**
          * 빈 값, 공백 또는 undefined 체크
@@ -142,10 +163,6 @@ commons.util = (function() {
         is$NotPresent: function(selectorStr) {
             return !commons.util.is$Present(selectorStr);
         },
-
-        /**
-         * TODO: element 값 존재여부 확인
-         */
 
         /**
          * 새 팝업 open
@@ -337,18 +354,8 @@ commons.util = (function() {
                     let isSuccess = func(res);
                     if (!isSuccess) commons.util.unblockUI();
                 }
-            }).fail(function (data) {
-                if (commons.util.hasSwal()) {
-                    Swal.fire({
-                        text: "처리에 실패했습니다."
-                    }).then(function(){
-                        Swal.fire({
-                            text: JSON.stringify(data)
-                        });
-                    });
-                } else {
-                    alert("처리에 실패했습니다.");
-                }
+            }).fail(function (res) {
+                if (commons.util.isNotEmpty(res.message)) commons.util.swalOrAlert(res.message);
                 commons.util.unblockUI();
             }).always(function () {
                 if (continueBlock !== 'block') commons.util.unblockUI();
@@ -433,7 +440,7 @@ commons.util = (function() {
         submit: function(formSelector, actionUrl, prefunc) {
             const $form = $(formSelector);
             if ($form === undefined) {
-                alert("form is not defined.");
+                commons.util.swalOrAlert("form is not defined.");
                 return false;
             }
             if (commons.util.isNotEmpty(prefunc)) prefunc();
