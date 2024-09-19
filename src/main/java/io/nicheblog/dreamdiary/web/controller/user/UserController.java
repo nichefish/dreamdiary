@@ -123,7 +123,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 등록 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.USER_REG_FORM)
+    @GetMapping(Url.USER_REG_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String userRegForm(
             final LogActvtyParam logParam,
@@ -248,7 +248,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 상세 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.USER_DTL)
+    @GetMapping(Url.USER_DTL)
     @Secured(Constant.ROLE_MNGR)
     public String userDtl(
             final @RequestParam("userNo") Integer userNo,
@@ -287,7 +287,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 수정 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.USER_MDF_FORM)
+    @GetMapping(Url.USER_MDF_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String userMdfForm(
             final @RequestParam("userNo") Integer userNo,
@@ -412,7 +412,7 @@ public class UserController
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 목록 엑셀 다운로드
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.USER_LIST_XLSX_DOWNLOAD)
+    @GetMapping(Url.USER_LIST_XLSX_DOWNLOAD)
     @Secured(Constant.ROLE_MNGR)
     public void userListXlsxDownload(
             @ModelAttribute("searchParam") UserSearchParam searchParam,

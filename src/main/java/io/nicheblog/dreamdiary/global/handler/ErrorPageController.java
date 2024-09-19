@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +41,7 @@ public class ErrorPageController
     /**
      * 기본 에러 화면(/error) :: 에러 코드에 따라 반환 페이지 분기
      */
-    @RequestMapping(Url.ERROR)
+    @GetMapping(Url.ERROR)
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 

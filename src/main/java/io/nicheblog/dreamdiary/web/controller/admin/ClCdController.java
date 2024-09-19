@@ -192,7 +192,7 @@ public class ClCdController
      * 분류 코드 관리(useYn=N 포함) 상세 데이터 조회 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.CL_CD_DTL_AJAX)
+    @GetMapping(Url.CL_CD_DTL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> clCdDtlAjax(

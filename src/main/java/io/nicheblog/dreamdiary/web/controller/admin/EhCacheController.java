@@ -15,7 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -46,7 +47,7 @@ public class EhCacheController
      * 사이트 캐시 조회 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.CACHE_ACTIVE_LIST_AJAX)
+    @GetMapping(Url.CACHE_ACTIVE_LIST_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> cacheActiveListAjax(
@@ -81,7 +82,7 @@ public class EhCacheController
      * 사이트 캐시 evict (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.CACHE_EVICT_AJAX)
+    @PostMapping(Url.CACHE_EVICT_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> cacheEvictAjax(
@@ -128,7 +129,7 @@ public class EhCacheController
      * 사이트 캐시 전체 초기화 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.CACHE_CLEAR_AJAX)
+    @PostMapping(Url.CACHE_CLEAR_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> cacheClearAjax(

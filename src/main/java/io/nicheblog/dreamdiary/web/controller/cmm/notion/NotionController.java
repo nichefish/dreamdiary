@@ -15,8 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Nullable;
@@ -47,7 +47,7 @@ public class NotionController
      * 노션 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.NOTION_HOME)
+    @GetMapping(Url.NOTION_HOME)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String flsysList(
             @ModelAttribute("searchParam") FlsysSearchParam searchParam,

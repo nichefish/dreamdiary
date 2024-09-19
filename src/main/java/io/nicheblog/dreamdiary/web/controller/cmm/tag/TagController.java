@@ -7,13 +7,18 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -46,7 +51,7 @@ public class TagController
     private TagService tagService;
 
     /**
-     * 저널 태그 관리 화면 조회
+     * 태그 관리 화면 조회
      * (관리자MNGR만 접근 가능)
      */
     @GetMapping(Url.TAG_LIST)
@@ -63,7 +68,9 @@ public class TagController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 태그 목록 조회
+            // 전체 태그 카테고리 목록 조회
+            List<String> tagCtgrList = tagService.getTotalCtgrList();
+            model.addAttribute("tagCtgrList", tagCtgrList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -82,10 +89,10 @@ public class TagController
     }
 
     /**
-     * 태그 전체 목록 조회 (Ajax)
+     * 전체 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.TAG_LIST_AJAX)
+    @GetMapping(Url.TAG_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> tagListAjax(
@@ -99,9 +106,13 @@ public class TagController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
+            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
+            Sort sort = Sort.by(Sort.Direction.ASC, "tagNm");
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
             // 전체 태그 목록 조회 (태그클라우드)
-            List<TagDto> tagList = tagService.getSizedListDto(searchParamMap);
-            ajaxResponse.setRsltList(tagList);
+            Page<TagDto> tagList = tagService.getPageDto(searchParamMap, pageRequest);
+            ajaxResponse.setRsltList(tagList.getContent());
+            ajaxResponse.setPagination(new PaginationInfo(tagList));
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -120,10 +131,10 @@ public class TagController
     }
 
     /**
-     * 게시판 태그별 글 목록 화면 조회
+     * 태그별 글 목록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.TAG_DTL_AJAX)
+    @GetMapping(Url.TAG_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> TagDtlAjax(

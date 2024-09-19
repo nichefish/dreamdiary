@@ -239,7 +239,7 @@ public class VcatnSchdulController
      * 휴가 관리 > 휴가사용일자 > 휴가사용일자 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      *//*
-    // @RequestMapping(Url.VCATN_SCHDUL_XLSX_DOWNLOAD)
+    // @GetMapping(Url.VCATN_SCHDUL_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)
     // public void vcatnSchdulXlsxDownload(
     //         final LogActvtyParam logParam,

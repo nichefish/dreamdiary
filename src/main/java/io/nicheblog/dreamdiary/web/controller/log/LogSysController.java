@@ -100,7 +100,7 @@ public class LogSysController
      * 활동 로그 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.LOG_SYS_DTL_AJAX)
+    @GetMapping(Url.LOG_SYS_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> logActvtyDtlAjax(

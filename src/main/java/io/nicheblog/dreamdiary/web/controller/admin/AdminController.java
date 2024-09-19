@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public class AdminController
      * 사이트 관리 > 사이트 관리 화면 조회
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.ADMIN_PAGE)
+    @GetMapping(Url.ADMIN_PAGE)
     @Secured(Constant.ROLE_MNGR)
     public String adminPage(
             final LogActvtyParam logParam,
@@ -83,7 +83,7 @@ public class AdminController
      * 사이트 관리 > 테스트 페이지
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.ADMIN_TEST)
+    @GetMapping(Url.ADMIN_TEST)
     @Secured(Constant.ROLE_MNGR)
     public String testPage(
             final LogActvtyParam logParam,

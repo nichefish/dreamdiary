@@ -54,7 +54,7 @@ public class FlsysController
      * 파일시스템 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.FLSYS_HOME)
+    @GetMapping(Url.FLSYS_HOME)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String flsysList(
             @ModelAttribute("searchParam") FlsysSearchParam searchParam,
@@ -131,7 +131,7 @@ public class FlsysController
      * 파일 시스템 파일 다운로드
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.FLSYS_FILE_DOWNLOAD)
+    @GetMapping(Url.FLSYS_FILE_DOWNLOAD)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public void flsysFileDownload(
             final @RequestParam("filePath") String filePath,

@@ -25,10 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
@@ -71,7 +68,7 @@ public class UserMyController
      * 내 정보 (상세) 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.USER_MY_DTL)
+    @GetMapping(Url.USER_MY_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String myInfoDtl(
             final LogActvtyParam logParam,

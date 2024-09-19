@@ -129,7 +129,7 @@ public class BoardPostController
      * 일반게시판 게시물 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.BOARD_POST_REG_FORM)
+    @GetMapping(Url.BOARD_POST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegForm(
             final @RequestParam("boardCd") String boardCd,
@@ -178,7 +178,7 @@ public class BoardPostController
      * 일반게시판 게시물 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.BOARD_POST_REG_PREVIEW_POP)
+    @GetMapping(Url.BOARD_POST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegPreviewPop(
             final BoardPostDto boardPost,
@@ -272,7 +272,7 @@ public class BoardPostController
      * 일반게시판 게시물 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = Url.BOARD_POST_DTL)
+    @GetMapping(value = Url.BOARD_POST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostDtl(
             final BoardPostKey postKey,
@@ -320,7 +320,7 @@ public class BoardPostController
      * 일반게시판 게시물 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.BOARD_POST_DTL_AJAX)
+    @GetMapping(Url.BOARD_POST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostDtlAjax(
@@ -362,7 +362,7 @@ public class BoardPostController
      * 일반게시판 게시물 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = Url.BOARD_POST_MDF_FORM)
+    @GetMapping(value = Url.BOARD_POST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostMdfForm(
             final BoardPostKey postKey,

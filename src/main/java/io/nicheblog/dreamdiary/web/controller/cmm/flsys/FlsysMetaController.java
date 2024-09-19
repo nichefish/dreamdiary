@@ -19,10 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -95,7 +92,7 @@ public class FlsysMetaController
      * 파일시스템 메타 정보 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.FLSYS_META_DTL_AJAX)
+    @GetMapping(Url.FLSYS_META_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> flsysMetaDtlAjax(

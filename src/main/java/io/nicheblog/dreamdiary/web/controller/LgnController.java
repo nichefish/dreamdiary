@@ -56,7 +56,7 @@ public class LgnController
     /**
      * 로그인 화면 조회
      */
-    @RequestMapping(Url.AUTH_LGN_FORM)
+    @GetMapping(Url.AUTH_LGN_FORM)
     @PermitAll
     public String lgnForm(
             final LogActvtyParam logParam,

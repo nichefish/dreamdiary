@@ -120,7 +120,7 @@ public class JrnlSbjctController
      * 저널 주제 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.JRNL_SBJCT_REG_FORM)
+    @GetMapping(Url.JRNL_SBJCT_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String jrnlSbjctRegForm(
             final LogActvtyParam logParam,
@@ -163,37 +163,38 @@ public class JrnlSbjctController
      * 저널 주제 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    // @RequestMapping(Url.JRNL_SBJCT_REG_PREVIEW_POP)
-    // @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    // public String jrnlSbjctRegPreviewPop(
-    //         final JrnlSbjctDto jrnlSbjct,
-    //         final LogActvtyParam logParam,
-    //         final ModelMap model
-    // ) {
-//
-    //     model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_SBJCT.setAcsPageInfo("저널 주제 미리보기"));
-//
-    //     boolean isSuccess = false;
-    //     String rsltMsg = "";
-    //     try {
-    //         // 객체 정보 모델에 추가
-    //         model.addAttribute("post", jrnlSbjct);
-//
-    //         isSuccess = true;
-    //         rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-    //     } catch (Exception e) {
-    //         isSuccess = false;
-    //         rsltMsg = MessageUtils.getExceptionMsg(e);
-    //         logParam.setExceptionInfo(e);
-    //     } finally {
-    //         // 로그 관련 처리
-    //         logParam.setCn(jrnlSbjct.toString());
-    //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-    //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
-    //     }
-//
-    //     return "/view/jrnl/sbjct/jrnl_sbjct_preview_pop";
-    // }
+    @GetMapping(Url.JRNL_SBJCT_REG_PREVIEW_POP)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    public String jrnlSbjctRegPreviewPop(
+            final JrnlSbjctDto jrnlSbjct,
+            final LogActvtyParam logParam,
+            final ModelMap model
+    ) {
+
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_SBJCT.setAcsPageInfo("저널 주제 미리보기"));
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 객체 정보 모델에 추가
+            jrnlSbjct.setMarkdownCn(CmmUtils.markdown(jrnlSbjct.getCn()));
+            model.addAttribute("post", jrnlSbjct);
+
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            // 로그 관련 처리
+            logParam.setCn(jrnlSbjct.toString());
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return "/view/jrnl/sbjct/jrnl_sbjct_preview_pop";
+    }
 
     /**
      * 저널 주제 등록/수정 (Ajax)
@@ -255,7 +256,7 @@ public class JrnlSbjctController
      * 저널 주제 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.JRNL_SBJCT_DTL)
+    @GetMapping(Url.JRNL_SBJCT_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String jrnlSbjctDtl(
             final @RequestParam("postNo") Integer key,
@@ -298,7 +299,7 @@ public class JrnlSbjctController
      * 저널 주제 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.JRNL_SBJCT_DTL_AJAX)
+    @GetMapping(Url.JRNL_SBJCT_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlSbjctDtlAjax(
@@ -340,7 +341,7 @@ public class JrnlSbjctController
      * 저널 주제 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.JRNL_SBJCT_MDF_FORM)
+    @GetMapping(Url.JRNL_SBJCT_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String jrnlSbjctMdfForm(
             final @RequestParam("postNo") Integer key,
@@ -426,7 +427,7 @@ public class JrnlSbjctController
      * 휴가 관리 > 휴가사용일자 > 휴가사용일자 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      */
-    // @RequestMapping(Url.JRNL_SBJCT_LIST_XLSX_DOWNLOAD)
+    // @GetMapping(Url.JRNL_SBJCT_LIST_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)
     // public void vcatnSchdulXlsxDownload(
     //         final JrnlSbjctSearchParam searchParam,

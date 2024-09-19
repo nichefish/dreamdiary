@@ -114,7 +114,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 휴가 계획서 등록 폼 이동
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.VCATN_PAPR_REG_FORM)
+    @GetMapping(Url.VCATN_PAPR_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprRegForm(
             final LogActvtyParam logParam,
@@ -243,7 +243,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 휴가 계획서 수정 폼 이동
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.VCATN_PAPR_MDF_FORM)
+    @GetMapping(Url.VCATN_PAPR_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprMdfForm(
             final @RequestParam("postNo") Integer key,
@@ -286,7 +286,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 상세화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.VCATN_PAPR_DTL)
+    @GetMapping(Url.VCATN_PAPR_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String vcatnPaprDtl(
             final @RequestParam("postNo") Integer key,
@@ -328,7 +328,7 @@ public class VcatnPaprController
      * 일정  > 휴가 계획서 > 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.VCATN_PAPR_DTL_AJAX)
+    @GetMapping(Url.VCATN_PAPR_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> vcatnPaprDtlAjax(

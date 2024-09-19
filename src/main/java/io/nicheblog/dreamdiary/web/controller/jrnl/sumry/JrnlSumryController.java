@@ -146,7 +146,7 @@ public class JrnlSumryController
      * 저널 결산 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(value = Url.JRNL_SUMRY_DTL)
+    @GetMapping(value = Url.JRNL_SUMRY_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String jrnlSumryDtl(
             final @RequestParam("postNo") @Nullable Integer key,

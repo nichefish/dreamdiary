@@ -208,7 +208,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_PRSNL_PAPR_REG_FORM)
+    @GetMapping(Url.EXPTR_PRSNL_PAPR_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlRegForm(
             final @RequestParam("prevYn") @Nullable String prevYn,
@@ -305,7 +305,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_PRSNL_PAPR_DTL)
+    @GetMapping(Url.EXPTR_PRSNL_PAPR_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlDtl(
             final @RequestParam("postNo") Integer key,
@@ -348,7 +348,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 출력 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_PRSNL_PAPR_PDF_POP)
+    @GetMapping(Url.EXPTR_PRSNL_PAPR_PDF_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlPdfPop(
             final @RequestParam("postNo") Integer key,
@@ -388,7 +388,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 경비지출서 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_PRSNL_PAPR_MDF_FORM)
+    @GetMapping(Url.EXPTR_PRSNL_PAPR_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrPrsnlMdfForm(
             final @RequestParam("postNo") Integer key,
@@ -476,7 +476,7 @@ public class ExptrPrsnlPaprController
      * 경비 관리 > 경비지출서 > 영수증 이미지파일 묶음 PDF 다운로드
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
+    @GetMapping(Url.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public void exptrPrsnlStatsRciptPdfDownload(
             final LogActvtyParam logParam,

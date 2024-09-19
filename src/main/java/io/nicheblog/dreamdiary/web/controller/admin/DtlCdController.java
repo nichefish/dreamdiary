@@ -55,7 +55,7 @@ public class DtlCdController
      * 상세 코드 관리(useYn=N 포함) 상세 조회 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.DTL_CD_DTL_AJAX)
+    @GetMapping(Url.DTL_CD_DTL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdDtlAjax(
@@ -241,7 +241,7 @@ public class DtlCdController
      *
      * @param clCd: 구분코드 (대분류)
      */
-    @RequestMapping(Url.DTL_CD_LIST_AJAX)
+    @GetMapping(Url.DTL_CD_LIST_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdListAjax(

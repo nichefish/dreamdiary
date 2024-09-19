@@ -17,10 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
@@ -53,7 +50,7 @@ public class AtchFileController
      * 파일ID 이용 (atchFileDtlNo)
      * 로그인 사용자만 접근 가능
      */
-    @RequestMapping(Url.FILE_DOWNLOAD_CHK_AJAX)
+    @GetMapping(Url.FILE_DOWNLOAD_CHK_AJAX)
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
     public ResponseEntity<AjaxResponse> fileChckAjax(
@@ -88,7 +85,7 @@ public class AtchFileController
      * 파일ID 이용 (atchFileNo)
      * 비로그인 사용자도 외부에서 접근 가능 (인증 없음)
      */
-    @RequestMapping(Url.FILE_INFO_LIST_AJAX)
+    @GetMapping(Url.FILE_INFO_LIST_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> getFileList(
             final LogActvtyParam logParam,
@@ -125,7 +122,7 @@ public class AtchFileController
      * Ajax로 유무 체크 후 다운로드하므로 항상 파일이 존재한다 가정하고 진행
      * 로그인 사용자만 접근 가능
      */
-    @RequestMapping(Url.FILE_DOWNLOAD)
+    @GetMapping(Url.FILE_DOWNLOAD)
     @PreAuthorize("isAuthenticated()")
     public void fileDownload(
             final LogActvtyParam logParam,
@@ -164,7 +161,7 @@ public class AtchFileController
      * Ajax로 유무 체크 후 다운로드하므로 항상 파일이 존재한다 가정하고 진행
      * 로그인 사용자만 접근 가능
      */
-    @RequestMapping("/file/vod/{dir}/{fileName}")
+    @GetMapping("/file/vod/{dir}/{fileName}")
     @PreAuthorize("isAuthenticated()")
     public void staticVodFileDownload(
             final @PathVariable String dirName,
@@ -201,7 +198,7 @@ public class AtchFileController
      * Ajax로 유무 체크 후 다운로드하므로 항상 파일이 존재한다 가정하고 진행
      * 로그인 사용자만 접근 가능
      */
-    @RequestMapping("/file/{fileName}")
+    @GetMapping("/file/{fileName}")
     public void staticFileDownload(
             final @PathVariable String fileName,
             final LogActvtyParam logParam
@@ -232,7 +229,7 @@ public class AtchFileController
      * 파일 업로드 : 업로드 후 AtchDtlFileDto 반환 (filepath 정보 포함)
      * 로그인 사용자만 접근 가능
      */
-    @RequestMapping(Url.FILE_UPLOAD_AJAX)
+    @PostMapping(Url.FILE_UPLOAD_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> uploadFileAjax(
             final LogActvtyParam logParam,

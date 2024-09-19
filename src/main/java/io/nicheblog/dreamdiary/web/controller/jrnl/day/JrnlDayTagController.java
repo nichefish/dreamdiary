@@ -58,7 +58,7 @@ public class JrnlDayTagController
      * 저널 일자 태그 전체 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.JRNL_DAY_TAG_LIST_AJAX)
+    @GetMapping(Url.JRNL_DAY_TAG_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlDayTagListAjax(
@@ -95,7 +95,7 @@ public class JrnlDayTagController
      * 저널 일자 태그 전체 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.JRNL_DAY_TAG_GROUP_LIST_AJAX)
+    @GetMapping(Url.JRNL_DAY_TAG_GROUP_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlDayTagGroupListAjax(

@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,7 +39,7 @@ public class SnmpController
      * API:: SNMP 내역 송신
      * 비로그인 사용자도 외부에서 접근 가능 (인증 없음)
      */
-    @RequestMapping(Url.URL_SNMP_SEND_AJAX)
+    @PostMapping(Url.URL_SNMP_SEND_AJAX)
     @ResponseBody
     public AjaxResponse snmpSendAjax (
             final SnmpParam snmpParam,

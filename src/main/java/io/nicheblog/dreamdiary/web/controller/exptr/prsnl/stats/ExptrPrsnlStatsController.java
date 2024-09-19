@@ -23,10 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
@@ -63,7 +60,7 @@ public class ExptrPrsnlStatsController
      * 경비 관리 > 경비지출누적집계 > 년도별 경비지출누적집계 화면 조회
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(Url.EXPTR_PRSNL_STATS_PAGE)
+    @GetMapping(Url.EXPTR_PRSNL_STATS_PAGE)
     @Secured(Constant.ROLE_MNGR)
     public String exptrPrsnlStats(
             final LogActvtyParam logParam,
@@ -106,7 +103,7 @@ public class ExptrPrsnlStatsController
      * 경비 관리 > 경비지출누적집계 > 경비지출서 상세 화면 조회 (관리자)
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(Url.EXPTR_PRSNL_STATS_DTL)
+    @GetMapping(Url.EXPTR_PRSNL_STATS_DTL)
     @Secured(Constant.ROLE_MNGR)
     public String exptrPrsnlStatsDtl(
             final LogActvtyParam logParam,
@@ -181,7 +178,7 @@ public class ExptrPrsnlStatsController
      * 경비 관리 > 경비지출누적집계 > 년도별 경비 지출 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      */
-    // @RequestMapping(Url.EXPTR_PRSNL_STATS_XLSX_DOWNLOAD)
+    // @GetMapping(Url.EXPTR_PRSNL_STATS_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)
     // public void exptrPrsnlStatsXlsxDownload(
     //         final LogActvtyParam logParam,

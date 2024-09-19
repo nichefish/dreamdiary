@@ -2,10 +2,7 @@ package io.nicheblog.dreamdiary.api.kafka;
 
 import io.nicheblog.dreamdiary.global.util.KafkaUtils;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * KafkaApiController
@@ -19,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class KafkaApiController {
 
-    @RequestMapping(value = "/kafka")
+    @PostMapping(value = "/kafka")
     @ResponseBody
     public String sendMessage(
             @RequestParam String message

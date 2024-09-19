@@ -25,7 +25,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -101,7 +100,7 @@ public class SchdulCalController
      * 일정 > 전체 일정 (달력) 목록 데이터 조회 (ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.SCHDUL_CAL_LIST_AJAX)
+    @GetMapping(Url.SCHDUL_CAL_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> schdulCalListAjax(

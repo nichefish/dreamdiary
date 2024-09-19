@@ -129,7 +129,7 @@ public class NoticeController
      * 공지사항 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.NOTICE_REG_FORM)
+    @GetMapping(Url.NOTICE_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeRegForm(
             final LogActvtyParam logParam,
@@ -172,7 +172,7 @@ public class NoticeController
      * 공지사항 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.NOTICE_REG_PREVIEW_POP)
+    @GetMapping(Url.NOTICE_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeRegPreviewPop(
             final NoticeDto notice,
@@ -265,7 +265,7 @@ public class NoticeController
      * 공지사항 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.NOTICE_DTL)
+    @GetMapping(Url.NOTICE_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeDtl(
             final @RequestParam("postNo") Integer key,
@@ -308,7 +308,7 @@ public class NoticeController
      * 공지사항 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.NOTICE_DTL_AJAX)
+    @GetMapping(Url.NOTICE_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticeDtlAjax(
@@ -350,7 +350,7 @@ public class NoticeController
      * 공지사항 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.NOTICE_MDF_FORM)
+    @GetMapping(Url.NOTICE_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeMdfForm(
             final @RequestParam("postNo") Integer key,
@@ -436,7 +436,7 @@ public class NoticeController
      * 공지사항 팝업공지 목록 조회 (Ajax)
      * 비로그인 사용자도 외부에서 접근 가능 (인증 없음)
      */
-    @RequestMapping(Url.NOTICE_POPUP_LIST_AJAX)
+    @GetMapping(Url.NOTICE_POPUP_LIST_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> noticePopupListAjax(
             final NoticeSearchParam searchParam,
@@ -476,7 +476,7 @@ public class NoticeController
      * 휴가 관리 > 휴가사용일자 > 휴가사용일자 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(Url.NOTICE_LIST_XLSX_DOWNLOAD)
+    @GetMapping(Url.NOTICE_LIST_XLSX_DOWNLOAD)
     @Secured(Constant.ROLE_MNGR)
     public void vcatnSchdulXlsxDownload(
             final NoticeSearchParam searchParam,

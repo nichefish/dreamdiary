@@ -22,10 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
@@ -64,7 +61,7 @@ public class VcatnStatsYyController
      * 휴가관리 > 년도별 휴가관리 > 목록 조회
      * 관리자MNGR만 접근 가능
      */
-    @RequestMapping(Url.VCATN_STATS_YY)
+    @GetMapping(Url.VCATN_STATS_YY)
     @Secured(Constant.ROLE_MNGR)
     public String vcatnStatsList(
             final LogActvtyParam logParam,
@@ -147,7 +144,7 @@ public class VcatnStatsYyController
      * 휴가관리 > 년도별 휴가관리 > 목록 엑셀 다운로드
      * 관리자MNGR만 접근 가능
      */
-    // @RequestMapping(Url.VCATN_STATS_YY_XLSX_DOWNLOAD)
+    // @GetMapping(Url.VCATN_STATS_YY_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)
     // public void vcatnStatsXlsxDownload(
     //         final LogActvtyParam logParam,

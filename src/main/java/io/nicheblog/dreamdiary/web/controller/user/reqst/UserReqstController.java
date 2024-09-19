@@ -22,8 +22,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -61,7 +61,7 @@ public class UserReqstController
      * 계정 정보 신청 화면 조회
      * 비로그인 사용자도 외부에서 접근 가능
      */
-    @RequestMapping(Url.USER_REQST_REG_FORM)
+    @GetMapping(Url.USER_REQST_REG_FORM)
     public String userReqstRegForm(
             final LogActvtyParam logParam,
             final ModelMap model

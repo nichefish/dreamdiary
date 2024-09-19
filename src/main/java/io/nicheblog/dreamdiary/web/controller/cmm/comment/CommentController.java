@@ -55,7 +55,7 @@ public class CommentController
      * 댓글 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.COMMENT_LIST_AJAX)
+    @GetMapping(Url.COMMENT_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentListAjax(

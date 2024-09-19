@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -52,7 +52,7 @@ public class JrnlTagController
      * 저널 태그 카테고리 메타 파일 - DB 동기화 (Ajax)
      * (관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.JRNL_TAG_CTGR_SYNC_AJAX)
+    @PostMapping(Url.JRNL_TAG_CTGR_SYNC_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> tagCtgrSyncAjax(

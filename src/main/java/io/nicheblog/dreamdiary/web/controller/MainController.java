@@ -9,7 +9,7 @@ import io.nicheblog.dreamdiary.web.SiteMenu;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * MainController
@@ -29,7 +29,7 @@ public class MainController
     /**
      * 메인 화면 :: 사용자
      */
-    @RequestMapping(value = {Url.ROOT, Url.MAIN})
+    @GetMapping(value = {Url.ROOT, Url.MAIN})
     public String mainPage(
             final LogActvtyParam logParam,
             final ModelMap model
@@ -48,7 +48,7 @@ public class MainController
     /**
      * 메인 화면 :: 관리자
      */
-    @RequestMapping(value = {Url.ADMIN_MAIN})
+    @GetMapping(value = {Url.ADMIN_MAIN})
     public String adminMainPage(
             final LogActvtyParam logParam,
             final ModelMap model

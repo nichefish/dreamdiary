@@ -118,7 +118,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 등록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_REQST_REG_FORM)
+    @GetMapping(Url.EXPTR_REQST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstRegForm(
             final LogActvtyParam logParam,
@@ -163,7 +163,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_REQST_REG_PREVIEW_POP)
+    @GetMapping(Url.EXPTR_REQST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstRegPreviewPop(
             final ExptrReqstDto exptrReqstDto,
@@ -253,7 +253,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 상세 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_REQST_DTL)
+    @GetMapping(Url.EXPTR_REQST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstDtl(
             final @RequestParam("postNo") Integer key,
@@ -296,7 +296,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_REQST_DTL_AJAX)
+    @GetMapping(Url.EXPTR_REQST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> postDtlAjax(
@@ -338,7 +338,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 수정 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @RequestMapping(Url.EXPTR_REQST_MDF_FORM)
+    @GetMapping(Url.EXPTR_REQST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstMdfForm(
             final @RequestParam("postNo") Integer key,
