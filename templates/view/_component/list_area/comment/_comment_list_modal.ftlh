@@ -47,7 +47,7 @@
     </div>
 </@modal.layout>
 
-<form name="procForm" id="commentProcForm">
+<form name="procForm" id="commentProcForm" method="get">
     <input type="hidden" name="refPostNo" id="refPostNo" value="" />
     <input type="hidden" name="refContentType" value="${contentType!}" />
     <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" />

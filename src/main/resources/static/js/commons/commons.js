@@ -19,7 +19,12 @@ if (typeof commons === 'undefined') { var commons = {}; }
                 commons.util.swalOrConfirm(msg + "\n로그인 화면으로 돌아갑니다.", function() {
                     window.location.href = lgnFormUrl;
                 }, function() {
-                    // do nothing...
+                    // do nothing... and mark as session expired
+                    if ($(".session-expired-message").length > 0) return;
+                    // 세션 만료 표시
+                    const $navbar = $(".app-navbar");
+                    const sessionExpiredText = $("<div class='d-flex align-items-center fs-5 text-danger blink me-5'>로그인 세션이 만료되었습니다.</div>")
+                    $navbar.prepend(sessionExpiredText);
                 });
                 return false;
             } else if (statusCode === 403) {

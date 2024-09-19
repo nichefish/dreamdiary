@@ -185,7 +185,7 @@
     </div>
 </div>
 
-<form name="procForm" id="procForm">
+<form name="procForm" id="procForm" method="get">
     <input type="hidden" name="postNo" id="postNo" value=""/>
     <input type="hidden" name="boardCd" id="boardCd" value="${boardCd!}"/>
 </form>

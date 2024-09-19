@@ -210,7 +210,7 @@
 </div>
 <!--end::Card-->
 
-<form name="procForm" id="procForm">
+<form name="procForm" id="procForm" method="get">
     <input type="hidden" name="userNo" value="${user.userNo!}">
     <#if user.profl??>
         <input type="hidden" name="userProflNo" value="${user.profl.userProflNo!}">

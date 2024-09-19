@@ -83,6 +83,8 @@ server:
             charset: UTF-8
             enabled: true
             force: true
+        session:
+            timeout: 1h
 
 #OpenAPI Swagger config
 springdoc:

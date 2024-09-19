@@ -175,9 +175,9 @@
                     <!-- 휴가관리 > 년도별 휴가관리 -->
                     <div class="menu-item">
                         <a class="menu-link" href="${SiteMenu.MENU_VCATN_STATS_YY[3]!}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
                             <span class="menu-title">${SiteMenu.MENU_VCATN_STATS_YY[2]!}</span>
                         </a>
                     </div>

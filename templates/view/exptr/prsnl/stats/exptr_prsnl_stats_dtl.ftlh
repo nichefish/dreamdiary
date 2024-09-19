@@ -330,7 +330,7 @@
     <#include "/view/_component/page_area/comment/_comment_area.ftlh">
 </div>
 
-<form name="procForm" id="procForm">
+<form name="procForm" id="procForm" method="get">
     <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
     <input type="hidden" name="exptrPrsnlItemNo" id="exptrPrsnlItemNo" />
     <input type="hidden" name="orgnlRciptYn" id="orgnlRciptYn" />
