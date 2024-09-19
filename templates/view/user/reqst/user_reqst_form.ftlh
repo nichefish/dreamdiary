@@ -51,7 +51,7 @@
                     $("#acsIpListSpan").hide()
                 });
                 /* 접속IP tagify */
-                commons.util.tagify("#acsIpListStr");
+                commons.tagify.init("#acsIpListStr");
             },
         }
     })();

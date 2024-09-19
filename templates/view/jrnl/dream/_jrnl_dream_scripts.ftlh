@@ -59,7 +59,7 @@
                 /* jquery :: validation */
                 JrnlDream.initValidateForm();
                 /* tagify */
-                commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
+                commons.tagify.initWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
 
                 // checkbox init
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
@@ -123,7 +123,7 @@
                     /* jquery :: validation */
                     JrnlDream.initValidateForm();
                     /* tagify */
-                    commons.util.tagifyWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
+                    commons.tagify.initWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
 
                     // checkbox init
                     commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");

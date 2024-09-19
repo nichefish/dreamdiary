@@ -51,5 +51,6 @@
     <script type="text/javascript" src="/js/commons/commons-validate.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/commons/commons-date.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/commons/commons-datepicker.js?${releaseDate!}"></script>
+    <script type="text/javascript" src="/js/commons/commons-tagify.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/commons/commons-helpers.js?${releaseDate!}"></script>
 </head>

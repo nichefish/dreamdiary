@@ -27,7 +27,7 @@
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
                 /* tagify */
-                commons.util.tagifyWithCtgr("#postRegForm #tagListStr");
+                commons.tagify.initWithCtgr("#postRegForm #tagListStr");
                 // 잔디발송여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function () {
                     $("#trgetTopicSpan").show();

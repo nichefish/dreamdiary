@@ -44,7 +44,7 @@
                     $("#acsIpListSpan").hide()
                 });
                 /* 접속IP tagify */
-                commons.util.tagify("#acsIpListStr");
+                commons.tagify.init("#acsIpListStr");
 
                 // 프로필 정보 / 인사정보 창 활성화
                 <#if user.profl??>

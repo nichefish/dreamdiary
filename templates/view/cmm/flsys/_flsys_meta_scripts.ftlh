@@ -15,7 +15,7 @@
                 commons.util.handlebarsTemplate(obj, "flsys_meta_reg", "show");
 
                 /** tagify */
-                commons.util.tagify("#tagListStr");
+                commons.tagify.init("#tagListStr");
             },
             /** 메타정보 등록 (Ajax) */
             submit: function() {
@@ -65,7 +65,7 @@
                     FlsysMeta.key = postNo;
 
                     /** tagify */
-                    commons.util.tagify("#tagListStr");
+                    commons.tagify.init("#tagListStr");
                 });
             },
             /** 메타정보 삭제 (Ajax) */
