@@ -65,7 +65,7 @@ public class AuthInfo
     private String needsPwReset;
 
     /** 사용자 정보 통으로 저장 (일단) */
-    private UserProflDto userProfl;
+    private UserProflDto profl;
 
     /* ----- */
 
@@ -80,8 +80,8 @@ public class AuthInfo
     /**
      * 사용자 정보 존재여부 (내부사용자)
      */
-    public Boolean getHasuserProfl() {
-        return this.userProfl != null && this.userProflNo != null;
+    public Boolean getHasUserProfl() {
+        return this.profl != null && this.userProflNo != null;
     }
 
     /**

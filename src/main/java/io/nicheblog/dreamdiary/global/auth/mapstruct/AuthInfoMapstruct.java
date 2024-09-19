@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
+import io.nicheblog.dreamdiary.web.mapstruct.user.profl.UserProflMapstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,7 +21,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserProflMapstruct.class})
 public interface AuthInfoMapstruct
         extends BaseMapstruct<AuthInfo, UserEntity> {
 
@@ -36,5 +37,7 @@ public interface AuthInfoMapstruct
     @Mapping(target = "pwChgDt", expression = "java(entity.acntStus.getPwChgDt() != null ? entity.acntStus.getPwChgDt() : entity.getRegDt())")          // 최종비밀번호변경일 또는 등록일
     @Mapping(target = "needsPwReset", expression = "java(entity.acntStus.getNeedsPwReset())")
     @Mapping(target = "cfYn", expression = "java(entity.acntStus.getCfYn())")
+    @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toDto(entity.getProfl()))")
+    @Mapping(target = "userProflNo", expression = "java(entity.getProfl().getUserProflNo())")
     AuthInfo toDto(final UserEntity entity) throws Exception;
 }

@@ -73,7 +73,7 @@ public class AuthService
         if (RequestContextHolder.getRequestAttributes() == null) return null;
         AuthInfo authInfo = getAuthenticatedUser();
         assert authInfo != null;
-        return (authInfo.getUserProfl() == null) ? null : authInfo.getUserProfl().getUserProflNo();
+        return (authInfo.getProfl() == null) ? null : authInfo.getProfl().getUserProflNo();
     }
 
     /**

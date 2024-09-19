@@ -14,6 +14,8 @@ public final class TestConstant {
     public static final String TEST_AUDITOR = "test_auditor";
 
     public static final String TEST_USER = "test_user";
+    public static final String TEST_PASSWORD_ENCODED = "test_password_encoded";
+    public static final String TEST_NICK_NM = "test_nick_nm";
 
     // 테스트 등록자
     public static final String TEST_REGSTR_ID = "test_regstr_id";
