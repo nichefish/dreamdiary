@@ -38,7 +38,7 @@ class UserMapstructToEntityTest {
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
 
     /**
-     * toEntity 검증
+     * dto -> entity 검증
      */
     @Test
     void testTestToEntity_checkBasic() throws Exception {
@@ -56,7 +56,7 @@ class UserMapstructToEntityTest {
     }
 
     /**
-     * toEntity 검증:: 권한
+     * dto -> entity 검증:: 권한
      */
     @Test
     void testTestToEntity_checkAuth() throws Exception {
@@ -81,7 +81,7 @@ class UserMapstructToEntityTest {
     }
 
     /**
-     * toEntity 검증:: 접속 IP
+     * dto -> entity 검증:: 접속 IP
      */
     @Test
     void testTestToEntity_checkAcsIp() throws Exception {
@@ -104,7 +104,7 @@ class UserMapstructToEntityTest {
     }
 
     /**
-     * toEntity 검증:: 사용자 프로필 정보
+     * dto -> entity 검증:: 사용자 프로필 정보
      */
     @Test
     void testTestToEntity_checkProfl() throws Exception {
@@ -125,7 +125,7 @@ class UserMapstructToEntityTest {
     }
 
     /**
-     * toEntity 검증:: 사용자 인사정보
+     * dto -> entity 검증:: 사용자 인사정보
      */
     @Test
     void testTestToEntity_checkEmplym() throws Exception {

@@ -26,11 +26,12 @@ public class UserEntityTestFactory {
         // 갹체 생성
         return UserEntity.builder()
                 .userId(TestConstant.TEST_USER)
-                .password("test_password_encoded")
-                .nickNm("test_nick_nm")
+                .password(TestConstant.TEST_PASSWORD_ENCODED)
+                .nickNm(TestConstant.TEST_NICK_NM)
                 .email("test_email_id@test_email_domain")
                 .cttpc("010-0101-0101")
                 .cn("test_cn")
+                .acntStus(UserStusEmbed.builder().build())
                 .build();
     }
     public static UserEntity createUser(UserProflEntity profl) throws Exception {

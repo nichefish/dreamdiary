@@ -25,7 +25,7 @@ class UserEmplymMapstructTest {
     private final UserEmplymMapstruct userEmplymMapstruct = UserEmplymMapstruct.INSTANCE;
 
     /**
-     * toDto 검증
+     * entity -> dto 검증
      */
     @Test
     void testToDto_checkEmplym() throws Exception {

@@ -141,7 +141,7 @@ public class UserDto
     public static class LIST extends UserDto {
         /** 입사일 */
         private String ecnyDt;
-        /** 입사일 */
+        /** 이름 */
         private String userNm;
 
         /* ----- */

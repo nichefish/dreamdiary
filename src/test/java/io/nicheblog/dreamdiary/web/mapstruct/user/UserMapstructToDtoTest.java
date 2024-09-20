@@ -36,7 +36,7 @@ class UserMapstructToDtoTest {
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
 
     /**
-     * toDto 검증 :: 기본 체크
+     * entity -> dto 검증 :: 기본 체크
      */
     @Test
     void testToDto_checkBasic() throws Exception {
@@ -55,7 +55,7 @@ class UserMapstructToDtoTest {
     }
 
     /**
-     * toDto 검증 :: 등록자/수정자 정보 체크
+     * entity -> dto 검증 :: 등록자/수정자 정보
      */
     @Test
     void testToDto_checkAuditor() throws Exception {
@@ -82,7 +82,7 @@ class UserMapstructToDtoTest {
     }
 
     /**
-     * toDto 검증 :: 권한 체크
+     * entity -> dto 검증 :: 권한 체크
      */
     @Test
     void testToDto_checkAuth() throws Exception {
@@ -92,8 +92,6 @@ class UserMapstructToDtoTest {
         UserAuthRoleEntity aa = UserAuthRoleEntityTestFactory.getUserAuthRoleEntity(Auth.USER);
         UserAuthRoleEntity bb = UserAuthRoleEntityTestFactory.getUserAuthRoleEntity(Auth.MNGR);
         userEntity.setAuthList(List.of(aa, bb));
-        // STUS
-        userEntity.setAcntStus(new UserStusEmbed());
 
         // When::
         UserDto.DTL dto = userMapstruct.toDto(userEntity);
@@ -109,17 +107,15 @@ class UserMapstructToDtoTest {
     }
 
     /**
-     * toDto 검증 :: 접속 IP 체크
+     * entity -> dto 검증 :: 접속 IP 체크
      */
     @Test
     void testToDto_checkAcsIp() throws Exception {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
         userEntity.setUseAcsIpYn("Y");
-        userEntity.setAcsIpList(List.of());
-        // AUTH
-        UserAcsIpEntity aa = UserAcsIpEntityTestFactory.createUserAcsIpEntity("1,1,1,1");
-        UserAcsIpEntity bb = UserAcsIpEntityTestFactory.createUserAcsIpEntity("2,2,2,2");
+        UserAcsIpEntity aa = UserAcsIpEntityTestFactory.createUserAcsIpEntity("1.1.1.1");
+        UserAcsIpEntity bb = UserAcsIpEntityTestFactory.createUserAcsIpEntity("2.2.2.2");
         userEntity.setAcsIpList(List.of(aa, bb));
 
         // When::
@@ -130,13 +126,14 @@ class UserMapstructToDtoTest {
         assertNotNull(dto);
         // 접속 IP 관련 매핑 검증
         assertNotNull(dto.getAcsIpList());
+        assertEquals(dto.getAcsIpList().size(), 2);
         assertNotNull(dto.getAcsIpList().get(0).getAcsIp(), "1.1.1.1");
-        assertNotNull(dto.getAcsIpList().get(0).getAcsIp(), "2.2.2.2");
-        assertEquals(dto.getAcsIpListStr(), "1.1.1.1,2.2.2.2");
+        assertNotNull(dto.getAcsIpList().get(1).getAcsIp(), "2.2.2.2");
+        assertEquals(dto.getAcsIpListStr(), "1.1.1.1, 2.2.2.2");
     }
 
     /**
-     * toDto 검증 :: 사용자 프로필 정보 체크
+     * entity -> dto 검증 :: 사용자 프로필 정보 체크
      */
     @Test
     void testToDto_checkProfl() throws Exception {
@@ -157,7 +154,7 @@ class UserMapstructToDtoTest {
     }
 
     /**
-     * toDto 검증 :: 사용자 인사정보 체크
+     * entity -> dto 검증 :: 사용자 인사정보 체크
      */
     @Test
     void testToDto_checkEmplym() throws Exception {
@@ -183,7 +180,7 @@ class UserMapstructToDtoTest {
     /* ----- */
 
     /**
-     * toDto 검증 :: 기본 체크
+     * entity -> dto 검증 :: 기본 체크
      */
     @Test
     void testToListDto_checkBasic() throws Exception {
@@ -202,12 +199,16 @@ class UserMapstructToDtoTest {
     }
 
     /**
-     * toListDto 검증 :: 등록자/수정자 정보 체크
+     * entity -> listDto 검증 :: 등록자/수정자 정보
      */
     @Test
     void testToListDto_checkAuditor() throws Exception {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
+        // 등록자
+        BaseEntityTestFactoryHelper.setRegstrInfo(userEntity);
+        // 수정자
+        BaseEntityTestFactoryHelper.setMdfusrInfo(userEntity);
 
         // When::
         UserDto.LIST dto = userMapstruct.toListDto(userEntity);
