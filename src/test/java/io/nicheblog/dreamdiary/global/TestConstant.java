@@ -10,6 +10,9 @@ package io.nicheblog.dreamdiary.global;
  */
 public final class TestConstant {
 
+    // 테스트 JSON RESPONSE
+    public static final String EXPECTED_JSON_RESPONSE = "{\"result\":true,\"status\":200}";
+
     // 테스트 auditor (자동으로 처리되는 등록자)
     public static final String TEST_AUDITOR = "test_auditor";
 

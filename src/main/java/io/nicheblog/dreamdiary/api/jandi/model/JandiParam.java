@@ -2,10 +2,7 @@ package io.nicheblog.dreamdiary.api.jandi.model;
 
 import io.nicheblog.dreamdiary.api.jandi.JandiTopic;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -21,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class JandiParam {
 
     /**
