@@ -28,7 +28,10 @@ public class BaseEntityTestFactoryHelper {
 
         ((BaseAuditRegEntity) obj).setRegDt(DateUtils.asDate("2000-01-01"));
         ((BaseAuditRegEntity) obj).setRegstrId(TestConstant.TEST_REGSTR_ID);
-        ((BaseAuditRegEntity) obj).setRegstrInfo(AuditorInfo.builder().userId(TestConstant.TEST_REGSTR_ID).nickNm(TestConstant.TEST_REGSTR_NM).build());
+        ((BaseAuditRegEntity) obj).setRegstrInfo(AuditorInfo.builder()
+                .userId(TestConstant.TEST_REGSTR_ID)
+                .nickNm(TestConstant.TEST_REGSTR_NM)
+                .build());
     }
 
     /**
@@ -39,6 +42,9 @@ public class BaseEntityTestFactoryHelper {
 
         ((BaseAuditEntity) obj).setMdfDt(DateUtils.asDate("2000-01-01"));
         ((BaseAuditEntity) obj).setMdfusrId(TestConstant.TEST_MDFUSR_ID);
-        ((BaseAuditEntity) obj).setMdfusrInfo(AuditorInfo.builder().userId(TestConstant.TEST_MDFUSR_ID).nickNm(TestConstant.TEST_MDFUSR_NM).build());
+        ((BaseAuditEntity) obj).setMdfusrInfo(AuditorInfo.builder()
+                .userId(TestConstant.TEST_MDFUSR_ID)
+                .nickNm(TestConstant.TEST_MDFUSR_NM)
+                .build());
     }
 }

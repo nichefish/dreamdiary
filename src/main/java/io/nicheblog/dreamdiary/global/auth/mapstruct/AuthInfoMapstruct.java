@@ -38,6 +38,6 @@ public interface AuthInfoMapstruct
     @Mapping(target = "needsPwReset", expression = "java(entity.acntStus.getNeedsPwReset())")
     @Mapping(target = "cfYn", expression = "java(entity.acntStus.getCfYn())")
     @Mapping(target = "profl", expression = "java(UserProflMapstruct.INSTANCE.toDto(entity.getProfl()))")
-    @Mapping(target = "userProflNo", expression = "java(entity.getProfl().getUserProflNo())")
+    @Mapping(target = "userProflNo", expression = "java(entity.getProfl() != null ? entity.getProfl().getUserProflNo() : null)")
     AuthInfo toDto(final UserEntity entity) throws Exception;
 }

@@ -3,7 +3,7 @@ plugins {
     id 'idea'
     id 'org.springframework.boot' version '2.7.18'
     id 'io.spring.dependency-management' version '1.1.4'
-    // id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10' // 플러그인 사용하면 gradlew 빌드시 문제 생김
+    id 'jacoco'
 }
 
 group = 'dreamdiary.io'
@@ -12,6 +12,9 @@ java {
 }
 springBoot {
     buildInfo()
+}
+jacoco {
+    toolVersion = "0.8.7" // JaCoCo 버전 (최신 버전을 사용하세요)
 }
 
 // project.afterEvaluate {
@@ -264,7 +267,18 @@ tasks.withType(JavaCompile) {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // 테스트 후에 자동으로 커버리지 리포트를 생성
 }
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // 테스트 후에 자동으로 커버리지 리포트를 생성
+}
+jacocoTestReport {
+    dependsOn test // 테스트 후에 리포트 생성
+    reports {
+        xml.enabled true  // XML 리포트 생성 (SonarQube 등과의 통합에 유용)
+        csv.enabled false // CSV 리포트는 보통 사용하지 않으므로 비활성화
+        html.enabled true // HTML 리포트 생성
+        html.destination file("${buildDir}/reports/jacoco") // HTML 리포트 저장 경로
+    }
 }
