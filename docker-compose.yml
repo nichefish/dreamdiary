@@ -16,6 +16,8 @@ services:
       - '${ZOOKEEPER_PORT}:${ZOOKEEPER_PORT}'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - dreamdiary_network
     restart: always
 
   kafka:
@@ -31,6 +33,8 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
+    networks:
+      - dreamdiary_network
     restart: always
 
   redis:
@@ -41,6 +45,8 @@ services:
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    networks:
+      - dreamdiary_network
     restart: always
 
   elasticsearch:
@@ -53,4 +59,10 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=false
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    networks:
+      - dreamdiary_network
     restart: always
+
+networks:
+  default:
+    driver: bridge
