@@ -37,7 +37,7 @@ class AuthInfoMapstructTest {
      * entity -> dto 검증 :: 기본 속성
      */
     @Test
-    void toDto_checkBasic() throws Exception {
+    void testToDto_checkBasic() throws Exception {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
         userEntity.setProflImgUrl("test_url");
@@ -70,7 +70,7 @@ class AuthInfoMapstructTest {
      * entity -> dto 검증 :: 어노테이션 매핑
      */
     @Test
-    void toDto_checkMapping() throws Exception {
+    void testToDto_checkMapping() throws Exception {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
         // authList
@@ -106,7 +106,7 @@ class AuthInfoMapstructTest {
      * 로직이 들어간 부분 테스트 분리
      */
     @Test
-    void toDto_checkMapping_stusDtNotNull() throws Exception {
+    void testToDto_checkMapping_stusDtNotNull() throws Exception {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
         // acntStus - lstLgnDt, pwChgDt = null
@@ -131,7 +131,7 @@ class AuthInfoMapstructTest {
      * 로직이 들어간 부분 테스트 분리
      */
     @Test
-    void toDto_checkMapping_stusDtNull() throws Exception {
+    void testToDto_checkMapping_stusDtNull() throws Exception {
         // Given::
         UserEntity userEntity = UserEntityTestFactory.createUser();
         // acntStus - lstLgnDt, pwChgDt = null
@@ -156,7 +156,7 @@ class AuthInfoMapstructTest {
      * entity -> dto 검증 :: 사용자 프로필(user_profl) 검증
      */
     @Test
-    void toDto_checkMapping_userProfl() throws Exception {
+    void testToDto_checkMapping_userProfl() throws Exception {
         // Given::
         UserProflEntity userProflEntity = UserProflEntityTestFactory.createUserProflEntity();
         userProflEntity.setUserProflNo(1);

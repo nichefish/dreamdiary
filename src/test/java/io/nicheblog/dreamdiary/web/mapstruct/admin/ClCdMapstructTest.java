@@ -32,7 +32,7 @@ class ClCdMapstructTest {
      * entity -> dto 검증 :: 기본 속성
      */
     @Test
-    void toDto_checkBasic() throws Exception {
+    void testToDto_checkBasic() throws Exception {
         // Given::
         ClCdEntity clCdEntity = ClCdEntityTestFactory.createClCd();
         // 글분류 코드
@@ -56,7 +56,7 @@ class ClCdMapstructTest {
      * entity -> listdto 검증 :: 기본 속성
      */
     @Test
-    void toListDto_checkBasic() throws Exception {
+    void testToListDto_checkBasic() throws Exception {
         // Given::
         ClCdEntity clCdEntity = ClCdEntityTestFactory.createClCd();
         // 글분류 코드
@@ -98,7 +98,7 @@ class ClCdMapstructTest {
      * dto -> entity 검증 :: 등록자/수정자 정보
      */
     @Test
-    void testToDto_checkAuditor() throws Exception {
+    void testToEntity_checkAuditor() throws Exception {
         // Given::
         ClCdEntity clCdEntity = ClCdEntityTestFactory.createClCd();
         // 등록자
@@ -120,6 +120,8 @@ class ClCdMapstructTest {
         assertEquals(dto.getMdfusrNm(), TestConstant.TEST_MDFUSR_NM);
         assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
     }
+
+    /* ----- */
 
     /**
      * update entity from dto 검증

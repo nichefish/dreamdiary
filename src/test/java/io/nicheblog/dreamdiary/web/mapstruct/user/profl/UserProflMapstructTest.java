@@ -46,7 +46,7 @@ class UserProflMapstructTest {
     /* ----- */
 
     /**
-     * toEntity 검증
+     * dto -> entity 검증
      */
     @Test
     void testToEntity_checkBasic() throws Exception {

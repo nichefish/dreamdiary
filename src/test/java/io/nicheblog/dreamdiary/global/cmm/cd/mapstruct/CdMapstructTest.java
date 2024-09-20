@@ -29,7 +29,7 @@ class CdMapstructTest {
      * toDto 검증 (분류코드)
      */
     @Test
-    void toDto_cl_checkBasic() throws Exception {
+    void testToDto_cl_checkBasic() throws Exception {
         // Given::
         ClCdEntity clCdEntity = ClCdEntityTestFactory.createClCd();
 
@@ -45,7 +45,7 @@ class CdMapstructTest {
      * toDto 검증 (상세코드)
      */
     @Test
-    void toDto_dtl_checkBasic() throws Exception {
+    void testToDto_dtl_checkBasic() throws Exception {
         // Given::
         DtlCdEntity dtlCdEntity = DtlCdEntityTestFactory.createDtlCd();
 

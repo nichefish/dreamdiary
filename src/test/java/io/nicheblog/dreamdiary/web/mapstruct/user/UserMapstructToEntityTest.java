@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * UserMapstructToEntityTest
  * <pre>
  *  사용자 계정 신청 Mapstruct 매핑 테스트 모듈 :: toEntity 분리
+ *  TODO: updateFromDto
  * </pre>
  *
  * @author nichefish
@@ -41,7 +42,7 @@ class UserMapstructToEntityTest {
      * dto -> entity 검증
      */
     @Test
-    void testTestToEntity_checkBasic() throws Exception {
+    void testToEntity_checkBasic() throws Exception {
         // Given::
         UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
 
@@ -59,7 +60,7 @@ class UserMapstructToEntityTest {
      * dto -> entity 검증:: 권한
      */
     @Test
-    void testTestToEntity_checkAuth() throws Exception {
+    void testToEntity_checkAuth() throws Exception {
         // Given::
         UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
         // AUTH
@@ -84,7 +85,7 @@ class UserMapstructToEntityTest {
      * dto -> entity 검증:: 접속 IP
      */
     @Test
-    void testTestToEntity_checkAcsIp() throws Exception {
+    void testToEntity_checkAcsIp() throws Exception {
         // Given::
         UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
         // ACS_IP
@@ -107,7 +108,7 @@ class UserMapstructToEntityTest {
      * dto -> entity 검증:: 사용자 프로필 정보
      */
     @Test
-    void testTestToEntity_checkProfl() throws Exception {
+    void testToEntity_checkProfl() throws Exception {
         // Given::
         UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
         UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto(userProflDto);
@@ -128,7 +129,7 @@ class UserMapstructToEntityTest {
      * dto -> entity 검증:: 사용자 인사정보
      */
     @Test
-    void testTestToEntity_checkEmplym() throws Exception {
+    void testToEntity_checkEmplym() throws Exception {
         // Given::
         UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
         UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto(userEmplymDto);
@@ -148,4 +149,14 @@ class UserMapstructToEntityTest {
         assertEquals(userEmplymEntity.getEmplymEmail(), userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain());
     }
 
+    /* ----- */
+
+    /**
+     * updateFromDto 검증 :: 기본 속성
+     * TODO
+     */
+    @Test
+    void testUpdateFromDto_checkBasic() throws Exception {
+        //
+    }
 }

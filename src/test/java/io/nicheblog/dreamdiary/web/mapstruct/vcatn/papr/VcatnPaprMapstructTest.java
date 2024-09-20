@@ -26,10 +26,10 @@ class VcatnPaprMapstructTest {
     private final VcatnPaprMapstruct vcatnPaprMapstruct = VcatnPaprMapstruct.INSTANCE;
 
     /**
-     * toEntity 검증
+     * dto -> entity 검증
      */
     @Test
-    void toEntity_checkBasic() throws Exception {
+    void testToEntity_checkBasic() throws Exception {
         // Given::
         VcatnPaprDto.DTL vcatnPaprDto = VcatnPaprDtoTestFactory.createVcatnPaprDtlDto();
 
@@ -42,10 +42,10 @@ class VcatnPaprMapstructTest {
     }
 
     /**
-     * toEntity 검증 :: 하위 엔티티
+     * dto -> entity 검증 :: 하위 엔티티
      */
     @Test
-    void toEntity_checkSchdulList() throws Exception {
+    void testToEntity_checkSchdulList() throws Exception {
         // Given::
         VcatnPaprDto.DTL vcatnPaprDto = VcatnPaprDtoTestFactory.createVcatnPaprDtlDto();
         // 휴가 일정 세팅
@@ -60,5 +60,16 @@ class VcatnPaprMapstructTest {
         // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
         assertNotNull(vcatnPaprEntity);
         assertNotNull(vcatnPaprEntity.getSchdulList());
+    }
+
+    /* ----- */
+
+    /**
+     * updateFromDto 검증 :: 기본 속성
+     * TODO
+     */
+    @Test
+    void testUpdateFromDto_checkBasic() throws Exception {
+        //
     }
 }

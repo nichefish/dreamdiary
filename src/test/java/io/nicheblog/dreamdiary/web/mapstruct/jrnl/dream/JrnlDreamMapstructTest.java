@@ -29,10 +29,10 @@ class JrnlDreamMapstructTest {
     private final JrnlDreamMapstruct jrnlDreamMapstruct = JrnlDreamMapstruct.INSTANCE;
 
     /**
-     * toDto 검증
+     * entity -> dto 검증
      */
     @Test
-    void toDto_checkBasic() throws Exception {
+    void testToDto_checkBasic() throws Exception {
         // Given::
         JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDaySmp();
         jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));
@@ -50,7 +50,7 @@ class JrnlDreamMapstructTest {
     }
 
     /**
-     * toDto 검증 :: 등록자/수정자 정보 체크
+     * entity -> dto 검증 :: 등록자/수정자 정보
      */
     @Test
     void testToDto_checkAuditor() throws Exception {
@@ -77,5 +77,16 @@ class JrnlDreamMapstructTest {
         assertEquals(dto.getMdfusrId(), TestConstant.TEST_MDFUSR_ID);
         assertEquals(dto.getMdfusrNm(), TestConstant.TEST_MDFUSR_NM);
         assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
+    }
+
+    /* ----- */
+
+    /**
+     * updateFromDto 검증 :: 기본 속성
+     * TODO
+     */
+    @Test
+    void testUpdateFromDto_checkBasic() throws Exception {
+        //
     }
 }

@@ -34,7 +34,7 @@ class UserReqstMapstructTest {
      * dto -> entity 검증 :: 기본 체크
      */
     @Test
-    void toEntity_checkBasic() throws Exception {
+    void testToEntity_checkBasic() throws Exception {
         // Given::
         UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst();
 
@@ -52,7 +52,7 @@ class UserReqstMapstructTest {
      * dto -> entity 검증 :: 접속 IP 관련
      */
     @Test
-    void toEntity_checkAcsIp() throws Exception {
+    void testToEntity_checkAcsIp() throws Exception {
         // Given::
         UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst();
         // 접속 IP 세팅
@@ -75,7 +75,7 @@ class UserReqstMapstructTest {
      * dto -> entity 검증 :: 사용자 프로필 정보 관련
      */
     @Test
-    void toEntity_checkProfl() throws Exception {
+    void testToEntity_checkProfl() throws Exception {
         // Given::
         UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
         UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(userProflDto);
@@ -96,7 +96,7 @@ class UserReqstMapstructTest {
      * dto -> entity 검증 :: 사용자 인사정보 관련
      */
     @Test
-    void toEntity_checkEmplym() throws Exception {
+    void testToEntity_checkEmplym() throws Exception {
         // Given::
         UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
         UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(userEmplymDto);

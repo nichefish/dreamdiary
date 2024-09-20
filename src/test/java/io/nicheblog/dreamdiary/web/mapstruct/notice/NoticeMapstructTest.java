@@ -26,23 +26,7 @@ class NoticeMapstructTest {
     private final NoticeMapstruct noticeMapstruct = NoticeMapstruct.INSTANCE;
 
     /**
-     * toEntity 검증
-     */
-    @Test
-    void toEntity_checkBasic() throws Exception {
-        // Given::
-        NoticeDto.DTL noticeDto = NoticeDtoTestFactory.createNoticeDtlDto();
-
-        // When::
-        NoticeEntity noticeEntity = noticeMapstruct.toEntity(noticeDto);
-
-        // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(noticeEntity);
-    }
-
-    /**
-     * toDto 검증 :: 등록자/수정자 정보 체크
+     * toDto 검증 :: 등록자/수정자 정보
      */
     @Test
     void testToDto_checkAuditor() throws Exception {
@@ -68,4 +52,32 @@ class NoticeMapstructTest {
         assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
     }
 
+    /* ----- */
+
+    /**
+     * dto -> entity 검증
+     */
+    @Test
+    void testToEntity_checkBasic() throws Exception {
+        // Given::
+        NoticeDto.DTL noticeDto = NoticeDtoTestFactory.createNoticeDtlDto();
+
+        // When::
+        NoticeEntity noticeEntity = noticeMapstruct.toEntity(noticeDto);
+
+        // Then::
+        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
+        assertNotNull(noticeEntity);
+    }
+
+    /* ----- */
+
+    /**
+     * updateFromDto 검증 :: 기본 속성
+     * TODO
+     */
+    @Test
+    void testUpdateFromDto_checkBasic() throws Exception {
+        //
+    }
 }
