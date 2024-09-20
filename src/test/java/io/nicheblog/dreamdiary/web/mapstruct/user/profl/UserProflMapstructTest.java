@@ -25,7 +25,7 @@ class UserProflMapstructTest {
     private final UserProflMapstruct userProflMapstruct = UserProflMapstruct.INSTANCE;
 
     /**
-     * toDto 검증
+     * entity -> dto 검증
      */
     @Test
     void testToDto_checkProfl() throws Exception {

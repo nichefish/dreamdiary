@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.cmm.cd.model;
 
+import io.nicheblog.dreamdiary.global.TestConstant;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -20,10 +21,10 @@ public class DtlCdDtoTestFactory {
      */
     public static DtlCdDto createDtlCdDtlDto() throws Exception {
         return DtlCdDto.builder()
-                .clCd("test_cl_cd")
-                .dtlCd("test_dtl_cd")
-                .dtlCdNm("테스트_분류코드")
-                .dc("설명")
+                .clCd(TestConstant.TEST_CL_CD)
+                .dtlCd(TestConstant.TEST_DTL_CD)
+                .dtlCdNm(TestConstant.TEST_DTL_CD_NM)
+                .dc(TestConstant.TEST_DC)
                 .build();
     }
 }

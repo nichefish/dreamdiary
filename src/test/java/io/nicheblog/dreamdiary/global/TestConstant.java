@@ -24,4 +24,13 @@ public final class TestConstant {
     // 테스트 수정자
     public static final String TEST_MDFUSR_ID = "test_mdfuser_id";
     public static final String TEST_MDFUSR_NM = "test_mdfuser_id";
+    
+    // 코드 관련
+    public static final String TEST_CL_CD = "test_cl_cd";
+    public static final String TEST_CL_CD_NM = "테스트_분류코드";
+    public static final String TEST_DTL_CD = "test_dtl_cd";
+    public static final String TEST_DTL_CD_NM = "테스트_상세코드";
+
+    //
+    public static final String TEST_DC = "테스트_설명";
 }
