@@ -30,7 +30,15 @@ public final class TestConstant {
     public static final String TEST_CL_CD_NM = "테스트_분류코드";
     public static final String TEST_DTL_CD = "test_dtl_cd";
     public static final String TEST_DTL_CD_NM = "테스트_상세코드";
+    public static final String TEST_CL_CTGR_CD = "test_cl_ctgr_cd";
+
+    public static final String TEST_CL_CD_1 = "test_cl_cd_1";
+    public static final String TEST_CL_CD_NM_1 = "테스트_분류코드_1";
+    public static final String TEST_DTL_CD_1 = "test_dtl_cd_1";
+    public static final String TEST_DTL_CD_NM_1 = "테스트_상세코드_1";
+    public static final String TEST_CL_CTGR_CD_1 = "test_cl_ctgr_cd_1";
 
     //
     public static final String TEST_DC = "테스트_설명";
+    public static final String TEST_DC_1 = "테스트_설명_1";
 }

@@ -26,4 +26,11 @@ public class ClCdDtoTestFactory {
                 .dc(TestConstant.TEST_DC)
                 .build();
     }
+    public static ClCdDto createClCdDtlDto_1() throws Exception {
+        return ClCdDto.builder()
+                .clCd(TestConstant.TEST_CL_CD_1)
+                .clCdNm(TestConstant.TEST_CL_CD_NM_1)
+                .dc(TestConstant.TEST_DC_1)
+                .build();
+    }
 }
