@@ -24,7 +24,7 @@
             <#--모달:: 버튼: 저장하기-->
             <@component.modal_btn_save "DtlCd.submit();" />
             <#--모달:: 버튼: 모달 닫기-->
-            <@component.modal_btn_close />
+            <@component.modal_btn_close_safe />
         </div>
     </div>
 </@modal.layout>

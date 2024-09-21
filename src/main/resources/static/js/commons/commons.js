@@ -734,11 +734,12 @@ commons.util = (function() {
         },
 
         /**
-         * button 일시 잠김 (딜레이 3초)
+         * button 일시 잠김 (딜레이 2초)
          */
         delayBtn: function(elmt, sec) {
             if (elmt instanceof jQuery) elmt = elmt[0];
             if (elmt === undefined) return;
+            if (elmt.classList.contains("modal-btn-close-safe")) return;     // 안전닫기 버튼 제외
             if (sec === undefined) sec = 2;
             elmt.disabled = true;
             setTimeout(function(){ elmt.disabled=false; }, sec * 1000);

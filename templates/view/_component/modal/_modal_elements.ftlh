@@ -75,3 +75,13 @@
         <i class="bi bi-x"></i>닫기
     </button>
 </#macro>
+
+<!--
+* 모달:: 버튼::모달 닫기 (닫기 안전장치 기능 추가)
+-->
+<#macro modal_btn_close_safe>
+    <button type="button" class="btn btn-sm btn-light modal-btn-close-safe"
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="modal" title="<@spring.message "bs.tooltip.modal.close.safe"/>">
+        <i class="bi bi-x"></i>닫기
+    </button>
+</#macro>

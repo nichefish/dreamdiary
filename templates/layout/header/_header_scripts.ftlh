@@ -46,10 +46,32 @@
                     if (!result.value) return;
                     location.replace("${Url.AUTH_LGOUT!}");
                 });
+            },
+            /** 모달 닫기 버튼에 안전장치 적용 */
+            modalBtnCloseSafe: function() {
+                // 모든 닫기 버튼을 선택
+                const closeButtons = document.querySelectorAll('.modal-btn-close-safe');
+                // 각 버튼마다 클릭 이벤트 추가
+                closeButtons.forEach(function(button) {
+                    let isAllowed = false;
+                    button.removeAttribute('data-bs-dismiss');
+                    button.addEventListener('click', function(event) {
+                        if (!isAllowed) {
+                            event.preventDefault();
+                            isAllowed = true;
+                            button.setAttribute('data-bs-dismiss', 'modal');
+                            setTimeout(function() {
+                                isAllowed = false;
+                                button.removeAttribute('data-bs-dismiss');
+                            }, 2000);
+                        }
+                    });
+                });
             }
         }
     })();
     $(document).ready(function() {
         Layout.init();
+        Layout.modalBtnCloseSafe();
     });
 </script>
