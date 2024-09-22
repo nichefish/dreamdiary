@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.handler.HttpMethodRequestWrapper;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
@@ -99,7 +100,10 @@ public class LgnFailureHandler
 
         log.info("login attempt failed.. userId: {} errorMsg: {}", userId, errorMsg);
         request.setAttribute(Constant.ERROR_MSG, errorMsg);
-        request.getRequestDispatcher(Url.AUTH_LGN_FORM).forward(request, response);
+        // POST로 넘어왔던 Request 메소드를 GET으로 변경
+        HttpMethodRequestWrapper getMethodRequest = new HttpMethodRequestWrapper(request);
+        // 로그인 화면으로 포워드
+        request.getRequestDispatcher(Url.AUTH_LGN_FORM).forward(getMethodRequest, response);
     }
 
     /**
