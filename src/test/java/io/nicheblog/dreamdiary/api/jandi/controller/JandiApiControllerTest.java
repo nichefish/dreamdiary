@@ -56,17 +56,17 @@ public class JandiApiControllerTest {
     }
 
     /**
-     * Jandi 메세지 송신 검증
+     * JANDI:: 메세지 송신 검증
      */
     @Test
     public void testSendMsg() throws Exception {
         // Given::
 
         // When::
-        when(jandiApiService.sendMsg(any(JandiParam.class)))
-                .thenReturn(true);
         when(request.getRequestURL())
                 .thenReturn(new StringBuffer(Url.API_JANDI_SND_MSG));
+        when(jandiApiService.sendMsg(any(JandiParam.class)))
+                .thenReturn(true);
 
         // Then::
         mockMvc.perform(

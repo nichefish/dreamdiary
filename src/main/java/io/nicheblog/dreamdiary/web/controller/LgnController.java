@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -76,10 +77,8 @@ public class LgnController
         // remember-me 관련 파라미터 세팅
         model.addAttribute("REMEMBER_ME_PARAM", REMEMBER_ME_PARAM);
 
-        // TODO: 보안적으로 정리하기
-        if ("Y".equals(dupLgnAt)) {
-            MessageUtils.alertMessage("중복 로그인 방지에 의해 로그아웃 처리되었습니다.", Url.AUTH_LGN_FORM);
-        }
+        // 중복 로그인으로 인해 로그인 면으로 튕겨나왔을 경우 alert
+        if ("Y".equals(dupLgnAt)) MessageUtils.alertMessage("중복 로그인 방지에 의해 로그아웃 처리되었습니다.", Url.AUTH_LGN_FORM);
 
         return "/view/lgn_form";
     }
@@ -125,6 +124,27 @@ public class LgnController
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+
+    /**
+     * 세션 강제 만료 처리 (중복 로그인 '기존 아이디 끊기'에서 취소 선택시)
+     */
+    @PostMapping(Url.AUTH_EXPIRE_SESSION_AJAX)
+    @PermitAll
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> expireSessionAjax(
+            //
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        // 세션 만료 처리
+        HttpSession session = request.getSession(false);
+        if (session != null) session.invalidate();
+
+        ajaxResponse.setAjaxResult(true, MessageUtils.RSLT_SUCCESS);
 
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }

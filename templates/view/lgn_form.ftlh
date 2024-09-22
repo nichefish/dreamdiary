@@ -20,7 +20,7 @@
                     errorMsgSpan.html("${errorMsg!}".replace(/&lt;br&gt;/g, '<br/>'));   // 줄바꿈 처리
                 </#if>
                 // 중복 로그인시 기존 로그인 끊기 팝업 호출
-                <#if isDupIdLgn!false>
+                <#if isDupIdLgn??>
                     Page.dupLgnAlert();
                 </#if>
                 // 조건 일치시 비밀번호 변경 팝업 호출
@@ -44,12 +44,16 @@
                     cancelButtonText: "취소",
                 }).then(function(result) {
                     if (result.value) {
+                        // 중복ID 로그인
                         $("#userId").val("${userId!}");
-                        $("#isDupIdLgnProc").val("Y");
                         $("#password").attr("disabled", "disabled");
                         Page.lgn();
                     } else {
-                        $("#isDupIdLgnProc").val("");
+                        // 중복ID 세션 attribute 만료시킴
+                        const url = "${Url.AUTH_EXPIRE_SESSION_AJAX!}";
+                        commons.util.blockUIAjax(url, 'post', null, function() {
+                            commons.util.blockUIReplace("${Url.AUTH_LGN_FORM!}");
+                        });
                     }
                 });
             },
@@ -96,9 +100,6 @@
             <input type="text" name="userId" id="userId" class="form-control form-control-lg enter required"
                    autocomplete="off" maxlength="20" placeholder="아이디를 입력하세요."
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="아이디를 입력하세요." />
-                <#if isDupIdLgn!false>
-                    <input type="hidden" name="isDupIdLgnProc" id="isDupIdLgnProc">
-                </#if>
             <div class="h-15px">
                 <span id="userId_valid_span" class="text-danger"></span>
             </div>

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.interceptor;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.util.CookieUtils;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +37,8 @@ public class CookieInterceptor
             final @NotNull Object handler,
             final ModelAndView mav
     ) {
+
+        if (Url.AUTH_LGN_FORM.equals(request.getRequestURI())) return;
 
         /* 사이드바 접기 쿠키 설정 */
         if (mav != null) {

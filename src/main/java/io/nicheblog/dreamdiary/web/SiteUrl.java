@@ -20,6 +20,7 @@ public interface SiteUrl {
     String AUTH_LGN_PROC = Prefix.AUTH + "/lgnProc.do";
     String AUTH_LGN_PW_CHG_AJAX = Prefix.AUTH + "/lgnPwChgAjax.do";
     String AUTH_LGOUT = Prefix.AUTH + "/lgout.do";
+    String AUTH_EXPIRE_SESSION_AJAX = Prefix.AUTH + "/expireSession.do";
 
     String ADMIN_MAIN = Prefix.ADMIN + MAIN;
 

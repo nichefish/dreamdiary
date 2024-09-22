@@ -90,6 +90,8 @@ public class WebSecurityConfig {
         public void configure(WebSecurity web) throws Exception {
 
             web.ignoring()
+                    // 세션 만료 처리 URL
+                    .antMatchers(Url.AUTH_EXPIRE_SESSION_AJAX)
                     // static 디렉터리의 하위 파일 목록은 인증 무시(=항상 통과 )
                     .antMatchers("/favicon.ico")
                     .antMatchers("/robots.txt")

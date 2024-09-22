@@ -23,10 +23,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * LgnFailureHandler
@@ -91,7 +94,10 @@ public class LgnFailureHandler
         // 중복 로그인 방지
         } else if (exception instanceof DupIdLgnException) {
             request.setAttribute("userId", userId);
-            request.setAttribute("isDupIdLgn", true);
+            // 세션에서 중복 아이디 정보 관리
+            ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = servletRequestAttribute.getRequest().getSession();
+            session.setAttribute("isDupIdLgn", userId);
         // 패스워드 초기화 강제
         } else if (exception instanceof AcntNeedsPwResetException) {
             request.setAttribute("userId", userId);

@@ -39,7 +39,7 @@ class ParamModule {
 
         // 세션에서 이전 정보 조회, 이전 정보가 있을 경우 이전 정보 반환
         ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = servletRequestAttribute.getRequest().getSession(true);
+        HttpSession session = servletRequestAttribute.getRequest().getSession();
         // prevListUrl과 prevSearchParam은 한 세트. prevListUrl이 있으면 prevSearchParam 반환
         String prevListUrl = (String) session.getAttribute("prevListUrl");
         if (StringUtils.isEmpty(prevListUrl) || !listUrl.equals(prevListUrl)) return searchParam;
@@ -110,7 +110,7 @@ class ParamModule {
     ) {
 
         ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = servletRequestAttribute.getRequest().getSession(true);
+        HttpSession session = servletRequestAttribute.getRequest().getSession();
 
         // 내 글 보기 체크시 목록 돌아가기 버튼 보여지기 위해 값 저장
         boolean isMyPapr = !searchParam.isBackToList() && searchParam.isAction(Constant.ACTION_TY_MY_PAPR);
@@ -178,7 +178,7 @@ class ParamModule {
     ) {
 
         ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = servletRequestAttribute.getRequest().getSession(true);
+        HttpSession session = servletRequestAttribute.getRequest().getSession();
         // 세션?에 목록 검색 인자 저장
         session.setAttribute("prevSearchMap", searchParam);
         session.setAttribute("prevListUrl", listUrl);

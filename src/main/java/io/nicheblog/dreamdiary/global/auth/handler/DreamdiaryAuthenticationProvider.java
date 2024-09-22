@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.util.SubnetUtils;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -20,10 +21,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * DreamdiaryAuthenticationProvider
@@ -64,7 +64,7 @@ public class DreamdiaryAuthenticationProvider
         if (authInfo == null) throw new InternalAuthenticationServiceException("internalAuthenticationServiceException");
 
         // 중복 로그인 '확인'(기존 아이디 끊기) 후 들어왔을 시 바로 패스 :: 메소드 분리
-        if (this.isConfirmedDupLgn()) return new UsernamePasswordAuthenticationToken(authInfo, null, authInfo.getAuthorities());
+        if (this.isDupLgnConfirmed(username)) return new UsernamePasswordAuthenticationToken(authInfo, null, authInfo.getAuthorities());
 
         // password 일치여부 체크
         if (!passwordEncoder.matches(password, authInfo.getPassword())) throw new BadCredentialsException("BadCredentialsException");
@@ -98,10 +98,14 @@ public class DreamdiaryAuthenticationProvider
     /**
      * 중복 로그인 후 재접속 여부 :: 메소드 분리
      */
-    public Boolean isConfirmedDupLgn() {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String isDupIdLgnProc = request.getParameter("isDupIdLgnProc");
-        return "Y".equals(isDupIdLgnProc);
+    public Boolean isDupLgnConfirmed(String username) {
+        if (StringUtils.isEmpty(username)) return false;
+        ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = servletRequestAttribute.getRequest().getSession(false);
+        if (session == null) return false;
+        Object isDupIdLgn = session.getAttribute("isDupIdLgn");
+        session.removeAttribute("isDupIdLgn");
+        return isDupIdLgn instanceof String && username.equals(isDupIdLgn);
     }
 
     /**
