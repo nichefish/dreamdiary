@@ -20,7 +20,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
@@ -67,7 +70,7 @@ public class LgnController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.LGN_PAGE.setAcsPageInfo(Constant.PAGE_LGN));
 
-        // 로그인 상태일 경우 메인 화면으로 리다이렉트
+        // 로그인 상태일 경우:: 메인 화면으로 리다이렉트
         if (AuthUtils.isAuthenticated()) return "redirect:" + Url.MAIN;
 
         // remember-me 관련 파라미터 세팅

@@ -90,10 +90,7 @@ public class WebSecurityConfig {
         public void configure(WebSecurity web) throws Exception {
 
             web.ignoring()
-                    // 로그인 화면, 캐시 클리어 인증 무시
-                    .antMatchers(Url.AUTH_LGN_FORM)
                     // static 디렉터리의 하위 파일 목록은 인증 무시(=항상 통과 )
-                    .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/public/**")
                     .antMatchers("/favicon.ico")
                     .antMatchers("/robots.txt")
                     // 에러 페이지
@@ -110,9 +107,7 @@ public class WebSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             // 페이지 권한 설정
             http.authorizeRequests()
-                    // 로그인 화면 전체 접근
-                    .antMatchers(Url.AUTH_LGN_FORM)
-                    .permitAll()
+                    // formLogin 설정만으로 로그인 페이지는 접근이 허용된다.
                     // static resource 전체 접근
                     .antMatchers("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/public/**")
                     .permitAll()

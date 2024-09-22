@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,9 +41,8 @@ public class AuthUtils {
      * 현재 로그인 중인 사용자 정보 세션에서 조회해서 반환
      */
     public static AuthInfo getAuthenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) return null;
-        return (AuthInfo) authentication.getPrincipal();
+        if (!isAuthenticated()) return null;
+        return (AuthInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     /**
@@ -65,9 +65,11 @@ public class AuthUtils {
 
     /**
      * 현재 사용자 인증여부 세션에서 조회해서 반환
+     * 익명 사용자(anynymousUser) 일 경우 false
      */
     public static Boolean isAuthenticated() {
-        boolean isAuthenticated = SecurityContextHolder.getContext().getAuthentication() != null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken);
         if (!isAuthenticated) log.info("isAuthenticated: {}", isAuthenticated);
         return isAuthenticated;
     }
