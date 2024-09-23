@@ -166,7 +166,7 @@ public class JrnlSbjctController
     @GetMapping(Url.JRNL_SBJCT_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String jrnlSbjctRegPreviewPop(
-            final JrnlSbjctDto jrnlSbjct,
+            final @Valid JrnlSbjctDto jrnlSbjct,
             final LogActvtyParam logParam,
             final ModelMap model
     ) {
@@ -206,8 +206,6 @@ public class JrnlSbjctController
     public ResponseEntity<AjaxResponse> jrnlSbjctRegAjax(
             final @Valid JrnlSbjctDto.DTL jrnlSbjct,
             final @RequestParam("postNo") @Nullable Integer key,
-            final @RequestParam("jandiYn") @Nullable String jandiYn,
-            final @RequestParam("trgetTopic") @Nullable String trgetTopic,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request,
             final BindingResult bindingResult

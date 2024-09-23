@@ -144,6 +144,7 @@ public interface SiteUrl {
     String SECTN_LIST_AJAX = Prefix.SECTN + "/sectnListAjax.do";
     String SECTN_REG_AJAX = Prefix.SECTN + "/sectnRegAjax.do";
     String SECTN_MDF_AJAX = Prefix.SECTN + "/sectnMdfAjax.do";
+    String SECTN_DTL_AJAX = Prefix.SECTN + "/sectnDtlAjax.do";
     String SECTN_DEL_AJAX = Prefix.SECTN + "/sectnDelAjax.do";
 
 

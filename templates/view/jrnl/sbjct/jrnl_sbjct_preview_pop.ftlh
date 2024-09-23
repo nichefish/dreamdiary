@@ -37,7 +37,19 @@
         </div>
     </div>
 
-    <div class="separator separator-dashed border-gray-300 my-8"></div>
+    <div class="separator separator-dashed border-gray-300 mb-8"></div>
+
+    <!--begin::section-->
+    <#if post.sectn?? && post.sectn.hasSectn>
+        <#list post.sectn.list![] as sectn>
+            <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6 min-h-75px">
+                11
+            </div>
+        </#list>
+
+        <div class="separator separator-dashed border-gray-300 my-8"></div>
+    </#if>
+
 
     <#--begin::Card footer-->
     <div class="card-footer">

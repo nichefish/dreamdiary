@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.web.model.jrnl.sbjct;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
@@ -26,11 +26,12 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 public class JrnlSbjctDto
         extends BasePostDto
-        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, SectnCmpstnModule {
 
-    /** 컨텐츠 타입 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType */
-    @JsonProperty("contentType")
-    private String boardCd;
+    /** 필수: 컨텐츠 타입 */
+    private static final ContentType CONTENT_TYPE = ContentType.JRNL_SBJCT;
+    /** 필수(Override): 글분류 코드 */
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     @Override
     public Integer getKey() {
@@ -57,12 +58,8 @@ public class JrnlSbjctDto
     @EqualsAndHashCode(callSuper = false)
     public static class DTL
             extends JrnlSbjctDto {
-        /** 노션 페이지 참조 ID :: UUID */
-        // private String notionPageId;
 
-        /** 파일시스템 참조 목록 */
-        // private List<FlsysRefDto> flsysRefList;
-
+        //
     }
 
     @Getter
@@ -79,10 +76,8 @@ public class JrnlSbjctDto
 
     /** 댓글 정보 모듈 (위임) */
     public CommentCmpstn comment;
+    /** 단락 정보 모듈 (위임) */
+    public SectnCmpstn sectn;
     /** 태그 정보 모듈 (위임) */
     public TagCmpstn tag;
-    /** 조치 정보 모듈 (위임) */
-    public ManagtCmpstn managt;
-    /** 열람자 정보 모듈 (위임) */
-    public ViewerCmpstn viewer;
 }

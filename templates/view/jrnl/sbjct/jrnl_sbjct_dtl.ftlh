@@ -1,13 +1,19 @@
 <#--
  * 저널 주제(jrnl_sbjct) > 상세 화면
+ * tinyMCE 정책 때문에 문서 최상단에 <!DOCTYPE html> 추가
  -->
 
+<!DOCTYPE html>
 <#import "/layout/layout.ftlh" as layout >
+
+<script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/js/commons/commons-tinymce.js?${releaseDate!}"></script>
 
 <@layout.layout toolbar=toolbar!"">
 
 <#--include::script modules-->
 <#include "/view/jrnl/sbjct/_jrnl_sbjct_scripts.ftlh">
+<#include "/view/_component/modal/sectn/_sectn_scripts.ftlh">
 
 <div class="card post">
     <#--begin::Card body-->
@@ -25,11 +31,44 @@
         <div class="separator separator-dashed border-gray-300 my-8"></div>
 
         <#--begin::cn-->
+        <!--begin::Label-->
+        <label class="mb-2 d-flex align-items-center" for="tinymce_cn">
+            <div class="col d-flex justify-content-end">
+                <#--헤더:: 버튼: 등록 모달 호출하기-->
+                <@component.header_btn_reg_modal "Sectn.regModal(${post.postNo!}, '${post.contentType!}');" />
+            </div>
+        </label>
+
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6 min-h-150px">
             ${post.cn?no_esc}
         </div>
 
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
+
+        <!--begin::section-->
+        <#if post.sectn?? && post.sectn.hasSectn>
+            <#list post.sectn.list![] as sectn>
+                <div class="row d-flex align-items-center mb-6">
+                    <div class="col fs-4 fw-normal text-gray-800 px-5 py-1 border-gray-300 border-end">
+                        ${sectn.cn?no_esc}
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                onclick="Sectn.mdfModal(${sectn.postNo!});"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="단락 <@spring.message "bs.tooltip.modal.mdf"/>">
+                            <i class="bi bi-pencil-square p-0"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-light-danger btn-outlined ms-2 py-1 px-2 cursor-pointer"
+                                onclick="Sectn.delAjax(${sectn.postNo!});"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="단락 <@spring.message "bs.tooltip.del"/>">
+                            <i class="bi bi-trash p-0"></i>
+                        </button>
+                    </div>
+                </div>
+            </#list>
+
+            <div class="separator separator-dashed border-gray-300 mb-8"></div>
+        </#if>
 
         <#--begin::meta-->
         <div class="mb-0">
@@ -66,5 +105,9 @@
 <form name="procForm" id="procForm" method="get">
     <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
 </form>
+
+<#--include:: component:: tinymce 이미지 추가 영역 template-->
+<#include "/view/_component/_tinymce_img.ftlh">
+<#include "/view/_component/modal/sectn/_sectn_reg_modal.ftlh">
 
 </@layout.layout>

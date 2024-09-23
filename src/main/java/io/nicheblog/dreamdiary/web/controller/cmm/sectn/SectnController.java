@@ -52,7 +52,7 @@ public class SectnController
     private SectnService sectnService;
 
     /**
-     * 댓글 목록 조회 (Ajax)
+     * 단락 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @GetMapping(Url.SECTN_LIST_AJAX)
@@ -95,7 +95,7 @@ public class SectnController
     }
 
     /**
-     * 댓글 등록/수정 처리 (Ajax)
+     * 단락 등록/수정 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(value = {Url.SECTN_REG_AJAX, Url.SECTN_MDF_AJAX})
@@ -137,8 +137,48 @@ public class SectnController
         return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
     }
 
+
     /**
-     * 댓글 삭제 처리 (Ajax)
+     * 단락 상세 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @GetMapping(Url.SECTN_DTL_AJAX)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> sectnDtlAjax(
+            final LogActvtyParam logParam,
+            final SectnParam param,
+            final @RequestParam("postNo") Integer key
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 삭제 처리
+            SectnDto rsDto = sectnService.getDtlDto(key);
+            ajaxResponse.setRsltObj(rsDto);
+
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setCn("key: " + key);
+            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+    }
+    
+    /**
+     * 단락 삭제 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
     @PostMapping(Url.SECTN_DEL_AJAX)

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
 /**
@@ -53,7 +54,7 @@ public class TmplatTxtController
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> tmplatTxtRegAjax(
-            final TmplatDefDto tmplatDto,
+            final @Valid TmplatDefDto tmplatDto,
             final LogActvtyParam logParam
     ) {
 
