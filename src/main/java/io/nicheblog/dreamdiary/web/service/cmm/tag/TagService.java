@@ -84,6 +84,48 @@ public class TagService
     }
 
     /**
+     * 컨텐츠 타입에 해당하는 태그만 INNER-JOIN으로 조회 (사이즈 정보 포함)
+     */
+    public List<TagDto> getContentSpecificSizedTagList(ContentType contentType) {
+        List<TagDto> tagList = this.getContentSpecificTagList(contentType);
+
+        int maxSize = this.calcMaxSize(tagList, contentType);
+        final int MIN_SIZE = 2; // 최소 크기
+        final int MAX_SIZE = 9; // 최대 크기
+        return tagList.stream()
+                .peek(dto -> {
+                    int size = dto.getContentSize();
+                    if (size == 1) {
+                        dto.setTagClass("ts-1");
+                    } else {
+                        double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
+                        int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
+                        dto.setTagClass("ts-"+tagSize);
+                    }
+                })
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 최대 사용빈도 계산한 태그 목록 조회
+     */
+    public Integer calcMaxSize(List<TagDto> tagList, ContentType contentType) {
+        int maxFrequency = 0;
+        for (TagDto tag : tagList) {
+            // 캐싱 처리 위해 셀프 프록시
+            Integer tagSize = this.countTagSize(tag.getTagNo(), contentType);
+            tag.setContentSize(tagSize);
+            maxFrequency = Math.max(maxFrequency, tagSize);
+        }
+        return maxFrequency;
+    }
+
+    public Integer countTagSize(Integer tagNo, ContentType contentType) {
+        return tagRepository.countTagSize(tagNo, contentType.key);
+    }
+
+    /**
      * 컨텐츠 태그 처리
      */
     @Transactional
@@ -157,41 +199,6 @@ public class TagService
         List<TagEntity> entity = tagRepository.findAll(tagSpec.getNoRefTags());
         tagRepository.deleteAll(entity);
 
-    }
-
-    /**
-     * css 사이즈 계산한 태그 목록 조회
-     * 태그 1개 = 1. 그 외엔 2~9
-     */
-    public List<TagDto> getSizedListDto(Map<String, Object> searchParamMap) throws Exception {
-        List<TagDto> tagList = this.getListDto(searchParamMap);
-        int maxSize = this.calcMaxSize(tagList);
-        final int MIN_SIZE = 2; // 최소 크기
-        final int MAX_SIZE = 9; // 최대 크기
-        return tagList.stream()
-                .peek(dto -> {
-                    int size = dto.getSize();
-                    if (size == 1) {
-                        dto.setTagClass("ts-1");
-                    } else {
-                        double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
-                        int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
-                        dto.setTagClass("ts-"+tagSize);
-                    }
-                })
-                .sorted()
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * 최대 사용빈도 계산한 태그 목록 조회
-     */
-    public int calcMaxSize(List<TagDto> tagList) {
-        int maxFrequency = 0;
-        for (TagDto tag : tagList) {
-            maxFrequency = Math.max(maxFrequency, tag.getSize());
-        }
-        return maxFrequency;
     }
 
     /**

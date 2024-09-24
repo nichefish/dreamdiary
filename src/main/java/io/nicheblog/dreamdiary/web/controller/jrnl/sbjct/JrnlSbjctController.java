@@ -94,7 +94,7 @@ public class JrnlSbjctController
             model.addAttribute("jrnlSbjctList", jrnlSbjctList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(jrnlSbjctList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
-            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.JRNL_SBJCT));
+            model.addAttribute("tagList", tagService.getContentSpecificSizedTagList(ContentType.JRNL_SBJCT));
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
@@ -161,7 +161,7 @@ public class JrnlSbjctController
      * 저널 주제 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(Url.JRNL_SBJCT_REG_PREVIEW_POP)
+    @PostMapping(Url.JRNL_SBJCT_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String jrnlSbjctRegPreviewPop(
             final @Valid JrnlSbjctDto jrnlSbjct,

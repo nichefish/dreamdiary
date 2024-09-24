@@ -103,7 +103,7 @@ public class NoticeController
             model.addAttribute("noticeList", noticeList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
-            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.NOTICE));
+            model.addAttribute("tagList", tagService.getContentSpecificSizedTagList(ContentType.NOTICE));
             // 코드 정보 모델에 추가
             cdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
             // 목록 검색 URL + 파라미터 모델에 추가
@@ -172,7 +172,7 @@ public class NoticeController
      * 공지사항 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(Url.NOTICE_REG_PREVIEW_POP)
+    @PostMapping(Url.NOTICE_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String noticeRegPreviewPop(
             final NoticeDto notice,

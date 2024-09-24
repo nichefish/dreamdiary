@@ -17,6 +17,7 @@
             /** 등록 모달 호출 */
             regModal: function(refPostNo, refContentType) {
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
+                commons.util.handlebarsTemplate(obj, "sectn_reg_header");
                 commons.util.handlebarsTemplate(obj, "sectn_reg", "show");
                 /* jquery :: validation */
                 Sectn.initValidateForm();
@@ -65,6 +66,7 @@
                     }
                     const rsltObj = res.rsltObj;
 
+                    commons.util.handlebarsTemplate(rsltObj, "sectn_reg_header");
                     commons.util.handlebarsTemplate(rsltObj, "sectn_reg", "show");
                     /* jquery :: validation */
                     Sectn.initValidateForm();

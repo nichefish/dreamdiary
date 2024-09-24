@@ -15,7 +15,7 @@
                         <#if tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>
                         <span class="em_${tag.tagNm!}">${tag.tagNm!}</span>
                     </span>
-                    <span class="fs-9 text-noti fw-normal" style="margin-left:-0.25em;">${tag.size!0}</span>
+                    <span class="fs-9 text-noti fw-normal" style="margin-left:-0.25em;">${tag.contentSize!0}</span>
                 </span>
             </#list>
         </div>

@@ -68,7 +68,10 @@
                 commons.util.blockUIFileAjax(url, ajaxData, function (res) {
                     Swal.fire({text: res.message})
                         .then(function () {
-                            if (res.rslt) JrnlSbjct.list();
+                            if (!res.rslt) return;
+                            if (res.rsltObj === undefined) JrnlSbjct.list();
+                            const postNo = res.rsltObj.postNo;
+                            commons.util.blockUIReplace("${Url.JRNL_SBJCT_DTL!}?postNo=" + postNo);
                         });
                 }, "block");
             },

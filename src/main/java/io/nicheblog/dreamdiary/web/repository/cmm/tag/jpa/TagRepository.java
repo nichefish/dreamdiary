@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.repository.cmm.tag.jpa;
 
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -29,4 +30,13 @@ public interface TagRepository
      * 태그명 + 카테고리명으로 테이블 조회
      */
     Optional<TagEntity> findByTagNmAndCtgr(String tagNm, String ctgr);
+
+    /**
+     * 년도/월별 저널 꿈 태그 개수 조회
+     */
+    @Query("SELECT COUNT(contentTag.contentTagNo) " +
+            "FROM ContentTagEntity contentTag " +
+            "WHERE contentTag.refTagNo = :tagNo " +
+            " AND contentTag.refContentType = :refContentType")
+    Integer countTagSize(Integer tagNo, String refContentType);
 }

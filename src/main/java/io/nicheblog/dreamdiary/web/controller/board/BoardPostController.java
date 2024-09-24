@@ -178,7 +178,7 @@ public class BoardPostController
      * 일반게시판 게시물 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(Url.BOARD_POST_REG_PREVIEW_POP)
+    @PostMapping(Url.BOARD_POST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String boardPostRegPreviewPop(
             final BoardPostDto boardPost,

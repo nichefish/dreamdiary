@@ -163,7 +163,7 @@ public class ExptrReqstController
      * 경비 관리 > 물품 구매 및 경조사비 신청 등록 전 미리보기 팝업 조회
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @GetMapping(Url.EXPTR_REQST_REG_PREVIEW_POP)
+    @PostMapping(Url.EXPTR_REQST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String exptrReqstRegPreviewPop(
             final ExptrReqstDto exptrReqstDto,

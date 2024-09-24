@@ -11,6 +11,9 @@
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <form name="sectnRegForm" id="sectnRegForm" enctype="multipart/form-data">
+            <div id="sectn_reg_header_div">
+                <#--Handlebars template goes in here-->
+            </div>
             <#--begin::Row-->
             <div class="row mb-4">
                 <div class="col-12">
@@ -41,4 +44,5 @@
 </@modal.layout>
 
 <#--include:: Handlebars template-->
+<#include "/view/_component/modal/sectn/_sectn_reg_header_template.hbs">
 <#include "/view/_component/modal/sectn/_sectn_reg_template.hbs">

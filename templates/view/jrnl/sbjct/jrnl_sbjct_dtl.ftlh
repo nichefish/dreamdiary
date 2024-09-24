@@ -49,8 +49,15 @@
         <#if post.sectn?? && post.sectn.hasSectn>
             <#list post.sectn.list![] as sectn>
                 <div class="row d-flex align-items-center mb-6">
-                    <div class="col fs-4 fw-normal text-gray-800 px-5 py-1 border-gray-300 border-end">
-                        ${sectn.cn?no_esc}
+                    <div class="col fs-3 fw-normal text-gray-800 py-1 border-gray-300 border-end">
+                        <#if sectn.title??>
+                            <div class="fs-1x fw-bold ms-2 mb-4 text-muted">
+                                ＜ ${sectn.title!} ＞
+                            </div>
+                        </#if>
+                        <div class="mx-5">
+                            ${sectn.cn?no_esc}
+                        </div>
                     </div>
                     <div class="col-1">
                         <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
@@ -64,6 +71,9 @@
                             <i class="bi bi-trash p-0"></i>
                         </button>
                     </div>
+                    <#if sectn?index + 1 < sectn?size>
+                        <div class="separator separator-dashed border-gray-300 my-6"></div>
+                    </#if>
                 </div>
             </#list>
 
