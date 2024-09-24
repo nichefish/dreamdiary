@@ -130,6 +130,7 @@ public class BoardDefController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             BoardDefDto result = boardDefService.regist(boardDef);
+            ajaxResponse.setRsltObj(result);
             
             isSuccess = (result.getBoardCd() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

@@ -81,6 +81,7 @@ public class JrnlDiaryController
             // 등록 및 수정 처리
             boolean isReg = key == null;
             JrnlDiaryDto result = isReg ? jrnlDiaryService.regist(jrnlDiary, request) : jrnlDiaryService.modify(jrnlDiary, request);
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

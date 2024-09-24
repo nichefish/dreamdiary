@@ -239,6 +239,7 @@ public class BoardPostController
             // 등록/수정 처리
             boolean isReg = key.getPostNo() == null;
             BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPost, request) : boardPostService.modify(boardPost, request);
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

@@ -120,6 +120,7 @@ public class JrnlDreamController
             // 등록 및 수정 처리
             boolean isReg = key == null;
             JrnlDreamDto result = isReg ? jrnlDreamService.regist(jrnlDream, request) : jrnlDreamService.modify(jrnlDream, request);
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

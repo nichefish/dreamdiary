@@ -222,6 +222,7 @@ public class ExptrReqstController
             // 등록/수정 처리
             boolean isReg = key == null;
             ExptrReqstDto result = isReg ? exptrReqstService.regist(exptrReqst, request) : exptrReqstService.modify(exptrReqst, request);
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

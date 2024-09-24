@@ -163,6 +163,7 @@ public class JrnlDayController
                 }
             }
             JrnlDayDto result = isReg ? jrnlDayService.regist(jrnlDay, request) : jrnlDayService.modify(jrnlDay, request);
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

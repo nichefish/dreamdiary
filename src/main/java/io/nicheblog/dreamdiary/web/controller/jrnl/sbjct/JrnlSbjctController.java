@@ -94,9 +94,7 @@ public class JrnlSbjctController
             model.addAttribute("jrnlSbjctList", jrnlSbjctList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(jrnlSbjctList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
-            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.NOTICE));
-            // 코드 정보 모델에 추가
-            // cdService.setModelCdData(Constant.JRNL_SBJCT_CTGR_CD, model);
+            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.JRNL_SBJCT));
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
@@ -221,6 +219,7 @@ public class JrnlSbjctController
             // 등록/수정 처리
             boolean isReg = (key == null);
             JrnlSbjctDto result = isReg ? jrnlSbjctService.regist(jrnlSbjct, request) : jrnlSbjctService.modify(jrnlSbjct, request);
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

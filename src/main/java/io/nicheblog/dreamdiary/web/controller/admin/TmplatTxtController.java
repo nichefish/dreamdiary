@@ -64,8 +64,9 @@ public class TmplatTxtController
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            TmplatDefDto rsDto = tmplatDefService.regist(tmplatDto);
+            TmplatDefDto result = tmplatDefService.regist(tmplatDto);
             // isSuccess = (StringUtils.isNotEmpty(rsDto.getTmplatCd()));
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

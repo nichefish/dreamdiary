@@ -112,6 +112,7 @@ public class DtlCdController
             // 등록/수정 처리
             boolean isReg = "Y".equals(regYn);
             DtlCdDto result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd);
+            ajaxResponse.setRsltObj(result);
             
             isSuccess = (result.getDtlCd() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

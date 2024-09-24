@@ -75,6 +75,7 @@ public class SchdulController
             // 등록/수정 처리
             boolean isReg = postNo == null;
             SchdulDto result = isReg ? schdulService.regist(schdul) : schdulService.modify(schdul);
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

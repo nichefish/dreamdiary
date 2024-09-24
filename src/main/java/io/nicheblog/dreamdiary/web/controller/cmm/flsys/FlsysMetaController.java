@@ -71,6 +71,8 @@ public class FlsysMetaController
             if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = key.getPostNo() == null;
             FlsysMetaDto result = isReg ? flsysMetaService.regist(flsysMeta) : flsysMetaService.modify(flsysMeta);
+            ajaxResponse.setRsltObj(result);
+
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {

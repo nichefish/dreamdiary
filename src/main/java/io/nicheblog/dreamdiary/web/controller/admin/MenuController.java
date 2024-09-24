@@ -116,6 +116,7 @@ public class MenuController
             // 등록/수정 처리
             boolean isReg = key == null;
             MenuDto result = isReg ? menuService.regist(menu) : menuService.modify(menu);
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = result.getMenuNo() != null;
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

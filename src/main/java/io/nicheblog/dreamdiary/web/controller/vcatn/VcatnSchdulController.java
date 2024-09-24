@@ -146,6 +146,7 @@ public class VcatnSchdulController
             // 등록/수정 처리
             boolean isReg = (vcatnSchdulNo == null);
             VcatnSchdulDto result = isReg ? vcatnSchdulService.regist(vcatnSchdul) : vcatnSchdulService.modify(vcatnSchdul);
+            ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getVcatnSchdulNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
