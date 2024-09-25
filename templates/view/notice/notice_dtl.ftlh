@@ -8,6 +8,8 @@
 
 <#--include::script modules-->
 <#include "/view/notice/_notice_scripts.ftlh">
+<#include "/view/_component/modal/sectn/_sectn_scripts.ftlh">
+<#include "/view/_component/modal/comment/_comment_scripts.ftlh">
 
 <div class="card post">
     <#--begin::Card body-->
@@ -30,6 +32,9 @@
         </div>
 
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
+
+        <#--페이지:: 단락 영역-->
+        <#include "/view/_component/page_area/sectn/_sectn_area.ftlh">
 
         <#--begin::meta-->
         <div class="mb-0">
@@ -66,5 +71,10 @@
 <form name="procForm" id="procForm" method="get">
     <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />
 </form>
+
+<#--include:: component:: tinymce 이미지 추가 영역 template-->
+<#include "/view/_component/_tinymce_img.ftlh">
+<#include "/view/_component/modal/sectn/_sectn_reg_modal.ftlh">
+<#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>

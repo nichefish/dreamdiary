@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.jrnl.sbjct;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sbjct.JrnlSbjctEntity;
 import io.nicheblog.dreamdiary.web.model.jrnl.sbjct.JrnlSbjctDto;
@@ -17,7 +18,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseClsfMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
 public interface JrnlSbjctMapstruct
         extends BasePostMapstruct<JrnlSbjctDto.DTL, JrnlSbjctDto.LIST, JrnlSbjctEntity> {
 
@@ -28,6 +29,7 @@ public interface JrnlSbjctMapstruct
      */
     @Override
     @Named("toDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     JrnlSbjctDto.DTL toDto(final JrnlSbjctEntity entity) throws Exception;
 
     /**
@@ -35,6 +37,7 @@ public interface JrnlSbjctMapstruct
      */
     @Override
     @Named("toListDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     JrnlSbjctDto.LIST toListDto(final JrnlSbjctEntity entity) throws Exception;
 
     /**

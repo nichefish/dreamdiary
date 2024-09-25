@@ -125,7 +125,9 @@ public class LgnController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -146,6 +148,8 @@ public class LgnController
 
         ajaxResponse.setAjaxResult(true, MessageUtils.RSLT_SUCCESS);
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 }

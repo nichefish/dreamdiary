@@ -74,7 +74,10 @@ public class JandiApiController
             logParam.setResult(isSuccess, rsltMsg);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(apiResponse);
     }
 
     /**
@@ -109,6 +112,9 @@ public class JandiApiController
     //         logParam.setResult(isSuccess, rsltMsg);
     //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     //     }
-    //     return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    //
+    //     return ResponseEntity
+    //        .status(HttpStatus.OK)
+    //        .body(apiResponse);
     // }
 }

@@ -59,7 +59,9 @@ public class BaseExceptionlHandler {
 
         if (this.isAjaxRequest(request)) {
             AjaxResponse ajaxResponse = new AjaxResponse(false, errorMsg);
-            return new ResponseEntity<>(ajaxResponse, status);
+            return ResponseEntity
+                    .status(status)
+                    .body(ajaxResponse);
         }
         ModelAndView modelAndView = new ModelAndView(view);
         modelAndView.addObject("errorMsg", errorMsg);

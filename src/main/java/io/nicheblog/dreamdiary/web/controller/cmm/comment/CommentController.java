@@ -91,7 +91,9 @@ public class CommentController
             logParam.setResult(isSuccess, rsltMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgrCd()));
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -135,7 +137,9 @@ public class CommentController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -174,7 +178,9 @@ public class CommentController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -210,6 +216,8 @@ public class CommentController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 }

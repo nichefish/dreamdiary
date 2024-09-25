@@ -32,7 +32,7 @@ import javax.persistence.*;
 @SQLDelete(sql = "UPDATE notice SET del_yn = 'Y' WHERE post_no = ?")
 public class NoticeEntity
         extends BasePostEntity
-        implements CommentEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {
+        implements CommentEmbedModule, SectnEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
     @Builder.Default
@@ -86,6 +86,9 @@ public class NoticeEntity
     /** 댓글 정보 모듈 (위임) */
     @Embedded
     public CommentEmbed comment;
+    /** 단락 정보 모듈 (위임) */
+    @Embedded
+    public SectnEmbed sectn;
     /** 태그 정보 모듈 (위임) */
     @Embedded
     public TagEmbed tag;

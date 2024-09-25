@@ -91,7 +91,10 @@ public class SectnController
             logParam.setResult(isSuccess, rsltMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgrCd()));
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -135,7 +138,9 @@ public class SectnController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
 
@@ -175,7 +180,9 @@ public class SectnController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
     
     /**
@@ -211,6 +218,8 @@ public class SectnController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 }

@@ -134,7 +134,9 @@ public class UserReqstController
             publisher.publishEvent(new LogAnonActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -168,7 +170,9 @@ public class UserReqstController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -202,6 +206,8 @@ public class UserReqstController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 }

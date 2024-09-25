@@ -171,7 +171,10 @@ public class ExptrPrsnlStatsController
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**

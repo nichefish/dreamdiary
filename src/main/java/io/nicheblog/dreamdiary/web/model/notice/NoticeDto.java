@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 @ToString(callSuper = true)
 public class NoticeDto
         extends BasePostDto
-        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, SectnCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     protected static final ContentType CONTENT_TYPE = ContentType.NOTICE;
@@ -84,6 +84,8 @@ public class NoticeDto
 
     /** 댓글 정보 모듈 (위임) */
     public CommentCmpstn comment;
+    /** 단락 정보 모듈 (위임) */
+    public SectnCmpstn sectn;
     /** 태그 정보 모듈 (위임) */
     public TagCmpstn tag;
     /** 조치 정보 모듈 (위임) */

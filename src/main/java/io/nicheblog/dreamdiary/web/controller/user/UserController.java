@@ -199,7 +199,9 @@ public class UserController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -242,7 +244,9 @@ public class UserController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -366,7 +370,10 @@ public class UserController
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -406,7 +413,9 @@ public class UserController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return new ResponseEntity<>(ajaxResponse, HttpStatus.OK);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
