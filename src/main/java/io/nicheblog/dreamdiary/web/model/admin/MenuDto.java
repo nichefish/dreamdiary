@@ -48,7 +48,7 @@ public class MenuDto
     /** 하위메뉴 확장유형 이름 */
     private String menuSubExtendTyNm;
 
-    /** 폴더(중메뉴) 여부 */
+    /** 폴더(중메뉴) 여부 (Y/N) */
     private String dirYn;
 
     /** 셀프 참조 :: 상위메뉴 조회 */

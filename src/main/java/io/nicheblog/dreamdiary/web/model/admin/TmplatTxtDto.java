@@ -46,7 +46,7 @@ public class TmplatTxtDto
     /** 내용 (텍스트에디터 */
     private String cn;
 
-    /** 기본설정 여부 */
+    /** 기본설정 여부 (Y/N) */
     @Builder.Default
     private String defaultYn = "N";
 

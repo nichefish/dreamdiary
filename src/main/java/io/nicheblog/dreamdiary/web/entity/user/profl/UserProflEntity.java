@@ -57,7 +57,7 @@ public class UserProflEntity
     @Comment("생년월일")
     private Date brthdy;
 
-    /** 음력여부 */
+    /** 음력 여부 (Y/N) */
     @Builder.Default        // Builder 사용시 초기값 세팅하도록 설정
     @Column(name = "lunar_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("음력여부")

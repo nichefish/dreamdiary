@@ -36,8 +36,10 @@ public class JrnlDayDto
         implements Identifiable<Integer>, TagCmpstnModule, Comparable<JrnlDayDto>  {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_DAY;
     /** 필수(Override): 글분류 코드 */
+    @Builder.Default
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
@@ -85,7 +87,7 @@ public class JrnlDayDto
         if (!StringUtils.isEmpty(this.jrnlDt)) return jrnlDt;
         return aprxmtDt;
     }
-    /** 꿈 목록 보유여부 */
+    /** 꿈 목록 보유 여부 */
     public Boolean getHasDreamList() {
         return !CollectionUtils.isEmpty(this.jrnlDreamList) || !CollectionUtils.isEmpty(this.jrnlElseDreamList);
     }

@@ -37,6 +37,7 @@ public class JrnlSumryEntity
         implements CommentEmbedModule, TagEmbedModule, SectnEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_SUMRY;
 
     /** 저널 꿈 고유 번호 (PK) */

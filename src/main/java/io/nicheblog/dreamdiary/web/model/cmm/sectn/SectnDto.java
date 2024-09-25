@@ -9,6 +9,9 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Comment;
+
+import javax.persistence.Column;
 
 /**
  * SectnDto
@@ -44,6 +47,12 @@ public class SectnDto
     private Integer refPostNo;
     /** 원글 컨텐츠 타입 */
     private String refContentType;
+
+    /* ----- */
+
+    /** 만료 여부 (Y/N) */
+    @Builder.Default
+    private String deprcYn = "N";
 
     @Override
     public Integer getKey() {

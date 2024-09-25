@@ -18,7 +18,7 @@
             </label>
         </div>
         <div class="col-lg-{{#if (exists postNo)}}11{{else}}12{{/if}}">
-            <input type="text" class="form-control" name="title" id="title" maxlength="50" value="{{title}}" placeholder="제목" />
+            <input type="text" class="form-control" name="title" id="title" maxlength="100" value="{{title}}" placeholder="제목" />
             <div id="title_valid_span"></div>
         </div>
         {{#if (exists postNo)}}
@@ -31,5 +31,23 @@
                 </div>
             {{/ifYn}}
         {{/if}}
+    </div>
+    <#--begin::Row-->
+    <div class="row d-flex mb-8">
+        <div class="col-2 d-flex align-items-center">
+            <div>
+                <label class="text-gray-700 fs-6 fw-bolder cursor-help"
+                       data-bs-toggle="tooltip" data-bs-placement="top" title="해당 글은 취소선으로 처리됩니다.">
+                    만료 여부
+                    <i class="bi bi-question-circle"></i>
+                </label>
+                <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
+                    <input class="form-check-input" type="checkbox" value="Y" name="deprcYn" id="deprcYn" {{checkedYn deprcYn}} />
+                    <label class="form-check-label fw-bold fs-6 ms-3" for="deprcYn" id="deprcYnLabel" {{{checkedYnStyle deprcYn "color" "red//gray"}}}>
+                        {{#ifYn imprtcYn}}만료{{else}}해당없음{{/ifYn}}
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
 </script>

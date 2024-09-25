@@ -105,8 +105,10 @@ public class ExptrPrsnlPaprEntity
     }
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.EXPTR_PRSNL_PAPR;
     /** 필수(Override): 글분류 코드 */
+    @Builder.Default
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 글 번호 */

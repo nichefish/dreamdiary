@@ -48,6 +48,7 @@ public class CommentEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.COMMENT;
 
     /** 댓글 번호 (PK) */

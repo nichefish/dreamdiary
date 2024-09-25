@@ -67,7 +67,6 @@
         <!--begin:Form-->
         <form name="jrnlSbjctRegForm" id="jrnlSbjctRegForm" class="form" method="post" enctype="multipart/form-data">
             <input type="hidden" name="postNo" value="${post.postNo!}">
-            <input type="hidden" name="contentType" value="${post.contentType!}">
             <input type="hidden" name="atchFileNo" value="${post.atchFileNo!}">
             <input type="hidden" name="hitCnt" value="${post.hitCnt!0?string.number}">
 
@@ -88,7 +87,7 @@
                     </select>
                 </div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control required" name="title" id="title" maxlength="50" value="${post.title!}"/>
+                    <input type="text" class="form-control required" name="title" id="title" maxlength="100" value="${post.title!}"/>
                     <span id="title_valid_span"></span>
                 </div>
             </div>
@@ -171,32 +170,8 @@
 
             <div class="separator separator-dashed border-gray-300 mb-8"></div>
 
-            <div class="d-flex flex-column mb-8">
-                <!--begin::section-->
-                <#if post.sectn?? && post.sectn.hasSectn>
-                    <#list post.sectn.list![] as sectn>
-                        <div class="row d-flex align-items-center mb-6">
-                            <div class="col fs-4 fw-normal text-gray-800 px-5 py-1 border-gray-300 border-end">
-                                ${sectn.cn?no_esc}
-                            </div>
-                            <div class="col-1">
-                                <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
-                                        onclick="Sectn.mdfModal(${sectn.postNo!});"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="단락 <@spring.message "bs.tooltip.modal.mdf"/>">
-                                    <i class="bi bi-pencil-square p-0"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-light-danger btn-outlined ms-2 py-1 px-2 cursor-pointer"
-                                        onclick="Sectn.delAjax(${sectn.postNo!});"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="단락 <@spring.message "bs.tooltip.del"/>">
-                                    <i class="bi bi-trash p-0"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </#list>
-
-                    <div class="separator separator-dashed border-gray-300 mb-8"></div>
-                </#if>
-            </div>
+            <#--페이지:: 단락 영역-->
+            <#include "/view/_component/page_area/sectn/_sectn_area.ftlh">
 
             <#--페이지:: 첨부파일 추가추가 영역-->
             <#include "/view/_component/page_area/atch_file/_atch_file_reg_area.ftlh">

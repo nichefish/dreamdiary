@@ -27,17 +27,17 @@ public class SchdulSearchParam
     /** 조회종료일자 */
     private String endDt;
 
-    /** 내 정보 표시여부 */
+    /** 내 정보 표시 여부 (Y/N) */
     private String myPaprChked;
-    /** 휴가 표시여부 */
+    /** 휴가 표시 여부 (Y/N) */
     private String vcatnChked;
-    /** 내부일정 정보 표시여부 */
+    /** 내부일정 정보 표시 여부 (Y/N) */
     private String indtChked;
-    /** 외근 정보 표시여부 */
+    /** 외근 정보 표시 여부 (Y/N) */
     private String outdtChked;
-    /** 재택근무 정보 표시여부 */
+    /** 재택근무 정보 표시 여부 (Y/N) */
     private String tlcmmtChked;
-    /** 개인용 정보 표시여부 */
+    /** 개인용 정보 표시 여부 (Y/N) */
     private String prvtChked;
 
     /**

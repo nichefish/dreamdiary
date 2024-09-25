@@ -63,15 +63,15 @@ public class UserDto
     /** 사용자 정보 (위임) */
     protected UserEmplymDto emplym;
 
-    /** 본인신청여부 */
+    /** 본인신청 여부 (Y/N) */
     protected String isReqst;
-    /** 승인여부 */
+    /** 승인 여부 */
     protected Boolean isCf;
 
-    /** 잠금여부 */
+    /** 잠금 여부 (Y/N) */
     @Builder.Default
     protected String lockedYn = "N";
-    /** 퇴사여부 */
+    /** 퇴사 여부 (Y/N) */
     @Builder.Default
     protected String retireYn = "N";
     /** 퇴사일 */
@@ -110,7 +110,7 @@ public class UserDto
         /** 접속IP 사용 여부 체크 */
         @Builder.Default
         private Boolean useAcsIp = false;
-        /** 접속 IP 사용 여부 */
+        /** 접속 IP 사용 여부 (Y/N) */
         @Builder.Default
         private String useAcsIpYn = "N";
         /** 접속 IP 정보 */

@@ -43,7 +43,7 @@ public class UserReqstDto
     /** 접속IP 사용 여부 체크 */
     @Builder.Default
     private Boolean useAcsIp = false;
-    /** 접속 IP 사용 여부 */
+    /** 접속 IP 사용 여부 (Y/N) */
     @Builder.Default
     private String useAcsIpYn = "N";
     /** 접속 IP 정보 */

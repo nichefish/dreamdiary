@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.mapstruct.cmm.sectn;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.SectnEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.sectn.SectnEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.sectn.SectnDto;
@@ -18,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, SectnEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CmmUtils.class, SectnEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface SectnMapstruct
         extends BasePostMapstruct<SectnDto, SectnDto, SectnEntity> {
 
@@ -29,6 +30,7 @@ public interface SectnMapstruct
      */
     @Override
     @Named("toDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     SectnDto toDto(final SectnEntity entity) throws Exception;
 
     /**
@@ -36,6 +38,7 @@ public interface SectnMapstruct
      */
     @Override
     @Named("toListDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     SectnDto toListDto(final SectnEntity entity) throws Exception;
 
     /**

@@ -35,8 +35,10 @@ public class JrnlDreamDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, Comparable<JrnlDreamDto> {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_DREAM;
     /** 필수(Override): 글분류 코드 */
+    @Builder.Default
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
@@ -68,7 +70,6 @@ public class JrnlDreamDto
     @Builder.Default
     private String elseDreamYn = "N";
     /** 꿈꾼이(타인) 이름 */
-    @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
 
     /* ----- */

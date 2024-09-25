@@ -41,6 +41,7 @@ public class SectnEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.SECTN;
 
     /** 내용 번호 (PK) */
@@ -78,6 +79,14 @@ public class SectnEntity
     @Column(name = "ref_content_type")
     @Comment("원글 컨텐츠 타입")
     private String refContentType;
+
+    /* ----- */
+
+    /** 만료 여부 (Y/N) */
+    @Builder.Default
+    @Column(name = "deprc_yn", length = 1, columnDefinition = "CHAR DEFAULT 'N'")
+    @Comment("만료 여부")
+    private String deprcYn = "N";
 
     /* ----- */
 

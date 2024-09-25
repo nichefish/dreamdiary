@@ -49,12 +49,12 @@ public class UserEmplymDto
     protected String emplymEmailDomain;
     /** 업무 연락처 */
     private String emplymCttpc;
-    /** 수습여부 */
+    /** 수습 여부 (Y/N) */
     @Builder.Default
     private String apntcYn = "N";
     /** 입사일 */
     private String ecnyDt;
-    /** 퇴사여부 */
+    /** 퇴사 여부 (Y/N) */
     @Builder.Default
     private String retireYn = "N";
     /** 퇴사일 */

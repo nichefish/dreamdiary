@@ -39,6 +39,7 @@ public class VcatnPaprEntity
         implements CommentEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.VCATN_PAPR;
 
     /** 글 번호 */

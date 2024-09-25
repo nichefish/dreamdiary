@@ -149,7 +149,7 @@ public class UserEmplymEntity
     @Transient
     private String rankNm;
 
-    /** 수습여부 */
+    /** 수습 여부 (Y/N) */
     @Builder.Default
     @Column(name = "apntc_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("수습여부")
@@ -162,7 +162,7 @@ public class UserEmplymEntity
     @Comment("입사일")
     private Date ecnyDt;
 
-    /** 퇴사여부 */
+    /** 퇴사 여부 (Y/N) */
     @Builder.Default
     @Column(name = "retire_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("퇴사여부")

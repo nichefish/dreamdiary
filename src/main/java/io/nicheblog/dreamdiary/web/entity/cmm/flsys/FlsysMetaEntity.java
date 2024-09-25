@@ -33,6 +33,7 @@ public class FlsysMetaEntity
         implements CommentEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.FLSYS_META;
 
     /** 글 번호 */

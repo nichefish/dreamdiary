@@ -26,7 +26,7 @@ public class UserProflDto
 
     /** 생년월일 */
     private String brthdy;
-    /** 음력여부 */
+    /** 음력 여부 (Y/N) */
     @Builder.Default
     private String lunarYn = "N";
     /** 프로필 설명 */

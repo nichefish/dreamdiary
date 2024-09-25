@@ -29,7 +29,7 @@ public class UserXlsxDto {
     private String cttpc;
     /** E-mail */
     private String email;
-    /** 잠금여부 */
+    /** 잠금 여부 (Y/N) */
     private String lockedYn;
     /** 접속 IP 정보 (String) */
     private String acsIpListStr;

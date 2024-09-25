@@ -25,7 +25,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserStusEmbed {
 
-    /** 잠금여부 */
+    /** 잠금 여부 (Y/N) */
     @Builder.Default
     @Column(name = "locked_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'Y'")
     private String lockedYn = "Y";
@@ -48,25 +48,25 @@ public class UserStusEmbed {
     @Comment("패스워드 변경일시")
     private Date pwChgDt;
 
-    /** 패스워드 리셋 필요여부 */
+    /** 패스워드 리셋 필요 여부 (Y/N) */
     @Builder.Default
     @Column(name = "needs_pw_reset", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("패스워드 리셋 필요여부")
     private String needsPwReset = "N";
 
-    /** 장기 미로그인 패스 체크 여부 */
+    /** 장기 미로그인 패스 체크 여부 (Y/N) */
     @Builder.Default
     @Column(name = "dormant_bypass_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("장기 미로그인 패스 체크 여부")
     private String dormantBypassYn = "N";
 
-    /** 본인신청여부 */
+    /** 본인신청 여부 (Y/N) */
     @Builder.Default
     @Column(name = "reqst_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
     @Comment("본인신청여부")
     private String reqstYn = "Y";
 
-    /** 승인여부 */
+    /** 승인 여부 (Y/N) */
     @Builder.Default
     @Column(name = "cf_yn", length = 1, columnDefinition = "CHAR DEFAULT 'Y'")
     @Comment("승인여부")

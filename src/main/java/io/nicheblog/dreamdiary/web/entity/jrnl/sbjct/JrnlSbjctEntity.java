@@ -36,6 +36,7 @@ public class JrnlSbjctEntity
         implements CommentEmbedModule, TagEmbedModule, SectnEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_SBJCT;
 
     /** 저널 주제 고유 번호 (PK) */

@@ -77,7 +77,7 @@ public class UserEntity
     @Comment("사용자 권한 정보")
     private List<UserAuthRoleEntity> authList;
 
-    /** 접속 IP 사용 여부 */
+    /** 접속 IP 사용 여부 (Y/N) */
     @Builder.Default
     @Column(name = "use_acs_ip_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("접속 IP 사용 여부")

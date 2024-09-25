@@ -49,6 +49,5 @@ public class JrnlDreamApiDto
     private String elseDreamYn = "N";
 
     /** 꿈꾼이(타인) 이름 */
-    @Column(name = "ELSE_DREAMER_NM", length = 64)
     private String elseDreamerNm;
 }

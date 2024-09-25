@@ -57,7 +57,7 @@ public class ManagtEmbed
     @Transient
     private String managtrNm;
 
-    /** 나=조치자 여부 */
+    /** 나(=조치자) 여부 */
     @Transient
     private Boolean isManagtr;
 

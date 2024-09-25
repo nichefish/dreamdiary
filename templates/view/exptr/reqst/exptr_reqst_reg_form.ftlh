@@ -91,7 +91,7 @@
                     </select>
                 </div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control required" name="title" id="title" maxlength="50" value="${post.title!}"/>
+                    <input type="text" class="form-control required" name="title" id="title" maxlength="100" value="${post.title!}"/>
                     <span id="title_valid_span"></span>
                 </div>
             </div>

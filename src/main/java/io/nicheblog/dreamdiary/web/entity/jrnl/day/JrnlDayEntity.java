@@ -43,8 +43,10 @@ public class JrnlDayEntity
         implements TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_DAY;
     /** 필수(Override): 글분류 코드 */
+    @Builder.Default
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 저널 일자 고유 번호 (PK) */

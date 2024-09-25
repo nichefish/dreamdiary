@@ -47,6 +47,7 @@ public class JrnlDiaryEntity
         implements CommentEmbedModule, TagEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.JRNL_DIARY;
 
     /** 저널 꿈 고유 번호 (PK) */

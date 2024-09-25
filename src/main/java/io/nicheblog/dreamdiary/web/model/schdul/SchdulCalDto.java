@@ -32,8 +32,10 @@ public class SchdulCalDto
         extends BaseCalDto {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.SCHDUL;
     /** 필수(Override): 글분류 코드 */
+    @Builder.Default
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
@@ -64,7 +66,7 @@ public class SchdulCalDto
     /** 참여자 문자열 */
     private String prtcpnt;
 
-    /** 개인일정 여부 */
+    /** 개인일정 여부 (Y/N) */
     private String prvtYn;
 
     /* ----- */

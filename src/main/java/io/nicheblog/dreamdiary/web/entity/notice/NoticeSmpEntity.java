@@ -32,6 +32,7 @@ public class NoticeSmpEntity
         extends BasePostEntity {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.NOTICE;
 
     /** 글 번호 */

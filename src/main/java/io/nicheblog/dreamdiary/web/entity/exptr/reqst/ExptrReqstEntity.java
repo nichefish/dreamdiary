@@ -35,6 +35,7 @@ public class ExptrReqstEntity
         implements CommentEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.EXPTR_REQST;
 
     /** 글 번호 */

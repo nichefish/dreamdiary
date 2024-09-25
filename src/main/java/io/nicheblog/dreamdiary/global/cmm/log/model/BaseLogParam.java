@@ -20,7 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BaseLogParam {
 
-    /** 성공여부 */
+    /** 성공 여부 */
     private Boolean rslt;
     /** 결과 메세지 */
     private String rsltMsg;
