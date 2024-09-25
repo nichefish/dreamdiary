@@ -13,7 +13,7 @@
                         ＜ ${sectn.title!} ＞
                     </div>
                 </#if>
-                <div class="mx-5 <#if sectn.deprcYn == "Y">text-muted strikethrough</#if>">
+                <div class="mx-5 fs-4 fw-normal <#if sectn.deprcYn == "Y">text-muted strikethrough</#if>">
                     ${sectn.markdownCn?no_esc}
                 </div>
                 <#if sectn.comment?? && sectn.comment.cnt gt 0>

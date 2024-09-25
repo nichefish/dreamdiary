@@ -153,6 +153,7 @@
                     <span class="text-gray-700 fs-6 fw-bolder">내용</span>
                     <span class="text-gray-500 fs-9">&nbsp;</span>
                     <#if isMdf>
+                        <#--begin::sectn button-->
                         <div class="col d-flex justify-content-end">
                             <#--헤더:: 버튼: 등록 모달 호출하기-->
                             <@component.header_btn_reg_modal "Sectn.regModal(${post.postNo!}, '${post.contentType!}');" />

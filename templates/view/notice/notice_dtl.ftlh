@@ -1,8 +1,13 @@
 <#--
  * 공지사항(notice) > 상세 화면
+ * tinyMCE 정책 때문에 문서 최상단에 <!DOCTYPE html> 추가
  -->
 
+<!DOCTYPE html>
 <#import "/layout/layout.ftlh" as layout >
+
+<script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/js/commons/commons-tinymce.js?${releaseDate!}"></script>
 
 <@layout.layout toolbar=toolbar!"">
 
@@ -25,6 +30,14 @@
         </div>
 
         <div class="separator separator-dashed border-gray-300 my-8"></div>
+
+        <#--begin::sectn button-->
+        <label class="mb-2 d-flex align-items-center" for="tinymce_cn">
+            <div class="col d-flex justify-content-end">
+                <#--헤더:: 버튼: 등록 모달 호출하기-->
+                <@component.header_btn_reg_modal "Sectn.regModal(${post.postNo!}, '${post.contentType!}');" />
+            </div>
+        </label>
 
         <#--begin::cn-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6 min-h-150px">

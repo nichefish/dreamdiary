@@ -31,8 +31,7 @@
 
         <div class="separator separator-dashed border-gray-300 my-8"></div>
 
-        <#--begin::cn-->
-        <!--begin::Label-->
+        <#--begin::sectn button-->
         <label class="mb-2 d-flex align-items-center" for="tinymce_cn">
             <div class="col d-flex justify-content-end">
                 <#--헤더:: 버튼: 등록 모달 호출하기-->
@@ -40,6 +39,7 @@
             </div>
         </label>
 
+        <#--begin::cn-->
         <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6 min-h-150px">
             ${post.markdownCn?no_esc}
         </div>
