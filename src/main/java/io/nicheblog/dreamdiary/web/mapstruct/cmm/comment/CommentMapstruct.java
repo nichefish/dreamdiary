@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.web.mapstruct.cmm.comment;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
@@ -19,7 +20,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CommentEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CmmUtils.class, CommentEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface CommentMapstruct
         extends BasePostMapstruct<CommentDto, CommentDto, CommentEntity> {
 
@@ -30,6 +31,7 @@ public interface CommentMapstruct
      */
     @Override
     @Named("toDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     CommentDto toDto(final CommentEntity entity) throws Exception;
 
     /**
@@ -37,6 +39,7 @@ public interface CommentMapstruct
      */
     @Override
     @Named("toListDto")
+    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
     CommentDto toListDto(final CommentEntity entity) throws Exception;
 
     /**

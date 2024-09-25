@@ -4,25 +4,26 @@
  -->
 
 <script>
-    const Comment = (function() {
+    if (typeof Comment === 'undefined') { let  Comment = {}; }
+    Comment.modal = (function() {
         return {
             init: function (refreshFunc) {
                 /* jquery :: validation */
-                Comment.initValidateForm();
+                Comment.modal.initValidateForm();
                 commons.util.handlebarsTemplate({}, "comment_reg");
-                if (refreshFunc !== undefined) Comment.refreshFunc = refreshFunc;
+                if (refreshFunc !== undefined) Comment.modal.refreshFunc = refreshFunc;
             },
             /** form validation init */
             initValidateForm: function() {
                 /* jquery :: validation */
-                commons.validate.validateForm("#commentRegForm", Comment.regAjax);
+                commons.validate.validateForm("#commentRegForm", Comment.modal.regAjax);
             },
             /** 등록 모달 호출 */
             regModal: function(refPostNo, refContentType) {
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
                 commons.util.handlebarsTemplate(obj, "comment_reg", "show");
                 /* jquery :: validation */
-                Comment.initValidateForm();
+                Comment.modal.initValidateForm();
             },
             /** submit */
             submit: function() {
@@ -42,8 +43,8 @@
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (!res.rslt) return;
-                                if (Comment.refreshFunc !== undefined) {
-                                    Comment.refreshFunc();
+                                if (Comment.modal.refreshFunc !== undefined) {
+                                    Comment.modal.refreshFunc();
                                 } else {
                                     commons.util.blockUIReload();
                                 }
@@ -64,7 +65,7 @@
 
                     commons.util.handlebarsTemplate(rsltObj, "comment_reg", "show");
                     /* jquery :: validation */
-                    Comment.initValidateForm();
+                    Comment.modal.initValidateForm();
                 });
             },
             /** 댓글 삭제 처리 (ajax) */
@@ -80,8 +81,8 @@
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (!res.rslt) return;
-                                if (Comment.refreshFunc !== undefined) {
-                                    Comment.refreshFunc();
+                                if (Comment.modal.refreshFunc !== undefined) {
+                                    Comment.modal.refreshFunc();
                                 } else {
                                     commons.util.blockUIReload();
                                 }
@@ -92,6 +93,6 @@
         }
     })();
     $(document).ready(function() {
-        Comment.init();
+        Comment.modal.init();
     });
 </script>

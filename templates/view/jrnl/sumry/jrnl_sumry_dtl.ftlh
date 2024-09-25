@@ -196,7 +196,7 @@
                     </div>
                     <div class="col-1 py-3 jrnl-dream-cn d-flex justify-content-between w-50px gap-1">
                         <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
-                                onclick="Comment.regModal(${sumryCn.postNo!}, 'JRNL_SUMRY_CN');"
+                                onclick="Comment.modal.regModal(${sumryCn.postNo!}, 'JRNL_SUMRY_CN');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 <@spring.message "bs.tooltip.modal.reg"/>">
                             <i class="bi bi-chat-left-dots p-0"></i>
                         </button>

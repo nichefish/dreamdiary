@@ -14,6 +14,7 @@
 <#--include::script modules-->
 <#include "/view/jrnl/sbjct/_jrnl_sbjct_scripts.ftlh">
 <#include "/view/_component/modal/sectn/_sectn_scripts.ftlh">
+<#include "/view/_component/modal/comment/_comment_scripts.ftlh">
 
 <div class="card post">
     <#--begin::Card body-->
@@ -87,5 +88,6 @@
 <#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 <#include "/view/_component/modal/sectn/_sectn_reg_modal.ftlh">
+<#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>

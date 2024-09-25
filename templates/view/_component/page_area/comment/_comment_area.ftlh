@@ -34,14 +34,14 @@
                         <div class="d-flex align-items-center py-1">
                             <div id="showMdfBtnDiv${comment.postNo!}">
                                 <a href="javascript:void(0);" class="btn btn-sm btn-flex btn-light-primary btn-icon mx-1"
-                                   onclick="Comment.mdfForm('${comment.postNo!}');"
+                                   onclick="Comment.page.mdfForm('${comment.postNo!}');"
                                    data-bs-toggle="tooltip" title="댓글 수정 폼을 호출합니다." data-bs-dismiss="click">
                                     <span class="svg-icon svg-icon-7">
                                         <i class="fas fa-solid fa-pen"></i>
                                     </span>
                                 </a>
                                 <a href="javascript:void(0);" class="btn btn-sm btn-flex btn-light-danger btn-icon"
-                                   onclick="Comment.delAjax('${comment.postNo!}');"
+                                   onclick="Comment.page.delAjax('${comment.postNo!}');"
                                    data-bs-toggle="tooltip" title="댓글을 삭제합니다." data-bs-dismiss="click">
                                 <span class="svg-icon svg-icon-7">
                                     <i class="fas fa-trash-alt"></i>
@@ -60,13 +60,13 @@
                     <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
                     <div class="col-xl-1 text-center fs-5 fw-normal text-gray-800" id="mdfSaveBtnDiv${comment.postNo!}" style="display:none;">
                         <button type="button" class="btn btn-sm btn-primary me-2 mb-2"
-                                onclick="Comment.mdfAjax('${comment.postNo!}');"
+                                onclick="Comment.page.mdfAjax('${comment.postNo!}');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글을 수정합니다.">
                             <i class="bi bi-pencil-square"></i>
                             저장
                         </button>
                         <button type="button" class="btn btn-sm btn-secondary me-2"
-                                onclick="Comment.closeMdfForm('${comment.postNo!}');"
+                                onclick="Comment.page.closeMdfForm('${comment.postNo!}');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글 수정 영역을 닫습니다.">
                             닫기
                         </button>
@@ -93,15 +93,15 @@
             <div class="row col-xl-11">
                 <div class="col-xl-11">
                     <#--begin::Form-->
-                    <form name="commentRegForm" id="commentRegForm" enctype="multipart/form-data">
-                        <div id="comment_reg_div">
+                    <form name="commentPageRegForm" id="commentPageRegForm" enctype="multipart/form-data">
+                        <div id="comment_page_reg_div">
                             <#--handlebar template goes in here-->
                         </div>
                     </form>
                 </div>
                 <div class="col-xl-1 col-form-label">
                     <#--페이지:: 버튼: 저장하기-->
-                    <@component.post_btn_submit "Comment.submit();" />
+                    <@component.post_btn_submit "Comment.page.submit();" />
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
 <div class="col-xl-10" id="commentMdfTemplate" hidden>
     <div class="fs-6 fw-bold col-form-label p-0">
         <#--begin::Form-->
-        <form name="commentMdfForm" id="commentMdfForm__INDEX__" class="form">
+        <form name="commentPageMdfForm" id="commentPageMdfForm__INDEX__" class="form">
             <input type="hidden" name="postNo" id="postNo__INDEX__" value="__INDEX__"/>
             <input type="hidden" name="refPostNo" value="${post.postNo!}" />
             <input type="hidden" name="refContentType" value="${post.contentType!}" />

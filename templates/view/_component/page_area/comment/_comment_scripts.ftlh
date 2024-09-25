@@ -4,21 +4,22 @@
  -->
 
 <script>
-    const Comment = (function() {
+    if (typeof Comment === 'undefined') { let  Comment = {}; }
+    Comment.page = (function() {
         return {
             init: function () {
                 /* jquery :: validation */
-                Comment.initValidateForm();
-                commons.util.handlebarsTemplate({}, "comment_reg");
+                Comment.page.initValidateForm();
+                commons.util.handlebarsTemplate({}, "comment_page_reg");
             },
             /** form validation init */
             initValidateForm: function() {
                 /* jquery :: validation */
-                commons.validate.validateForm("#commentRegForm", Comment.regAjax);
+                commons.validate.validateForm("#commentPageRegForm", Comment.page.regAjax);
             },
             /** submit */
             submit: function() {
-                $("#commentRegForm").submit();
+                $("#commentPageRegForm").submit();
             },
             /** 댓글 입력 처리 (ajax) */
             regAjax: function() {
@@ -28,7 +29,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.COMMENT_REG_AJAX!}";
-                    let ajaxData = new FormData($("#commentRegForm")[0]);
+                    let ajaxData = new FormData($("#commentPageRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -45,7 +46,7 @@
                 $("#commentMdfCn" + postNo).html($("#commentCnSpanDiv" + postNo).html());
                 $("#showMdfBtnDiv" + postNo).hide();
                 $("#mdfSaveBtnDiv" + postNo).show();
-                commons.validate.validateForm("#commentMdfForm", Comment.mdfAjax);
+                commons.validate.validateForm("#commentPageMdfForm", Comment.page.mdfAjax);
             },
             /** 댓글 수정 폼 닫기 */
             closeMdfForm: function(postNo) {
@@ -67,7 +68,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.COMMENT_MDF_AJAX!}";
-                    let ajaxData = $("#commentMdfForm" + postNo).serializeArray();
+                    let ajaxData = $("#commentPageMdfForm" + postNo).serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -96,6 +97,6 @@
         }
     })();
     $(document).ready(function() {
-        Comment.init();
+        Comment.page.init();
     });
 </script>
