@@ -13,6 +13,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.user.UserPwChgParam;
 import io.nicheblog.dreamdiary.web.service.user.UserMyService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -42,6 +42,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class LgnController
         extends BaseControllerImpl {
@@ -51,10 +52,9 @@ public class LgnController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LGN;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "userMyService")
-    private UserMyService userMyService;
+    private final UserMyService userMyService;
 
-    @Value("${remember-me.param")
+    @Value("${remember-me.param}")
     private String REMEMBER_ME_PARAM;
 
     /**

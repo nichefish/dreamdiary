@@ -10,10 +10,10 @@ import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.DtlCdMapstruct;
 import io.nicheblog.dreamdiary.web.repository.admin.jpa.DtlCdRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.DtlCdSpec;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -28,15 +28,13 @@ import java.util.List;
  * @implements BaseManageService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("dtlCdService")
+@RequiredArgsConstructor
 public class DtlCdService
         implements BaseCrudService<DtlCdDto, DtlCdDto, DtlCdKey, DtlCdEntity, DtlCdRepository, DtlCdSpec, DtlCdMapstruct>,
                    BaseStateService<DtlCdDto, DtlCdDto, DtlCdKey, DtlCdEntity, DtlCdRepository, DtlCdSpec, DtlCdMapstruct> {
 
-    @Resource(name = "dtlCdRepository")
-    private DtlCdRepository dtlCdRepository;
-    @Resource(name = "dtlCdSpec")
-    private DtlCdSpec dtlCdSpec;
-
+    private final DtlCdRepository dtlCdRepository;
+    private final DtlCdSpec dtlCdSpec;
     private final DtlCdMapstruct dtlCdMapstruct = DtlCdMapstruct.INSTANCE;
 
     @Override

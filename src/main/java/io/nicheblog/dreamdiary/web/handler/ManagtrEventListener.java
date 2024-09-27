@@ -2,10 +2,9 @@ package io.nicheblog.dreamdiary.web.handler;
 
 import io.nicheblog.dreamdiary.web.event.ManagtrAddEvent;
 import io.nicheblog.dreamdiary.web.service.cmm.managt.ManagtrService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * ManagtrEventListener
@@ -16,10 +15,10 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 public class ManagtrEventListener {
 
-    @Resource
-    private ManagtrService managtrService;
+    private final ManagtrService managtrService;
 
     /**
      * 조치자 추가

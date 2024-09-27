@@ -22,6 +22,7 @@ import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
 import io.nicheblog.dreamdiary.web.service.board.BoardPostService;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +35,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -49,6 +49,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class BoardPostController
         extends BaseControllerImpl {
@@ -58,16 +59,11 @@ public class BoardPostController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_POST;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "boardDefService")
-    private BoardDefService boardDefService;
-    @Resource(name = "boardPostService")
-    private BoardPostService boardPostService;
-    @Resource(name = "cdService")
-    public CdService cdService;
-    @Resource(name = "tagService")
-    private TagService tagService;
-    // @Resource(name = "xlsxUtils")
-    // private XlsxUtils xlsxUtils;
+    private final BoardDefService boardDefService;
+    private final BoardPostService boardPostService;
+    private final CdService cdService;
+    private final TagService tagService;
+
 
     /**
      * 일반게시판 게시물 목록 조회

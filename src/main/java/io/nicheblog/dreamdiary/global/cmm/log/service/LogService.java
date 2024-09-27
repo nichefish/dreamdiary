@@ -8,10 +8,9 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.cmm.log.repository.jpa.LogActvtyRepository;
 import io.nicheblog.dreamdiary.global.cmm.log.repository.jpa.LogSysRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * LogService
@@ -23,17 +22,14 @@ import javax.annotation.Resource;
  * @implements BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service
+@RequiredArgsConstructor
 @Log4j2
 public class LogService {
 
+    private final LogActvtyRepository logActvtyRepository;
+    private final LogSysRepository logSysRepository;
     private final LogMapstruct logMapstruct = LogMapstruct.INSTANCE;
-
-    @Resource(name = "logActvtyRepository")
-    private LogActvtyRepository logActvtyRepository;
-    @Resource(name = "logSysRepository")
-    private LogSysRepository logSysRepository;
-    @Resource(name = "activeProfile")
-    ActiveProfile activeProfile;
+    private final ActiveProfile activeProfile;
 
     /**
      * 활동 로그 등록 (로그인 상태)

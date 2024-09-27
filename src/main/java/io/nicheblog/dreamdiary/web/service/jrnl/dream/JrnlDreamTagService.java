@@ -6,13 +6,13 @@ import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.dream.jpa.JrnlDreamTagRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamTagSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,16 +28,14 @@ import java.util.stream.Collectors;
  * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDreamTagService")
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlDreamTagService
         implements BaseReadonlyService<TagDto, TagDto, Integer, JrnlDreamTagEntity, JrnlDreamTagRepository, JrnlDreamTagSpec, JrnlDreamTagMapstruct> {
 
+    private final JrnlDreamTagRepository jrnlDreamTagRepository;
+    private final JrnlDreamTagSpec jrnlDreamTagSpec;
     private final JrnlDreamTagMapstruct tagMapstruct = JrnlDreamTagMapstruct.INSTANCE;
-
-    @Resource(name = "jrnlDreamTagRepository")
-    private JrnlDreamTagRepository jrnlDreamTagRepository;
-    @Resource(name = "jrnlDreamTagSpec")
-    private JrnlDreamTagSpec jrnlDreamTagSpec;
 
     @Autowired
     private ApplicationContext context;

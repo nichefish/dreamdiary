@@ -1,14 +1,17 @@
 package io.nicheblog.dreamdiary.global.auth.config;
 
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.auth.handler.*;
+import io.nicheblog.dreamdiary.global.auth.handler.AjaxAwareAuthenticationEntryPoint;
+import io.nicheblog.dreamdiary.global.auth.handler.LgnFailureHandler;
+import io.nicheblog.dreamdiary.global.auth.handler.LgnSuccessHandler;
+import io.nicheblog.dreamdiary.global.auth.handler.LgoutHandler;
 import io.nicheblog.dreamdiary.global.auth.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -22,8 +25,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.annotation.Resource;
-
 /**
  * WebSecurityConfig
  * <pre>
@@ -35,37 +36,27 @@ import javax.annotation.Resource;
  */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@RequiredArgsConstructor
 @Log4j2
 public class WebSecurityConfig {
 
-    @Resource(name = "authService")
-    private AuthService authService;
-    @Resource(name = "lgnFailureHandler")
-    private LgnFailureHandler lgnFailureHandler;
-    @Resource(name = "lgnSuccessHandler")
-    private LgnSuccessHandler lgnSuccessHandler;
-    @Resource(name = "ajaxAwareAuthenticationEntryPoint")
-    private AjaxAwareAuthenticationEntryPoint ajaxAwareAuthenticationEntryPoint;
-    @Resource(name = "lgoutHandler")
-    private LgoutHandler lgoutHandler;
+    private final AuthService authService;
+    private final LgnFailureHandler lgnFailureHandler;
+    private final LgnSuccessHandler lgnSuccessHandler;
+    private final AjaxAwareAuthenticationEntryPoint ajaxAwareAuthenticationEntryPoint;
+    private final LgoutHandler lgoutHandler;
+
     @Value("${springdoc.api-docs.path:}")
     private String API_DOCS_PATH;
-
-    @Value("${remember-me.key")
+    @Value("${remember-me.key}")
     private String REMEMBER_ME_KEY;
-    @Value("${remember-me.param")
+    @Value("${remember-me.param}")
     private String REMEMBER_ME_PARAM;
 
     /** 로그인시 사용할 암호화 로직 */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    /** 접속IP 차단 위해 사용할 custom AuthenticationProvider */
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        return new DreamdiaryAuthenticationProvider();
     }
 
     /** 중복 로그인 방지:: logout 후 login 처리시 정상작동을 위함 */

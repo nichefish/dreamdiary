@@ -17,6 +17,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
 import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +30,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -44,6 +44,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class BoardDefController
         extends BaseControllerImpl {
@@ -53,10 +54,8 @@ public class BoardDefController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_DEF;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "boardDefService")
-    private BoardDefService boardDefService;
-    @Resource(name = "cdService")
-    private CdService cdService;
+    private final BoardDefService boardDefService;
+    private final CdService cdService;
 
     /**
      * 게시판 정의 목록 조회

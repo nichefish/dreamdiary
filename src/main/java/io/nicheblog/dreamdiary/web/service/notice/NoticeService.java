@@ -8,10 +8,10 @@ import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
 import io.nicheblog.dreamdiary.web.model.notice.NoticeXlsxDto;
 import io.nicheblog.dreamdiary.web.repository.notice.jpa.NoticeRepository;
 import io.nicheblog.dreamdiary.web.spec.notice.NoticeSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.stream.Stream;
 
 /**
@@ -24,15 +24,13 @@ import java.util.stream.Stream;
  * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("noticeService")
+@RequiredArgsConstructor
 @Log4j2
 public class NoticeService
         implements BasePostService<NoticeDto.DTL, NoticeDto.LIST, Integer, NoticeEntity, NoticeRepository, NoticeSpec, NoticeMapstruct> {
 
-    @Resource(name = "noticeRepository")
-    private NoticeRepository noticeRepository;
-    @Resource(name = "noticeSpec")
-    private NoticeSpec noticeSpec;
-
+    private final NoticeRepository noticeRepository;
+    private final NoticeSpec noticeSpec;
     private final NoticeMapstruct noticeMapstruct = NoticeMapstruct.INSTANCE;
 
     @Override

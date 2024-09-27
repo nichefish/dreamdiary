@@ -8,15 +8,14 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.cmm.mail.model.MailAddress;
 import io.nicheblog.dreamdiary.global.cmm.mail.model.MailSendParam;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -34,18 +33,16 @@ import java.util.Map;
  * @author nichefish
  */
 @Service
+@RequiredArgsConstructor
 @Log4j2
 public class MailService {
 
-    @Resource
-    private JavaMailSender mailSender;
-    @Autowired
-    private Configuration freemarkerMailConfiguration;
-    @Resource
-    private ApplicationEventPublisher publisher;
+    private final JavaMailSender mailSender;
+    private final Configuration freemarkerMailConfiguration;
+    private final ApplicationEventPublisher publisher;
 
-    private String WEBMASTER_NAME = "webmaster";
-    private String WEBMASTER_EMAIL = "webmaster@email.net";
+    private final String WEBMASTER_NAME = "webmaster";
+    private final String WEBMASTER_EMAIL = "webmaster@email.net";
 
     /** 메일 발송 */
     public Boolean send(MailSendParam mailSendParam) {

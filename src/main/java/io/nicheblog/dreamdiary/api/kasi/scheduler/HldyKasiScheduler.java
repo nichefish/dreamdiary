@@ -8,12 +8,12 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -25,14 +25,12 @@ import java.util.List;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class HldyKasiScheduler {
 
-    @Resource(name = "hldyKasiApiService")
-    public HldyKasiApiService hldyKasiApiService;
-
-    @Resource
-    private ApplicationEventPublisher publisher;
+    private final HldyKasiApiService hldyKasiApiService;
+    private final ApplicationEventPublisher publisher;
 
     /**
      * 1년에 한 번씩 휴일/특일 정보 API 조회하여 등록

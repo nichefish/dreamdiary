@@ -9,12 +9,12 @@ import io.nicheblog.dreamdiary.web.mapstruct.board.BoardPostMapstruct;
 import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
 import io.nicheblog.dreamdiary.web.repository.board.jpa.BoardPostRepository;
 import io.nicheblog.dreamdiary.web.spec.board.BoardPostSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,19 +30,16 @@ import java.util.Map;
  * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("boardPostService")
+@RequiredArgsConstructor
 @Log4j2
 public class BoardPostService
         implements BasePostService<BoardPostDto.DTL, BoardPostDto.LIST, BaseClsfKey, BoardPostEntity, BoardPostRepository, BoardPostSpec, BoardPostMapstruct> {
 
-    @Resource(name = "boardPostRepository")
-    private BoardPostRepository boardPostRepository;
-    @Resource(name = "boardPostSpec")
-    private BoardPostSpec boardPostSpec;
-
+    private final BoardPostRepository boardPostRepository;
+    private final BoardPostSpec boardPostSpec;
     private final BoardPostMapstruct postMapstruct = BoardPostMapstruct.INSTANCE;
 
-    @Resource(name = "cdService")
-    public CdService cdService;
+    private final CdService cdService;
 
     @Override
     public BoardPostRepository getRepository() {

@@ -10,11 +10,11 @@ import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.diary.jpa.JrnlDiaryRepository;
 import io.nicheblog.dreamdiary.web.repository.jrnl.diary.mybatis.JrnlDiaryMapper;
 import io.nicheblog.dreamdiary.web.spec.jrnl.diary.JrnlDiarySpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -30,18 +30,16 @@ import java.util.Map;
  * @implements BaseClsfService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDiaryService")
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlDiaryService
         implements BaseClsfService<JrnlDiaryDto, JrnlDiaryDto, Integer, JrnlDiaryEntity, JrnlDiaryRepository, JrnlDiarySpec, JrnlDiaryMapstruct> {
 
+    private final JrnlDiaryRepository jrnlDiaryRepository;
+    private final JrnlDiarySpec jrnlDiarySpec;
     private final JrnlDiaryMapstruct jrnlDiaryMapstruct = JrnlDiaryMapstruct.INSTANCE;
 
-    @Resource(name = "jrnlDiaryRepository")
-    private JrnlDiaryRepository jrnlDiaryRepository;
-    @Resource(name = "jrnlDiarySpec")
-    private JrnlDiarySpec jrnlDiarySpec;
-    @Resource(name = "jrnlDiaryMapper")
-    private JrnlDiaryMapper jrnlDiaryMapper;
+    private final JrnlDiaryMapper jrnlDiaryMapper;
 
     @Override
     public JrnlDiaryRepository getRepository() {

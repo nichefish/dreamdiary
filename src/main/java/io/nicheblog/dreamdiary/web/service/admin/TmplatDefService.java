@@ -8,10 +8,9 @@ import io.nicheblog.dreamdiary.web.mapstruct.admin.TmplatDefMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.TmplatDefDto;
 import io.nicheblog.dreamdiary.web.repository.admin.jpa.TmplatDefRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.TmplatDefSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * TmplatDefService
@@ -23,16 +22,14 @@ import javax.annotation.Resource;
  * @implements BaseCrudService, BaseStateService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("tmplatDefService")
+@RequiredArgsConstructor
 @Log4j2
 public class TmplatDefService
         implements BaseCrudService<TmplatDefDto, TmplatDefDto, Integer, TmplatDefEntity, TmplatDefRepository, TmplatDefSpec, TmplatDefMapstruct>,
                    BaseStateService<TmplatDefDto, TmplatDefDto, Integer, TmplatDefEntity, TmplatDefRepository, TmplatDefSpec, TmplatDefMapstruct> {
 
-    @Resource(name = "tmplatDefRepository")
-    private TmplatDefRepository tmplatDefRepository;
-    @Resource(name = "tmplatDefSpec")
-    private TmplatDefSpec tmplatDefSpec;
-
+    private final TmplatDefRepository tmplatDefRepository;
+    private final TmplatDefSpec tmplatDefSpec;
     private final TmplatDefMapstruct tmplatDefMapstruct = TmplatDefMapstruct.INSTANCE;
 
     @Override

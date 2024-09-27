@@ -3,12 +3,12 @@ package io.nicheblog.dreamdiary.global.auth.handler;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,11 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 public class LgoutHandler
         implements LogoutHandler {
 
-    @Resource
-    private ApplicationEventPublisher publisher;
+    private final ApplicationEventPublisher publisher;
 
     @Override
     public void logout(

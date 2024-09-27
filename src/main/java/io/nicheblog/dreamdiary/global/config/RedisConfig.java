@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +15,6 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import javax.annotation.Resource;
-
 /**
  * RedisConfig
  * <pre>
@@ -25,10 +24,10 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Configuration
+@RequiredArgsConstructor
 public class RedisConfig {
 
-    @Resource(name = "redisProperty")
-    private RedisProperty redisProperty;
+    private final RedisProperty redisProperty;
 
     /**
      * redis 연결이 되지 않아도 구동되게끔 sneakyThrows

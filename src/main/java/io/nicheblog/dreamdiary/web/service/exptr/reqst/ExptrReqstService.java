@@ -6,10 +6,9 @@ import io.nicheblog.dreamdiary.web.mapstruct.exptr.reqst.ExptrReqstMapstruct;
 import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstDto;
 import io.nicheblog.dreamdiary.web.repository.exptr.reqst.jpa.ExptrReqstRepository;
 import io.nicheblog.dreamdiary.web.spec.exptr.reqst.ExptrReqstSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * ExptrReqstService
@@ -21,15 +20,13 @@ import javax.annotation.Resource;
  * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("exptrReqstService")
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrReqstService
         implements BasePostService<ExptrReqstDto.DTL, ExptrReqstDto.LIST, Integer, ExptrReqstEntity, ExptrReqstRepository, ExptrReqstSpec, ExptrReqstMapstruct> {
 
-    @Resource(name = "exptrReqstRepository")
-    private ExptrReqstRepository exptrReqstRepository;
-    @Resource(name = "exptrReqstSpec")
-    public ExptrReqstSpec exptrReqstSpec;
-
+    private final ExptrReqstRepository exptrReqstRepository;
+    private final ExptrReqstSpec exptrReqstSpec;
     private final ExptrReqstMapstruct exptrReqstMapstruct = ExptrReqstMapstruct.INSTANCE;
 
     @Override

@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptSmDto;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.rpt.ExptrPrsnlRptService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +39,7 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrPrsnlRptController
         extends BaseControllerImpl {
@@ -48,13 +49,8 @@ public class ExptrPrsnlRptController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_RPT;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "exptrPrsnlPaprService")
-    private ExptrPrsnlPaprService exptrPrsnlPaprService;
-    @Resource(name = "exptrPrsnlRptService")
-    private ExptrPrsnlRptService exptrPrsnlRptService;
-
-    // @Resource(name = "xlsxUtils")
-    // private XlsxUtils xlsxUtils;
+    private final ExptrPrsnlPaprService exptrPrsnlPaprService;
+    private final ExptrPrsnlRptService exptrPrsnlRptService;
 
     /**
      * 경비 관리 > 월간지출내역 > 년도별 경비지출 누적집계 화면

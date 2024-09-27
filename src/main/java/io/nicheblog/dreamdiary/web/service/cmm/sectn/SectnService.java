@@ -8,10 +8,9 @@ import io.nicheblog.dreamdiary.web.mapstruct.cmm.sectn.SectnMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.sectn.SectnDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.sectn.jpa.SectnRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.sectn.SectnSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * SectnService
@@ -23,16 +22,14 @@ import javax.annotation.Resource;
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("sectnService")
+@RequiredArgsConstructor
 @Log4j2
 public class SectnService
         implements BaseMultiCrudService<SectnDto, SectnDto, Integer, SectnEntity, SectnRepository, SectnSpec, SectnMapstruct> {
 
+    private final SectnRepository sectnRepository;
+    private final SectnSpec sectnSpec;
     private final SectnMapstruct sectnMapstruct = SectnMapstruct.INSTANCE;
-
-    @Resource(name = "sectnRepository")
-    private SectnRepository sectnRepository;
-    @Resource(name = "sectnSpec")
-    private SectnSpec sectnSpec;
 
     @Override
     public SectnRepository getRepository() {

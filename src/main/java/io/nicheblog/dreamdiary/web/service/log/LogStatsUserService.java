@@ -8,10 +8,10 @@ import io.nicheblog.dreamdiary.web.mapstruct.log.LogStatsUserMapstruct;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserDto;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserIntrfc;
 import io.nicheblog.dreamdiary.web.repository.log.jpa.LogStatsUserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -23,12 +23,11 @@ import java.util.*;
  * @author nichefish
  */
 @Service("logStatsUserService")
+@RequiredArgsConstructor
 public class LogStatsUserService {
 
+    private final LogStatsUserRepository logStatsUserRepository;
     private final LogStatsUserMapstruct logStatsUserMapstruct = LogStatsUserMapstruct.INSTANCE;
-
-    @Resource(name = "logStatsUserRepository")
-    private LogStatsUserRepository logStatsUserRepository;
 
     /**
      * 활동 로그 > 활동 로그 목록 조회 (entity level)

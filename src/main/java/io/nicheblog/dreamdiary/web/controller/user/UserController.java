@@ -18,6 +18,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.UserSearchParam;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +32,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
@@ -47,6 +47,7 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class UserController
         extends BaseControllerImpl {
@@ -56,15 +57,9 @@ public class UserController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "userService")
-    private UserService userService;
-    @Resource(name = "authRoleService")
-    private AuthRoleService authRoleService;
-    @Resource(name = "cdService")
-    private CdService cdService;
-
-    // @Resource(name = "xlsxUtils")
-    // private XlsxUtils xlsxUtils;
+    private final UserService userService;
+    private final AuthRoleService authRoleService;
+    private final CdService cdService;
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 목록 화면 조회

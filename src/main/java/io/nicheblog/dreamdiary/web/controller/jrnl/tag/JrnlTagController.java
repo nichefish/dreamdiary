@@ -13,6 +13,7 @@ import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamTagCtgrSynchronizer;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -20,8 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
 
 /**
  * JrnlTagController
@@ -33,6 +32,7 @@ import javax.annotation.Resource;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 public class JrnlTagController
         extends BaseControllerImpl {
 
@@ -41,12 +41,9 @@ public class JrnlTagController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlDreamTagCtgrSynchronizer")
-    private JrnlDreamTagCtgrSynchronizer jrnlDreamTagCtgrSynchronizer;
-    @Resource(name = "jrnlDiaryTagCtgrSynchronizer")
-    private JrnlDiaryTagCtgrSynchronizer jrnlDiaryTagCtgrSynchronizer;
-    @Resource(name = "jrnlDayTagCtgrSynchronizer")
-    private JrnlDayTagCtgrSynchronizer jrnlDayTagCtgrSynchronizer;
+    private final JrnlDreamTagCtgrSynchronizer jrnlDreamTagCtgrSynchronizer;
+    private final JrnlDiaryTagCtgrSynchronizer jrnlDiaryTagCtgrSynchronizer;
+    private final JrnlDayTagCtgrSynchronizer jrnlDayTagCtgrSynchronizer;
 
     /**
      * 저널 태그 카테고리 메타 파일 - DB 동기화 (Ajax)

@@ -6,12 +6,12 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.cmm.mail.event.MailSendEvent;
 import io.nicheblog.dreamdiary.global.cmm.mail.model.MailSendParam;
 import io.nicheblog.dreamdiary.global.cmm.mail.service.MailService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -24,13 +24,12 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author nichefish
  **/
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class MailWorker implements Runnable {
 
-	@Resource(name = "mailService")
-	private MailService mailService;
-	@Resource
-	private ApplicationEventPublisher publisher;
+	private final MailService mailService;
+	private final ApplicationEventPublisher publisher;
 
 	/** 메일 queue */
 	private static final BlockingQueue<MailSendEvent> mailQueue = new LinkedBlockingQueue<>();

@@ -13,11 +13,11 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.spec.user.UserSpec;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -33,20 +33,16 @@ import java.util.Optional;
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("userService")
+@RequiredArgsConstructor
 public class UserService
         implements BaseMultiCrudService<UserDto.DTL, UserDto.LIST, Integer, UserEntity, UserRepository, UserSpec, UserMapstruct> {
 
-    @Resource(name = "userRepository")
-    private UserRepository userRepository;
-    @Resource(name = "userSpec")
-    private UserSpec userSpec;
-
-    @Resource(name = "lgnPolicyService")
-    private LgnPolicyService lgnPolicyService;
-    @Resource(name = "passwordEncoder")
-    private PasswordEncoder passwordEncoder;
-
+    private final UserRepository userRepository;
+    private final UserSpec userSpec;
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
+
+    private final LgnPolicyService lgnPolicyService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserRepository getRepository() {

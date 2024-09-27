@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.annotation.Resource;
-
 /**
  * GlobalExceptionlHandler
  * <pre>
@@ -29,11 +28,11 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @ControllerAdvice
+@RequiredArgsConstructor
 @Log4j2
 public class BaseExceptionlHandler {
 
-    @Resource
-    private ApplicationEventPublisher publisher;
+    private final ApplicationEventPublisher publisher;
 
     /**
      * 요청이 AJAX 요청인지 확인

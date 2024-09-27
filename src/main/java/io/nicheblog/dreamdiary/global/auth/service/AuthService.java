@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.repository.jpa.AuthRoleRepository;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.Optional;
 
@@ -27,15 +27,13 @@ import java.util.Optional;
  * @author nichefish
  */
 @Service
+@RequiredArgsConstructor
 @Log4j2
 public class AuthService
         implements UserDetailsService {
 
-    @Resource(name = "userRepository")
-    private UserRepository userRepository;
-
-    @Resource(name = "authRoleRepository")
-    private AuthRoleRepository authRoleRepository;
+    private final UserRepository userRepository;
+    private final AuthRoleRepository authRoleRepository;
 
     /**
      * userId로 계정 + 사용자 정보 조회

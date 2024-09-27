@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.log.LogSysDto;
 import io.nicheblog.dreamdiary.web.model.log.LogSysSearchParam;
 import io.nicheblog.dreamdiary.web.service.log.LogSysService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,9 +24,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * LogSysController
@@ -37,6 +39,7 @@ import javax.annotation.Resource;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class LogSysController
         extends BaseControllerImpl {
@@ -46,8 +49,7 @@ public class LogSysController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_SYS;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "logSysService")
-    private LogSysService logSysService;
+    private final LogSysService logSysService;
 
     /**
      * 활동 로그 > 활동 로그 목록 (전체) 화면 조회

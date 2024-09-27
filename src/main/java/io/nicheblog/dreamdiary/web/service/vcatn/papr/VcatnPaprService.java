@@ -14,11 +14,11 @@ import io.nicheblog.dreamdiary.web.repository.vcatn.jpa.VcatnPaprRepository;
 import io.nicheblog.dreamdiary.web.service.vcatn.schdul.VcatnSchdulService;
 import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnPaprSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,23 +33,18 @@ import java.util.stream.Collectors;
  * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("vcatnPaprService")
+@RequiredArgsConstructor
 @Log4j2
 public class VcatnPaprService
         implements BasePostService<VcatnPaprDto.DTL, VcatnPaprDto.LIST, Integer, VcatnPaprEntity, VcatnPaprRepository, VcatnPaprSpec, VcatnPaprMapstruct> {
 
-    @Resource(name = "vcatnPaprRepository")
-    private VcatnPaprRepository vcatnPaprRepository;
-    @Resource(name = "vcatnPaprSpec")
-    private VcatnPaprSpec vcatnPaprSpec;
-
+    private final VcatnPaprRepository vcatnPaprRepository;
+    private final VcatnPaprSpec vcatnPaprSpec;
     private final VcatnPaprMapstruct vcatnPaprMapstruct = VcatnPaprMapstruct.INSTANCE;
 
-    @Resource(name = "vcatnSchdulService")
-    private VcatnSchdulService vcatnSchdulService;
-    @Resource(name = "vcatnStatsYyService")
-    private VcatnStatsYyService vcatnStatsYyService;
-    @Resource(name = "cdService")
-    public CdService cmmCdService;
+    private final VcatnSchdulService vcatnSchdulService;
+    private final VcatnStatsYyService vcatnStatsYyService;
+    private final CdService cmmCdService;
 
     @Override
     public VcatnPaprRepository getRepository() {

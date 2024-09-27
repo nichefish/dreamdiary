@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
@@ -15,7 +16,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,17 +32,15 @@ import java.io.IOException;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class LgnSuccessHandler
         extends SavedRequestAwareAuthenticationSuccessHandler
         implements AuthenticationSuccessHandler {
 
-    @Resource(name = "authService")
-    private AuthService authService;
-    @Resource
-    private ApplicationEventPublisher publisher;
-    @Resource
-    private HttpSession session;
+    private final AuthService authService;
+    private final ApplicationEventPublisher publisher;
+    private final HttpSession session;
 
     @Override
     public void onAuthenticationSuccess(

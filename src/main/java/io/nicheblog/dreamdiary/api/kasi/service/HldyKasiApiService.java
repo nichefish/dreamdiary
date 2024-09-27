@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,13 +32,12 @@ import java.util.stream.Collectors;
  * @author nichefish
  */
 @Service
+@RequiredArgsConstructor
 @Log4j2
 public class HldyKasiApiService {
 
     private final HldyKasiApiMapstruct hldyApiMapstruct = HldyKasiApiMapstruct.INSTANCE;
-
-    @Resource(name = "schdulService")
-    private SchdulService schdulService;
+    private final SchdulService schdulService;
 
     @Value("${api.kasi.serviceKey}")
     private String serviceKey;

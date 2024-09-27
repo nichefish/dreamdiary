@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentParam;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.comment.CommentService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -41,6 +41,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class CommentController
         extends BaseControllerImpl {
@@ -48,8 +49,7 @@ public class CommentController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DEFAULT;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "commentService")
-    private CommentService commentService;
+    private final CommentService commentService;
 
     /**
      * 댓글 목록 조회 (Ajax)

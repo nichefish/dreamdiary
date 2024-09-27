@@ -14,11 +14,11 @@ import io.nicheblog.dreamdiary.web.repository.schdul.jpa.SchdulRepository;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import io.nicheblog.dreamdiary.web.service.vcatn.schdul.VcatnSchdulService;
 import io.nicheblog.dreamdiary.web.spec.schdul.SchdulSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,29 +29,17 @@ import java.util.stream.Collectors;
  * @author nichefish
  */
 @Service("schdulCalService")
+@RequiredArgsConstructor
 @Log4j2
 public class SchdulCalService {
 
-    @Resource(name = "schdulService")
-    private SchdulService schdulService;
-
-    @Resource(name = "vcatnSchdulService")
-    private VcatnSchdulService vcatnSchdulService;
-
+    private final SchdulService schdulService;
+    private final VcatnSchdulService vcatnSchdulService;
     private final SchdulCalMapstruct schdulCalMapstruct = SchdulCalMapstruct.INSTANCE;
     private final VcatnSchdulMapstruct vcatnSchdulMapstruct = VcatnSchdulMapstruct.INSTANCE;
-
-    @Resource(name = "schdulSpec")
-    private SchdulSpec schdulSpec;
-
-    @Resource(name = "userService")
-    private UserService userService;
-
-    // @Resource(name = "vcatnSchdulService")
-    // private VcatnSchdulService vcatnSchdulService;
-
-    @Resource(name = "schdulRepository")
-    private SchdulRepository schdulRepository;
+    private final SchdulSpec schdulSpec;
+    private final UserService userService;
+    private final SchdulRepository schdulRepository;
 
     /**
      * 일정 > 전체일정 (일정+휴가) 데이터 조회

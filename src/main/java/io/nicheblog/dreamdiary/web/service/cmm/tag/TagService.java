@@ -14,13 +14,16 @@ import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.jpa.TagRepository;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.TagSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -33,23 +36,18 @@ import java.util.stream.Collectors;
  * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("tagService")
+@RequiredArgsConstructor
 @Log4j2
 public class TagService
         implements BaseCrudService<TagDto, TagDto, Integer, TagEntity, TagRepository, TagSpec, TagMapstruct> {
 
+    private final TagRepository tagRepository;
+    private final TagSpec tagSpec;
     private final TagMapstruct tagMapstruct = TagMapstruct.INSTANCE;
 
-    @Resource(name = "contentTagService")
-    private ContentTagService contentTagService;
-    @Resource(name = "tagRepository")
-    private TagRepository tagRepository;
-    @Resource(name = "tagSpec")
-    private TagSpec tagSpec;
-    @Resource(name = "jrnlDreamService")
-    private JrnlDreamService jrnlDreamService;
-
-    @Resource
-    private JPAQueryFactory queryFactory;
+    private final ContentTagService contentTagService;
+    private final JrnlDreamService jrnlDreamService;
+    private final JPAQueryFactory queryFactory;
 
     @Override
     public TagRepository getRepository() {

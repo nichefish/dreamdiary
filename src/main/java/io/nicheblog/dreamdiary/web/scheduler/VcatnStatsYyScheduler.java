@@ -5,12 +5,11 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * VcatnStatsYyScheduler
@@ -22,14 +21,12 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class VcatnStatsYyScheduler {
 
-    @Resource(name = "vcatnStatsYyService")
-    public VcatnStatsYyService vcatnStatsYyService;
-
-    @Resource
-    private ApplicationEventPublisher publisher;
+    private final VcatnStatsYyService vcatnStatsYyService;
+    private final ApplicationEventPublisher publisher;
 
     /**
      * 당해 휴가집계년도 관리 정보 추가

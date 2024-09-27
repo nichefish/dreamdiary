@@ -4,10 +4,9 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.ContentTagService;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * TagEventListener
@@ -18,12 +17,11 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 public class TagEventListener {
 
-    @Resource(name="tagService")
-    private TagService tagService;
-    @Resource(name="contentTagService")
-    private ContentTagService contentTagService;
+    private final TagService tagService;
+    private final ContentTagService contentTagService;
 
     /**
      * 태그 처리

@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileDtlService;
 import io.nicheblog.dreamdiary.global.cmm.file.service.AtchFileService;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -41,15 +41,13 @@ import java.util.stream.Collectors;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class FileUtils {
 
-    @Resource(name = "atchFileService")
-    private AtchFileService fileService;
-    @Resource(name = "atchFileDtlService")
-    private AtchFileDtlService fileDtlService;
-    @Resource
-    private HttpServletResponse resp;
+    private final AtchFileService autowiredFileService;
+    private final AtchFileDtlService autowiredFileDtlService;
+    private final HttpServletResponse autowiredResponse;
 
     private static AtchFileService atchFileService;
     private static AtchFileDtlService atchFileDtlService;
@@ -58,9 +56,9 @@ public class FileUtils {
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
-        atchFileService = fileService;
-        atchFileDtlService = fileDtlService;
-        response = resp;
+        atchFileService = autowiredFileService;
+        atchFileDtlService = autowiredFileDtlService;
+        response = autowiredResponse;
     }
 
     /**

@@ -25,7 +25,6 @@ public abstract class BaseControllerImpl
     protected HttpServletRequest request;
     @Resource
     protected HttpServletResponse response;
-
     @Resource
     protected ApplicationEventPublisher publisher;
 

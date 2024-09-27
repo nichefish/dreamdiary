@@ -8,12 +8,12 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.jpa.ExptrPrsnlPaprRepository;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,17 +28,13 @@ import java.util.Map;
  * @author nichefish
  */
 @Service("exptrPrsnlStatsService")
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrPrsnlStatsService {
 
-    @Resource(name = "exptrPrsnlPaprService")
-    private ExptrPrsnlPaprService exptrPrsnlPaprService;
-
-    @Resource(name = "exptrPrsnlPaprRepository")
-    private ExptrPrsnlPaprRepository exptrPrsnlPaprRepository;
-
-    @Resource(name = "userService")
-    private UserService userService;
+    private final ExptrPrsnlPaprService exptrPrsnlPaprService;
+    private final ExptrPrsnlPaprRepository exptrPrsnlPaprRepository;
+    private final UserService userService;
 
     /**
      * 경비 관리 > 경비지출서 > 올해년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 통계 산정

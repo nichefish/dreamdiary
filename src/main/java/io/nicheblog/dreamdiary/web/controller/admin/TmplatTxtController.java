@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.web.model.admin.TmplatDefDto;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.TmplatDefService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -34,6 +34,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class TmplatTxtController
         extends BaseControllerImpl {
@@ -43,8 +44,7 @@ public class TmplatTxtController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.TMPLAT;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "tmplatDefService")
-    private TmplatDefService tmplatDefService;
+    private final TmplatDefService tmplatDefService;
 
     /**
      * 템플릿 관리 등록/수정 처리 (Ajax)

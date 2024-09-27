@@ -13,15 +13,18 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
 import io.nicheblog.dreamdiary.web.service.cmm.flsys.FlsysMetaService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -36,6 +39,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class FlsysMetaController
         extends BaseControllerImpl {
@@ -45,8 +49,7 @@ public class FlsysMetaController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FLSYS;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "flsysMetaService")
-    public FlsysMetaService flsysMetaService;
+    private final FlsysMetaService flsysMetaService;
 
     /**
      * 파일시스템 메타 정보 등록/수정 (Ajax)

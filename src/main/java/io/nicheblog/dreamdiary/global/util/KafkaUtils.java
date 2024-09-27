@@ -1,14 +1,12 @@
 package io.nicheblog.dreamdiary.global.util;
 
-import lombok.extern.java.Log;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -18,13 +16,13 @@ import java.io.IOException;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class KafkaUtils {
 
     private static final String TOPIC = "dreamdiary";
 
-    @Resource
-    private KafkaTemplate<String, String> template;
+    private final KafkaTemplate<String, String> template;
 
     private static KafkaTemplate<String, String> kafkaTemplate;
     private static HttpServletResponse response;

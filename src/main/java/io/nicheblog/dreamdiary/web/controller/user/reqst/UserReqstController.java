@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.service.user.reqst.UserReqstService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -43,6 +43,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class UserReqstController
         extends BaseControllerImpl {
@@ -52,10 +53,8 @@ public class UserReqstController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER_REQST;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "userReqstService")
-    private UserReqstService userReqstService;
-    @Resource(name = "cdService")
-    private CdService cdService;
+    private final UserReqstService userReqstService;
+    private final CdService cdService;
 
     /**
      * 계정 정보 신청 화면 조회

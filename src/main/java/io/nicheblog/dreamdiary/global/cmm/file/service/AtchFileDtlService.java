@@ -8,13 +8,13 @@ import io.nicheblog.dreamdiary.global.cmm.file.spec.AtchFileDtlSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,16 +29,14 @@ import java.util.*;
  * @author nichefish
  */
 @Service
+@RequiredArgsConstructor
 @Log4j2
 public class AtchFileDtlService
         implements BaseCrudService<AtchFileDtlDto, AtchFileDtlDto, Integer, AtchFileDtlEntity, AtchFileDtlRepository, AtchFileDtlSpec, AtchFileDtlMapstruct> {
 
-    AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;
-
-    @Resource(name = "atchFileDtlRepository")
-    private AtchFileDtlRepository atchFileDtlRepository;
-    @Resource(name = "atchFileDtlSpec")
-    private AtchFileDtlSpec atchFileDtlSpec;
+    private final AtchFileDtlRepository atchFileDtlRepository;
+    private final AtchFileDtlSpec atchFileDtlSpec;
+    private final AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;
 
     @Override
     public AtchFileDtlRepository getRepository() {

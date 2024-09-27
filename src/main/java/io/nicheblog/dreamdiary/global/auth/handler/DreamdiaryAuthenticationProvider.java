@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,10 +18,10 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
@@ -34,21 +35,16 @@ import java.util.List;
  *
  * @author nichefish
  */
+@Component
+@RequiredArgsConstructor
 @Log4j2
 public class DreamdiaryAuthenticationProvider
         implements AuthenticationProvider {
 
-    @Resource(name = "authService")
-    private AuthService authService;
-
-    @Resource(name = "userService")
-    private UserService userService;
-
-    @Resource(name = "lgnPolicyService")
-    private LgnPolicyService lgnPolicyService;
-
-    @Resource(name = "passwordEncoder")
-    private PasswordEncoder passwordEncoder;
+    private final AuthService authService;
+    private final UserService userService;
+    private final LgnPolicyService lgnPolicyService;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 사용자 인증 과정

@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
-import io.nicheblog.dreamdiary.web.service.admin.MenuService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,14 +27,13 @@ import javax.servlet.http.HttpSession;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class FreemarkerInterceptor
         implements HandlerInterceptor {
 
-    @Resource
-    private HttpSession session;
-    @Resource(name = "menuService")
-    private MenuService menuService;
+    private final HttpSession session;
+    // private final MenuService menuService;
 
     @Value("${release-date:20000101}")
     private String releaseDate;

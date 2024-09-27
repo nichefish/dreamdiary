@@ -1,10 +1,9 @@
 package io.nicheblog.dreamdiary.global.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
-
-import javax.annotation.Resource;
 
 /**
  * ElasticConfig
@@ -15,10 +14,10 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Configuration
+@RequiredArgsConstructor
 public class ElasticConfig extends ElasticsearchConfiguration {
 
-    @Resource(name = "elasticProperty")
-    private ElasticProperty elasticProperty;
+    private final ElasticProperty elasticProperty;
 
     @Override
     public ClientConfiguration clientConfiguration() {

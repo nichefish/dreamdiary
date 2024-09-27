@@ -11,14 +11,13 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.JsonRestTemplate;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.config.HttpClientConfig;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * JandiApiService
@@ -29,11 +28,11 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Service
+@RequiredArgsConstructor
 @Log4j2
 public class JandiApiService {
 
-    @Resource(name = "jandiProperty")
-    private JandiProperty jandiProperty;
+    private final JandiProperty jandiProperty;
 
     /**
      * API:: JANDI:: 잔디로 incoming webhook 전송

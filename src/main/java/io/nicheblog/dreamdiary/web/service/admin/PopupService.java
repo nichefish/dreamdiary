@@ -7,9 +7,8 @@ import io.nicheblog.dreamdiary.web.mapstruct.admin.PopupMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.PopupDto;
 import io.nicheblog.dreamdiary.web.repository.admin.jpa.PopupRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.PopupSpec;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * PopupService
@@ -21,14 +20,12 @@ import javax.annotation.Resource;
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("popupService")
+@RequiredArgsConstructor
 public class PopupService
         implements BaseMultiCrudService<PopupDto, PopupDto, Integer, PopupEntity, PopupRepository, PopupSpec, PopupMapstruct> {
 
-    @Resource(name = "popupRepository")
-    private PopupRepository popupRepository;
-    @Resource(name = "popupSpec")
-    private PopupSpec popupSpec;
-
+    private final PopupRepository popupRepository;
+    private final PopupSpec popupSpec;
     private final PopupMapstruct popupMapstruct = PopupMapstruct.INSTANCE;
 
     @Override

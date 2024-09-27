@@ -6,10 +6,9 @@ import io.nicheblog.dreamdiary.web.mapstruct.cmm.flsys.FlsysMetaMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.flsys.jpa.FlsysMetaRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.flsys.FlsysMetaSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * FlsysMetaService
@@ -21,15 +20,13 @@ import javax.annotation.Resource;
  * @implements BaseMultiCrudInterface:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("flsysMetaService")
+@RequiredArgsConstructor
 @Log4j2
 public class FlsysMetaService
         implements BaseMultiCrudService<FlsysMetaDto, FlsysMetaDto, Integer, FlsysMetaEntity, FlsysMetaRepository, FlsysMetaSpec, FlsysMetaMapstruct> {
 
-    @Resource(name = "flsysMetaRepository")
-    private FlsysMetaRepository flsysMetaRepository;
-    @Resource(name = "flsysMetaSpec")
-    private FlsysMetaSpec flsysMetaSpec;
-
+    private final FlsysMetaRepository flsysMetaRepository;
+    private final FlsysMetaSpec flsysMetaSpec;
     private final FlsysMetaMapstruct flsysMetaMapstruct = FlsysMetaMapstruct.INSTANCE;
 
     @Override

@@ -18,6 +18,7 @@ import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
 import io.nicheblog.dreamdiary.web.service.vcatn.schdul.VcatnSchdulService;
 import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -47,6 +47,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class VcatnSchdulController
         extends BaseControllerImpl {
@@ -56,19 +57,11 @@ public class VcatnSchdulController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_SCHDUL;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "vcatnPaprService")
-    private VcatnPaprService vcatnPaprService;
-    @Resource(name = "vcatnStatsYyService")
-    private VcatnStatsYyService vcatnStatsYyService;
-    @Resource(name = "vcatnSchdulService")
-    private VcatnSchdulService vcatnSchdulService;
-    @Resource(name = "userService")
-    private UserService userService;
-    @Resource(name = "cdService")
-    private CdService cdService;
-
-    // @Resource(name = "xlsxUtils")
-    // private XlsxUtils xlsxUtils;
+    private final VcatnPaprService vcatnPaprService;
+    private final VcatnStatsYyService vcatnStatsYyService;
+    private final VcatnSchdulService vcatnSchdulService;
+    private final UserService userService;
+    private final CdService cdService;
 
     /**
      * 휴가관리 > 휴가사용일자 > 휴가사용일자 목록 화면 조회

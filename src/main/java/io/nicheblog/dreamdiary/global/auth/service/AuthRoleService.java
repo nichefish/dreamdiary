@@ -6,10 +6,9 @@ import io.nicheblog.dreamdiary.global.auth.model.AuthRoleDto;
 import io.nicheblog.dreamdiary.global.auth.repository.jpa.AuthRoleRepository;
 import io.nicheblog.dreamdiary.global.auth.spec.AuthRoleSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * AuthRoleService
@@ -20,16 +19,14 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Service
+@RequiredArgsConstructor
 @Log4j2
 public class AuthRoleService
         implements BaseReadonlyService<AuthRoleDto, AuthRoleDto, String, AuthRoleEntity, AuthRoleRepository, AuthRoleSpec, AuthRoleMapstruct> {
 
+    private final AuthRoleRepository authRoleRepository;
+    private final AuthRoleSpec authRoleSpec;
     private final AuthRoleMapstruct authRoleMapstruct = AuthRoleMapstruct.INSTANCE;
-
-    @Resource(name = "authRoleRepository")
-    private AuthRoleRepository authRoleRepository;
-    @Resource(name = "authRoleSpec")
-    private AuthRoleSpec authRoleSpec;
 
     @Override
     public AuthRoleRepository getRepository() {

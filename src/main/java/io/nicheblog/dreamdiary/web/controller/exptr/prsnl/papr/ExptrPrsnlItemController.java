@@ -14,6 +14,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlItemService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import javax.annotation.Resource;
 
 /**
  * ExptrPrsnlItemController
@@ -38,6 +37,7 @@ import javax.annotation.Resource;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrPrsnlItemController
         extends BaseControllerImpl {
@@ -45,10 +45,8 @@ public class ExptrPrsnlItemController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "exptrPrsnlPaprService")
-    private ExptrPrsnlPaprService exptrPrsnlPaprService;
-    @Resource(name = "exptrPrsnlItemService")
-    private ExptrPrsnlItemService exptrPrsnlItemService;
+    private final ExptrPrsnlPaprService exptrPrsnlPaprService;
+    private final ExptrPrsnlItemService exptrPrsnlItemService;
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출내역 목록 조회

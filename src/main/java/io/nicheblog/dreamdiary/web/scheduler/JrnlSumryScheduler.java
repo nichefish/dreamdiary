@@ -9,12 +9,11 @@ import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * JrnlSumryScheduler
@@ -25,21 +24,15 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlSumryScheduler {
 
-    @Resource(name = "jrnlSumryService")
-    public JrnlSumryService jrnlSumryService;
-
-    @Resource(name = "jrnlDreamTagCtgrSynchronizer")
-    private JrnlDreamTagCtgrSynchronizer jrnlDreamTagCtgrSynchronizer;
-    @Resource(name = "jrnlDiaryTagCtgrSynchronizer")
-    private JrnlDiaryTagCtgrSynchronizer jrnlDiaryTagCtgrSynchronizer;
-    @Resource(name = "jrnlDayTagCtgrSynchronizer")
-    private JrnlDayTagCtgrSynchronizer jrnlDayTagCtgrSynchronizer;
-
-    @Resource
-    private ApplicationEventPublisher publisher;
+    private final JrnlSumryService jrnlSumryService;
+    private final JrnlDreamTagCtgrSynchronizer jrnlDreamTagCtgrSynchronizer;
+    private final JrnlDiaryTagCtgrSynchronizer jrnlDiaryTagCtgrSynchronizer;
+    private final JrnlDayTagCtgrSynchronizer jrnlDayTagCtgrSynchronizer;
+    private final ApplicationEventPublisher publisher;
 
     /**
      * 하루에 한 번 전체 집계 갱신

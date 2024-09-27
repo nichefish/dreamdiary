@@ -16,6 +16,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamSearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -28,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -43,6 +43,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 public class JrnlDreamController
         extends BaseControllerImpl {
 
@@ -51,8 +52,7 @@ public class JrnlDreamController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlDreamService")
-    private JrnlDreamService jrnlDreamService;
+    private final JrnlDreamService jrnlDreamService;
 
     /**
      * 저널 꿈 목록 조회 (Ajax)

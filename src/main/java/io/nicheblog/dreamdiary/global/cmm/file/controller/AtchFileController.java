@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import java.io.File;
 import java.util.List;
 
@@ -35,6 +35,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class AtchFileController
         extends BaseControllerImpl {
@@ -42,8 +43,7 @@ public class AtchFileController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FILE;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "atchFileDtlService")
-    private AtchFileDtlService atchFileDtlService;
+    private final AtchFileDtlService atchFileDtlService;
 
     /**
      * 파일 유무 여부 체크 (Ajax)

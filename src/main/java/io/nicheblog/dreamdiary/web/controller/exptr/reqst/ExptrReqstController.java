@@ -19,6 +19,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.reqst.ExptrReqstSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.exptr.reqst.ExptrReqstService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,7 +33,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -47,6 +47,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrReqstController
         extends BaseControllerImpl {
@@ -56,12 +57,9 @@ public class ExptrReqstController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_REQST;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "cdService")
-    public CdService cdService;
-    @Resource(name = "exptrReqstService")
-    public ExptrReqstService exptrReqstService;
-    @Resource(name = "tagService")
-    private TagService tagService;
+    private final CdService cdService;
+    private final ExptrReqstService exptrReqstService;
+    private final TagService tagService;
 
     /**
      * 경비 관리 > 물품 구매 및 경조사비 신청 목록 화면 조회

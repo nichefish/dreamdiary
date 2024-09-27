@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global.cmm.xlsx.XlsxCellStyle;
 import io.nicheblog.dreamdiary.global.cmm.xlsx.XlsxType;
 import io.nicheblog.dreamdiary.global.util.CookieUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
@@ -20,7 +21,6 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -43,18 +43,18 @@ import java.util.stream.Stream;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class XlsxUtils {
 
-    @Resource
-    private HttpServletResponse resp;
+    private final HttpServletResponse autowiredResponse;
 
     private static HttpServletResponse response;
 
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
-        response = resp;
+        response = autowiredResponse;
     }
 
     /**

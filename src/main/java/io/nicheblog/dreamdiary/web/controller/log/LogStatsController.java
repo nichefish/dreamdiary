@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.web.model.log.LogStatsSearchParam;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserDto;
 import io.nicheblog.dreamdiary.web.service.log.LogStatsUserService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
@@ -20,7 +21,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 
@@ -35,6 +35,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class LogStatsController
         extends BaseControllerImpl {
@@ -44,8 +45,7 @@ public class LogStatsController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_STATS;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "logStatsUserService")
-    private LogStatsUserService logStatsUserService;
+    private final LogStatsUserService logStatsUserService;
 
     /**
      * 활동 로그 > 활동 로그 목록 (전체) 화면 조회

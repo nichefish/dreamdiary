@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDaySearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayTagService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +39,7 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlDayTagController
         extends BaseControllerImpl {
@@ -49,10 +49,8 @@ public class JrnlDayTagController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlDayService")
-    private JrnlDayService jrnlDayService;
-    @Resource(name = "jrnlDayTagService")
-    private JrnlDayTagService jrnlDayTagService;
+    private final JrnlDayService jrnlDayService;
+    private final JrnlDayTagService jrnlDayTagService;
 
     /**
      * 저널 일자 태그 전체 목록 조회 (Ajax)

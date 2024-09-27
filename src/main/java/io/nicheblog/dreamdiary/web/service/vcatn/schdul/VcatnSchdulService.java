@@ -7,10 +7,10 @@ import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.repository.vcatn.jpa.VcatnSchdulRepository;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnSchdulSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,15 +25,13 @@ import java.util.Map;
  * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("vcatnSchdulService")
+@RequiredArgsConstructor
 @Log4j2
 public class VcatnSchdulService
         implements BaseCrudService<VcatnSchdulDto, VcatnSchdulDto, Integer, VcatnSchdulEntity, VcatnSchdulRepository, VcatnSchdulSpec, VcatnSchdulMapstruct> {
 
-    @Resource(name = "vcatnSchdulRepository")
-    private VcatnSchdulRepository vcatnSchdulRepository;
-    @Resource(name = "vcatnSchdulSpec")
-    private VcatnSchdulSpec vcatnSchdulSpec;
-
+    private final VcatnSchdulRepository vcatnSchdulRepository;
+    private final VcatnSchdulSpec vcatnSchdulSpec;
     private final VcatnSchdulMapstruct vcatnSchdulMapstruct = VcatnSchdulMapstruct.INSTANCE;
 
     @Override

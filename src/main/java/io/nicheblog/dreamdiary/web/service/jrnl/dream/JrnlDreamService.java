@@ -5,16 +5,16 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
-import io.nicheblog.dreamdiary.web.repository.jrnl.dream.mybatis.JrnlDreamMapper;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.dream.jpa.JrnlDreamRepository;
+import io.nicheblog.dreamdiary.web.repository.jrnl.dream.mybatis.JrnlDreamMapper;
 import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -30,18 +30,16 @@ import java.util.Map;
  * @implements BaseClsfService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDreamService")
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlDreamService
         implements BaseClsfService<JrnlDreamDto, JrnlDreamDto, Integer, JrnlDreamEntity, JrnlDreamRepository, JrnlDreamSpec, JrnlDreamMapstruct> {
 
+    private final JrnlDreamRepository jrnlDreamRepository;
+    private final JrnlDreamSpec jrnlDreamSpec;
     private final JrnlDreamMapstruct jrnlDreamMapstruct = JrnlDreamMapstruct.INSTANCE;
 
-    @Resource(name = "jrnlDreamRepository")
-    private JrnlDreamRepository jrnlDreamRepository;
-    @Resource(name = "jrnlDreamSpec")
-    private JrnlDreamSpec jrnlDreamSpec;
-    @Resource(name = "jrnlDreamMapper")
-    private JrnlDreamMapper jrnlDreamMapper;
+    private final JrnlDreamMapper jrnlDreamMapper;
 
     @Override
     public JrnlDreamRepository getRepository() {

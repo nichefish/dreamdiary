@@ -4,10 +4,10 @@ import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysDirDto;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysDto;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysFileDto;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,11 +22,11 @@ import java.util.*;
  * @author nichefish
  */
 @Service("flsysService")
+@RequiredArgsConstructor
 @Log4j2
 public class FlsysService {
 
-    @Resource(name = "flsysMetaService")
-    public FlsysMetaService flsysMetaService;
+    public final FlsysMetaService flsysMetaService;
 
     /**
      * 경로를 받아서 파일 정보 조회

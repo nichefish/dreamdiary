@@ -20,6 +20,7 @@ import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamTagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -28,7 +29,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -41,6 +41,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 public class JrnlSumryController
         extends BaseControllerImpl {
 
@@ -49,20 +50,13 @@ public class JrnlSumryController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlSumryService")
-    private JrnlSumryService jrnlSumryService;
-    @Resource(name = "jrnlDiaryService")
-    private JrnlDiaryService jrnlDiaryService;
-    @Resource(name = "jrnlDreamService")
-    private JrnlDreamService jrnlDreamService;
-    @Resource(name = "jrnlDayTagService")
-    private JrnlDayTagService jrnlDayTagService;
-    @Resource(name = "jrnlDiaryTagService")
-    private JrnlDiaryTagService jrnlDiaryTagService;
-    @Resource(name = "jrnlDreamTagService")
-    private JrnlDreamTagService jrnlDreamTagService;
-    @Resource(name = "cdService")
-    private CdService cdService;
+    private final JrnlSumryService jrnlSumryService;
+    private final JrnlDiaryService jrnlDiaryService;
+    private final JrnlDreamService jrnlDreamService;
+    private final JrnlDayTagService jrnlDayTagService;
+    private final JrnlDiaryTagService jrnlDiaryTagService;
+    private final JrnlDreamTagService jrnlDreamTagService;
+    private final CdService cdService;
 
     /**
      * 저널 결산 화면 조회

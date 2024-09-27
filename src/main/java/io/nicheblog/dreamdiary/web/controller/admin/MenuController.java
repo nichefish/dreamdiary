@@ -16,6 +16,7 @@ import io.nicheblog.dreamdiary.web.model.admin.MenuSearchParam;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.MenuService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -46,6 +46,7 @@ import java.security.InvalidParameterException;
  */
 @Controller
 @PreAuthorize("isAuthenticated()")
+@RequiredArgsConstructor
 @Log4j2
 public class MenuController
         extends BaseControllerImpl {
@@ -55,10 +56,8 @@ public class MenuController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.MENU;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "menuService")
-    private MenuService menuService;
-    @Resource(name = "cdService")
-    private CdService cdService;
+    private final MenuService menuService;
+    private final CdService cdService;
 
     /**
      * 관리자 > 메뉴 관리 > 메뉴 관리 화면 조회

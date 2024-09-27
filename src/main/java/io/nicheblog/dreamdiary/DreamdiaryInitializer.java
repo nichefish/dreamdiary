@@ -13,6 +13,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -20,7 +21,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -32,22 +32,16 @@ import java.util.List;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class DreamdiaryInitializer
         implements CommandLineRunner {
 
-    @Resource(name = "activeProfile")
-    private ActiveProfile activeProfile;
-
-    @Resource(name = "authService")
-    private AuthService authService;
-    @Resource(name = "userService")
-    private UserService userService;
-    @Resource(name = "lgnPolicyService")
-    private LgnPolicyService lgnPolicyService;
-
-    @Resource
-    private ApplicationEventPublisher publisher;
+    private final ActiveProfile activeProfile;
+    private final AuthService authService;
+    private final UserService userService;
+    private final LgnPolicyService lgnPolicyService;
+    private final ApplicationEventPublisher publisher;
 
     @Value("${system.init-temp-pw:}")
     public String SYSTEM_INIT_TEMP_PW;

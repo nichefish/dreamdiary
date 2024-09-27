@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryCnDto;
 import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryCnService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -41,6 +41,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 public class JrnSumryCnController
         extends BaseControllerImpl {
 
@@ -49,8 +50,7 @@ public class JrnSumryCnController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlSumryCnService")
-    private JrnlSumryCnService jrnlSumryCnService;
+    private final JrnlSumryCnService jrnlSumryCnService;
 
     /**
      * 저널 결산 내용 등록/수정 처리 (Ajax)

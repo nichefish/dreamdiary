@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.web.model.schdul.SchdulDto;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulPrtcpntDto;
 import io.nicheblog.dreamdiary.web.repository.schdul.jpa.SchdulRepository;
 import io.nicheblog.dreamdiary.web.spec.schdul.SchdulSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +18,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -30,15 +30,13 @@ import java.util.*;
  * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("schdulService")
+@RequiredArgsConstructor
 @Log4j2
 public class SchdulService
         implements BaseClsfService<SchdulDto, SchdulDto, Integer, SchdulEntity, SchdulRepository, SchdulSpec, SchdulMapstruct> {
 
-    @Resource(name = "schdulRepository")
-    private SchdulRepository schdulRepository;
-    @Resource(name = "schdulSpec")
-    private SchdulSpec schdulSpec;
-
+    private final SchdulRepository schdulRepository;
+    private final SchdulSpec schdulSpec;
     private final SchdulMapstruct schdulMapstruct = SchdulMapstruct.INSTANCE;
 
     @Override

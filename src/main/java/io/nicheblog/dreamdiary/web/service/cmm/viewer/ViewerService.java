@@ -5,12 +5,12 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.web.entity.cmm.viewer.ViewerEntity;
 import io.nicheblog.dreamdiary.web.repository.cmm.viewer.jpa.ViewerRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.viewer.ViewerSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -23,13 +23,12 @@ import java.util.Map;
  * @author nichefish
  */
 @Service("ViewerService")
+@RequiredArgsConstructor
 @Log4j2
 public class ViewerService {
 
-    @Resource(name = "viewerRepository")
-    private ViewerRepository viewerRepository;
-    @Resource(name = "viewerSpec")
-    private ViewerSpec viewerSpec;
+    private final ViewerRepository viewerRepository;
+    private final ViewerSpec viewerSpec;
 
     /**
      * 게시물 열람자 존재여부 (기 방문여부) 체크

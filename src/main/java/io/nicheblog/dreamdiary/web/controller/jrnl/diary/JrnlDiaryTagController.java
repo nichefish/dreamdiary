@@ -15,16 +15,15 @@ import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiarySearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryTagService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +38,7 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 public class JrnlDiaryTagController
         extends BaseControllerImpl {
 
@@ -47,10 +47,8 @@ public class JrnlDiaryTagController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlDiaryService")
-    private JrnlDiaryService jrnlDiaryService;
-    @Resource(name = "jrnlDiaryTagService")
-    private JrnlDiaryTagService jrnlDiaryTagService;
+    private final JrnlDiaryService jrnlDiaryService;
+    private final JrnlDiaryTagService jrnlDiaryTagService;
 
     /**
      * 저널 일기 태그 전체 목록 조회 (Ajax)

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.util;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.MessageSource;
@@ -9,7 +10,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,15 +25,14 @@ import java.util.Locale;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class MessageUtils
         extends ReloadableResourceBundleMessageSource
         implements MessageSource {
 
-    @Resource(name = "messageSource")
-    private MessageSource source;
-    @Resource
-    private HttpServletResponse resp;
+    private final MessageSource autowiredMessageSource;
+    private final HttpServletResponse autowiredResponse;
 
     private static MessageSource messageSource;
     private static HttpServletResponse response;
@@ -41,8 +40,8 @@ public class MessageUtils
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
-        messageSource = source;
-        response = resp;
+        messageSource = autowiredMessageSource;
+        response = autowiredResponse;
     }
 
     public static final String RSLT_SUCCESS = "common.rslt.success";

@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.log.LogActvtyDto;
 import io.nicheblog.dreamdiary.web.model.log.LogActvtySearchParam;
 import io.nicheblog.dreamdiary.web.service.log.LogActvtyService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,9 +24,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
@@ -38,6 +41,7 @@ import java.io.IOException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class LogActvtyController
         extends BaseControllerImpl {
@@ -47,11 +51,7 @@ public class LogActvtyController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LOG_ACTVTY;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "logActvtyService")
-    private LogActvtyService logActvtyService;
-
-    // @Resource(name = "xlsxUtils")
-    // private XlsxUtils xlsxUtils;
+    private final LogActvtyService logActvtyService;
 
     /**
      * 활동 로그 목록 (전체) 화면 조회

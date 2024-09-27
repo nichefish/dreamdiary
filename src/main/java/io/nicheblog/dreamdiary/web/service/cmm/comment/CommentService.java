@@ -8,10 +8,9 @@ import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.comment.jpa.CommentRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.comment.CommentSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * CommentService
@@ -25,16 +24,14 @@ import javax.annotation.Resource;
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("commentService")
+@RequiredArgsConstructor
 @Log4j2
 public class CommentService
         implements BaseMultiCrudService<CommentDto, CommentDto, Integer, CommentEntity, CommentRepository, CommentSpec, CommentMapstruct> {
 
+    private final CommentRepository commentRepository;
+    private final CommentSpec commentSpec;
     private final CommentMapstruct commentMapstruct = CommentMapstruct.INSTANCE;
-
-    @Resource(name = "commentRepository")
-    private CommentRepository commentRepository;
-    @Resource(name = "commentSpec")
-    private CommentSpec commentSpec;
 
     @Override
     public CommentRepository getRepository() {

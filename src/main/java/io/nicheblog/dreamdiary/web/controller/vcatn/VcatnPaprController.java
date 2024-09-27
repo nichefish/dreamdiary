@@ -19,6 +19,7 @@ import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,7 +33,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -46,6 +46,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class VcatnPaprController
         extends BaseControllerImpl {
@@ -55,12 +56,9 @@ public class VcatnPaprController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_PAPR;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "vcatnPaprService")
-    private VcatnPaprService vcatnPaprService;
-    @Resource(name = "tagService")
-    private TagService tagService;
-    @Resource(name = "cdService")
-    private CdService cdService;
+    private final VcatnPaprService vcatnPaprService;
+    private final TagService tagService;
+    private final CdService cdService;
 
     /**
      * 일정  > 휴가 계획서 > 휴가 계획서 목록

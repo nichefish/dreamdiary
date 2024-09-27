@@ -24,11 +24,11 @@ import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.spec.cmm.tag.ContentTagSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,22 +45,18 @@ import java.util.stream.Collectors;
  * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("contentTagService")
+@RequiredArgsConstructor
 @Log4j2
 public class ContentTagService
         implements BaseCrudService<ContentTagDto, ContentTagDto, Integer, ContentTagEntity, ContentTagRepository, ContentTagSpec, ContentTagMapstruct> {
 
+    private final ContentTagRepository contentTagRepository;
+    private final ContentTagSpec contentTagSpec;
     private final ContentTagMapstruct tagMapstruct = ContentTagMapstruct.INSTANCE;
 
-    @Resource(name = "contentTagRepository")
-    private ContentTagRepository contentTagRepository;
-    @Resource(name = "contentTagSpec")
-    private ContentTagSpec contentTagSpec;
-    @Resource(name = "jrnlDayService")
-    private JrnlDayService jrnlDayService;
-    @Resource(name = "jrnlDiaryService")
-    private JrnlDiaryService jrnlDiaryService;
-    @Resource(name = "jrnlDreamService")
-    private JrnlDreamService jrnlDreamService;
+    private final JrnlDayService jrnlDayService;
+    private final JrnlDiaryService jrnlDiaryService;
+    private final JrnlDreamService jrnlDreamService;
 
     @Override
     public ContentTagRepository getRepository() {

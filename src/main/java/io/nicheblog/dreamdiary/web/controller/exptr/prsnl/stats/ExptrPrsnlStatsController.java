@@ -16,6 +16,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.stats.ExptrPrsnlStatsDto;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.stats.ExptrPrsnlStatsService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -23,10 +24,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -39,6 +42,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrPrsnlStatsController
         extends BaseControllerImpl {
@@ -48,13 +52,8 @@ public class ExptrPrsnlStatsController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_STATS;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "exptrPrsnlPaprService")
-    private ExptrPrsnlPaprService exptrPrsnlPaprService;
-    @Resource(name = "exptrPrsnlStatsService")
-    private ExptrPrsnlStatsService exptrPrsnlStatsService;
-
-    // @Resource(name = "xlsxUtils")
-    // private XlsxUtils xlsxUtils;
+    private final ExptrPrsnlPaprService exptrPrsnlPaprService;
+    private final ExptrPrsnlStatsService exptrPrsnlStatsService;
 
     /**
      * 경비 관리 > 경비지출누적집계 > 년도별 경비지출누적집계 화면 조회

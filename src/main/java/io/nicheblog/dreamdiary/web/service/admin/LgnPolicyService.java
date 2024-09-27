@@ -4,12 +4,12 @@ import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.LgnPolicyMapstruct;
 import io.nicheblog.dreamdiary.web.model.admin.LgnPolicyDto;
 import io.nicheblog.dreamdiary.web.repository.admin.jpa.LgnPolicyRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +22,11 @@ import java.util.Optional;
  * @author nichefish
  */
 @Service("lgnPolicyService")
+@RequiredArgsConstructor
 public class LgnPolicyService {
 
+    private final LgnPolicyRepository lgnPolicyRepository;
     private final LgnPolicyMapstruct lgnPolicyMapstruct = LgnPolicyMapstruct.INSTANCE;
-
-    @Resource(name = "lgnPolicyRepository")
-    private LgnPolicyRepository lgnPolicyRepository;
 
     /**
      * 사용자 관리 > 로그인 설정 조회 (Dto 레벨)

@@ -4,8 +4,6 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-
 /**
  * JrnlDreamApiDto
  * <pre>

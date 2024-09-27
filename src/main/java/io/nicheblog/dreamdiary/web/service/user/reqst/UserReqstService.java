@@ -8,11 +8,11 @@ import io.nicheblog.dreamdiary.web.mapstruct.user.reqst.UserReqstMapstruct;
 import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -24,18 +24,13 @@ import java.util.List;
  * @author nichefish
  */
 @Service("userReqstService")
+@RequiredArgsConstructor
 public class UserReqstService {
 
-    @Resource(name = "userService")
-    private UserService userService;
-
+    private final UserService userService;
     private final UserReqstMapstruct userReqstMapstruct = UserReqstMapstruct.INSTANCE;
-
-    @Resource(name = "userRepository")
-    private UserRepository userRepository;
-
-    @Resource(name = "passwordEncoder")
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 신청 전처리:: 메소드 분리

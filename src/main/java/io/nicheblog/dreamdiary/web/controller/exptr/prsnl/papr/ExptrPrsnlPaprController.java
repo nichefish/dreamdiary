@@ -24,6 +24,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprSearchPa
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
@@ -57,6 +57,7 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrPrsnlPaprController
         extends BaseControllerImpl {
@@ -66,12 +67,9 @@ public class ExptrPrsnlPaprController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "exptrPrsnlPaprService")
-    private ExptrPrsnlPaprService exptrPrsnlPaprService;
-    @Resource(name = "cdService")
-    private CdService cdService;
-    @Resource(name = "tagService")
-    private TagService tagService;
+    private final ExptrPrsnlPaprService exptrPrsnlPaprService;
+    private final CdService cdService;
+    private final TagService tagService;
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 목록 조회

@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.handler.UTF8DecodeResourceResolver;
 import io.nicheblog.dreamdiary.global.interceptor.CookieInterceptor;
 import io.nicheblog.dreamdiary.global.interceptor.FreemarkerInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -11,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -23,14 +23,12 @@ import java.util.List;
  * @author nichefish
  */
 @Configuration
+@RequiredArgsConstructor
 public class WebMvcContextConfig
         implements WebMvcConfigurer {
 
-    @Resource(name = "freemarkerInterceptor")
-    private FreemarkerInterceptor freemarkerInterceptor;
-
-    @Resource(name = "cookieInterceptor")
-    private CookieInterceptor cookieInterceptor;
+    private final FreemarkerInterceptor freemarkerInterceptor;
+    private final CookieInterceptor cookieInterceptor;
 
     private static final List<String> STATIC_RESOURCES_URL_PATTERN = List.of("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/**");
 

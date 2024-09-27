@@ -22,6 +22,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.sbjct.JrnlSbjctSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import io.nicheblog.dreamdiary.web.service.jrnl.sbjct.JrnlSbjctService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +36,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -49,6 +49,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlSbjctController
         extends BaseControllerImpl {
@@ -58,12 +59,9 @@ public class JrnlSbjctController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.NOTICE;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlSbjctService")
-    private JrnlSbjctService jrnlSbjctService;
-    @Resource(name = "cdService")
-    private CdService cdService;
-    @Resource(name = "tagService")
-    private TagService tagService;
+    private final JrnlSbjctService jrnlSbjctService;
+    private final CdService cdService;
+    private final TagService tagService;
 
     /**
      * 저널 주제 목록 조회

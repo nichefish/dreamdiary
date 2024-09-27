@@ -3,11 +3,11 @@ package io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.jpa.ExptrPrsnlPaprRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,14 +21,12 @@ import java.util.List;
  * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("exptrPrsnlItemService")
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrPrsnlItemService {
 
-    @Resource(name = "exptrPrsnlPaprService")
-    private ExptrPrsnlPaprService exptrPrsnlPaprService;
-
-    @Resource(name = "exptrPrsnlPaprRepository")
-    private ExptrPrsnlPaprRepository exptrPrsnlPaprRepository;
+    private final ExptrPrsnlPaprService exptrPrsnlPaprService;
+    private final ExptrPrsnlPaprRepository exptrPrsnlPaprRepository;
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 첨부파일 업데이트

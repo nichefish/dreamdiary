@@ -11,11 +11,11 @@ import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.day.jpa.JrnlDayRepository;
 import io.nicheblog.dreamdiary.web.repository.jrnl.day.mybatis.JrnlDayMapper;
 import io.nicheblog.dreamdiary.web.spec.jrnl.day.JrnlDaySpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,18 +30,15 @@ import java.util.Map;
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDayService")
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlDayService
         implements BaseMultiCrudService<JrnlDayDto, JrnlDayDto, Integer, JrnlDayEntity, JrnlDayRepository, JrnlDaySpec, JrnlDayMapstruct> {
 
     private final JrnlDayMapstruct jrnlDayMapstruct = JrnlDayMapstruct.INSTANCE;
-
-    @Resource(name = "jrnlDayRepository")
-    private JrnlDayRepository jrnlDayRepository;
-    @Resource(name = "jrnlDaySpec")
-    private JrnlDaySpec jrnlDaySpec;
-    @Resource(name = "jrnlDayMapper")
-    private JrnlDayMapper jrnlDayMapper;
+    private final JrnlDayRepository jrnlDayRepository;
+    private final JrnlDaySpec jrnlDaySpec;
+    private final JrnlDayMapper jrnlDayMapper;
 
     @Override
     public JrnlDayRepository getRepository() {

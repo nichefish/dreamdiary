@@ -4,8 +4,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.nicheblog.dreamdiary.web.entity.user.QUserEntity;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.repository.user.querydsl.QUserRepository;
+import lombok.RequiredArgsConstructor;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,11 +16,11 @@ import java.util.List;
  *
  * @author nichefish
  */
+@RequiredArgsConstructor
 public class QUserRepositoryImpl
         implements QUserRepository {
 
-    @Resource
-    private JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     @Override
     public List<UserEntity> queryUsersByUserIdTest() {

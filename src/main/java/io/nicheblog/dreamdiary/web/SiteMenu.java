@@ -3,10 +3,10 @@ package io.nicheblog.dreamdiary.web;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -18,13 +18,13 @@ import java.util.List;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 public class SiteMenu
     implements SiteAdminMenu {
 
-    @Resource(name = "boardDefService")
-    private BoardDefService boardDefService;
+    private final BoardDefService boardDefService;
 
-    public static String TOP_MENU_IDX = "00";
+    public static final String TOP_MENU_IDX = "00";
 
     @PostConstruct
     private void init() throws Exception {

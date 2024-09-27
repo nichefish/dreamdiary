@@ -14,13 +14,13 @@ import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlPaprMapstruct
 import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
 import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.jpa.ExptrPrsnlPaprRepository;
 import io.nicheblog.dreamdiary.web.spec.exptr.prsnl.ExptrPrsnlPaprSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -34,16 +34,15 @@ import java.util.*;
  * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrPrsnlPaprService
         implements BasePostService<ExptrPrsnlPaprDto.DTL, ExptrPrsnlPaprDto.LIST, Integer, ExptrPrsnlPaprEntity, ExptrPrsnlPaprRepository, ExptrPrsnlPaprSpec, ExptrPrsnlPaprMapstruct> {
 
-    @Resource(name = "exptrPrsnlPaprRepository")
-    private ExptrPrsnlPaprRepository exptrPrsnlPaprRepository;
-    @Resource(name = "exptrPrsnlPaprSpec")
-    private ExptrPrsnlPaprSpec exptrPrsnlPaprSpec;
-
+    private final ExptrPrsnlPaprRepository exptrPrsnlPaprRepository;
+    private final ExptrPrsnlPaprSpec exptrPrsnlPaprSpec;
     private final ExptrPrsnlPaprMapstruct exptrPrsnlPaprMapstruct = ExptrPrsnlPaprMapstruct.INSTANCE;
+
     private final AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;
 
     @Override

@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysDto;
 import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.flsys.FlsysService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 
 /**
  * FlsysController
@@ -38,6 +38,7 @@ import javax.annotation.Resource;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class FlsysController
         extends BaseControllerImpl {
@@ -47,8 +48,7 @@ public class FlsysController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.FLSYS;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "flsysService")
-    public FlsysService flsysService;
+    private final FlsysService flsysService;
 
     /**
      * 파일시스템 화면 조회

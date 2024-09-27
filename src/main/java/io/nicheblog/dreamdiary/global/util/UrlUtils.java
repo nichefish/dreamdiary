@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.global.util;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,12 +17,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 public class UrlUtils {
 
-    @Resource
-    private HttpServletRequest req;
-    @Resource
-    private HttpServletResponse resp;
+    private final HttpServletRequest autowiredRequest;
+    private final HttpServletResponse autowiredResponse;
 
     private static HttpServletRequest request;
     private static HttpServletResponse response;
@@ -30,8 +29,8 @@ public class UrlUtils {
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
-        request = req;
-        response = resp;
+        request = autowiredRequest;
+        response = autowiredResponse;
     }
 
     //

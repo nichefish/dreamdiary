@@ -19,17 +19,20 @@ import io.nicheblog.dreamdiary.web.service.vcatn.papr.VcatnPaprService;
 import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsService;
 import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +47,7 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class UserMyController
         extends BaseControllerImpl {
@@ -53,16 +57,11 @@ public class UserMyController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER_MY;     // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "userService")
-    private UserService userService;
-    @Resource(name = "userMyService")
-    private UserMyService userMyService;
-    @Resource(name = "vcatnStatsService")
-    private VcatnStatsService vcatnStatsService;
-    @Resource(name = "vcatnStatsYyService")
-    private VcatnStatsYyService vcatnStatsYyService;
-    @Resource(name = "vcatnPaprService")
-    private VcatnPaprService vcatnPaprService;
+    private final UserService userService;
+    private final UserMyService userMyService;
+    private final VcatnStatsService vcatnStatsService;
+    private final VcatnStatsYyService vcatnStatsYyService;
+    private final VcatnPaprService vcatnPaprService;
 
     /**
      * 내 정보 (상세) 화면 조회

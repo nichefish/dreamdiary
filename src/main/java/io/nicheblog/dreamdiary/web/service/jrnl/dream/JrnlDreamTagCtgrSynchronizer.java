@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.dream;
 
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.io.FileWriter;
 import java.util.HashMap;
@@ -23,11 +23,11 @@ import java.util.stream.Collectors;
  * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDreamTagCtgrSynchronizer")
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlDreamTagCtgrSynchronizer {
 
-    @Resource(name = "jrnlDreamTagService")
-    private JrnlDreamTagService jrnlDreamTagService;
+    private final JrnlDreamTagService jrnlDreamTagService;
 
     /**
      * 태그 조회해서 파일 생성

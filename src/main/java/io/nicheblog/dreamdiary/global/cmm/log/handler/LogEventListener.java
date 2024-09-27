@@ -3,11 +3,11 @@ package io.nicheblog.dreamdiary.global.cmm.log.handler;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -20,12 +20,11 @@ import javax.servlet.http.HttpServletRequest;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 public class LogEventListener {
 
-    @Resource
-    private HttpServletRequest request;
-    @Resource(name = "logWorker")
-    private LogWorker logWorker;
+    private final HttpServletRequest request;
+    private final LogWorker logWorker;
 
     /**
      * 현재 인증(로그인) 상태인 등록/수정자 반환

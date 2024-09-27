@@ -4,13 +4,13 @@ import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.cmm.cd.mapstruct.CdMapstruct;
 import io.nicheblog.dreamdiary.global.cmm.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.cmm.cd.repository.jpa.CdRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +23,11 @@ import java.util.List;
  * @author nichefish
  */
 @Service
+@RequiredArgsConstructor
 public class CdService {
 
+    private final CdRepository cdRepository;
     private final CdMapstruct cdMapstruct = CdMapstruct.INSTANCE;
-
-    @Resource(name = "cdRepository")
-    private CdRepository cdRepository;
 
     /**
      * 공통 > 공통코드CL_CD로 상세코드DTL_CD 목록 조회 (entity level)

@@ -11,13 +11,13 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +31,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class AdminController
         extends BaseControllerImpl {
@@ -40,8 +41,7 @@ public class AdminController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;      // 작업 카테고리 (로그 적재용)
 
-    @Resource
-    private AuthRoleService authRoleService;
+    private final AuthRoleService authRoleService;
 
     /**
      * 사이트 관리 > 사이트 관리 화면 조회

@@ -17,6 +17,7 @@ import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulCalService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -40,6 +40,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class SchdulCalController
         extends BaseControllerImpl {
@@ -49,12 +50,9 @@ public class SchdulCalController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.SCHDUL;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "schdulCalService")
-    private SchdulCalService schdulCalService;
-    @Resource(name = "cdService")
-    private CdService cdService;
-    @Resource(name = "userService")
-    private UserService userService;
+    private final SchdulCalService schdulCalService;
+    private final CdService cdService;
+    private final UserService userService;
 
     /**
      * 일정 > 전체 일정 (달력) 화면 조회

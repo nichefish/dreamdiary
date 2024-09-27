@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.web.model.admin.MenuDto;
 import io.nicheblog.dreamdiary.web.model.admin.MenuSearchParam;
 import io.nicheblog.dreamdiary.web.repository.admin.jpa.MenuRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.MenuSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
@@ -35,16 +35,14 @@ import java.util.Map;
  * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("menuService")
+@RequiredArgsConstructor
 @Log4j2
 public class MenuService
         implements BaseCrudService<MenuDto, MenuDto, Integer, MenuEntity, MenuRepository, MenuSpec, MenuMapstruct>,
                    BaseStateService<MenuDto, MenuDto, Integer, MenuEntity, MenuRepository, MenuSpec, MenuMapstruct> {
 
-    @Resource(name = "menuRepository")
-    private MenuRepository menuRepository;
-    @Resource(name = "menuSpec")
-    private MenuSpec menuSpec;
-
+    private final MenuRepository menuRepository;
+    private final MenuSpec menuSpec;
     private final MenuMapstruct menuMapstruct = MenuMapstruct.INSTANCE;
 
     @Override

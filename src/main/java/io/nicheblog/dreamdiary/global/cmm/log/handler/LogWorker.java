@@ -4,11 +4,11 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.service.LogService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -21,12 +21,12 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class LogWorker
         implements Runnable {
 
-    @Resource(name = "logService")
-    private LogService logService;
+    private final LogService logService;
 
     /** 로그 queue */
     private static final BlockingQueue<Object> logQueue = new LinkedBlockingQueue<>();

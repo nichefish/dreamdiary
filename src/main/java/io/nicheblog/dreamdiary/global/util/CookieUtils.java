@@ -1,10 +1,10 @@
 package io.nicheblog.dreamdiary.global.util;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +19,11 @@ import java.util.Arrays;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 public class CookieUtils {
 
-    @Resource
-    private HttpServletRequest req;
-    @Resource
-    private HttpServletResponse resp;
+    private final HttpServletRequest autowiredRequest;
+    private final HttpServletResponse autowiredResponse;
 
     private static HttpServletRequest request;
     private static HttpServletResponse response;
@@ -32,8 +31,8 @@ public class CookieUtils {
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
-        request = req;
-        response = resp;
+        request = autowiredRequest;
+        response = autowiredResponse;
     }
 
     private static final Integer A_DAY = 60 * 60 * 24;

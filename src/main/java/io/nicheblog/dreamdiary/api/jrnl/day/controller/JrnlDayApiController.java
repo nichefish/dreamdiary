@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +25,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -39,6 +39,7 @@ import java.util.Map;
  */
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
+@RequiredArgsConstructor
 @Log4j2
 @Tag(name = "저널 일자 API", description = "잔디 메신저 API입니다.")
 public class JrnlDayApiController
@@ -47,8 +48,7 @@ public class JrnlDayApiController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlDayApiService")
-    private JrnlDayApiService jrnlDayApiService;
+    private final JrnlDayApiService jrnlDayApiService;
 
     /**
      * API:: 저널 일자 목록 조회 (Ajax)

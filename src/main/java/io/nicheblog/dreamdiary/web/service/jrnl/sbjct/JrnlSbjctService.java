@@ -6,10 +6,9 @@ import io.nicheblog.dreamdiary.web.mapstruct.jrnl.sbjct.JrnlSbjctMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.sbjct.JrnlSbjctDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.sbjct.jpa.JrnlSbjctRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.sbjct.JrnlSbjctSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * JrnlSbjctService
@@ -21,15 +20,13 @@ import javax.annotation.Resource;
  * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlSbjctService")
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlSbjctService
         implements BasePostService<JrnlSbjctDto.DTL, JrnlSbjctDto.LIST, Integer, JrnlSbjctEntity, JrnlSbjctRepository, JrnlSbjctSpec, JrnlSbjctMapstruct> {
 
-    @Resource(name = "jrnlSbjctRepository")
-    private JrnlSbjctRepository jrnlSbjctRepository;
-    @Resource(name = "jrnlSbjctSpec")
-    private JrnlSbjctSpec jrnlSbjctSpec;
-
+    private final JrnlSbjctRepository jrnlSbjctRepository;
+    private final JrnlSbjctSpec jrnlSbjctSpec;
     private final JrnlSbjctMapstruct jrnlSbjctMapstruct = JrnlSbjctMapstruct.INSTANCE;
 
     @Override

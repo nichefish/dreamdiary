@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.global.util;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -14,11 +14,11 @@ import java.util.concurrent.TimeUnit;
  *
  * @author nichefish
  */
-@Service
+@Component
+@RequiredArgsConstructor
 public class RedisUtils {
 
-    @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     /**
      * setData

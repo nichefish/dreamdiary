@@ -13,6 +13,7 @@ import io.nicheblog.dreamdiary.global.handler.HttpMethodRequestWrapper;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
@@ -26,7 +27,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,17 +40,15 @@ import javax.servlet.http.HttpSession;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class LgnFailureHandler
         extends SimpleUrlAuthenticationFailureHandler
         implements AuthenticationFailureHandler {
 
-    @Resource(name = "authService")
-    private AuthService authService;
-    @Resource(name = "lgnPolicyService")
-    private LgnPolicyService lgnPolicyService;
-    @Resource
-    private ApplicationEventPublisher publisher;
+    private final AuthService authService;
+    private final LgnPolicyService lgnPolicyService;
+    private final ApplicationEventPublisher publisher;
 
     /**
      * 로그인 실패시 상황별 분기 처리

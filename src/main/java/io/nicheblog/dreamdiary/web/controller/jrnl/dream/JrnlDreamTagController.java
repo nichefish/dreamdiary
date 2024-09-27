@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamSearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamTagService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +38,7 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 public class JrnlDreamTagController
         extends BaseControllerImpl {
 
@@ -46,10 +47,8 @@ public class JrnlDreamTagController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlDreamService")
-    private JrnlDreamService jrnlDreamService;
-    @Resource(name = "jrnlDreamTagService")
-    private JrnlDreamTagService jrnlDreamTagService;
+    private final JrnlDreamService jrnlDreamService;
+    private final JrnlDreamTagService jrnlDreamTagService;
 
     /**
      * 저널 꿈 태그 전체 목록 조회 (Ajax)

@@ -16,11 +16,11 @@ import io.nicheblog.dreamdiary.web.repository.vcatn.jpa.VcatnStatsRepository;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
 import io.nicheblog.dreamdiary.web.service.vcatn.schdul.VcatnSchdulService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
@@ -35,26 +35,17 @@ import java.util.*;
  * @author nichefish
  */
 @Service("vcatnStatsService")
+@RequiredArgsConstructor
 @Log4j2
 public class VcatnStatsService {
 
     private final VcatnStatsMapstruct vcatnStatsMapstruct = VcatnStatsMapstruct.INSTANCE;
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
-
-    @Resource(name = "userService")
-    private UserService userService;
-
-    @Resource(name = "vcatnSchdulService")
-    private VcatnSchdulService vcatnSchdulService;
-
-    @Resource(name = "vcatnStatsYyService")
-    private VcatnStatsYyService vcatnStatsYyService;
-
-    @Resource(name = "vcatnStatsRepository")
-    private VcatnStatsRepository vcatnStatsRepository;
-
-    @Resource(name = "schdulService")
-    private SchdulService schdulService;
+    private final UserService userService;
+    private final VcatnSchdulService vcatnSchdulService;
+    private final VcatnStatsYyService vcatnStatsYyService;
+    private final VcatnStatsRepository vcatnStatsRepository;
+    private final SchdulService schdulService;
 
     /**
      * 휴가관리 > 년도별 휴가관리 통계 목록 조회

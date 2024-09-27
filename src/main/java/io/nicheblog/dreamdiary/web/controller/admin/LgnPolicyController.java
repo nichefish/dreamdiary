@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.web.model.admin.LgnPolicyDto;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -37,6 +37,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class LgnPolicyController
         extends BaseControllerImpl {
@@ -46,8 +47,7 @@ public class LgnPolicyController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.LGN_POLICY;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "lgnPolicyService")
-    private LgnPolicyService lgnPolicyService;
+    private final LgnPolicyService lgnPolicyService;
 
     /**
      * 사이트 관리 > 로그인 설정 관리 > 로그인 설정 등록/수정 화면 조회

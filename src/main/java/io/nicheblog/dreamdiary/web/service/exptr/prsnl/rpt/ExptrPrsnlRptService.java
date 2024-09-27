@@ -13,6 +13,7 @@ import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptSmDto;
 import io.nicheblog.dreamdiary.web.model.user.UserDto;
 import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.web.service.user.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -34,19 +34,14 @@ import java.util.*;
  * @author nichefish
  */
 @Service("exptrPrsnlRptService")
+@RequiredArgsConstructor
 @Log4j2
 public class ExptrPrsnlRptService {
 
+    private final ExptrPrsnlPaprService exptrPrsnlPaprService;
     private final ExptrPrsnlItemMapstruct exptrPrsnlItemMapstruct = ExptrPrsnlItemMapstruct.INSTANCE;
-
-    @Resource(name = "exptrPrsnlPaprService")
-    private ExptrPrsnlPaprService exptrPrsnlPaprService;
-
-    @Resource(name = "cdService")
-    public CdService cmmCdService;
-
-    @Resource(name = "userService")
-    private UserService userService;
+    private final CdService cmmCdService;
+    private final UserService userService;
 
     /**
      * 경비지출서 월간지출내역 (보고용) 개별 목록 조회

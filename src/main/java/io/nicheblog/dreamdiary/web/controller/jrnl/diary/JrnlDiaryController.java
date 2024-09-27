@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -41,6 +41,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 public class JrnlDiaryController
         extends BaseControllerImpl {
 
@@ -49,8 +50,7 @@ public class JrnlDiaryController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlDiaryService")
-    private JrnlDiaryService jrnlDiaryService;
+    private final JrnlDiaryService jrnlDiaryService;
 
     /**
      * 저널 일기 등록/수정 처리 (Ajax)

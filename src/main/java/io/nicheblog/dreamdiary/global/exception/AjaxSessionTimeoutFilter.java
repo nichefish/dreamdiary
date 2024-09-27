@@ -4,12 +4,12 @@ import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,13 +24,13 @@ import java.io.IOException;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 public class AjaxSessionTimeoutFilter
         implements Filter {
 
     public FilterConfig filterConfig;
 
-    @Resource
-    protected ApplicationEventPublisher publisher;
+    protected final ApplicationEventPublisher publisher;
 
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {

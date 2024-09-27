@@ -10,13 +10,13 @@ import io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry.JrnlSumryMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.jpa.JrnlSumryRepository;
 import io.nicheblog.dreamdiary.web.spec.jrnl.sumry.JrnlSumrySpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,16 +31,14 @@ import java.util.Optional;
  * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlSumryService")
+@RequiredArgsConstructor
 @Log4j2
 public class JrnlSumryService
         implements BaseReadonlyService<JrnlSumryDto.DTL, JrnlSumryDto.LIST, Integer, JrnlSumryEntity, JrnlSumryRepository, JrnlSumrySpec, JrnlSumryMapstruct> {
 
+    private final JrnlSumryRepository jrnlSumryRepository;
+    private final JrnlSumrySpec jrnlSumrySpec;
     private final JrnlSumryMapstruct jrnlSumryMapstruct = JrnlSumryMapstruct.INSTANCE;
-
-    @Resource(name = "jrnlSumryRepository")
-    private JrnlSumryRepository jrnlSumryRepository;
-    @Resource(name = "jrnlSumrySpec")
-    private JrnlSumrySpec jrnlSumrySpec;
 
     @Override
     public JrnlSumryRepository getRepository() {

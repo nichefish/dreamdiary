@@ -6,10 +6,9 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
 import io.nicheblog.dreamdiary.web.mapstruct.log.LogActvtyMapstruct;
 import io.nicheblog.dreamdiary.web.model.log.LogActvtyDto;
 import io.nicheblog.dreamdiary.web.spec.log.LogActvtySpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * LogActvtyService
@@ -21,16 +20,14 @@ import javax.annotation.Resource;
  * @implements BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("logActvtyService")
+@RequiredArgsConstructor
 @Log4j2
 public class LogActvtyService
         implements BaseReadonlyService<LogActvtyDto.DTL, LogActvtyDto.LIST, Integer, LogActvtyEntity, LogActvtyRepository, LogActvtySpec, LogActvtyMapstruct> {
 
+    private final LogActvtyRepository logActvtyRepository;
+    private final LogActvtySpec logActvtySpec;
     private final LogActvtyMapstruct logActvtyMapstruct = LogActvtyMapstruct.INSTANCE;
-
-    @Resource(name = "logActvtyRepository")
-    private LogActvtyRepository logActvtyRepository;
-    @Resource(name = "logActvtySpec")
-    private LogActvtySpec logActvtySpec;
 
     @Override
     public LogActvtyRepository getRepository() {

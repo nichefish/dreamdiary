@@ -6,10 +6,9 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
 import io.nicheblog.dreamdiary.web.mapstruct.log.LogSysMapstruct;
 import io.nicheblog.dreamdiary.web.model.log.LogSysDto;
 import io.nicheblog.dreamdiary.web.spec.log.LogSysSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * LogSysService
@@ -21,16 +20,14 @@ import javax.annotation.Resource;
  * @implements BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("logSysService")
+@RequiredArgsConstructor
 @Log4j2
 public class LogSysService
         implements BaseReadonlyService<LogSysDto.DTL, LogSysDto.LIST, Integer, LogSysEntity, LogSysRepository, LogSysSpec, LogSysMapstruct> {
 
+    private final LogSysRepository logSysRepository;
+    private final LogSysSpec logSysSpec;
     private final LogSysMapstruct logSysMapstruct = LogSysMapstruct.INSTANCE;
-
-    @Resource(name = "logSysRepository")
-    private LogSysRepository logSysRepository;
-    @Resource(name = "logSysSpec")
-    private LogSysSpec logSysSpec;
 
     @Override
     public LogSysRepository getRepository() {

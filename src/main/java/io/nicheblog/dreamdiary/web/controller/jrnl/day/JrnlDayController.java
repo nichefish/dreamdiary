@@ -17,6 +17,7 @@ import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDaySearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -42,6 +42,7 @@ import java.util.List;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 public class JrnlDayController
         extends BaseControllerImpl {
 
@@ -50,8 +51,7 @@ public class JrnlDayController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jrnlDayService")
-    private JrnlDayService jrnlDayService;
+    private final JrnlDayService jrnlDayService;
 
     /**
      * 저널 일자 화면 조회

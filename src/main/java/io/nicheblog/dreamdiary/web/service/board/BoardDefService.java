@@ -10,11 +10,11 @@ import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
 import io.nicheblog.dreamdiary.web.repository.board.jpa.BoardDefRepository;
 import io.nicheblog.dreamdiary.web.spec.board.BoardDefSpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
@@ -32,17 +32,15 @@ import java.util.stream.Collectors;
  * @implements BaseCrudService, BaseStateService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("boardDefService")
+@RequiredArgsConstructor
 @Log4j2
 public class BoardDefService
         implements BaseCrudService<BoardDefDto, BoardDefDto, String, BoardDefEntity, BoardDefRepository, BoardDefSpec, BoardDefMapstruct>,
         BaseStateService<BoardDefDto, BoardDefDto, String, BoardDefEntity, BoardDefRepository, BoardDefSpec, BoardDefMapstruct> {
 
+    private final BoardDefRepository boardDefRepository;
+    private final BoardDefSpec boardDefSpec;
     private final BoardDefMapstruct boardDefMapstruct = BoardDefMapstruct.INSTANCE;
-
-    @Resource(name = "boardDefRepository")
-    private BoardDefRepository boardDefRepository;
-    @Resource(name = "boardDefSpec")
-    private BoardDefSpec boardDefSpec;
 
     @Override
     public BoardDefRepository getRepository() {

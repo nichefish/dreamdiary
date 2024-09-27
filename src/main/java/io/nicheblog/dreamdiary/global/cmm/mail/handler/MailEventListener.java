@@ -1,11 +1,10 @@
 package io.nicheblog.dreamdiary.global.cmm.mail.handler;
 
 import io.nicheblog.dreamdiary.global.cmm.mail.event.MailSendEvent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * MailEventListener
@@ -16,10 +15,10 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 public class MailEventListener {
 
-    @Resource(name = "mailWorker")
-    MailWorker MailWorker;
+    private final MailWorker MailWorker;
 
     /**
      * 메일 발송

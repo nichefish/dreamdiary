@@ -15,6 +15,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,9 +25,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +43,7 @@ import java.util.Map;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class TagController
         extends BaseControllerImpl {
@@ -47,8 +51,7 @@ public class TagController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.TAG;           // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "tagService")
-    private TagService tagService;
+    private final TagService tagService;
 
     /**
      * 태그 관리 화면 조회

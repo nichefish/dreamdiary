@@ -9,10 +9,10 @@ import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.mapstruct.admin.ClCdMapstruct;
 import io.nicheblog.dreamdiary.web.repository.admin.jpa.ClCdRepository;
 import io.nicheblog.dreamdiary.web.spec.admin.ClCdSpec;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -27,15 +27,13 @@ import java.util.List;
  * @implements BaseManageService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("clCdService")
+@RequiredArgsConstructor
 public class ClCdService
         implements BaseCrudService<ClCdDto, ClCdDto, String, ClCdEntity, ClCdRepository, ClCdSpec, ClCdMapstruct>,
                    BaseStateService<ClCdDto, ClCdDto, String, ClCdEntity, ClCdRepository, ClCdSpec, ClCdMapstruct> {
 
-    @Resource(name = "clCdRepository")
-    private ClCdRepository clCdRepository;
-    @Resource(name = "clCdSpec")
-    private ClCdSpec clCdSpec;
-
+    private final ClCdRepository clCdRepository;
+    private final ClCdSpec clCdSpec;
     private final ClCdMapstruct clCdMapstruct = ClCdMapstruct.INSTANCE;
 
     @Override

@@ -10,12 +10,11 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import io.nicheblog.dreamdiary.web.model.user.UserPwChgParam;
 import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import javax.annotation.Resource;
 
 /**
  * UserMyService
@@ -26,16 +25,12 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Service("userMyService")
+@RequiredArgsConstructor
 public class UserMyService {
 
-    @Resource(name = "userService")
-    private UserService userService;
-
-    @Resource(name = "userRepository")
-    private UserRepository userRepository;
-
-    @Resource(name = "passwordEncoder")
-    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 비밀번호 만료시 비밀번호 변경 (미로그인 상태)

@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.schdul.SchdulDto;
 import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
@@ -37,6 +37,7 @@ import java.security.InvalidParameterException;
  * @extends BaseControllerImpl
  */
 @Controller
+@RequiredArgsConstructor
 @Log4j2
 public class SchdulController
         extends BaseControllerImpl {
@@ -46,8 +47,7 @@ public class SchdulController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.SCHDUL;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "schdulService")
-    private SchdulService schdulService;
+    private final SchdulService schdulService;
 
     /**
      * 일정 > 전체일정 > 일정 등록(ajax)

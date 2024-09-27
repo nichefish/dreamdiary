@@ -6,12 +6,11 @@ import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * EhCacheClearScheduler
@@ -20,11 +19,11 @@ import javax.annotation.Resource;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class EhCacheScheduler {
 
-    @Resource
-    private ApplicationEventPublisher publisher;
+    private final ApplicationEventPublisher publisher;
 
     /**
      * 1시간에 한 번씩 전체 캐시 클리어

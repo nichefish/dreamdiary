@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.web.mapstruct.vcatn.stats.VcatnStatsYyMapstruct;
 import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.web.repository.vcatn.jpa.VcatnStatsYyRepository;
 import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnStatsYySpec;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -25,14 +25,12 @@ import java.util.*;
  * @author nichefish
  */
 @Service("vcatnStatsYyService")
+@RequiredArgsConstructor
 @Log4j2
 public class VcatnStatsYyService {
 
-    @Resource(name = "vcatnStatsYySpec")
-    private VcatnStatsYySpec vcatnStatsYySpec;
-
-    @Resource(name = "vcatnStatsYyRepository")
-    private VcatnStatsYyRepository vcatnStatsYyRepository;
+    private final VcatnStatsYySpec vcatnStatsYySpec;
+    private final VcatnStatsYyRepository vcatnStatsYyRepository;
 
     /**
      * 휴가관리 > 휴가 기준 년도 등록

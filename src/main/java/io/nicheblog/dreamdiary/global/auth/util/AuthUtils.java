@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.global.auth.util;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -11,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -23,18 +23,18 @@ import javax.servlet.http.HttpServletRequest;
  * @author nichefish
  */
 @Component
+@RequiredArgsConstructor
 @Log4j2
 public class AuthUtils {
 
-    @Resource
-    private HttpServletRequest reqst;
+    private final HttpServletRequest autowiredRequest;
 
     private static HttpServletRequest request;
 
     /** static 맥락에서 사용할 수 있도록 bean 주입 */
     @PostConstruct
     private void init() {
-        request = reqst;
+        request = autowiredRequest;
     }
 
     /**

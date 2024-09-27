@@ -13,6 +13,7 @@ import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -37,6 +37,7 @@ import java.util.List;
  */
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
+@RequiredArgsConstructor
 @Log4j2
 @Tag(
         name = "한국천문연구원 특일 정보 API",
@@ -48,8 +49,7 @@ public class HldyKasiApiController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.API_KASI;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "hldyKasiApiService")
-    private HldyKasiApiService hldyKasiApiService;
+    private final HldyKasiApiService hldyKasiApiService;
 
     /**
      * 한국천문연구원(KASI):: 휴일 정보 조회 및 DB 저장

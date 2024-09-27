@@ -12,14 +12,13 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * JandiApiController
@@ -32,6 +31,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
+@RequiredArgsConstructor
 @Log4j2
 @Tag(name = "잔디 메신저 API", description = "잔디 메신저 API입니다.")
 public class JandiApiController
@@ -40,8 +40,7 @@ public class JandiApiController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JANDI;      // 작업 카테고리 (로그 적재용)
 
-    @Resource(name = "jandiApiService")
-    private JandiApiService jandiApiService;
+    private final JandiApiService jandiApiService;
 
     /**
      * JANDI :: 잔디 메신저로 웹훅 메세지 전송
