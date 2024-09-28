@@ -39,7 +39,7 @@ public class JrnlSumryCnDto
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    protected String contentType = CONTENT_TYPE.key;
+    private String contentType = CONTENT_TYPE.key;
 
     /* ----- */
 

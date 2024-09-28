@@ -30,13 +30,13 @@ public class VcatnPaprDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
-    protected static final ContentType CONTENT_TYPE = ContentType.VCATN_PAPR;
+    private static final ContentType CONTENT_TYPE = ContentType.VCATN_PAPR;
     /** 필수(Override): 글분류 코드 */
-    protected static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    protected String contentType = CONTENT_TYPE.key;
+    private String contentType = CONTENT_TYPE.key;
 
     /* ----- */
 

@@ -32,6 +32,10 @@ public class JrnlSbjctDto
     @Builder.Default
     private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
+    /** 컨텐츠 타입 */
+    @Builder.Default
+    private String contentType = CONTENT_TYPE.key;
+
     @Override
     public Integer getKey() {
         return this.postNo;

@@ -28,13 +28,15 @@ public class NoticeDto
         implements Identifiable<Integer>, CommentCmpstnModule, SectnCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
-    protected static final ContentType CONTENT_TYPE = ContentType.NOTICE;
+    @Builder.Default
+    private static final ContentType CONTENT_TYPE = ContentType.NOTICE;
     /** 필수(Override): 글분류 코드 */
-    protected static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
+    @Builder.Default
+    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
 
     /** 컨텐츠 타입 */
     @Builder.Default
-    protected String contentType = CONTENT_TYPE.key;
+    private String contentType = CONTENT_TYPE.key;
 
     /* ----- */
 
