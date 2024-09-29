@@ -24,10 +24,10 @@ public interface JrnlDayRepository
     @Query("SELECT COUNT(day.jrnlDt) " +
             "FROM JrnlDayEntity day " +
             "WHERE day.jrnlDt = :jrnlDt")
-    Integer countByJrnlDt(@Param("jrnlDt") Date jrnlDt);
+    Integer countByJrnlDt(final @Param("jrnlDt") Date jrnlDt);
 
     @Query("SELECT day " +
             "FROM JrnlDayEntity day " +
             "WHERE day.jrnlDt = :jrnlDt")
-    JrnlDayEntity findByJrnlDt(@Param("jrnlDt") Date jrnlDt);
+    JrnlDayEntity findByJrnlDt(final @Param("jrnlDt") Date jrnlDt);
 }

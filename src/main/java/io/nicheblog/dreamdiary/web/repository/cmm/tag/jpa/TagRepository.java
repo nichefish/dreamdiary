@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.repository.cmm.tag.jpa;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -38,5 +39,5 @@ public interface TagRepository
             "FROM ContentTagEntity contentTag " +
             "WHERE contentTag.refTagNo = :tagNo " +
             " AND contentTag.refContentType = :refContentType")
-    Integer countTagSize(Integer tagNo, String refContentType);
+    Integer countTagSize(final @Param("tagNo") Integer tagNo, final @Param("refContentType") String refContentType);
 }

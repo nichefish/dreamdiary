@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,5 +28,5 @@ public interface ContentTagRepository
     @Query("DELETE FROM ContentTagEntity ct " +
             "WHERE ct.refPostNo = :postNo AND ct.refContentType = :contentType " +
             "AND EXISTS (SELECT 1 FROM TagEntity t WHERE t.tagNo = ct.refTagNo AND t.tagNm = :tagNm AND (t.ctgr = :ctgr OR (t.ctgr IS NULL AND :ctgr IS NULL)))")
-    void deleteObsoleteContentTags(Integer postNo, String contentType, String tagNm, String ctgr);
+    void deleteObsoleteContentTags(final @Param("postNo") Integer postNo, final @Param("contentType") String contentType, final @Param("tagNm") String tagNm, final @Param("ctgr") String ctgr);
 }

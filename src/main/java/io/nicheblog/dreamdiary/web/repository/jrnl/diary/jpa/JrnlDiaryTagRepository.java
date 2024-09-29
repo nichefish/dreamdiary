@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
@@ -58,5 +59,5 @@ public interface JrnlDiaryTagRepository
             "WHERE contentTag.refTagNo = :tagNo " +
             " AND (:yy IS NULL OR day.yy = :yy OR :yy = 9999) " +
             " AND (:mnth IS NULL OR day.mnth = :mnth OR :mnth = 99)")
-    Integer countDiarySize(Integer tagNo, Integer yy, Integer mnth);
+    Integer countDiarySize(final @Param("tagNo") Integer tagNo, final @Param("yy") Integer yy, final @Param("mnth") Integer mnth);
 }

@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.web.entity.log.LogStatsUserEntity;
 import io.nicheblog.dreamdiary.web.model.log.LogStatsUserIntrfc;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.QueryHint;
@@ -33,8 +34,8 @@ public interface LogStatsUserRepository
                     "GROUP BY t.userId"
     )
     List<LogStatsUserIntrfc> getStatsUserIntrfcList(
-            final Date searchStartDt,
-            final Date searchEndDt
+            final @Param("searchStartDt") Date searchStartDt,
+            final @Param("searchEndDt") Date searchEndDt
     );
 
     /** 비로그인 구분별로 건수 조회 */
@@ -47,7 +48,7 @@ public interface LogStatsUserRepository
                     "GROUP BY t.userId"
     )
     List<LogStatsUserIntrfc> getStatsNotUserIntrfcList(
-            final Date searchStartDt,
-            final Date searchEndDt
+            final @Param("searchStartDt") Date searchStartDt,
+            final @Param("searchEndDt") Date searchEndDt
     );
 }

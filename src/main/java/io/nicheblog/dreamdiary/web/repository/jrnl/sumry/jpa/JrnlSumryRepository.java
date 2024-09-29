@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.web.repository.jrnl.sumry.jpa;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -31,7 +32,7 @@ public interface JrnlSumryRepository
             "FROM JrnlDayEntity day " +
             "INNER JOIN FETCH JrnlDreamEntity dream ON day.postNo = dream.jrnlDayNo " +
             "WHERE day.yy = :yy")
-    Integer getDreamDayCntByYy(Integer yy);
+    Integer getDreamDayCntByYy(final @Param("yy") Integer yy);
 
     /**
      * 년도별 꿈 개수 조회
@@ -40,7 +41,7 @@ public interface JrnlSumryRepository
             "FROM JrnlDreamEntity dream " +
             "INNER JOIN FETCH JrnlDayEntity day ON dream.jrnlDayNo = day.postNo " +
             "WHERE day.yy = :yy")
-    Integer getDreamCntByYy(Integer yy);
+    Integer getDreamCntByYy(final @Param("yy") Integer yy);
 
     /**
      * 년도별 일기 일자 개수 조회
@@ -49,7 +50,7 @@ public interface JrnlSumryRepository
             "FROM JrnlDayEntity day " +
             "INNER JOIN FETCH JrnlDiaryEntity diary ON day.postNo = diary.jrnlDayNo " +
             "WHERE day.yy = :yy")
-    Integer getDiaryDayCntByYy(Integer yy);
+    Integer getDiaryDayCntByYy(final @Param("yy") Integer yy);
 
     /**
      * 전체 꿈 일자 개수 조회

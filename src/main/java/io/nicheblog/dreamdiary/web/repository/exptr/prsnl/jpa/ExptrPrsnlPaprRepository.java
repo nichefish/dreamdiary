@@ -52,10 +52,8 @@ public interface ExptrPrsnlPaprRepository
     /**
      * 존재하는 경비지출서 중 최저년도 조회
      */
-    @Query(
-            value = "SELECT min(t.yy) " +
-                    "FROM ExptrPrsnlPaprEntity t"
-    )
+    @Query("SELECT min(t.yy) " +
+            "FROM ExptrPrsnlPaprEntity t")
     String selectMinYy();
 
     /**
