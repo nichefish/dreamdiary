@@ -44,7 +44,7 @@
                 <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
                     <input class="form-check-input" type="checkbox" value="Y" name="deprcYn" id="deprcYn" {{checkedYn deprcYn}} />
                     <label class="form-check-label fw-bold fs-6 ms-3" for="deprcYn" id="deprcYnLabel" {{{checkedYnStyle deprcYn "color" "red//gray"}}}>
-                        {{#ifYn imprtcYn}}만료{{else}}해당없음{{/ifYn}}
+                        {{#ifYn deprcYn}}만료{{else}}해당없음{{/ifYn}}
                     </label>
                 </div>
             </div>

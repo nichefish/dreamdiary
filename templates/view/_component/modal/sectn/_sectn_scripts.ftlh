@@ -21,6 +21,8 @@
                 commons.util.handlebarsTemplate(obj, "sectn_reg", "show");
                 /* jquery :: validation */
                 Sectn.initValidateForm();
+                // checkbox init
+                commons.util.chckboxLabel("deprcYn", "만료//해당없음", "red//gray");
                 /* tagify */
                 commons.tagify.initWithCtgr("#sectnRegForm #tagListStr", undefined);
                 // tinymce editor reset
@@ -70,6 +72,8 @@
                     commons.util.handlebarsTemplate(rsltObj, "sectn_reg", "show");
                     /* jquery :: validation */
                     Sectn.initValidateForm();
+                    // checkbox init
+                    commons.util.chckboxLabel("deprcYn", "만료//해당없음", "red//gray");
                     /* tagify */
                     commons.tagify.initWithCtgr("#sectnRegForm #tagListStr", undefined);
                     // tinymce editor reset
