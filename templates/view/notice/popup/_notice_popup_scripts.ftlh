@@ -48,9 +48,9 @@
             },
             /** 팝업 쿠키 존재여부 체크 */
             hasNoticeCookie: function() {
-                let obj = NoticePopup.popupList[NoticePopup.popupIdx];
+                const obj = NoticePopup.popupList[NoticePopup.popupIdx];
                 if (obj === undefined) return false;
-                let popupCookie = $.cookie("notice_popup__postno_" + obj.postNo);
+                const popupCookie = $.cookie("notice_popup__postno_" + obj.postNo);
                 return (popupCookie !== undefined);
             },
             /** 팝업 닫기 버튼 */

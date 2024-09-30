@@ -18,7 +18,7 @@
                         if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
                         if (!commons.validate.fileExtnChck(this, "jpg|jpeg|png")) return false;      // fileExtnChck
                         const url = "${Url.FILE_UPLOAD_AJAX!}";
-                        let ajaxData = new FormData($("#exptrPrsnlRciptForm")[0]);
+                        const ajaxData = new FormData($("#exptrPrsnlRciptForm")[0]);
                         commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                             Swal.fire({ text: res.message })
                                 .then(function() {
@@ -49,7 +49,7 @@
                         if (!commons.validate.fileExtnChck(this, "jpg|jpeg|png")) return false;      // fileExtnChck
                         $("#exptrPrsnlItemNo_upload").val(exptrPrsnlItemNo);
                         const url = "${Url.EXPTR_PRSNL_ITEM_RCIPT_UPLOAD_AJAX!}";
-                        let ajaxData = new FormData($("#exptrPrsnlRciptForm")[0]);
+                        const ajaxData = new FormData($("#exptrPrsnlRciptForm")[0]);
                         commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                             Swal.fire({ text: res.message })
                                 .then(function() {

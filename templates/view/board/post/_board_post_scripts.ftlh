@@ -64,8 +64,8 @@
             },
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
-                let ajaxData = new FormData($("#postRegForm")[0]);
                 const url = "<#if isMdf!false>${Url.BOARD_POST_MDF_AJAX!}<#else>${Url.BOARD_POST_REG_AJAX!}</#if>";
+                const ajaxData = new FormData($("#postRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -103,7 +103,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.BOARD_POST_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

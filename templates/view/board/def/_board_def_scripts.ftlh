@@ -37,7 +37,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = '${Url.BOARD_DEF_REG_AJAX!}';
-                    let ajaxData = $("#boardDefRegForm").serializeArray();
+                    const ajaxData = $("#boardDefRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

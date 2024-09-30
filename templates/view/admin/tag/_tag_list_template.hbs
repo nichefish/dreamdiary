@@ -1,0 +1,42 @@
+<#--
+ * 태그 관리 > 목록 조회 Template
+ * @included_in : jrnl_day_page.ftlh
+ -->
+
+<script type="text/x-handlebars-template" id="tag_list_template">
+    {{#each this}}
+        <tr class="sortable-item draggable bg-hover-secondary">
+            <td class="text-center hidden-table">
+                {{#if (exists ctgr)}}
+                    <span class="fs-7 text-noti">[{{ctgr}}]</span>
+                {{else}}
+                    -
+                {{/if}}
+            </td>
+            <td class="text-start px-6 cursor-pointer fw-bold text-gray-700">
+                <span class="text-muted cursor-pointer pe-1"
+                      onclick="Tag.dtlAjax({{tagNo}});"
+                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                      title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
+                    #<span class="border-bottom text-primary fw-lighter opacity-hover">
+                        {{tagNm}}
+                    </span>
+                </span>
+            </td>
+            <td class="text-start ps-6 hidden-table">
+                봐야 하는 내용 = 현재 할당된 컨텐츠 태그 현황
+                (이걸 목록에서 봐야 하나?)
+            </td>
+            <td class="text-center hidden-table">
+            </td>
+            <td class="text-center hidden-table">
+            </td>
+            <td class="text-center hidden-table">
+            </td>
+        </tr>
+    {{else}}
+        <div class="row jrnl-day d-flex-center">
+            저널 일자 정보가 없습니다.
+        </div>
+    {{/each}}
+</script>

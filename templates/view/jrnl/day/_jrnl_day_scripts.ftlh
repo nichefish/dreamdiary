@@ -47,9 +47,9 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let rsltList = res.rsltList;
+                    const rsltList = res.rsltList;
                     // 정렬 처리
-                    let sortStr = $("#jrnl_aside #sort").val();
+                    const sortStr = $("#jrnl_aside #sort").val();
                     if (sortStr === "ASC") {
                         $("#jrnl_aside #sortIcon").removeClass("bi-sort-numeric-up-alt").addClass("bi-sort-numeric-down");
                     } else {
@@ -119,7 +119,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_DAY_REG_AJAX!}";
-                    let ajaxData = new FormData($("#jrnlDayRegForm")[0]);
+                    const ajaxData = new FormData($("#jrnlDayRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

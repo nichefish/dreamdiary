@@ -18,7 +18,7 @@ commons.tinymce = (function() {
          */
         init: function(selectorStr, imgFunc) {
             if ($(selectorStr) === undefined) return;
-            let options = {
+            const options = {
                 selector: selectorStr,
                 editor_encoding: "raw",
                 height: 540,
@@ -94,24 +94,24 @@ commons.tinymce = (function() {
          * tinymce 에디터 이미지 첨부
          */
         imgRegFunc: function() {
-            let $fileInput = $("#atchFile0");
+            const $fileInput = $("#atchFile0");
             $fileInput.click();
             $fileInput.on("change", function() {
                 if (this.value !== "") {
                     if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
                     if (!commons.validate.fileExtnChck(this, "jpg|jpeg|png")) return false;      // fileExtnChck
                     const url = "/file/fileUploadAjax.do";
-                    let ajaxData = new FormData($("#tinymceImageForm")[0]);
+                    const ajaxData = new FormData($("#tinymceImageForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         if (commons.util.isNotEmpty(res.message)) alert(res.message);
                         if (res.rslt) {
-                            let fileInfo = res.rsltObj;
-                            let imgTag = "<img src='" + fileInfo.url + "' data-mce-src='" + fileInfo.url + "' data-originalFileName='" + fileInfo.orgnFileNm + "' >";
+                            const fileInfo = res.rsltObj;
+                            const imgTag = "<img src='" + fileInfo.url + "' data-mce-src='" + fileInfo.url + "' data-originalFileName='" + fileInfo.orgnFileNm + "' >";
                             tinymce.execCommand('mceInsertContent', true, imgTag);
                             // file input 초기화
                             $("#atchFile0").val("");
-                            let $imgFileDiv = $("#tinymceImageTemplate");
-                            let fileInputHtml = $imgFileDiv.html();
+                            const $imgFileDiv = $("#tinymceImageTemplate");
+                            const fileInputHtml = $imgFileDiv.html();
                             $imgFileDiv.empty().html(fileInputHtml);
                         }
                     });

@@ -45,7 +45,7 @@
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 const url = "${Url.USER_REQST_REG_AJAX!}";
-                let ajaxData = new FormData($("#userReqstForm")[0]);
+                const ajaxData = new FormData($("#userReqstForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

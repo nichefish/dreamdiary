@@ -44,9 +44,9 @@
             },
             /** 등록 또는 수정 처리(Ajax) */
             regAjax: function() {
-                let ajaxData = new FormData($("#vcantSchdulRegForm")[0]);
-                let isReg = ($("#vcatnSchdulNo").val() === "");
+                const isReg = ($("#vcatnSchdulNo").val() === "");
                 const url = isReg ? '${Url.VCATN_SCHDUL_REG_AJAX!}' : '${Url.VCATN_SCHDUL_MDF_AJAX!}';
+                const ajaxData = new FormData($("#vcantSchdulRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -71,7 +71,7 @@
             mdfModal: function(vcatnSchdulNo) {
                 $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
                 const url = "${Url.VCATN_SCHDUL_DTL_AJAX!}";
-                let ajaxData = $("#procForm").serializeArray();
+                const ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) return;
                     let rsltObj = res.rsltObj;
@@ -106,7 +106,7 @@
                     if (!result.value) return;
                     $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
                     const url = "${Url.VCATN_SCHDUL_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

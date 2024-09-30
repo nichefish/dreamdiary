@@ -79,18 +79,18 @@
 
     const truefalseFunc = function(value, ynValues, options) {
         // 기본값 null일 때 true로 간주하는 옵션
-        let defaultTrue = options.hash["default"] || false;
+        const defaultTrue = options.hash["default"] || false;
         if (defaultTrue && commons.util.isEmpty(value)) return true;
-        let separator = "//";
-        let idx = ynValues.indexOf(separator);
-        let yValue = ynValues.substring(0, idx);
+        const separator = "//";
+        const idx = ynValues.indexOf(separator);
+        const yValue = ynValues.substring(0, idx);
         return (value == yValue);
     }
     Handlebars.registerHelper("trueFalse", truefalseFunc);
 
     const equalsFunc = function(value, compareValue, options) {
         // 기본값 null일 때 true로 간주하는 옵션
-        let defaultTrue = options.hash["default"] || false;
+        const defaultTrue = options.hash["default"] || false;
         if (defaultTrue && commons.util.isEmpty(value)) return true;
         // 비교결과 반환 :: 일부러 느슨한 비교
         return (value == compareValue);
@@ -102,19 +102,19 @@
     Handlebars.registerHelper("notEquals", notEqualsFunc);
 
     const checkedLabelFunc = function(value, ynLabels, options) {
-        let separator = "//";
-        let idx = ynLabels.indexOf(separator);
-        let yLabel = ynLabels.substring(0, idx);
-        let nLabel = ynLabels.substring(idx + 2);
+        const separator = "//";
+        const idx = ynLabels.indexOf(separator);
+        const yLabel = ynLabels.substring(0, idx);
+        const nLabel = ynLabels.substring(idx + 2);
         return value ? yLabel : nLabel;
     }
     Handlebars.registerHelper("checkedLabel", checkedLabelFunc);
 
     const checkedStyleFunc = function(value, type, ynColors, options) {
         const separator = "//";
-        let idx = ynColors.indexOf(separator);
-        let yColor = ynColors.substring(0, idx);
-        let nColor = ynColors.substring(idx + 2);
+        const idx = ynColors.indexOf(separator);
+        const yColor = ynColors.substring(0, idx);
+        const nColor = ynColors.substring(idx + 2);
         return "style=" + type + ":" + (value ? yColor : nColor) + ";";
     }
     const checkedYnStyleFunc = function(value, type, ynColors, options) {
@@ -153,8 +153,8 @@
         return a >= b;
     });
 
-    /*    let placeholderFunc = function(value, options) {
-            let placeholder = options.hash["default"] || 0;
+    /*    const placeholderFunc = function(value, options) {
+            const placeholder = options.hash["default"] || 0;
             return commons.util.isEmpty(value) ? placeholder : value;
         }
         Handlebars.registerHelper("placeholder", placeholderFunc());*/

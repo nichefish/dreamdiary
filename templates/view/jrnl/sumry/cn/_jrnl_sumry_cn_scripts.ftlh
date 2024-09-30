@@ -12,7 +12,7 @@
             },
             /** 저널 일기 등록 모달 팝업 호출 */
             regModal: function(jrnlSumryNo, yy) {
-                let obj = { "jrnlSumryNo": jrnlSumryNo, "yy": yy };
+                const obj = { "jrnlSumryNo": jrnlSumryNo, "yy": yy };
                 commons.util.handlebarsTemplate(obj, "jrnl_sumry_cn_reg_header");
                 commons.util.handlebarsTemplate(obj, "jrnl_sumry_cn_reg", "show");
 
@@ -37,7 +37,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_SUMRY_CN_REG_AJAX!}";
-                    let ajaxData = new FormData($("#jrnlSumryCnRegForm")[0]);
+                    const ajaxData = new FormData($("#jrnlSumryCnRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

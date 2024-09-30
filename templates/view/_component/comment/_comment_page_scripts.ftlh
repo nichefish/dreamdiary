@@ -29,7 +29,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.COMMENT_REG_AJAX!}";
-                    let ajaxData = new FormData($("#commentPageRegForm")[0]);
+                    const ajaxData = new FormData($("#commentPageRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -68,7 +68,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.COMMENT_MDF_AJAX!}";
-                    let ajaxData = $("#commentPageMdfForm" + postNo).serializeArray();
+                    const ajaxData = $("#commentPageMdfForm" + postNo).serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

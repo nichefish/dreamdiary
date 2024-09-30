@@ -75,7 +75,7 @@
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 const url = "${Url.SCHDUL_REG_AJAX!}";
-                let ajaxData = $("#schdulRegForm").serializeArray();
+                const ajaxData = $("#schdulRegForm").serializeArray();
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -92,7 +92,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let obj = res.rsltObj;
+                    const obj = res.rsltObj;
                     commons.util.handlebarsTemplate(obj, "schdul_dtl", "show");
                     Schdul.key = obj.postNo;
                 });

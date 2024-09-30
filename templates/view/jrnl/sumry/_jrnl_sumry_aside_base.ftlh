@@ -1,5 +1,5 @@
 <#--
- * 저널 일자(jrnl_sumry) : ASIDE (우측 사이드바)
+ * 저널 결산(jrnl_sumry) : ASIDE (우측 사이드바)
  * @included_in : jrnl_sumry_page.ftlh
  -->
 

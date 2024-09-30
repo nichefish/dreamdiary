@@ -45,7 +45,7 @@
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 const url = "<#if isReg!false>${Url.VCATN_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.VCATN_PAPR_MDF_AJAX!}</#if>";
-                let ajaxData = new FormData($("#vcatnPaprRegForm")[0]);
+                const ajaxData = new FormData($("#vcatnPaprRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -78,7 +78,7 @@
             /** 관리자 확인 여부 변경 (Ajax) */
             cfAjax: function() {
                 const url = "${Url.VCATN_PAPR_CF_AJAX!}";
-                let ajaxData = $("#procForm").serializeArray();
+                const ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -94,7 +94,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.VCATN_PAPR_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

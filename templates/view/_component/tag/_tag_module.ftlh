@@ -28,7 +28,7 @@
             search: function(tagNo) {
                 $("#listForm #pageNo").val(1);
                 $("#listForm #tags").val(tagNo);
-                let url = "${listUrl!}?actionTyCd=SEARCH";
+                const url = "${listUrl!}?actionTyCd=SEARCH";
                 commons.util.blockUISubmit("#listForm", url);
             },
             /** 전체 태그 목록 조회 */

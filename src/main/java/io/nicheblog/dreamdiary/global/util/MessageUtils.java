@@ -96,7 +96,7 @@ public class MessageUtils
         response.setContentType("text/html; charset=utf-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<script language=\"JavaScript\" type=\"text/JavaScript\">");
-            out.println("let hasSwal = (typeof Swal !== \"undefined\");");
+            out.println("const hasSwal = (typeof Swal !== \"undefined\");");
             if (url != null) {
                 out.println("if (hasSwal) { Swal.fire({\"text\": `" + msg + "`}).then(location.replace('" + url + "')); }");
                 out.println("else { alert(`" + msg + "`); location.replace('" + url + "'); }");

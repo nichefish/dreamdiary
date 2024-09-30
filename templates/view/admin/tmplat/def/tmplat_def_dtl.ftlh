@@ -24,7 +24,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.NOTICE_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

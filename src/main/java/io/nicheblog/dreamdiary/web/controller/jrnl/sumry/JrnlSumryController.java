@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.SiteMenu;
+import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
@@ -29,6 +30,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -327,6 +329,43 @@ public class JrnlSumryController
             // 삭제 처리
             isSuccess = jrnlSumryService.dreamCompt(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
+    }
+
+    /**
+     * 저널 결산 태그 수정 처리 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @PostMapping(value = {Url.JRNL_SUMRY_TAG_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> jrnlSumryTagAjax(
+            final @Valid JrnlSumryDto jrnlSumry,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+            // 태그 처리
+            publisher.publishEvent(new TagProcEvent(this, jrnlSumry.getClsfKey(), jrnlSumry.tag));
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);

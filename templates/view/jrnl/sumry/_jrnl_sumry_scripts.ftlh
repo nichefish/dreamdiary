@@ -45,7 +45,7 @@
                 }, "block");
             },
             /** 꿈 기록 완료 처리 */
-            comptAjax(postNo) {
+            comptAjax: function(postNo) {
                 const url = "${Url.JRNL_SUMRY_DREAM_COMPT_AJAX!}";
                 const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
@@ -54,6 +54,29 @@
                             if (res.rslt) commons.util.blockUIReload();
                         });
                 }, "block");
+            },
+            tagModal: function(postNo) {
+                const obj = { "postNo": postNo };
+                commons.util.handlebarsTemplate(obj, "jrnl_sumry_tag", "show");
+                /* tagify */
+                commons.tagify.initWithCtgr("#jrnlSumryTagForm #tagListStr", undefined);
+            },
+            tagAjax: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.save"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    const url = "${Url.JRNL_SUMRY_TAG_AJAX!}";
+                    const ajaxData = new FormData($("#jrnlSumryTagForm")[0]);
+                    commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                        Swal.fire({ text: res.message })
+                            .then(function() {
+                                if (!res.rslt) return;
+                                commons.util.blockUIReload();
+                            });
+                    }, "block");
+                });
             }
         }
     })();

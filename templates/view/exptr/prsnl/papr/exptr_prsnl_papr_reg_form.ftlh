@@ -104,7 +104,7 @@
             addExptrPrsnlItemList: function() {
                 // TODO: API 응답 JSON으로 받아와서 handlebars로 그려버리기
                 const url = "${Url.EXPTR_PRSNL_ITEM_LIST_AJAX!}";
-                let ajaxData = $("#procForm").serializeArray();
+                const ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         Swal.fire({text: res.message});

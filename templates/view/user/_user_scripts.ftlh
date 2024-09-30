@@ -91,7 +91,7 @@
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 const url = "<#if isReg!false>${Url.USER_REG_AJAX!}</#if><#if isMdf!false>${Url.USER_MDF_AJAX!}</#if>";
-                let ajaxData = new FormData($("#userRegForm")[0]);
+                const ajaxData = new FormData($("#userRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -112,7 +112,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.USER_REQST_CF_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -129,7 +129,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.USER_REQST_UNCF_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -146,7 +146,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.USER_PW_RESET_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -167,7 +167,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.USER_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

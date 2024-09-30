@@ -45,7 +45,7 @@ commons.util = (function() {
          * blockUI wrapped by try-catch
          */
         blockUI: function() {
-            // let blockUI = new KTBlockUI();
+            // const blockUI = new KTBlockUI();
             try {
                 $.blockUI({
                     message: `<div class="flex-column py-2 bg-dark bg-opacity-25">
@@ -623,13 +623,13 @@ commons.util = (function() {
             if (value === "") return "";
             if (commons.util.isEmpty(unit)) unit = 1;       // 나눔 단위
             // 숫자값이 넘어오면 걍 콤마 빼서 넘겨버린다.
-            let numValue = value.replace(/,/g, "");
-            let isNumber = !isNaN(numValue);
+            const numValue = value.replace(/,/g, "");
+            const isNumber = !isNaN(numValue);
             if (isNumber) return Number(numValue / unit);
             // 나머지 경우에는 selector로 간주, 콤마 제거 처리 및 keyup시 콤마 제거 처리한다.
-            let selectorStr = value;
+            const selectorStr = value;
             if (commons.util.is$NotPresent(selectorStr)) return;
-            let $inputs = $(selectorStr);
+            const $inputs = $(selectorStr);
             $inputs.each(function (idx, elmt) {
                 $(elmt).val(commons.util.removeComma($(elmt).val(), unit));
                 $(elmt).on("keyup", function() {
@@ -657,9 +657,9 @@ commons.util = (function() {
                 });
             }
             // 나머지 경우에는 selector로 간주, 콤마 제거 처리 및 keyup시 콤마 제거 처리한다.
-            let selectorStr = value;
+            const selectorStr = value;
             if (commons.util.is$NotPresent(selectorStr)) return;
-            let $inputs = $(selectorStr);
+            const $inputs = $(selectorStr);
             $inputs.each(function (idx, elmt) {
                 $(elmt).val(commons.util.addDot($(elmt).val(), fixed, unit));
                 $(elmt).on("keyup", function() {

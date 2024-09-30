@@ -43,7 +43,7 @@
                     if (!result.value) return;
                     $("#clCdRegForm #regYn").val("Y");
                     const url = "${Url.CL_CD_REG_AJAX!}";
-                    let ajaxData = $("#clCdRegForm").serializeArray();
+                    const ajaxData = $("#clCdRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

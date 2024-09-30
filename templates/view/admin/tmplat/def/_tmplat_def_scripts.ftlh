@@ -19,7 +19,7 @@
             /** 등록 모달 팝업 호출 */
             regModal: function(menuTyCd, upperMenuNo, upperMenuNm) {
                 event.stopPropagation();
-                let obj = { "menuTyCd": menuTyCd, "upperMenuNo": upperMenuNo, "upperMenuNm": upperMenuNm };
+                const obj = { "menuTyCd": menuTyCd, "upperMenuNo": upperMenuNo, "upperMenuNm": upperMenuNm };
                 commons.util.handlebarsTemplate(obj, "menu_reg", "show");
             },
             /** 아이콘 새로고침 */
@@ -41,7 +41,7 @@
                     if (!result.value) return;
                     let isReg = $("#menuRegForm #menuNo").val() === "";
                     const url = isReg ? "${Url.MENU_REG_AJAX!}" : "${Url.MENU_MDF_AJAX!}";
-                    let ajaxData = $("#tmplatDefRegForm").serializeArray();
+                    const ajaxData = $("#tmplatDefRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

@@ -63,8 +63,8 @@
             },
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
-                let ajaxData = new FormData($("#exptrReqstRegForm")[0]);
                 const url = "<#if isReg!false>${Url.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_REQST_MDF_AJAX!}</#if>";
+                const ajaxData = new FormData($("#exptrReqstRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -99,7 +99,7 @@
                 }).then(function (result) {
                     if (!result.value) return;
                     const url = "${Url.EXPTR_REQST_CF_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -116,7 +116,7 @@
                 }).then(function (result) {
                     if (!result.value) return;
                     const url = "${Url.EXPTR_REQST_DISMISS_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -137,7 +137,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.EXPTR_REQST_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

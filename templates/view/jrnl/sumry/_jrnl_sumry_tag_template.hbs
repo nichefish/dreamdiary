@@ -1,0 +1,12 @@
+<#--
+ * 저널 결산(jrnl_sumry) > 태그 Template
+ * @included_in : _jrnl_sumry_tag_modal.ftlh
+-->
+
+<script type="text/x-handlebars-template" id="jrnl_sumry_tag_template">
+    <input type="hidden" name="postNo" value="{{postNo}}">
+    <input type="hidden" name="contentType" value="JRNL_SUMRY">
+
+    <!--begin::tagify partial-->
+    <#include "/view/_component/tag/_tag_tagify_partial.hbs">
+</script>

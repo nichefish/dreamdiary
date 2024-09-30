@@ -15,7 +15,7 @@
             },
             /** 저널 일기 등록 모달 팝업 호출 */
             regModal: function(jrnlDayNo, stdrdDt) {
-                let obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
+                const obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
                 commons.util.handlebarsTemplate(obj, "jrnl_diary_reg_header");
                 commons.util.handlebarsTemplate(obj, "jrnl_diary_reg", "show");
 
@@ -43,7 +43,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_DIARY_REG_AJAX!}";
-                    let ajaxData = new FormData($("#jrnlDiaryRegForm")[0]);
+                    const ajaxData = new FormData($("#jrnlDiaryRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

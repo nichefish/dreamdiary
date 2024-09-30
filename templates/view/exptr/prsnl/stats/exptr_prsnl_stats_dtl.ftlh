@@ -66,7 +66,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.EXPTR_PRSNL_STATS_CF_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -83,7 +83,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.EXPTR_PRSNL_PAPR_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -113,7 +113,7 @@
                 $("#rjectYn").val(rjectYn);
                 if (rjectYn === "Y") $("#rjectResn").val($("#rjectResnShow").val());
                 const url = "${Url.EXPTR_PRSNL_STATS_RJECT!}";
-                let ajaxData = $("#procForm").serializeArray();
+                const ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

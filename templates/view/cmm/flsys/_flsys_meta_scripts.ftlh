@@ -11,7 +11,7 @@
             },
             /** 등록 모달 조회 */
             regModal: function(filePath) {
-                let obj = { "filePath": filePath, "upperFilePath": Flsys.currPath };
+                const obj = { "filePath": filePath, "upperFilePath": Flsys.currPath };
                 commons.util.handlebarsTemplate(obj, "flsys_meta_reg", "show");
 
                 /** tagify */
@@ -29,7 +29,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.FLSYS_META_REG_AJAX!}";
-                    let ajaxData = $("#flsysMetaRegForm").serializeArray();
+                    const ajaxData = $("#flsysMetaRegForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -59,7 +59,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let rsltObj = res.rsltObj;
+                    const rsltObj = res.rsltObj;
                     $("#flsys_meta_dtl_modal").modal("hide");
                     commons.util.handlebarsTemplate(rsltObj, "flsys_meta_reg", "show");
                     FlsysMeta.key = postNo;

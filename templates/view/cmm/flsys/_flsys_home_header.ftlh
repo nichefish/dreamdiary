@@ -34,7 +34,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let rsltObj = res.rsltObj;
+                    const rsltObj = res.rsltObj;
                     rsltObj.mode = Flsys.mode;
                     commons.util.handlebarsTemplate(rsltObj, "flsys_list");
                     Flsys.currPath = rsltObj.filePath;
@@ -74,12 +74,12 @@
             },
             /** vod 재생 */
             playVod: function(filePath) {
-                let obj = { "filePath": filePath };
+                const obj = { "filePath": filePath };
                 commons.util.handlebarsTemplate(obj, "flsys_file_vod", "show");
             },
             /** 파일 참조 추가 */
             addRef: function(filePath) {
-                let obj = { "filePath": filePath, "refCnt": Flsys.refCnt++ }
+                const obj = { "filePath": filePath, "refCnt": Flsys.refCnt++ }
                 commons.util.handlebarsAppend(obj, "flsys_ref");
                 commons.util.closeModal();
             },

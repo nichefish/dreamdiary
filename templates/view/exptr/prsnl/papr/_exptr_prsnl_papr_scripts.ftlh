@@ -98,8 +98,8 @@
                     let index = $(item).attr("id").replace("exptrAmt", "");
                     $("input[name='itemList["+index+"].exptrAmt']").val($(item).val().replace(/,/gi, ""));
                 });
-                let ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
                 const url = "<#if isReg!false>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
+                const ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
                 commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -128,7 +128,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.EXPTR_PRSNL_PAPR_DEL_AJAX!}";
-                    let ajaxData = $("#procForm").serializeArray();
+                    const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

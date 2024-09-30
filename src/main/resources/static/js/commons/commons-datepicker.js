@@ -50,7 +50,7 @@ commons.datepicker = (function() {
             $elmt.val(option.startDate);
             $elmt.daterangepicker(option, function(start) {
                 $elmt.val(start.format(format));
-                let $errorSpan = $("#"+id+"_valid_span");
+                const $errorSpan = $("#"+id+"_valid_span");
                 if (commons.util.isNotEmpty($errorSpan)) $errorSpan.empty();
                 if (commons.util.isNotEmpty(func)) func(start);
             });
@@ -62,7 +62,7 @@ commons.datepicker = (function() {
          * @depdendency: dateRangePicker (metronic)
          */
         singleDatePicker: function(selectorStr, format, initDt, func) {
-            let option = commons.datepicker.baseOption;
+            const option = commons.datepicker.baseOption;
             if (commons.util.isNotEmpty(format)) option.locale.format = format;
             if (initDt !== 'today') option.startDate = commons.util.isEmpty(initDt) ? undefined : initDt;
             return this.datepicker(selectorStr, option, func);
@@ -73,7 +73,7 @@ commons.datepicker = (function() {
          * @depdendency: dateRangePicker (metronic)
          */
         singleDatetimePicker: function(selectorStr, format, initDt, func) {
-            let option = commons.datepicker.timeOption;
+            const option = commons.datepicker.timeOption;
             if (commons.util.isNotEmpty(format)) option.locale.format = format;
             if (initDt !== 'today') option.startDate = commons.util.isEmpty(initDt) ? undefined : initDt;
             return this.datepicker(selectorStr, option, func);

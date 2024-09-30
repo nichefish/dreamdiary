@@ -89,7 +89,23 @@
     <#--begin::Card footer-->
     <div class="card-footer">
         <#--버튼 영역-->
-        <div class="d-flex justify-content-end gap-3">
+        <div class="d-flex justify-content-between gap-3">
+            <div class="col-2 fs-5 ms-5">
+                <div class="d-flex">
+                    <i class="bi bi-tag fs-4 me-1"></i>
+                    <div class="fs-5 fw-bold me-1">중요 키워드:</div>
+                </div>
+                <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
+                        onclick="JrnlSumry.tagModal(${post.postNo!});"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
+                    <i class="bi bi-book fs-4 pe-1"></i>
+                    수정
+                </button>
+            </div>
+            <div class="col">
+                <#--페이지:: 태그 표시 영역-->
+                <#include "/view/_component/tag/_tag_dtl_area.ftlh">
+            </div>
             <div class="col-1 w-auto">
                 <select id="yy" class="form-select form-select-solid text-end"
                         onchange="JrnlSumry.dtlByYy(this.value)"
@@ -233,10 +249,10 @@
 </div>
 
 <!-- 중요 일기 -->
-<#include "/view/jrnl/sumry/jrnl_sumry_dtl_imprtc_diary.ftlh">
+<#include "/view/jrnl/sumry/_jrnl_sumry_dtl_imprtc_diary.ftlh">
 
 <!-- 중요 꿈 -->
-<#include "/view/jrnl/sumry/jrnl_sumry_dtl_imprtc_dream.ftlh">
+<#include "/view/jrnl/sumry/_jrnl_sumry_dtl_imprtc_dream.ftlh">
 
 <form name="procForm" id="procForm" method="get">
     <input type="hidden" name="postNo" id="postNo" value="" />
@@ -246,6 +262,7 @@
 
 <#--include::modals-->
 <#include "/view/jrnl/sumry/cn/_jrnl_sumry_cn_reg_modal.ftlh">
+<#include "/view/jrnl/sumry/_jrnl_sumry_tag_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 <#include "/view/jrnl/dream/tag/_jrnl_dream_tag_dtl_modal.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
