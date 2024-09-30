@@ -13,12 +13,14 @@ import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamContentTagEntity;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.jpa.ContentTagRepository;
 import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
@@ -187,6 +189,9 @@ public class ContentTagService
         } else if (ContentType.JRNL_DREAM.key.equals(contentType)) {
             // 저널 꿈 관련 캐시 삭제 :: 메소드 분리
             this.evictJrnlDreamCache(postNo);
+        } else if (ContentType.JRNL_SUMRY.key.equals(contentType)) {
+            // 저널 결산 관련 캐시 삭제 :: 메소드 분리
+            this.evictJrnlSumryCache(postNo);
         } else if (ContentType.JRNL_SUMRY_CN.key.equals(contentType)) {
             // jrnl_sumry_cn
             EhCacheUtils.evictCache("jrnlSumryCnDtlDto", postNo);
@@ -279,6 +284,21 @@ public class ContentTagService
         // L2캐시 처리
         EhCacheUtils.clearL2Cache(JrnlDreamTagEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDreamContentTagEntity.class);
+    }
+
+    /** 저널 결산 관련 캐시 삭제 :: 메소드 분리 */
+    public void evictJrnlSumryCache(Integer postNo) throws Exception {
+        // jrnl_sumry
+        EhCacheUtils.evictCacheAll("jrnlSumryList");
+        EhCacheUtils.evictCacheAll("jrnlTotalSumry");
+        EhCacheUtils.evictCache("jrnlSumryDtl", postNo);
+        JrnlSumryDto jrnlSumry = (JrnlSumryDto) EhCacheUtils.getObjectFromCache("jrnlSumryDtl", postNo);
+        // 년도-월에 따른 캐시 삭제
+        if (jrnlSumry == null) return;
+        Integer yy = jrnlSumry.getYy();
+        EhCacheUtils.evictCache("jrnlSumryDtlByYy", yy);
+        // L2캐시 처리
+        EhCacheUtils.clearL2Cache(JrnlSumryEntity.class);
     }
 
     /**

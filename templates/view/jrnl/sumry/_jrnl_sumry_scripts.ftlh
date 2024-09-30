@@ -56,10 +56,17 @@
                 }, "block");
             },
             tagModal: function(postNo) {
-                const obj = { "postNo": postNo };
-                commons.util.handlebarsTemplate(obj, "jrnl_sumry_tag", "show");
-                /* tagify */
-                commons.tagify.initWithCtgr("#jrnlSumryTagForm #tagListStr", undefined);
+                const url = "${Url.JRNL_SUMRY_DTL_AJAX!}";
+                const ajaxData = { "postNo": postNo };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    commons.util.handlebarsTemplate(res.rsltObj, "jrnl_sumry_tag", "show");
+                    /* tagify */
+                    commons.tagify.initWithCtgr("#jrnlSumryTagForm #tagListStr", undefined);
+                });
             },
             tagAjax: function() {
                 Swal.fire({

@@ -127,7 +127,7 @@ public class JrnlSumryService
     /**
      * 캐시 사용 위해 구현체로 pullUp
      */
-    @Cacheable(value="jrnlSumryDtl", key = "#key")
+    @Cacheable(value="jrnlSumryDtl", key="#key")
     public JrnlSumryDto.DTL getSumryDtl(final Integer key) throws Exception {
         return this.getDtlDto(key);
     }
@@ -135,7 +135,7 @@ public class JrnlSumryService
     /**
      * 캐시 사용 위해 구현체로 pullUp
      */
-    @Cacheable(value="jrnlSumryDtlByYy", key = "#yy")
+    @Cacheable(value="jrnlSumryDtlByYy", key="#yy")
     public JrnlSumryDto getDtlDtoByYy(Integer yy) throws Exception {
         Optional<JrnlSumryEntity> entityWrapper = jrnlSumryRepository.findByYy(yy);
         if (entityWrapper.isEmpty()) return null;

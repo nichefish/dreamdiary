@@ -90,10 +90,10 @@
     <div class="card-footer">
         <#--버튼 영역-->
         <div class="d-flex justify-content-between gap-3">
-            <div class="col-2 fs-5 ms-5">
+            <div class="col-2 fs-5 ps-5">
                 <div class="d-flex">
-                    <i class="bi bi-tag fs-4 me-1"></i>
-                    <div class="fs-5 fw-bold me-1">중요 키워드:</div>
+                    <i class="bi bi-tag fs-4 pe-1"></i>
+                    <div class="fs-5 fw-bold pe-1">중요 키워드:</div>
                 </div>
                 <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
                         onclick="JrnlSumry.tagModal(${post.postNo!});"
@@ -104,7 +104,19 @@
             </div>
             <div class="col">
                 <#--페이지:: 태그 표시 영역-->
-                <#include "/view/_component/tag/_tag_dtl_area.ftlh">
+                <#if post.tag?? && post.tag.list??>
+                    <#list post.tag.list as tag>
+                        <span class="py-2 me-3 cursor-pointer opacity-hover"
+                              onclick="Tag.dtlAjax('${tag.refTagNo}');"
+                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
+                              title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
+                            <span class="${tag.tagClass!}">
+                                <#if tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>
+                                #<span class="fs-6 border-bottom text-primary fw-lighter opacity-hover em_${tag.tagNm!}">${tag.tagNm!}</span>
+                            </span>
+                        </span>
+                    </#list>
+                </#if>
             </div>
             <div class="col-1 w-auto">
                 <select id="yy" class="form-select form-select-solid text-end"

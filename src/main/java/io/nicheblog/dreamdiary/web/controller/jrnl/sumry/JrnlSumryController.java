@@ -217,7 +217,7 @@ public class JrnlSumryController
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            JrnlSumryDto.DTL rslt = jrnlSumryService.getDtlDto(key);
+            JrnlSumryDto.DTL rslt = jrnlSumryService.getSumryDtl(key);
             ajaxResponse.setRsltObj(rslt);
 
             isSuccess = (rslt.getPostNo() != null);

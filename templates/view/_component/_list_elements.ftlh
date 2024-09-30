@@ -93,6 +93,7 @@
                 <span class="text-muted pe-1" onclick="Tag.dtlAjax('${tag.refTagNo!}')"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                       title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
+                    <#if tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>
                     #<span class="border-bottom text-primary fw-lighter opacity-hover">${tag.tagNm!"-"}</span>
                 </span>
             </#list>
