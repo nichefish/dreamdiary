@@ -3,10 +3,7 @@ package io.nicheblog.dreamdiary.web.model.cmm.sectn;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
@@ -30,7 +27,7 @@ import javax.persistence.Column;
 @ToString(callSuper = true)
 public class SectnDto
         extends BasePostDto
-        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, StateCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     private static final String CONTENT_TYPE = ContentType.SECTN.key;
@@ -65,4 +62,6 @@ public class SectnDto
     public CommentCmpstn comment;
     /** 태그 정보 모듈 (위임) */
     public TagCmpstn tag;
+    /** 상태 관리 모듈 (위임) */
+    public StateCmpstn state;
 }

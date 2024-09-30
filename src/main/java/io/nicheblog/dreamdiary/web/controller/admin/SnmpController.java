@@ -10,6 +10,8 @@ import io.nicheblog.dreamdiary.global.util.snmp.SnmpUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +43,7 @@ public class SnmpController
      */
     @PostMapping(Url.URL_SNMP_SEND_AJAX)
     @ResponseBody
-    public AjaxResponse snmpSendAjax (
+    public ResponseEntity<AjaxResponse> snmpSendAjax (
             final SnmpParam snmpParam,
             final LogActvtyParam logParam,
             final @RequestParam("ipAddr") String ipAddr
@@ -66,8 +68,10 @@ public class SnmpController
             log.info("{} / isSuccess: {}, rsltMsg: {}", request.getRequestURI(), isSuccess, rsltMsg);
             // TODO: 로그 관련 처리
         }
-        
-        return ajaxResponse;
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
 }

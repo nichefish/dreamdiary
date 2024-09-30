@@ -64,7 +64,7 @@
             <#--begin::Table body-->
             <tbody class="draggable-zone">
                 <#list boardDefMngList![] as boardDef>
-                    <tr class="sortable-item draggable" id="${boardDef.boardCd!}">
+                    <tr id="${boardDef.boardCd!}" class="sortable-item draggable">
                         <td class="text-center hidden-table">
                             <div class="draggable-handle d-flex-center cursor-move pt-2"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">

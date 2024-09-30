@@ -312,7 +312,7 @@ public class BoardDefController
      */
     @PostMapping(Url.BOARD_DEF_SORT_ORDR_AJAX)
     @ResponseBody
-    public AjaxResponse boardDefSortOrdrAjax(
+    public ResponseEntity<AjaxResponse> boardDefSortOrdrAjax(
             @RequestBody BoardDefParam boardDefParam,
             final LogActvtyParam logParam
     ) {
@@ -335,7 +335,9 @@ public class BoardDefController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return ajaxResponse;
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**

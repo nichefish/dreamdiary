@@ -4,6 +4,8 @@ import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 /**
  * SectnParam
  * <pre>
@@ -22,5 +24,6 @@ import lombok.experimental.SuperBuilder;
 public class SectnParam
         extends BaseParam {
 
-    //
+    /** 정렬순서 배열 */
+    List<SectnDto> sortOrdr;
 }

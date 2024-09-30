@@ -14,6 +14,12 @@
                 /* jquery :: validation */
                 commons.validate.validateForm("#sectnRegForm", Sectn.regAjax);
             },
+            /** Draggable 컴포넌트 init */
+            initDraggable: function() {
+                const keyExtractor = (item) => ({ "postNo": $(item).attr("id") });
+                const url = "${Url.SECTN_SORT_ORDR_AJAX!}";
+                JrnlSbjct.swappable = commons.util.initDraggable(keyExtractor, url);
+            },
             /** 등록 모달 호출 */
             regModal: function(refPostNo, refContentType) {
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };

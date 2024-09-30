@@ -343,7 +343,7 @@ public class ClCdController
      */
     @PostMapping(Url.CL_CD_SORT_ORDR_AJAX)
     @ResponseBody
-    public AjaxResponse clCdSortOrdrAjax(
+    public ResponseEntity<AjaxResponse> clCdSortOrdrAjax(
             @RequestBody ClCdParam clCdParam,
             final LogActvtyParam logParam
     ) {
@@ -366,6 +366,8 @@ public class ClCdController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return ajaxResponse;
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 }

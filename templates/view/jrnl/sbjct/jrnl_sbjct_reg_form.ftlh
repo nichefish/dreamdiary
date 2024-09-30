@@ -15,6 +15,8 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
+
 <#--include::script modules-->
 <#include "/view/jrnl/sbjct/_jrnl_sbjct_scripts.ftlh">
 <#include "/view/_component/modal/sectn/_sectn_scripts.ftlh">
@@ -38,6 +40,8 @@
             init: function () {
                 /* jquery :: validation */
                 JrnlSbjct.initValidateForm()
+                /* 글 단락 정렬순서 변경 init */
+                Sectn.initDraggable();
 
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);

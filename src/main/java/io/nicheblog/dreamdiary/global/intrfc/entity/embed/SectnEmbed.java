@@ -40,7 +40,7 @@ public class SectnEmbed
             @JoinColumnOrFormula(column = @JoinColumn(name = "ref_content_type", referencedColumnName = "content_type", insertable = false, updatable = false)),
     })
     @Fetch(FetchMode.SELECT)
-    @OrderBy("regDt ASC")
+    @OrderBy("state.sortOrdr ASC")
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("단락 목록")
     private List<SectnEntity> list;

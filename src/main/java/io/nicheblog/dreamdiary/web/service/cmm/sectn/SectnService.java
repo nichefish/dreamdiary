@@ -11,6 +11,10 @@ import io.nicheblog.dreamdiary.web.spec.cmm.sectn.SectnSpec;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * SectnService
@@ -94,5 +98,25 @@ public class SectnService
         }
 
         EhCacheUtils.clearL2Cache(SectnEntity.class);
+    }
+
+    /**
+     * 정렬 순서 업데이트
+     */
+    @Transactional
+    public boolean sortOrdr(List<SectnDto> sortOrdr) throws Exception {
+        if (CollectionUtils.isEmpty(sortOrdr)) return true;
+        sortOrdr.forEach(dto -> {
+            try {
+                SectnEntity e = this.getDtlEntity(dto.getKey());
+                e.getState().setSortOrdr(dto.getState().getSortOrdr());
+                this.updt(e);
+            } catch (Exception ex) {
+                ex.getStackTrace();
+                // 로그 기록, 예외 처리 등
+                throw new RuntimeException(ex);
+            }
+        });
+        return true;
     }
 }

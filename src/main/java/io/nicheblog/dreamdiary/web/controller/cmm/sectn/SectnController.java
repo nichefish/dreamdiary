@@ -222,4 +222,37 @@ public class SectnController
                 .status(HttpStatus.OK)
                 .body(ajaxResponse);
     }
+
+    /**
+     * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     */
+    @PostMapping(Url.SECTN_SORT_ORDR_AJAX)
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> clCdSortOrdrAjax(
+            @RequestBody SectnParam sectnParam,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = null;
+        try {
+            // 메뉴 정렬 순서 저장
+            isSuccess = sectnService.sortOrdr(sectnParam.getSortOrdr());
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // logParam.setCn("key: " + menuNo);
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
+    }
 }

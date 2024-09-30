@@ -223,7 +223,7 @@ public class MenuController
      */
     @PostMapping(Url.MENU_SORT_ORDR_AJAX)
     @ResponseBody
-    public AjaxResponse menuSortOrdrAjax(
+    public ResponseEntity<AjaxResponse> menuSortOrdrAjax(
             @RequestBody MenuParam menuParam,
             final LogActvtyParam logParam
     ) {
@@ -246,7 +246,9 @@ public class MenuController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return ajaxResponse;
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**

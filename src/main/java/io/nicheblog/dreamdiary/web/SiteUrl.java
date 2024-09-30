@@ -146,7 +146,7 @@ public interface SiteUrl {
     String SECTN_MDF_AJAX = Prefix.SECTN + "/sectnMdfAjax.do";
     String SECTN_DTL_AJAX = Prefix.SECTN + "/sectnDtlAjax.do";
     String SECTN_DEL_AJAX = Prefix.SECTN + "/sectnDelAjax.do";
-
+    String SECTN_SORT_ORDR_AJAX = Prefix.SECTN + "/sectnSortOrdrAjax.do";
 
     /** 태그 */
 

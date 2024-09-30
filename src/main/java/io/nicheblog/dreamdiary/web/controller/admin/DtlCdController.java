@@ -294,7 +294,7 @@ public class DtlCdController
      */
     @PostMapping(Url.DTL_CD_SORT_ORDR_AJAX)
     @ResponseBody
-    public AjaxResponse dtlCdSortOrdrAjax(
+    public ResponseEntity<AjaxResponse> dtlCdSortOrdrAjax(
             @RequestBody DtlCdParam dtlCdParam,
             final LogActvtyParam logParam
     ) {
@@ -317,6 +317,8 @@ public class DtlCdController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return ajaxResponse;
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 }
