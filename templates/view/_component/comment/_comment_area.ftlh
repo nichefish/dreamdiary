@@ -52,13 +52,16 @@
                     </#if>
                 </div>
                 <div class="row">
-                    <div class="col-xl-11 fs-5 fw-normal text-gray-800" id="commentSpan${comment.postNo!}">
-                        <div class="fs-6 col-form-label" id="commentDtlSpan${comment.postNo!}">
-                            <div class="div-textarea-smp" id="commentCnSpanDiv${comment.postNo!}">${comment.cn!}</div>
+                    <div id="commentSpan${comment.postNo!}" class="col fs-5 fw-normal text-gray-800">
+                        <div id="commentDtlSpan${comment.postNo!}" class="fs-6 col-form-label">
+                            <div id="commentCnSpanDiv${comment.postNo!}" class="div-textarea-smp">
+                                ${comment.cn!}
+                            </div>
                         </div>
                     </div>
                     <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
-                    <div class="col-xl-1 text-center fs-5 fw-normal text-gray-800" id="mdfSaveBtnDiv${comment.postNo!}" style="display:none;">
+                    <div id="mdfSaveBtnDiv${comment.postNo!}" class="col-1 text-center fs-5 fw-normal text-gray-800 w-125px"
+                         style="display:none;">
                         <button type="button" class="btn btn-sm btn-primary me-2 mb-2"
                                 onclick="Comment.page.mdfAjax('${comment.postNo!}');"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="댓글을 수정합니다.">
@@ -78,8 +81,8 @@
 
     <div class="separator separator-dashed my-6 mt-8"></div>
 
-    <div class="row mx-5">
-        <div class="row ">
+    <div class="row ms-5">
+        <div class="row">
             <div class="col-xl-1">
                 <div class="fs-6 fw-bold col-form-label vertical-center">
                     <#if (authInfo.proflImgUrl)??>
@@ -91,7 +94,7 @@
                 </div>
             </div>
             <div class="row col-xl-11">
-                <div class="col-xl-11">
+                <div class="col">
                     <#--begin::Form-->
                     <form name="commentPageRegForm" id="commentPageRegForm" enctype="multipart/form-data">
                         <div id="comment_page_reg_div">
@@ -99,7 +102,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-xl-1 col-form-label">
+                <div class="col-1 col-form-label w-125px">
                     <#--페이지:: 버튼: 저장하기-->
                     <@component.post_btn_submit "Comment.page.submit();" />
                 </div>

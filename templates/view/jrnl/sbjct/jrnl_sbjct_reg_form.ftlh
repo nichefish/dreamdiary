@@ -215,13 +215,17 @@
             </div>
         </div>
     </div>
-
-    <#--begin::Card body-->
-    <div class="card-body">
-        <#--페이지:: 단락 영역-->
-        <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
-    </div>
 </div>
+
+<#if isMdf!false>
+    <div class="card post">
+        <#--begin::Card body-->
+        <div class="card-body pt-0">
+            <#--페이지:: 단락 영역-->
+            <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
+        </div>
+    </div>
+</#if>
 
 <#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">

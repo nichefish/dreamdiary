@@ -41,11 +41,6 @@
             ${post.markdownCn?no_esc}
         </div>
 
-        <div class="separator separator-dashed border-gray-300 mb-8"></div>
-
-        <#--페이지:: 단락 영역-->
-        <#include "/view/_component/sectn/_sectn_dtl_area.ftlh">
-
         <#--begin::meta-->
         <div class="mb-0">
             <#--페이지:: 첨부파일 표시 영역-->
@@ -62,6 +57,7 @@
             <@component.post_viewer_area post />
         </div>
     </div>
+
     <#--begin::Card footer-->
     <div class="card-footer">
         <#--버튼 영역-->
@@ -75,6 +71,14 @@
         </div>
         <#--페이지:: 댓글 영역-->
         <#include "/view/_component/comment/_comment_area.ftlh">
+    </div>
+</div>
+
+<div class="card post">
+    <#--begin::Card body-->
+    <div class="card-body">
+        <#--페이지:: 단락 영역-->
+        <#include "/view/_component/sectn/_sectn_dtl_area.ftlh">
     </div>
 </div>
 

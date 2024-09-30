@@ -6,7 +6,7 @@
 <script>
     const Sectn = (function() {
         return {
-            init: function ({ refreshFunc }) {
+            init: function ({ refreshFunc } = {}) {
                 if (refreshFunc !== undefined) Sectn.refreshFunc = refreshFunc;
             },
             /** form validation init */

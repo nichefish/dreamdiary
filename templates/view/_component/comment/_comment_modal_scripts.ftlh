@@ -7,7 +7,7 @@
     if (typeof Comment === 'undefined') { let  Comment = {}; }
     Comment.modal = (function() {
         return {
-            init: function ({ refreshFunc }) {
+            init: function ({ refreshFunc } = {}) {
                 /* jquery :: validation */
                 Comment.modal.initValidateForm();
                 commons.util.handlebarsTemplate({}, "comment_reg");
