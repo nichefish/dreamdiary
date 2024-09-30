@@ -5,6 +5,11 @@
 <script>
     const JrnlSumry = (function() {
         return {
+            /** form validation init */
+            initValidateForm: function() {
+                /* jquery :: validation */
+                commons.validate.validateForm("#jrnlSumryRegForm", JrnlSumry.regAjax);
+            },
             /** 상세 화면 이동 */
             dtl: function (postNo) {
                 $("#procForm #postNo").val(postNo);
@@ -55,7 +60,12 @@
                         });
                 }, "block");
             },
-            tagModal: function(postNo) {
+            /** 이관 submit */
+            submit: function() {
+                tinymce.get("tinymce_jrnlSumryCn").save();
+                $("#jrnlSumryRegForm").submit();
+            },
+            regModal: function(postNo) {
                 const url = "${Url.JRNL_SUMRY_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
@@ -63,19 +73,27 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.rsltObj, "jrnl_sumry_tag", "show");
+                    const rsltObj = res.rsltObj;
+                    commons.util.handlebarsTemplate(rsltObj, "jrnl_sumry_reg_header");
+                    commons.util.handlebarsTemplate(rsltObj, "jrnl_sumry_reg", "show");
+
+                    /* jquery :: validation */
+                    JrnlSumry.initValidateForm();
                     /* tagify */
-                    commons.tagify.initWithCtgr("#jrnlSumryTagForm #tagListStr", undefined);
+                    commons.tagify.initWithCtgr("#jrnlSumryRegForm #tagListStr", undefined);
+                    // tinymce editor reset
+                    commons.tinymce.init('#tinymce_jrnlSumryCn', commons.tinymce.imgRegFunc);
+                    commons.tinymce.setContentWhenReady("tinymce_jrnlSumryCn", rsltObj.cn);
                 });
             },
-            tagAjax: function() {
+            regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.save"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${Url.JRNL_SUMRY_TAG_AJAX!}";
-                    const ajaxData = new FormData($("#jrnlSumryTagForm")[0]);
+                    const url = "${Url.JRNL_SUMRY_REG_AJAX!}";
+                    const ajaxData = new FormData($("#jrnlSumryRegForm")[0]);
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

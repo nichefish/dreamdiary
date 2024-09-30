@@ -8,6 +8,7 @@
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?20230908"></script>
+<script type="text/javascript" src="/lib/prism/js/prism.js?${releaseDate!}"></script>
 <link rel="stylesheet" type="text/css" href="/css/jrnl.css?${releaseDate!}" />
 
 <#--include::script modules-->
@@ -33,6 +34,7 @@
 <div class="card post">
     <#--begin::Card body-->
     <div class="card-body">
+        <#--begin::header row-->
         <div class="row">
             <div class="col-2 d-flex align-items-center fs-5">
                 <i class="bi bi-calendar3 fs-6 me-2"></i>
@@ -71,12 +73,6 @@
             </div>
             <div class="col-1 d-flex flex-column align-items-center">
                 <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
-                        onclick="JrnlSumryCn.regModal(${post.postNo!}, '${post.yy!}');"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
-                    <i class="bi bi-book fs-4 pe-1"></i>
-                    저널 결산 내용 등록
-                </button>
-                <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
                         onclick="JrnlSumry.comptAjax(${post.postNo!});"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
                     <i class="bi bi-book fs-4 pe-1"></i>
@@ -85,40 +81,28 @@
             </div>
         </div>
     </div>
+    <#--begin::Card body-->
+    <div class="card-body">
+        <#--begin::cn-->
+        <div class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6 min-h-50px">
+            ${post.markdownCn?no_esc}
+        </div>
+
+        <#--begin::meta-->
+        <div class="mb-0">
+            <#--페이지:: 태그 표시 영역-->
+            <#include "/view/_component/tag/_tag_dtl_area.ftlh">
+        </div>
+    </div>
     <#--begin::Card footer-->
     <div class="card-footer">
         <#--버튼 영역-->
-        <div class="d-flex justify-content-between gap-3">
-            <div class="col-2 fs-5 ps-5">
-                <div class="d-flex">
-                    <i class="bi bi-tag fs-4 pe-1"></i>
-                    <div class="fs-5 fw-bold pe-1">중요 키워드:</div>
-                </div>
-                <button type="button" class="btn btn-sm btn-light-primary btn-outlined py-2 px-3 cursor-pointer"
-                        onclick="JrnlSumry.tagModal(${post.postNo!});"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저널 일자 <@spring.message "bs.tooltip.modal.mdf"/>">
-                    <i class="bi bi-book fs-4 pe-1"></i>
-                    수정
-                </button>
-            </div>
-            <div class="col">
-                <#--페이지:: 태그 표시 영역-->
-                <#if post.tag?? && post.tag.list??>
-                    <#list post.tag.list as tag>
-                        <span class="py-2 me-3 cursor-pointer opacity-hover"
-                              onclick="Tag.dtlAjax('${tag.refTagNo}');"
-                              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                              title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
-                            <span class="${tag.tagClass!}">
-                                <#if tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>
-                                #<span class="fs-6 border-bottom text-primary fw-lighter opacity-hover em_${tag.tagNm!}">${tag.tagNm!}</span>
-                            </span>
-                        </span>
-                    </#list>
-                </#if>
-            </div>
+        <div class="d-flex justify-content-end gap-3">
+            <#--페이지:: 버튼: 목록으로 가기-->
+            <@component.header_btn_reg_modal "JrnlSumry.regModal(${post.postNo!})" />
+            <#--페이지:: 버튼: 조회년도 변경-->
             <div class="col-1 w-auto">
-                <select id="yy" class="form-select form-select-solid text-end"
+                <select id="yy" class="form-select form-select-solid fs-7 text-end"
                         onchange="JrnlSumry.dtlByYy(this.value)"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">>
                     <#assign currYy = DateUtils.getCurrYy()?number />
@@ -171,7 +155,7 @@
 </form>
 
 <#--include::modals-->
-<#include "/view/jrnl/sumry/_jrnl_sumry_tag_modal.ftlh">
+<#include "/view/jrnl/sumry/_jrnl_sumry_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 <#include "/view/jrnl/dream/tag/_jrnl_dream_tag_dtl_modal.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">

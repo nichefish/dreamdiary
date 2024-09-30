@@ -31,7 +31,7 @@ public interface CommentMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     CommentDto toDto(final CommentEntity entity) throws Exception;
 
     /**
@@ -39,7 +39,7 @@ public interface CommentMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     CommentDto toListDto(final CommentEntity entity) throws Exception;
 
     /**

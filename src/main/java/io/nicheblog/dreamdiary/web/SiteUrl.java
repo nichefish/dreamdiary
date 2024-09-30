@@ -83,7 +83,7 @@ public interface SiteUrl {
     String JRNL_SUMRY_MAKE_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryMakeAjax.do";
     String JRNL_SUMRY_MAKE_TOTAL_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryMakeTotalAjax.do";
     String JRNL_SUMRY_DREAM_COMPT_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryDreamComptAjax.do";
-    String JRNL_SUMRY_TAG_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryTagAjax.do";
+    String JRNL_SUMRY_REG_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryRegAjax.do";
 
     /** 공지사항 */
     String NOTICE_LIST = Prefix.NOTICE + "/noticeList.do";

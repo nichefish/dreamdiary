@@ -27,10 +27,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
+import java.security.InvalidParameterException;
 import java.util.List;
 
 /**
@@ -349,12 +352,14 @@ public class JrnlSumryController
      * 저널 결산 태그 수정 처리 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능)
      */
-    @PostMapping(value = {Url.JRNL_SUMRY_TAG_AJAX})
+    @PostMapping(value = {Url.JRNL_SUMRY_REG_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlSumryTagAjax(
-            final @Valid JrnlSumryDto jrnlSumry,
-            final LogActvtyParam logParam
+            final @Valid JrnlSumryDto.DTL jrnlSumry,
+            final LogActvtyParam logParam,
+            final MultipartHttpServletRequest request,
+            final BindingResult bindingResult
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -362,6 +367,11 @@ public class JrnlSumryController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
+            // Validation
+            if (bindingResult.hasErrors()) throw new InvalidParameterException();
+            JrnlSumryDto result = jrnlSumryService.modify(jrnlSumry, request);
+            ajaxResponse.setRsltObj(result);
+
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             // 태그 처리

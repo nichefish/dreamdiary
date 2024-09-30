@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
@@ -18,7 +19,7 @@ import org.mapstruct.factory.Mappers;
  * @author nichefish
  * @extends BaseClsfMapstruct
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
 public interface JrnlSumryMapstruct
         extends BasePostMapstruct<JrnlSumryDto.DTL, JrnlSumryDto.LIST, JrnlSumryEntity> {
 
@@ -29,6 +30,7 @@ public interface JrnlSumryMapstruct
      */
     @Override
     @Named("toDto")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     JrnlSumryDto.DTL toDto(final JrnlSumryEntity entity) throws Exception;
 
     /**
@@ -36,6 +38,7 @@ public interface JrnlSumryMapstruct
      */
     @Override
     @Named("toListDto")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     JrnlSumryDto.LIST toListDto(final JrnlSumryEntity entity) throws Exception;
 
     /**

@@ -33,7 +33,7 @@ public interface JrnlDreamMapstruct
     @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
     @Mapping(target = "yy", expression = "java(entity.getJrnlDay().getYy())")
     @Mapping(target = "mnth", expression = "java(entity.getJrnlDay().getMnth())")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     JrnlDreamDto toDto(final JrnlDreamEntity entity) throws Exception;
 
     /**
@@ -44,7 +44,7 @@ public interface JrnlDreamMapstruct
     @Mapping(target = "stdrdDt", expression = "java(DateUtils.asStr(\"Y\".equals(entity.getJrnlDay().getDtUnknownYn()) ? entity.getJrnlDay().getAprxmtDt() : entity.getJrnlDay().getJrnlDt(), DatePtn.DATE))")
     @Mapping(target = "yy", expression = "java(entity.getJrnlDay().getYy())")
     @Mapping(target = "mnth", expression = "java(entity.getJrnlDay().getMnth())")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     JrnlDreamDto toListDto(final JrnlDreamEntity entity) throws Exception;
 
     /**

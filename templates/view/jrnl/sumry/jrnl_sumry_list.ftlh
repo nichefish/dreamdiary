@@ -124,6 +124,12 @@
                     </div>
                     <div class="mt-2">
                         <#--목록:: 태그 표시-->
+                        <div class="fs-6 fw-normal text-gray-800 ps-2 pt-3 text-noti">
+                            ${jrnlSumry.markdownCn?no_esc}
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <#--목록:: 태그 표시-->
                         <@component.list_tag jrnlSumry />
                     </div>
                 </div>

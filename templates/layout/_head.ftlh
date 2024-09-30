@@ -36,7 +36,7 @@
     <script type="text/javascript" src="/js/handlebars.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/moment.min.js?${releaseDate!}"></script>
     <!--Metronic:: Global Javascript Bundle(used by all pages)-->
-    <script src="/metronic/assets/plugins/global/plugins.bundle.js?${releaseDate!}"></script>
+    <script type="text/javascript" src="/metronic/assets/plugins/global/plugins.bundle.js?${releaseDate!}"></script>
 
     <script type="text/javascript" src="/js/jquery.cookie.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/jquery.blockUI.min.js?${releaseDate!}"></script>
@@ -44,7 +44,7 @@
     <script type="text/javascript" src="/js/jquery.validate.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/additional-methods.js?${releaseDate!}"></script>
 
-    <script src="/metronic/assets/js/scripts.bundle.js?${releaseDate!}"></script>
+    <script type="text/javascript" src="/metronic/assets/js/scripts.bundle.js?${releaseDate!}"></script>
 
     <!--Custom Javascript Bundle(used by all pages)-->
     <script type="text/javascript" src="/js/commons/commons.js?${releaseDate!}"></script>

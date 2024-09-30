@@ -11,8 +11,8 @@
 
 <!--begin::Page Vendors Javascript(used by this page)-->
 <link rel="stylesheet" type="text/css" href="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css?${releaseDate!}" />
-<script src="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?${releaseDate!}"></script>
-<script src="/js/commons/commons-fullcalendar.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/metronic/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/js/commons/commons-fullcalendar.js?${releaseDate!}"></script>
 
 <#assign isReg = (isReg!false)>
 <#assign isMdf = (isMdf!false)>

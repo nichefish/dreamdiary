@@ -29,14 +29,14 @@ public interface ExptrReqstMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     ExptrReqstDto.DTL toDto(final ExptrReqstEntity entity) throws Exception;
 
     /**
      * Entity -> listDto
      */
     @Named("toListDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     ExptrReqstDto.LIST toListDto(final ExptrReqstEntity entity) throws Exception;
 
     /**

@@ -30,7 +30,7 @@ public interface SectnMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     SectnDto toDto(final SectnEntity entity) throws Exception;
 
     /**
@@ -38,7 +38,7 @@ public interface SectnMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     SectnDto toListDto(final SectnEntity entity) throws Exception;
 
     /**

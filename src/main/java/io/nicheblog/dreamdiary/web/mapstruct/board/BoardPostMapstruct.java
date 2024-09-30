@@ -35,7 +35,7 @@ public interface BoardPostMapstruct
     @Override
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     BoardPostDto.DTL toDto(final BoardPostEntity entity) throws Exception;
 
     /**
@@ -43,7 +43,7 @@ public interface BoardPostMapstruct
      */
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     BoardPostDto.DTL toDto(final BoardPostSmpEntity entity) throws Exception;
 
     /**
@@ -52,7 +52,7 @@ public interface BoardPostMapstruct
     @Override
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     BoardPostDto.LIST toListDto(final BoardPostEntity entity) throws Exception;
 
     /**

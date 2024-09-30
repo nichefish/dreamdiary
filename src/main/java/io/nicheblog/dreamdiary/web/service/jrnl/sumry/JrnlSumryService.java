@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
+import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
@@ -34,7 +35,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Log4j2
 public class JrnlSumryService
-        implements BaseReadonlyService<JrnlSumryDto.DTL, JrnlSumryDto.LIST, Integer, JrnlSumryEntity, JrnlSumryRepository, JrnlSumrySpec, JrnlSumryMapstruct> {
+        implements BaseMultiCrudService<JrnlSumryDto.DTL, JrnlSumryDto.LIST, Integer, JrnlSumryEntity, JrnlSumryRepository, JrnlSumrySpec, JrnlSumryMapstruct> {
 
     private final JrnlSumryRepository jrnlSumryRepository;
     private final JrnlSumrySpec jrnlSumrySpec;

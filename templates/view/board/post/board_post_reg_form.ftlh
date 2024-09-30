@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <#import "/layout/layout.ftlh" as layout >
 
-<script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js?${releaseDate!}"></script>
 <script type="text/javascript" src="/js/commons/commons-tinymce.js?${releaseDate!}"></script>
 <script type="text/javascript" src="/lib/prism/js/prism.js?${releaseDate!}"></script>
 

@@ -29,7 +29,7 @@ public interface JrnlSbjctMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     JrnlSbjctDto.DTL toDto(final JrnlSbjctEntity entity) throws Exception;
 
     /**
@@ -37,7 +37,7 @@ public interface JrnlSbjctMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     JrnlSbjctDto.LIST toListDto(final JrnlSbjctEntity entity) throws Exception;
 
     /**

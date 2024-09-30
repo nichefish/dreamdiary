@@ -30,7 +30,7 @@ public interface NoticeMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     NoticeDto.DTL toDto(final NoticeEntity entity) throws Exception;
 
     /**
@@ -38,7 +38,7 @@ public interface NoticeMapstruct
      */
     @Override
     @Named("toListDto")
-    @Mapping(target = "markdownCn", expression = "java(CmmUtils.markdown(entity.getCn()))")
+    @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
     NoticeDto.LIST toListDto(final NoticeEntity entity) throws Exception;
 
     /**
