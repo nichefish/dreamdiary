@@ -4,7 +4,7 @@
  -->
 
 <script type="text/x-handlebars-template" id="tmplat_def_reg_template">
-    <input type="hidden" class="form-control" name="tmplatDefNo" id="tmplatDefNo">
+    <input type="hidden" name="tmplatDefNo" id="tmplatDefNo">
 
     <!--begin::title-->
     <div class="mb-0">
@@ -18,8 +18,9 @@
                 </label>
             </div>
             <div class="col-10">
-                <input type="text" class="form-control {{#isMdf}}bg-secondary{{/isMdf}}" name="tmplatDefCd" id="tmplatDefCd" value="{{clCd}}" {{#isMdf}}readonly{{/isMdf}}
-                    {{#isMdf}}data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="분류코드는 수정할 수 없습니다."{{/isMdf}}>
+                <input type="text" name="tmplatDefCd" id="tmplatDefCd" class="form-control {{#isMdf}}bg-secondary{{/isMdf}}"
+                       {{#isMdf}}data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="분류코드는 수정할 수 없습니다."{{/isMdf}}
+                       value="{{clCd}}" maxlength="50" {{#isMdf}}readonly{{/isMdf}}>
             </div>
             <!--end::Title-->
         </div>
@@ -32,7 +33,8 @@
                 </label>
             </div>
             <div class="col-10">
-                <input type="text" class="form-control" name="tmplatDefNm" id="tmplatDefNm" value="{{clCdNm}}">
+                <input type="text" name="tmplatDefNm" id="tmplatDefNm" class="form-control"
+                       value="{{clCdNm}}" maxlength="50">
             </div>
             <!--end::Title-->
         </div>
@@ -42,7 +44,8 @@
                 템플릿 구분 코드
             </div>
             <div class="col-10">
-                <input type="text" class="form-control" name="ctgrClCd" id="ctgrClCd" value="{{ctgrClCd}}">
+                <input type="text" class="form-control" name="ctgrClCd" id="ctgrClCd"
+                       value="{{ctgrClCd}}" maxlength="50">
             </div>
             <!--end::Title-->
         </div>
@@ -52,7 +55,7 @@
                 템플릿 정의 설명
             </div>
             <div class="col-10">
-                <textarea class="form-control h-75px" name="dc">{{dc}}</textarea>
+                <textarea name="dc" id="dc" class="form-control h-75px">{{dc}}</textarea>
             </div>
             <!--end::Title-->
         </div>
@@ -63,7 +66,8 @@
             </div>
             <div class="col-10">
                 <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
-                    <input class="form-check-input ms-3" type="checkbox" value="Y" name="useYn" id="useYn" />
+                    <input type="checkbox" name="useYn" id="useYn" class="form-check-input ms-3"
+                           value="Y" />
                     <label class="form-check-label fw-bold ms-3" for="useYn" id="useYnLabel">미사용</label>
                 </div>
             </div>
@@ -76,7 +80,8 @@
                 정렬 순서
             </div>
             <div class="col-10">
-                <input type="text" class="form-control" name="sortOrdr" id="sortOrdr" value="{{sortOrdr}}">
+                <input type="text" name="sortOrdr" id="sortOrdr" class="form-control"
+                       value="{{sortOrdr}}" maxlength="3">
             </div>
             <!--end::Title-->
         </div>

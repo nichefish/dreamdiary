@@ -32,7 +32,8 @@
             </select>
         </div>
         <div class="col-lg-{{#if (exists postNo)}}9{{else}}10{{/if}}">
-            <input type="text" class="form-control" name="title" id="title" maxlength="100" value="{{title}}" placeholder="제목" />
+            <input type="text" name="title" id="title" class="form-control"
+                   value="{{title}}" placeholder="제목" maxlength="100" />
             <div id="title_valid_span"></div>
         </div>
         {{#if (exists postNo)}}
@@ -56,7 +57,8 @@
                     <i class="bi bi-question-circle"></i>
                 </label>
                 <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
-                    <input class="form-check-input" type="checkbox" value="Y" name="imprtcYn" id="imprtcYn" {{checkedYn imprtcYn}} />
+                    <input type="checkbox" name="imprtcYn" id="imprtcYn" class="form-check-input"
+                           value="Y" {{checkedYn imprtcYn}} />
                     <label class="form-check-label fw-bold fs-6 ms-3" for="imprtcYn" id="imprtcYnLabel" {{{checkedYnStyle imprtcYn "color" "red//gray"}}}>
                         {{#ifYn imprtcYn}}중요{{else}}해당없음{{/ifYn}}
                     </label>
@@ -71,7 +73,8 @@
                     <i class="bi bi-question-circle"></i>
                 </label>
                 <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
-                    <input class="form-check-input" type="checkbox" value="Y" name="nhtmrYn" id="nhtmrYn" {{checkedYn nhtmrYn}} />
+                    <input type="checkbox" name="nhtmrYn" id="nhtmrYn" class="form-check-input"
+                           value="Y" {{checkedYn nhtmrYn}} />
                     <label class="form-check-label fw-bold fs-6 ms-3" for="nhtmrYn" id="nhtmrYnLabel" {{{checkedYnStyle nhtmrYn "color" "red//gray"}}}>
                         {{#ifYn hallucYn}}악몽{{else}}해당없음{{/ifYn}}
                     </label>
@@ -86,7 +89,8 @@
                     <i class="bi bi-question-circle"></i>
                 </label>
                 <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
-                    <input class="form-check-input" type="checkbox" value="Y" name="hallucYn" id="hallucYn" {{checkedYn hallucYn}} />
+                    <input type="checkbox" name="hallucYn" id="hallucYn" class="form-check-input"
+                           value="Y" {{checkedYn hallucYn}} />
                     <label class="form-check-label fw-bold fs-6 ms-3" for="hallucYn" id="hallucYnLabel" {{{checkedYnStyle hallucYn "color" "blue//gray"}}}>
                         {{#ifYn hallucYn}}입면환각{{else}}해당없음{{/ifYn}}
                     </label>
@@ -101,7 +105,8 @@
                     <i class="bi bi-question-circle"></i>
                 </label>
                 <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
-                    <input class="form-check-input" type="checkbox" value="Y" name="elseDreamYn" id="elseDreamYn" {{checkedYn elseDreamYn}} />
+                    <input type="checkbox" name="elseDreamYn" id="elseDreamYn" class="form-check-input"
+                           value="Y" {{checkedYn elseDreamYn}} />
                     <label class="form-check-label fw-bold fs-6 ms-3" for="elseDreamYn" id="elseDreamYnLabel" {{{checkedYnStyle elseDreamYn "color" "purple//gray"}}}>
                         {{#ifYn elseDreamYn}}해당{{else}}해당없음{{/ifYn}}
                     </label>
@@ -110,7 +115,8 @@
         </div>
         <div class="col-4 d-flex align-items-center {{^ifYn elseDreamYn}}d-none{{/ifYn}}" id="elseDreamerNmDiv">
             <div class="col">
-                <input class="form-control form-control-solid w-150px required" name="elseDreamerNm" id="elseDreamerNm" placeholder="꿈꾼 사람" value="{{elseDreamerNm}}" maxlength="10" />
+                <input type="text" name="elseDreamerNm" id="elseDreamerNm" class="form-control form-control-solid w-150px required"
+                       value="{{elseDreamerNm}}" placeholder="꿈꾼 사람" maxlength="30" />
             </div>
             <div class="col" id="elseDreamerNm_valid_span"></div>
         </div>

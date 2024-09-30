@@ -113,8 +113,8 @@
                         </div>
                     </div>
                     <div class="col-xl-2 col-8">
-                        <input type="text" class="form-control form-control-solid required no-space" name="userId" id="userId"
-                               maxlength="16" placeholder="아이디" value="${user.userId!}" />
+                        <input type="text" name="userId" id="userId" class="form-control form-control-solid required no-space"
+                               value="${user.userId!}" placeholder="아이디" maxlength="16" />
                         <div class="form-text text-noti">(※영문소문자, 숫자 포함 4~16자)</div>
                         <div id="userId_valid_span" class="text-danger"></div>
                         <div id="ipDupChckPassed_valid_span" class="text-danger"></div>
@@ -136,7 +136,7 @@
                         </div>
                     </div>
                     <div class="col-xl-2">
-                        <input type="password" class="form-control form-control-solid required no-space" name="password" id="password"
+                        <input type="password" name="password" id="password" class="form-control form-control-solid required no-space"
                                placeholder="비밀번호" maxlength="20" autocomplete="off" />
                         <div class="form-text text-noti">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
                         <div id="password_valid_span"></div>
@@ -147,7 +147,7 @@
                         </div>
                     </div>
                     <div class="col-xl-2">
-                        <input type="password" class="form-control form-control-solid required no-space" name="passwordCf" id="passwordCf"
+                        <input type="password" name="passwordCf" id="passwordCf" class="form-control form-control-solid required no-space"
                                placeholder="비밀번호 확인" maxlength="20" autocomplete="off" />
                         <div class="form-text text-noti">(※비밀번호와 동일하게 입력해야 합니다.)</div>
                         <div id="passwordCf_valid_span"></div>
@@ -167,7 +167,7 @@
                     <div class="col-xl-2 col-form-label">
                         <i class="bi bi-people-fill me-1 blink-slow"></i>
                         <span class="fw-bold text-gray-600">사용자</span>
-                        <input type="hidden" name="authList[0].authCd" id="authCd" class="form-select form-select-solid" value="${Constant.AUTH_USER!}">
+                        <input type="hidden" name="authList[0].authCd" id="authCd" value="${Constant.AUTH_USER!}">
                         <div id="authCd_valid_span"></div>
                     </div>
                 </div>
@@ -184,8 +184,8 @@
                         </div>
                     </div>
                     <div class="col-xl-2">
-                        <input type="text" class="form-control form-control-solid required" name="nickNm" id="nickNm"
-                               placeholder="표시이름" maxlength="20" value="${user.nickNm!}" />
+                        <input type="text" name="nickNm" id="nickNm" class="form-control form-control-solid required"
+                               value="${user.nickNm!}" placeholder="표시이름" maxlength="20" />
                         <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
                         <div id="nickNm_valid_span"></div>
                     </div>
@@ -202,16 +202,16 @@
                         </div>
                     </div>
                     <div class="col-lg-2 col-4">
-                        <input type="text" class="form-control form-control-solid required no-space" name="emailId" id="emailId"
-                               maxlength="20" placeholder="이메일 ID 입력" value="${user.emailId!}" />
+                        <input type="text" name="emailId" id="emailId" class="form-control form-control-solid required no-space"
+                               value="${user.emailId!}" placeholder="이메일 ID 입력" maxlength="20" />
                         <div id="emailId_valid_span"></div>
                     </div>
                     <div class="col-xl-2 col-1 d-flex-center fw-bold text-gray-700" style="width:2%;">
                         <label for="emailDomain"><label for="emailDomainSelect">@</label></label>
                     </div>
                     <div class="col-lg-2 col-5 vertical-center">
-                        <input type="text" class="form-control form-control-solid required no-space" name="emailDomain" id="emailDomain"
-                               placeholder="직접입력" maxlength="20" value="gmail.com" />
+                        <input type="text" name="emailDomain" id="emailDomain" class="form-control form-control-solid required no-space"
+                               value="gmail.com" placeholder="직접입력" maxlength="20" />
                         <div id="emailDomain_valid_span"></div>
                     </div>
                     <div class="col-xl-2 col-1">
@@ -233,8 +233,8 @@
                         </div>
                     </div>
                     <div class="col-xl-2">
-                        <input type="text" class="form-control form-control-solid" name="cttpc" id="cttpc"
-                               maxlength="20" placeholder="전화번호" <#if user.userInfo??>value="${user.cttpc!}"</#if> />
+                        <input type="text" name="cttpc" id="cttpc" class="form-control form-control-solid"
+                               <#if user.userInfo??>value="${user.cttpc!}"</#if> placeholder="전화번호" maxlength="20" />
                         <div class="form-text text-noti">(※숫자만 입력)</div>
                         <div id="cttpc_valid_span"></div>
                     </div>
@@ -252,14 +252,15 @@
                     </div>
                     <div class="col-xl-10">
                         <div class="form-check form-switch form-check-custom form-check-solid mt-2">
-                            <input class="form-check-input" type="checkbox" value="Y" name="useAcsIpYn" id="useAcsIpYn" />
+                            <input type="checkbox" name="useAcsIpYn" id="useAcsIpYn" class="form-check-input" value="Y" />
                             <label class="form-check-label fw-bold ms-3" for="useAcsIpYn" id="useAcsIpYnLabel" style="color:gray;">
                                 미사용
                             </label>
                         </div>
                         <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
                         <div id="acsIpListSpan" class="mt-2 mb-0" style="display:none;">
-                            <input name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space" autocomplete="off"/>
+                            <input type="text" name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space"
+                                   value="" maxlength="500" autocomplete="off"/>
                             <div class="form-text text-noti">(※최대 5개)</div>
                             <div id="acsIpListStr_valid_span"></div>
                         </div>

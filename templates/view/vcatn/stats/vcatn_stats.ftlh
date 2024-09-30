@@ -86,36 +86,48 @@
                             </td>
                             <td class="w-100px text-center">
                                 ${stats.cnwkYy!0}
-                                <input type="hidden" id="cnwkYy${stats?counter}" value="${stats.cnwkYy!0}" maxlength="3" readonly>
+                                <input type="hidden" id="cnwkYy${stats?counter}" value="${stats.cnwkYy!0}" readonly>
                             </td>
                             <td class="w-100px text-center">
                                 ${stats.bsYryc!0}
                                 <#if stats.isNewbie!false>
                                     <span class="text-danger">(+${stats.newbieYryc!0})</span>
                                 </#if>
-                                <input type="hidden" id="bsYryc${stats?counter}" value="${stats.bsYryc!0}" maxlength="3" readonly>
-                                <input type="hidden" id="newbieYryc${stats?counter}" value="${stats.newbieYryc!0}" maxlength="3" readonly>
+                                <input type="hidden" id="bsYryc${stats?counter}" value="${stats.bsYryc!0}" readonly>
+                                <input type="hidden" id="newbieYryc${stats?counter}" value="${stats.newbieYryc!0}" readonly>
                             </td>
                             <td class="w-100px text-center">
-                                <input type="hidden" class="w-50px" name="statsList[${stats?counter}].cnwkYryc" id="cnwkYryc${stats?counter}" value="${stats.cnwkYryc!0}" maxlength="3" onchange="Page.totYryc('${stats?counter}');">
+                                <input type="hidden" name="statsList[${stats?counter}].cnwkYryc" id="cnwkYryc${stats?counter}"
+                                       onchange="Page.totYryc('${stats?counter}');"
+                                       value="${stats.cnwkYryc!0}" maxlength="3" >
                                 <span id="cnwkYryc${stats?counter}_valid_span"></span>
                             </td>
                             <td class="w-100px text-center">
-                                <input type="text" class="w-50px num" name="statsList[${stats?counter}].prjctYryc" id="prjctYryc${stats?counter}" value="${stats.prjctYryc!0}" maxlength="3" onchange="Page.totYryc('${stats?counter}');">
+                                <input type="text" name="statsList[${stats?counter}].prjctYryc" id="prjctYryc${stats?counter}" class="w-50px num"
+                                       onchange="Page.totYryc('${stats?counter}');"
+                                       value="${stats.prjctYryc!0}" maxlength="3">
                             </td>
                             <td class="w-100px text-center">
-                                <input type="text" class="w-50px num" name="statsList[${stats?counter}].refreshYryc" id="refreshYryc${stats?counter}" value="${stats.refreshYryc!0}" maxlength="3" onchange="Page.totYryc('${stats?counter}');">
+                                <input type="text" name="statsList[${stats?counter}].refreshYryc" id="refreshYryc${stats?counter}" class="w-50px num"
+                                       onchange="Page.totYryc('${stats?counter}');"
+                                       value="${stats.refreshYryc!0}" maxlength="3">
                             </td>
                             <td class="text-center">
-                                <input type="hidden" class="w-50px" name="statsList[${stats?counter}].totYryc" id="totYryc${stats?counter}" value="${stats.totYryc!0}" onchange="Page.totYryc('${stats?counter}');">
+                                <input type="hidden" name="statsList[${stats?counter}].totYryc" id="totYryc${stats?counter}"
+                                       onchange="Page.totYryc('${stats?counter}');"
+                                       value="${stats.totYryc!0}" >
                                 <span id="totYryc${stats?counter}_valid_span">${stats.totYryc!0}</span>
                             </td>
                             <td class="text-center">
-                                <input type="hidden" class="w-50px" name="statsList[${stats?counter}].exhsYryc" id="exhsYryc${stats?counter}" value="${stats.exhsYryc!0}" onchange="Page.totYryc('${stats?counter}');">
+                                <input type="hidden" name="statsList[${stats?counter}].exhsYryc" id="exhsYryc${stats?counter}"
+                                       onchange="Page.totYryc('${stats?counter}');"
+                                       value="${stats.exhsYryc!0}" >
                                 <span id="exhsYryc${stats?counter}_valid_span">${stats.exhsYryc!0}</span>
                             </td>
                             <td class="text-center">
-                                <input type="hidden" class="w-50px" name="statsList[${stats?counter}].remndrYryc" id="remndrYryc${stats?counter}" value="${stats.remndrYryc!0}" onchange="Page.totYryc('${stats?counter}');">
+                                <input type="hidden" name="statsList[${stats?counter}].remndrYryc" id="remndrYryc${stats?counter}"
+                                       onchange="Page.totYryc('${stats?counter}');"
+                                       value="${stats.remndrYryc!0}" >
                                 <span id="remndrYryc${stats?counter}_valid_span">${stats.remndrYryc!0}</span>
                             </td>
                         </tr>

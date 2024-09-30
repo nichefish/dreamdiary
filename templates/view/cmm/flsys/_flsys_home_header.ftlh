@@ -124,12 +124,14 @@
             <span class="menu-icon me-md-2 vertical-middle">
                 <label for="searchStartDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>
             </span>
-            <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline" name="searchStartDt" id="searchStartDt" placeholder="Pick date" readonly/>
+            <input type="text" name="searchStartDt" id="searchStartDt"  class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline"]
+                   value="" placeholder="Pick date" readonly/>
             <span class="me-md-2">~</span>
             <span class="menu-icon me-md-2 vertical-middle">
                 <label for="searchEndDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>
             </span>
-            <input type="text" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline" name="searchEndDt" id="searchEndDt" placeholder="Pick date" readonly/>
+            <input type="text" name="searchEndDt" id="searchEndDt" class="form-control form-control-solid w-150px fs-7 me-md-2 fw-bolder d-inline"
+                   value="" placeholder="Pick date" readonly/>
         </div>
         <div class="position-relative w-md-1250px me-md-2">
             <!--begin::Select&ndash;&gt;
@@ -154,7 +156,8 @@
                 </svg>
             </span>
             <!--end::Svg Icon&ndash;&gt;
-            <input type="text" class="form-control form-control-solid fs-7 ps-10" name="searchKeyword" id="searchKeyword" placeholder="검색" maxlength="16" />
+            <input type="text" name="searchKeyword" id="searchKeyword" class="form-control form-control-solid fs-7 ps-10"
+                   value="" placeholder="검색" maxlength="200" />
         </div>
         <div class="card-title me-md-2">
             <label class="form-label fw-bolder text-dark"> </label>

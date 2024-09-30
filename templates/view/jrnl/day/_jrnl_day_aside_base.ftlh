@@ -217,7 +217,8 @@
                 <div class="mb-6">
                     <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">꿈 키워드 검색</span>
                     <div class="d-flex gap-1">
-                        <input type="text" name="dreamKeyword" id="dreamKeyword" class="form-control" placeholder="꿈 키워드 검색" />
+                        <input type="text" name="dreamKeyword" id="dreamKeyword" class="form-control"
+                               value="" placeholder="꿈 키워드 검색" maxlength="200"/>
                         <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                                 onclick="JrnlDream.keywordListAjax();"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈을 키워드로 검색합니다.">

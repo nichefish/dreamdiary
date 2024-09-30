@@ -6,7 +6,7 @@
 <form name="listForm" id="listForm" class="d-flex align-items-center flex-nowrap gap-2" method="get" >
     <div>
         <#--헤더:: 인풋: 년도 선택-->
-        <select class="form-select form-select-solid w-90px mx-1" name="statsYy" id="statsYy"
+        <select name="statsYy" id="statsYy" class="form-select form-select-solid w-90px mx-1"
                 onchange="VcatnSchdul.chgYy(this);"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">
             <#list yyList![] as yy>

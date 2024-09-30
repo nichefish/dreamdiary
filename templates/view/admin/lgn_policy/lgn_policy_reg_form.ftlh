@@ -37,7 +37,8 @@
                     <label for="lgnLockDy">장기간 미로그인 잠금일수</label>
                 </div>
                 <div class="col-xl-1">
-                    <input type="text" class="form-control form-control-solid text-end required number" name="lgnLockDy" id="lgnLockDy" value="${lgnPolicy.lgnLockDy!}" maxlength="3"/>
+                    <input type="text" name="lgnLockDy" id="lgnLockDy" class="form-control form-control-solid text-end required number"
+                           value="${lgnPolicy.lgnLockDy!}" maxlength="3" />
                     <div id="lgnLockDy_valid_span"></div>
                 </div>
                 <div class="col-xl-1 col-form-label w-5">
@@ -54,7 +55,8 @@
                     <label for="lgnTryLmt">로그인 제한 횟수</label>
                 </div>
                 <div class="col-xl-1">
-                    <input type="text" class="form-control form-control-solid text-end required number" name="lgnTryLmt" id="lgnTryLmt" value="${lgnPolicy.lgnTryLmt!}" maxlength="3" />
+                    <input type="text" name="lgnTryLmt" id="lgnTryLmt" class="form-control form-control-solid text-end required number"
+                           value="${lgnPolicy.lgnTryLmt!}" maxlength="3" />
                     <div id="lgnTryLmt_valid_span"></div>
                 </div>
                 <div class="col-xl-1 col-form-label w-5">
@@ -71,7 +73,8 @@
                     <label for="pwChgDy">비밀번호 변경 일수</label>
                 </div>
                 <div class="col-xl-1">
-                    <input type="text" class="form-control form-control-solid text-end required number" name="pwChgDy" id="pwChgDy" value="${lgnPolicy.pwChgDy!}" maxlength="3" />
+                    <input type="text" name="pwChgDy" id="pwChgDy" class="form-control form-control-solid text-end required number"
+                           value="${lgnPolicy.pwChgDy!}" maxlength="3" />
                     <div id="pwChgDy_valid_span"></div>
                 </div>
                 <div class="col-xl-1 col-form-label w-5">
@@ -88,7 +91,8 @@
                     <label for="pwForReset">비밀번호 초기화 설정값</label>
                 </div>
                 <div class="col-xl-2">
-                    <input type="password" class="form-control form-control-solid required" name="pwForReset" id="pwForReset" value="${lgnPolicy.pwForReset!}" maxlength="16" />
+                    <input type="password" name="pwForReset" id="pwForReset" class="form-control form-control-solid required"
+                           value="${lgnPolicy.pwForReset!}" maxlength="16" autocomplete="off" />
                     <div id="pwForReset_valid_span"></div>
                 </div>
                 <div class="col-xl-8 text-noti">

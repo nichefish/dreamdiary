@@ -88,7 +88,8 @@
                     </select>
                 </div>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control required" name="title" id="title" maxlength="100" value="${post.title!}"/>
+                    <input type="text" name="title" id="title" class="form-control required"
+                           value="${post.title!}" maxlength="100" />
                     <span id="title_valid_span"></span>
                 </div>
             </div>
@@ -174,7 +175,7 @@
                 <!--end::Label-->
                 <!--begin::Form control-->
                 <div class="mb-3">
-                    <textarea class="form-control required" rows="10" placeholder="내용을 입력하세요" name="cn" id="tinymce_cn">${post.cn!}</textarea>
+                    <textarea name="cn" id="tinymce_cn" class="form-control required" rows="10" placeholder="내용을 입력하세요.">${post.cn!}</textarea>
                 </div>
                 <div id="tinymce_cn_valid_span"></div>
                 <!--end::Form control-->

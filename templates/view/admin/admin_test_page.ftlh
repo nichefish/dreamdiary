@@ -137,7 +137,8 @@
                 </select>
             </div>
             <div class="col-xl-3">
-                <input type="text" class="form-control form-control-solid no-space" name="dataId" id="dataId" value="" maxlength="64" />
+                <input type="text" name="dataId" id="dataId" class="form-control form-control-solid no-space"
+                       value="" maxlength="64" />
             </div>
             <div class="col-xl-2 mt-1">
                 <button type="button" class="btn btn-sm btn-primary" onclick="Page.notionAjax();">

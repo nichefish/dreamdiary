@@ -5,5 +5,6 @@
 
 <div id="rjectSpanTemplate" hidden class="item">
     <span class="col-1 text-center mt-3">반려:</span>
-    <input type="text" class="form-control form-control-solid" name="itemList[__INDEX__].rjectResn" id="rjectResn__INDEX__" maxlength="200" disabled>
+    <input type="text" name="itemList[__INDEX__].rjectResn" id="rjectResn__INDEX__" class="form-control form-control-solid"
+           value="" maxlength="200" disabled>
 </div>

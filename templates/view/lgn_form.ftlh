@@ -98,7 +98,7 @@
         <div class="opacity-75 mb-5">
             <label class="form-label fs-6 text-secondary fw-bolder" for="userId">아이디</label>
             <input type="text" name="userId" id="userId" class="form-control form-control-lg enter required"
-                   autocomplete="off" maxlength="20" placeholder="아이디를 입력하세요."
+                   value="" placeholder="아이디를 입력하세요." autocomplete="off" maxlength="20"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="아이디를 입력하세요." />
             <div class="h-15px">
                 <span id="userId_valid_span" class="text-danger"></span>
@@ -107,8 +107,8 @@
         <div class="opacity-75">
             <label class="form-label text-secondary fw-bolder fs-6 mb-1" for="password">비밀번호</label>
             <input type="password" name="password" id="password" class="form-control form-control-lg enter required"
-                   autocomplete="off" maxlength="20"  placeholder="비밀번호를 입력하세요."
-                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호를 입력하세요." />
+                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호를 입력하세요."
+                   placeholder="비밀번호를 입력하세요." maxlength="20" autocomplete="off" />
             <div class="mb-3 h-15px">
                 <span id="password_valid_span" class="text-danger"></span>
             </div>

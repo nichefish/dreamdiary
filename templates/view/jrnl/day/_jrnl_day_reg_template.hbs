@@ -16,7 +16,8 @@
                 <span class="menu-icon me-md-2 vertical-middle">
                     <label for="jrnlDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>
                 </span>
-                <input class="form-control form-control-solid w-150px required" name="jrnlDt" id="jrnlDt" placeholder="꿈꾼 일자" value="{{jrnlDt}}" maxlength="10" />
+                <input type="text" name="jrnlDt" id="jrnlDt" class="form-control form-control-solid w-150px required"
+                       value="{{jrnlDt}}" placeholder="꿈꾼 일자" maxlength="10" />
             </div>
             <div id="jrnlDt_valid_span"></div>
         </div>
@@ -27,7 +28,8 @@
                     날짜미상
                 </label>
                 <i class="bi bi-question-circle cursor-pointer ms-1 me-5"></i>
-                <input class="form-check-input" type="checkbox" value="Y" name="dtUnknownYn" id="dtUnknownYn" {{checkedYn dtUnknownYn}} />
+                <input type="checkbox" name="dtUnknownYn" id="dtUnknownYn" class="form-check-input"
+                       value="Y" {{checkedYn dtUnknownYn}} />
             </div>
         </div>
         <div class="col-xl-3 col-5 {{^ifYn dtUnknownYn}}d-none{{/ifYn}}" id="aprxmtDtDiv">
@@ -35,7 +37,8 @@
                 <span class="menu-icon me-md-2 vertical-middle">
                     <label for="searchStartDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>
                 </span>
-                <input class="form-control form-control-solid w-150px required" name="aprxmtDt" id="aprxmtDt" placeholder="대략일자" value="{{aprxmtDt}}" maxlength="10" />
+                <input type="text" name="aprxmtDt" id="aprxmtDt" class="form-control form-control-solid w-150px required"
+                       value="{{aprxmtDt}}" placeholder="대략일자" maxlength="10" />
             </div>
             <div id="aprxmtDt_valid_span"></div>
         </div>
@@ -61,8 +64,8 @@
             </div>
         </div>
         <div class="col-8">
-            <textarea name="weather" id="weather"
-                      class="form-control form-control-solid d-block" rows="1" maxlength="200" placeholder="날씨 내용을 입력합니다. (아이콘 html 포함 가능)">{{weather}}</textarea>
+            <textarea name="weather" id="weather" class="form-control form-control-solid d-block"
+                      placeholder="날씨 내용을 입력합니다. (아이콘 html 포함 가능)" maxlength="200" rows="1" >{{weather}}</textarea>
         </div>
         <div class="col-1 d-flex align-items-center">
             <div class="btn btn-sm btn-icon btn-light-primary" onclick="JrnlDay.refreshIcon();"
@@ -87,7 +90,8 @@
                     </select>
                 </div>
                 <div id="tag_ctgr_div" style="display:none;">
-                    <input type="text" class="form-control form-control-sm form-control-solid w-200px" id="tag_ctgr" placeholder="태그 카테고리를 입력합니다.">
+                    <input type="text" id="tag_ctgr" class="form-control form-control-sm form-control-solid w-200px"
+                           value="" placeholder="태그 카테고리를 입력합니다." maxlength="500">
                 </div>
             </div>
         </div>

@@ -38,7 +38,8 @@
                         <#--end::Svg Icon-->
                         <!--end::Icon-->
                         <!--begin::Input-->
-                        <input type="text" class="form-control form-control-flush ps-10" name="search" value="" placeholder="Search..." data-kt-search-element="input" />
+                        <input type="text" name="search" class="form-control form-control-flush ps-10"
+                               value="" placeholder="Search..." maxlength="200" data-kt-search-element="input" />
                         <!--end::Input-->
                         <!--begin::Spinner-->
                         <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-1" data-kt-search-element="spinner">
@@ -575,7 +576,8 @@
                     <!--end::Heading-->
                     <!--begin::Input group-->
                     <div class="mb-5">
-                        <input type="text" class="form-control form-control-sm form-control-solid" placeholder="Contains the word" name="query" />
+                        <input type="text" name="query" class="form-control form-control-sm form-control-solid"
+                               value="" placeholder="Contains the word" maxlength="200" />
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
@@ -612,12 +614,14 @@
                     <!--end::Input group-->
                     <!--begin::Input group-->
                     <div class="mb-5">
-                        <input type="text" name="assignedto" class="form-control form-control-sm form-control-solid" placeholder="Assigned to" value="" />
+                        <input type="text" name="assignedto" class="form-control form-control-sm form-control-solid"
+                               value="" placeholder="Assigned to" maxlength="200" />
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
                     <div class="mb-5">
-                        <input type="text" name="collaborators" class="form-control form-control-sm form-control-solid" placeholder="Collaborators" value="" />
+                        <input type="text" name="collaborators" class="form-control form-control-sm form-control-solid"
+                               value="" placeholder="Collaborators" maxlength="1000" />
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
@@ -642,7 +646,7 @@
                     <!--end::Input group-->
                     <!--begin::Input group-->
                     <div class="mb-5">
-                        <select name="timezone" aria-label="Select a Timezone" data-control="select2" data-placeholder="date_period" class="form-select form-select-sm form-select-solid">
+                        <select name="timezone" class="form-select form-select-sm form-select-solid" aria-label="Select a Timezone" data-control="select2" data-placeholder="date_period" >
                             <option value="next">Within the next</option>
                             <option value="last">Within the last</option>
                             <option value="between">Between</option>
@@ -659,7 +663,7 @@
                         <!--end::Col-->
                         <!--begin::Col-->
                         <div class="col-6">
-                            <select name="date_typer" aria-label="Select a Timezone" data-control="select2" data-placeholder="Period" class="form-select form-select-sm form-select-solid">
+                            <select name="date_typer" class="form-select form-select-sm form-select-solid" aria-label="Select a Timezone" data-control="select2" data-placeholder="Period">
                                 <option value="days">Days</option>
                                 <option value="weeks">Weeks</option>
                                 <option value="months">Months</option>
@@ -686,7 +690,7 @@
                     <div class="pb-4 border-bottom">
                         <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                             <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Projects</span>
-                            <input class="form-check-input" type="checkbox" value="1" checked="checked" />
+                            <input type="checkbox" class="form-check-input" value="1" checked="checked" />
                         </label>
                     </div>
                     <!--end::Input group-->
@@ -694,7 +698,7 @@
                     <div class="py-4 border-bottom">
                         <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                             <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Targets</span>
-                            <input class="form-check-input" type="checkbox" value="1" checked="checked" />
+                            <input type="checkbox" class="form-check-input" value="1" checked="checked" />
                         </label>
                     </div>
                     <!--end::Input group-->
@@ -702,7 +706,7 @@
                     <div class="py-4 border-bottom">
                         <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                             <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Affiliate Programs</span>
-                            <input class="form-check-input" type="checkbox" value="1" />
+                            <input type="checkbox" class="form-check-input" value="1" />
                         </label>
                     </div>
                     <!--end::Input group-->
@@ -710,7 +714,7 @@
                     <div class="py-4 border-bottom">
                         <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                             <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Referrals</span>
-                            <input class="form-check-input" type="checkbox" value="1" checked="checked" />
+                            <input type="checkbox" class="form-check-input" value="1" checked="checked" />
                         </label>
                     </div>
                     <!--end::Input group-->
@@ -718,7 +722,7 @@
                     <div class="py-4 border-bottom">
                         <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
                             <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Users</span>
-                            <input class="form-check-input" type="checkbox" value="1" />
+                            <input type="checkbox" class="form-check-input" value="1" />
                         </label>
                     </div>
                     <!--end::Input group-->

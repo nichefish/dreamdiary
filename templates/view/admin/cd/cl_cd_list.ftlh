@@ -130,7 +130,7 @@
 </div>
 
 <form name="procForm" id="procForm" method="get">
-    <input type="hidden" id="clCd" name="clCd" />
+    <input type="hidden" name="clCd" id="clCd" />
 </form>
 
 <#--include::modals-->

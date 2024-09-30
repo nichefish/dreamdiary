@@ -31,7 +31,8 @@
                     <input type="hidden" name="clCd" value="{{clCd}}">
                 </div>
             {{else}}
-                <input type="text" class="form-control form-control-solid required" name="clCd" id="clCd" value="{{clCd}}" maxlength="30">
+                <input type="text" name="clCd" id="clCd" class="form-control form-control-solid required"
+                       value="{{clCd}}" maxlength="30">
                 <div class="text-noti">※영문 대문자 및 숫자만 가능, 1~30자</div>
                 <div id="clCd_valid_span"></div>
             {{/if}}
@@ -48,7 +49,8 @@
             </label>
         </div>
         <div class="col-9">
-            <input type="text" class="form-control form-control-solid required" name="clCdNm" id="clCdNm" value="{{clCdNm}}">
+            <input type="text" name="clCdNm" id="clCdNm" class="form-control form-control-solid required"
+                   value="{{clCdNm}}" maxlength="50">
             <div id="clCdNm_valid_span"></div>
         </div>
     </div>
@@ -60,7 +62,7 @@
             </label>
         </div>
         <div class="col-9">
-            <textarea class="form-control form-control-solid h-75px" name="dc">{{dc}}</textarea>
+            <textarea name="dc" id="dc" class="form-control form-control-solid h-75px">{{dc}}</textarea>
         </div>
     </div>
     <#--begin::Row-->
@@ -74,7 +76,8 @@
         </div>
         <div class="col-9">
             <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
-                <input class="form-check-input" type="checkbox" value="Y" name="state.useYn" id="useYn" {{checkedYn state.useYn}} />
+                <input type="checkbox" name="state.useYn" id="useYn" class="form-check-input"
+                       value="Y" {{checkedYn state.useYn}} />
                 <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedYnStyle state.useYn "color" "blue//gray"}}>
                     {{^ifYn state.useYn}}미{{/ifYn}}사용
                 </label>

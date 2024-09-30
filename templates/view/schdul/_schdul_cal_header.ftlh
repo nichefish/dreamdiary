@@ -20,7 +20,8 @@
         <span class="menu-icon me-md-2 vertical-middle">
             <label for="calDt"><i class="bi bi-calendar3 fs-2 cursor-pointer"></i></label>
         </span>
-        <input type="text" class="form-control form-control-solid w-sm-150px w-90px fs-7 me-md-2 fw-bolder d-inline" name="calDt" id="calDt" placeholder="Pick date" readonly/>
+        <input type="text" name="calDt" id="calDt" class="form-control form-control-solid w-sm-150px w-90px fs-7 me-md-2 fw-bolder d-inline"
+               placeholder="Pick date" readonly/>
     </div>
 
     <span class="h-25px border-gray-500 border-start mx-4"></span>

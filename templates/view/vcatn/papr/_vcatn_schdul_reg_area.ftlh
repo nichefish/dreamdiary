@@ -24,7 +24,8 @@
             <div class="row g-9">
                 <div class="col-md-2" id="vcatnCdSelectDiv${schdul?index}">
                     <label class="required fs-6 fw-bold mb-2">휴가분류</label>
-                    <select class="form-select form-select-solid w-180px required" onchange="VcatnSchdul.propEndDt(${schdul?index})" name="schdulList[${schdul?index}].vcatnCd" id="vcatnCd${schdul?index}" data-hide-search="true">
+                    <select name="schdulList[${schdul?index}].vcatnCd" id="vcatnCd${schdul?index}" class="form-select form-select-solid w-180px required"
+                            onchange="VcatnSchdul.propEndDt(${schdul?index})" data-hide-search="true">
                         <option value="">휴가 분류</option>
                         <#list VCATN_CD![] as vcatnCd>
                             <option value="${vcatnCd.dtlCd!}" ${fn.selected(schdul.vcatnCd!, vcatnCd.dtlCd)}>[${vcatnCd.dtlCdNm!}]</option>
@@ -48,8 +49,9 @@
                                               fill="black"/>
                                     </svg>
                                 </span>
-                                <input class="form-control form-control-solid ps-12 required w-100" name="schdulList[${schdul?index}].bgnDt" id="bgnDt${schdul?index}"
-                                       autocomplete="off" onchange="VcatnSchdul.propEndDt(${schdul?index})" placeholder="휴가 시작일" value="${schdul.bgnDt!}" readonly />
+                                <input type="text" name="schdulList[${schdul?index}].bgnDt" id="bgnDt${schdul?index}" class="form-control form-control-solid ps-12 required w-100"
+                                       onchange="VcatnSchdul.propEndDt(${schdul?index})"
+                                       value="${schdul.bgnDt!}" placeholder="휴가 시작일" readonly />
                             </div>
                             <div id="bgnDt${schdul?index}_valid_span"></div>
                         </div>
@@ -71,9 +73,9 @@
                                               fill="black"/>
                                     </svg>
                                 </span>
-                                <input name="schdulList[${schdul?index}].endDt" id="endDt${schdul?index}" class="form-control form-control-solid ps-12 required w-100"
+                                <input type="text" name="schdulList[${schdul?index}].endDt" id="endDt${schdul?index}" class="form-control form-control-solid ps-12 required w-100"
                                        onchange="VcatnSchdul.propEndDt(${schdul?index})"
-                                       autocomplete="off" placeholder="휴가 종료일" value="${schdul.endDt!}" readonly />
+                                       value="${schdul.endDt!}" placeholder="휴가 종료일" readonly />
                             </div>
                             <div id="endDt${schdul?index}_valid_span"></div>
                         </div>
@@ -81,8 +83,8 @@
                 </div>
                 <div class="col-md-5">
                     <label class="fs-6 fw-bold mb-2" for="resn${schdul?index}">사유</label>
-                    <textarea name="schdulList[${schdul?index}].resn" id="resn${schdul?index}"
-                              class="form-control form-control-solid" rows="2"  maxlength="500" placeholder="내용을 입력하세요">${schdul.resn!}</textarea>
+                    <textarea name="schdulList[${schdul?index}].resn" id="resn${schdul?index}" class="form-control form-control-solid"
+                              rows="2" maxlength="500" placeholder="내용을 입력하세요">${schdul.resn!}</textarea>
                 </div>
             </div>
         </div>

@@ -17,14 +17,14 @@
                     </svg>
                 </span>
                 <span class="ps-12 hidden-table"></span>
-                <input type="text" class="form-control form-control-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
-                       name="itemList[{{rnum}}].exptrDt" id="exptrDt{{rnum}}" placeholder="날짜" value="{{exptrDt}}" readonly />
+                <input type="text" name="itemList[{{rnum}}].exptrDt" id="exptrDt{{rnum}}" class="form-control form-control-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
+                       value="{{exptrDt}}" placeholder="날짜" readonly />
             </div>
             <div id="exptrDt{{rnum}}Span"></div>
         </td>
         <td>
-            <select class="form-select form-select-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
-                    name="itemList[{{rnum}}].exptrCd" {{#ifYn rjectYn}}readonly{{/ifYn}}>
+            <select name="itemList[{{rnum}}].exptrCd" class="form-select form-select-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
+                    {{#ifYn rjectYn}}readonly{{/ifYn}}>
                 <option value="">--지출구분--</option>
                 <#list EXPTR_CD![] as exptrCd>
                     <option value="${exptrCd.dtlCd!}" {{selectedIf (equals exptrCd "${exptrCd.dtlCd!}")}}>
@@ -35,15 +35,15 @@
             <div id="exptrCd{{rnum}}Span"></div>
         </td>
         <td>
-            <input type="text" class="form-control form-control-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
-                   name="itemList[{{rnum}}].exptrCn" id="exptrCn{{rnum}}" maxlength="200" placeholder="지출내역" value="{{exptrCn}}">
+            <input type="text" name="itemList[{{rnum}}].exptrCn" id="exptrCn{{rnum}}" class="form-control form-control-solid required {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
+                   value="{{exptrCn}}" placeholder="지출내역" maxlength="200" >
             <div id="exptrCn{{rnum}}Span"></div>
         </td>
         <td>
             <div class="d-flex align-items-center">
-                <input type="text" class="form-control form-control-solid num required text-end {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
-                       name="itemList[{{rnum}}].exptrAmtStr" id="exptrAmt{{rnum}}" placeholder="총 금액" maxlength="9" value="{{numberFormat exptrAmt}}"
-                       onchange="Page.setTotAmt();" {{#ifYn rjectYn}}readonly{{/ifYn}}>
+                <input type="text" name="itemList[{{rnum}}].exptrAmtStr" id="exptrAmt{{rnum}}" class="form-control form-control-solid num required text-end {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
+                       onchange="Page.setTotAmt();"
+                       value="{{numberFormat exptrAmt}}" placeholder="총 금액" maxlength="9" {{#ifYn rjectYn}}readonly{{/ifYn}} >
                 <input type="hidden" name="itemList[{{rnum}}].exptrAmt">
                 <span class="menu-icon mx-2 vertical-middle">원</span>
             </div>
@@ -62,11 +62,11 @@
         <td id="rmRjectDiv{{rnum}}" class="d-flex">
             {{#ifYn rjectYn}}
                 <span class="col-1 text-center mt-3">반려:</span>
-                <input type="text" class="form-control form-control-solid"
-                       name="itemList[{{rnum}}].rjectResn" id="rjectResn{{rnum}}" maxlength="200" value="{{rjectResn}}" readonly>
+                <input type="text" name="itemList[{{rnum}}].rjectResn" id="rjectResn{{rnum}}" maxlength="200" class="form-control form-control-solid"
+                       value="{{rjectResn}}" readonly>
             {{/ifYn}}
-            <input type="text" class="form-control form-control-solid {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
-                   name="itemList[{{rnum}}].exptrRm" id="exptrRm{{rnum}}" maxlength="300" placeholder="인원 및 비고" value="{{exptrRm}}" {{#ifYn rjectYn}}readonly{{/ifYn}}>
+            <input type="text" name="itemList[{{rnum}}].exptrRm" id="exptrRm{{rnum}}" class="form-control form-control-solid {{#ifYn rjectYn}}strikethrough{{/ifYn}}"
+                   value="{{exptrRm}}" placeholder="인원 및 비고" maxlength="300" {{#ifYn rjectYn}}readonly{{/ifYn}}>
         </td>
         <td class="text-center">
             {{#unless (exists atchFileDtlNo)}}
@@ -93,17 +93,17 @@
                     <a href="javascript:void(0);" class="fs-8" id="rciptDelBtn{{rnum}}" onclick="Page.rciptDel({{rnum}})">삭제</a>
                 </span>
             {{/unless}}
-            <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].atchFileDtlNo" id="atchFileDtlNo{{rnum}}" value="{{atchFileDtlNo}}"/>
+            <input type="hidden" name="itemList[{{rnum}}].atchFileDtlNo" id="atchFileDtlNo{{rnum}}" value="{{atchFileDtlNo}}"/>
             <span id="rciptOrgnlSpan{{rnum}}"></span>
         </td>
         <td>
             <span id="exptrPrsnlItem{{rnum}}"></span>
-            <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].orgnlRciptYn" id="orgnlRciptYn{{rnum}}" value="{{ifEmpty orgnlRciptYn 'N'}}"/>
-            <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].delYn" id="delYn{{rnum}}" value="{{ifEmpty delYn 'N'}}"/>
+            <input type="hidden" name="itemList[{{rnum}}].orgnlRciptYn" id="orgnlRciptYn{{rnum}}" value="{{ifEmpty orgnlRciptYn 'N'}}"/>
+            <input type="hidden" name="itemList[{{rnum}}].delYn" id="delYn{{rnum}}" value="{{ifEmpty delYn 'N'}}"/>
             {{#if (exists exptrPrsnlItemNo)}}
-                <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].exptrPrsnlItemNo" id="exptrPrsnlItemNo{{rnum}}" value="{{exptrPrsnlItemNo}}"/>
-                <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].refPostNo" value="{{refPostNo}}"/>
-                <input type="hidden" class="form-control form-control-solid" name="itemList[{{rnum}}].rjectYn" id="rjectYn{{rnum}}" value="{{ifEmpty rjectYn 'N'}}"/>
+                <input type="hidden" name="itemList[{{rnum}}].exptrPrsnlItemNo" id="exptrPrsnlItemNo{{rnum}}" value="{{exptrPrsnlItemNo}}"/>
+                <input type="hidden" name="itemList[{{rnum}}].refPostNo" value="{{refPostNo}}"/>
+                <input type="hidden" name="itemList[{{rnum}}].rjectYn" id="rjectYn{{rnum}}" value="{{ifEmpty rjectYn 'N'}}"/>
             {{/if}}
             <a href="javascript:void(0);" class="btn btn-bg-light btn-active-color-primary p-0" id="delExptrPrsnlItemBtn{{rnum}}" onclick="Page.delExptrPrsnlItemSpan({{rnum}});">
                 <span class="svg-icon svg-icon-muted svg-icon-2hx m-0">

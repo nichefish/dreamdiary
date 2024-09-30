@@ -5,7 +5,7 @@
 
 <script type="text/x-handlebars-template" id="board_def_reg_template">
     <input type="hidden" name="regYn" value="{{#if (notExists boardCd)}}Y{{/if}}{{#if (exists boardCd)}}N{{/if}}">
-    <input type="hidden" class="form-control required" name="useYn" value="N">
+    <input type="hidden" name="useYn" value="N">
 
     <#--begin::Row-->
     <div class="row mb-4">
@@ -24,7 +24,8 @@
                     <input type="hidden" name="clCd" value="{{clCd}}">
                 </div>
             {{else}}
-                <input type="text" class="form-control form-control-solid required cddata" name="boardCd" id="boardCd" value="{{boardCd}}" maxlength="16" placeholder="게시판 코드">
+                <input type="text" name="boardCd" id="boardCd" class="form-control form-control-solid required cddata"
+                       value="{{boardCd}}" placeholder="게시판 코드" maxlength="16" >
                 <div class="text-noti">※영문 대문자 및 숫자만 가능, 1~30자</div>
                 <div id="boardCd_valid_span"></div>
             {{/if}}
@@ -40,7 +41,8 @@
             </label>
         </div>
         <div class="col-9">
-            <input type="text" class="form-control form-control-solid required" name="boardNm" id="boardNm" value="{{boardNm}}" maxlength="32" placeholder="게시판 이름">
+            <input type="text" name="boardNm" id="boardNm" class="form-control form-control-solid required"
+                   value="{{boardNm}}" placeholder="게시판 이름" maxlength="32" >
         </div>
     </div>
     <#--begin::Row-->
@@ -54,7 +56,8 @@
             </label>
         </div>
         <div class="col-9">
-            <input type="text" class="form-control form-control-solid required" name="ctgrClCd" id="ctgrClCd" value="{{ctgrClCd}}" maxlength="32" placeholder="글분류 코드">
+            <input type="text" name="ctgrClCd" id="ctgrClCd" class="form-control form-control-solid required"
+                   value="{{ctgrClCd}}" placeholder="글분류 코드" maxlength="32" >
         </div>
     </div>
     <#--begin::Row-->
@@ -63,7 +66,8 @@
             <label class="fw-bold">게시판 설명</label>
         </div>
         <div class="col-9">
-            <textarea name="dc" id="dc" class="form-control form-control-solid h-100px" wrap="hard" maxlength="1000" placeholder="게시판 설명을 입력합니다.">{{dc}}</textarea>
+            <textarea name="dc" id="dc" class="form-control form-control-solid h-100px"
+                      wrap="hard" maxlength="1000" placeholder="게시판 설명을 입력합니다.">{{dc}}</textarea>
         </div>
     </div>
     <#--begin::Row-->
@@ -77,7 +81,8 @@
         </div>
         <div class="col-9 text-center d-flex align-items-center">
             <div class="form-check form-switch form-check-custom form-check-solid">
-                <input class="form-check-input" type="checkbox" value="Y" name="state.useYn" id="useYn" {{checkedYn state.useYn}} />
+                <input type="checkbox" name="state.useYn" id="useYn" class="form-check-input"
+                       value="Y" {{checkedYn state.useYn}} />
                 <label class="form-check-label ms-3" for="useYn" id="useYnLabel" {{checkedYnStyle state.useYn "color" "blue//gray"}}>
                     {{#ifYn state.useYn}}미{{/ifYn}}사용
                 </label>

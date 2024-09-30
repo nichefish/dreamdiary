@@ -5,9 +5,9 @@
 
 <script type="text/x-handlebars-template" id="menu_reg_template">
     <!-- form start -->
-    <input type="hidden" name="menuNo" id="menuNo" value="{{menuNo}}" placeholder="menuNo">
-    <input type="hidden" name="menuTyCd" id="menuTyCd" value="{{menuTyCd}}" placeholder="menuTyCd">
-    <input type="hidden" name="upperMenuNo" id="upperMenuNo" value="{{upperMenuNo}}" placeholder="upperMenuNo">
+    <input type="hidden" name="menuNo" id="menuNo" value="{{menuNo}}">
+    <input type="hidden" name="menuTyCd" id="menuTyCd" value="{{menuTyCd}}">
+    <input type="hidden" name="upperMenuNo" id="upperMenuNo" value="{{upperMenuNo}}">
 
     <#--begin::Row-->
     <div class="row mb-4">
@@ -34,7 +34,8 @@
             </label>
         </div>
         <div class="col-10">
-            <input type="text" name="menuNm" id="menuNm" class="form-control d-inline-block required" value="{{menuNm}}">
+            <input type="text" name="menuNm" id="menuNm" class="form-control d-inline-block required"
+                   value="{{menuNm}}" maxlength="200">
             <span id="menuNm_valid_span"></span>
         </div>
     </div>
@@ -60,8 +61,8 @@
             </div>
         </div>
         <div class="col-8">
-            <textarea name="icon" id="icon"
-                      class="form-control form-control-solid d-block required" rows="3" maxlength="200" placeholder="아이콘 html을 입력하세요.">{{icon}}</textarea>
+            <textarea name="icon" id="icon" class="form-control form-control-solid d-block required"
+                      placeholder="아이콘 html을 입력하세요." maxlength="200" rows="3" >{{icon}}</textarea>
             <div id="icon_valid_span" class="ps-2"></div>
         </div>
         <div class="col-1 d-flex align-items-center">
@@ -82,7 +83,8 @@
             </label>
         </div>
         <div class="col-3">
-            <select class="form-select form-select-solid required" name="menuSubExtendTyCd" id="menuSubExtendTyCd" onchange="Menu.toggleUrlSpan(this);">
+            <select name="menuSubExtendTyCd" id="menuSubExtendTyCd" class="form-select form-select-solid required"
+                    onchange="Menu.toggleUrlSpan(this);">
                 <option value="">----</option>
                 <#list MENU_SUB_EXTEND_TY_CD![] as menuSubExtend>
                     <option value="${menuSubExtend.dtlCd!}" {{selectedIf (equals menuSubExtendTyCd "${menuSubExtend.dtlCd!}")}}>
@@ -101,7 +103,8 @@
             </label>
         </div>
         <div class="col-10">
-            <input type="text" name="url" id="url" class="form-control" value="{{url}}">
+            <input type="text" name="url" id="url" class="form-control"
+                   value="{{url}}" maxlength="1000">
             <div id="url_valid_span"></div>
         </div>
     </div>
@@ -114,7 +117,8 @@
         </div>
         <div class="col-10">
             <div class="form-check col-form-label">
-                <input class="form-check-input" type="checkbox" name="state.useYn" id="useYn" value="Y" {{checkedYn state.useYn}}>
+                <input type="checkbox" name="state.useYn" id="useYn" class="form-check-input"
+                       value="Y" {{checkedYn state.useYn}}>
                 <label class="form-check-label" for="useYn">메뉴 숨김</label>
             </div>
         </div>

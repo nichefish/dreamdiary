@@ -308,7 +308,8 @@
                             <td colspan="3" class="text-center"></td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <input type="text" class="form-control form-control-solid number text-end" id="totAmt" placeholder="금액(원)" readonly>
+                                    <input type="text" id="totAmt" class="form-control form-control-solid number text-end"
+                                           value="" placeholder="금액(원)" readonly>
                                     <span class="menu-icon mx-2 vertical-middle">원</span>
                                 </div>
                             </td>

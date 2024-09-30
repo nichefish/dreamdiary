@@ -22,7 +22,8 @@
                     </div>
                 </div>
                 <div class="col-xl-9 text-start">
-                    <input type="text" name="rjectResnShow" id="rjectResnShow" class="form-control" value="">
+                    <input type="text" name="rjectResnShow" id="rjectResnShow" class="form-control"
+                           value="" maxlength="500" />
                 </div>
             </div>
         </form>

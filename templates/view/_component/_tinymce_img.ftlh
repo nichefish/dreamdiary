@@ -6,6 +6,8 @@
 <div id="tinymceImageTemplate" hidden>
     <#--begin::Form-->
     <form name="tinymceImageForm" id="tinymceImageForm" class="form" enctype="multipart/form-data">
-        <input type="file" class="file" name="atchFile0" id="atchFile0" onchange="return false;"/>
+        <input type="file" name="atchFile0" id="atchFile0" class="file"
+               onchange="return false;"
+               accept=".png, .jpg, .jpeg" />
     </form>
 </div>

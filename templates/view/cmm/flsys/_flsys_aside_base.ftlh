@@ -80,7 +80,7 @@
                 </div>
                 <div class="mb-6">
                     <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">Email</span>
-                    <input type="text" class="form-control" placeholder="Your Email" />
+                    <input type="text" class="form-control" placeholder="Your Email" maxlength="200" />
                 </div>
                 <!--end::Form-->
                 <#--begin::Action-->

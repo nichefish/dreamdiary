@@ -78,8 +78,9 @@
                         <a class="page-link" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                            data-kt-menu-flip="bottom-start">...</a>
                         <div class="menu menu-sub menu-sub-dropdown menu-rounded fw-bold fs-7 w-100px p-4" data-kt-menu="true">
-                            <input type="text" class="w-70px page-ellipsis" placeholder="페이지 번호" maxlength="5"
-                                   onchange="if (this.value !== '') Pagination.fnPage(this.value);">
+                            <input type="text" class="w-70px page-ellipsis"
+                                   onchange="if (this.value !== '') Pagination.fnPage(this.value);"
+                                   value="" placeholder="페이지 번호" maxlength="5">
                         </div>
                     </li>
                 </#if>
@@ -136,8 +137,9 @@
                            data-kt-menu-placement="bottom-start" , data-kt-menu-flip="bottom-start">...</a>
                         <div class="menu menu-sub menu-sub-dropdown menu-rounded fw-bold fs-7 w-100px p-4"
                              data-kt-menu="true">
-                            <input type="text" class="w-70px page-ellipsis" placeholder="페이지 번호" maxlength="5"
-                                   onchange="if (this.value !== '') Pagination.fnPage(this.value);">
+                            <input type="text" class="w-70px page-ellipsis"
+                                   onchange="if (this.value !== '') Pagination.fnPage(this.value);"
+                                   value="" placeholder="페이지 번호" maxlength="5">
                         </div>
                     </li>
                     <li class="page-item <#if paginationInfo.isLastPage!false>disabled</#if>">

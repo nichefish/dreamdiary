@@ -13,7 +13,8 @@
             <span class="text-gray-700 fs-6 fw-bolder">첨부파일</span>
             <span class="text-gray-500 fs-9 mx-2">※ 첨부파일은 개별 50MB, 최대 100MB까지 업로드 가능합니다.</span>
         </label>
-        <input class="form-control" type="file" id="formFile" onclick="AtchFile.addFileItem();">
+        <input type="file" id="formFile" class="form-control"
+               onclick="AtchFile.addFileItem();">
     </div>
     <div class="col-xl-10 mb-8 text-sm-start" id="atchFileSpan">
         <#if post.atchFileInfo??>
@@ -45,7 +46,8 @@
     <!--fileSn :: nullable-->
     <input type="hidden" name="fileSn__INDEX__" value="fileSn__INDEX__" size="5"/>
     <div hidden>
-        <input type="file" class="file" name="atchFile__INDEX__" id="atchFile__INDEX__" onchange="return false;"/>
+        <input type="file" name="atchFile__INDEX__" id="atchFile__INDEX__" class="file"
+               onchange="return false;"/>
     </div>
     <div class="col-xl-10 text-sm-start">
         <!--fileNm :: to display-->

@@ -13,7 +13,8 @@
             <label class="col-form-label text-center fs-6 fw-bold required">제목</label>
         </div>
         <div class="col-xl-3 col-4">
-            <select name="schdulCd" id="schdulCd" class="form-select form-select-solid required" onchange="Schdul.schdulCd(this);">
+            <select name="schdulCd" id="schdulCd" class="form-select form-select-solid required"
+                    onchange="Schdul.schdulCd(this);">
                 <option value="">--구분--</option>
                 <#list SCHDUL_CD![] as topic>
                     {{#if isPrvt}}
@@ -32,7 +33,8 @@
             <span id="schdulCd_valid_span"></span>
         </div>
         <div class="col-xl-7 col-6">
-            <input type="text" class="form-control form-control-solid required" placeholder="제목" name="title" id="title" maxlength="120" value="{{title}}" />
+            <input type="text" name="title" id="title" class="form-control form-control-solid required"
+                   value="{{title}}" placeholder="제목" maxlength="120" />
             <span id="title_valid_span"></span>
         </div>
     </div>
@@ -75,7 +77,8 @@
             <label class="col-form-label text-center fs-6 fw-bold mb-2" for="cn">내용</label>
         </div>
         <div class="col-xl-10 col-10">
-            <textarea name="cn" id="cn" class="form-control form-control-solid h-100px" wrap="hard" maxlength="500">{{cn}}</textarea>
+            <textarea name="cn" id="cn" class="form-control form-control-solid h-100px"
+                      wrap="hard" maxlength="500">{{cn}}</textarea>
         </div>
     </div>
     <#--begin::Row-->
@@ -85,12 +88,14 @@
         </div>
         <div class="col-xl-5 col-5">
             <label class="fs-6 mt-3 mb-2 required" for="bgnDt">시작일</label>
-            <input class="form-control form-control-solid required" name="bgnDt" id="bgnDt" placeholder="시작일" value="{{bgnDt}}" readonly/>
+            <input name="bgnDt" id="bgnDt" class="form-control form-control-solid required"
+                   value="{{bgnDt}}" placeholder="시작일" readonly/>
             <div id="bgnDt_valid_span"></div>
         </div>
         <div class="col-xl-5 col-5" id="endDtDiv">
             <label class="fs-6 mt-3 mb-2" for="endDt">종료일</label>
-            <input class="form-control form-control-solid" name="endDt" id="endDt" placeholder="종료일" value="{{endDt}}" readonly />
+            <input name="endDt" id="endDt" class="form-control form-control-solid"
+                   value="{{endDt}}" placeholder="종료일" readonly />
             <div id="endDtSpan" class="text-noti">※미입력시 시작일자와 같게끔 처리됩니다.</div>
         </div>
     </div>

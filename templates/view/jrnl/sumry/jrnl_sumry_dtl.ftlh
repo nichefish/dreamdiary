@@ -91,7 +91,7 @@
         <#--버튼 영역-->
         <div class="d-flex justify-content-end gap-3">
             <div class="col-1 w-auto">
-                <select class="form-select form-select-solid text-end" id="yy"
+                <select id="yy" class="form-select form-select-solid text-end"
                         onchange="JrnlSumry.dtlByYy(this.value)"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="조회 년도를 변경합니다.">>
                     <#assign currYy = DateUtils.getCurrYy()?number />

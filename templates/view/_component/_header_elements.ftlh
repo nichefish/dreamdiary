@@ -20,8 +20,8 @@
         <label for="${searchNm}"><i class="bi bi-calendar3 fs-3 cursor-pointer"></i></label>
     </span>
     <span class="datepicker">
-        <input type="text" class="form-control form-control-sm form-control-solid w-150px d-inline" name="${searchNm}" id="${searchNm}"
-               placeholder="Pick date" value="${param[searchNm]!initDt}" />
+        <input type="text" name="${searchNm}" id="${searchNm}" class="form-control form-control-sm form-control-solid w-150px d-inline"
+               value="${param[searchNm]!initDt}" placeholder="Pick date" maxlength="25" />
     </span>
 </#macro>
 
@@ -42,8 +42,8 @@
         <label for="${searchNm}"><i class="bi bi-calendar3 fs-3 cursor-pointer"></i></label>
     </span>
     <span class="datepicker">
-        <input type="text" class="form-control form-control-sm form-control-solid w-150px d-inline" name="${searchNm}" id="${searchNm}"
-               placeholder="Pick date" value="${param[searchNm]!initDt}" />
+        <input type="text" name="${searchNm}" id="${searchNm}" class="form-control form-control-sm form-control-solid w-150px d-inline"
+               value="${param[searchNm]!initDt}" placeholder="Pick date" maxlength="25" />
     </span>
 </#macro>
 
@@ -72,8 +72,8 @@
             </svg>
         </span>
         <#--end::Svg Icon-->
-        <input type="text" class="form-control form-control-sm form-control-solid fs-7 ps-10"
-               name="searchKeyword" id="searchKeyword" placeholder="검색.." maxlength="30" value="${(param.searchKeyword)!}" />
+        <input type="text" name="searchKeyword" id="searchKeyword" class="form-control form-control-sm form-control-solid fs-7 ps-10"
+               value="${(param.searchKeyword)!}" placeholder="검색.." maxlength="200" />
     </span>
 </#macro>
 

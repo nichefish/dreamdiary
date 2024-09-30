@@ -36,7 +36,8 @@
             <div id="ctgrCd_valid_span"></div>
         </div>
         <div class="col-lg-{{#if (exists postNo)}}9{{else}}10{{/if}}">
-            <input type="text" class="form-control" name="title" id="title" maxlength="100" value="{{title}}" placeholder="제목" />
+            <input type="text" name="title" id="title" class="form-control"
+                   value="{{title}}" placeholder="제목" maxlength="100" />
             <div id="title_valid_span"></div>
         </div>
         {{#if (exists postNo)}}
@@ -59,7 +60,8 @@
         </div>
         <div class="col-lg-2 col-9 d-flex align-items-center">
             <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
-                <input class="form-check-input" type="checkbox" value="Y" name="imprtcYn" id="imprtcYn" {{checkedYn imprtcYn}} />
+                <input type="checkbox" name="imprtcYn" id="imprtcYn" class="form-check-input"
+                       value="Y" {{checkedYn imprtcYn}} />
                 <label class="form-check-label fw-bold fs-6 ms-3" for="imprtcYn" id="imprtcYnLabel" {{{checkedYnStyle imprtcYn "color" "red//gray"}}}>
                     {{#ifYn imprtcYn}}중요{{else}}해당없음{{/ifYn}}
                 </label>

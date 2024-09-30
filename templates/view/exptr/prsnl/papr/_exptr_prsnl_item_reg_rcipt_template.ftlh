@@ -67,7 +67,8 @@
 <div id="exptrPrsnlRciptTemplate" hidden>
     <#--begin::Form-->
     <form name="exptrPrsnlRciptForm" id="exptrPrsnlRciptForm" class="form" enctype="multipart/form-data">
-        <input type="file" class="file" name="atchFile0" id="atchFile0" />
+        <input type="file" name="atchFile0" id="atchFile0" class="file"
+               accept=".png, .jpg, .jpeg" />
         <input type="hidden" name="exptrPrsnlItemNo" id="exptrPrsnlItemNo_upload">
     </form>
 </div>
