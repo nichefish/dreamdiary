@@ -6,6 +6,8 @@
 <!--begin::section-->
 <div id="sectn_list_div">
     <#if post.sectn?? && post.sectn.hasSectn>
+        <div class="separator separator-dashed border-gray-300 mb-8"></div>
+
         <div class="draggable-zone">
             <#list post.sectn.list![] as sectn>
                 <div id="${sectn.postNo!}" class="row d-flex align-items-center mb-4 sortable-item draggable">
@@ -73,7 +75,5 @@
                 </div>
             </#list>
         </div>
-
-        <div class="separator separator-dashed border-gray-300 mb-8"></div>
     </#if>
 </div>

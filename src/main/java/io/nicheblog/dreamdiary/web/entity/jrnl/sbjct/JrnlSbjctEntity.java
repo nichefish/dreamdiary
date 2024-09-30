@@ -55,7 +55,7 @@ public class JrnlSbjctEntity
     /** 글분류 코드 정보 */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "'JRNL_DREAM_SBJCT_CD'", referencedColumnName = "cl_cd")),
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'JRNL_SBJCT_CTGR_CD'", referencedColumnName = "cl_cd")),
             @JoinColumnOrFormula(column = @JoinColumn(name = "ctgr_cd", referencedColumnName = "dtl_cd", insertable = false, updatable = false))
     })
     @Fetch(value = FetchMode.JOIN)

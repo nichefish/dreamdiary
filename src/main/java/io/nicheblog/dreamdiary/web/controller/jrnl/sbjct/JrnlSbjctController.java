@@ -93,6 +93,8 @@ public class JrnlSbjctController
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(jrnlSbjctList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
             model.addAttribute("tagList", tagService.getContentSpecificSizedTagList(ContentType.JRNL_SBJCT));
+            // 코드 정보 모델에 추가
+            cdService.setModelCdData(Constant.JRNL_SBJCT_CTGR_CD, model);
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
@@ -134,7 +136,7 @@ public class JrnlSbjctController
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_REG, true);
             // 코드 정보 모델에 추가
-            // cdService.setModelCdData(Constant.JRNL_SBJCT_CTGR_CD, model);
+            cdService.setModelCdData(Constant.JRNL_SBJCT_CTGR_CD, model);
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
             // cmmService.setModelFlsysPath(model);
@@ -360,7 +362,7 @@ public class JrnlSbjctController
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_MDF, true);
             // 코드 정보 모델에 추가
-            // cdService.setModelCdData(Constant.JRNL_SBJCT_CTGR_CD, model);
+            cdService.setModelCdData(Constant.JRNL_SBJCT_CTGR_CD, model);
             cdService.setModelCdData(Constant.MDFABLE_CD, model);
             cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
             // cmmService.setModelFlsysPath(model);

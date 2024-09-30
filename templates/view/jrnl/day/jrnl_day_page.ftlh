@@ -23,7 +23,7 @@
 <#include "/view/jrnl/diary/_jrnl_diary_scripts.ftlh">
 <#include "/view/jrnl/diary/tag/_jrnl_diary_tag_scripts.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
-<#include "/view/_component/comment/_comment_,modal_scripts.ftlh">
+<#include "/view/_component/comment/_comment_modal_scripts.ftlh">
 
 <script>
     const Page = (function() {

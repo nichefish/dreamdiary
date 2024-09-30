@@ -73,6 +73,7 @@ public interface CdConstant {
     String POST_CTGR_CD = "POST_CTGR_CD";       // 게시판
     String EXPTR_REQST_CTGR_CD = "EXPTR_REQST_CTGR_CD";   // 물품구매 및 경조사비 신청 글분류 코드
     String JANDI_TOPIC_CD = "JANDI_TOPIC_CD";   // 잔디 토픽 코드
+    String JRNL_SBJCT_CTGR_CD = "JRNL_SBJCT_CTGR_CD";   // 저널 주제 글분류 코드
 
     String BOARD_DEF_RSRVD_CD = "BOARD_DEF_RSRVD_CD";                 // 게시판 코드 (예약어)
 

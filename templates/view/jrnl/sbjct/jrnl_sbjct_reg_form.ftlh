@@ -91,7 +91,7 @@
                 <div class="col-lg-2">
                     <select name="ctgrCd" id="ctgrCd" class="form-select form-select-solid">
                         <option value="">--글분류--</option>
-                        <#list NOTICE_CTGR_CD![] as ctgr>
+                        <#list JRNL_SBJCT_CTGR_CD![] as ctgr>
                             <option value="${ctgr.dtlCd!}" <#if ctgr.dtlCd == (post.ctgrCd)!>selected="selected"</#if>>[${ctgr.dtlCdNm!}]</option>
                         </#list>
                     </select>
@@ -181,15 +181,11 @@
             </div>
 
             <div class="separator separator-dashed border-gray-300 mb-8"></div>
-
-            <#--페이지:: 단락 영역-->
-            <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
-
             <#--페이지:: 첨부파일 추가추가 영역-->
             <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
 
             <!-- #include:: component:: 파일시스템 참조 -->
-            <#include "/view/_component/page_area/flsys/_flsys_reg_area.ftlh">
+            <#include "/view/_component/flsys/_flsys_reg_area.ftlh">
 
             <!-- #include:: component:: 태그 태그 -->
             <#include "/view/_component/tag/_tag_reg_area.ftlh">
@@ -214,6 +210,12 @@
                 <@component.post_btn_toList "JrnlSbjct.list();" />
             </div>
         </div>
+    </div>
+
+    <#--begin::Card body-->
+    <div class="card-body">
+        <#--페이지:: 단락 영역-->
+        <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
     </div>
 </div>
 

@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
+import java.util.Optional;
 
 /**
  * SectnController
@@ -88,7 +89,8 @@ public class SectnController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgrCd()));
+            ActvtyCtgr actvty = Optional.ofNullable(searchParam.getActvtyCtgrCd()).map(ActvtyCtgr::valueOf).orElse(null);
+            logParam.setResult(isSuccess, rsltMsg, actvty);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

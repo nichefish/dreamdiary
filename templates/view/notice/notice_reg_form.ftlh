@@ -18,7 +18,7 @@
 <#--include::script modules-->
 <#include "/view/notice/_notice_scripts.ftlh">
 <#include "/view/_component/sectn/_sectn_scripts.ftlh">
-<#include "/view/_component/comment/_comment_,modal_scripts.ftlh">
+<#include "/view/_component/comment/_comment_modal_scripts.ftlh">
 
 <script>
     /** tinymce 글접기 토글 테스트중... */
@@ -188,7 +188,7 @@
             <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
 
             <!-- #include:: component:: 파일시스템 참조 -->
-            <#include "/view/_component/page_area/flsys/_flsys_reg_area.ftlh">
+            <#include "/view/_component/flsys/_flsys_reg_area.ftlh">
 
             <!-- #include:: component:: 태그 태그 -->
             <#include "/view/_component/tag/_tag_reg_area.ftlh">

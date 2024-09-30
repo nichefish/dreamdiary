@@ -11,7 +11,7 @@
 <#--include::script modules-->
 <#include "/view/notice/_notice_scripts.ftlh">
 <#include "/view/_component/sectn/_sectn_scripts.ftlh">
-<#include "/view/_component/comment/_comment_,modal_scripts.ftlh">
+<#include "/view/_component/comment/_comment_modal_scripts.ftlh">
 
 <div class="card post">
     <#--begin::Card body-->
