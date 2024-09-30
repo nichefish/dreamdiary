@@ -22,7 +22,6 @@ public enum ContentType {
     JRNL_DIARY("JRNL_DIARY", "저널 일기"),
     JRNL_SBJCT("JRNL_SBJCT", "저널 주제"),
     JRNL_SUMRY("JRNL_SUMRY", "저널 결산"),
-    JRNL_SUMRY_CN("JRNL_SUMRY_CN", "저널 결산 내용"),
     // 일정
     VCATN_PAPR("VCATN_PAPR", "휴가계획서"),
     SCHDUL("SCHDUL", "일정"),

@@ -29,8 +29,6 @@ public interface JrnlSumryMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "sumryCnDiaryList", expression = "java(JrnlSumryCnMapstruct.INSTANCE.toDtoList(entity.getSumryCnDiaryList()))")
-    @Mapping(target = "sumryCnDreamList", expression = "java(JrnlSumryCnMapstruct.INSTANCE.toDtoList(entity.getSumryCnDreamList()))")
     JrnlSumryDto.DTL toDto(final JrnlSumryEntity entity) throws Exception;
 
     /**

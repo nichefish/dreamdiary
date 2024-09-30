@@ -89,7 +89,7 @@
                         </div>
                         <div class="col ms-10 text-noti">
                             <#list dream.comment.list![] as comment>
-                                <div class="row pb-1">
+                                <div class="row div-textarea-smp pb-1">
                                     ${(comment.cn!)?no_esc}
                                 </div>
                             </#list>

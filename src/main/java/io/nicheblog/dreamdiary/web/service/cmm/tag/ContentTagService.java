@@ -192,9 +192,6 @@ public class ContentTagService
         } else if (ContentType.JRNL_SUMRY.key.equals(contentType)) {
             // 저널 결산 관련 캐시 삭제 :: 메소드 분리
             this.evictJrnlSumryCache(postNo);
-        } else if (ContentType.JRNL_SUMRY_CN.key.equals(contentType)) {
-            // jrnl_sumry_cn
-            EhCacheUtils.evictCache("jrnlSumryCnDtlDto", postNo);
         }
     }
 

@@ -85,12 +85,6 @@ public interface SiteUrl {
     String JRNL_SUMRY_DREAM_COMPT_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryDreamComptAjax.do";
     String JRNL_SUMRY_TAG_AJAX = Prefix.JRNL_SUMRY + "/jrnlSumryTagAjax.do";
 
-    /** 저널 결산 내용 */
-    String JRNL_SUMRY_CN_REG_AJAX = Prefix.JRNL_SUMRY_CN + "/jrnlSumryCnRegAjax.do";
-    String JRNL_SUMRY_CN_DTL_AJAX = Prefix.JRNL_SUMRY_CN + "/jrnlSumryCnDtlAjax.do";
-    String JRNL_SUMRY_CN_MDF_AJAX = Prefix.JRNL_SUMRY_CN + "/jrnlSumryCnMdfAjax.do";
-    String JRNL_SUMRY_CN_DEL_AJAX = Prefix.JRNL_SUMRY_CN + "/jrnlSumryCnDelAjax.do";
-
     /** 공지사항 */
     String NOTICE_LIST = Prefix.NOTICE + "/noticeList.do";
     String NOTICE_REG_FORM = Prefix.NOTICE + "/noticeRegForm.do";
@@ -361,7 +355,6 @@ public interface SiteUrl {
         // 저널 결산
         String SUMRY = "/sumry";
         String JRNL_SUMRY = JRNL + SUMRY;
-        String JRNL_SUMRY_CN = JRNL_SUMRY + "/cn";
 
         /* 일반게시판 (board) */
         String BOARD = "/board";

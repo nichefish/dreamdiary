@@ -9,10 +9,8 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 
 import javax.persistence.Entity;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * JrnlSumryEntity
@@ -71,26 +69,6 @@ public class JrnlSumryEntity
     @Column(name = "dream_compt_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("꿈 기록 완료 여부 (Y/N)")
     private String dreamComptYn = "N";
-
-    /** 저널 결산 내용 (일기) 목록 */
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "jrnl_sumry_no", referencedColumnName = "post_no", insertable = false, updatable = false)
-    @Fetch(FetchMode.SELECT)
-    @Where(clause = "ctgr_cd = 'DIARY'")
-    @OrderBy("idx ASC")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("저널 결산 내용 목록")
-    private List<JrnlSumryCnEntity> sumryCnDiaryList;
-
-    /** 저널 결산 내용 (꿈) 목록 */
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "jrnl_sumry_no", referencedColumnName = "post_no", insertable = false, updatable = false)
-    @Fetch(FetchMode.SELECT)
-    @Where(clause = "ctgr_cd = 'DREAM'")
-    @OrderBy("idx ASC")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @Comment("저널 결산 내용 목록")
-    private List<JrnlSumryCnEntity> sumryCnDreamList;
 
     /* ----- */
 

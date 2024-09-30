@@ -3,14 +3,9 @@ package io.nicheblog.dreamdiary.web.model.jrnl.sumry;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 /**
  * JrnlSumryDto
@@ -30,7 +25,7 @@ import java.util.List;
 @ToString(callSuper = true)
 public class JrnlSumryDto
         extends BasePostDto
-        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {
+        implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, SectnCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     @Builder.Default
@@ -70,11 +65,7 @@ public class JrnlSumryDto
     @EqualsAndHashCode(callSuper = false)
     @ToString(callSuper = true)
     public static class DTL extends JrnlSumryDto {
-
-        /** 저널 결산 내용 (일기) 목록 */
-        private List<JrnlSumryCnDto> sumryCnDiaryList;
-        /** 저널 결산 내용 (꿈) 목록 */
-        private List<JrnlSumryCnDto> sumryCnDreamList;
+        //
     }
 
     @Getter
@@ -91,6 +82,8 @@ public class JrnlSumryDto
 
     /** 댓글 정보 모듈 (위임) */
     public CommentCmpstn comment;
+    /** 단락 정보 모듈 (위임) */
+    public SectnCmpstn sectn;
     /** 태그 정보 모듈 (위임) */
     public TagCmpstn tag;
 }
