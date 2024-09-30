@@ -12,25 +12,9 @@
             },
             /** Draggable 컴포넌트 init */
             initDraggable: function() {
-                const containers = document.querySelectorAll(".draggable-zone");
-                if (containers.length === 0) return false;
-                BoardDef.swappable = new Draggable.Sortable(containers, {
-                    draggable: ".draggable",
-                    handle: ".draggable .draggable-handle",
-                    mirror: {
-                        //appendTo: selector,
-                        appendTo: "body",
-                        constrainDimensions: true
-                    },
-                }).on('drag:start', (event) => {
-                    $(event.data.source).addClass('dragging');
-                }).on('drag:stop', (event) => {
-                    const id = $(event.data.source).attr("id");
-                    setTimeout(() => {
-                        const $newTr = $("tr#"+id);
-                        $newTr.removeClass('dragging').addClass("draggable-modified");
-                    }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
-                });
+                const keyExtractor = (item) => ({ "boardCd": $(item).attr("id") });
+                const url = "${Url.BOARD_DEF_SORT_ORDR_AJAX!}";
+                BoardDef.swappable = commons.util.initDraggable(keyExtractor, url);
             },
             /** 등록 모달 호출 */
             regModal: function() {
@@ -130,24 +114,6 @@
                     }, "block");
                 });
             },
-            /** 정렬순서 저장 */
-            sortOrdr: function() {
-                let orderData = [];
-                document.querySelectorAll('.sortable-item').forEach((item, index) => {
-                    orderData.push({ "boardCd": $(item).attr("id"), "state": { "sortOrdr": index }});
-                });
-                const url = "${Url.BOARD_DEF_SORT_ORDR_AJAX!}";
-                let ajaxData = { "sortOrdr": orderData };
-                commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
-                    if (res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) {
-                            Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
-                        } else {
-                            commons.util.blockUIReload();
-                        }
-                    }
-                }, "block");
-            }
         }
     })();
 </script>

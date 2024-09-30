@@ -63,9 +63,6 @@
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
-                                <span class="text-muted ms-2">
-                                    ${(clCd.state.sortOrdr)!"-"}
-                                </span>
                             </div>
                         </td>
                         <td class="text-start px-6 cursor-pointer fw-bold text-gray-700">

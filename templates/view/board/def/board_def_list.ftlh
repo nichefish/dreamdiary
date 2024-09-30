@@ -72,9 +72,6 @@
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
-                                <span class="text-muted ms-2">
-                                    ${(boardDef.state.sortOrdr)!"-"}
-                                </span>
                             </div>
                         </td>
                         <td class="text-start ps-15 fw-bold text-gray-700">

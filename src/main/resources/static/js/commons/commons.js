@@ -759,7 +759,56 @@ commons.util = (function() {
             $('html, body').animate({
                 scrollTop : 0
             }, 300);
-        }
+        },
 
+        /** Draggable 컴포넌트 init */
+        initDraggable: function(keyExtractor, url) {
+            const containers = document.querySelectorAll(".draggable-zone");
+            if (containers.length === 0) return false;
+
+            // 드래그 전 초기 정렬 순서 저장
+            const initOrdr = Array.from(containers[0].querySelectorAll('.draggable'))
+                .map(draggable => $(draggable).attr("id"));
+
+            return new Draggable.Sortable(containers, {
+                draggable: ".draggable",
+                handle: ".draggable .draggable-handle",
+                mirror: {
+                    //appendTo: selector,
+                    appendTo: "body",
+                    constrainDimensions: true
+                },
+            }).on('drag:start', (event) => {
+                $(event.data.source).addClass('dragging');
+            }).on('drag:stop', (event) => {
+                const id = $(event.data.source).attr("id");
+                setTimeout(() => {
+                    const $newTr = $("tr#" + id);
+                    $newTr.removeClass('dragging').addClass("draggable-modified");
+
+                    // 드래그 후 정렬 순서 가져오기
+                    const newOrdr = Array.from(containers[0].querySelectorAll('.draggable'))
+                        .map(draggable => $(draggable).attr("id"));
+                    const isOrdrChanged = JSON.stringify(initOrdr) !== JSON.stringify(newOrdr);
+
+                    // 정렬 순서 ajax 저장
+                    if (isOrdrChanged) commons.util.sortOrdr(keyExtractor, url);
+                }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
+            });
+        },
+
+        /** 정렬순서 저장 */
+        sortOrdr: function(keyExtractor, url) {
+            const orderData = [];
+            document.querySelectorAll('.sortable-item').forEach((item, index) => {
+                const key = keyExtractor(item, index);
+                orderData.push({ ...key, "state": { "sortOrdr": index } });
+            });
+            const ajaxData = { "sortOrdr": orderData };
+            commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
+                if (res.rslt) commons.util.blockUIReload();
+                else if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+            }, "block");
+        },
     }
 })();

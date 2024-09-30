@@ -96,10 +96,6 @@
                     <i class="fas fa-plus"></i>상세코드 추가
                 </button>
             </div>
-            <div>
-                <#--헤더:: 버튼: 정렬순서 저장-->
-                <@component.header_btn_sort_ordr "DtlCd.sortOrdr();" />
-            </div>
             <!--end::Toolbar-->
         </div>
     </div>
@@ -153,9 +149,6 @@
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
-                                <span class="text-muted ms-2">
-                                    ${(dtlCd.state.sortOrdr)!"-"}
-                                </span>
                             </div>
                         </td>
                         <td class="text-start ps-10 cursor-pointer">

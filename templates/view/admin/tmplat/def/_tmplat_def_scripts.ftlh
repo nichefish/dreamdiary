@@ -12,46 +12,9 @@
             },
             /** Draggable 컴포넌트 init */
             initDraggable: function() {
-                const mainContainers = document.querySelectorAll(".draggable-zone-main");
+                const keyExtractor = document.querySelectorAll(".draggable-zone");
                 if (mainContainers.length === 0) return false;
-                Menu.mainSwappable = new Draggable.Sortable(mainContainers, {
-                    draggable: ".draggable-main",
-                    handle: ".draggable-main .draggable-handle-main",
-                    mirror: {
-                        //appendTo: selector,
-                        appendTo: "body",
-                        constrainDimensions: true
-                    },
-                }).on('drag:start', (event) => {
-                    const $card = $(event.data.source).find(".card");
-                    $card.addClass('dragging');
-                }).on('drag:stop', (event) => {
-                    const $card = $(event.data.source).find(".card");
-                    $card.removeClass('dragging');
-                });
-
-                const subContainers = document.querySelectorAll(".draggable-zone-sub");
-                if (subContainers.length === 0) return false;
-                Menu.subSwappable = new Draggable.Sortable(subContainers, {
-                    draggable: ".draggable-sub",
-                    handle: ".draggable-sub .draggable-handle-sub",
-                    mirror: {
-                        //appendTo: selector,
-                        appendTo: "body",
-                        constrainDimensions: true
-                    },
-                }).on('drag:start', (event) => {
-                    $(event.data.source).addClass('dragging');
-                }).on('drag:stop', (event) => {
-                    const id = $(event.data.source).attr("id");
-                    setTimeout(() => {
-                        const $newLi = $("li#"+id);
-                        const $newParent = $newLi.parents("li.sortable-item");
-                        const newParentId = $newParent.closest("li.sortable-item").attr('id');
-                        $newLi.attr('upper-menu-no', newParentId);
-                        $newLi.removeClass('dragging').addClass("draggable-modified");
-                    }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
-                });
+                TmplatDef.swappable = commons.util.initDraggable(keyExtractor, url);
             },
             /** 등록 모달 팝업 호출 */
             regModal: function(menuTyCd, upperMenuNo, upperMenuNm) {
@@ -115,24 +78,6 @@
                             });
                     }, "block");
                 });
-            },
-            /** 정렬순서 저장 */
-            sortOrdr: function() {
-                let orderData = [];
-                document.querySelectorAll('.sortable-item').forEach((item, index) => {
-                    orderData.push({ "menuNo": Number($(item).attr("id")), "upperMenuNo": Number($(item).attr("upper-menu-no")), "state": { "sortOrdr": index }});
-                });
-                const url = "${Url.MENU_SORT_ORDR_AJAX!}";
-                let ajaxData = { "sortOrdr": orderData };
-                commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
-                    if (res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) {
-                            Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
-                        } else {
-                            commons.util.blockUIReload();
-                        }
-                    }
-                }, "block");
             },
             /** 목록 검색 */
             search: function() {
