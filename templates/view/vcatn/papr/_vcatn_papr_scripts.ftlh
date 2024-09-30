@@ -62,7 +62,7 @@
             dtlAjax: function (postNo) {
                 event.stopPropagation();
                 const url = "${Url.VCATN_PAPR_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo };
+                const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

@@ -49,7 +49,7 @@
             /** 저널 꿈 수정 모달 팝업 호출 */
             mdfModal: function(postNo) {
                 const url = "${Url.JRNL_SUMRY_CN_DTL_AJAX!}";
-                let ajaxData = { "postNo" : postNo };
+                const ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -77,7 +77,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_SUMRY_CN_DEL_AJAX!}";
-                    let ajaxData = { "postNo": postNo };
+                    const ajaxData = { "postNo": postNo };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

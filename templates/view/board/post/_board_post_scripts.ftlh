@@ -82,7 +82,7 @@
             dtlAjax: function (postNo) {
                 event.stopPropagation();
                 const url = "${Url.BOARD_POST_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo, "boardCd": $("#boardCd").val() };
+                const ajaxData = { "postNo": postNo, "boardCd": $("#boardCd").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

@@ -53,7 +53,7 @@
             /** 수정 모달 팝업 호출 */
             mdfModal: function(menuNo) {
                 const url = "${Url.MENU_DTL_AJAX!}";
-                let ajaxData = { "menuNo": menuNo };
+                const ajaxData = { "menuNo": menuNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -70,7 +70,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.MENU_DEL_AJAX!}";
-                    let ajaxData = { "menuNo": menuNo };
+                    const ajaxData = { "menuNo": menuNo };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

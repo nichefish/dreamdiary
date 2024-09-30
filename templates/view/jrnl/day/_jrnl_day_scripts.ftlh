@@ -41,7 +41,7 @@
                 const mnth = $("#jrnl_aside #mnth").val();
                 if (commons.util.isEmpty(mnth)) return;
                 const url = "${Url.JRNL_DAY_LIST_AJAX!}";
-                let ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": mnth };
+                const ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": mnth };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -135,7 +135,7 @@
             /** 등록 화면 호출 */
             mdfModal: function(postNo) {
                 const url = "${Url.JRNL_DAY_DTL_AJAX!}";
-                let ajaxData = { "postNo" : postNo };
+                const ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -171,7 +171,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_DAY_DEL_AJAX!}";
-                    let ajaxData = { "postNo": postNo };
+                    const ajaxData = { "postNo": postNo };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

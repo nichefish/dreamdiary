@@ -67,14 +67,14 @@
             /** 아이디 중복 체크(Ajax) */
             idDupChckAjax: function() {
                 const userIdValidSpan = $("#userId_valid_span");
-                let userId = $("#userId").val();
+                const userId = $("#userId").val();
                 const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
                 if (!idRegex.test(userId)) {
                     userIdValidSpan.text("아이디가 형식에 맞지 않습니다.").removeClass("text-success").addClass("text-danger");
                     return false;
                 }
                 const url = "${Url.USER_ID_DUP_CHK_AJAX!}";
-                let ajaxData = { "userId": userId };
+                const ajaxData = { "userId": userId };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     userIdValidSpan.text(res.message);
                     if (res.rslt) {

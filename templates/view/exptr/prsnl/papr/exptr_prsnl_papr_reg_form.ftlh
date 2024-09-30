@@ -41,7 +41,7 @@
             /** 년도/월 등록 가능한지 검사 */
             validateYyMnth: function() {
                 const url = "${Url.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
-                let ajaxData = {"yy": $("#yy").val(), "mnth": $("#mnth").val()};
+                const ajaxData = {"yy": $("#yy").val(), "mnth": $("#mnth").val()};
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     let rsltObj = res.rsltObj;
                     if (rsltObj === undefined) return;

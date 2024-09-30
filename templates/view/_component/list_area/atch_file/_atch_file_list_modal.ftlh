@@ -12,7 +12,7 @@
             modal: function(atchFileNo) {
                 event.stopPropagation();
                 const url = "${Url.FILE_INFO_LIST_AJAX!}";
-                let ajaxData = { "atchFileNo": atchFileNo };
+                const ajaxData = { "atchFileNo": atchFileNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

@@ -11,7 +11,7 @@
             dtlAjax: function(tagNo) {
                 event.stopPropagation();
                 const url = "${Url.TAG_DTL_AJAX!}";
-                let ajaxData = { "tagNo": tagNo };
+                const ajaxData = { "tagNo": tagNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -34,7 +34,7 @@
             /** 전체 태그 목록 조회 */
             listAjax: function() {
                 const url = "${Url.TAG_LIST_AJAX!}";
-                let ajaxData = { "contentType": $("#contentType").val() };
+                const ajaxData = { "contentType": $("#contentType").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

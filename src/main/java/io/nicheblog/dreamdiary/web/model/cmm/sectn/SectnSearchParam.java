@@ -22,5 +22,8 @@ import lombok.experimental.SuperBuilder;
 public class SectnSearchParam
         extends BaseSearchParam {
 
-    //
+    /** 단락 고유 번호 (PK) */
+    private Integer postNo;
+    /** 컨텐츠 타입 */
+    private String contentType;
 }

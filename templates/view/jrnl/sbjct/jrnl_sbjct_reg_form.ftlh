@@ -40,6 +40,8 @@
             init: function () {
                 /* jquery :: validation */
                 JrnlSbjct.initValidateForm()
+                /* 글 단락 init */
+                Sectn.init(Sectn.listAjax);
                 /* 글 단락 정렬순서 변경 init */
                 Sectn.initDraggable();
 
@@ -214,5 +216,6 @@
 <#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 <#include "/view/_component/modal/sectn/_sectn_reg_modal.ftlh">
+<#include "/view/_component/modal/sectn/_sectn_list_template.hbs">
 
 </@layout.layout>

@@ -35,7 +35,7 @@
                 const keyword = $("#jrnl_aside #dreamKeyword").val();
                 if (commons.util.isEmpty(keyword)) return;
                 const url = "${Url.JRNL_DREAM_LIST_AJAX!}";
-                let ajaxData = { "dreamKeyword": $("#jrnl_aside #dreamKeyword").val() };
+                const ajaxData = { "dreamKeyword": $("#jrnl_aside #dreamKeyword").val() };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -110,7 +110,7 @@
             /** 저널 꿈 수정 모달 팝업 호출 */
             mdfModal: function(postNo) {
                 const url = "${Url.JRNL_DREAM_DTL_AJAX!}";
-                let ajaxData = { "postNo" : postNo };
+                const ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -150,7 +150,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_DREAM_DEL_AJAX!}";
-                    let ajaxData = { "postNo": postNo };
+                    const ajaxData = { "postNo": postNo };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

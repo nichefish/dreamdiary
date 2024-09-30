@@ -49,7 +49,7 @@
             /** 수정 모달 호출 */
             mdfModal: function(boardCd) {
                 const url = "${Url.BOARD_DEF_DTL_AJAX!}";
-                let ajaxData = { "boardCd": boardCd };
+                const ajaxData = { "boardCd": boardCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -71,7 +71,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = '${Url.BOARD_DEF_USE_AJAX!}';
-                    let ajaxData = { "boardCd": key };
+                    const ajaxData = { "boardCd": key };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -88,7 +88,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = '${Url.BOARD_DEF_UNUSE_AJAX!}';
-                    let ajaxData = { "boardCd": key };
+                    const ajaxData = { "boardCd": key };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -105,7 +105,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.BOARD_DEF_DEL_AJAX!}";
-                    let ajaxData = { "boardCd": key };
+                    const ajaxData = { "boardCd": key };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

@@ -35,8 +35,8 @@
                     return NoticePopup.showNoticePopup();
                 }
                 const url = "${Url.NOTICE_DTL_AJAX!}";
-                let obj = NoticePopup.popupList[NoticePopup.popupIdx];
-                let ajaxData = { "postNo": obj.postNo };
+                const obj = NoticePopup.popupList[NoticePopup.popupIdx];
+                const ajaxData = { "postNo": obj.postNo };
                 commons.util.blockUISyncAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

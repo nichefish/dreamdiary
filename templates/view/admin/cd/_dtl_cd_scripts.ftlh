@@ -50,7 +50,7 @@
             /** 수정 화면 이동 */
             mdfModal: function(dtlCd) {
                 const url = "${Url.DTL_CD_DTL_AJAX!}";
-                let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
+                const ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -73,7 +73,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = '${Url.DTL_CD_USE_AJAX!}';
-                    let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
+                    const ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -91,7 +91,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = '${Url.DTL_CD_UNUSE_AJAX!}';
-                    let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
+                    const ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -109,7 +109,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.DTL_CD_DEL_AJAX!}";
-                    let ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
+                    const ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

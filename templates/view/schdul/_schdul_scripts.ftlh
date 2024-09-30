@@ -86,7 +86,7 @@
             /** 상세 모달 호출 (Ajax) */
             dtlAjax: function(postNo) {
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo };
+                const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -100,7 +100,7 @@
             /** 수정 폼 오픈 */
             mdfModal: function(key) {
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
-                let ajaxData = { "postNo": key };
+                const ajaxData = { "postNo": key };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -130,7 +130,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.SCHDUL_DEL_AJAX!}";
-                    let ajaxData = { "postNo" : key }
+                    const ajaxData = { "postNo" : key }
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

@@ -38,7 +38,7 @@
             },
             dtlAjax: function(tagNo, tagNm) {
                 const url = "${Url.JRNL_DIARY_TAG_DTL_AJAX!}";
-                let ajaxData = { "tagNo": tagNo };
+                const ajaxData = { "tagNo": tagNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

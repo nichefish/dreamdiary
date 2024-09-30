@@ -15,7 +15,7 @@
             /** url, data 받아서 ajax 호출 */
             evictAjax: function(cacheName, key) {
                 const url = "${Url.CACHE_EVICT_AJAX!}";
-                let ajaxData = { "cacheName": cacheName, "key": key };
+                const ajaxData = { "cacheName": cacheName, "key": key };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (res.rslt) Swal.fire(JSON.stringify(res));
                     Swal.fire({ text: res.message })

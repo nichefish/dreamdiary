@@ -41,7 +41,7 @@
             /** 메타정보 상세 조회 (Ajax) */
             dtlAjax: function(postNo) {
                 const url = "${Url.FLSYS_META_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo };
+                const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -53,7 +53,7 @@
             /** 등록 모달 조회 */
             mdfModal: function(postNo) {
                 const url = "${Url.FLSYS_META_DTL_AJAX!}";
-                let ajaxData = { "postNo": postNo };
+                const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -76,7 +76,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.FLSYS_META_DEL_AJAX!}";
-                    let ajaxData = { "postNo": postNo };
+                    const ajaxData = { "postNo": postNo };
                     commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         if (res.rslt) Flsys.flsysListAjax(Flsys.currPath);

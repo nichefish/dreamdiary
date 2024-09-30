@@ -85,7 +85,7 @@
                 }).then(function (result) {
                     if (!result.value) return;
                     const url = "${Url.COMMENT_DEL_AJAX!}";
-                    let ajaxData = { "postNo": postNo, "actvtyCtgrCd": "${actvtyCtgrCd!}" };
+                    const ajaxData = { "postNo": postNo, "actvtyCtgrCd": "${actvtyCtgrCd!}" };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

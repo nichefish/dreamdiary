@@ -28,7 +28,7 @@
             /** 목록 조회 (ajax) */
             flsysListAjax: function(filePath) {
                 const url = "${Url.FLSYS_LIST_AJAX!}";
-                let ajaxData = { "filePath": filePath };
+                const ajaxData = { "filePath": filePath };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -51,7 +51,7 @@
             /** 탐색기로 열기 */
             openInExplorer: function(filePath, objectTy) {
                 const url = "${Url.FLSYS_OPEN_IN_EXPLORER_AJAX!}";
-                let ajaxData = { "filePath": filePath, "objectTy": objectTy };
+                const ajaxData = { "filePath": filePath, "objectTy": objectTy };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -96,7 +96,7 @@
             /** 실행하기 */
             fileExec: function(filePath) {
                 const url = "${Url.FLSYS_FILE_EXEC_AJAX!}";
-                let ajaxData = { "filePath": filePath };
+                const ajaxData = { "filePath": filePath };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

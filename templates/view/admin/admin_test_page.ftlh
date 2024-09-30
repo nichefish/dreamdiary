@@ -16,14 +16,14 @@
             /** 휴일정보 : url, data 받아서 ajax 호출 */
             hldyAjax: function() {
                 const url = "${Url.API_HLDY_GET!}";
-                let ajaxData = { "yy" : $("#hldyYy option:selected").val() };
+                const ajaxData = { "yy" : $("#hldyYy option:selected").val() };
                 Page.ajax(url, ajaxData);
             },
             /** NOTION : url, data 받아서 ajax 호출 */
             notionAjax: function() {
                 const url = "${Url.API_NOTION_GET!}";
-                let ajaxData = { "dataType": $("#dataType").val(), "dataId": $("#dataId").val() };
-                commons.util.blockUIAjax(url, 'get', data, function(res) {
+                const ajaxData = { "dataType": $("#dataType").val(), "dataId": $("#dataId").val() };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (res.rslt) Swal.fire(JSON.stringify(res));
                     Swal.fire({ text: res.message });
                 });

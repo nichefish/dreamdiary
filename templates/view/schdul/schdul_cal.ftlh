@@ -110,13 +110,13 @@
             getEventList: function() {
                 const url = '${Url.SCHDUL_CAL_LIST_AJAX!}';
                 // 날짜 세팅
-                let calDt = Page.calDt;
-                let yy  = calDt.getFullYear();
-                let bgnDt = commons.date.getDateAddDayStr(calDt, -35, "yyyy-MM-dd");
-                let endDt = commons.date.getDateAddDayStr(calDt, 45, "yyyy-MM-dd");
+                const calDt = Page.calDt;
+                const yy  = calDt.getFullYear();
+                const bgnDt = commons.date.getDateAddDayStr(calDt, -35, "yyyy-MM-dd");
+                const endDt = commons.date.getDateAddDayStr(calDt, 45, "yyyy-MM-dd");
                 // 체크박스 값을 읽어와서 필터 요소를 만듬
-                let ajaxData = { 'yy': yy, 'bgnDt': bgnDt, 'endDt': endDt };
-                let chkArr = $("input:checkbox[id^='schdul_chk_']");
+                const ajaxData = { 'yy': yy, 'bgnDt': bgnDt, 'endDt': endDt };
+                const chkArr = $("input:checkbox[id^='schdul_chk_']");
                 chkArr.each(function(_index, item) {
                     const itemName = $(item).attr("name").replaceAll("schdul_chk_", "") + "ed";
                     ajaxData[itemName] = $(item).prop("checked") ? "Y" : "N";

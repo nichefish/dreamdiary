@@ -62,7 +62,7 @@
             dtlAjax: function(clCd) {
                 event.stopPropagation();
                 const url = "${Url.CL_CD_DTL_AJAX!}";
-                let ajaxData = { "clCd": clCd };
+                const ajaxData = { "clCd": clCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -75,7 +75,7 @@
             /** 수정 모달 호출 */
             mdfModal: function(clCd) {
                 const url = "${Url.CL_CD_DTL_AJAX!}";
-                let ajaxData = { "clCd": clCd };
+                const ajaxData = { "clCd": clCd };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -99,7 +99,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = '${Url.CL_CD_USE_AJAX!}';
-                    let ajaxData = { "clCd": clCd };
+                    const ajaxData = { "clCd": clCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -117,7 +117,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = '${Url.CL_CD_UNUSE_AJAX!}';
-                    let ajaxData = { "clCd": clCd };
+                    const ajaxData = { "clCd": clCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -135,7 +135,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.CL_CD_DEL_AJAX!}";
-                    let ajaxData = { "clCd" : clCd };
+                    const ajaxData = { "clCd" : clCd };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

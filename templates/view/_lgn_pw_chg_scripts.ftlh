@@ -40,7 +40,7 @@
             /** 비밀번호 수정 처리(Ajax) */
             lgnPwChgAjax: function() {
                 const url = '${Url.AUTH_LGN_PW_CHG_AJAX!}';
-                let ajaxData = { "userId" : $("#lgnUserId").val(), "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };
+                const ajaxData = { "userId" : $("#lgnUserId").val(), "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({
                         text: res.message

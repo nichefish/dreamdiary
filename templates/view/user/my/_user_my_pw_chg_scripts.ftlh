@@ -45,7 +45,7 @@
             /** 내 비밀번호 수정 처리(Ajax) */
             myPwChgAjax: function() {
                 const url = "${Url.USER_MY_PW_CHG_AJAX!}";
-                let ajaxData = { "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };
+                const ajaxData = { "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };
                 commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

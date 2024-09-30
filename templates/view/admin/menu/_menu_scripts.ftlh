@@ -14,6 +14,11 @@
             initDraggable: function() {
                 const mainContainers = document.querySelectorAll(".draggable-zone-main");
                 if (mainContainers.length === 0) return false;
+
+                // 드래그 전 초기 정렬 순서 저장
+                const initOrdr = Array.from(containers[0].querySelectorAll('.draggable'))
+                    .map(draggable => $(draggable).attr("id"));
+
                 Menu.mainSwappable = new Draggable.Sortable(mainContainers, {
                     draggable: ".draggable-main",
                     handle: ".draggable-main .draggable-handle-main",
@@ -28,6 +33,16 @@
                 }).on('drag:stop', (event) => {
                     const $card = $(event.data.source).find(".card");
                     $card.removeClass('dragging');
+
+                    // 드래그 후 정렬 순서 가져오기
+                    const newOrdr = Array.from(containers[0].querySelectorAll('.draggable'))
+                        .map(draggable => $(draggable).attr("id"));
+                    const isOrdrChanged = JSON.stringify(initOrdr) !== JSON.stringify(newOrdr);
+
+                    // 정렬 순서 ajax 저장
+                    const keyExtractor = (item) => ({ "menuNo": Number($(item).attr("id")), "upperMenuNo": Number($(item).attr("upper-menu-no")) });
+                    const url = "${Url.MENU_SORT_ORDR_AJAX!}";
+                    if (isOrdrChanged) commons.util.sortOrdr(keyExtractor, url);
                 });
 
                 const subContainers = document.querySelectorAll(".draggable-zone-sub");
@@ -100,7 +115,7 @@
             /** 수정 모달 팝업 호출 */
             mdfModal: function(menuNo) {
                 const url = "${Url.MENU_DTL_AJAX!}";
-                let ajaxData = { "menuNo": menuNo };
+                const ajaxData = { "menuNo": menuNo };
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -118,7 +133,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.MENU_DEL_AJAX!}";
-                    let ajaxData = { "menuNo": menuNo };
+                    const ajaxData = { "menuNo": menuNo };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -126,24 +141,6 @@
                             });
                     }, "block");
                 });
-            },
-            /** 정렬순서 저장 */
-            sortOrdr: function() {
-                let orderData = [];
-                document.querySelectorAll('.sortable-item').forEach((item, index) => {
-                    orderData.push({ "menuNo": Number($(item).attr("id")), "upperMenuNo": Number($(item).attr("upper-menu-no")), "state": { "sortOrdr": index }});
-                });
-                const url = "${Url.MENU_SORT_ORDR_AJAX!}";
-                let ajaxData = { "sortOrdr": orderData };
-                commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
-                    if (res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) {
-                            Swal.fire({ text: res.message }).then(function() { commons.util.blockUIReload(); });
-                        } else {
-                            commons.util.blockUIReload();
-                        }
-                    }
-                }, "block");
             },
             /** 목록 검색 */
             search: function() {
