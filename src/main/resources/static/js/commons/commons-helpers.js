@@ -14,7 +14,7 @@
     /**
    	 * 비교연산
    	 */
-   	let ifCondFunc = function (v1, operator, v2, options) {
+    const ifCondFunc = function (v1, operator, v2, options) {
    	    switch (operator) {
    	        case '==':
    	            return (v1 == v2) ? options.fn(this) : options.inverse(this);
@@ -43,10 +43,10 @@
     Handlebars.registerHelper('ifCond', ifCondFunc);
 
     /** 값 존재여부 체크 */
-    let existsFunc = function(value) {
+    const existsFunc = function(value) {
         return !commons.util.isEmpty(value);
     }
-    let notExistsFunc = function(value) {
+    const notExistsFunc = function(value) {
         return !existsFunc(value);
     }
     Handlebars.registerHelper("exists", existsFunc);
@@ -77,7 +77,7 @@
         return "Y" === value ? options.fn(this) : options.inverse(this);;
     })
 
-    let truefalseFunc = function(value, ynValues, options) {
+    const truefalseFunc = function(value, ynValues, options) {
         // 기본값 null일 때 true로 간주하는 옵션
         let defaultTrue = options.hash["default"] || false;
         if (defaultTrue && commons.util.isEmpty(value)) return true;
@@ -88,20 +88,20 @@
     }
     Handlebars.registerHelper("trueFalse", truefalseFunc);
 
-    let equalsFunc = function(value, compareValue, options) {
+    const equalsFunc = function(value, compareValue, options) {
         // 기본값 null일 때 true로 간주하는 옵션
         let defaultTrue = options.hash["default"] || false;
         if (defaultTrue && commons.util.isEmpty(value)) return true;
         // 비교결과 반환 :: 일부러 느슨한 비교
         return (value == compareValue);
     }
-    let notEqualsFunc = function(value, compareValue, options) {
+    const notEqualsFunc = function(value, compareValue, options) {
         return !equalsFunc(value, compareValue, options);
     }
     Handlebars.registerHelper("equals", equalsFunc);
     Handlebars.registerHelper("notEquals", notEqualsFunc);
 
-    let checkedLabelFunc = function(value, ynLabels, options) {
+    const checkedLabelFunc = function(value, ynLabels, options) {
         let separator = "//";
         let idx = ynLabels.indexOf(separator);
         let yLabel = ynLabels.substring(0, idx);
@@ -110,14 +110,14 @@
     }
     Handlebars.registerHelper("checkedLabel", checkedLabelFunc);
 
-    let checkedStyleFunc = function(value, type, ynColors, options) {
+    const checkedStyleFunc = function(value, type, ynColors, options) {
         const separator = "//";
         let idx = ynColors.indexOf(separator);
         let yColor = ynColors.substring(0, idx);
         let nColor = ynColors.substring(idx + 2);
         return "style=" + type + ":" + (value ? yColor : nColor) + ";";
     }
-    let checkedYnStyleFunc = function(value, type, ynColors, options) {
+    const checkedYnStyleFunc = function(value, type, ynColors, options) {
         return checkedStyleFunc(value === "Y", type, ynColors, options);
     }
     Handlebars.registerHelper("checkedStyle", checkedStyleFunc);
@@ -133,6 +133,10 @@
     Handlebars.registerHelper("dateformat", function(value, pattern) {
         if (value === undefined) return "";
         return commons.date.asStr(value, pattern);
+    });
+
+    Handlebars.registerHelper('subtract', function(a, b) {
+        return a - b;
     });
 
     /*    let placeholderFunc = function(value, options) {

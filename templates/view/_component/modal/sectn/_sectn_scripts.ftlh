@@ -6,7 +6,7 @@
 <script>
     const Sectn = (function() {
         return {
-            init: function (refreshFunc) {
+            init: function ({ refreshFunc }) {
                 if (refreshFunc !== undefined) Sectn.refreshFunc = refreshFunc;
             },
             /** form validation init */
@@ -19,6 +19,19 @@
                 const keyExtractor = (item) => ({ "postNo": $(item).attr("id") });
                 const url = "${Url.SECTN_SORT_ORDR_AJAX!}";
                 JrnlSbjct.swappable = commons.util.initDraggable(keyExtractor, url);
+            },
+            /** 전체 태그 목록 조회 */
+            listAjax: function({ refPostNo, refContentType }) {
+                const url = "${Url.SECTN_LIST_AJAX!}";
+                const ajaxData = { "refPostNo": refPostNo, "refContentType": refContentType };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    // 태그 상세 정보
+                    commons.util.handlebarsTemplate(res.rsltList, "section_list");
+                });
             },
             /** 등록 모달 호출 */
             regModal: function(refPostNo, refContentType) {
@@ -66,7 +79,7 @@
             /** 수정 모달 호출 */
             mdfModal: function(postNo) {
                 const url = "${Url.SECTN_DTL_AJAX!}";
-                let ajaxData = { "postNo" : postNo };
+                const ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
@@ -95,7 +108,7 @@
                 }).then(function (result) {
                     if (!result.value) return;
                     const url = "${Url.SECTN_DEL_AJAX!}";
-                    let ajaxData = { "postNo": postNo, "actvtyCtgrCd": "${actvtyCtgrCd!}" };
+                    const ajaxData = { "postNo": postNo, "actvtyCtgrCd": "${actvtyCtgrCd!}" };
                     commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -111,7 +124,4 @@
             },
         }
     })();
-    $(document).ready(function() {
-        Sectn.init();
-    });
 </script>
