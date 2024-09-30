@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayTagEntity;
 import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
 import io.nicheblog.dreamdiary.web.service.cmm.cache.CacheEvictor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 public class JrnlDayCacheEvictor
         implements CacheEvictor<Integer> {
 
-    @Lazy
     private final JrnlDayService jrnlDayService;
 
     /**
