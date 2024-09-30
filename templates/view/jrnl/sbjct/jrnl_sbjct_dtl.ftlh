@@ -74,13 +74,15 @@
     </div>
 </div>
 
-<div class="card post">
-    <#--begin::Card body-->
-    <div class="card-body">
-        <#--페이지:: 단락 영역-->
-        <#include "/view/_component/sectn/_sectn_dtl_area.ftlh">
+<#if post.sectn?? && post.sectn.hasSectn>
+    <div class="card post">
+        <#--begin::Card body-->
+        <div class="card-body">
+            <#--페이지:: 단락 영역-->
+            <#include "/view/_component/sectn/_sectn_dtl_area.ftlh">
+        </div>
     </div>
-</div>
+</#if>
 
 <form name="procForm" id="procForm" method="get">
     <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />

@@ -20,9 +20,12 @@
         </div>
         <!--begin::Menu-->
         <ul class="order-2 menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-            <li class="menu-item"><a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a></li>
-            <li class="menu-item"><a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a></li>
-            <li class="menu-item"><a href="https://1.envato.market/EA4JP" target="_blank" class="menu-link px-2">Purchase</a></li>
+            <li class="menu-item">
+                <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
+            </li>
+            <li class="menu-item">
+                <a href="https://preview.keenthemes.com/html/metronic/docs/index" target="_blank" class="menu-link px-2">Metronic</a>
+            </li>
             <#--include::Related Websites-->
             <#include "/layout/footer/_footer_related.ftlh">
         </ul>
