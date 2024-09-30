@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
-import javax.persistence.OrderBy;
 import java.io.Serializable;
 import java.util.List;
 

@@ -11,7 +11,6 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 /**
