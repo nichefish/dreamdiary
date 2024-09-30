@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.web.service.cmm.comment;
 
-import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.comment.CommentMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.comment.jpa.CommentRepository;
+import io.nicheblog.dreamdiary.web.service.cmm.cache.EhCacheEvictService;
 import io.nicheblog.dreamdiary.web.spec.cmm.comment.CommentSpec;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -32,6 +32,8 @@ public class CommentService
     private final CommentRepository commentRepository;
     private final CommentSpec commentSpec;
     private final CommentMapstruct commentMapstruct = CommentMapstruct.INSTANCE;
+
+    private final EhCacheEvictService ehCacheEvictService;
 
     @Override
     public CommentRepository getRepository() {
@@ -78,23 +80,10 @@ public class CommentService
     /**
      * 관련 캐시 처리
      */
-    public void evictClsfCache(final CommentEntity rslt) {
+    public void evictClsfCache(final CommentEntity rslt) throws Exception {
         String refContentType = rslt.getRefContentType();
-        if (ContentType.JRNL_DIARY.key.equals(refContentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
-            // jrnl_diary
-            EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo());
-            EhCacheUtils.evictCacheAll("imprtcDiaryList");
-        }
-        if (ContentType.JRNL_DREAM.key.equals(refContentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
-            // jrnl_dream
-            EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo());
-            EhCacheUtils.evictCacheAll("imprtcDreamList");
-        }
-
+        Integer refPostNo = rslt.getRefPostNo();
+        ehCacheEvictService.evictClsfCache(refContentType, refPostNo);
         EhCacheUtils.clearL2Cache(CommentEntity.class);
     }
 }

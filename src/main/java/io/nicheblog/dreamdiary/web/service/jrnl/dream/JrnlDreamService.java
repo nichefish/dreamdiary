@@ -1,10 +1,11 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.dream;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
-import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.web.event.EhCacheEvictEvent;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.dream.jpa.JrnlDreamRepository;
@@ -13,6 +14,7 @@ import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamSpec;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -40,6 +42,9 @@ public class JrnlDreamService
     private final JrnlDreamMapstruct jrnlDreamMapstruct = JrnlDreamMapstruct.INSTANCE;
 
     private final JrnlDreamMapper jrnlDreamMapper;
+    private final ApplicationEventPublisher publisher;
+
+    private final String JRNL_DREAM = ContentType.JRNL_DREAM.key;
 
     @Override
     public JrnlDreamRepository getRepository() {
@@ -103,7 +108,7 @@ public class JrnlDreamService
     @Override
     public void postRegist(final JrnlDreamEntity rslt) throws Exception {
         // 관련 캐시 처리
-        this.evictRelatedCache(rslt);
+        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DREAM));
     }
 
     /**
@@ -120,7 +125,7 @@ public class JrnlDreamService
     @Override
     public void postModify(final JrnlDreamEntity rslt) throws Exception {
         // 관련 캐시 처리
-        this.evictRelatedCache(rslt);
+        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DREAM));
     }
 
     /**
@@ -129,28 +134,8 @@ public class JrnlDreamService
     @Override
     public void postDelete(final JrnlDreamEntity rslt) throws Exception {
         // 관련 캐시 처리
-        this.evictRelatedCache(rslt);
-
+        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DREAM));
         // TODO: 관련 엔티티 삭제?
-    }
-
-    /**
-     * 관련 캐시 처리 :: 메소드 분리
-     */
-    public void evictRelatedCache(final JrnlDreamEntity rslt) {
-        Integer yy = rslt.getJrnlDay().getYy();
-        Integer mnth = rslt.getJrnlDay().getMnth();
-        // jrnl_day
-        EhCacheUtils.evictCache("jrnlDayList", yy + "_" + mnth);
-        EhCacheUtils.evictCache("jrnlDayList", yy + "_99");
-        EhCacheUtils.evictCache("jrnlDayDtlDto", rslt.getJrnlDayNo());
-        // jrnl_dream
-        EhCacheUtils.evictCache("imprtcDreamList", yy);
-        EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getPostNo());
-        EhCacheUtils.evictCacheAll("jrnlDreamList");
-        // jrnl_diary_tag
-        EhCacheUtils.evictCache("jrnlDreamTagList", yy + "_99");
-        EhCacheUtils.evictCache("jrnlDreamTagList", yy + mnth);
     }
 
     /**

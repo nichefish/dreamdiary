@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.web.service.cmm.sectn;
 
-import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
@@ -8,7 +7,7 @@ import io.nicheblog.dreamdiary.web.entity.cmm.sectn.SectnEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.sectn.SectnMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.sectn.SectnDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.sectn.jpa.SectnRepository;
-import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryCacheEvictor;
+import io.nicheblog.dreamdiary.web.service.cmm.cache.EhCacheEvictService;
 import io.nicheblog.dreamdiary.web.spec.cmm.sectn.SectnSpec;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,7 +36,7 @@ public class SectnService
     private final SectnSpec sectnSpec;
     private final SectnMapstruct sectnMapstruct = SectnMapstruct.INSTANCE;
 
-    private final JrnlSumryCacheEvictor jrnlSumryCacheEvictor;
+    private final EhCacheEvictService ehCacheEvictService;
 
     @Override
     public SectnRepository getRepository() {
@@ -92,24 +91,10 @@ public class SectnService
     /**
      * 관련 캐시 처리
      */
-    public void evictClsfCache(final SectnEntity rslt) {
+    public void evictClsfCache(final SectnEntity rslt) throws Exception {
         String refContentType = rslt.getRefContentType();
-        if (ContentType.JRNL_DIARY.key.equals(refContentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
-            // jrnl_diary
-            EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo());
-            EhCacheUtils.evictCacheAll("imprtcDiaryList");
-        } else if (ContentType.JRNL_DREAM.key.equals(refContentType)) {
-            // jrnl_day
-            EhCacheUtils.evictCacheAll("jrnlDayList");
-            // jrnl_dream
-            EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo());
-            EhCacheUtils.evictCacheAll("imprtcDreamList");
-        } else if (ContentType.JRNL_SUMRY.key.equals(refContentType)) {
-            // jrnl_sumry
-            jrnlSumryCacheEvictor.evict(rslt.getRefPostNo());
-        }
+        Integer refPostNo = rslt.getRefPostNo();
+        ehCacheEvictService.evictClsfCache(refContentType, refPostNo);
         EhCacheUtils.clearL2Cache(SectnEntity.class);
     }
 

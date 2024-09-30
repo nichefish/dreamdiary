@@ -1,10 +1,12 @@
 package io.nicheblog.dreamdiary.web.handler;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.web.event.EhCacheEvictEvent;
 import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.ContentTagService;
 import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,8 @@ public class TagEventListener {
     private final TagService tagService;
     private final ContentTagService contentTagService;
 
+    private final ApplicationEventPublisher publisher;
+
     /**
      * 태그 처리
      */
@@ -40,7 +44,7 @@ public class TagEventListener {
             tagService.procTags(clsfKey, event.getTagCmpstn());
         }
         // 관련 캐시 클리어
-        contentTagService.evictClsfCache(clsfKey);
+        publisher.publishEvent(new EhCacheEvictEvent(this, clsfKey.getPostNo(), clsfKey.getContentType()));
         // 태그테이블 refresh (연관관계 없는 태그 삭제)
         tagService.deleteNoRefTags();
     }

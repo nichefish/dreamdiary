@@ -1,10 +1,12 @@
 package io.nicheblog.dreamdiary.web.service.jrnl.sumry;
 
+import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
+import io.nicheblog.dreamdiary.web.event.EhCacheEvictEvent;
 import io.nicheblog.dreamdiary.web.mapstruct.jrnl.sumry.JrnlSumryMapstruct;
 import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.repository.jrnl.sumry.jpa.JrnlSumryRepository;
@@ -14,6 +16,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +42,9 @@ public class JrnlSumryService
     private final JrnlSumrySpec jrnlSumrySpec;
     private final JrnlSumryMapstruct jrnlSumryMapstruct = JrnlSumryMapstruct.INSTANCE;
 
-    private final JrnlSumryCacheEvictor jrnlSumryCacheEvictor;
+    private final ApplicationEventPublisher publisher;
+
+    private final String JRNL_SUMRY = ContentType.JRNL_SUMRY.key;
 
     @Override
     public JrnlSumryRepository getRepository() {
@@ -151,7 +156,7 @@ public class JrnlSumryService
         entity.setDreamComptYn("Y");
         jrnlSumryRepository.save(entity);
         // 캐시 초기화
-        jrnlSumryCacheEvictor.evict(key);
+        publisher.publishEvent(new EhCacheEvictEvent(this, key, JRNL_SUMRY));
         return true;
     }
 }
