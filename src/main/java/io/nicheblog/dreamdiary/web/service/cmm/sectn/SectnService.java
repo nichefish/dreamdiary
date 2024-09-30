@@ -5,8 +5,10 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.sectn.SectnEntity;
+import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.sectn.SectnMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.sectn.SectnDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.sumry.JrnlSumryDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.sectn.jpa.SectnRepository;
 import io.nicheblog.dreamdiary.web.spec.cmm.sectn.SectnSpec;
 import lombok.RequiredArgsConstructor;
@@ -97,15 +99,25 @@ public class SectnService
             // jrnl_diary
             EhCacheUtils.evictCache("jrnlDiaryDtlDto", rslt.getRefPostNo());
             EhCacheUtils.evictCacheAll("imprtcDiaryList");
-        }
-        if (ContentType.JRNL_DREAM.key.equals(refContentType)) {
+        } else if (ContentType.JRNL_DREAM.key.equals(refContentType)) {
             // jrnl_day
             EhCacheUtils.evictCacheAll("jrnlDayList");
             // jrnl_dream
             EhCacheUtils.evictCache("jrnlDreamDtlDto", rslt.getRefPostNo());
             EhCacheUtils.evictCacheAll("imprtcDreamList");
+        } else if (ContentType.JRNL_SUMRY.key.equals(refContentType)) {
+            // jrnl_sumry
+            EhCacheUtils.evictCacheAll("jrnlSumryList");
+            EhCacheUtils.evictCacheAll("jrnlTotalSumry");
+            EhCacheUtils.evictCache("jrnlSumryDtl", rslt.getRefPostNo());
+            JrnlSumryDto jrnlSumry = (JrnlSumryDto) EhCacheUtils.getObjectFromCache("jrnlSumryDtl", rslt.getRefPostNo());
+            // 년도-월에 따른 캐시 삭제
+            if (jrnlSumry == null) return;
+            Integer yy = jrnlSumry.getYy();
+            EhCacheUtils.evictCache("jrnlSumryDtlByYy", yy);
+            // L2캐시 처리
+            EhCacheUtils.clearL2Cache(JrnlSumryEntity.class);
         }
-
         EhCacheUtils.clearL2Cache(SectnEntity.class);
     }
 

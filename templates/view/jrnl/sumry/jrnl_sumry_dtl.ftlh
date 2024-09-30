@@ -16,12 +16,15 @@
 <#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
 <#include "/view/_component/comment/_comment_modal_scripts.ftlh">
+<#include "/view/_component/sectn/_sectn_scripts.ftlh">
 
 <script>
     const Page = (function() {
         return {
             init: function () {
-                //
+                /* 글 단락 init */
+                Sectn.init();
+                Sectn.initDraggable();
             },
         }
     })();
@@ -119,6 +122,14 @@
     </div>
 </div>
 
+<div class="card post">
+    <#--begin::Card body-->
+    <div class="card-body pt-0">
+        <#--페이지:: 단락 영역-->
+        <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
+    </div>
+</div>
+
 <hr class="my-6 text-muted" />
 <div class="d-flex align-items-center mb-6 ms-4">
     <div class="col-1 ms-4 me-6 text-center fs-6">
@@ -155,10 +166,14 @@
 </form>
 
 <#--include::modals-->
+<#include "/view/_component/_tinymce_img.ftlh">
 <#include "/view/jrnl/sumry/_jrnl_sumry_reg_modal.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_reg_modal.ftlh">
 <#include "/view/jrnl/dream/tag/_jrnl_dream_tag_dtl_modal.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
 <#include "/view/_component/comment/_comment_reg_modal.ftlh">
+<#include "/view/_component/sectn/_sectn_reg_modal.ftlh">
+<#include "/view/_component/sectn/_sectn_list_template.hbs">
+
 
 </@layout.layout>

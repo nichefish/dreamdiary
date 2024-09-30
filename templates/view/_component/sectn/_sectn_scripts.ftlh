@@ -15,7 +15,7 @@
                 commons.validate.validateForm("#sectnRegForm", Sectn.regAjax);
             },
             /** Draggable 컴포넌트 init */
-            initDraggable: function({ refreshFunc }) {
+            initDraggable: function({ refreshFunc } = {}) {
                 const keyExtractor = (item) => ({ "postNo": $(item).attr("id") });
                 const url = "${Url.SECTN_SORT_ORDR_AJAX!}";
                 Sectn.swappable = commons.util.initDraggable(keyExtractor, url, refreshFunc);
