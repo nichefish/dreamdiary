@@ -22,19 +22,6 @@
 <#include "/view/_component/sectn/_sectn_scripts.ftlh">
 
 <script>
-    /** tinymce 글접기 토글 테스트중... */
-    $(document).ready(function() {
-        const toggleElements = $("[id^='tinymce_toggle_']");
-        toggleElements.on('click', function() {
-            const toggleId = $(this).attr('id');
-            const sectionContentId = toggleId.replace('tinymce_toggle_', 'tinymce_section_content_');
-            const contentElements = $("#" + sectionContentId);
-            if (contentElements.length > 0) {
-                contentElements.toggleClass('tinymce-collapse-div tinymce-collapsed');
-            }
-        });
-    });
-
     const Page = (function() {
         return {
             init: function () {
@@ -185,14 +172,18 @@
             </div>
 
             <div class="separator separator-dashed border-gray-300 mb-8"></div>
-            <#--페이지:: 첨부파일 추가추가 영역-->
-            <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
 
-            <!-- #include:: component:: 파일시스템 참조 -->
-            <#include "/view/_component/flsys/_flsys_reg_area.ftlh">
+            <#--begin::meta-->
+            <div class="mb-0">
+                <#--페이지:: 첨부파일 추가추가 영역-->
+                <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
 
-            <!-- #include:: component:: 태그 태그 -->
-            <#include "/view/_component/tag/_tag_reg_area.ftlh">
+                <!-- #include:: component:: 파일시스템 참조 -->
+                <#include "/view/_component/flsys/_flsys_reg_area.ftlh">
+
+                <!-- #include:: component:: 태그 태그 -->
+                <#include "/view/_component/tag/_tag_reg_area.ftlh">
+            </div>
 
             <div class="separator my-8"></div>
 

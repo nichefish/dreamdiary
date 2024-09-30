@@ -41,11 +41,6 @@
             ${post.markdownCn?no_esc}
         </div>
 
-        <div class="separator separator-dashed border-gray-300 mb-8"></div>
-
-        <#--페이지:: 단락 영역-->
-        <#include "/view/_component/sectn/_sectn_dtl_area.ftlh">
-
         <#--begin::meta-->
         <div class="mb-0">
             <#--페이지:: 첨부파일 표시 영역-->
@@ -77,6 +72,16 @@
         <#include "/view/_component/comment/_comment_area.ftlh">
     </div>
 </div>
+
+<#if post.sectn?? && post.sectn.hasSectn>
+    <div class="card post">
+        <#--begin::Card body-->
+        <div class="card-body">
+            <#--페이지:: 단락 영역-->
+            <#include "/view/_component/sectn/_sectn_dtl_area.ftlh">
+        </div>
+    </div>
+</#if>
 
 <form name="procForm" id="procForm" method="get">
     <input type="hidden" name="postNo" id="postNo" value="${post.postNo!}" />

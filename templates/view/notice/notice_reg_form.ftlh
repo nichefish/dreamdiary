@@ -15,13 +15,15 @@
 
 <@layout.layout toolbar=toolbar!"">
 
+<script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
+
 <#--include::script modules-->
 <#include "/view/notice/_notice_scripts.ftlh">
 <#include "/view/_component/sectn/_sectn_scripts.ftlh">
 <#include "/view/_component/comment/_comment_modal_scripts.ftlh">
 
 <script>
-    /** tinymce 글접기 토글 테스트중... */
+    /** TODO: tinymce 글접기 토글 테스트중... */
     $(document).ready(function() {
         const toggleElements = $("[id^='tinymce_toggle_']");
         toggleElements.on('click', function() {
@@ -38,7 +40,19 @@
         return {
             init: function () {
                 /* jquery :: validation */
-                Notice.initValidateForm()
+                Notice.initValidateForm();
+                /* 글 단락 init */
+                Sectn.init({
+                    refreshFunc: function() {
+                        setTimeout(function() {
+                            Page.refreshFunc();
+                        });
+                    }
+                });
+                /* 글 단락 정렬순서 변경 init */
+                Sectn.initDraggable({
+                    refreshFunc: Page.refreshFunc
+                });
 
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
@@ -55,6 +69,13 @@
                     $("#jandiYn").click();
                 </#if>
             },
+            refreshFunc: function() {
+                Sectn.listAjax({ "refPostNo": ${post.postNo!}, "refContentType": "${post.contentType!}" });
+                $("#sectn_reg_modal").modal("hide");
+                Sectn.initDraggable({
+                    refreshFunc: Page.refreshFunc
+                });
+            }
         }
     })();
     $(document).ready(function () {
@@ -181,17 +202,17 @@
                 <!--end::Form control-->
             </div>
 
-            <#--페이지:: 단락 영역-->
-            <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
+            <#--begin::meta-->
+            <div class="mb-0">
+                <#--페이지:: 첨부파일 추가추가 영역-->
+                <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
 
-            <#--페이지:: 첨부파일 추가추가 영역-->
-            <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
+                <!-- #include:: component:: 파일시스템 참조 -->
+                <#include "/view/_component/flsys/_flsys_reg_area.ftlh">
 
-            <!-- #include:: component:: 파일시스템 참조 -->
-            <#include "/view/_component/flsys/_flsys_reg_area.ftlh">
-
-            <!-- #include:: component:: 태그 태그 -->
-            <#include "/view/_component/tag/_tag_reg_area.ftlh">
+                <!-- #include:: component:: 태그 태그 -->
+                <#include "/view/_component/tag/_tag_reg_area.ftlh">
+            </div>
 
             <div class="separator my-8"></div>
 
@@ -216,9 +237,19 @@
     </div>
 </div>
 
+<#if isMdf!false>
+    <div class="card post">
+        <#--begin::Card body-->
+        <div class="card-body pt-0">
+            <#--페이지:: 단락 영역-->
+            <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
+        </div>
+    </div>
+</#if>
+
 <#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 <#include "/view/_component/sectn/_sectn_reg_modal.ftlh">
-<#include "/view/_component/comment/_comment_reg_modal.ftlh">
+<#include "/view/_component/sectn/_sectn_list_template.hbs">
 
 </@layout.layout>

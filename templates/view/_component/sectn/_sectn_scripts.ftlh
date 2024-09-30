@@ -18,7 +18,7 @@
             initDraggable: function({ refreshFunc }) {
                 const keyExtractor = (item) => ({ "postNo": $(item).attr("id") });
                 const url = "${Url.SECTN_SORT_ORDR_AJAX!}";
-                JrnlSbjct.swappable = commons.util.initDraggable(keyExtractor, url, refreshFunc);
+                Sectn.swappable = commons.util.initDraggable(keyExtractor, url, refreshFunc);
             },
             /** 전체 태그 목록 조회 */
             listAjax: function({ refPostNo, refContentType }) {
