@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.web.service.cmm.sectn;
 
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.sectn.SectnEntity;
@@ -46,6 +47,14 @@ public class SectnService
     @Override
     public SectnSpec getSpec() {
         return this.sectnSpec;
+    }
+
+    /**
+     * 등록 전처리 :: override
+     */
+    @Override
+    public void preRegist(final SectnDto sectn) {
+        if (sectn.getState() == null) sectn.setState(new StateCmpstn());
     }
 
     /**

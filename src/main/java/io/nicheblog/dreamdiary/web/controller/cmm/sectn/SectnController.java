@@ -70,7 +70,7 @@ public class SectnController
         String rsltMsg = "";
         try {
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
+            Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
             PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
             // 목록 조회 및 응답에 추가
             Page<SectnDto> sectnList = sectnService.getPageDto(searchParam, pageRequest);

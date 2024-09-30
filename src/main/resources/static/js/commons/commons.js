@@ -762,7 +762,7 @@ commons.util = (function() {
         },
 
         /** Draggable 컴포넌트 init */
-        initDraggable: function(keyExtractor, url) {
+        initDraggable: function(keyExtractor, url, refreshFunc) {
             const containers = document.querySelectorAll(".draggable-zone");
             if (containers.length === 0) return false;
 
@@ -792,13 +792,13 @@ commons.util = (function() {
                     const isOrdrChanged = JSON.stringify(initOrdr) !== JSON.stringify(newOrdr);
 
                     // 정렬 순서 ajax 저장
-                    if (isOrdrChanged) commons.util.sortOrdr(keyExtractor, url);
+                    if (isOrdrChanged) commons.util.sortOrdr(keyExtractor, url, refreshFunc);
                 }, 0); // 지연 시간을 0으로 설정하여 다음 이벤트 루프에서 실행되도록 함
             });
         },
 
         /** 정렬순서 저장 */
-        sortOrdr: function(keyExtractor, url) {
+        sortOrdr: function(keyExtractor, url, refreshFunc) {
             const orderData = [];
             document.querySelectorAll('.sortable-item').forEach((item, index) => {
                 const key = keyExtractor(item, index);
@@ -806,7 +806,13 @@ commons.util = (function() {
             });
             const ajaxData = { "sortOrdr": orderData };
             commons.util.blockUIJsonAjax(url, 'post', JSON.stringify(ajaxData), function(res) {
-                if (res.rslt) commons.util.blockUIReload();
+                if (res.rslt) {
+                    if (refreshFunc !== undefined) {
+                        refreshFunc();
+                    } else {
+                        commons.util.blockUIReload();
+                    }
+                }
                 else if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
             }, "block");
         },

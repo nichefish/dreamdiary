@@ -43,11 +43,15 @@
                 /* 글 단락 init */
                 Sectn.init({
                     refreshFunc: function() {
-                        Sectn.listAjax({ "refPostNo": ${post.postNo!}, "refContentType": "${post.contentType!}" });
+                        setTimeout(function() {
+                            Page.refreshFunc();
+                        });
                     }
                 });
                 /* 글 단락 정렬순서 변경 init */
-                Sectn.initDraggable();
+                Sectn.initDraggable({
+                    refreshFunc: Page.refreshFunc
+                });
 
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
@@ -64,6 +68,13 @@
                     $("#jandiYn").click();
                 </#if>
             },
+            refreshFunc: function() {
+                Sectn.listAjax({ "refPostNo": ${post.postNo!}, "refContentType": "${post.contentType!}" });
+                $("#sectn_reg_modal").modal("hide");
+                Sectn.initDraggable({
+                    refreshFunc: Page.refreshFunc
+                });
+            }
         }
     })();
     $(document).ready(function () {
@@ -163,13 +174,6 @@
                 <label class="mb-2 d-flex align-items-center" for="tinymce_cn">
                     <span class="text-gray-700 fs-6 fw-bolder">내용</span>
                     <span class="text-gray-500 fs-9">&nbsp;</span>
-                    <#if isMdf>
-                        <#--begin::sectn button-->
-                        <div class="col d-flex justify-content-end">
-                            <#--헤더:: 버튼: 등록 모달 호출하기-->
-                            <@component.header_btn_reg_modal "Sectn.regModal(${post.postNo!}, '${post.contentType!}');" />
-                        </div>
-                    </#if>
                 </label>
                 <!--end::Label-->
                 <!--begin::Form control-->

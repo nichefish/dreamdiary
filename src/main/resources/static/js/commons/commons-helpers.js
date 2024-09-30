@@ -74,7 +74,7 @@
     });
 
     Handlebars.registerHelper("ifYn", function(value, options) {
-        return "Y" === value ? options.fn(this) : options.inverse(this);;
+        return "Y" === (value && value.trim()) ? options.fn(this) : options.inverse(this);;
     })
 
     const truefalseFunc = function(value, ynValues, options) {
@@ -137,6 +137,20 @@
 
     Handlebars.registerHelper('subtract', function(a, b) {
         return a - b;
+    });
+
+    /** 비교 연산자 */
+    Handlebars.registerHelper('lt', function(a, b) {
+        return a < b;
+    });
+    Handlebars.registerHelper('le', function(a, b) {
+        return a <= b;
+    });
+    Handlebars.registerHelper('gt', function(a, b) {
+        return a > b;
+    });
+    Handlebars.registerHelper('ge', function(a, b) {
+        return a >= b;
     });
 
     /*    let placeholderFunc = function(value, options) {

@@ -15,10 +15,10 @@
                 commons.validate.validateForm("#sectnRegForm", Sectn.regAjax);
             },
             /** Draggable 컴포넌트 init */
-            initDraggable: function() {
+            initDraggable: function({ refreshFunc }) {
                 const keyExtractor = (item) => ({ "postNo": $(item).attr("id") });
                 const url = "${Url.SECTN_SORT_ORDR_AJAX!}";
-                JrnlSbjct.swappable = commons.util.initDraggable(keyExtractor, url);
+                JrnlSbjct.swappable = commons.util.initDraggable(keyExtractor, url, refreshFunc);
             },
             /** 전체 태그 목록 조회 */
             listAjax: function({ refPostNo, refContentType }) {
@@ -30,7 +30,8 @@
                         return false;
                     }
                     // 태그 상세 정보
-                    commons.util.handlebarsTemplate(res.rsltList, "section_list");
+                    console.log(res.rsltList);
+                    commons.util.handlebarsTemplate(res.rsltList, "sectn_list");
                 });
             },
             /** 등록 모달 호출 */

@@ -5,14 +5,14 @@
 
 <!--begin::section-->
 
-<script type="text/x-handlebars-template" id="sectn_reg_template">
+<script type="text/x-handlebars-template" id="sectn_list_template">
     {{#if this.length}}
         <div class="draggable-zone">
             {{#each this}}
                 <div id="{{postNo}}" class="row d-flex align-items-center mb-4 sortable-item draggable">
                     <div class="col fs-3 fw-normal text-gray-800 py-1 border-gray-300 border-end">
-                        {{#ifExists title}}
-                            <div class="fs-1x fw-bold mb-4 text-muted {{#ifYn deprcYn}}>strikethrough{{/ifYn}}">
+                        {{#if title}}
+                            <div class="fs-1x fw-bold mb-4 text-muted {{#ifYn deprcYn}}strikethrough{{/ifYn}}">
                                 <div class="draggable-handle d-flex align-items-center cursor-move pt-2"
                                      data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
                                     <i class="ki-duotone ki-abstract-14 fs-2x">
@@ -22,7 +22,7 @@
                                     ＜ {{title}} ＞
                                 </div>
                             </div>
-                        {{/ifExists}}
+                        {{/if}}
                         <div class="mx-5 fs-4 fw-normal {{#ifYn deprcYn}}>strikethrough{{/ifYn}}">
                             {{{markdownCn}}}
                         </div>
