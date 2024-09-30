@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.controller.admin;
+package io.nicheblog.dreamdiary.web.controller.cmm.cache;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;

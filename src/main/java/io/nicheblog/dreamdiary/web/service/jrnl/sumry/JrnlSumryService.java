@@ -2,8 +2,6 @@ package io.nicheblog.dreamdiary.web.service.jrnl.sumry;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
-import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
-import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import io.nicheblog.dreamdiary.web.entity.jrnl.sumry.JrnlSumryEntity;
@@ -40,6 +38,8 @@ public class JrnlSumryService
     private final JrnlSumryRepository jrnlSumryRepository;
     private final JrnlSumrySpec jrnlSumrySpec;
     private final JrnlSumryMapstruct jrnlSumryMapstruct = JrnlSumryMapstruct.INSTANCE;
+
+    private final JrnlSumryCacheEvictor jrnlSumryCacheEvictor;
 
     @Override
     public JrnlSumryRepository getRepository() {
@@ -150,11 +150,8 @@ public class JrnlSumryService
         JrnlSumryEntity entity = this.getDtlEntity(key);
         entity.setDreamComptYn("Y");
         jrnlSumryRepository.save(entity);
-
         // 캐시 초기화
-        EhCacheUtils.evictCacheAll("jrnlSumryList");
-        EhCacheUtils.evictCache("jrnlSumryDtl", entity.getPostNo());
-        EhCacheUtils.evictCache("jrnlSumryDtlByYy", entity.getYy());
+        jrnlSumryCacheEvictor.evict(key);
         return true;
     }
 }

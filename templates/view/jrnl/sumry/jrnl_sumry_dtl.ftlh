@@ -11,6 +11,8 @@
 <script type="text/javascript" src="/lib/prism/js/prism.js?${releaseDate!}"></script>
 <link rel="stylesheet" type="text/css" href="/css/jrnl.css?${releaseDate!}" />
 
+<script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
+
 <#--include::script modules-->
 <#include "/view/jrnl/sumry/_jrnl_sumry_scripts.ftlh">
 <#include "/view/jrnl/dream/_jrnl_dream_scripts.ftlh">
