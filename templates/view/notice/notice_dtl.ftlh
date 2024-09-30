@@ -6,9 +6,6 @@
 <!DOCTYPE html>
 <#import "/layout/layout.ftlh" as layout >
 
-<script src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js?${releaseDate!}"></script>
-<script type="text/javascript" src="/js/commons/commons-tinymce.js?${releaseDate!}"></script>
-
 <@layout.layout toolbar=toolbar!"">
 
 <#--include::script modules-->
@@ -47,7 +44,7 @@
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
 
         <#--페이지:: 단락 영역-->
-        <#include "/view/_component/page_area/sectn/_sectn_area.ftlh">
+        <#include "/view/_component/page_area/sectn/_sectn_dtl_area.ftlh">
 
         <#--begin::meta-->
         <div class="mb-0">
@@ -87,7 +84,6 @@
 
 <#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
-<#include "/view/_component/modal/sectn/_sectn_reg_modal.ftlh">
 <#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>

@@ -182,7 +182,7 @@
             </div>
 
             <#--페이지:: 단락 영역-->
-            <#include "/view/_component/page_area/sectn/_sectn_area.ftlh">
+            <#include "/view/_component/page_area/sectn/_sectn_reg_area.ftlh">
 
             <#--페이지:: 첨부파일 추가추가 영역-->
             <#include "/view/_component/page_area/atch_file/_atch_file_reg_area.ftlh">

@@ -17,7 +17,7 @@
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
-                                ＜ ${sectn.title!} ＞ ${sectn.state.sortOrdr!}
+                                <#if sectn.title != "">＜ ${sectn.title!} ＞<#else>&nbsp;&nbsp;-&nbsp;&nbsp;</#if>
                             </div>
                         </div>
                     </#if>
