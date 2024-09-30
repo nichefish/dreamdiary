@@ -18,7 +18,7 @@
 <#--include::script modules-->
 <#include "/view/notice/_notice_scripts.ftlh">
 <#include "/view/_component/modal/sectn/_sectn_scripts.ftlh">
-<#include "/view/_component/modal/comment/_comment_scripts.ftlh">
+<#include "/view/_component/comment/_comment_,modal_scripts.ftlh">
 
 <script>
     /** tinymce 글접기 토글 테스트중... */
@@ -219,6 +219,6 @@
 <#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
 <#include "/view/_component/modal/sectn/_sectn_reg_modal.ftlh">
-<#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
+<#include "/view/_component/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>

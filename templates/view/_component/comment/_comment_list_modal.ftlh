@@ -54,4 +54,4 @@
 </form>
 
 <#--include:: Handlebars template-->
-<#include "/view/_component/list_area/comment/_comment_list_template.hbs">
+<#include "/view/_component/comment/_comment_list_template.hbs">

@@ -11,7 +11,7 @@
 <#--include::script modules-->
 <#include "/view/notice/_notice_scripts.ftlh">
 <#include "/view/_component/modal/sectn/_sectn_scripts.ftlh">
-<#include "/view/_component/modal/comment/_comment_scripts.ftlh">
+<#include "/view/_component/comment/_comment_,modal_scripts.ftlh">
 
 <div class="card post">
     <#--begin::Card body-->
@@ -74,7 +74,7 @@
             <@component.post_btn_toList "Notice.list();" />
         </div>
         <#--페이지:: 댓글 영역-->
-        <#include "/view/_component/page_area/comment/_comment_area.ftlh">
+        <#include "/view/_component/comment/_comment_area.ftlh">
     </div>
 </div>
 
@@ -84,6 +84,6 @@
 
 <#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
-<#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
+<#include "/view/_component/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>

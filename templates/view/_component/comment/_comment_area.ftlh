@@ -4,7 +4,7 @@
  -->
 
 <#--include::script modules-->
-<#include "/view/_component/page_area/comment/_comment_scripts.ftlh">
+<#include "/view/_component/comment/_comment_page_scripts.ftlh">
 
 <div class="separator separator-dashed mt-8"></div>
 
@@ -127,4 +127,4 @@
     </div>
 </div>
 
-<#include "/view/_component/page_area/comment/_comment_reg_template.hbs">
+<#include "/view/_component/comment/_comment_page_reg_template.hbs">

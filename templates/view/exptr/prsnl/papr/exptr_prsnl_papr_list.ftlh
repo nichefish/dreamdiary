@@ -142,6 +142,6 @@
     <input type="hidden" name="prevYn" id="prevYn" value="N"/>
 </form>
 
-<#include "/view/_component/list_area/comment/_comment_list_modal.ftlh">
+<#include "/view/_component/comment/_comment_list_modal.ftlh">
 
 </@layout.layout>

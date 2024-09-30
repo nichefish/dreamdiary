@@ -194,7 +194,7 @@
 
 <#--include::modals-->
 <#include "/view/vcatn/papr/_vcatn_papr_dtl_modal.ftlh">
-<#include "/view/_component/list_area/comment/_comment_list_modal.ftlh">
+<#include "/view/_component/comment/_comment_list_modal.ftlh">
 <#include "/view/_component/list_area/atch_file/_atch_file_list_modal.ftlh">
 
 </@layout.layout>

@@ -23,7 +23,7 @@
 <#include "/view/jrnl/diary/_jrnl_diary_scripts.ftlh">
 <#include "/view/jrnl/diary/tag/_jrnl_diary_tag_scripts.ftlh">
 <#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
-<#include "/view/_component/modal/comment/_comment_scripts.ftlh">
+<#include "/view/_component/comment/_comment_,modal_scripts.ftlh">
 
 <script>
     const Page = (function() {
@@ -105,6 +105,6 @@
 <#include "/view/jrnl/dream/tag/_jrnl_dream_tag_dtl_modal.ftlh">
 
 <#include "/view/jrnl/tag/_jrnl_tag_list_modal.ftlh">
-<#include "/view/_component/modal/comment/_comment_reg_modal.ftlh">
+<#include "/view/_component/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>
