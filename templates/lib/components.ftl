@@ -9,12 +9,12 @@
 <#include "/view/_component/page_area/_page_elements.ftlh">
 
 <!-- list-table items -->
-<#include "/view/_component/list_area/_list_elements.ftlh">
+<#include "/view/_component/_list_elements.ftlh">
 <!-- buttons -->
 <#include "/view/_component/page_area/_page_buttons.ftlh">
 
 <!-- modal_elements -->
-<#include "/view/_component/modal/_modal_elements.ftlh">
+<#include "/view/_component/_modal_elements.ftlh">
 
 <!-- header_elements -->
 <#include "/view/_component/_header_elements.ftlh">

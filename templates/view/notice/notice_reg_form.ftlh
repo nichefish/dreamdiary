@@ -17,7 +17,7 @@
 
 <#--include::script modules-->
 <#include "/view/notice/_notice_scripts.ftlh">
-<#include "/view/_component/modal/sectn/_sectn_scripts.ftlh">
+<#include "/view/_component/sectn/_sectn_scripts.ftlh">
 <#include "/view/_component/comment/_comment_,modal_scripts.ftlh">
 
 <script>
@@ -182,7 +182,7 @@
             </div>
 
             <#--페이지:: 단락 영역-->
-            <#include "/view/_component/page_area/sectn/_sectn_reg_area.ftlh">
+            <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
 
             <#--페이지:: 첨부파일 추가추가 영역-->
             <#include "/view/_component/page_area/atch_file/_atch_file_reg_area.ftlh">
@@ -218,7 +218,7 @@
 
 <#--include:: component:: tinymce 이미지 추가 영역 template-->
 <#include "/view/_component/_tinymce_img.ftlh">
-<#include "/view/_component/modal/sectn/_sectn_reg_modal.ftlh">
+<#include "/view/_component/sectn/_sectn_reg_modal.ftlh">
 <#include "/view/_component/comment/_comment_reg_modal.ftlh">
 
 </@layout.layout>

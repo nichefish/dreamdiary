@@ -10,7 +10,7 @@
 
 <#--include::script modules-->
 <#include "/view/jrnl/sbjct/_jrnl_sbjct_scripts.ftlh">
-<#include "/view/_component/modal/sectn/_sectn_scripts.ftlh">
+<#include "/view/_component/sectn/_sectn_scripts.ftlh">
 <#include "/view/_component/comment/_comment_,modal_scripts.ftlh">
 
 <div class="card post">
@@ -44,7 +44,7 @@
         <div class="separator separator-dashed border-gray-300 mb-8"></div>
 
         <#--페이지:: 단락 영역-->
-        <#include "/view/_component/page_area/sectn/_sectn_dtl_area.ftlh">
+        <#include "/view/_component/sectn/_sectn_dtl_area.ftlh">
 
         <#--begin::meta-->
         <div class="mb-0">

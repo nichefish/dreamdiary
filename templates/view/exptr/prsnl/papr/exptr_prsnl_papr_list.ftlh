@@ -133,7 +133,7 @@
     </table>
 
     <#--pagination::begin-->
-    <#include "/view/_component/list_area/_pagination.ftlh">
+    <#include "/view/_component/_pagination.ftlh">
     <#--pagination::end-->
 </div>
 
