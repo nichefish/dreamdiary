@@ -4,7 +4,7 @@
  -->
 
 <#--include::script modules-->
-<#include "/view/_component/page_area/atch_file/_atch_file_scripts.ftlh">
+<#include "/view/_component/atch_file/_atch_file_scripts.ftlh">
 
 <#--begin::Row-->
 <div class="row">
