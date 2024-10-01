@@ -48,6 +48,7 @@
     <cache alias="jrnlDayTagDtl" uses-template="defaultTemplate" />
 
     <!-- 저널 일기 -->
+    <cache alias="jrnlDiaryList" uses-template="defaultTemplate" />
     <cache alias="jrnlDiaryDtlDto" uses-template="defaultTemplate" />
     <cache alias="jrnlDiaryTagList" uses-template="defaultTemplate" />
     <cache alias="jrnlDiarySizedTagList" uses-template="defaultTemplate" />

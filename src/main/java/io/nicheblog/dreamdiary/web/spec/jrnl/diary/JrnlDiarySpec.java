@@ -31,6 +31,22 @@ public class JrnlDiarySpec
         implements BasePostSpec<JrnlDiaryEntity> {
 
     /**
+     * 조회 후처리:: 정렬 순서 변경
+     */
+    @Override
+    public void postQuery(
+            final Root<JrnlDiaryEntity> root,
+            final CriteriaQuery<?> query,
+            final CriteriaBuilder builder
+    ) {
+        List<Order> order = new ArrayList<>();
+        Join<JrnlDreamEntity, JrnlDaySmpEntity> jrnlDayJoin = root.join("jrnlDay", JoinType.INNER);
+        order.add(builder.desc(builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"))));
+        query.orderBy(order);
+        query.distinct(true);
+    }
+
+    /**
      * 인자별로 구체적인 검색 조건 세팅
      */
     @Override
@@ -66,6 +82,10 @@ public class JrnlDiarySpec
                     // 99 = 모든 월
                     Integer mnth = (Integer) searchParamMap.get(key);
                     if (mnth != 99) predicate.add(builder.equal(jrnlDayJoin.get(key), mnth));
+                    continue;
+                case "diaryKeyword":
+                    // 내용 like 검색
+                    predicate.add(builder.like(root.get("cn"), "%" + searchParamMap.get(key) + "%"));
                     continue;
                 case "tagNo":
                     // 특정 태그된 꿈만 조회

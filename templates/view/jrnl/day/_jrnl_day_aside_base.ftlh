@@ -160,7 +160,7 @@
                 <div class="mb-4">
                     <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                             onclick="JrnlDayAside.today();"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈을 키워드로 검색합니다.">
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="오늘 일자를 조회합니다.">
                         오늘 일자 조회하기<i class="bi bi-search ps-1 pe-0"></i>
                     </button>
                     <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
@@ -173,7 +173,7 @@
                 <div class="mb-4">
                     <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
                             onclick="JrnlDayAside.pinpoint();"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="꿈을 키워드로 검색합니다.">
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="나중에 돌아올 수 있도록.&#10;현재 년월을 저장합니다.">
                         현재 년월 저장<i class="bi bi-pin-map ps-1 pe-0"></i>
                     </button>
                     <span class="px-2">
@@ -181,7 +181,7 @@
                         <span> / </span>
                         <span id="pinMnth" class="text-muted text-underline-dotted">--</span>
                     </span>
-                    <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                    <button type="button" class="btn btn-sm btn-outline btn-light-primary px-2"
                             onclick="JrnlDayAside.turnback();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="저장된 년월로 이동합니다.">
                         <i class="bi bi-reply-all"></i>
@@ -211,6 +211,19 @@
                             </#list>
                             <option value="99">전체 월</option>
                         </select>
+                    </div>
+                </div>
+                <#--begin::row-->
+                <div class="mb-6">
+                    <span class="text-gray-900 fs-h6 fw-bold d-inline-block mb-1">일기 키워드 검색</span>
+                    <div class="d-flex gap-1">
+                        <input type="text" name="diaryKeyword" id="diaryKeyword" class="form-control"
+                               value="" placeholder="일기 키워드 검색" maxlength="200"/>
+                        <button type="button" class="btn btn-sm btn-outline btn-light-primary px-4"
+                                onclick="JrnlDiary.keywordListAjax();"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="일기를 키워드로 검색합니다.">
+                            <i class="bi bi-search pe-0"></i>
+                        </button>
                     </div>
                 </div>
                 <#--begin::row-->

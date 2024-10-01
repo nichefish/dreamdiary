@@ -37,7 +37,8 @@ public class JrnlDreamCacheEvictor
                 if (jrnlDream == null) return;
             }
         }
-        // 상세 캐시 삭제
+        // jrnl_dream
+        EhCacheUtils.evictCacheAll("jrnlDreamList");
         EhCacheUtils.evictCache("jrnlDreamDtlDto", key);
         // 년도-월에 따른 캐시 삭제
         Integer yy = jrnlDream.getYy();
@@ -46,6 +47,7 @@ public class JrnlDreamCacheEvictor
         EhCacheUtils.evictCache("jrnlDayDtlDto", jrnlDream.getJrnlDayNo());
         this.evictCacheForPeriod("jrnlDayList", yy, mnth);
         // jrnl_dream_tag
+        EhCacheUtils.evictCacheAll("jrnlDreamList");
         this.evictCacheForPeriod("jrnlDreamTagList", yy, mnth);
         this.evictCacheForPeriod("jrnlDreamSizedTagList", yy, mnth);
         // L2캐시 처리

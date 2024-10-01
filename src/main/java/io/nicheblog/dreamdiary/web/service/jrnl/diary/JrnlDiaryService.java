@@ -60,6 +60,14 @@ public class JrnlDiaryService
     }
 
     /**
+     * 목록 조회 (dto level) :: 캐시 처리
+     */
+    @Cacheable(value="jrnlDiaryList", key="#searchParam.hashCode()")
+    public List<JrnlDiaryDto> getListDtoWithCache(final BaseSearchParam searchParam) throws Exception {
+        return this.getListDto(searchParam);
+    }
+
+    /**
      * 특정 년도의 중요 일기 목록 조회
      */
     @Cacheable(value="imprtcDiaryList", key="#yy")

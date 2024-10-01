@@ -13,6 +13,33 @@
                 /* jquery :: validation */
                 commons.validate.validateForm("#jrnlDiaryRegForm", JrnlDiary.regAjax);
             },
+            /** 목록 조회 */
+            keywordListAjax: function() {
+                const keyword = $("#jrnl_aside #diaryKeyword").val();
+                if (commons.util.isEmpty(keyword)) return;
+                const url = "${Url.JRNL_DIARY_LIST_AJAX!}";
+                const ajaxData = { "diaryKeyword": $("#jrnl_aside #diaryKeyword").val() };
+                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    $("#jrnl_aside #yy").val("");
+                    $("#jrnl_aside #mnth").val("");
+                    // 목록 영역 클리어
+                    $("#jrnl_aside #dreamKeyword").val("");
+                    $("#jrnl_day_list_div").empty();
+                    $("#jrnl_dream_list_div").empty();
+                    // 태그 헤더 클리어
+                    $("#jrnl_day_tag_list_div").empty();
+                    $("#jrnl_diary_tag_list_div").empty();
+                    $("#jrnl_dream_tag_list_div").empty();
+                    commons.util.closeModal();
+                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_diary_list");
+                    $("[data-bs-toggle='tooltip']").tooltip();
+                    JrnlDiary.inKeywordSearchMode = true;
+                }, "block");
+            },
             /** 저널 일기 등록 모달 팝업 호출 */
             regModal: function(jrnlDayNo, stdrdDt) {
                 const obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
@@ -47,10 +74,15 @@
                     commons.util.blockUIFileAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
-                                if (res.rslt) {
+                                if (!res.rslt) return;
+                                if (JrnlDiary.inKeywordSearchMode) {
+                                    JrnlDiary.keywordListAjax();
+                                } else {
                                     JrnlDay.yyMnthListAjax();
                                     JrnlDiaryTag.listAjax();
                                 }
+                                // TODO: 결산 페이지에서 처리시도 처리해 줘야 한다.
+                                commons.util.unblockUI();
                             });
                     }, "block");
                 });

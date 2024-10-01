@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.web.event.TagProcEvent;
 import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
+import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiarySearchParam;
 import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
@@ -30,6 +31,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
+import java.util.List;
 
 /**
  * JrnlDiaryController
@@ -51,6 +53,45 @@ public class JrnlDiaryController
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
     private final JrnlDiaryService jrnlDiaryService;
+
+    /**
+     * 저널 일기 목록 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능)
+     */
+    @GetMapping(value = {Url.JRNL_DIARY_LIST_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> jrnlDiaryListAjax(
+            JrnlDiarySearchParam searchParam,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 목록 조회 및 응답에 추가
+            List<JrnlDiaryDto> jrnlDiaryList = jrnlDiaryService.getListDtoWithCache(searchParam);
+            ajaxResponse.setRsltList(jrnlDiaryList);
+
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
+    }
 
     /**
      * 저널 일기 등록/수정 처리 (Ajax)

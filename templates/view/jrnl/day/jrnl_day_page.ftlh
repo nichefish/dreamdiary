@@ -47,7 +47,8 @@
                 JrnlDreamTag.listAjax();
                 // template에 있는 tooltip들 활성화
                 $("[data-bs-toggle='tooltip']").tooltip();
-                // 꿈 키워드 검색에 엔터키 처리
+                // 일기/꿈 키워드 검색에 엔터키 처리
+                commons.util.enterKey("#diaryKeyword", JrnlDiary.keywordListAjax);
                 commons.util.enterKey("#dreamKeyword", JrnlDream.keywordListAjax);
             },
         }
@@ -79,6 +80,9 @@
         <div id="jrnl_day_list_div">
             <#--handlebars template goes in here-->
         </div>
+        <div id="jrnl_diary_list_div">
+            <#--handlebars template goes in here-->
+        </div>
         <div id="jrnl_dream_list_div">
             <#--handlebars template goes in here-->
         </div>
@@ -96,6 +100,7 @@
 <#include "/view/jrnl/day/tag/_jrnl_day_tag_dtl_modal.ftlh">
 
 <#include "/view/jrnl/diary/_jrnl_diary_reg_modal.ftlh">
+<#include "/view/jrnl/diary/_jrnl_diary_list_template.hbs">
 <#include "/view/jrnl/diary/tag/_jrnl_diary_tag_list_template.hbs">
 <#include "/view/jrnl/diary/tag/_jrnl_diary_tag_dtl_modal.ftlh">
 

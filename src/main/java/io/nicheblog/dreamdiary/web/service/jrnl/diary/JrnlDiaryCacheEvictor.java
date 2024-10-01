@@ -37,7 +37,8 @@ public class JrnlDiaryCacheEvictor
                 if (jrnlDiary == null) return;
             }
         }
-        // 상세 캐시 삭제
+        // jrnl_dream
+        EhCacheUtils.evictCacheAll("jrnlDiaryList");
         EhCacheUtils.evictCache("jrnlDiaryDtlDto", key);
         // 년도-월에 따른 캐시 삭제
         Integer yy = jrnlDiary.getYy();

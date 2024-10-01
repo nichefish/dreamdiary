@@ -61,7 +61,7 @@ public class JrnlDreamController
     @GetMapping(value = {Url.JRNL_DREAM_LIST_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayListAjax(
+    public ResponseEntity<AjaxResponse> jrnlDreamListAjax(
             JrnlDreamSearchParam searchParam,
             final LogActvtyParam logParam
     ) {

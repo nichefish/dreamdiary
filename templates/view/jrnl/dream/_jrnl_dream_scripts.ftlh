@@ -43,10 +43,17 @@
                     }
                     $("#jrnl_aside #yy").val("");
                     $("#jrnl_aside #mnth").val("");
+                    // 목록 영역 클리어
+                    $("#jrnl_aside #diaryKeyword").val("");
                     $("#jrnl_day_list_div").empty();
+                    $("#jrnl_diary_list_div").empty();
+                    // 태그 헤더 클리어
+                    $("#jrnl_day_tag_list_div").empty();
+                    $("#jrnl_diary_tag_list_div").empty();
                     $("#jrnl_dream_tag_list_div").empty();
                     commons.util.closeModal();
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_list");
+                    $("[data-bs-toggle='tooltip']").tooltip();
                     JrnlDream.inKeywordSearchMode = true;
                 }, "block");
             },
