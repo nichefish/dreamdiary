@@ -83,7 +83,7 @@ public class ContentTagEntity
     /**
      * 생성자
      */
-    public ContentTagEntity(Integer refTagNo, BaseClsfKey clsfKey) {
+    public ContentTagEntity(final Integer refTagNo, final BaseClsfKey clsfKey) {
         this.refTagNo = refTagNo;
         this.refPostNo = clsfKey.getPostNo();
         this.refContentType = clsfKey.getContentType();

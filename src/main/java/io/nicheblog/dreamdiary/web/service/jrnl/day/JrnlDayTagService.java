@@ -58,7 +58,7 @@ public class JrnlDayTagService
     }
 
     @Cacheable(value="jrnlDayTagList", key="#yy + \"_\" + #mnth")
-    public List<TagDto> getListDtoWithCache(Integer yy, Integer mnth) throws Exception {
+    public List<TagDto> getListDtoWithCache(final Integer yy, final Integer mnth) throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("yy", yy);
             put("mnth", mnth);
@@ -71,7 +71,7 @@ public class JrnlDayTagService
      * 태그 1개 = 1. 그 외엔 2~9
      */
     @Cacheable(value="jrnlDaySizedTagList", key="#yy + \"_\" + #mnth")
-    public List<TagDto> getDaySizedListDto(Integer yy, Integer mnth) throws Exception {
+    public List<TagDto> getDaySizedListDto(final Integer yy, final Integer mnth) throws Exception {
         // 저널 꿈 태그 DTO 목록 조회
         List<TagDto> tagList = this.getSelf().getListDtoWithCache(yy, mnth);
 
@@ -96,7 +96,7 @@ public class JrnlDayTagService
     /**
      * 최대 사용빈도 계산한 꿈 태그 목록 조회
      */
-    public Integer calcMaxSize(List<TagDto> tagList, Integer yy, Integer mnth) {
+    public Integer calcMaxSize(final List<TagDto> tagList, Integer yy, Integer mnth) {
         int maxFrequency = 0;
         for (TagDto tag : tagList) {
             // 캐싱 처리 위해 셀프 프록시
@@ -111,11 +111,11 @@ public class JrnlDayTagService
      * 일자 태그별 크기 조회
      */
     @Cacheable(value="countDaySize", key="#tagNo + \"_\" + #yy + \"_\" + #mnth")
-    public Integer countDaySize(Integer tagNo, Integer yy, Integer mnth) {
+    public Integer countDaySize(final Integer tagNo, final Integer yy, final Integer mnth) {
         return jrnlDayTagRepository.countDiarySize(tagNo, yy, mnth);
     }
 
-    public Map<String, List<TagDto>> getDaySizedGroupListDto(Integer yy, Integer mnth) throws Exception {
+    public Map<String, List<TagDto>> getDaySizedGroupListDto(final Integer yy, final Integer mnth) throws Exception {
 
         List<TagDto> tagList = this.getDaySizedListDto(yy, mnth);
 

@@ -31,23 +31,23 @@ public interface JrnlDayTagRepository
 
     @Override
     @EntityGraph(value = "JrnlDayTagEntity.withTag")
-    Optional<JrnlDayTagEntity> findById(Integer key);
+    Optional<JrnlDayTagEntity> findById(final Integer key);
 
     @Override
     @EntityGraph(value = "JrnlDayTagEntity.withTag")
-    Page<JrnlDayTagEntity> findAll(@Nullable Specification<JrnlDayTagEntity> spec, Pageable pageable);
+    Page<JrnlDayTagEntity> findAll(final @Nullable Specification<JrnlDayTagEntity> spec, final Pageable pageable);
 
     @Override
     @EntityGraph(value = "JrnlDayTagEntity.withTag")
-    List<JrnlDayTagEntity> findAll(@Nullable Specification<JrnlDayTagEntity> spec);
+    List<JrnlDayTagEntity> findAll(final @Nullable Specification<JrnlDayTagEntity> spec);
 
     @Override
     @EntityGraph(value = "JrnlDayTagEntity.withTag")
-    List<JrnlDayTagEntity> findAll(@Nullable Specification<JrnlDayTagEntity> spec, Sort sort);
+    List<JrnlDayTagEntity> findAll(final @Nullable Specification<JrnlDayTagEntity> spec, final Sort sort);
 
     @Override
     @EntityGraph(value = "JrnlDayTagEntity.withTag")
-    Stream<JrnlDayTagEntity> streamAllBy(@Nullable Specification<JrnlDayTagEntity> spec);
+    Stream<JrnlDayTagEntity> streamAllBy(final @Nullable Specification<JrnlDayTagEntity> spec);
 
     /**
      * 년도/월별 저널 꿈 태그 개수 조회

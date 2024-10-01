@@ -146,7 +146,7 @@ public class UserEntity
     /**
      * tagify 문자열로부터 List<useAcsIpEntity> 세팅
      */
-    public void setAuthList(String authStr) {
+    public void setAuthList(final String authStr) {
         if (StringUtils.isEmpty(authStr)) return;
         // 권한 정보 문자열에서 권한 목록 생성
         List<String> authStrList = List.of(authStr.split(","));
@@ -158,7 +158,7 @@ public class UserEntity
     /**
      * tagify 문자열로부터 List<useAcsIpEntity> 세팅
      */
-    public void setAcsIpList(String tagifyStr) {
+    public void setAcsIpList(final String tagifyStr) {
         List<String> acsIpStrList = CmmUtils.parseTagify(tagifyStr);
         this.setAcsIpList(acsIpStrList.stream()
                 .map(UserAcsIpEntity::new)

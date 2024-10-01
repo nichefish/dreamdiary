@@ -30,7 +30,7 @@ public enum DayOfWeek {
     /* ----- */
 
     /** 인덱스 받아서 한글 반환 */
-    public static String asKorean(Integer idx) {
+    public static String asKorean(final Integer idx) {
         for (DayOfWeek day : DayOfWeek.values()) {
             if (Objects.equals(day.idx, idx)) {
                 return day.kor;
@@ -39,7 +39,7 @@ public enum DayOfWeek {
         throw new IllegalArgumentException("Invalid dayofweek index: " + idx);
     }
     /** 인덱스 받아서 한자 반환 */
-    public static String asChinese(Integer idx) {
+    public static String asChinese(final Integer idx) {
         for (DayOfWeek day : DayOfWeek.values()) {
             if (Objects.equals(day.idx, idx)) {
                 return day.chinese;

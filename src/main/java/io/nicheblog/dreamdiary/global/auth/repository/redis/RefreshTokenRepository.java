@@ -18,8 +18,8 @@ z *
 public interface RefreshTokenRepository
         extends CrudRepository<RefreshToken, String> {
 
-    Optional<RefreshToken> findByToken(String token);
+    Optional<RefreshToken> findByToken(final String token);
 
-    Optional<RefreshToken> findByAuthId(String authId);
+    Optional<RefreshToken> findByAuthId(final String authId);
 }
 

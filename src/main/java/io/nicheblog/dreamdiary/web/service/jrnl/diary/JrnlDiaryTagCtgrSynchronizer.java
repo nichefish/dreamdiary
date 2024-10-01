@@ -37,7 +37,7 @@ public class JrnlDiaryTagCtgrSynchronizer {
 
         List<JrnlDiaryTagEntity> tagList = jrnlDreamTagService.getListEntity(new HashMap<>());
 
-        Map<String, List<String>> tagCtgryMap = tagList.stream()
+        Map<String, List<String>> tagCtgrMap = tagList.stream()
                 .collect(Collectors.groupingBy(
                         JrnlDiaryTagEntity::getTagNm,
                         Collectors.mapping(tag -> {
@@ -47,16 +47,16 @@ public class JrnlDiaryTagCtgrSynchronizer {
                 ));
 
         // 각 태그의 카테고리 리스트를 정렬
-        tagCtgryMap.forEach((key, value) -> value.sort(String::compareTo));
+        tagCtgrMap.forEach((key, value) -> value.sort(String::compareTo));
 
         // 파일 생성 (메소드 분리)
-        this.writeToFile(tagCtgryMap);
+        this.writeToFile(tagCtgrMap);
     }
 
     /**
      * 파일 생성 (메소드 분리)
      */
-    private void writeToFile(Map<String, List<String>> tagCtgryMap) throws Exception {
+    private void writeToFile(final Map<String, List<String>> tagCtgrMap) throws Exception {
         String FILE_PATH = "templates/view/jrnl/diary/tag/_jrnl_diary_tag_ctgr_map.ftlh";
         String MAP_NM = "jrnlDiary";
 
@@ -66,10 +66,10 @@ public class JrnlDiaryTagCtgrSynchronizer {
             fileWriter.write("\tTagCtgrMap." + MAP_NM + " = (function() {\n");
             fileWriter.write("\t\treturn {\n");
 
-            if (tagCtgryMap.isEmpty()) {
+            if (tagCtgrMap.isEmpty()) {
                 fileWriter.write("\t\t // tag list is empty. \n");
             } else {
-                for (Map.Entry<String, List<String>> entry : tagCtgryMap.entrySet()) {
+                for (Map.Entry<String, List<String>> entry : tagCtgrMap.entrySet()) {
                     String tagName = entry.getKey();
                     List<String> ctgrList = entry.getValue();
                     String formattedCategories = ctgrList.stream()

@@ -91,7 +91,7 @@ public class JrnlSumryEntity
     /* ----- */
 
     /** 생성자 */
-    public JrnlSumryEntity(Integer yy) {
+    public JrnlSumryEntity(final Integer yy) {
         this.yy = yy;
     }
 

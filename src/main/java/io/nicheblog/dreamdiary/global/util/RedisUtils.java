@@ -23,21 +23,21 @@ public class RedisUtils {
     /**
      * setData
      */
-    public void setData(String key, String value,Long expiredTime){
+    public void setData(final String key, final String value, final Long expiredTime){
         redisTemplate.opsForValue().set(key, value, expiredTime, TimeUnit.MILLISECONDS);
     }
 
     /**
      * getData
      */
-    public String getData(String key){
+    public String getData(final String key){
         return (String) redisTemplate.opsForValue().get(key);
     }
 
     /**
      * deleteData
      */
-    public void deleteData(String key){
+    public void deleteData(final String key){
         redisTemplate.delete(key);
     }
 }

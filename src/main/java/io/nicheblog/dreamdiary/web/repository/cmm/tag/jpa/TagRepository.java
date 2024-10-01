@@ -25,12 +25,12 @@ public interface TagRepository
     /**
      * 태그명으로 테이블 조회
      */
-    Optional<TagEntity> findByTagNm(String tagNo);
+    Optional<TagEntity> findByTagNm(final String tagNo);
     
     /**
      * 태그명 + 카테고리명으로 테이블 조회
      */
-    Optional<TagEntity> findByTagNmAndCtgr(String tagNm, String ctgr);
+    Optional<TagEntity> findByTagNmAndCtgr(final String tagNm, final String ctgr);
 
     /**
      * 년도/월별 저널 꿈 태그 개수 조회

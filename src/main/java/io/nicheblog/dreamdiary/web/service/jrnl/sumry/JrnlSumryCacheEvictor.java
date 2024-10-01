@@ -19,7 +19,7 @@ public class JrnlSumryCacheEvictor
      * 관련 Cache Evict
      */
     @Override
-    public void evict(Integer key) throws Exception {
+    public void evict(final Integer key) throws Exception {
         // 목록 캐시 초기화
         EhCacheUtils.evictCacheAll("jrnlSumryList");
         EhCacheUtils.evictCacheAll("jrnlTotalSumry");

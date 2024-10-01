@@ -24,7 +24,7 @@ public class JrnlDayCacheEvictor
      * 관련 Cache Evict
      */
     @Override
-    public void evict(Integer key) throws Exception {
+    public void evict(final Integer key) throws Exception {
         // jrnl_day
         EhCacheUtils.evictCacheAll("jrnlDayList");
         // 태그가 삭제되었을 때 태그 목록 캐시 초기화

@@ -23,7 +23,7 @@ public class XlsxTemplateLoader {
     /**
      * 엑셀 XSSF 템플릿 조회
      */
-    public static XSSFWorkbook loadTemplateAsXssf(String templatePath) throws IOException {
+    public static XSSFWorkbook loadTemplateAsXssf(final String templatePath) throws IOException {
         FileInputStream fis = new FileInputStream(templatePath);
         XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fis);
         // XSSFWorkbook을 SXSSFWorkbook으로 변환
@@ -34,7 +34,7 @@ public class XlsxTemplateLoader {
     /**
      * 엑셀 SXSSF 템플릿 조회 (스트림 처리)
      */
-    public static SXSSFWorkbook loadTemplateAsSxssf(String templatePath) throws IOException {
+    public static SXSSFWorkbook loadTemplateAsSxssf(final String templatePath) throws IOException {
         XSSFWorkbook xssfWorkbook = loadTemplateAsXssf(templatePath);
         // XSSFWorkbook을 SXSSFWorkbook으로 변환
         SXSSFWorkbook sxssfWorkbook = new SXSSFWorkbook(xssfWorkbook);

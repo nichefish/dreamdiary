@@ -34,7 +34,7 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
     /**
      * EntityList to DtoList
      */
-    default List<ListDto> toDtoList(List<Entity> entityList) {
+    default List<ListDto> toDtoList(final List<Entity> entityList) {
         if (CollectionUtils.isEmpty(entityList)) return null;
         AtomicLong i = new AtomicLong(1);
         return entityList.stream()

@@ -63,7 +63,7 @@ public class JrnlDiaryService
      * 특정 년도의 중요 일기 목록 조회
      */
     @Cacheable(value="imprtcDiaryList", key="#yy")
-    public List<JrnlDiaryDto> getImprtcDiaryList(Integer yy) throws Exception {
+    public List<JrnlDiaryDto> getImprtcDiaryList(final Integer yy) throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("yy", yy);
             put("imprtcYn", "Y");
@@ -105,7 +105,7 @@ public class JrnlDiaryService
      * 상세 조회 (dto level) :: 캐시 처리
      */
     @Cacheable(value="jrnlDiaryDtlDto", key="#key")
-    public JrnlDiaryDto getDtlDtoWithCache(Integer key) throws Exception {
+    public JrnlDiaryDto getDtlDtoWithCache(final Integer key) throws Exception {
         return this.getDtlDto(key);
     }
 
@@ -131,7 +131,7 @@ public class JrnlDiaryService
     /**
      * 삭제 데이터 조회
      */
-    public JrnlDiaryDto getDeletedDtlDto(Integer postNo) throws Exception {
+    public JrnlDiaryDto getDeletedDtlDto(final Integer postNo) throws Exception {
         return jrnlDiaryMapper.getDeletedByPostNo(postNo);
     }
 }

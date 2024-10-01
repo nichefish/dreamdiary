@@ -137,7 +137,7 @@ public class SchdulCalService {
     /**
      * CalDto 생성 :: 메소드 분리
      */
-    private SchdulCalDto initNewCalDto(VcatnSchdulEntity vcatn, Date keyDt) throws Exception {
+    private SchdulCalDto initNewCalDto(final VcatnSchdulEntity vcatn, final Date keyDt) throws Exception {
         SchdulCalDto calDto = schdulCalMapstruct.toCalDto(vcatn);
         calDto.setBgnDt(DateUtils.asStr(keyDt, DatePtn.DATE));
         if (StringUtils.isEmpty(calDto.getSchdulCd())) calDto.setSchdulCd(Constant.SCHDUL_VCATN);
@@ -147,7 +147,7 @@ public class SchdulCalService {
     /**
      * CalDto 마무리 :: 메소드 분리
      */
-    private void finNewCalDto(SchdulCalDto calDto, Date keyDt) throws Exception {
+    private void finNewCalDto(final SchdulCalDto calDto, final Date keyDt) throws Exception {
         calDto.setEndDt(DateUtils.Parser.eDateParseStr(keyDt));
         // 1일짜리 일정일 경우 : allday=true로 줘야 제대로 나온다.
         boolean isSameDay = DateUtils.isSameDay(calDto.getBgnDt(), calDto.getEndDt());

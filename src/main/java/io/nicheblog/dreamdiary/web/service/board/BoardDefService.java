@@ -106,7 +106,7 @@ public class BoardDefService
      * 정렬 순서 업데이트
      */
     @Transactional
-    public boolean sortOrdr(List<BoardDefDto> sortOrdr) throws Exception {
+    public boolean sortOrdr(final List<BoardDefDto> sortOrdr) throws Exception {
         if (CollectionUtils.isEmpty(sortOrdr)) return true;
         sortOrdr.forEach(dto -> {
             try {

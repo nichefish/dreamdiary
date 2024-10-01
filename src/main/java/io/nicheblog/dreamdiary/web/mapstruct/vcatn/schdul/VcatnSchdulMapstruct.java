@@ -73,7 +73,7 @@ public interface VcatnSchdulMapstruct
     /**
      * DtoList to EntityList
      */
-    default List<VcatnSchdulEntity> toEntityList(List<VcatnSchdulDto> dtoList) {
+    default List<VcatnSchdulEntity> toEntityList(final List<VcatnSchdulDto> dtoList) {
         if (CollectionUtils.isEmpty(dtoList)) return null;
         return dtoList.stream()
                 .map(dto -> {

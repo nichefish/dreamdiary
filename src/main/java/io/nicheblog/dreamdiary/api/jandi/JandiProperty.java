@@ -43,7 +43,7 @@ public class JandiProperty {
     }
 
     /** 토픽 조회 */
-    public String getId(String name) {
+    public String getId(final String name) {
         if (StringUtils.isEmpty(name)) throw new JandiException("팀 이름을 찾을 수 없습니다.");
         for (Topic topic : this.topics) {
             if (name.equals(topic.getName())) return topic.getId();

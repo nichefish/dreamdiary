@@ -94,7 +94,7 @@ public class DreamdiaryAuthenticationProvider
     /**
      * 중복 로그인 후 재접속 여부 :: 메소드 분리
      */
-    public Boolean isDupLgnConfirmed(String username) {
+    public Boolean isDupLgnConfirmed(final String username) {
         if (StringUtils.isEmpty(username)) return false;
         ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = servletRequestAttribute.getRequest().getSession(false);
@@ -107,7 +107,7 @@ public class DreamdiaryAuthenticationProvider
     /**
      * 접속 IP 체크 :: 메소드 분리
      */
-    public Boolean isAcsIpValid(AuthInfo authInfo) {
+    public Boolean isAcsIpValid(final AuthInfo authInfo) {
         if (!"Y".equals(authInfo.getUseAcsIpYn())) return true; 
 
         List<String> acsIpStrList = authInfo.getAcsIpStrList();

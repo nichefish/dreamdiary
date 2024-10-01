@@ -140,7 +140,7 @@ public class CmmUtils {
     /**
      * 공통 > html 태그 제거 (정규식)
      */
-    public String removeHtmlTag(String html) {
+    public String removeHtmlTag(final String html) {
         return html.replaceAll(CmmRegex.HTML_TAG_REGEX, "");
     }
 
@@ -210,7 +210,7 @@ public class CmmUtils {
     /**
      * 공통 > 마크다운 처리
      */
-    public static String markdown(String htmlContent) {
+    public static String markdown(final String htmlContent) {
         Document document = Jsoup.parseBodyFragment(htmlContent);
         Elements paragraphs = document.select("p");
         procNodes(paragraphs);
@@ -221,7 +221,7 @@ public class CmmUtils {
         return document.body().html(); // 변경된 HTML 반환
     }
 
-    public static void procNodes(Elements elements) {
+    public static void procNodes(final Elements elements) {
         for (Element elmt : elements) {
             // <p> 태그 내의 모든 자식 노드를 순회
             for (Node child : elmt.childNodes()) {
@@ -242,7 +242,7 @@ public class CmmUtils {
     /**
      * 텍스트 마크다운 처리 :: 메소드 분리
      **/
-    public static String procText(String text) {
+    public static String procText(final String text) {
         final int MAX_GROUP_LENGTH = 3000;
 
         // 텍스트를 <pre> 태그 기준으로 분할, <pre> </pre> 사이는 처리하지 않음

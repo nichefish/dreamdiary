@@ -88,7 +88,7 @@ public class TagSpec
     /** 
      * 컨텐츠 타입에 맞는 태그 목록 조회 
      */
-    public Specification<TagEntity> getContentSpecificTag(String contentType) {
+    public Specification<TagEntity> getContentSpecificTag(final String contentType) {
         Map<String, Object> searchParamMap = new HashMap<>(){{
             put("contentType", contentType);
         }};

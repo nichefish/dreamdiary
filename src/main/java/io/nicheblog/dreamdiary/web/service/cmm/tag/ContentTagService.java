@@ -58,7 +58,7 @@ public class ContentTagService
     /**
      * 특정 게시물에 대한 컨텐츠 태그 목록 조회 
      */
-    public List<TagDto> getTagStrListByClsfKey(BaseClsfKey clsfKey) {
+    public List<TagDto> getTagStrListByClsfKey(final BaseClsfKey clsfKey) {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("refPostNo", clsfKey.getPostNo());
             put("refContentType", clsfKey.getContentType());
@@ -73,7 +73,7 @@ public class ContentTagService
     /**
      * obsolete된 기존 컨텐츠 태그 삭제:: 메소드 분리
      */
-    public void delObsoleteContentTags(BaseClsfKey clsfKey, List<TagDto> obsoleteTagList) throws Exception {
+    public void delObsoleteContentTags(final BaseClsfKey clsfKey, final List<TagDto> obsoleteTagList) throws Exception {
         obsoleteTagList.forEach(tag -> {
             contentTagRepository.deleteObsoleteContentTags(clsfKey.getPostNo(), clsfKey.getContentType(), tag.getTagNm(), tag.getCtgr());
         });
@@ -82,7 +82,7 @@ public class ContentTagService
     /**
      * 컨텐츠 태그 처리
      */
-    public void procContentTags(BaseClsfKey clsfKey, List<TagEntity> rsList) throws Exception {
+    public void procContentTags(final BaseClsfKey clsfKey, final List<TagEntity> rsList) throws Exception {
         List<ContentTagEntity> contentTagList = rsList.stream()
                 .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
                 .collect(Collectors.toList());
@@ -93,7 +93,7 @@ public class ContentTagService
      * 컨텐츠 태그 전처리::
      */
     @Override
-    public void postRegistAll(List<ContentTagEntity> entityList) {
+    public void postRegistAll(final List<ContentTagEntity> entityList) {
         // 태그 개수 캐시 초기화
         entityList.forEach(entity -> {
             String contentType = entity.getRefContentType();
@@ -107,7 +107,7 @@ public class ContentTagService
     /**
      * 기존 컨텐츠 태그 전부 삭제:: 메소드 분리
      */
-    public void delExistingContentTags(BaseClsfKey clsfKey) throws Exception {
+    public void delExistingContentTags(final BaseClsfKey clsfKey) throws Exception {
         // 2. 글번호 + 태그번호를 받아와서 기존 태그 목록 조회
         Map<String, Object> searchParamMap = new HashMap(){{
             put("refPostNo", clsfKey.getPostNo());
@@ -128,7 +128,7 @@ public class ContentTagService
     /**
      * 콘텐츠 타입에 따른 캐시 이름 반환 :: 메소드 분리
      */
-    private String getCacheNameByContentType(String contentType) {
+    private String getCacheNameByContentType(final String contentType) {
         if (ContentType.JRNL_DAY.key.equals(contentType)) {
             return "countDaySize";
         } else if (ContentType.JRNL_DIARY.key.equals(contentType)) {
@@ -142,7 +142,7 @@ public class ContentTagService
     /**
      * 기간에 따른 컨텐츠 태그 캐시 삭제 :: 메소드 분리
      */
-    private void evictCacheForPeriod(String cacheName, Integer tagNo) {
+    private void evictCacheForPeriod(final String cacheName, final Integer tagNo) {
         try {
             int currYy = DateUtils.getCurrYy();
             for (int yy = 2010; yy <= currYy; yy++) {

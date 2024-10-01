@@ -65,10 +65,10 @@ public class TagService
     /**
      * 컨텐츠 타입에 해당하는 태그만 INNER-JOIN으로 조회
      */
-    public List<TagDto> getContentSpecificTagList(ContentType contentType) {
+    public List<TagDto> getContentSpecificTagList(final ContentType contentType) {
         return this.getContentSpecificTagList(contentType.key);
     }
-    public List<TagDto> getContentSpecificTagList(String contentType) {
+    public List<TagDto> getContentSpecificTagList(final String contentType) {
         List<TagEntity> contentSpeficitTagList = tagRepository.findAll(tagSpec.getContentSpecificTag(contentType));
         return contentSpeficitTagList.stream()
                 .map(entity -> {
@@ -84,7 +84,7 @@ public class TagService
     /**
      * 컨텐츠 타입에 해당하는 태그만 INNER-JOIN으로 조회 (사이즈 정보 포함)
      */
-    public List<TagDto> getContentSpecificSizedTagList(ContentType contentType) {
+    public List<TagDto> getContentSpecificSizedTagList(final ContentType contentType) {
         List<TagDto> tagList = this.getContentSpecificTagList(contentType);
 
         int maxSize = this.calcMaxSize(tagList, contentType);
@@ -108,7 +108,7 @@ public class TagService
     /**
      * 최대 사용빈도 계산한 태그 목록 조회
      */
-    public Integer calcMaxSize(List<TagDto> tagList, ContentType contentType) {
+    public Integer calcMaxSize(final List<TagDto> tagList, final ContentType contentType) {
         int maxFrequency = 0;
         for (TagDto tag : tagList) {
             // 캐싱 처리 위해 셀프 프록시
@@ -119,7 +119,7 @@ public class TagService
         return maxFrequency;
     }
 
-    public Integer countTagSize(Integer tagNo, ContentType contentType) {
+    public Integer countTagSize(final Integer tagNo, final ContentType contentType) {
         return tagRepository.countTagSize(tagNo, contentType.key);
     }
 
@@ -127,7 +127,7 @@ public class TagService
      * 컨텐츠 태그 처리
      */
     @Transactional
-    public void procTags(BaseClsfKey clsfKey, TagCmpstn tagCmpstn) throws Exception {
+    public void procTags(final BaseClsfKey clsfKey, final TagCmpstn tagCmpstn) throws Exception {
         // 태그객체가 넘어오지 않았으면? 리턴.
         if (tagCmpstn == null) return;
 
@@ -159,7 +159,7 @@ public class TagService
     /**
      * 마스터 태그 처리:: 메소드 분리
      */
-    public List<TagEntity> addMasterTag(List<TagDto> tagList, BaseClsfKey clsfKey) {
+    public List<TagEntity> addMasterTag(final List<TagDto> tagList, final BaseClsfKey clsfKey) {
 
         String contentType = clsfKey.getContentType();
         List<TagEntity> tagEntityList = tagList.stream()

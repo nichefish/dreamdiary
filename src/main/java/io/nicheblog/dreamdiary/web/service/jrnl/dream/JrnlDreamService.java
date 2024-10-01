@@ -71,7 +71,7 @@ public class JrnlDreamService
      * 특정 년도의 중요 꿈 목록 조회
      */
     @Cacheable(value="imprtcDreamList", key="#yy")
-    public List<JrnlDreamDto> getImprtcDreamList(Integer yy) throws Exception {
+    public List<JrnlDreamDto> getImprtcDreamList(final Integer yy) throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("yy", yy);
             put("imprtcYn", "Y");
@@ -115,7 +115,7 @@ public class JrnlDreamService
      * 상세 조회 (dto level) :: 캐시 처리
      */
     @Cacheable(value="jrnlDreamDtlDto", key="#key")
-    public JrnlDreamDto getDtlDtoWithCache(Integer key) throws Exception {
+    public JrnlDreamDto getDtlDtoWithCache(final Integer key) throws Exception {
         return this.getDtlDto(key);
     }
 
@@ -141,7 +141,7 @@ public class JrnlDreamService
     /**
      * 삭제 데이터 조회
      */
-    public JrnlDreamDto getDeletedDtlDto(Integer postNo) throws Exception {
+    public JrnlDreamDto getDeletedDtlDto(final Integer postNo) throws Exception {
         return jrnlDreamMapper.getDeletedByPostNo(postNo);
     }
 }

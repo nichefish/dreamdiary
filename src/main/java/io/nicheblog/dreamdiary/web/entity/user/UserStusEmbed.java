@@ -75,7 +75,7 @@ public class UserStusEmbed {
     /* ----- */
 
     /** 생성자 */
-    public UserStusEmbed(String reqstYn, String cfYn) {
+    public UserStusEmbed(final String reqstYn, final String cfYn) {
         this.reqstYn = reqstYn;
         this.cfYn = cfYn;
     }

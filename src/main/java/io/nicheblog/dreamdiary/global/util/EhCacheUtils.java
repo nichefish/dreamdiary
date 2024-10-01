@@ -86,7 +86,7 @@ public class EhCacheUtils {
      * @param cacheKey 캐시 키
      * @return 캐시에서 가져온 오브젝트, 캐시에 해당 키가 없는 경우 null 반환
      */
-    public static Object getObjectFromCache(String cacheName, Object cacheKey) {
+    public static Object getObjectFromCache(final String cacheName, final Object cacheKey) {
         Cache cache = cacheManager.getCache(cacheName);
         if (cache == null) {
             log.info("Cache with name {} does not exist.", cacheName);
@@ -138,7 +138,7 @@ public class EhCacheUtils {
     /**
      * Hibernate Second Level 캐시 특정 엔티티 삭제
      */
-    public static void clearL2Cache(Class<?> clazz) {
+    public static void clearL2Cache(final Class<?> clazz) {
         org.hibernate.Cache cache = sessionFactory.getCache();
         cache.evictEntityData(clazz);
     }

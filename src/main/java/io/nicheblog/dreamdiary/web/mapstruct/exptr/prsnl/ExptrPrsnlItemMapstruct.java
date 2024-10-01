@@ -54,7 +54,7 @@ public interface ExptrPrsnlItemMapstruct
     /**
      * EntityList to DtoList
      */
-    default List<ExptrPrsnlItemDto> toDtoList(List<ExptrPrsnlItemEntity> entityList) {
+    default List<ExptrPrsnlItemDto> toDtoList(final List<ExptrPrsnlItemEntity> entityList) {
         if (CollectionUtils.isEmpty(entityList)) return null;
         return entityList.stream()
                 .map(entity -> {

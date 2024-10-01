@@ -119,7 +119,7 @@ public class JrnlDayService
      * 상세 조회 (dto level) :: 캐시 처리
      */
     @Cacheable(value="jrnlDayDtlDto", key="#key")
-    public JrnlDayDto getDtlDtoWithCache(Integer key) throws Exception {
+    public JrnlDayDto getDtlDtoWithCache(final Integer key) throws Exception {
         return this.getDtlDto(key);
     }
 
@@ -174,7 +174,7 @@ public class JrnlDayService
     /**
      * 삭제 데이터 조회
      */
-    public JrnlDayDto getDeletedDtlDto(Integer postNo) throws Exception {
+    public JrnlDayDto getDeletedDtlDto(final Integer postNo) throws Exception {
         return jrnlDayMapper.getDeletedByPostNo(postNo);
     }
 }

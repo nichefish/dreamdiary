@@ -74,7 +74,7 @@ public class JrnlSumryService
             @CacheEvict(value={"jrnlTotalSumry", "jrnlSumryList"}, allEntries = true),
             @CacheEvict(value="jrnlSumryDtlByYy", key="#rslt.getYy()")
     })
-    public Boolean makeYySumry(Integer yy) {
+    public Boolean makeYySumry(final Integer yy) {
         // 해당 년도 결산 정보 조회
         JrnlSumryEntity sumry = jrnlSumryRepository.findByYy(yy).orElse(new JrnlSumryEntity(yy));
 
@@ -142,7 +142,7 @@ public class JrnlSumryService
      * 캐시 사용 위해 구현체로 pullUp
      */
     @Cacheable(value="jrnlSumryDtlByYy", key="#yy")
-    public JrnlSumryDto getDtlDtoByYy(Integer yy) throws Exception {
+    public JrnlSumryDto getDtlDtoByYy(final Integer yy) throws Exception {
         Optional<JrnlSumryEntity> entityWrapper = jrnlSumryRepository.findByYy(yy);
         if (entityWrapper.isEmpty()) return null;
         return jrnlSumryMapstruct.toDto(entityWrapper.get());
@@ -151,7 +151,7 @@ public class JrnlSumryService
     /**
      * 저널 결산 꿈 기록 완료 처리
      */
-    public boolean dreamCompt(Integer key) throws Exception {
+    public boolean dreamCompt(final Integer key) throws Exception {
         JrnlSumryEntity entity = this.getDtlEntity(key);
         entity.setDreamComptYn("Y");
         jrnlSumryRepository.save(entity);

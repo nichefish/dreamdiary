@@ -21,5 +21,5 @@ public interface CommentRepository
 
     @Override
     @EntityGraph(value = "CommentEntity.withCtgrCd")
-    Optional<CommentEntity> findById(Integer key);
+    Optional<CommentEntity> findById(final Integer key);
 }

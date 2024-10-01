@@ -36,7 +36,7 @@ public class KafkaUtils {
     /**
      * 메세지 전송
      */
-    public static void sendMessage(String message) {
+    public static void sendMessage(final String message) {
         log.info("Produce message : {}", message);
         kafkaTemplate.send(TOPIC, message);
     }
@@ -45,7 +45,7 @@ public class KafkaUtils {
      * 메세지 처리
      */
     @KafkaListener(topics = TOPIC, groupId = "dreamdiary")
-    public static void consume(String message) throws IOException {
+    public static void consume(final String message) throws IOException {
         log.info("Consumed message : {}", message);
     }
 

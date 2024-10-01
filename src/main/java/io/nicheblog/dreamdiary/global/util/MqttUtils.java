@@ -21,7 +21,7 @@ public class MqttUtils {
      * @param serverUri
      * @return IMqttClient 객체
      */
-    public IMqttClient getConnection(String serverUri) throws MqttException {
+    public IMqttClient getConnection(final String serverUri) throws MqttException {
         // 기본 옵션 설정
         MqttConnectOptions options = new MqttConnectOptions();
         options.setAutomaticReconnect(true);
@@ -36,7 +36,7 @@ public class MqttUtils {
      * @param options
      * @return IMqttClient 객체
      */
-    public IMqttClient getConnection(String serverUri, MqttConnectOptions options) throws MqttException {
+    public IMqttClient getConnection(final String serverUri, final MqttConnectOptions options) throws MqttException {
         String clientId = UUID.randomUUID().toString();
         IMqttClient client = new MqttClient(serverUri, clientId);
         client.connect(options);
@@ -50,7 +50,7 @@ public class MqttUtils {
      * @param getConnection
      * @return IMqttClient 객체
      */
-    public IMqttClient getConnection(String serverUri, MqttConnectOptions options, Boolean getConnection) throws MqttException {
+    public IMqttClient getConnection(final String serverUri, final MqttConnectOptions options, final Boolean getConnection) throws MqttException {
         String clientId = UUID.randomUUID().toString();
         IMqttClient client = new MqttClient(serverUri, clientId);
         if (getConnection) client.connect(options);
@@ -60,14 +60,14 @@ public class MqttUtils {
     /**
      * connection
      */
-    public void doConnect(IMqttClient client, MqttConnectOptions options) throws MqttException {
+    public void doConnect(final IMqttClient client, final MqttConnectOptions options) throws MqttException {
         client.connect(options);
     }
 
     /**
      * connection
      */
-    public void doConnect(IMqttClient client) throws MqttException {
+    public void doConnect(final IMqttClient client) throws MqttException {
         MqttConnectOptions options = this.getDefaultOption();
         doConnect(client, options);
     }
@@ -87,7 +87,7 @@ public class MqttUtils {
     /**
      * Mqtt 메세지 발행
      */
-    public void doPublish(IMqttClient client, String topic, String message) throws Exception {
+    public void doPublish(final IMqttClient client, final String topic, final String message) throws Exception {
         if (!client.isConnected()) return;
         MqttMessage msg = getMqttMessage(message);
         // TODO :: 옵션 살펴보기
@@ -97,7 +97,7 @@ public class MqttUtils {
     }
 
     /** 문자열에서 바이트 페이로드 생성 */
-    private MqttMessage getMqttMessage(String message) {
+    private MqttMessage getMqttMessage(final String message) {
         byte[] payload = message.getBytes();
         return new MqttMessage(payload);
     }

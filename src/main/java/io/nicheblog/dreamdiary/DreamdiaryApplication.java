@@ -54,7 +54,7 @@ public class DreamdiaryApplication {
     /**
      * 프로퍼티 파일 읽어서 시스템 환경 변수 추가 :: 메소드 분리
      */
-    private static void setDotEnvPropertiesByFileNm(String fileName) {
+    private static void setDotEnvPropertiesByFileNm(final String fileName) {
         Dotenv dotenv = Dotenv.configure().filename(fileName).load();
         dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
         log.info("Loaded {} file successfully.", fileName);

@@ -26,7 +26,7 @@ public class XlsxStyledCell
     /**
      * 생성자
      */
-    public XlsxStyledCell(String header, Integer length) {
+    public XlsxStyledCell(final String header, final Integer length) {
         super(header, length);
     }
 }

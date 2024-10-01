@@ -19,10 +19,10 @@ public interface CacheEvictor<Key extends Serializable> {
     /**
      * 캐시 이름에 대해서 기간 캐시 삭제 :: 메소드 분리
      */
-    default void evictCacheForPeriod(String cacheName, String yy, String mnth) {
+    default void evictCacheForPeriod(final String cacheName, final String yy, final String mnth) {
         this.evictCacheForPeriod(cacheName, Integer.parseInt(yy), Integer.parseInt(mnth));
     }
-    default void evictCacheForPeriod(String cacheName, Integer yy, Integer mnth) {
+    default void evictCacheForPeriod(final String cacheName, final Integer yy, final Integer mnth) {
         EhCacheUtils.evictCache(cacheName, yy + "_" + mnth);
         EhCacheUtils.evictCache(cacheName, yy + "_99");
         EhCacheUtils.evictCache(cacheName, "9999_99");

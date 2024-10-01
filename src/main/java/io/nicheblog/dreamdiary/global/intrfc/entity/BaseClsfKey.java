@@ -30,7 +30,7 @@ public class BaseClsfKey
     /* ----- */
 
     /** 생성자 */
-    public BaseClsfKey(Integer postNo, ContentType type) {
+    public BaseClsfKey(final Integer postNo, final ContentType type) {
         this.postNo = postNo;
         this.contentType = type.key;
     }

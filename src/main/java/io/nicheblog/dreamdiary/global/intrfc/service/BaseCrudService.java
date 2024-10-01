@@ -77,7 +77,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
     /**
      * default: 게시물 bulk 등록 후처리
      */
-    default void postRegistAll(List<Entity> entityList) {
+    default void postRegistAll(final List<Entity> entityList) {
         // 기본 공백, 필요시 각 함수에서 Override
     }
 
@@ -182,7 +182,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
     /**
      * default: 게시물 bulk-delete (entity level)
      */
-    default boolean deleteAll(List<Entity> entityList) {
+    default boolean deleteAll(final List<Entity> entityList) {
         Repository repository = this.getRepository();
         repository.deleteAll(entityList);
         return true;
@@ -200,7 +200,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
     /**
      * default: 게시물 bulk 삭제 후처리
      */
-    default void postDeleteAll(List<Entity> entityList) {
+    default void postDeleteAll(final List<Entity> entityList) {
         // 기본 공백, 필요시 각 함수에서 Override
     }
 }

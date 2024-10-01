@@ -99,7 +99,7 @@ public class DtlCdService
      * 정렬 순서 업데이트
      */
     @Transactional
-    public boolean sortOrdr(List<DtlCdDto> sortOrdr) throws Exception {
+    public boolean sortOrdr(final List<DtlCdDto> sortOrdr) throws Exception {
         if (CollectionUtils.isEmpty(sortOrdr)) return true;
         sortOrdr.forEach(dto -> {
             try {

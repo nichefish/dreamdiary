@@ -75,7 +75,7 @@ public class UserAuthRoleEntity
     /**
      * 생성자
      */
-    public UserAuthRoleEntity(String authCd) {
+    public UserAuthRoleEntity(final String authCd) {
         this.authCd = authCd;
     }
     

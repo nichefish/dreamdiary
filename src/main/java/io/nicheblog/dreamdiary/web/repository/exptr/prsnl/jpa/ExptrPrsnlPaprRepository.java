@@ -31,23 +31,23 @@ public interface ExptrPrsnlPaprRepository
 
     @Override
     @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
-    Optional<ExptrPrsnlPaprEntity> findById(Integer key);
+    Optional<ExptrPrsnlPaprEntity> findById(final Integer key);
 
     @Override
     @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
-    Page<ExptrPrsnlPaprEntity> findAll(@Nullable Specification<ExptrPrsnlPaprEntity> spec, Pageable pageable);
+    Page<ExptrPrsnlPaprEntity> findAll(final @Nullable Specification<ExptrPrsnlPaprEntity> spec, final Pageable pageable);
 
     @Override
     @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
-    List<ExptrPrsnlPaprEntity> findAll(@Nullable Specification<ExptrPrsnlPaprEntity> spec);
+    List<ExptrPrsnlPaprEntity> findAll(final @Nullable Specification<ExptrPrsnlPaprEntity> spec);
 
     @Override
     @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
-    List<ExptrPrsnlPaprEntity> findAll(@Nullable Specification<ExptrPrsnlPaprEntity> spec, Sort sort);
+    List<ExptrPrsnlPaprEntity> findAll(final @Nullable Specification<ExptrPrsnlPaprEntity> spec, final Sort sort);
 
     @Override
     @EntityGraph(value = "ExptrPrsnlPaprEntity.withCtgrCd")
-    Stream<ExptrPrsnlPaprEntity> streamAllBy(@Nullable Specification<ExptrPrsnlPaprEntity> spec);
+    Stream<ExptrPrsnlPaprEntity> streamAllBy(final @Nullable Specification<ExptrPrsnlPaprEntity> spec);
 
     /**
      * 존재하는 경비지출서 중 최저년도 조회

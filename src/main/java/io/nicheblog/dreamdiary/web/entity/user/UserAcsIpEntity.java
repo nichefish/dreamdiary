@@ -58,7 +58,7 @@ public class UserAcsIpEntity
     /**
      * 생성자
      */
-    public UserAcsIpEntity(String acsIp) {
+    public UserAcsIpEntity(final String acsIp) {
         this.setAcsIp(acsIp);
     }
 }

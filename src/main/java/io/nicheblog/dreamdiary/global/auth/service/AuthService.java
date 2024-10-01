@@ -120,7 +120,7 @@ public class AuthService
      * 권한 정보 조회
      * TODO: 사이트 커지면 역할 분리해야 함
      */
-    public AuthRoleEntity getAuthRole(String authCd) {
+    public AuthRoleEntity getAuthRole(final String authCd) {
         return authRoleRepository.findById(authCd).orElse(null);
     }
 

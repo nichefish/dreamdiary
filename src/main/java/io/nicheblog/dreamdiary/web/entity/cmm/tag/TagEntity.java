@@ -66,7 +66,7 @@ public class TagEntity
     public TagEntity(final String tagNm) {
         this.tagNm = tagNm;
     }
-    public TagEntity(String tagNm, String ctgr) {
+    public TagEntity(final String tagNm, final String ctgr) {
         this.tagNm = tagNm;
         this.ctgr = ctgr;
     }

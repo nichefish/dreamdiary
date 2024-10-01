@@ -67,7 +67,7 @@ public class AjaxResponse {
     }
 
     /** Map이 들어올 시 HashMap으로 변환 */
-    public void setRsltMap(Map<String, ? extends Object> map) {
+    public void setRsltMap(final Map<String, ? extends Object> map) {
         this.rsltMap = new HashMap<>(map);
     }
 }
