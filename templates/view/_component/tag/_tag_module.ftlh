@@ -24,16 +24,16 @@
                     $("#board_tag_list_modal").modal("hide");
                 });
             },
-            /** 태그로 글 목록 검색 */
-            search: function(tagNo) {
+            /** 태그로 글 목록 필터링 */
+            filter: function(tagNo) {
                 $("#listForm #pageNo").val(1);
                 $("#listForm #tags").val(tagNo);
                 const url = "${listUrl!}?actionTyCd=SEARCH";
                 commons.util.blockUISubmit("#listForm", url);
             },
-            /** 태그로 글 목록 검색 */
-            resetSearch: function() {
-                Tag.search("");
+            /** 글 목록 태그 필터링 리셋 */
+            resetFilter: function() {
+                Tag.filter("");
             },
             /** 전체 태그 목록 조회 */
             listAjax: function() {
