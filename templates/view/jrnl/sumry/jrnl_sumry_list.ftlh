@@ -46,16 +46,16 @@
                         전체 꿈
                     </span>
                     <i class="bi bi-moon-stars fs-4 me-2"></i>
-                    (<span class="text-underline-dotted text-primary fw-bold mx-1">${totalSumry.dreamDayCnt!}</span>일
+                    (<span class="text-info fw-bold mx-1">${totalSumry.dreamDayCnt!}</span>일
                     /
-                    <span class="text-underline-dotted text-primary fw-bold mx-1">${totalSumry.dreamCnt!}</span>개)
+                    <span class="text-info fw-bold mx-1">${totalSumry.dreamCnt!}</span>개)
                 </div>
                 <div class="text-gray-700 d-flex-center">
                     <span class="fw-bold me-2">
                         전체 일기
                     </span>
                     <i class="bi bi-book fs-4 mt-1 me-2"></i>
-                    (<span class="text-underline-dotted text-primary fw-bold mx-1">${totalSumry.diaryDayCnt!}</span>일)
+                    (<span class="text-info fw-bold mx-1">${totalSumry.diaryDayCnt!}</span>일)
                 </div>
             </div>
 
@@ -76,12 +76,12 @@
                 <div class="col-2 d-flex align-items-center">
                     <i class="bi bi-calendar3 fs-6 me-2"></i>
                     <a class="cursor-pointer text-underline-dotted text-dark"
-                       onclick="JrnlSumry.dtl(${jrnlSumry.postNo!});"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 화면으로 이동">
+                       href="${Url.JRNL_SUMRY_DTL!}?postNo=${jrnlSumry.postNo!}"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 화면으로 이동합니다.">
                         <#if jrnlSumry.title??>
                             <span class="fs-5 me-1">${jrnlSumry.title!}</span>
                         <#else>
-                            <span class="fs-5 fw-bold me-0">${jrnlSumry.yy!}</span>
+                            <span class="fs-5 fw-bolder me-0">${jrnlSumry.yy!}</span>
                             년 결산
                         </#if>
                     </a>
@@ -110,20 +110,19 @@
                                     <i class="bi bi-moon-stars fs-4 me-2"></i>
                                 </span>
                             </#if>
-                            (<span class="text-underline-dotted text-primary fw-bold mx-1">${jrnlSumry.dreamDayCnt!}</span>일
+                            (<span class="text-info fw-bold mx-1">${jrnlSumry.dreamDayCnt!}</span>일
                             /
-                            <span class="text-underline-dotted text-primary fw-bold mx-1">${jrnlSumry.dreamCnt!}</span>개)
+                            <span class="text-info fw-bold mx-1">${jrnlSumry.dreamCnt!}</span>개)
                         </div>
                         <div class="text-gray-700 d-flex-center">
                             <span class="fw-bold me-2">
                                 일기
                             </span>
                             <i class="bi bi-book fs-4 mt-1 me-2"></i>
-                            (<span class="text-underline-dotted text-primary fw-bold mx-1">${jrnlSumry.diaryDayCnt!}</span>일)
+                            (<span class="text-info fw-bold mx-1">${jrnlSumry.diaryDayCnt!}</span>일)
                         </div>
                     </div>
                     <div class="mt-2">
-                        <#--목록:: 태그 표시-->
                         <div class="fs-6 fw-normal text-gray-800 ps-2 pt-3 text-noti">
                             ${jrnlSumry.markdownCn?no_esc}
                         </div>

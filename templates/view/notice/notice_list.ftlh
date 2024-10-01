@@ -63,7 +63,7 @@
             <tbody>
                 <#--begin::상단고정 목록-->
                 <#list noticeFxdList![] as post>
-                    <tr class="bg-fxd-list bg-hover-secondary" onclick="Notice.dtl('${post.postNo!}');">
+                    <tr class="bg-fxd-list bg-hover-secondary cursor-default">
                         <td class="text-center hidden-table">
                             -
                         </td>
@@ -72,7 +72,8 @@
                                 <div class="col-xl-8 col-12 d-flex flex-column">
                                     <div class="my-1">
                                         <a href="${Url.NOTICE_DTL!}?postNo=${post.postNo!}"
-                                           class="title-fxd vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
+                                           class="title-fxd vertical-middle text-underline-dotted <#if (((post.imprtcYn)!"N") == "Y")!false>fw-bold</#if>"
+                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 화면으로 이동합니다.">
                                             <#if (post.ctgrNm!"") != "">
                                                 <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
                                             </#if>
@@ -120,7 +121,7 @@
                 </#list>
                 <#--begin::목록-->
                 <#list noticeList![] as post>
-                    <tr class="bg-hover-secondary" onclick="Notice.dtl('${post.postNo!}');">
+                    <tr class="bg-hover-secondary cursor-default">
                         <td class="text-center hidden-table">
                             ${post.rnum!}
                         </td>
@@ -129,7 +130,8 @@
                                 <div class="col-xl-8 col-12 d-flex flex-column">
                                     <div class="my-1">
                                         <a href="${Url.NOTICE_DTL!}?postNo=${post.postNo!}"
-                                           class="text-dark vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold text-danger</#if>">
+                                           class="text-dark vertical-middle text-underline-dotted <#if (((post.imprtcYn)!"N") == "Y")!false>fw-bold text-danger</#if>"
+                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 화면으로 이동합니다.">
                                             <#if (post.ctgrNm!"") != "">
                                                 <span class="ctgr-span ctgr-gray">${post.ctgrNm!}</span>
                                             </#if>

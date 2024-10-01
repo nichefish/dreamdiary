@@ -529,7 +529,23 @@ html, body {
   display: none;
 }
 
+/** !override */
+.text-decoration-underline {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+/** !override */
+.text-underline-dotted {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
 /** cursors */
+.cursor-default {
+  cursor: default;
+}
+
 .cursor-help {
   cursor: help;
 }

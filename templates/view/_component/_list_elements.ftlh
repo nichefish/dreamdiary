@@ -90,7 +90,8 @@
         <span class="me-6 fs-7">
             <span class="pe-1 text-muted"><i class="bi bi-tags"></i></span>
             <#list post.tag.list as tag>
-                <span class="text-muted pe-1" onclick="Tag.dtlAjax('${tag.refTagNo!}')"
+                <span class="text-muted pe-1 cursor-pointer"
+                      onclick="Tag.dtlAjax('${tag.refTagNo!}')"
                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                       title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
                     <#if tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>

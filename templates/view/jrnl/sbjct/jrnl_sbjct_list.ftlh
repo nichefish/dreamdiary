@@ -49,35 +49,40 @@
             <tbody>
                 <#--begin::상단고정 목록-->
                 <#list jrnlSbjctFxdList![] as post>
-                    <tr class="bg-fxd-list bg-hover-secondary" onclick="JrnlSbjct.dtl('${post.postNo!}');">
+                    <tr class="bg-fxd-list bg-hover-secondary cursor-default">
                         <td class="text-center hidden-table">
                             -
                         </td>
                         <td class="text-start title-fxd <#if post.tagStrList??>pb-4</#if>">
                             <div class="row d-flex align-items-center justify-content-between">
-                                <div class="col-xl-8 col-12 d-flex align-items-center">
-                                    <a href="${Url.JRNL_SBJCT_DTL!}?postNo=${post.postNo!}"
-                                       class="title-fxd vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold</#if>">
-                                        <#if (post.ctgrNm!"") != "">
-                                            <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
+                                <div class="col-xl-8 col-12 d-flex flex-column">
+                                    <div class="my-1">
+                                        <a href="${Url.JRNL_SBJCT_DTL!}?postNo=${post.postNo!}"
+                                           class="title-fxd vertical-middle text-underline-dotted <#if (((post.imprtcYn)!"N") == "Y")!false>fw-bold</#if>"
+                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 화면으로 이동합니다.">
+                                            <#if (post.ctgrNm!"") != "">
+                                                <span class="ctgr-span ctgr-imprtc">${post.ctgrNm!}</span>
+                                            </#if>
+                                            ${post.title!}
+                                        </a>
+                                        <#if (((post.imprtcYn)!"N") == "Y")!false>
+                                            <span class="fs-4 blink ms-1">&#128680;</span>
                                         </#if>
-                                        ${post.title!}
-                                    </a>
-                                    <#if (((post.imprtcYn)!"N") == "Y")!false>
-                                        <span class="fs-4 blink ms-1">&#128680;</span>
-                                    </#if>
-                                    <#--목록:: 수정권한 표시-->
-                                    <@component.mdfable post />
-                                    <#--목록:: 댓글 표시-->
-                                    <@component.list_comment post />
-                                    <#--목록:: 새 글이면 'N' 표시-->
-                                    <#if post.isNew>
-                                        <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
-                                    </#if>
+                                        <#--목록:: 수정권한 표시-->
+                                        <@component.mdfable post />
+                                        <#--목록:: 댓글 표시-->
+                                        <@component.list_comment post />
+                                        <#--목록:: 새 글이면 'N' 표시-->
+                                        <#if post.isNew>
+                                            <div class="badge border-0 text-white bg-noti blink fs-8 ms-2">N</div>
+                                        </#if>
+                                    </div>
+                                    <div class="ms-1">
+                                        <#--목록:: 태그 표시-->
+                                        <@component.list_tag post />
+                                    </div>
                                 </div>
                                 <div class="col-xl-4 col-12 d-flex justify-content-end align-items-center">
-                                    <#--목록:: 태그 표시-->
-                                    <@component.list_tag post />
                                     <#--목록:: 모달 팝업 열기 버튼 표시-->
                                     <@component.list_dtl_modal post "JrnlSbjct.dtlAjax" />
                                 </div>
@@ -94,7 +99,7 @@
                 </#list>
                 <#--begin::목록-->
                 <#list jrnlSbjctList![] as post>
-                    <tr class="bg-hover-secondary" onclick="JrnlSbjct.dtl('${post.postNo!}');">
+                    <tr class="bg-hover-secondary cursor-default">
                         <td class="text-center hidden-table">
                             ${post.rnum!}
                         </td>
@@ -103,7 +108,8 @@
                                 <div class="col-xl-8 col-12 d-flex flex-column">
                                     <div class="my-1">
                                         <a href="${Url.JRNL_SBJCT_DTL!}?postNo=${post.postNo!}"
-                                           class="text-dark vertical-middle<#if (((post.imprtcYn)!"N") == "Y")!false> fw-bold text-danger</#if>">
+                                           class="text-dark vertical-middle text-underline-dotted<#if (((post.imprtcYn)!"N") == "Y")!false>fw-bold text-danger</#if>"
+                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 화면으로 이동합니다.">
                                             <#if (post.ctgrNm!"") != "">
                                                 <span class="ctgr-span ctgr-gray">${post.ctgrNm!}</span>
                                             </#if>
