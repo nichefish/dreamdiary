@@ -247,7 +247,8 @@
                     잔여연차 : ${vcatnStats.remndrYryc!0}
                 </div>
                 <div class="col-xl-2 col-sm-12">
-                    <button type="button" class="btn btn-sm btn-primary mx-1" onclick="UserMy.myVcatnList();"
+                    <button type="button" class="btn btn-sm btn-primary mx-1"
+                            onclick="UserMy.myVcatnList();"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="내 휴가 사용현황 조회&#10;팝업을 호출합니다.">
                         <i class="fas fa-umbrella-beach"></i>휴가 상세 현황 확인
                     </button>

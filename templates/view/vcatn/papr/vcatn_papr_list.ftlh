@@ -59,7 +59,8 @@
             <tbody class="cursor-pointer">
                 <#--begin::상단고정 목록-->
                 <#list vcatnPaprFxdList![] as post>
-                    <tr class="bg-fxd-list <#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary" onclick="VcatnPapr.dtl('${post.postNo!}');">
+                    <tr class="bg-fxd-list <#if post.isRegstr!false>bg-fxd-list</#if> bg-hover-secondary"
+                        onclick="VcatnPapr.dtl('${post.postNo!}');">
                         <td class="text-center hidden-table">
                             ${post.rnum!"-"}
                         </td>
@@ -121,7 +122,8 @@
                 </#list>
                 <#--begin::목록-->
                 <#list vcatnPaprList![] as post>
-                    <tr class="bg-hover-secondary <#if post.isRegstr!false>bg-fxd-list</#if>" onclick="VcatnPapr.dtl('${post.postNo!}');">
+                    <tr class="bg-hover-secondary <#if post.isRegstr!false>bg-fxd-list</#if>"
+                        onclick="VcatnPapr.dtl('${post.postNo!}');">
                         <td class="text-center hidden-table">
                             ${post.rnum!}
                         </td>

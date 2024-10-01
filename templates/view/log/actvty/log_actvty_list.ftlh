@@ -54,7 +54,8 @@
             <#--begin::Table body-->
             <tbody class="text-gray-600">
                 <#list logActvtyList![] as log>
-                    <tr class="cursor-pointer <#if log.isJobUser!false>bg-fxd-list</#if>" onclick="LogActvty.dtlAjax('${log.logActvtyNo!}');">
+                    <tr class="cursor-pointer <#if log.isJobUser!false>bg-fxd-list</#if>"
+                        onclick="LogActvty.dtlAjax('${log.logActvtyNo!}');">
                         <td class="text-center hidden-table">${log.rnum!}</td>
                         <td class="text-center">
                             ${log.logDt!"-"}

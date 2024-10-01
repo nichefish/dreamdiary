@@ -31,6 +31,10 @@
                 const url = "${listUrl!}?actionTyCd=SEARCH";
                 commons.util.blockUISubmit("#listForm", url);
             },
+            /** 태그로 글 목록 검색 */
+            resetSearch: function() {
+                Tag.search("");
+            },
             /** 전체 태그 목록 조회 */
             listAjax: function() {
                 const url = "${Url.TAG_LIST_AJAX!}";

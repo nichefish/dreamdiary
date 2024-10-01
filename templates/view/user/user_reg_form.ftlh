@@ -286,8 +286,8 @@
                 <div class="d-flex gap-2">
                     <div id="user_profl_reg_btn_div">
                         <button type="button" id="userProflBtn" class="btn btn-sm btn-primary blink"
-                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="사용자 프로필 정보를&#10;추가합니다."
-                                onclick="UserProfl.enableUserProfl();">
+                                onclick="UserProfl.enableUserProfl();"
+                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="사용자 프로필 정보를&#10;추가합니다.">
                             프로필 정보 추가+
                         </button>
                     </div>
