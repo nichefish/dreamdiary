@@ -41,18 +41,20 @@
             init: function () {
                 /* jquery :: validation */
                 Notice.initValidateForm();
-                /* 글 단락 init */
-                Sectn.init({
-                    refreshFunc: function() {
-                        setTimeout(function() {
-                            Page.refreshFunc();
-                        });
-                    }
-                });
-                /* 글 단락 정렬순서 변경 init */
-                Sectn.initDraggable({
-                    refreshFunc: Page.refreshFunc
-                });
+                <#if isMdf>
+                    /* 글 단락 init */
+                    Sectn.init({
+                        refreshFunc: function() {
+                            setTimeout(function() {
+                                Page.refreshFunc();
+                            });
+                        }
+                    });
+                    /* 글 단락 정렬순서 변경 init */
+                    Sectn.initDraggable({
+                        refreshFunc: Page.refreshFunc
+                    });
+                </#if>
 
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
@@ -69,13 +71,15 @@
                     $("#jandiYn").click();
                 </#if>
             },
-            refreshFunc: function() {
-                Sectn.listAjax({ "refPostNo": ${post.postNo!}, "refContentType": "${post.contentType!}" });
-                $("#sectn_reg_modal").modal("hide");
-                Sectn.initDraggable({
-                    refreshFunc: Page.refreshFunc
-                });
-            }
+            <#if isMdf>
+                refreshFunc: function() {
+                    Sectn.listAjax({ "refPostNo": ${post.postNo!}, "refContentType": "${post.contentType!}" });
+                    $("#sectn_reg_modal").modal("hide");
+                    Sectn.initDraggable({
+                        refreshFunc: Page.refreshFunc
+                    });
+                }
+            </#if>
         }
     })();
     $(document).ready(function () {
