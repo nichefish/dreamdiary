@@ -36,14 +36,14 @@
         <#--begin::meta-->
         <div class="mb-0">
             <#--페이지:: 첨부파일 표시 영역-->
-            <#include "/view/_component/atch_file/_atch_file_dtl_area.ftlh">
+            <#include "/view/_component/atch_file/_atch_file_page_dtl_area.ftlh">
 
             <#--페이지:: 파일시스템 참조 표시 영역-->
 
             <#--페이지:: 노션 참조 표시 영역-->
 
             <#--페이지:: 태그 표시 영역-->
-            <#include "/view/_component/tag/_tag_dtl_area.ftlh">
+            <#include "/view/_component/tag/_tag_page_dtl_area.ftlh">
 
             <#--페이지:: 열람자 표시 영역-->
             <@component.post_viewer_area post />
@@ -61,7 +61,7 @@
             <@component.post_btn_toList "Notice.list();" />
         </div>
         <#--페이지:: 댓글 영역-->
-        <#include "/view/_component/comment/_comment_area.ftlh">
+        <#include "/view/_component/comment/_comment_page_area.ftlh">
     </div>
 </div>
 
@@ -70,7 +70,7 @@
         <#--begin::Card body-->
         <div class="card-body">
             <#--페이지:: 단락 영역-->
-            <#include "/view/_component/sectn/_sectn_dtl_area.ftlh">
+            <#include "/view/_component/sectn/_sectn_page_dtl_area.ftlh">
         </div>
     </div>
 </#if>

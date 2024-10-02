@@ -96,7 +96,7 @@
         <#--begin::meta-->
         <div class="mb-0">
             <#--페이지:: 태그 표시 영역-->
-            <#include "/view/_component/tag/_tag_dtl_area.ftlh">
+            <#include "/view/_component/tag/_tag_page_dtl_area.ftlh">
         </div>
     </div>
     <#--begin::Card footer-->
@@ -128,7 +128,7 @@
     <#--begin::Card body-->
     <div class="card-body pt-0">
         <#--페이지:: 단락 영역-->
-        <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
+        <#include "/view/_component/sectn/_sectn_page_reg_area.ftlh">
     </div>
 </div>
 

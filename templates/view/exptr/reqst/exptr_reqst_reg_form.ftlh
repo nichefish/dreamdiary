@@ -159,7 +159,7 @@
             <div class="separator my-2"></div>
 
             <#--페이지:: 첨부파일 추가추가 영역-->
-            <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
+            <#include "/view/_component/atch_file/_atch_file_page_reg_area.ftlh">
 
             <div class="separator my-8"></div>
 

@@ -209,13 +209,13 @@
             <#--begin::meta-->
             <div class="mb-0">
                 <#--페이지:: 첨부파일 추가추가 영역-->
-                <#include "/view/_component/atch_file/_atch_file_reg_area.ftlh">
+                <#include "/view/_component/atch_file/_atch_file_page_reg_area.ftlh">
 
                 <!-- #include:: component:: 파일시스템 참조 -->
                 <#include "/view/_component/flsys/_flsys_reg_area.ftlh">
 
                 <!-- #include:: component:: 태그 태그 -->
-                <#include "/view/_component/tag/_tag_reg_area.ftlh">
+                <#include "/view/_component/tag/_tag_page_reg_area.ftlh">
             </div>
 
             <div class="separator my-8"></div>
@@ -246,7 +246,7 @@
         <#--begin::Card body-->
         <div class="card-body pt-0">
             <#--페이지:: 단락 영역-->
-            <#include "/view/_component/sectn/_sectn_reg_area.ftlh">
+            <#include "/view/_component/sectn/_sectn_page_reg_area.ftlh">
         </div>
     </div>
 </#if>

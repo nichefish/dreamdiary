@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS comment (
     del_yn CHAR(1) DEFAULT 'N' COMMENT '삭제 여부 (Y/N)',
     -- CONSTRAINT
     INDEX (ref_post_no, ref_content_type)
-) COMMENT = '게시판 댓글';
+) COMMENT = '댓글';
 
 -- ---------- --
 
