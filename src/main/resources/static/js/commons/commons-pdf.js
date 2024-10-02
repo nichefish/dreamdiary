@@ -11,23 +11,29 @@ if (typeof commons === 'undefined') { var commons = {}; }
 commons.pdf = (function() {
     return {
         /**
-         * pdf 관련 설정
-         *
+         * PDF 생성 기본 옵션
+         */
+        defaultOptions: {
+            margin: 0,
+            filename: 'test.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { dpi: 300, letterRendering: true },
+            jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4', compressPDF: true },
+            pagebreak: {
+                mode: ['avoid-all', 'css'],
+                before: ['#pdfContent']
+            }
+        },
+
+        /**
+         * 특정 요소를 PDF로 변환하고 저장합니다.
+         * @param {string} elmtId - PDF로 변환할 요소의 ID.
          */
         fnPdf: function(elmtId) {
             const elmt = document.getElementById(elmtId);
-            const options = {
-                margin: 0,
-                filename: 'test.pdf',
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { dpi: 300, letterRendering: true },
-                jsPDF: {orientation: 'portrait', unit: 'mm', format: 'a4', compressPDF: true},
-                pagebreak: {
-                    mode: ['avoid-all', 'css'],
-                    before: [ '#pdfContent' ]
-                }
-            };
-            html2pdf().from(elmt).set(options).save();
+            html2pdf().from(elmt)
+                      .set(commons.pdf.defaultOptions)
+                      .save();
         }
     }
 })();
