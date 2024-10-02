@@ -17,7 +17,6 @@ $(function() {
 });
 commons.validate = (function() {
     return {
-
         // "global flag /g works inconsistent if called multiple times..."
 
         basicExtnFilter: "exe|class|jsp|asp|php|sh|bat|war|jar|java|xml|js|css|html|sql",

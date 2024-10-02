@@ -3,8 +3,6 @@
  * @namespace: commons.mqttws31
  * @author: nichefish
  * @since: 2022-06-27~
- * @last-modified: 2022-08-04
- * @last-modieied-by: nichefish
  * 공통 - mqtt 웹소켓 클라이언트 함수 모듈
  * (노출식 모듈 패턴 적용 :: commons.util.enterKey("#userId") 이런식으로 사용)
  */

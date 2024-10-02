@@ -3,8 +3,6 @@
  * @namespace: commons.tinymce
  * @author: nichefish
  * @since: 2022-06-27
- * @last-modified: 2022-08-04
- * @last-modieied-by: nichefish
  * @depdendency: tinymce.js
  * 공통 - tinymce 에디터 관련 함수 모듈
  * (노출식 모듈 패턴 적용 :: commons.tinymce.init("#aaa", func) 이런식으로 사용)
@@ -12,7 +10,6 @@
 if (typeof commons === 'undefined') { var commons = {}; }
 commons.tinymce = (function() {
     return {
-
         /** 기본 옵션 분리 */
         basicOptions: {
             editor_encoding: "raw",

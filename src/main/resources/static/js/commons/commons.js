@@ -40,7 +40,6 @@ if (typeof commons === 'undefined') { var commons = {}; }
 })(jQuery);
 commons.util = (function() {
     return {
-
         /**
          * blockUI wrapped by try-catch
          */
