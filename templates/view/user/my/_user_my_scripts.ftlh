@@ -17,7 +17,7 @@
                         if (!commons.validate.fileExtnChck(this, "jpg|jpeg|png")) return false;      // fileExtnChck
                         const url = "${Url.USER_MY_UPLOAD_PROFL_IMG_AJAX!}";
                         const ajaxData = new FormData($("#profllImgForm")[0]);
-                        commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                        commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                             if (commons.util.isNotEmpty(res.message)) {
                                 Swal.fire({ "text": res.message })
                                     .then(function() {
@@ -41,7 +41,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.USER_MY_REMOVE_PROFL_IMG_AJAX!}";
-                    commons.util.blockUIFileAjax(url, {}, function(res) {
+                    commons.util.blockUIMultipartAjax(url, {}, function(res) {
                         if (commons.util.isNotEmpty(res.message)) {
                             Swal.fire({ "text": res.message })
                                 .then(function() {

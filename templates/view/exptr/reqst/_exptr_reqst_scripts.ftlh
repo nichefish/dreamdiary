@@ -13,8 +13,9 @@
                         if (ExptrReqst.submitMode === "preview") {
                             const popupNm = "preview";
                             const options = 'width=1280,height=1440,top=0,left=270';
-                            commons.util.popup("", popupNm, options);
-                            let popupUrl = "${Url.EXPTR_REQST_REG_PREVIEW_POP!}";
+                            const popup = commons.util.openPopup("", popupNm, options);
+                            if (popup) popup.focus();
+                            const popupUrl = "${Url.EXPTR_REQST_REG_PREVIEW_POP!}";
                             $("#exptrReqstRegForm").attr("action", popupUrl).attr("target", popupNm);
                             return true;
                         } else if (ExptrReqst.submitMode === "submit") {
@@ -65,7 +66,7 @@
             regAjax: function() {
                 const url = "<#if isReg!false>${Url.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_REQST_MDF_AJAX!}</#if>";
                 const ajaxData = new FormData($("#exptrReqstRegForm")[0]);
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) ExptrReqst.list();

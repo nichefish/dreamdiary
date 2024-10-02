@@ -46,7 +46,7 @@
             regAjax: function() {
                 const url = "${Url.USER_REQST_REG_AJAX!}";
                 const ajaxData = new FormData($("#userReqstForm")[0]);
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) UserReqst.main();

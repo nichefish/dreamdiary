@@ -39,7 +39,7 @@
                     if (!result.value) return;
                     const url = isReg ? "${Url.COMMENT_REG_AJAX!}" : "${Url.COMMENT_MDF_AJAX!}";
                     const ajaxData = new FormData($("#commentRegForm")[0]);
-                    commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                    commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (!res.rslt) return;

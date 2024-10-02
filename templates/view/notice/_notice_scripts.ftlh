@@ -13,8 +13,9 @@
                         if (Notice.submitMode === "preview") {
                             const popupNm = "preview";
                             const options = 'width=1280,height=1440,top=0,left=270';
-                            commons.util.popup("", popupNm, options);
-                            let popupUrl = "${Url.NOTICE_REG_PREVIEW_POP!}";
+                            const popup = commons.util.openPopup("", popupNm, options);
+                            if (popup) popup.focus();
+                            const popupUrl = "${Url.NOTICE_REG_PREVIEW_POP!}";
                             $("#noticeRegForm").attr("action", popupUrl).attr("target", popupNm);
                             return true;
                         } else if (Notice.submitMode === "submit") {
@@ -76,7 +77,7 @@
             regAjax: function () {
                 const url = " <#if isMdf!false>${Url.NOTICE_MDF_AJAX!}<#else>${Url.NOTICE_REG_AJAX!}</#if>";
                 const ajaxData = new FormData($("#noticeRegForm")[0]);
-                commons.util.blockUIFileAjax(url, ajaxData, function (res) {
+                commons.util.blockUIMultipartAjax(url, ajaxData, function (res) {
                     Swal.fire({text: res.message})
                         .then(function () {
                             if (res.rslt) Notice.list();

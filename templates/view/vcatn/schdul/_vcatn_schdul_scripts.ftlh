@@ -47,7 +47,7 @@
                 const isReg = ($("#vcatnSchdulNo").val() === "");
                 const url = isReg ? '${Url.VCATN_SCHDUL_REG_AJAX!}' : '${Url.VCATN_SCHDUL_MDF_AJAX!}';
                 const ajaxData = new FormData($("#vcantSchdulRegForm")[0]);
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();

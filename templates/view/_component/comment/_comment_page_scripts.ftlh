@@ -30,7 +30,7 @@
                     if (!result.value) return;
                     const url = "${Url.COMMENT_REG_AJAX!}";
                     const ajaxData = new FormData($("#commentPageRegForm")[0]);
-                    commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                    commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();

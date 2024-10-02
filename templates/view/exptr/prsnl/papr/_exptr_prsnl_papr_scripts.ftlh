@@ -55,7 +55,7 @@
             regForm: function() {
                 $("#prevYn").val("N");
                 const url = "${Url.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX!}";
-                commons.util.blockUIAjax(url, 'POST', "", function(res) {
+                commons.util.blockUIAjax(url, 'POST', null, function(res) {
                     if (!res.rsltMap) return;
                     // 중복 코드 감소를 위한 함수 정의
                     const checkAndRedirect = (data) => {
@@ -100,7 +100,7 @@
                 });
                 const url = "<#if isReg!false>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
                 const ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (!res.rslt) return;

@@ -102,7 +102,7 @@ commons.tinymce = (function() {
                     if (!commons.validate.fileExtnChck(this, "jpg|jpeg|png")) return false;      // fileExtnChck
                     const url = "/file/fileUploadAjax.do";
                     const ajaxData = new FormData($("#tinymceImageForm")[0]);
-                    commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                    commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         if (commons.util.isNotEmpty(res.message)) alert(res.message);
                         if (res.rslt) {
                             const fileInfo = res.rsltObj;

@@ -13,8 +13,9 @@
                         if (Page.submitMode === "preview") {
                             const popupNm = "preview";
                             const options = 'width=1280,height=1440,top=0,left=270';
-                            commons.util.popup("", popupNm, options);
-                            let popupUrl = "${Url.BOARD_POST_REG_PREVIEW_POP!}";
+                            const popup = commons.util.openPopup("", popupNm, options);
+                            if (popup) popup.focus();
+                            const popupUrl = "${Url.BOARD_POST_REG_PREVIEW_POP!}";
                             $("#postRegForm").attr("action", popupUrl).attr("target", popupNm);
                             return true;
                         } else if (Page.submitMode === "submit") {
@@ -66,7 +67,7 @@
             regAjax: function() {
                 const url = "<#if isMdf!false>${Url.BOARD_POST_MDF_AJAX!}<#else>${Url.BOARD_POST_REG_AJAX!}</#if>";
                 const ajaxData = new FormData($("#postRegForm")[0]);
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) BoardPost.list();

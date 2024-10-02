@@ -47,7 +47,8 @@
                 const url = "${Url.EXPTR_PRSNL_PAPR_PDF_POP!}?postNo="+$("#postNo").val();
                 const popupNm = '경비지출서 팝업';
                 const options = 'width=1280,height=1440,top=0,left=270';
-                commons.util.popup(url, popupNm, options);
+                const popup = commons.util.openPopup(url, popupNm, options);
+                if (popup) popup.focus();
             },
             /** 개별 영수증 PDF 취합 다운로드 */
             pdfDownload: function() {

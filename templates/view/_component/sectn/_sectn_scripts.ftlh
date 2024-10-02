@@ -64,7 +64,7 @@
                     if (!result.value) return;
                     const url = isReg ? "${Url.SECTN_REG_AJAX!}" : "${Url.SECTN_MDF_AJAX!}";
                     const ajaxData = new FormData($("#sectnRegForm")[0]);
-                    commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                    commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (!res.rslt) return;

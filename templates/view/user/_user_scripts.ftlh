@@ -92,7 +92,7 @@
             regAjax: function() {
                 const url = "<#if isReg!false>${Url.USER_REG_AJAX!}</#if><#if isMdf!false>${Url.USER_MDF_AJAX!}</#if>";
                 const ajaxData = new FormData($("#userRegForm")[0]);
-                commons.util.blockUIFileAjax(url, ajaxData, function(res) {
+                commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) User.list();
