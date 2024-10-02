@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * CommentRepository
  * <pre>
- *  게시판 댓글 Repository 인터페이스.
+ *  댓글 Repository 인터페이스.
  * </pre>
  *
  * @author nichefish

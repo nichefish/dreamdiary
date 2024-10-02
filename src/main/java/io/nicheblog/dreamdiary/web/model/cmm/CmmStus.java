@@ -18,17 +18,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CmmStus {
 
-    /**
-     * 상태명
-     */
+    /** 상태명 */
     private String nm;
-    /**
-     * 상태 클래스명(색상)
-     */
+    /** 상태 클래스명(색상) */
     private String classNm;
-    /**
-     * 상태 아이콘(클래스)
-     */
+    /** 상태 아이콘(클래스) */
     private String icon;
 
     /* ----- */

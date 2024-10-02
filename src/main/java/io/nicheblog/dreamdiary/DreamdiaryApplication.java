@@ -42,12 +42,12 @@ public class DreamdiaryApplication {
         try {
             // 기본 .env 프로퍼티 로드
             setDotEnvPropertiesByFileNm(".env");
-            // 프로필 기반 .env.${profile} 프로퍼티 로드
+            // 프로필 기반 .env.${profile} 프로퍼티 로드 (속성 없을시:: 기본값 local)
             String profile = System.getProperty("spring.profiles.active", "local");
             String profileEnvFileNm = ".env." + profile;
             setDotEnvPropertiesByFileNm(profileEnvFileNm);
         } catch (Exception e) {
-            log.error("Failed to load .env file for profile: {}", System.getProperty("spring.profiles.active"), e);
+            log.error("Failed to load .env file for profile '{}'", System.getProperty("spring.profiles.active"), e);
         }
     }
 

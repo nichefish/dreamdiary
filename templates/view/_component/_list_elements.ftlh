@@ -22,7 +22,7 @@
 <#macro list_comment post >
     <#if post.comment?? && post.comment.cnt gt 0>
         <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
-              onclick="CommentList.modal('${post.postNo!}');"
+              onclick="CommentList.modal(${post.postNo!}, '${post.contentType}');"
               data-bs-toggle="tooltip" data-bs-placement="top" title="댓글 모달 팝업 호출">
         [${post.comment.cnt!0}]
         </span>

@@ -7,9 +7,12 @@
     const CommentList = (function() {
         return {
             /** 댓글 목록 모달 호출 */
-            modal: function(postNo) {
+            modal: function(refPostNo, refContentType) {
                 event.stopPropagation();
-                $("#commentProcForm #refPostNo").val(postNo);
+                document.querySelector(`#commentProcForm [name="refPostNo"]`).value = refPostNo;
+                if (commons.util.isNotEmpty(refContentType)) {
+                    document.querySelector(`#commentProcForm [name="refContentType"]`).value = refContentType;
+                }
                 const url = "${Url.COMMENT_LIST_AJAX!}";
                 const ajaxData = $("#commentProcForm").serializeArray();
                 commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
@@ -48,7 +51,7 @@
 </@modal.layout>
 
 <form name="procForm" id="commentProcForm" method="get">
-    <input type="hidden" name="refPostNo" id="refPostNo" value="" />
+    <input type="hidden" name="refPostNo" value="" />
     <input type="hidden" name="refContentType" value="${contentType!}" />
     <input type="hidden" name="actvtyCtgrCd" value="${actvtyCtgrCd!}" />
 </form>

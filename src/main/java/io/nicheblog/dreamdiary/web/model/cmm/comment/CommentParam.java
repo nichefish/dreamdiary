@@ -7,8 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * CommentSearchParam
  * <pre>
- *  게시판 댓글 검색 파라미터 Dto
- *  ※게시판 댓글(board_comment) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  댓글 검색 파라미터 Dto
  * </pre>
  *
  * @author nichefish

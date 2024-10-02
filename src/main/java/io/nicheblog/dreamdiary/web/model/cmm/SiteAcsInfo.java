@@ -26,55 +26,33 @@ import static io.nicheblog.dreamdiary.web.SiteTopMenu.NO_ASIDE;
 @NoArgsConstructor
 public class SiteAcsInfo {
 
-    /**
-     * 사이드바 메뉴 번호
-     */
+    /** 사이드바 메뉴 번호 */
     private String menuNo;
 
-    /**
-     * 사이드바 상위 메뉴
-     */
+    /** 사이드바 상위 메뉴 */
     private SiteTopMenu topMenu;
-    /**
-     * 사이드바 상위 메뉴 번호 (메뉴 활성화용)
-     */
+    /** 사이드바 상위 메뉴 번호 (메뉴 활성화용) */
     private String topMenuNo;
-    /**
-     * 사이드바 상위 메뉴 이름 (툴바 표시용)
-     */
+    /** 사이드바 상위 메뉴 이름 (툴바 표시용) */
     private String topMenuNm;
-    /**
-     * 사이드바 상위 메뉴 코드 (메뉴 표시용)
-     */
+    /** 사이드바 상위 메뉴 코드 (메뉴 표시용) */
     private String topMenuLabel;
 
-    /**
-     * 사이드바 메뉴 이름 (로깅 및 사이트 헤더 표시용)
-     */
+    /** 사이드바 메뉴 이름 (로깅 및 사이트 헤더 표시용) */
     private String menuNm;
 
-    /**
-     * 접근 화면 이름 (로깅 및 사이트 헤더 표시용)
-     */
+    /** 접근 화면 이름 (로깅 및 사이트 헤더 표시용) */
     private String acsPageNm;
 
-    /**
-     * 접근(처리) url
-     */
+    /** 접근(처리) url */
     private String url;
 
-    /**
-     * 관리자메뉴 여부
-     */
+    /** 관리자메뉴 여부 */
     private Boolean isMngrMenu = false;
-    /**
-     * 사이드메뉴 표시 여부
-     */
+    /** 사이드메뉴 표시 여부 */
     private Boolean asideAt = true;
 
-    /**
-     * 하위 메뉴 리스트
-     */
+    /** 하위 메뉴 리스트 */
     private List<SiteAcsInfo> subMenuList;
 
     /* ----- */

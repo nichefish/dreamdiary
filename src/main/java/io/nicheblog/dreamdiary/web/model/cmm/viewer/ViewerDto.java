@@ -28,10 +28,9 @@ public class ViewerDto
     /** 조치자 번호 (PK) */
     private Integer managtrNo;
 
-    /** 글 번호 */
+    /** 참조 글 번호 */
     private Integer refPostNo;
-
-    /** 게시판 코드 */
+    /** 참조 컨텐츠 타입 (게시판 코드) */
     private String refContentType;
 
     /* ----- */

@@ -59,7 +59,7 @@ public class DreamdiaryInitializer
         // 로그인 정책 부재시 등록
         this.chkLgnPolicy();
 
-        // 시스템 재기동 로그 적재
+        // 시스템 재기동 로그 적재:: 운영 환경 이외에는 적재하지 않음
         if (activeProfile.isProd()) {
             LogSysParam logParam = new LogSysParam(true, "시스템이 정상적으로 재기동되었습니다.", ActvtyCtgr.SYSTEM);
             publisher.publishEvent(new LogSysEvent(this, logParam));
@@ -91,6 +91,7 @@ public class DreamdiaryInitializer
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
         } finally {
+            // 시스템 계정 등록 처리했을 경우 로그 적재
             if (!systemAcntExists) {
                 logParam.setResult(isSuccess, rsltMsg);
                 publisher.publishEvent(new LogSysEvent(this, logParam));
@@ -131,16 +132,16 @@ public class DreamdiaryInitializer
         LogSysParam logParam = new LogSysParam();
 
         boolean isSuccess = false;
-        boolean systemAcntExists = false;
+        boolean lgnPolicyExists = false;
         String rsltMsg = "";
         try {
             // 로그인 정책 존재여부 체크
             LgnPolicyDto rsLgnPolicy = lgnPolicyService.getDtlDto();
             if (rsLgnPolicy != null) {
-                systemAcntExists = true;
+                lgnPolicyExists = true;
                 return;
             }
-            // 로그인 정책 등록:: 메소드 분리
+            // 로그인 정책 부재시 등록:: 메소드 분리
             isSuccess = this.regLgnPolicy();
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -148,7 +149,8 @@ public class DreamdiaryInitializer
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
         } finally {
-            if (!systemAcntExists) {
+            // 로그인 정책 등록 처리했을 경우 로그 적재
+            if (!lgnPolicyExists) {
                 logParam.setResult(isSuccess, rsltMsg);
                 publisher.publishEvent(new LogSysEvent(this, logParam));
             }

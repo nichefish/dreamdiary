@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
 /**
  * CommentService
  * <pre>
- *  게시판 댓글 서비스 모듈
- *  ※게시판 댓글(board_comment) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  댓글 서비스 모듈
  * </pre>
  * TODO: 좀 더 섬세하게 캐시를 다루는 방법?
  *

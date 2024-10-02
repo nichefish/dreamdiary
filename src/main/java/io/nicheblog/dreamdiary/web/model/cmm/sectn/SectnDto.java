@@ -27,8 +27,10 @@ public class SectnDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, StateCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
+    @Builder.Default
     private static final String CONTENT_TYPE = ContentType.SECTN.key;
     /** 필수(Override): 글분류 코드 */
+    @Builder.Default
     private static final String CTGR_CL_CD = CONTENT_TYPE + "_CTGR_CD";
 
     /** 컨텐츠 타입 */

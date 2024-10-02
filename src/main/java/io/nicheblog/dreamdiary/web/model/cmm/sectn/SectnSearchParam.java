@@ -22,8 +22,8 @@ import lombok.experimental.SuperBuilder;
 public class SectnSearchParam
         extends BaseSearchParam {
 
-    /** 단락 고유 번호 (PK) */
+    /** 참조 글 번호 */
     private Integer refPostNo;
-    /** 컨텐츠 타입 */
+    /** 참조 컨텐츠 타입 */
     private String refContentType;
 }

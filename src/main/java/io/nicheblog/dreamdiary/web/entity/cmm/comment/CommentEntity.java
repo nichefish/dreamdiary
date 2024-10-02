@@ -19,8 +19,7 @@ import javax.persistence.*;
 /**
  * CommentEntity
  * <pre>
- *  게시판 댓글 Entity
- *  ※게시판 댓글(board_comment) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  댓글 Entity
  * </pre>
  *
  * @author nichefish

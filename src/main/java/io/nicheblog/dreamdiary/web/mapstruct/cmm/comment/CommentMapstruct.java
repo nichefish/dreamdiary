@@ -13,8 +13,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * CommentMapstruct
  * <pre>
- *  일반게시판 댓글 MapStruct 기반 Mapper 인터페이스
- *  ※일반게시판 댓글(board_comment) = 일반게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  댓글 MapStruct 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish
