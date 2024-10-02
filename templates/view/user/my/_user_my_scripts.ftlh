@@ -14,7 +14,7 @@
                 $fileInput.on("change", function() {
                     if (this.value !== "") {
                         if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
-                        if (!commons.validate.fileExtnChck(this, "jpg|jpeg|png")) return false;      // fileExtnChck
+                        if (!commons.validate.fileImgExtnChck(this)) return false;      // fileExtnChck
                         const url = "${Url.USER_MY_UPLOAD_PROFL_IMG_AJAX!}";
                         const ajaxData = new FormData($("#profllImgForm")[0]);
                         commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {

@@ -18,7 +18,10 @@ $(function() {
 commons.validate = (function() {
     return {
 
-        // global flag /g works inconsistent if called multiple times...
+        // "global flag /g works inconsistent if called multiple times..."
+
+        basicExtnFilter: "exe|class|jsp|asp|php|sh|bat|war|jar|java|xml|js|css|html|sql",
+        validImgExtn: "jpg|jpeg|png",
 
         /** 정규식: 숫자 */
         numRegex: /[0-9]/g,
@@ -68,160 +71,207 @@ commons.validate = (function() {
         /** 정규식: 2차 비밀번호 정규식 */
         scscPwRegex: /^(?=.*[a-zA-Z])(?=.*[$~@!%*#?&])[a-zA-Z$~@!%*#?&]{5}$/,
 
+
         /**
-         * input에 공백시 자동 trim 처리 (onkeyup)
-         * @param: selectorStr
+         * 선택자에서 유효한 입력 요소를 반환합니다.
+         * @param {string|HTMLElement|jQuery} selector - 선택자 문자열 또는 DOM 요소 또는 jQuery 객체.
+         * @returns {HTMLElement[]} - 유효한 입력 요소 배열 또는 빈 배열.
          */
-        noSpaces: function (selectorStr) {
-            if ($(selectorStr) === undefined) return;
-            $(selectorStr).on("keyup", function() {
-                $(this).val($(this).val().trim());
+        verifySelector: function(selector) {
+            let inputs;
+            if (selector instanceof jQuery) {
+                inputs = selector.toArray();
+            } else if (selector instanceof HTMLElement) {
+                inputs = [selector];
+            } else {
+                inputs = Array.from(document.querySelectorAll(selector));
+            }
+            return inputs;
+        },
+
+        /**
+         * 입력 요소에서 공백을 자동으로 제거합니다. (onkeyup 이벤트)
+         * @param {string|HTMLElement|jQuery} selector - 공백을 제거할 입력 요소의 선택자 또는 DOM 또는 jQuery객체.
+         */
+        noSpaces: function (selector) {
+            const inputs = commons.validate.verifySelector(selector);
+            if (inputs.length === 0) return;
+
+            inputs.forEach(input => {
+                input.addEventListener("keyup", function() {
+                    this.value = this.value.replace(/\s+/g, ''); // 모든 공백 제거
+                });
             });
         },
 
         /**
-         * 정규식에 해당시 공백처리 (onkeyup)
-         * @param: selectorStr, regex
+         * 정규식에 해당하는 경우 공백 및 문자를 처리합니다. (onkeyup)
+         * @param {string|HTMLElement|jQuery} selector - 처리할 입력 요소의 선택자 또는 DOM 요소 또는 jQuery 객체.
+         * @param {RegExp} regex - 제거할 문자에 대한 정규 표현식.
          */
-        replaceBlankIfMatches: function (selectorStr, regex) {
-            if ($(selectorStr) === undefined) return;
-            commons.validate.noSpaces(selectorStr);
-            $(selectorStr).on("keyup", function() {
-                $(this).val($(this).val().replace(regex, ""));
+        replaceBlankIfMatches: function (selector, regex) {
+            const inputs = commons.validate.verifySelector(selector);
+            if (inputs.length === 0) return;
+
+            inputs.forEach(input => {
+                commons.validate.noSpaces(input); // 공백 처리
+                input.addEventListener("keyup", function() {
+                    this.value = this.value.replace(regex, ""); // 정규식에 따라 문자 제거
+                });
             });
         },
 
         /**
          * 숫자 제외 공백처리 (onkeyup)
-         * @param: selectorStr
+         * @param {string|HTMLElement|jQuery} selector - 숫자만 허용할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
-        onlyNum: function (selectorStr) {
-            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonNumRegex);
+        onlyNum: function (selector) {
+            return commons.validate.replaceBlankIfMatches(selector, commons.validate.nonNumRegex);
         },
 
         /**
          * 날짜 제외 공백처리 (onkeyup)
-         * @param: selectorStr
+         * @param {string|HTMLElement|jQuery} selector - 날짜만 허용할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
-        onlyDt: function (selectorStr) {
-            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonDtRegex);
+        onlyDt: function (selector) {
+            return commons.validate.replaceBlankIfMatches(selector, commons.validate.nonDtRegex);
         },
 
         /**
-         * 숫자와 점 제외 공백처리 (onkeyup)
-         * @param: selectorStr
+         * 숫자와 점을 제외한 공백처리 (onkeyup)
+         * @param {string|HTMLElement|jQuery} selector - 숫자와 점만 허용할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
-        onlyNumAndDot: function (selectorStr) {
-            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonNumAndDotRegex);
+        onlyNumAndDot: function (selector) {
+            return commons.validate.replaceBlankIfMatches(selector, commons.validate.nonNumAndDotRegex);
         },
 
         /**
-         * 숫자와 쉽표 제외 공백처리 (onkeyup)
-         * @param: selectorStr
+         * 숫자와 쉼표를 제외한 공백처리 (onkeyup)
+         * @param {string|HTMLElement|jQuery} selector - 숫자와 쉼표만 허용할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
-        onlyNumAndComma: function (selectorStr) {
-            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonNumAndCommaRegex);
+        onlyNumAndComma: function (selector) {
+            return commons.validate.replaceBlankIfMatches(selector, commons.validate.nonNumAndCommaRegex);
         },
 
         /**
-         * 숫자와 영문 제외 공백처리 (onkeyup)
-         * @param: selectorStr
+         * 숫자와 영문자를 제외한 공백처리 (onkeyup)
+         * @param {string|HTMLElement|jQuery} selector - 숫자와 영문자가 아닌 문자를 허용할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
-        onlyEngNum: function (selectorStr) {
-            return commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonEngNumRegex);
+        onlyEngNum: function (selector) {
+            return commons.validate.replaceBlankIfMatches(selector, commons.validate.nonEngNumRegex);
         },
 
         /**
-         * ipv4 cidr regex (onkeyup)
-         * @param: selectorStr
+         * IPv4 CIDR 형식을 검사하고, 입력 필드에서 유효하지 않은 경우 공백으로 설정합니다.
+         * @param {string|HTMLElement|jQuery} selector - CIDR 형식을 검사할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
-        replaceIpv4Cidr: function (selectorStr) {
-            commons.validate.replaceBlankIfMatches(selectorStr, commons.validate.nonNumDotAndSlashRegex);
-            $(selectorStr).on("blur", function() {
-                let $errorSpan = $("#" + $(this).attr("id") + "_valid_span");
-                if (!commons.validate.ipv4regex.test($(this).val()) && !commons.validate.ipv4CidrRegex.test($(this).val())) {
-                    $(this).val("");
-                    if (commons.util.is$Present($errorSpan)) $errorSpan.empty().addClass("text-danger").text("유효하지 않은 IP 주소입니다.");
-                } else {
-                    if (commons.util.is$Present($errorSpan)) $errorSpan.empty().removeClass("text-danger");
-                }
+        checkIpv4Cidr: function (selector) {
+            const inputs = commons.validate.verifySelector(selector);
+            if (inputs.length === 0) return;
+
+            // 숫자, 점, 슬래시를 제외한 문자 제거
+            commons.validate.replaceBlankIfMatches(selector, commons.validate.nonNumDotAndSlashRegex);
+
+            inputs.forEach(input => {
+                input.addEventListener("blur", function() {
+                    const errorSpan = document.getElementById(input.id + "_valid_span");
+                    const isValidIp = commons.validate.ipv4regex.test(input.value);
+                    const isValidCidr = commons.validate.ipv4CidrRegex.test(input.value);
+                    const isValid = isValidIp || isValidCidr;
+
+                    input.value = isValid ? input.value : "";
+                    if (errorSpan) {
+                        errorSpan.textContent = isValid ? "" : "유효하지 않은 IP 주소입니다.";
+                        errorSpan.classList.toggle("text-danger", !isValid);
+                    }
+                });
             });
         },
 
         /**
-         * input 자동 lowercase 처리 (onkeyup)
-         * @param: selectorStr
+         * 입력 요소에서 자동으로 소문자로 변환합니다. (onkeyup 이벤트)
+         * @param {string|HTMLElement|jQuery} selector - 소문자로 변환할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
-        toLowerCase: function(selectorStr) {
-            if ($(selectorStr) === undefined) return;
-            $(selectorStr).on("keyup", function() {
-                $(this).val($(this).val().toLowerCase());
+        toLowerCase: function(selector) {
+            const inputs = commons.validate.verifySelector(selector);
+            if (inputs.length === 0) return;
+
+            inputs.forEach(input => {
+                input.addEventListener("keyup", function() {
+                    this.value = this.value.toLowerCase();
+                });
             });
         },
 
         /**
-         * input 자동 uppercase 처리 (onkeyup)
-         * @param: selectorStr
+         * 입력 요소에서 자동으로 대문자로 변환합니다. (onkeyup 이벤트)
+         * @param {string|HTMLElement|jQuery} selector - 대문자로 변환할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
-        toUpperCase: function(selectorStr) {
-            if ($(selectorStr) === undefined) return;
-            $(selectorStr).on("keyup", function() {
-                $(this).val($(this).val().toUpperCase());
+        toUpperCase: function(selector) {
+            const inputs = commons.validate.verifySelector(selector);
+            if (inputs.length === 0) return;
+
+            inputs.forEach(input => {
+                input.addEventListener("keyup", function() {
+                    this.value = this.value.toUpperCase();
+                });
             });
         },
 
         /**
-         * 핸드폰번호 형식 유효성검사 (정규식) (onkeyup)
-         * @param: selectorStr
+         * 핸드폰 번호 형식 유효성 검사를 수행하고, 유효하지 않으면 입력값을 초기화합니다. (onkeyup 이벤트)
+         * @param {string|HTMLElement|jQuery} selector - 핸드폰 번호를 입력할 요소의 선택자, DOM 요소 또는 jQuery 객체.
          */
-        cttpc: function(selectorStr) {
-            if ($(selectorStr) === undefined) return;
-            $(selectorStr).on("keyup", function() {
-                let value = $(this).val().trim();        // 공백 제거
-                $(this).val(value);
-                // 0으로 시작 안하면 무효처리
-                let startWithZero = /(^0)([0-9]|-)*$/g;		    // 0으로 시작하는지
-                if (!startWithZero.test(value)) {
-                    $(this).val("");
-                    return;
-                }
-                // 02는 12자/나머지는 13자보다 길어지면 끝자리 자름, 이후 xxx-xxx(x)-xxxx 형식에 맞게 변환
-                let seoulLocal = /(^02)([0-9]|-)*$/g;           // 시작번호 02 vs. 나머지
-                if (seoulLocal.test(value)) {
-                    // 12자리 자르고 다시 포맷팅
-                    $(this).val(value.substr(0,12).replace(/[^0-9]/g, "").replace(/(^02)([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-"));
-                } else {
-                    // 13자리 자르고 다시 포맷팅
-                    $(this).val(value.substr(0,13).replace(/[^0-9]/g, "").replace(/(^[0-9]{3})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-"));
-                }
+        cttpc: function(selector) {
+            const inputs = commons.validate.verifySelector(selector);
+            if (inputs.length === 0) return;
+
+            inputs.forEach(input => {
+                input.addEventListener("keyup", function() {
+                    // 모든 공백 제거
+                    this.value = this.value.replace(/\s+/g, '');
+
+                    // 0으로 시작하지 않으면 무효 처리
+                    const startWithZero = /^(0[0-9]|0)$/;
+                    if (!startWithZero.test(value)) {
+                        this.value = "";
+                        return;
+                    }
+
+                    // 02 번호와 그 외의 번호 구분
+                    // 02는 12자/나머지는 13자보다 길어지면 끝자리 자름, 이후 xxx-xxx(x)-xxxx 형식에 맞게 변환
+                    const isSeoulLocal = /^02/.test(value);
+                    const formattedValue = isSeoulLocal ?
+                        value.slice(0, 12).replace(/[^0-9]/g, "").replace(/(^02)([0-9]{3})([0-9]{4})$/, "$1-$2-$3") :
+                        value.slice(0, 13).replace(/[^0-9]/g, "").replace(/(^[0-9]{3})([0-9]{4})$/, "$1-$2");
+
+                    this.value = formattedValue.replace("--", "-"); // 포맷팅 적용
+                });
             });
         },
 
         /**
-         * jquery-validation 함수 분리
+         * jQuery Validation을 사용하여 폼 검증을 수행합니다.
          * @dependency: jquery-validation
-         * @param: error, element
+         * @param {string} formSelector - 검증할 폼의 선택자.
+         * @param {Function} [func] - 제출 시 호출할 함수 (선택적).
          */
         validateForm: function (formSelector, func) {
             $(function(){
-                if (func === undefined) {
-                    $(formSelector).validate({
-                        errorPlacement : function(error, element) {
-                            commons.validate.errorSpan(error, element);
-                        },
-                        ignore: [],         // hidden 필드도 검증하기 위함
-                    });
-                } else {
-                    $(formSelector).validate({
-                        submitHandler: function() {
-                            if (func !== undefined) func();
-                        },
-                        errorPlacement : function(error, element) {
-                            commons.validate.errorSpan(error, element);
-                        },
-                        ignore: [],         // hidden 필드도 검증하기 위함
-                    });
+                // jQuery Validation을 초기화
+                const options = {
+                    errorPlacement: function(error, element) {
+                        commons.validate.errorSpan(error, element);
+                    },
+                    ignore: [], // hidden 필드도 검증하기 위함
+                };
+                // 제출 핸들러가 있는 경우 추가 설정
+                if (typeof func === 'function') {
+                    options.submitHandler = function() {
+                        func();
+                    };
                 }
+                $(formSelector).validate(options); // 검증 초기화
             });
         },
 
@@ -231,64 +281,86 @@ commons.validate = (function() {
          * @param: error, element
          */
         errorSpan: function (error, element) {
-            const $errorSpan = $("#" + $(element).attr("id") + "_valid_span");
-            $errorSpan.append(error).addClass("text-danger").focus();
+            const errorSpan = document.getElementById(element.id + "_valid_span");
+            if (!errorSpan) return;
+            errorSpan.innerHTML += error;
+            errorSpan.classList.add("text-danger");
+            errorSpan.focus();
         },
 
         /**
-         * jquery-validation에서 공통으로 사용하는 에러 처리 함수 분리
-         * @dependency: jQueryValidation
+         * 모든 필수 입력 요소의 에러 메시지를 지웁니다.
+         * @param {string} selector - 필수 입력 요소의 선택자.
          */
-        clearErrorSpan: function() {
-            $(".required").each(function(idx, elmt) {
-                $("#" + $(elmt).attr("id") + "_valid_span").empty();
+        clearErrorSpan: function(selector) {
+            const requiredElements = document.querySelectorAll(selector || ".required");
+            requiredElements.forEach(function(elmt) {
+                const errorSpan = document.getElementById(elmt.id + "_valid_span");
+                if (errorSpan) errorSpan.innerHTML = '';
             });
         },
 
         /**
-         * 파일 업로드시 확장자 체크
+         * 파일 업로드 시 확장자를 체크합니다.
+         * @param {HTMLInputElement} selector - 파일 입력 요소.
+         * @param {string} validExtn - 허용되는 확장자 목록 (파이프(|)로 구분).
+         * @returns {boolean} - 유효한 확장자일 경우 true, 아니면 false.
          */
-        fileExtnChck: function(obj, validExtn) {
-            if (!obj) return;
-            const file = obj.files[0];
-            if (typeof (file) == 'undefined') return;
+        fileExtnChck: function(selector, validExtn = "") {
+            const inputElements = commons.validate.verifySelector(selector);
+            if (inputElements.length === 0 || !inputElements[0].files || !inputElements[0].files.length) return false;
 
+            const input = inputElements[0];
+            const file = input.files[0];
             const filename = file.name;
-            const extn = filename.split('.').pop();
+            let extn = filename.split('.').pop();
+            // 확장가가 없는 경우 처리
             if (extn === filename) extn = "";
 
-            const basicfileFilter = "exe|class|jsp|asp|php|sh|bat|war|jar|java|xml|js|css|html|sql";
-            if (basicfileFilter.indexOf(extn.toLowerCase()) > -1) {
+            // 기본 확장자 필터
+            const basicExtnFiltered = commons.validate.basicExtnFilter.split('|').includes(extn.toLowerCase());
+            if (basicExtnFiltered) {
                 commons.util.swalOrAlert("파일첨부가 불가능한 파일 형식입니다.");
-                $(obj).val("");
+                input.value = "";
                 return false;
             }
-
             // 'validExtn' 인자가 넘어온 경우:: 해당 확장자만 업로드 가능 (기본 필터는 그대로 막힘)
-            if (validExtn && validExtn !== "") {
-                if (validExtn.indexOf(extn.toLowerCase()) < 0) {
-                    const message = validExtn.replace(/\|/g, ", ");
-                    commons.util.swalOrAlert(message + " 파일만 첨부 가능합니다.");
-                    $(obj).val("");
-                    return false;
-                }
+            const validExtnMatches = validExtn.split('|').includes(extn.toLowerCase());
+            const isExtnNotValid = validExtn && validExtn !== "" && !validExtnMatches;
+            if (isExtnNotValid) {
+                const message = validExtn.replace(/\|/g, ", ");
+                commons.util.swalOrAlert(message + " 파일만 첨부 가능합니다.");
+                input.value = "";
+                return false;
             }
             return true;
         },
 
         /**
+         * 이미지 파일 확장자 체크
+         * @param {string|HTMLElement|jQuery} selector - 파일 입력 요소의 선택자, DOM 요소 또는 jQuery 객체.
+         * @returns {boolean} - 유효한 이미지 확장자일 경우 true, 아니면 false.
+         */
+        fileImgExtnChck: function(selector) {
+            return commons.validate.fileExtnChck(selector, commons.validate.validImgExtn);
+        },
+
+        /**
          * 파일 업로드시 용량 체크 (현재 50MB)
          */
-        fileSizeChck: function(obj) {
-            if (!obj) return;
+
+        fileSizeChck: function(selector) {
+            const inputElements = commons.validate.verifySelector(selector);
+            if (inputElements.length === 0 || !inputElements[0].files || !inputElements[0].files.length) return false;
+
+            const input = inputElements[0];
             const fileSizeLimitMb = 50;       // 50MB
             const fileSizeLimit = 1024 * 1024 * fileSizeLimitMb;
-            const file = obj.files[0];
-            if (typeof (file) == 'undefined') return;
+            const file = input.files[0];
 
             if (file.size > fileSizeLimit) {
                 commons.util.swalOrAlert(fileSizeLimitMb + "MB 이하의 파일만 첨부가능합니다.");
-                $(obj).val("");
+                input.value = "";
                 return false;
             }
             return true;
