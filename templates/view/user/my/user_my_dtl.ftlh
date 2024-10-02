@@ -264,7 +264,7 @@
         <input type="hidden" name="userProflNo" value="${user.userInfo.userProflNo!}">
     </#if>
 </form>
-<div id="tinymceImageTemplate" hidden>
+<div id="proflImageTemplate" hidden>
     <#--begin::Form-->
     <form name="profllImgForm" id="profllImgForm" class="form" enctype="multipart/form-data">
         <input type="file" name="atchFile0" id="atchFile0" class="file"

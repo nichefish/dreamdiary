@@ -81,7 +81,7 @@
                     $("#elseDreamerNmDiv").addClass("d-none");
                 });
                 // tinymce editor init
-                commons.tinymce.init('#tinymce_jrnlDreamCn', commons.tinymce.imgRegFunc);
+                commons.tinymce.init('#tinymce_jrnlDreamCn');
                 commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", "");
             },
             /** 이관 submit */
@@ -145,7 +145,7 @@
                         $("#elseDreamerNmDiv").addClass("d-none");
                     });
                     // tinymce editor reset
-                    commons.tinymce.init('#tinymce_jrnlDreamCn', commons.tinymce.imgRegFunc);
+                    commons.tinymce.init('#tinymce_jrnlDreamCn');
                     commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", rsltObj.cn);
                 });
             },

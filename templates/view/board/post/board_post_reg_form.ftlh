@@ -25,7 +25,7 @@
                 /* jquery :: validation */
                 BoardPost.initValidateForm()
                 /* tinymce init */
-                commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
+                commons.tinymce.init("#tinymce_cn");
                 /* tagify */
                 commons.tagify.initWithCtgr("#postRegForm #tagListStr");
                 // 잔디발송여부 클릭시 글씨 변경

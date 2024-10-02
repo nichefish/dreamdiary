@@ -23,7 +23,7 @@
         return {
             init: function () {
                 /** tinymce init */
-                commons.tinymce.init("#tinymce_cn", commons.tinymce.imgRegFunc);
+                commons.tinymce.init("#tinymce_cn");
 
                 /* jquery :: validation */
                 ExptrReqst.initValidateForm();

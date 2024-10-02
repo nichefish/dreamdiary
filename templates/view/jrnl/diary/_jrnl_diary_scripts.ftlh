@@ -54,7 +54,7 @@
                 // checkbox init
                 commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                 // tinymce editor reset
-                commons.tinymce.init('#tinymce_jrnlDiaryCn', commons.tinymce.imgRegFunc);
+                commons.tinymce.init('#tinymce_jrnlDiaryCn');
                 commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", "");
             },
             /** 이관 submit */
@@ -109,7 +109,7 @@
                     // checkbox init
                     commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
                     // tinymce editor reset
-                    commons.tinymce.init('#tinymce_jrnlDiaryCn', commons.tinymce.imgRegFunc);
+                    commons.tinymce.init('#tinymce_jrnlDiaryCn');
                     commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", rsltObj.cn);
                 });
             },

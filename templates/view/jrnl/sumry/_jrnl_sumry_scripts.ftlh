@@ -82,7 +82,7 @@
                     /* tagify */
                     commons.tagify.initWithCtgr("#jrnlSumryRegForm #tagListStr", undefined);
                     // tinymce editor reset
-                    commons.tinymce.init('#tinymce_jrnlSumryCn', commons.tinymce.imgRegFunc);
+                    commons.tinymce.init('#tinymce_jrnlSumryCn');
                     commons.tinymce.setContentWhenReady("tinymce_jrnlSumryCn", rsltObj.cn);
                 });
             },

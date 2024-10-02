@@ -12,32 +12,41 @@
 if (typeof commons === 'undefined') { var commons = {}; }
 commons.tinymce = (function() {
     return {
+
+        /** 기본 옵션 분리 */
+        basicOptions: {
+            editor_encoding: "raw",
+            height: 540,
+            menubar: false,
+            branding: false,
+            statusbar: false,
+            default_link_target: "_blank",
+            convert_urls: false,
+            plugins: 'help quickbars searchreplace link autolink pageembed table lists advlist checklist emoticons hr visualchars visualblocks pagebreak code codesample',
+            toolbar1: 'undo redo | searchreplace | styles styleselect fontselect fontsizeselect | bold italic underline strikethrough | forecolor backcolor | align | code codesample | help',
+            toolbar2: 'emoticons custom_image link pageembed | hr | numlist bullist checklist moreless | visualchars visualblocks pagebreak | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+            contextmenu: 'link custom_image lists table',
+            /* https://www.tiny.cloud/docs/plugins/opensource/textpattern/
+            textpattern_patterns: [
+                {start: '*', end: '*', format: 'italic'},
+                {start: '**', end: '**', format: 'bold'},
+                {start: '~', end: '~', cmd: 'createLink', value: 'https://tiny.cloud'}
+            ], */
+        },
+
         /**
-         * tinymce 에디터 init
-         * @depdendency : tinyMCE
+         * tinymce 에디터를 초기화합니다.
+         * @dependency: tinyMCE
+         * @param {string} selectorStr - 초기화할 에디터의 선택자 문자열.
+         * @param {Function} imgFunc - 이미지 업로드 로직을 처리할 함수.
          */
-        init: function(selectorStr, imgFunc) {
-            if ($(selectorStr) === undefined) return;
+        init: function(selectorStr, imgFunc = null) {
+            const editorElement = document.querySelector(selectorStr);
+            if (!editorElement) return;
+
             const options = {
                 selector: selectorStr,
-                editor_encoding: "raw",
-                height: 540,
-                menubar: false,
-                branding: false,
-                statusbar: false,
-                default_link_target: "_blank",
-                convert_urls: false,
-                /* textpattern */
-                plugins: 'help quickbars searchreplace link autolink pageembed table lists advlist checklist emoticons hr visualchars visualblocks pagebreak code codesample',
-                toolbar1: 'undo redo | searchreplace | styles styleselect fontselect fontsizeselect | bold italic underline strikethrough | forecolor backcolor | align | code codesample | help',
-                toolbar2: 'emoticons custom_image link pageembed | hr | numlist bullist checklist moreless | visualchars visualblocks pagebreak | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
-                contextmenu: 'link custom_image lists table',
-                /* https://www.tiny.cloud/docs/plugins/opensource/textpattern/
-                textpattern_patterns: [
-                    {start: '*', end: '*', format: 'italic'},
-                    {start: '**', end: '**', format: 'bold'},
-                    {start: '~', end: '~', cmd: 'createLink', value: 'https://tiny.cloud'}
-                ], */
+                ...commons.tinymce.basicOptions, // 공통 옵션을 병합
                 setup: function (editor) {
                     // 자동 이스케이핑
                     editor.on('SaveContent', function (e) {
@@ -45,18 +54,19 @@ commons.tinymce = (function() {
                     });
                     // 하단 option들 메뉴에 붙여두는 기능
                     editor.on('PostRender', function(e) {
-                        var container = editor.getContainer();
-                        var uiContainer = document.querySelectorAll('.tox-tinymce-aux');
+                        const container = editor.getContainer();
+                        const uiContainer = document.querySelectorAll('.tox-tinymce-aux');
                         uiContainer.forEach((c) => {
                             container.parentNode.appendChild(c);
                         });
                     });
                     // 이미지 업로드 로직
+                    if (typeof imgFunc !== 'function') imgFunc = commons.tinymce.imgRegFunc;
                     editor.ui.registry.addButton('custom_image', {
                         icon: 'image',
                         tooltip: 'insert Image',
                         onAction: function() {
-                            imgFunc();
+                             imgFunc();
                         }
                     });
                     // 글접기/펼치기 로직
@@ -72,55 +82,78 @@ commons.tinymce = (function() {
             };
             tinymce.init(options);
         },
+
         /**
-         * tinymce 에디터 준비되면 컨텐츠 세팅
+         * TinyMCE 에디터가 준비되면 컨텐츠를 설정합니다.
+         * @param {string} editorNm - 설정할 에디터의 이름.
+         * @param {string} cn - 설정할 내용.
+         * @param {number} [attempt=0] - 현재 시도 횟수.
          */
-        setContentWhenReady: function(editorNm, cn) {
+        setContentWhenReady: function(editorNm, cn, attempt = 0) {
             const editor = tinymce.get(editorNm);
+            const maxAttempts = 20; // 최대 시도 횟수
             if (editor && editor.initialized) {
                 editor.setContent(cn);
-            } else {
+            } else if (attempt < maxAttempts) {
                 // 초기화가 완료될 때까지 재귀적으로 시도
-                setTimeout(() => commons.tinymce.setContentWhenReady(editorNm, cn), 50);
+                setTimeout(function() {
+                    commons.tinymce.setContentWhenReady(editorNm, cn, attempt + 1);
+                }, 50);
+            } else {
+                console.warn("Unable to set content for editor " + editorNm + ": Initialization failed after " + maxAttempts + " + attempts.");
             }
         },
+
         /**
-         * tinymce 에디터 destroy
+         * TinyMCE 에디터를 제거합니다.
+         * @param {string|HTMLElement|jQuery} selector - 제거할 에디터의 선택자, DOM 요소 또는 jQuery 객체.
          */
         destroy: function(selector) {
-            if (typeof tinymce != 'undefined' && tinymce != null) tinymce.remove([selector]);
+            const editorElements = commons.validate.verifySelector(selector);
+            if (editorElements.length === 0) return;
+
+            editorElements.forEach(editorElement => {
+                if (typeof tinymce !== 'undefined' && tinymce !== null) {
+                    tinymce.remove(editorElement); // 지정된 선택자를 가진 에디터를 제거
+                }
+            });
         },
+
         /**
          * tinymce 에디터 이미지 첨부
          */
         imgRegFunc: function() {
-            const $fileInput = $("#atchFile0");
-            $fileInput.click();
-            $fileInput.on("change", function() {
-                if (this.value !== "") {
-                    if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
-                    if (!commons.validate.fileImgExtnChck(this)) return false;      // fileExtnChck
-                    const url = "/file/fileUploadAjax.do";
-                    const ajaxData = new FormData($("#tinymceImageForm")[0]);
-                    commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
-                        if (commons.util.isNotEmpty(res.message)) alert(res.message);
-                        if (res.rslt) {
-                            const fileInfo = res.rsltObj;
-                            const imgTag = "<img src='" + fileInfo.url + "' data-mce-src='" + fileInfo.url + "' data-originalFileName='" + fileInfo.orgnFileNm + "' >";
-                            tinymce.execCommand('mceInsertContent', true, imgTag);
-                            // file input 초기화
-                            $("#atchFile0").val("");
-                            const $imgFileDiv = $("#tinymceImageTemplate");
-                            const fileInputHtml = $imgFileDiv.html();
-                            $imgFileDiv.empty().html(fileInputHtml);
-                        }
-                    });
-                }
+            const fileInput = document.getElementById("atchFile0");
+            fileInput.click();
+
+            fileInput.addEventListener("change", function() {
+                if (!this.value) return;
+                if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
+                if (!commons.validate.fileImgExtnChck(this)) return false;      // fileExtnChck
+
+                const url = "/file/fileUploadAjax.do";
+                const ajaxData = new FormData(document.getElementById("tinymceImageForm"));
+                commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
+                    if (commons.util.isNotEmpty(res.message)) alert(res.message);
+                    if (!res.rslt) return;
+
+                    const fileInfo = res.rsltObj;
+                    const imgTag = "<img src='" + fileInfo.url + "' data-mce-src='" + fileInfo.url + "' data-originalFileName='" + fileInfo.orgnFileNm + "' >";
+                    tinymce.execCommand('mceInsertContent', true, imgTag);
+
+                    // file input 초기화
+                    fileInput.value = "";
+                    const templateDiv = document.getElementById("tinymceImageTemplate");
+                    const originalTemplate = templateDiv.innerHTML;
+                    templateDiv.innerHTML = "";
+                    templateDiv.innerHTML = originalTemplate;
+                });
             });
         },
+
         morelessFunc: function() {
             if (typeof commons.tinymce.sectionCount === "undefined") commons.tinymce.sectionCount = 0;
-            const sectionId = `tinymce_section_` + commons.tinymce.sectionCount;
+            const sectionId = "tinymce_section_" + commons.tinymce.sectionCount;
             const sectionContentId = `tinymce_section_content_` + commons.tinymce.sectionCount;
             const toggleId = `tinymce_toggle_` + commons.tinymce.sectionCount;
 

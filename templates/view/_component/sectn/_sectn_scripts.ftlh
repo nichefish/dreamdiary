@@ -46,7 +46,7 @@
                 /* tagify */
                 commons.tagify.initWithCtgr("#sectnRegForm #tagListStr", undefined);
                 // tinymce editor reset
-                commons.tinymce.init('#tinymce_sectnCn', commons.tinymce.imgRegFunc);
+                commons.tinymce.init('#tinymce_sectnCn');
                 commons.tinymce.setContentWhenReady("tinymce_sectnCn", "");
             },
             /** submit */
@@ -97,7 +97,7 @@
                     /* tagify */
                     commons.tagify.initWithCtgr("#sectnRegForm #tagListStr", undefined);
                     // tinymce editor reset
-                    commons.tinymce.init('#tinymce_sectnCn', commons.tinymce.imgRegFunc);
+                    commons.tinymce.init('#tinymce_sectnCn');
                     commons.tinymce.setContentWhenReady("tinymce_sectnCn", rsltObj.cn);
                 });
             },
