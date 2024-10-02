@@ -39,7 +39,7 @@
                     $("#dtlCdRegForm #regYn").val("Y");
                     const url = "${Url.DTL_CD_REG_AJAX!}";
                     const ajaxData = $("#dtlCdRegForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -51,7 +51,7 @@
             mdfModal: function(dtlCd) {
                 const url = "${Url.DTL_CD_DTL_AJAX!}";
                 const ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -74,7 +74,7 @@
                     if (!result.value) return;
                     const url = '${Url.DTL_CD_USE_AJAX!}';
                     const ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -92,7 +92,7 @@
                     if (!result.value) return;
                     const url = '${Url.DTL_CD_UNUSE_AJAX!}';
                     const ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -110,7 +110,7 @@
                     if (!result.value) return;
                     const url = "${Url.DTL_CD_DEL_AJAX!}";
                     const ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();

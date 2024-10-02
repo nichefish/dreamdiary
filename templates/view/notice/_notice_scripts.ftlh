@@ -93,7 +93,7 @@
                 event.stopPropagation();
                 const url = "${Url.NOTICE_DTL_AJAX!}";
                 const ajaxData = {"postNo": postNo};
-                commons.util.blockUIAjax(url, 'get', ajaxData, function (res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function (res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({text: res.message});
                         return false;
@@ -114,7 +114,7 @@
                     if (!result.value) return;
                     const url = "${Url.NOTICE_DEL_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function (res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function (res) {
                         Swal.fire({text: res.message})
                             .then(function () {
                                 if (res.rslt) Notice.list();

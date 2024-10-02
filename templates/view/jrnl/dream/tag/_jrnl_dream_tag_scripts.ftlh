@@ -9,7 +9,7 @@
             listAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
                 const ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -21,7 +21,7 @@
             listAllAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
                 const ajaxData = { "yy": 9999, "mnth":99 };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -40,7 +40,7 @@
             dreamTagGroupListAllAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
                 const ajaxData = { "yy": 9999, "mnth":99 };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -83,7 +83,7 @@
             dtlAjax: function(tagNo, tagNm) {
                 const url = "${Url.JRNL_DREAM_TAG_DTL_AJAX!}";
                 const ajaxData = { "tagNo": tagNo };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -117,7 +117,7 @@
              */
             tagCtgrSyncAjax: function() {
                 const url = "${Url.JRNL_TAG_CTGR_SYNC_AJAX!}";
-                commons.util.blockUIAjax(url, 'post', {}, function(res) {
+                commons.util.blockUIAjax(url, 'POST', {}, function(res) {
                     Swal.fire({ text: res.message });
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });

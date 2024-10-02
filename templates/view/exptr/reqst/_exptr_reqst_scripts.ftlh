@@ -83,7 +83,7 @@
                 event.stopPropagation();
                 const url = "${Url.EXPTR_REQST_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -100,7 +100,7 @@
                     if (!result.value) return;
                     const url = "${Url.EXPTR_REQST_CF_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -117,7 +117,7 @@
                     if (!result.value) return;
                     const url = "${Url.EXPTR_REQST_DISMISS_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -138,7 +138,7 @@
                     if (!result.value) return;
                     const url = "${Url.EXPTR_REQST_DEL_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) ExptrReqst.list();

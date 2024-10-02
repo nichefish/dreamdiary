@@ -38,7 +38,7 @@
                     if (!result.value) return;
                     const url = '${Url.BOARD_DEF_REG_AJAX!}';
                     const ajaxData = $("#boardDefRegForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -50,7 +50,7 @@
             mdfModal: function(boardCd) {
                 const url = "${Url.BOARD_DEF_DTL_AJAX!}";
                 const ajaxData = { "boardCd": boardCd };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -72,7 +72,7 @@
                     if (!result.value) return;
                     const url = '${Url.BOARD_DEF_USE_AJAX!}';
                     const ajaxData = { "boardCd": key };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -89,7 +89,7 @@
                     if (!result.value) return;
                     const url = '${Url.BOARD_DEF_UNUSE_AJAX!}';
                     const ajaxData = { "boardCd": key };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -106,7 +106,7 @@
                     if (!result.value) return;
                     const url = "${Url.BOARD_DEF_DEL_AJAX!}";
                     const ajaxData = { "boardCd": key };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();

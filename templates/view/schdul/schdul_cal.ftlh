@@ -123,7 +123,7 @@
                 });
                 // 검색키워드 설정
                 ajaxData.searchKeyword = $("#searchKeyword").val();
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (res.rslt) Page.eventList = res.rsltList;
                 });
             },

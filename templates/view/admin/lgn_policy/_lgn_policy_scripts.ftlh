@@ -39,7 +39,7 @@
                     if (!result.value) return;
                     const url = "${Url.LGN_POLICY_REG_AJAX!}";
                     const ajaxData = $("#lgnPolicyForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReplace("${Url.LGN_POLICY_FORM!}");

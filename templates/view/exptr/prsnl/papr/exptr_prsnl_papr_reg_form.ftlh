@@ -42,7 +42,7 @@
             validateYyMnth: function() {
                 const url = "${Url.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
                 const ajaxData = {"yy": $("#yy").val(), "mnth": $("#mnth").val()};
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     let rsltObj = res.rsltObj;
                     if (rsltObj === undefined) return;
                     if (rsltObj.cfYn === "Y") {
@@ -105,7 +105,7 @@
                 // TODO: API 응답 JSON으로 받아와서 handlebars로 그려버리기
                 const url = "${Url.EXPTR_PRSNL_ITEM_LIST_AJAX!}";
                 const ajaxData = $("#procForm").serializeArray();
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         Swal.fire({text: res.message});
                         return;

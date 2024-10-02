@@ -41,7 +41,7 @@
             lgnPwChgAjax: function() {
                 const url = '${Url.AUTH_LGN_PW_CHG_AJAX!}';
                 const ajaxData = { "userId" : $("#lgnUserId").val(), "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     Swal.fire({
                         text: res.message
                     }).then(function() {

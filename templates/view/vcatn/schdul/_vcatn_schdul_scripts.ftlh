@@ -72,7 +72,7 @@
                 $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
                 const url = "${Url.VCATN_SCHDUL_DTL_AJAX!}";
                 const ajaxData = $("#procForm").serializeArray();
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     if (!res.rslt) return;
                     let rsltObj = res.rsltObj;
                     // 수정 modal_form에 값 세팅
@@ -107,7 +107,7 @@
                     $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
                     const url = "${Url.VCATN_SCHDUL_DEL_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();

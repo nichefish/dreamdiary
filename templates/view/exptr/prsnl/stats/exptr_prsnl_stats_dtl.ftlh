@@ -45,7 +45,7 @@
                     if (!result.value) return;
                     const url = "${Url.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX!}";
                     const ajaxData = { "postNo": '${post.postNo!}', "exptrPrsnlItemNo": exptrPrsnlItemNo, "orgnlRciptYn": orgnlRciptYn };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -67,7 +67,7 @@
                     if (!result.value) return;
                     const url = "${Url.EXPTR_PRSNL_STATS_CF_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) Page.stats();
@@ -84,7 +84,7 @@
                     if (!result.value) return;
                     const url = "${Url.EXPTR_PRSNL_PAPR_DEL_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) Page.stats();
@@ -114,7 +114,7 @@
                 if (rjectYn === "Y") $("#rjectResn").val($("#rjectResnShow").val());
                 const url = "${Url.EXPTR_PRSNL_STATS_RJECT!}";
                 const ajaxData = $("#procForm").serializeArray();
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();

@@ -14,7 +14,7 @@
             /** 팝업 목록 조회 및 처리 */
             showNoticePopupAjax() {
                 // const url = "${Url.NOTICE_POPUP_LIST_AJAX!}";
-                // commons.util.blockUISyncAjax(url, 'post', null, function(res) {
+                // commons.util.blockUIAsyncAjax(url, 'POST', null, function(res) {
                 //     if (commons.util.isNotEmpty(res.rsltList)) {
                 //         let rsltList = res.rsltList;
                 //         NoticePopup.popupList = rsltList;
@@ -37,7 +37,7 @@
                 const url = "${Url.NOTICE_DTL_AJAX!}";
                 const obj = NoticePopup.popupList[NoticePopup.popupIdx];
                 const ajaxData = { "postNo": obj.postNo };
-                commons.util.blockUISyncAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAsyncAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;

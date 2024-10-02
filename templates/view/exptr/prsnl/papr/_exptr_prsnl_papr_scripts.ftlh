@@ -55,7 +55,7 @@
             regForm: function() {
                 $("#prevYn").val("N");
                 const url = "${Url.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX!}";
-                commons.util.blockUIAjax(url, 'post', "", function(res) {
+                commons.util.blockUIAjax(url, 'POST', "", function(res) {
                     if (!res.rsltMap) return;
                     // 중복 코드 감소를 위한 함수 정의
                     const checkAndRedirect = (data) => {
@@ -129,7 +129,7 @@
                     if (!result.value) return;
                     const url = "${Url.EXPTR_PRSNL_PAPR_DEL_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) ExptrPrsnlPapr.list();

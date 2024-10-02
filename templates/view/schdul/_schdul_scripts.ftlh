@@ -76,7 +76,7 @@
             regAjax: function() {
                 const url = "${Url.SCHDUL_REG_AJAX!}";
                 const ajaxData = $("#schdulRegForm").serializeArray();
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();
@@ -87,7 +87,7 @@
             dtlAjax: function(postNo) {
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -101,7 +101,7 @@
             mdfModal: function(key) {
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
                 const ajaxData = { "postNo": key };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -131,7 +131,7 @@
                     if (!result.value) return;
                     const url = "${Url.SCHDUL_DEL_AJAX!}";
                     const ajaxData = { "postNo" : key }
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();

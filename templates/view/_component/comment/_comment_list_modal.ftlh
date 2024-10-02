@@ -15,7 +15,7 @@
                 }
                 const url = "${Url.COMMENT_LIST_AJAX!}";
                 const ajaxData = $("#commentProcForm").serializeArray();
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;

@@ -29,7 +29,7 @@
             flsysListAjax: function(filePath) {
                 const url = "${Url.FLSYS_LIST_AJAX!}";
                 const ajaxData = { "filePath": filePath };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -52,7 +52,7 @@
             openInExplorer: function(filePath, objectTy) {
                 const url = "${Url.FLSYS_OPEN_IN_EXPLORER_AJAX!}";
                 const ajaxData = { "filePath": filePath, "objectTy": objectTy };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -97,7 +97,7 @@
             fileExec: function(filePath) {
                 const url = "${Url.FLSYS_FILE_EXEC_AJAX!}";
                 const ajaxData = { "filePath": filePath };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;

@@ -12,7 +12,7 @@
                 event.stopPropagation();
                 const url = "${Url.TAG_DTL_AJAX!}";
                 const ajaxData = { "tagNo": tagNo };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -39,7 +39,7 @@
             listAjax: function() {
                 const url = "${Url.TAG_LIST_AJAX!}";
                 const ajaxData = { "contentType": $("#contentType").val() };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;

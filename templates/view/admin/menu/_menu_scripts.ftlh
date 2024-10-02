@@ -104,7 +104,7 @@
                     let isReg = $("#menuRegForm #menuNo").val() === "";
                     const url = isReg ? "${Url.MENU_REG_AJAX!}" : "${Url.MENU_MDF_AJAX!}";
                     const ajaxData = $("#menuRegForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();
@@ -116,7 +116,7 @@
             mdfModal: function(menuNo) {
                 const url = "${Url.MENU_DTL_AJAX!}";
                 const ajaxData = { "menuNo": menuNo };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -134,7 +134,7 @@
                     if (!result.value) return;
                     const url = "${Url.MENU_DEL_AJAX!}";
                     const ajaxData = { "menuNo": menuNo };
-                    commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
                                 if (res.rslt) commons.util.blockUIReload();

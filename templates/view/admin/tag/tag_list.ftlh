@@ -33,7 +33,7 @@
             tagListAjax: function(tagCtgr) {
                 const url = "${Url.TAG_LIST_AJAX!}";
                 const ajaxData = { "tagCtgr": tagCtgr };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -46,7 +46,7 @@
             listAjax: function() {
                 const url = "${Url.JRNL_DIARY_TAG_LIST_AJAX!}";
                 const ajaxData = { "yy": 9999, "mnth": 99 };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -58,7 +58,7 @@
             listAjax: function() {
                 const url = "${Url.JRNL_DIARY_TAG_LIST_AJAX!}";
                 const ajaxData = { "yy": 9999, "mnth": 99 };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
@@ -70,7 +70,7 @@
             listAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
                 const ajaxData = { "yy": 9999, "mnth": 99 };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;

@@ -46,7 +46,7 @@
             updt: function() {
                 // 메인 메뉴 그리기
                 const url = "${Url.MENU_MAIN_LIST_AJAX!}";
-                commons.util.blockUIAjax(url, 'get', null, function(res) {
+                commons.util.blockUIAjax(url, 'GET', null, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;

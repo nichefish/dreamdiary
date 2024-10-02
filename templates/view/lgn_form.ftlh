@@ -51,7 +51,7 @@
                     } else {
                         // 중복ID 세션 attribute 만료시킴
                         const url = "${Url.AUTH_EXPIRE_SESSION_AJAX!}";
-                        commons.util.blockUIAjax(url, 'post', null, function() {
+                        commons.util.blockUIAjax(url, 'POST', null, function() {
                             commons.util.blockUIReplace("${Url.AUTH_LGN_FORM!}");
                         });
                     }

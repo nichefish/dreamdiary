@@ -32,7 +32,7 @@
                 }
                 const url = "${Url.JRNL_SUMRY_MAKE_AJAX!}";
                 const ajaxData = { "yy": yy };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();
@@ -42,7 +42,7 @@
             /** 전체 년도 결산 갱신 */
             makeTotalSumryAjax: function() {
                 const url = "${Url.JRNL_SUMRY_MAKE_TOTAL_AJAX!}";
-                commons.util.blockUIAjax(url, 'post', null, function(res) {
+                commons.util.blockUIAjax(url, 'POST', null, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();
@@ -53,7 +53,7 @@
             comptAjax: function(postNo) {
                 const url = "${Url.JRNL_SUMRY_DREAM_COMPT_AJAX!}";
                 const ajaxData = { "postNo": postNo };
-                commons.util.blockUIAjax(url, 'post', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
                             if (res.rslt) commons.util.blockUIReload();
@@ -68,7 +68,7 @@
             regModal: function(postNo) {
                 const url = "${Url.JRNL_SUMRY_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
-                commons.util.blockUIAjax(url, 'get', ajaxData, function(res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;

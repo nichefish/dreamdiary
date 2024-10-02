@@ -89,7 +89,7 @@ public class LgnController
     @GetMapping({ Url.AUTH_LGN_PROC, Url.AUTH_LGOUT})
     public String authRedirection() {
 
-        log.info("'get' access in lgnProc!");
+        log.info("'GET' access in lgnProc!");
         return "redirect:" + Url.AUTH_LGN_FORM;
     }
 
