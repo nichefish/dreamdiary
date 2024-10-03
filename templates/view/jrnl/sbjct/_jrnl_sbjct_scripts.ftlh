@@ -26,7 +26,7 @@
                             Swal.fire({
                                 text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
                                 showCancelButton: true,
-                            }).then(function (result) {
+                            }).then(function(result) {
                                 if (!result.value) return;
                                 JrnlSbjct.regAjax();
                             });
@@ -83,7 +83,7 @@
             regAjax: function() {
                 const url = " <#if isMdf!false>${Url.JRNL_SBJCT_MDF_AJAX!}<#else>${Url.JRNL_SBJCT_REG_AJAX!}</#if>";
                 const ajaxData = new FormData($("#jrnlSbjctRegForm")[0]);
-                commons.util.blockUIMultipartAjax(url, ajaxData, function (res) {
+                commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({text: res.message})
                         .then(function() {
                             if (!res.rslt) return;
@@ -97,19 +97,25 @@
             /**
              * 상세 화면으로 이동
              */
-            dtl: function (postNo) {
+            dtl: function(postNo) {
+                event.stopPropagation();
+                if (isNaN(postNo)) return;
+
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SBJCT_DTL!}");
             },
 
             /**
              * 상세 모달 호출
+             * @param {string|number} postNo - 조회할 글 번호.
              */
-            dtlAjax: function (postNo) {
+            dtlModal: function(postNo) {
                 event.stopPropagation();
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.JRNL_SBJCT_DTL_AJAX!}";
                 const ajaxData = {"postNo": postNo};
-                commons.util.blockUIAjax(url, 'GET', ajaxData, function (res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({text: res.message});
                         return false;
@@ -132,11 +138,11 @@
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
-                }).then(function (result) {
+                }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_SBJCT_DEL_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'POST', ajaxData, function (res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({text: res.message})
                             .then(function() {
                                 if (res.rslt) JrnlSbjct.list();

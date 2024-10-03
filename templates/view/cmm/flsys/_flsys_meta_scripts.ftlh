@@ -41,8 +41,15 @@
                     });
                 });
             },
-            /** 메타정보 상세 조회 (Ajax) */
-            dtlAjax: function(postNo) {
+
+            /**
+             * 상세 모달 호출
+             * @param {string|number} postNo - 조회할 글 번호.
+             */
+            dtlModal: function(postNo) {
+                event.stopPropagation();
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.FLSYS_META_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -73,6 +80,8 @@
             },
             /** 메타정보 삭제 (Ajax) */
             delAjax: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

@@ -10,7 +10,7 @@
     <div class="col" id="jrnl_diary_tag_list_div">
         <#list diaryTagList![] as tag>
             <span class="py-2 me-3 cursor-pointer opacity-hover"
-                  onclick="JrnlTag.dtlAjax(${tag.tagNo!}, '${tag.tagNm!}');"
+                  onclick="JrnlTag.dtlModal(${tag.tagNo!}, '${tag.tagNm!}');"
                   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">
                 <span class="${tag.tagClass!}">
                     <#if tag.ctgr?? && tag.ctgr != ""><span class="fs-7 text-noti">[${tag.ctgr!}]</span></#if>
@@ -49,7 +49,7 @@
                         <#if diary.tag.list??>
                             <div class="ms-2 mt-3">
                                 <#list diary.tag.list as tag>
-                                    <span class="text-muted cursor-pointer pe-1" onclick="Tag.dtlAjax(${tag.refTagNo!});"
+                                    <span class="text-muted cursor-pointer pe-1" onclick="Tag.dtlModal(${tag.refTagNo!});"
                                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                                           title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
                                     #<span class="border-bottom text-primary fw-lighter opacity-hover">${tag.tagNm!}</span>

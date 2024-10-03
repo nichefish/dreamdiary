@@ -13,7 +13,7 @@
             /**
              * Flsys 객체 초기화
              */
-            init: function (mode) {
+            init: function(mode) {
                 Flsys.mode = mode;
                 $("#flsys_file_vod_modal").on("hidden.bs.modal", function() {
                     $("#flsys_file_vod_div").empty();

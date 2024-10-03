@@ -10,7 +10,7 @@
             /**
              * Comment.modal 객체 초기화
              */
-            init: function ({ refreshFunc } = {}) {
+            init: function({ refreshFunc } = {}) {
                 /* jquery :: validation */
                 Comment.modal.initValidateForm();
                 commons.util.handlebarsTemplate({}, "comment_reg");
@@ -100,7 +100,7 @@
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
-                }).then(function (result) {
+                }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.COMMENT_DEL_AJAX!}";
                     const ajaxData = { "postNo": postNo, "actvtyCtgrCd": "${actvtyCtgrCd!}" };

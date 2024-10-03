@@ -132,7 +132,7 @@
             /**
              * 상세 화면으로 이동
              */
-            dtl: function (postNo) {
+            dtl: function(postNo) {
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_PAPR_DTL!}");
             },

@@ -26,6 +26,8 @@
              * 목록 검색
              */
             search: function() {
+                event.stopPropagation();
+
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.CL_CD_LIST!}?actionTyCd=SEARCH");
             },
@@ -34,6 +36,8 @@
              * 등록 모달 호출
              */
             regModal: function() {
+                event.stopPropagation();
+
                 commons.util.handlebarsTemplate({}, "cl_cd_reg", "show");
                 /* jquery :: validation */
                 ClCd.initValidateForm();
@@ -46,6 +50,8 @@
              * submit
              */
             submit: function() {
+                event.stopPropagation();
+
                 $("#clCdRegForm").submit();
             },
 
@@ -53,6 +59,8 @@
              * 등록/수정 처리(Ajax)
              */
             regAjax: function() {
+                event.stopPropagation();
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
                     showCancelButton: true,
@@ -72,9 +80,11 @@
 
             /**
              * 상세 화면 이동
-             * @param {string} clCd - 분류코드.
+             * @param {string} clCd - 조회할 분류 코드.
              */
             dtl: function(clCd) {
+                event.stopPropagation();
+
                 commons.util.blockUIRequest();
                 $("#procForm #clCd").val(clCd);
                 commons.util.blockUISubmit("#procForm", "${Url.CL_CD_DTL!}");
@@ -82,10 +92,11 @@
 
             /**
              * 상세 모달 호출
-             * @param {string} clCd - 분류코드.
+             * @param {string} clCd - 조회할 분류 코드.
              */
-            dtlAjax: function(clCd) {
+            dtlModal: function(clCd) {
                 event.stopPropagation();
+
                 const url = "${Url.CL_CD_DTL_AJAX!}";
                 const ajaxData = { "clCd": clCd };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -100,9 +111,11 @@
 
             /**
              * 수정 모달 호출
-             * @param {string} clCd - 분류코드.
+             * @param {string} clCd - 조회할 분류 코드.
              */
             mdfModal: function(clCd) {
+                event.stopPropagation();
+
                 const url = "${Url.CL_CD_DTL_AJAX!}";
                 const ajaxData = { "clCd": clCd };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -122,10 +135,11 @@
 
             /**
              * 사용으로 변경 (Ajax)
-             * @param {string} clCd - 분류코드.
+             * @param {string} clCd - 변경할 분류 코드.
              */
             useAjax: function(clCd) {
                 event.stopPropagation();
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.use"/>,
                     showCancelButton: true,
@@ -144,10 +158,11 @@
 
             /**
              * 미사용으로 변경 (Ajax)
-             * @param {string} clCd - 분류코드.
+             * @param {string} clCd - 변경할 분류 코드.
              */
             unuseAjax: function(clCd) {
                 event.stopPropagation();
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.unuse"/>,
                     showCancelButton: true,
@@ -166,10 +181,11 @@
 
             /**
              * 삭제 처리 (ajax)
-             * @param {string} clCd - 삭제할 분류코드.
+             * @param {string} clCd - 삭제할 분류 코드.
              */
             delAjax: function(clCd) {
                 event.stopPropagation();
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

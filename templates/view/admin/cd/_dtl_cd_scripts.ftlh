@@ -22,8 +22,12 @@
                 DtlCd.swappable = commons.util.initDraggable(keyExtractor, url);
             },
 
-            /** 상세코드 등록 모달 호출 */
+            /**
+             * 등록 모달 호출
+             */
             regModal: function() {
+                event.stopPropagation();
+
                 commons.util.handlebarsTemplate({ "clCd": $("#clCd").val() }, "dtl_cd_reg", "show");
                 /* jquery :: validation */
                 DtlCd.initValidateForm();
@@ -61,7 +65,8 @@
             },
 
             /**
-             * 수정 화면으로 이동
+             * 수정 모달 호출
+             * @param {string} dtlCd - 조회할 상세 코드.
              */
             mdfModal: function(dtlCd) {
                 const url = "${Url.DTL_CD_DTL_AJAX!}";
@@ -82,9 +87,11 @@
 
             /**
              * 사용으로 변경 (Ajax)
+             * @param {string} dtlCd - 변경할 상세 코드.
              */
             useAjax: function(dtlCd) {
                 event.stopPropagation();
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.use"/>,
                     showCancelButton: true,
@@ -103,9 +110,11 @@
 
             /**
              * 미사용으로 변경 (Ajax)
+             * @param {string} dtlCd - 변경할 상세 코드.
              */
             unuseAjax: function(dtlCd) {
                 event.stopPropagation();
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.unuse"/>,
                     showCancelButton: true,
@@ -124,9 +133,11 @@
 
             /**
              * 삭제 처리 (ajax)
+             * @param {string} dtlCd - 삭제할 상세 코드.
              */
             delAjax: function(dtlCd) {
                 event.stopPropagation();
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

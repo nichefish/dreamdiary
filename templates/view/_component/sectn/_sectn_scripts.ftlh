@@ -11,7 +11,7 @@
              * @param {Object} options - 초기화 옵션 객체.
              * @param {Function} [options.refreshFunc] - 섹션 새로 고침에 사용할 함수 (선택적).
              */
-            init: function ({ refreshFunc } = {}) {
+            init: function({ refreshFunc } = {}) {
                 if (refreshFunc !== undefined) Sectn.refreshFunc = refreshFunc;
             },
 
@@ -149,7 +149,7 @@
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
-                }).then(function (result) {
+                }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.SECTN_DEL_AJAX!}";
                     const ajaxData = { "postNo": postNo, "actvtyCtgrCd": "${actvtyCtgrCd!}" };

@@ -28,9 +28,12 @@
 
             /**
              * 상세 모달 호출
+             * @param {string|number} logActvtyNo - 조회할 로그 번호.
              */
-            dtlAjax: function (logActvtyNo) {
+            dtlModal: function(logActvtyNo) {
                 event.stopPropagation();
+                if (isNaN(logActvtyNo)) return;
+
                 const url = "${Url.LOG_ACTVTY_DTL_AJAX!}";
                 const ajaxData = { "logActvtyNo": logActvtyNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {

@@ -6,7 +6,7 @@
 <script>
     const JrnlSumryAside = (function() {
         return {
-            yyMnth: function (obj) {
+            yyMnth: function(obj) {
                 // 쿠키 설정하기
                 const id = $(obj).attr("id");
                 let cookieOptions = {

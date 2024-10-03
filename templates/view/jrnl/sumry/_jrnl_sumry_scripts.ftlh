@@ -16,7 +16,7 @@
             /**
              * 상세 화면으로 이동
              */
-            dtl: function (postNo) {
+            dtl: function(postNo) {
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
             },
@@ -24,7 +24,7 @@
             /**
              * 상세 화면으로 이동
              */
-            dtlByYy: function (yy) {
+            dtlByYy: function(yy) {
                 $("#procForm #yy").val(yy);
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
             },
@@ -32,7 +32,7 @@
             /**
              * 목록 화면으로 이동
              */
-            list: function (postNo) {
+            list: function() {
                 commons.util.blockUIReplace("${Url.JRNL_SUMRY_LIST!}");
             },
 

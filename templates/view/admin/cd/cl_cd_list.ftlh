@@ -78,7 +78,7 @@
                             <span class="ms-1">(${clCd.clCd!})</span>
                             <a class="badge badge-secondary ms-2 p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="ClCd.dtlAjax('${clCd.clCd!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="ClCd.dtlModal('${clCd.clCd!}');"></i>
                             </a>
                         </td>
                         <td class="text-start ps-6 hidden-table">

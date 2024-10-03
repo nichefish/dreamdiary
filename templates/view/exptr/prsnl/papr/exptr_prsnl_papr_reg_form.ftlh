@@ -93,7 +93,7 @@
                     }
                     // 날짜 변경시 순으로 자동 정렬
                     let divTable = document.getElementById('exptr_prsnl_table');
-                    (function (divTable, n) {
+                    (function(divTable, n) {
                         commons.util.sortReqstTable(divTable, 0, "FORWARD");
                     }(divTable, 0));
                 });
@@ -115,7 +115,7 @@
                     }
                     let rsltList = res.rsltList;
                     if (commons.util.isEmpty(rsltList)) return;
-                    rsltList.forEach(function (item, idx) {
+                    rsltList.forEach(function(item, idx) {
                         item.rnum = idx;
                         commons.util.handlebarsAppend(item, "exptr_prsnl_item_reg");
 
@@ -137,7 +137,7 @@
 
                     // // 날짜순으로 자동 정렬
                     // let divTable = document.getElementById('exptr_prsnl_table');
-                    // (function (table, n) {
+                    // (function(table, n) {
                     //     commons.util.sortReqstTable(table, n, "FORWARD");
                     // }(divTable, 0));
 

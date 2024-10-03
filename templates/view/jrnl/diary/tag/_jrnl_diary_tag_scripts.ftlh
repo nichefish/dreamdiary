@@ -36,7 +36,15 @@
                     $("#jrnl_tag_dtl_modal").modal("hide");
                 });
             },
-            dtlAjax: function(tagNo, tagNm) {
+
+            /**
+             * 상세 모달 호출
+             * @param {string|number} tagNo - 조회할 태그 번호.
+             */
+            dtlModal: function(tagNo, tagNm) {
+                event.stopPropagation();
+                if (isNaN(tagNo)) return;
+
                 const url = "${Url.JRNL_DIARY_TAG_DTL_AJAX!}";
                 const ajaxData = { "tagNo": tagNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {

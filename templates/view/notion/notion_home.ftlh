@@ -22,7 +22,11 @@
                 const pageId ="";
                 Page.setIframe(pageId);
             },
-            setIframe: function (pageId) {
+
+            /**
+             * iframe 세팅
+             */
+            setIframe: function(pageId) {
                 const iframe = $('<iframe>', {
                   src: domain + pageId,
                   id: 'myFrame',

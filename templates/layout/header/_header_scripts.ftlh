@@ -68,7 +68,7 @@
                 Swal.fire({
                     text: <@spring.message "view.cnfm.lgout"/>,
                     showCancelButton: true,
-                }).then(function (result) {
+                }).then(function(result) {
                     if (!result.value) return;
                     location.replace("${Url.AUTH_LGOUT!}");
                 });

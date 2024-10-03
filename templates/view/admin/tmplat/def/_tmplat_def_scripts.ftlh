@@ -87,6 +87,8 @@
              * 삭제 처리 (ajax)
              */
             delAjax: function(menuNo) {
+                if (isNaN(menuNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

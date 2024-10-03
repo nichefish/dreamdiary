@@ -20,7 +20,7 @@
             <div class="d-flex align-items-center mb-4 py-4">
                 {{#each this}}
                     <span class="ctgr-span ctgr-gray cursor-pointer"
-                          onclick="Tag.dtlAjax('{{tagNo}}');"
+                          onclick="Tag.dtlModal('{{tagNo}}');"
                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그가 등록된 게시물 목록 팝업을 호출합니다.">
                         <span>&#35;</span><span class="border-bottom text-primary fw-normal">{{boardTag}}</span>
                         <span class="fs-9 text-noti">[{{cnt}}]</span>

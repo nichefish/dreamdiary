@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="col-xl-4 col-12 d-flex justify-content-end align-items-center">
                                     <#--목록:: 모달 팝업 열기 버튼 표시-->
-                                    <@component.list_dtl_modal post "Notice.dtlAjax" />
+                                    <@component.list_dtl_modal post "Notice.dtlModal" />
                                 </div>
                             </div>
                         </td>
@@ -161,7 +161,7 @@
                                 </div>
                                 <div class="col-xl-4 col-12 d-flex justify-content-end align-items-center">
                                     <#--목록:: 모달 팝업 열기 버튼 표시-->
-                                    <@component.list_dtl_modal post "Notice.dtlAjax" />
+                                    <@component.list_dtl_modal post "Notice.dtlModal" />
                                 </div>
                             </div>
                         </td>

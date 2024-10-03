@@ -94,7 +94,7 @@
             /**
              * 상세 화면으로 이동
              */
-            dtl: function (postNo) {
+            dtl: function(postNo) {
                 commons.util.blockUIRequest();
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_REQST_DTL!}");
@@ -102,9 +102,12 @@
 
             /**
              * 상세 모달 호출
+             * @param {string|number} postNo - 조회할 글 번호.
              */
-            dtlAjax: function (postNo) {
+            dtlModal: function(postNo) {
                 event.stopPropagation();
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.EXPTR_REQST_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -121,7 +124,7 @@
                 Swal.fire({
                     text: "완료 처리하시겠습니까?",
                     showCancelButton: true,
-                }).then(function (result) {
+                }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.EXPTR_REQST_CF_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
@@ -141,7 +144,7 @@
                 Swal.fire({
                     text: "취소(기각) 처리하시겠습니까?",
                     showCancelButton: true,
-                }).then(function (result) {
+                }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.EXPTR_REQST_DISMISS_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();

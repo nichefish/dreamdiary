@@ -13,10 +13,10 @@
             },
 
             /**
-             * 태그 상세 정보 조회 (ajax)
+             * 상세 모달 호출
              * @param {string|number} tagNo - 조회할 태그 번호.
              */
-            dtlAjax: function(tagNo) {
+            dtlModal: function(tagNo) {
                 event.stopPropagation();
                 if (isNaN(tagNo)) return;
 

@@ -94,7 +94,7 @@
                                     </#if>
                                 </span>
                                 <#--목록:: 모달 팝업 열기 버튼 표시-->
-                                <@component.list_dtl_modal post "ExptrReqst.dtlAjax" />
+                                <@component.list_dtl_modal post "ExptrReqst.dtlModal" />
                             </div>
                         </td>
                         <td class="text-center col-form-label hidden-table">
@@ -162,7 +162,7 @@
                                     </#if>
                                 </span>
                                 <#--목록:: 모달 팝업 열기 버튼 표시-->
-                                <@component.list_dtl_modal post "ExptrReqst.dtlAjax" />
+                                <@component.list_dtl_modal post "ExptrReqst.dtlModal" />
                             </div>
                         </td>
                         <td class="text-center col-form-label hidden-table">

@@ -31,12 +31,12 @@
             <div class="d-flex align-items-center justify-content-end">
                 <div class="w-80px">
                     <div class="btn btn-sm btn-icon btn-light-primary btn-outlined cursor-pointer" {{#if (equals menuSubExtendTyCd "NO_SUB")}}style="visibility:hidden;"{{/if}}
-                         onclick="Menu.regModal('${Constant.MENU_TY_SUB!}', '{{menuNo}}', '{{menuNm}}');"
+                         onclick="Menu.regModal('${Constant.MENU_TY_SUB!}', {{menuNo}}, '{{menuNm}}');"
                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="하위메뉴 추가 팝업을&#10;호출합니다.">
                         <i class="fas fa-plus"></i>
                     </div>
                     <div class="btn btn-sm btn-icon btn-light-danger cursor-pointer"
-                         onclick="Menu.delAjax('{{menuNo}}');"
+                         onclick="Menu.delAjax({{menuNo}});"
                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="이 메뉴를 삭제합니다.">
                         <i class="bi bi-trash d-flex-center opacity-75"></i>
                     </div>

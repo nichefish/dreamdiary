@@ -421,7 +421,7 @@ commons.util = (function() {
                     const  isSuccess = func(res);
                     if (!isSuccess) commons.util.unblockUI();
                 }
-            }).fail(function (res) {
+            }).fail(function(res) {
                 if (commons.util.isNotEmpty(res.message)) commons.util.swalOrAlert(res.message);
                 commons.util.unblockUI();
             }).always(function() {
@@ -477,7 +477,7 @@ commons.util = (function() {
          * @param {Function} func - 요청 성공 시 호출될 콜백 함수.
          * @param {boolean} [continueBlock] - 추가적인 블록 UI 동작 여부 (선택적).
          */
-        blockUIAsyncAjax: function (url, method, ajaxData, func, continueBlock) {
+        blockUIAsyncAjax: function(url, method, ajaxData, func, continueBlock) {
             const option = {
                 url: url,
                 type: method.toUpperCase(),

@@ -5,7 +5,9 @@
 <script>
     const JrnlDreamTag = (function() {
         return {
-            /** 목록에 따른 꿈 태그 조회 */
+            /**
+             * 목록에 따른 꿈 태그 조회
+             */
             listAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
                 const ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": $("#jrnl_aside #mnth").val() };
@@ -17,7 +19,10 @@
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_tag_list");
                 });
             },
-            /** 목록에 따른 꿈 태그 (전체) 조회 */
+
+            /**
+             * 목록에 따른 꿈 태그 (전체) 조회
+             */
             listAllAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
                 const ajaxData = { "yy": 9999, "mnth":99 };
@@ -36,7 +41,10 @@
                     $("#jrnl_tag_dtl_modal").modal("hide");
                 });
             },
-            /** 목록에 따른 꿈 태그 (전체) 조회 */
+
+            /**
+             * 목록에 따른 꿈 태그 (전체) 조회
+             */
             dreamTagGroupListAllAjax: function() {
                 const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
                 const ajaxData = { "yy": 9999, "mnth":99 };
@@ -80,7 +88,15 @@
 
                 return sortedGroupedTags;
             },
-            dtlAjax: function(tagNo, tagNm) {
+
+            /**
+             * 상세 모달 호출
+             * @param {string|number} tagNo - 조회할 태그 번호.
+             */
+            dtlModal: function(tagNo, tagNm) {
+                event.stopPropagation();
+                if (isNaN(tagNo)) return;
+
                 const url = "${Url.JRNL_DREAM_TAG_DTL_AJAX!}";
                 const ajaxData = { "tagNo": tagNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {

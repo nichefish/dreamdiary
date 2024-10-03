@@ -26,7 +26,7 @@
                             Swal.fire({
                                 text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
                                 showCancelButton: true,
-                            }).then(function (result) {
+                            }).then(function(result) {
                                 if (!result.value) return;
                                 Notice.regAjax();
                             });
@@ -59,7 +59,7 @@
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
-                }).then(function (result) {
+                }).then(function(result) {
                     if (!result.value) return;
                     commons.util.blockUIFileDownload();
                     $("#listForm").attr("action", "${Url.NOTICE_LIST_XLSX_DOWNLOAD!}").submit();
@@ -97,7 +97,7 @@
             regAjax: function() {
                 const url = " <#if isMdf!false>${Url.NOTICE_MDF_AJAX!}<#else>${Url.NOTICE_REG_AJAX!}</#if>";
                 const ajaxData = new FormData($("#noticeRegForm")[0]);
-                commons.util.blockUIMultipartAjax(url, ajaxData, function (res) {
+                commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({text: res.message})
                         .then(function() {
                             if (res.rslt) Notice.list();
@@ -108,7 +108,7 @@
             /**
              * 상세 화면 이동
              */
-            dtl: function (postNo) {
+            dtl: function(postNo) {
                 if (isNaN(tagNo)) return;
 
                 $("#procForm #postNo").val(postNo);
@@ -117,14 +117,15 @@
 
             /**
              * 상세 모달 호출
+             * @param {string|number} postNo - 조회할 글 번호.
              */
-            dtlAjax: function (postNo) {
+            dtlModal: function(postNo) {
                 event.stopPropagation();
                 if (isNaN(postNo)) return;
 
                 const url = "${Url.NOTICE_DTL_AJAX!}";
                 const ajaxData = {"postNo": postNo};
-                commons.util.blockUIAjax(url, 'GET', ajaxData, function (res) {
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
                     if (!res.rslt) {
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({text: res.message});
                         return false;
@@ -149,11 +150,11 @@
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
-                }).then(function (result) {
+                }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.NOTICE_DEL_AJAX!}";
                     const ajaxData = $("#procForm").serializeArray();
-                    commons.util.blockUIAjax(url, 'POST', ajaxData, function (res) {
+                    commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                         Swal.fire({text: res.message})
                             .then(function() {
                                 if (res.rslt) Notice.list();
