@@ -31,7 +31,7 @@ commons.datepicker = (function() {
         /**
          * 시간 포함 날짜 옵션
          */
-        timeOption: {
+        timeOptions: {
             ...commons.datepicker.baseOptions,
             timePicker: true,
             timePicker24Hour: true,
@@ -43,42 +43,80 @@ commons.datepicker = (function() {
         },
 
         /**
-         * datepicker 공통 형식
+         * 기본 공통 로직 : jQuery 요소에 datepicker를 초기화하고 날짜 변경 시 콜백을 실행합니다.
+         * @param {string} selectorStr - 초기화할 요소의 선택자 문자열.
+         * @param {object} option - `daterangepicker`에 적용할 옵션.
+         * @param {function} func - 날짜 선택 시 실행할 콜백 함수 (선택적).
          */
-        datepicker: function(selectorStr, option, func) {
-            const format = option.locale.format;
-            const $elmt = $(selectorStr);
+        datepicker: function(selector, options, func) {
+            if (commons.util.isEmpty(selector)) return;
+
+            const $elmt = $(selector);
             const id = $elmt.attr("id");
-            $elmt.val(option.startDate);
-            $elmt.daterangepicker(option, function(start) {
-                $elmt.val(start.format(format));
+
+            // 초기 값 설정
+            $elmt.val(options.startDate);
+
+            // datepicker 초기화
+            $elmt.daterangepicker(options, function(start) {
+                // 날짜 포맷 설정
+                $elmt.val(start.format(options.locale.format));
+                // 에러 메세지 제거
                 const $errorSpan = $("#"+id+"_valid_span");
-                if (commons.util.isNotEmpty($errorSpan)) $errorSpan.empty();
-                if (commons.util.isNotEmpty(func)) func(start);
+                if ($errorSpan.length) $errorSpan.empty();
+                // 콜백 함수 실행
+                if (typeof func === 'function') func(start);
             });
-            commons.validate.onlyDt(selectorStr);
-        },
-        
-        /**
-         * dateRangePicker init
-         * @depdendency: dateRangePicker (metronic)
-         */
-        singleDatePicker: function(selectorStr, format, initDt, func) {
-            const option = commons.datepicker.baseOption;
-            if (commons.util.isNotEmpty(format)) option.locale.format = format;
-            if (initDt !== 'today') option.startDate = commons.util.isEmpty(initDt) ? undefined : initDt;
-            return this.datepicker(selectorStr, option, func);
+            // 날짜 유효성 검증
+            commons.validate.onlyDt($elmt);
         },
 
         /**
-         * dateRangePicker init
-         * @depdendency: dateRangePicker (metronic)
+         * dateRangePicker init : 단일 날짜 선택기를 초기화합니다.
+         * @param {string} selector - 초기화할 요소의 선택자 문자열.
+         * @param {string} format - 날짜 형식 (선택적).
+         * @param {string|Date} initDt - 초기 날짜 값 (선택적, 'today'가 아닌 경우 설정).
+         * @param {function} func - 날짜 선택 시 실행할 콜백 함수 (선택적).
+         * @param {object} additionalOptions - 추가로 적용할 옵션 (선택적).
+         * @returns {object} - 초기화된 datepicker 인스턴스.
          */
-        singleDatetimePicker: function(selectorStr, format, initDt, func) {
-            const option = commons.datepicker.timeOption;
-            if (commons.util.isNotEmpty(format)) option.locale.format = format;
-            if (initDt !== 'today') option.startDate = commons.util.isEmpty(initDt) ? undefined : initDt;
-            return this.datepicker(selectorStr, option, func);
+        singleDatePicker: function(selector, format, initDt, func, additionalOptions = {}) {
+            if (commons.util.isEmpty(selector)) return;
+
+            const mergedOptions = {
+                ...commons.datepicker.baseOptions,
+                ...additionalOptions
+            };
+            // 날짜 형식 설정
+            if (commons.util.isNotEmpty(format)) mergedOptions.locale.format = format;
+            // 초기 날짜 설정 ('today'가 아닌 경우에만 설정)
+            if (initDt !== 'today') mergedOptions.startDate = commons.util.isEmpty(initDt) ? undefined : initDt;
+            // datepicker 초기화
+            return this.datepicker(selector, mergedOptions, func);
+        },
+
+        /**
+         * dateRangePicker init : 단일 날짜-시간 선택기를 초기화합니다.
+         * @param {string} selector - 초기화할 요소의 선택자 문자열.
+         * @param {string} format - 날짜-시간 형식 (선택적).
+         * @param {string|Date} initDt - 초기 날짜 값 (선택적, 'today'가 아닌 경우 설정).
+         * @param {function} func - 날짜 선택 시 실행할 콜백 함수 (선택적).
+         * @param {object} additionalOptions - 추가로 적용할 옵션 (선택적).
+         * @returns {object} - 초기화된 datepicker 인스턴스.
+         */
+        singleDatetimePicker: function(selector, format, initDt, func, additionalOptions = {}) {
+            if (commons.util.isEmpty(selector)) return;
+
+            const mergedOptions = {
+                ...commons.datepicker.timeOptions,
+                ...additionalOptions
+            };
+            // 날짜 형식 설정
+            if (commons.util.isNotEmpty(format)) mergedOptions.locale.format = format;
+            // 초기 날짜 설정 ('today'가 아닌 경우에만 설정)
+            if (initDt !== 'today') mergedOptions.startDate = commons.util.isEmpty(initDt) ? undefined : initDt;
+            // datepicker 초기화
+            return this.datepicker(selector, mergedOptions, func);
         },
     }
 })();
