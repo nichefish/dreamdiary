@@ -106,7 +106,7 @@ commons.tinymce = (function() {
          * @param {string|HTMLElement|jQuery} selector - 제거할 에디터의 선택자, DOM 요소 또는 jQuery 객체.
          */
         destroy: function(selector) {
-            const editorElements = commons.validate.verifySelector(selector);
+            const editorElements = commons.util.verifySelector(selector);
             if (editorElements.length === 0) return;
 
             editorElements.forEach(editorElement => {

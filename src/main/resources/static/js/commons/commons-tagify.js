@@ -50,8 +50,9 @@ commons.tagify = (function() {
          */
         init: function(selector) {
             // 태그 tagify
-            const inputs = commons.validate.verifySelector(selector);
+            const inputs = commons.util.verifySelector(selector);
             if (inputs.length === 0) return;
+
             const tagInput = inputs[0];
             return new Tagify(tagInput, commons.tagify.baseOptions);
         },

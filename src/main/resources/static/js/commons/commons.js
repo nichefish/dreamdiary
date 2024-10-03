@@ -159,19 +159,28 @@ commons.util = (function() {
         },
 
         /**
-         * jQuery 선택자 요소의 존재 여부를 체크합니다.
+         * 선택자에서 유효한 입력 요소를 반환합니다.
+         * @param {string|HTMLElement|jQuery} selector - 선택자 문자열 또는 DOM 요소 또는 jQuery 객체.
+         * @returns {HTMLElement[]} - 유효한 입력 요소 배열 또는 빈 배열.
+         */
+        verifySelector: function(selector) {
+            if (selector instanceof jQuery) {
+                return selector.toArray();
+            } else if (selector instanceof HTMLElement) {
+                return [selector];
+            } else if (typeof selector === 'string') {
+                return Array.from(document.querySelectorAll(selector));
+            }
+            return [];
+        },
+
+        /**
+         * 선택자 요소의 존재 여부를 체크합니다.
          * @param {string|jQuery|HTMLElement} selectorStr - 체크할 요소의 선택자 문자열, jQuery 객체, 또는 DOM 요소.
          * @returns {boolean} - 요소가 존재하면 true, 그렇지 않으면 false.
          */
-        is$Present: function(selector) {
-            if (typeof selector === 'string') {
-                return $(selector).length > 0;   // jQuery 선택자 처리
-            } else if (selector instanceof jQuery) {
-                return selector.length > 0;         // jQuery 객체 체크
-            } else if (selector instanceof HTMLElement) {
-                return true;                        // DOM 요소 체크
-            }
-            return false;
+        isPresent: function(selector) {
+            return this.verifySelector(selector).length > 0;
         },
 
         /**
@@ -252,7 +261,7 @@ commons.util = (function() {
          * selectorStr 받아서 input 값을 숫자로 반환
          */
         toNumber: function(selectorStr) {
-            if (!commons.util.is$Present(selectorStr)) return;
+            if (!commons.util.isPresent(selectorStr)) return;
             const $input = $(selectorStr);
             if ($input.val() === undefined) return;
             const numValue = Number($(selectorStr).val().replace(/,/gi, ""));
@@ -678,27 +687,29 @@ commons.util = (function() {
         },
 
         /**
-         * 숫자(정수)에 콤마(,) 자동 붙이기
+         * 숫자(정수)에 천 단위로 콤마(,)를 추가.
          * @param: value (숫자 또는 selectorStr)
-         * @param: unit (나눔단위 ex.천단위)
+         * @param: unit (나눔단위 ex.1,400만)
          */
-        addComma: function(value, unit = 1) {
+        thousandSeparator: function(value, unit = 1) {
             if (value === "") return "";
+
             // 숫자값이 넘어오면 걍 콤마 붙인 결과값을(string) 넘겨버린다.
             const numValue = value.replace(/,/g, "");
-            const isNumber = !isNaN(numValue);
-            if (isNumber) {
-                const divided = parseInt(numValue) / unit;
+            if (!isNaN(numValue)) {
+                const divided = parseInt(numValue, 10) / unit;
                 return Number(divided).toLocaleString();
             }
-            // 나머지 경우에는 selector로 간주, keyup시 천단위 콤마 처리한다.
-            const selectorStr = value;
-            if (!commons.util.is$Present(selectorStr)) return;
-            const inputs = document.querySelectorAll(selectorStr);
+
+            // 나머지 경우에는 selector로 간주, 입력 필드에 이벤트 리스너 추가
+            const selector = value;
+            if (!commons.util.isPresent(selector)) return;
+
+            const inputs = document.querySelectorAll(selector);
             inputs.forEach(elmt => {
-                elmt.value = commons.util.addComma(elmt.value, unit);
+                elmt.value = commons.util.thousandSeparator(elmt.value, unit);
                 elmt.addEventListener("keyup", function() {
-                    let localeStr = commons.util.addComma(elmt.value, unit);
+                    let localeStr = commons.util.thousandSeparator(elmt.value, unit);
                     // maxlength를 초과하는 경우 처리
                     const maxlength = elmt.getAttribute("maxlength");
                     if (maxlength !== null) localeStr = localeStr.substring(0, maxlength);
@@ -716,11 +727,10 @@ commons.util = (function() {
             if (value === "") return "";
             // 숫자값이 넘어오면 걍 콤마 빼서 넘겨버린다.
             const numValue = value.replace(/,/g, "");
-            const isNumber = !isNaN(numValue);
-            if (isNumber) return Number(numValue / unit);
+            if (!isNaN(numValue)) return Number(numValue / unit);
             // 나머지 경우에는 selector로 간주, 콤마 제거 처리 및 keyup시 콤마 제거 처리한다.
             const selectorStr = value;
-            if (!commons.util.is$Present(selectorStr)) return;
+            if (!commons.util.isPresent(selectorStr)) return;
             const inputs = document.querySelectorAll(selectorStr);
             inputs.forEach(elmt => {
                 elmt.value = commons.util.removeComma(elmt.value, unit);
@@ -739,8 +749,7 @@ commons.util = (function() {
             if (value === "") return "";
             // 숫자값이 넘어오면 걍 콤마 빼서 넘겨버린다.
             let numValue = value.replace(/,/g, "");
-            let isNumber = !isNaN(numValue);
-            if (isNumber) {
+            if (!isNaN(numValue)) {
                 return Number(value).toLocaleString(undefined, {
                     minimumFractionDigits: fixed,
                     maximumFractionDigits: fixed
@@ -748,7 +757,7 @@ commons.util = (function() {
             }
             // 나머지 경우에는 selector로 간주, 콤마 제거 처리 및 keyup시 콤마 제거 처리한다.
             const selectorStr = value;
-            if (!commons.util.is$Present(selectorStr)) return;
+            if (!commons.util.isPresent(selectorStr)) return;
             const inputs = document.querySelectorAll(selectorStr);
             inputs.forEach(elmt => {
                 elmt.value = commons.util.addDot(elmt.value, fixed, unit);

@@ -25,7 +25,7 @@
                 <#elseif isMdf!false>
                     Page.addExptrPrsnlItemList();
                     Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
-                    commons.util.addComma(".num");
+                    commons.util.thousandSeparator(".num");
                     Page.setTotAmt();
                 </#if>
 
@@ -94,7 +94,7 @@
                         commons.util.sortReqstTable(divTable, 0, "FORWARD");
                     }(divTable, 0));
                 });
-                commons.util.addComma(".num");
+                commons.util.thousandSeparator(".num");
 
                 Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
             },

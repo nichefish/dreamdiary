@@ -178,7 +178,7 @@ public class CmmUtils {
     /**
      * 공통 > 숫자 텍스트에 콤마 추가
      */
-    public String addComma(final String value) {
+    public String thousandSeparator(final String value) {
         try {
             return new java.text.DecimalFormat("#,###").format(Integer.parseInt(value));
         } catch (Exception e) {

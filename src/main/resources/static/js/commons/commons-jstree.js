@@ -13,26 +13,33 @@ commons.jstree = (function() {
         /**
          * 공통 :: jstree 초기화
          * possible plugins :: "dnd" "state" "changed" "contextmenu" "conditionalselect"
+         * @param {string} treeSelector - jstree를 초기화할 요소의 선택자.
          */
         init: function(treeSelector) {
-            if ($(treeSelector) === undefined) return;
-            $(treeSelector).jstree({
+            const $treeElmt = $(treeSelector);
+            if ($treeElmt.length === 0) return;
+
+            $treeElmt.jstree({
                 "plugins": [ "checkbox",  "search", "wholerow" ],
                 "core" : {
                     "animation": 0,
                     "check_callback": true,
                     "expand_selected_onload": true,
-                    "data" : {  }
+                    "data" : {}
                 },
-            }).init();
+            });
         },
 
         /**
          * 공통 :: jstree 트리 리셋
+         * @param {string} treeSelector - jstree를 리셋할 요소의 선택자.
          */
         reset: function(treeSelector) {
-            if ($(treeSelector) === undefined) return;
-            $(treeSelector).jstree("destroy").empty();
+            const $treeElmt = $(treeSelector);
+            if ($treeElmt.length === 0) return;
+
+            // jstree 파괴 및 비우기
+            $treeElmt.jstree("destroy").empty();
         }
     }
 })();

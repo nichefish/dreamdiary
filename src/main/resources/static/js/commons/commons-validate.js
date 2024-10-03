@@ -70,30 +70,15 @@ commons.validate = (function() {
         /** 정규식: 2차 비밀번호 정규식 */
         scscPwRegex: /^(?=.*[a-zA-Z])(?=.*[$~@!%*#?&])[a-zA-Z$~@!%*#?&]{5}$/,
 
-
-        /**
-         * 선택자에서 유효한 입력 요소를 반환합니다.
-         * @param {string|HTMLElement|jQuery} selector - 선택자 문자열 또는 DOM 요소 또는 jQuery 객체.
-         * @returns {HTMLElement[]} - 유효한 입력 요소 배열 또는 빈 배열.
-         */
-        verifySelector: function(selector) {
-            let inputs;
-            if (selector instanceof jQuery) {
-                inputs = selector.toArray();
-            } else if (selector instanceof HTMLElement) {
-                inputs = [selector];
-            } else {
-                inputs = Array.from(document.querySelectorAll(selector));
-            }
-            return inputs;
-        },
+        /** 정규식: 천 단위 콤마 */
+        thousandSeparatorRegex: /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
 
         /**
          * 입력 요소에서 공백을 자동으로 제거합니다. (onkeyup 이벤트)
          * @param {string|HTMLElement|jQuery} selector - 공백을 제거할 입력 요소의 선택자 또는 DOM 또는 jQuery객체.
          */
         noSpaces: function (selector) {
-            const inputs = commons.validate.verifySelector(selector);
+            const inputs = commons.util.verifySelector(selector);
             if (inputs.length === 0) return;
 
             inputs.forEach(input => {
@@ -109,7 +94,7 @@ commons.validate = (function() {
          * @param {RegExp} regex - 제거할 문자에 대한 정규 표현식.
          */
         replaceBlankIfMatches: function (selector, regex) {
-            const inputs = commons.validate.verifySelector(selector);
+            const inputs = commons.util.verifySelector(selector);
             if (inputs.length === 0) return;
 
             inputs.forEach(input => {
@@ -165,7 +150,7 @@ commons.validate = (function() {
          * @param {string|HTMLElement|jQuery} selector - CIDR 형식을 검사할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
         checkIpv4Cidr: function (selector) {
-            const inputs = commons.validate.verifySelector(selector);
+            const inputs = commons.util.verifySelector(selector);
             if (inputs.length === 0) return;
 
             // 숫자, 점, 슬래시를 제외한 문자 제거
@@ -192,7 +177,7 @@ commons.validate = (function() {
          * @param {string|HTMLElement|jQuery} selector - 소문자로 변환할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
         toLowerCase: function(selector) {
-            const inputs = commons.validate.verifySelector(selector);
+            const inputs = commons.util.verifySelector(selector);
             if (inputs.length === 0) return;
 
             inputs.forEach(input => {
@@ -207,7 +192,7 @@ commons.validate = (function() {
          * @param {string|HTMLElement|jQuery} selector - 대문자로 변환할 입력 요소의 선택자, DOM 요소, 또는 jQuery 객체.
          */
         toUpperCase: function(selector) {
-            const inputs = commons.validate.verifySelector(selector);
+            const inputs = commons.util.verifySelector(selector);
             if (inputs.length === 0) return;
 
             inputs.forEach(input => {
@@ -222,7 +207,7 @@ commons.validate = (function() {
          * @param {string|HTMLElement|jQuery} selector - 핸드폰 번호를 입력할 요소의 선택자, DOM 요소 또는 jQuery 객체.
          */
         cttpc: function(selector) {
-            const inputs = commons.validate.verifySelector(selector);
+            const inputs = commons.util.verifySelector(selector);
             if (inputs.length === 0) return;
 
             inputs.forEach(input => {
@@ -306,7 +291,7 @@ commons.validate = (function() {
          * @returns {boolean} - 유효한 확장자일 경우 true, 아니면 false.
          */
         fileExtnChck: function(selector, validExtn = "") {
-            const inputElements = commons.validate.verifySelector(selector);
+            const inputElements = commons.util.verifySelector(selector);
             if (inputElements.length === 0 || !inputElements[0].files || !inputElements[0].files.length) return false;
 
             const input = inputElements[0];
@@ -349,7 +334,7 @@ commons.validate = (function() {
          */
 
         fileSizeChck: function(selector) {
-            const inputElements = commons.validate.verifySelector(selector);
+            const inputElements = commons.util.verifySelector(selector);
             if (inputElements.length === 0 || !inputElements[0].files || !inputElements[0].files.length) return false;
 
             const input = inputElements[0];

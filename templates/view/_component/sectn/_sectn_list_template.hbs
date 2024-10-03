@@ -39,7 +39,7 @@
                             {{#if hasComment}}
                                 <div class="row py-2 fs-4">
                                     {{#list comment}}
-                                        <div class="row ms-10 text-noti my-1 {{#if (eq @index 0)}}mt-3{{/if}} {{#if (eq @index (subtract ../length 1))}}mb-3{{/if}}">
+                                        <div class="row ms-10 text-noti my-1 {{#if (eq @index 0)}}mt-3{{/if}} {{#if (eq @index (sub ../length 1))}}mb-3{{/if}}">
                                             <div class="col div-textarea-smp me-10">- {{{comment.markdownCn}}}</div>
                                             <div class="col-1">
                                                 <button type="button" class="btn btn-sm btn-light-primary btn-outlined ms-2 py-1 px-2 cursor-pointer"
@@ -81,7 +81,7 @@
                             </button>
                         </div>
                     </div>
-                    {{#if (lt @index (subtract ../length 1))}}
+                    {{#if (lt @index (sub ../length 1))}}
                         <div class="separator separator-dashed border-gray-300 my-6"></div>
                     {{/if}}
                 </div>
