@@ -76,7 +76,7 @@
              * form submit
              */
             submit: function() {
-                tinymce.activeEditor.save();
+                if (tinymce !== undefined) tinymce.activeEditor.save();
                 Page.submitMode = "submit";
                 $("#postRegForm").submit();
             },
@@ -85,7 +85,7 @@
              * 미리보기 팝업 호출
              */
             preview: function() {
-                tinymce.activeEditor.save();
+                if (tinymce !== undefined) tinymce.activeEditor.save();
                 Page.submitMode = "preview";
                 $("#postRegForm").submit();
             },

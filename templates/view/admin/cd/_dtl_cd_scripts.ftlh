@@ -51,7 +51,7 @@
              */
             regAjax: function() {
                 Swal.fire({
-                    text: <@spring.message "view.cnfm.reg"/>,
+                    text: <@spring.message "view.cnfm.save"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;

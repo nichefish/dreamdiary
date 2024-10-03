@@ -80,7 +80,7 @@
              * form submit
              */
             submit: function() {
-                tinymce.activeEditor.save();     // 활성화된 TinyMCE 에디터의 내용 저장
+                if (tinymce !== undefined) tinymce.activeEditor.save();
                 $("#sectnRegForm").submit();
             },
 
