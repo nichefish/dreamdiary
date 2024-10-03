@@ -8,8 +8,8 @@
  -->
 <#macro header_datepicker param searchNm initDt >
     <script>
-        $(document).ready(function() {
-            const ptn = commons.datepicker.ptnDate;
+        document.addEventListener("DOMContentLoaded", function() {
+            const ptn = commons.date.ptnDate;
             /** dateRangePicker init */
             let initDt = "${initDt!}";
             if(initDt === "today") initDt = commons.date.getCurrDateStr(ptn);
@@ -30,8 +30,8 @@
  -->
 <#macro header_datetimepicker param searchNm initDt >
     <script>
-        const ptn = commons.datepicker.ptnDatetime;
-        $(document).ready(function() {
+        document.addEventListener("DOMContentLoaded", function() {
+            const ptn = commons.date.ptnDatetime;
             /** dateRangePicker init */
             let initDt = "${initDt!}";
             if(initDt === "") initDt = commons.date.getCurrDateStr(ptn);

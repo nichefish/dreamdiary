@@ -51,7 +51,7 @@
             },
         }
     })();
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         Tag.init();
     });
 </script>

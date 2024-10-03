@@ -8,7 +8,7 @@
  -->
 <#macro checkbox param checkboxNm ynLabel ynColor defaultOn  >
     <script>
-        $(document).ready(function() {
+        document.addEventListener("DOMContentLoaded", function() {
             const ynLabel = "${ynLabel}", ynColor = "${ynColor}";
             commons.util.chckboxLabel("${checkboxNm}", ynLabel, ynColor);
             const separator = "//";

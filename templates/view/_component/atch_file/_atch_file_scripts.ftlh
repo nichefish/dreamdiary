@@ -65,7 +65,7 @@
             }
         }
     })();
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function() {
         AtchFile.init();
     });
 </script>

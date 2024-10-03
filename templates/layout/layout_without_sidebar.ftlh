@@ -81,7 +81,7 @@
         <!--end::modals-->
 
         <script>
-            $(document).ready(function() {
+            document.addEventListener("DOMContentLoaded", function() {
                 /** 타이틀 설정 */
                 document.title = "dreamdiary | ${(siteAcsInfo.topMenuNm)!}";
 

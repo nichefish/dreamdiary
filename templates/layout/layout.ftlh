@@ -110,13 +110,13 @@
             ${pageScripts!}
         </#if>
         <script>
-            $(document).ready(function() {
+            document.addEventListener("DOMContentLoaded", function() {
                 /** 타이틀 설정 */
                 document.title = "dreamdiary | ${(siteAcsInfo.topMenuNm)!}";
 
                 /** 메세지 존재시 출력 */
                 <#if message??>
-                    Swal.fire("${message!}");
+                Swal.fire("${message!}");
                 </#if>
 
                 // 공백 자동 제거

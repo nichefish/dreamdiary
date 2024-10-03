@@ -24,7 +24,7 @@
 
 <script>
     /** TODO: tinymce 글접기 토글 테스트중... */
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         const toggleElements = $("[id^='tinymce_toggle_']");
         toggleElements.on('click', function() {
             const toggleId = $(this).attr('id');
@@ -82,7 +82,7 @@
             </#if>
         }
     })();
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function() {
         Page.init();
     });
  </script>

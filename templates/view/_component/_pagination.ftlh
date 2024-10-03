@@ -10,11 +10,13 @@
                 /** 페이지 개수 selectbox 세팅 */
                 <#if paginationInfo??>
                     const pageSize = "${pageSize!}";
-                    $("#pageSizeSelect option").each(function (idx, elmt) {
-                        if ($(elmt).val() === pageSize) $(elmt).attr("selected", "selected");
+                    const pageSizeSelect = document.getElementById("pageSizeSelect");
+                    Array.from(pageSizeSelect.options).forEach(option => {
+                        if (option.value === pageSize) {
+                            option.selected = true; // 선택된 상태로 설정
+                        }
                     });
                 </#if>
-
                 commons.validate.onlyNum(".page-ellipsis");
             },
             /** 페이지 처리 함수 (공통) */
@@ -24,8 +26,8 @@
                 if (pageSize !== undefined && pageSize !== prevPageSize) {
                     pageNo = Pagination.fnRepage(pageNo, prevPageSize, pageSize);
                 }
-                if (pageNo !== undefined) $("#listForm #pageNo").val(pageNo);
-                if (pageSize !== undefined) $("#pageSize").val(pageSize);
+                if (pageNo !== undefined) document.querySelector("#listForm #pageNo").value = pageNo;
+                if (pageSize !== undefined) document.querySelector("#listForm #pageSize").value = pageSize;
                 commons.util.blockUISubmit("#listForm", "${listUrl!}");
             },
             /** 페이지 출력개수 변경시 페이지 자동 재계산 */
@@ -35,7 +37,7 @@
             }
         }
     })();
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function() {
         Pagination.init();
     });
 </script>

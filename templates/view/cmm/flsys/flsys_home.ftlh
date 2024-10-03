@@ -18,8 +18,7 @@
             },
         }
     })();
-
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         Page.init();
         Flsys.init("page");
     });

@@ -92,7 +92,7 @@
             }
         }
     })();
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         Comment.modal.init();
     });
 </script>

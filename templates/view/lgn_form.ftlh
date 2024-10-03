@@ -67,8 +67,7 @@
             },
         }
     })();
-    /** 페이지 초기화시 처리 */
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         Page.init();
     });
 </script>

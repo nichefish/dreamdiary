@@ -70,7 +70,7 @@
             }
         }
     })();
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         Layout.init();
         Layout.modalBtnCloseSafe();
     });

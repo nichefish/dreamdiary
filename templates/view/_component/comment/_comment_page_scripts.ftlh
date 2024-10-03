@@ -96,7 +96,7 @@
             }
         }
     })();
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         Comment.page.init();
     });
 </script>

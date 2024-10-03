@@ -19,7 +19,7 @@
             },
         }
     })();
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         Page.init();
     });
 </script>
