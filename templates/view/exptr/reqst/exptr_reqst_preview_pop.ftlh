@@ -3,7 +3,7 @@
  * (사이드바 없음)
  -->
 
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_default.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 

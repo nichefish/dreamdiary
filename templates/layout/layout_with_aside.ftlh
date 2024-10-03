@@ -1,5 +1,5 @@
 <!--
- * 레이아웃 > 기본 레이아웃 (aside(우측 사이드바) 추가 버전)
+ * 레이아웃 > 우측 ASIDE 추가 레이아웃 (헤더 o, 좌측 사이드바 o, 우측 aside o)
  * metronic v8.2.5
  -->
 
@@ -103,18 +103,8 @@
         <#include "/layout/header/navbar/_navbar_user_drawer.ftlh">
         <!--end::modals-->
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                /** 타이틀 설정 */
-                document.title = "dreamdiary | ${(siteAcsInfo.topMenuNm)!}";
-
-                /** 메세지 존재시 출력 */
-                <#if message??>
-                    Swal.fire("${message!}");
-                </#if>
-            });
-        </script>
-
+        <!--layout scripts-->
+        <#include "/layout/_layout_scripts.ftlh">
     </body>
     <!--end::Body-->
 </html>

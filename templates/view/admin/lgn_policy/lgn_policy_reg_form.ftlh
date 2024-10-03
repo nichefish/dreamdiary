@@ -2,7 +2,7 @@
  * 로그인 정책(lgn_policy) > 관리 화면
  -->
 
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_default.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 

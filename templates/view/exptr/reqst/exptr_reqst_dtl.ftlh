@@ -2,7 +2,7 @@
  * 물품구매/경조사비 신청(exptr_reqst) > 상세 화면
  -->
 
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_default.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 

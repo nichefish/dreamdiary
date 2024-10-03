@@ -1,5 +1,5 @@
 <!--
- * 레이아웃 > 기본 레이아웃 (사이드바 제거 버전)
+ * 레이아웃 > 기본 레이아웃 (헤더 o, 좌측 사이드바 o, 우측 ASIDE x)
  * metronic v8.2.5
  -->
 
@@ -109,21 +109,9 @@
         <#if pageScripts??>
             ${pageScripts!}
         </#if>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                /** 타이틀 설정 */
-                document.title = "dreamdiary | ${(siteAcsInfo.topMenuNm)!}";
 
-                /** 메세지 존재시 출력 */
-                <#if message??>
-                Swal.fire("${message!}");
-                </#if>
-
-                // 공백 자동 제거
-                commons.validate.noSpaces(".no-space");
-            });
-        </script>
-
+        <!--layout scripts-->
+        <#include "/layout/_layout_scripts.ftlh">
     </body>
     <!--end::Body-->
 </html>

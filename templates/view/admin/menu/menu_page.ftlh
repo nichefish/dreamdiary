@@ -2,7 +2,7 @@
  -- 메뉴(menu) > 목록 화면
  -->
 
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_default.ftlh" as layout >
 
 <#--toolbar::버튼 추가-->
 <#assign toolbar>

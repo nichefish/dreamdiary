@@ -1,5 +1,5 @@
 <!--
- * 레이아웃 > 팝업 레이아웃
+ * 레이아웃 > 팝업 레이아웃 (헤더 x, 좌측 사이드바 x, 우측 ASIDE x)
  * metronic v8.2.5
  -->
 
@@ -80,18 +80,8 @@
         <!--begin::Modals (include modals here)-->
         <!--end::modals-->
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                /** 타이틀 설정 */
-                document.title = "dreamdiary | ${(siteAcsInfo.topMenuNm)!}";
-
-                /** 메세지 존재시 출력 */
-                <#if message??>
-                    Swal.fire("${message!}");
-                </#if>
-            });
-        </script>
-
+        <!--layout scripts-->
+        <#include "/layout/_layout_scripts.ftlh">
     </body>
     <!--end::Body-->
 </html>

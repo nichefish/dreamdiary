@@ -2,7 +2,7 @@
  * 게시판(board_post) > 상세 화면
  -->
 
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_default.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 

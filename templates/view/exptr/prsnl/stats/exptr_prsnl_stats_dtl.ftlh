@@ -2,7 +2,7 @@
  * 경비 관리 > 경비지출누적집계 > 상세 화면
  -->
 
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_default.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 

@@ -2,7 +2,7 @@
  * 휴가계획서(vcatn_papr) > 등록 화면
  -->
 
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_default.ftlh" as layout >
 
 <script type="text/javascript" src="/lib/prism/js/prism.js?${releaseDate!}"></script>
 
