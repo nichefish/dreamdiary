@@ -2,7 +2,7 @@
  * 저널 결산(jrnl_sumry) : 페이지
  -->
 
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_default.ftlh" as layout >
 
 <@layout.layout toolbar=toolbar!"">
 

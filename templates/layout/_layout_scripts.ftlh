@@ -18,7 +18,7 @@
                 // 모든 버튼에 딜레이 기능 추가
                 const buttons = document.querySelectorAll("button, .btn, .badge");
                 buttons.forEach(function(button) {
-                    button.on("click", function(button) {
+                    button.addEventListener("click", function(button) {
                         commons.util.delayBtn(button);
                     });
                 });

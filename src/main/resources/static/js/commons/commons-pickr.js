@@ -9,48 +9,46 @@
  */
 if (typeof commons === 'undefined') { var commons = {}; }
 commons.pickr = (function() {
+
+    /** 기본 색상 배열 */
+    const defaultColorArr = [
+        "#d3d3d3",
+        "#bf4141",
+        "#ff9750",
+        "#fdffb6",
+        // ,,,
+    ];
+
+    /** 기본 색상 배열 */
+    const i18n = {
+        // Strings visible in the UI
+        'ui:dialog': 'color picker dialog',
+        'btn:toggle': 'toggle color picker dialog',
+        'btn:swatch': 'color swatch',
+        'btn:last-color': 'use previous color',
+        'btn:save': 'Save',
+        'btn:cancel': 'Cancel',
+        'btn:clear': 'Clear',
+
+        // Strings used for aria-labels
+        'aria:btn:save': 'save and close',
+        'aria:btn:cancel': 'cancel and close',
+        'aria:btn:clear': 'clear and close',
+        'aria:input': 'color input field',
+        'aria:palette': 'color selection area',
+        'aria:hue': 'hue selection slider',
+        'aria:opacity': 'selection slider'
+    };
+
     return {
-        /**
-         * 기본 색상 배열
-         */
-        defaultColorArr: [
-            "#d3d3d3",
-            "#bf4141",
-            "#ff9750",
-            "#fdffb6",
-            // ,,,
-        ],
-
-        /**
-         * 기본 색상 배열
-         */
-        i18n: {
-            // Strings visible in the UI
-            'ui:dialog': 'color picker dialog',
-            'btn:toggle': 'toggle color picker dialog',
-            'btn:swatch': 'color swatch',
-            'btn:last-color': 'use previous color',
-            'btn:save': 'Save',
-            'btn:cancel': 'Cancel',
-            'btn:clear': 'Clear',
-
-            // Strings used for aria-labels
-            'aria:btn:save': 'save and close',
-            'aria:btn:cancel': 'cancel and close',
-            'aria:btn:clear': 'clear and close',
-            'aria:input': 'color input field',
-            'aria:palette': 'color selection area',
-            'aria:hue': 'hue selection slider',
-            'aria:opacity': 'selection slider'
-        },
 
         /**
          * 색상 선택기를 초기화하고 변경 이벤트를 처리합니다.
          * @param {string} selectorStr - 색상 선택기를 초기화할 DOM 요소의 선택자 문자열.
          * @param {string} initColor - 초기 색상 값 (선택적).
-         * @param {Array} [initColorArr=commons.pickr.defaultColorArr] - 초기 색상 배열 (선택적).
+         * @param {Array} [initColorArr=defaultColorArr] - 초기 색상 배열 (선택적).
          */
-        init: function(selectorStr, initColor, initColorArr = commons.pickr.defaultColorArr) {
+        init: function(selectorStr, initColor, initColorArr = defaultColorArr) {
             // 색상 배열 들어올시 기본배열에 추가
             if (initColor) initColorArr = [initColor, ...initColorArr];
 
@@ -73,7 +71,7 @@ commons.pickr = (function() {
                         /** save: true */
                     },
                     // i18n
-                    i18n: commons.pickr.i18n
+                    i18n: i18n
                 }
             });
 

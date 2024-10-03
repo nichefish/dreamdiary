@@ -9,28 +9,26 @@
  */
 if (typeof commons === 'undefined') { var commons = {}; }
 commons.tagify = (function() {
-    return {
-        /**
-         * 기본 옵션 분리
-         */
-        baseOptions: {
-            whitelist: [],
+
+    /** 기본 옵션 분리 */
+    const baseOptions = {
+        whitelist: [],
             maxTags: 21,
             keepInvalidTags: false,
             skipInvalid: true,
             // duplicate 허용하고 수동 로직으로 중복 처리
             duplicates: false,
             editTags: {
-                clicks: 2,
+            clicks: 2,
                 // if after editing, tag is invalid, auto-revert
                 keepInvalid: false
-            },
-            templates: {
-                tag: function (tagData) {
-                    // 태그 메타데이터 (data)를 문자열로 변환하여 표시
-                    const ctgr = commons.util.isNotEmpty(tagData.data) ? tagData.data.ctgr : "";
-                    const ctgrSpan = ctgr !== "" ? `<span class="tagify__tag-category text-noti me-1">[${tagData.data.ctgr}]</span>` : "";
-                    return `<tag title="${tagData.value}" contenteditable="false" spellcheck="false" tabindex="-1"
+        },
+        templates: {
+            tag: function (tagData) {
+                // 태그 메타데이터 (data)를 문자열로 변환하여 표시
+                const ctgr = commons.util.isNotEmpty(tagData.data) ? tagData.data.ctgr : "";
+                const ctgrSpan = ctgr !== "" ? `<span class="tagify__tag-category text-noti me-1">[${tagData.data.ctgr}]</span>` : "";
+                return `<tag title="${tagData.value}" contenteditable="false" spellcheck="false" tabindex="-1"
                                      class="tagify__tag" value="${tagData.value}" data-ctgr="${ctgr}">
                                     <x title="" class="tagify__tag__removeBtn" role="button" aria-label="remove tag"></x>
                                     <div>
@@ -39,10 +37,11 @@ commons.tagify = (function() {
                                         <span class="tagify__tag-text">${tagData.value}</span>
                                     </div>
                                 </tag>`;
-                }
-            },
+            }
         },
+    };
 
+    return {
         /**
          * Tagify를 초기화합니다.
          * @param {string} selector - 초기화할 태그 입력 요소의 선택자 문자열.
@@ -58,7 +57,7 @@ commons.tagify = (function() {
 
             // 기본 옵션과 추가 옵션을 병합하여 Tagify 생성
             const mergedOptions = {
-                ...commons.tagify.baseOptions,
+                ...baseOptions,
                 ...additionalOptions
             };
             return new Tagify(tagInput, mergedOptions);

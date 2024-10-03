@@ -9,36 +9,35 @@
  */
 if (typeof commons === 'undefined') { var commons = {}; }
 commons.datepicker = (function() {
-    return {
-        /**
-         * 기본 날짜 옵션
-         */
-        baseOptions: {
-            singleDatePicker: true,
-            startDate: moment().startOf("Day"),
-            showDropdowns: true,
-            autoUpdateInput: false,
-            locale: {
-                format: commons.date.ptnDate,
+
+    /** 기본 날짜 옵션 */
+    const baseOptions = {
+        singleDatePicker: true,
+        startDate: moment().startOf("Day"),
+        showDropdowns: true,
+        autoUpdateInput: false,
+        locale: {
+            format: commons.date.ptnDate,
                 daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
                 monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-            }
-        },
+        }
+    };
 
-        /**
-         * 시간 포함 날짜 옵션
-         */
-        timeOptions: {
-            ...commons.datepicker.baseOptions,
-            timePicker: true,
-            timePicker24Hour: true,
-            timePickerSeconds: true,
-            locale: {
-                ...commons.datepicker.baseOptions.locale,
-                format: commons.date.ptnDatetime
-            }
-        },
+    /**
+     * 시간 포함 날짜 옵션
+     */
+    const timeOptions = {
+        ...baseOptions,
+        timePicker: true,
+        timePicker24Hour: true,
+        timePickerSeconds: true,
+        locale: {
+            ...baseOptions.locale,
+            format: commons.date.ptnDatetime
+        }
+    };
 
+    return {
         /**
          * 기본 공통 로직 : jQuery 요소에 datepicker를 초기화하고 날짜 변경 시 콜백을 실행합니다.
          * @param {string} selector - 초기화할 요소의 선택자 문자열.
@@ -81,7 +80,7 @@ commons.datepicker = (function() {
             if (commons.util.isEmpty(selector)) return;
 
             const mergedOptions = {
-                ...commons.datepicker.baseOptions,
+                ...baseOptions,
                 ...additionalOptions
             };
             // 날짜 형식 설정
@@ -105,7 +104,7 @@ commons.datepicker = (function() {
             if (commons.util.isEmpty(selector)) return;
 
             const mergedOptions = {
-                ...commons.datepicker.timeOptions,
+                ...timeOptions,
                 ...additionalOptions
             };
             // 날짜 형식 설정

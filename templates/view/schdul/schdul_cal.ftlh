@@ -2,7 +2,7 @@
  * 일정 > 전체 일정 화면 (달력)
  -->
 
-<#import "/layout/layout.ftlh" as layout >
+<#import "/layout/layout_default.ftlh" as layout >
 
 <#--toolbar::버튼 추가-->
 <#assign toolbar>

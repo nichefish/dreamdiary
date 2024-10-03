@@ -9,28 +9,30 @@
  */
 if (typeof commons === 'undefined') { var commons = {}; }
 commons.tinymce = (function() {
-    return {
-        /** 기본 옵션 분리 */
-        basicOptions: {
-            editor_encoding: "raw",
-            height: 540,
-            menubar: false,
-            branding: false,
-            statusbar: false,
-            default_link_target: "_blank",
-            convert_urls: false,
-            plugins: 'help quickbars searchreplace link autolink pageembed table lists advlist checklist emoticons hr visualchars visualblocks pagebreak code codesample',
-            toolbar1: 'undo redo | searchreplace | styles styleselect fontselect fontsizeselect | bold italic underline strikethrough | forecolor backcolor | align | code codesample | help',
-            toolbar2: 'emoticons custom_image link pageembed | hr | numlist bullist checklist moreless | visualchars visualblocks pagebreak | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
-            contextmenu: 'link custom_image lists table',
-            /* https://www.tiny.cloud/docs/plugins/opensource/textpattern/
-            textpattern_patterns: [
-                {start: '*', end: '*', format: 'italic'},
-                {start: '**', end: '**', format: 'bold'},
-                {start: '~', end: '~', cmd: 'createLink', value: 'https://tiny.cloud'}
-            ], */
-        },
 
+    /** 기본 옵션 분리 */
+    const basicOptions = {
+        editor_encoding: "raw",
+        height: 540,
+        menubar: false,
+        branding: false,
+        statusbar: false,
+        default_link_target: "_blank",
+        convert_urls: false,
+        plugins: 'help quickbars searchreplace link autolink pageembed table lists advlist checklist emoticons hr visualchars visualblocks pagebreak code codesample',
+        toolbar1: 'undo redo | searchreplace | styles styleselect fontselect fontsizeselect | bold italic underline strikethrough | forecolor backcolor | align | code codesample | help',
+        toolbar2: 'emoticons custom_image link pageembed | hr | numlist bullist checklist moreless | visualchars visualblocks pagebreak | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+        contextmenu: 'link custom_image lists table',
+
+        /* https://www.tiny.cloud/docs/plugins/opensource/textpattern/
+        textpattern_patterns: [
+            {start: '*', end: '*', format: 'italic'},
+            {start: '**', end: '**', format: 'bold'},
+            {start: '~', end: '~', cmd: 'createLink', value: 'https://tiny.cloud'}
+        ], */
+    };
+
+    return {
         /**
          * tinymce 에디터를 초기화합니다.
          * @dependency: tinyMCE
@@ -43,7 +45,7 @@ commons.tinymce = (function() {
 
             const options = {
                 selector: selectorStr,
-                ...commons.tinymce.basicOptions, // 공통 옵션을 병합
+                ...basicOptions, // 공통 옵션을 병합
                 setup: function (editor) {
                     // 자동 이스케이핑
                     editor.on('SaveContent', function (e) {

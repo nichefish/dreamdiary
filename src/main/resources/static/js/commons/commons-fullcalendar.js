@@ -10,36 +10,37 @@
  */
 if (typeof commons === 'undefined') { var commons = {}; }
 commons.fullcalendar = (function() {
-    return {
-        /** 기본 옵션 */
-        baseOptions: {
-            headerToolbar: {
-                left: "prev,next today",
-                center: "title",
-                right: ""
-            },
-            height: 1040,
-            contentHeight: 980,
-            aspectRatio: 3,  // @see: https://fullcalendar.io/docs/aspectRatio
-            expandRows: true,
-            nowIndicator: true,
-            selectOverlap: false,
 
-            views: {
-                dayGridMonth: { buttonText: "월별 조회" }
-            },
+    /** 기본 옵션 */
+    const baseOptions = {
+        headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: ""
+        },
+        height: 1040,
+        contentHeight: 980,
+        aspectRatio: 3,  // @see: https://fullcalendar.io/docs/aspectRatio
+        expandRows: true,
+        nowIndicator: true,
+        selectOverlap: false,
 
-            initialView: "dayGridMonth",
-            locale: "ko",
-
-            editable: false,
-            businessHours: true,
-            displayEventTime: false,
-            // dayMaxEvents: true, // allow "more" link when too many events
-            navLinks: false,
-            nextDayThreshold: '00:00:00',
+        views: {
+            dayGridMonth: { buttonText: "월별 조회" }
         },
 
+        initialView: "dayGridMonth",
+        locale: "ko",
+
+        editable: false,
+        businessHours: true,
+        displayEventTime: false,
+        // dayMaxEvents: true, // allow "more" link when too many events
+        navLinks: false,
+        nextDayThreshold: '00:00:00',
+    };
+
+    return {
         /**
          * init : `FullCalendar` 객체를 생성하고 이벤트를 설정하는 함수.
          * @param {string} selectorId - 캘린더를 렌더링할 DOM 요소의 ID.
@@ -59,7 +60,7 @@ commons.fullcalendar = (function() {
             const TODAY = todayDate.format("YYYY-MM-DD");
 
             const mergedOptions = {
-                ...commons.fullcalendar.baseOptions,
+                ...baseOptions,
                 now: TODAY,
                 initialDate: TODAY,
                 events: eventList,
