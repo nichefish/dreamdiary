@@ -13,7 +13,10 @@ commons.datepicker = (function() {
         ptnDate: "yyyy-MM-DD",
         ptnDatetime: "yyyy-MM-DD HH:mm:ss",
 
-        baseOption: {
+        /**
+         * 기본 날짜 옵션
+         */
+        baseOptions: {
             singleDatePicker: true,
             startDate: moment().startOf("Day"),
             showDropdowns: true,
@@ -25,18 +28,17 @@ commons.datepicker = (function() {
             }
         },
 
+        /**
+         * 시간 포함 날짜 옵션
+         */
         timeOption: {
-            singleDatePicker: true,
+            ...commons.datepicker.baseOptions,
             timePicker: true,
             timePicker24Hour: true,
             timePickerSeconds: true,
-            startDate: moment().startOf("Day"),
-            showDropdowns: true,
-            autoUpdateInput: false,
             locale: {
-                format: this.ptnDatetime,
-                "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
-                "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+                ...commons.datepicker.baseOption.locale,
+                format: this.ptnDatetime
             }
         },
 

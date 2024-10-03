@@ -4,7 +4,7 @@
  * @author: nichefish
  * @since: 2022-06-27
  * @dependency: commons.js
- * 공통 - 날짜 관련 함수 모듈
+ * 공통 - Handlebars(템플릿) 헬퍼 관련 함수 모듈
  * (노출식 모듈 패턴 적용 :: commons.date.getCurrDateStr(commons.date.ptnDate) 이런식으로 사용)
  */
 

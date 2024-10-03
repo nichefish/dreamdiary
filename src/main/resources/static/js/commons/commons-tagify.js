@@ -4,7 +4,7 @@
  * @author: nichefish
  * @since: 2022-06-27~
  * @dependency: jquery.blockUI.js, jquery.forms.js
- * 공통 - 일반 함수 모듈
+ * 공통 - tagify(라이브러리) 관련 함수 모듈
  * (노출식 모듈 패턴 적용 :: commons.util.enterKey("#userId") 이런식으로 사용)
  */
 if (typeof commons === 'undefined') { var commons = {}; }
@@ -46,25 +46,33 @@ commons.tagify = (function() {
         /**
          * Tagify를 초기화합니다.
          * @param {string} selector - 초기화할 태그 입력 요소의 선택자 문자열.
+         * @param {object} additionalOptions - 추가로 적용할 `Tagify` 설정 옵션 (선택적).
          * @returns {Tagify} - 초기화된 Tagify 인스턴스.
          */
-        init: function(selector) {
+        init: function(selector, additionalOptions = {}) {
             // 태그 tagify
             const inputs = commons.util.verifySelector(selector);
             if (inputs.length === 0) return;
 
             const tagInput = inputs[0];
-            return new Tagify(tagInput, commons.tagify.baseOptions);
+
+            // 기본 옵션과 추가 옵션을 병합하여 Tagify 생성
+            const mergedOptions = {
+                ...commons.tagify.baseOptions,
+                ...additionalOptions
+            };
+            return new Tagify(tagInput, mergedOptions);
         },
 
         /**
          * 카테고리 기능을 추가하여 Tagify를 초기화합니다.
          * @param {string} selector - 초기화할 태그 입력 요소의 선택자 문자열.
          * @param {Object} tagCtgrMap - 태그 카테고리 매핑 객체. 태그와 관련된 카테고리를 정의합니다.
+         * @param {object} additionalOptions - 추가로 적용할 `Tagify` 설정 옵션 (선택적).
          * @returns {Tagify} - 초기화된 Tagify 인스턴스. 카테고리 기능이 추가된 상태입니다.
          */
-        initWithCtgr: function(selector, tagCtgrMap) {
-            const tagify = commons.tagify.init(selector);
+        initWithCtgr: function(selector, tagCtgrMap, additionalOptions = {}) {
+            const tagify = commons.tagify.init(selector, additionalOptions);
 
             // tagify 스코프 설정
             const parts = selector.split(' ');

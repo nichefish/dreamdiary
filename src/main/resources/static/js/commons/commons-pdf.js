@@ -4,7 +4,7 @@
  * @author: nichefish
  * @since: 2022-06-27
  * @depdendency: html2pdf
- * 공통 - pdf 다운로드 관련 함수 모듈
+ * 공통 - html2pdf(라이브러리) 관련 함수 모듈
  * (노출식 모듈 패턴 적용 :: commons.pdf.fnPdf("#id") 이런식으로 사용)
  */
 if (typeof commons === 'undefined') { var commons = {}; }

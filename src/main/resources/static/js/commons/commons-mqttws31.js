@@ -16,11 +16,11 @@ commons.mqttws31 = (function() {
          * @param {function} onSuccFunc - 연결 성공 시 호출할 콜백 함수.
          * @returns {object} mqttClient - 생성된 MQTT 클라이언트 인스턴스.
          */
-        fnMqttStart: function(componentId, options, onSuccFunc) {
+        start: function(componentId, options, onSuccFunc) {
             // MQTT 클라이언트 생성 :: 메소드 분리
-            const mqttClient = commons.mqttws31.getMqttClient(componentId, options);
+            const mqttClient = commons.mqttws31.initClient(componentId, options);
             // MQTT 연결 시도 및 콜백 함수 등록 :: 메소드 분리
-            commons.mqttws31.fnMqttConnect(mqttClient, options, onSuccFunc);
+            commons.mqttws31.connect(mqttClient, options, onSuccFunc);
             return mqttClient;
         },
 
@@ -30,7 +30,7 @@ commons.mqttws31 = (function() {
          * @param {object} options - MQTT 클라이언트 설정 옵션.
          * @returns {Paho.MQTT.Client} mqttClient - 생성된 MQTT 클라이언트 인스턴스.
          */
-        getMqttClient: function(componentId, options) {
+        initClient: function(componentId, options) {
             const mqttHost = options.host;
             const mqttPort = options.port;
             const mqttClientId = options.title + "_client_" + componentId + Math.floor(Math.random() * 10000000);
@@ -44,7 +44,7 @@ commons.mqttws31 = (function() {
                 if (options.connRetryCnt < 5) {
                     if (options.reconnTimer) clearTimeout(options.reconnTimer);
                     options.reconnTimer = setTimeout(function() {
-                        commons.mqttws31.fnMqttConnect(mqttClient)
+                        commons.mqttws31.connect(mqttClient)
                     }, options.reconnTimeout);
                 }
             }
@@ -65,7 +65,7 @@ commons.mqttws31 = (function() {
          * @param {object} options - 연결 설정 옵션.
          * @param {function} onSuccFunc - 연결 성공 시 호출할 콜백 함수.
          */
-        fnMqttConnect: function(mqttClient, options = {}, onSuccFunc) {
+        connect: function(mqttClient, options = {}, onSuccFunc) {
             const isLogging = options.logging || false;
             const topics = Array.isArray(options.topics) ? options.topics : [];
 
@@ -102,7 +102,7 @@ commons.mqttws31 = (function() {
          * @param {string} topic - 메시지를 발행할 MQTT 주제.
          * @param {string} payloadStr - 발행할 메시지 내용.
          */
-        fnPublish: function(mqttClient, options, topic, payloadStr) {
+        publish: function(mqttClient, options, topic, payloadStr) {
             const isLogging = options.logging || false;
 
             try {

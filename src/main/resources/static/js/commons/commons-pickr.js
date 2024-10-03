@@ -3,7 +3,7 @@
  * @namespace: commons.pickr
  * @author: nichefish
  * @since: 2022-06-27~
- * 공통 - Pickr (색상선택 툴) 함수 모듈
+ * 공통 - pickr(색상선택 라이브러리) 함수 모듈
  * (노출식 모듈 패턴 적용 :: commons.util.enterKey("#userId") 이런식으로 사용)
  * https://github.com/simonwep/pickr
  */
