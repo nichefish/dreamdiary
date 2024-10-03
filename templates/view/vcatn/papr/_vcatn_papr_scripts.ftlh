@@ -10,23 +10,25 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#vcatnPaprRegForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        Swal.fire({
-                            text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                            showCancelButton: true,
-                        }).then(function(result) {
-                            if (!result.value) return;
-                            VcatnPapr.regAjax();
-                        });
-                    },
-                });
+                commons.validate.validateForm("#vcatnPaprRegForm", VcatnPapr.submitHandler);
                 // 잔디발송여부 클릭시 글씨 변경
                 commons.util.chckboxLabel("jandiYn", "발송//미발송", "#0095E8//gray", function() {
                     $("#trgetTopicSpan").show();
                 }, function() {
                     $("#trgetTopicSpan").hide();
+                });
+            },
+
+            /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                Swal.fire({
+                    text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    VcatnPapr.regAjax();
                 });
             },
 
@@ -55,7 +57,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#vcatnPaprRegForm").submit();
@@ -66,7 +68,7 @@
              */
             regAjax: function() {
                 const url = "<#if isReg!false>${Url.VCATN_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.VCATN_PAPR_MDF_AJAX!}</#if>";
-                const ajaxData = new FormData($("#vcatnPaprRegForm")[0]);
+                const ajaxData = new FormData(document.getElementById("vcatnPaprRegForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

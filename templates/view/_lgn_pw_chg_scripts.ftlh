@@ -10,21 +10,19 @@
              */
             pwChgModal: function() {
                 const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
-                commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
                 /* init form */
-                LgnPwChg.initForm();
+                LgnPwChg.initForm(data);
             },
 
             /**
              * form init
              */
             initForm: function(obj = {}) {
+                /* show modal */
+                commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
+
                 /* jquery validation */
-                $("#lgnPwChgForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        LgnPwChg.lgnPwChgAjax();
-                    },
+                commons.validate.validateForm("#flsysMetaRegForm", LgnPwChg.lgnPwChgAjax, {
                     rules: {
                         newPw: { regex: commons.validate.pwRegex },
                         newPwCf: { equalTo: "#newPw" }
@@ -37,7 +35,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#lgnPwChgForm").submit();

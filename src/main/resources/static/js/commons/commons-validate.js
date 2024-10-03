@@ -22,7 +22,6 @@ commons.validate = (function() {
         errorPlacement : function(error, element) {
             commons.validate.errorSpan(error, element);        // 공통 함수로 분리
         },
-        ignore: [],         // hidden 필드도 검증하기 위함
     };
 
     return {

@@ -10,21 +10,7 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#userReqstForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        if ($("#useAcsIpYn").is(":checked") && $("#acsIpListStr").val() === "") {
-                            Swal.fire("접속 IP는 최소 한 개 이상 입력해야 합니다.");
-                            return false;
-                        }
-                        Swal.fire({
-                            text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                            showCancelButton: true,
-                        }).then(function(result) {
-                            if (!result.value) return;
-                            UserReqst.regAjax();
-                        });
-                    },
+                commons.validate.validateForm("#userReqstForm", UserReqst.submitHandler, {
                     rules: {
                         userId: { minlength:4, maxlength:16 },
                         ipDupChckPassed: { dupChck:true },
@@ -74,11 +60,28 @@
             },
 
             /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                if ($("#useAcsIpYn").is(":checked") && $("#acsIpListStr").val() === "") {
+                    Swal.fire("접속 IP는 최소 한 개 이상 입력해야 합니다.");
+                    return false;
+                }
+                Swal.fire({
+                    text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    UserReqst.regAjax();
+                });
+            },
+
+            /**
              * 등록/수정 처리(Ajax)
              */
             regAjax: function() {
                 const url = "${Url.USER_REQST_REG_AJAX!}";
-                const ajaxData = new FormData($("#userReqstForm")[0]);
+                const ajaxData = new FormData(document.getElementById("userReqstForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -88,7 +91,7 @@
             },
 
             /**
-             * 메인 화면으로 돌아가기
+             * 로그인 화면으로 돌아가기
              */
             return: function() {
                 Swal.fire({
@@ -100,10 +103,10 @@
             },
 
             /**
-             * 메인 화면으로 이동
+             * 로그인 화면으로 이동
              */
             main: function() {
-                commons.util.blockUIReplace("${Url.MAIN!}");
+                commons.util.blockUIReplace("${Url.AUTH_LGN_FORM!}");
             }
         }
     })();

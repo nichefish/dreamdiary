@@ -14,27 +14,45 @@
              * Page 객체 초기화
              */
             init: function() {
-                // request에서 불러온 에러 메세지 표시
-                const errorMsgSpan = $("#errorMsgSpan");
-                errorMsgSpan.html("");
+                /* init form */
+                Page.initForm();
+
+                /* 에러 메세지 존재시 표시 */
                 <#if errorMsg??>
-                    $("#userId_valid_span").text("");
-                    $("#password_valid_span").text("");
-                    errorMsgSpan.html("${errorMsg!}".replace(/&lt;br&gt;/g, '<br/>'));   // 줄바꿈 처리
+                    Page.showErrorMsg();
                 </#if>
-                // 중복 로그인시 기존 로그인 끊기 팝업 호출
+                /* 중복 로그인시 기존 로그인 끊기 팝업 호출 */
                 <#if isDupIdLgn??>
                     Page.dupLgnAlert();
                 </#if>
-                // 조건 일치시 비밀번호 변경 팝업 호출
+                /* 조건 일치시 비밀번호 변경 팝업 호출 */
                 <#if isCredentialExpired!false || needsPwReset!false>
                     LgnPwChg.pwChgModal();
                 </#if>
+            },
 
+            /**
+             * form init
+             */
+            initForm: function(obj = {}) {
                 /* jquery validation */
                 commons.validate.validateForm("#lgnForm");
                 // 엔터키 처리
                 commons.util.enterKey(".enter", Page.lgn);
+            },
+
+            /**
+             * request에 추가된 에러 메세지 존재시 표시
+             */
+            showErrorMsg: function() {
+                const errorMsg = "${errorMsg!}";
+                if (commons.util.isEmpty(errorMsg)) return;
+
+                const $errorMsgSpan = $("#errorMsgSpan");
+                $errorMsgSpan.html("");
+                $("#userId_valid_span").text("");
+                $("#password_valid_span").text("");
+                $errorMsgSpan.html(errorMsg.replace(/&lt;br&gt;/g, '<br/>'));   // 줄바꿈 처리
             },
 
             /**

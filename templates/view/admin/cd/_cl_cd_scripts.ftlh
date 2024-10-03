@@ -49,7 +49,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 event.stopPropagation();
@@ -81,7 +81,7 @@
             },
 
             /**
-             * 상세 화면 이동
+             * 상세 화면으로 이동
              * @param {string} clCd - 조회할 분류 코드.
              */
             dtl: function(clCd) {

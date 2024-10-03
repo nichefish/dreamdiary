@@ -29,6 +29,7 @@
              */
             regModal: function(filePath) {
                 const obj = { "filePath": filePath, "upperFilePath": Flsys.currPath };
+                /* init form */
                 FlsysMeta.initForm(obj);
             },
 
@@ -92,6 +93,7 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
+                    /* init form */
                     FlsysMeta.initForm(rsltObj);
                     $("#flsys_meta_dtl_modal").modal("hide");
                     FlsysMeta.key = postNo;

@@ -12,21 +12,23 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#schdulRegForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        let isReg = ($("#schdulRegForm #postNo").val() === "");
-                        Swal.fire({
-                            text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
-                            showCancelButton: true,
-                        }).then(function(result) {
-                            if (!result.value) return;
-                            Schdul.regAjax();
-                        });
-                    },
-                });
+                commons.validate.validateForm("#schdulRegForm", Schdul.submitHandler);
                 // 엔터키 처리
                 commons.util.enterKey("#searchKeyword", Page.search);
+            },
+
+            /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                const isReg = ($("#schdulRegForm #postNo").val() === "");
+                Swal.fire({
+                    text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    Schdul.regAjax();
+                });
             },
 
             /**
@@ -86,7 +88,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#schdulRegForm").submit();

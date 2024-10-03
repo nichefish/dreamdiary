@@ -18,7 +18,7 @@
                 commons.tagify.initWithCtgr("#jrnlSumryRegForm #tagListStr", undefined);
                 // tinymce editor reset
                 commons.tinymce.init('#tinymce_jrnlSumryCn');
-                commons.tinymce.setContentWhenReady("tinymce_jrnlSumryCn", obj.cn);
+                commons.tinymce.setContentWhenReady("tinymce_jrnlSumryCn", obj.cn || "");
             },
 
             /**
@@ -94,7 +94,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 tinymce.get("tinymce_jrnlSumryCn").save();
@@ -128,7 +128,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_SUMRY_REG_AJAX!}";
-                    const ajaxData = new FormData($("#jrnlSumryRegForm")[0]);
+                    const ajaxData = new FormData(document.getElementById("jrnlSumryRegForm"));
                     commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

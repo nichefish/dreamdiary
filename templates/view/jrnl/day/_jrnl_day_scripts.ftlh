@@ -15,11 +15,7 @@
                 commons.util.handlebarsTemplate(obj, "jrnl_day_reg", "show");
 
                 /* jquery validation */
-                $("#jrnlDayRegForm").validate({
-                     ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        JrnlDay.regAjax();
-                    },
+                commons.validate.validateForm("#jrnlDiaryRegForm", JrnlDiary.regAjax, {
                     rules: {
                         jrnlDt: {
                             required: function() {
@@ -123,7 +119,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#jrnlDayRegForm").submit();
@@ -139,7 +135,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_DAY_REG_AJAX!}";
-                    const ajaxData = new FormData($("#jrnlDayRegForm")[0]);
+                    const ajaxData = new FormData(document.getElementById("jrnlDayRegForm"));
                     commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

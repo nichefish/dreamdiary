@@ -31,7 +31,7 @@
                 /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
                 commons.util.initSortTable();
 
-                /** jquery validation */
+                /* jquery validation */
                 $(function() {
                     $("#vcantSchdulRegForm").validate({
                         submitHandler: function() {
@@ -50,7 +50,10 @@
                     });
                 });
             },
-            /** 유효성검사:: 시작일 이전 날짜 선택 불가하게 막기 */
+
+            /**
+             * 유효성 검사:: 시작일 이전 날짜 선택 불가하게 막기
+             */
             noBefore: function(beginSelectorStr, endSelectorStr) {
                 const isBefore = commons.date.isBefore(beginSelectorStr, endSelectorStr);
                 const vcatnCd = select = $("#vcatnCd").children('option:selected').val();

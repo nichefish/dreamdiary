@@ -16,7 +16,7 @@
                         if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
                         if (!commons.validate.fileImgExtnChck(this)) return false;      // fileExtnChck
                         const url = "${Url.USER_MY_UPLOAD_PROFL_IMG_AJAX!}";
-                        const ajaxData = new FormData($("#profllImgForm")[0]);
+                        const ajaxData = new FormData(document.getElementById("profllImgForm"));
                         commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                             if (commons.util.isNotEmpty(res.message)) {
                                 Swal.fire({ "text": res.message })

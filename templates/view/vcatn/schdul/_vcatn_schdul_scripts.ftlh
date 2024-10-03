@@ -49,7 +49,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#vcantSchdulRegForm").submit();
@@ -61,7 +61,7 @@
             regAjax: function() {
                 const isReg = ($("#vcatnSchdulNo").val() === "");
                 const url = isReg ? '${Url.VCATN_SCHDUL_REG_AJAX!}' : '${Url.VCATN_SCHDUL_MDF_AJAX!}';
-                const ajaxData = new FormData($("#vcantSchdulRegForm")[0]);
+                const ajaxData = new FormData(document.getElementById("vcantSchdulRegForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

@@ -871,7 +871,7 @@ commons.util = (function() {
         delayBtn: function(elmt, sec = 2) {
             if (elmt instanceof jQuery) elmt = elmt[0];
             if (!elmt) return;
-            if (elmt.classList.contains("modal-btn-close-safe")) return;     // 안전닫기 버튼 제외
+            if (elmt.classList?.contains("modal-btn-close-safe")) return;     // 안전닫기 버튼 제외
 
             elmt.disabled = true;
             setTimeout(function() {

@@ -15,11 +15,11 @@
                 // 개별 input 유효성검사
                 commons.validate.onlyNum(".number");
 
-                // 모든 버튼에 딜레이 기능 추가
-                const buttons = document.querySelectorAll("button, .btn, .badge");
+                // (안전클릭 제외한) 모든 버튼에 딜레이 기능 추가
+                const buttons = document.querySelectorAll("button:not(.modal-btn-close-safe), .btn:not(.modal-btn-close-safe), .badge:not(.modal-btn-close-safe)");
                 buttons.forEach(function(button) {
-                    button.addEventListener("click", function(button) {
-                        commons.util.delayBtn(button);
+                    button.addEventListener("click", function() {
+                        commons.util.delayBtn(this);
                     });
                 });
             },

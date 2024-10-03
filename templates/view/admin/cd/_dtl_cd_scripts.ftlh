@@ -40,7 +40,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#dtlCdRegForm").submit();

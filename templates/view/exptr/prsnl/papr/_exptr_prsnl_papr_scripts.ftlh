@@ -10,24 +10,25 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#exptrPrsnlRegForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        Swal.fire({
-                            text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                            showCancelButton: true,
-                        }).then(function(result) {
-                            if (!result.value) return;
-                            // disabled된 selectbox 값을 풀어준다.
-                            $("input").removeAttr("disabled");
-                            $("select").removeAttr("disabled");
-                            ExptrPrsnlPapr.regAjax();
-                        });
-                    },
-                });
+                commons.validate.validateForm("#exptrPrsnlRegForm", ExptrPrsnlPapr.submitHandler);
                 // 공백 자동 제거
                 commons.validate.onlyNumAndComma(".num");
+            },
 
+            /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                Swal.fire({
+                    text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    // disabled된 selectbox 값을 풀어준다.
+                    $("input").removeAttr("disabled");
+                    $("select").removeAttr("disabled");
+                    ExptrPrsnlPapr.regAjax();
+                });
             },
 
             /**
@@ -103,7 +104,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#exptrPrsnlRegForm").submit();
@@ -119,7 +120,7 @@
                     $("input[name='itemList["+index+"].exptrAmt']").val($(item).val().replace(/,/gi, ""));
                 });
                 const url = "<#if isReg!false>${Url.EXPTR_PRSNL_PAPR_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_PRSNL_PAPR_MDF_AJAX!}</#if>";
-                const ajaxData = new FormData($("#exptrPrsnlRegForm")[0]);
+                const ajaxData = new FormData(document.getElementById("exptrPrsnlRegForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

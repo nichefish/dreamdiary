@@ -83,6 +83,7 @@
                 event.stopPropagation();
 
                 const obj = { "menuTyCd": menuTyCd, "upperMenuNo": upperMenuNo, "upperMenuNm": upperMenuNm };
+                /* init form */
                 Menu.initForm(obj);
             },
 
@@ -108,7 +109,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#menuRegForm").submit();
@@ -149,6 +150,7 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
+                    /* init form */
                     Menu.initForm(rsltObj);
                 });
             },

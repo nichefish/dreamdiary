@@ -10,21 +10,7 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#userRegForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        if ($("#useAcsIpYn").is(":checked") && $("#acsIpListStr").val() === "") {
-                            Swal.fire("접속 IP는 최소 한 개 이상 입력해야 합니다.");
-                            return false;
-                        }
-                        Swal.fire({
-                            text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                            showCancelButton: true,
-                        }).then(function(result) {
-                            if (!result.value) return;
-                            User.regAjax();
-                        });
-                    },
+                commons.validate.validateForm("#userRegForm", User.submitHandler, {
                     <#if isReg!false>
                         rules: {
                             userId: { minlength:4, maxlength:16 },
@@ -58,6 +44,23 @@
                 });
                 /* 접속IP tagify */
                 commons.tagify.init("#acsIpListStr");
+            },
+
+            /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                if ($("#useAcsIpYn").is(":checked") && $("#acsIpListStr").val() === "") {
+                    Swal.fire("접속 IP는 최소 한 개 이상 입력해야 합니다.");
+                    return false;
+                }
+                Swal.fire({
+                    text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    User.regAjax();
+                });
             },
 
             /**
@@ -121,7 +124,7 @@
              */
             regAjax: function() {
                 const url = "<#if isReg!false>${Url.USER_REG_AJAX!}</#if><#if isMdf!false>${Url.USER_MDF_AJAX!}</#if>";
-                const ajaxData = new FormData($("#userRegForm")[0]);
+                const ajaxData = new FormData(document.getElementById("userRegForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {
@@ -132,8 +135,11 @@
 
             /**
              * 상세 화면으로 이동
+             * @param {string|number} userNo - 사용자 번호
              */
             dtl: function(userNo) {
+                if (isNaN(postNo)) return;
+
                 $("#procForm #userNo").val(userNo);
                 commons.util.blockUISubmit("#procForm", "${Url.USER_DTL!}");
             },

@@ -10,29 +10,7 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#jrnlSbjctRegForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        if (JrnlSbjct.submitMode === "preview") {
-                            const popupNm = "preview";
-                            const options = 'width=1280,height=1440,top=0,left=270';
-                            const popup = commons.util.openPopup("", popupNm, options);
-                            if (popup) popup.focus();
-                            const popupUrl = "${Url.JRNL_SBJCT_REG_PREVIEW_POP!}";
-                            $("#jrnlSbjctRegForm").attr("action", popupUrl).attr("target", popupNm);
-                            return true;
-                        } else if (JrnlSbjct.submitMode === "submit") {
-                            $("#jrnlSbjctRegForm").removeAttr("action");
-                            Swal.fire({
-                                text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                showCancelButton: true,
-                            }).then(function(result) {
-                                if (!result.value) return;
-                                JrnlSbjct.regAjax();
-                            });
-                        }
-                    },
-                });
+                commons.validate.validateForm("#jrnlSbjctRegForm", JrnlSbjct.submitHandler);
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn");
                 /* tagify */
@@ -43,6 +21,30 @@
                 }, function() {
                     $("#trgetTopicSpan").hide();
                 });
+            },
+
+            /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                if (JrnlSbjct.submitMode === "preview") {
+                    const popupNm = "preview";
+                    const options = 'width=1280,height=1440,top=0,left=270';
+                    const popup = commons.util.openPopup("", popupNm, options);
+                    if (popup) popup.focus();
+                    const popupUrl = "${Url.JRNL_SBJCT_REG_PREVIEW_POP!}";
+                    $("#jrnlSbjctRegForm").attr("action", popupUrl).attr("target", popupNm);
+                    return true;
+                } else if (JrnlSbjct.submitMode === "submit") {
+                    $("#jrnlSbjctRegForm").removeAttr("action");
+                    Swal.fire({
+                        text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                        showCancelButton: true,
+                    }).then(function(result) {
+                        if (!result.value) return;
+                        JrnlSbjct.regAjax();
+                    });
+                }
             },
 
             /**
@@ -70,7 +72,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 if (tinymce !== undefined) tinymce.activeEditor.save();
@@ -92,7 +94,7 @@
              */
             regAjax: function() {
                 const url = " <#if isMdf!false>${Url.JRNL_SBJCT_MDF_AJAX!}<#else>${Url.JRNL_SBJCT_REG_AJAX!}</#if>";
-                const ajaxData = new FormData($("#jrnlSbjctRegForm")[0]);
+                const ajaxData = new FormData(document.getElementById("jrnlSbjctRegForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({text: res.message})
                         .then(function() {

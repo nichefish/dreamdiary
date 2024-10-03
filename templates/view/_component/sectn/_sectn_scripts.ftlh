@@ -30,7 +30,7 @@
                 commons.tagify.initWithCtgr("#sectnRegForm #tagListStr", undefined);
                 // tinymce editor reset
                 commons.tinymce.init('#tinymce_sectnCn');
-                commons.tinymce.setContentWhenReady("tinymce_sectnCn", obj.cn);
+                commons.tinymce.setContentWhenReady("tinymce_sectnCn", obj.cn || "");
             },
 
             /**
@@ -77,7 +77,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 tinymce.activeEditor.save();     // 활성화된 TinyMCE 에디터의 내용 저장
@@ -95,7 +95,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = isReg ? "${Url.SECTN_REG_AJAX!}" : "${Url.SECTN_MDF_AJAX!}";
-                    const ajaxData = new FormData(document.querySelector("#sectnRegForm"));
+                    const ajaxData = new FormData(document.getElementById("sectnRegForm"));
                     commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

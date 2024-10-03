@@ -10,11 +10,7 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#lgnPolicyForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        LgnPolicy.regAjax();
-                    },
+                commons.validate.validateForm("#lgnPolicyForm", LgnPolicy.regAjax, {
                     rules: {
                         lgnLockDy: { maxlength:3 },
                         lgnTryLmt: { maxlength:3 },
@@ -28,7 +24,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#lgnPolicyForm").submit();

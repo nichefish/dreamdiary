@@ -10,17 +10,7 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#myPwChgForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        Swal.fire({
-                            text: <@spring.message "view.cnfm.chgPw"/>,
-                            showCancelButton: true,
-                        }).then(function(result) {
-                            if (!result.value) return;
-                            UserMyPwChg.myPwChgAjax();
-                        });
-                    },
+                commons.validate.validateForm("#myPwChgForm", UserMyPwChg.submitHandler, {
                     rules: {
                         newPw: { regex: commons.validate.pwRegex },
                         newPwCf: { equalTo: "#newPw" }
@@ -33,6 +23,19 @@
             },
 
             /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                Swal.fire({
+                    text: <@spring.message "view.cnfm.chgPw"/>,
+                    showCancelButton: true,
+                }).then(function(result) {
+                    if (!result.value) return;
+                    UserMyPwChg.myPwChgAjax();
+                });
+            },
+
+            /**
              * 내 비밀번호 수정 팝업 호출
              */
             myPwChgModal: function() {
@@ -41,7 +44,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#myPwChgForm").submit();

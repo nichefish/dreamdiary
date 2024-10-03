@@ -34,7 +34,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#commentRegForm").submit();
@@ -51,7 +51,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = isReg ? "${Url.COMMENT_REG_AJAX!}" : "${Url.COMMENT_MDF_AJAX!}";
-                    const ajaxData = new FormData($("#commentRegForm")[0]);
+                    const ajaxData = new FormData(document.getElementById("commentRegForm"));
                     commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {

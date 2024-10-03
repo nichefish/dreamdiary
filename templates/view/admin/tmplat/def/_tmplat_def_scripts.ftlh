@@ -43,7 +43,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#tmplatDefRegForm").submit();

@@ -37,7 +37,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 $("#boardDefRegForm").submit();

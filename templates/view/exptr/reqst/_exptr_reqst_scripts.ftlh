@@ -10,29 +10,7 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#exptrReqstRegForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        if (ExptrReqst.submitMode === "preview") {
-                            const popupNm = "preview";
-                            const options = 'width=1280,height=1440,top=0,left=270';
-                            const popup = commons.util.openPopup("", popupNm, options);
-                            if (popup) popup.focus();
-                            const popupUrl = "${Url.EXPTR_REQST_REG_PREVIEW_POP!}";
-                            $("#exptrReqstRegForm").attr("action", popupUrl).attr("target", popupNm);
-                            return true;
-                        } else if (ExptrReqst.submitMode === "submit") {
-                            $("#exptrReqstRegForm").removeAttr("action");
-                            Swal.fire({
-                                text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                showCancelButton: true,
-                            }).then(function(result) {
-                                if (!result.value) return;
-                                ExptrReqst.regAjax();
-                            });
-                        }
-                    },
-                });
+                commons.validate.validateForm("#exptrReqstRegForm", ExptrReqst.submitHandler);
                 /** tinymce init */
                 commons.tinymce.init("#tinymce_cn");
                 // 잔디발송여부 클릭시 글씨 변경
@@ -41,6 +19,30 @@
                 }, function() {
                     $("#trgetTopicSpan").hide();
                 });
+            },
+
+            /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                if (ExptrReqst.submitMode === "preview") {
+                    const popupNm = "preview";
+                    const options = 'width=1280,height=1440,top=0,left=270';
+                    const popup = commons.util.openPopup("", popupNm, options);
+                    if (popup) popup.focus();
+                    const popupUrl = "${Url.EXPTR_REQST_REG_PREVIEW_POP!}";
+                    $("#exptrReqstRegForm").attr("action", popupUrl).attr("target", popupNm);
+                    return true;
+                } else if (ExptrReqst.submitMode === "submit") {
+                    $("#exptrReqstRegForm").removeAttr("action");
+                    Swal.fire({
+                        text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                        showCancelButton: true,
+                    }).then(function(result) {
+                        if (!result.value) return;
+                        ExptrReqst.regAjax();
+                    });
+                }
             },
 
             /**
@@ -68,7 +70,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 tinymce.activeEditor.save();
@@ -90,7 +92,7 @@
              */
             regAjax: function() {
                 const url = "<#if isReg!false>${Url.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_REQST_MDF_AJAX!}</#if>";
-                const ajaxData = new FormData($("#exptrReqstRegForm")[0]);
+                const ajaxData = new FormData(document.getElementById("exptrReqstRegForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

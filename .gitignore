@@ -13,6 +13,7 @@
 !/flsys/.file_system_path.md
 /log/*
 !/log/.logfile_path.md
+/upfile/*
 /upfile/public/*
 /upfile/secured/*
 /ssh-key-2024-04-22.key
@@ -22,3 +23,4 @@
 /templates/view/jrnl/day/tag/_jrnl_day_tag_ctgr_map.ftlh
 /templates/view/jrnl/diary/tag/_jrnl_diary_tag_ctgr_map.ftlh
 /templates/view/jrnl/dream/tag/_jrnl_dream_tag_ctgr_map.ftlh
+/target/*

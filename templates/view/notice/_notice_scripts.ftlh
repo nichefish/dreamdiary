@@ -10,29 +10,7 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#noticeRegForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        if (Notice.submitMode === "preview") {
-                            const popupNm = "preview";
-                            const options = 'width=1280,height=1440,top=0,left=270';
-                            const popup = commons.util.openPopup("", popupNm, options);
-                            if (popup) popup.focus();
-                            const popupUrl = "${Url.NOTICE_REG_PREVIEW_POP!}";
-                            $("#noticeRegForm").attr("action", popupUrl).attr("target", popupNm);
-                            return true;
-                        } else if (Notice.submitMode === "submit") {
-                            $("#noticeRegForm").removeAttr("action");
-                            Swal.fire({
-                                text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                showCancelButton: true,
-                            }).then(function(result) {
-                                if (!result.value) return;
-                                Notice.regAjax();
-                            });
-                        }
-                    },
-                });
+                commons.validate.validateForm("#noticeRegForm", Notice.submitHandler);
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn");
                 /* tagify */
@@ -43,6 +21,30 @@
                 }, function() {
                     $("#trgetTopicSpan").hide();
                 });
+            },
+
+            /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                if (Notice.submitMode === "preview") {
+                    const popupNm = "preview";
+                    const options = 'width=1280,height=1440,top=0,left=270';
+                    const popup = commons.util.openPopup("", popupNm, options);
+                    if (popup) popup.focus();
+                    const popupUrl = "${Url.NOTICE_REG_PREVIEW_POP!}";
+                    $("#noticeRegForm").attr("action", popupUrl).attr("target", popupNm);
+                    return true;
+                } else if (Notice.submitMode === "submit") {
+                    $("#noticeRegForm").removeAttr("action");
+                    Swal.fire({
+                        text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                        showCancelButton: true,
+                    }).then(function(result) {
+                        if (!result.value) return;
+                        Notice.regAjax();
+                    });
+                }
             },
 
             /**
@@ -84,7 +86,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 if (tinymce !== undefined) tinymce.activeEditor.save();
@@ -106,7 +108,7 @@
              */
             regAjax: function() {
                 const url = " <#if isMdf!false>${Url.NOTICE_MDF_AJAX!}<#else>${Url.NOTICE_REG_AJAX!}</#if>";
-                const ajaxData = new FormData($("#noticeRegForm")[0]);
+                const ajaxData = new FormData(document.getElementById("noticeRegForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({text: res.message})
                         .then(function() {
@@ -116,7 +118,7 @@
             },
 
             /**
-             * 상세 화면 이동
+             * 상세 화면으로 이동
              * @param {string|number} postNo - 조회할 글 번호.
              */
             dtl: function(postNo) {

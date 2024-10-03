@@ -10,29 +10,7 @@
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                $("#postRegForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        if (Page.submitMode === "preview") {
-                            const popupNm = "preview";
-                            const options = 'width=1280,height=1440,top=0,left=270';
-                            const popup = commons.util.openPopup("", popupNm, options);
-                            if (popup) popup.focus();
-                            const popupUrl = "${Url.BOARD_POST_REG_PREVIEW_POP!}";
-                            $("#postRegForm").attr("action", popupUrl).attr("target", popupNm);
-                            return true;
-                        } else if (Page.submitMode === "submit") {
-                            $("#postRegForm").removeAttr("action");
-                            Swal.fire({
-                                text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
-                                showCancelButton: true,
-                            }).then(function(result) {
-                                if (!result.value) return;
-                                BoardPost.regAjax();
-                            });
-                        }
-                    },
-                });
+                commons.validate.validateForm("#postRegForm", BoardPost.submitHandler);
                 /* tinymce init */
                 commons.tinymce.init("#tinymce_cn");
                 /* tagify */
@@ -43,6 +21,30 @@
                 }, function() {
                     $("#trgetTopicSpan").hide();
                 });
+            },
+
+            /**
+             * Custom SubmitHandler
+             */
+            submitHandler: function() {
+                if (Page.submitMode === "preview") {
+                    const popupNm = "preview";
+                    const options = 'width=1280,height=1440,top=0,left=270';
+                    const popup = commons.util.openPopup("", popupNm, options);
+                    if (popup) popup.focus();
+                    const popupUrl = "${Url.BOARD_POST_REG_PREVIEW_POP!}";
+                    $("#postRegForm").attr("action", popupUrl).attr("target", popupNm);
+                    return true;
+                } else if (Page.submitMode === "submit") {
+                    $("#postRegForm").removeAttr("action");
+                    Swal.fire({
+                        text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
+                        showCancelButton: true,
+                    }).then(function(result) {
+                        if (!result.value) return;
+                        BoardPost.regAjax();
+                    });
+                }
             },
 
             /**
@@ -71,7 +73,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 tinymce.activeEditor.save();
@@ -93,7 +95,7 @@
              */
             regAjax: function() {
                 const url = "<#if isMdf!false>${Url.BOARD_POST_MDF_AJAX!}<#else>${Url.BOARD_POST_REG_AJAX!}</#if>";
-                const ajaxData = new FormData($("#postRegForm")[0]);
+                const ajaxData = new FormData(document.getElementById("postRegForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({ text: res.message })
                         .then(function() {

@@ -16,11 +16,7 @@
                 commons.util.handlebarsTemplate(obj, "jrnl_dream_reg", "show");
 
                 /* jquery validation */
-                $("#jrnlDreamRegForm").validate({
-                    ...commons.validate.baseOptions,
-                    submitHandler: function() {
-                        JrnlDream.regAjax();
-                    },
+                commons.validate.validateForm("#jrnlDreamRegForm", JrnlDream.regAjax, {
                     rules: {
                         elseDreamerNm: {
                             required: function() {
@@ -48,7 +44,7 @@
                 });
                 /* tinymce editor reset */
                 commons.tinymce.init('#tinymce_jrnlDreamCn');
-                commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", obj.cn);
+                commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", obj.cn || "");
             },
 
             /**
@@ -91,7 +87,7 @@
             },
 
             /**
-             * submit
+             * form submit
              */
             submit: function() {
                 tinymce.get("tinymce_jrnlDreamCn").save();
@@ -108,7 +104,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = "${Url.JRNL_DREAM_REG_AJAX!}";
-                    const ajaxData = new FormData($("#jrnlDreamRegForm")[0]);
+                    const ajaxData = new FormData(document.getElementById("jrnlDreamRegForm"));
                     commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
