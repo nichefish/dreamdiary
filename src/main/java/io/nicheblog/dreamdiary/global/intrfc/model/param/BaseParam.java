@@ -1,11 +1,15 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
 import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * BaseParam
@@ -22,14 +26,22 @@ import org.apache.commons.lang3.StringUtils;
 public class BaseParam {
 
     /** 작업 카테고리 코드 */
+    @Size(max = 50)
     protected String actvtyCtgrCd;
+    
     /** 작업 카테고리 */
+    @Size(max = 50)
     protected ActvtyCtgr actvtyCtgr;
+
     /** 액션구분 코드 */
+    @Size(max = 50)
     protected String actionTyCd;
 
     /** 수정/상세에서 목록 화면으로 돌아옴 구분 코드 ( Y/N ) */
-    protected String isBackToList;
+    @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
+    protected String isBackToList = "N";
 
     // TODO: UTM 파라미터...
 

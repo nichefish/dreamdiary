@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * TmplatDefDto
  * <pre>
@@ -30,9 +33,11 @@ public class TmplatDefDto
         implements Identifiable<Integer>, StateCmpstnModule {
 
     /** 고유 ID (PK) */
+    @Positive
     private Integer tmplatDefNo;
 
     /** 템플릿 정의 코드 */
+    @Size(max = 50)
     private String tmplatDefCd;
 
     /** 제목 */

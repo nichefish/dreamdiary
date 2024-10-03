@@ -26,7 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +33,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 import java.util.List;
 
 /**
@@ -125,8 +123,7 @@ public class VcatnSchdulController
     public ResponseEntity<AjaxResponse> vcatnSchdulRegAjax(
             final @Valid VcatnSchdulDto vcatnSchdul,
             final Integer vcatnSchdulNo,
-            final LogActvtyParam logParam,
-            final BindingResult bindingResult
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -134,8 +131,6 @@ public class VcatnSchdulController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = (vcatnSchdulNo == null);
             VcatnSchdulDto result = isReg ? vcatnSchdulService.regist(vcatnSchdul) : vcatnSchdulService.modify(vcatnSchdul);

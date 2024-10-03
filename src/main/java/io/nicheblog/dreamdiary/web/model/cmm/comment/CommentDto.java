@@ -10,6 +10,9 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * CommentDto
  * <pre>
@@ -36,21 +39,25 @@ public class CommentDto
 
     /** 컨텐츠 타입 */
     @Builder.Default
+    @Size(max = 50)
     private String contentType = CONTENT_TYPE;
 
     /* ----- */
 
     /** 원글 번호 */
+    @Positive
     private Integer refPostNo;
+
     /** 원글 컨텐츠 타입 */
+    @Size(max = 50)
     private String refContentType;
+
+    /* ----- */
 
     @Override
     public Integer getKey() {
         return this.postNo;
     }
-
-    /* ----- */
 
     /** 댓글 정보 모듈 (위임) */
     public CommentCmpstn comment;

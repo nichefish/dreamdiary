@@ -24,8 +24,10 @@ public class BaseAuditDto
 
     /** 수정자 ID */
     protected String mdfusrId;
+
     /** 수정자 이름 */
     protected String mdfusrNm;
+
     /** 수정일시 */
     protected String mdfDt;
 

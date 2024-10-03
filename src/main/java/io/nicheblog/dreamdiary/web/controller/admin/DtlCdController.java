@@ -19,11 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,8 +98,7 @@ public class DtlCdController
     public ResponseEntity<AjaxResponse> dtlCdRegAjax(
             final @Valid DtlCdDto dtlCd,
             final LogActvtyParam logParam,
-            final @RequestParam("regYn") String regYn,
-            final BindingResult bindingResult
+            final @RequestParam("regYn") String regYn
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -109,8 +106,6 @@ public class DtlCdController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = "Y".equals(regYn);
             DtlCdDto result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd);

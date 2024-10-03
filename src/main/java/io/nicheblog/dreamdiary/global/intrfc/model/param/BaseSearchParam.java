@@ -3,6 +3,9 @@ package io.nicheblog.dreamdiary.global.intrfc.model.param;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * BaseSearchParam
  * <pre>
@@ -25,9 +28,12 @@ public class BaseSearchParam
 
     /** 페이지 번호 (기본값 : 1) */
     @Builder.Default
+    @Positive
     protected Integer pageNo = 1;
+
     /** 페이지 크기 (기본값 : 10) */
     @Builder.Default
+    @Positive
     protected Integer pageSize = 10;
 
     /** 검색 유형 (검색 키워드와 한 세트) */
@@ -41,12 +47,19 @@ public class BaseSearchParam
     protected String searchEndDt;
 
     /** 등록자 ID */
+    @Size(max = 20)
     protected String regstrId;
+
     /** 등록자 이름 */
+    @Size(max = 50)
     protected String regstrNm;
+
     /** 조치자 ID */
+    @Size(max = 20)
     protected String managtrId;
+
     /** 조치자 이름 */
+    @Size(max = 50)
     protected String managtrNm;
 
     /* ----- */

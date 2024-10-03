@@ -44,6 +44,8 @@ public class JrnlDayApiDto
     /** 저널 꿈 목록 */
     private List<JrnlDreamDto> jrnlDreamList;
 
+    /* ----- */
+
     @Override
     public Integer getKey() {
         return this.jrnlDayNo;

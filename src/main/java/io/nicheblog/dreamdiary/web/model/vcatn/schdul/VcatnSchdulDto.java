@@ -49,6 +49,8 @@ public class VcatnSchdulDto
     /** 처리 성공여부  */
     private Boolean isSuccess;
 
+    /* ----- */
+
     @Override
     public Integer getKey() {
         return this.vcatnSchdulNo;

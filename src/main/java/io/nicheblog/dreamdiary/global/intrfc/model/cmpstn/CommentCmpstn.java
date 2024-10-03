@@ -24,9 +24,11 @@ public class CommentCmpstn
 
     /** 댓글 목록 */
     private List<CommentDto> list;
+
     /** 댓글 갯수 */
     @Builder.Default
     private Integer cnt = 0;
+
     /** 댓글 존재 여부 */
     @Builder.Default
     private Boolean hasComment = false;

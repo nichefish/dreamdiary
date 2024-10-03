@@ -20,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +29,6 @@ import javax.annotation.Nullable;
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 
 /**
  * LgnController
@@ -102,8 +100,7 @@ public class LgnController
     @ResponseBody
     public ResponseEntity<AjaxResponse> lgnPwChgAjax(
             final LogActvtyParam logParam,
-            final @Valid UserPwChgParam userPwChgParam,
-            final BindingResult bindingResult
+            final @Valid UserPwChgParam userPwChgParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -111,8 +108,6 @@ public class LgnController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 비밀번호 변경 처리
             isSuccess = userMyService.lgnPwChg(userPwChgParam);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

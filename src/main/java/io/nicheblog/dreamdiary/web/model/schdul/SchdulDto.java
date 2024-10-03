@@ -14,6 +14,8 @@ import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +63,8 @@ public class SchdulDto
 
     /** 개인일정 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String prvtYn = "N";
 
     /** 참석자 리스트  */

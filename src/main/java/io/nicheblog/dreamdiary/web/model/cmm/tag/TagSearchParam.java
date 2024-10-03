@@ -4,6 +4,9 @@ import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * TagSearchParam
  * <pre>
@@ -23,10 +26,13 @@ public class TagSearchParam
         extends BaseSearchParam {
 
     /** 년도 */
+    @Positive
     private Integer yy;
     /** 월 */
+    @Positive
     private Integer mnth;
 
     /** 컨텐츠 타입 */
+    @Size(max = 50)
     private String contentType;
 }

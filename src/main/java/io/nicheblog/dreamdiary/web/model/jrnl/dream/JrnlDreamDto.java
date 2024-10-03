@@ -11,6 +11,8 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -59,15 +61,22 @@ public class JrnlDreamDto
 
     /** 악몽 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String nhtmrYn = "N";
 
     /** 입면환각 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String hallucYn = "N";
 
     /** 타인 꿈 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String elseDreamYn = "N";
+
     /** 꿈꾼이(타인) 이름 */
     private String elseDreamerNm;
 

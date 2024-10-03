@@ -31,13 +31,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 
 /**
  * JrnlSbjctController
@@ -205,8 +203,7 @@ public class JrnlSbjctController
             final @Valid JrnlSbjctDto.DTL jrnlSbjct,
             final @RequestParam("postNo") @Nullable Integer key,
             final LogActvtyParam logParam,
-            final MultipartHttpServletRequest request,
-            final BindingResult bindingResult
+            final MultipartHttpServletRequest request
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -214,8 +211,6 @@ public class JrnlSbjctController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = (key == null);
             JrnlSbjctDto result = isReg ? jrnlSbjctService.regist(jrnlSbjct, request) : jrnlSbjctService.modify(jrnlSbjct, request);

@@ -13,7 +13,7 @@
 
 <link rel="stylesheet" type="text/css" href="/lib/jstree/css/style.min.css?${releaseDate!}" />
 <script type="text/javascript" src="/lib/jstree/js/jstree.min.js?${releaseDate!}"></script>
-<script type="text/javascript" src="/js/commons/commons-jstree.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/js/commons-jstree.js?${releaseDate!}"></script>
 <script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
 
 <#--include::script modules-->
@@ -38,7 +38,7 @@
             init: function() {
                 Page.updt();
 
-                /* init form */
+                /* initialize form. */
                 Menu.initForm();
                 /* init : Draggable */
                 Menu.initDraggable();

@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * FlsysRefDto
  * <pre>
@@ -20,11 +23,17 @@ import lombok.Setter;
 public class FlsysRefDto {
 
     /** 사용자 고유 ID (PK) */
+    @Positive
     private Integer flsysRefNo;
+
     /** 글 번호 */
+    @Positive
     private String postNo;
-    /** 게시판분류코드 */
-    private String boardCd;
+
+    /** 컨텐츠 타입 */
+    @Size(max = 50)
+    protected String contentType;
+
     /** 파일 경로 */
     private String filePath;
 }

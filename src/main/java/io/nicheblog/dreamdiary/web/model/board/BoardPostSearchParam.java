@@ -4,6 +4,8 @@ import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.Size;
+
 /**
  * BoardPostSearchParam
  * <pre>
@@ -22,6 +24,7 @@ public class BoardPostSearchParam
         extends BasePostSearchParam {
 
     /** 게시판 코드 */
+    @Size(max = 50)
     private String boardCd;
 
     /* ----- */

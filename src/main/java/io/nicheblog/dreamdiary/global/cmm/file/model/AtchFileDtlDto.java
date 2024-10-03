@@ -44,6 +44,8 @@ public class AtchFileDtlDto
     /**  URL (상대경로) */
     private String url;
 
+    /* ----- */
+
     @Override
     public Integer getKey() {
         return this.atchFileDtlNo;

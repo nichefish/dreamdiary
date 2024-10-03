@@ -43,11 +43,16 @@ public class UserReqstDto
     /** 접속IP 사용 여부 체크 */
     @Builder.Default
     private Boolean useAcsIp = false;
+
     /** 접속 IP 사용 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String useAcsIpYn = "N";
+
     /** 접속 IP 정보 */
     private String acsIpListStr;
+
     /** 접속 IP 정보 */
     private List<UserAcsIpDto> acsIpList;
 

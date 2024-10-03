@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Size;
+
 /**
  * BoardPostDto
  * <pre>
@@ -31,6 +33,7 @@ public class BoardPostDto
 
     /** 컨텐츠 타입 :: 화면단 + dto 레벨에서는 boardCd, entity 단에서는 contentType */
     @JsonProperty("contentType")
+    @Size(max = 50)
     protected String boardCd;
 
     @Override
@@ -63,7 +66,6 @@ public class BoardPostDto
 
         /** 파일시스템 참조 목록 */
         // private List<FlsysRefDto> flsysRefList;
-
     }
 
     @Getter

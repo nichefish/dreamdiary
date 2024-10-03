@@ -272,7 +272,7 @@
             </#if>
             <#if (((post.isRegstr)!false || isMngr) && (post.cfYn!"N") != "Y")>
                 <button type="button" class="btn btn-sm btn-light btn-active-danger me-2"
-                        onclick="ExptrPrsnlPapr.delAjax();"
+                        onclick="ExptrPrsnlPapr.delAjax(${post.postNo!});"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="<@spring.message "bs.tooltip.del"/>">
                     <i class="bi bi-trash"></i>삭제
                 </button>

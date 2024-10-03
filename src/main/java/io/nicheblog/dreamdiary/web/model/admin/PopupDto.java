@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * PopupDto
  * <pre>
@@ -29,12 +32,18 @@ public class PopupDto
         implements Identifiable<Integer>, StateCmpstnModule {
 
     /** 팝업 코드 */
+    @Size(max = 50)
     private String popupCd;
+
     /** 팝업 이름 */
     private String popupNm;
+
     /** 가로 */
+    @Positive
     private Integer width;
+
     /** 세로 */
+    @Positive
     private Integer height;
 
     /** 게시시작일시 */

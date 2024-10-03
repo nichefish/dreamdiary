@@ -18,14 +18,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 
 /**
  * SchdulController
@@ -61,8 +59,7 @@ public class SchdulController
             final LogActvtyParam logParam,
             final @RequestParam("postNo") @Nullable Integer postNo,
             final @RequestParam("jandiYn") @Nullable String jandiYn,
-            final @RequestParam("trgetTopic") @Nullable String trgetTopic,
-            final BindingResult bindingResult
+            final @RequestParam("trgetTopic") @Nullable String trgetTopic
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -70,8 +67,6 @@ public class SchdulController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = postNo == null;
             SchdulDto result = isReg ? schdulService.regist(schdul) : schdulService.modify(schdul);

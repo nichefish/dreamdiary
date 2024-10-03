@@ -7,6 +7,10 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * SectnDto
  * <pre>
@@ -40,14 +44,19 @@ public class SectnDto
     /* ----- */
 
     /** 원글 번호 */
+    @Positive
     private Integer refPostNo;
+
     /** 원글 컨텐츠 타입 */
+    @Size(max = 50)
     private String refContentType;
 
     /* ----- */
 
     /** 만료 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String deprcYn = "N";
 
     @Override

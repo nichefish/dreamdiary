@@ -4,6 +4,10 @@ import io.nicheblog.dreamdiary.global.Constant;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * BasePostDto
  * <pre>
@@ -25,34 +29,51 @@ public class BasePostDto
 
     /** 제목 */
     protected String title;
+
     /** 내용 */
     protected String cn;
+
     /** 마크다운 처리된 내용 */
     protected String markdownCn;
 
     /** 글분류 코드 */
+    @Size(max = 50)
     protected String ctgrClCd;
+
     /** 글분류 코드 */
+    @Size(max = 50)
     protected String ctgrCd;
+
     /** 글분류 코드 이름 */
+    @Size(max = 50)
     protected String ctgrNm;
+
     /** 글분류 존재 여부 */
     @Builder.Default
     protected Boolean hasCtgrNm = false;
     
     /** 중요 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     protected String imprtcYn = "N";
+
     /** 상단고정 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     protected String fxdYn = "N";
+
     /** 조회수 */
     @Builder.Default
+    @Min(value = 0)
     protected Integer hitCnt = 0;
 
     /** 수정권한 */
     @Builder.Default
+    @Size(max = 50)
     protected String mdfable = Constant.MDFABLE_REGSTR;
+
     /** 수정 가능 여부 */
     @Builder.Default
     protected Boolean isMdfable = false;

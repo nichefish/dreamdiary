@@ -7,6 +7,10 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * TmplatTxtDto
  * <pre>
@@ -27,9 +31,11 @@ public class TmplatTxtDto
         implements Identifiable<Integer>, StateCmpstnModule {
 
     /** 고유 ID (PK) */
+    @Positive
     private Integer tmplatTxtNo;
 
     /** 템플릿 정의 코드 */
+    @Size(max = 50)
     private String tmplatDefCd;
     /** 템플릿 정의 정보 */
     // private TmplatDefDto tmplatDefInfo;
@@ -37,17 +43,23 @@ public class TmplatTxtDto
     /* ---- */
 
     /** 템플릿 구분 코드 (TEXTAREA vs. TEXTEDITOR) */
+    @Size(max = 50)
     private String tmplatTyCd;
+
     /** 템플릿 분류(상세) 코드 */
+    @Size(max = 50)
     private String ctgrCd;
 
     /** 제목 */
     private String title;
+
     /** 내용 (텍스트에디터 */
     private String cn;
 
     /** 기본설정 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String defaultYn = "N";
 
     /* ----- */

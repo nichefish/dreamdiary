@@ -1,6 +1,12 @@
 package io.nicheblog.dreamdiary.web.model.admin;
 
+import io.nicheblog.dreamdiary.global.validator.CmmRegex;
 import lombok.*;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 /**
  * LgnPolicyDto
@@ -21,14 +27,22 @@ public class LgnPolicyDto {
     private Integer lgnPolicyNo;
 
     /** 로그인 최대 시도 횟수 */
+    @Positive
+    @Max(value = 999)
     private Integer lgnTryLmt;
 
     /** 비밀번호 변경 일자 */
+    @Positive
+    @Max(value = 365)
     private Integer pwChgDy;
 
     /** 미접속시 계정 잠금 일자 */
+    @Positive
+    @Max(value = 365)
     private Integer lgnLockDy;
 
     /** 비밀번호 초기화 값 */
+    @Size(min = 9, max = 20)
+    @Pattern(regexp = CmmRegex.PW_REGEX, message = "비밀번호가 형식에 맞지 않습니다.")
     private String pwForReset;
 }

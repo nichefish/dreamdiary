@@ -4,6 +4,9 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * UserInfoDto
  * <pre>
@@ -26,9 +29,13 @@ public class UserProflDto
 
     /** 생년월일 */
     private String brthdy;
+
     /** 음력 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String lunarYn = "N";
+
     /** 프로필 설명 */
     private String proflCn;
 }

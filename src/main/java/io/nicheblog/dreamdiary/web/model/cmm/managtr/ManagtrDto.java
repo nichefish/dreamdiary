@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * ManagtrDto
  * <pre>
@@ -26,11 +29,15 @@ public class ManagtrDto
         extends BaseAuditRegDto {
 
     /** 조치자 번호 (PK) */
+    @Positive
     private Integer managtrNo;
 
     /** 참조 글 번호 */
+    @Positive
     private Integer refPostNo;
+
     /** 참조 컨텐츠 타입 (게시판 코드) */
+    @Size(max = 50)
     private String refContentType;
 
     /* ----- */

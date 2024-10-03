@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.interceptor;
 
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
@@ -51,6 +52,9 @@ public class FreemarkerInterceptor
 
         /* model 정보 없을시 처리하지 않음 */
         if (mav == null) return;
+
+        String requestURI = request.getRequestURI();
+        if (Url.AUTH_LGN_FORM.equals(requestURI) || Url.AUTH_LGN_PROC.equals(requestURI)) return;
 
         // static 자원들에 releaseDate 세팅
         mav.addObject("releaseDate", releaseDate);

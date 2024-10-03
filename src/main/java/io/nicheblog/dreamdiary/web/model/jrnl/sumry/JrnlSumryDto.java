@@ -7,6 +7,9 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * JrnlSumryDto
  * <pre>
@@ -51,6 +54,8 @@ public class JrnlSumryDto
 
     /** 꿈 기록 완료 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String dreamComptYn = "N";
 
     @Override

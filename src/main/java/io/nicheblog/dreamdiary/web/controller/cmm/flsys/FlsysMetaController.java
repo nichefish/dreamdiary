@@ -19,14 +19,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 
 /**
  * FlsysMetaController
@@ -62,8 +60,7 @@ public class FlsysMetaController
             final @Valid FlsysMetaDto flsysMeta,
             final BaseClsfKey key,
             final LogActvtyParam logParam,
-            final BaseParam param,
-            final BindingResult bindingResult
+            final BaseParam param
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -71,7 +68,6 @@ public class FlsysMetaController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             boolean isReg = key.getPostNo() == null;
             FlsysMetaDto result = isReg ? flsysMetaService.regist(flsysMeta) : flsysMetaService.modify(flsysMeta);
             ajaxResponse.setRsltObj(result);

@@ -8,6 +8,9 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * NoticeDto
  * <pre>
@@ -66,6 +69,8 @@ public class NoticeDto
     public static class DTL extends NoticeDto {
         /** 팝업공지 여부 (Y/N) */
         @Builder.Default
+        @Size(min = 1, max = 1)
+        @Pattern(regexp = "^[YN]$")
         private String popupYn = "N";
 
         /** 파일시스템 참조 목록 */

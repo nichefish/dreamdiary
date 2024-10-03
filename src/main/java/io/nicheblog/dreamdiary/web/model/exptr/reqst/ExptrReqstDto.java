@@ -8,6 +8,9 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * ExptrReqstDto
  * <pre>
@@ -39,8 +42,10 @@ public class ExptrReqstDto
 
     /* ----- */
 
-    /** 처리 여부 (Y/N) */
+    /** 처리 여부 (Y/N/X) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YNX]$")
     private String cfYn = "N";
 
     /* ---- */

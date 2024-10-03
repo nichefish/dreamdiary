@@ -27,13 +27,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.security.InvalidParameterException;
 
 /**
  * MenuController
@@ -101,8 +99,7 @@ public class MenuController
     public ResponseEntity<AjaxResponse> menuRegAjax(
             final @Valid MenuDto menu,
             final @RequestParam("menuNo") @Nullable Integer key,
-            final LogActvtyParam logParam,
-            final BindingResult bindingResult
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -110,8 +107,6 @@ public class MenuController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = key == null;
             MenuDto result = isReg ? menuService.regist(menu) : menuService.modify(menu);

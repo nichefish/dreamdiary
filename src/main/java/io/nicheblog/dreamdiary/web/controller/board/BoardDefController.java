@@ -27,11 +27,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 
 /**
  * BoardDefController
@@ -116,8 +114,7 @@ public class BoardDefController
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefRegAjax(
             final @Valid BoardDefDto boardDef,
-            final LogActvtyParam logParam,
-            final BindingResult bindingResult
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -125,8 +122,6 @@ public class BoardDefController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             BoardDefDto result = boardDefService.regist(boardDef);
             ajaxResponse.setRsltObj(result);
@@ -199,8 +194,7 @@ public class BoardDefController
     public ResponseEntity<AjaxResponse> boardDefMdfItemAjax(
             final @Valid BoardDefDto boardDef,
             final String boardCd,
-            final LogActvtyParam logParam,
-            final BindingResult bindingResult
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -208,8 +202,6 @@ public class BoardDefController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 항목 수정 처리
             BoardDefDto result = boardDefService.modify(boardDef);
 

@@ -10,6 +10,8 @@ import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,10 +72,16 @@ public class UserDto
 
     /** 잠금 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     protected String lockedYn = "N";
+
     /** 퇴사 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     protected String retireYn = "N";
+
     /** 퇴사일 */
     protected String retireDt;
     
@@ -110,11 +118,16 @@ public class UserDto
         /** 접속IP 사용 여부 체크 */
         @Builder.Default
         private Boolean useAcsIp = false;
+
         /** 접속 IP 사용 여부 (Y/N) */
         @Builder.Default
+        @Size(min = 1, max = 1)
+        @Pattern(regexp = "^[YN]$")
         private String useAcsIpYn = "N";
+
         /** 접속 IP 정보 */
         private String acsIpListStr;
+
         /** 접속 IP 정보 */
         private List<UserAcsIpDto> acsIpList;
 

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Embedded;
 import java.util.List;
 
 /**
@@ -41,12 +40,11 @@ public class AuthRoleDto
 
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
-    @Embedded
-    public StateCmpstn state;
-
     @Override
     public String getKey() {
         return this.authCd;
     }
+
+    /** 상태 관리 모듈 (위임) */
+    public StateCmpstn state;
 }

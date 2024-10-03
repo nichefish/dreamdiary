@@ -4,6 +4,10 @@ import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * BaseClsfDto
  * <pre>
@@ -24,12 +28,17 @@ public class BaseClsfDto
         extends BaseAtchDto {
 
     /** 글 번호 */
+    @Positive
     protected Integer postNo;
+
     /** 컨텐츠 타입 */
+    @Size(max = 50)
     protected String contentType;
 
-    /** (수정시) 조치일자 변경하지 않음 변수 */
+    /** (수정시) 조치일자 변경하지 않음 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     protected String managtDtUpdtYn = "N";
 
     /* ----- */

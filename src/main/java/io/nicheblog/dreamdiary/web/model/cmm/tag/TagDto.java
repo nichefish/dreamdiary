@@ -6,6 +6,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -29,21 +31,28 @@ public class TagDto
         implements Identifiable<Integer>, Comparable<TagDto> {
 
     /** 태그 번호 (PK) */
+    @Positive
     private Integer tagNo;
 
     /** 태그 카테고리 */
     @Builder.Default
+    @Size(max = 50)
     private String ctgr = "";
+
     /** 태그 */
+    @Size(max = 50)
     private String tagNm;
 
     /** 게시물 태그 목록 (=게시물 리스트) */
     private List<ContentTagDto> contentTagList;
+
     /** 게시물 목록 (게시물 태그 목록을 글 목록으로 정제한 버전) */
     private List<?> contentList;
+
     /** 태그 크기 (=컨텐츠 개수) */
     @Builder.Default
     private Integer size = 0;
+
     /** 태그 크기 (=컨텐츠 개수) */
     @Builder.Default
     private Integer contentSize = 0;

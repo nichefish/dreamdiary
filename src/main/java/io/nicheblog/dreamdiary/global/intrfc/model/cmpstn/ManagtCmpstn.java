@@ -31,8 +31,10 @@ public class ManagtCmpstn
 
     /** 조치자(작업자)ID */
     private String managtrId;
+
     /** 조치자(작업자)이름 */
     private String managtrNm;
+
     /** 조치자 정보 */
     private AuditorDto managtrInfo;
     /** 처리(조치)자 여부 */

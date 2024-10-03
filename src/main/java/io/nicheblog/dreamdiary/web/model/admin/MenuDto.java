@@ -4,11 +4,15 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -30,26 +34,44 @@ public class MenuDto
         implements Identifiable<Integer>, StateCmpstnModule {
 
     /** 메뉴 번호 (PK)  */
+    @Positive
     private Integer menuNo;
+
     /** 상위 메뉴 번호 */
+    @Positive
     private Integer upperMenuNo;
+
     /** 메뉴 구분 코드 (루트"ROOT", 대메뉴"MAIN", 중-소메뉴"SUB") */
+    @Size(max = 50)
     private String menuTyCd;
+
     /** 메뉴 구분 코드명 (루트"ROOT", 대메뉴"MAIN", 중-소메뉴"SUB") */
+    @Size(max = 50)
     private String menuTyNm;
+
     /** 메뉴 이름 */
+    @Size(max = 50)
     private String menuNm;
+
     /** URL */
     private String url;
+
     /** 아이콘 (bootstrap icon 또는 font-awesome) TODO: svg? */
     private String icon;
+
     /** 하위메뉴 확장유형 코드 */
+    @Size(max = 50)
     private String menuSubExtendTyCd;
+
     /** 하위메뉴 확장유형 이름 */
+    @Size(max = 50)
     private String menuSubExtendTyNm;
 
     /** 폴더(중메뉴) 여부 (Y/N) */
-    private String dirYn;
+    @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
+    private String dirYn = "N";
 
     /** 셀프 참조 :: 상위메뉴 조회 */
     private MenuDto upperMenu;

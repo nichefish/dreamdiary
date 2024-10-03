@@ -23,7 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -111,7 +110,6 @@ public class SectnController
             final @RequestParam("postNo") @Nullable Integer key,
             final SectnParam param,
             final MultipartHttpServletRequest request,
-            final BindingResult bindingResult,
             final LogActvtyParam logParam
     ) {
 
@@ -120,8 +118,6 @@ public class SectnController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록 및 수정 처리
             boolean isReg = (key == null);
             SectnDto result = isReg ? sectnService.regist(sectn, request) : sectnService.modify(sectn, request);

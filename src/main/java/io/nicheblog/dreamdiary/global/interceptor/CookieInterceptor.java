@@ -38,7 +38,8 @@ public class CookieInterceptor
             final ModelAndView mav
     ) {
 
-        if (Url.AUTH_LGN_FORM.equals(request.getRequestURI())) return;
+        String requestURI = request.getRequestURI();
+        if (Url.AUTH_LGN_FORM.equals(requestURI) || Url.AUTH_LGN_PROC.equals(requestURI)) return;
 
         /* 사이드바 접기 쿠키 설정 */
         if (mav != null) {

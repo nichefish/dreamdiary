@@ -36,13 +36,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -216,8 +214,7 @@ public class NoticeController
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
             final LogActvtyParam logParam,
-            final MultipartHttpServletRequest request,
-            final BindingResult bindingResult
+            final MultipartHttpServletRequest request
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -225,8 +222,6 @@ public class NoticeController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = (key == null);
             NoticeDto result = isReg ? noticeService.regist(notice, request) : noticeService.modify(notice, request);

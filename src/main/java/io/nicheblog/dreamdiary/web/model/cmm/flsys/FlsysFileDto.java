@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.activation.MimetypesFileTypeMap;
+import javax.validation.constraints.Positive;
 import java.io.File;
 import java.io.Serializable;
 import java.util.List;
@@ -36,6 +37,7 @@ public class FlsysFileDto
     private String contentType;
 
     /** 파일 크기 */
+    @Positive
     private Long length;
 
     /* ----- */

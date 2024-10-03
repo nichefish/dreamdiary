@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Positive;
+
 /**
  * FlsysMetaDto
  * <pre>
@@ -27,16 +29,13 @@ public class FlsysMetaDto
         extends BasePostDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
+    /** 글번호 */
+    @Positive
     private Integer postNo;
-    private String boardCd;
 
-    /**
-     * 파일절대경로
-     */
+    /** 파일절대경로 */
     private String filePath;
-    /**
-     * 상위파일절대경로
-     */
+    /** 상위파일절대경로 */
     private String upperFilePath;
 
     /* ----- */

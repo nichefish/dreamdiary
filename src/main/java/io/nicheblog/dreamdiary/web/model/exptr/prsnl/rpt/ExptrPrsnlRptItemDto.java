@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * ExptrPrsnlItemDto
  * <pre>
@@ -55,6 +58,8 @@ public class ExptrPrsnlRptItemDto {
     /**
      * 영수증실물여부
      */
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String orgnlRciptYn = "N";
     /**
      * 소속

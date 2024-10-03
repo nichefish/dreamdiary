@@ -28,14 +28,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.security.InvalidParameterException;
 
 /**
  * ExptrReqstController
@@ -206,8 +204,7 @@ public class ExptrReqstController
             final @RequestParam("jandiYn") @Nullable String jandiYn,
             final @RequestParam("trgetTopic") @Nullable String trgetTopic,
             final LogActvtyParam logParam,
-            final MultipartHttpServletRequest request,
-            final BindingResult bindingResult
+            final MultipartHttpServletRequest request
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -215,8 +212,6 @@ public class ExptrReqstController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = key == null;
             ExptrReqstDto result = isReg ? exptrReqstService.regist(exptrReqst, request) : exptrReqstService.modify(exptrReqst, request);

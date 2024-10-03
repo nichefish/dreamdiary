@@ -22,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 
 /**
  * UserReqstController
@@ -108,7 +106,6 @@ public class UserReqstController
     public ResponseEntity<AjaxResponse> userReqstRegAjax(
             final @Valid UserReqstDto userReqst,
             final LogActvtyParam logParam,
-            final BindingResult bindingResult,
             final MultipartHttpServletRequest request
     ) {
 
@@ -117,8 +114,6 @@ public class UserReqstController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록 처리
             UserReqstDto result = userReqstService.regist(userReqst);
 

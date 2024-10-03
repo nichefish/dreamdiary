@@ -27,13 +27,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 import java.util.List;
 
 /**
@@ -358,8 +356,7 @@ public class JrnlSumryController
     public ResponseEntity<AjaxResponse> jrnlSumryTagAjax(
             final @Valid JrnlSumryDto.DTL jrnlSumry,
             final LogActvtyParam logParam,
-            final MultipartHttpServletRequest request,
-            final BindingResult bindingResult
+            final MultipartHttpServletRequest request
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -367,8 +364,6 @@ public class JrnlSumryController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             JrnlSumryDto result = jrnlSumryService.modify(jrnlSumry, request);
             ajaxResponse.setRsltObj(result);
 

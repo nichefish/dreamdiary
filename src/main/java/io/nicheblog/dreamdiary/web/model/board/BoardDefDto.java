@@ -7,6 +7,9 @@ import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * BoardDefDto
  * <pre>
@@ -29,23 +32,31 @@ public class BoardDefDto
         implements Identifiable<String>, StateCmpstnModule {
 
     /** 게시판 코드 */
+    @NotBlank
+    @Size(max = 50)
     private String boardCd;
+
     /** 게시판 이름 */
+    @NotBlank
     private String boardNm;
+
     /** 메뉴 번호 */
     private String menuNo;
+
     /** 글분류 분류 코드 */
+    @Size(max = 50)
     private String ctgrClCd;
+
     /** 설명 */
     private String dc;
 
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
-    public StateCmpstn state;
-
     @Override
     public String getKey() {
         return this.boardCd;
     }
+
+    /** 상태 관리 모듈 (위임) */
+    public StateCmpstn state;
 }

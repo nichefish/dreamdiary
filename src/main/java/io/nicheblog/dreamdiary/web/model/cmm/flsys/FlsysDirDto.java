@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Positive;
 import java.io.File;
 import java.io.Serializable;
 
@@ -25,11 +26,16 @@ public class FlsysDirDto
         extends FlsysDto
         implements Serializable {
 
-    /** lastModified */
+    /** totalSpace */
+    @Positive
     private Long totalSpace;
-    /** lastModified */
+
+    /** usableSpace */
+    @Positive
     private Long usableSpace;
-    /** lastModified */
+
+    /** freeSpace */
+    @Positive
     private Long freeSpace;
 
     /* ----- */

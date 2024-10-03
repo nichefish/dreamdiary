@@ -7,7 +7,7 @@
 <#import "/layout/layout_default.ftlh" as layout >
 
 <script type="text/javascript" src="/metronic/assets/plugins/custom/tinymce/tinymce.bundle.js?${releaseDate!}"></script>
-<script type="text/javascript" src="/js/commons/commons-tinymce.js?${releaseDate!}"></script>
+<script type="text/javascript" src="/js/commons-tinymce.js?${releaseDate!}"></script>
 <script type="text/javascript" src="/lib/prism/js/prism.js?${releaseDate!}"></script>
 
 <#assign isReg = isReg!false>
@@ -86,7 +86,7 @@
                 <div class="col-lg-10">
                     <input type="text" name="title" id="title" class="form-control required"
                            value="${post.title!}" maxlength="100" />
-                    <span id="title_valid_span"></span>
+                    <span id="title_validate_span"></span>
                 </div>
             </div>
             <#--begin::Row-->
@@ -146,7 +146,7 @@
                     <textarea name="cn" id="tinymce_cn" class="form-control required" rows="10" placeholder="내용을 입력하세요."><#if isReg!false>${(exptrReqstTmplat.cn)!}</#if>${post.cn!}</textarea>
                 </div>
                 <!--end::Form control-->
-                <div id="tinymce_cn_valid_span"></div>
+                <div id="tinymce_cn_validate_span"></div>
             </div>
 
             <div class="separator my-2"></div>

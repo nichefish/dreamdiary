@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 /**
@@ -29,12 +30,16 @@ public class BaseAtchDto
         extends BaseAuditDto {
 
     /** 첨부파일 번호 */
+    @Positive
     protected Integer atchFileNo;
+
     /** 첨부파일 정보 (1:N) */
     protected AtchFileDto atchFileInfo;
+
     /** 첨부파일 .zip 다운로드 URL */
     protected String atchFileZipUrl;
     /** 첨부파일 .zip 파일명 */
+
     @JsonIgnore
     protected String atchFileZipNm;
 

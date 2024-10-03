@@ -24,8 +24,10 @@ public class BaseAuditRegDto
 
     /** 등록자 ID */
     protected String regstrId;
+
     /** 등록자 이름 */
     protected String regstrNm;
+
     /** 등록일시 */
     protected String regDt;
 

@@ -13,6 +13,8 @@ import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -49,14 +51,24 @@ public class JrnlDayDto
     /* ----- */
 
     /** 저널 일자 */
+    @Size(max = 10, message = "일자는 최대 10자여야 합니다.")
+    @Pattern(regexp = "(\\d{4}-\\d{2}-\\d{2}|\\s*)", message = "일자는 'YYYY-MM-DD' 형식이어야 합니다.")
     private String jrnlDt;
+
     /** 저널 일자 요일 */
     private String jrnlDtWeekDay;
+
     /** 날짜미상 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String dtUnknownYn = "N";
+
     /** 대략일자 (날짜미상시 해당일자 이후에 표기) */
+    @Size(max = 10, message = "일자는 최대 10자여야 합니다.")
+    @Pattern(regexp = "(\\d{4}-\\d{2}-\\d{2}|\\s*)", message = "일자는 'YYYY-MM-DD' 형식이어야 합니다.")
     private String aprxmtDt;
+
     /** 기준일자 (저널일자 또는 대략일자) */
     private String stdrdDt;
 
@@ -66,6 +78,7 @@ public class JrnlDayDto
     private String mnth;
 
     /** 날씨 */
+    @Size(max = 100, message = "날씨 정보는 100자 이하로 입력해야 합니다.")
     private String weather;
 
     /** 저널 일기 목록 */
@@ -80,6 +93,21 @@ public class JrnlDayDto
         return this.postNo;
     }
 
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    public static class REQUEST
+            extends JrnlDayDto {
+
+        /** 노션 페이지 참조 ID :: UUID */
+        // private String notionPageId;
+
+        /** 파일시스템 참조 목록 */
+        // private List<FlsysRefDto> flsysRefList;
+    }
+
     /* ----- */
 
     /** 기준일자 */
@@ -88,7 +116,7 @@ public class JrnlDayDto
         return aprxmtDt;
     }
     /** 꿈 목록 보유 여부 */
-    public Boolean getHasDreamList() {
+    public Boolean getHasDream() {
         return !CollectionUtils.isEmpty(this.jrnlDreamList) || !CollectionUtils.isEmpty(this.jrnlElseDreamList);
     }
 

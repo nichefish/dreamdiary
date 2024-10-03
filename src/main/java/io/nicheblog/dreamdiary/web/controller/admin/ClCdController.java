@@ -27,11 +27,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 
 /**
  * ClCdController
@@ -115,8 +113,7 @@ public class ClCdController
     public ResponseEntity<AjaxResponse> clCdRegAjax(
             final @Valid ClCdDto clCd,
             final @RequestParam("regYn") String regYn,
-            final LogActvtyParam logParam,
-            final BindingResult bindingResult
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -124,8 +121,6 @@ public class ClCdController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             boolean isReg = "Y".equals(regYn);
             ClCdDto result = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd);

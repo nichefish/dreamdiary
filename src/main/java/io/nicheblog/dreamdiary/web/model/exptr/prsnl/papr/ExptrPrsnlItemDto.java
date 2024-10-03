@@ -6,6 +6,10 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 /**
  * ExptrPrsnlItemDto
  * <pre>
@@ -25,7 +29,9 @@ public class ExptrPrsnlItemDto
         extends BaseAuditDto {
 
     /** 개인 경비 취합 정보 고유 ID (PK) */
+    @Positive
     private Integer exptrPrsnlItemNo;
+
     /**
      * 개인경비 취합 정보 정보 ID
      */
@@ -46,13 +52,19 @@ public class ExptrPrsnlItemDto
 
     /** 첨부파일(상세) 번호 */
     private String atchFileDtlNo;
+
     /** 영수증 실물제출 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String orgnlRciptYn = "N";
 
     /** 반려 여부 (Y/N) */
     @Builder.Default
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     private String rjectYn = "N";
+
     /** 반려사유 */
     private String rjectResn;
     

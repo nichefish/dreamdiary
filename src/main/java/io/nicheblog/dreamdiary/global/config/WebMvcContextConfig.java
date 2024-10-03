@@ -76,8 +76,9 @@ public class WebMvcContextConfig
         String orglStaticPath = "classpath:/static/";
         String reactPath = "classpath:/static/react/";
         String reactStaticPath = "classpath:/static/react/static/";
+        String externalStaticPath = "static/";
         registry.addResourceHandler(staticContextPath)
-                .addResourceLocations(orglStaticPath, reactPath, reactStaticPath)
+                .addResourceLocations(orglStaticPath, reactPath, reactStaticPath, externalStaticPath)
                 .resourceChain(true)
                 .addResolver(new UTF8DecodeResourceResolver());
     }

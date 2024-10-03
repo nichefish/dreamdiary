@@ -19,13 +19,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 
 /**
  * LgnPolicyController
@@ -95,8 +93,7 @@ public class LgnPolicyController
     @ResponseBody
     public ResponseEntity<AjaxResponse> lgnPolicyRegAjax(
             final @Valid LgnPolicyDto lgnPolicy,
-            final LogActvtyParam logParam,
-            final BindingResult bindingResult
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -104,8 +101,6 @@ public class LgnPolicyController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // Validation
-            if (bindingResult.hasErrors()) throw new InvalidParameterException();
             // 등록/수정 처리
             isSuccess = lgnPolicyService.regist(lgnPolicy);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

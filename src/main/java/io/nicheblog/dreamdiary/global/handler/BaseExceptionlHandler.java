@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -72,7 +73,6 @@ public class BaseExceptionlHandler {
             NoHandlerFoundException e,
             WebRequest request
     ) {
-
         return handleException(e, request, HttpStatus.NOT_FOUND, "/view/error/error_not_found");
     }
 
@@ -86,8 +86,18 @@ public class BaseExceptionlHandler {
             AccessDeniedException e,
             WebRequest request
     ) {
-
         return handleException(e, request, HttpStatus.FORBIDDEN, "/view/error/error_access_denied");
+    }
+
+    /**
+     * 파라미터 바인딩 에러
+     */
+    @ExceptionHandler(BindException.class)
+    public Object handleBingdingException(
+            BindException e,
+            WebRequest request
+    ) {
+        return handleException(e, request, HttpStatus.BAD_REQUEST, "/view/error/error_page");
     }
 
     /**
@@ -99,7 +109,6 @@ public class BaseExceptionlHandler {
             Exception e,
             WebRequest request
     ) {
-
         return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

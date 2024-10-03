@@ -40,14 +40,12 @@ public class DtlCdDto
     /** 분류코드 */
     private String clCd;
 
-    /* ---- */
+    /* ----- */
 
     @Override
     public DtlCdKey getKey() {
         return new DtlCdKey(this.clCd, this.dtlCd);
     }
-
-    /* ----- */
 
     /** 상태 관리 모듈 (위임) */
     public StateCmpstn state;
