@@ -8,22 +8,38 @@
         return {
             /**
              * Sectn 객체 초기화
+             * @param {Object} options - 초기화 옵션 객체.
+             * @param {Function} [options.refreshFunc] - 섹션 새로 고침에 사용할 함수 (선택적).
              */
             init: function ({ refreshFunc } = {}) {
                 if (refreshFunc !== undefined) Sectn.refreshFunc = refreshFunc;
             },
-            /** form validation init */
+
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#sectnRegForm", Sectn.regAjax);
             },
-            /** Draggable 컴포넌트 init */
+
+            /**
+             * Draggable 컴포넌트 init
+             * @param {Object} options - 초기화 옵션 객체.
+             * @param {Function} [options.refreshFunc] - 드래그 완료 후 호출할 함수 (선택적).
+             */
             initDraggable: function({ refreshFunc } = {}) {
                 const keyExtractor = (item) => ({ "postNo": $(item).attr("id") });
                 const url = "${Url.SECTN_SORT_ORDR_AJAX!}";
                 Sectn.swappable = commons.util.initDraggable(keyExtractor, url, refreshFunc);
             },
-            /** 전체 태그 목록 조회 */
+
+            /**
+             * 전체 태그 목록 조회
+             * @param {Object} options - 조회 옵션 객체.
+             * @param {string|number} options.refPostNo - 참조할 포스트 번호.
+             * @param {string} options.refContentType - 참조할 콘텐츠 유형.
+             */
             listAjax: function({ refPostNo, refContentType }) {
                 const url = "${Url.SECTN_LIST_AJAX!}";
                 const ajaxData = { "refPostNo": refPostNo, "refContentType": refContentType };
@@ -33,12 +49,18 @@
                         return false;
                     }
                     // 태그 상세 정보
-                    console.log(res.rsltList);
                     commons.util.handlebarsTemplate(res.rsltList, "sectn_list");
                 });
             },
-            /** 등록 모달 호출 */
+
+            /**
+             * 등록 모달 호출
+             * @param {string|number} refPostNo - 참조할 포스트 번호.
+             * @param {string} refContentType - 참조할 콘텐츠 유형.
+             */
             regModal: function(refPostNo, refContentType) {
+                if (isNaN(refPostNo)) return;
+
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
                 commons.util.handlebarsTemplate(obj, "sectn_reg_header");
                 commons.util.handlebarsTemplate(obj, "sectn_reg", "show");
@@ -52,12 +74,18 @@
                 commons.tinymce.init('#tinymce_sectnCn');
                 commons.tinymce.setContentWhenReady("tinymce_sectnCn", "");
             },
-            /** submit */
+
+            /**
+             * submit
+             */
             submit: function() {
-                tinymce.activeEditor.save();
+                tinymce.activeEditor.save();     // 활성화된 TinyMCE 에디터의 내용 저장
                 $("#sectnRegForm").submit();
             },
-            /** 댓글 입력 처리 (ajax) */
+
+            /**
+             * 단락 등록 처리 (ajax)
+             */
             regAjax: function() {
                 const isReg = $("#sectnRegForm #postNo").val() === "";
                 Swal.fire({
@@ -66,7 +94,7 @@
                 }).then(function(result) {
                     if (!result.value) return;
                     const url = isReg ? "${Url.SECTN_REG_AJAX!}" : "${Url.SECTN_MDF_AJAX!}";
-                    const ajaxData = new FormData($("#sectnRegForm")[0]);
+                    const ajaxData = new FormData(document.querySelector("#sectnRegForm"));
                     commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
                             .then(function() {
@@ -80,8 +108,14 @@
                     });
                 });
             },
-            /** 수정 모달 호출 */
+
+            /**
+             * 단락 수정 모달 호출
+             * @param {string|number} postNo - 단락 번호.
+             */
             mdfModal: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.SECTN_DTL_AJAX!}";
                 const ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
@@ -104,8 +138,14 @@
                     commons.tinymce.setContentWhenReady("tinymce_sectnCn", rsltObj.cn);
                 });
             },
-            /** 댓글 삭제 처리 (ajax) */
+
+            /**
+             * 단락 삭제 처리 (ajax)
+             * @param {string|number} postNo - 단락 번호.
+             */
             delAjax: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
