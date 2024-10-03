@@ -7,8 +7,10 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
+                /* show modal */
                 commons.util.handlebarsTemplate(obj, "dtl_cd_reg", "show");
 
                 /* jquery validation */
@@ -35,7 +37,7 @@
                 event.stopPropagation();
 
                 const obj = { "clCd": $("#clCd").val() };
-                /* init form */
+                /* initialize form. */
                 DtlCd.initForm(obj);
             },
 
@@ -81,7 +83,7 @@
                     }
                     const rsltObj = res.rsltObj;
                     rsltObj.isMdf = true;
-                    /* init form */
+                    /* initialize form. */
                     DtlCd.initForm(rsltObj);
                 });
             },

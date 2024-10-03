@@ -38,7 +38,7 @@
     </div>
     <div>
         <#--헤더:: 버튼: 내 글 보기-->
-        <@component.header_btn_mypapr "BoardPost.myPapr();" MY_PAPR!false />
+        <@component.header_btn_mypapr "BoardPost.myPaprList();" MY_PAPR!false />
     </div>
     <div>
         <#--헤더:: 버튼: 등록 화면 이동하기-->

@@ -11,14 +11,16 @@
              * Comment.page 객체 초기화
              */
             init: function() {
-                /* init form */
+                /* initialize form. */
                 Comment.page.initForm();
             },
 
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
+                /* show reg area */
                 commons.util.handlebarsTemplate(obj, "comment_page_reg");
 
                 /* jquery validation */
@@ -70,8 +72,11 @@
 
             /**
              * 댓글 수정 폼 닫기
+             * @param {string|number} postNo - 댓글 번호.
              */
             closeMdfForm: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 $("#commentDtlSpan" + postNo).show();
                 $("#commentSpan" + postNo).empty();
                 $("#commentMdfCn" + postNo).empty();

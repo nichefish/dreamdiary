@@ -9,6 +9,8 @@
         return {
             /**
              * Comment.modal 객체 초기화
+             * @param {Object} options - 초기화 옵션 객체.
+             * @param {Function} [options.refreshFunc] - 섹션 새로 고침에 사용할 함수 (선택적).
              */
             init: function({ refreshFunc } = {}) {
                 if (refreshFunc !== undefined) Comment.modal.refreshFunc = refreshFunc;
@@ -16,8 +18,10 @@
 
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
+                /* show modal */
                 commons.util.handlebarsTemplate(obj, "comment_reg", "show");
 
                 /* jquery validation */
@@ -26,10 +30,12 @@
 
             /**
              * 등록 모달 호출
+             * @param {string|number} refPostNo - 참조할 게시물 번호.
+             * @param {string} refContentType - 참조할 콘텐츠 타입.
              */
             regModal: function(refPostNo, refContentType) {
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
-                /* init form */
+                /* initialize form. */
                 Comment.modal.initForm(obj);
             },
 
@@ -81,7 +87,7 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-                    /* init form */
+                    /* initialize form. */
                     Comment.modal.initForm(rsltObj);
                 });
             },

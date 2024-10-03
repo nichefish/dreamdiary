@@ -7,8 +7,10 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
+                /* show modal */
                 commons.util.handlebarsTemplate(obj, "board_def_reg", "show");
 
                 /* jquery validation */
@@ -32,7 +34,7 @@
              * 등록 모달 호출
              */
             regModal: function() {
-                /* init form */
+                /* initialize form. */
                 BoardDef.initForm();
             },
 
@@ -65,6 +67,7 @@
 
             /**
              * 수정 모달 호출
+             * @param {string|number} boardCd - 게시판 코드 (key).
              */
             mdfModal: function(boardCd) {
                 const url = "${Url.BOARD_DEF_DTL_AJAX!}";
@@ -76,13 +79,14 @@
                     }
                     const rsltObj = res.rsltObj;
                     rsltObj.isMdf = true;
-                    /* init form */
+                    /* initialize form. */
                     BoardDef.initForm(rsltObj);
                 });
             },
 
             /**
              * 사용으로 변경 (Ajax)
+             * @param {string|number} Ajax - 게시판 코드 (key).
              */
             useAjax: function(key) {
                 Swal.fire({
@@ -103,6 +107,7 @@
 
             /**
              * 미사용으로 변경 (Ajax)
+             * @param {string|number} Ajax - 게시판 코드 (key).
              */
             unuseAjax: function(key) {
                 Swal.fire({
@@ -123,6 +128,7 @@
 
             /**
              * 삭제 처리 (ajax)
+             * @param {string|number} Ajax - 게시판 코드 (key).
              */
             delAjax: function(key) {
                 Swal.fire({
