@@ -6,10 +6,12 @@
     const TmplatDef = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "menu_reg", "show");
+
+                /* jquery validation */
                 commons.validate.validateForm("#menuRegForm", Menu.regAjax);
             },
 
@@ -28,7 +30,7 @@
             regModal: function(menuTyCd, upperMenuNo, upperMenuNm) {
                 event.stopPropagation();
                 const obj = { "menuTyCd": menuTyCd, "upperMenuNo": upperMenuNo, "upperMenuNm": upperMenuNm };
-                commons.util.handlebarsTemplate(obj, "menu_reg", "show");
+                TmplatDef.initForm(obj);
             },
 
             /**
@@ -72,6 +74,8 @@
              * 수정 모달 호출
              */
             mdfModal: function(menuNo) {
+                if (isNaN(menuNo)) return;
+
                 const url = "${Url.MENU_DTL_AJAX!}";
                 const ajaxData = { "menuNo": menuNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -79,12 +83,14 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    commons.util.handlebarsTemplate(res.rsltObj, "menu_reg", "show");
+                    const rsltObj = res.rsltObj;
+                    TmplatDef.initForm(rsltObj);
                 });
             },
 
             /**
              * 삭제 처리 (ajax)
+             * @param {string|number} menuNo - 메뉴 번호.
              */
             delAjax: function(menuNo) {
                 if (isNaN(menuNo)) return;

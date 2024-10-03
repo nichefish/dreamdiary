@@ -9,22 +9,39 @@
              * FlsysMeta 객체 초기화
              */
             init: function() {
-                /** jquery :: validation */
-                commons.validate.validateForm("#flsysMetaRegForm", FlsysMeta.regAjax);
+
             },
-            /** 등록 모달 조회 */
-            regModal: function(filePath) {
-                const obj = { "filePath": filePath, "upperFilePath": Flsys.currPath };
+
+            /**
+             * form init
+             */
+            initForm: function(obj = {}) {
                 commons.util.handlebarsTemplate(obj, "flsys_meta_reg", "show");
 
-                /** tagify */
+                /* jquery validation */
+                commons.validate.validateForm("#flsysMetaRegForm", FlsysMeta.regAjax);
+                /* tagify */
                 commons.tagify.init("#tagListStr");
             },
-            /** 메타정보 등록 (Ajax) */
+
+            /**
+             * 등록 모달 조회
+             */
+            regModal: function(filePath) {
+                const obj = { "filePath": filePath, "upperFilePath": Flsys.currPath };
+                FlsysMeta.initForm(obj);
+            },
+
+            /**
+             * 메타정보 등록 (Ajax)
+             */
             submit: function() {
                 $("#flsysMetaRegForm").submit();
             },
-            /** 메타정보 등록 (Ajax) */
+
+            /**
+             * 등록 처리 (Ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
@@ -60,8 +77,13 @@
                     commons.util.handlebarsTemplate(res.rsltObj, "flsys_meta_dtl", "show");
                 });
             },
-            /** 등록 모달 조회 */
+
+            /**
+             * 수정 모달 호출
+             */
             mdfModal: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.FLSYS_META_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -70,15 +92,15 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
+                    FlsysMeta.initForm(rsltObj);
                     $("#flsys_meta_dtl_modal").modal("hide");
-                    commons.util.handlebarsTemplate(rsltObj, "flsys_meta_reg", "show");
                     FlsysMeta.key = postNo;
-
-                    /** tagify */
-                    commons.tagify.init("#tagListStr");
                 });
             },
-            /** 메타정보 삭제 (Ajax) */
+
+            /**
+             * 삭제 처리 (Ajax)
+             */
             delAjax: function(postNo) {
                 if (isNaN(postNo)) return;
 

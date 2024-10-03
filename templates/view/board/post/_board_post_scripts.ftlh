@@ -6,10 +6,10 @@
     const BoardPost = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                /* jquery validation */
                 $("#postRegForm").validate({
                     ...commons.validate.baseOptions,
                     submitHandler: function() {
@@ -33,6 +33,16 @@
                         }
                     },
                 });
+                /* tinymce init */
+                commons.tinymce.init("#tinymce_cn");
+                /* tagify */
+                commons.tagify.initWithCtgr("#postRegForm #tagListStr");
+                // 잔디발송여부 클릭시 글씨 변경
+                commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function() {
+                    $("#trgetTopicSpan").show();
+                }, function() {
+                    $("#trgetTopicSpan").hide();
+                });
             },
 
             /**
@@ -47,9 +57,9 @@
              * 내가 작성한 글 목록 보기
              */
             myPapr: function() {
-                let boardCd = $("#boardCd").val();
+                const boardCd = $("#boardCd").val();
                 const url = "${Url.BOARD_POST_LIST!}";
-                let param = "?boardCd="+boardCd+"&searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
+                const param = "?boardCd="+boardCd+"&searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
 
@@ -94,6 +104,7 @@
 
             /**
              * 상세 화면으로 이동
+             * @param {string|number} postNo - 조회할 글 번호.
              */
             dtl: function(postNo) {
                 if (isNaN(postNo)) return;
@@ -130,6 +141,7 @@
 
             /**
              * 삭제 처리 (ajax)
+             * @param {string|number} postNo - 글 번호.
              */
             delAjax: function(postNo) {
                 if (isNaN(postNo)) return;

@@ -68,8 +68,11 @@
 
             /**
              * 상세 화면으로 이동
+             * @param {string|number} postNo - 조회할 글 번호.
              */
             dtl: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.TMPLAT_DEF_DTL!}");
             },

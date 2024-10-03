@@ -6,26 +6,27 @@
     const Schdul = (function() {
         return {
             prtcpntCnt: 0,
+
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
-                $(function() {
-                    $("#schdulRegForm").validate({
-                        ...commons.validate.baseOptions,
-                        submitHandler: function() {
-                            let isReg = ($("#schdulRegForm #postNo").val() === "");
-                            Swal.fire({
-                                text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
-                                showCancelButton: true,
-                            }).then(function(result) {
-                                if (!result.value) return;
-                                Schdul.regAjax();
-                            });
-                        },
-                    });
+            initForm: function(obj = {}) {
+                /* jquery validation */
+                $("#schdulRegForm").validate({
+                    ...commons.validate.baseOptions,
+                    submitHandler: function() {
+                        let isReg = ($("#schdulRegForm #postNo").val() === "");
+                        Swal.fire({
+                            text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
+                            showCancelButton: true,
+                        }).then(function(result) {
+                            if (!result.value) return;
+                            Schdul.regAjax();
+                        });
+                    },
                 });
+                // 엔터키 처리
+                commons.util.enterKey("#searchKeyword", Page.search);
             },
 
             /**
@@ -130,6 +131,8 @@
              * 수정 모달 호출
              */
             mdfModal: function(key) {
+                if (isNaN(key)) return;
+
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
                 const ajaxData = { "postNo": key };
                 commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
@@ -156,8 +159,11 @@
 
             /**
              * 삭제 처리 (ajax)
+             * @param {string|number} key - 참여자 번호.
              */
             delAjax: function(key) {
+                if (isNaN(key)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

@@ -16,11 +16,21 @@
             },
 
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "sectn_reg_header");
+                commons.util.handlebarsTemplate(obj, "sectn_reg", "show");
+
+                /* jquery validation */
                 commons.validate.validateForm("#sectnRegForm", Sectn.regAjax);
+                // checkbox init
+                commons.util.chckboxLabel("deprcYn", "만료//해당없음", "red//gray");
+                /* tagify */
+                commons.tagify.initWithCtgr("#sectnRegForm #tagListStr", undefined);
+                // tinymce editor reset
+                commons.tinymce.init('#tinymce_sectnCn');
+                commons.tinymce.setContentWhenReady("tinymce_sectnCn", obj.cn);
             },
 
             /**
@@ -62,17 +72,8 @@
                 if (isNaN(refPostNo)) return;
 
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
-                commons.util.handlebarsTemplate(obj, "sectn_reg_header");
-                commons.util.handlebarsTemplate(obj, "sectn_reg", "show");
-                /* jquery :: validation */
-                Sectn.initValidateForm();
-                // checkbox init
-                commons.util.chckboxLabel("deprcYn", "만료//해당없음", "red//gray");
-                /* tagify */
-                commons.tagify.initWithCtgr("#sectnRegForm #tagListStr", undefined);
-                // tinymce editor reset
-                commons.tinymce.init('#tinymce_sectnCn');
-                commons.tinymce.setContentWhenReady("tinymce_sectnCn", "");
+                /* init form */
+                Sectn.initForm(obj);
             },
 
             /**
@@ -124,18 +125,8 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-
-                    commons.util.handlebarsTemplate(rsltObj, "sectn_reg_header");
-                    commons.util.handlebarsTemplate(rsltObj, "sectn_reg", "show");
-                    /* jquery :: validation */
-                    Sectn.initValidateForm();
-                    // checkbox init
-                    commons.util.chckboxLabel("deprcYn", "만료//해당없음", "red//gray");
-                    /* tagify */
-                    commons.tagify.initWithCtgr("#sectnRegForm #tagListStr", undefined);
-                    // tinymce editor reset
-                    commons.tinymce.init('#tinymce_sectnCn');
-                    commons.tinymce.setContentWhenReady("tinymce_sectnCn", rsltObj.cn);
+                    /* init form */
+                    Sectn.initForm(rsltObj);
                 });
             },
 

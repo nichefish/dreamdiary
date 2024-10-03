@@ -90,6 +90,8 @@
              * 수정 팝업 호출
              */
             mdfModal: function(vcatnSchdulNo) {
+                if (isNaN(vcatnSchdulNo)) return;
+
                 $("#vcatnSchdulNoProc").val(vcatnSchdulNo);
                 const url = "${Url.VCATN_SCHDUL_DTL_AJAX!}";
                 const ajaxData = $("#procForm").serializeArray();
@@ -124,8 +126,11 @@
 
             /**
              * 삭제 처리 (ajax)
+             * @param {string|number} vcatnSchdulNo - 일정 번호.
              */
             delAjax: function(vcatnSchdulNo) {
+                if (isNaN(vcatnSchdulNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

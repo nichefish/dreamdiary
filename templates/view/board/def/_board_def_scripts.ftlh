@@ -6,11 +6,17 @@
     const BoardDef = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "board_def_reg", "show");
+
+                /* jquery validation */
                 commons.validate.validateForm("#boardDefRegForm", BoardDef.regAjax);
+                // checkbox init
+                commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
+                commons.validate.replaceBlankIfMatches("#boardDefRegForm .cddata", commons.validate.nonCdRegex);
+                commons.validate.onlyNum(".number");
             },
 
             /**
@@ -26,12 +32,8 @@
              * 등록 모달 호출
              */
             regModal: function() {
-                commons.util.handlebarsTemplate({}, "board_def_reg", "show");
-                /* jquery :: validation */
-                BoardDef.initValidateForm();
-                commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                commons.validate.replaceBlankIfMatches("#boardDefRegForm .cddata", commons.validate.nonCdRegex);
-                commons.validate.onlyNum(".number");
+                /* init form */
+                BoardDef.initForm();
             },
 
             /**
@@ -72,12 +74,10 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let rsltObj = res.rsltObj;
+                    const rsltObj = res.rsltObj;
                     rsltObj.isMdf = true;
-                    commons.util.handlebarsTemplate(rsltObj, "board_def_reg", "show");
-                    /* jquery :: validation */
-                    BoardDef.initValidateForm();
-                    commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
+                    /* init form */
+                    BoardDef.initForm(rsltObj);
                 });
             },
 

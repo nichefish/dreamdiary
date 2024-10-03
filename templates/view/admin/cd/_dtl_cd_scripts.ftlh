@@ -6,11 +6,17 @@
     const DtlCd = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "dtl_cd_reg", "show");
+
+                /* jquery validation */
                 commons.validate.validateForm("#dtlCdRegForm", DtlCd.regAjax);
+                // checkbox init
+                commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
+                commons.validate.replaceBlankIfMatches("#dtlCdRegForm #dtlCd", commons.validate.nonCdRegex);
+                commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
             },
 
             /**
@@ -28,12 +34,9 @@
             regModal: function() {
                 event.stopPropagation();
 
-                commons.util.handlebarsTemplate({ "clCd": $("#clCd").val() }, "dtl_cd_reg", "show");
-                /* jquery :: validation */
-                DtlCd.initValidateForm();
-                commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
-                commons.validate.replaceBlankIfMatches("#dtlCdRegForm #dtlCd", commons.validate.nonCdRegex);
-                commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
+                const obj = { "clCd": $("#clCd").val() };
+                /* init form */
+                DtlCd.initForm(obj);
             },
 
             /**
@@ -76,12 +79,10 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let rsltObj = res.rsltObj;
+                    const rsltObj = res.rsltObj;
                     rsltObj.isMdf = true;
-                    commons.util.handlebarsTemplate(rsltObj, "dtl_cd_reg", "show");
-                    /* jquery :: validation */
-                    DtlCd.initValidateForm();
-                    commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
+                    /* init form */
+                    DtlCd.initForm(rsltObj);
                 });
             },
 

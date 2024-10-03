@@ -38,8 +38,8 @@
             init: function() {
                 Page.updt();
 
-                /* jquery :: validation */
-                Menu.initValidateForm();
+                /* init form */
+                Menu.initForm();
                 /* init : Draggable */
                 Menu.initDraggable();
             },

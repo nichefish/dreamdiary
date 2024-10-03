@@ -16,10 +16,8 @@
              * Page 객체 초기화
              */
             init: function() {
-                /* jquery :: validation */
-                LgnPolicy.initValidateForm();
-                /* 개별 input 유효성검사 */
-                commons.validate.onlyNum(".number");
+                /* init form */
+                LgnPolicy.initForm();
             },
         }
     })();

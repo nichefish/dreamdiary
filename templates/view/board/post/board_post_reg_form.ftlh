@@ -25,18 +25,8 @@
              * Page 객체 초기화
              */
             init: function() {
-                /* jquery :: validation */
-                BoardPost.initValidateForm()
-                /* tinymce init */
-                commons.tinymce.init("#tinymce_cn");
-                /* tagify */
-                commons.tagify.initWithCtgr("#postRegForm #tagListStr");
-                // 잔디발송여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function() {
-                    $("#trgetTopicSpan").show();
-                }, function() {
-                    $("#trgetTopicSpan").hide();
-                });
+                /* init form */
+                BoardPost.initForm();
             },
         }
     })();

@@ -45,10 +45,10 @@
              * Page 객체 초기화
              */
             init: function() {
-                /* jquery :: validation */
-                Schdul.initValidateForm();
+                /* init form */
+                Schdul.initForm();
 
-                let chkArr = $("input:checkbox[id^='schdul_chk']");
+                const chkArr = $("input:checkbox[id^='schdul_chk']");
                 chkArr.each(function(_index, item) {
                     let id = $(item).attr("id");
                     if (Page.getChkedCookie(id) === "Y") $(item).prop("checked", true);
@@ -88,10 +88,8 @@
                     Page.refreshEventList(selectedDt);
                 });
 
-                commons.util.enterKey("#searchKeyword", Page.search);       // 엔터키 처리
-
                 // https://github.com/fullcalendar/fullcalendar/issues/6393
-                let harnessArr = $(".fc-daygrid-event-harness");
+                const harnessArr = $(".fc-daygrid-event-harness");
                 harnessArr.each(function() {
                     const marginTop = $(this).css("margin-top");
                     if (parseInt(marginTop) < 0) $(this).css("margin-top", "");

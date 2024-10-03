@@ -9,11 +9,21 @@
     const JrnlDiary = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "jrnl_diary_reg_header");
+                commons.util.handlebarsTemplate(obj, "jrnl_diary_reg", "show");
+
+                /* jquery validation */
                 commons.validate.validateForm("#jrnlDiaryRegForm", JrnlDiary.regAjax);
+                /* tagify */
+                commons.tagify.initWithCtgr("#jrnlDiaryRegForm #tagListStr");
+                // checkbox init
+                commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
+                /* tinymce editor reset */
+                commons.tinymce.init('#tinymce_jrnlDiaryCn');
+                commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", obj.cn);
             },
 
             /**
@@ -47,23 +57,12 @@
             },
 
             /**
-             * 저널 일기 등록 모달 호출
+             * 등록 모달 호출
              */
             regModal: function(jrnlDayNo, stdrdDt) {
                 const obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
-                commons.util.handlebarsTemplate(obj, "jrnl_diary_reg_header");
-                commons.util.handlebarsTemplate(obj, "jrnl_diary_reg", "show");
-
-                /* jquery :: validation */
-                JrnlDiary.initValidateForm();
-                /* tagify */
-                commons.tagify.initWithCtgr("#jrnlDiaryRegForm #tagListStr");
-
-                // checkbox init
-                commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
-                // tinymce editor reset
-                commons.tinymce.init('#tinymce_jrnlDiaryCn');
-                commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", "");
+                /* init form */
+                JrnlDiary.initForm(obj);
             },
 
             /**
@@ -103,9 +102,12 @@
             },
 
             /**
-             * 저널 꿈 수정 모달 호출
+             * 수정 모달 호출
+             * @param {string|number} postNo - 글 번호.
              */
             mdfModal: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.JRNL_DIARY_DTL_AJAX!}";
                 const ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
@@ -114,27 +116,18 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-
-                    commons.util.handlebarsTemplate(rsltObj, "jrnl_diary_reg_header");
-                    commons.util.handlebarsTemplate(rsltObj, "jrnl_diary_reg", "show");
-
-                    /* jquery :: validation */
-                    JrnlDiary.initValidateForm();
-                    /* tagify */
-                    commons.tagify.initWithCtgr("#jrnlDiaryRegForm #tagListStr");
-
-                    // checkbox init
-                    commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
-                    // tinymce editor reset
-                    commons.tinymce.init('#tinymce_jrnlDiaryCn');
-                    commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", rsltObj.cn);
+                    /* init form */
+                    JrnlDiary.initForm(rsltObj);
                 });
             },
 
             /**
              * 삭제 처리 (ajax)
+             * @param {string|number} postNo - 글 번호.
              */
             delAjax: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

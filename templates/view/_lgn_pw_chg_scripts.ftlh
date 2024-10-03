@@ -11,15 +11,15 @@
             pwChgModal: function() {
                 const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
                 commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
-                /* jquery :: validation */
-                LgnPwChg.initValidateForm();
+                /* init form */
+                LgnPwChg.initForm();
             },
 
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                /* jquery validation */
                 $("#lgnPwChgForm").validate({
                     ...commons.validate.baseOptions,
                     submitHandler: function() {

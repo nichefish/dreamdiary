@@ -6,10 +6,10 @@
     const ExptrPrsnlPapr = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                /* jquery validation */
                 $("#exptrPrsnlRegForm").validate({
                     ...commons.validate.baseOptions,
                     submitHandler: function() {
@@ -25,6 +25,9 @@
                         });
                     },
                 });
+                // 공백 자동 제거
+                commons.validate.onlyNumAndComma(".num");
+
             },
 
             /**
@@ -131,8 +134,11 @@
 
             /**
              * 상세 화면으로 이동
+             * @param {string|number} postNo - 조회할 글 번호.
              */
             dtl: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_PAPR_DTL!}");
             },

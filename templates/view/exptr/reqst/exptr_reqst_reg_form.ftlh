@@ -25,17 +25,8 @@
              * Page 객체 초기화
              */
             init: function() {
-                /** tinymce init */
-                commons.tinymce.init("#tinymce_cn");
-
-                /* jquery :: validation */
-                ExptrReqst.initValidateForm();
-                // 잔디발송여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function() {
-                    $("#trgetTopicSpan").show();
-                }, function() {
-                    $("#trgetTopicSpan").hide();
-                });
+                /* init form */
+                ExptrReqst.initForm();
                 <#if isReg!false>
                     $("#jandiYn").click();
                 </#if>

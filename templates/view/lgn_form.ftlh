@@ -31,7 +31,7 @@
                     LgnPwChg.pwChgModal();
                 </#if>
 
-                /* jquery :: validation */
+                /* jquery validation */
                 commons.validate.validateForm("#lgnForm");
                 // 엔터키 처리
                 commons.util.enterKey(".enter", Page.lgn);
@@ -55,7 +55,7 @@
                         $("#password").attr("disabled", "disabled");
                         Page.lgn();
                     } else {
-                        // 중복ID 세션 attribute 만료시킴
+                        // 로그인하지 않음. 중복ID 세션 attribute 만료시킴
                         const url = "${Url.AUTH_EXPIRE_SESSION_AJAX!}";
                         commons.util.blockUIAjax(url, 'POST', null, function() {
                             commons.util.blockUIReplace("${Url.AUTH_LGN_FORM!}");

@@ -11,17 +11,16 @@
              * Comment.modal 객체 초기화
              */
             init: function({ refreshFunc } = {}) {
-                /* jquery :: validation */
-                Comment.modal.initValidateForm();
-                commons.util.handlebarsTemplate({}, "comment_reg");
                 if (refreshFunc !== undefined) Comment.modal.refreshFunc = refreshFunc;
             },
 
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "comment_reg", "show");
+
+                /* jquery validation */
                 commons.validate.validateForm("#commentRegForm", Comment.modal.regAjax);
             },
 
@@ -30,9 +29,8 @@
              */
             regModal: function(refPostNo, refContentType) {
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
-                commons.util.handlebarsTemplate(obj, "comment_reg", "show");
-                /* jquery :: validation */
-                Comment.modal.initValidateForm();
+                /* init form */
+                Comment.modal.initForm(obj);
             },
 
             /**
@@ -83,10 +81,8 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-
-                    commons.util.handlebarsTemplate(rsltObj, "comment_reg", "show");
-                    /* jquery :: validation */
-                    Comment.modal.initValidateForm();
+                    /* init form */
+                    Comment.modal.initForm(rsltObj);
                 });
             },
 

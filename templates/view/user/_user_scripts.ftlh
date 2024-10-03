@@ -6,10 +6,10 @@
     const User = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                /* jquery validation */
                 $("#userRegForm").validate({
                     ...commons.validate.baseOptions,
                     submitHandler: function() {
@@ -42,6 +42,22 @@
                 $.validator.addMethod("dupChck", function(value) {
                     return (value === "Y");
                 });
+                // 자동 대문자->소문자처리
+                commons.validate.toLowerCase("#userId");
+                // 연락처 포맷
+                commons.validate.cttpc("#cttpc");
+                // 권한 유효성검사 바꿀때마다 지우기
+                $("#authCd").change(function() {
+                    $("#authCd").valid(); // 체크박스 상태 변경시 details 필드 재검증
+                });
+                // 접속IP 사용 여부 클릭시 글씨 변경 + 입력창 토글 :: 메소드 분리
+                commons.util.chckboxLabel("useAcsIpYn", "사용//미사용", "blue//gray", function(){
+                    $("#acsIpListSpan").show()
+                }, function(){
+                    $("#acsIpListSpan").hide()
+                });
+                /* 접속IP tagify */
+                commons.tagify.init("#acsIpListStr");
             },
 
             /**
@@ -121,7 +137,10 @@
                 $("#procForm #userNo").val(userNo);
                 commons.util.blockUISubmit("#procForm", "${Url.USER_DTL!}");
             },
-            /** 승인 처리 (ajax) */
+
+            /**
+             * 승인 처리 (ajax)
+             */
             cfAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.cf"/>,

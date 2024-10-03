@@ -6,10 +6,10 @@
     const VcatnPapr = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                /* jquery validation */
                 $("#vcatnPaprRegForm").validate({
                     ...commons.validate.baseOptions,
                     submitHandler: function() {
@@ -21,6 +21,12 @@
                             VcatnPapr.regAjax();
                         });
                     },
+                });
+                // 잔디발송여부 클릭시 글씨 변경
+                commons.util.chckboxLabel("jandiYn", "발송//미발송", "#0095E8//gray", function() {
+                    $("#trgetTopicSpan").show();
+                }, function() {
+                    $("#trgetTopicSpan").hide();
                 });
             },
 
@@ -71,8 +77,11 @@
 
             /**
              * 상세 화면으로 이동
+             * @param {string|number} postNo - 조회할 글 번호.
              */
             dtl: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.VCATN_PAPR_DTL!}");
             },

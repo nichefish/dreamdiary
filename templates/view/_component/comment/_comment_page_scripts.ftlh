@@ -11,16 +11,17 @@
              * Comment.page 객체 초기화
              */
             init: function() {
-                /* jquery :: validation */
-                Comment.page.initValidateForm();
-                commons.util.handlebarsTemplate({}, "comment_page_reg");
+                /* init form */
+                Comment.page.initForm();
             },
 
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "comment_page_reg");
+
+                /* jquery validation */
                 commons.validate.validateForm("#commentPageRegForm", Comment.page.regAjax);
             },
 

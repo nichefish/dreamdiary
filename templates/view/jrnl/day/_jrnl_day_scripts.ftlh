@@ -9,10 +9,12 @@
     const JrnlDay = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "jrnl_day_reg", "show");
+
+                /* jquery validation */
                 $("#jrnlDayRegForm").validate({
                      ...commons.validate.baseOptions,
                     submitHandler: function() {
@@ -35,6 +37,22 @@
                     $("#jrnlDt").valid(); // 체크박스 상태 변경시 details 필드 재검증
                     $("#aprxmtDt").valid(); // 체크박스 상태 변경시 details 필드 재검증
                 });
+                // 일자 datepicker 날짜 검색 init : 현재 조회중인 yyyy-MM으로 처리
+                commons.datepicker.singleDatePicker("#jrnlDt", "yyyy-MM-DD", obj.jrnlDt);
+                // 날짜미상 datepicker 날짜 검색 init
+                commons.datepicker.singleDatePicker("#aprxmtDt", "yyyy-MM-DD", obj.aprxmtDt);
+                // 날짜미상 checkbox init
+                commons.util.chckboxLabel("dtUnknownYn", "날짜미상//날짜미상", "blue//gray", function() {
+                    $("#jrnlDayRegForm #jrnlDtDiv").addClass("d-none");
+                    $("#jrnlDayRegForm #aprxmtDtDiv").removeClass("d-none");
+                    $("#jrnlDayRegForm #aprxmtDt").val($("#jrnlDayRegForm #jrnlDt").val());
+                }, function() {
+                    $("#jrnlDayRegForm #jrnlDtDiv").removeClass("d-none");
+                    $("#jrnlDayRegForm #aprxmtDtDiv").addClass("d-none");
+                    $("#jrnlDayRegForm #jrnlDt").val($("#jrnlDayRegForm #aprxmtDt").val());
+                });
+                /* tagify */
+                commons.tagify.initWithCtgr("#jrnlDayRegForm #tagListStr", TagCtgrMap.jrnlDay);
             },
 
             /**
@@ -69,25 +87,9 @@
              * 등록 모달 호출
              */
             regModal: function() {
-                commons.util.handlebarsTemplate({}, "jrnl_day_reg", "show");
-                /* jquery :: validation */
-                JrnlDay.initValidateForm();
-                // 일자 datepicker 날짜 검색 init : 현재 조회중인 yyyy-MM으로 처리
-                commons.datepicker.singleDatePicker("#jrnlDt", "yyyy-MM-DD", JrnlDay.validDt());
-                // 날짜미상 datepicker 날짜 검색 init
-                commons.datepicker.singleDatePicker("#aprxmtDt", "yyyy-MM-DD")
-                // 날짜미상 checkbox init
-                commons.util.chckboxLabel("dtUnknownYn", "날짜미상//날짜미상", "blue//gray", function() {
-                    $("#jrnlDayRegForm #jrnlDtDiv").addClass("d-none");
-                    $("#jrnlDayRegForm #aprxmtDtDiv").removeClass("d-none");
-                    $("#jrnlDayRegForm #aprxmtDt").val($("#jrnlDayRegForm #jrnlDt").val());
-                }, function() {
-                    $("#jrnlDayRegForm #jrnlDtDiv").removeClass("d-none");
-                    $("#jrnlDayRegForm #aprxmtDtDiv").addClass("d-none");
-                    $("#jrnlDayRegForm #jrnlDt").val($("#jrnlDayRegForm #aprxmtDt").val());
-                });
-                /* tagify */
-                commons.tagify.initWithCtgr("#jrnlDayRegForm #tagListStr", TagCtgrMap.jrnlDay);
+                const obj = { "jrnlDt": JrnlDay.validDt() };
+                /* init form */
+                JrnlDay.initForm(obj);
             },
 
             /**
@@ -153,8 +155,11 @@
 
             /**
              * 등록 모달 호출
+             * @param {string|number} postNo - 글 번호.
              */
             mdfModal: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.JRNL_DAY_DTL_AJAX!}";
                 const ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
@@ -163,32 +168,18 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-                    commons.util.handlebarsTemplate(rsltObj, "jrnl_day_reg", "show");
-                    /* jquery :: validation */
-                    JrnlDay.initValidateForm();
-                    // datepicker 날짜 검색 init
-                    commons.datepicker.singleDatePicker("#jrnlDt", "yyyy-MM-DD", rsltObj.jrnlDt);
-                    // 날짜미상 datepicker 날짜 검색 init
-                    commons.datepicker.singleDatePicker("#aprxmtDt", "yyyy-MM-DD", rsltObj.aprxmtDt);
-                    // 날짜미상 checkbox init
-                    commons.util.chckboxLabel("dtUnknownYn", "날짜미상//날짜미상", "blue//gray", function() {
-                        $("#jrnlDayRegForm #jrnlDtDiv").addClass("d-none");
-                        $("#jrnlDayRegForm #aprxmtDtDiv").removeClass("d-none");
-                        $("#jrnlDayRegForm #aprxmtDt").val($("#jrnlDayRegForm #jrnlDt").val());
-                    }, function() {
-                        $("#jrnlDayRegForm #jrnlDtDiv").removeClass("d-none");
-                        $("#jrnlDayRegForm #aprxmtDtDiv").addClass("d-none");
-                        $("#jrnlDayRegForm #jrnlDt").val($("#jrnlDayRegForm #aprxmtDt").val());
-                    });
-                    /* tagify */
-                    commons.tagify.initWithCtgr("#jrnlDayRegForm #tagListStr", TagCtgrMap.jrnlDay);
+                    /* init form */
+                    JrnlDay.initForm(rsltObj);
                 });
             },
 
             /**
              * 삭제 처리 (ajax)
+             * @param {string|number} postNo - 글 번호.
              */
             delAjax: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

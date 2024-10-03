@@ -249,23 +249,22 @@ commons.validate = (function() {
          * @dependency: jquery-validation
          * @param {string} formSelector - 검증할 폼의 선택자.
          * @param {Function} [func] - 제출 시 호출할 함수 (선택적).
+         * @param {object} additionalOptions - 추가로 적용할 옵션 (선택적).
          */
-        validateForm: function (formSelector, func) {
+        validateForm: function (formSelector, func, additionalOptions = {}) {
             $(function(){
                 // jQuery Validation을 초기화
-                const options = {
-                    errorPlacement: function(error, element) {
-                        commons.validate.errorSpan(error, element);
-                    },
-                    ignore: [], // hidden 필드도 검증하기 위함
+                const mergedOptions = {
+                    ...jQueryValidationBaseOptions,
+                    ...additionalOptions
                 };
                 // 제출 핸들러가 있는 경우 추가 설정
                 if (typeof func === 'function') {
-                    options.submitHandler = function() {
+                    mergedOptions.submitHandler = function() {
                         func();
                     };
                 }
-                $(formSelector).validate(options); // 검증 초기화
+                $(formSelector).validate(mergedOptions); // 검증 초기화
             });
         },
 

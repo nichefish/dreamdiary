@@ -6,10 +6,10 @@
     const LgnPolicy = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                /* jquery validation */
                 $("#lgnPolicyForm").validate({
                     ...commons.validate.baseOptions,
                     submitHandler: function() {

@@ -29,8 +29,8 @@
              * Page 객체 초기화
              */
             init: function() {
-                /* jquery :: validation */
-                Notice.initValidateForm();
+                /* init form */
+                Notice.initForm();
                 <#if isMdf>
                     /* 글 단락 init */
                     Sectn.init({
@@ -45,18 +45,6 @@
                         refreshFunc: Page.refreshFunc
                     });
                 </#if>
-
-                /* tinymce init */
-                commons.tinymce.init("#tinymce_cn");
-                /* tagify */
-                commons.tagify.initWithCtgr("#noticeRegForm #tagListStr");
-
-                // 잔디발송여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function() {
-                    $("#trgetTopicSpan").show();
-                }, function() {
-                    $("#trgetTopicSpan").hide();
-                });
                 <#if isReg!false>
                     $("#jandiYn").click();
                 </#if>

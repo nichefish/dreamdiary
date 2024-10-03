@@ -19,9 +19,6 @@
              * Page 객체 초기화
              */
             init: function() {
-                // 공백 자동 제거
-                commons.validate.onlyNumAndComma(".num");
-
                 Page.itemIdx = ${(post.itemList![])?size};
                 <#if isReg!false>
                     Page.setTitle();
@@ -32,15 +29,17 @@
                     Page.setTotAmt();
                 </#if>
 
-                /* jquery :: validation */
-                ExptrPrsnlPapr.initValidateForm();
+                /* init form */
+                ExptrPrsnlPapr.initForm();
             },
+
             /** 제목 자동설정 */
             setTitle: function() {
                 let yy = $("#yy").val();
                 let mnth = $("#mnth").val();
                 $("#title").val(yy + "년 " + mnth + "월 경비지출서");
             },
+
             /** 년도/월 등록 가능한지 검사 */
             validateYyMnth: function() {
                 const url = "${Url.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
@@ -62,6 +61,7 @@
                     }
                 });
             },
+
             /** 추가추가 개수 0개인지 체크 */
             emptyItemListToggle: function() {
                 if ($("#exptr_prsnl_item_reg_div tr").length === 0) {
@@ -70,6 +70,7 @@
                     $("#empty_list_div").hide();
                 }
             },
+
             /**
              * 지출항목 등록 영역 새로 추가
              */
@@ -101,6 +102,7 @@
 
                 Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
             },
+
             /**
              * 사용자 정보 추가항목 수정 영역 기존 정보 목록 추가
              */
@@ -145,6 +147,7 @@
                     Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
                 });
             },
+
             /** 영수증 이미지 삭제 */
             rciptDel: function(idx) {
                 $("#rciptFile" + idx).empty();
@@ -152,6 +155,7 @@
                 $("#rciptDel" + idx).hide();
                 $("#atchFileDtlNo" + idx).val("");
             },
+
             /** 추가항목 영역 삭제 */
             delExptrPrsnlItemSpan: function(idx) {
                 if ($("#exptrPrsnlItemNo" + idx).val() === "") {
@@ -163,6 +167,7 @@
                 Page.emptyItemListToggle();        // 추가추가 개수 0개인지 체크
                 Page.setTotAmt();
             },
+
             /**
              * 사용자 정보 추가항목 영역 합계 구하기
              */

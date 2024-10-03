@@ -6,10 +6,10 @@
     const UserReqst = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                /* jquery validation */
                 $("#userReqstForm").validate({
                     ...commons.validate.baseOptions,
                     submitHandler: function() {
@@ -40,6 +40,37 @@
                 $.validator.addMethod("dupChck", function(value) {
                     return (value === "Y");
                 });
+
+                // 자동 대문자->소문자처리
+                commons.validate.toLowerCase("#userId");
+                // 전화번호 형식 유효성 검사
+                commons.validate.cttpc("#cttpc");
+                // 이메일 도메인 select시 자동입력
+                $("#emailDomainSelect").on("change", function() {
+                    $("#emailDomain").val($(this).val());
+                });
+                // 권한 유효성검사 바꿀때마다 지우기
+                $("#authCd").change(function() {
+                    $("#authCd").valid(); // 체크박스 상태 변경시 details 필드 재검증
+                });
+                // 등록화면:: 사용자 ID 변경입력시 중복체크 통과여부 초기화
+                $("#userId").on("keyup", function() {
+                    $("#userId_valid_span").empty();
+                    $("#ipDupChckPassed").val("N");
+                    $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
+                }).on("keydown", function() {
+                    $("#userId_valid_span").text("");
+                    $("#ipDupChckPassed").val("N");
+                    $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
+                });
+                // 접속IP 사용 여부 클릭시 글씨 변경 + 입력창 토글 :: 메소드 분리
+                commons.util.chckboxLabel("useAcsIpYn", "사용//미사용", "blue//gray", function(){
+                    $("#acsIpListSpan").show()
+                }, function(){
+                    $("#acsIpListSpan").hide()
+                });
+                /* 접속IP tagify */
+                commons.tagify.init("#acsIpListStr");
             },
 
             /**

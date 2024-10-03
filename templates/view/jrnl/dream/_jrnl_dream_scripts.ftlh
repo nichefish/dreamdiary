@@ -9,10 +9,13 @@
     const JrnlDream = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "jrnl_dream_reg_header");
+                commons.util.handlebarsTemplate(obj, "jrnl_dream_reg", "show");
+
+                /* jquery validation */
                 $("#jrnlDreamRegForm").validate({
                     ...commons.validate.baseOptions,
                     submitHandler: function() {
@@ -29,6 +32,23 @@
                 $("#elseDreamYn").change(function() {
                     $("#elseDreamerNm").valid(); // 체크박스 상태 변경시 details 필드 재검증
                 });
+                /* tagify */
+                commons.tagify.initWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
+                // checkbox init
+                commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
+                // checkbox init
+                commons.util.chckboxLabel("nhtmrYn", "악몽//해당없음", "red//gray");
+                // checkbox init
+                commons.util.chckboxLabel("hallucYn", "입면환각//해당없음", "blue//gray");
+                // checkbox init
+                commons.util.chckboxLabel("elseDreamYn", "해당//미해당", "blue//gray", function() {
+                    $("#elseDreamerNmDiv").removeClass("d-none");
+                }, function() {
+                    $("#elseDreamerNmDiv").addClass("d-none");
+                });
+                /* tinymce editor reset */
+                commons.tinymce.init('#tinymce_jrnlDreamCn');
+                commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", obj.cn);
             },
 
             /**
@@ -62,33 +82,12 @@
             },
 
             /**
-             * 저널 꿈 등록 모달 호출
+             * 등록 모달 호출
              */
             regModal: function(jrnlDayNo, stdrdDt) {
                 const obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
-                commons.util.handlebarsTemplate(obj, "jrnl_dream_reg_header");
-                commons.util.handlebarsTemplate(obj, "jrnl_dream_reg", "show");
-
-                /* jquery :: validation */
-                JrnlDream.initValidateForm();
-                /* tagify */
-                commons.tagify.initWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
-
-                // checkbox init
-                commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
-                // checkbox init
-                commons.util.chckboxLabel("nhtmrYn", "악몽//해당없음", "red//gray");
-                // checkbox init
-                commons.util.chckboxLabel("hallucYn", "입면환각//해당없음", "blue//gray");
-                // checkbox init
-                commons.util.chckboxLabel("elseDreamYn", "해당//미해당", "blue//gray", function() {
-                    $("#elseDreamerNmDiv").removeClass("d-none");
-                }, function() {
-                    $("#elseDreamerNmDiv").addClass("d-none");
-                });
-                // tinymce editor init
-                commons.tinymce.init('#tinymce_jrnlDreamCn');
-                commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", "");
+                /* init form */
+                JrnlDream.initForm(obj);
             },
 
             /**
@@ -128,9 +127,12 @@
             },
 
             /**
-             * 저널 꿈 수정 모달 호출
+             * 수정 모달 호출
+             * @param {string|number} postNo - 글 번호.
              */
             mdfModal: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.JRNL_DREAM_DTL_AJAX!}";
                 const ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
@@ -139,36 +141,18 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-
-                    commons.util.handlebarsTemplate(rsltObj, "jrnl_dream_reg_header");
-                    commons.util.handlebarsTemplate(rsltObj, "jrnl_dream_reg", "show");
-                    /* jquery :: validation */
-                    JrnlDream.initValidateForm();
-                    /* tagify */
-                    commons.tagify.initWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
-
-                    // checkbox init
-                    commons.util.chckboxLabel("imprtcYn", "중요//해당없음", "red//gray");
-                    // checkbox init
-                    commons.util.chckboxLabel("nhtmrYn", "악몽//해당없음", "red//gray");
-                    // checkbox init
-                    commons.util.chckboxLabel("hallucYn", "입면환각//해당없음", "blue//gray");
-                    // checkbox init
-                    commons.util.chckboxLabel("elseDreamYn", "해당//미해당", "blue//gray", function() {
-                        $("#elseDreamerNmDiv").removeClass("d-none");
-                    }, function() {
-                        $("#elseDreamerNmDiv").addClass("d-none");
-                    });
-                    // tinymce editor reset
-                    commons.tinymce.init('#tinymce_jrnlDreamCn');
-                    commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", rsltObj.cn);
+                    /* init form */
+                    JrnlDream.initForm(rsltObj);
                 });
             },
 
             /**
              * 삭제 처리 (ajax)
+             * @param {string|number} postNo - 글 번호.
              */
             delAjax: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

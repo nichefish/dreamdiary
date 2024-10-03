@@ -6,31 +6,29 @@
     const UserMyPwChg = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
-                $(function(){
-                    $("#myPwChgForm").validate({
-                        ...commons.validate.baseOptions,
-                        submitHandler: function() {
-                            Swal.fire({
-                                text: <@spring.message "view.cnfm.chgPw"/>,
-                                showCancelButton: true,
-                            }).then(function(result) {
-                                if (!result.value) return;
-                                UserMyPwChg.myPwChgAjax();
-                            });
-                        },
-                        rules: {
-                            newPw: { regex: commons.validate.pwRegex },
-                            newPwCf: { equalTo: "#newPw" }
-                        },
-                        messages: {
-                            newPw: { regex:"변경할 비밀번호가 형식에 맞지 않습니다." },
-                            newPwCf: { equalTo:"변경할 비밀번호에 입력한 값과 동일하게 입력해야 합니다." }
-                        },
-                    });
+            initForm: function(obj = {}) {
+                /* jquery validation */
+                $("#myPwChgForm").validate({
+                    ...commons.validate.baseOptions,
+                    submitHandler: function() {
+                        Swal.fire({
+                            text: <@spring.message "view.cnfm.chgPw"/>,
+                            showCancelButton: true,
+                        }).then(function(result) {
+                            if (!result.value) return;
+                            UserMyPwChg.myPwChgAjax();
+                        });
+                    },
+                    rules: {
+                        newPw: { regex: commons.validate.pwRegex },
+                        newPwCf: { equalTo: "#newPw" }
+                    },
+                    messages: {
+                        newPw: { regex:"변경할 비밀번호가 형식에 맞지 않습니다." },
+                        newPwCf: { equalTo:"변경할 비밀번호에 입력한 값과 동일하게 입력해야 합니다." }
+                    },
                 });
             },
 

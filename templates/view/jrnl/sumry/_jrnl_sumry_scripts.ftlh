@@ -6,17 +6,28 @@
     const JrnlSumry = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                commons.util.handlebarsTemplate(obj, "jrnl_sumry_reg_header");
+                commons.util.handlebarsTemplate(obj, "jrnl_sumry_reg", "show");
+
+                /* jquery validation */
                 commons.validate.validateForm("#jrnlSumryRegForm", JrnlSumry.regAjax);
+                /* tagify */
+                commons.tagify.initWithCtgr("#jrnlSumryRegForm #tagListStr", undefined);
+                // tinymce editor reset
+                commons.tinymce.init('#tinymce_jrnlSumryCn');
+                commons.tinymce.setContentWhenReady("tinymce_jrnlSumryCn", obj.cn);
             },
 
             /**
              * 상세 화면으로 이동
+             * @param {string|number} postNo - 조회할 글 번호.
              */
             dtl: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
             },
@@ -102,16 +113,8 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-                    commons.util.handlebarsTemplate(rsltObj, "jrnl_sumry_reg_header");
-                    commons.util.handlebarsTemplate(rsltObj, "jrnl_sumry_reg", "show");
-
-                    /* jquery :: validation */
-                    JrnlSumry.initValidateForm();
-                    /* tagify */
-                    commons.tagify.initWithCtgr("#jrnlSumryRegForm #tagListStr", undefined);
-                    // tinymce editor reset
-                    commons.tinymce.init('#tinymce_jrnlSumryCn');
-                    commons.tinymce.setContentWhenReady("tinymce_jrnlSumryCn", rsltObj.cn);
+                    /* init form */
+                    JrnlSumry.initForm(rsltObj);
                 });
             },
 

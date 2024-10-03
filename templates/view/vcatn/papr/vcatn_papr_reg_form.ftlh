@@ -19,6 +19,7 @@
     const Page = (function() {
         return {
             idx: 0,
+
             /**
              * Page 객체 초기화
              */
@@ -26,26 +27,21 @@
                 // 추가추가에 사용할 인덱스 설정
                 Page.idx = ${(post.schdulList![])?size};
 
-                /* jquery :: validation */
-                VcatnPapr.initValidateForm();
+                /* init form */
+                VcatnPapr.initForm();
                 // 첨부파일 영역 0개인지 체크
                 AtchFile.atchFileListToggle();
 
-                // 잔디발송여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("jandiYn", "발송//미발송", "#0095E8//gray", function() {
-                    $("#trgetTopicSpan").show();
-                }, function() {
-                    $("#trgetTopicSpan").hide();
-                });
                 <#if isReg!false>
                     $("#jandiYn").trigger("click");
                 </#if>
 
                 <#if isReg!false>
-                    /** 휴가 추가 폼 기본 뿌리기 */
+                    // 휴가 추가 폼 기본 뿌리기
                     Page.addVcatnSchdul();
                 </#if>
             },
+
             /**
              * 휴가등록 부분 추가
              */

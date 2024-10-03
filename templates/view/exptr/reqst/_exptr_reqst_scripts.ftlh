@@ -6,10 +6,10 @@
     const ExptrReqst = (function() {
         return {
             /**
-             * form validation init
+             * form init
              */
-            initValidateForm: function() {
-                /* jquery :: validation */
+            initForm: function(obj = {}) {
+                /* jquery validation */
                 $("#exptrReqstRegForm").validate({
                     ...commons.validate.baseOptions,
                     submitHandler: function() {
@@ -32,6 +32,14 @@
                             });
                         }
                     },
+                });
+                /** tinymce init */
+                commons.tinymce.init("#tinymce_cn");
+                // 잔디발송여부 클릭시 글씨 변경
+                commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function() {
+                    $("#trgetTopicSpan").show();
+                }, function() {
+                    $("#trgetTopicSpan").hide();
                 });
             },
 
@@ -93,8 +101,11 @@
 
             /**
              * 상세 화면으로 이동
+             * @param {string|number} postNo - 조회할 글 번호.
              */
             dtl: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 commons.util.blockUIRequest();
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_REQST_DTL!}");
