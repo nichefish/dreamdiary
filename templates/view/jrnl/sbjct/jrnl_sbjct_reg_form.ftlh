@@ -28,7 +28,7 @@
              * Page 객체 초기화
              */
             init: function() {
-                /* init form */
+                /* initialize form. */
                 JrnlSbjct.initForm();
                 <#if isMdf>
                     /* 글 단락 init */

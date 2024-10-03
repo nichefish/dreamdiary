@@ -27,7 +27,7 @@
                 // 추가추가에 사용할 인덱스 설정
                 Page.idx = ${(post.schdulList![])?size};
 
-                /* init form */
+                /* initialize form. */
                 VcatnPapr.initForm();
                 // 첨부파일 영역 0개인지 체크
                 AtchFile.atchFileListToggle();

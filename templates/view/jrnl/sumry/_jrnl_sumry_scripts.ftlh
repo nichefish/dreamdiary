@@ -7,8 +7,10 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
+                /* show modal */
                 commons.util.handlebarsTemplate(obj, "jrnl_sumry_reg_header");
                 commons.util.handlebarsTemplate(obj, "jrnl_sumry_reg", "show");
 
@@ -22,7 +24,7 @@
             },
 
             /**
-             * 상세 화면으로 이동
+             * 상세 화면으로 이동 (key로 조회)
              * @param {string|number} postNo - 조회할 글 번호.
              */
             dtl: function(postNo) {
@@ -33,10 +35,13 @@
             },
 
             /**
-             * 상세 화면으로 이동
+             * 상세 화면으로 이동 (년도로 조회)
+             * @param {string|number} yy - 조회할 년도.
              */
             dtlByYy: function(yy) {
-                $("#procForm #yy").val(yy);
+                if (isNaN(yy)) return;
+
+                document.querySelector("#procForm #yy").value = yy;
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
             },
 
@@ -49,11 +54,12 @@
 
             /**
              * 특정 년도 결산 생성
+             * @param {string|number} yy - 결산을 생성할 년도.
              */
             makeYySumryAjax: function(yy) {
-                if (yy === undefined) yy = $("#listForm #yy").val();
+                if (yy === undefined) yy = document.querySelector("#listForm #yy")?.value;
                 if (commons.util.isEmpty(yy)) {
-                    alert("yy는 필수 항목입니다.");
+                    commons.util.swalOrAlert("yy는 필수 항목입니다.");
                     return false;
                 }
                 const url = "${Url.JRNL_SUMRY_MAKE_AJAX!}";
@@ -81,8 +87,11 @@
 
             /**
              * 꿈 기록 완료 처리
+             * @param {string|number} postNo - 글 번호.
              */
             comptAjax: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.JRNL_SUMRY_DREAM_COMPT_AJAX!}";
                 const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
@@ -102,9 +111,12 @@
             },
 
             /**
-             * 등록 모달 호출
+             * 등록(수정) 모달 호출
+             * @param {string|number} postNo - 글 번호.
              */
             regModal: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.JRNL_SUMRY_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -113,7 +125,7 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-                    /* init form */
+                    /* initialize form. */
                     JrnlSumry.initForm(rsltObj);
                 });
             },

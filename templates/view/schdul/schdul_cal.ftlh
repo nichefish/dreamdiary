@@ -45,7 +45,7 @@
              * Page 객체 초기화
              */
             init: function() {
-                /* init form */
+                /* initialize form. */
                 Schdul.initForm();
 
                 const chkArr = $("input:checkbox[id^='schdul_chk']");

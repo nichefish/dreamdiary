@@ -5,11 +5,14 @@
 
 <script>
     const JrnlDayAside = (function() {
+
+        /** 쿠키 기본 옵션*/
+        const cookieOptions = {
+            path: "/jrnl/day/",
+            expires: commons.date.getCurrDateAddDay(36135)
+        };
+
         return {
-            cookieOptions: {
-                path: "/jrnl/day/",
-                expires: commons.date.getCurrDateAddDay(36135)
-            },
             /**
              * JrnlDayAside 객체 초기화
              */
@@ -23,7 +26,10 @@
                     $("#jrnl_aside #pinMnth").text(pinMnthCookie);
                 }
             },
-            /** 오늘 날짜로 가기 */
+
+            /**
+             * 오늘 날짜로 가기
+             */
             today: function() {
                 const todayYy = commons.date.getCurrYyStr();
                 const todayMnth = commons.date.getCurrMnthStr();
@@ -33,7 +39,10 @@
                 // 오늘이 제일 위에 오게 하기 위해 내림차순 정렬로 변경
                 JrnlDayAside.sort("DESC");
             },
-            /** 년도 바꾸기 */
+
+            /**
+             * 년도 바꾸기
+             */
             yy: function() {
                 commons.util.handlebarsTemplate(null, "jrnl_day_list");
                 commons.util.handlebarsTemplate([], "jrnl_day_tag_list");
@@ -47,12 +56,15 @@
                     $("#jrnl_aside #mnth").val("");
                 }
             },
-            /** 월 바꾸기 */
+
+            /**
+             * 월 바꾸기
+             */
             mnth: function() {
                 // 쿠키 설정하기
-                $.cookie("jrnl_yy", $("#jrnl_aside #yy").val(), JrnlDayAside.cookieOptions);
+                $.cookie("jrnl_yy", $("#jrnl_aside #yy").val(), cookieOptions);
                 if ($("#jrnl_aside #mnth").val() === "") return;
-                $.cookie("jrnl_mnth", $("#jrnl_aside #mnth").val(), JrnlDayAside.cookieOptions);
+                $.cookie("jrnl_mnth", $("#jrnl_aside #mnth").val(), cookieOptions);
                 $("#jrnl_aside #dreamKeyword").val("");
                 // 목록 조회
                 JrnlDay.yyMnthListAjax();
@@ -61,21 +73,25 @@
                 JrnlDreamTag.listAjax();
                 //
                 JrnlDream.inKeywordSearchMode = false;
-                // template에 있는 tooltip들 활성화
-                $("[data-bs-toggle='tooltip']").tooltip();
                 // 페이지 상단으로 이동
                 commons.util.toPageTop();
             },
-            /** 현재 년/월을 저장한다. */
+
+            /**
+             * 현재 년/월을 저장한다.
+             */
             pinpoint: function() {
                 const pinYy = $("#jrnl_aside #yy").val();
                 const pinMnth = $("#jrnl_aside #mnth").val();
-                $.cookie("pin_yy", pinYy, JrnlDayAside.cookieOptions);
-                $.cookie("pin_mnth", pinMnth, JrnlDayAside.cookieOptions);
+                $.cookie("pin_yy", pinYy, cookieOptions);
+                $.cookie("pin_mnth", pinMnth, cookieOptions);
                 $("#jrnl_aside #pinYy").text(pinYy);
                 $("#jrnl_aside #pinMnth").text(pinMnth);
             },
-            /** 저장된 저널 년/월로 돌아가기 */
+
+            /**
+             * 저장된 저널 년/월로 돌아가기
+             */
             turnback: function() {
                 const pinYyCookie = $.cookie("pin_yy");
                 if (pinYyCookie !== undefined) $("#jrnl_aside #yy").val(pinYyCookie);
@@ -83,23 +99,28 @@
                 if (pinMnthCookie !== undefined) $("#jrnl_aside #mnth").val(pinMnthCookie);
                 JrnlDayAside.mnth();
             },
-            /** 저널 일자 정렬 */
+
+            /**
+             * 저널 일자 정렬
+             * @param {string} [toBe] - 정렬 방향 ("ASC" 또는 "DESC").
+             */
             sort: function(toBe) {
-                const asIs = $("#jrnl_aside #sort").val();
+                const sortElement = document.querySelector("#jrnl_aside #sort");
+                const asIs = sortElement.value;
                 if (toBe === undefined) toBe = (asIs !== "ASC") ? "ASC" : "DESC";
-                // 쿠키 설정하기
-                const cookieOptions = {
-                    path: "/jrnl/day/",
-                    expires: commons.date.getCurrDateAddDay(36135)
-                };
+                // 쿠키에 정렬 정보 저장
                 $.cookie("jrnl_day_sort", toBe, cookieOptions);
-                // 값 설정
+                // 정렬 값 설정
                 $("#jrnl_aside #sort").val(toBe);
+
+                // 정렬 아이콘 변경
                 if (toBe === "DESC") {
                     $("#jrnl_aside #sortIcon").removeClass("bi-sort-numeric-down").addClass("bi-sort-numeric-up-alt");
                 } else {
                     $("#jrnl_aside #sortIcon").removeClass("bi-sort-numeric-up-alt").addClass("bi-sort-numeric-down");
                 }
+
+                // 정렬 수행
                 const container = document.querySelector('#jrnl_day_list_div'); // 모든 저널 일자를 포함하는 컨테이너
                 const days = Array.from(container.querySelectorAll('.jrnl-day')); // 모든 'jrnl-day' 요소를 배열로 변환
                 days.sort((a, b) => {
@@ -107,10 +128,12 @@
                     const dateB = new Date(b.querySelector('.jrnl-day-header .col-1').textContent.trim());
                     return (toBe === "ASC") ? dateA - dateB : dateB - dateA;
                 });
+
                 // 컨테이너에서 모든 요소를 제거
                 while (container.firstChild) {
                     container.removeChild(container.firstChild);
                 }
+
                 // 정렬된 요소를 다시 컨테이너에 추가
                 days.forEach(day => {
                     container.appendChild(day);

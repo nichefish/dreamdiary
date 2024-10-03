@@ -16,8 +16,6 @@
                 $.cookie("jrnl_" + id, $(obj).val(), cookieOptions);
                 // 목록 조회
                 JrnlSumry.listAjax();
-                // template에 있는 tooltip들 활성화
-                $("[data-bs-toggle='tooltip']").tooltip();
             },
         }
     })();

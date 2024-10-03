@@ -17,8 +17,10 @@
 
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
+                /* show modal */
                 commons.util.handlebarsTemplate(obj, "sectn_reg_header");
                 commons.util.handlebarsTemplate(obj, "sectn_reg", "show");
 
@@ -72,7 +74,7 @@
                 if (isNaN(refPostNo)) return;
 
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
-                /* init form */
+                /* initialize form. */
                 Sectn.initForm(obj);
             },
 
@@ -125,7 +127,7 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-                    /* init form */
+                    /* initialize form. */
                     Sectn.initForm(rsltObj);
                 });
             },

@@ -15,7 +15,7 @@
              * Page 객체 초기화
              */
             init: function() {
-                /* init form */
+                /* initialize form. */
                 User.initForm();
 
                 <#if isReg!false>

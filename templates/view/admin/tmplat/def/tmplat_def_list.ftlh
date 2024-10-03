@@ -33,7 +33,7 @@
             /**
              * 내가 작성한 글 목록 보기
              */
-            myPapr: function() {
+            myPaprList: function() {
                 const url = "${Url.TMPLAT_DEF_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
@@ -47,7 +47,9 @@
                 commons.util.handlebarsTemplate({}, "tmplat_def_reg", "show");
             },
 
-            /** 등록 처리 (ajax) */
+            /**
+             * 등록 처리 (ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,

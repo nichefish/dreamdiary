@@ -10,19 +10,20 @@
              */
             pwChgModal: function() {
                 const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
-                /* init form */
+                /* initialize form. */
                 LgnPwChg.initForm(data);
             },
 
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
                 /* show modal */
                 commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
 
                 /* jquery validation */
-                commons.validate.validateForm("#flsysMetaRegForm", LgnPwChg.lgnPwChgAjax, {
+                commons.validate.validateForm("#lgnPwChgForm", LgnPwChg.lgnPwChgAjax, {
                     rules: {
                         newPw: { regex: commons.validate.pwRegex },
                         newPwCf: { equalTo: "#newPw" }
@@ -42,7 +43,7 @@
             },
 
             /**
-             * 비밀번호 수정 처리(Ajax)
+             * 비밀번호 수정 처리 (ajax)
              */
             lgnPwChgAjax: function() {
                 const url = '${Url.AUTH_LGN_PW_CHG_AJAX!}';

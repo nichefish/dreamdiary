@@ -32,15 +32,7 @@
              * Page 객체 초기화
              */
             init: function() {
-                // 쿠키 설정하기
-                let yyCookie = $.cookie("jrnl_yy");
-                if (yyCookie !== undefined) $("#jrnl_aside #yy").val(yyCookie);
-                let mnthCookie = $.cookie("jrnl_mnth");
-                if (yyCookie !== undefined) $("#jrnl_aside #mnth").val(mnthCookie);
-                let sortCookie = $.cookie("jrnl_day_sort");
-                if (sortCookie !== undefined) $("#jrnl_aside #sort").val(sortCookie);
-                // 아무 쿠키도 없을경우 전체 데이터 로딩을 막기 위해 올해 년도 세팅
-                if (yyCookie === undefined && mnthCookie === undefined) $("#jrnl_aside #yy").val(commons.date.getCurrYyStr());
+                Page.setYyMnthCookie();
                 JrnlDayAside.init();
                 // 목록 조회
                 JrnlDay.yyMnthListAjax();
@@ -48,12 +40,29 @@
                 JrnlDayTag.listAjax();
                 JrnlDiaryTag.listAjax();
                 JrnlDreamTag.listAjax();
-                // template에 있는 tooltip들 활성화
-                $("[data-bs-toggle='tooltip']").tooltip();
                 // 일기/꿈 키워드 검색에 엔터키 처리
                 commons.util.enterKey("#diaryKeyword", JrnlDiary.keywordListAjax);
                 commons.util.enterKey("#dreamKeyword", JrnlDream.keywordListAjax);
             },
+
+            /**
+             * 페이지에 조회년월 쿠키 세팅
+             */
+            setYyMnthCookie: function() {
+                // 년도 쿠키 설정
+                const yyCookie = $.cookie("jrnl_yy");
+                if (yyCookie !== undefined) document.querySelector("#jrnl_aside #yy").value = yyCookie;
+                // 월 쿠키 설정
+                const mnthCookie = $.cookie("jrnl_mnth");
+                if (yyCookie !== undefined) document.querySelector("#jrnl_aside #mnth").value = mnthCookie;
+                // 정렬 쿠키 설정
+                const sortCookie = $.cookie("jrnl_day_sort");
+                if (sortCookie !== undefined) document.querySelector("#jrnl_aside #sort").value = sortCookie;
+                // 아무 쿠키도 없을경우 전체 데이터 로딩을 막기 위해 올해 년도 세팅
+                if (yyCookie === undefined && mnthCookie === undefined) {
+                    $("#jrnl_aside #yy").val(commons.date.getCurrYyStr());
+                }
+            }
         }
     })();
     document.addEventListener("DOMContentLoaded", function() {

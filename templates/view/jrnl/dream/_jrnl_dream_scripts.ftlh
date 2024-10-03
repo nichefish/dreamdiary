@@ -10,8 +10,10 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
+                /* show modal */
                 commons.util.handlebarsTemplate(obj, "jrnl_dream_reg_header");
                 commons.util.handlebarsTemplate(obj, "jrnl_dream_reg", "show");
 
@@ -25,8 +27,9 @@
                         },
                     },
                 });
+                // 체크박스 상태 변경시 필드 재검증
                 $("#elseDreamYn").change(function() {
-                    $("#elseDreamerNm").valid(); // 체크박스 상태 변경시 details 필드 재검증
+                    $("#elseDreamerNm").valid();
                 });
                 /* tagify */
                 commons.tagify.initWithCtgr("#jrnlDreamRegForm #tagListStr", TagCtgrMap.jrnlDream);
@@ -72,17 +75,20 @@
                     $("#jrnl_dream_tag_list_div").empty();
                     commons.util.closeModal();
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_list");
-                    $("[data-bs-toggle='tooltip']").tooltip();
                     JrnlDream.inKeywordSearchMode = true;
                 }, "block");
             },
 
             /**
              * 등록 모달 호출
+             * @param {string|number} jrnlDayNo - 저널 일자 번호.
+             * @param {string} stdrdDt - 기준 날짜.
              */
             regModal: function(jrnlDayNo, stdrdDt) {
+                if (isNaN(jrnlDayNo)) return;
+
                 const obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
-                /* init form */
+                /* initialize form. */
                 JrnlDream.initForm(obj);
             },
 
@@ -98,12 +104,13 @@
              * 등록 처리 (ajax)
              */
             regAjax: function() {
+                const isReg = $("#jrnlDreamRegForm #postNo").val() === "";
                 Swal.fire({
-                    text: <@spring.message "view.cnfm.reg"/>,
+                    text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${Url.JRNL_DREAM_REG_AJAX!}";
+                    const url = isReg ? "${Url.JRNL_DREAM_REG_AJAX!}" : "${Url.JRNL_DREAM_MDF_AJAX!}";
                     const ajaxData = new FormData(document.getElementById("jrnlDreamRegForm"));
                     commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -137,7 +144,7 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-                    /* init form */
+                    /* initialize form. */
                     JrnlDream.initForm(rsltObj);
                 });
             },

@@ -7,6 +7,7 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
@@ -58,7 +59,7 @@
             /**
              * 내가 작성한 글 목록 보기
              */
-            myPapr: function() {
+            myPaprList: function() {
                 const url = "${Url.JRNL_SBJCT_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);

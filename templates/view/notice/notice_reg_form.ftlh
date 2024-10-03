@@ -29,7 +29,7 @@
              * Page 객체 초기화
              */
             init: function() {
-                /* init form */
+                /* initialize form. */
                 Notice.initForm();
                 <#if isMdf>
                     /* 글 단락 init */

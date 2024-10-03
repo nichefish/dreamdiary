@@ -10,12 +10,14 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터.
              */
             initForm: function(obj = {}) {
+                /* show modal */
                 commons.util.handlebarsTemplate(obj, "jrnl_day_reg", "show");
 
                 /* jquery validation */
-                commons.validate.validateForm("#jrnlDiaryRegForm", JrnlDiary.regAjax, {
+                commons.validate.validateForm("#jrnlDayRegForm", JrnlDay.regAjax, {
                     rules: {
                         jrnlDt: {
                             required: function() {
@@ -29,9 +31,10 @@
                         },
                     },
                 });
+                // 체크박스 상태 변경시 필드 재검증
                 $("#dtUnknownYn").change(function() {
-                    $("#jrnlDt").valid(); // 체크박스 상태 변경시 details 필드 재검증
-                    $("#aprxmtDt").valid(); // 체크박스 상태 변경시 details 필드 재검증
+                    $("#jrnlDt").valid();
+                    $("#aprxmtDt").valid();
                 });
                 // 일자 datepicker 날짜 검색 init : 현재 조회중인 yyyy-MM으로 처리
                 commons.datepicker.singleDatePicker("#jrnlDt", "yyyy-MM-DD", obj.jrnlDt);
@@ -52,11 +55,12 @@
             },
 
             /**
-             * 년도-월 목록 조회
+             * 년도-월 목록 조회 (ajax)
              */
             yyMnthListAjax: function() {
                 const mnth = $("#jrnl_aside #mnth").val();
                 if (commons.util.isEmpty(mnth)) return;
+
                 const url = "${Url.JRNL_DAY_LIST_AJAX!}";
                 const ajaxData = { "yy": $("#jrnl_aside #yy").val(), "mnth": mnth };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -84,7 +88,7 @@
              */
             regModal: function() {
                 const obj = { "jrnlDt": JrnlDay.validDt() };
-                /* init form */
+                /* initialize form. */
                 JrnlDay.initForm(obj);
             },
 
@@ -129,12 +133,13 @@
              * 등록 처리 (ajax)
              */
             regAjax: function() {
+                const isReg = $("#jrnlDayRegForm #postNo").val() === "";
                 Swal.fire({
-                    text: <@spring.message "view.cnfm.reg"/>,
+                    text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
-                    const url = "${Url.JRNL_DAY_REG_AJAX!}";
+                    const url = isReg ? "${Url.JRNL_DAY_REG_AJAX!}" : "${Url.JRNL_DAY_MDF_AJAX!}";
                     const ajaxData = new FormData(document.getElementById("jrnlDayRegForm"));
                     commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                         Swal.fire({ text: res.message })
@@ -164,7 +169,7 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-                    /* init form */
+                    /* initialize form. */
                     JrnlDay.initForm(rsltObj);
                 });
             },
@@ -188,7 +193,6 @@
                             .then(function() {
                                 if (res.rslt) {
                                     JrnlDay.yyMnthListAjax();
-                                    // 태그 조회
                                     JrnlDayTag.listAjax();
                                 }
                             });

@@ -14,7 +14,7 @@
              * Page 객체 초기화
              */
             init: function() {
-                /* init form */
+                /* initialize form. */
                 Page.initForm();
 
                 /* 에러 메세지 존재시 표시 */
@@ -33,6 +33,7 @@
 
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
                 /* jquery validation */

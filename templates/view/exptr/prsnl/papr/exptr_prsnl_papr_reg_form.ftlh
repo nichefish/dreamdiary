@@ -29,18 +29,22 @@
                     Page.setTotAmt();
                 </#if>
 
-                /* init form */
+                /* initialize form. */
                 ExptrPrsnlPapr.initForm();
             },
 
-            /** 제목 자동설정 */
+            /**
+             * 제목 자동설정
+             */
             setTitle: function() {
-                let yy = $("#yy").val();
-                let mnth = $("#mnth").val();
+                const yy = $("#yy").val();
+                const mnth = $("#mnth").val();
                 $("#title").val(yy + "년 " + mnth + "월 경비지출서");
             },
 
-            /** 년도/월 등록 가능한지 검사 */
+            /**
+             * 년도/월 등록 가능한지 검사
+             */
             validateYyMnth: function() {
                 const url = "${Url.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
                 const ajaxData = {"yy": $("#yy").val(), "mnth": $("#mnth").val()};
@@ -62,7 +66,9 @@
                 });
             },
 
-            /** 추가추가 개수 0개인지 체크 */
+            /**
+             * 추가추가 개수 0개인지 체크
+             */
             emptyItemListToggle: function() {
                 if ($("#exptr_prsnl_item_reg_div tr").length === 0) {
                     $("#empty_list_div").show();
