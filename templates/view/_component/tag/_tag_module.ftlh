@@ -11,8 +11,15 @@
             init: function() {
                 //
             },
+
+            /**
+             * 태그 상세 정보 조회 (ajax)
+             * @param {string|number} tagNo - 조회할 태그 번호.
+             */
             dtlAjax: function(tagNo) {
                 event.stopPropagation();
+                if (isNaN(tagNo)) return;
+
                 const url = "${Url.TAG_DTL_AJAX!}";
                 const ajaxData = { "tagNo": tagNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -27,18 +34,30 @@
                     $("#board_tag_list_modal").modal("hide");
                 });
             },
-            /** 태그로 글 목록 필터링 */
+
+            /**
+             * 태그로 글 목록 필터링
+             * @param {string|number} tagNo - 필터링할 태그 번호.
+             */
             filter: function(tagNo) {
-                $("#listForm #pageNo").val(1);
-                $("#listForm #tags").val(tagNo);
+                if (isNaN(tagNo)) return;
+
+                document.querySelector("#listForm #pageNo").value = 1;
+                document.querySelector("#listForm #tags").value = tagNo;
                 const url = "${listUrl!}?actionTyCd=SEARCH";
                 commons.util.blockUISubmit("#listForm", url);
             },
-            /** 글 목록 태그 필터링 리셋 */
+
+            /**
+             * 글 목록 태그 필터링 리셋
+             */
             resetFilter: function() {
                 Tag.filter("");
             },
-            /** 전체 태그 목록 조회 */
+
+            /**
+             * 전체 태그 목록 조회
+             */
             listAjax: function() {
                 const url = "${Url.TAG_LIST_AJAX!}";
                 const ajaxData = { "contentType": $("#contentType").val() };

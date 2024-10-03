@@ -12,7 +12,7 @@
             const ptn = commons.date.ptnDate;
             /** dateRangePicker init */
             let initDt = "${initDt!}";
-            if(initDt === "today") initDt = commons.date.getCurrDateStr(ptn);
+            if (initDt === "today") initDt = commons.date.getCurrDateStr(ptn);
             commons.datepicker.singleDatePicker("#${searchNm}", ptn, initDt);
         });
     </script>
@@ -34,7 +34,7 @@
             const ptn = commons.date.ptnDatetime;
             /** dateRangePicker init */
             let initDt = "${initDt!}";
-            if(initDt === "") initDt = commons.date.getCurrDateStr(ptn);
+            if (initDt === "") initDt = commons.date.getCurrDateStr(ptn);
             commons.datepicker.singleDatePicker("#${searchNm}", ptn, initDt);
         });
     </script>
