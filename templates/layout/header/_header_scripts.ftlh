@@ -7,30 +7,63 @@
     /** 레이아웃 */
     const Header = (function() {
         return {
+            /**
+             * Header 객체 초기화
+             */
             init: function() {
                 // 사용자/관리자 전환
-                $("#userMode").on("change", function() {
-                    let mode = $(this).val();
-                    if (mode === "${Constant.AUTH_USER!}") location.replace("${Url.MAIN!}");
-                    if (mode === "${Constant.AUTH_MNGR!}") location.replace("${Url.ADMIN_MAIN!}");
-                });
-
-                /** 현재 접속중인 메뉴 활성화 로직 */
-                const siteAcsInfoExists = "${topMenuNo!}" !== "" && "${siteMenuNo!}" !== "";
-                if (siteAcsInfoExists) {
-                    $("#${topMenuNo!}").addClass("hover");
-                    $("#${siteMenuNo!}").addClass("hover");
-                }
+                Header.userModeSelectInit();
+                // 현재 접속중인 메뉴 활성화
+                Header.activateSelectedMenu();
             },
-            /** 사이트맵 모달 팝업 호출 */
+
+            /**
+             * 사용자/관리자 전환 <select> init
+             */
+            userModeSelectInit: function() {
+                const userModeSelect = document.querySelector("#userMode");
+                if (!userModeSelect) return;
+                userModeSelect.addEventListener("change", function() {
+                    let mode = this.value;
+                    if (mode === "${Constant.AUTH_USER!}") {
+                        location.replace("${Url.MAIN!}");
+                    } else if (mode === "${Constant.AUTH_MNGR!}") {
+                        location.replace("${Url.ADMIN_MAIN!}");
+                    }
+                });
+            },
+
+            /**
+             * 현재 접속중인 메뉴 활성화
+             */
+            activateSelectedMenu: function() {
+                const topMenuNo = "${topMenuNo!}";
+                const siteMenuNo = "${siteMenuNo!}";
+
+                const siteAcsInfoExists = (topMenuNo !== "") && (siteMenuNo !== "");
+                if (!siteAcsInfoExists) return;
+
+                document.getElementById(topMenuNo)?.classList.add("hover");
+                document.getElementById(siteMenuNo)?.classList.add("hover");
+            },
+
+            /**
+             * 사이트맵 모달 팝업 호출
+             */
             siteMapModal: function() {
                 $("#sitemap_modal").modal("show");
             },
-            /** 내 정보 상세 페이지 이동 */
+
+            /**
+             * 내 정보 상세 페이지 이동
+             */
             myInfoDtl: function () {
                 location.replace("${Url.USER_MY_DTL!}");
             },
-            /** 로그아웃 처림 */
+
+            /**
+             * 로그아웃 처리
+             */
             lgout: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.lgout"/>,
