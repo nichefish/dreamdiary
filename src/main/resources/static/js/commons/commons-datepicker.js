@@ -10,9 +10,6 @@
 if (typeof commons === 'undefined') { var commons = {}; }
 commons.datepicker = (function() {
     return {
-        ptnDate: "yyyy-MM-DD",
-        ptnDatetime: "yyyy-MM-DD HH:mm:ss",
-
         /**
          * 기본 날짜 옵션
          */
@@ -22,7 +19,7 @@ commons.datepicker = (function() {
             showDropdowns: true,
             autoUpdateInput: false,
             locale: {
-                format: this.ptnDate,
+                format: commons.date.ptnDate,
                 daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
                 monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
             }
@@ -37,15 +34,15 @@ commons.datepicker = (function() {
             timePicker24Hour: true,
             timePickerSeconds: true,
             locale: {
-                ...commons.datepicker.baseOption.locale,
-                format: this.ptnDatetime
+                ...commons.datepicker.baseOptions.locale,
+                format: commons.date.ptnDatetime
             }
         },
 
         /**
          * 기본 공통 로직 : jQuery 요소에 datepicker를 초기화하고 날짜 변경 시 콜백을 실행합니다.
-         * @param {string} selectorStr - 초기화할 요소의 선택자 문자열.
-         * @param {object} option - `daterangepicker`에 적용할 옵션.
+         * @param {string} selector - 초기화할 요소의 선택자 문자열.
+         * @param {object} options - `daterangepicker`에 적용할 옵션.
          * @param {function} func - 날짜 선택 시 실행할 콜백 함수 (선택적).
          */
         datepicker: function(selector, options, func) {

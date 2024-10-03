@@ -207,6 +207,7 @@ commons.util = (function() {
             if (!selectorStr || typeof func !== 'function') return;
 
             const inputs = document.querySelectorAll(selectorStr);
+            if (inputs.length === 0) return;
             inputs.forEach(input => {
                 input.addEventListener("keyup", function(event) {
                     if (event.key === "Enter") { // Enter 키 확인
@@ -258,14 +259,21 @@ commons.util = (function() {
         },
 
         /**
-         * selectorStr 받아서 input 값을 숫자로 반환
+         * 주어진 선택자 문자열에 해당하는 input 요소의 값을 숫자로 변환하여 반환합니다.
+         * @param {string} selector - 변환할 input 요소의 선택자 문자열.
+         * @returns {number|null} - 변환된 숫자 값 또는 유효하지 않은 경우 `null`.
          */
-        toNumber: function(selectorStr) {
-            if (!commons.util.isPresent(selectorStr)) return;
-            const $input = $(selectorStr);
-            if ($input.val() === undefined) return;
-            const numValue = Number($(selectorStr).val().replace(/,/gi, ""));
-            if (!isNaN(numValue)) return numValue;
+        toNumber: function(selector) {
+            const inputElement = commons.util.verifySelector(selector);
+            if (inputElement.length === 0) return null;
+            const input = document.querySelector(selector);
+            // input 요소의 값이 없거나 undefined인 경우 null 반환
+            const inputValue = input?.value;
+            if (inputValue === undefined || inputValue === "") return null;
+
+            // 쉼표를 제거하고 숫자로 변환
+            const numValue = Number(inputValue.replace(/,/g, ""));
+            return !isNaN(numValue) ? numValue : null;
         },
 
         /**
@@ -702,10 +710,8 @@ commons.util = (function() {
             }
 
             // 나머지 경우에는 selector로 간주, 입력 필드에 이벤트 리스너 추가
-            const selector = value;
-            if (!commons.util.isPresent(selector)) return;
-
-            const inputs = document.querySelectorAll(selector);
+            const inputs = document.querySelectorAll(value);
+            if (inputs.length === 0) return;
             inputs.forEach(elmt => {
                 elmt.value = commons.util.thousandSeparator(elmt.value, unit);
                 elmt.addEventListener("keyup", function() {
@@ -729,9 +735,8 @@ commons.util = (function() {
             const numValue = value.replace(/,/g, "");
             if (!isNaN(numValue)) return Number(numValue / unit);
             // 나머지 경우에는 selector로 간주, 콤마 제거 처리 및 keyup시 콤마 제거 처리한다.
-            const selectorStr = value;
-            if (!commons.util.isPresent(selectorStr)) return;
-            const inputs = document.querySelectorAll(selectorStr);
+            const inputs = commons.util.verifySelector(value);
+            if (inputs.length === 0) return;
             inputs.forEach(elmt => {
                 elmt.value = commons.util.removeComma(elmt.value, unit);
                 elmt.addEventListener("keyup", function() {
@@ -756,9 +761,8 @@ commons.util = (function() {
                 });
             }
             // 나머지 경우에는 selector로 간주, 콤마 제거 처리 및 keyup시 콤마 제거 처리한다.
-            const selectorStr = value;
-            if (!commons.util.isPresent(selectorStr)) return;
-            const inputs = document.querySelectorAll(selectorStr);
+            const inputs = document.querySelectorAll(value);
+            if (inputs.length === 0) return;
             inputs.forEach(elmt => {
                 elmt.value = commons.util.addDot(elmt.value, fixed, unit);
                 elmt.addEventListener("keyup", function() {
