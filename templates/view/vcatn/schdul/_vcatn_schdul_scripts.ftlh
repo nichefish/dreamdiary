@@ -38,7 +38,9 @@
                     }
                 }
             },
-            /** submit */
+            /**
+             * submit
+             */
             submit: function() {
                 $("#vcantSchdulRegForm").submit();
             },

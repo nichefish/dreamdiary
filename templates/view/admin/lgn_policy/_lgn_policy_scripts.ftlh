@@ -5,7 +5,9 @@
 <script>
     const LgnPolicy = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#lgnPolicyForm").validate({
@@ -26,7 +28,9 @@
                     },
                 });
             },
-            /** submit */
+            /**
+             * submit
+             */
             submit: function() {
                 $("#lgnPolicyForm").submit();
             },

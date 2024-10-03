@@ -23,19 +23,6 @@
 <#include "/view/_component/comment/_comment_modal_scripts.ftlh">
 
 <script>
-    /** TODO: tinymce 글접기 토글 테스트중... */
-    document.addEventListener("DOMContentLoaded", function() {
-        const toggleElements = $("[id^='tinymce_toggle_']");
-        toggleElements.on('click', function() {
-            const toggleId = $(this).attr('id');
-            const sectionContentId = toggleId.replace('tinymce_toggle_', 'tinymce_section_content_');
-            const contentElements = $("#" + sectionContentId);
-            if (contentElements.length > 0) {
-                contentElements.toggleClass('tinymce-collapse-div tinymce-collapsed');
-            }
-        });
-    });
-
     const Page = (function() {
         return {
             /**
@@ -74,7 +61,11 @@
                     $("#jandiYn").click();
                 </#if>
             },
+
             <#if isMdf>
+                /**
+                 * 새로고침 함수 :: 페이지별 특성에 따라 별도로 세팅
+                 */
                 refreshFunc: function() {
                     Sectn.listAjax({ "refPostNo": ${post.postNo!}, "refContentType": "${post.contentType!}" });
                     $("#sectn_reg_modal").modal("hide");

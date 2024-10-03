@@ -5,7 +5,9 @@
 <script>
     const User = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#userRegForm").validate({
@@ -176,7 +178,7 @@
                     }, "block");
                 });
             },
-            /** 목록 화면 이동 */
+            /** 목록 화면으로 이동 */
             list: function() {
                 const listUrl = "${Url.USER_LIST!}<#if isMdf!false>?isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);

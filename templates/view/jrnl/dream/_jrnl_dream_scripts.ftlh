@@ -8,7 +8,9 @@
 <script>
     const JrnlDream = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#jrnlDreamRegForm").validate({

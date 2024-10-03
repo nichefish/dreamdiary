@@ -5,7 +5,9 @@
 <script>
     const UserReqst = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#userReqstForm").validate({

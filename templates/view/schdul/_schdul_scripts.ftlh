@@ -6,7 +6,9 @@
     const Schdul = (function() {
         return {
             prtcpntCnt: 0,
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $(function() {
@@ -27,6 +29,7 @@
                     });
                 });
             },
+
             /** 일정 등록 모달 호출 */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "schdul_reg", "show");
@@ -43,20 +46,24 @@
                 $("#jandiYn").click();
                 Schdul.addPrtcpnt();
             },
+
             /** 일정 등록 모달 호출 */
             prvtRegModal: function() {
                 commons.util.handlebarsTemplate({ "isPrvt": true }, "schdul_reg", "show");
                 commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD");
                 commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD");
             },
+
             /** 참여자 추가 */
             addPrtcpnt: function() {
                 commons.util.handlebarsAppend({ "idx": Schdul.prtcpntCnt++ }, "schdul_reg_prtcpnt");
             },
+
             /** 참여자 삭제 */
             removePrtcpnt: function(idx) {
                 $("#schdul_reg_prtcpnt_div #prtcpntRow"+idx).remove();
             },
+
             /** 종료일자 토글 처리 */
             schdulCd: function(obj) {
                 if ($(obj).val() === "${Constant.SCHDUL_HLDY!}") {
@@ -68,10 +75,14 @@
                     $("#endDtSpan").show();
                 }
             },
-            /** submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 $("#schdulRegForm").submit();
             },
+
             /** 등록/수정 처리(Ajax) */
             regAjax: function() {
                 const url = "${Url.SCHDUL_REG_AJAX!}";
@@ -83,6 +94,7 @@
                         });
                 }, "block");
             },
+
             /** 상세 모달 호출 (Ajax) */
             dtlAjax: function(postNo) {
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
@@ -97,6 +109,7 @@
                     Schdul.key = obj.postNo;
                 });
             },
+
             /** 수정 폼 오픈 */
             mdfModal: function(key) {
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
@@ -122,6 +135,7 @@
                     });
                 });
             },
+
             /** 삭제 처리 (ajax) */
             delAjax: function(key) {
                 Swal.fire({

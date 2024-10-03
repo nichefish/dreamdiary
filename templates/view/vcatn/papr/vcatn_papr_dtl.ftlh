@@ -103,7 +103,7 @@
             <#--페이지:: 버튼: 수정하기-->
             <@component.post_btn_modify "VcatnPapr.mdfForm();" post isMngr />
             <#--페이지:: 버튼: 삭제하기-->
-            <@component.post_btn_delete "VcatnPapr.delAjax();" post isMngr />
+            <@component.post_btn_delete "VcatnPapr.delAjax(${post.postNo});" post isMngr />
             <!-- 등록자: 수정,삭제 가능, 관리자: 삭제 가능, 확인 시: 삭제만 가능 -->
     <#--        <#if post.isRegstr!false && (post.cfYn)! == "N">
                 <button type="button" class="btn btn-light btn-active-primary me-2 btn-sm" onclick="Page.mdfForm();"

@@ -8,7 +8,9 @@
 <script>
     const JrnlDiary = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#jrnlDiaryRegForm", JrnlDiary.regAjax);

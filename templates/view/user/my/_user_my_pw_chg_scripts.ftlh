@@ -5,7 +5,9 @@
 <script>
     const UserMyPwChg = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $(function(){
@@ -38,7 +40,9 @@
                 const data = { "errorMsg": "${errorMsg!}" };
                 commons.util.handlebarsTemplate(data, "user_my_pw_chg", "show");
             },
-            /** submit */
+            /**
+             * submit
+             */
             submit: function() {
                 $("#myPwChgForm").submit();
             },

@@ -96,7 +96,7 @@
                     });
                 });
             },
-            /** 목록 화면 이동 */
+            /** 목록 화면으로 이동 */
             stats: function() {
                 commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE!}");
             },

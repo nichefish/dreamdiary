@@ -26,7 +26,7 @@
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.TMPLAT_DEF_LIST!}?actionTyCd=SEARCH");
             },
-            /** 내가 작성한 글 보기 */
+            /** 내가 작성한 글 목록 보기 */
             myPapr: function() {
                 const url = "${Url.TMPLAT_DEF_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";

@@ -5,33 +5,44 @@
 <script>
     const TmplatDef = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#menuRegForm", Menu.regAjax);
             },
-            /** Draggable 컴포넌트 init */
+
+            /**
+             * Draggable 컴포넌트 init
+             */
             initDraggable: function() {
                 const keyExtractor = document.querySelectorAll(".draggable-zone");
                 if (mainContainers.length === 0) return false;
                 TmplatDef.swappable = commons.util.initDraggable(keyExtractor, url);
             },
+
             /** 등록 모달 팝업 호출 */
             regModal: function(menuTyCd, upperMenuNo, upperMenuNm) {
                 event.stopPropagation();
                 const obj = { "menuTyCd": menuTyCd, "upperMenuNo": upperMenuNo, "upperMenuNm": upperMenuNm };
                 commons.util.handlebarsTemplate(obj, "menu_reg", "show");
             },
+
             /** 아이콘 새로고침 */
             refreshIcon: function() {
                 const $iconClassElmt = $("#menuRegForm #icon");
                 if (!$iconClassElmt.length) return;
                 $("#menuRegForm #menu_icon_div").html($iconClassElmt.val());
             },
-            /** submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 $("#tmplatDefRegForm").submit();
             },
+
             /** 메뉴 정보 등록/수정 */
             regAjax: function() {
                 Swal.fire({
@@ -50,6 +61,7 @@
                     }, "block");
                 });
             },
+
             /** 수정 모달 팝업 호출 */
             mdfModal: function(menuNo) {
                 const url = "${Url.MENU_DTL_AJAX!}";
@@ -62,6 +74,7 @@
                     commons.util.handlebarsTemplate(res.rsltObj, "menu_reg", "show");
                 });
             },
+
             /** 삭제 처리 (ajax) */
             delAjax: function(menuNo) {
                 Swal.fire({
@@ -79,11 +92,13 @@
                     }, "block");
                 });
             },
+
             /** 목록 검색 */
             search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.LOG_ACTVTY_LIST!}?actionTyCd=SEARCH");
             },
+
             /** 엑셀 다운로드 */
             xlsxDownload: function() {
                 Swal.fire({

@@ -77,7 +77,7 @@
             <#--페이지:: 버튼: 수정하기-->
             <@component.post_btn_modify "ExptrReqst.mdfForm();" post isMngr />
             <#--페이지:: 버튼: 삭제하기-->
-            <@component.post_btn_delete "ExptrReqst.delAjax();" post isMngr />
+            <@component.post_btn_delete "ExptrReqst.delAjax(${post.postNo});" post isMngr />
             <#--페이지:: 버튼: 목록으로 가기-->
             <@component.post_btn_toList "ExptrReqst.list();" />
         </div>

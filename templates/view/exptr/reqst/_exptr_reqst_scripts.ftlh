@@ -5,7 +5,9 @@
 <script>
     const ExptrReqst = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#exptrReqstRegForm").validate({
@@ -40,7 +42,7 @@
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.EXPTR_REQST_LIST!}?actionTyCd=SEARCH");
             },
-            /** 내가 작성한 글 보기 */
+            /** 내가 작성한 글 목록 보기 */
             myPapr: function() {
                 const url = "${Url.EXPTR_REQST_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
@@ -50,7 +52,9 @@
             regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_REQST_REG_FORM!}");
             },
-            /** submit */
+            /**
+             * submit
+             */
             submit: function() {
                 tinymce.activeEditor.save();
                 Page.submitMode = "submit";
@@ -147,7 +151,7 @@
                     }, "block");
                 });
             },
-            /** 목록 화면 이동 */
+            /** 목록 화면으로 이동 */
             list: function() {
                 const listUrl = "${Url.EXPTR_REQST_LIST!}<#if isMdf!false>?isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);

@@ -5,18 +5,26 @@
 <script>
     const BoardDef = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#boardDefRegForm", BoardDef.regAjax);
             },
-            /** Draggable 컴포넌트 init */
+
+            /**
+             * Draggable 컴포넌트 init
+             */
             initDraggable: function() {
                 const keyExtractor = (item) => ({ "boardCd": $(item).attr("id") });
                 const url = "${Url.BOARD_DEF_SORT_ORDR_AJAX!}";
                 BoardDef.swappable = commons.util.initDraggable(keyExtractor, url);
             },
-            /** 등록 모달 호출 */
+
+            /**
+             * 등록 모달 호출
+             */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "board_def_reg", "show");
                 /* jquery :: validation */
@@ -25,7 +33,10 @@
                 commons.validate.replaceBlankIfMatches("#boardDefRegForm .cddata", commons.validate.nonCdRegex);
                 commons.validate.onlyNum(".number");
             },
-            /** submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 $("#boardDefRegForm").submit();
             },

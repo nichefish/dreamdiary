@@ -5,7 +5,9 @@
 <script>
     const JrnlSumry = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#jrnlSumryRegForm", JrnlSumry.regAjax);
@@ -19,7 +21,7 @@
                 $("#procForm #yy").val(yy);
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
             },
-            /** 목록 화면 이동 */
+            /** 목록 화면으로 이동 */
             list: function (postNo) {
                 commons.util.blockUIReplace("${Url.JRNL_SUMRY_LIST!}");
             },

@@ -5,12 +5,16 @@
 <script>
     const DtlCd = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#dtlCdRegForm", DtlCd.regAjax);
             },
-            /** Draggable 컴포넌트 init */
+            /**
+             * Draggable 컴포넌트 init
+             */
             initDraggable: function() {
                 const keyExtractor = (item) => ({ "clCd": $("#clCd").val(), "dtlCd": $(item).attr("id") });
                 const url = "${Url.CL_CD_SORT_ORDR_AJAX!}";
@@ -25,7 +29,9 @@
                 commons.validate.replaceBlankIfMatches("#dtlCdRegForm #dtlCd", commons.validate.nonCdRegex);
                 commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
             },
-            /** submit */
+            /**
+             * submit
+             */
             submit: function() {
                 $("#dtlCdRegForm").submit();
             },

@@ -187,7 +187,7 @@
             },
 
             /**
-             * 목록 화면 이동
+             * 목록 화면으로 이동
              */
             list: function() {
                 const listUrl = "${Url.CL_CD_LIST!}?isBackToList=Y";

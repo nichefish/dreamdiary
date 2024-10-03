@@ -8,7 +8,9 @@
 <script>
     const JrnlDay = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#jrnlDayRegForm").validate({
@@ -107,7 +109,9 @@
                 if (!$iconClassElmt.length) return;
                 $("#jrnlDayRegForm #weather_icon_div").html($iconClassElmt.val());
             },
-            /** submit */
+            /**
+             * submit
+             */
             submit: function() {
                 $("#jrnlDayRegForm").submit();
             },

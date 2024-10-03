@@ -12,7 +12,10 @@
                 /* jquery :: validation */
                 LgnPwChg.initValidateForm();
             },
-            /** form validation init */
+
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#lgnPwChgForm").validate({
@@ -33,11 +36,17 @@
                     },
                 });
             },
-            /** submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 $("#lgnPwChgForm").submit();
             },
-            /** 비밀번호 수정 처리(Ajax) */
+
+            /**
+             * 비밀번호 수정 처리(Ajax)
+             */
             lgnPwChgAjax: function() {
                 const url = '${Url.AUTH_LGN_PW_CHG_AJAX!}';
                 const ajaxData = { "userId" : $("#lgnUserId").val(), "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };

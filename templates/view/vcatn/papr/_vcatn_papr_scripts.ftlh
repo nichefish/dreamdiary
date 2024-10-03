@@ -5,7 +5,9 @@
 <script>
     const VcatnPapr = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#vcatnPaprRegForm").validate({
@@ -28,7 +30,7 @@
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.VCATN_PAPR_LIST!}?actionTyCd=SEARCH");
             },
-            /** 내가 작성한 글 보기 */
+            /** 내가 작성한 글 목록 보기 */
             myPapr: function() {
                 const url = "${Url.VCATN_PAPR_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
@@ -38,7 +40,9 @@
             regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.VCATN_PAPR_REG_FORM!}");
             },
-            /** submit */
+            /**
+             * submit
+             */
             submit: function() {
                 $("#vcatnPaprRegForm").submit();
             },
@@ -103,7 +107,7 @@
                     }, "block");
                 });
             },
-            /** 목록 화면 이동 */
+            /** 목록 화면으로 이동 */
             list: function() {
                 commons.util.blockUIReplace("${Url.VCATN_PAPR_LIST!}?isBackToList=Y");
             }

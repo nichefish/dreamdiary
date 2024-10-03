@@ -5,12 +5,16 @@
 <script>
     const Menu = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#menuRegForm", Menu.regAjax);
             },
-            /** Draggable 컴포넌트 init */
+            /**
+             * Draggable 컴포넌트 init
+             */
             initDraggable: function() {
                 const mainContainers = document.querySelectorAll(".draggable-zone-main");
                 if (mainContainers.length === 0) return false;
@@ -90,7 +94,9 @@
                     $("#url_div").removeClass("d-none");
                 }
             },
-            /** submit */
+            /**
+             * submit
+             */
             submit: function() {
                 $("#menuRegForm").submit();
             },
