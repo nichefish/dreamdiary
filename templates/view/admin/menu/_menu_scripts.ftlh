@@ -7,8 +7,10 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
+                /* show modal */
                 commons.util.handlebarsTemplate(obj, "menu_reg", "show");
 
                 /* jquery validation */
@@ -83,7 +85,7 @@
                 event.stopPropagation();
 
                 const obj = { "menuTyCd": menuTyCd, "upperMenuNo": upperMenuNo, "upperMenuNm": upperMenuNm };
-                /* init form */
+                /* initialize form. */
                 Menu.initForm(obj);
             },
 
@@ -150,7 +152,7 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-                    /* init form */
+                    /* initialize form. */
                     Menu.initForm(rsltObj);
                 });
             },

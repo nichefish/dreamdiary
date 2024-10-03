@@ -30,12 +30,12 @@
                     {{/if}}
                 </#list>
             </select>
-            <span id="schdulCd_valid_span"></span>
+            <span id="schdulCd_validate_span"></span>
         </div>
         <div class="col-xl-7 col-6">
             <input type="text" name="title" id="title" class="form-control form-control-solid required"
                    value="{{title}}" placeholder="제목" maxlength="120" />
-            <span id="title_valid_span"></span>
+            <span id="title_validate_span"></span>
         </div>
     </div>
     <#--begin::Row-->
@@ -90,7 +90,7 @@
             <label class="fs-6 mt-3 mb-2 required" for="bgnDt">시작일</label>
             <input name="bgnDt" id="bgnDt" class="form-control form-control-solid required"
                    value="{{bgnDt}}" placeholder="시작일" readonly/>
-            <div id="bgnDt_valid_span"></div>
+            <div id="bgnDt_validate_span"></div>
         </div>
         <div class="col-xl-5 col-5" id="endDtDiv">
             <label class="fs-6 mt-3 mb-2" for="endDt">종료일</label>

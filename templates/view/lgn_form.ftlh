@@ -51,8 +51,8 @@
 
                 const $errorMsgSpan = $("#errorMsgSpan");
                 $errorMsgSpan.html("");
-                $("#userId_valid_span").text("");
-                $("#password_valid_span").text("");
+                $("#userId_validate_span").text("");
+                $("#password_validate_span").text("");
                 $errorMsgSpan.html(errorMsg.replace(/&lt;br&gt;/g, '<br/>'));   // 줄바꿈 처리
             },
 
@@ -125,23 +125,23 @@
     </div>
     <#--begin::Form-->
     <form name="lgnForm" id="lgnForm" class="w-100" method="post">
-        <div class="opacity-75 mb-5">
+        <div class="opacity-75">
             <label class="form-label fs-6 text-secondary fw-bolder" for="userId">아이디</label>
             <input type="text" name="userId" id="userId" class="form-control form-control-lg enter required"
                    value="" placeholder="아이디를 입력하세요." autocomplete="off" maxlength="20"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="아이디를 입력하세요." />
-            <div class="h-15px">
-                <span id="userId_valid_span" class="text-danger"></span>
-            </div>
+        </div>
+        <div class="h-15px mt-1 mb-5">
+            <span id="userId_validate_span" class="text-danger"></span>
         </div>
         <div class="opacity-75">
             <label class="form-label text-secondary fw-bolder fs-6 mb-1" for="password">비밀번호</label>
             <input type="password" name="password" id="password" class="form-control form-control-lg enter required"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="비밀번호를 입력하세요."
                    placeholder="비밀번호를 입력하세요." maxlength="20" autocomplete="off" />
-            <div class="mb-3 h-15px">
-                <span id="password_valid_span" class="text-danger"></span>
-            </div>
+        </div>
+        <div class="h-15px mt-1 mb-3">
+            <span id="password_validate_span" class="text-danger"></span>
         </div>
         <div class="text-left">
             <span id="errorMsgSpan" class="text-danger"></span>

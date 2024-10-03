@@ -21,15 +21,16 @@
                     rules: {
                         jrnlDt: {
                             required: function() {
-                                return $("#jrnlDayRegForm #dtUnknownYn").prop(":checked", false);
+                                return !$("#jrnlDayRegForm #dtUnknownYn").prop(":checked");
                             }
                         },
                         aprxmtDt: {
                             required: function() {
-                                return $("#jrnlDayRegForm #dtUnknownYn").prop(":checked", true);
+                                return $("#jrnlDayRegForm #dtUnknownYn").prop(":checked");
                             }
                         },
                     },
+                    ignore: undefined
                 });
                 // 체크박스 상태 변경시 필드 재검증
                 $("#dtUnknownYn").change(function() {

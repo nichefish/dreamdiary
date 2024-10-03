@@ -31,6 +31,7 @@
                     }
                 });
             },
+
             /**
              * 프로필 이미지 삭제
              */
@@ -54,17 +55,19 @@
                     }, "block");
                 });
             },
+
             /**
              * TODO: 원본 프로필 이미지 조회
              */
             viewOrgnlProflImg: function() {
                 //
             },
-            /** 내 휴가 사용현황 조회 */
+
+            /**
+             * 내 휴가 사용현황 조회
+             */
             myVcatnList: function() {
                 $("#user_my_dtl_vcatn_list").modal("show");
-                // template에 있는 tooltip들 활성화
-                $("[data-bs-toggle='tooltip']").tooltip();
             }
         }
     })();

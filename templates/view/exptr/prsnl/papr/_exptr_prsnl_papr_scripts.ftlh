@@ -7,6 +7,7 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
@@ -42,7 +43,7 @@
             /**
              * 내가 작성한 글 목록 보기
              */
-            myPapr: function() {
+            myPaprList: function() {
                 const url = "${Url.EXPTR_PRSNL_PAPR_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
@@ -50,9 +51,12 @@
 
             /**
              * 개별 영수증 PDF 취합 다운로드
+             * @param {string|number} postNo - 글 번호.
              */
             pdfDownload: function(postNo) {
                 event.stopPropagation();
+                if (isNaN(postNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,

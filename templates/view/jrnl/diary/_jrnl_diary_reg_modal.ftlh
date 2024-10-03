@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-12">
                     <textarea name="cn" id="tinymce_jrnlDiaryCn" class="form-control form-control-solid h-100px required"></textarea>
-                    <div id="tinymce_jrnlDiaryCn_valid_span"></div>
+                    <div id="tinymce_jrnlDiaryCn_validate_span"></div>
                 </div>
             </div>
             <div id="jrnl_diary_reg_div">

@@ -34,7 +34,7 @@
         <div class="col-lg-{{#if (exists postNo)}}9{{else}}10{{/if}}">
             <input type="text" name="title" id="title" class="form-control"
                    value="{{title}}" placeholder="제목" maxlength="100" />
-            <div id="title_valid_span"></div>
+            <div id="title_validate_span"></div>
         </div>
         {{#if (exists postNo)}}
             {{^ifYn elseDreamYn}}
@@ -118,7 +118,7 @@
                 <input type="text" name="elseDreamerNm" id="elseDreamerNm" class="form-control form-control-solid w-150px required"
                        value="{{elseDreamerNm}}" placeholder="꿈꾼 사람" maxlength="30" />
             </div>
-            <div class="col" id="elseDreamerNm_valid_span"></div>
+            <div class="col" id="elseDreamerNm_validate_span"></div>
         </div>
     </div>
 </script>

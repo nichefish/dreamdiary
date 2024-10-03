@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-12">
                     <textarea name="cn" id="tinymce_sectnCn" class="form-control form-control-solid h-100px required"></textarea>
-                    <div id="tinymce_sectnCn_valid_span"></div>
+                    <div id="tinymce_sectnCn_validate_span"></div>
                 </div>
             </div>
             <div class="row" id="sectn_reg_div">

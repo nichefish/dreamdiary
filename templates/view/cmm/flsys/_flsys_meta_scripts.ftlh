@@ -14,8 +14,10 @@
 
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
+                /* show modal */
                 commons.util.handlebarsTemplate(obj, "flsys_meta_reg", "show");
 
                 /* jquery validation */
@@ -29,7 +31,7 @@
              */
             regModal: function(filePath) {
                 const obj = { "filePath": filePath, "upperFilePath": Flsys.currPath };
-                /* init form */
+                /* initialize form. */
                 FlsysMeta.initForm(obj);
             },
 
@@ -93,7 +95,7 @@
                         return false;
                     }
                     const rsltObj = res.rsltObj;
-                    /* init form */
+                    /* initialize form. */
                     FlsysMeta.initForm(rsltObj);
                     $("#flsys_meta_dtl_modal").modal("hide");
                     FlsysMeta.key = postNo;

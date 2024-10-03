@@ -40,7 +40,7 @@
                 <div class="col-xl-1">
                     <input type="text" name="lgnLockDy" id="lgnLockDy" class="form-control form-control-solid text-end required number"
                            value="${lgnPolicy.lgnLockDy!}" maxlength="3" />
-                    <div id="lgnLockDy_valid_span"></div>
+                    <div id="lgnLockDy_validate_span"></div>
                 </div>
                 <div class="col-xl-1 col-form-label w-5">
                     일
@@ -58,7 +58,7 @@
                 <div class="col-xl-1">
                     <input type="text" name="lgnTryLmt" id="lgnTryLmt" class="form-control form-control-solid text-end required number"
                            value="${lgnPolicy.lgnTryLmt!}" maxlength="3" />
-                    <div id="lgnTryLmt_valid_span"></div>
+                    <div id="lgnTryLmt_validate_span"></div>
                 </div>
                 <div class="col-xl-1 col-form-label w-5">
                     회
@@ -76,7 +76,7 @@
                 <div class="col-xl-1">
                     <input type="text" name="pwChgDy" id="pwChgDy" class="form-control form-control-solid text-end required number"
                            value="${lgnPolicy.pwChgDy!}" maxlength="3" />
-                    <div id="pwChgDy_valid_span"></div>
+                    <div id="pwChgDy_validate_span"></div>
                 </div>
                 <div class="col-xl-1 col-form-label w-5">
                     일
@@ -94,7 +94,7 @@
                 <div class="col-xl-2">
                     <input type="password" name="pwForReset" id="pwForReset" class="form-control form-control-solid required"
                            value="${lgnPolicy.pwForReset!}" maxlength="16" autocomplete="off" />
-                    <div id="pwForReset_valid_span"></div>
+                    <div id="pwForReset_validate_span"></div>
                 </div>
                 <div class="col-xl-8 text-noti">
                     ※ 계정 '비밀번호 초기화'시 초기값으로 설정할 비밀번호<br/>

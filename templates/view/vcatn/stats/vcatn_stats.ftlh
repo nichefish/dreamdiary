@@ -100,7 +100,7 @@
                                 <input type="hidden" name="statsList[${stats?counter}].cnwkYryc" id="cnwkYryc${stats?counter}"
                                        onchange="Page.totYryc('${stats?counter}');"
                                        value="${stats.cnwkYryc!0}" maxlength="3" >
-                                <span id="cnwkYryc${stats?counter}_valid_span"></span>
+                                <span id="cnwkYryc${stats?counter}_validate_span"></span>
                             </td>
                             <td class="w-100px text-center">
                                 <input type="text" name="statsList[${stats?counter}].prjctYryc" id="prjctYryc${stats?counter}" class="w-50px num"
@@ -116,19 +116,19 @@
                                 <input type="hidden" name="statsList[${stats?counter}].totYryc" id="totYryc${stats?counter}"
                                        onchange="Page.totYryc('${stats?counter}');"
                                        value="${stats.totYryc!0}" >
-                                <span id="totYryc${stats?counter}_valid_span">${stats.totYryc!0}</span>
+                                <span id="totYryc${stats?counter}_validate_span">${stats.totYryc!0}</span>
                             </td>
                             <td class="text-center">
                                 <input type="hidden" name="statsList[${stats?counter}].exhsYryc" id="exhsYryc${stats?counter}"
                                        onchange="Page.totYryc('${stats?counter}');"
                                        value="${stats.exhsYryc!0}" >
-                                <span id="exhsYryc${stats?counter}_valid_span">${stats.exhsYryc!0}</span>
+                                <span id="exhsYryc${stats?counter}_validate_span">${stats.exhsYryc!0}</span>
                             </td>
                             <td class="text-center">
                                 <input type="hidden" name="statsList[${stats?counter}].remndrYryc" id="remndrYryc${stats?counter}"
                                        onchange="Page.totYryc('${stats?counter}');"
                                        value="${stats.remndrYryc!0}" >
-                                <span id="remndrYryc${stats?counter}_valid_span">${stats.remndrYryc!0}</span>
+                                <span id="remndrYryc${stats?counter}_validate_span">${stats.remndrYryc!0}</span>
                             </td>
                         </tr>
                     </#list>

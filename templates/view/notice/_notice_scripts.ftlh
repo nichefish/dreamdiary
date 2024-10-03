@@ -108,7 +108,7 @@
              * 등록/수정 처리(Ajax)
              */
             regAjax: function() {
-                const url = " <#if isMdf!false>${Url.NOTICE_MDF_AJAX!}<#else>${Url.NOTICE_REG_AJAX!}</#if>";
+                const url = "<#if isMdf!false>${Url.NOTICE_MDF_AJAX!}<#else>${Url.NOTICE_REG_AJAX!}</#if>";
                 const ajaxData = new FormData(document.getElementById("noticeRegForm"));
                 commons.util.blockUIMultipartAjax(url, ajaxData, function(res) {
                     Swal.fire({text: res.message})

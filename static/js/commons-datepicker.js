@@ -58,7 +58,7 @@ commons.datepicker = (function() {
                 // 날짜 포맷 설정
                 $elmt.val(start.format(options.locale.format));
                 // 에러 메세지 제거
-                const $errorSpan = $("#"+id+"_valid_span");
+                const $errorSpan = $("#"+id+"_validate_span");
                 if ($errorSpan.length) $errorSpan.empty();
                 // 콜백 함수 실행
                 if (typeof func === 'function') func(start);

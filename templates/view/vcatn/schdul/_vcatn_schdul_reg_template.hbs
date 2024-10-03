@@ -20,7 +20,7 @@
                     <option value="${user.userId!}" id="${user.userId!}">${user.userNm!}</option>
                 </#list>
             </select>
-            <div id="userId_valid_span"></div>
+            <div id="userId_validate_span"></div>
         </div>
     </div>
     <#--begin::Row-->
@@ -38,7 +38,7 @@
                     <option value="${vcatnCd.dtlCd!}">${vcatnCd.dtlCdNm!}</option>
                 </#list>
             </select>
-            <div id="vcatnCd_valid_span"></div>
+            <div id="vcatnCd_validate_span"></div>
         </div>
     </div>
     <#--begin::Row-->
@@ -61,7 +61,7 @@
                     <input name="bgnDt" id="bgnDt" class="form-control form-control-solid ps-12 required w-100"
                            value="{{bgbDt}}" placeholder="휴가 시작일" readonly />
                 </div>
-                    <div id="bgnDt_valid_span"></div>
+                    <div id="bgnDt_validate_span"></div>
             </div>
             <div class="d-flex flex-column">
                 <div class="position-relative d-flex align-items-center" id="endDtDiv">
@@ -76,7 +76,7 @@
                     <input name="endDt" id="endDt" class="form-control form-control-solid ps-12 mt-1 required w-100"
                            value="{{endDt}}" placeholder="휴가 종료일" readonly />
                 </div>
-                <div id="endDt_valid_span"></div>
+                <div id="endDt_validate_span"></div>
             </div>
         </div>
     </div>

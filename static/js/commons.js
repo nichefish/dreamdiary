@@ -32,12 +32,47 @@ if (typeof commons === 'undefined') { var commons = {}; }
                     window.location.href = lgnFormUrl;
                 });
                 return;
+            } else if (statusCode === 400) {
+                const errorLines = msg.split("\n");
+                errorLines.forEach(line => {
+                    const fieldErrorMatch = line.match(/Field error in object '([^']+)' on field '([^']+)':/);
+                    console.log(fieldErrorMatch);
+                    const defaultMessageMatch = line.match(/\]; default message \[([^\[\]]+)\]$/);
+                    console.log(defaultMessageMatch);
+                    if (fieldErrorMatch && defaultMessageMatch) {
+                        const fieldName = fieldErrorMatch[2];
+                        const errorMessage = defaultMessageMatch[1]; // 0보다 커야 합니다
+                        const errorMsg = fieldName + ": " + errorMessage + ".";
+                        // 필드네임을 스네이크 캐이스로 변환
+                        const snakeFieldName = toSnakeCase(fieldName);
+                        const elmts = (commons.util.verifySelector("[name=\"" + snakeFieldName + "\"]"));
+                        console.log(snakeFieldName);
+                        if (elmts.length === 0) {
+                            commons.util.swalOrAlert(errorMsg);
+                        } else {
+                            const elmt = elmts[0];
+                            const errorSpan = document.querySelector("#" + elmt.id + "_validate_span");
+                            errorSpan.classList.add("text-danger");
+                            errorSpan.appendChild(document.createTextNode(errorMessage));
+                            elmt.focus();
+                        }
+                        console.error("ajax error: ", xhr);
+                    }
+                });
+                console.error("ajax error: ", xhr);
+                return;
             }
-            // 오류 로그 추가
+            // 기본 오류 로그 추가
             console.error("ajax error: ", xhr);
+            commons.util.swalOrAlert(msg);
         }
     });
 })(jQuery);
+function toSnakeCase(str) {
+    return str
+        .replace(/([a-z])([A-Z])/g, '$1_$2') // camelCase에서 _를 추가
+        .toLowerCase(); // 모두 소문자로 변환
+}
 commons.util = (function() {
     return {
         /**

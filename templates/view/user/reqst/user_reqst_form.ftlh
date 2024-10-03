@@ -83,9 +83,11 @@
                     <div class="col-xl-2 col-8">
                         <input type="text" name="userId" id="userId" class="form-control form-control-solid required no-space"
                                value="${user.userId!}" placeholder="아이디" maxlength="16" />
-                        <div class="form-text text-noti">(※영문소문자, 숫자 포함 4~16자)</div>
-                        <div id="userId_valid_span" class="text-danger"></div>
-                        <div id="ipDupChckPassed_valid_span" class="text-danger"></div>
+                        <div class="form-text text-noti">
+                            <@spring.message "noti.req.userid"/>
+                        </div>
+                        <div id="userId_validate_span" class="text-danger"></div>
+                        <div id="ipDupChckPassed_validate_span" class="text-danger"></div>
                     </div>
                     <div class="col-xl-2 col-4">
                         <button type="button" class="btn btn-sm btn-secondary required blink" id="idDupChckBtn"
@@ -106,8 +108,10 @@
                     <div class="col-xl-2">
                         <input type="password" name="password" id="password" class="form-control form-control-solid required no-space"
                                placeholder="비밀번호" maxlength="20" autocomplete="off" />
-                        <div class="form-text text-noti">(※특수문자, 숫자, 영문 포함 9자리 이상)</div>
-                        <div id="password_valid_span"></div>
+                        <div class="form-text text-noti">
+                            <@spring.message "noti.req.password"/>
+                        </div>
+                        <div id="password_validate_span"></div>
                     </div>
                     <div class="col-xl-2">
                         <div class="fw-bold col-form-label text-sm-start text-lg-end required">
@@ -117,8 +121,10 @@
                     <div class="col-xl-2">
                         <input type="password" name="passwordCf" id="passwordCf" class="form-control form-control-solid required no-space"
                                placeholder="비밀번호 확인" maxlength="20" autocomplete="off" />
-                        <div class="form-text text-noti">(※비밀번호와 동일하게 입력해야 합니다.)</div>
-                        <div id="passwordCf_valid_span"></div>
+                        <div class="form-text text-noti">
+                            <@spring.message "noti.req.password.cf"/>
+                        </div>
+                        <div id="passwordCf_validate_span"></div>
                     </div>
                 </div>
                 <#--begin::Row-->
@@ -136,7 +142,7 @@
                         <i class="bi bi-people-fill me-1 blink-slow"></i>
                         <span class="fw-bold text-gray-600">사용자</span>
                         <input type="hidden" name="authList[0].authCd" id="authCd" value="${Constant.AUTH_USER!}">
-                        <div id="authCd_valid_span"></div>
+                        <div id="authCd_validate_span"></div>
                     </div>
                 </div>
                 <#--begin::Row-->
@@ -154,8 +160,10 @@
                     <div class="col-xl-2">
                         <input type="text" name="nickNm" id="nickNm" class="form-control form-control-solid required"
                                value="${user.nickNm!}" placeholder="표시이름" maxlength="20" />
-                        <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
-                        <div id="nickNm_valid_span"></div>
+                        <div class="form-text text-noti">
+                            <@spring.message "noti.req.nicknm"/>
+                        </div>
+                        <div id="nickNm_validate_span"></div>
                     </div>
                 </div>
                 <#--begin::Row-->
@@ -172,7 +180,7 @@
                     <div class="col-lg-2 col-4">
                         <input type="text" name="emailId" id="emailId" class="form-control form-control-solid required no-space"
                                value="${user.emailId!}" placeholder="이메일 ID 입력" maxlength="20" />
-                        <div id="emailId_valid_span"></div>
+                        <div id="emailId_validate_span"></div>
                     </div>
                     <div class="col-xl-2 col-1 d-flex-center fw-bold text-gray-700" style="width:2%;">
                         <label for="emailDomain"><label for="emailDomainSelect">@</label></label>
@@ -180,7 +188,7 @@
                     <div class="col-lg-2 col-5 vertical-center">
                         <input type="text" name="emailDomain" id="emailDomain" class="form-control form-control-solid required no-space"
                                value="gmail.com" placeholder="직접입력" maxlength="20" />
-                        <div id="emailDomain_valid_span"></div>
+                        <div id="emailDomain_validate_span"></div>
                     </div>
                     <div class="col-xl-2 col-1">
                         <select name="emailDomainSelect" id="emailDomainSelect" class="form-select form-select-solid">
@@ -203,8 +211,8 @@
                     <div class="col-xl-2">
                         <input type="text" name="cttpc" id="cttpc" class="form-control form-control-solid"
                                <#if user.userInfo??>value="${user.cttpc!}"</#if> placeholder="전화번호" maxlength="20" />
-                        <div class="form-text text-noti">(※숫자만 입력)</div>
-                        <div id="cttpc_valid_span"></div>
+                        <div class="form-text text-noti"><@spring.message "noti.req.cttpc"/></div>
+                        <div id="cttpc_validate_span"></div>
                     </div>
                 </div>
                 <#--begin::Row-->
@@ -229,7 +237,7 @@
                         <div id="acsIpListSpan" class="mt-2 mb-0" style="display:none;">
                             <input type="text" name="acsIpListStr" id="acsIpListStr" class="form-control form-control-solid no-space"
                                    value="" maxlength="500" autocomplete="off"/>
-                            <div class="form-text text-noti">(※최대 5개)</div>
+                            <div class="form-text text-noti"><@spring.message "noti.req.acsip"/></div>
                             <div id="acsIpListStr_valid_span"></div>
                         </div>
                     </div>
@@ -282,7 +290,7 @@
                             직원 인사정보 추가+
                         </button>
                         <div class="text-noti">
-                            ※회사 소속인 경우 직원 인사정보를 입력해주세요.
+                            <@spring.message "noti.req.user.emplym"/>
                         </div>
                     </div>
                 </div>

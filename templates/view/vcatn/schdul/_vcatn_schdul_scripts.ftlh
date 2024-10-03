@@ -79,7 +79,7 @@
                     $("#lineDiv"+idx).addClass("d-none");
                     $("#endDtDiv"+idx).addClass("d-none");
                     $("#endDt"+idx).val($("#bgnDt"+idx).val());
-                    $("#endDt"+idx+"_valid_span").empty();
+                    $("#endDt"+idx+"_validate_span").empty();
                 } else {
                     $("#lineDiv"+idx).removeClass("d-none");
                     $("#endDtDiv"+idx).removeClass("d-none");

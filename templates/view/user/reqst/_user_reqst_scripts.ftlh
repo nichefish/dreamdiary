@@ -35,17 +35,17 @@
                 $("#emailDomainSelect").on("change", function() {
                     $("#emailDomain").val($(this).val());
                 });
-                // 권한 유효성검사 바꿀때마다 지우기
+                // 권한 변경시 필드 재검증
                 $("#authCd").change(function() {
                     $("#authCd").valid(); // 체크박스 상태 변경시 details 필드 재검증
                 });
                 // 등록화면:: 사용자 ID 변경입력시 중복체크 통과여부 초기화
                 $("#userId").on("keyup", function() {
-                    $("#userId_valid_span").empty();
+                    $("#userId_validate_span").empty();
                     $("#ipDupChckPassed").val("N");
                     $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
                 }).on("keydown", function() {
-                    $("#userId_valid_span").text("");
+                    $("#userId_validate_span").text("");
                     $("#ipDupChckPassed").val("N");
                     $("#idDupChckBtn").addClass("blink").removeClass("btn-success").addClass("btn-secondary").removeAttr("disabled");
                 });
@@ -74,6 +74,13 @@
                     if (!result.value) return;
                     UserReqst.regAjax();
                 });
+            },
+
+            /**
+             * form submit
+             */
+            submit: function() {
+                $("userReqstForm").submit();
             },
 
             /**

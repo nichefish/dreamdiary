@@ -10,10 +10,8 @@
             enableUserProfl: function() {
                 // 영역 표시
                 commons.util.handlebarsTemplate({}, "user_profl");
-                // template에 있는 tooltip들 활성화
-                $("[data-bs-toggle='tooltip']").tooltip();
                 // 버튼 교체 :: 툴팁 작동 유지 위해 속성만 교체
-                let $btn = $("#userProflBtn");
+                const $btn = $("#userProflBtn");
                 $btn.removeClass("btn-primary").addClass("btn-danger");
                 $btn.text("프로필 정보 삭제-");
                 $btn.attr("onclick", "UserProfl.disableUserProfl();");

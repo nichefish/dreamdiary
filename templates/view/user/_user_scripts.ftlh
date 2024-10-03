@@ -7,24 +7,11 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
-                commons.validate.validateForm("#userRegForm", User.submitHandler, {
-                    <#if isReg!false>
-                        rules: {
-                            userId: { minlength:4, maxlength:16 },
-                            ipDupChckPassed: { dupChck:true },
-                            password: { minlength:9, maxlength:20, regex:commons.validate.pwRegex },
-                            passwordCf: { equalTo:"#password", maxlength:20 },
-                        },
-                        messages: {
-                            ipDupChckPassed: { dupChck:"아이디 중복 체크는 필수 항목입니다." },
-                            password: { regex:"비밀번호가 형식에 맞지 않습니다." },
-                            passwordCf: { equalTo:"비밀번호에 입력한 값과 동일하게 입력해야 합니다." },
-                        },
-                    </#if>
-                });
+                commons.validate.validateForm("#userRegForm", User.submitHandler);
                 $.validator.addMethod("dupChck", function(value) {
                     return (value === "Y");
                 });
@@ -32,9 +19,9 @@
                 commons.validate.toLowerCase("#userId");
                 // 연락처 포맷
                 commons.validate.cttpc("#cttpc");
-                // 권한 유효성검사 바꿀때마다 지우기
+                // 권한 변경시 필드 재검증
                 $("#authCd").change(function() {
-                    $("#authCd").valid(); // 체크박스 상태 변경시 details 필드 재검증
+                    $("#authCd").valid();
                 });
                 // 접속IP 사용 여부 클릭시 글씨 변경 + 입력창 토글 :: 메소드 분리
                 commons.util.chckboxLabel("useAcsIpYn", "사용//미사용", "blue//gray", function(){
@@ -96,7 +83,7 @@
              * 아이디 중복 체크(Ajax)
              */
             idDupChckAjax: function() {
-                const userIdValidSpan = $("#userId_valid_span");
+                const userIdValidSpan = $("#userId_validate_span");
                 const userId = $("#userId").val();
                 const idRegex = /^(?=.*[a-z])[a-z\d]{4,16}$/g;
                 if (!idRegex.test(userId)) {
@@ -110,7 +97,7 @@
                     if (res.rslt) {
                         userIdValidSpan.removeClass("text-danger").addClass("text-success");
                         $("#ipDupChckPassed").val("Y");
-                        $("#ipDupChckPassed_valid_span").text("");
+                        $("#ipDupChckPassed_validate_span").text("");
                         $("#idDupChckBtn").removeClass("blink").addClass("btn-success").removeClass("btn-secondary").attr("disabled", "disabled");
                     } else {
                         userIdValidSpan.removeClass("text-success").addClass("text-danger");

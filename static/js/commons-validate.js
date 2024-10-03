@@ -17,16 +17,21 @@ $(function() {
 });
 commons.validate = (function() {
 
-    /** jQuery valication 기본 옵션 */
-    const jQueryValidationBaseOptions = {
-        errorPlacement : function(error, element) {
-            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-        },
-    };
-
     return {
         // "global flag /g works inconsistent if called multiple times..."
-        baseOptions: jQueryValidationBaseOptions,
+
+        /** jQuery valication 기본 옵션 */
+        baseOptions: {
+            errorPlacement : function($error, $element) {
+                // 공통 함수로 분리
+                commons.validate.errorSpan($error, $element);
+            },
+            success: function(label) {
+                // 유효성 검사를 통과한 경우 에러 메시지 제거
+                label.remove();
+            },
+            ignore: [], // hidden 필드도 검증하기 위함
+        },
 
         basicExtnFilter: "exe|class|jsp|asp|php|sh|bat|war|jar|java|xml|js|css|html|sql",
         validImgExtn: "jpg|jpeg|png",
@@ -167,7 +172,7 @@ commons.validate = (function() {
 
             inputs.forEach(input => {
                 input.addEventListener("blur", function() {
-                    const errorSpan = document.getElementById(input.id + "_valid_span");
+                    const errorSpan = document.getElementById(input.id + "_validate_span");
                     const isValidIp = commons.validate.ipv4regex.test(input.value);
                     const isValidCidr = commons.validate.ipv4CidrRegex.test(input.value);
                     const isValid = isValidIp || isValidCidr;
@@ -219,10 +224,11 @@ commons.validate = (function() {
             const inputs = commons.util.verifySelector(selector);
             if (inputs.length === 0) return;
 
-            inputs.forEach(input => {
+            inputs.forEach(function(input) {
                 input.addEventListener("keyup", function() {
                     // 모든 공백 제거
-                    this.value = this.value.replace(/\s+/g, '');
+                    const value = this.value.replace(/\s+/g, '');
+                    this.value = value;
 
                     // 0으로 시작하지 않으면 무효 처리
                     const startWithZero = /^(0[0-9]|0)$/;
@@ -251,20 +257,15 @@ commons.validate = (function() {
          * @param {object} additionalOptions - 추가로 적용할 옵션 (선택적).
          */
         validateForm: function (formSelector, func, additionalOptions = {}) {
-            $(function(){
-                // jQuery Validation을 초기화
-                const mergedOptions = {
-                    ...jQueryValidationBaseOptions,
-                    ...additionalOptions
-                };
-                // 제출 핸들러가 있는 경우 추가 설정
-                if (typeof func === 'function') {
-                    mergedOptions.submitHandler = function() {
-                        func();
-                    };
-                }
-                $(formSelector).validate(mergedOptions); // 검증 초기화
-            });
+            if (!commons.util.isPresent(formSelector)) return;
+            // jQuery Validation을 초기화
+            const mergedOptions = {
+                ...commons.validate.baseOptions,
+                ...additionalOptions
+            };
+            // 제출 핸들러가 있는 경우 추가 설정
+            if (typeof func === 'function') mergedOptions.submitHandler = func;
+            $(formSelector).validate(mergedOptions); // 검증 초기화
         },
 
         /**
@@ -272,10 +273,10 @@ commons.validate = (function() {
          * @dependency: jQueryValidation
          * @param: error, element
          */
-        errorSpan: function (error, element) {
-            const errorSpan = document.getElementById(element.id + "_valid_span");
+        errorSpan: function ($error, $element) {
+            const errorSpan = document.getElementById($element[0].id + "_validate_span");
             if (!errorSpan) return;
-            errorSpan.innerHTML += error;
+            errorSpan.innerHTML = $error.html();
             errorSpan.classList.add("text-danger");
             errorSpan.focus();
         },
@@ -287,7 +288,7 @@ commons.validate = (function() {
         clearErrorSpan: function(selector) {
             const requiredElements = document.querySelectorAll(selector || ".required");
             requiredElements.forEach(function(elmt) {
-                const errorSpan = document.getElementById(elmt.id + "_valid_span");
+                const errorSpan = document.getElementById(elmt.id + "_validate_span");
                 if (errorSpan) errorSpan.innerHTML = '';
             });
         },

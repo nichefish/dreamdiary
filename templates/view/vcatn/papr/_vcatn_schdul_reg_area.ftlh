@@ -31,7 +31,7 @@
                             <option value="${vcatnCd.dtlCd!}" ${fn.selected(schdul.vcatnCd!, vcatnCd.dtlCd)}>[${vcatnCd.dtlCdNm!}]</option>
                         </#list>
                     </select>
-                    <div id="vcatnCd${schdul?index}_valid_span"></div>
+                    <div id="vcatnCd${schdul?index}_validate_span"></div>
                 </div>
                 <div class="col-md-5 d-flex flex-column">
                     <label class="required fs-6 fw-bold mb-2" for="bgnDt${schdul?index}">휴가일</label>
@@ -53,7 +53,7 @@
                                        onchange="VcatnSchdul.propEndDt(${schdul?index})"
                                        value="${schdul.bgnDt!}" placeholder="휴가 시작일" readonly />
                             </div>
-                            <div id="bgnDt${schdul?index}_valid_span"></div>
+                            <div id="bgnDt${schdul?index}_validate_span"></div>
                         </div>
                         <span class="col-1 svg-icon svg-icon-muted svg-icon-2hx lineDiv" id="lineDiv${schdul?index}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vertical-middle">
@@ -77,7 +77,7 @@
                                        onchange="VcatnSchdul.propEndDt(${schdul?index})"
                                        value="${schdul.endDt!}" placeholder="휴가 종료일" readonly />
                             </div>
-                            <div id="endDt${schdul?index}_valid_span"></div>
+                            <div id="endDt${schdul?index}_validate_span"></div>
                         </div>
                     </div>
                 </div>

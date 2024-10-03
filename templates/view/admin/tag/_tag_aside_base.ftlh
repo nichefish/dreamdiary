@@ -24,7 +24,10 @@
                     $("#jrnl_aside #pinMnth").text(pinMnthCookie);
                 }
             },
-            /** 오늘 날짜로 가기 */
+
+            /**
+             * 오늘 날짜로 가기
+             */
             today: function() {
                 const todayYy = commons.date.getCurrYyStr();
                 const todayMnth = commons.date.getCurrMnthStr();
@@ -34,7 +37,10 @@
                 // 오늘이 제일 위에 오게 하기 위해 내림차순 정렬로 변경
                 JrnlDayAside.sort("DESC");
             },
-            /** 년도 바꾸기 */
+
+            /**
+             * 년도 바꾸기
+             */
             yy: function() {
                 commons.util.handlebarsTemplate(null, "jrnl_day_list");
                 commons.util.handlebarsTemplate([], "jrnl_day_tag_list");
@@ -48,7 +54,10 @@
                     $("#jrnl_aside #mnth").val("");
                 }
             },
-            /** 월 바꾸기 */
+
+            /**
+             * 월 바꾸기
+             */
             mnth: function() {
                 // 쿠키 설정하기
                 $.cookie("jrnl_yy", $("#jrnl_aside #yy").val(), JrnlDayAside.cookieOptions);
@@ -62,12 +71,13 @@
                 JrnlDreamTag.listAjax();
                 //
                 JrnlDream.inKeywordSearchMode = false;
-                // template에 있는 tooltip들 활성화
-                $("[data-bs-toggle='tooltip']").tooltip();
                 // 페이지 상단으로 이동
                 commons.util.toPageTop();
             },
-            /** 현재 년/월을 저장한다. */
+
+            /**
+             * 현재 년/월을 저장한다.
+             */
             pinpoint: function() {
                 const pinYy = $("#jrnl_aside #yy").val();
                 const pinMnth = $("#jrnl_aside #mnth").val();
@@ -76,7 +86,10 @@
                 $("#jrnl_aside #pinYy").text(pinYy);
                 $("#jrnl_aside #pinMnth").text(pinMnth);
             },
-            /** 저장된 저널 년/월로 돌아가기 */
+
+            /**
+             * 저장된 저널 년/월로 돌아가기
+             */
             turnback: function() {
                 const pinYyCookie = $.cookie("pin_yy");
                 if (pinYyCookie !== undefined) $("#jrnl_aside #yy").val(pinYyCookie);
@@ -84,7 +97,10 @@
                 if (pinMnthCookie !== undefined) $("#jrnl_aside #mnth").val(pinMnthCookie);
                 JrnlDayAside.mnth();
             },
-            /** 저널 일자 정렬 */
+
+            /**
+             * 저널 일자 정렬
+             */
             sort: function(toBe) {
                 const asIs = $("#jrnl_aside #sort").val();
                 if (toBe === undefined) toBe = (asIs !== "ASC") ? "ASC" : "DESC";

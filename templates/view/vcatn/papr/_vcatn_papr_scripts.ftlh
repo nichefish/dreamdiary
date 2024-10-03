@@ -7,6 +7,7 @@
         return {
             /**
              * form init
+             * @param {Object} obj - 폼에 바인딩할 데이터
              */
             initForm: function(obj = {}) {
                 /* jquery validation */
@@ -43,7 +44,7 @@
             /**
              * 내가 작성한 글 목록 보기
              */
-            myPapr: function() {
+            myPaprList: function() {
                 const url = "${Url.VCATN_PAPR_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
@@ -114,7 +115,9 @@
                 commons.util.blockUISubmit("#procForm", "${Url.VCATN_PAPR_MDF_FORM!}");
             },
 
-            /** 관리자 확인 여부 변경 (Ajax) */
+            /**
+             * 관리자 확인 여부 변경 (Ajax)
+             */
             cfAjax: function() {
                 const url = "${Url.VCATN_PAPR_CF_AJAX!}";
                 const ajaxData = $("#procForm").serializeArray();

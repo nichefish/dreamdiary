@@ -19,16 +19,23 @@
                     $("#flsys_file_vod_div").empty();
                 });
             },
-            /** 탭 활성화 */
+
+            /**
+             * 파일시스템 모달 호출
+             */
             flsysModal: function(filePath) {
                 $("#flsys_home_modal").modal("show");
                 Flsys.flsysListAjax(filePath);
             },
-            /** 탭 활성화 */
+
+            /**
+             * 탭 활성화
+             */
             activateTab: function(tabObj) {
                 $("li.nav-item a.nav-link").removeClass("active");
                 $(tabObj).addClass("active");
             },
+
             /** 목록 조회 (ajax) */
             flsysListAjax: function(filePath) {
                 const url = "${Url.FLSYS_LIST_AJAX!}";
@@ -44,14 +51,14 @@
                     Flsys.currPath = rsltObj.filePath;
                     $("#absolute_path_div").text(rsltObj.filePath);
                     commons.util.handlebarsTemplate(rsltObj, "flsys_home_header_path");
-                    // template에 있는 tooltip들 활성화
-                    $("[data-bs-toggle='tooltip']").tooltip();
                 });
             },
+
             /** 새로고침 (ajax) */
             flsysRefreshAjax: function() {
                 Flsys.flsysListAjax(Flsys.currPath);
             },
+
             /** 탐색기로 열기 */
             openInExplorer: function(filePath, objectTy) {
                 const url = "${Url.FLSYS_OPEN_IN_EXPLORER_AJAX!}";

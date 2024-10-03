@@ -22,8 +22,10 @@
         <div class="col-xl-2">
             <input type="text" name="emplym.userNm" id="userNm" class="form-control form-control-solid required"
                    value="${(user.emplym.userNm)!}" placeholder="이름" maxlength="20" />
-            <div class="form-text text-noti">(※한글/영문 최대 20자)</div>
-            <div id="userNm_valid_span">
+            <div class="form-text text-noti">
+                <@spring.message "noti.req.nicknm"/>
+            </div>
+            <div id="userNm_validate_span">
         </div>
     </div>
     <#--begin::Row-->
@@ -40,7 +42,7 @@
         <div class="col-lg-2 col-4">
             <input type="text" name="emplym.emplymEmailId" id="emplymEmailId" class="form-control form-control-solid no-space required"
                    value="${(user.emplym.emplymEmailId)!}" placeholder="이메일 ID 입력" maxlength="20" />
-            <div id="emplymEmailId_valid_span"></div>
+            <div id="emplymEmailId_validate_span"></div>
         </div>
         <div class="col-xl-2 col-1 d-flex-center fw-bold text-gray-700" style="width:2%;">
             <label for="emailDomain"><label for="emplymEmailDomainSelect">@</label></label>
@@ -48,7 +50,7 @@
         <div class="col-lg-2 col-5 vertical-center">
             <input type="text" name="emplym.emplymEmailDomain" id="emplymEmailDomain" class="form-control form-control-solid no-space required"
                    value="${(user.emplym.emplymEmailDomain)!}" placeholder="직접입력" maxlength="20" />
-            <div id="emplymEmailDomain_valid_span"></div>
+            <div id="emplymEmailDomain_validate_span"></div>
         </div>
         <div class="col-xl-2 col-1">
             <select name="emplymEmailDomainSelect" id="emplymEmailDomainSelect" class="form-select form-select-solid">
@@ -73,8 +75,8 @@
         <div class="col-xl-2">
             <input type="text" name="emplym.emplymCttpc" id="emplymCttpc" class="form-control form-control-solid required"
                    value="${(user.emplym.emplymCttpc)!}" maxlength="20" />
-            <div class="form-text text-noti">(※숫자만 입력)</div>
-            <span id="cttpc_valid_span"></span>
+            <div class="form-text text-noti"><@spring.message "noti.req.cttpc"/></div>
+            <span id="cttpc_validate_span"></span>
         </div>
     </div>
     <#--begin::Row-->
@@ -95,7 +97,7 @@
                     <option value="${cmpy.dtlCd!}" <#if user.emplym?? && cmpy.dtlCd == (user.emplym.cmpyCd)!>"selected"</#if>>${cmpy.dtlCdNm!}</option>
                 </#list>
             </select>
-            <div id="cmpyCd_valid_span"></div>
+            <div id="cmpyCd_validate_span"></div>
         </div>
         <div class="col-xl-1 col-6">
             <select name="emplym.teamCd" id="teamCd" class="form-select form-select-solid">
@@ -104,7 +106,7 @@
                     <option value="${team.dtlCd!}" <#if user.emplym?? && team.dtlCd == (user.emplym.teamCd)!>"selected"</#if>>${team.dtlCdNm!}</option>
                 </#list>
             </select>
-            <div id="teamCd_valid_span"></div>
+            <div id="teamCd_validate_span"></div>
         </div>
         <div class="col-xl-2 mg-lg-0">
             <select name="emplym.emplymCd" id="emplymCd" class="form-select form-select-solid">
@@ -113,7 +115,7 @@
                     <option value="${emplym.dtlCd!}" <#if emplym.dtlCd == (user.emplym.emplymCd)!>"selected"</#if>>${emplym.dtlCdNm!}</option>
                 </#list>
             </select>
-            <div id="emplymCd_valid_span"></div>
+            <div id="emplymCd_validate_span"></div>
         </div>
     </div>
     <#--begin::Row-->
@@ -128,7 +130,7 @@
                     <option value="${rank.dtlCd!}" <#if rank.dtlCd == (user.emplym.rankCd)!>"selected"</#if>>${rank.dtlCdNm!}</option>
                 </#list>
             </select>
-            <div id="rankCd_valid_span"></div>
+            <div id="rankCd_validate_span"></div>
         </div>
         <!-- 가리고 숨기고를 반복하는 곳은 style로 선언해야 한다. -->
         <div class="col-xl-2" id="apntcYnDiv" style="display:none;">
@@ -163,7 +165,7 @@
             <input type="text" name="emplym.ecnyDt" id="ecnyDt" class="form-control form-control-solid ps-12 required"
                    value="${(user.emplym.ecnyDt)!}" placeholder="입사일" readonly/>
             <div class="text-noti form-text">※입사일 정보가 없는 계정은 '현재 직원' 대상에 포함되지 않습니다.</div>
-            <div id="ecnyDt_valid_span"></div>
+            <div id="ecnyDt_validate_span"></div>
         </div>
         <div class="col-xl-2">
             <div class="form-check form-switch mt-2 form-check-custom form-check-solid">
@@ -221,7 +223,7 @@
             <input type="text" name="emplym.acntNo" id="acntNo" class="form-control form-control-solid"
                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="급여계좌 계좌번호를&#10;입력합니다."
                    value="${(user.emplym.acntNo)!}" placeholder="계좌번호" maxlength="40">
-            <div id="acntNo_valid_span"></div>
+            <div id="acntNo_validate_span"></div>
         </div>
     </div>
 </script>

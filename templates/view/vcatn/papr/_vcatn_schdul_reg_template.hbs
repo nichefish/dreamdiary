@@ -30,7 +30,7 @@
                             <option value="${vcatnCd.dtlCd!}">[${vcatnCd.dtlCdNm!}]</option>
                         </#list>
                     </select>
-                    <div id="vcatnCd{{idx}}_valid_span"></div>
+                    <div id="vcatnCd{{idx}}_validate_span"></div>
                 </div>
                 <div class="col-md-5 d-flex flex-column">
                     <label class="required fs-6 fw-bold mb-2">휴가일</label>
@@ -52,7 +52,7 @@
                                        onchange="VcatnSchdul.propEndDt({{idx}})"
                                        placeholder="휴가 시작일" readonly />
                             </div>
-                            <div id="bgnDt{{idx}}_valid_span"></div>
+                            <div id="bgnDt{{idx}}_validate_span"></div>
                         </div>
                         <span class="col-1 svg-icon svg-icon-muted svg-icon-2hx lineDiv" id="lineDiv{{idx}}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vertical-middle">
@@ -76,7 +76,7 @@
                                        onchange="VcatnSchdul.propEndDt({{idx}})"
                                        placeholder="휴가 종료일" readonly />
                             </div>
-                            <div id="endDt{{idx}}_valid_span"></div>
+                            <div id="endDt{{idx}}_validate_span"></div>
                         </div>
                     </div>
                 </div>
