@@ -4,7 +4,7 @@
  -->
 
 <script>
-    if (typeof Comment === 'undefined') { let  Comment = {}; }
+    if (typeof Comment === 'undefined') { let Comment = {}; }
     Comment.page = (function() {
         return {
             /**
@@ -15,16 +15,25 @@
                 Comment.page.initValidateForm();
                 commons.util.handlebarsTemplate({}, "comment_page_reg");
             },
-            /** form validation init */
+
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#commentPageRegForm", Comment.page.regAjax);
             },
-            /** submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 $("#commentPageRegForm").submit();
             },
-            /** 댓글 입력 처리 (ajax) */
+
+            /**
+             * 댓글 입력 처리 (ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
@@ -41,8 +50,14 @@
                     });
                 });
             },
-            /** 댓글 수정 폼 생성 */
+
+            /**
+             * 댓글 수정 폼 생성
+             * @param {string|number} postNo - 댓글 번호.
+             */
             mdfForm: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 $("#commentDtlSpan" + postNo).hide();
                 let str = $("#commentMdfTemplate").html().replace(/__INDEX__/g, postNo);
                 $("#commentSpan" + postNo).append(str);
@@ -51,7 +66,10 @@
                 $("#mdfSaveBtnDiv" + postNo).show();
                 commons.validate.validateForm("#commentPageMdfForm", Comment.page.mdfAjax);
             },
-            /** 댓글 수정 폼 닫기 */
+
+            /**
+             * 댓글 수정 폼 닫기
+             */
             closeMdfForm: function(postNo) {
                 $("#commentDtlSpan" + postNo).show();
                 $("#commentSpan" + postNo).empty();
@@ -59,8 +77,14 @@
                 $("#showMdfBtnDiv" + postNo).show();
                 $("#mdfSaveBtnDiv" + postNo).hide();
             },
-            /** 댓글 수정 처리 (ajax) */
+
+            /**
+             * 댓글 수정 처리 (ajax)
+             * @param {string|number} postNo - 댓글 번호.
+             */
             mdfAjax: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 if (commons.util.isEmpty($("#commentMdfCn" + postNo), "value")) {
                     Swal.fire("댓글 내용을 입력해주세요.");
                     return false;
@@ -80,8 +104,14 @@
                     });
                 });
             },
-            /** 댓글 삭제 처리 (ajax) */
+
+            /**
+             * 댓글 삭제 처리 (ajax)
+             * @param {string|number} postNo - 댓글 번호.
+             */
             delAjax: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

@@ -5,23 +5,34 @@
 <script>
     const ClCd = (function() {
         return {
-            /** form validation init */
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#clCdRegForm", ClCd.regAjax);
             },
-            /** Draggable 컴포넌트 init */
+
+            /**
+             * Draggable 컴포넌트 init
+             */
             initDraggable: function() {
                 const keyExtractor = (item) => ({ "clCd": $(item).attr("id") });
                 const url = "${Url.CL_CD_SORT_ORDR_AJAX!}";
                 ClCd.swappable = commons.util.initDraggable(keyExtractor, url);
             },
-            /** 목록 검색 */
+
+            /**
+             * 목록 검색
+             */
             search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.CL_CD_LIST!}?actionTyCd=SEARCH");
             },
-            /** 등록 팝업 호출 */
+
+            /**
+             * 등록 팝업 호출
+             */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "cl_cd_reg", "show");
                 /* jquery :: validation */
@@ -30,11 +41,17 @@
                 commons.validate.replaceBlankIfMatches("#clCdRegForm #clCd", commons.validate.nonCdRegex);
                 commons.validate.toUpperCase("#clCdRegForm #clCd");
             },
-            /** submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 $("#clCdRegForm").submit();
             },
-            /** 등록 또는 수정 처리(Ajax) */
+
+            /**
+             * 등록/수정 처리(Ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
@@ -52,13 +69,21 @@
                     }, "block");
                 });
             },
-            /** 상세 화면 이동 */
+
+            /**
+             * 상세 화면 이동
+             * @param {string} clCd - 분류코드.
+             */
             dtl: function(clCd) {
                 commons.util.blockUIRequest();
                 $("#procForm #clCd").val(clCd);
                 commons.util.blockUISubmit("#procForm", "${Url.CL_CD_DTL!}");
             },
-            /** 상세 모달 팝업 호출 */
+
+            /**
+             * 상세 모달 팝업 호출
+             * @param {string} clCd - 분류코드.
+             */
             dtlAjax: function(clCd) {
                 event.stopPropagation();
                 const url = "${Url.CL_CD_DTL_AJAX!}";
@@ -72,7 +97,11 @@
                     ClCd.key = clCd;
                 });
             },
-            /** 수정 모달 호출 */
+
+            /**
+             * 수정 모달 호출
+             * @param {string} clCd - 분류코드.
+             */
             mdfModal: function(clCd) {
                 const url = "${Url.CL_CD_DTL_AJAX!}";
                 const ajaxData = { "clCd": clCd };
@@ -90,7 +119,11 @@
                     commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 });
             },
-            /** 사용으로 변경 (Ajax) */
+
+            /**
+             * 사용으로 변경 (Ajax)
+             * @param {string} clCd - 분류코드.
+             */
             useAjax: function(clCd) {
                 event.stopPropagation();
                 Swal.fire({
@@ -108,7 +141,11 @@
                     }, "block");
                 });
             },
-            /** 미사용으로 변경 (Ajax) */
+
+            /**
+             * 미사용으로 변경 (Ajax)
+             * @param {string} clCd - 분류코드.
+             */
             unuseAjax: function(clCd) {
                 event.stopPropagation();
                 Swal.fire({
@@ -126,7 +163,11 @@
                     }, "block");
                 });
             },
-            /** 삭제 처리 (ajax) */
+
+            /**
+             * 삭제 처리 (ajax)
+             * @param {string} clCd - 삭제할 분류코드.
+             */
             delAjax: function(clCd) {
                 event.stopPropagation();
                 Swal.fire({
@@ -144,7 +185,10 @@
                     }, "block");
                 });
             },
-            /** 목록 화면 이동 */
+
+            /**
+             * 목록 화면 이동
+             */
             list: function() {
                 const listUrl = "${Url.CL_CD_LIST!}?isBackToList=Y";
                 commons.util.blockUIReplace(listUrl);

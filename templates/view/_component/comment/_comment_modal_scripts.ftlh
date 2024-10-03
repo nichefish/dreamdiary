@@ -4,7 +4,7 @@
  -->
 
 <script>
-    if (typeof Comment === 'undefined') { let  Comment = {}; }
+    if (typeof Comment === 'undefined') { let Comment = {}; }
     Comment.modal = (function() {
         return {
             /**
@@ -16,27 +16,39 @@
                 commons.util.handlebarsTemplate({}, "comment_reg");
                 if (refreshFunc !== undefined) Comment.modal.refreshFunc = refreshFunc;
             },
-            /** form validation init */
+
+            /**
+             * form validation init
+             */
             initValidateForm: function() {
                 /* jquery :: validation */
                 commons.validate.validateForm("#commentRegForm", Comment.modal.regAjax);
             },
-            /** 등록 모달 호출 */
+
+            /**
+             * 등록 모달 호출
+             */
             regModal: function(refPostNo, refContentType) {
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
                 commons.util.handlebarsTemplate(obj, "comment_reg", "show");
                 /* jquery :: validation */
                 Comment.modal.initValidateForm();
             },
-            /** submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 $("#commentRegForm").submit();
             },
-            /** 댓글 입력 처리 (ajax) */
+
+            /**
+             * 댓글 입력(등록/수정) 처리 (ajax)
+             */
             regAjax: function() {
                 const isReg = $("#commentRegForm #postNo").val() === "";
                 Swal.fire({
-                    text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
+                    text: <@spring.message "view.cnfm.save"/>,
                     showCancelButton: true,
                 }).then(function(result) {
                     if (!result.value) return;
@@ -55,8 +67,14 @@
                     });
                 });
             },
-            /** 수정 모달 호출 */
+
+            /**
+             * 수정 모달 호출
+             * @param {string|number} postNo - 댓글 번호.
+             */
             mdfModal: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 const url = "${Url.COMMENT_DTL_AJAX!}";
                 const ajaxData = { "postNo" : postNo };
                 commons.util.blockUIAjax(url, "get", ajaxData, function(res) {
@@ -71,8 +89,14 @@
                     Comment.modal.initValidateForm();
                 });
             },
-            /** 댓글 삭제 처리 (ajax) */
+
+            /**
+             * 댓글 삭제 처리 (ajax)
+             * @param {string|number} postNo - 댓글 번호.
+             */
             delAjax: function(postNo) {
+                if (isNaN(postNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

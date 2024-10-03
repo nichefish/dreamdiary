@@ -5,14 +5,21 @@
 <script>
     const Cache = (function() {
         return {
-            /** url, data 받아서 ajax 호출 */
+            /**
+             * url, data 받아서 ajax 호출
+             */
             activeListModal: function() {
                 const url = "${Url.CACHE_ACTIVE_LIST_AJAX!}";
                 commons.util.blockUIAjax(url, 'GET', null, function(res) {
                     commons.util.handlebarsTemplate(res.rsltMap, "cache_list", "show");
                 });
             },
-            /** url, data 받아서 ajax 호출 */
+
+            /**
+             * 캐시 무효화 처리 (ajax)
+             * @param {string} cacheName - 캐시 이름.
+             * @param {string} key - 무효화할 캐시의 키.
+             */
             evictAjax: function(cacheName, key) {
                 const url = "${Url.CACHE_EVICT_AJAX!}";
                 const ajaxData = { "cacheName": cacheName, "key": key };
@@ -25,7 +32,10 @@
                         });
                 });
             },
-            /** url, data 받아서 ajax 호출 */
+
+            /**
+             * 전체 캐시 무효화 (ajax)
+             */
             clearAllAjax: function() {
                 const url = "${Url.CACHE_CLEAR_AJAX!}";
                 commons.util.blockUIAjax(url, 'POST', null, function(res) {
