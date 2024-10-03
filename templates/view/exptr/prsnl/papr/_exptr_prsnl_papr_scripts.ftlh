@@ -11,6 +11,7 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#exptrPrsnlRegForm").validate({
+                    ...commons.validate.baseOptions,
                     submitHandler: function() {
                         Swal.fire({
                             text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
@@ -23,24 +24,29 @@
                             ExptrPrsnlPapr.regAjax();
                         });
                     },
-                    errorPlacement: function (error, element) {
-                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                    },
-                    ignore: []         // hidden 필드도 검증하기 위함
                 });
             },
-            /** 목록 검색 */
+
+            /**
+             * 목록 검색
+             */
             search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.EXPTR_PRSNL_PAPR_LIST!}?actionTyCd=SEARCH");
             },
-            /** 내가 작성한 글 목록 보기 */
+
+            /**
+             * 내가 작성한 글 목록 보기
+             */
             myPapr: function() {
                 const url = "${Url.EXPTR_PRSNL_PAPR_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
-            /** 개별 영수증 PDF 취합 다운로드 */
+
+            /**
+             * 개별 영수증 PDF 취합 다운로드
+             */
             pdfDownload: function(postNo) {
                 event.stopPropagation();
                 Swal.fire({
@@ -53,7 +59,10 @@
                     $("#procForm").attr("action", "${Url.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD!}").submit();
                 });
             },
-            /** 등록 전 점검 + 등록 화면 이동 (Ajax) */
+
+            /**
+             * 등록 전 점검 + 등록 화면 이동 (Ajax)
+             */
             regForm: function() {
                 $("#prevYn").val("N");
                 const url = "${Url.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX!}";
@@ -89,13 +98,17 @@
                     }
                 });
             },
+
             /**
              * submit
              */
             submit: function() {
                 $("#exptrPrsnlRegForm").submit();
             },
-            /** 등록/수정 처리(Ajax) */
+
+            /**
+             * 등록/수정 처리(Ajax)
+             */
             regAjax: function() {
                 // DTO에서 integer로 받으므로 콤마 처리되어 있던 값 수동으로 처리
                 $("input[name$='.exptrAmtStr']").each(function(idx, item) {
@@ -115,16 +128,25 @@
                         });
                 }, "block");
             },
-            /** 상세 화면 이동 */
+
+            /**
+             * 상세 화면으로 이동
+             */
             dtl: function (postNo) {
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_PAPR_DTL!}");
             },
-            /** 수정 화면 이동 */
+
+            /**
+             * 수정 화면으로 이동
+             */
             mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_PAPR_MDF_FORM!}");
             },
-            /** 삭제 처리 (ajax) */
+
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
@@ -141,12 +163,16 @@
                     }, "block");
                 });
             },
-            /** 목록 화면으로 이동 */
+
+            /**
+             * 목록 화면으로 이동
+             */
             list: function() {
                 const listUrl = "${Url.EXPTR_PRSNL_PAPR_LIST!}?isBackToList=Y";
                 commons.util.blockUIReplace(listUrl);
             },
-            /** 이전 화면 이동 */
+
+            /** 이전 화면으로 이동 */
             stats: function() {
                 commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE!}");
             }

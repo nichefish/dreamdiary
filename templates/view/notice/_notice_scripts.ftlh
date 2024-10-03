@@ -11,6 +11,7 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#noticeRegForm").validate({
+                    ...commons.validate.baseOptions,
                     submitHandler: function() {
                         if (Notice.submitMode === "preview") {
                             const popupNm = "preview";
@@ -31,10 +32,6 @@
                             });
                         }
                     },
-                    errorPlacement: function (error, element) {
-                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                    },
-                    ignore: [],         // hidden 필드도 검증하기 위함
                 });
             },
 
@@ -119,7 +116,7 @@
             },
 
             /**
-             * 상세 모달 팝업 호출
+             * 상세 모달 호출
              */
             dtlAjax: function (postNo) {
                 event.stopPropagation();

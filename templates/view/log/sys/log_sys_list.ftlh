@@ -20,7 +20,10 @@
                 /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
                 commons.util.initSortTable();
             },
-            /** 목록 검색 */
+
+            /**
+             * 목록 검색
+             */
             search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.LOG_SYS_LIST!}?actionTyCd=SEARCH");

@@ -21,13 +21,19 @@
                 /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
                 commons.util.initSortTable();
             },
-            /** 조회 년도 변경 */
+
+            /**
+             * 조회 년도 변경
+             */
             statsYyMnth: function() {
                 let statsYy = $("#statsYy option:selected").val();
                 let statsMnth = $("#statsMnth option:selected").val();
                 commons.util.blockUIReplace("${Url.EXPTR_PRSNL_RPT_ITEMS}?statsYy="+statsYy+"&statsMnth="+statsMnth);
             },
-            /** 엑셀 다운로드 */
+
+            /**
+             * 엑셀 다운로드
+             */
             xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,

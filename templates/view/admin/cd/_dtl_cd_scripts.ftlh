@@ -12,6 +12,7 @@
                 /* jquery :: validation */
                 commons.validate.validateForm("#dtlCdRegForm", DtlCd.regAjax);
             },
+
             /**
              * Draggable 컴포넌트 init
              */
@@ -20,7 +21,8 @@
                 const url = "${Url.CL_CD_SORT_ORDR_AJAX!}";
                 DtlCd.swappable = commons.util.initDraggable(keyExtractor, url);
             },
-            /** 상세코드 등록 팝업 호출 */
+
+            /** 상세코드 등록 모달 호출 */
             regModal: function() {
                 commons.util.handlebarsTemplate({ "clCd": $("#clCd").val() }, "dtl_cd_reg", "show");
                 /* jquery :: validation */
@@ -29,13 +31,17 @@
                 commons.validate.replaceBlankIfMatches("#dtlCdRegForm #dtlCd", commons.validate.nonCdRegex);
                 commons.validate.toUpperCase("#dtlCdRegForm #dtlCd");
             },
+
             /**
              * submit
              */
             submit: function() {
                 $("#dtlCdRegForm").submit();
             },
-            /** 상세코드 등록 (Ajax) */
+
+            /**
+             * 등록 처리 (Ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
@@ -53,7 +59,10 @@
                     }, "block");
                 });
             },
-            /** 수정 화면 이동 */
+
+            /**
+             * 수정 화면으로 이동
+             */
             mdfModal: function(dtlCd) {
                 const url = "${Url.DTL_CD_DTL_AJAX!}";
                 const ajaxData = { "clCd": $("#clCd").val(), "dtlCd": dtlCd };
@@ -70,7 +79,10 @@
                     commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 });
             },
-            /** 사용으로 변경 (Ajax) */
+
+            /**
+             * 사용으로 변경 (Ajax)
+             */
             useAjax: function(dtlCd) {
                 event.stopPropagation();
                 Swal.fire({
@@ -88,7 +100,10 @@
                     }, "block");
                 });
             },
-            /** 미사용으로 변경 (Ajax) */
+
+            /**
+             * 미사용으로 변경 (Ajax)
+             */
             unuseAjax: function(dtlCd) {
                 event.stopPropagation();
                 Swal.fire({
@@ -106,7 +121,10 @@
                     }, "block");
                 });
             },
-            /** 삭제 처리 (ajax) */
+
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function(dtlCd) {
                 event.stopPropagation();
                 Swal.fire({

@@ -21,22 +21,32 @@
                 /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
                 commons.util.initSortTable();
             },
-            /** 목록 검색 */
+
+            /**
+             * 목록 검색
+             */
             search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.TMPLAT_DEF_LIST!}?actionTyCd=SEARCH");
             },
-            /** 내가 작성한 글 목록 보기 */
+
+            /**
+             * 내가 작성한 글 목록 보기
+             */
             myPapr: function() {
                 const url = "${Url.TMPLAT_DEF_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
-            /** 등록 화면 이동 */
+
+            /**
+             * 등록 화면으로 이동
+             */
             regForm: function() {
                 commons.util.blockUIRequest();
                 commons.util.handlebarsTemplate({}, "tmplat_def_reg", "show");
             },
+
             /** 등록 처리 (ajax) */
             regAjax: function() {
                 Swal.fire({
@@ -55,12 +65,18 @@
                     });
                 });
             },
-            /** 상세 화면 이동 */
+
+            /**
+             * 상세 화면으로 이동
+             */
             dtl: function(postNo) {
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.TMPLAT_DEF_DTL!}");
             },
-            /** 상세 모달 팝업 호출 */
+
+            /**
+             * 상세 모달 호출
+             */
             dtlAjax: function (postNo) {
                 event.stopPropagation();
                 const url = "${Url.TMPLAT_DEF_DTL_AJAX!}";
@@ -119,7 +135,7 @@
                                 <@component.list_comment post />
                             </a>
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
+                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달로 보기">
                                 <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${tmplat.postNo!}');"></i>
                             </a>
                         </td>
@@ -155,7 +171,7 @@
                             <#--목록:: 댓글 표시-->
                             <@component.list_comment post />
                             <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
+                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달로 보기">
                                 <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.dtlAjax('${tmplat.postNo!}');"></i>
                             </a>
                         </td>

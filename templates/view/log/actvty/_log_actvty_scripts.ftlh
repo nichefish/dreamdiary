@@ -5,12 +5,16 @@
 <script>
     const LogActvty = (function() {
         return {
-            /** 목록 검색 */
+            /**
+             * 목록 검색
+             */
             search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.LOG_ACTVTY_LIST!}?actionTyCd=SEARCH");
             },
-            /** 엑셀 다운로드 */
+            /**
+             * 엑셀 다운로드
+             */
             xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
@@ -21,7 +25,10 @@
                     $("#listForm").attr("action", "${Url.LOG_ACTVTY_LIST_XLSX_DOWNLOAD!}").submit();
                 });
             },
-            /** 상세 모달 팝업 호출 */
+
+            /**
+             * 상세 모달 호출
+             */
             dtlAjax: function (logActvtyNo) {
                 event.stopPropagation();
                 const url = "${Url.LOG_ACTVTY_DTL_AJAX!}";

@@ -23,7 +23,7 @@
     <#if post.comment?? && post.comment.cnt gt 0>
         <span class="mx-1 text-noti btn-active-warning fs-x-small cursor-pointer opacity-hover"
               onclick="CommentList.modal(${post.postNo!}, '${post.contentType}');"
-              data-bs-toggle="tooltip" data-bs-placement="top" title="댓글 모달 팝업 호출">
+              data-bs-toggle="tooltip" data-bs-placement="top" title="댓글 모달 호출">
         [${post.comment.cnt!0}]
         </span>
     </#if>
@@ -35,7 +35,7 @@
 <#macro list_dtl_modal post func>
     <#assign fullFunc = (func + "(" + post.postNo?c + ")") />
     <a class="badge badge-secondary p-2 btn-white bg-hover-white blank blink-slow float-end"
-       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
+       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달로 보기">
         <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="${fullFunc!}"></i>
     </a>
 </#macro>

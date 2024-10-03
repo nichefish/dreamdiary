@@ -12,20 +12,33 @@
                 /* jquery :: validation */
                 commons.validate.validateForm("#jrnlSumryRegForm", JrnlSumry.regAjax);
             },
-            /** 상세 화면 이동 */
+
+            /**
+             * 상세 화면으로 이동
+             */
             dtl: function (postNo) {
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
             },
+
+            /**
+             * 상세 화면으로 이동
+             */
             dtlByYy: function (yy) {
                 $("#procForm #yy").val(yy);
                 commons.util.blockUISubmit("#procForm", "${Url.JRNL_SUMRY_DTL!}");
             },
-            /** 목록 화면으로 이동 */
+
+            /**
+             * 목록 화면으로 이동
+             */
             list: function (postNo) {
                 commons.util.blockUIReplace("${Url.JRNL_SUMRY_LIST!}");
             },
-            /** 특정 년도 결산 생성 */
+
+            /**
+             * 특정 년도 결산 생성
+             */
             makeYySumryAjax: function(yy) {
                 if (yy === undefined) yy = $("#listForm #yy").val();
                 if (commons.util.isEmpty(yy)) {
@@ -41,7 +54,10 @@
                         });
                 }, "block");
             },
-            /** 전체 년도 결산 갱신 */
+
+            /**
+             * 전체 년도 결산 갱신
+             */
             makeTotalSumryAjax: function() {
                 const url = "${Url.JRNL_SUMRY_MAKE_TOTAL_AJAX!}";
                 commons.util.blockUIAjax(url, 'POST', null, function(res) {
@@ -51,7 +67,10 @@
                         });
                 }, "block");
             },
-            /** 꿈 기록 완료 처리 */
+
+            /**
+             * 꿈 기록 완료 처리
+             */
             comptAjax: function(postNo) {
                 const url = "${Url.JRNL_SUMRY_DREAM_COMPT_AJAX!}";
                 const ajaxData = { "postNo": postNo };
@@ -62,11 +81,18 @@
                         });
                 }, "block");
             },
-            /** 이관 submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 tinymce.get("tinymce_jrnlSumryCn").save();
                 $("#jrnlSumryRegForm").submit();
             },
+
+            /**
+             * 등록 모달 호출
+             */
             regModal: function(postNo) {
                 const url = "${Url.JRNL_SUMRY_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
@@ -88,6 +114,10 @@
                     commons.tinymce.setContentWhenReady("tinymce_jrnlSumryCn", rsltObj.cn);
                 });
             },
+
+            /**
+             * 등록 처리 (ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.save"/>,

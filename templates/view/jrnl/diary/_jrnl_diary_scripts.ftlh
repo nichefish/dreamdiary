@@ -15,7 +15,10 @@
                 /* jquery :: validation */
                 commons.validate.validateForm("#jrnlDiaryRegForm", JrnlDiary.regAjax);
             },
-            /** 목록 조회 */
+
+            /**
+             * 목록 조회
+             */
             keywordListAjax: function() {
                 const keyword = $("#jrnl_aside #diaryKeyword").val();
                 if (commons.util.isEmpty(keyword)) return;
@@ -42,7 +45,10 @@
                     JrnlDiary.inKeywordSearchMode = true;
                 }, "block");
             },
-            /** 저널 일기 등록 모달 팝업 호출 */
+
+            /**
+             * 저널 일기 등록 모달 호출
+             */
             regModal: function(jrnlDayNo, stdrdDt) {
                 const obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
                 commons.util.handlebarsTemplate(obj, "jrnl_diary_reg_header");
@@ -59,12 +65,18 @@
                 commons.tinymce.init('#tinymce_jrnlDiaryCn');
                 commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", "");
             },
-            /** 이관 submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 tinymce.get("tinymce_jrnlDiaryCn").save();
                 $("#jrnlDiaryRegForm").submit();
             },
-            /** 등록 */
+
+            /**
+             * 등록 처리 (ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
@@ -89,7 +101,10 @@
                     }, "block");
                 });
             },
-            /** 저널 꿈 수정 모달 팝업 호출 */
+
+            /**
+             * 저널 꿈 수정 모달 호출
+             */
             mdfModal: function(postNo) {
                 const url = "${Url.JRNL_DIARY_DTL_AJAX!}";
                 const ajaxData = { "postNo" : postNo };
@@ -115,7 +130,10 @@
                     commons.tinymce.setContentWhenReady("tinymce_jrnlDiaryCn", rsltObj.cn);
                 });
             },
-            /** 삭제 (ajax) */
+
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function(postNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,

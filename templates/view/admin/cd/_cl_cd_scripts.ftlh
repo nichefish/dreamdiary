@@ -31,7 +31,7 @@
             },
 
             /**
-             * 등록 팝업 호출
+             * 등록 모달 호출
              */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "cl_cd_reg", "show");
@@ -81,7 +81,7 @@
             },
 
             /**
-             * 상세 모달 팝업 호출
+             * 상세 모달 호출
              * @param {string} clCd - 분류코드.
              */
             dtlAjax: function(clCd) {

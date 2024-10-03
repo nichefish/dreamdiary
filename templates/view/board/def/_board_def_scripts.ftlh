@@ -40,7 +40,10 @@
             submit: function() {
                 $("#boardDefRegForm").submit();
             },
-            /** 등록 (ajax) */
+
+            /**
+             * 등록 처리 (ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
@@ -57,7 +60,10 @@
                     }, "block");
                 });
             },
-            /** 수정 모달 호출 */
+
+            /**
+             * 수정 모달 호출
+             */
             mdfModal: function(boardCd) {
                 const url = "${Url.BOARD_DEF_DTL_AJAX!}";
                 const ajaxData = { "boardCd": boardCd };
@@ -74,7 +80,10 @@
                     commons.util.chckboxLabel("useYn", "사용//미사용", "blue//gray");
                 });
             },
-            /** 사용으로 변경 (Ajax) */
+
+            /**
+             * 사용으로 변경 (Ajax)
+             */
             useAjax: function(key) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.use"/>,
@@ -91,7 +100,10 @@
                     }, "block");
                 });
             },
-            /** 미사용으로 변경 (Ajax) */
+
+            /**
+             * 미사용으로 변경 (Ajax)
+             */
             unuseAjax: function(key) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.unuse"/>,
@@ -108,7 +120,10 @@
                     }, "block");
                 });
             },
-            /** 삭제 처리 (ajax) */
+
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function(key) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,

@@ -26,17 +26,24 @@
                     $("#mnthSumSpan"+i).text(commons.util.getReqstItemTotSum("id^=mnth"+i+"__").toLocaleString());
                 }
             },
+
             /** 조회 년도 변경 */
             statsYy: function() {
                 let statsYy = $("#statsYy option:selected").val();
                 commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE}?statsYy="+statsYy);
             },
-            /** 상세 화면 이동 */
+
+            /**
+             * 상세 화면으로 이동
+             */
             statsDtl: function(postNo) {
                 $("#postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_STATS_DTL!}");
             },
-            /** 엑셀 다운로드 */
+
+            /**
+             * 엑셀 다운로드
+             */
             xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,

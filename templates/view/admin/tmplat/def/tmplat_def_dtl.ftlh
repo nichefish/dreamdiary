@@ -15,11 +15,17 @@
             init: function() {
                 //
             },
-            /** 수정 화면 이동 */
+
+            /**
+             * 수정 화면으로 이동
+             */
             mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.NOTICE_MDF_FORM!}");
             },
-            /** 삭제 처리 (ajax) */
+
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
@@ -36,7 +42,10 @@
                     });
                 });
             },
-            /** 목록 화면으로 이동 */
+
+            /**
+             * 목록 화면으로 이동
+             */
             list: function() {
                 const listUrl = "${Url.NOTICE_LIST!}?isBackToList=Y";
                 commons.util.blockUIReplace(listUrl);

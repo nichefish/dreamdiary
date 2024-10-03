@@ -22,7 +22,7 @@
                     </span>
                     <span>${post.notionPageId!}</span>
                     <a class="badge badge-secondary p-2 btn-white blank blink-slow float-end"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달로 보기">
                         <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="Page.notionModal('${post.notionPageId!}');"></i>
                     </a>
                 </div>

@@ -11,6 +11,7 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#postRegForm").validate({
+                    ...commons.validate.baseOptions,
                     submitHandler: function() {
                         if (Page.submitMode === "preview") {
                             const popupNm = "preview";
@@ -31,10 +32,6 @@
                             });
                         }
                     },
-                    errorPlacement: function(error, element) {
-                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                    },
-                    ignore: [],         // hidden 필드도 검증하기 위함
                 });
             },
 
@@ -46,7 +43,9 @@
                 commons.util.blockUISubmit("#listForm", "${Url.BOARD_POST_LIST!}?actionTyCd=SEARCH");
             },
 
-            /** 내가 작성한 글 목록 보기 */
+            /**
+             * 내가 작성한 글 목록 보기
+             */
             myPapr: function() {
                 let boardCd = $("#boardCd").val();
                 const url = "${Url.BOARD_POST_LIST!}";
@@ -54,7 +53,9 @@
                 commons.util.blockUIReplace(url + param);
             },
 
-            /** 등록 화면 이동 */
+            /**
+             * 등록 화면으로 이동
+             */
             regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.BOARD_POST_REG_FORM!}");
             },
@@ -68,14 +69,18 @@
                 $("#postRegForm").submit();
             },
 
-            /** 미리보기 팝업 호출 */
+            /**
+             * 미리보기 팝업 호출
+             */
             preview: function() {
                 tinymce.activeEditor.save();
                 Page.submitMode = "preview";
                 $("#postRegForm").submit();
             },
 
-            /** 등록/수정 처리(Ajax) */
+            /**
+             * 등록/수정 처리(Ajax)
+             */
             regAjax: function() {
                 const url = "<#if isMdf!false>${Url.BOARD_POST_MDF_AJAX!}<#else>${Url.BOARD_POST_REG_AJAX!}</#if>";
                 const ajaxData = new FormData($("#postRegForm")[0]);
@@ -87,7 +92,9 @@
                 }, "block");
             },
 
-            /** 상세 화면 이동 */
+            /**
+             * 상세 화면으로 이동
+             */
             dtl: function (postNo) {
                 if (isNaN(postNo)) return;
 
@@ -95,7 +102,9 @@
                 commons.util.blockUISubmit("#procForm", "${Url.BOARD_POST_DTL!}");
             },
 
-            /** 상세 모달 팝업 호출 */
+            /**
+             * 상세 모달 호출
+             */
             dtlAjax: function (postNo) {
                 event.stopPropagation();
                 if (isNaN(postNo)) return;
@@ -111,12 +120,16 @@
                 });
             },
 
-            /** 수정 화면 이동 */
+            /**
+             * 수정 화면으로 이동
+             */
             mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.BOARD_POST_MDF_FORM!}");
             },
 
-            /** 삭제 처리 (ajax) */
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function(postNo) {
                 if (isNaN(postNo)) return;
 
@@ -136,7 +149,9 @@
                 });
             },
 
-            /** 목록 화면으로 이동 */
+            /**
+             * 목록 화면으로 이동
+             */
             list: function() {
                 const listUrl = "${Url.BOARD_POST_LIST!}?boardCd=${boardCd!}<#if isMdf!false>&isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);

@@ -48,7 +48,7 @@
             },
 
             /**
-             * 사이트맵 모달 팝업 호출
+             * 사이트맵 모달 호출
              */
             siteMapModal: function() {
                 $("#sitemap_modal").modal("show");

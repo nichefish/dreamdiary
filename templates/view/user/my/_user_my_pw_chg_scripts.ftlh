@@ -12,6 +12,7 @@
                 /* jquery :: validation */
                 $(function(){
                     $("#myPwChgForm").validate({
+                        ...commons.validate.baseOptions,
                         submitHandler: function() {
                             Swal.fire({
                                 text: <@spring.message "view.cnfm.chgPw"/>,
@@ -20,9 +21,6 @@
                                 if (!result.value) return;
                                 UserMyPwChg.myPwChgAjax();
                             });
-                        },
-                        errorPlacement : function(error, element) {
-                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
                         },
                         rules: {
                             newPw: { regex: commons.validate.pwRegex },
@@ -35,18 +33,25 @@
                     });
                 });
             },
-            /** 내 비밀번호 수정 팝업 호출 */
+
+            /**
+             * 내 비밀번호 수정 팝업 호출
+             */
             myPwChgModal: function() {
                 const data = { "errorMsg": "${errorMsg!}" };
                 commons.util.handlebarsTemplate(data, "user_my_pw_chg", "show");
             },
+
             /**
              * submit
              */
             submit: function() {
                 $("#myPwChgForm").submit();
             },
-            /** 내 비밀번호 수정 처리(Ajax) */
+
+            /**
+             * 내 비밀번호 수정 처리(Ajax)
+             */
             myPwChgAjax: function() {
                 const url = "${Url.USER_MY_PW_CHG_AJAX!}";
                 const ajaxData = { "currPw" : $("#currPw").val(), "newPw" : $("#newPw").val() };

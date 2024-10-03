@@ -13,6 +13,7 @@
                 /* jquery :: validation */
                 $(function() {
                     $("#schdulRegForm").validate({
+                        ...commons.validate.baseOptions,
                         submitHandler: function() {
                             let isReg = ($("#schdulRegForm #postNo").val() === "");
                             Swal.fire({
@@ -23,14 +24,13 @@
                                 Schdul.regAjax();
                             });
                         },
-                        errorPlacement: function (error, element) {
-                            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                        }
                     });
                 });
             },
 
-            /** 일정 등록 모달 호출 */
+            /**
+             * 등록 모달 호출
+             */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "schdul_reg", "show");
                 commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray");
@@ -47,24 +47,32 @@
                 Schdul.addPrtcpnt();
             },
 
-            /** 일정 등록 모달 호출 */
+            /**
+             * 일정 등록 모달 호출 (개인일정)
+             */
             prvtRegModal: function() {
                 commons.util.handlebarsTemplate({ "isPrvt": true }, "schdul_reg", "show");
                 commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD");
                 commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD");
             },
 
-            /** 참여자 추가 */
+            /**
+             * 참여자 추가
+             */
             addPrtcpnt: function() {
                 commons.util.handlebarsAppend({ "idx": Schdul.prtcpntCnt++ }, "schdul_reg_prtcpnt");
             },
 
-            /** 참여자 삭제 */
+            /**
+             * 참여자 삭제
+             */
             removePrtcpnt: function(idx) {
                 $("#schdul_reg_prtcpnt_div #prtcpntRow"+idx).remove();
             },
 
-            /** 종료일자 토글 처리 */
+            /**
+             * 종료일자 토글 처리
+             */
             schdulCd: function(obj) {
                 if ($(obj).val() === "${Constant.SCHDUL_HLDY!}") {
                     $("#endDt").val($("#startDt").val());
@@ -83,7 +91,9 @@
                 $("#schdulRegForm").submit();
             },
 
-            /** 등록/수정 처리(Ajax) */
+            /**
+             * 등록/수정 처리(Ajax)
+             */
             regAjax: function() {
                 const url = "${Url.SCHDUL_REG_AJAX!}";
                 const ajaxData = $("#schdulRegForm").serializeArray();
@@ -95,7 +105,9 @@
                 }, "block");
             },
 
-            /** 상세 모달 호출 (Ajax) */
+            /**
+             * 상세 모달 호출 (Ajax)
+             */
             dtlAjax: function(postNo) {
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
                 const ajaxData = { "postNo": postNo };
@@ -110,7 +122,9 @@
                 });
             },
 
-            /** 수정 폼 오픈 */
+            /**
+             * 수정 모달 호출
+             */
             mdfModal: function(key) {
                 const url = "${Url.SCHDUL_DTL_AJAX!}";
                 const ajaxData = { "postNo": key };
@@ -136,7 +150,9 @@
                 });
             },
 
-            /** 삭제 처리 (ajax) */
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function(key) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,

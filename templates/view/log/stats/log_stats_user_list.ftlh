@@ -20,20 +20,32 @@
                 /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
                 commons.util.initSortTable();
             },
-            /** 전체 로그 페이지로 이동 */
+
+            /**
+             * 전체 로그 페이지로 이동
+             */
             logActvtyList: function() {
                 commons.util.blockUISubmit("#listForm", "${Url.LOG_ACTVTY_LIST!}");
             },
-            /** 전체 로그 페이지로 이동 */
+
+            /**
+             * 전체 로그 페이지로 이동
+             */
             logStatsUserList: function() {
                 commons.util.blockUISubmit("#listForm", "${Url.LOG_STATS_USER_LIST!}");
             },
-            /** 목록 검색 */
+
+            /**
+             * 목록 검색
+             */
             search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.LOG_STATS_USER_LIST!}?actionTyCd=SEARCH");
             },
-            /** 엑셀 다운로드 */
+
+            /**
+             * 엑셀 다운로드
+             */
             xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,

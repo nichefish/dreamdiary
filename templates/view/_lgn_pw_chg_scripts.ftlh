@@ -5,7 +5,9 @@
 <script>
     const LgnPwChg = (function() {
         return {
-            /** 비밀번호 변경 팝업 호출 */
+            /**
+             * 비밀번호 변경 팝업 호출
+             */
             pwChgModal: function() {
                 const data = { "userId": "${userId!}", "errorMsg": "${errorMsg!}" };
                 commons.util.handlebarsTemplate(data, "lgn_pw_chg", "show");
@@ -19,17 +21,14 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#lgnPwChgForm").validate({
+                    ...commons.validate.baseOptions,
                     submitHandler: function() {
                         LgnPwChg.lgnPwChgAjax();
-                    },
-                    errorPlacement : function(error, element) {
-                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
                     },
                     rules: {
                         newPw: { regex: commons.validate.pwRegex },
                         newPwCf: { equalTo: "#newPw" }
                     },
-                    ignore: [],         // hidden 필드도 검증하기 위함
                     messages: {
                         newPw: { regex: "변경할 비밀번호가 형식에 맞지 않습니다." },
                         newPwCf: { equalTo: "변경할 비밀번호에 입력한 값과 동일하게 입력해야 합니다." }

@@ -11,6 +11,7 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#exptrReqstRegForm").validate({
+                    ...commons.validate.baseOptions,
                     submitHandler: function() {
                         if (ExptrReqst.submitMode === "preview") {
                             const popupNm = "preview";
@@ -31,27 +32,33 @@
                             });
                         }
                     },
-                    errorPlacement : function(error, element) {
-                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                    },
-                    ignore: [],         // hidden 필드도 검증하기 위함
                 });
             },
-            /** 목록 검색 */
+
+            /**
+             * 목록 검색
+             */
             search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.EXPTR_REQST_LIST!}?actionTyCd=SEARCH");
             },
-            /** 내가 작성한 글 목록 보기 */
+
+            /**
+             * 내가 작성한 글 목록 보기
+             */
             myPapr: function() {
                 const url = "${Url.EXPTR_REQST_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
-            /** 등록 화면 이동 */
+
+            /**
+             * 등록 화면으로 이동
+             */
             regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_REQST_REG_FORM!}");
             },
+
             /**
              * submit
              */
@@ -60,13 +67,19 @@
                 Page.submitMode = "submit";
                 $("#exptrReqstRegForm").submit();
             },
-            /** 미리보기 팝업 호출 */
+
+            /**
+             * 미리보기 팝업 호출
+             */
             preview: function() {
                 tinymce.activeEditor.save();
                 Page.submitMode = "preview";
                 $("#exptrReqstRegForm").submit();
             },
-            /** 등록/수정 처리(Ajax) */
+
+            /**
+             * 등록/수정 처리(Ajax)
+             */
             regAjax: function() {
                 const url = "<#if isReg!false>${Url.EXPTR_REQST_REG_AJAX!}</#if><#if isMdf!false>${Url.EXPTR_REQST_MDF_AJAX!}</#if>";
                 const ajaxData = new FormData($("#exptrReqstRegForm")[0]);
@@ -77,13 +90,19 @@
                         });
                 }, "block");
             },
-            /** 상세 화면 이동 */
+
+            /**
+             * 상세 화면으로 이동
+             */
             dtl: function (postNo) {
                 commons.util.blockUIRequest();
                 $("#procForm #postNo").val(postNo);
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_REQST_DTL!}");
             },
-            /** 상세 모달 팝업 호출 */
+
+            /**
+             * 상세 모달 호출
+             */
             dtlAjax: function (postNo) {
                 event.stopPropagation();
                 const url = "${Url.EXPTR_REQST_DTL_AJAX!}";
@@ -96,6 +115,7 @@
                     commons.util.handlebarsTemplate(res.rsltObj, "exptr_reqst_dtl", "show");
                 });
             },
+
             /** 관리자 확인 여부 변경 (Ajax) */
             cfAjax: function() {
                 Swal.fire({
@@ -113,7 +133,10 @@
                     }, "block");
                 });
             },
-            /** 항목 미처리 (Ajax) */
+
+            /**
+             * 항목 미처리 (Ajax)
+             */
             dismissAjax: function() {
                 Swal.fire({
                     text: "취소(기각) 처리하시겠습니까?",
@@ -130,11 +153,17 @@
                     }, "block");
                 });
             },
-            /** 수정 화면 이동 */
+
+            /**
+             * 수정 화면으로 이동
+             */
             mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_REQST_MDF_FORM!}");
             },
-            /** 삭제 처리 (ajax) */
+
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
@@ -151,7 +180,10 @@
                     }, "block");
                 });
             },
-            /** 목록 화면으로 이동 */
+
+            /**
+             * 목록 화면으로 이동
+             */
             list: function() {
                 const listUrl = "${Url.EXPTR_REQST_LIST!}<#if isMdf!false>?isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);

@@ -124,19 +124,8 @@
 <#macro header_btn_reg_modal func>
     <button type="button" class="btn btn-sm btn-primary"
             onclick="${func}"
-            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 모달을 호출합니다.">
         <i class="fas fa-plus"></i>등록
-    </button>
-</#macro>
-
-<!--
- * 버튼 : 정렬 순서 조정
- -->
-<#macro header_btn_sort_ordr func>
-    <button type="button" class="btn btn-sm btn-primary"
-            onclick="${func}"
-            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="등록 팝업을 호출합니다.">
-        <i class="bi bi-sort-up fs-3"></i>정렬 순서 저장
     </button>
 </#macro>
 

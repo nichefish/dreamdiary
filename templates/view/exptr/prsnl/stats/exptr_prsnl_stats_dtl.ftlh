@@ -20,7 +20,10 @@
                     $(".rject").attr("onclick", "return false");
                 </#if>
             },
-            /** 추가추가 개수 0개인지 체크 */
+
+            /**
+             * 추가추가 개수 0개인지 체크
+             */
             emptyListToggle: function() {
                 if ($("#exptr_prsnl_item_reg_div tr").length === 0) {
                     $("#empty_list_div").show();
@@ -28,7 +31,10 @@
                     $("#empty_list_div").hide();
                 }
             },
-            /** PDF 인쇄 화면 출력 */
+
+            /**
+             * PDF 인쇄 화면 출력
+             */
             pdfPop: function() {
                 const url = "${Url.EXPTR_PRSNL_PAPR_PDF_POP!}?postNo="+$("#postNo").val();
                 const popupNm = '경비지출서 팝업';
@@ -36,11 +42,17 @@
                 const popup = commons.util.openPopup(url, popupNm, options);
                 if (popup) popup.focus();
             },
-            /** 수정 화면 이동 */
+
+            /**
+             * 수정 화면으로 이동
+             */
             mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_PAPR_MDF_FORM!}");
             },
-            /** 영수증 원본 제출 체크 */
+
+            /**
+             * 영수증 원본 제출 체크 (ajax)
+             */
             orgnlRciptAjax: function(exptrPrsnlItemNo, orgnlRciptYn) {
                 Swal.fire({
                     text: "영수증 원본 제출상태를 변경하시겠습니까?",
@@ -57,12 +69,18 @@
                     });
                 });
             },
-            /** 지출항목 반려 팝업 호출 */
+
+            /**
+             * 지출항목 반려 팝업 호출
+             */
             rjectModal: function(idx) {
                 $("#modal_idx").val(idx);
                 $("#rject_resn_modal").modal("show");
             },
-            /** 취합완료 처리 (Ajax) */
+
+            /**
+             * 취합완료 처리 (Ajax)
+             */
             cfAjax: function() {
                 Swal.fire({
                     html: <@spring.message "view.cnfm.stacnt"/>,
@@ -79,7 +97,10 @@
                     });
                 });
             },
-            /** 삭제 처리 (ajax) */
+
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
@@ -96,11 +117,17 @@
                     });
                 });
             },
-            /** 목록 화면으로 이동 */
+
+            /**
+             * 목록 화면으로 이동
+             */
             stats: function() {
                 commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE!}");
             },
-            /** PDF 다운로드 */
+
+            /**
+             * PDF 다운로드
+             */
             pdfDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
@@ -111,7 +138,10 @@
                     $("#procForm").attr("action", "${Url.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD!}").submit();
                 });
             },
-            /** 지출항목 반려 처리 (Ajax) */
+
+            /**
+             * 지출항목 반려 처리 (Ajax)
+             */
             rjectAjax: function(idx, rjectYn) {
                 $("#exptrPrsnlItemNo").val($("#exptrPrsnlItemNo"+idx).val());
                 $("#rjectYn").val(rjectYn);

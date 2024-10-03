@@ -77,7 +77,7 @@
                             <span>${clCd.clCdNm!}</span>
                             <span class="ms-1">(${clCd.clCd!})</span>
                             <a class="badge badge-secondary ms-2 p-2 btn-white blank blink-slow float-end"
-                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달 팝업으로 보기">
+                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달로 보기">
                                 <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="ClCd.dtlAjax('${clCd.clCd!}');"></i>
                             </a>
                         </td>

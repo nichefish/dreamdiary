@@ -95,7 +95,7 @@
             <div>
                 <button type="button" class="btn btn-sm btn-primary"
                         onclick="DtlCd.regModal();"
-                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 코드 등록 팝업을&#10;호출합니다.">
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 코드 등록 모달을&#10;호출합니다.">
                     <i class="fas fa-plus"></i>상세코드 추가
                 </button>
             </div>

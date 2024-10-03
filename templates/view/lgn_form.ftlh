@@ -36,7 +36,10 @@
                 // 엔터키 처리
                 commons.util.enterKey(".enter", Page.lgn);
             },
-            /** 기존 로그인 끊기 팝업 호출 */
+
+            /**
+             * 기존 로그인 끊기 팝업 호출
+             */
             dupLgnAlert: function() {
                 Swal.fire({
                     title: <@spring.message "view.rslt.dupLgn"/>,
@@ -60,11 +63,17 @@
                     }
                 });
             },
-            /** 로그인 처리 */
+
+            /**
+             * 로그인 처리
+             */
             lgn: function() {
                 commons.util.blockUISubmit("#lgnForm", "${Url.AUTH_LGN_PROC!}");
             },
-            /** 신규계정 신청 페이지로 이동 */
+
+            /**
+             * 신규계정 신청 페이지로 이동
+             */
             reqstUser: function() {
                 commons.util.blockUIReplace("${Url.USER_REQST_REG_FORM!}");
             },

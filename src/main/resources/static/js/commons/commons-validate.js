@@ -16,8 +16,18 @@ $(function() {
     });
 });
 commons.validate = (function() {
+
+    /** jQuery valication 기본 옵션 */
+    const jQueryValidationBaseOptions = {
+        errorPlacement : function(error, element) {
+            commons.validate.errorSpan(error, element);        // 공통 함수로 분리
+        },
+        ignore: [],         // hidden 필드도 검증하기 위함
+    };
+
     return {
         // "global flag /g works inconsistent if called multiple times..."
+        baseOptions: jQueryValidationBaseOptions,
 
         basicExtnFilter: "exe|class|jsp|asp|php|sh|bat|war|jar|java|xml|js|css|html|sql",
         validImgExtn: "jpg|jpeg|png",

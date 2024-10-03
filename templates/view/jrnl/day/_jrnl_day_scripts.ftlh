@@ -14,11 +14,9 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#jrnlDayRegForm").validate({
+                     ...commons.validate.baseOptions,
                     submitHandler: function() {
                         JrnlDay.regAjax();
-                    },
-                    errorPlacement : function(error, element) {
-                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
                     },
                     rules: {
                         jrnlDt: {
@@ -38,7 +36,10 @@
                     $("#aprxmtDt").valid(); // 체크박스 상태 변경시 details 필드 재검증
                 });
             },
-            /** 년도-월 목록 조회 */
+
+            /**
+             * 년도-월 목록 조회
+             */
             yyMnthListAjax: function() {
                 const mnth = $("#jrnl_aside #mnth").val();
                 if (commons.util.isEmpty(mnth)) return;
@@ -63,7 +64,10 @@
                     commons.util.handlebarsTemplate(rsltList, "jrnl_day_list");
                 }, "block");
             },
-            /** 등록 화면 호출 */
+
+            /**
+             * 등록 모달 호출
+             */
             regModal: function() {
                 commons.util.handlebarsTemplate({}, "jrnl_day_reg", "show");
                 /* jquery :: validation */
@@ -85,7 +89,10 @@
                 /* tagify */
                 commons.tagify.initWithCtgr("#jrnlDayRegForm #tagListStr", TagCtgrMap.jrnlDay);
             },
-            /** 사이드바 기준으로 등록 모달 날짜 계산:: 메소드 분리 */
+
+            /**
+             * 사이드바 기준으로 등록 모달 날짜 계산:: 메소드 분리
+             */
             validDt: function() {
                 const year = parseInt($("#jrnl_aside #yy").val(), 10);
                 let month = parseInt($("#jrnl_aside #mnth").val(), 10);
@@ -103,19 +110,26 @@
 
                 return yyyyStr + '-' + mmStr + '-' + ddStr;
             },
-            /** 아이콘 새로고침 */
+
+            /**
+             * 아이콘 새로고침
+             */
             refreshIcon: function() {
                 const $iconClassElmt = $("#jrnlDayRegForm #weather");
                 if (!$iconClassElmt.length) return;
                 $("#jrnlDayRegForm #weather_icon_div").html($iconClassElmt.val());
             },
+
             /**
              * submit
              */
             submit: function() {
                 $("#jrnlDayRegForm").submit();
             },
-            /** 등록 */
+
+            /**
+             * 등록 처리 (ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
@@ -136,7 +150,10 @@
                     }, "block");
                 });
             },
-            /** 등록 화면 호출 */
+
+            /**
+             * 등록 모달 호출
+             */
             mdfModal: function(postNo) {
                 const url = "${Url.JRNL_DAY_DTL_AJAX!}";
                 const ajaxData = { "postNo" : postNo };
@@ -167,7 +184,10 @@
                     commons.tagify.initWithCtgr("#jrnlDayRegForm #tagListStr", TagCtgrMap.jrnlDay);
                 });
             },
-            /** 삭제 */
+
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function(postNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,

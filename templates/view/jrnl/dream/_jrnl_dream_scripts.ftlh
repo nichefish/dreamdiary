@@ -14,11 +14,9 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#jrnlDreamRegForm").validate({
+                    ...commons.validate.baseOptions,
                     submitHandler: function() {
                         JrnlDream.regAjax();
-                    },
-                    errorPlacement : function(error, element) {
-                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
                     },
                     rules: {
                         elseDreamerNm: {
@@ -32,7 +30,10 @@
                     $("#elseDreamerNm").valid(); // 체크박스 상태 변경시 details 필드 재검증
                 });
             },
-            /** 목록 조회 */
+
+            /**
+             * 목록 조회 (ajax)
+             */
             keywordListAjax: function() {
                 const keyword = $("#jrnl_aside #dreamKeyword").val();
                 if (commons.util.isEmpty(keyword)) return;
@@ -59,7 +60,10 @@
                     JrnlDream.inKeywordSearchMode = true;
                 }, "block");
             },
-            /** 저널 꿈 등록 모달 팝업 호출 */
+
+            /**
+             * 저널 꿈 등록 모달 호출
+             */
             regModal: function(jrnlDayNo, stdrdDt) {
                 const obj = { "jrnlDayNo": jrnlDayNo, "stdrdDt": stdrdDt };
                 commons.util.handlebarsTemplate(obj, "jrnl_dream_reg_header");
@@ -86,12 +90,18 @@
                 commons.tinymce.init('#tinymce_jrnlDreamCn');
                 commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", "");
             },
-            /** 이관 submit */
+
+            /**
+             * submit
+             */
             submit: function() {
                 tinymce.get("tinymce_jrnlDreamCn").save();
                 $("#jrnlDreamRegForm").submit();
             },
-            /** 등록 */
+
+            /**
+             * 등록 처리 (ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.reg"/>,
@@ -116,7 +126,10 @@
                     }, "block");
                 });
             },
-            /** 저널 꿈 수정 모달 팝업 호출 */
+
+            /**
+             * 저널 꿈 수정 모달 호출
+             */
             mdfModal: function(postNo) {
                 const url = "${Url.JRNL_DREAM_DTL_AJAX!}";
                 const ajaxData = { "postNo" : postNo };
@@ -151,7 +164,10 @@
                     commons.tinymce.setContentWhenReady("tinymce_jrnlDreamCn", rsltObj.cn);
                 });
             },
-            /** 삭제 (ajax) */
+
+            /**
+             * 삭제 처리 (ajax)
+             */
             delAjax: function(postNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,

@@ -16,7 +16,7 @@
      * @param {any} value - 체크할 값.
      * @returns {boolean} - `value`가 비어 있지 않으면 `true`, 비어 있으면 `false`.
      */
-    Handlebars.registerHelper("exists", function() {
+    Handlebars.registerHelper("exists", function(value) {
         return !commons.util.isEmpty(value);
     });
 
@@ -25,7 +25,7 @@
      * @param {any} value - 체크할 값.
      * @returns {boolean} - `value`가 비어 있으면 `true`, 비어 있지 않으면 `false`.
      */
-    Handlebars.registerHelper("notExists", function() {
+    Handlebars.registerHelper("notExists", function(value) {
         return commons.util.isEmpty(value);
     });
 

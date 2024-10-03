@@ -11,11 +11,9 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#lgnPolicyForm").validate({
+                    ...commons.validate.baseOptions,
                     submitHandler: function() {
                         LgnPolicy.regAjax();
-                    },
-                    errorPlacement : function(error, element) {
-                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
                     },
                     rules: {
                         lgnLockDy: { maxlength:3 },
@@ -28,13 +26,17 @@
                     },
                 });
             },
+
             /**
              * submit
              */
             submit: function() {
                 $("#lgnPolicyForm").submit();
             },
-            /** 등록 또는 수정 처리(Ajax) */
+
+            /**
+             * 등록/수정 처리(Ajax)
+             */
             regAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.mdf"/>,

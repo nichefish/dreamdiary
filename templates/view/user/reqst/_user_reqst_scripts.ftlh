@@ -11,6 +11,7 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#userReqstForm").validate({
+                    ...commons.validate.baseOptions,
                     submitHandler: function() {
                         if ($("#useAcsIpYn").is(":checked") && $("#acsIpListStr").val() === "") {
                             Swal.fire("접속 IP는 최소 한 개 이상 입력해야 합니다.");
@@ -24,10 +25,6 @@
                             UserReqst.regAjax();
                         });
                     },
-                    errorPlacement : function(error, element) {
-                        commons.validate.errorSpan(error, element);        // 공통 함수로 분리
-                    },
-                    ignore: [],         // hidden 필드도 검증하기 위함
                     rules: {
                         userId: { minlength:4, maxlength:16 },
                         ipDupChckPassed: { dupChck:true },
@@ -44,7 +41,10 @@
                     return (value === "Y");
                 });
             },
-            /** 등록/수정 처리(Ajax) */
+
+            /**
+             * 등록/수정 처리(Ajax)
+             */
             regAjax: function() {
                 const url = "${Url.USER_REQST_REG_AJAX!}";
                 const ajaxData = new FormData($("#userReqstForm")[0]);
@@ -55,7 +55,10 @@
                         });
                 }, "block");
             },
-            /** 메인 화면으로 돌아가기 */
+
+            /**
+             * 메인 화면으로 돌아가기
+             */
             return: function() {
                 Swal.fire({
                     text: "메인 화면으로 이동합니다.\n(현재까지 입력한 내용은 사라집니다.)\n계속하겠습니까?",
@@ -64,7 +67,10 @@
                     if (result.value) UserReqst.main();
                 });
             },
-            /** 메인 화면으로 이동 */
+
+            /**
+             * 메인 화면으로 이동
+             */
             main: function() {
                 commons.util.blockUIReplace("${Url.MAIN!}");
             }
