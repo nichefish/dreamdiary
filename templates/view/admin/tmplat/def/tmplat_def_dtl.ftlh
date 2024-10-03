@@ -9,7 +9,10 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 //
             },
             /** 수정 화면 이동 */

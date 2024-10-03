@@ -6,10 +6,10 @@
     const ExptrPrsnlPapr = (function() {
         return {
             /** form validation init */
-            initValidateForm: function () {
+            initValidateForm: function() {
                 /* jquery :: validation */
                 $("#exptrPrsnlRegForm").validate({
-                    submitHandler: function () {
+                    submitHandler: function() {
                         Swal.fire({
                             text: <#if isMdf!false><@spring.message "view.cnfm.mdf"/><#else><@spring.message "view.cnfm.reg"/></#if>,
                             showCancelButton: true,
@@ -28,12 +28,12 @@
                 });
             },
             /** 목록 검색 */
-            search: function () {
+            search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.EXPTR_PRSNL_PAPR_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
-            myPapr: function () {
+            myPapr: function() {
                 const url = "${Url.EXPTR_PRSNL_PAPR_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);

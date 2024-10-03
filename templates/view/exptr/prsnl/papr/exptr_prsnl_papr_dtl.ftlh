@@ -7,9 +7,12 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 Page.emptyListToggle();        // 추가추가 개수 0개인지 체크
                 $("#totAmt").text(commons.util.getReqstItemTotSum("id^=exptrAmtSpan").toLocaleString());
             },
@@ -62,7 +65,7 @@
                 });
             },
         }
-    }();
+    })();
     document.addEventListener("DOMContentLoaded", function() {
         Page.init();
     });

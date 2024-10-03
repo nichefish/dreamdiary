@@ -13,7 +13,10 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 /* jquery :: validation */
                 UserReqst.initValidateForm();
                 // 자동 대문자->소문자처리

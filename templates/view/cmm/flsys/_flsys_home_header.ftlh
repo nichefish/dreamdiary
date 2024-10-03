@@ -6,9 +6,13 @@
 <script>
     const Flsys = (function() {
         return {
+            /** 현재 경로 저장 */
             currPath: "${Constant.HOME_FLSYS!}",
             refCnt: 0,
-            /** 현재 경로 저장 */
+
+            /**
+             * Flsys 객체 초기화
+             */
             init: function (mode) {
                 Flsys.mode = mode;
                 $("#flsys_file_vod_modal").on("hidden.bs.modal", function() {

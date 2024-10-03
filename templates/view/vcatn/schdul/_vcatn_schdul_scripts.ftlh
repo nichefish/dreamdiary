@@ -3,7 +3,7 @@
  -->
 
 <script>
-    const VcatnSchdul = function() {
+    const VcatnSchdul = (function() {
         return {
             /** 조회년도 변경 */
             chgYy: function(obj) {
@@ -116,5 +116,5 @@
                 });
             }
         }
-    }();
+    })();
 </script>

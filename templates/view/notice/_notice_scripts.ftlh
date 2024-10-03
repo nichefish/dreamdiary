@@ -6,10 +6,10 @@
     const Notice = (function() {
         return {
             /** form validation init */
-            initValidateForm: function () {
+            initValidateForm: function() {
                 /* jquery :: validation */
                 $("#noticeRegForm").validate({
-                    submitHandler: function () {
+                    submitHandler: function() {
                         if (Notice.submitMode === "preview") {
                             const popupNm = "preview";
                             const options = 'width=1280,height=1440,top=0,left=270';
@@ -36,18 +36,18 @@
                 });
             },
             /** 목록 검색 */
-            search: function () {
+            search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.NOTICE_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
-            myPapr: function () {
+            myPapr: function() {
                 const url = "${Url.NOTICE_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
             /** 엑셀 다운로드 */
-            xlsxDownload: function () {
+            xlsxDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
                     showCancelButton: true,
@@ -58,28 +58,28 @@
                 });
             },
             /** 등록 화면 이동 */
-            regForm: function () {
+            regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.NOTICE_REG_FORM!}");
             },
             /** submit */
-            submit: function () {
+            submit: function() {
                 if (tinymce !== undefined) tinymce.activeEditor.save();
                 Notice.submitMode = "submit";
                 $("#noticeRegForm").submit();
             },
             /** 미리보기 팝업 호출 */
-            preview: function () {
+            preview: function() {
                 if (tinymce !== undefined) tinymce.activeEditor.save();
                 Notice.submitMode = "preview";
                 $("#noticeRegForm").submit();
             },
             /** 등록/수정 처리(Ajax) */
-            regAjax: function () {
+            regAjax: function() {
                 const url = " <#if isMdf!false>${Url.NOTICE_MDF_AJAX!}<#else>${Url.NOTICE_REG_AJAX!}</#if>";
                 const ajaxData = new FormData($("#noticeRegForm")[0]);
                 commons.util.blockUIMultipartAjax(url, ajaxData, function (res) {
                     Swal.fire({text: res.message})
-                        .then(function () {
+                        .then(function() {
                             if (res.rslt) Notice.list();
                         });
                 }, "block");
@@ -103,11 +103,11 @@
                 });
             },
             /** 수정 화면 이동 */
-            mdfForm: function () {
+            mdfForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.NOTICE_MDF_FORM!}");
             },
             /** 삭제 처리 (ajax) */
-            delAjax: function () {
+            delAjax: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -117,14 +117,14 @@
                     const ajaxData = $("#procForm").serializeArray();
                     commons.util.blockUIAjax(url, 'POST', ajaxData, function (res) {
                         Swal.fire({text: res.message})
-                            .then(function () {
+                            .then(function() {
                                 if (res.rslt) Notice.list();
                             });
                     }, "block");
                 });
             },
             /** 목록 화면 이동 */
-            list: function () {
+            list: function() {
                 const listUrl = "${Url.NOTICE_LIST!}<#if isMdf!false>?isBackToList=Y</#if>";
                 commons.util.blockUIReplace(listUrl);
             }

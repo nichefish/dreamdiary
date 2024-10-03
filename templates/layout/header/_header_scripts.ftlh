@@ -57,7 +57,7 @@
             /**
              * 내 정보 상세 페이지 이동
              */
-            myInfoDtl: function () {
+            myInfoDtl: function() {
                 location.replace("${Url.USER_MY_DTL!}");
             },
 

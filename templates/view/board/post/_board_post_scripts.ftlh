@@ -9,7 +9,7 @@
             initValidateForm: function() {
                 /* jquery :: validation */
                 $("#postRegForm").validate({
-                    submitHandler: function () {
+                    submitHandler: function() {
                         if (Page.submitMode === "preview") {
                             const popupNm = "preview";
                             const options = 'width=1280,height=1440,top=0,left=270';
@@ -36,19 +36,19 @@
                 });
             },
             /** 목록 검색 */
-            search: function () {
+            search: function() {
                 $("#listForm #pageNo").val(1);
                 commons.util.blockUISubmit("#listForm", "${Url.BOARD_POST_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
-            myPapr: function () {
+            myPapr: function() {
                 let boardCd = $("#boardCd").val();
                 const url = "${Url.BOARD_POST_LIST!}";
                 let param = "?boardCd="+boardCd+"&searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);
             },
             /** 등록 화면 이동 */
-            regForm: function () {
+            regForm: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.BOARD_POST_REG_FORM!}");
             },
             /** submit */

@@ -19,7 +19,10 @@
     const Page = (function() {
         return {
             idx: 0,
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 // 추가추가에 사용할 인덱스 설정
                 Page.idx = ${(post.schdulList![])?size};
 
@@ -29,9 +32,9 @@
                 AtchFile.atchFileListToggle();
 
                 // 잔디발송여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("jandiYn", "발송//미발송", "#0095E8//gray", function () {
+                commons.util.chckboxLabel("jandiYn", "발송//미발송", "#0095E8//gray", function() {
                     $("#trgetTopicSpan").show();
-                }, function () {
+                }, function() {
                     $("#trgetTopicSpan").hide();
                 });
                 <#if isReg!false>

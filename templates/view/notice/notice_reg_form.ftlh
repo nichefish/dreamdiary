@@ -38,7 +38,10 @@
 
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 /* jquery :: validation */
                 Notice.initValidateForm();
                 <#if isMdf>
@@ -62,9 +65,9 @@
                 commons.tagify.initWithCtgr("#noticeRegForm #tagListStr");
 
                 // 잔디발송여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function () {
+                commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function() {
                     $("#trgetTopicSpan").show();
-                }, function () {
+                }, function() {
                     $("#trgetTopicSpan").hide();
                 });
                 <#if isReg!false>

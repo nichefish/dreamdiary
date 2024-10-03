@@ -7,7 +7,10 @@
     if (typeof Comment === 'undefined') { let  Comment = {}; }
     Comment.page = (function() {
         return {
-            init: function () {
+            /**
+             * Comment.page 객체 초기화
+             */
+            init: function() {
                 /* jquery :: validation */
                 Comment.page.initValidateForm();
                 commons.util.handlebarsTemplate({}, "comment_page_reg");

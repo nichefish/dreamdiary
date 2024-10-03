@@ -10,7 +10,10 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 // request에서 불러온 에러 메세지 표시
                 const errorMsgSpan = $("#errorMsgSpan");
                 errorMsgSpan.html("");

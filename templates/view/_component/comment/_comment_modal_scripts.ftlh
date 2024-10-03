@@ -7,6 +7,9 @@
     if (typeof Comment === 'undefined') { let  Comment = {}; }
     Comment.modal = (function() {
         return {
+            /**
+             * Comment.modal 객체 초기화
+             */
             init: function ({ refreshFunc } = {}) {
                 /* jquery :: validation */
                 Comment.modal.initValidateForm();

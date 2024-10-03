@@ -9,10 +9,12 @@
 <@layout.layout toolbar=toolbar!"">
 
 <script>
-    const Page = function() {
+    const Page = (function() {
         return {
-            /** init */
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
                 commons.util.initSortTable();
 
@@ -34,7 +36,7 @@
                 }).appendTo('#react_notion_root');
             }
         }
-    }();
+    })();
     document.addEventListener("DOMContentLoaded", function() {
         Page.init();
     });

@@ -23,7 +23,10 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 /* 글 단락 init */
                 Sectn.init();
                 Sectn.initDraggable();

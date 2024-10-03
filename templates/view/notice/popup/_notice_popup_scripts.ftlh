@@ -6,6 +6,9 @@
     /** 공지사항 팝업 관련 */
     const NoticePopup = (function() {
         return {
+            /**
+             * NoticePopup 객체 초기화
+             */
             init: function() {
                 /** 로그인 공지 목록 조회 */
                 let isAuthenticated = ${(authInfo != null)!false?string};

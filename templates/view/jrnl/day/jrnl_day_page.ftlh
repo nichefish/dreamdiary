@@ -28,7 +28,10 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 // 쿠키 설정하기
                 let yyCookie = $.cookie("jrnl_yy");
                 if (yyCookie !== undefined) $("#jrnl_aside #yy").val(yyCookie);

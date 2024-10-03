@@ -17,11 +17,14 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
-                commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", null, function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
+                commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", null, function() {
                     Page.noBefore("#bgnDt", "#endDt");
                 });
-                commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD", null, function () {
+                commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD", null, function() {
                     if ($("#endDt").val() !== "") Page.noBefore("#bgnDt", "#endDt");
                 });
 
@@ -29,9 +32,9 @@
                 commons.util.initSortTable();
 
                 /** jquery validation */
-                $(function () {
+                $(function() {
                     $("#vcantSchdulRegForm").validate({
-                        submitHandler: function () {
+                        submitHandler: function() {
                             let isReg = ($("#vcatnSchdulNo").val() === "");
                             Swal.fire({
                                 text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,

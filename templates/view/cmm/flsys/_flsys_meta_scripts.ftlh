@@ -5,6 +5,9 @@
 <script>
     const FlsysMeta = (function() {
         return {
+            /**
+             * FlsysMeta 객체 초기화
+             */
             init: function() {
                 /** jquery :: validation */
                 commons.validate.validateForm("#flsysMetaRegForm", FlsysMeta.regAjax);

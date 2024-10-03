@@ -5,7 +5,10 @@
 <script>
     const Tag = (function() {
         return {
-            init: function () {
+            /**
+             * Tag 객체 초기화
+             */
+            init: function() {
                 //
             },
             dtlAjax: function(tagNo) {

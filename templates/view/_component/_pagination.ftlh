@@ -6,6 +6,9 @@
 <script>
     const Pagination = (function() {
         return {
+            /**
+             * Pagination 객체 초기화
+             */
             init: function() {
                 /** 페이지 개수 selectbox 세팅 */
                 <#if paginationInfo??>

@@ -6,9 +6,13 @@
 <script>
     const AtchFile = (function() {
         return {
+            /**
+             * AtchFile 객체 초기화
+             */
             init: function() {
                 AtchFile.atchFileListToggle();     // 첨부파일 영역 0개인지 체크
             },
+
             /**
              * 첨부파일 추가추가
              * (reqstItemIdx는 어차피 한 페이지 내에서 고유하므로 따로 처리해줄 필요 없다.)

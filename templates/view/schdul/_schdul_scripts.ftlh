@@ -7,11 +7,11 @@
         return {
             prtcpntCnt: 0,
             /** form validation init */
-            initValidateForm: function () {
+            initValidateForm: function() {
                 /* jquery :: validation */
-                $(function () {
+                $(function() {
                     $("#schdulRegForm").validate({
-                        submitHandler: function () {
+                        submitHandler: function() {
                             let isReg = ($("#schdulRegForm #postNo").val() === "");
                             Swal.fire({
                                 text: isReg ? <@spring.message "view.cnfm.reg"/> : <@spring.message "view.cnfm.mdf"/>,
@@ -35,9 +35,9 @@
                 commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD");
 
                 // 잔디발송여부 클릭시 글씨 변경
-                commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function () {
+                commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function() {
                     $("#trgetTopicSpan").show();
-                }, function () {
+                }, function() {
                     $("#trgetTopicSpan").hide();
                 });
                 $("#jandiYn").click();
@@ -115,9 +115,9 @@
                     commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", rsltObj.bgnDt);
                     commons.datepicker.singleDatePicker("#endDt", "yyyy-MM-DD", rsltObj.endDt);
                     // 잔디발송여부 클릭시 글씨 변경
-                    commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function () {
+                    commons.util.chckboxLabel("jandiYn", "발송//미발송", "blue//gray", function() {
                         $("#trgetTopicSpan").show();
-                    }, function () {
+                    }, function() {
                         $("#trgetTopicSpan").hide();
                     });
                 });

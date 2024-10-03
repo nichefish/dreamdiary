@@ -13,7 +13,10 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 /* jquery :: validation */
                 UserMyPwChg.initValidateForm();
             },

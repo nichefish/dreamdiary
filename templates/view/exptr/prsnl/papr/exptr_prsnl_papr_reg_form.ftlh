@@ -15,7 +15,10 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 // 공백 자동 제거
                 commons.validate.onlyNumAndComma(".num");
 
@@ -76,7 +79,7 @@
 
                 commons.validate.onlyNumAndComma(".num");
                 // input에서 날짜 변경시 날짜 순서대로 행 정렬
-                commons.datepicker.singleDatePicker("#exptrDt" + reqstItemIdx, "yyyy-MM-DD", null, function () {
+                commons.datepicker.singleDatePicker("#exptrDt" + reqstItemIdx, "yyyy-MM-DD", null, function() {
                     // 날짜범위 유효성검사
                     let yy = $("#yy").val();
                     let mnth = $("#mnth").val();
@@ -117,7 +120,7 @@
                         commons.util.handlebarsAppend(item, "exptr_prsnl_item_reg");
 
                         // 달력 함수
-                        commons.datepicker.singleDatePicker("#exptrDt" + idx, "yyyy-MM-DD", item.exptrDt, function () {
+                        commons.datepicker.singleDatePicker("#exptrDt" + idx, "yyyy-MM-DD", item.exptrDt, function() {
                             // 날짜범위 유효성검사
                             let yy = $("#yy").val();
                             let mnth = $("#mnth").val();

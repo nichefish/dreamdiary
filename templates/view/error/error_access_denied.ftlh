@@ -10,11 +10,15 @@
 <script>
     const Page = (function() {
         return {
-            /** init */
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 //
             },
-            /** 메인으로 돌아가기 */
+            /**
+             * 메인으로 돌아가기
+             */
             main: function() {
                 commons.util.blockUIReplace("${Url.MAIN!}");
             }

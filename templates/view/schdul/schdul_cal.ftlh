@@ -40,7 +40,11 @@
             calendar: null,
             calInitDt: null,
             calDt: null,
-            init: function () {
+
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 /* jquery :: validation */
                 Schdul.initValidateForm();
 

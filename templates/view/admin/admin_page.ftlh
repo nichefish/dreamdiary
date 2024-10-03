@@ -13,7 +13,10 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 //
             },
             /** 휴일정보 : url, data 받아서 ajax 호출 */

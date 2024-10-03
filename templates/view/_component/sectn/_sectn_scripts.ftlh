@@ -6,6 +6,9 @@
 <script>
     const Sectn = (function() {
         return {
+            /**
+             * Sectn 객체 초기화
+             */
             init: function ({ refreshFunc } = {}) {
                 if (refreshFunc !== undefined) Sectn.refreshFunc = refreshFunc;
             },

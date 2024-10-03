@@ -78,7 +78,7 @@ commons.util = (function() {
          * SweetAlert가 정의되어 있는지 확인합니다.
          * @returns {boolean} - Swal이 정의되어 있으면 true, 그렇지 않으면 false.
          */
-        hasSwal: function () {
+        hasSwal: function() {
             return typeof Swal !== 'undefined';
         },
 
@@ -344,7 +344,7 @@ commons.util = (function() {
          */
         blockUIFileDownload: (function() {
             commons.util.blockUI();
-            const downloadTimer = setInterval(function () {
+            const downloadTimer = setInterval(function() {
                 const token = commons.util.getCookie("FILE_CREATE_SUCCESS");
                 if (token === "TRUE") {
                     commons.util.unblockUI();
@@ -360,7 +360,7 @@ commons.util = (function() {
          */
         blockUIRequest: function() {
             commons.util.blockUI();
-            const requestTimer = setInterval(function () {
+            const requestTimer = setInterval(function() {
                 const token = commons.util.getCookie("RESPONSE_SUCCESS");
                 if (token === "TRUE") {
                     commons.util.unblockUI();
@@ -424,7 +424,7 @@ commons.util = (function() {
             }).fail(function (res) {
                 if (commons.util.isNotEmpty(res.message)) commons.util.swalOrAlert(res.message);
                 commons.util.unblockUI();
-            }).always(function () {
+            }).always(function() {
                 if (continueBlock !== 'block') commons.util.unblockUI();
             });
         },
@@ -515,9 +515,7 @@ commons.util = (function() {
          */
         resetForm: function(formSelector) {
             const form = document.querySelector(formSelector);
-            if (!form) return;
-
-            form.reset();
+            form?.reset();
         },
 
         /**
@@ -681,7 +679,7 @@ commons.util = (function() {
             const [yesStr, noStr] = ynCn.split(separator);
             const [yesColor, noColor] = ynColor.split(separator);
             const labelElmt = document.getElementById(attrId + "Label");
-            checkboxElmt.addEventListener("click", function () {
+            checkboxElmt.addEventListener("click", function() {
                 if (checkboxElmt.checked) {
                     labelElmt.textContent = yesStr;
                     labelElmt.style.color = yesColor;

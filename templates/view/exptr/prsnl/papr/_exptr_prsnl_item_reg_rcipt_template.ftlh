@@ -43,7 +43,7 @@
             uploadDtlAjax: function(exptrPrsnlItemNo) {
                 let fileInput = $("#atchFile0");
                 fileInput.click();
-                fileInput.on("change", function () {
+                fileInput.on("change", function() {
                     if (this.value !== "") {
                         if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
                         if (!commons.validate.fileImgExtnChck(this)) return false;      // fileExtnChck

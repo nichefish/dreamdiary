@@ -14,7 +14,10 @@
 <script>
     const Page = (function() {
         return {
-            init: function () {
+            /**
+             * Page 객체 초기화
+             */
+            init: function() {
                 /* 모든 table 헤더에 클릭 이벤트를 설정한다. */
                 commons.util.initSortTable();
             },
@@ -24,7 +27,7 @@
                 commons.util.blockUISubmit("#listForm", "${Url.TMPLAT_DEF_LIST!}?actionTyCd=SEARCH");
             },
             /** 내가 작성한 글 보기 */
-            myPapr: function () {
+            myPapr: function() {
                 const url = "${Url.TMPLAT_DEF_LIST!}";
                 let param = "?searchType=nickNm&searchKeyword=${authInfo.nickNm!}&regstrId=${authInfo.userId!}&pageSize=50&actionTyCd=MY_PAPR";
                 commons.util.blockUIReplace(url + param);

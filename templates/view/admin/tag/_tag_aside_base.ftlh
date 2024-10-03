@@ -10,6 +10,10 @@
                 path: "/jrnl/day/",
                 expires: commons.date.getCurrDateAddDay(36135)
             },
+
+            /**
+             * JrnlDayAside 객체 초기화
+             */
             init: function() {
                 const pinYyCookie = $.cookie("pin_yy");
                 if (pinYyCookie !== undefined) {
@@ -31,7 +35,7 @@
                 JrnlDayAside.sort("DESC");
             },
             /** 년도 바꾸기 */
-            yy: function () {
+            yy: function() {
                 commons.util.handlebarsTemplate(null, "jrnl_day_list");
                 commons.util.handlebarsTemplate([], "jrnl_day_tag_list");
                 commons.util.handlebarsTemplate([], "jrnl_diary_tag_list");
@@ -45,7 +49,7 @@
                 }
             },
             /** 월 바꾸기 */
-            mnth: function () {
+            mnth: function() {
                 // 쿠키 설정하기
                 $.cookie("jrnl_yy", $("#jrnl_aside #yy").val(), JrnlDayAside.cookieOptions);
                 if ($("#jrnl_aside #mnth").val() === "") return;
