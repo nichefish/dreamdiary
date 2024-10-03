@@ -6,9 +6,13 @@
 <script>
     const CommentList = (function() {
         return {
-            /** 댓글 목록 모달 호출 */
+            /**
+             * 댓글 목록 모달 호출
+             */
             modal: function(refPostNo, refContentType) {
                 event.stopPropagation();
+                if (isNaN(refPostNo) || !refContentType) return;
+
                 document.querySelector(`#commentProcForm [name="refPostNo"]`).value = refPostNo;
                 if (commons.util.isNotEmpty(refContentType)) {
                     document.querySelector(`#commentProcForm [name="refContentType"]`).value = refContentType;

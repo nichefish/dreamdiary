@@ -18,10 +18,10 @@
              * (reqstItemIdx는 어차피 한 페이지 내에서 고유하므로 따로 처리해줄 필요 없다.)
              */
             addFileItem: function() {
-                let reqstItemIdx = commons.util.getReqstItemIdx("input", "id^=atchFile", "atchFile");		// elmt, selector, elmtId
+                const reqstItemIdx = commons.util.getReqstItemIdx("input", "id^=atchFile", "atchFile");		// elmt, selector, elmtId
                 // 감췄다 숨겼다 할것이므로 style로 설정한다.
-                let tableTmpl = "<div class='row' id='itemContainer"+reqstItemIdx+"' style='display:none;'>" + $("#atchFileTemplate").html() + "</div>";
-                let str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
+                const tableTmpl = "<div class='row' id='itemContainer"+reqstItemIdx+"' style='display:none;'>" + $("#atchFileTemplate").html() + "</div>";
+                const str = tableTmpl.replace(/__INDEX__/g, reqstItemIdx);
                 // 공격 탐지 내역 목록 관련 처리 로직
                 $("#atchFileSpan").append(str);
                 $("#atchFile" + reqstItemIdx).click();
@@ -38,7 +38,10 @@
                     AtchFile.atchFileListToggle();
                 });
             },
-            /** 추가추가 개수 0개인지 체크 */
+
+            /**
+             * 추가추가 개수 0개인지 체크
+             */
             atchFileListToggle: function() {
                 if ($("#atchFileSpan div[id^=itemContainer]").length === 0) {
                     $("#emptyFileListDiv").show();
@@ -46,7 +49,10 @@
                     $("#emptyFileListDiv").hide();
                 }
             },
-            /** 새로 추가된 첨부파일 삭제 */
+
+            /**
+             * 새로 추가된 첨부파일 삭제
+             */
             delNewFileSpan: function(idx) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
@@ -56,7 +62,10 @@
                     $("div#itemContainer"+idx).remove();
                 });
             },
-            /** 기존 첨부파일 삭제 플래그 세팅 */
+
+            /**
+             * 기존 첨부파일 삭제 플래그 세팅
+             */
             delExistingFile: function(atchFileDtlNo) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,

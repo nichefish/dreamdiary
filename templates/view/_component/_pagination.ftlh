@@ -22,7 +22,12 @@
                 </#if>
                 commons.validate.onlyNum(".page-ellipsis");
             },
-            /** 페이지 처리 함수 (공통) */
+
+            /**
+             * 페이지 처리 함수 (공통)
+             * @param {number} pageNo - 현재 페이지 번호.
+             * @param {number} pageSize - 페이지당 항목 수.
+             */
             fnPage: function(pageNo, pageSize) {
                 // 페이지 출력개수 변경시 페이지 자동 재계산
                 const prevPageSize = "${pageSize!}";
@@ -33,7 +38,14 @@
                 if (pageSize !== undefined) document.querySelector("#listForm #pageSize").value = pageSize;
                 commons.util.blockUISubmit("#listForm", "${listUrl!}");
             },
-            /** 페이지 출력개수 변경시 페이지 자동 재계산 */
+
+            /**
+             * 페이지 출력개수 변경시 페이지 자동 재계산
+             * @param {number} pageNo - 현재 페이지 번호.
+             * @param {number} prevPageSize - 이전 페이지당 항목 수.
+             * @param {number} newPageSize - 새로운 페이지당 항목 수.
+             * @returns {number} - 재계산된 페이지 번호.
+             */
             fnRepage: function(pageNo, prevPageSize, newPageSize) {
                 const offset = Number((pageNo - 1) * prevPageSize);
                 return Math.floor(offset / newPageSize) + 1;

@@ -8,9 +8,12 @@
             /**
              * 첨부파일 추가추가
              * (reqstItemIdx는 어차피 한 페이지 내에서 고유하므로 따로 처리해줄 필요 없다.)
+             * @param {string||number} atchFileNo - 첨부파일 번호
              */
             modal: function(atchFileNo) {
                 event.stopPropagation();
+                if (isNaN(atchFileNo)) return;
+
                 const url = "${Url.FILE_INFO_LIST_AJAX!}";
                 const ajaxData = { "atchFileNo": atchFileNo };
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
@@ -18,8 +21,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let rsltList = res.rsltList;
-                    if (commons.util.isEmpty(res.rsltList)) rsltList = [];
+                    const rsltList = res.rsltList || [];
                     commons.util.handlebarsTemplate(rsltList, "atch_file_list", "show");
                 });
             },
