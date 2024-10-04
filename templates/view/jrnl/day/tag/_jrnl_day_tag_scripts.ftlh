@@ -52,7 +52,6 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    console.log(res.rsltList);
                     commons.util.handlebarsTemplate(res.rsltList, "jrnl_day_tag_dtl", "show");
                 });
             },

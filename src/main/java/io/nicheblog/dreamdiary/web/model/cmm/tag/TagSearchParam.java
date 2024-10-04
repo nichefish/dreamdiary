@@ -32,6 +32,12 @@ public class TagSearchParam
     @Positive
     private Integer mnth;
 
+    /** 관리 컨텐츠 타입 */
+    private String refContentType;
+
+    /** 태그 카테고리 */
+    private String ctgr;
+
     /** 컨텐츠 타입 */
     @Size(max = 50)
     private String contentType;

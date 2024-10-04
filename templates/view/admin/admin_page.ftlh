@@ -60,7 +60,8 @@
 <#--begin::Tab-->
 <ul class="nav nav-tabs nav-tabs-line ps-5 my-5">
     <li class="nav-item">
-        <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="Page.adminPage();">
+        <a class="nav-link px-6 active" data-bs-toggle="tab" href="#kt_tab_pane_1"
+           onclick="Page.adminPage();">
         <span class="nav-icon">
             <i class="bi bi-sort-down-alt"></i>
         </span>
@@ -68,7 +69,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="Page.cdList();">
+        <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_2"
+           onclick="Page.cdList();">
         <span class="nav-icon">
             <i class="bi bi-people"></i>
         </span>
@@ -76,7 +78,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="Page.logStatsUserList();">
+        <a class="nav-link px-6" data-bs-toggle="tab" href="#kt_tab_pane_3"
+           onclick="Page.logStatsUserList();">
         <span class="nav-icon">
             <i class="bi bi-grid-1x2"></i>
         </span>
@@ -96,10 +99,12 @@
                 </div>
                 <div class="col-xl-3">
                     <div class="mt-1">
-                        <button type="button" class="btn btn-sm btn-primary" onclick="Cache.activeListModal();">
+                        <button type="button" class="btn btn-sm btn-primary"
+                                onclick="Cache.activeListModal();">
                             현재 캐시 조회
                         </button>
-                        <button type="button" class="btn btn-sm btn-primary" onclick="Cache.clearAllAjax();">
+                        <button type="button" class="btn btn-sm btn-primary"
+                                onclick="Cache.clearAllAjax();">
                             사이트 캐시 초기화
                         </button>
                     </div>
@@ -125,7 +130,8 @@
                     </select>
                 </div>
                 <div class="col-xl-2 mt-1">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.hldyAjax();">
+                    <button type="button" class="btn btn-sm btn-primary"
+                            onclick="Page.hldyAjax();">
                         휴일정보 조회+저장
                     </button>
                 </div>
@@ -151,7 +157,8 @@
                            value="" maxlength="64" />
                 </div>
                 <div class="col-xl-2 mt-1">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="Page.notionAjax();">
+                    <button type="button" class="btn btn-sm btn-primary"
+                            onclick="Page.notionAjax();">
                         NOTION 데이터 조회
                     </button>
                 </div>

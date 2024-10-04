@@ -174,7 +174,8 @@
             <label class="form-label fw-bolder text-dark"> </label>
         </div>
         <div class="d-flex align-items-center me-md-2">
-            <button type="submit" class="btn btn-sm btn-primary me-5" onclick="Swal.fire('준비중입니다.');">
+            <button type="submit" class="btn btn-sm btn-primary me-5"
+                    onclick="Swal.fire('준비중입니다.');">
                 <i class="bi bi-search"></i>검색
             </button>
         </div>

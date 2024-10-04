@@ -1,10 +1,10 @@
 <#--
- * 레이아웃 > 댓글 모듈
+ * 컴포넌트 > 댓글 모듈
  * @included_in : 댓글 기능이 있는 페이지들
  -->
 
 <script>
-    if (typeof Comment === 'undefined') { let Comment = {}; }
+    if (typeof Comment === 'undefined') { var Comment = {}; }
     Comment.modal = (function() {
         return {
             /**
@@ -34,6 +34,8 @@
              * @param {string} refContentType - 참조할 콘텐츠 타입.
              */
             regModal: function(refPostNo, refContentType) {
+                if (isNaN(refPostNo) || !refContentType) return;
+
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
                 /* initialize form. */
                 Comment.modal.initForm(obj);

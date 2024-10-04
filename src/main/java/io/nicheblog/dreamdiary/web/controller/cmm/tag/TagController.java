@@ -17,6 +17,7 @@ import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -72,8 +73,11 @@ public class TagController
         String rsltMsg = "";
         try {
             // 전체 태그 카테고리 목록 조회
-            List<String> tagCtgrList = tagService.getTotalCtgrList();
-            model.addAttribute("tagCtgrList", tagCtgrList);
+            model.addAttribute("tagCtgrList", tagService.getTotalCtgrList());
+            // 관련 컨텐츠 타입 목록 조회
+            model.addAttribute("contentTypeList", tagService.getContentTypeList());
+            // 활성 컨텐츠 타입 모델에 추가
+            model.addAttribute("refContentType", searchParam.getRefContentType());
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -111,11 +115,9 @@ public class TagController
         try {
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
             Sort sort = Sort.by(Sort.Direction.ASC, "tagNm");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
             // 전체 태그 목록 조회 (태그클라우드)
-            Page<TagDto> tagList = tagService.getPageDto(searchParamMap, pageRequest);
-            ajaxResponse.setRsltList(tagList.getContent());
-            ajaxResponse.setPagination(new PaginationInfo(tagList));
+            List<TagDto> tagList = tagService.getOverallSizedTagList(searchParam);
+            ajaxResponse.setRsltList(tagList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

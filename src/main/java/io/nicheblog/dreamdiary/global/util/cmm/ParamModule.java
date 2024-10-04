@@ -144,6 +144,8 @@ class ParamModule {
             // pageNo, pageSize는 검색인자가 아니므로 여기 들어갈 필요가 없다.
             if ("pageNo".equals(key)) continue;
             if ("pageSize".equals(key)) continue;
+            // isBackToList 빼기
+            if ("isBackToList".equals(key)) continue;
             Object value = searchParamMap.get(key);
             String valueStr = String.valueOf(searchParamMap.get(key));
             if (StringUtils.isNotEmpty(valueStr) && !"null".equals(valueStr)) {

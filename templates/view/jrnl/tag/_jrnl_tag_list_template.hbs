@@ -9,7 +9,9 @@
               onclick="JrnlDreamTag.dtlModal({{tagNo}}, '{{tagNm}}');"
               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="해당 태그로 게시물 목록을&#10;필터링합니다.">
             <span class="{{tagClass}}">
-                {{#if (exists ctgr)}}<span class="fs-7 text-noti">[{{ctgr}}]</span>{{/if}}
+                {{#if (exists ctgr)}}
+                    <span class="fs-7 text-noti">[{{ctgr}}]</span>
+                {{/if}}
                 {{tagNm}}
             </span>
             <span class="fs-9 text-noti fw-normal" style="margin-left:-0.25em;">{{contentSize}}</span>

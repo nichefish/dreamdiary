@@ -4,12 +4,14 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.QTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
+import io.nicheblog.dreamdiary.web.model.cmm.tag.TagSearchParam;
 import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import io.nicheblog.dreamdiary.web.repository.cmm.tag.jpa.TagRepository;
 import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamService;
@@ -63,6 +65,17 @@ public class TagService
     }
 
     /**
+     * 태그 요소를 관리할 컨텐츠 타입 목록 조회
+     */
+    public List<ContentType> getContentTypeList() {
+        return List.of(
+                ContentType.JRNL_DAY,
+                ContentType.JRNL_DIARY,
+                ContentType.JRNL_DREAM
+        );
+    }
+
+    /**
      * 컨텐츠 타입에 해당하는 태그만 INNER-JOIN으로 조회
      */
     public List<TagDto> getContentSpecificTagList(final ContentType contentType) {
@@ -106,9 +119,53 @@ public class TagService
     }
 
     /**
+     * 컨텐츠 타입 무관하게 사이즈 정보 포함하여 조회
+     */
+    public List<TagDto> getOverallSizedTagList(TagSearchParam searchParam) throws Exception {
+        List<TagDto> tagList = this.getListDto(searchParam);
+        String refContentType = searchParam.getContentType();
+
+        int maxSize = this.calcMaxSize(tagList, refContentType);
+        final int MIN_SIZE = 2; // 최소 크기
+        final int MAX_SIZE = 9; // 최대 크기
+        return tagList.stream()
+                .peek(dto -> {
+                    int size = dto.getContentSize();
+                    if (size == 1) {
+                        dto.setTagClass("ts-1");
+                    } else {
+                        double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
+                        int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
+                        dto.setTagClass("ts-"+tagSize);
+                    }
+                })
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    /**
      * 최대 사용빈도 계산한 태그 목록 조회
      */
     public Integer calcMaxSize(final List<TagDto> tagList, final ContentType contentType) {
+        int maxFrequency = 0;
+        for (TagDto tag : tagList) {
+            // 캐싱 처리 위해 셀프 프록시
+            Integer tagSize = this.countTagSize(tag.getTagNo(), contentType.key);
+            tag.setContentSize(tagSize);
+            maxFrequency = Math.max(maxFrequency, tagSize);
+        }
+        return maxFrequency;
+    }
+
+    public Integer countTagSize(final Integer tagNo, final String contentType) {
+        return tagRepository.countTagSize(tagNo, contentType);
+    }
+
+
+    /**
+     * 최대 사용빈도 계산한 태그 목록 조회
+     */
+    public Integer calcMaxSize(final List<TagDto> tagList, final String contentType) {
         int maxFrequency = 0;
         for (TagDto tag : tagList) {
             // 캐싱 처리 위해 셀프 프록시
@@ -119,8 +176,8 @@ public class TagService
         return maxFrequency;
     }
 
-    public Integer countTagSize(final Integer tagNo, final ContentType contentType) {
-        return tagRepository.countTagSize(tagNo, contentType.key);
+    public Integer countTagSize(final Integer tagNo) {
+        return tagRepository.countTagSize(tagNo);
     }
 
     /**

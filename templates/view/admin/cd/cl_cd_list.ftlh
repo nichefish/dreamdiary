@@ -58,7 +58,8 @@
             <tbody class="draggable-zone">
                 <#--begin::목록-->
                 <#list clCdList![] as clCd>
-                    <tr class="sortable-item draggable bg-hover-secondary" id="${clCd.clCd!}" onclick="ClCd.dtl('${clCd.clCd!}');">
+                    <tr class="sortable-item draggable bg-hover-secondary" id="${clCd.clCd!}"
+                        onclick="ClCd.dtl('${clCd.clCd!}');">
                         <td class="text-center hidden-table">
                             <div class="draggable-handle d-flex-center cursor-move pt-2"
                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
@@ -78,7 +79,8 @@
                             <span class="ms-1">(${clCd.clCd!})</span>
                             <a class="badge badge-secondary ms-2 p-2 btn-white blank blink-slow float-end"
                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="모달로 보기">
-                                <i class="bi bi-stickies fs-5 text-noti opacity-hover" onclick="ClCd.dtlModal('${clCd.clCd!}');"></i>
+                                <i class="bi bi-stickies fs-5 text-noti opacity-hover"
+                                   onclick="ClCd.dtlModal('${clCd.clCd!}');"></i>
                             </a>
                         </td>
                         <td class="text-start ps-6 hidden-table">

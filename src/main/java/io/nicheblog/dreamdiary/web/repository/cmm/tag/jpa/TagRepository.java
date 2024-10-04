@@ -38,6 +38,11 @@ public interface TagRepository
     @Query("SELECT COUNT(contentTag.contentTagNo) " +
             "FROM ContentTagEntity contentTag " +
             "WHERE contentTag.refTagNo = :tagNo " +
-            " AND contentTag.refContentType = :refContentType")
+            " AND (:refContentType IS NULL OR contentTag.refContentType = :refContentType)")
     Integer countTagSize(final @Param("tagNo") Integer tagNo, final @Param("refContentType") String refContentType);
+
+    @Query("SELECT COUNT(contentTag.contentTagNo) " +
+            "FROM ContentTagEntity contentTag " +
+            "WHERE contentTag.refTagNo = :tagNo")
+    Integer countTagSize(Integer tagNo);
 }

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -34,6 +35,8 @@ public enum ContentType {
     COMMENT("COMMENT", "댓글"),
     FLSYS_META("FLSYS_META", "파일시스템 메타");
 
+    @Getter
     public final String key;
+    @Getter
     public final String desc;
 }
