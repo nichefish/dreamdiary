@@ -43,7 +43,7 @@
                         <div class="col mx-5 fs-4 fw-normal <#if sectn.deprcYn == "Y">text-muted strikethrough</#if>">
                             ${sectn.markdownCn?no_esc}
                             <#if sectn.comment?? && sectn.comment.cnt gt 0>
-                                <div class="row py-2 fs-4">
+                                <div class="row pb-2 fs-4">
                                     <#list sectn.comment.list![] as comment>
                                         <div class="row ms-10 text-noti my-1 <#if comment?index == 0>mt-3</#if> <#if comment?index == sectn.comment.list?size - 1>mb-3</#if>">
                                             <div class="col div-textarea-smp me-10">- ${comment.markdownCn?no_esc}</div>

@@ -71,7 +71,7 @@
              * @param {string} refContentType - 참조할 콘텐츠 유형.
              */
             regModal: function(refPostNo, refContentType) {
-                if (isNaN(refPostNo)) return;
+                if (isNaN(refPostNo) || !refContentType) return;
 
                 const obj = { "refPostNo": refPostNo, "refContentType": refContentType };
                 /* initialize form. */

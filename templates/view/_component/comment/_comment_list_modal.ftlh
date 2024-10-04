@@ -8,6 +8,8 @@
         return {
             /**
              * 댓글 목록 모달 호출
+             * @param {string|number} refPostNo - 참조할 게시물 번호.
+             * @param {string} refContentType - 참조할 콘텐츠 타입.
              */
             modal: function(refPostNo, refContentType) {
                 event.stopPropagation();

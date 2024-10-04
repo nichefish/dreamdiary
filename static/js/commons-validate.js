@@ -30,6 +30,11 @@ commons.validate = (function() {
                 // 유효성 검사를 통과한 경우 에러 메시지 제거
                 label.remove();
             },
+            rules: {
+                ".required": {
+                    required: true
+                }
+            },
             ignore: [], // hidden 필드도 검증하기 위함
         },
 
@@ -227,11 +232,11 @@ commons.validate = (function() {
             inputs.forEach(function(input) {
                 input.addEventListener("keyup", function() {
                     // 모든 공백 제거
-                    const value = this.value.replace(/\s+/g, '');
+                    const value = this.value.trim();
                     this.value = value;
 
                     // 0으로 시작하지 않으면 무효 처리
-                    const startWithZero = /^(0[0-9]|0)$/;
+                    const startWithZero = /(^0)([0-9]|-)*$/g;
                     if (!startWithZero.test(value)) {
                         this.value = "";
                         return;
@@ -239,10 +244,11 @@ commons.validate = (function() {
 
                     // 02 번호와 그 외의 번호 구분
                     // 02는 12자/나머지는 13자보다 길어지면 끝자리 자름, 이후 xxx-xxx(x)-xxxx 형식에 맞게 변환
-                    const isSeoulLocal = /^02/.test(value);
+                    const seoulLocal = /(^02)([0-9]|-)*$/g; // 시작번호 02 vs. 나머지
+                    const isSeoulLocal = seoulLocal.test(value);
                     const formattedValue = isSeoulLocal ?
-                        value.slice(0, 12).replace(/[^0-9]/g, "").replace(/(^02)([0-9]{3})([0-9]{4})$/, "$1-$2-$3") :
-                        value.slice(0, 13).replace(/[^0-9]/g, "").replace(/(^[0-9]{3})([0-9]{4})$/, "$1-$2");
+                        value.substr(0, 12).replace(/[^0-9]/g, "").replace(/(^02)([0-9]+)?([0-9]{4})$/, "$1-$2-$3").replace("--", "-") :
+                        value.substr(0, 13).replace(/[^0-9]/g, "").replace(/(^[0-9]{3})([0-9]+)?([0-9]{4})$/, "$1-$2-$3").replace("--", "-");
 
                     this.value = formattedValue.replace("--", "-"); // 포맷팅 적용
                 });

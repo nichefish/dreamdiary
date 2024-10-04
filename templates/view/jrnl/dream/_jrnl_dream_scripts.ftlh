@@ -26,6 +26,7 @@
                             }
                         },
                     },
+                    ignore: undefined
                 });
                 // 체크박스 상태 변경시 필드 재검증
                 $("#elseDreamYn").change(function() {
