@@ -30,6 +30,7 @@
 
                 return sortedGroupedTags;
             },
+
             filterAll: function(obj) {
                 const isActivate = !$(obj).hasClass("active");
                 if (isActivate) {
@@ -42,15 +43,22 @@
                     $("div.ctgr").removeClass("active").removeClass("btn-outlined").addClass("btn-light");
                 }
             },
+
+            /**
+             * 태그 카테고리로 글 목록 필터링
+             * @param {string|number} tagCtgr - 필터링할 태그 카테고리.
+             */
             filter: function(tagCtgr) {
                 if (commons.util.isEmpty(tagCtgr)) return;
                 $("span."+tagCtgr).toggle();
                 $("i."+tagCtgr).toggle();
                 $("div."+tagCtgr).toggleClass("active").toggleClass("btn-outlined").toggleClass("btn-light");
             },
+
             hideSingleTag(selectorDiv) {
                 $(selectorDiv + " span.ts-1").parent().toggle();
             },
+
             /**
              * 태그 카테고리 파일을 DB로부터 새로고침한다.
              */

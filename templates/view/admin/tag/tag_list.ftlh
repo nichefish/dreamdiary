@@ -26,6 +26,7 @@
                 // 태그 조회
                 Page.tagListAjax('${refContentType!}');
             },
+
             /** 전체 태그 목록 조회 */
             tagListAjax: function(refContentType) {
                 const url = "${Url.TAG_LIST_AJAX!}";
@@ -38,6 +39,7 @@
                     commons.util.handlebarsTemplate(res.rsltList, "tag_list");
                 });
             },
+
             filterAll: function(obj) {
                 const isActivate = !$(obj).hasClass("active");
                 if (isActivate) {
@@ -50,58 +52,17 @@
                     $("div.ctgr").removeClass("active").removeClass("btn-outlined").addClass("btn-light");
                 }
             },
+
+            /**
+             * 태그 카테고리로 글 목록 필터링
+             * @param {string|number} tagCtgr - 필터링할 태그 카테고리.
+             */
             filter: function(tagCtgr) {
                 if (commons.util.isEmpty(tagCtgr)) return;
                 $("span."+tagCtgr).toggle();
                 $("i."+tagCtgr).toggle();
                 $("div."+tagCtgr).toggleClass("active").toggleClass("btn-outlined").toggleClass("btn-light");
             },
-            reloadWithParam: function(key, value) {
-                // 현재 URL을 가져옵니다.
-                const url = new URL(window.location.href);
-
-                // 기존 파라미터를 지우거나 업데이트합니다.
-                url.searchParams.set(key, value);
-
-                // 변경된 URL로 리다이렉트합니다.
-                window.location.href = url.toString();
-            },
-/*            /!** 목록에 따른 일기 태그 조회 *!/
-            listAjax: function() {
-                const url = "${Url.JRNL_DIARY_TAG_LIST_AJAX!}";
-                const ajaxData = { "yy": 9999, "mnth": 99 };
-                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_diary_tag_list");
-                });
-            },
-            /!** 목록에 따른 일기 태그 조회 *!/
-            listAjax: function() {
-                const url = "${Url.JRNL_DIARY_TAG_LIST_AJAX!}";
-                const ajaxData = { "yy": 9999, "mnth": 99 };
-                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_diary_tag_list");
-                });
-            },
-            /!** 목록에 따른 꿈 태그 조회 *!/
-            listAjax: function() {
-                const url = "${Url.JRNL_DREAM_TAG_LIST_AJAX!}";
-                const ajaxData = { "yy": 9999, "mnth": 99 };
-                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltList, "jrnl_dream_tag_list");
-                });
-            },*/
         }
     })();
     document.addEventListener("DOMContentLoaded", function() {
@@ -124,7 +85,7 @@
 
         <#list contentTypeList![] as contentType>
             <div class="btn btn-sm btn-outlined btn-light-secondary text-muted"
-                 onclick="Page.reloadWithParam('refContentType', '${contentType.key!}');">
+                 onclick="commons.util.reloadWithParam('refContentType', '${contentType.key!}');">
                 ${contentType.desc!}
                 <#if refContentType! == contentType.key!>
                     <i class="bi bi-check"></i>

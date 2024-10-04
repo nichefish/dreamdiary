@@ -1001,5 +1001,19 @@ commons.util = (function() {
                 }
             }, "block");
         },
+
+        /**
+         * 현재 페이지의 특정 URL 파라미터를 업데이트하고 페이지를 새로고침합니다.
+         * @param {string} key - 업데이트할 파라미터의 키.
+         * @param {string} value - 지정된 파라미터 키에 설정할 값.
+         */
+        reloadWithParam: function(key, value) {
+            // 현재 URL을 가져옵니다.
+            const url = new URL(window.location.href);
+            // 기존 파라미터를 지우거나 업데이트합니다.
+            url.searchParams.set(key, value);
+            // 변경된 URL로 리다이렉트합니다.
+            window.location.href = url.toString();
+        },
     }
 })();
