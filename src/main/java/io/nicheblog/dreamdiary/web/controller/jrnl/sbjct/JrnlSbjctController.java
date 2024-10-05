@@ -401,7 +401,7 @@ public class JrnlSbjctController
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             if (isSuccess) {
                 // 태그 처리 :: 메인 로직과 분리
-                publisher.publishEvent(new TagProcEvent(this, new BaseClsfKey(key, ContentType.NOTICE)));
+                publisher.publishEvent(new TagProcEvent(this, new BaseClsfKey(key, ContentType.JRNL_SBJCT)));
             }
         } catch (Exception e) {
             logParam.setExceptionInfo(e);

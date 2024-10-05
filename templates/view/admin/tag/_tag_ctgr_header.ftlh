@@ -4,21 +4,21 @@
  -->
 
 <div class="card post">
-    <div id="jrnl_tag_ctgr_div">
+    <div id="tag_ctgr_div">
         <div class="btn btn-sm btn-outlined btn-light-secondary text-muted ctgr active"
-             onclick="Tag.filterAll(this);">
+             onclick="Tag.ctgrFilterAll(this);">
             전체
             <i class="bi bi-check ctgr"></i>
         </div>
 
         <div class="btn btn-sm btn-outlined btn-light-secondary text-muted ctgr defaultCtgr active"
-             onclick="Tag.filter('defaultCtgr');">
+             onclick="Tag.ctgrFilter('defaultCtgr');">
             카테고리 없음
             <i class="bi bi-check ctgr defaultCtgr"></i>
         </div>
         <#list tagCtgrList![] as ctgr>
             <div class="btn btn-sm btn-outlined btn-light-secondary text-muted ctgr ${ctgr} active"
-                 onclick="Tag.filter('${ctgr}');">
+                 onclick="Tag.ctgrFilter('${ctgr}');">
                 ${ctgr}
                 <i class="bi bi-check ctgr ${ctgr}"></i>
             </div>

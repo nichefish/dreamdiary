@@ -45,7 +45,7 @@ public class TagEventListener {
         }
         // 관련 캐시 클리어
         publisher.publishEvent(new EhCacheEvictEvent(this, clsfKey.getPostNo(), clsfKey.getContentType()));
-        // 태그테이블 refresh (연관관계 없는 태그 삭제)
+        // 태그 테이블 refresh (연관관계 없는 메인 태그 삭제)
         tagService.deleteNoRefTags();
     }
 }

@@ -13,8 +13,7 @@
 <script type="text/javascript" src="/metronic/assets/plugins/custom/draggable/draggable.bundle.js?${releaseDate!}"></script>
 
 <#--include::script modules-->
-<#include "/view/admin/cd/_cl_cd_scripts.ftlh">
-<#include "/view/admin/tag/_tag_scripts.ftlh">
+<#include "/view/admin/tag/_tag_admin_scripts.ftlh">
 
 <script>
     const Page = (function() {
@@ -24,7 +23,7 @@
              */
             init: function() {
                 // 태그 조회
-                Tag.tagListAjax('${refContentType!}');
+                TagAdmin.tagListAjax('${refContentType!}');
             },
         }
     })();
@@ -96,5 +95,6 @@
 
 <#--include::modals-->
 <#include "/view/admin/tag/_tag_list_template.hbs">
+<#include "/view/admin/tag/_tag_ctgr_template.hbs">
 
 </@layout.layout>

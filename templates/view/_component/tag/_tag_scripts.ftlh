@@ -2,6 +2,7 @@
  * 태그 관련파일 묶음
  * @included_in : board_post_list
  -->
+
 <script>
     const Tag = (function() {
         return {
@@ -69,7 +70,7 @@
              * '전체 카테고리'로 글 목록 필터링
              * @param {HTMLElement} obj - 클릭한 요소를 나타내는 HTML 요소.
              */
-            filterAll: function(obj) {
+            ctgrFilterAll: function(obj) {
                 const isActivate = !$(obj).hasClass("active");
                 const $spanCtgr = $("span.ctgr");
                 const $iconCtgr = $("i.ctgr");
@@ -83,6 +84,17 @@
                     $iconCtgr.hide();
                     $divCtgr.removeClass("active").removeClass("btn-outlined").addClass("btn-light");
                 }
+            },
+
+            /**
+             * 태그 카테고리로 글 목록 필터링
+             * @param {string|number} tagCtgr - 필터링할 태그 카테고리.
+             */
+            ctgrFilter: function(tagCtgr) {
+                if (commons.util.isEmpty(tagCtgr)) return;
+                $("span."+tagCtgr).toggle();
+                $("i."+tagCtgr).toggle();
+                $("div."+tagCtgr).toggleClass("active").toggleClass("btn-outlined").toggleClass("btn-light");
             },
 
             /**

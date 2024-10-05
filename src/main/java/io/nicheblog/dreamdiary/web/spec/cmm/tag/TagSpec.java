@@ -76,7 +76,7 @@ public class TagSpec
         return (root, query, builder) -> {
             List<Predicate> predicate = new ArrayList<>();
             try {
-                Join<TagEntity, ContentTagEntity> contentTagJoin = root.join("contentTagList", JoinType.INNER);
+                Join<TagEntity, ContentTagEntity> contentTagJoin = root.join("contentTagList", JoinType.LEFT);
                 predicate.add(builder.isNull(contentTagJoin));
             } catch (Exception e) {
                 e.printStackTrace();

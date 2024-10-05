@@ -99,12 +99,10 @@
             <#include "/component/notice/popup/_notice_popup_modal.ftlh">
             <#include "/layout/topbar/_topbar_sitemap_modal.ftlh">
         </#if>
-        <#--include:: Tag Module-->
-        <#include "/view/_component/tag/_tag_scripts.ftlh">
         <#--include:: User-My-Drawer-->
         <#include "/layout/header/navbar/_navbar_user_drawer.ftlh">
-
-        <!--end::modals-->
+        <#--include:: Tag Module-->
+        <#include "/view/_component/tag/_tag_scripts.ftlh">
 
         <#if pageScripts??>
             ${pageScripts!}

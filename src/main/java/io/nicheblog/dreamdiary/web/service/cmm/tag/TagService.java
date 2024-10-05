@@ -4,10 +4,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.QTagEntity;
 import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
 import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.TagMapstruct;
 import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
@@ -241,16 +239,17 @@ public class TagService
 
     /**
      * 전체 태그 카테고리 목록 조회
+     * @Unused
      */
-    public List<String> getTotalCtgrList() throws Exception {
-        // TODO: 리포지토리 레이어로 분리하기
-        QTagEntity tag = QTagEntity.tagEntity;
-        return queryFactory.select(tag.ctgr)
-                .distinct()
-                .from(tag)
-                .where(tag.ctgr.isNotEmpty())
-                .fetch();
-    }
+    // npublic List<String> getTotalCtgrList() throws Exception {
+    // n    // TODO: 리포지토리 레이어로 분리하기
+    // n    QTagEntity tag = QTagEntity.tagEntity;
+    // n    return queryFactory.select(tag.ctgr)
+    // n            .distinct()
+    // n            .from(tag)
+    // n            .where(tag.ctgr.isNotEmpty())
+    // n            .fetch();
+    // n}
 
     /**
      * 게시판 태그 목록 Page<Entity>->Page<Dto> 변환
