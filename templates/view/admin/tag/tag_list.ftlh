@@ -96,5 +96,6 @@
 <#--include::modals-->
 <#include "/view/admin/tag/_tag_list_template.hbs">
 <#include "/view/admin/tag/_tag_ctgr_template.hbs">
+<#include "/view/admin/tag/_tag_admin_dtl_modal.ftlh">
 
 </@layout.layout>

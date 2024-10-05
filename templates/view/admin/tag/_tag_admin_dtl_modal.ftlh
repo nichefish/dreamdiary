@@ -4,13 +4,13 @@
 
 <#import "/layout/modal_layout.ftlh" as modal>
 
-<@modal.layout id="tag_dtl" size="xl">
+<@modal.layout id="tag_admin_dtl" size="xl">
     <#--begin::Modal Header-->
     <@component.modal_header "태그" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div class="table-responsive-sm">
-            <div class="row" id="tag_dtl_div">
+            <div class="row" id="tag_admin_dtl_div">
                 <#--Handlebars template goes in here-->
             </div>
         </div>
@@ -26,4 +26,4 @@
 </@modal.layout>
 
 <#--include:: Handlebars template-->
-<#include "/view/admin/tag/_tag_dtl_template.hbs">
+<#include "/view/admin/tag/_tag_admin_dtl_template.hbs">
