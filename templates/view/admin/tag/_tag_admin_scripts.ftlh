@@ -26,6 +26,25 @@
                     commons.util.handlebarsTemplate(res.rsltList, "tag_list");
                 });
             },
+
+            /**
+             * 관리 모달 호출
+             * @param {string|number} tagNo - 조회할 태그 번호.
+             */
+            dtlModal: function(tagNo) {
+                if (isNaN(tagNo)) return;
+
+                const url = "${Url.TAG_DTL_AJAX!}";
+                const ajaxData = { "tagNo": tagNo };
+                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
+                    if (!res.rslt) {
+                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
+                        return false;
+                    }
+                    // 태그 상세 정보
+                    commons.util.handlebarsTemplate(res.rsltObj, "tag_dtl", "show");
+                });
+            }
         }
     })();
     document.addEventListener("DOMContentLoaded", function() {

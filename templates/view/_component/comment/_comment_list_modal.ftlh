@@ -26,8 +26,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    let rsltList = res.rsltList;
-                    if (commons.util.isEmpty(res.rsltList)) rsltList = [];
+                    const { rsltList = [] } = res;
                     commons.util.handlebarsTemplate(rsltList, "comment_list", "show");
                 });
             },

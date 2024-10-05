@@ -94,7 +94,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    const rsltObj = res.rsltObj;
+                    const { rsltObj } = res;
                     /* initialize form. */
                     FlsysMeta.initForm(rsltObj);
                     $("#flsys_meta_dtl_modal").modal("hide");

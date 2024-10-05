@@ -97,7 +97,7 @@
                 const ajaxData = $("#procForm").serializeArray();
                 commons.util.blockUIAjax(url, 'POST', ajaxData, function(res) {
                     if (!res.rslt) return;
-                    let rsltObj = res.rsltObj;
+                    const { rsltObj } = res;
                     // 수정 modal_form에 값 세팅
                     $("#vcatnSchdulNo").val(vcatnSchdulNo);
                     $("#userId").val(rsltObj.userId);

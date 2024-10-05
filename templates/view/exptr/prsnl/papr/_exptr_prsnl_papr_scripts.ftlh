@@ -89,7 +89,7 @@
                         return false;
                     };
 
-                    let {prevMnth, currMnth} = res.rsltMap;
+                    const { prevMnth, currMnth } = res.rsltMap;
                     // 확인된 결과에 따라 처리
                     if (prevMnth?.cfYn === "Y" && currMnth?.cfYn === "Y") {
                         alert("<@spring.message 'view.post.prsnl.alreadyCompt'/>");

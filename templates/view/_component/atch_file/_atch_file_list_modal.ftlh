@@ -20,7 +20,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    const rsltList = res.rsltList || [];
+                    const { rsltList = [] } = res;
                     commons.util.handlebarsTemplate(rsltList, "atch_file_list", "show");
                 });
             },

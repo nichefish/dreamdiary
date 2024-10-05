@@ -69,7 +69,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    const rsltList = res.rsltList;
+                    const { rsltList } = res;
                     // 정렬 처리
                     const sortStr = $("#jrnl_aside #sort").val();
                     if (sortStr === "ASC") {
@@ -169,7 +169,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    const rsltObj = res.rsltObj;
+                    const { rsltObj } = res;
                     /* initialize form. */
                     JrnlDay.initForm(rsltObj);
                 });

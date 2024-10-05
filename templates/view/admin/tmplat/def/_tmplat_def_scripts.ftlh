@@ -85,7 +85,8 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    const rsltObj = res.rsltObj;
+                    const { rsltObj } = res;
+                    /* initialize form. */
                     TmplatDef.initForm(rsltObj);
                 });
             },

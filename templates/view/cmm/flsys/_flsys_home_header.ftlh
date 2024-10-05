@@ -47,7 +47,7 @@
                         if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
                         return false;
                     }
-                    const rsltObj = res.rsltObj;
+                    const { rsltObj } = res;
                     rsltObj.mode = Flsys.mode;
                     commons.util.handlebarsTemplate(rsltObj, "flsys_list");
                     Flsys.currPath = rsltObj.filePath;

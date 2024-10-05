@@ -145,8 +145,7 @@
                     }
                     $("#schdul_dtl_modal").modal("hide");
                     commons.util.handlebarsTemplate(res.rsltObj, "schdul_reg", "show");
-                    let rsltObj = res.rsltObj;
-                    let prtcpnt = rsltObj.prtcpntList;
+                    const { rsltObj: { prtcpntList: prtcpnt } } = res;
                     Schdul.prtcpntCnt = prtcpnt !== undefined ? prtcpnt.length : 0;
 
                     commons.datepicker.singleDatePicker("#bgnDt", "yyyy-MM-DD", rsltObj.bgnDt);

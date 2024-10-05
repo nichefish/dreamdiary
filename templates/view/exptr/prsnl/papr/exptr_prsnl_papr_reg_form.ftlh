@@ -49,7 +49,7 @@
                 const url = "${Url.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX!}";
                 const ajaxData = {"yy": $("#yy").val(), "mnth": $("#mnth").val()};
                 commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
-                    let rsltObj = res.rsltObj;
+                    const { rsltObj } = res;
                     if (rsltObj === undefined) return;
                     if (rsltObj.cfYn === "Y") {
                         Swal.fire("이미 해당 월 경비 취합이 완료된 상태입니다.")
@@ -121,7 +121,7 @@
                         Swal.fire({text: res.message});
                         return;
                     }
-                    let rsltList = res.rsltList;
+                    const rsltList = res.rsltList;
                     if (commons.util.isEmpty(rsltList)) return;
                     rsltList.forEach(function(item, idx) {
                         item.rnum = idx;

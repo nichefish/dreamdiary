@@ -150,8 +150,6 @@ public class TagController
             // 태그 상세 조회 (관련글 목록 포함)
             TagDto tagDto = tagService.getDtlDto(tagNo);
             ajaxResponse.setRsltObj(tagDto);
-            // if (!CollectionUtils.isEmpty(TagDto.getPostList())) ajaxResponse.setRsltList(TagDto.getPostList());
-            // if (!CollectionUtils.isEmpty(TagDto.getNoticeList())) ajaxResponse.setRsltList(TagDto.getNoticeList());
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
