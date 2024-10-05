@@ -147,24 +147,8 @@ public class TagService
      * 최대 사용빈도 계산한 태그 목록 조회
      */
     public Integer calcMaxSize(final List<TagDto> tagList, final ContentType contentType) {
-        int maxFrequency = 0;
-        for (TagDto tag : tagList) {
-            // 캐싱 처리 위해 셀프 프록시
-            Integer tagSize = this.countTagSize(tag.getTagNo(), contentType.key);
-            tag.setContentSize(tagSize);
-            maxFrequency = Math.max(maxFrequency, tagSize);
-        }
-        return maxFrequency;
+        return this.calcMaxSize(tagList, contentType.key);
     }
-
-    public Integer countTagSize(final Integer tagNo, final String contentType) {
-        return tagRepository.countTagSize(tagNo, contentType);
-    }
-
-
-    /**
-     * 최대 사용빈도 계산한 태그 목록 조회
-     */
     public Integer calcMaxSize(final List<TagDto> tagList, final String contentType) {
         int maxFrequency = 0;
         for (TagDto tag : tagList) {
@@ -176,8 +160,8 @@ public class TagService
         return maxFrequency;
     }
 
-    public Integer countTagSize(final Integer tagNo) {
-        return tagRepository.countTagSize(tagNo);
+    public Integer countTagSize(final Integer tagNo, final String contentType) {
+        return tagRepository.countTagSize(tagNo, contentType);
     }
 
     /**
@@ -253,7 +237,6 @@ public class TagService
     public void deleteNoRefTags() {
         List<TagEntity> entity = tagRepository.findAll(tagSpec.getNoRefTags());
         tagRepository.deleteAll(entity);
-
     }
 
     /**

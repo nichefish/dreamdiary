@@ -10,6 +10,7 @@
 
 <!-- list-table items -->
 <#include "/view/_component/_list_elements.ftlh">
+
 <!-- buttons -->
 <#include "/view/_component/_page_buttons.ftlh">
 

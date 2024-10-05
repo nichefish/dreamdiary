@@ -14,7 +14,7 @@
 
 <#--include::script modules-->
 <#include "/view/admin/cd/_cl_cd_scripts.ftlh">
-<#include "/view/jrnl/tag/_jrnl_tag_scripts.ftlh">
+<#include "/view/admin/tag/_tag_scripts.ftlh">
 
 <script>
     const Page = (function() {
@@ -24,44 +24,7 @@
              */
             init: function() {
                 // 태그 조회
-                Page.tagListAjax('${refContentType!}');
-            },
-
-            /** 전체 태그 목록 조회 */
-            tagListAjax: function(refContentType) {
-                const url = "${Url.TAG_LIST_AJAX!}";
-                const ajaxData = { "contentType": refContentType };
-                commons.util.blockUIAjax(url, 'GET', ajaxData, function(res) {
-                    if (!res.rslt) {
-                        if (commons.util.isNotEmpty(res.message)) Swal.fire({ text: res.message });
-                        return false;
-                    }
-                    commons.util.handlebarsTemplate(res.rsltList, "tag_list");
-                });
-            },
-
-            filterAll: function(obj) {
-                const isActivate = !$(obj).hasClass("active");
-                if (isActivate) {
-                    $("span.ctgr").show();
-                    $("i.ctgr").show();
-                    $("div.ctgr").addClass("active").addClass("btn-outlined").removeClass("btn-light");
-                } else {
-                    $("span.ctgr").hide();
-                    $("i.ctgr").hide();
-                    $("div.ctgr").removeClass("active").removeClass("btn-outlined").addClass("btn-light");
-                }
-            },
-
-            /**
-             * 태그 카테고리로 글 목록 필터링
-             * @param {string|number} tagCtgr - 필터링할 태그 카테고리.
-             */
-            filter: function(tagCtgr) {
-                if (commons.util.isEmpty(tagCtgr)) return;
-                $("span."+tagCtgr).toggle();
-                $("i."+tagCtgr).toggle();
-                $("div."+tagCtgr).toggleClass("active").toggleClass("btn-outlined").toggleClass("btn-light");
+                Tag.tagListAjax('${refContentType!}');
             },
         }
     })();
@@ -74,28 +37,41 @@
 <#--include:: Aside-->
 <#include "/view/admin/tag/_tag_aside_base.ftlh">
 
-<!-- 컨텐츠 타입 -->
+<!-- 컨텐츠 타입 헤더 -->
 <div class="card post">
     <div id="jrnl_tag_ctgr_div">
-        <div class="btn btn-sm btn-outlined btn-light-secondary text-muted ctgr active"
-             onclick="Page.reloadWithParam('refContentType', '');">
-            전체
-            <i class="bi bi-check ctgr"></i>
+        <#assign isOverall = !refContentType?? || refContentType! == "" />
+        <div class="btn btn-sm btn-outlined <#if isOverall>btn-light-primary<#else>btn-light-secondary</#if> text-muted ctgr active"
+             onclick="commons.util.reloadWithParam('refContentType', '');">
+            <span class="d-flex align-items-center">
+                전체
+                <#if isOverall>
+                    <i class="bi bi-check text-dark"></i>
+                </#if>
+            </span>
         </div>
 
         <#list contentTypeList![] as contentType>
-            <div class="btn btn-sm btn-outlined btn-light-secondary text-muted"
+            <#assign isChecked = refContentType! == contentType.key! />
+            <div class="btn btn-sm btn-outlined <#if isChecked>btn-light-primary<#else>btn-light-secondary</#if> text-dark align-middler"
                  onclick="commons.util.reloadWithParam('refContentType', '${contentType.key!}');">
-                ${contentType.desc!}
-                <#if refContentType! == contentType.key!>
-                    <i class="bi bi-check"></i>
-                </#if>
+                <span class="d-flex align-items-center">
+                    <#if contentType.icon??>
+                        <i class="bi bi-${contentType.icon!} text-dark"></i>
+                    </#if>
+                    <span class="ms-2">
+                        ${contentType.desc!}
+                    </span>
+                    <#if isChecked>
+                        <i class="bi bi-check text-dark"></i>
+                    </#if>
+                </span>
             </div>
         </#list>
     </div>
 </div>
 
-<!-- 태그 카테고리 -->
+<!-- 태그 카테고리 헤더 -->
 <#include "/view/admin/tag/_tag_ctgr_header.ftlh">
 
 <!-- 태그 목록 -->

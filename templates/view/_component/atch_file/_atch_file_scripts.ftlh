@@ -51,9 +51,12 @@
             },
 
             /**
-             * 새로 추가된 첨부파일 삭제
+             * 새로 추가된 첨부파일 영역(div) 삭제
+             * @param {string|number} idx - 추가된 첨부파일 영역(div) 삭제.
              */
             delNewFileSpan: function(idx) {
+                if (isNaN(idx)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,
@@ -65,8 +68,11 @@
 
             /**
              * 기존 첨부파일 삭제 플래그 세팅
+             * @param {string|number} atchFileDtlNo - 첨부파일 상세 번호.
              */
             delExistingFile: function(atchFileDtlNo) {
+                if (isNaN(atchFileDtlNo)) return;
+
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
                     showCancelButton: true,

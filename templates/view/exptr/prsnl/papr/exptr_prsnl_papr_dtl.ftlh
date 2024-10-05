@@ -16,11 +16,17 @@
                 Page.emptyListToggle();        // 추가추가 개수 0개인지 체크
                 $("#totAmt").text(commons.util.getReqstItemTotSum("id^=exptrAmtSpan").toLocaleString());
             },
-            /** 관리 페이지로 이동 */
+
+            /**
+             * 관리 페이지로 이동
+             */
             statsPage: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.EXPTR_PRSNL_STATS_DTL!}");
             },
-            /** 추가추가 개수 0개인지 체크 */
+
+            /**
+             * 추가추가 개수 0개인지 체크
+             */
             emptyListToggle: function() {
                 if ($("#exptr_prsnl_item_reg_div tr").length == 0) {
                     $("#empty_list_div").show();
@@ -28,7 +34,10 @@
                     $("#empty_list_div").hide();
                 }
             },
-            /** 영수증 원본 제출 체크 */
+
+            /**
+             * 영수증 원본 제출 체크 (ajax)
+             */
             orgnlRciptAjax: function(exptrPrsnlItemNo, orgnlRciptYn) {
                 Swal.fire({
                     text: "영수증 원본 제출상태를 변경하시겠습니까?",
@@ -45,7 +54,10 @@
                     });
                 });
             },
-            /** PDF 인쇄 화면 출력 */
+
+            /**
+             * PDF 인쇄 화면 출력
+             */
             pdfPop: function() {
                 const url = "${Url.EXPTR_PRSNL_PAPR_PDF_POP!}?postNo="+$("#postNo").val();
                 const popupNm = '경비지출서 팝업';
@@ -53,7 +65,10 @@
                 const popup = commons.util.openPopup(url, popupNm, options);
                 if (popup) popup.focus();
             },
-            /** 개별 영수증 PDF 취합 다운로드 */
+
+            /**
+             * 개별 영수증 PDF 취합 다운로드
+             */
             pdfDownload: function() {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,

@@ -36,7 +36,9 @@
                 $(tabObj).addClass("active");
             },
 
-            /** 목록 조회 (ajax) */
+            /**
+             * 목록 조회 (ajax)
+             */
             flsysListAjax: function(filePath) {
                 const url = "${Url.FLSYS_LIST_AJAX!}";
                 const ajaxData = { "filePath": filePath };
@@ -54,12 +56,16 @@
                 });
             },
 
-            /** 새로고침 (ajax) */
+            /**
+             * 새로고침 (ajax)
+             */
             flsysRefreshAjax: function() {
                 Flsys.flsysListAjax(Flsys.currPath);
             },
 
-            /** 탐색기로 열기 */
+            /**
+             * 탐색기로 열기
+             */
             openInExplorer: function(filePath, objectTy) {
                 const url = "${Url.FLSYS_OPEN_IN_EXPLORER_AJAX!}";
                 const ajaxData = { "filePath": filePath, "objectTy": objectTy };
@@ -71,7 +77,10 @@
                     window.open("file:///" + "//${FILE_SVR_IP_ADDR!}/" + filePath);
                 });
             },
-            /** vod 재생 */
+
+            /**
+             * vod 재생
+             */
             fileDownload: function(filePath) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.download"/>,
@@ -83,18 +92,27 @@
                     $("#flsysForm").attr("action", "${Url.FLSYS_FILE_DOWNLOAD!}").submit();
                 });
             },
-            /** vod 재생 */
+
+            /**
+             * vod 재생
+             */
             playVod: function(filePath) {
                 const obj = { "filePath": filePath };
                 commons.util.handlebarsTemplate(obj, "flsys_file_vod", "show");
             },
-            /** 파일 참조 추가 */
+
+            /**
+             * 파일 참조 추가
+             */
             addRef: function(filePath) {
                 const obj = { "filePath": filePath, "refCnt": Flsys.refCnt++ }
                 commons.util.handlebarsAppend(obj, "flsys_ref");
                 commons.util.closeModal();
             },
-            /** 기존 첨부파일 삭제 플래그 세팅 */
+
+            /**
+             * 기존 첨부파일 삭제 플래그 세팅
+             */
             delRef: function(obj) {
                 Swal.fire({
                     text: <@spring.message "view.cnfm.del"/>,
@@ -104,7 +122,10 @@
                     $(obj).parent().remove();
                 });
             },
-            /** 실행하기 */
+
+            /**
+             * 실행하기
+             */
             fileExec: function(filePath) {
                 const url = "${Url.FLSYS_FILE_EXEC_AJAX!}";
                 const ajaxData = { "filePath": filePath };

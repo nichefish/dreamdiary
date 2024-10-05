@@ -47,7 +47,7 @@
             },
 
             /**
-             * 전체 태그 목록 조회
+             * 전체 태그 목록 조회 (ajax)
              * @param {Object} options - 조회 옵션 객체.
              * @param {string|number} options.refPostNo - 참조할 포스트 번호.
              * @param {string} options.refContentType - 참조할 콘텐츠 유형.

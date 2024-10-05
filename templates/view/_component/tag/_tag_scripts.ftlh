@@ -36,6 +36,56 @@
             },
 
             /**
+             * 태그를 태그 카테고리별로 그룹화
+             * @param {string|number} tagNo - 태그 목록.
+             */
+            groupTagsByCategory: function(tagList) {
+                // 카테고리별로 그룹화
+                const groupedTags = tagList.reduce((acc, tag) => {
+                    const category = tag.ctgr || '';
+                    if (!acc[category]) {
+                        acc[category] = [];
+                    }
+                    acc[category].push(tag);
+                    return acc;
+                }, {});
+
+                // 그룹을 순서대로 정렬 (Unknown을 마지막으로)
+                const sortedGroupedTags = Object.keys(groupedTags)
+                    .sort((a, b) => {
+                        if (a === 'Unknown') return 1;
+                        if (b === 'Unknown') return -1;
+                        return a.localeCompare(b);
+                    })
+                    .reduce((acc, key) => {
+                        acc[key] = groupedTags[key];
+                        return acc;
+                    }, {});
+
+                return sortedGroupedTags;
+            },
+
+            /**
+             * '전체 카테고리'로 글 목록 필터링
+             * @param {HTMLElement} obj - 클릭한 요소를 나타내는 HTML 요소.
+             */
+            filterAll: function(obj) {
+                const isActivate = !$(obj).hasClass("active");
+                const $spanCtgr = $("span.ctgr");
+                const $iconCtgr = $("i.ctgr");
+                const $divCtgr = $("div.ctgr");
+                if (isActivate) {
+                    $spanCtgr.show();
+                    $iconCtgr.show();
+                    $divCtgr.addClass("active").addClass("btn-outlined").removeClass("btn-light");
+                } else {
+                    $spanCtgr.hide();
+                    $iconCtgr.hide();
+                    $divCtgr.removeClass("active").removeClass("btn-outlined").addClass("btn-light");
+                }
+            },
+
+            /**
              * 태그로 글 목록 필터링
              * @param {string|number} tagNo - 필터링할 태그 번호.
              */
@@ -49,6 +99,14 @@
             },
 
             /**
+             * 글 1개짜리 태그 숨김
+             * @param {HTMLElement} obj - 토글을 적용할 범위 selector
+             */
+            hideSingleTag(selectorDiv) {
+                $(selectorDiv + " span.ts-1").parent().toggle();
+            },
+
+            /**
              * 글 목록 태그 필터링 리셋
              */
             resetFilter: function() {
@@ -56,7 +114,7 @@
             },
 
             /**
-             * 전체 태그 목록 조회
+             * 전체 태그 목록 조회 (ajax)
              */
             listAjax: function() {
                 const url = "${Url.TAG_LIST_AJAX!}";

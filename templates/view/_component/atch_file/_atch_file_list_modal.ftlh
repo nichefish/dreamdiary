@@ -6,9 +6,8 @@
     const AtchFileList = (function() {
         return {
             /**
-             * 첨부파일 추가추가
-             * (reqstItemIdx는 어차피 한 페이지 내에서 고유하므로 따로 처리해줄 필요 없다.)
-             * @param {string||number} atchFileNo - 첨부파일 번호
+             * 첨부파일 목록 모달 호출
+             * @param {string|number} atchFileNo - 첨부파일 번호.
              */
             modal: function(atchFileNo) {
                 event.stopPropagation();

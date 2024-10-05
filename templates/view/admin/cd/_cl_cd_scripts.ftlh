@@ -60,7 +60,7 @@
             },
 
             /**
-             * 등록/수정 처리(Ajax)
+             * 등록/수정 처리 (ajax)
              */
             regAjax: function() {
                 event.stopPropagation();

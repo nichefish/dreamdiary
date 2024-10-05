@@ -52,7 +52,7 @@
             },
 
             /**
-             * 내 비밀번호 수정 처리(Ajax)
+             * 내 비밀번호 수정 처리 (Ajax)
              */
             myPwChgAjax: function() {
                 const url = "${Url.USER_MY_PW_CHG_AJAX!}";

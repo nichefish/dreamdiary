@@ -5,62 +5,8 @@
 <script>
     const JrnlTag = (function() {
         return {
-            groupTagsByCategory: function(tagList) {
-                // 카테고리별로 그룹화
-                const groupedTags = tagList.reduce((acc, tag) => {
-                    const category = tag.ctgr || '';
-                    if (!acc[category]) {
-                        acc[category] = [];
-                    }
-                    acc[category].push(tag);
-                    return acc;
-                }, {});
-
-                // 그룹을 순서대로 정렬 (Unknown을 마지막으로)
-                const sortedGroupedTags = Object.keys(groupedTags)
-                    .sort((a, b) => {
-                        if (a === 'Unknown') return 1;
-                        if (b === 'Unknown') return -1;
-                        return a.localeCompare(b);
-                    })
-                    .reduce((acc, key) => {
-                        acc[key] = groupedTags[key];
-                        return acc;
-                    }, {});
-
-                return sortedGroupedTags;
-            },
-
-            filterAll: function(obj) {
-                const isActivate = !$(obj).hasClass("active");
-                if (isActivate) {
-                    $("span.ctgr").show();
-                    $("i.ctgr").show();
-                    $("div.ctgr").addClass("active").addClass("btn-outlined").removeClass("btn-light");
-                } else {
-                    $("span.ctgr").hide();
-                    $("i.ctgr").hide();
-                    $("div.ctgr").removeClass("active").removeClass("btn-outlined").addClass("btn-light");
-                }
-            },
-
             /**
-             * 태그 카테고리로 글 목록 필터링
-             * @param {string|number} tagCtgr - 필터링할 태그 카테고리.
-             */
-            filter: function(tagCtgr) {
-                if (commons.util.isEmpty(tagCtgr)) return;
-                $("span."+tagCtgr).toggle();
-                $("i."+tagCtgr).toggle();
-                $("div."+tagCtgr).toggleClass("active").toggleClass("btn-outlined").toggleClass("btn-light");
-            },
-
-            hideSingleTag(selectorDiv) {
-                $(selectorDiv + " span.ts-1").parent().toggle();
-            },
-
-            /**
-             * 태그 카테고리 파일을 DB로부터 새로고침한다.
+             * 태그 카테고리 파일을 DB로부터 새로고침한다. (ajax)
              */
             tagCtgrSyncAjax: function() {
                 const url = "${Url.JRNL_TAG_CTGR_SYNC_AJAX!}";

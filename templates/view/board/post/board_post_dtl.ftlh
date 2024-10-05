@@ -16,7 +16,7 @@
              * 노션Notion 모달 페이지 호출
              */
             notionModal: function() {
-                let notionPageId = "${(post.notionPageId)!}";
+                const notionPageId = "${(post.notionPageId)!}";
                 if (notionPageId === "") return;
 
                 const iframe = $('<iframe>', {

@@ -29,7 +29,7 @@
             },
 
             /**
-             * 목록 조회
+             * 목록 조회 (ajax)
              */
             keywordListAjax: function() {
                 const keyword = $("#jrnl_aside #diaryKeyword").val();

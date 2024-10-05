@@ -3,14 +3,13 @@
  * @included_in : 단락 기능이 있는 페이지들
  -->
 
-<!--begin::section-->
-
 <#--begin::sectn button-->
 <div class="col d-flex justify-content-end">
     <#--헤더:: 버튼: 등록 모달 호출하기-->
     <@component.header_btn_reg_modal "Sectn.regModal(${post.postNo!}, '${post.contentType!}');" />
 </div>
 
+<!--begin::section-->
 <div id="sectn_list_div" class="accordion accordion-icon-collapse">
     <#if post.sectn?? && post.sectn.hasSectn>
         <div class="separator separator-dashed border-gray-300 my-8"></div>

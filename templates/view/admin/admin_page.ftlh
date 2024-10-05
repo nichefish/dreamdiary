@@ -19,13 +19,19 @@
             init: function() {
                 //
             },
-            /** 휴일정보 : url, data 받아서 ajax 호출 */
+
+            /**
+             * 휴일정보 : url, data 받아서 ajax 호출
+             */
             hldyAjax: function() {
                 const url = "${Url.API_HLDY_GET!}";
                 const ajaxData = { "yy" : $("#hldyYy option:selected").val() };
                 Page.ajax(url, ajaxData);
             },
-            /** NOTION : url, data 받아서 ajax 호출 */
+
+            /**
+             * NOTION : url, data 받아서 ajax 호출
+             */
             notionAjax: function() {
                 const url = "${Url.API_NOTION_GET!}";
                 const ajaxData = { "dataType": $("#dataType").val(), "dataId": $("#dataId").val() };
@@ -34,7 +40,12 @@
                     Swal.fire({ text: res.message });
                 });
             },
-            /** url, data 받아서 ajax 호출 */
+
+            /**
+             * url, data 받아서 ajax 호출
+             * @param {string} url - 요청을 보낼 대상 URL.
+             * @param {Object} data - 서버로 전송할 데이터 객체.
+             */
             ajax: function(url, data) {
                 commons.util.blockUIAjax(url, 'POST', data, function(res) {
                     if (res.rslt) Swal.fire(JSON.stringify(res));
@@ -45,11 +56,17 @@
                         });
                 });
             },
-            /** 사이트 관리 페이지로 이동 */
+
+            /**
+             * 사이트 관리 페이지로 이동
+             */
             adminPage: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.ADMIN_PAGE!}");
             },
-            /** 코드 관리 페이지로 이동 */
+
+            /**
+             * 코드 관리 페이지로 이동
+             */
             cdList: function() {
                 commons.util.blockUISubmit("#procForm", "${Url.CL_CD_LIST!}");
             },

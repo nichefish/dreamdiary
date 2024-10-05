@@ -8,7 +8,7 @@
     const Rcipt = (function() {
         return {
             /**
-             * 영수증 이미지 첨부 (등록/수정)
+             * 영수증 이미지 첨부 (등록/수정 페이지) (ajax)
              */
             uploadRegAjax: function(idx) {
                 let fileInput = $("#atchFile0");
@@ -37,8 +37,9 @@
                     }
                 });
             },
+
             /**
-             * 영수증 이미지 첨부 (상세)
+             * 영수증 이미지 첨부 (상세 페이지) (ajax)
              */
             uploadDtlAjax: function(exptrPrsnlItemNo) {
                 let fileInput = $("#atchFile0");

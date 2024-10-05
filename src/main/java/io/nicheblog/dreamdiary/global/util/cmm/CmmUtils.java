@@ -223,7 +223,16 @@ public class CmmUtils {
 
     public static void procNodes(final Elements elements) {
         for (Element elmt : elements) {
-            // <p> 태그 내의 모든 자식 노드를 순회
+            // <pre> 태그는 처리하지 않음
+            if (elmt.tagName().equalsIgnoreCase("pre")) continue;
+
+            // <li>&nbsp;- 형태의 태그에 상하 간격 부여
+            if (elmt.tagName().equalsIgnoreCase("li")) {
+                String html = elmt.html();
+                if (html.trim().startsWith("&nbsp;-")) elmt.addClass("my-2");
+            }
+
+            // 해당 요소의 모든 자식 노드를 순회
             for (Node child : elmt.childNodes()) {
                 if (child instanceof TextNode) {
                     // 텍스트 노드의 경우, 마크다운 변환 로직을 적용

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,15 +13,16 @@ import lombok.RequiredArgsConstructor;
  * @author nichefish
  */
 @RequiredArgsConstructor
+@AllArgsConstructor
 public enum ContentType {
 
     DEFAULT("DEFAULT", "기본"),
     // 공지사항
     NOTICE("NOTICE", "공지사항"),
     // 저널
-    JRNL_DAY("JRNL_DAY", "저널 일자"),
-    JRNL_DREAM("JRNL_DREAM", "저널 꿈"),
-    JRNL_DIARY("JRNL_DIARY", "저널 일기"),
+    JRNL_DAY("JRNL_DAY", "저널 일자", "calendar3"),
+    JRNL_DREAM("JRNL_DREAM", "저널 꿈", "moon-stars"),
+    JRNL_DIARY("JRNL_DIARY", "저널 일기", "book"),
     JRNL_SBJCT("JRNL_SBJCT", "저널 주제"),
     JRNL_SUMRY("JRNL_SUMRY", "저널 결산"),
     // 일정
@@ -39,4 +41,6 @@ public enum ContentType {
     public final String key;
     @Getter
     public final String desc;
+    @Getter
+    public String icon;
 }
