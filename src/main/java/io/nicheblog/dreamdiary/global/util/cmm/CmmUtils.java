@@ -310,6 +310,18 @@ public class CmmUtils {
                     part = part.replace("||" + group + "||", "<span class='text-muted fw-bold border-end border-2 border-gray-400 pe-5 me-3'>" + group + "</span>");
                 }
 
+                // <@> .로 묶인 부분을 강조 처리
+                Pattern atPattern = Pattern.compile("<@>(.*?\\.)");
+                Matcher atMatcher = atPattern.matcher(part);
+                StringBuffer buffer = new StringBuffer();
+                while (atMatcher.find()) {
+                    String group = atMatcher.group(1);
+                    if (group == null || group.length() > MAX_GROUP_LENGTH) continue;
+                    atMatcher.appendReplacement(buffer, "<span class=\"text-muted\">@" + group + "</span>");
+                }
+                atMatcher.appendTail(buffer); // 변환되지 않은 나머지 텍스트를 추가
+                part = buffer.toString(); // 변환된 부분을 전체 텍스트에 반영
+
                 result.append(part);
             }
         }

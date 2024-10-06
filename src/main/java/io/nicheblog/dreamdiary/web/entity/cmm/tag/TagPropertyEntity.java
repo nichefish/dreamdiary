@@ -22,14 +22,14 @@ import javax.persistence.*;
  * @extends BaseCrudEntity
  */
 @Entity
-@Table(name = "tag")
+@Table(name = "tag_property")
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Where(clause = "del_yn='N'")
-@SQLDelete(sql = "UPDATE tag SET del_yn = 'Y' WHERE tag_no = ?")
+@SQLDelete(sql = "UPDATE tag_property SET del_yn = 'Y' WHERE tag_property_no = ?")
 public class TagPropertyEntity
         extends BaseCrudEntity {
 
@@ -43,39 +43,32 @@ public class TagPropertyEntity
     private Integer tagPropertyNo;
 
     /**
-     * 참조 태그 번호
+     * 태그 번호
      */
-    @Column(name = "ref_tag_no")
-    @Comment("참조 태그 번호")
+    @Column(name = "tag_no")
+    @Comment("태그 번호")
     private Integer tagNo;
 
     /**
      * 참조 컨텐츠 타입
      */
-    @Column(name = "ref_content_type")
+    @Column(name = "content_type")
     @Comment("컨텐츠 타입")
-    private String refContentType;
+    private String contentType;
 
     /* ----- */
 
     /**
-     * 프로퍼티 키
+     * CSS 클래스
      */
-    @Column(name = "property_key")
-    @Comment("프로퍼티 키")
-    private String propertyKey;
+    @Column(name = "css_class")
+    @Comment("CSS 클래스")
+    private String cssClass;
 
     /**
-     * 프로퍼티 값
+     * CSS 스타일
      */
-    @Column(name = "property_value")
-    @Comment("프로퍼티 값")
-    private String propertyValue;
-
-    /**
-     * 프로퍼티 JSON (JSON String)
-     */
-    @Column(name = "property_json")
-    @Comment("프로퍼티 JSON")
-    private String propertyJson;
+    @Column(name = "css_style")
+    @Comment("CSS 스타일")
+    private String cssStyle;
 }

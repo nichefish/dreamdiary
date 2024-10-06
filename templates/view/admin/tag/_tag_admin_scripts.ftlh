@@ -42,7 +42,6 @@
                         return false;
                     }
                     // 태그 상세 정보
-                    alert("!!");
                     commons.util.handlebarsTemplate(res.rsltObj, "tag_admin_dtl", "show");
                 });
             }

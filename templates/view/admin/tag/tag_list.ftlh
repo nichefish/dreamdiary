@@ -23,7 +23,8 @@
              */
             init: function() {
                 // 태그 조회
-                TagAdmin.tagListAjax('${refContentType!}');
+                const refContentType = "${refContentType!}";
+                if (refContentType !== "") TagAdmin.tagListAjax('${refContentType!}');
             },
         }
     })();
@@ -38,22 +39,15 @@
 
 <!-- 컨텐츠 타입 헤더 -->
 <div class="card post">
-    <div id="jrnl_tag_ctgr_div">
-        <#assign isOverall = !refContentType?? || refContentType! == "" />
-        <div class="btn btn-sm btn-outlined <#if isOverall>btn-light-primary<#else>btn-light-secondary</#if> text-muted ctgr active"
-             onclick="commons.util.reloadWithParam('refContentType', '');">
-            <span class="d-flex align-items-center">
-                전체
-                <#if isOverall>
-                    <i class="bi bi-check text-dark"></i>
-                </#if>
-            </span>
+    <div class="d-flex align-items-center">
+        <div class="fs-5 fw-bold me-5">
+            태그 컨텐츠 :
         </div>
-
-        <#list contentTypeList![] as contentType>
-            <#assign isChecked = refContentType! == contentType.key! />
-            <div class="btn btn-sm btn-outlined <#if isChecked>btn-light-primary<#else>btn-light-secondary</#if> text-dark align-middler"
-                 onclick="commons.util.reloadWithParam('refContentType', '${contentType.key!}');">
+        <div id="jrnl_tag_ctgr_div">
+            <#list contentTypeList![] as contentType>
+                <#assign isChecked = refContentType! == contentType.key! />
+                <div class="btn btn-sm btn-outlined <#if isChecked>btn-light-primary<#else>btn-light-secondary</#if> text-dark align-middler"
+                     onclick="commons.util.reloadWithParam('refContentType', '${contentType.key!}');">
                 <span class="d-flex align-items-center">
                     <#if contentType.icon??>
                         <i class="bi bi-${contentType.icon!} text-dark"></i>
@@ -65,9 +59,15 @@
                         <i class="bi bi-check text-dark"></i>
                     </#if>
                 </span>
-            </div>
-        </#list>
+                </div>
+            </#list>
+        </div>
     </div>
+    <#if !refContentType?? || refContentType == "">
+        <div class="ms-20 mt-5 text-noti">
+            ※ 컨텐츠 타입을 선택해 주세요.
+        </div>
+    </#if>
 </div>
 
 <!-- 태그 카테고리 헤더 -->
