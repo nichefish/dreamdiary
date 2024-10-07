@@ -32,6 +32,11 @@
         Page.init();
     });
 </script>
+<style>
+    input:placeholder-shown {
+        font-style: italic;
+    }
+</style>
 
 
 <#--include:: Aside-->
@@ -97,5 +102,6 @@
 <#include "/view/admin/tag/_tag_list_template.hbs">
 <#include "/view/admin/tag/_tag_ctgr_template.hbs">
 <#include "/view/admin/tag/_tag_admin_dtl_modal.ftlh">
+<#include "/view/admin/tag/property/_tag_property_reg_modal.ftlh">
 
 </@layout.layout>

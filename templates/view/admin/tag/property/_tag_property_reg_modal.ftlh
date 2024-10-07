@@ -4,7 +4,7 @@
 
 <#import "/layout/modal_layout.ftlh" as modal>
 
-<@modal.layout id="tag_propert_reg" size="xl">
+<@modal.layout id="tag_property_reg" size="lg">
     <#--begin::Modal Header-->
     <@component.modal_header "태그 속성" />
     <#--begin::Modal Body-->
@@ -26,4 +26,4 @@
 </@modal.layout>
 
 <#--include:: Handlebars template-->
-<#include "/view/admin/tag/_tag_admin_dtl_template.hbs">
+<#include "/view/admin/tag/property/_tag_property_reg_template.hbs">

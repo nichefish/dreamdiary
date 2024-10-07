@@ -44,6 +44,16 @@
                     // 태그 상세 정보
                     commons.util.handlebarsTemplate(res.rsltObj, "tag_admin_dtl", "show");
                 });
+            },
+
+            /**
+             * 속성 추가 모달 호출
+             * @param {string|number} tagNo - 속성을 추가할 태그 번호.
+             */
+            addPropertyModal: function(tagNo) {
+                if (isNaN(tagNo)) return;
+
+                commons.util.handlebarsTemplate({}, "tag_property_reg", "show");
             }
         }
     })();
