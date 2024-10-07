@@ -144,11 +144,16 @@ public interface SiteUrl {
     String SECTN_SORT_ORDR_AJAX = Prefix.SECTN + "/sectnSortOrdrAjax.do";
 
     /** 태그 */
-
     String TAG_LIST = Prefix.TAG + "/tagList.do";
     String TAG_CLOUD_PAGE = Prefix.TAG + "/tagCloudPage.do";
     String TAG_LIST_AJAX = Prefix.TAG + "/tagListAjax.do";
     String TAG_DTL_AJAX = Prefix.TAG + "/tagDtlAjax.do";
+
+    /** 태그 속성 */
+    String TAG_PROPERTY_REG_AJAX = Prefix.TAG_PROPERTY + "/tagPropertyRegAjax.do";
+    String TAG_PROPERTY_DTL_AJAX = Prefix.TAG_PROPERTY + "/tagPropertyDtlAjax.do";
+    String TAG_PROPERTY_MDF_AJAX = Prefix.TAG_PROPERTY + "/tagPropertyMdfAjax.do";
+    String TAG_PROPERTY_DEL_AJAX = Prefix.TAG_PROPERTY + "/tagPropertyDelAjax.do";
 
     /** 로그인 정책 관리 */
     String LGN_POLICY_FORM = Prefix.LGN_POLICY + "/lgnPolicyForm.do";
@@ -387,6 +392,7 @@ public interface SiteUrl {
         String COMMENT = "/comment";
         String SECTN = "/sectn";
         String TAG = "/tag";
+        String TAG_PROPERTY = "/tagProperty";
 
         String LGN_POLICY = "/lgnPolicy";
 

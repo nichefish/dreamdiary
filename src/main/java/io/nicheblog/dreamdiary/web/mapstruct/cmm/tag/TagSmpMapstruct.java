@@ -9,8 +9,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * TagSmpMapstruct
  * <pre>
- *  일반게시판 태그 MapStruct 기반 Mapper 인터페이스
- *  ※일반게시판 태그(board_tag) = 일반게시판별 태그 정보. 일반게시판 게시물 태그(board_post_tag)와 1:N으로 연관된다.
+ *  태그 MapStruct 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish

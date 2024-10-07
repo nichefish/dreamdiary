@@ -252,7 +252,7 @@ public class TagService
     // n}
 
     /**
-     * 게시판 태그 목록 Page<Entity>->Page<Dto> 변환
+     * 태그 목록 Page<Entity>->Page<Dto> 변환
      */
     // @Override
     //public Page<TagDto> pageEntityToDto(final Page<TagEntity> entityPage) throws Exception {

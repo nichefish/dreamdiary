@@ -10,8 +10,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * ContentTagMapstruct
  * <pre>
- *  일반게시판 게시물-태그 MapStruct 기반 Mapper 인터페이스
- *  일반게시판 게시물 태그(board_post_tag) = 일반게시판 태그(board_tag)에 N:1, 일반게시판 게시물(board_post)에 N:1로 연관된다. (N:N의 중간)
+ *  컨텐츠-태그 MapStruct 기반 Mapper 인터페이스
  * </pre>
  *
  * @author nichefish
