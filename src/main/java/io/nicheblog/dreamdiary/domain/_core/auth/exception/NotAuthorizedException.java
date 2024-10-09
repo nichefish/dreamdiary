@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth.exception;
+package io.nicheblog.dreamdiary.domain._core.auth.exception;
 
 /**
  * NotAuthorizedException
@@ -12,6 +12,11 @@ package io.nicheblog.dreamdiary.global.auth.exception;
 public class NotAuthorizedException
         extends RuntimeException {
 
+    /**
+     * 생성자.
+     * @param msg 예외 메시지
+     * @param cause 이 예외의 원인
+     */
     public NotAuthorizedException(
             final String msg,
             final Throwable cause
@@ -19,6 +24,10 @@ public class NotAuthorizedException
         super(msg, cause);
     }
 
+    /**
+     * 생성자.
+     * @param msg 예외 메시지
+     */
     public NotAuthorizedException(final String msg) {
         super(msg);
     }

@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
-import io.nicheblog.dreamdiary.web.entity.cmm.viewer.ViewerEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.viewer.ViewerMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.viewer.ViewerDto;
+import io.nicheblog.dreamdiary.domain._core.viewer.entity.ViewerEntity;
+import io.nicheblog.dreamdiary.domain._core.viewer.mapstruct.ViewerMapstruct;
+import io.nicheblog.dreamdiary.domain._core.viewer.model.ViewerDto;
 import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.annotations.*;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * ViewerEmbed
  * <pre>
- *  컨텐츠 열람자 관련 정보 위임
+ *  컨텐츠 열람자 관련 정보 위임. (entity level)
  * </pre>
  *
  * @author nichefish
@@ -45,8 +45,10 @@ public class ViewerEmbed
 
     /**
      * 열람자 :: List<Entity> -> List<Dto> 반환
+     * @return 변환된 ViewerDto 객체의 리스트.
+     *         리스트가 비어있거나 null인 경우 null을 반환합니다.
      */
-    public List<ViewerDto> getDtoList() throws Exception {
+    public List<ViewerDto> getDtoList() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()
                 .map(entity -> {

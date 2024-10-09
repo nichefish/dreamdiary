@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.cmm.viewer;
+package io.nicheblog.dreamdiary.domain._core.viewer.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditRegEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
@@ -16,8 +16,7 @@ import javax.persistence.*;
 /**
  * ViewerEntity
  * <pre>
- *  일반게시판 게시물 열람자 Entity
- *  ※일반게시판 게시물 열람자(board_post_viewer) = 게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  컨탠츠 열람자 Entity.
  * </pre>
  *
  * @author nichefish
@@ -56,6 +55,7 @@ public class ViewerEntity
 
     /**
      * 생성자
+     * @param key - 게시물의 고유 키를 포함하는 BaseClsfKey 객체
      */
     public ViewerEntity(final BaseClsfKey key) {
         this.refPostNo = key.getPostNo();

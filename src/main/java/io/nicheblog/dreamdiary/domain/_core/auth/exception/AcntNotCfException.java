@@ -14,7 +14,7 @@ public class AcntNotCfException
         extends AuthenticationException {
 
     /**
-     * 생성자
+     * 생성자.
      * @param msg 예외 메시지
      * @param cause 이 예외의 원인
      */
@@ -26,7 +26,7 @@ public class AcntNotCfException
     }
 
     /**
-     * 생성자
+     * 생성자.
      * @param msg 예외 메시지
      */
     public AcntNotCfException(final String msg) {

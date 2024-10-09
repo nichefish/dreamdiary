@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.handler;
+package io.nicheblog.dreamdiary.domain._core.viewer.handler;
 
-import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
-import io.nicheblog.dreamdiary.web.service.cmm.viewer.ViewerService;
+import io.nicheblog.dreamdiary.domain._core.viewer.event.ViewerAddEvent;
+import io.nicheblog.dreamdiary.domain._core.viewer.service.ViewerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * ViewerEventListener
  * <pre>
- *  컨탠츠 열람자 이벤트 처리 핸들러
+ *  컨탠츠 열람자 이벤트 처리 핸들러.
  * </pre>
  *
  * @author nichefish
@@ -21,7 +21,8 @@ public class ViewerEventListener {
     private final ViewerService viewerService;
 
     /**
-     * 열람자 추가
+     * 열람자 추가 이벤트를 처리합니다.
+     * @param event - 열람자를 추가하기 위한 정보를 담고 있는 ViewerAddEvent 객체
      */
     @EventListener
     public void handleViewerAddEvent(ViewerAddEvent event) {

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.cmm.viewer;
+package io.nicheblog.dreamdiary.domain._core.viewer.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditRegDto;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * ViewerDto
  * <pre>
- *  열람자 Dto
+ *  컨텐츠 열람자 Dto.
  * </pre>
  *
  * @author nichefish
@@ -37,6 +37,7 @@ public class ViewerDto
 
     /**
      * 생성자
+     * @param key - 게시물의 고유 키를 포함하는 BaseClsfKey 객체
      */
     public ViewerDto(final BaseClsfKey key) {
         this.refPostNo = key.getPostNo();
