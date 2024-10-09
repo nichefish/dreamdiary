@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web;
+package io.nicheblog.dreamdiary.domain.admin.menu.model;
 
 import lombok.RequiredArgsConstructor;
 

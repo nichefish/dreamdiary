@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.api;
 /**
  * ApiUrl
  * <pre>
- *  API:: 공통 상수:: API 호출 URL 정의
+ *  API:: 공통 상수:: API 호출 URL 정의.
  * </pre>
  *
  * @author nichefish
@@ -31,6 +31,11 @@ public interface ApiUrl {
 
 
     String API_NOTION_GET = Prefix.API_NOTION + "/notion.do";
+
+    /**
+     * (API) SNMP : 메세지 발신
+     */
+    String URL_API_SNMP_SEND_AJAX = "/snmpSendAjax.do";
 
     /**
      * PREFIX 정보

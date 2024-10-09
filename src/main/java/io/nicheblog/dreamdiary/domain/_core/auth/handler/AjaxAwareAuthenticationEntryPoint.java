@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth.handler;
+package io.nicheblog.dreamdiary.domain._core.auth.handler;
 
 import io.nicheblog.dreamdiary.global.Url;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +15,7 @@ import java.io.PrintWriter;
  * AjaxAwareAuthenticationEntryPoint
  * <pre>
  *  Spring Security에서 인증 포인트 주입.
- *  AJAX 요청에는 JSON 응답을 반환하도록 설정.
+ *  AJAX 요청에는 JSON 응답을 반환하도록 설정한다.
  * </pre>
  *
  * @author nichefish
@@ -34,6 +34,8 @@ public class AjaxAwareAuthenticationEntryPoint
 
         boolean isAjaxRequest = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
         if (isAjaxRequest) {
+            // Ajax 요청일 경우 : 에러 응답을 내려보내고, js 레벨에서 처리한다.
+            // @see commons.js
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
             response.getWriter().write("{ \"error\": \"Unauthenticated\", \"message\": \"사용지 인증이 만료되었습니다.\"}");

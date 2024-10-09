@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.log;
+package io.nicheblog.dreamdiary.domain._core.log.actvty;
 
 import lombok.AllArgsConstructor;
 
