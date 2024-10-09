@@ -8,17 +8,16 @@ import java.util.List;
 /**
  * BaseClsfSearchParam
  * <pre>
- *  (공통/상속) 게시물 목록 검색 파라미터 Dto
+ *  (공통/상속) 게시물 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish
- * @extends BaseSearchParam
  */
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class BaseClsfSearchParam
         extends BaseSearchParam {

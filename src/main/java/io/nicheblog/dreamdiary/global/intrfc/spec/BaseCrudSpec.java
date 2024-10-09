@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.spec;
 
-import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.domain._core.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -17,15 +17,15 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @extends BaseSpec - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BaseCrudSpec<Entity extends BaseCrudEntity>
         extends BaseSpec<Entity> {
 
     /**
-     * default: 검색 조건 목록 반환
-     * @param searchParamMap - 검색 파라미터 맵
-     * @return Specification<Entity> - 검색 조건에 맞는 Specification 객체
+     * default: 인자별로 구체적인 검색 조건을 설정하여 목록을 반환한다.
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @return Specification -- 검색 조건에 맞는 Specification 객체
      */
     @Override
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
@@ -50,11 +50,12 @@ public interface BaseCrudSpec<Entity extends BaseCrudEntity>
     }
 
     /**
-     * default: 인자별로 구체적인 검색 조건 세팅
-     * @param searchParamMap - 검색 파라미터 맵
-     * @param root - 검색할 엔티티의 Root 객체
-     * @param builder - 검색 조건을 생성하는 CriteriaBuilder 객체
-     * @return List<Predicate> - 설정된 검색 조건(Predicate) 리스트
+     * default: 인자별로 구체적인 검색 조건을 세팅한다.
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @param root 검색할 엔티티의 Root 객체
+     * @param builder 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return List<Predicate> -- 설정된 검색 조건(Predicate) 리스트
      */
     default List<Predicate> getBasePredicate(
             final Map<String, Object> searchParamMap,

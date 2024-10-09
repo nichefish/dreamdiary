@@ -11,13 +11,12 @@ import lombok.experimental.SuperBuilder;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditRegDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class BaseAuditDto
         extends BaseAuditRegDto {
