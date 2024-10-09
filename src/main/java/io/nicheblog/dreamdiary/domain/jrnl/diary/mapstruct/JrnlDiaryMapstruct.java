@@ -50,8 +50,8 @@ public interface JrnlDiaryMapstruct
 
     /**
      * Dto -> Entity
-     * @param dto - 변환할 AtchFileDtlDto 객체
-     * @return Entity - 변환된 AtchFileDtlEntity 객체
+     * @param dto - 변환할 Dto 객체
+     * @return Entity - 변환된 Entity 객체
      * @throws Exception - 변환 중 발생할 수 있는 예외
      */
     @Override

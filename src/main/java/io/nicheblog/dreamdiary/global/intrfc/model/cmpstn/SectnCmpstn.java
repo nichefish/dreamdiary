@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
-import io.nicheblog.dreamdiary.web.model.cmm.sectn.SectnDto;
+import io.nicheblog.dreamdiary.domain._core.sectn.model.SectnDto;
 import lombok.*;
 
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * SectnCmpstn
  * <pre>
- *  단락 관련 정보 위임
+ *  위임 :: 단락 관련 정보. (dto level)
  * </pre>
  *
  * @author nichefish
@@ -24,9 +24,11 @@ public class SectnCmpstn
 
     /** 단락 목록 */
     private List<SectnDto> list;
+
     /** 단락 갯수 */
     @Builder.Default
     private Integer cnt = 0;
+
     /** 단락 존재 여부 */
     @Builder.Default
     private Boolean hasSectn = false;

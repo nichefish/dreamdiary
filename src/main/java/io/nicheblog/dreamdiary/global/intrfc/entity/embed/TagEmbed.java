@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
+import io.nicheblog.dreamdiary.domain._core.tag.entity.ContentTagEntity;
 import lombok.*;
 import org.hibernate.annotations.*;
 
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * TagEmbed
  * <pre>
- *  태그 관련 정보 위임
+ *  위임 :: 태그 관련 정보. (entity level)
  * </pre>
  *
  * @author nichefish

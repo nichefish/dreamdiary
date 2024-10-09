@@ -20,7 +20,6 @@ import javax.persistence.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditRegEntity
  */
 @Entity
 @Table(name = "viewer")
@@ -48,7 +47,7 @@ public class ViewerEntity
 
     /** 참조 컨텐츠 타입 */
     @Column(name = "ref_content_type")
-    @Comment("게시판 분류코드")
+    @Comment("게시판 분류 코드")
     private String refContentType;
 
     /* ----- */

@@ -19,7 +19,6 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @implements BaseClsfSpec - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Component
 @Log4j2
@@ -27,7 +26,7 @@ public class NoticeSpec
         implements BasePostSpec<NoticeEntity> {
 
     /**
-     * 조회 후처리:: 정렬 순서 변경
+     * 조회 후처리
      * @param root - 조회할 엔티티의 Root 객체
      * @param query - CriteriaQuery 객체
      * @param builder - CriteriaBuilder 객체
@@ -38,6 +37,7 @@ public class NoticeSpec
             final CriteriaQuery<?> query,
             final CriteriaBuilder builder
     ) {
+        // distinct
         query.distinct(true);
     }
 
