@@ -70,7 +70,7 @@
                                     </span>
                         </div>
                         <div class="<#if (listUrl! == Url.BOARD_POST_LIST!)>fw-bold border-bottom</#if>">
-                            일반게시판
+                            게시판
                         </div>
                     </div>
                     <#list boardDefList![] as boardDef>

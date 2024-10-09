@@ -7,7 +7,7 @@
 
 <@modal.layout id="board_post_dtl" size="xl">
     <#--begin::Modal Header-->
-    <@component.modal_header "일반게시판" />
+    <@component.modal_header "게시판" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div id="board_post_dtl_div">

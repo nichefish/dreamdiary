@@ -24,10 +24,11 @@ public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule &
         extends BaseCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**
-     * default: 사용 상태로 변경
-     * @param key - 상태를 변경할 엔티티의 키
-     * @return Boolean - 상태 변경 성공 시 true
-     * @throws Exception - 상태 변경 중 발생할 수 있는 예외
+     * default: 상태를 '사용'으로 변경한다.
+     * 
+     * @param key 상태를 변경할 엔티티의 키
+     * @return Boolean - 상태 변경 성공시 true
+     * @throws Exception 상태 변경 중 발생할 수 있는 예외
      */
     default Boolean setStateUse(final Key key) throws Exception {
         Entity e = this.getDtlEntity(key);
@@ -40,10 +41,11 @@ public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule &
     }
 
     /**
-     * default: 미사용 상태로 변경
-     * @param key - 상태를 변경할 엔티티의 키
-     * @return Boolean - 상태 변경 성공 시 true
-     * @throws Exception - 상태 변경 중 발생할 수 있는 예외
+     * default: 상태를 '미사용'으로 변경한다.
+     * 
+     * @param key 상태를 변경할 엔티티의 키
+     * @return Boolean - 상태 변경 성공시 true
+     * @throws Exception 상태 변경 중 발생할 수 있는 예외
      */
     default Boolean setStateUnuse(final Key key) throws Exception {
         Entity e = this.getDtlEntity(key);
@@ -56,8 +58,9 @@ public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule &
     }
 
     /**
-     * default: 사용/미사용 상태로 변경 후처리
-     * @throws Exception - 후처리 중 발생할 수 있는 예외
+     * default: 상태 변경 후 해당 로직을 수행한다.
+     *
+     * @throws Exception 후처리 중 발생할 수 있는 예외
      */
     default void postSetState() throws Exception {
         // 변경 후처리:: 기본 공백, 필요시 각 함수에서 Override

@@ -41,7 +41,7 @@
         <div class="mt-3 fs-5 fw-bold">
             <span class="opacity-75 me-5 cursor-help"
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-                  title="사용자 포탈에 표시되는&#10;'일반게시판' 대메뉴 번호입니다.&#10;게시판 메뉴 번호 작성시&#10;해당 번호 아래에 둘 것을&#10;권장합니다.">
+                  title="사용자 포탈에 표시되는&#10;'게시판' 대메뉴 번호입니다.&#10;게시판 메뉴 번호 작성시&#10;해당 번호 아래에 둘 것을&#10;권장합니다.">
                 ※ 현재 게시판 상위메뉴 번호 : </span>
             <span class="text-noti ls-1 text-decoration-underline">${SiteMenu.BOARD.menuNo!}</span>
         </div>

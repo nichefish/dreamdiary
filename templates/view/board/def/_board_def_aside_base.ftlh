@@ -30,7 +30,7 @@
                 <h3 class="card-title text-gray-900 fw-bold fs-3">※ 예약 게시판 코드 목록</h3>
                 <div class="card-toolbar">
                     <a href="#" class="btn btn-sm btn-icon btn-color-gray-500 btn-light"
-                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="일반게시판과 기본 구조를&#10;공유하는 다른 엔티티에서&#10;이미 점유 중인&#10;게시판 코드입니다.&#10;(중복 사용시 데이터 참조가 오작동합니다.)">
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="게시판과 기본 구조를&#10;공유하는 다른 엔티티에서&#10;이미 점유 중인&#10;게시판 코드입니다.&#10;(중복 사용시 데이터 참조가 오작동합니다.)">
                         <i class="bi bi-question-circle"></i>
                     </a>
                 </div>
@@ -39,7 +39,7 @@
             <#--begin::Body-->
             <div class="card-body">
                 <div class="text-noti">
-                    ※일반게시판과 기본 구조를 공유하는 다른 엔티티에서 이미 점유 중인 게시판 코드입니다.
+                    ※게시판과 기본 구조를 공유하는 다른 엔티티에서 이미 점유 중인 게시판 코드입니다.
                 </div>
                 <div class="text-noti">
                     (중복 사용시 데이터 참조가 오작동합니다.)
