@@ -37,7 +37,7 @@
             },
 
             /**
-             * 목록 조회 (ajax)
+             * 목록 조회 (Ajax)
              */
             flsysListAjax: function(filePath) {
                 const url = "${Url.FLSYS_LIST_AJAX!}";
@@ -57,7 +57,7 @@
             },
 
             /**
-             * 새로고침 (ajax)
+             * 새로고침 처리 (Ajax)
              */
             flsysRefreshAjax: function() {
                 Flsys.flsysListAjax(Flsys.currPath);

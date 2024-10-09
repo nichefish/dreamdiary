@@ -47,7 +47,7 @@
             },
 
             /**
-             * 전체 태그 목록 조회 (ajax)
+             * 전체 태그 목록 조회 (Ajax)
              * @param {Object} options - 조회 옵션 객체.
              * @param {string|number} options.refPostNo - 참조할 포스트 번호.
              * @param {string} options.refContentType - 참조할 콘텐츠 유형.
@@ -87,7 +87,7 @@
             },
 
             /**
-             * 단락 등록 처리 (ajax)
+             * 단락 등록 처리 (Ajax)
              */
             regAjax: function() {
                 const isReg = $("#sectnRegForm #postNo").val() === "";
@@ -133,7 +133,7 @@
             },
 
             /**
-             * 단락 삭제 처리 (ajax)
+             * 단락 삭제 처리 (Ajax)
              * @param {string|number} postNo - 단락 번호.
              */
             delAjax: function(postNo) {

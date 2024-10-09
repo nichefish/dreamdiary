@@ -156,7 +156,7 @@
             },
 
             /**
-             * 삭제 처리 (ajax)
+             * 삭제 처리 (Ajax)
              */
             delAjax: function() {
                 Swal.fire({
@@ -183,7 +183,9 @@
                 commons.util.blockUIReplace(listUrl);
             },
 
-            /** 이전 화면으로 이동 */
+            /**
+             * 이전 화면으로 이동
+             */
             stats: function() {
                 commons.util.blockUIReplace("${Url.EXPTR_PRSNL_STATS_PAGE!}");
             }

@@ -60,7 +60,7 @@
             },
 
             /**
-             * 등록/수정 처리 (ajax)
+             * 등록/수정 처리 (Ajax)
              */
             regAjax: function() {
                 event.stopPropagation();
@@ -182,7 +182,7 @@
             },
 
             /**
-             * 삭제 처리 (ajax)
+             * 삭제 처리 (Ajax)
              * @param {string} clCd - 삭제할 분류 코드.
              */
             delAjax: function(clCd) {

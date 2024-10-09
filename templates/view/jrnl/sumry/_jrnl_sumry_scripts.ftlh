@@ -53,7 +53,7 @@
             },
 
             /**
-             * 특정 년도 결산 생성 (ajax)
+             * 특정 년도 결산 생성 (Ajax)
              * @param {string|number} yy - 결산을 생성할 년도.
              */
             makeYySumryAjax: function(yy) {
@@ -73,7 +73,7 @@
             },
 
             /**
-             * 전체 년도 결산 갱신 (ajax)
+             * 전체 년도 결산 갱신 (Ajax)
              */
             makeTotalSumryAjax: function() {
                 const url = "${Url.JRNL_SUMRY_MAKE_TOTAL_AJAX!}";
@@ -86,7 +86,7 @@
             },
 
             /**
-             * 꿈 기록 완료 처리 (ajax)
+             * 꿈 기록 완료 처리 (Ajax)
              * @param {string|number} postNo - 글 번호.
              */
             comptAjax: function(postNo) {
@@ -131,7 +131,7 @@
             },
 
             /**
-             * 등록 처리 (ajax)
+             * 등록 처리 (Ajax)
              */
             regAjax: function() {
                 Swal.fire({

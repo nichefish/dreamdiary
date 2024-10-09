@@ -6,7 +6,7 @@
     const TagAdmin = (function() {
         return {
             /**
-             * 전체 태그 목록 조회 (ajax)
+             * 전체 태그 목록 조회 (Ajax)
              * @param {string} refContentType - 조회할 태그의 참조 콘텐츠 유형.
              */
             tagListAjax: function(refContentType) {

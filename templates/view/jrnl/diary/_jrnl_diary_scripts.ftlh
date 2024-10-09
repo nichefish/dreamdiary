@@ -29,7 +29,7 @@
             },
 
             /**
-             * 목록 조회 (ajax)
+             * 목록 조회 (Ajax)
              */
             keywordListAjax: function() {
                 const keyword = $("#jrnl_aside #diaryKeyword").val();
@@ -80,7 +80,7 @@
             },
 
             /**
-             * 등록 처리 (ajax)
+             * 등록 처리 (Ajax)
              */
             regAjax: function() {
                 const isReg = $("#jrnlDiaryRegForm #postNo").val() === "";
@@ -129,7 +129,7 @@
             },
 
             /**
-             * 삭제 처리 (ajax)
+             * 삭제 처리 (Ajax)
              * @param {string|number} postNo - 글 번호.
              */
             delAjax: function(postNo) {

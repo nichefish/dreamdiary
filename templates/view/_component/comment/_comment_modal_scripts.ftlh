@@ -49,7 +49,7 @@
             },
 
             /**
-             * 댓글 입력(등록/수정) 처리 (ajax)
+             * 댓글 입력(등록/수정) 처리 (Ajax)
              */
             regAjax: function() {
                 const isReg = $("#commentRegForm #postNo").val() === "";
@@ -95,7 +95,7 @@
             },
 
             /**
-             * 댓글 삭제 처리 (ajax)
+             * 댓글 삭제 처리 (Ajax)
              * @param {string|number} postNo - 댓글 번호.
              */
             delAjax: function(postNo) {

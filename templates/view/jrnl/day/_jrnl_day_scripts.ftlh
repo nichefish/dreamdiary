@@ -56,7 +56,7 @@
             },
 
             /**
-             * 년도-월 목록 조회 (ajax)
+             * 년도-월 목록 조회 (Ajax)
              */
             yyMnthListAjax: function() {
                 const mnth = $("#jrnl_aside #mnth").val();
@@ -131,7 +131,7 @@
             },
 
             /**
-             * 등록 처리 (ajax)
+             * 등록 처리 (Ajax)
              */
             regAjax: function() {
                 const isReg = $("#jrnlDayRegForm #postNo").val() === "";
@@ -176,7 +176,7 @@
             },
 
             /**
-             * 삭제 처리 (ajax)
+             * 삭제 처리 (Ajax)
              * @param {string|number} postNo - 글 번호.
              */
             delAjax: function(postNo) {

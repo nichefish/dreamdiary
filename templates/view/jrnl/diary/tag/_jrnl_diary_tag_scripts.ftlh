@@ -6,7 +6,7 @@
     const JrnlDiaryTag = (function() {
         return {
             /**
-             * 목록에 따른 일기 태그 조회 (ajax)
+             * 목록에 따른 일기 태그 조회 (Ajax)
              */
             listAjax: function() {
                 const url = "${Url.JRNL_DIARY_TAG_LIST_AJAX!}";
@@ -21,7 +21,7 @@
             },
 
             /**
-             * 목록에 따른 일기 태그 (전체) 조회 (ajax)
+             * 목록에 따른 일기 태그 (전체) 조회 (Ajax)
              */
             listAllAjax: function() {
                 const url = "${Url.JRNL_DIARY_TAG_LIST_AJAX!}";

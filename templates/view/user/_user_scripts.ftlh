@@ -132,7 +132,7 @@
             },
 
             /**
-             * 승인 처리 (ajax)
+             * 승인 처리 (Ajax)
              */
             cfAjax: function() {
                 Swal.fire({
@@ -152,7 +152,7 @@
             },
 
             /**
-             * 승인취소 처리 (ajax)
+             * 승인취소 처리 (Ajax)
              */
             uncfAjax: function() {
                 Swal.fire({
@@ -172,7 +172,7 @@
             },
 
             /**
-             * 패스워드 초기화 (ajax)
+             * 패스워드 초기화 (Ajax)
              */
             pwResetAjax: function() {
                 Swal.fire({
@@ -199,7 +199,7 @@
             },
 
             /**
-             * 삭제 처리 (ajax)
+             * 삭제 처리 (Ajax)
              */
             delAjax: function() {
                 Swal.fire({

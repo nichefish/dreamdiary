@@ -125,7 +125,7 @@
             },
 
             /**
-             * 삭제 처리 (ajax)
+             * 삭제 처리 (Ajax)
              * @param {string|number} vcatnSchdulNo - 일정 번호.
              */
             delAjax: function(vcatnSchdulNo) {

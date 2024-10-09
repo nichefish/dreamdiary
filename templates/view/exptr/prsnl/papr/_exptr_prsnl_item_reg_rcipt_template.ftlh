@@ -8,14 +8,18 @@
     const Rcipt = (function() {
         return {
             /**
-             * 영수증 이미지 첨부 (등록/수정 페이지) (ajax)
+             * 영수증 이미지 첨부 (Ajax)
+             * (등록/수정 페이지에서 사용함.)
+             * @param {string|number} idx - 첨부할 영수증 항목 인덱스
              */
             uploadRegAjax: function(idx) {
-                let fileInput = $("#atchFile0");
+                if (isNaN(idx)) return;
+
+                const fileInput = $("#atchFile0");
                 fileInput.click();
                 fileInput.on("change", function() {
                     if (this.value !== "") {
-                        if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
+                        if (!commons.validate.fileSizeChck(this)) return false;         // fileSizeChck
                         if (!commons.validate.fileImgExtnChck(this)) return false;      // fileExtnChck
                         const url = "${Url.FILE_UPLOAD_AJAX!}";
                         const ajaxData = new FormData(document.getElementById("exptrPrsnlRciptForm"));
@@ -38,14 +42,18 @@
             },
 
             /**
-             * 영수증 이미지 첨부 (상세 페이지) (ajax)
+             * 영수증 이미지 첨부 (Ajax)
+             * (상세 페이지에서 사용함.)
+             * @param {string|number} exptrPrsnlItemNo - 첨부할 영수증 항목 번호
              */
             uploadDtlAjax: function(exptrPrsnlItemNo) {
-                let fileInput = $("#atchFile0");
+                if (isNaN(exptrPrsnlItemNo)) return;
+
+                const fileInput = $("#atchFile0");
                 fileInput.click();
                 fileInput.on("change", function() {
                     if (this.value !== "") {
-                        if (!commons.validate.fileSizeChck(this)) return false;      // fileSizeChck
+                        if (!commons.validate.fileSizeChck(this)) return false;         // fileSizeChck
                         if (!commons.validate.fileImgExtnChck(this)) return false;      // fileExtnChck
                         $("#exptrPrsnlItemNo_upload").val(exptrPrsnlItemNo);
                         const url = "${Url.EXPTR_PRSNL_ITEM_RCIPT_UPLOAD_AJAX!}";

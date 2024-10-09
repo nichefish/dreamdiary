@@ -126,7 +126,7 @@
             },
 
             /**
-             * 전체 태그 목록 조회 (ajax)
+             * 전체 태그 목록 조회 (Ajax)
              */
             listAjax: function() {
                 const url = "${Url.TAG_LIST_AJAX!}";

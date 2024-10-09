@@ -16,7 +16,7 @@
             },
 
             /**
-             * 캐시 무효화 처리 (ajax)
+             * 캐시 무효화 처리 (Ajax)
              * @param {string} cacheName - 캐시 이름.
              * @param {string} key - 무효화할 캐시의 키.
              */
@@ -34,7 +34,7 @@
             },
 
             /**
-             * 전체 캐시 무효화 (ajax)
+             * 전체 캐시 무효화 (Ajax)
              */
             clearAllAjax: function() {
                 const url = "${Url.CACHE_CLEAR_AJAX!}";

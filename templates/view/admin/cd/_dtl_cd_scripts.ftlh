@@ -135,7 +135,7 @@
             },
 
             /**
-             * 삭제 처리 (ajax)
+             * 삭제 처리 (Ajax)
              * @param {string} dtlCd - 삭제할 상세 코드.
              */
             delAjax: function(dtlCd) {

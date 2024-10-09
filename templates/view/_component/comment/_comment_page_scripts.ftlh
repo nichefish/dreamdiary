@@ -35,7 +35,7 @@
             },
 
             /**
-             * 댓글 입력 처리 (ajax)
+             * 댓글 입력 처리 (Ajax)
              */
             regAjax: function() {
                 Swal.fire({
@@ -85,7 +85,7 @@
             },
 
             /**
-             * 댓글 수정 처리 (ajax)
+             * 댓글 수정 처리 (Ajax)
              * @param {string|number} postNo - 댓글 번호.
              */
             mdfAjax: function(postNo) {
@@ -112,7 +112,7 @@
             },
 
             /**
-             * 댓글 삭제 처리 (ajax)
+             * 댓글 삭제 처리 (Ajax)
              * @param {string|number} postNo - 댓글 번호.
              */
             delAjax: function(postNo) {

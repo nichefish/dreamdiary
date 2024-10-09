@@ -46,7 +46,7 @@
             },
 
             /**
-             * 등록 처리 (ajax)
+             * 등록 처리 (Ajax)
              */
             regAjax: function() {
                 Swal.fire({
@@ -127,7 +127,7 @@
             },
 
             /**
-             * 삭제 처리 (ajax)
+             * 삭제 처리 (Ajax)
              * @param {string|number} Ajax - 게시판 코드 (key).
              */
             delAjax: function(key) {
