@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.user;
+package io.nicheblog.dreamdiary.domain.user.info.model;
 
 import io.nicheblog.dreamdiary.global.validator.CmmRegex;
 import lombok.Getter;
@@ -12,8 +12,7 @@ import javax.validation.constraints.Size;
 /**
  * UserPwChgParam
  * <pre>
- *  패스워드 변경 파라미터
- *  (spring-boot-starter-validation dependency 추가 필요)
+ *  패스워드 변경 파라미터 Dto.
  * </pre>
  *
  * @author nichefish

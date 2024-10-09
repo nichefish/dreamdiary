@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.model.user;
+package io.nicheblog.dreamdiary.domain.user.info.model;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuthRoleEntity;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,26 +11,28 @@ import lombok.experimental.SuperBuilder;
 /**
  * UserAuthRoleDto
  * <pre>
- *  사용자-권한 Dto
+ *  사용자-권한 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class UserAuthRoleDto
-        extends BaseAtchDto {
+        extends BaseCrudDto {
 
     /** 사용자 권한 번호 (PK) */
     private Integer userAuthRoleNo;
+
     /** 권한 코드 */
     private String authCd;
+
     /** 권한 코드 */
     private String authNm;
+
     /** 권한 정보 매핑 */
     private AuthRoleEntity role;
 }

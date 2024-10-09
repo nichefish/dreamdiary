@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.web.entity.user;
+package io.nicheblog.dreamdiary.domain.user.info.entity;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -73,11 +73,10 @@ public class UserAuthRoleEntity
     /* ----- */
 
     /**
-     * 생성자
+     * 생성자.
+     * @param authCd - 사용자의 권한 코드를 나타내는 문자열
      */
     public UserAuthRoleEntity(final String authCd) {
         this.authCd = authCd;
     }
-    
-    /** 생성자 */
 }

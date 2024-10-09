@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.user;
+package io.nicheblog.dreamdiary.domain.user.info.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 /**
  * UserAcsIpEntity
  * <pre>
- *  사용자(계정) 정보 > 접속가능 IP Entity
+ *  사용자(계정) 정보 > 접속가능 IP Entity.
  * </pre>
  *
  * @author nichefish
@@ -56,7 +56,8 @@ public class UserAcsIpEntity
     /* ----- */
 
     /**
-     * 생성자
+     * 생성자.
+     * @param acsIp - 사용자 접근 IP 주소
      */
     public UserAcsIpEntity(final String acsIp) {
         this.setAcsIp(acsIp);

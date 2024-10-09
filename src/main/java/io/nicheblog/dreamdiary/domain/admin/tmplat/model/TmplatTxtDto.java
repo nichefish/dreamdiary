@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.admin;
+package io.nicheblog.dreamdiary.domain.admin.tmplat.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
@@ -14,18 +14,16 @@ import javax.validation.constraints.Size;
 /**
  * TmplatTxtDto
  * <pre>
- *  템플릿 텍스트 정보 Dto
+ *  템플릿 텍스트 정보 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchDto
- * @implements StateCmpstnModule
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class TmplatTxtDto
         extends BaseAtchDto
         implements Identifiable<Integer>, StateCmpstnModule {
@@ -37,6 +35,7 @@ public class TmplatTxtDto
     /** 템플릿 정의 코드 */
     @Size(max = 50)
     private String tmplatDefCd;
+
     /** 템플릿 정의 정보 */
     // private TmplatDefDto tmplatDefInfo;
 
@@ -64,11 +63,11 @@ public class TmplatTxtDto
 
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
-    public StateCmpstn state;
-
     @Override
     public Integer getKey() {
         return this.tmplatTxtNo;
     }
+
+    /** 위임 :: 상태 관리 모듈 */
+    public StateCmpstn state;
 }

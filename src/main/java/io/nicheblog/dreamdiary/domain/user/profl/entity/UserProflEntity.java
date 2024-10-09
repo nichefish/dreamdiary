@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.entity.user.profl;
+package io.nicheblog.dreamdiary.domain.user.profl.entity;
 
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -14,13 +14,12 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * UserInfoEntity
+ * UserProflEntity
  * <pre>
- *  사용자 정보 Entity :: 계정(User) 정보에 귀속됨
+ *  사용자 프로필 Entity.
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudEntity
  */
 @Entity
 @Table(name = "user_profl")
