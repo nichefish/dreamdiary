@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.board;
+package io.nicheblog.dreamdiary.domain.board.post.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 /**
  * BoardPostDto
  * <pre>
- *  일반게시판 게시물 Dto
+ *  일반게시판 게시물 Dto.
  * </pre>
  *
  * @author nichefish
@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class BoardPostDto
         extends BasePostDto
         implements Identifiable<BaseClsfKey>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
@@ -35,11 +35,6 @@ public class BoardPostDto
     @JsonProperty("contentType")
     @Size(max = 50)
     protected String boardCd;
-
-    @Override
-    public BaseClsfKey getKey() {
-        return new BaseClsfKey(this.postNo, this.boardCd);
-    }
 
     /* ----- */
 
@@ -58,7 +53,7 @@ public class BoardPostDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode(callSuper = true)
     public static class DTL
             extends BoardPostDto {
         /** 노션 페이지 참조 ID :: UUID */
@@ -72,7 +67,7 @@ public class BoardPostDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode(callSuper = true)
     public static class LIST
             extends BoardPostDto {
         //
@@ -80,12 +75,17 @@ public class BoardPostDto
 
     /* ----- */
 
-    /** 댓글 정보 모듈 (위임) */
+    @Override
+    public BaseClsfKey getKey() {
+        return new BaseClsfKey(this.postNo, this.boardCd);
+    }
+
+    /** 위임 :: 댓글 정보 모듈 */
     public CommentCmpstn comment;
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     public TagCmpstn tag;
-    /** 조치 정보 모듈 (위임) */
+    /** 위임 :: 조치 정보 모듈 */
     public ManagtCmpstn managt;
-    /** 열람자 정보 모듈 (위임) */
+    /** 위임 :: 열람 정보 모듈 */
     public ViewerCmpstn viewer;
 }
