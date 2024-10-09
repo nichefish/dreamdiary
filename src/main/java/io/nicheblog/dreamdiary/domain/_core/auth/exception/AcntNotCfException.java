@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth.exception;
+package io.nicheblog.dreamdiary.domain._core.auth.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
@@ -13,6 +13,11 @@ import org.springframework.security.core.AuthenticationException;
 public class AcntNotCfException
         extends AuthenticationException {
 
+    /**
+     * 생성자
+     * @param msg 예외 메시지
+     * @param cause 이 예외의 원인
+     */
     public AcntNotCfException(
             final String msg,
             final Throwable cause
@@ -20,6 +25,10 @@ public class AcntNotCfException
         super(msg, cause);
     }
 
+    /**
+     * 생성자
+     * @param msg 예외 메시지
+     */
     public AcntNotCfException(final String msg) {
         super(msg);
     }
