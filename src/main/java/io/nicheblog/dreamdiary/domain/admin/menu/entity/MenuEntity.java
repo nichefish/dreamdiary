@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.web.entity.admin;
+package io.nicheblog.dreamdiary.domain.admin.menu.entity;
 
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * MenuEntity
  * <pre>
- *  메뉴 관리 Entity
+ *  메뉴 관리 Entity.
  * </pre>
  *
  * @author nichefish
@@ -122,7 +122,7 @@ public class MenuEntity
 
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
+    /** 위임 :: 상태 관리 모듈 */
     @Embedded
     public StateEmbed state;
 }

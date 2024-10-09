@@ -1,9 +1,9 @@
-package io.nicheblog.dreamdiary.global.auth;
+package io.nicheblog.dreamdiary.domain._core.auth;
 
 import lombok.AllArgsConstructor;
 
 /**
- * 수정권한 Enum
+ * 수정 권한 Enum
  *
  * @author nichefish
  */

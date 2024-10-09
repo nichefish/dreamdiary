@@ -1,16 +1,17 @@
-package io.nicheblog.dreamdiary.web.repository.admin.jpa;
+package io.nicheblog.dreamdiary.domain.admin.menu.repository.jpa;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.entity.MenuEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
-import io.nicheblog.dreamdiary.web.entity.admin.MenuEntity;
 import org.springframework.stereotype.Repository;
 
 /**
  * MenuRepository
  * <pre>
- *  메뉴 Repository 인터페이스
+ *  메뉴 (JPA) Repository 인터페이스.
  * </pre>
  *
  * @author nichefish
+ * @extends BaseStreamRepository
  */
 @Repository("menuRepository")
 public interface MenuRepository

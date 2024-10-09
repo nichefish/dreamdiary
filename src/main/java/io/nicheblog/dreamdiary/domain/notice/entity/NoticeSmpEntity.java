@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.entity.notice;
+package io.nicheblog.dreamdiary.domain.notice.entity;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -13,11 +13,13 @@ import javax.persistence.*;
 
 /**
  * NoticeSmpEntity
- * 공지사항 간소화 Entity
- * (NoticeEntity 태그 관련 정보 제거 = 연관관계 순환참조 방지 위함. 나머지는 동일)
- * (BaseClsfEntity 상속)
+ * <pre>
+ *  공지사항 간소화 Entity
+ *  (NoticeEntity 태그 관련 정보 제거 = 연관관계 순환참조 방지 위함. 나머지는 동일)
+ * </pre>
  *
  * @author nichefish
+ * @extends BasePostEntity
  */
 @Entity
 @Table(name = "notice")

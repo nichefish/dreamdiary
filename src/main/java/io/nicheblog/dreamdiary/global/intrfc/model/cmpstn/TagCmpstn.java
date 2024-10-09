@@ -3,12 +3,12 @@ package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.BaseTagifyDataDto;
-import io.nicheblog.dreamdiary.web.model.cmm.BaseTagifyDto;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
+import io.nicheblog.dreamdiary.domain._core.tag.entity.ContentTagEntity;
+import io.nicheblog.dreamdiary.domain._core.tag.mapstruct.ContentTagMapstruct;
+import io.nicheblog.dreamdiary.domain._core.tag.model.ContentTagDto;
+import io.nicheblog.dreamdiary.domain._core.tag.model.TagDto;
+import io.nicheblog.dreamdiary.global.model.BaseTagifyDataDto;
+import io.nicheblog.dreamdiary.global.model.BaseTagifyDto;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -23,7 +23,7 @@ import java.util.stream.IntStream;
 /**
  * TagCmpstn
  * <pre>
- *  태그 관련 정보 위임
+ *  위임 :: 태그 관련 정보. (dto level)
  * </pre>
  *
  * @author nichefish
@@ -36,7 +36,25 @@ import java.util.stream.IntStream;
 public class TagCmpstn
         implements Serializable {
 
-    /** Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜. */
+    /** 컨텐츠 타입 :: 상위에서 주입받음. */
+    private String contentType;
+
+    /** 컨텐츠 태그 목록 */
+    private List<ContentTagDto> list;
+
+    /** 컨텐츠 태그 문자열 목록 */
+    private List<String> tagStrList;
+
+    /** 컨텐츠 태그 문자열 (','로 구분) */
+    private String tagListStr;
+
+    /* ----- */
+
+    /**
+     * Tagify 형식의 문자열을 파싱하여 "value" 리스트로 반환하는 메서드.
+     * Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜.
+     * @return List<String> - 파싱된 문자열 값들의 리스트. 문자열이 비어 있을 경우 빈 리스트 반환.
+     */
     public List<String> getParsedTagStrList() {
         if (StringUtils.isEmpty(this.tagListStr)) return new ArrayList<>();
         JSONArray jArray = new JSONArray(tagListStr);
@@ -46,7 +64,11 @@ public class TagCmpstn
                 .collect(Collectors.toList());
     }
 
-    /** Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜. */
+    /**
+     * Tagify 형식의 문자열을 파싱하여 TagDto 리스트로 반환하는 메서드.
+     * Tagify (ex.) = [{"value":"123.123.123.123"},{"value":"234.234.234.234"}] 문자열 형식으로 넘어온댜.
+     * @return List<TagDto> - 파싱된 TagDto 객체들의 리스트. 문자열이 비어 있을 경우 빈 리스트 반환.
+     */
     public List<TagDto> getParsedTagList() {
         if (StringUtils.isEmpty(this.tagListStr)) return new ArrayList<>();
         JSONArray jArray = new JSONArray(tagListStr);
@@ -59,21 +81,11 @@ public class TagCmpstn
                 .collect(Collectors.toList());
     }
 
-    /** 컨텐츠 타입 :: 상위에서 주입받음. */
-    private String contentType;
-
-    /** 컨텐츠 태그 목록 */
-    private List<ContentTagDto> list;
-
-    /** 컨텐츠 태그 문자열 목록 */
-    private List<String> tagStrList;
-    /** 컨텐츠 태그 문자열 (','로 구분) */
-    private String tagListStr;
-
     /* ----- */
 
     /**
-     * getter
+     * Getter :: 태그 목록을 문자열로 반환
+     * @return String - 콤마로 구분된 태그 이름 문자열, 리스트가 비어 있을 경우 null 반환
      */
     public String getTagListStr() {
         if (CollectionUtils.isEmpty(this.list)) return null;
@@ -82,6 +94,11 @@ public class TagCmpstn
                 .map(tag -> tag.getTag().getTagNm())
                 .collect(Collectors.joining(","));
     }
+
+    /**
+     * Getter :: 태그 목록과 카테고리를 포함한 문자열로 반환.
+     * @return String - JSON 형식의 태그와 카테고리 문자열, 리스트가 비어 있을 경우 null 반환
+     */
     public String getTagListStrWithCtgr() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         ObjectMapper mapper = new ObjectMapper();
@@ -97,6 +114,10 @@ public class TagCmpstn
                 .collect(Collectors.joining(",", "[", "]"));
     }
 
+    /**
+     * Getter :: 태그 목록을 리스트로 반환.
+     * @return List<String> - 태그 이름의 리스트, 리스트가 비어 있을 경우 null 반환
+     */
     public List<String> getTagStrList() {
         if (CollectionUtils.isEmpty(this.list)) return null;
         return this.list.stream()
@@ -107,6 +128,7 @@ public class TagCmpstn
 
     /**
      * 태그 :: List<Dto> -> List<Entity> 반환
+     * @return List<ContentTagEntity> - 변환된 ContentTagEntity 리스트, 리스트가 비어 있을 경우 null 반환
      */
     @JsonIgnore
     public List<ContentTagEntity> getEntityList() {

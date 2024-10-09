@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.admin;
+package io.nicheblog.dreamdiary.domain.admin.menu.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 /**
  * MenuSearchParam
  * <pre>
- *  메뉴 검색 파라미터 Dto
+ *  메뉴 목록 검색 파라미터 Dto.
  * </pre>
  *
  * @author nichefish
@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @AllArgsConstructor
 public class MenuSearchParam

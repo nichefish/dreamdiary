@@ -1,11 +1,11 @@
-package io.nicheblog.dreamdiary.global.cmm.file;
+package io.nicheblog.dreamdiary.domain._core.file;
 
 import lombok.RequiredArgsConstructor;
 
 /**
  * MimeType
  * <pre>
- *  파일 MIME_TYPE 정보
+ *  파일 MIME_TYPE 정보.
  * </pre>
  *
  * @author nichefish

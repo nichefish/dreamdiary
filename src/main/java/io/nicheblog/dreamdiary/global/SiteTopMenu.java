@@ -1,11 +1,11 @@
-package io.nicheblog.dreamdiary.web;
+package io.nicheblog.dreamdiary.global;
 
 import lombok.RequiredArgsConstructor;
 
 /**
  * SiteTopMenu
  * <pre>
- *  공통 상수 :: 사이트 상위메뉴 정보 Enum
+ *  공통 상수 :: 사이트 상위메뉴 정보 Enum.
  *  메뉴 번호 :: 2depth를 상정하고 두자리씩 할당. depth 늘어날시 자리수를 늘려야 한다.
  * </pre>
  * TODO: 메뉴 DB관리로 완전히 바꾸기?

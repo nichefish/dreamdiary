@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.cmm.managt;
+package io.nicheblog.dreamdiary.domain._core.managt.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditRegEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
@@ -16,7 +16,7 @@ import javax.persistence.*;
 /**
  * ManagtrEntity
  * <pre>
- *  작업자 Entity
+ *  작업자 Entity.
  * </pre>
  *
  * @author nichefish
@@ -48,13 +48,14 @@ public class ManagtrEntity
 
     /** 참조 컨텐츠 타입 */
     @Column(name = "ref_content_type")
-    @Comment("게시판 분류코드")
+    @Comment("게시판 분류 코드")
     private String refContentType;
 
     /* ----- */
 
     /**
      * 생성자
+     * @param key - 게시물의 키 정보 (BaseClsfKey)
      */
     public ManagtrEntity(final BaseClsfKey key) {
         this.refPostNo = key.getPostNo();

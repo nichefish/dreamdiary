@@ -1,14 +1,13 @@
-package io.nicheblog.dreamdiary.web;
+package io.nicheblog.dreamdiary.global;
 
-import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
+import io.nicheblog.dreamdiary.global.model.SiteAcsInfo;
 
 import java.util.List;
 
 /**
- * SiteMenu
+ * SiteAdminMenu
  * <pre>
- *  공통 상수 :: 사이트 메뉴 번호, 이름, URL 정의
+ *  공통 상수 :: 사이트 메뉴 번호, 이름, URL 정의.
  * </pre>
  *
  * @author nichefish

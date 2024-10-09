@@ -1,8 +1,7 @@
-package io.nicheblog.dreamdiary.web;
+package io.nicheblog.dreamdiary.global;
 
-import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
-import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
+import io.nicheblog.dreamdiary.domain.board.def.service.BoardDefService;
+import io.nicheblog.dreamdiary.global.model.SiteAcsInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * SiteMenu
  * <pre>
- *  공통 상수 :: 사이트 메뉴 번호, 이름, URL 정의
+ *  공통 상수 :: 사이트 메뉴 번호, 이름, URL 정의.
  * </pre>
  *
  * @author nichefish

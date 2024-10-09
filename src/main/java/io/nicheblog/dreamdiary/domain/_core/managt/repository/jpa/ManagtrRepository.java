@@ -1,16 +1,17 @@
-package io.nicheblog.dreamdiary.web.repository.cmm.managt.jpa;
+package io.nicheblog.dreamdiary.domain._core.managt.repository.jpa;
 
+import io.nicheblog.dreamdiary.domain._core.managt.entity.ManagtrEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
-import io.nicheblog.dreamdiary.web.entity.cmm.managt.ManagtrEntity;
 import org.springframework.stereotype.Repository;
 
 /**
  * ManagtrRepository
  * <pre>
- *  작업자 Repository 인터페이스
+ *  작업자 (JPA) Repository 인터페이스.
  * </pre>
  *
  * @author nichefish
+ * @extends BaseStreamRepository
  */
 @Repository("managtrRepository")
 public interface ManagtrRepository
