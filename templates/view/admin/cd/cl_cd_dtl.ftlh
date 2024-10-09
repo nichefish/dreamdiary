@@ -96,7 +96,7 @@
                 <button type="button" class="btn btn-sm btn-primary"
                         onclick="DtlCd.regModal();"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="상세 코드 등록 모달을&#10;호출합니다.">
-                    <i class="fas fa-plus"></i>상세코드 추가
+                    <i class="fas fa-plus"></i>상세 코드 추가
                 </button>
             </div>
             <!--end::Toolbar-->
@@ -113,17 +113,17 @@
                         <span class="cursor-help"
                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                               title="코드를 특정할 때 내부적으로&#10;사용되는 고유 코드입니다.&#10;(등록 후 수정할 수 없습니다.)">
-                            상세코드
+                            상세 코드
                         </span>
                     </th>
                     <th class="col-2 text-center wb-keepall">
                         <span class="cursor-help"
                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
                               title="외부적으로 사용되는&#10;코드 이름입니다.">
-                            상세코드명
+                            상세 코드명
                         </span>
                     </th>
-                    <th class="col-4 text-center wb-keepall">상세코드 설명</th>
+                    <th class="col-4 text-center wb-keepall">상세 코드 설명</th>
                     <th class="col-1 text-center wb-keepall">
                         <span class="cursor-help"
                               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"

@@ -47,9 +47,9 @@
                         정렬
                         <i class="bi bi-question-circle"></i>
                     </th>
-                    <th class="col-3 text-center wb-keepall">분류코드</th>
-                    <th class="col-4 text-center wb-keepall">분류코드 설명</th>
-                    <th class="col-1 text-center wb-keepall">하위 상세코드 수</th>
+                    <th class="col-3 text-center wb-keepall">분류 코드</th>
+                    <th class="col-4 text-center wb-keepall">분류 코드 설명</th>
+                    <th class="col-1 text-center wb-keepall">하위 상세 코드 수</th>
                     <th class="col-1 text-center wb-keepall">사용 여부</th>
                     <th class="col-1 text-center wb-keepall">관리</th>
                 </tr>

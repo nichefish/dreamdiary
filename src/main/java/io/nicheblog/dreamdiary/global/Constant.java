@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global;
 
 import io.nicheblog.dreamdiary.api.ApiConstant;
-import io.nicheblog.dreamdiary.global.auth.AuthConstant;
+import io.nicheblog.dreamdiary.domain._core.auth.AuthConstant;
 
 import java.util.Locale;
 import java.util.TimeZone;
@@ -9,7 +9,7 @@ import java.util.TimeZone;
 /**
  * Constant
  * <pre>
- *  공통으로 사용하는 상수 데이터 정의
+ *  공통으로 사용하는 상수 데이터 정의.
  * </pre>
  *
  * @author nichefish

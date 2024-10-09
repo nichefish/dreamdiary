@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.cmpstn;
 
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
+import io.nicheblog.dreamdiary.domain._core.comment.model.CommentDto;
 import lombok.*;
 
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * CommentCmpstn
  * <pre>
- *  댓글 관련 정보 위임
+ *  위임:: 댓글 관련 정보. (dto level)
  * </pre>
  *
  * @author nichefish

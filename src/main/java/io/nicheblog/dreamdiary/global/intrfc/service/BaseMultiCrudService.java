@@ -19,7 +19,6 @@ import java.io.Serializable;
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key>, ListDto extends BaseAtchDto, Key extends Serializable, Entity extends BaseAtchEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
         extends BaseCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {

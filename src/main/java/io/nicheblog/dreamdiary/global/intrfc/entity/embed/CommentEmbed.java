@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity.embed;
 
-import io.nicheblog.dreamdiary.web.entity.cmm.comment.CommentEntity;
+import io.nicheblog.dreamdiary.domain._core.comment.entity.CommentEntity;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.springframework.util.CollectionUtils;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * CommentEmbed
  * <pre>
- *  댓글 관련 정보 위임
+ *  위임:: 댓글 관련 정보. (entity level)
  * </pre>
  *
  * @author nichefish
