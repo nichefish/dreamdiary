@@ -15,13 +15,12 @@ import lombok.experimental.SuperBuilder;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditRegDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 public class ViewerDto
         extends BaseAuditRegDto {
 
@@ -30,14 +29,15 @@ public class ViewerDto
 
     /** 참조 글 번호 */
     private Integer refPostNo;
+
     /** 참조 컨텐츠 타입 (게시판 코드) */
     private String refContentType;
 
     /* ----- */
 
     /**
-     * 생성자
-     * @param key - 게시물의 고유 키를 포함하는 BaseClsfKey 객체
+     * 생성자.
+     * @param key 게시물의 고유 키를 포함하는 BaseClsfKey 객체
      */
     public ViewerDto(final BaseClsfKey key) {
         this.refPostNo = key.getPostNo();

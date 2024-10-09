@@ -3,11 +3,13 @@ package io.nicheblog.dreamdiary.domain._core.viewer.mapstruct;
 import io.nicheblog.dreamdiary.domain._core.viewer.entity.ViewerEntity;
 import io.nicheblog.dreamdiary.domain._core.viewer.model.ViewerDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.MapstructHelper;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -25,8 +27,9 @@ public interface ViewerMapstruct
     ViewerMapstruct INSTANCE = Mappers.getMapper(ViewerMapstruct.class);
 
     /**
-     * Entity -> Dto
-     * @param entity - 변환할 Entity 객체
+     * Entity -> Dto 변환
+     *
+     * @param entity 변환할 Entity 객체
      * @return 변환된 Dto 객체
      * @throws Exception 변환 과정에서 발생할 수 있는 예외
      */
@@ -37,23 +40,13 @@ public interface ViewerMapstruct
     ViewerDto toDto(final ViewerEntity entity) throws Exception;
 
     /**
-     * Dto -> Entity
-     * @param dto - 변환할 Dto 객체
+     * Dto -> Entity 변환
+     *
+     * @param dto 변환할 Dto 객체
      * @return 변환된 Entity 객체
-     * @throws Exception - 변환 과정에서 발생할 수 있는 예외
+     * @throws Exception 변환 과정에서 발생할 수 있는 예외
      */
     @Override
     @Named("toEntity")
     ViewerEntity toEntity(final ViewerDto dto) throws Exception;
-
-    /**
-     * default : BaseEntity 기본 요소들 매핑
-     * @param entity - 매핑할 Entity 객체
-     * @param dto - 매핑 대상인 Dto 객체
-     * @throws Exception 매핑 과정에서 발생할 수 있는 예외
-     */
-    @AfterMapping
-    default void mapBaseFields(final ViewerEntity entity, final @MappingTarget ViewerDto dto) throws Exception {
-        MapstructHelper.mapBaseFields(entity, dto);
-    }
 }
