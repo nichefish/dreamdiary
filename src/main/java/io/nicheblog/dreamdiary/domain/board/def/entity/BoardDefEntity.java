@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.board;
+package io.nicheblog.dreamdiary.domain.board.def.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
@@ -21,7 +21,7 @@ import javax.persistence.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseManageEntity
+ * @extends BaseAuditEntity
  * @implements StateEmbedModule
  */
 @Entity
@@ -63,7 +63,7 @@ public class BoardDefEntity
 
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
+    /** 위임 :: 상태 관리 모듈 */
     @Embedded
     public StateEmbed state;
 }

@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 /**
  * BaseParam
  * <pre>
- *  (공통/상속) 파라미터 Dto
+ *  (공통/상속) 파라미터 Dto.
  * </pre>
  *
  * @author nichefish
@@ -47,12 +47,18 @@ public class BaseParam {
 
     /* ----- */
 
+    /**
+     * 목록으로 돌아가는지 여부를 확인하는 함수.
+     * @return Boolean - "Y" 값과 일치하면 true, 그렇지 않으면 false.
+     */
     public Boolean isBackToList() {
         return "Y".equals(this.isBackToList);
     }
 
     /**
-     * 액션유형 체크 함수
+     * 특정 액션 유형이 일치하는지 확인하는 함수.
+     * @param actionTyCd - 액션 유형 코드
+     * @return Boolean - 주어진 액션 유형 코드와 일치하면 true, 그렇지 않으면 false
      */
     public Boolean isAction(final String actionTyCd) {
         if (StringUtils.isEmpty(actionTyCd)) return false;
@@ -61,7 +67,10 @@ public class BaseParam {
 
     /* ----- */
 
-    /** Getter :: 작업 카테고리 조회 */
+    /**
+     * Getter :: 작업 카테고리 조회
+     * @return ActvtyCtgr - 작업 카테고리 (기본값: ActvtyCtgr.DEFAULT)
+     */
     public ActvtyCtgr getActvtyCtgr() {
         if (this.actvtyCtgr != null) return this.actvtyCtgr;
         if (StringUtils.isEmpty(this.actvtyCtgrCd)) return ActvtyCtgr.DEFAULT;

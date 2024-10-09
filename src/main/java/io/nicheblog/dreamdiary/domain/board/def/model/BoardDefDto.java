@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.board;
+package io.nicheblog.dreamdiary.domain.board.def.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
@@ -13,12 +13,12 @@ import javax.validation.constraints.Size;
 /**
  * BoardDefDto
  * <pre>
- *  일반게시판 정의 정보 Dto
+ *  일반게시판 정의 정보 Dto.
  *  ※일반게시판 정의(board_def) = 일반게시판 분류. 일반게시판 게시물(board_post)을 1:N으로 관리한다.
  * </pre>
  *
  * @author nichefish
- * @extends BasePostDto
+ * @extends BaseAuditDto
  * @implements StateCmpstnModule
  */
 @Getter
@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class BoardDefDto
         extends BaseAuditDto
         implements Identifiable<String>, StateCmpstnModule {
@@ -57,6 +57,6 @@ public class BoardDefDto
         return this.boardCd;
     }
 
-    /** 상태 관리 모듈 (위임) */
+    /** 위임 :: 상태 관리 모듈 */
     public StateCmpstn state;
 }

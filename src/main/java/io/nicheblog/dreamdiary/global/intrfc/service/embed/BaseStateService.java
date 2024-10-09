@@ -15,17 +15,20 @@ import java.io.Serializable;
 /**
  * BaseStateService
  * <pre>
- *  (공통/상속) 관리요소 CRUD 공통 서비스 인터페이스
+ *  (공통/상속) 관리요소 CRUD 공통 서비스 인터페이스.
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseCrudService - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule & Identifiable<Key>, ListDto extends BaseAuditDto & StateCmpstnModule, Key extends Serializable, Entity extends BaseCrudEntity & StateEmbedModule, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
         extends BaseCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**
      * default: 사용 상태로 변경
+     * @param key - 상태를 변경할 엔티티의 키
+     * @return Boolean - 상태 변경 성공 시 true
+     * @throws Exception - 상태 변경 중 발생할 수 있는 예외
      */
     default Boolean setStateUse(final Key key) throws Exception {
         Entity e = this.getDtlEntity(key);
@@ -39,6 +42,9 @@ public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule &
 
     /**
      * default: 미사용 상태로 변경
+     * @param key - 상태를 변경할 엔티티의 키
+     * @return Boolean - 상태 변경 성공 시 true
+     * @throws Exception - 상태 변경 중 발생할 수 있는 예외
      */
     default Boolean setStateUnuse(final Key key) throws Exception {
         Entity e = this.getDtlEntity(key);
@@ -52,6 +58,7 @@ public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule &
 
     /**
      * default: 사용/미사용 상태로 변경 후처리
+     * @throws Exception - 후처리 중 발생할 수 있는 예외
      */
     default void postSetState() throws Exception {
         // 변경 후처리:: 기본 공백, 필요시 각 함수에서 Override

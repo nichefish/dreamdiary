@@ -17,18 +17,17 @@ import java.util.Map;
 /**
  * BasePostService
  * <pre>
- *  (공통/상속) 일반게시물 CRUD 공통 서비스 인터페이스
+ *  (공통/상속) 일반게시물 CRUD 공통 서비스 인터페이스.
  * </pre>
  *
  * @author nichefish
- * @extends BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @extends BaseMultiCrudService - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BasePostService<Dto extends BasePostDto & Identifiable<Key>, ListDto extends BasePostDto, Key extends Serializable, Entity extends BasePostEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseClsfMapstruct<Dto, ListDto, Entity>>
         extends BaseClsfService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**
      * default: 상단 고정 항목 목록 조회
-     * TODO: 조회조건 좀 더 세분화?
      * @return List<ListDto> - 상단 고정 항목 목록
      * @throws Exception - 조회 중 발생할 수 있는 예외
      */

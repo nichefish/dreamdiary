@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 /**
  * BaseSearchParam
  * <pre>
- *  (공통/상속) 검색 파라미터 Dto
+ *  (공통/상속) 검색 파라미터 Dto.
  * </pre>
  *
  * @author nichefish
@@ -38,11 +38,13 @@ public class BaseSearchParam
 
     /** 검색 유형 (검색 키워드와 한 세트) */
     protected String searchType;
+
     /** 검색 키워드 (검색 유형과 한 세트) */
     protected String searchKeyword;
 
     /** 검색 시작일자 */
     protected String searchStartDt;
+
     /** 검색 종료일자 */
     protected String searchEndDt;
 
@@ -64,10 +66,18 @@ public class BaseSearchParam
 
     /* ----- */
 
+    /**
+     * Getter :: 페이지 번호.
+     * @return Integer - 페이지 번호 (기본값: 1)
+     */
     public Integer getPageNo() {
         if (this.pageNo == null) this.pageNo = DEFAULT_PAGE_NO;
         return this.pageNo;
     }
+    /**
+     * Getter :: 페이지 크기.
+     * @return Integer - 페이지 크기 (기본값: 10)
+     */
     public Integer getPageSize() {
         if (this.pageSize == null) this.pageSize = DEFAULT_PAGE_SIZE;
         return this.pageSize;

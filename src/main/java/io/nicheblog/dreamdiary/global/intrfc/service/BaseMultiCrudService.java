@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
-import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
+import io.nicheblog.dreamdiary.domain._core.file.utils.FileUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
@@ -15,17 +15,21 @@ import java.io.Serializable;
 /**
  * BaseMultiCrudInterface
  * <pre>
- *  (공통/상속) MultipartRequest(파일업로드)를 사용하는 CRUD 공통 서비스 인터페이스
+ *  (공통/상속) MultipartRequest(파일업로드)를 사용하는 CRUD 공통 서비스 인터페이스.
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseCrudService - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key>, ListDto extends BaseAtchDto, Key extends Serializable, Entity extends BaseAtchEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseCrudMapstruct<Dto, ListDto, Entity>>
         extends BaseCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**
      * default: 게시물 등록 (Multipart)
+     * @param dto - 등록할 DTO 객체
+     * @param request - Multipart 요청 객체
+     * @return Dto - 처리된 DTO 객체
+     * @throws Exception - 파일 업로드 또는 등록 중 예외 발생 시
      */
     @Transactional
     default Dto regist(final Dto dto, final MultipartHttpServletRequest request) throws Exception {
@@ -38,6 +42,10 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
 
     /**
      * default: 게시물 수정 (Multipart)
+     * @param dto - 수정할 DTO 객체
+     * @param request - Multipart 요청 객체
+     * @return Dto - 처리된 DTO 객체
+     * @throws Exception - 파일 업로드 또는 수정 중 예외 발생 시
      */
     @Transactional
     default Dto modify(final Dto dto, final MultipartHttpServletRequest request) throws Exception {

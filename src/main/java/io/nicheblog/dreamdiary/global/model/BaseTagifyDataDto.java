@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.cmm;
+package io.nicheblog.dreamdiary.global.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,8 @@ import lombok.Setter;
 /**
  * BaseTagifyDataDto
  * <pre>
- *  for tagify jsonstring parse.
+ *  Tagify JsonString - { data } 파싱 Dto.
+ *  Dto for tagify jsonstring { data } parse.
  * </pre>
  *
  * @author nichefish
