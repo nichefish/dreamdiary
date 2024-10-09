@@ -17,7 +17,6 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudDto
  */
 @Getter
 @Setter

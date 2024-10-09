@@ -1,10 +1,10 @@
-package io.nicheblog.dreamdiary.web.service.cmm.cache;
+package io.nicheblog.dreamdiary.domain._core.cache.service;
 
+import io.nicheblog.dreamdiary.domain.jrnl.day.service.JrnlDayCacheEvictor;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.service.JrnlDiaryCacheEvictor;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.service.JrnlDreamCacheEvictor;
+import io.nicheblog.dreamdiary.domain.jrnl.sumry.service.JrnlSumryCacheEvictor;
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayCacheEvictor;
-import io.nicheblog.dreamdiary.web.service.jrnl.diary.JrnlDiaryCacheEvictor;
-import io.nicheblog.dreamdiary.web.service.jrnl.dream.JrnlDreamCacheEvictor;
-import io.nicheblog.dreamdiary.web.service.jrnl.sumry.JrnlSumryCacheEvictor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -45,6 +45,9 @@ public class EhCacheEvictService {
 
     /**
      * 관련 캐시 처리
+     * @param refContentType - 캐시를 삭제할 컨텐츠 타입
+     * @param refPostNo - 캐시를 삭제할 게시글 번호
+     * @throws Exception - 캐시 삭제 과정 중 발생할 수 있는 예외
      */
     public void evictClsfCache(final String refContentType, final Integer refPostNo) throws Exception {
         CacheEvictor<Integer> evictor = evictorMap.get(refContentType);

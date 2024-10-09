@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.event;
+package io.nicheblog.dreamdiary.domain._core.cache.event;
 
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
@@ -17,19 +17,19 @@ public class EhCacheEvictEvent
 
     /** 컨텐츠 타입 */
     private final Integer postNo;
+
     /** 컨텐츠 타입 */
     private final String contentType;
 
     /* ----- */
 
     /**
-     * 생성자
+     * 생성자.
+     * @param source - 이벤트가 발생한 객체
+     * @param postNo - 캐시를 제거할 게시글 번호
+     * @param contentType - 캐시를 제거할 컨텐츠 타입
      */
-    public EhCacheEvictEvent(
-            final Object source,
-            final Integer postNo,
-            final String contentType
-    ) {
+    public EhCacheEvictEvent(final Object source, final Integer postNo, final String contentType) {
         super(source);
         this.postNo = postNo;
         this.contentType = contentType;
