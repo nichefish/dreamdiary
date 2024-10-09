@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 /**
  * UserPwChgParam
  * <pre>
- *  패스워드 변경 파라미터 Dto.
+ *  패스워드 변경 파라미터.
  * </pre>
  *
  * @author nichefish

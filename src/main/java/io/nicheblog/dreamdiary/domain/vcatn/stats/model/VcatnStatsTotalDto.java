@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.vcatn.stats;
+package io.nicheblog.dreamdiary.domain.vcatn.stats.model;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * VcatnStatsTotalDto
  * <pre>
- *  휴가계획서 통계 일괄 집계 Dto
+ *  휴가관리 > 년도별 휴가관리 일괄 집계 Dto.
  * </pre>
  *
  * @author nichefish
@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 @ToString
 public class VcatnStatsTotalDto {
 

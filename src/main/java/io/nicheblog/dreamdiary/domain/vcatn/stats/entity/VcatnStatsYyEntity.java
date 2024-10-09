@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.vcatn.stats;
+package io.nicheblog.dreamdiary.domain.vcatn.stats.entity;
 
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * VcatnStatsEntity
  * <pre>
- *  휴가계획서 통계 Entity
+ *  휴가관리 > 년도별 휴가관리 년도 Entity.
  * </pre>
  *
  * @author nichefish
@@ -49,6 +49,8 @@ public class VcatnStatsYyEntity {
 
     /**
      * 생성자 = 년도 받아서 기본시작일/종료일(1월 1일~12월 31일) 세팅
+     * @param yyStr - 휴가 통계 연도를 나타내는 문자열 (예: "2024")
+     * @throws Exception - 날짜 변환 중 발생할 수 있는 예외
      */
     public VcatnStatsYyEntity(final String yyStr) throws Exception {
         this.statsYy = yyStr;

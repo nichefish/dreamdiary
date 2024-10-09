@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.user.profl;
+package io.nicheblog.dreamdiary.domain.user.info.model.profl;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import lombok.*;
@@ -10,17 +10,16 @@ import javax.validation.constraints.Size;
 /**
  * UserInfoDto
  * <pre>
- *  사용자(직원) 정보 Dto
+ *  사용자(직원) 정보 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class UserProflDto
         extends BaseCrudDto {
 

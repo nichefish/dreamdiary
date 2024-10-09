@@ -1,10 +1,10 @@
-package io.nicheblog.dreamdiary.web.scheduler;
+package io.nicheblog.dreamdiary.domain.vcatn.papr.scheduler;
 
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.model.LogSysParam;
+import io.nicheblog.dreamdiary.domain._core.log.sys.event.LogSysEvent;
+import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.service.vcatn.stats.VcatnStatsYyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * VcatnStatsYyScheduler
  * <pre>
- *  휴가관리정보 추가 Scheduler
+ *  휴가관리정보 추가 Scheduler.
  *  1년에 한번 자동으로 추가 (해당 정보가 없으면 휴가 산정시 에러가 발생하므로)
  * </pre>
  *

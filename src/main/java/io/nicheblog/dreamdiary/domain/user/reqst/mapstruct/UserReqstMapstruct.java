@@ -1,12 +1,12 @@
-package io.nicheblog.dreamdiary.web.mapstruct.user.reqst;
+package io.nicheblog.dreamdiary.domain.user.reqst.mapstruct;
 
+import io.nicheblog.dreamdiary.domain.user.emplym.mapstruct.UserEmplymMapstruct;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserStusEmbed;
+import io.nicheblog.dreamdiary.domain.user.profl.mapstruct.UserProflMapstruct;
+import io.nicheblog.dreamdiary.domain.user.reqst.model.UserReqstDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
-import io.nicheblog.dreamdiary.web.mapstruct.user.emplym.UserEmplymMapstruct;
-import io.nicheblog.dreamdiary.web.mapstruct.user.profl.UserProflMapstruct;
-import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Builder;
@@ -20,11 +20,10 @@ import java.util.stream.Collectors;
 /**
  * UserReqstMapstruct
  * <pre>
- *  사용자 신규계정 신청 정보 MapStruct 기반 Mapper 인터페이스
+ *  사용자 신규계정 신청 정보 MapStruct 기반 Mapper 인터페이스.
  * </pre>
  *
  * @author nichefish
- * @extends BaseMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CollectionUtils.class, Collectors.class, UserStusEmbed.class, UserProflMapstruct.class, UserEmplymMapstruct.class}, builder = @Builder(disableBuilder = true))
 public interface UserReqstMapstruct
