@@ -8,12 +8,12 @@ import java.io.Serializable;
 /**
  * BaseClsfKey
  * <pre>
- *  (공통/상속) 게시판 복합키 Entity (postNo + contentType)
+ *  (공통/상속) 게시판 복합키 Entity. (postNo + contentType)
  * </pre>
  *
  * @author nichefish
  */
-@Getter(AccessLevel.PUBLIC)
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,7 +29,11 @@ public class BaseClsfKey
 
     /* ----- */
 
-    /** 생성자 */
+    /**
+     * 생성자
+     * @param postNo - 게시물의 고유 번호
+     * @param type - 콘텐츠 유형을 나타내는 ContentType 객체
+     */
     public BaseClsfKey(final Integer postNo, final ContentType type) {
         this.postNo = postNo;
         this.contentType = type.key;

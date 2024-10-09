@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.api.cmm.model;
+package io.nicheblog.dreamdiary.api._core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * BaseApiResponse
  * <pre>
- *  API:: 공통:: 응답 반환 Dto
+ *  API:: 공통:: 응답 반환 Dto.
  * </pre>
  *
  * @author nichefish
@@ -45,12 +45,11 @@ public class BaseApiRespns {
     /* ----- */
 
     /**
-     * 결과 세팅
+     * API 결과 세팅
+     * @param result - API 호출의 결과 (true: 성공, false: 실패)
+     * @param message - 결과에 대한 메시지
      */
-    public void setApiResult(
-            final Boolean result,
-            final String message
-    ) {
+    public void setApiResult(final Boolean result, final String message) {
         this.result = result;
         this.message = message;
         if (this.status == null) {

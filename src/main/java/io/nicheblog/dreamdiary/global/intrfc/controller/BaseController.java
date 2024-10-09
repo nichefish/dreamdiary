@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.global.intrfc.controller;
 
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 
 /**
  * BaseController
  * <pre>
- *  (공통/상속) 기본 컨트롤러 인터페이스
+ *  (공통/상속) 기본 컨트롤러 인터페이스.
  * </pre>
  *
  * @author nichefish

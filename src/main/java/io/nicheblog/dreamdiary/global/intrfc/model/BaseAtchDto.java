@@ -1,11 +1,10 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDto;
+import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.log4j.Log4j2;
 
 import javax.validation.constraints.Positive;
 import java.util.List;
@@ -13,19 +12,18 @@ import java.util.List;
 /**
  * BaseAtchDto
  * <pre>
- *  (공통/상속) 첨부파일 소유 Dto (첨부파일 정보 추가)
+ *  (공통/상속) 첨부파일 정보 추가 Dto.
  * </pre>
  *
  * @author nichefish
  * @extends BaseAuditDto
  */
-@Getter(AccessLevel.PUBLIC)
+@Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Log4j2
 public class BaseAtchDto
         extends BaseAuditDto {
 
@@ -49,7 +47,7 @@ public class BaseAtchDto
     /* ---- */
 
     /**
-     * 첨부파일 목록
+     * 첨부파일 목록 반환
      */
     public List<AtchFileDtlDto> getAtchFileList() {
         if (this.getAtchFileNo() == null || this.getAtchFileInfo() == null) return null;

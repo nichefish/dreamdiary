@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth.entity;
+package io.nicheblog.dreamdiary.domain._core.auth.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * AuthRoleEntity
  * <pre>
- *  (공통) 권한 정보 Entity
+ *  (공통) 권한 정보 Entity.
  * </pre>
  *
  * @author nichefish

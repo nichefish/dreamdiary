@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
-import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuditorDto;
 import io.nicheblog.dreamdiary.global.util.crypto.CryptoUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -14,11 +14,12 @@ import lombok.experimental.SuperBuilder;
  * @author nichefish
  * @extends BaseCrudDto
  */
-@Getter(AccessLevel.PUBLIC)
+@Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class BaseAuditRegDto
         extends BaseCrudDto {
 

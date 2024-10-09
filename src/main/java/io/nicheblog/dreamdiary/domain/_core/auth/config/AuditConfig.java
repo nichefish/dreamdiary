@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.global.auth.config;
+package io.nicheblog.dreamdiary.domain._core.auth.config;
 
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -25,7 +25,7 @@ import java.util.Optional;
 public class AuditConfig {
 
     /**
-     * 현재 작업자 감지
+     * auditorRef 빈 등록 : 현재 작업자 감지
      */
     @Bean
     public AuditAwareImpl auditorRef() {

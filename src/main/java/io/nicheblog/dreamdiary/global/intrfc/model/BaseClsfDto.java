@@ -11,14 +11,14 @@ import javax.validation.constraints.Size;
 /**
  * BaseClsfDto
  * <pre>
- *  (공통/상속) 게시판 Dto
+ *  (공통/상속) 분류 속성 Dto.
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
  * @extends BaseAtchDto
  */
-@Getter(AccessLevel.PUBLIC)
+@Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor

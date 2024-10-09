@@ -1,7 +1,10 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
-import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileEntity;
-import lombok.*;
+import io.nicheblog.dreamdiary.domain._core.file.entity.AtchFileEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -14,7 +17,7 @@ import javax.persistence.OneToOne;
 /**
  * BaseAtchEntity
  * <pre>
- *  (공통/상속) 첨부파일 정보 포함 Entity
+ *  (공통/상속) 첨부파일 정보 추가 Entity.
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
@@ -22,7 +25,7 @@ import javax.persistence.OneToOne;
  * @extends BaseAuditEntity
  */
 @MappedSuperclass
-@Getter(AccessLevel.PUBLIC)
+@Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor

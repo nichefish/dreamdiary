@@ -1,6 +1,9 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.MappedSuperclass;
@@ -9,15 +12,15 @@ import javax.persistence.Transient;
 /**
  * BaseClsfEntity
  * <pre>
- *  (공통/상속) 태그/댓글 속성 Entity
+ *  (공통/상속) 분류 속성 Entity.
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
- * @implements BaseAtchEntity
+ * @extends BaseAtchEntity
  */
 @MappedSuperclass
-@Getter(AccessLevel.PUBLIC)
+@Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor

@@ -1,8 +1,11 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -19,7 +22,7 @@ import java.util.Date;
 /**
  * BaseAuditRegEntity
  * <pre>
- *  (공통/상속) Audit 정보 Entity (수정자 없이 등록자만)
+ *  (공통/상속) Audit 정보 Entity. (수정자 없이 등록자만)
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
@@ -27,7 +30,7 @@ import java.util.Date;
  * @extends BaseCrudEntity
  */
 @MappedSuperclass
-@Getter(AccessLevel.PUBLIC)
+@Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor

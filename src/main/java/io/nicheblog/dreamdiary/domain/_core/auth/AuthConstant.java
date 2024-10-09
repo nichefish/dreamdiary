@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth;
+package io.nicheblog.dreamdiary.domain._core.auth;
 
 /**
  * AuthConstant

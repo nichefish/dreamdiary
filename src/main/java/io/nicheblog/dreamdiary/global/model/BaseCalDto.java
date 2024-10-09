@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.cmm;
+package io.nicheblog.dreamdiary.global.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,9 +14,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Date;
 
 /**
- * SchdulDtlCalDto
+ * BaseCalDto
  * <pre>
- *  전체일정 Full-Calendar Dto
+ *  (공통/상속) 전체일정 Full-Calendar Dto.
  * </pre>
  *
  * @author nichefish
@@ -73,6 +73,9 @@ public class BaseCalDto
     /**
      * 일정일자 기준 정렬 (오름차순)
      * 일자가 같으면? => 제목순 정렬
+     * @param compare - 비교할 BaseCalDto 객체
+     * @return 양수: 현재 객체가 더 큼, 음수: 현재 객체가 더 작음, 0: 두 객체가 같음
+     * @throws Exception - 날짜 변환 중 발생할 수 있는 예외
      */
     @SneakyThrows
     @Override

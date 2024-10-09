@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.global.auth.entity;
+package io.nicheblog.dreamdiary.domain._core.auth.entity;
 
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserAuthRoleEntity;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.web.entity.user.UserAuthRoleEntity;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * AuditorInfo
  * <pre>
- *  (공통) Auditor(regstr, mdfusr) 정보 Entity
+ *  (공통) Auditor(regstr, mdfusr) 정보 Entity.
  *  연관관계 조회시에만 사용. 상호참조로 인한 무한재귀호출 방지를 위해서 UserEntity와 분리
  * </pre>
  *
@@ -64,7 +64,7 @@ public class AuditorInfo
     /* ----- */
 
     /**
-     * getter override
+     * 프로필 이미지 getter 재정의
      */
     public String getProflImgUrl() {
         if (StringUtils.isEmpty(this.proflImgUrl)) return (Constant.BLANK_AVATAR_URL);

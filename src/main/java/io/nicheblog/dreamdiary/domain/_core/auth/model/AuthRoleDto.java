@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth.model;
+package io.nicheblog.dreamdiary.domain._core.auth.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * AuthRoleDto
  * <pre>
- *  (공통) 권한 정보 Dto
+ *  (공통) 권한 정보 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BaseManagtEntity
+ * @extends BaseCrudDto
  */
 @Getter
 @Setter

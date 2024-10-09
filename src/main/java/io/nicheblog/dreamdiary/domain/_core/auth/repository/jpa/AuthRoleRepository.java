@@ -1,16 +1,17 @@
-package io.nicheblog.dreamdiary.global.auth.repository.jpa;
+package io.nicheblog.dreamdiary.domain._core.auth.repository.jpa;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  * AuthRoleRepository
  * <pre>
- *  권한 정보 repository 인터페이스
+ *  권한 정보 repository 인터페이스.
  * </pre>
  *
  * @author nichefish
+ * @extends BaseStreamRepository
  */
 @Repository("authRoleRepository")
 public interface AuthRoleRepository

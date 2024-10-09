@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.global.auth.model;
+package io.nicheblog.dreamdiary.domain._core.auth.model;
 
+import io.nicheblog.dreamdiary.domain.user.info.model.UserAuthRoleDto;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * AuditorDto
  * <pre>
- *  사용자 정보 조회용 Dto
+ *  사용자 정보 조회용 Dto.
  *  (등록자/수정자 등 조회시 다른 dto 안에 포함된 형태로 사용)
  * </pre>
  *

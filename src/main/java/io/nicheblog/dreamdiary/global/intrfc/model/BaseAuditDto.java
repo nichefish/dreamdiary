@@ -1,19 +1,19 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
-import io.nicheblog.dreamdiary.global.auth.model.AuditorDto;
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuditorDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
  * BaseAuditDto
  * <pre>
- *  (공통/상속) Audit 정보 Dto (수정자 정보 추가)
+ *  (공통/상속) Audit 정보 Dto. (기존 등록자 + 수정자 정보 추가)
  * </pre>
  *
  * @author nichefish
  * @extends BaseAuditRegDto
  */
-@Getter(AccessLevel.PUBLIC)
+@Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
