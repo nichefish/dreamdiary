@@ -2,14 +2,14 @@ package io.nicheblog.dreamdiary.api.kasi.controller;
 
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.api.kasi.service.HldyKasiApiService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
@@ -29,11 +29,10 @@ import java.util.List;
 /**
  * HldyKasiApiController
  * <pre>
- *  API:: 한국천문연구원(KASI):: 특일 정보 API 컨트롤러
+ *  API:: 한국천문연구원(KASI):: 특일 정보 API 컨트롤러.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
@@ -53,6 +52,9 @@ public class HldyKasiApiController
 
     /**
      * 한국천문연구원(KASI):: 휴일 정보 조회 및 DB 저장
+     * @param yyParam - 조회할 연도의 문자열 (nullable, 지정되지 않을 경우 현재 연도를 사용)
+     * @param logParam - 로그 활동을 기록하기 위한 파라미터 객체
+     * @return ResponseEntity<AjaxResponse> - 응답 객체
      */
     @Operation(
             summary = "휴일 정보 조회 및 DB 저장",
