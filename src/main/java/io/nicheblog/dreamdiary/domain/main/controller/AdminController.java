@@ -1,15 +1,15 @@
-package io.nicheblog.dreamdiary.web.controller.admin;
+package io.nicheblog.dreamdiary.domain.main.controller;
 
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuthRoleDto;
+import io.nicheblog.dreamdiary.domain._core.auth.service.AuthRoleService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.auth.model.AuthRoleDto;
-import io.nicheblog.dreamdiary.global.auth.service.AuthRoleService;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteMenu;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * AdminController
  * <pre>
- *  사이트 관리 > 사이트 관리 컨트롤러
+ *  사이트 관리 > 사이트 관리 컨트롤러.
  * </pre>
  *
  * @author nichefish
