@@ -21,7 +21,6 @@ import javax.persistence.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudEntity
  */
 @Entity
 @Table(name = "atch_file_dtl")
@@ -81,9 +80,10 @@ public class AtchFileDtlEntity
     /* ----- */
 
     /**
-     * 현재 객체를 DTO로 변환.
-     * @return AtchFileDtlDto - 변환된 객체
-     * @throws Exception - 변환 과정에서 발생할 수 있는 예외
+     * 현재 객체를 Dto로 변환하여 반환한다.
+     *
+     * @return AtchFileDtlDto -- 변환된 객체
+     * @throws Exception 변환 과정에서 발생할 수 있는 예외
      */
     public AtchFileDtlDto asDto() throws Exception {
         return AtchFileDtlMapstruct.INSTANCE.toDto(this);

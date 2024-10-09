@@ -17,7 +17,6 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudDto
  */
 @Getter
 @Setter
@@ -31,7 +30,7 @@ public class AtchFileDto
     private Integer atchFileNo;
 
     /** 첨부파일 목록 */
-    List<AtchFileDtlDto> atchFileList;
+    private List<AtchFileDtlDto> atchFileList;
 
     /* ----- */
 
