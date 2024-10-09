@@ -7,17 +7,16 @@ import lombok.experimental.SuperBuilder;
 /**
  * JrnlDreamApiDto
  * <pre>
- *  API:: 저널 꿈 Dto
+ *  API:: 저널 꿈 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class JrnlDreamApiDto
         extends BasePostDto {

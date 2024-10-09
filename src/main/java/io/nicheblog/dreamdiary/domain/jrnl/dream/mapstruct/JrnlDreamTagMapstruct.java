@@ -1,26 +1,25 @@
-package io.nicheblog.dreamdiary.api.jrnl.dream.mapstruct;
+package io.nicheblog.dreamdiary.domain.jrnl.dream.mapstruct;
 
-import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamEntity;
-import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamDto;
+import io.nicheblog.dreamdiary.domain._core.tag.mapstruct.ContentTagMapstruct;
+import io.nicheblog.dreamdiary.domain._core.tag.model.TagDto;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
-import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 /**
- * JrnlDreamMapstruct
+ * JrnlDreamTagMapstruct
  * <pre>
- *  API:: 저널 꿈 MapStruct 기반 Mapper 인터페이스.
+ *  저널 꿈 태그 MapStruct 기반 Mapper 인터페이스.
  * </pre>
  *
  * @author nichefish
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class}, builder = @Builder(disableBuilder = true))
-public interface JrnlDreamApiMapstruct
-        extends BaseCrudMapstruct<JrnlDreamDto, JrnlDreamDto, JrnlDreamEntity> {
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {ContentTagMapstruct.class})
+public interface JrnlDreamTagMapstruct
+        extends BaseCrudMapstruct<TagDto, TagDto, JrnlDreamTagEntity> {
 
-    JrnlDreamApiMapstruct INSTANCE = Mappers.getMapper(JrnlDreamApiMapstruct.class);
+    JrnlDreamTagMapstruct INSTANCE = Mappers.getMapper(JrnlDreamTagMapstruct.class);
 
     /**
      * Entity -> Dto
@@ -30,7 +29,7 @@ public interface JrnlDreamApiMapstruct
      */
     @Override
     @Named("toDto")
-    JrnlDreamDto toDto(final JrnlDreamEntity entity) throws Exception;
+    TagDto toDto(final JrnlDreamTagEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
@@ -40,7 +39,7 @@ public interface JrnlDreamApiMapstruct
      */
     @Override
     @Named("toListDto")
-    JrnlDreamDto toListDto(final JrnlDreamEntity entity) throws Exception;
+    TagDto toListDto(final JrnlDreamTagEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
@@ -48,8 +47,7 @@ public interface JrnlDreamApiMapstruct
      * @return Entity - 변환된 AtchFileDtlEntity 객체
      * @throws Exception - 변환 중 발생할 수 있는 예외
      */
-    @Override
-    JrnlDreamEntity toEntity(final JrnlDreamDto dto) throws Exception;
+    JrnlDreamTagEntity toEntity(final TagDto dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
@@ -59,5 +57,5 @@ public interface JrnlDreamApiMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(final JrnlDreamDto dto, final @MappingTarget JrnlDreamEntity entity) throws Exception;
+    void updateFromDto(final TagDto dto, final @MappingTarget JrnlDreamTagEntity entity) throws Exception;
 }
