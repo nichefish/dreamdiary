@@ -27,9 +27,10 @@ public interface BasePostService<Dto extends BasePostDto & Identifiable<Key>, Li
         extends BaseClsfService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**
-     * default: 상단 고정 항목 목록 조회
-     * @return List<ListDto> - 상단 고정 항목 목록
-     * @throws Exception - 조회 중 발생할 수 있는 예외
+     * default: 상단 고정 항목 목록을 조회한다.
+     *
+     * @return List<ListDto> -- 상단 고정 항목 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     default List<ListDto> getFxdList() throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
@@ -39,16 +40,17 @@ public interface BasePostService<Dto extends BasePostDto & Identifiable<Key>, Li
     }
 
     /**
-     * default: 항목 조회수 증가
-     * 로그인 사용자 ID가 게시물 등록자와 동일할 경우 조회수는 증가하지 않습니다.
-     * @param key - 조회수를 증가시킬 항목의 키
-     * @throws Exception - 조회수 증가 중 발생할 수 있는 예외
+     * default: 항목 조회수를 1 증가시킨다.
+     *
+     * @param key 조회수를 증가시킬 항목의 키
+     * @throws Exception 조회수 증가 중 발생할 수 있는 예외
      */
     default void hitCntUp(final Key key) throws Exception {
         Entity e = this.getDtlEntity(key);
         String lgnUserId = AuthUtils.getLgnUserId();
         if (StringUtils.isEmpty(lgnUserId)) return;
         if (lgnUserId.equals(e.getRegstrId())) return;      // 본인이 쓴 글은 조회수 증가하지 않음
+
         Integer currentHitCnt = e.getHitCnt();
         e.setHitCnt(currentHitCnt + 1);
         this.updt(e);

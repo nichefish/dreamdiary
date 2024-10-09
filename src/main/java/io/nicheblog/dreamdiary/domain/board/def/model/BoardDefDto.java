@@ -13,20 +13,18 @@ import javax.validation.constraints.Size;
 /**
  * BoardDefDto
  * <pre>
- *  일반게시판 정의 정보 Dto.
- *  ※일반게시판 정의(board_def) = 일반게시판 분류. 일반게시판 게시물(board_post)을 1:N으로 관리한다.
+ *  게시판 정의 정보 Dto.
+ *  ※게시판 정의(board_def) = 게시판 분류. 게시판 게시물(board_post)을 1:N으로 관리한다.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditDto
- * @implements StateCmpstnModule
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 public class BoardDefDto
         extends BaseAuditDto
         implements Identifiable<String>, StateCmpstnModule {

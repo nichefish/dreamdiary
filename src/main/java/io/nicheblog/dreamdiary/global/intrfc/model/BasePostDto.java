@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 /**
  * BasePostDto
  * <pre>
- *  (공통/상속) 일반게시판 Dto.
+ *  (공통/상속) 게시판 Dto.
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class BasePostDto
         extends BaseClsfDto {

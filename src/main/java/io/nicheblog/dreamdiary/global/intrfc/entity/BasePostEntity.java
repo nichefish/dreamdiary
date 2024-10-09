@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.global.Constant;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
@@ -13,12 +13,11 @@ import javax.persistence.Transient;
 /**
  * BasePostEntity
  * <pre>
- *  (공통/상속) 일반게시판 속성 Entity.
+ *  (공통/상속) 게시판 속성 Entity.
  *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
- * @implements BaseClsfEntity
  */
 @MappedSuperclass
 @Getter
