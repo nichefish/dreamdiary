@@ -17,6 +17,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class BoardDefSearchParam extends BaseSearchParam {
+public class BoardDefSearchParam
+        extends BaseSearchParam {
     //
 }

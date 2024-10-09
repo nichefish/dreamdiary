@@ -7,7 +7,7 @@ import lombok.*;
 /**
  * ExptrReqstSearchParam
  * <pre>
- *  경비 관리 > 물품구매/경조사비 신청 검색 파라미터 Dto.
+ *  경비 관리 > 물품구매/경조사비 신청 검색 파라미터.
  * </pre>
  *
  * @author nichefish
@@ -21,6 +21,5 @@ public class ExptrReqstSearchParam
         extends BasePostSearchParam {
 
     /** 컨텐츠 타입 */
-    @Builder.Default
     private String contentType = ContentType.EXPTR_REQST.key;
 }
