@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.notice;
+package io.nicheblog.dreamdiary.domain.notice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,7 +9,7 @@ import lombok.*;
 /**
  * NoticeSearchParam
  * <pre>
- *  공지사항 목록 검색 파라미터 Dto
+ *  공지사항 목록 검색 파라미터 Dto.
  * </pre>
  *
  * @author nichefish
@@ -18,7 +18,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -27,7 +27,4 @@ public class NoticeSearchParam
 
     /** 컨텐츠 타입 */
     private String contentType = ContentType.NOTICE.key;
-
-    private String test;
-
 }

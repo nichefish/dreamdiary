@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.entity.notice;
+package io.nicheblog.dreamdiary.domain.notice.entity;
 
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
 import lombok.*;
@@ -15,11 +15,12 @@ import javax.persistence.*;
 /**
  * NoticeEntity
  * <pre>
- *  공지사항 Entity
+ *  공지사항 Entity.
  * </pre>
  *
  * @author nichefish
  * @extends BasePostEntity
+ * @implements CommentEmbedModule, SectnEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule
  */
 @Entity
 @Table(name = "notice")
@@ -83,19 +84,19 @@ public class NoticeEntity
 
     /* ----- */
 
-    /** 댓글 정보 모듈 (위임) */
+    /** 위임 :: 댓글 정보 모듈 */
     @Embedded
     public CommentEmbed comment;
     /** 단락 정보 모듈 (위임) */
     @Embedded
     public SectnEmbed sectn;
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     @Embedded
     public TagEmbed tag;
-    /** 조치 정보 모듈 (위임) */
+    /** 위임 :: 조치 정보 모듈 */
     @Embedded
     public ManagtEmbed managt;
-    /** 열람자 정보 모듈 (위임) */
+    /** 위임 :: 열람 정보 모듈 */
     @Embedded
     public ViewerEmbed viewer;
 }

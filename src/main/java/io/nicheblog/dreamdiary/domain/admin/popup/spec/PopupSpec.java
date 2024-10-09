@@ -1,9 +1,9 @@
-package io.nicheblog.dreamdiary.web.spec.admin;
+package io.nicheblog.dreamdiary.domain.admin.popup.spec;
 
+import io.nicheblog.dreamdiary.domain.admin.popup.entity.PopupEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
 import io.nicheblog.dreamdiary.global.intrfc.spec.embed.BaseStateSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.admin.PopupEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +19,11 @@ import java.util.Map;
 /**
  * PopupSpec
  * <pre>
- *  팝업 정보 검색인자 세팅 Specification
+ *  팝업 정보 검색인자 세팅 Specification.
  * </pre>
  *
  * @author nichefish
- * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseSpec - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Component
 @Log4j2
@@ -33,6 +33,11 @@ public class PopupSpec
 
     /**
      * 인자별로 검색 조건 세팅 :: 메소드 분리
+     * @param searchParamMap - 검색 파라미터 맵
+     * @param root - 검색할 엔티티의 Root 객체
+     * @param builder - 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return List<Predicate> - 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception - 검색 조건 생성 중 발생할 수 있는 예외
      */
     @Override
     public List<Predicate> getPredicateWithParams(

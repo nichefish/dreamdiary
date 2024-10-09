@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.admin;
+package io.nicheblog.dreamdiary.domain.admin.popup.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
@@ -16,16 +16,17 @@ import javax.validation.constraints.Size;
 /**
  * PopupDto
  * <pre>
- *  팝업 정보 관리 Dto
+ *  팝업 정보 관리 Dto.
  * </pre>
  *
  * @author nichefish
  * @extends BaseAtchDto
+ * @implements StateCmpstnModule
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class PopupDto
         extends BaseAtchDto
@@ -53,11 +54,13 @@ public class PopupDto
 
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
-    public StateCmpstn state;
-
     @Override
     public Integer getKey() {
         return null;
     }
+
+    /* ----- */
+
+    /** 위임 :: 상태 관리 모듈 */
+    public StateCmpstn state;
 }

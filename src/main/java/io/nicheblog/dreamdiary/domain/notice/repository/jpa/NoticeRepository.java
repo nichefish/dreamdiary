@@ -1,16 +1,17 @@
-package io.nicheblog.dreamdiary.web.repository.notice.jpa;
+package io.nicheblog.dreamdiary.domain.notice.repository.jpa;
 
+import io.nicheblog.dreamdiary.domain.notice.entity.NoticeEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
-import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import org.springframework.stereotype.Repository;
 
 /**
  * NoticeRepository
  * <pre>
- *  공지사항 Repository 인터페이스
+ *  공지사항 (JPA) Repository 인터페이스.
  * </pre>
  *
  * @author nichefish
+ * @extends BaseStreamRepository
  */
 @Repository("noticeRepository")
 public interface NoticeRepository

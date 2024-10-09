@@ -1,13 +1,13 @@
-package io.nicheblog.dreamdiary.web.service.notice;
+package io.nicheblog.dreamdiary.domain.notice.service;
 
+import io.nicheblog.dreamdiary.domain.notice.entity.NoticeEntity;
+import io.nicheblog.dreamdiary.domain.notice.mapstruct.NoticeMapstruct;
+import io.nicheblog.dreamdiary.domain.notice.model.NoticeDto;
+import io.nicheblog.dreamdiary.domain.notice.model.NoticeSearchParam;
+import io.nicheblog.dreamdiary.domain.notice.model.NoticeXlsxDto;
+import io.nicheblog.dreamdiary.domain.notice.repository.jpa.NoticeRepository;
+import io.nicheblog.dreamdiary.domain.notice.spec.NoticeSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
-import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.notice.NoticeMapstruct;
-import io.nicheblog.dreamdiary.web.model.notice.NoticeDto;
-import io.nicheblog.dreamdiary.web.model.notice.NoticeSearchParam;
-import io.nicheblog.dreamdiary.web.model.notice.NoticeXlsxDto;
-import io.nicheblog.dreamdiary.web.repository.notice.jpa.NoticeRepository;
-import io.nicheblog.dreamdiary.web.spec.notice.NoticeSpec;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,11 @@ import java.util.stream.Stream;
 /**
  * NoticeService
  * <pre>
- *  공지사항 서비스 모듈
+ *  공지사항 서비스 모듈.
  * </pre>
  *
  * @author nichefish
- * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BasePostService - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("noticeService")
 @RequiredArgsConstructor
@@ -48,7 +48,12 @@ public class NoticeService
         return this.noticeMapstruct;
     }
 
-    /** 엑셀 다운로드 스트림 조회 */
+    /**
+     * 엑셀 다운로드 스트림 조회
+     * @param searchParam - 검색 파라미터 객체
+     * @return Stream<NoticeXlsxDto> - 변환된 NoticeXlsxDto 스트림
+     * @throws Exception - 변환 중 발생할 수 있는 예외
+     */
     public Stream<NoticeXlsxDto> getStreamXlsxDto(NoticeSearchParam searchParam) throws Exception {
         Stream<NoticeEntity> entityStream = this.getStreamEntity(searchParam);
         return entityStream.map(e -> {

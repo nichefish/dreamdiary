@@ -21,8 +21,11 @@ public class RedisProperty {
 
     /** Redis 호스트 */
     private String host;
+
     /** Redis 포트 */
     private Integer port;
+
     /** Redis 패스워드 */
     private String password;
+
 }

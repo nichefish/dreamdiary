@@ -18,7 +18,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * RedisConfig
  * <pre>
- *  Redis 관련 Config
+ *  Redis 관련 Config.
  * </pre>
  *
  * @author nichefish
@@ -30,6 +30,7 @@ public class RedisConfig {
     private final RedisProperty redisProperty;
 
     /**
+     * 빈 등록:: redisConnectionFactory
      * redis 연결이 되지 않아도 구동되게끔 sneakyThrows
      */
     @Bean
@@ -43,6 +44,9 @@ public class RedisConfig {
         return lettuceConnectionFactory;
     }
 
+    /**
+     * 빈 등록 :: redisTemplate
+     */
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -59,7 +63,7 @@ public class RedisConfig {
     }
 
     /**
-     * redisCache
+     * 빈 등록 :: redisCacheManager
      */
     @Bean(name = "redisCacheManager")
     public CacheManager redisCacheManager() {

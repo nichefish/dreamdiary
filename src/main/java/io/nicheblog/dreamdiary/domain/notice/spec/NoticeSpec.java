@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.spec.notice;
+package io.nicheblog.dreamdiary.domain.notice.spec;
 
+import io.nicheblog.dreamdiary.domain.notice.entity.NoticeEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BasePostSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.notice.NoticeEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +15,11 @@ import java.util.Map;
 /**
  * NoticeSpec
  * <pre>
- *  공지사항 목록 검색인자 세팅 Specification
+ *  공지사항 목록 검색인자 세팅 Specification.
  * </pre>
  *
  * @author nichefish
- * @implements BaseClsfSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseClsfSpec - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Component
 @Log4j2
@@ -28,6 +28,9 @@ public class NoticeSpec
 
     /**
      * 조회 후처리:: 정렬 순서 변경
+     * @param root - 조회할 엔티티의 Root 객체
+     * @param query - CriteriaQuery 객체
+     * @param builder - CriteriaBuilder 객체
      */
     @Override
     public void postQuery(
@@ -40,6 +43,11 @@ public class NoticeSpec
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
+     * @param searchParamMap - 검색 파라미터 맵
+     * @param root - 검색할 엔티티의 Root 객체
+     * @param builder - 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return List<Predicate> - 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception - 검색 조건 생성 중 발생할 수 있는 예외
      */
     @Override
     public List<Predicate> getPredicateWithParams(

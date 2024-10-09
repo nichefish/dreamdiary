@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.admin;
+package io.nicheblog.dreamdiary.domain.admin.popup.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
@@ -71,7 +71,7 @@ public class PopupEntity
 
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
+    /** 위임 :: 상태 관리 모듈 */
     @Embedded
     public StateEmbed state;
 }
