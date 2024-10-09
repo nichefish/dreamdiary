@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * </pre>
  *
  * @author nichefish
- * @implements BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseReadonlyService - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service
 @RequiredArgsConstructor

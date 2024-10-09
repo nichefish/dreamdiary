@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.global.cmm.file.entity;
+package io.nicheblog.dreamdiary.domain._core.file.entity;
 
-import io.nicheblog.dreamdiary.global.cmm.file.mapstruct.AtchFileDtlMapstruct;
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain._core.file.mapstruct.AtchFileDtlMapstruct;
+import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,11 +16,12 @@ import javax.persistence.*;
 /**
  * AtchFileDtlEntity
  * <pre>
- *  첨부파일 상세 Entity
+ *  첨부파일 상세 Entity.
  *  ※첨부파일 상세(atch_file_dtl) = 실제 첨부파일 정보를 담고 있는 객체. 첨부파일(atch_file)에 N:1로 귀속된다.
  * </pre>
  *
  * @author nichefish
+ * @extends BaseCrudEntity
  */
 @Entity
 @Table(name = "atch_file_dtl")
@@ -79,6 +80,11 @@ public class AtchFileDtlEntity
 
     /* ----- */
 
+    /**
+     * 현재 객체를 DTO로 변환.
+     * @return AtchFileDtlDto - 변환된 객체
+     * @throws Exception - 변환 과정에서 발생할 수 있는 예외
+     */
     public AtchFileDtlDto asDto() throws Exception {
         return AtchFileDtlMapstruct.INSTANCE.toDto(this);
     }
