@@ -1,27 +1,24 @@
-package io.nicheblog.dreamdiary.web.service.log;
+package io.nicheblog.dreamdiary.domain._core.log.sys.service;
 
-import io.nicheblog.dreamdiary.global.cmm.log.entity.LogSysEntity;
-import io.nicheblog.dreamdiary.global.cmm.log.repository.jpa.LogSysRepository;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogSysDto;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.spec.LogSysSpec;
+import io.nicheblog.dreamdiary.domain._core.log.repository.jpa.LogSysRepository;
+import io.nicheblog.dreamdiary.domain._core.log.sys.entity.LogSysEntity;
+import io.nicheblog.dreamdiary.domain._core.log.sys.mapstruct.LogSysMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
-import io.nicheblog.dreamdiary.web.mapstruct.log.LogSysMapstruct;
-import io.nicheblog.dreamdiary.web.model.log.LogSysDto;
-import io.nicheblog.dreamdiary.web.spec.log.LogSysSpec;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 /**
  * LogSysService
  * <pre>
- *  시스템 로그 관리 서비스 모듈
+ *  시스템 로그 관리 서비스 모듈.
  * </pre>
  *
  * @author nichefish
- * @implements BaseReadonlyService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("logSysService")
 @RequiredArgsConstructor
-@Log4j2
 public class LogSysService
         implements BaseReadonlyService<LogSysDto.DTL, LogSysDto.LIST, Integer, LogSysEntity, LogSysRepository, LogSysSpec, LogSysMapstruct> {
 
@@ -43,5 +40,4 @@ public class LogSysService
     public LogSysMapstruct getMapstruct() {
         return this.logSysMapstruct;
     }
-
 }

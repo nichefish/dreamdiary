@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.global.cmm.log.entity;
+package io.nicheblog.dreamdiary.domain._core.log.sys.entity;
 
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * LogSysEntity
  * <pre>
- *  시스템 로그 Entity
+ *  시스템 로그 Entity.
  * </pre>
  *
  * @author nichefish
