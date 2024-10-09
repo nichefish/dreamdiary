@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 /**
  * FlsysSearchParam
  * <pre>
- *  파일시스템 목록 검색 파라미터 Dto.
+ *  파일시스템 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish

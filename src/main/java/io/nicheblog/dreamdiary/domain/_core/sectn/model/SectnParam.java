@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * SectnParam
  * <pre>
- *  단락 검색 파라미터 Dto.
+ *  단락 검색 파라미터.
  * </pre>
  *
  * @author nichefish

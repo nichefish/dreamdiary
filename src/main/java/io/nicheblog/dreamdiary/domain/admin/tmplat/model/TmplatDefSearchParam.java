@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * TmplatDefSearchParam
  * <pre>
- *  템플릿 정의 목록 검색 파라미터 Dto.
+ *  템플릿 정의 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish

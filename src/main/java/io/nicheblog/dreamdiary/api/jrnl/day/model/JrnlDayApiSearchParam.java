@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * JrnlDayApiSearchParam
  * <pre>
- *  API:: 저널 일자 검색 파라미터 Dto.
+ *  API:: 저널 일자 검색 파라미터.
  * </pre>
  *
  * @author nichefish

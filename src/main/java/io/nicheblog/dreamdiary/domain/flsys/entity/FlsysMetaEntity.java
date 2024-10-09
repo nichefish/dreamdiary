@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.entity.cmm.flsys;
+package io.nicheblog.dreamdiary.domain.flsys.entity;
 
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
 import lombok.*;
@@ -14,8 +14,9 @@ import javax.persistence.*;
 
 /**
  * FlsysMetaEntity
- * 파일시스템 메타정보 Entity
- * (BasePostEntity 상속)
+ * <pre>
+ *  파일시스템 메타정보 Entity
+ * </pre>
  *
  * @author nichefish
  */
@@ -74,19 +75,16 @@ public class FlsysMetaEntity
 
     /* ----- */
 
-    /** 댓글 정보 모듈 (위임) */
+    /** 위임 :: 댓글 정보 모듈 */
     @Embedded
     public CommentEmbed comment;
-
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     @Embedded
     public TagEmbed tag;
-
-    /** 조치 정보 모듈 (위임) */
+    /** 위임 :: 조치 정보 모듈 */
     @Embedded
     public ManagtEmbed managt;
-
-    /** 열람자 정보 모듈 (위임) */
+    /** 위임 :: 열람 정보 모듈 */
     @Embedded
     public ViewerEmbed viewer;
 }

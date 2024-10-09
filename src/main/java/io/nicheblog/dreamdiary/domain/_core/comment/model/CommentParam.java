@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * CommentSearchParam
  * <pre>
- *  댓글 검색 파라미터 Dto.
+ *  댓글 검색 파라미터.
  * </pre>
  *
  * @author nichefish
@@ -20,6 +20,5 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 public class CommentParam
         extends BaseParam {
-
     //
 }

@@ -9,11 +9,10 @@ import lombok.*;
 /**
  * NoticeSearchParam
  * <pre>
- *  공지사항 목록 검색 파라미터 Dto.
+ *  공지사항 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish
- * @extends BasePostSearchParam
  */
 @Getter
 @Setter

@@ -7,7 +7,7 @@ import lombok.*;
 /**
  * LogSysParam
  * <pre>
- *  시스템 로그 파라미터 Dto.
+ *  시스템 로그 파라미터.
  * </pre>
  *
  * @author nichefish
@@ -36,7 +36,6 @@ public class LogSysParam
     public LogSysParam(final Boolean rslt) {
         super(rslt);
     }
-
 
     /**
      * 생성자.

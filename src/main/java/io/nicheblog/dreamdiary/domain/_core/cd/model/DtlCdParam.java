@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * DtlCdParam
  * <pre>
- *  상세 코드 파라미터 Dto.
+ *  상세 코드 파라미터.
  * </pre>
  *
  * @author nichefish

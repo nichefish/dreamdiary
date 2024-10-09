@@ -9,11 +9,10 @@ import java.util.List;
 /**
  * MenuParam
  * <pre>
- *  메뉴 검색 파라미터 Dto.
+ *  메뉴 검색 파라미터.
  * </pre>
  *
  * @author nichefish
- * @extends BaseParam
  */
 @Getter
 @Setter
@@ -25,6 +24,6 @@ import java.util.List;
 public class MenuParam
         extends BaseParam {
 
-    /** 정렬 순서 */
+    /** 정렬 순서 배열 */
     List<MenuDto> sortOrdr;
 }

@@ -10,11 +10,10 @@ import javax.validation.constraints.Size;
 /**
  * MenuSearchParam
  * <pre>
- *  메뉴 목록 검색 파라미터 Dto.
+ *  메뉴 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish
- * @implements BaseSearchParam
  */
 @Getter
 @Setter

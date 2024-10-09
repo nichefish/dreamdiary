@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * ClCdParam
  * <pre>
- *  분류 코드 파라미터 Dto.
+ *  분류 코드 파라미터.
  * </pre>
  *
  * @author nichefish

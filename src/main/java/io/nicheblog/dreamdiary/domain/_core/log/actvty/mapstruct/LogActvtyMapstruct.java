@@ -1,10 +1,10 @@
-package io.nicheblog.dreamdiary.web.mapstruct.log;
+package io.nicheblog.dreamdiary.domain._core.log.actvty.mapstruct;
 
-import io.nicheblog.dreamdiary.global.cmm.log.entity.LogActvtyEntity;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.entity.LogActvtyEntity;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.model.log.LogActvtyDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -12,11 +12,10 @@ import org.mapstruct.factory.Mappers;
 /**
  * LogActvtyMapstruct
  * <pre>
- *  활동 로그 MapStruct 기반 Mapper 인터페이스
+ *  활동 로그 MapStruct 기반 Mapper 인터페이스.
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class}, builder = @Builder(disableBuilder = true))
 public interface LogActvtyMapstruct
@@ -26,6 +25,9 @@ public interface LogActvtyMapstruct
 
     /**
      * Entity -> Dto
+     * @param entity - 변환할 Entity 객체
+     * @return Dto - 변환된 Dto 객체
+     * @throws Exception - 변환 중 발생할 수 있는 예외
      */
     @Override
     @Named("toDto")
@@ -34,6 +36,9 @@ public interface LogActvtyMapstruct
 
     /**
      * Entity -> ListDto
+     * @param entity - 변환할 Entity 객체
+     * @return ListDto - 변환된 ListDto 객체
+     * @throws Exception - 변환 중 발생할 수 있는 예외
      */
     @Override
     @Named("toListDto")

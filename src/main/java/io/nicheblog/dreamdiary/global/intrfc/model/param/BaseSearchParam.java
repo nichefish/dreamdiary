@@ -9,11 +9,10 @@ import javax.validation.constraints.Size;
 /**
  * BaseSearchParam
  * <pre>
- *  (공통/상속) 검색 파라미터 Dto.
+ *  (공통/상속) 검색 파라미터.
  * </pre>
  *
  * @author nichefish
- * @extends BaseParam
  */
 @Getter
 @Setter

@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 /**
  * TagSearchParam
  * <pre>
- *  태그 검색 파라미터 Dto.
+ *  태그 검색 파라미터.
  * </pre>
  *
  * @author nichefish

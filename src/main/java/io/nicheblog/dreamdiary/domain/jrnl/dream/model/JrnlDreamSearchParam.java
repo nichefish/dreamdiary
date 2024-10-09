@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * JrnlDreamSearchParam
  * <pre>
- *  저널 꿈 목록 검색 파라미터 Dto.
+ *  저널 꿈 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish

@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * ClCdSearchParam
  * <pre>
- *  분류 코드 목록 검색 파라미터 Dto.
+ *  분류 코드 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish
@@ -20,6 +20,5 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 public class ClCdSearchParam
         extends BaseSearchParam {
-
     //
 }

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.cmm.flsys;
+package io.nicheblog.dreamdiary.domain.flsys.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
@@ -14,11 +14,10 @@ import javax.validation.constraints.Positive;
 /**
  * FlsysMetaDto
  * <pre>
- *  파일시스템 메타 Dto
+ *  파일시스템 메타 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BasePostDto
  */
 @Getter
 @Setter
@@ -51,11 +50,6 @@ public class FlsysMetaDto
         return "flsysMeta";
     }
 
-    @Override
-    public Integer getKey() {
-        return this.postNo;
-    }
-
     /* ----- */
 
     public static class DTL extends FlsysMetaDto {
@@ -68,12 +62,17 @@ public class FlsysMetaDto
 
     /* ----- */
 
-    /** 댓글 정보 모듈 (위임) */
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
+
+    /** 위임 :: 댓글 정보 모듈 */
     public CommentCmpstn comment;
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     public TagCmpstn tag;
-    /** 조치 정보 모듈 (위임) */
+    /** 위임 :: 조치 정보 모듈 */
     public ManagtCmpstn managt;
-    /** 열람자 정보 모듈 (위임) */
+    /** 위임 :: 열람 정보 모듈 */
     public ViewerCmpstn viewer;
 }

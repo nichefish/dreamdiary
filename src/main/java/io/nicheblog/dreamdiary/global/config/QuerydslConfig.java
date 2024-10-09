@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 /**
  * QuerydslConfig
  * <pre>
- *  Querydsl 관련 설정 커스터마이즈
+ *  Querydsl 관련 설정 커스터마이즈.
  * </pre>
  *
  * @author nichefish
@@ -23,6 +23,9 @@ public class QuerydslConfig
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * 빈 등록:: jpaQueryFactory
+     */
     @Bean
     public JPAQueryFactory jpaQueryFactory(){
         return new JPAQueryFactory(entityManager);

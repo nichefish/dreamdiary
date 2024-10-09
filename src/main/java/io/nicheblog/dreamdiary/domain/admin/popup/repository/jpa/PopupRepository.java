@@ -7,15 +7,13 @@ import org.springframework.stereotype.Repository;
 /**
  * PopupRepository
  * <pre>
- *  팝업 관리 Repository.
+ *  팝업 관리 (JPA) Repository 인터페이스.
  * </pre>
  *
  * @author nichefish
- * @extends BaseStreamRepository
  */
 @Repository("popupRepository")
 public interface PopupRepository
         extends BaseStreamRepository<PopupEntity, Integer> {
-
     //
 }

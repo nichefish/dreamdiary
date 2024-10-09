@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * JrnlSumrySearchParam
  * <pre>
- *  저널 결산 목록 검색 파라미터 Dto.
+ *  저널 결산 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish

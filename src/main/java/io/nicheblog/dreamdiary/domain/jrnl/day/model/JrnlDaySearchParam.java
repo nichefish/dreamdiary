@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * JrnlDaySearchParam
  * <pre>
- *  저널 일자 목록 검색 파라미터 Dto.
+ *  저널 일자 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish
@@ -23,6 +23,7 @@ public class JrnlDaySearchParam
 
     /** 년도 */
     private Integer yy;
+
     /** 월 */
     private Integer mnth;
 

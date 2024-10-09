@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 /**
  * BaseParam
  * <pre>
- *  (공통/상속) 파라미터 Dto.
+ *  (공통/상속) 파라미터.
  * </pre>
  *
  * @author nichefish

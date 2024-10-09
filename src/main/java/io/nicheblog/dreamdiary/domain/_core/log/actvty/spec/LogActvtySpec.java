@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.web.spec.log;
+package io.nicheblog.dreamdiary.domain._core.log.actvty.spec;
 
-import io.nicheblog.dreamdiary.global.cmm.log.entity.LogActvtyEntity;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.entity.LogActvtyEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.extern.log4j.Log4j2;
@@ -18,11 +18,10 @@ import java.util.Map;
 /**
  * LogActvtySpec
  * <pre>
- *  활동 로그 목록 검색인자 세팅 Specification
+ *  활동 로그 목록 검색인자 세팅 Specification.
  * </pre>
  *
  * @author nichefish
- * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Component
 @Log4j2
@@ -31,6 +30,11 @@ public class LogActvtySpec
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
+     * @param searchParamMap - 검색 파라미터 맵
+     * @param root - 검색할 엔티티의 Root 객체
+     * @param builder - 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return List<Predicate> - 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception - 검색 조건 생성 중 발생할 수 있는 예외
      */
     @Override
     public List<Predicate> getPredicateWithParams(

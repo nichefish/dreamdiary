@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * LogSysSearchParam
  * <pre>
- *  시스템 로그 목록 검색 파라미터 Dto.
+ *  시스템 로그 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish

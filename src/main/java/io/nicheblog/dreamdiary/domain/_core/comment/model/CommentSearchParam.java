@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 /**
  * CommentSearchParam
  * <pre>
- *  댓글 검색 파라미터 Dto.
+ *  댓글 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish
