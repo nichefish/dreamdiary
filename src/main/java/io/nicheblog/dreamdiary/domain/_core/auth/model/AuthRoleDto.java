@@ -45,6 +45,6 @@ public class AuthRoleDto
         return this.authCd;
     }
 
-    /** 상태 관리 모듈 (위임) */
+    /** 위임 :: 상태 관리 모듈 */
     public StateCmpstn state;
 }

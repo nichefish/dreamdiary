@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.cmm;
+package io.nicheblog.dreamdiary.global.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -6,14 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
 /**
  * BaseJstreeDto
  * <pre>
- *  Jstree Dto
+ *  (공통) Jstree Dto.
  * </pre>
  *
  * @author nichefish
@@ -23,7 +22,6 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Log4j2
 public class BaseJstreeDto {
 
     /** 노드 고유 ID */
@@ -48,14 +46,25 @@ public class BaseJstreeDto {
 
     /* ----- */
 
+    /**
+     * 노드의 "열림" 상태를 설정하는 메서드.
+     */
     public void setOpenedState() {
         if (this.state == null) this.state = new BaseJstreeStateDto();
         this.state.setOpened(true);
     }
+
+    /**
+     * 노드의 "선택" 상태를 설정하는 메서드.
+     */
     public void setSelectedState() {
         if (this.state == null) this.state = new BaseJstreeStateDto();
         this.state.setSelected(true);
     }
+
+    /**
+     * 노드의 "열림" + "선택" 상태를 설정하는 메서드.
+     */
     public void setOpenedAndSelectedState() {
         if (this.state == null) this.state = new BaseJstreeStateDto();
         this.state.setOpened(true);

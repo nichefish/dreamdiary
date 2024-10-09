@@ -1,6 +1,5 @@
-package io.nicheblog.dreamdiary.web.model.admin;
+package io.nicheblog.dreamdiary.domain._core.cd.model;
 
-import io.nicheblog.dreamdiary.global.cmm.cd.model.ClCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -10,17 +9,16 @@ import java.util.List;
 /**
  * ClCdParam
  * <pre>
- *  분류코드 파라미터 Dto
+ *  분류 코드 파라미터 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BaseSearchParam
  */
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class ClCdParam
         extends BaseParam {

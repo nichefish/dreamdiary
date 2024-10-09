@@ -7,7 +7,7 @@
 
 <@modal.layout id="cl_cd_dtl" size="xl">
     <#--begin::Modal Header-->
-    <@component.modal_header "분류코드 조회" />
+    <@component.modal_header "분류 코드 조회" />
     <#--begin::Modal Body-->
     <div class="modal-body modal-mbl-body my-5">
         <div id="cl_cd_dtl_div">

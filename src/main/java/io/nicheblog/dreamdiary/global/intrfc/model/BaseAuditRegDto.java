@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class BaseAuditRegDto
         extends BaseCrudDto {

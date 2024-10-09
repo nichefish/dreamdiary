@@ -10,9 +10,9 @@
     <div>
         <#--헤더:: 인풋: searchType-->
         <select name="searchType" id="searchType" class="form-select form-select-sm form-select-solid">
-            <option value="clCd" ${fn.selected(searchParam.searchType!, "clCd")}>분류코드</option>
-            <option value="clCdNm" ${fn.selected(searchParam.searchType!, "clCdNm")}>분류코드명</option>
-            <option value="dc" ${fn.selected(searchParam.searchType!, "dc")}>분류코드 설명</option>
+            <option value="clCd" ${fn.selected(searchParam.searchType!, "clCd")}>분류 코드</option>
+            <option value="clCdNm" ${fn.selected(searchParam.searchType!, "clCdNm")}>분류 코드명</option>
+            <option value="dc" ${fn.selected(searchParam.searchType!, "dc")}>분류 코드 설명</option>
         </select>
     </div>
     <div>

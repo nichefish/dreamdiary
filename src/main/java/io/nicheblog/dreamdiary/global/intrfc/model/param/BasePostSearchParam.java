@@ -2,6 +2,9 @@ package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
 import lombok.*;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * BasePostSearchParam
  * <pre>
@@ -14,7 +17,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class BasePostSearchParam
         extends BaseClsfSearchParam {
@@ -29,8 +32,12 @@ public class BasePostSearchParam
     protected String ctgrCd;
 
     /** 중요 여부 (Y/N) */
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     protected String imprtcYn;
 
     /** 상단고정 여부 (Y/N) */
+    @Size(min = 1, max = 1)
+    @Pattern(regexp = "^[YN]$")
     protected String fxdYn;
 }

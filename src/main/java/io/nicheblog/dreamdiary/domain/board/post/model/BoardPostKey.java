@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.board;
+package io.nicheblog.dreamdiary.domain.board.post.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import lombok.*;
@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * BoardPostKey
  * <pre>
- *  일반게시판 복합키 Dto
+ *  일반게시판 복합키 Dto.
  *  (일반게시판 한정하여 contentType = boardCd)
  * </pre>
  *
@@ -35,7 +35,7 @@ public class BoardPostKey
     /* ----- */
 
     /**
-     * BoardPostKey -> BaseClsfKey 변환 
+     * Getter :: BoardPostKey -> BaseClsfKey 변환
      */    
     public BaseClsfKey getClsfKey() {
         return new BaseClsfKey(this.postNo, this.boardCd);

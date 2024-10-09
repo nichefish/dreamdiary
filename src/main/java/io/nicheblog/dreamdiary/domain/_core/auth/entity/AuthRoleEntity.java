@@ -66,7 +66,7 @@ public class AuthRoleEntity
 
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
+    /** 위임 :: 상태 관리 모듈 */
     @Embedded
     public StateEmbed state;
 }

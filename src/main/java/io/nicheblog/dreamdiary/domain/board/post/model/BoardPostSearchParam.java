@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.board;
+package io.nicheblog.dreamdiary.domain.board.post.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 /**
  * BoardPostSearchParam
  * <pre>
- *  일반게시판 게시물 검색 파라미터 Dto
+ *  일반게시판 게시물 검색 파라미터 Dto.
  * </pre>
  *
  * @author nichefish
@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class BoardPostSearchParam
         extends BasePostSearchParam {
@@ -30,7 +30,7 @@ public class BoardPostSearchParam
     /* ----- */
 
     /** 
-     * 게시판 코드 <-> 컨텐츠 타입 변환 
+     * Getter :: 게시판 코드 <-> 컨텐츠 타입 변환
      */
     public String getBoardCd() {
         if (StringUtils.isEmpty(boardCd)) return this.getContentType();

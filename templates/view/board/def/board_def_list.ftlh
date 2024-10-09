@@ -55,7 +55,7 @@
                 <tr class="text-start fw-bolder fs-7 text-uppercase gs-0 text-muted">
                     <th class="col-1 text-center wb-keepall w-5 hidden-table">번호</th>
                     <th class="col-lg-3 col-8 text-center wb-keepall">게시판 코드</th>
-                    <th class="col-1 text-center wb-keepall w-15">글분류코드</th>
+                    <th class="col-1 text-center wb-keepall w-15">글분류 코드</th>
                     <th class="col-4 text-center wb-keepall">게시판 설명</th>
                     <th class="col-1 text-center wb-keepall w-10">글 갯수</th>
                     <th class="col-1 text-center wb-keepall w-5">사용 여부</th>

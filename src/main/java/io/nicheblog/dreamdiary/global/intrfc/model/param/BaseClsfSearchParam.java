@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class BaseClsfSearchParam
         extends BaseSearchParam {

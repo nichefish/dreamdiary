@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.web.spec.admin;
+package io.nicheblog.dreamdiary.domain._core.cd.spec;
 
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.ClCdEntity;
+import io.nicheblog.dreamdiary.domain._core.cd.entity.ClCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.embed.BaseStateSpec;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -16,12 +16,12 @@ import java.util.Map;
 /**
  * ClCdSpec
  * <pre>
- *  분류코드 검색인자 세팅 Specification
- *  ※분류코드(cl_cd) = 상위 분류코드. 상세코드(dtl_cd)를 1:N 묶음으로 관리한다.
+ *  분류 코드 검색인자 세팅 Specification.
+ *  ※분류 코드(cl_cd) = 상위 분류 코드. 상세 코드(dtl_cd)를 1:N 묶음으로 관리한다.
  * </pre>
  *
  * @author nichefish
- * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BaseSpec - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Component
 @Log4j2
@@ -30,6 +30,11 @@ public class ClCdSpec
 
     /**
      * 인자별로 구체적인 검색 조건 세팅
+     * @param searchParamMap - 검색 파라미터 맵
+     * @param root - 검색할 엔티티의 Root 객체
+     * @param builder - 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return List<Predicate> - 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception - 검색 조건 생성 중 발생할 수 있는 예외
      */
     public List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
