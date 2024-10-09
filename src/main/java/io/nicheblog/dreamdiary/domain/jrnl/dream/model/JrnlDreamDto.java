@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.jrnl.dream;
+package io.nicheblog.dreamdiary.domain.jrnl.dream.model;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
@@ -22,14 +22,12 @@ import java.util.Date;
  * </pre>
  *
  * @author nichefish
- * @extends BasePostDto
- * @implements CommentCmpstnModule, TagCmpstnModule
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class JrnlDreamDto
         extends BasePostDto
@@ -82,11 +80,6 @@ public class JrnlDreamDto
 
     /* ----- */
 
-    @Override
-    public Integer getKey() {
-        return this.postNo;
-    }
-
     /**
      * 날짜 오름차순 정렬
      */
@@ -98,10 +91,13 @@ public class JrnlDreamDto
         return thisDate.compareTo(otherDate);
     }
 
-    /* ----- */
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
 
-    /** 댓글 정보 모듈 (위임) */
+    /** 위임 :: 댓글 정보 모듈 */
     public CommentCmpstn comment;
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     public TagCmpstn tag;
 }

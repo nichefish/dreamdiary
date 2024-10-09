@@ -1,12 +1,12 @@
-package io.nicheblog.dreamdiary.web.entity.jrnl.day;
+package io.nicheblog.dreamdiary.domain.jrnl.day.entity;
 
+import io.nicheblog.dreamdiary.domain.jrnl.diary.entity.JrnlDiaryEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamEntity;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbedModule;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -27,7 +27,6 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudEntity
  */
 @Entity
 @Table(name = "jrnl_day")
@@ -133,7 +132,7 @@ public class JrnlDayEntity
 
     /* ----- */
 
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     @Embedded
     public TagEmbed tag;
 }

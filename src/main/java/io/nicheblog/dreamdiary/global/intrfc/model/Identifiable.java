@@ -1,18 +1,18 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
 /**
- * BaseAtchDto
+ * Identifiable
  * <pre>
- *  (공통/상속) 첨부파일 소유 Dto (첨부파일 정보 추가)
+ *  (공통/상속) 식별키 조회 인터페이스
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditDto
  */
 public interface Identifiable<KeyType> {
 
     /**
      * 키 반환 메소드 (각 dto에서 구현)
+     * @return KeyType - 해당 DTO의 고유 키를 나타내는 KeyType 객체
      */
     KeyType getKey();
 }

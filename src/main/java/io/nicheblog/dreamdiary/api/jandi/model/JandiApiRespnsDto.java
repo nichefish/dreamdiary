@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.api.jandi.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nicheblog.dreamdiary.api.cmm.model.BaseApiRespns;
+import io.nicheblog.dreamdiary.api._core.model.BaseApiRespns;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * JandiApiRespnsDto
  * <pre>
- *  API:: JANDI:: API 호출 응답 반환 Dto
+ *  API:: JANDI:: API 호출 응답 반환 Dto.
  * </pre>
  *
  * @author nichefish
@@ -28,9 +28,7 @@ public class JandiApiRespnsDto
 
     // 기본 attribute (result, code, status, message) 상속
 
-    /**
-     * message (jsonProperty 재정의)
-     */
+    /** message (jsonProperty 재정의) */
     @JsonProperty("msg")
     private String message;
 }

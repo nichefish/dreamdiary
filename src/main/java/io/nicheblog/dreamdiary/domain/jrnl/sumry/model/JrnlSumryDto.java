@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.jrnl.sumry;
+package io.nicheblog.dreamdiary.domain.jrnl.sumry.model;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
@@ -17,14 +17,12 @@ import javax.validation.constraints.Size;
  * </pre>
  *
  * @author nichefish
- * @extends BasePostDto
- * @implements CommentCmpstnModule, TagCmpstnModule
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class JrnlSumryDto
         extends BasePostDto
@@ -58,16 +56,11 @@ public class JrnlSumryDto
     @Pattern(regexp = "^[YN]$")
     private String dreamComptYn = "N";
 
-    @Override
-    public Integer getKey() {
-        return this.postNo;
-    }
-
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static class DTL extends JrnlSumryDto {
         //
@@ -77,7 +70,7 @@ public class JrnlSumryDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static class LIST extends JrnlSumryDto {
         //
@@ -85,10 +78,14 @@ public class JrnlSumryDto
 
     /* ----- */
 
-    /** 댓글 정보 모듈 (위임) */
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
+    /** 위임 :: 댓글 정보 모듈 */
     public CommentCmpstn comment;
     /** 단락 정보 모듈 (위임) */
     public SectnCmpstn sectn;
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     public TagCmpstn tag;
 }

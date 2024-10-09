@@ -2,26 +2,23 @@ package io.nicheblog.dreamdiary.api.jrnl.day.service;
 
 import io.nicheblog.dreamdiary.api.jrnl.day.mapstruct.JrnlDayApiMapstruct;
 import io.nicheblog.dreamdiary.api.jrnl.day.model.JrnlDayApiDto;
+import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDayEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.day.repository.jpa.JrnlDayRepository;
+import io.nicheblog.dreamdiary.domain.jrnl.day.spec.JrnlDaySpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
-import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
-import io.nicheblog.dreamdiary.web.repository.jrnl.day.jpa.JrnlDayRepository;
-import io.nicheblog.dreamdiary.web.spec.jrnl.day.JrnlDaySpec;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 /**
  * JrnlDayApiService
  * <pre>
- *  API:: 저널 일자 관리 서비스 모듈
+ *  API:: 저널 일자 관리 서비스 모듈.
  * </pre>
  *
  * @author nichefish
- * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class JrnlDayApiService
         implements BaseMultiCrudService<JrnlDayApiDto, JrnlDayApiDto, Integer, JrnlDayEntity, JrnlDayRepository, JrnlDaySpec, JrnlDayApiMapstruct> {
 

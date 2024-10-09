@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * JrnlDayApiSearchParam
  * <pre>
- *  API:: 저널 일자 검색 파라미터 Dto
+ *  API:: 저널 일자 검색 파라미터 Dto.
  * </pre>
  *
  * @author nichefish
@@ -16,15 +16,14 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class JrnlDayApiSearchParam
         extends BaseSearchParam {
 
     /** 글분류 코드 */
     private String ctgrCd;
+
     /** 제목 */
     private String title;
-
-
 }

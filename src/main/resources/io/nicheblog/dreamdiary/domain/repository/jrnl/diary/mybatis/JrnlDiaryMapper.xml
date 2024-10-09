@@ -1,8 +1,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.nicheblog.dreamdiary.web.repository.jrnl.diary.mybatis.JrnlDiaryMapper">
-    <select id="getDeletedByPostNo" resultType="io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto">
+<mapper namespace="io.nicheblog.dreamdiary.domain.jrnl.diary.repository.mybatis.JrnlDiaryMapper">
+    <select id="getDeletedByPostNo" resultType="io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto">
         SELECT
             diary.post_no AS postNo,
             diary.jrnl_day_no AS jrnlDayNo,

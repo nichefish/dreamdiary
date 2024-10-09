@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.entity.jrnl.sbjct;
+package io.nicheblog.dreamdiary.domain.jrnl.sbjct.entity;
 
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -19,7 +19,6 @@ import javax.persistence.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudEntity
  */
 @Entity
 @Table(name = "jrnl_sbjct")
@@ -60,5 +59,4 @@ public class JrnlSbjctSmpEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("저널 주제 글분류 코드 정보")
     private DtlCdEntity ctgrCdInfo;
-
 }
