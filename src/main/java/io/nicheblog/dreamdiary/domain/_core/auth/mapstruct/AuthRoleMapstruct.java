@@ -15,7 +15,6 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class})
 public interface AuthRoleMapstruct
@@ -45,8 +44,8 @@ public interface AuthRoleMapstruct
 
     /**
      * Dto -> Entity
-     * @param dto - 변환할 AtchFileDtlDto 객체
-     * @return Entity - 변환된 AtchFileDtlEntity 객체
+     * @param dto - 변환할 Dto 객체
+     * @return Entity - 변환된 Entity 객체
      * @throws Exception - 변환 중 발생할 수 있는 예외
      */
     @Override

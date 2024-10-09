@@ -1,0 +1,38 @@
+package io.nicheblog.dreamdiary.domain.jrnl.sumry.service;
+
+import io.nicheblog.dreamdiary.domain._core.cache.service.CacheEvictor;
+import io.nicheblog.dreamdiary.domain.jrnl.sumry.entity.JrnlSumryEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.sumry.model.JrnlSumryDto;
+import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
+import org.springframework.stereotype.Component;
+
+/**
+ * JrnlSumryCacheEvictor
+ * <p>
+ *  저널 결산 관련 캐시 evictor
+ * </p>
+ *
+ * @author nichefish
+ */
+@Component
+public class JrnlSumryCacheEvictor
+        implements CacheEvictor<Integer> {
+
+    /**
+     * 관련 Cache Evict
+     * @param key - 캐시에서 삭제할 대상 키
+     * @throws Exception - 캐시 삭제 과정에서 발생할 수 있는 예외
+     */
+    @Override
+    public void evict(final Integer key) throws Exception {
+        // 목록 캐시 초기화
+        EhCacheUtils.evictCacheAll("jrnlSumryList");
+        EhCacheUtils.evictCacheAll("jrnlTotalSumry");
+        // 상세 캐시 초기화
+        EhCacheUtils.evictCache("jrnlSumryDtl", key);
+        JrnlSumryDto jrnlSumry = (JrnlSumryDto) EhCacheUtils.getObjectFromCache("jrnlSumryDtl", key);
+        if (jrnlSumry != null) EhCacheUtils.evictCache("jrnlSumryDtlByYy", jrnlSumry.getYy());
+        // L2캐시 처리
+        EhCacheUtils.clearL2Cache(JrnlSumryEntity.class);
+    }
+}

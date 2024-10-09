@@ -28,7 +28,6 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -45,7 +44,10 @@ public class AdminController
 
     /**
      * 사이트 관리 > 사이트 관리 화면 조회
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     * @param logParam - 활동 로그를 기록하기 위한 로그 파라미터
+     * @param model - 뷰에 전달할 데이터를 저장하는 ModelMap 객체
+     * @return view - 사이트 관리 화면의 뷰 이름을 나타내는 문자열
      */
     @GetMapping(Url.ADMIN_PAGE)
     @Secured(Constant.ROLE_MNGR)
@@ -81,7 +83,10 @@ public class AdminController
 
     /**
      * 사이트 관리 > 테스트 페이지
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     * @param logParam - 활동 로그를 기록하기 위한 로그 파라미터
+     * @param model - 뷰에 전달할 데이터를 저장하는 ModelMap 객체
+     * @return view - 사이트 관리 화면의 뷰 이름을 나타내는 문자열
      */
     @GetMapping(Url.ADMIN_TEST)
     @Secured(Constant.ROLE_MNGR)

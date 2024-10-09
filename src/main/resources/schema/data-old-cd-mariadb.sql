@@ -5,9 +5,9 @@
 
 -- -----------------------
 
--- (구) 필수 :: 휴가 분류코드 추가
+-- (구) 필수 :: 휴가 분류 코드 추가
 REPLACE INTO cmm_cl_cd (CL_CD, CL_CD_NM, CL_CD_DC) VALUES ('VCATN_CD', '휴가', '휴가');
--- (구) 필수 :: 휴가 상세코드 추가
+-- (구) 필수 :: 휴가 상세 코드 추가
 REPLACE INTO cmm_dtl_cd (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('VCATN_CD', 'ANNUAL', '연차', '연차', '1');
 REPLACE INTO cmm_dtl_cd (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('VCATN_CD', 'AM_HALF', '오전반차', '오전반차', '2');
 REPLACE INTO cmm_dtl_cd (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('VCATN_CD', 'PM_HALF', '오후반차', '오후반차', '3');
@@ -18,9 +18,9 @@ REPLACE INTO cmm_dtl_cd (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES 
 
 -- -----------------------
 
--- (구) 필수 :: 지출 분류코드 추가
+-- (구) 필수 :: 지출 분류 코드 추가
 REPLACE INTO cmm_cl_cd (CL_CD, CL_CD_NM, CL_CD_DC) VALUES ('EXPTR_CD', '휴가', '휴가');
--- (구) 필수 :: 지출 상세코드 추가
+-- (구) 필수 :: 지출 상세 코드 추가
 REPLACE INTO cmm_dtl_cd (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('EXPTR_CD', 'TRVL', '여비교통비', '여비교통비', '1');
 
 -- -----------------------

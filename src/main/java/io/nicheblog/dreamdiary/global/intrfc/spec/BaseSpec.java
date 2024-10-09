@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * BaseSpec
  * <pre>
- *  (공통/상속) 검색인자 세팅 Specification 인터페이스
+ *  (공통/상속) 검색인자 세팅 Specification 인터페이스.
  * </pre>
  *
  * @author nichefish
@@ -23,6 +23,8 @@ public interface BaseSpec<Entity> {
 
     /**
      * default: 검색 조건 목록 반환
+     * @param searchParamMap - 검색 파라미터 맵
+     * @return Specification<Entity> - 검색 조건에 맞는 Specification 객체
      */
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
         // filter
@@ -43,6 +45,11 @@ public interface BaseSpec<Entity> {
 
     /**
      * default: 인자별로 구체적인 검색 조건 세팅
+     * @param searchParamMap - 검색 파라미터 맵
+     * @param root - 검색할 엔티티의 Root 객체
+     * @param builder - 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return List<Predicate> - 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception - 검색 조건 생성 중 발생할 수 있는 예외
      */
     default List<Predicate> getPredicateWithParams(
             final Map<String, Object> searchParamMap,
@@ -65,6 +72,10 @@ public interface BaseSpec<Entity> {
 
     /**
      * default: 조회 후처리 (정렬 순서 변경, distinct 등)
+     * @param root - 조회 대상 엔티티의 Root 객체
+     * @param query - CriteriaQuery 객체, 조회 결과에 대한 쿼리 정의
+     * @param builder - CriteriaBuilder 객체, 조회 조건을 설정하는 데 사용
+     * @param searchParamMap - 검색 조건을 담은 파라미터 맵
      */
     default void postQuery(
             final Root<Entity> root,
@@ -78,6 +89,9 @@ public interface BaseSpec<Entity> {
 
     /**
      * default: 조회 후처리 (정렬 순서 변경, distinct 등)
+     * @param root - 조회 대상 엔티티의 Root 객체
+     * @param query - CriteriaQuery 객체로, 조회 결과를 정의하는 데 사용됩니다.
+     * @param builder - CriteriaBuilder 객체로, 쿼리 조건을 설정하는 데 사용됩니다.
      */
     default void postQuery(
             final Root<Entity> root,
@@ -89,6 +103,12 @@ public interface BaseSpec<Entity> {
 
     /**
      * IPv4/CIDR 검색 조건 세팅 :: 메소드 분리
+     * @param key - 검색할 컬럼의 이름
+     * @param ipStr - 검색할 IP 주소 또는 CIDR 형식의 문자열
+     * @param root - 검색 대상 엔티티의 Root 객체
+     * @param builder - CriteriaBuilder 객체로, 쿼리 조건을 설정하는 데 사용됩니다.
+     * @return Predicate - IP 주소에 대한 검색 조건을 나타내는 Predicate 객체
+     * @throws Exception - 서브넷 계산 중 발생할 수 있는 예외
      */
     private Predicate getIpPredicate(
             final String key,

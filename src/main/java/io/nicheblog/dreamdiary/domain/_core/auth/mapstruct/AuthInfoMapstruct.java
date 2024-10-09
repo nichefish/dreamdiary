@@ -19,7 +19,6 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseMapstruct:: 기본 변환 매핑 로직 상속
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, UserProflMapstruct.class})
 public interface AuthInfoMapstruct

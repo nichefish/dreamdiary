@@ -1,9 +1,8 @@
-package io.nicheblog.dreamdiary.domain._core.comment.mapstruct;
+package io.nicheblog.dreamdiary.domain.exptr.reqst.mapstruct;
 
-import io.nicheblog.dreamdiary.domain._core.comment.entity.CommentEntity;
-import io.nicheblog.dreamdiary.domain._core.comment.model.CommentDto;
+import io.nicheblog.dreamdiary.domain.exptr.reqst.entity.ExptrReqstEntity;
+import io.nicheblog.dreamdiary.domain.exptr.reqst.model.ExptrReqstDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BasePostMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.embed.CommentEmbedMapstruct;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -11,18 +10,18 @@ import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 /**
- * CommentMapstruct
+ * ExptrReqstMapstruct
  * <pre>
- *  댓글 MapStruct 기반 Mapper 인터페이스.
+ *  물품구매/경조사비 신청 MapStruct 기반 Mapper 인터페이스.
  * </pre>
  *
  * @author nichefish
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CmmUtils.class, CommentEmbedMapstruct.class}, builder = @Builder(disableBuilder = true))
-public interface CommentMapstruct
-        extends BasePostMapstruct<CommentDto, CommentDto, CommentEntity> {
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
+public interface ExptrReqstMapstruct
+        extends BasePostMapstruct<ExptrReqstDto.DTL, ExptrReqstDto.LIST, ExptrReqstEntity> {
 
-    CommentMapstruct INSTANCE = Mappers.getMapper(CommentMapstruct.class);
+    ExptrReqstMapstruct INSTANCE = Mappers.getMapper(ExptrReqstMapstruct.class);
 
     /**
      * Entity -> Dto
@@ -33,7 +32,7 @@ public interface CommentMapstruct
     @Override
     @Named("toDto")
     @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
-    CommentDto toDto(final CommentEntity entity) throws Exception;
+    ExptrReqstDto.DTL toDto(final ExptrReqstEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
@@ -41,10 +40,9 @@ public interface CommentMapstruct
      * @return ListDto - 변환된 ListDto 객체
      * @throws Exception - 변환 중 발생할 수 있는 예외
      */
-    @Override
     @Named("toListDto")
     @Mapping(target = "markdownCn", expression = "java(StringUtils.isEmpty(entity.getCn()) ? \"-\" : CmmUtils.markdown(entity.getCn()))")
-    CommentDto toListDto(final CommentEntity entity) throws Exception;
+    ExptrReqstDto.LIST toListDto(final ExptrReqstEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
@@ -53,8 +51,7 @@ public interface CommentMapstruct
      * @throws Exception - 변환 중 발생할 수 있는 예외
      */
     @Override
-    @Named("toEntity")
-    CommentEntity toEntity(final CommentDto dto) throws Exception;
+    ExptrReqstEntity toEntity(final ExptrReqstDto.DTL dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
@@ -64,5 +61,5 @@ public interface CommentMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(final CommentDto dto, final @MappingTarget CommentEntity entity) throws Exception;
+    void updateFromDto(final ExptrReqstDto.DTL dto, final @MappingTarget ExptrReqstEntity entity) throws Exception;
 }

@@ -1,25 +1,25 @@
-package io.nicheblog.dreamdiary.domain._core.file.mapstruct;
+package io.nicheblog.dreamdiary.domain._core.cd.mapstruct;
 
-import io.nicheblog.dreamdiary.domain._core.file.entity.AtchFileDtlEntity;
-import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.domain._core.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 /**
- * AtchFileDtlMapstruct
+ * DtlCdMapstruct
  * <pre>
- *  첨부파일 상세 MapStruct 기반 Mapper 인터페이스.
- *  ※첨부파일 상세(atch_file_dtl) = 실제 첨부파일 정보를 담고 있는 객체. 첨부파일(atch_file)에 N:1로 귀속된다.
+ *  상세 코드 관리 MapStruct 기반 Mapper 인터페이스.
+ *  ※상세 코드(dtl_cd) = 분류 코드 하위의 상세 코드. 분류 코드(cl_cd)에 N:1로 귀속된다.
  * </pre>
  *
  * @author nichefish
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface AtchFileDtlMapstruct
-        extends BaseCrudMapstruct<AtchFileDtlDto, AtchFileDtlDto, AtchFileDtlEntity> {
+public interface DtlCdMapstruct
+        extends BaseCrudMapstruct<DtlCdDto, DtlCdDto, DtlCdEntity> {
 
-    AtchFileDtlMapstruct INSTANCE = Mappers.getMapper(AtchFileDtlMapstruct.class);
+    DtlCdMapstruct INSTANCE = Mappers.getMapper(DtlCdMapstruct.class);
 
     /**
      * Entity -> Dto
@@ -29,7 +29,7 @@ public interface AtchFileDtlMapstruct
      */
     @Override
     @Named("toDto")
-    AtchFileDtlDto toDto(final AtchFileDtlEntity entity) throws Exception;
+    DtlCdDto toDto(final DtlCdEntity entity) throws Exception;
 
     /**
      * Entity -> ListDto
@@ -39,7 +39,7 @@ public interface AtchFileDtlMapstruct
      */
     @Override
     @Named("toListDto")
-    AtchFileDtlDto toListDto(final AtchFileDtlEntity entity) throws Exception;
+    DtlCdDto toListDto(final DtlCdEntity entity) throws Exception;
 
     /**
      * Dto -> Entity
@@ -48,7 +48,7 @@ public interface AtchFileDtlMapstruct
      * @throws Exception - 변환 중 발생할 수 있는 예외
      */
     @Override
-    AtchFileDtlEntity toEntity(final AtchFileDtlDto dto) throws Exception;
+    DtlCdEntity toEntity(final DtlCdDto dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
@@ -58,5 +58,5 @@ public interface AtchFileDtlMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(final AtchFileDtlDto dto, final @MappingTarget AtchFileDtlEntity entity) throws Exception;
+    void updateFromDto(final DtlCdDto dto, final @MappingTarget DtlCdEntity entity) throws Exception;
 }

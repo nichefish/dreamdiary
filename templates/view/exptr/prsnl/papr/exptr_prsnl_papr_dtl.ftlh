@@ -36,7 +36,7 @@
             },
 
             /**
-             * 영수증 원본 제출 체크 (ajax)
+             * 영수증 원본 제출 체크 (Ajax)
              */
             orgnlRciptAjax: function(exptrPrsnlItemNo, orgnlRciptYn) {
                 Swal.fire({

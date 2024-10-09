@@ -1,18 +1,19 @@
 package io.nicheblog.dreamdiary;
 
+import io.github.cdimascio.dotenv.Dotenv;
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuthRoleEntity;
+import io.nicheblog.dreamdiary.domain._core.auth.service.AuthService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.model.LogSysParam;
+import io.nicheblog.dreamdiary.domain._core.log.sys.event.LogSysEvent;
+import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.model.LgnPolicyDto;
+import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.service.LgnPolicyService;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserAuthRoleDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
+import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
 import io.nicheblog.dreamdiary.global.ActiveProfile;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
-import io.nicheblog.dreamdiary.global.auth.service.AuthService;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.model.admin.LgnPolicyDto;
-import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
-import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
-import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +27,7 @@ import java.util.List;
 /**
  * DreamdiaryInitializer
  * <pre>
- *  어플리케이션 초기화 로직 분리 클래스
+ *  어플리케이션 초기화 로직 수행 클래스.
  * </pre>
  *
  * @author nichefish
@@ -48,16 +49,19 @@ public class DreamdiaryInitializer
 
     /**
      * 프로그램 최초 구동시 수행할 로직
+     * @param args - 명령줄에서 전달된 인수
      */
     @Override
     public void run(final String... args) throws Exception {
 
         log.info("DreamdiaryApplication init... activeProfile: {}", activeProfile.getActive());
 
-        // 시스템 계정 부재시 등록
+        // 시스템 계정 부재시 등록 :: 메소드 분리
         this.chkSystemAcnt();
-        // 로그인 정책 부재시 등록
+        // 로그인 정책 부재시 등록 :: 메소드 분리
         this.chkLgnPolicy();
+        // 프로필에 따른 .env 로드 :: 메소드 분리
+        this.loadDotEnvProperties();
 
         // 시스템 재기동 로그 적재:: 운영 환경 이외에는 적재하지 않음
         if (activeProfile.isProd()) {
@@ -171,5 +175,29 @@ public class DreamdiaryInitializer
                 .build();
 
         return lgnPolicyService.regist(lgnPolicy);
+    }
+
+    /**
+     * 프로필에 따른 dotEnv 설정 :: 메소드 분리
+     */
+    private void loadDotEnvProperties() {
+        try {
+            // 프로필 기반 .env.${profile} 프로퍼티 로드 (속성 없을시:: 기본값 local)
+            String profile = System.getProperty("spring.profiles.active", "local");
+            this.setDotEnvPropertiesByFileNm(".env");
+            this.setDotEnvPropertiesByFileNm(".env." + profile);
+        } catch (Exception e) {
+            log.error("Failed to load .env file for profile '{}'", System.getProperty("spring.profiles.active"), e);
+        }
+    }
+
+    /**
+     * 지정된 프로퍼티 파일을 읽어 시스템 환경 변수에 추가합니다.
+     * @param fileName - 로드할 .env 파일의 이름
+     */
+    private void setDotEnvPropertiesByFileNm(final String fileName) {
+        Dotenv dotenv = Dotenv.configure().filename(fileName).load();
+        dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+        log.info("Loaded {} file successfully.", fileName);
     }
 }
