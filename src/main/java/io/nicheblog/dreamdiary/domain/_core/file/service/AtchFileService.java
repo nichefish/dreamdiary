@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 /**
  * AtchFileService
  * <pre>
- *  공통 > 파일 처리 서비스 모듈
+ *  공통 > 파일 처리 서비스 모듈.
  * </pre>
  *
  * @author nichefish

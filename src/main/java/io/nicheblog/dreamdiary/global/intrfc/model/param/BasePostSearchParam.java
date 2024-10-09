@@ -5,7 +5,7 @@ import lombok.*;
 /**
  * BasePostSearchParam
  * <pre>
- *  (공통/상속) 게시물 목록 검색 파라미터 Dto
+ *  (공통/상속) 게시물 목록 검색 파라미터 Dto.
  * </pre>
  *
  * @author nichefish
@@ -21,12 +21,16 @@ public class BasePostSearchParam
 
     /** 제목 */
     protected String title;
+
     /** 내용 */
     protected String cn;
+
     /** 글분류 코드 */
     protected String ctgrCd;
+
     /** 중요 여부 (Y/N) */
     protected String imprtcYn;
+
     /** 상단고정 여부 (Y/N) */
     protected String fxdYn;
 }
