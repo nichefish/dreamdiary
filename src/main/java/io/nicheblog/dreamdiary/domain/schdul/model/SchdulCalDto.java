@@ -1,19 +1,19 @@
-package io.nicheblog.dreamdiary.web.model.schdul;
+package io.nicheblog.dreamdiary.domain.schdul.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.model.BaseCalDto;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.model.cmm.BaseCalDto;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
 /**
  * SchdulCalDto
  * <pre>
- *  전체 일정 Full-Calendar Dto
+ *  전체 일정 Full-Calendar Dto.
  *  (휴가 + 일정 등 통합)
  * </pre>
  *
@@ -47,11 +47,14 @@ public class SchdulCalDto
     /** 일정 고유 번호 (PK) */
     @JsonProperty("id")
     private String postNo;
+
     /** 일정 그룹 ID */
     @JsonProperty("groupId")
     private String schdulCd;
+
     /** 일정 이름 */
     private String title;
+
     /** 일정 내용 */
     @JsonProperty("description")
     private String cn;
@@ -59,6 +62,7 @@ public class SchdulCalDto
     /** 일정 시작일 */
     @JsonProperty("start")
     private String bgnDt;
+
     /** 일정 종료일 */
     @JsonProperty("end")
     private String endDt;

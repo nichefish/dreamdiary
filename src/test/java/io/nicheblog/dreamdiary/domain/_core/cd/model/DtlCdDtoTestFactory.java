@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.cd.model;
+package io.nicheblog.dreamdiary.domain._core.cd.model;
 
 import io.nicheblog.dreamdiary.global.TestConstant;
 import lombok.experimental.UtilityClass;
@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 /**
  * DtlCdDtoTestFactory
  * <pre>
- *  상세코드 테스트 Dto 생성 팩토리 모듈
+ *  상세 코드 테스트 Dto 생성 팩토리 모듈
  * </pre>
  *
  * @author nichefish 
@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 public class DtlCdDtoTestFactory {
 
     /**
-     * 상세코드 상세 Dto 생성
+     * 상세 코드 상세 Dto 생성
      */
     public static DtlCdDto createDtlCdDtlDto() throws Exception {
         return DtlCdDto.builder()

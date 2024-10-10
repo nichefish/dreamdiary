@@ -48,7 +48,7 @@
             },
 
             /**
-             * 등록 처리 (Ajax)
+             * 등록 (Ajax)
              */
             regAjax: function() {
                 Swal.fire({

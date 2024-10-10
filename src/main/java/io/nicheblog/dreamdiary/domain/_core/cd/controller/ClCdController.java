@@ -203,7 +203,7 @@ public class ClCdController
     }
 
     /**
-     * 분류 코드 관리(useYn=N 포함) 상세 데이터 조회 (Ajax)
+     * 분류 코드 관리(useYn=N 포함) 상세 조회 (Ajax)
      * (관리자MNGR만 접근 가능.)
      *
      * @param key 식별자
@@ -248,54 +248,12 @@ public class ClCdController
     }
 
     /**
-     * 분류 코드(CL_CD) 관리(useYn=N 포함) 삭제 (Ajax)
-     * (관리자MNGR만 접근 가능.)
-     *
-     * @param key 식별자
-     * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
-     * @throws Exception 처리 중 발생할 수 있는 예외
-     */
-    @PostMapping(Url.CL_CD_DEL_AJAX)
-    @Secured({Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> clCdDelAjax(
-            final @RequestParam("clCd") String key,
-            final LogActvtyParam logParam
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 삭제 처리
-            isSuccess = clCdService.delete(key);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ajaxResponse);
-    }
-
-    /**
      * 분류 코드 관리(useYn=N 포함) '사용'으로 변경 (Ajax)
      * (관리자MNGR만 접근 가능.)
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 응답 객체
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.CL_CD_USE_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -336,7 +294,6 @@ public class ClCdController
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 응답 객체
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.CL_CD_UNUSE_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -353,6 +310,45 @@ public class ClCdController
         try {
             // 상태 변경 처리
             isSuccess = clCdService.setStateUnuse(key);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
+    }
+    /**
+     * 분류 코드(CL_CD) 관리(useYn=N 포함) 삭제 (Ajax)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
+     */
+    @PostMapping(Url.CL_CD_DEL_AJAX)
+    @Secured({Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> clCdDelAjax(
+            final @RequestParam("clCd") String key,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 삭제
+            isSuccess = clCdService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;

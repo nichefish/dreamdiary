@@ -468,7 +468,7 @@ public class BoardPostController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 삭제 처리
+            // 삭제
             isSuccess = boardPostService.delete(postKey.getClsfKey());
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             if (isSuccess) {

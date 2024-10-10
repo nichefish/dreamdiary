@@ -171,7 +171,7 @@ public class CommentController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 삭제 처리
+            // 삭제
             CommentDto rsDto = commentService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
@@ -217,7 +217,7 @@ public class CommentController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 삭제 처리
+            // 삭제
             isSuccess = commentService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

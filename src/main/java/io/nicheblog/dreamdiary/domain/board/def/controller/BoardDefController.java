@@ -382,7 +382,7 @@ public class BoardDefController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 삭제 처리
+            // 삭제
             isSuccess = boardDefService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {

@@ -44,7 +44,8 @@ public class EhCacheEvictService {
     }
 
     /**
-     * 관련 캐시 처리
+     * 관련 캐시 삭제
+     * 
      * @param refContentType - 캐시를 삭제할 컨텐츠 타입
      * @param refPostNo - 캐시를 삭제할 게시글 번호
      * @throws Exception 캐시 삭제 과정 중 발생할 수 있는 예외

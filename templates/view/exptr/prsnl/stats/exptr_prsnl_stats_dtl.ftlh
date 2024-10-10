@@ -99,7 +99,7 @@
             },
 
             /**
-             * 삭제 처리 (Ajax)
+             * 삭제 (Ajax)
              */
             delAjax: function() {
                 Swal.fire({

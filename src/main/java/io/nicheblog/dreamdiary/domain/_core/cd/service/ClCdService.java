@@ -57,7 +57,7 @@ public class ClCdService
      */
     @Override
     public void postRegist(final ClCdEntity rslt) throws Exception {
-        // 관련 캐시 삭제 처리
+        // 관련 캐시 삭제
         this.evictRelatedCache(rslt);
     }
 
@@ -69,7 +69,7 @@ public class ClCdService
      */
     @Override
     public void postModify(final ClCdEntity rslt) throws Exception {
-        // 관련 캐시 삭제 처리
+        // 관련 캐시 삭제
         this.evictRelatedCache(rslt);
     }
 
@@ -81,12 +81,12 @@ public class ClCdService
      */
     @Override
     public void postDelete(final ClCdEntity rslt) throws Exception {
-        // 관련 캐시 삭제 처리
+        // 관련 캐시 삭제
         this.evictRelatedCache(rslt);
     }
 
     /**
-     * 관련 캐시 삭제 처리.
+     * 관련 캐시 삭제.
      *
      * @param rslt 캐시 처리할 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외

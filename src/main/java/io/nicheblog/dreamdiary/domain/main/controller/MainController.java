@@ -1,11 +1,11 @@
-package io.nicheblog.dreamdiary.web.controller;
+package io.nicheblog.dreamdiary.domain.main.controller;
 
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.web.SiteMenu;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * MainController
+ * <pre>
+ *  메인 화면 컨트롤러.
+ * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 public class MainController
@@ -28,6 +30,10 @@ public class MainController
 
     /**
      * 메인 화면 :: 사용자
+     *
+     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @param model 뷰에 전달할 데이터를 저장하는 ModelMap 객체
+     * @return view -- 뷰 이름을 나타내는 문자열
      */
     @GetMapping(value = {Url.ROOT, Url.MAIN})
     public String mainPage(
@@ -47,6 +53,10 @@ public class MainController
 
     /**
      * 메인 화면 :: 관리자
+     *
+     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @param model 뷰에 전달할 데이터를 저장하는 ModelMap 객체
+     * @return view -- 뷰 이름을 나타내는 문자열
      */
     @GetMapping(value = {Url.ADMIN_MAIN})
     public String adminMainPage(
@@ -63,6 +73,4 @@ public class MainController
         return "redirect:" + Url.ADMIN_PAGE;
         // return "/view/main/main_page";
     }
-
-
 }

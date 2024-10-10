@@ -42,7 +42,7 @@ public class CommentService
      */
     @Override
     public void postRegist(final CommentEntity rslt) throws Exception {
-        // 관련 캐시 삭제 처리
+        // 관련 캐시 삭제
         this.evictClsfCache(rslt);
     }
 
@@ -54,7 +54,7 @@ public class CommentService
      */
     @Override
     public void postModify(final CommentEntity rslt) throws Exception {
-        // 관련 캐시 삭제 처리
+        // 관련 캐시 삭제
         this.evictClsfCache(rslt);
     }
 
@@ -66,17 +66,17 @@ public class CommentService
      */
     @Override
     public void postDelete(final CommentEntity rslt) throws Exception {
-        // 관련 캐시 삭제 처리
+        // 관련 캐시 삭제
         this.evictClsfCache(rslt);
 
         // TODO: 관련 엔티티 삭제?
     }
 
     /**
-     * 관련 캐시 삭제 처리.
+     * 관련 캐시 삭제.
      *
      * @param rslt 캐시 처리할 엔티티
-     * @throws Exception 캐시 처리 중 발생할 수 있는 예외
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public void evictClsfCache(final CommentEntity rslt) throws Exception {
         String refContentType = rslt.getRefContentType();
