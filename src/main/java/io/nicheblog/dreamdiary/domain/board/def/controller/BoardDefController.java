@@ -1,21 +1,21 @@
-package io.nicheblog.dreamdiary.web.controller.board;
+package io.nicheblog.dreamdiary.domain.board.def.controller;
 
+import io.nicheblog.dreamdiary.domain._core.cd.service.CdService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefDto;
+import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefParam;
+import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefSearchParam;
+import io.nicheblog.dreamdiary.domain.board.def.service.BoardDefService;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
+import io.nicheblog.dreamdiary.global.model.PaginationInfo;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
-import io.nicheblog.dreamdiary.web.model.board.BoardDefParam;
-import io.nicheblog.dreamdiary.web.model.board.BoardDefSearchParam;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
-import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,12 +34,11 @@ import javax.validation.Valid;
 /**
  * BoardDefController
  * <pre>
- *  게시판 정의 관리 컨트롤러
+ *  게시판 정의 관리 컨트롤러.
  *  ※게시판 정의(board_def) = 게시판 분류. 게시판 게시물(board_post)을 1:N으로 관리한다.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -57,7 +56,13 @@ public class BoardDefController
 
     /**
      * 게시판 정의 목록 조회
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면의 뷰 이름
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.BOARD_DEF_LIST)
     @Secured({Constant.ROLE_MNGR})
@@ -107,7 +112,12 @@ public class BoardDefController
 
     /**
      * 게시판 정의 등록 (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param boardDef 등록 처리할 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.BOARD_DEF_REG_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -146,14 +156,19 @@ public class BoardDefController
     }
 
     /**
-     * 게시판 정의 상세 화면 조회 (ajax)
-     * (관리자MNGR만 접근 가능)
+     * 게시판 정의 상세 화면 조회 (Ajax)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.BOARD_DEF_DTL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     public ResponseEntity<AjaxResponse> boardDefDtlAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("boardCd") String boardCd
+            final @RequestParam("boardCd") String key,
+            final LogActvtyParam logParam
     ) throws Exception {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -162,7 +177,7 @@ public class BoardDefController
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
+            BoardDefDto boardDef = boardDefService.getDtlDto(key);
             ajaxResponse.setRsltObj(boardDef);
 
             isSuccess = true;
@@ -186,14 +201,17 @@ public class BoardDefController
 
     /**
      * 게시판 정의 항목 수정 (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param boardDef 수정 처리할 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(Url.BOARD_DEF_MDF_ITEM_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefMdfItemAjax(
             final @Valid BoardDefDto boardDef,
-            final String boardCd,
             final LogActvtyParam logParam
     ) {
 
@@ -225,14 +243,18 @@ public class BoardDefController
     }
 
     /**
-     * 게시판 정의 사용 (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * 게시판 정의 상태를 '사용'으로 변경 (Ajax)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(Url.BOARD_DEF_USE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefUseAjax(
-            final @RequestParam("boardCd") String boardCd,
+            final @RequestParam("boardCd") String key,
             final LogActvtyParam logParam
     ) {
 
@@ -242,7 +264,7 @@ public class BoardDefController
         String rsltMsg = "";
         try {
             // 상태 변경 처리
-            isSuccess = boardDefService.setStateUse(boardCd);
+            isSuccess = boardDefService.setStateUse(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -251,7 +273,7 @@ public class BoardDefController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + boardCd);
+            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -262,14 +284,18 @@ public class BoardDefController
     }
 
     /**
-     * 게시판 정의 미사용 (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * 게시판 정의 상태를 '미사용'으로 변경 (Ajax)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(Url.BOARD_DEF_UNUSE_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefUnuseAjax(
-            final @RequestParam("boardCd") String boardCd,
+            final @RequestParam("boardCd") String key,
             final LogActvtyParam logParam
     ) {
 
@@ -279,7 +305,7 @@ public class BoardDefController
         String rsltMsg = "";
         try {
             // 상태 변경 처리
-            isSuccess = boardDefService.setStateUnuse(boardCd);
+            isSuccess = boardDefService.setStateUnuse(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -288,7 +314,7 @@ public class BoardDefController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + boardCd);
+            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -301,11 +327,15 @@ public class BoardDefController
 
     /**
      * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     *
+     * @param boardDefParam 키+정렬 순서 목록을 담은 파라미터
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(Url.BOARD_DEF_SORT_ORDR_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefSortOrdrAjax(
-            @RequestBody BoardDefParam boardDefParam,
+            final @RequestBody BoardDefParam boardDefParam,
             final LogActvtyParam logParam
     ) {
 
@@ -333,14 +363,18 @@ public class BoardDefController
     }
 
     /**
-     * 게시판 정의 삭제 (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * 게시판 정의 삭제 처리 (Ajax)
+     * (관리자MNGR만 접근 가능.)
+     * 
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(Url.BOARD_DEF_DEL_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefDelAjax(
-            final @RequestParam("boardCd") String boardCd,
+            final @RequestParam("boardCd") String key,
             final LogActvtyParam logParam
     ) {
 
@@ -350,7 +384,7 @@ public class BoardDefController
         String rsltMsg = "";
         try {
             // 삭제 처리
-            isSuccess = boardDefService.delete(boardCd);
+            isSuccess = boardDefService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
@@ -359,7 +393,7 @@ public class BoardDefController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + boardCd);
+            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 /**
  * BaseReadonlyService
  * <pre>
- *  (공통/상속) 조회 전용 서비스 인터페이스
+ *  (공통/상속) 조회 전용 서비스 인터페이스.
  * </pre>
  *
  * @author nichefish
@@ -43,14 +43,25 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
 
     /**
      * default: 항목 페이징 목록 조회 (dto level)
+     *
+     * @param searchParam 검색 조건 파라미터
+     * @param pageable 페이징 정보
+     * @return {@link Page} -- 페이징 처리된 목록 (dto level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Page<ListDto> getPageDto(final BaseSearchParam searchParam, final Pageable pageable) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
         return this.getPageDto(searchParamMap, pageable);
     }
 
     /**
      * default: 항목 페이징 목록 조회 (dto level)
+     *
+     * @param searchParamMap 검색 조건 파라미터 맵
+     * @param pageable 페이징 정보
+     * @return {@link Page} -- 페이징 처리된 목록 (dto level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Page<ListDto> getPageDto(final Map<String, Object> searchParamMap, final Pageable pageable) throws Exception {
         // searchParamMap에서 빈 값들 및 쓸모없는 값들 정리
@@ -61,6 +72,25 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
 
     /**
      * default: 항목 페이징 목록 조회 (entity level)
+     *
+     * @param searchParam 검색 조건 파라미터 객체
+     * @param pageable 페이징 정보
+     * @return {@link Page} -- 페이징 처리된 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
+     */
+    default Page<Entity> getPageEntity(final BaseSearchParam searchParam, final Pageable pageable) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
+        return this.getPageEntity(searchParamMap, pageable);
+    }
+
+    /**
+     * default: 항목 페이징 목록 조회 (entity level)
+     *
+     * @param searchParamMap 검색 조건 파라미터 맵
+     * @param pageable 페이징 정보
+     * @return {@link Page} -- 페이징 처리된 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Page<Entity> getPageEntity(final Map<String, Object> searchParamMap, final Pageable pageable) throws Exception {
         Repository repository = this.getRepository();
@@ -70,7 +100,11 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     }
 
     /**
-     * default: 항목 페이징 목록 Page<Entity>->Page<Dto> 변환
+     * default: 항목 페이징 목록 Page<Entity> -> Page<Dto> 변환
+     *
+     * @param entityPage 페이징 처리된 Entity 목록
+     * @return {@link Page} -- 변환된 페이징 처리된 Dto 목록
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Page<ListDto> pageEntityToDto(final Page<Entity> entityPage) throws Exception {
         Mapstruct mapstruct = this.getMapstruct();
@@ -93,14 +127,23 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
 
     /**
      * default: 항목 목록 조회 (dto level)
+     *
+     * @param searchParam 검색 조건 파라미터
+     * @return {@link List} -- 목록 (dto level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default List<ListDto> getListDto(final BaseSearchParam searchParam) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
         return this.getListDto(searchParamMap);
     }
 
     /**
      * default: 항목 목록 조회 (dto level)
+     *
+     * @param searchParamMap 검색 조건 파라미터 맵
+     * @return {@link List} -- 목록 (dto level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default List<ListDto> getListDto(final Map<String, Object> searchParamMap) throws Exception {
         // searchParamMap에서 빈 값들 및 쓸모없는 값들 정리
@@ -111,14 +154,25 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
 
     /**
      * default: 항목 목록 조회 (+정렬) (dto level)
+     *
+     * @param searchParam 검색 조건 파라미터
+     * @param sort 정렬
+     * @return {@link List} -- 목록 (dto level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default List<ListDto> getListDto(final BaseSearchParam searchParam, Sort sort) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
         return this.getListDto(searchParamMap, sort);
     }
 
     /**
      * default: 항목 목록 조회 (+정렬) (dto level)
+     *
+     * @param searchParamMap 검색 조건 파라미터 맵
+     * @param sort 정렬
+     * @return {@link List} -- 목록 (dto level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default List<ListDto> getListDto(final Map<String, Object> searchParamMap, Sort sort) throws Exception {
         // searchParamMap에서 빈 값들 및 쓸모없는 값들 정리
@@ -129,6 +183,10 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
 
     /**
      * default: 항목 목록 조회 (entity level)
+     *
+     * @param searchParam 검색 조건 파라미터
+     * @return {@link List} -- 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default List<Entity> getListEntity(final BaseSearchParam searchParam) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
@@ -137,6 +195,10 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
 
     /**
      * default: 항목 목록 조회 (entity level)
+     *
+     * @param searchParamMap 검색 조건 파라미터 맵
+     * @return {@link List} -- 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default List<Entity> getListEntity(final Map<String, Object> searchParamMap) throws Exception {
         Repository repository = this.getRepository();
@@ -147,6 +209,11 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
 
     /**
      * default: 항목 목록 조회 (+정렬) (entity level)
+     *
+     * @param searchParam 검색 조건 파라미터
+     * @param sort 정렬
+     * @return {@link List} -- 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default List<Entity> getListEntity(final BaseSearchParam searchParam, Sort sort) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
@@ -155,6 +222,11 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
 
     /**
      * default: 항목 목록 조회 (+정렬) (entity level)
+     *
+     * @param searchParamMap 검색 조건 파라미터 맵
+     * @param sort 정렬
+     * @return {@link List} -- 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default List<Entity> getListEntity(final Map<String, Object> searchParamMap, Sort sort) throws Exception {
         Repository repository = this.getRepository();
@@ -164,7 +236,11 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     }
 
     /**
-     * default: 항목 목록 Page<Entity>->Page<Dto> 변환
+     * default: 항목 목록 List<Entity> -> List<Dto> 변환
+     *
+     * @param entityList Entity 목록
+     * @return {@link Page} -- 변환된 Dto 목록
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default List<ListDto> listEntityToDto(final List<Entity> entityList) throws Exception {
         Mapstruct mapstruct = this.getMapstruct();
@@ -182,7 +258,11 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     /* ----- */
 
     /**
-     * default: Stream<Entity> 변환
+     * default: Stream<Entity> 조회
+     *
+     * @param searchParam 검색 조건 파라미터
+     * @return {@link Stream} -- 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Stream<Entity> getStreamEntity(final BaseSearchParam searchParam) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
@@ -190,7 +270,11 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     }
 
     /**
-     * default: Stream<Entity> 변환
+     * default: Stream<Entity> 조회
+     *
+     * @param searchParamMap 검색 조건 파라미터 맵
+     * @return {@link Stream} -- 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Stream<Entity> getStreamEntity(final Map<String, Object> searchParamMap) throws Exception {
         Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
@@ -200,7 +284,12 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     }
 
     /**
-     * default: Stream<Entity> (+정렬) 변환
+     * default: Stream<Entity> (+정렬) 조회
+     *
+     * @param searchParam 검색 조건 파라미터
+     * @param sort 정렬
+     * @return {@link Stream} -- 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Stream<Entity> getStreamEntity(final BaseSearchParam searchParam, Sort sort) throws Exception {
         Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
@@ -208,7 +297,12 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     }
 
     /**
-     * default: Stream<Entity> 변환
+     * default: Stream<Entity> 조회
+     *
+     * @param searchParamMap 검색 조건 파라미터 맵
+     * @param sort 정렬
+     * @return {@link Stream} -- 목록 (entity level)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Stream<Entity> getStreamEntity(final Map<String, Object> searchParamMap, Sort sort) throws Exception {
         Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
@@ -221,6 +315,10 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
 
     /**
      * default: 단일 항목 조회 (entity level)
+     *
+     * @param key 조회할 엔티티의 키
+     * @return {@link Entity} -- 조회된 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Entity getDtlEntity(final Key key) throws Exception {
         // 의존성 주입
@@ -228,8 +326,13 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
         Optional<Entity> entityWrapper = repository.findById(key);
         return Objects.requireNonNull(entityWrapper.orElseThrow(() -> new NullPointerException("해당 정보가 존재하지 않습니다.")));
     }
+
     /**
      * default: 단일 항목 조회 (entity level)
+     *
+     * @param dto 조회할 Key 정보가 담긴 Dto
+     * @return {@link Entity} -- 조회된 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     default Entity getDtlEntity(final Dto dto) throws Exception {
         return this.getDtlEntity(dto.getKey());
@@ -238,8 +341,8 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     /**
      * default: 단일 항목 조회 (dto level)
      *
-     * @param key
-     * @return Dto
+     * @param key 조회할 엔티티의 키
+     * @return {@link Dto} -- 조회 항목 반환
      */
     default Dto getDtlDto(final Key key) throws Exception {
         Entity entity = this.getDtlEntity(key);

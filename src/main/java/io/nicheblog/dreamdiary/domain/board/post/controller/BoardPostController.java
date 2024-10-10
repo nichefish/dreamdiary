@@ -1,26 +1,26 @@
-package io.nicheblog.dreamdiary.web.controller.board;
+package io.nicheblog.dreamdiary.domain.board.post.controller;
 
+import io.nicheblog.dreamdiary.domain._core.cd.service.CdService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain._core.tag.event.TagProcEvent;
+import io.nicheblog.dreamdiary.domain._core.tag.service.TagService;
+import io.nicheblog.dreamdiary.domain._core.viewer.event.ViewerAddEvent;
+import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefDto;
+import io.nicheblog.dreamdiary.domain.board.def.service.BoardDefService;
+import io.nicheblog.dreamdiary.domain.board.post.model.BoardPostDto;
+import io.nicheblog.dreamdiary.domain.board.post.model.BoardPostKey;
+import io.nicheblog.dreamdiary.domain.board.post.model.BoardPostSearchParam;
+import io.nicheblog.dreamdiary.domain.board.post.service.BoardPostService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
+import io.nicheblog.dreamdiary.global.model.PaginationInfo;
+import io.nicheblog.dreamdiary.global.model.SiteAcsInfo;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.event.TagProcEvent;
-import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
-import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
-import io.nicheblog.dreamdiary.web.model.board.BoardPostDto;
-import io.nicheblog.dreamdiary.web.model.board.BoardPostKey;
-import io.nicheblog.dreamdiary.web.model.board.BoardPostSearchParam;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
-import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
-import io.nicheblog.dreamdiary.web.service.board.BoardDefService;
-import io.nicheblog.dreamdiary.web.service.board.BoardPostService;
-import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -39,12 +39,11 @@ import javax.validation.Valid;
 /**
  * BoardPostController
  * <pre>
- *  일반게시판 게시물 컨트롤러
+ *  게시판 게시물 컨트롤러.
  *  화면단에선 boardCd, 어플리케이션 단에선 contentType으로 사용
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -64,8 +63,14 @@ public class BoardPostController
 
 
     /**
-     * 일반게시판 게시물 목록 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 게시판 게시물 목록 조회
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return String - 화면의 뷰 이름
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.BOARD_POST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -120,8 +125,14 @@ public class BoardPostController
     }
 
     /**
-     * 일반게시판 게시물 등록 화면 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 게시판 게시물 등록 화면 조회
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param boardCd 게시판 코드
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return String - 화면의 뷰 이름
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.BOARD_POST_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -169,8 +180,15 @@ public class BoardPostController
     }
 
     /**
-     * 일반게시판 게시물 등록 전 미리보기 팝업 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 게시판 게시물 등록 전 미리보기 팝업 조회
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param boardPost 작성 중인 게시물
+     * @param boardCd 게시판 코드
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return String - 화면의 뷰 이름
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.BOARD_POST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -207,15 +225,21 @@ public class BoardPostController
     }
 
     /**
-     * 일반게시판 게시물 등록/수정 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 게시판 게시물 등록/수정 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param boardPost 등록/수정 처리할 게시물
+     * @param postKey 복합키 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param request - Multipart 요청 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(value = {Url.BOARD_POST_REG_AJAX, Url.BOARD_POST_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostRegAjax(
             final @Valid BoardPostDto.DTL boardPost,
-            final BoardPostKey key,
+            final BoardPostKey postKey,
             final LogActvtyParam logParam,
             // final @RequestParam("jandiYn") @Nullable String jandiYn,
             // final @RequestParam("trgetTopic") @Nullable String trgetTopic,
@@ -228,7 +252,7 @@ public class BoardPostController
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = key.getPostNo() == null;
+            boolean isReg = postKey.getPostNo() == null;
             BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPost, request) : boardPostService.modify(boardPost, request);
             ajaxResponse.setRsltObj(result);
 
@@ -263,8 +287,14 @@ public class BoardPostController
     }
 
     /**
-     * 일반게시판 게시물 상세 화면 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 게시판 게시물 상세 화면 조회
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param postKey 복합키 식별자
+     * @param boardCd 게시판 코드
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @GetMapping(value = Url.BOARD_POST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -311,8 +341,12 @@ public class BoardPostController
     }
 
     /**
-     * 일반게시판 게시물 상세 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 게시판 게시물 상세 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param postKey 복합키 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @GetMapping(Url.BOARD_POST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -355,8 +389,15 @@ public class BoardPostController
     }
 
     /**
-     * 일반게시판 게시물 수정 화면 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 게시판 게시물 수정 화면 조회
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param postKey 복합키 식별자
+     * @param boardCd 게시판 코드
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return String - 화면의 뷰 이름
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(value = Url.BOARD_POST_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -407,8 +448,12 @@ public class BoardPostController
     }
 
     /**
-     * 일반게시판 게시물 삭제 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 게시판 게시물 삭제 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param postKey 복합키 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.BOARD_POST_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

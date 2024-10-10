@@ -1,15 +1,16 @@
-package io.nicheblog.dreamdiary.web.service.board;
+package io.nicheblog.dreamdiary.domain.board.def.service;
 
+import io.nicheblog.dreamdiary.domain.board.def.entity.BoardDefEntity;
+import io.nicheblog.dreamdiary.domain.board.def.mapstruct.BoardDefMapstruct;
+import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefDto;
+import io.nicheblog.dreamdiary.domain.board.def.repository.jpa.BoardDefRepository;
+import io.nicheblog.dreamdiary.domain.board.def.spec.BoardDefSpec;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
-import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.entity.board.BoardDefEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.board.BoardDefMapstruct;
-import io.nicheblog.dreamdiary.web.model.board.BoardDefDto;
-import io.nicheblog.dreamdiary.web.model.cmm.SiteAcsInfo;
-import io.nicheblog.dreamdiary.web.repository.board.jpa.BoardDefRepository;
-import io.nicheblog.dreamdiary.web.spec.board.BoardDefSpec;
+import io.nicheblog.dreamdiary.global.model.SiteAcsInfo;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -29,37 +30,26 @@ import java.util.stream.Collectors;
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService, BaseStateService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("boardDefService")
 @RequiredArgsConstructor
 @Log4j2
 public class BoardDefService
         implements BaseCrudService<BoardDefDto, BoardDefDto, String, BoardDefEntity, BoardDefRepository, BoardDefSpec, BoardDefMapstruct>,
-        BaseStateService<BoardDefDto, BoardDefDto, String, BoardDefEntity, BoardDefRepository, BoardDefSpec, BoardDefMapstruct> {
+                   BaseStateService<BoardDefDto, BoardDefDto, String, BoardDefEntity, BoardDefRepository, BoardDefSpec, BoardDefMapstruct> {
 
-    private final BoardDefRepository boardDefRepository;
-    private final BoardDefSpec boardDefSpec;
-    private final BoardDefMapstruct boardDefMapstruct = BoardDefMapstruct.INSTANCE;
-
-    @Override
-    public BoardDefRepository getRepository() {
-        return this.boardDefRepository;
-    }
-
-    @Override
-    public BoardDefSpec getSpec() {
-        return this.boardDefSpec;
-    }
-
-    @Override
-    public BoardDefMapstruct getMapstruct() {
-        return this.boardDefMapstruct;
-    }
+    @Getter
+    private final BoardDefRepository repository;
+    @Getter
+    private final BoardDefSpec spec;
+    @Getter
+    private final BoardDefMapstruct mapstruct = BoardDefMapstruct.INSTANCE;
 
     /**
-     * boardDef 목록 메뉴 조회
-     * (SiteAcsInfo 목록 반환)
+     * boardDef 목록 메뉴 조회 (SiteAcsInfo 목록 반환)
+     *
+     * @return {@link List} -- 게시판 정의 목록을 메뉴 정보로 변환한 리스트
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public List<SiteAcsInfo> boardDefMenuList() throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
@@ -69,7 +59,7 @@ public class BoardDefService
         return boardDefPage.stream()
                 .map(entity -> {
                     try {
-                        return boardDefMapstruct.toMenu(entity);
+                        return mapstruct.toMenu(entity);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -78,24 +68,28 @@ public class BoardDefService
     }
 
     /**
-     * boardCd로 메뉴 조회
-     * (SiteAcsInfo 반환)
+     * boardCd로 단일 메뉴 조회 (SiteAcsInfo 반환)
+     *
+     * @return {@link SiteAcsInfo} -- 게시판 정의를 메뉴 정보로 변환하여 반환
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public SiteAcsInfo getBoardMenu(final String boardCd) throws Exception {
         BoardDefEntity boardDef = this.getDtlEntity(boardCd);
-        return boardDefMapstruct.toMenu(boardDef);
+        return mapstruct.toMenu(boardDef);
     }
 
     /**
-     * 등록 전처리 :: override
+     * 등록 전처리. (override)
+     *
+     * @param dto 등록할 객체
      */
     @Override
-    public void preRegist(final BoardDefDto boardDef) {
-        if (boardDef.getState() == null) boardDef.setState(new StateCmpstn());
+    public void preRegist(final BoardDefDto dto) {
+        if (dto.getState() == null) dto.setState(new StateCmpstn());
     }
 
     /**
-     * 사용/미사용 변경 후처리
+     * 상태 변경 후처리. (override)
      */
     @Override
     public void postSetState() throws Exception {
@@ -103,7 +97,11 @@ public class BoardDefService
     }
 
     /**
-     * 정렬 순서 업데이트
+     * 정렬 순서 업데이트.
+     *
+     * @param sortOrdr 키 + 정렬 순서로 이루어진 목록
+     * @return {@link Boolean} -- 성공시 true 반환
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Transactional
     public boolean sortOrdr(final List<BoardDefDto> sortOrdr) throws Exception {
