@@ -52,7 +52,7 @@
             },
 
             /**
-             * 등록/수정 처리 (Ajax)
+             * 등록/수정 (Ajax)
              */
             regAjax: function() {
                 Swal.fire({
@@ -92,7 +92,7 @@
             },
 
             /**
-             * 삭제 처리 (Ajax)
+             * 삭제 (Ajax)
              * @param {string|number} menuNo - 메뉴 번호.
              */
             delAjax: function(menuNo) {

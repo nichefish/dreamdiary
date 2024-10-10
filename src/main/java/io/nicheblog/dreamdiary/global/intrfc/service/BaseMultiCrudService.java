@@ -28,7 +28,7 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
      * default: 게시물 등록 (Multipart)
      *
      * @param dto 등록할 DTO 객체
-     * @param request - Multipart 요청 객체
+     * @param request - Multipart 요청
      * @return {@link Dto} -- 처리된 DTO 객체
      * @throws Exception 파일 업로드 또는 등록 중 예외 발생 시
      */
@@ -45,7 +45,7 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
      * default: 게시물 수정 (Multipart)
      *
      * @param dto 수정할 DTO 객체
-     * @param request - Multipart 요청 객체
+     * @param request - Multipart 요청
      * @return {@link Dto} -- 처리된 DTO 객체
      * @throws Exception 파일 업로드 또는 수정 중 예외 발생 시
      */

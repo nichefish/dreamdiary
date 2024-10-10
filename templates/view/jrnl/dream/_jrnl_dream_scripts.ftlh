@@ -102,7 +102,7 @@
             },
 
             /**
-             * 등록 처리 (Ajax)
+             * 등록 (Ajax)
              */
             regAjax: function() {
                 const isReg = $("#jrnlDreamRegForm #postNo").val() === "";
@@ -151,7 +151,7 @@
             },
 
             /**
-             * 삭제 처리 (Ajax)
+             * 삭제 (Ajax)
              * @param {string|number} postNo - 글 번호.
              */
             delAjax: function(postNo) {

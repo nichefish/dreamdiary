@@ -160,7 +160,7 @@
             },
 
             /**
-             * 삭제 처리 (Ajax)
+             * 삭제 (Ajax)
              * @param {string|number} key - 참여자 번호.
              */
             delAjax: function(key) {

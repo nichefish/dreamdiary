@@ -117,7 +117,6 @@ public class BoardDefController
      * @param boardDef 등록 처리할 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 응답 객체
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.BOARD_DEF_REG_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -363,7 +362,7 @@ public class BoardDefController
     }
 
     /**
-     * 게시판 정의 삭제 처리 (Ajax)
+     * 게시판 정의 삭제 (Ajax)
      * (관리자MNGR만 접근 가능.)
      * 
      * @param key 식별자

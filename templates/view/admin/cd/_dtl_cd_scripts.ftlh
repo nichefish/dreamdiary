@@ -49,7 +49,7 @@
             },
 
             /**
-             * 등록 처리 (Ajax)
+             * 등록 (Ajax)
              */
             regAjax: function() {
                 Swal.fire({
@@ -135,7 +135,7 @@
             },
 
             /**
-             * 삭제 처리 (Ajax)
+             * 삭제 (Ajax)
              * @param {string} dtlCd - 삭제할 상세 코드.
              */
             delAjax: function(dtlCd) {

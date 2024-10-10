@@ -231,7 +231,7 @@ public class BoardPostController
      * @param boardPost 등록/수정 처리할 게시물
      * @param postKey 복합키 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @param request - Multipart 요청 객체
+     * @param request - Multipart 요청
      * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(value = {Url.BOARD_POST_REG_AJAX, Url.BOARD_POST_MDF_AJAX})

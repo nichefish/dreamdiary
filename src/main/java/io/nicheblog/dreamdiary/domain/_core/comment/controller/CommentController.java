@@ -1,18 +1,18 @@
-package io.nicheblog.dreamdiary.web.controller.cmm.comment;
+package io.nicheblog.dreamdiary.domain._core.comment.controller;
 
+import io.nicheblog.dreamdiary.domain._core.comment.model.CommentDto;
+import io.nicheblog.dreamdiary.domain._core.comment.model.CommentParam;
+import io.nicheblog.dreamdiary.domain._core.comment.model.CommentSearchParam;
+import io.nicheblog.dreamdiary.domain._core.comment.service.CommentService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentDto;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentParam;
-import io.nicheblog.dreamdiary.web.model.cmm.comment.CommentSearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.comment.CommentService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,11 +33,10 @@ import java.security.InvalidParameterException;
 /**
  * CommentController
  * <pre>
- *  댓글 컨트롤러
+ *  댓글 컨트롤러.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -52,7 +51,11 @@ public class CommentController
 
     /**
      * 댓글 목록 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     * 
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @GetMapping(Url.COMMENT_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -96,8 +99,15 @@ public class CommentController
     }
 
     /**
-     * 댓글 등록/수정 처리 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 댓글 등록/수정 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     * 
+     * @param comment 등록/수정 처리할 객체
+     * @param key 식별자
+     * @param param 조회 파라미터
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param request - Multipart 요청
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(value = {Url.COMMENT_REG_AJAX, Url.COMMENT_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -106,8 +116,8 @@ public class CommentController
             final @Valid CommentDto comment,
             final @RequestParam("postNo") @Nullable Integer key,
             final CommentParam param,
-            final MultipartHttpServletRequest request,
-            final LogActvtyParam logParam
+            final LogActvtyParam logParam,
+            final MultipartHttpServletRequest request
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -140,15 +150,20 @@ public class CommentController
 
     /**
      * 댓글 상세 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param param 조회 파라미터
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @GetMapping(Url.COMMENT_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentDtlAjax(
-            final LogActvtyParam logParam,
+            final @RequestParam("postNo") Integer key,
             final CommentParam param,
-            final @RequestParam("postNo") Integer key
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -180,16 +195,21 @@ public class CommentController
     }
 
     /**
-     * 댓글 삭제 처리 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 댓글 삭제 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param param 조회 파라미터
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(Url.COMMENT_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentDelAjax(
-            final LogActvtyParam logParam,
+            final @RequestParam("postNo") Integer key,
             final CommentParam param,
-            final @RequestParam("postNo") Integer key
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

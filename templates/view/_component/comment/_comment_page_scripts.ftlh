@@ -85,7 +85,7 @@
             },
 
             /**
-             * 댓글 수정 처리 (Ajax)
+             * 댓글 수정 (Ajax)
              * @param {string|number} postNo - 댓글 번호.
              */
             mdfAjax: function(postNo) {
@@ -112,7 +112,7 @@
             },
 
             /**
-             * 댓글 삭제 처리 (Ajax)
+             * 댓글 삭제 (Ajax)
              * @param {string|number} postNo - 댓글 번호.
              */
             delAjax: function(postNo) {

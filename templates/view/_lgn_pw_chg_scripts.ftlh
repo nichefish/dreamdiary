@@ -43,7 +43,7 @@
             },
 
             /**
-             * 비밀번호 수정 처리 (Ajax)
+             * 비밀번호 수정 (Ajax)
              */
             lgnPwChgAjax: function() {
                 const url = '${Url.AUTH_LGN_PW_CHG_AJAX!}';

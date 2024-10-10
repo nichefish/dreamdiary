@@ -87,7 +87,7 @@
             },
 
             /**
-             * 단락 등록 처리 (Ajax)
+             * 단락 등록 (Ajax)
              */
             regAjax: function() {
                 const isReg = $("#sectnRegForm #postNo").val() === "";
@@ -133,7 +133,7 @@
             },
 
             /**
-             * 단락 삭제 처리 (Ajax)
+             * 단락 삭제 (Ajax)
              * @param {string|number} postNo - 단락 번호.
              */
             delAjax: function(postNo) {
