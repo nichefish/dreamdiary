@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.spec;
 
-import io.nicheblog.dreamdiary.domain.notice.entity.NoticeEntity;
 import io.nicheblog.dreamdiary.domain._core.tag.entity.ContentTagEntity;
+import io.nicheblog.dreamdiary.domain.notice.entity.NoticeEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;
@@ -18,15 +18,15 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudSpec
  */
 public interface BaseClsfSpec<Entity extends BaseClsfEntity>
         extends BaseCrudSpec<Entity> {
 
     /**
-     * default: 검색 조건 목록 반환
-     * @param searchParamMap - 검색 조건을 포함하는 매개변수 맵
-     * @return Specification<Entity> - 검색 조건에 따른 Specification 객체
+     * default: 인자별로 구체적인 검색 조건을 설정하여 목록을 반환한다.
+     * 
+     * @param searchParamMap 검색 조건을 포함하는 매개변수 맵
+     * @return {@link Specification} -- 검색 조건에 따른 Specification 객체
      */
     @Override
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
@@ -55,11 +55,12 @@ public interface BaseClsfSpec<Entity extends BaseClsfEntity>
 
     /**
      * default: CLSF 요소에 대해 인자별로 구체적인 검색 조건 세팅
-     * @param searchParamMap - 검색 조건을 포함하는 매개변수 맵
-     * @param root - 엔티티의 루트 객체
-     * @param builder - CriteriaBuilder 객체
-     * @return List<Predicate> - 생성된 검색 조건의 리스트
-     * @throws Exception - 검색 조건 생성 중 발생할 수 있는 예외
+     * 
+     * @param searchParamMap 검색 조건을 포함하는 매개변수 맵
+     * @param root 엔티티의 루트 객체
+     * @param builder CriteriaBuilder 객체
+     * @return {@link List} -- 생성된 검색 조건의 리스트
+     * @throws Exception 검색 조건 생성 중 발생할 수 있는 예외
      */
     default List<Predicate> getClsfPredicate(
             final Map<String, Object> searchParamMap,

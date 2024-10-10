@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.transaction.Transactional;
@@ -25,10 +26,11 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
 
     /**
      * default: 게시물 등록 (Multipart)
-     * @param dto - 등록할 DTO 객체
+     *
+     * @param dto 등록할 DTO 객체
      * @param request - Multipart 요청 객체
-     * @return Dto - 처리된 DTO 객체
-     * @throws Exception - 파일 업로드 또는 등록 중 예외 발생 시
+     * @return {@link Dto} -- 처리된 DTO 객체
+     * @throws Exception 파일 업로드 또는 등록 중 예외 발생 시
      */
     @Transactional
     default Dto regist(final Dto dto, final MultipartHttpServletRequest request) throws Exception {
@@ -41,10 +43,11 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
 
     /**
      * default: 게시물 수정 (Multipart)
-     * @param dto - 수정할 DTO 객체
+     *
+     * @param dto 수정할 DTO 객체
      * @param request - Multipart 요청 객체
-     * @return Dto - 처리된 DTO 객체
-     * @throws Exception - 파일 업로드 또는 수정 중 예외 발생 시
+     * @return {@link Dto} -- 처리된 DTO 객체
+     * @throws Exception 파일 업로드 또는 수정 중 예외 발생 시
      */
     @Transactional
     default Dto modify(final Dto dto, final MultipartHttpServletRequest request) throws Exception {

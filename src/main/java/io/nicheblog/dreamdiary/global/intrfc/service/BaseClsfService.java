@@ -19,23 +19,23 @@ import java.io.Serializable;
  * </pre>
  *
  * @author nichefish
- * @extends BaseMultiCrudService - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 public interface BaseClsfService<Dto extends BaseClsfDto & Identifiable<Key>, ListDto extends BaseClsfDto, Key extends Serializable, Entity extends BaseClsfEntity, Repository extends BaseStreamRepository<Entity, Key>, Spec extends BaseSpec<Entity>, Mapstruct extends BaseClsfMapstruct<Dto, ListDto, Entity>>
         extends BaseMultiCrudService<Dto, ListDto, Key, Entity, Repository, Spec, Mapstruct> {
 
     /**
      * default: 게시물 등록 (dto level)
-     * @param dto - 등록할 DTO 객체
-     * @return Dto - 등록된 결과를 DTO로 변환한 객체
-     * @throws Exception - 등록 중 발생할 수 있는 예외
+     *
+     * @param dto 등록할 DTO 객체
+     * @return {@link Dto} -- 등록 결과를 DTO로 변환한 객체
+     * @throws Exception 등록 중 발생할 수 있는 예외
      */
     @Override
     default Dto regist(final Dto dto) throws Exception {
         // 등록 전처리
         this.preRegist(dto);
 
-        // Dto -> Entity
+        // Dto -> Entity 변환
         Mapstruct mapstruct = this.getMapstruct();
         Entity entity = mapstruct.toEntity(dto);
 
@@ -55,9 +55,10 @@ public interface BaseClsfService<Dto extends BaseClsfDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 수정 (dto level)
-     * @param dto - 수정할 DTO 객체
-     * @return Dto - 수정된 결과를 DTO로 변환한 객체
-     * @throws Exception - 수정 중 발생할 수 있는 예외
+     *
+     * @param dto 수정할 DTO 객체
+     * @return {@link Dto} -- 수정 결과를 DTO로 변환한 객체
+     * @throws Exception 수정 중 발생할 수 있는 예외
      */
     @Override
     default Dto modify(final Dto dto) throws Exception {
@@ -92,9 +93,10 @@ public interface BaseClsfService<Dto extends BaseClsfDto & Identifiable<Key>, Li
 
     /**
      * DTO와 엔티티가 각각 ManagtCmpstnModule 및 ManagtEmbedModule의 인스턴스인지 확인합니다.
-     * @param dto - 확인할 DTO 객체
-     * @param entity - 확인할 엔티티 객체
-     * @return Boolean - 두 객체가 해당 모듈의 인스턴스일 경우 true, 그렇지 않으면 false
+     *
+     * @param dto 확인할 DTO 객체
+     * @param entity 확인할 엔티티 객체
+     * @return {@link Boolean} -- 두 객체가 해당 모듈의 인스턴스일 경우 true, 그렇지 않으면 false
      */
     default boolean isManagtModule(final Dto dto, final Entity entity) {
         return dto instanceof ManagtCmpstnModule && entity instanceof ManagtEmbedModule;

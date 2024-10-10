@@ -17,7 +17,6 @@ import javax.persistence.Transient;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchEntity
  */
 @MappedSuperclass
 @Getter
@@ -45,7 +44,8 @@ public class BaseClsfEntity
     /* ----- */
 
     /**
-     * 복합키 객체 반환
+     * 복합키 객체 반환.
+     * @return {@link BaseClsfKey} -- 글 번호와 콘텐츠 유형을 포함하는 복합키 객체
      */
     public BaseClsfKey getClsfKey() {
         return new BaseClsfKey(this.postNo, this.contentType);

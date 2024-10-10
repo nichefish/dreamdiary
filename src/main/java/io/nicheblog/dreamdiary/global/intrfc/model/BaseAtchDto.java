@@ -13,16 +13,16 @@ import java.util.List;
  * BaseAtchDto
  * <pre>
  *  (공통/상속) 첨부파일 정보 추가 Dto.
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class BaseAtchDto
         extends BaseAuditDto {
@@ -36,8 +36,8 @@ public class BaseAtchDto
 
     /** 첨부파일 .zip 다운로드 URL */
     protected String atchFileZipUrl;
-    /** 첨부파일 .zip 파일명 */
 
+    /** 첨부파일 .zip 파일명 */
     @JsonIgnore
     protected String atchFileZipNm;
 
@@ -47,7 +47,8 @@ public class BaseAtchDto
     /* ---- */
 
     /**
-     * 첨부파일 목록 반환
+     * Getter :: 첨부파일 상세 목록을 반환한다.
+     * @return {@link List} -- 첨부파일 싱세 목록.
      */
     public List<AtchFileDtlDto> getAtchFileList() {
         if (this.getAtchFileNo() == null || this.getAtchFileInfo() == null) return null;

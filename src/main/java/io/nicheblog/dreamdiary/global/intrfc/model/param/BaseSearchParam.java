@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 public class BaseSearchParam
         extends BaseParam {
 
@@ -67,7 +67,8 @@ public class BaseSearchParam
 
     /**
      * Getter :: 페이지 번호.
-     * @return Integer - 페이지 번호 (기본값: 1)
+     *
+     * @return {@link Integer} -- 페이지 번호 (기본값: 1)
      */
     public Integer getPageNo() {
         if (this.pageNo == null) this.pageNo = DEFAULT_PAGE_NO;
@@ -75,7 +76,8 @@ public class BaseSearchParam
     }
     /**
      * Getter :: 페이지 크기.
-     * @return Integer - 페이지 크기 (기본값: 10)
+     *
+     * @return {@link Integer} -- 페이지 크기 (기본값: 10)
      */
     public Integer getPageSize() {
         if (this.pageSize == null) this.pageSize = DEFAULT_PAGE_SIZE;

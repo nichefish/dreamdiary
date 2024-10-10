@@ -16,13 +16,12 @@ import javax.validation.constraints.Size;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class BaseClsfDto
         extends BaseAtchDto {
@@ -41,14 +40,15 @@ public class BaseClsfDto
     @Pattern(regexp = "^[YN]$")
     protected String managtDtUpdtYn = "N";
 
-    /* ----- */
-
     /** 새 글 여부 */
     @Builder.Default
     protected Boolean isNew = false;
 
+    /* ----- */
+
     /**
-     * 복합키 객체 반환
+     * 복합키 객체 반환.
+     * @return {@link BaseClsfKey} -- 글 번호와 콘텐츠 유형을 포함하는 복합키 객체
      */
     public BaseClsfKey getClsfKey() {
         return new BaseClsfKey(this.getPostNo(), this.getContentType());

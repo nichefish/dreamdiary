@@ -21,7 +21,7 @@ import java.io.Serializable;
 public class BaseClsfKey
         implements Serializable {
 
-    /** 글번호 */
+    /** 글 번호 */
     protected Integer postNo;
 
     /** 컨텐츠 타입 */
@@ -30,9 +30,9 @@ public class BaseClsfKey
     /* ----- */
 
     /**
-     * 생성자
-     * @param postNo - 게시물의 고유 번호
-     * @param type - 콘텐츠 유형을 나타내는 ContentType 객체
+     * 생성자.
+     * @param postNo - 글 번호
+     * @param type - 콘텐츠 타입
      */
     public BaseClsfKey(final Integer postNo, final ContentType type) {
         this.postNo = postNo;
