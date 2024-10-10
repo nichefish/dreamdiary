@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.domain._core.auth.model.AuthRoleDto;
 import io.nicheblog.dreamdiary.domain._core.auth.service.AuthRoleService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.domain._core.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;

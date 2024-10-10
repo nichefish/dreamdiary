@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.entity.vcatn.papr;
+package io.nicheblog.dreamdiary.domain.vcatn.papr.entity;
 
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -18,7 +18,6 @@ import java.util.Date;
  * <pre>
  *  휴가 일정 Entity
  * </pre>
- *
  *
  * @author nichefish
  */
