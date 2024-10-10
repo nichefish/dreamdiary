@@ -88,6 +88,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 bulk 등록 후처리
+     *
      * @param entityList - 등록된 엔티티 리스트
      */
     default void postRegistAll(final List<Entity> entityList) {
@@ -96,6 +97,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 수정 전처리 (dto level)
+     *
      * @param dto 수정할 DTO 객체
      * @throws Exception 수정 전처리 중 발생할 수 있는 예외
      */
@@ -105,6 +107,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 수정 중간처리 (entity level, entity 변환 후 처리)
+     *
      * @param entity 수정 중간처리를 할 엔티티 객체
      */
     default void midModify(final Entity entity) {
@@ -113,6 +116,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 수정 후처리 (entity level, entity 변환 후 처리)
+     *
      * @param rslt - 수정된 엔티티 객체
      * @throws Exception 후처리 중 발생할 수 있는 예외
      */
@@ -122,9 +126,10 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 수정 (dto level)
+     *
      * @param dto 수정할 DTO 객체
      * @return Dto - 수정된 결과를 DTO로 변환한 객체
-     * @throws Exception 수정 중 발생할 수 있는 예외
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Transactional
     default Dto modify(final Dto dto) throws Exception {
@@ -151,6 +156,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 수정 (entity level)
+     *
      * @param e - 수정할 엔티티 객체
      * @return Entity - 저장 및 새로고침된 엔티티 객체
      */
@@ -169,6 +175,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 삭제 전처리
+     *
      * @param e - 삭제할 엔티티 객체
      * @throws Exception 삭제 전처리 중 발생할 수 있는 예외
      */
@@ -178,6 +185,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 삭제 (Dto 사용)
+     *
      * @param dto 삭제할 DTO 객체
      * @return Boolean - 삭제 성공시 true, 실패 시 false
      * @throws Exception 삭제 중 발생할 수 있는 예외
@@ -188,6 +196,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 삭제 (key 사용)
+     *
      * @param key 삭제할 엔티티의 키
      * @return Boolean - 삭제 성공시 true, 실패 시 false
      * @throws Exception 삭제 중 발생할 수 있는 예외
@@ -208,6 +217,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 삭제 후처리
+     *
      * @param e - 삭제된 엔티티 객체
      * @throws Exception 후처리 중 발생할 수 있는 예외
      */
@@ -217,6 +227,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 bulk-delete (entity level)
+     *
      * @param entityList - 삭제할 엔티티 리스트
      * @return Boolean - 삭제 성공시 true
      */
@@ -228,6 +239,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 bulk-delete (entity level)
+     *
      * @param searchParamMap 엔티티 리스트를 조회할 검색 파라미터 맵
      * @return Boolean - 삭제 성공시 true
      * @throws Exception 삭제 중 발생할 수 있는 예외
@@ -244,6 +256,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
 
     /**
      * default: 게시물 bulk 삭제 후처리
+     *
      * @param entityList - 삭제된 엔티티 리스트
      */
     default void postDeleteAll(final List<Entity> entityList) {

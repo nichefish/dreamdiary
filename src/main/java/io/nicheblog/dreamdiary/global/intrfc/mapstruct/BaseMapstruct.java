@@ -33,8 +33,7 @@ public interface BaseMapstruct<Dto, Entity> {
     Entity toEntity(final Dto dto) throws Exception;
 
     /**
-     * Update Entity from Dto
-     * (Dto에서 null이 아닌 값만 Entity로 매핑)
+     * Update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
      *
      * @param dto 업데이트할 DTO 객체
      * @param entity 업데이트할 대상 엔티티 객체

@@ -15,21 +15,24 @@ import java.util.stream.Collectors;
 /**
  * BaseCrudMapstruct
  * <pre>
- *  (공통/상속) MapStruct 기반 Mapper 인터페이스
- *  (entity -> listDto 추가)
+ *  (공통/상속) MapStruct 기반 Mapper 인터페이스.
+ *  (Entity -> ListDto 변환 메소드 추가.)
  * <pre>
  *
  * @author nichefish
- * @extends BaseMapstruct
  */
 public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends BaseCrudDto, Entity extends BaseCrudEntity>
         extends BaseMapstruct<Dto, Entity> {
 
     /**
-     * Entity -> ListDto
+     * Entity -> ListDto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return {@link ListDto} -- 변환된 ListDto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Named("toListDto")
-    ListDto toListDto(final Entity e) throws Exception;
+    ListDto toListDto(final Entity entity) throws Exception;
 
     /**
      * EntityList to DtoList
@@ -54,7 +57,11 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
     /* ----- */
 
     /**
-     * default : BaseEntity 기본 요소들 매핑 (toDto)
+     * default : BaseEntity -> BaseDto 기본 요소들 매핑 (toDto)
+     *
+     * @param entity 매핑할 원본 Entity 객체
+     * @param dto 매핑 대상인 Dto 객체
+     * @throws Exception 매핑 중 발생할 수 있는 예외
      */
     @AfterMapping
     default void mapBaseFields(final Entity entity, final @MappingTarget Dto dto) throws Exception {
@@ -62,7 +69,11 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
     }
 
     /**
-     * default : BaseEntity 기본 요소들 매핑 (toListDto)
+     * default : BaseEntity -> BaseListDto기본 요소들 매핑 (toListDto)
+     *
+     * @param entity 매핑할 원본 Entity 객체
+     * @param dto 매핑 대상인 ListDto 객체
+     * @throws Exception 매핑 중 발생할 수 있는 예외
      */
     @AfterMapping
     default void mapBaseListFields(final Entity entity, final @MappingTarget ListDto dto) throws Exception {
