@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.exptr.reqst;
+package io.nicheblog.dreamdiary.domain.exptr.reqst.model;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 /**
  * ExptrReqstDto
  * <pre>
- *  경비 관리 > 물품구매/경조사비 신청 Dto
+ *  경비 관리 > 물품구매/경조사비 신청 Dto.
  * </pre>
  *
  * @author nichefish
@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class ExptrReqstDto
         extends BasePostDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
@@ -59,18 +59,13 @@ public class ExptrReqstDto
         return title;
     }
 
-    @Override
-    public Integer getKey() {
-        return this.postNo;
-    }
-
     /* ----- */
 
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode
     public static class DTL extends ExptrReqstDto {
 
     }
@@ -79,7 +74,7 @@ public class ExptrReqstDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode
     @ToString
     public static class LIST extends ExptrReqstDto {
 
@@ -87,12 +82,17 @@ public class ExptrReqstDto
 
     /* ----- */
 
-    /** 댓글 정보 모듈 (위임) */
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
+
+    /** 위임 :: 댓글 정보 모듈 */
     public CommentCmpstn comment;
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     public TagCmpstn tag;
-    /** 조치 정보 모듈 (위임) */
+    /** 위임 :: 조치 정보 모듈 */
     public ManagtCmpstn managt;
-    /** 열람자 정보 모듈 (위임) */
+    /** 위임 :: 열람 정보 모듈 */
     public ViewerCmpstn viewer;
 }

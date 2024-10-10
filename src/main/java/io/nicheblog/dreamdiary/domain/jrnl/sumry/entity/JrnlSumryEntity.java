@@ -19,7 +19,6 @@ import javax.persistence.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudEntity
  */
 @Entity
 @Table(name = "jrnl_sumry")
@@ -92,6 +91,7 @@ public class JrnlSumryEntity
 
     /**
      * 생성자.
+     *
      * @param yy - 생성할 엔티티에 설정할 연도 값
      */
     public JrnlSumryEntity(final Integer yy) {

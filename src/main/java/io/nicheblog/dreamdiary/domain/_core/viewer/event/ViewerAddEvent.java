@@ -23,8 +23,9 @@ public class ViewerAddEvent
 
     /**
      * 생성자.
+     *
      * @param source 이 이벤트의 출처를 나타내는 객체
-     * @param clsfKey 게시물의 고유 키를 포함하는 BaseClsfKey 객체
+     * @param clsfKey 이벤트 처리 대상 객체를 식별 가능한 복합키
      */
     public ViewerAddEvent(
             final Object source,

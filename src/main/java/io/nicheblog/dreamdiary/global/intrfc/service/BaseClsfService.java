@@ -58,7 +58,7 @@ public interface BaseClsfService<Dto extends BaseClsfDto & Identifiable<Key>, Li
      *
      * @param dto 수정할 DTO 객체
      * @return {@link Dto} -- 수정 결과를 DTO로 변환한 객체
-     * @throws Exception 수정 중 발생할 수 있는 예외
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     default Dto modify(final Dto dto) throws Exception {

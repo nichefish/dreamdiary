@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.user;
+package io.nicheblog.dreamdiary.domain.user.info.entity;
 
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
@@ -74,14 +74,31 @@ public class UserStusEmbed {
 
     /* ----- */
 
-    /** 생성자 */
+    /**
+     * 생성자.
+     *
+     * @param reqstYn 요청 여부 ("Y" 또는 "N")
+     * @param cfYn 확인 여부 ("Y" 또는 "N")
+     */
     public UserStusEmbed(final String reqstYn, final String cfYn) {
         this.reqstYn = reqstYn;
         this.cfYn = cfYn;
     }
+
+    /**
+     * 갓 요청한 상태 = 요청 상태가 "Y", 확인 상태가 "N"인 상태 각체 반환
+     *
+     * @return {@link UserStusEmbed} -- 상태 객체
+     */
     public static UserStusEmbed getReqstStus() {
         return new UserStusEmbed("Y", "N");
     }
+
+    /**
+     * 갓 등록한 상태 = 요청 상태가 "N", 확인 상태가 "Y"인 상태 각체 반환
+     *
+     * @return {@link UserStusEmbed} -- 상태 객체
+     */
     public static UserStusEmbed getRegistStus() {
         return new UserStusEmbed("N", "Y");
     }

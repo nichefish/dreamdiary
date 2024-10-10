@@ -1,10 +1,9 @@
-package io.nicheblog.dreamdiary.web.model.vcatn.papr;
+package io.nicheblog.dreamdiary.domain.vcatn.papr.model;
 
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
-import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -13,17 +12,16 @@ import java.util.List;
 /**
  * VcatnPaprDto
  * <pre>
- *  휴가계획서 Dto
+ *  휴가계획서 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BasePostDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 @ToString
 public class VcatnPaprDto
         extends BasePostDto
@@ -48,16 +46,11 @@ public class VcatnPaprDto
 
     /* ----- */
 
-    @Override
-    public Integer getKey() {
-        return this.postNo;
-    }
-
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode
     @ToString
     public static class DTL extends VcatnPaprDto {
         //
@@ -67,7 +60,7 @@ public class VcatnPaprDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode
     @ToString
     public static class LIST extends VcatnPaprDto {
         //
@@ -75,12 +68,17 @@ public class VcatnPaprDto
 
     /* ----- */
 
-    /** 댓글 정보 모듈 (위임) */
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
+
+    /** 위임 :: 댓글 정보 모듈 */
     public CommentCmpstn comment;
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     public TagCmpstn tag;
-    /** 조치 정보 모듈 (위임) */
+    /** 위임 :: 조치 정보 모듈 */
     public ManagtCmpstn managt;
-    /** 열람자 정보 모듈 (위임) */
+    /** 위임 :: 열람 정보 모듈 */
     public ViewerCmpstn viewer;
 }

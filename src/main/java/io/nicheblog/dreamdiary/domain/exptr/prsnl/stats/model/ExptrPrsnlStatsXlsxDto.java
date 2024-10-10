@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.exptr.prsnl.stats;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.stats.model;
 
 import lombok.*;
 
@@ -14,7 +14,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class ExptrPrsnlStatsXlsxDto {
 
     /** 구분 */

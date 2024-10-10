@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudDto
  */
 @Getter
 @Setter

@@ -1,12 +1,13 @@
-package io.nicheblog.dreamdiary.web.service.vcatn.schdul;
+package io.nicheblog.dreamdiary.domain.vcatn.papr.service;
 
+import io.nicheblog.dreamdiary.domain.vcatn.papr.entity.VcatnSchdulEntity;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.mapstruct.VcatnSchdulMapstruct;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnSchdulDto;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.repository.jpa.VcatnSchdulRepository;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.spec.VcatnSchdulSpec;
+import io.nicheblog.dreamdiary.domain.vcatn.stats.model.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
-import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.vcatn.schdul.VcatnSchdulMapstruct;
-import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.stats.VcatnStatsYyDto;
-import io.nicheblog.dreamdiary.web.repository.vcatn.jpa.VcatnSchdulRepository;
-import io.nicheblog.dreamdiary.web.spec.vcatn.VcatnSchdulSpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,6 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("vcatnSchdulService")
 @RequiredArgsConstructor
@@ -30,25 +30,20 @@ import java.util.Map;
 public class VcatnSchdulService
         implements BaseCrudService<VcatnSchdulDto, VcatnSchdulDto, Integer, VcatnSchdulEntity, VcatnSchdulRepository, VcatnSchdulSpec, VcatnSchdulMapstruct> {
 
-    private final VcatnSchdulRepository vcatnSchdulRepository;
-    private final VcatnSchdulSpec vcatnSchdulSpec;
-    private final VcatnSchdulMapstruct vcatnSchdulMapstruct = VcatnSchdulMapstruct.INSTANCE;
+    @Getter
+    private final VcatnSchdulRepository repository;
+    @Getter
+    private final VcatnSchdulSpec spec;
+    @Getter
+    private final VcatnSchdulMapstruct mapstruct = VcatnSchdulMapstruct.INSTANCE;
 
-    @Override
-    public VcatnSchdulRepository getRepository() {
-        return this.vcatnSchdulRepository;
-    }
-
-    @Override
-    public VcatnSchdulSpec getSpec() {
-        return this.vcatnSchdulSpec;
-    }
-
-    @Override
-    public VcatnSchdulMapstruct getMapstruct() {
-        return this.vcatnSchdulMapstruct;
-    }
-
+    /**
+     * 휴가 년도 정보를 바탕으로 휴가 일정 목록을 조회합니다.
+     *
+     * @param statsYy 휴가 년도 정보를 담고 있는 객체
+     * @return {@link List} 휴가 일정 목록
+     * @throws Exception 처리 중 발생할 수 있는 예외
+     */
     public List<VcatnSchdulDto> getListDto(VcatnStatsYyDto statsYy) throws Exception {
         Map<String, Object> searchParamMap = new HashMap(){{
             put("statsYy", statsYy.getStatsYy());
@@ -57,9 +52,8 @@ public class VcatnSchdulService
         return this.getListDto(searchParamMap);
     }
 
-    //
 /**
- * 휴가관리 > 휴가사용일자 목록 Page<Entity>->Page<Dto> 변환
+ * 목록 Page<Entity>->Page<Dto> 변환
  *//*
 
     public Page<VcatnSchdulDto> pageEntityToDto(

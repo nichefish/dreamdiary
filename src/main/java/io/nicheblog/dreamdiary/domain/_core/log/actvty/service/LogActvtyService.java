@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.domain._core.log.actvty.entity.LogActvtyEntity;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.mapstruct.LogActvtyMapstruct;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyDto;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.spec.LogActvtySpec;
-import io.nicheblog.dreamdiary.domain._core.log.repository.jpa.LogActvtyRepository;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.repository.jpa.LogActvtyRepository;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 /**
  * LogActvtyService
  * <pre>
- *  활동 로그 관리 서비스 모듈
+ *  활동 로그 관리 서비스 모듈.
  * </pre>
  *
  * @author nichefish

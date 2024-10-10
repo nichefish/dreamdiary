@@ -114,7 +114,6 @@ public class VcatnPaprService
      * 삭제 전처리. (override)
      *
      * @param entity - 삭제할 엔티티
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void preDelete(final VcatnPaprEntity entity) {
@@ -127,7 +126,7 @@ public class VcatnPaprService
      * 휴가계획서 중 가장 오래된 등록 년도부터 현재 년도까지의 년도 목록을 생성하여 반환합니다.
      *
      * @return {@link List} -- 휴가계획서 년도 목록
-     * @throws Exception 처리 중 발생 가능한 예외
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public List<VcatnStatsYyDto> getVcatnYyList() throws Exception {
         String minYyStr = repository.selectMinYy();

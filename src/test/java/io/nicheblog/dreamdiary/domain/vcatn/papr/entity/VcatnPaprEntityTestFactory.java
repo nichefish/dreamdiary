@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.vcatn.papr;
+package io.nicheblog.dreamdiary.domain.vcatn.papr.entity;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;

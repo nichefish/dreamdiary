@@ -23,8 +23,9 @@ public class LogSysEvent
 
     /**
      * 생성자.
-     * @param source 이벤트가 발생한 객체
-     * @param log 이벤트와 관련된 로그 정보를 담은 `LogSysParam` 객체
+     * 
+     * @param source 이벤트의 출처를 나타내는 객체
+     * @param log 적제할 시스템 로그 정보를 담은 객체
      */
     public LogSysEvent(final Object source, final LogSysParam log) {
         super(source);
