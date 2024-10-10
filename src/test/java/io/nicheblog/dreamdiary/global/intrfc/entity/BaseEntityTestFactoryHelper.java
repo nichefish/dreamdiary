@@ -1,9 +1,7 @@
-package io.nicheblog.dreamdiary.web.entity;
+package io.nicheblog.dreamdiary.global.intrfc.entity;
 
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.TestConstant;
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditRegEntity;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;

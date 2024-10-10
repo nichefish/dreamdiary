@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.cd.entity;
+package io.nicheblog.dreamdiary.domain._core.cd.entity;
 
 import io.nicheblog.dreamdiary.global.TestConstant;
 import lombok.experimental.UtilityClass;
@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 /**
  * DtlCdEntityTestFactory
  * <pre>
- *  상세코드 테스트 Entity 생성 팩토리 모듈
+ *  상세 코드 테스트 Entity 생성 팩토리 모듈
  * </pre>
  *
  * @author nichefish 
@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 public class DtlCdEntityTestFactory {
 
     /**
-     * 상세코드 Entity 생성
+     * 상세 코드 Entity 생성
      */
     public static DtlCdEntity createDtlCd() throws Exception {
         return DtlCdEntity.builder()

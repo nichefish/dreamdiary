@@ -52,14 +52,16 @@ public class DtlCdController
      * 분류 코드로 상세 코드 관리(useYn=N 포함) 목록 조회 (Ajax)
      * (관리자MNGR만 접근 가능.)
      *
-     * @param clCd: 구분코드 (대분류)
+     * @param clCd: 구분 코드 (대분류)
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @GetMapping(Url.DTL_CD_LIST_AJAX)
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdListAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("clCd") String clCd
+            final @RequestParam("clCd") String clCd,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -99,7 +101,6 @@ public class DtlCdController
      * @param regYn 등록 여부 (Y/N)
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 응답 객체
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(value = {Url.DTL_CD_REG_AJAX, Url.DTL_CD_MDF_AJAX})
     @Secured({Constant.ROLE_MNGR})
@@ -146,7 +147,6 @@ public class DtlCdController
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 응답 객체
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.DTL_CD_DTL_AJAX)
     @Secured({Constant.ROLE_MNGR})

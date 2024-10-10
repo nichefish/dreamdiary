@@ -1,14 +1,14 @@
-package io.nicheblog.dreamdiary.web.controller.cmm.cache;
+package io.nicheblog.dreamdiary.domain._core.cache.controller;
 
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -27,11 +27,10 @@ import java.util.Map;
 /**
  * EhCacheController
  * <pre>
- *  ehCache 수동 관리 컨트롤러
+ *  ehCache 수동 관리 컨트롤러.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @Log4j2
@@ -44,8 +43,11 @@ public class EhCacheController
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;        // 작업 카테고리 (로그 적재용)
 
     /**
-     * 사이트 캐시 조회 (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * 사이트 캐시 목록 조회 (Ajax)
+     * (관리자MNGR만 접근 가능.)
+     * 
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @GetMapping(Url.CACHE_ACTIVE_LIST_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -82,8 +84,13 @@ public class EhCacheController
     }
 
     /**
-     * 사이트 캐시 evict (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * 사이트 캐시 삭제 (Ajax)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param cacheName 삭제할 캐시의 이름
+     * @param key 삭제할 캐시 항목의 키 (전체 삭제 시 "-" 입력)
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(Url.CACHE_EVICT_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -133,7 +140,10 @@ public class EhCacheController
 
     /**
      * 사이트 캐시 전체 초기화 (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @PostMapping(Url.CACHE_CLEAR_AJAX)
     @Secured(Constant.ROLE_MNGR)
