@@ -18,11 +18,10 @@ import javax.persistence.*;
 /**
  * BoardPostEntity
  * <pre>
- *  일반게시판 게시물 Entity.
+ *  게시판 게시물 Entity.
  * </pre>
  *
  * @author nichefish
- * @extends BasePostEntity
  */
 @Entity
 @Table(name = "board_post")
@@ -59,23 +58,6 @@ public class BoardPostEntity
     @NotFound(action = NotFoundAction.IGNORE)
     @Comment("게시판 정의 정보")
     private BoardDefEntity boardDefInfo;
-
-    /** 노션 페이지 참조 ID :: UUID */
-    // @Column(name = "NOTION_PAGE_ID")
-    // @Comment("노션 페이지 참조 ID :: UUID")
-    // private String notionPageId;
-
-    /** 파일시스템 참조 목록 *//*
-    // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    // @JoinColumnsOrFormulas({
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "POST_NO", referencedColumnName = "POST_NO")),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type"))
-    // })
-    // @Fetch(FetchMode.SELECT)
-    // @NotFound(action = NotFoundAction.IGNORE)
-    // @Comment("파일시스템 참조 목록")
-    // private List<FlsysRefEntity> flsysRefList;
-    */
 
     /* ----- */
 

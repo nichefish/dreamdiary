@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class CommentSearchParam
         extends BaseSearchParam {

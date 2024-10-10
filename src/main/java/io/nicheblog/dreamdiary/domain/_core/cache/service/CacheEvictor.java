@@ -16,13 +16,15 @@ public interface CacheEvictor<Key extends Serializable> {
 
     /**
      * 캐시 삭제
-     * @param key - 캐시에서 삭제할 대상 키
-     * @throws Exception - 캐시 삭제 과정에서 발생할 수 있는 예외
+     *
+     * @param key 캐시에서 삭제할 대상 키
+     * @throws Exception 캐시 삭제 과정에서 발생할 수 있는 예외
      */
     void evict(Key key) throws Exception;
 
     /**
-     * 캐시 이름에 대해서 기간 캐시 삭제 :: 메소드 분리
+     * 캐시 이름에 대해서 기간 캐시 삭제
+     *
      * @param cacheName - 삭제할 캐시 이름
      * @param yy - 삭제할 연도(문자열 형식)
      * @param mnth - 삭제할 월(문자열 형식)
@@ -32,7 +34,8 @@ public interface CacheEvictor<Key extends Serializable> {
     }
 
     /**
-     * 캐시 이름에 대해서 기간 캐시 삭제 :: 메소드 분리
+     * 캐시 이름에 대해서 기간 캐시 삭제
+     *
      * @param cacheName - 삭제할 캐시 이름
      * @param yy - 삭제할 연도(문자열 형식)
      * @param mnth - 삭제할 월(문자열 형식)

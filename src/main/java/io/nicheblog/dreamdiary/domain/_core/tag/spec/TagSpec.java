@@ -27,10 +27,11 @@ public class TagSpec
         implements BaseSpec<TagEntity> {
 
     /**
-     * 조회 후처리
-     * @param root - 조회할 엔티티의 Root 객체
+     * 검색 조건 세팅 후 쿼리 후처리. (override)
+     *
+     * @param root 조회할 엔티티의 Root 객체
      * @param query - CriteriaQuery 객체
-     * @param builder - CriteriaBuilder 객체
+     * @param builder CriteriaBuilder 객체
      */
     @Override
     public void postQuery(
@@ -43,12 +44,13 @@ public class TagSpec
     }
 
     /**
-     * 인자별로 구체적인 검색 조건 세팅
-     * @param searchParamMap - 검색 파라미터 맵
-     * @param root - 검색할 엔티티의 Root 객체
-     * @param builder - 검색 조건을 생성하는 CriteriaBuilder 객체
-     * @return List<Predicate> - 설정된 검색 조건(Predicate) 리스트
-     * @throws Exception - 검색 조건 생성 중 발생할 수 있는 예외
+     * 인자별로 구체적인 검색 조건을 세팅한다. (override)
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @param root 검색할 엔티티의 Root 객체
+     * @param builder 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return {@link List} -- 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception 검색 조건 생성 중 발생할 수 있는 예외
      */
     @Override
     public List<Predicate> getPredicateWithParams(
@@ -78,8 +80,9 @@ public class TagSpec
     }
     
     /**
-     * 연관관계 없는 태그 조회
-     * @return Specification<TagEntity> - 연관관계가 없는 태그들을 검색하는 Specification 객체
+     * 연관관계 없는 태그 조회 조건을 반환한다.
+     *
+     * @return {@link Specification} -- 연관관계가 없는 태그들을 검색하는 Specification 객체
      */
     public Specification<TagEntity> getNoRefTags() {
         return (root, query, builder) -> {
@@ -95,9 +98,10 @@ public class TagSpec
     }
     
     /** 
-     * 컨텐츠 타입에 맞는 태그 목록 조회
+     * 컨텐츠 타입에 맞는 태그 목록 조회 조건을 반환한다.
+     *
      * @param contentType - 조회할 컨텐츠 타입
-     * @return Specification<TagEntity> - 주어진 컨텐츠 타입에 맞는 태그들을 검색하는 Specification 객체
+     * @return {@link Specification} -- 주어진 컨텐츠 타입에 맞는 태그들을 검색하는 Specification 객체
      */
     public Specification<TagEntity> getContentSpecificTag(final String contentType) {
         Map<String, Object> searchParamMap = new HashMap<>(){{

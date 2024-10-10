@@ -1,13 +1,13 @@
-package io.nicheblog.dreamdiary.web.model.jrnl.day;
+package io.nicheblog.dreamdiary.domain.jrnl.day.model;
 
+import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamDto;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.model.jrnl.diary.JrnlDiaryDto;
-import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -25,14 +25,12 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseClsfDto
- * @implements CommentCmpstnModule, TagCmpstnModule
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class JrnlDayDto
         extends BaseClsfDto
         implements Identifiable<Integer>, TagCmpstnModule, Comparable<JrnlDayDto>  {
@@ -83,42 +81,31 @@ public class JrnlDayDto
 
     /** 저널 일기 목록 */
     private List<JrnlDiaryDto> jrnlDiaryList;
+
     /** 저널 꿈 목록 */
     private List<JrnlDreamDto> jrnlDreamList;
+
     /** 저널 꿈 (타인) 목록 */
     private List<JrnlDreamDto> jrnlElseDreamList;
 
-    @Override
-    public Integer getKey() {
-        return this.postNo;
-    }
-
-    @Getter
-    @Setter
-    @SuperBuilder(toBuilder = true)
-    @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    public static class REQUEST
-            extends JrnlDayDto {
-
-        /** 노션 페이지 참조 ID :: UUID */
-        // private String notionPageId;
-
-        /** 파일시스템 참조 목록 */
-        // private List<FlsysRefDto> flsysRefList;
-    }
-
     /* ----- */
 
-    /** 기준일자 */
+    /**
+     * Getter :: 기준일자
+     */
     public String getStdrdDt() {
         if (!StringUtils.isEmpty(this.jrnlDt)) return jrnlDt;
         return aprxmtDt;
     }
-    /** 꿈 목록 보유 여부 */
+
+    /**
+     * Getter :: 꿈 목록 보유 여부
+     */
     public Boolean getHasDream() {
         return !CollectionUtils.isEmpty(this.jrnlDreamList) || !CollectionUtils.isEmpty(this.jrnlElseDreamList);
     }
+
+    /* ----- */
 
     /**
      * 날짜 오름차순 정렬
@@ -131,8 +118,11 @@ public class JrnlDayDto
         return thisDate.compareTo(otherDate);
     }
 
-    /* ----- */
+    @Override
+    public Integer getKey() {
+        return this.postNo;
+    }
 
-    /** 태그 정보 모듈 (위임) */
+    /** 위임 :: 태그 정보 모듈 */
     public TagCmpstn tag;
 }

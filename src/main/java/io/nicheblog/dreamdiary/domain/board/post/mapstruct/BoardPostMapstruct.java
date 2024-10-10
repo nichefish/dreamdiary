@@ -17,7 +17,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * BoardPostMapstruct
  * <pre>
- *  일반게시판 게시물 MapStruct 기반 Mapper 인터페이스.
+ *  게시판 게시물 MapStruct 기반 Mapper 인터페이스.
  * </pre>
  *
  * @author nichefish
@@ -29,10 +29,11 @@ public interface BoardPostMapstruct
     BoardPostMapstruct INSTANCE = Mappers.getMapper(BoardPostMapstruct.class);
 
     /**
-     * Entity -> Dto
-     * @param entity - 변환할 Entity 객체
-     * @return Dto - 변환된 Dto 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Entity -> Dto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return Dto -- 변환된 Dto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Mapping(target = "boardCd", source = "contentType")
@@ -41,10 +42,11 @@ public interface BoardPostMapstruct
     BoardPostDto.DTL toDto(final BoardPostEntity entity) throws Exception;
 
     /**
-     * SmpEntity -> Dto
-     * @param entity - 변환할 SmpEntity 객체
-     * @return Dto - 변환된 Dto 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * SmpEntity -> Dto 변환
+     *
+     * @param entity 변환할 SmpEntity 객체
+     * @return Dto -- 변환된 Dto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Mapping(target = "boardCd", source = "contentType")
     @Mapping(target = "ctgrClCd", expression = "java((entity.getBoardDefInfo() != null) ? entity.getBoardDefInfo().getCtgrClCd() : null)")
@@ -52,10 +54,11 @@ public interface BoardPostMapstruct
     BoardPostDto.DTL toDto(final BoardPostSmpEntity entity) throws Exception;
 
     /**
-     * Entity -> ListDto
-     * @param entity - 변환할 Entity 객체
-     * @return ListDto - 변환된 ListDto 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Entity -> ListDto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return ListDto -- 변환된 ListDto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Mapping(target = "boardCd", source = "contentType")
@@ -64,10 +67,11 @@ public interface BoardPostMapstruct
     BoardPostDto.LIST toListDto(final BoardPostEntity entity) throws Exception;
 
     /**
-     * Dto -> Entity
-     * @param dto - 변환할 Dto 객체
-     * @return Entity - 변환된 Entity 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Dto -> Entity 변환
+     *
+     * @param dto 변환할 Dto 객체
+     * @return Entity -- 변환된 Entity 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Mapping(target = "contentType", source = "boardCd")
@@ -75,9 +79,10 @@ public interface BoardPostMapstruct
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
-     * @param dto - 업데이트할 DTO 객체
-     * @param entity - 업데이트할 대상 엔티티 객체
-     * @throws Exception - 매핑 중 발생할 수 있는 예외
+     *
+     * @param dto 업데이트할 DTO 객체
+     * @param entity 업데이트할 대상 엔티티 객체
+     * @throws Exception 매핑 중 발생할 수 있는 예외
      */
     @Override
     @Mapping(target = "contentType", source = "boardCd")

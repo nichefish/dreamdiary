@@ -13,7 +13,7 @@ commons.mqttws31 = (function() {
          * MQTT 연결을 시작하고 MQTT 클라이언트 인스턴스를 반환합니다.
          * @param {string} componentId - MQTT 통신을 위한 컴포넌트 ID.
          * @param {object} options - MQTT 클라이언트 설정 옵션.
-         * @param {function} onSuccFunc - 연결 성공 시 호출할 콜백 함수.
+         * @param {function} onSuccFunc - 연결 성공시 호출할 콜백 함수.
          * @returns {object} mqttClient - 생성된 MQTT 클라이언트 인스턴스.
          */
         start: function(componentId, options, onSuccFunc) {
@@ -60,10 +60,10 @@ commons.mqttws31 = (function() {
         },
 
         /**
-         * MQTT 클라이언트를 지정된 옵션으로 연결하고, 성공 시 콜백 함수를 실행합니다.
+         * MQTT 클라이언트를 지정된 옵션으로 연결하고, 성공시 콜백 함수를 실행합니다.
          * @param {Paho.MQTT.Client} mqttClient - MQTT 클라이언트 인스턴스.
          * @param {object} options - 연결 설정 옵션.
-         * @param {function} onSuccFunc - 연결 성공 시 호출할 콜백 함수.
+         * @param {function} onSuccFunc - 연결 성공시 호출할 콜백 함수.
          */
         connect: function(mqttClient, options = {}, onSuccFunc) {
             const isLogging = options.logging || false;
@@ -76,7 +76,7 @@ commons.mqttws31 = (function() {
                 useSSL: options.useSSL || false,
                 keepAliveInterval: 30,
 
-                // 연결 성공 시
+                // 연결 성공시
                 onSuccess: function() {
                     if (isLogging) console.log(mqttClient.clientId + " // connect: onConnect...");
 

@@ -24,7 +24,7 @@ public interface BaseStateSpec<Entity extends BaseAuditEntity & StateEmbedModule
         extends BaseSpec<Entity> {
 
     /**
-     * default: 인자별로 구체적인 검색 조건을 세팅한다.
+     * default: 인자별로 구체적인 검색 조건을 세팅한다. (override)
      * 
      * @param searchParamMap 검색 파라미터 맵
      * @param root 검색할 엔티티의 Root 객체

@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * BasePostSpec
  * <pre>
- *  (공통/상속) 게시판 검색인자 세팅 Specification 인터페이스
+ *  (공통/상속) 게시판 검색인자 세팅 Specification 인터페이스.
  * </pre>
  *
  * @author nichefish
@@ -24,7 +24,7 @@ public interface BasePostSpec<Entity extends BasePostEntity>
         extends BaseClsfSpec<Entity> {
 
     /**
-     * default: 검색 조건 목록 반환
+     * default: 인자별로 구체적인 검색 조건을 설정하여 목록을 반환한다.
      */
     @Override
     default Specification<Entity> searchWith(final Map<String, Object> searchParamMap) {
@@ -55,7 +55,13 @@ public interface BasePostSpec<Entity extends BasePostEntity>
     }
 
     /**
-     * default: CLSF 요소에 대해 인자별로 구체적인 검색 조건 세팅
+     * default: CLSF 요소에 대해 인자별로 구체적인 검색 조건을 세팅한다.
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @param root 검색할 엔티티의 Root 객체
+     * @param builder 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return {@link List} -- 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception 검색 조건 생성 중 발생할 수 있는 예외
      */
     default List<Predicate> getPostPredicate(
             final Map<String, Object> searchParamMap,

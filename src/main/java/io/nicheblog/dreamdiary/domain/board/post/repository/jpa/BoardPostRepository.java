@@ -8,11 +8,10 @@ import org.springframework.stereotype.Repository;
 /**
  * BoardPostRepository
  * <pre>
- *  일반게시판 게시물 (JPA) Repository 인터페이스.
+ *  게시판 게시물 (JPA) Repository 인터페이스.
  * </pre>
  *
  * @author nichefish
- * @extends BaseStreamRepository
  */
 @Repository("boardPostRepository")
 public interface BoardPostRepository

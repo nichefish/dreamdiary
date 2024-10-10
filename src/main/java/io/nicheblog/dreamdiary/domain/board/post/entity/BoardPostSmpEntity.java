@@ -17,7 +17,7 @@ import javax.persistence.*;
 /**
  * BoardPostSmpEntity
  * <pre>
- *  일반게시판 게시물 간소화 Entity.
+ *  게시판 게시물 간소화 Entity.
  *  (BoardPostEntity에서 연관관계(댓글, 태그 등) 정보 제거 = 연관관계 순환참조 방지 위함. 나머지는 동일)
  * </pre>
  *

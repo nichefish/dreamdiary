@@ -54,8 +54,8 @@ public class ManagtrEntity
     /* ----- */
 
     /**
-     * 생성자
-     * @param key - 게시물의 키 정보 (BaseClsfKey)
+     * 생성자.
+     * @param key 글 번호와 컨텐츠 타입 정보를 포함한 복합키 객체.
      */
     public ManagtrEntity(final BaseClsfKey key) {
         this.refPostNo = key.getPostNo();

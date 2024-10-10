@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.log.entity;
+package io.nicheblog.dreamdiary.domain._core.log.actvty.entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -14,7 +14,10 @@ import java.io.Serializable;
 
 /**
  * LogActvtyUrlNmEntity
- * 로그 작업URL 한글 매칭 Entity
+ * <pre>
+ *  로그 작업 URL 한글 매칭 Entity.
+ * </pre>
+ *
  *
  * @author nichefish
  */

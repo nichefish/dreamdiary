@@ -20,7 +20,7 @@ import java.util.List;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class JrnlDayApiDto
         extends BaseClsfDto

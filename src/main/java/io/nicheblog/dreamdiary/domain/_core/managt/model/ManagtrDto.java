@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 public class ManagtrDto
         extends BaseAuditRegDto {
 
@@ -43,7 +43,7 @@ public class ManagtrDto
 
     /**
      * 생성자.
-     * @param key - 게시글 번호와 컨텐츠 타입 정보를 포함한 분류 키 객체
+     * @param key 글 번호와 컨텐츠 타입 정보를 포함한 분류 키 객체.
      */
     public ManagtrDto(final BaseClsfKey key) {
         this.refPostNo = key.getPostNo();

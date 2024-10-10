@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.repository.log.mybatis;
+package io.nicheblog.dreamdiary.domain._core.log.stats.repository.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 

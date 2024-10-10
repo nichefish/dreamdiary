@@ -16,17 +16,16 @@ import javax.validation.constraints.Size;
 /**
  * BoardPostDto
  * <pre>
- *  일반게시판 게시물 Dto.
+ *  게시판 게시물 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BasePostDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 public class BoardPostDto
         extends BasePostDto
         implements Identifiable<BaseClsfKey>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
@@ -38,22 +37,11 @@ public class BoardPostDto
 
     /* ----- */
 
-    /**
-     * 내부 값들 합쳐서 풀 타이틀 반환
-     */
-    // public String getFullTitle() {
-    //     String title = this.title;
-    //     if (StringUtils.isNotEmpty(this.ctgrNm)) title = "[" + this.ctgrNm + "] " + title;
-    //     return title;
-    // }
-
-    /* ----- */
-
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode
     public static class DTL
             extends BoardPostDto {
         /** 노션 페이지 참조 ID :: UUID */
@@ -67,7 +55,7 @@ public class BoardPostDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode
     public static class LIST
             extends BoardPostDto {
         //

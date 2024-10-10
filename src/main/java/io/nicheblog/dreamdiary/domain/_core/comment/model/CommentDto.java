@@ -20,13 +20,12 @@ import javax.validation.constraints.Size;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class CommentDto
         extends BasePostDto

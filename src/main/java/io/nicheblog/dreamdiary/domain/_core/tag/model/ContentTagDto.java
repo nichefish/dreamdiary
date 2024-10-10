@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 public class ContentTagDto
         extends BaseCrudDto
         implements Identifiable<Integer>, Comparable<ContentTagDto> {
@@ -66,8 +66,6 @@ public class ContentTagDto
         String otherTagNm = other.getTagNm();
         return thisTagNm.compareTo(otherTagNm);
     }
-
-    /* ----- */
 
     @Override
     public Integer getKey() {

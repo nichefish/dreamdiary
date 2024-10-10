@@ -9,16 +9,15 @@ import javax.validation.constraints.Size;
 /**
  * BoardPostSearchParam
  * <pre>
- *  일반게시판 게시물 검색 파라미터.
+ *  게시판 게시물 검색 파라미터.
  * </pre>
  *
  * @author nichefish
- * @extends BasePostSearchParam
  */
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class BoardPostSearchParam
         extends BasePostSearchParam {

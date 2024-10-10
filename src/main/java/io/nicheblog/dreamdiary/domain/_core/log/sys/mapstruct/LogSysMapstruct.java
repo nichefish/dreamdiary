@@ -24,10 +24,11 @@ public interface LogSysMapstruct
     LogSysMapstruct INSTANCE = Mappers.getMapper(LogSysMapstruct.class);
 
     /**
-     * Entity -> Dto
-     * @param entity - 변환할 Entity 객체
-     * @return Dto - 변환된 Dto 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Entity -> Dto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return Dto -- 변환된 Dto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Named("toDto")
@@ -35,10 +36,11 @@ public interface LogSysMapstruct
     LogSysDto.DTL toDto(final LogSysEntity entity) throws Exception;
 
     /**
-     * Entity -> ListDto
-     * @param entity - 변환할 Entity 객체
-     * @return ListDto - 변환된 ListDto 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Entity -> ListDto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return ListDto -- 변환된 ListDto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Named("toListDto")

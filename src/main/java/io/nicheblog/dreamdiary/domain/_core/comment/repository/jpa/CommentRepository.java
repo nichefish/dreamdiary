@@ -21,9 +21,10 @@ public interface CommentRepository
         extends BaseStreamRepository<CommentEntity, Integer> {
 
     /**
-     * 댓글 엔티티(CommentEntity) 조회
-     * @param key - 조회할 댓글 엔티티의 식별자 (키 값)
-     * @return Optional<CommentEntity> - 지정된 키 값에 해당하는 댓글 엔티티를 포함한 Optional 객체
+     * 댓글 엔티티(CommentEntity) 조회 :: entityGraph 사용 위해 override
+     *
+     * @param key 조회할 댓글 엔티티의 식별자 (키 값)
+     * @return {@link Optional} -- 지정된 키 값에 해당하는 댓글 엔티티를 포함한 Optional 객체
      */
     @Override
     @EntityGraph(value = "CommentEntity.withCtgrCd")

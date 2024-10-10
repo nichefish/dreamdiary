@@ -3,18 +3,20 @@ package io.nicheblog.dreamdiary.domain._core.managt.mapstruct;
 import io.nicheblog.dreamdiary.domain._core.managt.entity.ManagtrEntity;
 import io.nicheblog.dreamdiary.domain._core.managt.model.ManagtrDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.MapstructHelper;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 /**
  * ManagtrMapstruct
  * <pre>
  *  게시물 작업자 MapStruct 기반 Mapper 인터페이스.
- *  게시물 게시물 작업자(managtr) = 일반게시판 수정이력자. 일반게시판 게시물(board_post)에 1:N으로 귀속된다.
+ *  게시물 게시물 작업자(managtr) = 게시판 수정이력자. 게시판 게시물(board_post)에 1:N으로 귀속된다.
  * </pre>
  *
  * @author nichefish
@@ -26,10 +28,11 @@ public interface ManagtrMapstruct
     ManagtrMapstruct INSTANCE = Mappers.getMapper(ManagtrMapstruct.class);
 
     /**
-     * Entity -> Dto
-     * @param entity - 변환할 Entity 객체
-     * @return Dto - 변환된 Dto 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Entity -> Dto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return Dto -- 변환된 Dto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Named("toDto")
@@ -38,10 +41,11 @@ public interface ManagtrMapstruct
     ManagtrDto toDto(final ManagtrEntity entity) throws Exception;
 
     /**
-     * Dto -> Entity
-     * @param dto - 변환할 Dto 객체
-     * @return Entity - 변환된 Entity 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Dto -> Entity 변환
+     *
+     * @param dto 변환할 Dto 객체
+     * @return Entity -- 변환된 Entity 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     ManagtrEntity toEntity(final ManagtrDto dto) throws Exception;

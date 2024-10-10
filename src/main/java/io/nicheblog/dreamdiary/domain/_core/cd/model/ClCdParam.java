@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class ClCdParam
         extends BaseParam {

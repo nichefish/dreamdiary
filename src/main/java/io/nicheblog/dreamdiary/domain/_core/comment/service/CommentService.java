@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.domain._core.comment.repository.jpa.CommentReposi
 import io.nicheblog.dreamdiary.domain._core.comment.spec.CommentSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,29 +25,20 @@ import org.springframework.stereotype.Service;
 public class CommentService
         implements BaseMultiCrudService<CommentDto, CommentDto, Integer, CommentEntity, CommentRepository, CommentSpec, CommentMapstruct> {
 
-    private final CommentRepository commentRepository;
-    private final CommentSpec commentSpec;
-    private final CommentMapstruct commentMapstruct = CommentMapstruct.INSTANCE;
+    @Getter
+    private final CommentRepository repository;
+    @Getter
+    private final CommentSpec spec;
+    @Getter
+    private final CommentMapstruct mapstruct = CommentMapstruct.INSTANCE;
 
     private final EhCacheEvictService ehCacheEvictService;
 
-    @Override
-    public CommentRepository getRepository() {
-        return this.commentRepository;
-    }
-    @Override
-    public CommentMapstruct getMapstruct() {
-        return this.commentMapstruct;
-    }
-    @Override
-    public CommentSpec getSpec() {
-        return this.commentSpec;
-    }
-
     /**
-     * 등록 후처리 :: override
+     * 등록 후처리. (override)
+     * 
      * @param rslt - 등록된 엔티티
-     * @throws Exception - 처리 중 발생할 수 있는 예외
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postRegist(final CommentEntity rslt) throws Exception {
@@ -55,9 +47,10 @@ public class CommentService
     }
 
     /**
-     * 수정 후처리 :: override
+     * 수정 후처리. (override)
+     *
      * @param rslt - 수정된 엔티티
-     * @throws Exception - 처리 중 발생할 수 있는 예외
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postModify(final CommentEntity rslt) throws Exception {
@@ -66,9 +59,10 @@ public class CommentService
     }
 
     /**
-     * 삭제 후처리 :: override
+     * 삭제 후처리. (override)
+     *
      * @param rslt - 삭제된 엔티티
-     * @throws Exception - 처리 중 발생할 수 있는 예외
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postDelete(final CommentEntity rslt) throws Exception {

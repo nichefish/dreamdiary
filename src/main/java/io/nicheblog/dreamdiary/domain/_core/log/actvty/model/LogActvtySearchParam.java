@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class LogActvtySearchParam
         extends BaseSearchParam {
@@ -26,5 +26,4 @@ public class LogActvtySearchParam
 
     /** 제목 */
     private String title;
-
 }

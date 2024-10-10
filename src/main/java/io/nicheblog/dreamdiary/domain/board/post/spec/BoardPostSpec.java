@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * BoardPostSpec
  * <pre>
- *  일반게시판 게시물 목록 검색인자 세팅 Specification.
+ *  게시판 게시물 목록 검색인자 세팅 Specification.
  * </pre>
  *
  * @author nichefish
@@ -29,12 +29,13 @@ public class BoardPostSpec
         implements BasePostSpec<BoardPostEntity> {
 
     /**
-     * 인자별로 구체적인 검색 조건 세팅
-     * @param searchParamMap - 검색 파라미터 맵
-     * @param root - 검색할 엔티티의 Root 객체
-     * @param builder - 검색 조건을 생성하는 CriteriaBuilder 객체
-     * @return List<Predicate> - 설정된 검색 조건(Predicate) 리스트
-     * @throws Exception - 검색 조건 생성 중 발생할 수 있는 예외
+     * 인자별로 구체적인 검색 조건을 세팅한다. (override)
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @param root 검색할 엔티티의 Root 객체
+     * @param builder 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return {@link List} -- 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception 검색 조건 생성 중 발생할 수 있는 예외
      */
     @Override
     public List<Predicate> getPredicateWithParams(

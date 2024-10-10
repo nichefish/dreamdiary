@@ -68,7 +68,7 @@ public class LogSysEntity
     @Comment("작업일시")
     private Date logDt;
 
-    /** 작업 구분 코드 (ex. 일반게시판, 공지사항, ...) (기능/모듈 단위) */
+    /** 작업 구분 코드 (ex. 게시판, 공지사항, ...) (기능/모듈 단위) */
     @Column(name = "actvty_ctgr_cd", length = 400)
     @Comment("작업 구분 코드")
     private String actvtyCtgrCd;

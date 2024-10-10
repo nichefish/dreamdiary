@@ -444,7 +444,7 @@ commons.util = (function() {
         /**
          * AJAX 공통 형식.
          * @param {Object} option - AJAX 요청에 대한 설정 옵션.
-         * @param {Function} func - 요청 성공 시 호출될 콜백 함수.
+         * @param {Function} func - 요청 성공시 호출될 콜백 함수.
          * @param {string} [continueBlock] - 추가적인 블록 UI 동작 여부 (선택적).
          */
         ajax: function(option, func, continueBlock) {
@@ -469,7 +469,7 @@ commons.util = (function() {
          * @param {string} url - 요청할 URL.
          * @param {string} method - HTTP 메서드 (GET, POST 등).
          * @param {Object} ajaxData - JSON 형태의 요청 데이터.
-         * @param {Function} func - 요청 성공 시 호출될 콜백 함수.
+         * @param {Function} func - 요청 성공시 호출될 콜백 함수.
          * @param {boolean} [continueBlock] - 추가적인 블록 UI 동작 여부 (선택적).
          */
         blockUIAjax: function(url, method, ajaxData, func, continueBlock) {
@@ -487,7 +487,7 @@ commons.util = (function() {
          * blockUI를 적용한 AJAX 호출 (Multipart).
          * @param {string} url - 요청할 URL.
          * @param {FormData} ajaxData - 파일 데이터가 포함된 FormData 객체.
-         * @param {Function} func - 요청 성공 시 호출될 콜백 함수.
+         * @param {Function} func - 요청 성공시 호출될 콜백 함수.
          * @param {boolean} [continueBlock] - 추가적인 블록 UI 동작 여부 (선택적).
          */
         blockUIMultipartAjax: function(url, ajaxData, func, continueBlock) {
@@ -509,7 +509,7 @@ commons.util = (function() {
          * @param {string} url - 요청할 URL.
          * @param {string} method - HTTP 메서드 (GET, POST 등).
          * @param {Object} ajaxData - JSON 형태의 요청 데이터.
-         * @param {Function} func - 요청 성공 시 호출될 콜백 함수.
+         * @param {Function} func - 요청 성공시 호출될 콜백 함수.
          * @param {boolean} [continueBlock] - 추가적인 블록 UI 동작 여부 (선택적).
          */
         blockUIAsyncAjax: function(url, method, ajaxData, func, continueBlock) {
@@ -528,7 +528,7 @@ commons.util = (function() {
          * @param {string} url - 요청할 URL.
          * @param {string} method - HTTP 메서드 (GET, POST 등).
          * @param {Object} ajaxData - JSON 형태의 요청 데이터.
-         * @param {Function} func - 요청 성공 시 호출될 콜백 함수.
+         * @param {Function} func - 요청 성공시 호출될 콜백 함수.
          * @param {boolean} [continueBlock] - 추가적인 블록 UI 동작 여부 (선택적).
          */
         blockUIJsonAjax: function(url, method, ajaxData, func, continueBlock) {

@@ -27,10 +27,11 @@ public class BoardDefSpec
                    BaseStateSpec<BoardDefEntity> {
 
     /**
-     * 조회 후처리
-     * @param root - 조회할 엔티티의 Root 객체
+     * 검색 조건 세팅 후 쿼리 후처리. (override)
+     * 
+     * @param root 조회할 엔티티의 Root 객체
      * @param query - CriteriaQuery 객체
-     * @param builder - CriteriaBuilder 객체
+     * @param builder CriteriaBuilder 객체
      */
     @Override
     public void postQuery(
