@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -56,14 +57,15 @@ public class ContentTagDto
 
     /**
      * 태그이름 오름차순 정렬
-     * @param other - 비교할 ContentTagDto 객체
-     * @return int - 사전 순 비교 결과 (음수, 0, 양수)
+     *
+     * @param compare - 비교할 객체
+     * @return 양수: 현재 객체가 더 큼, 음수: 현재 객체가 더 작음, 0: 두 객체가 같음
      */
     @SneakyThrows
     @Override
-    public int compareTo(ContentTagDto other) {
+    public int compareTo(final @NotNull ContentTagDto compare) {
         String thisTagNm = this.getTagNm();
-        String otherTagNm = other.getTagNm();
+        String otherTagNm = compare.getTagNm();
         return thisTagNm.compareTo(otherTagNm);
     }
 

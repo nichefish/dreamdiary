@@ -21,10 +21,10 @@ public class EhCacheEvictEventListner {
     private final EhCacheEvictService ehCacheEvictService;
 
     /**
-     * 캐시 제거 이벤트 처리.
+     * 캐시 제거 이벤트를 처리한다.
      *
-     * @param event - 캐시를 제거할 `EhCacheEvictEvent` 객체
-     * @throws Exception 캐시 처리 중 발생할 수 있는 예외
+     * @param event 처리할 이벤트 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @EventListener
     public void handleEhCacheEvictvent(EhCacheEvictEvent event) throws Exception {

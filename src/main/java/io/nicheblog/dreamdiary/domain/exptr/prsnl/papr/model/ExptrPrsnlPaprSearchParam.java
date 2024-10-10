@@ -16,7 +16,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class ExptrPrsnlPaprSearchParam
         extends BasePostSearchParam {
