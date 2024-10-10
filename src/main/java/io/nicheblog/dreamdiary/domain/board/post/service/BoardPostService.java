@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain.board.post.service;
 
-import io.nicheblog.dreamdiary.domain._core.cd.service.CdService;
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain.board.post.entity.BoardPostEntity;
 import io.nicheblog.dreamdiary.domain.board.post.mapstruct.BoardPostMapstruct;
 import io.nicheblog.dreamdiary.domain.board.post.model.BoardPostDto;
@@ -42,7 +42,7 @@ public class BoardPostService
     @Getter
     private final BoardPostMapstruct mapstruct = BoardPostMapstruct.INSTANCE;
 
-    private final CdService cdService;
+    private final DtlCdService dtlCdService;
 
     /**
      * 목록 Page<Entity> -> Page<Dto> 변환 (override)
@@ -58,7 +58,7 @@ public class BoardPostService
         for (BoardPostEntity entity : entityPage.getContent()) {
             BoardPostDto.LIST listDto = mapstruct.toListDto(entity);
             listDto.setRnum(CmmUtils.getPageRnum(entityPage, i));
-            String ctgrNm = cdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
+            String ctgrNm = dtlCdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
             listDto.setCtgrNm(ctgrNm);
             dtoList.add(listDto);
             i++;
@@ -83,7 +83,7 @@ public class BoardPostService
         List<BoardPostDto.LIST> dtoList = new ArrayList<>();
         for (BoardPostEntity entity : entityList) {
             BoardPostDto.LIST listDto = mapstruct.toListDto(entity);
-            String ctgrNm = cdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
+            String ctgrNm = dtlCdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
             listDto.setCtgrNm(ctgrNm);
             dtoList.add(listDto);
         }
@@ -99,7 +99,7 @@ public class BoardPostService
     public BoardPostDto.DTL getDtlDto(final BaseClsfKey key) throws Exception {
         BoardPostEntity rsEntity = this.getDtlEntity(key);       // Entity 레벨 조회
         BoardPostDto.DTL rsDto = mapstruct.toDto(rsEntity);
-        String ctgrNm = cdService.getDtlCdNm(rsDto.getCtgrClCd(), rsDto.getCtgrCd());
+        String ctgrNm = dtlCdService.getDtlCdNm(rsDto.getCtgrClCd(), rsDto.getCtgrCd());
         rsDto.setCtgrNm(ctgrNm);
         return rsDto;
     }

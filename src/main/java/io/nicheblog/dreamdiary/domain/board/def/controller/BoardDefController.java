@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain.board.def.controller;
 
-import io.nicheblog.dreamdiary.domain._core.cd.service.CdService;
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
@@ -52,7 +52,7 @@ public class BoardDefController
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.BOARD_DEF;        // 작업 카테고리 (로그 적재용)
 
     private final BoardDefService boardDefService;
-    private final CdService cdService;
+    private final DtlCdService dtlCdService;
 
     /**
      * 게시판 정의 목록 조회
@@ -88,11 +88,11 @@ public class BoardDefController
             model.addAttribute("boardDefMngList", boardDefMngList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(boardDefMngList));
             // 코드 정보 모델에 추가
-            cdService.setModelCdData(Constant.BOARD_DEF_RSRVD_CD, model);
+            dtlCdService.setModelCdData(Constant.BOARD_DEF_RSRVD_CD, model);
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
             // 코드 정보 모델에 추가
-            cdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
+            dtlCdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

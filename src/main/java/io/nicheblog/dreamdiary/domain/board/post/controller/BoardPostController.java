@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain.board.post.controller;
 
-import io.nicheblog.dreamdiary.domain._core.cd.service.CdService;
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
@@ -58,7 +58,7 @@ public class BoardPostController
 
     private final BoardDefService boardDefService;
     private final BoardPostService boardPostService;
-    private final CdService cdService;
+    private final DtlCdService dtlCdService;
     private final TagService tagService;
 
 
@@ -104,7 +104,7 @@ public class BoardPostController
             // 컨텐츠 타입에 맞는 태그 목록 조회
             model.addAttribute("tagList", tagService.getContentSpecificTagList(boardCd));
             // 코드 정보 모델에 추가
-            model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdDtoListByClCd(boardDef.getCtgrClCd()));
+            model.addAttribute(Constant.POST_CTGR_CD, dtlCdService.getCdDtoListByClCd(boardDef.getCtgrClCd()));
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
@@ -158,9 +158,9 @@ public class BoardPostController
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
             // 코드 정보 모델에 추가
-            model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdDtoListByClCd(boardDef.getCtgrClCd()));
-            cdService.setModelCdData(Constant.MDFABLE_CD, model);
-            cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
+            model.addAttribute(Constant.POST_CTGR_CD, dtlCdService.getCdDtoListByClCd(boardDef.getCtgrClCd()));
+            dtlCdService.setModelCdData(Constant.MDFABLE_CD, model);
+            dtlCdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
             // CmmUtils.setModelFlsysPath(model);
 
             isSuccess = true;
@@ -425,9 +425,9 @@ public class BoardPostController
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_MDF, true);
             // 코드 정보 모델에 추가
-            model.addAttribute(Constant.POST_CTGR_CD, cdService.getCdDtoListByClCd(boardDef.getCtgrClCd()));
-            cdService.setModelCdData(Constant.MDFABLE_CD, model);
-            cdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
+            model.addAttribute(Constant.POST_CTGR_CD, dtlCdService.getCdDtoListByClCd(boardDef.getCtgrClCd()));
+            dtlCdService.setModelCdData(Constant.MDFABLE_CD, model);
+            dtlCdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
             // CmmUtils.setModelFlsysPath(model);
 
             isSuccess = rsDto.getPostNo() != null;

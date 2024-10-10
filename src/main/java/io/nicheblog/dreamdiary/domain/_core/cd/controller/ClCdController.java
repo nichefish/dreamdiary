@@ -3,8 +3,8 @@ package io.nicheblog.dreamdiary.domain._core.cd.controller;
 import io.nicheblog.dreamdiary.domain._core.cd.model.ClCdDto;
 import io.nicheblog.dreamdiary.domain._core.cd.model.ClCdParam;
 import io.nicheblog.dreamdiary.domain._core.cd.model.ClCdSearchParam;
-import io.nicheblog.dreamdiary.domain._core.cd.service.CdService;
 import io.nicheblog.dreamdiary.domain._core.cd.service.ClCdService;
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
@@ -52,7 +52,7 @@ public class ClCdController
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.CD;        // 작업 카테고리 (로그 적재용)
 
     private final ClCdService clCdService;
-    private final CdService cdService;
+    private final DtlCdService dtlCdService;
 
     /**
      * 분류 코드(CL_CD) 관리(useYn=N 포함) 목록 화면 조회
@@ -90,7 +90,7 @@ public class ClCdController
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
             // 코드 데이터 모델에 추가
-            cdService.setModelCdData(Constant.CL_CTGR_CD, model);
+            dtlCdService.setModelCdData(Constant.CL_CTGR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -116,7 +116,6 @@ public class ClCdController
      * @param regYn 등록 여부 (Y/N)
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 응답 객체
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(value = {Url.CL_CD_REG_AJAX, Url.CL_CD_MDF_AJAX})
     @Secured({Constant.ROLE_MNGR})
@@ -184,7 +183,7 @@ public class ClCdController
             ClCdDto cmmClCd = clCdService.getDtlDto(key);
             model.addAttribute("clCd", cmmClCd);
             // 코드 데이터 모델에 추가
-            cdService.setModelCdData(Constant.CL_CTGR_CD, model);
+            dtlCdService.setModelCdData(Constant.CL_CTGR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

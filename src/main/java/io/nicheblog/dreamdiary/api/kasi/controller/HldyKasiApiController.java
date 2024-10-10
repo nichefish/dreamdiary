@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.api.kasi.service.HldyKasiApiService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.domain._core.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -52,9 +52,10 @@ public class HldyKasiApiController
 
     /**
      * 한국천문연구원(KASI):: 휴일 정보 조회 및 DB 저장
+     *
      * @param yyParam - 조회할 연도의 문자열 (nullable, 지정되지 않을 경우 현재 연도를 사용)
-     * @param logParam - 로그 활동을 기록하기 위한 파라미터 객체
-     * @return ResponseEntity<AjaxResponse> - 응답 객체
+     * @param logParam 로그 활동을 기록하기 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 응답 객체
      */
     @Operation(
             summary = "휴일 정보 조회 및 DB 저장",
