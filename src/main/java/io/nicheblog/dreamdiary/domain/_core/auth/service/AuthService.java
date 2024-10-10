@@ -1,11 +1,11 @@
-package io.nicheblog.dreamdiary.global.auth.service;
+package io.nicheblog.dreamdiary.domain._core.auth.service;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuthRoleEntity;
-import io.nicheblog.dreamdiary.global.auth.mapstruct.AuthInfoMapstruct;
-import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
-import io.nicheblog.dreamdiary.global.auth.repository.jpa.AuthRoleRepository;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuthRoleEntity;
+import io.nicheblog.dreamdiary.domain._core.auth.mapstruct.AuthInfoMapstruct;
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.domain._core.auth.repository.jpa.AuthRoleRepository;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
+import io.nicheblog.dreamdiary.domain.user.info.repository.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -21,7 +21,7 @@ import java.util.Optional;
 /**
  * AuthService
  * <pre>
- *  Spring Security:: 인증 및 권한 처리 관련 서비스 모듈
+ *  Spring Security:: 인증 및 권한 처리 관련 서비스 모듈.
  * </pre>
  *
  * @author nichefish
@@ -37,7 +37,11 @@ public class AuthService
 
     /**
      * userId로 계정 + 사용자 정보 조회
-     * 로그인 등 인증시 Spring Security에서 사용. Spring Security용 사용자 인터페이스(UserDetails) 반환
+     * 로그인 등 인증시 Spring Security에서 사용.
+     *
+     * @param userId 조회할 사용자의 ID
+     * @return {@link AuthInfo} -- Spring Security용 사용자 인증정보 객체
+     * @throws UsernameNotFoundException 사용자 정보를 찾을 수 없는 경우
      */
     @SneakyThrows
     @Override
@@ -46,7 +50,7 @@ public class AuthService
         if (rsWrapper.isEmpty()) throw new UsernameNotFoundException("사용자 정보를 찾을 수 없습니다.");
         UserEntity rsUser = rsWrapper.get();
 
-        // TODO: 사용자 정보 존재여부 체크
+        // TODO: 사용자 프로필 정보 존재여부 체크
         // Integer userProflNo = rsUserEntity.getUserProflNo();
         // if (userProflNo != null) {
         //     UserProflEntity rsUserInfo = userProflRepository.findById(userProflNo).orElse(null);
@@ -57,25 +61,10 @@ public class AuthService
     }
 
     /**
-     * 현재 로그인 중인 사용자 정보 세션에서 조회해서 반환
-     */
-    public static AuthInfo getAuthenticatedUser() {
-        if (RequestContextHolder.getRequestAttributes() == null) return null;
-        return (AuthInfo) RequestContextHolder.getRequestAttributes().getAttribute("authInfo", RequestAttributes.SCOPE_SESSION);
-    }
-
-    /**
-     * 현재 로그인 중인 사용자 정보 Id 세션에서 조회해서 반환
-     */
-    public static Integer getAuthenticatedUserProflNo() {
-        if (RequestContextHolder.getRequestAttributes() == null) return null;
-        AuthInfo authInfo = getAuthenticatedUser();
-        assert authInfo != null;
-        return (authInfo.getProfl() == null) ? null : authInfo.getProfl().getUserProflNo();
-    }
-
-    /**
-     * 로그인 실패시 실패 카운트 증가
+     * 로그인 실패시 실패 카운트를 증가시킨다.
+     *
+     * @param userId 로그인 실패한 사용자 ID
+     * @return {@link Integer} -- 업데이트된 로그인 실패 횟수
      */
     public Integer applyLgnFailCnt(final String userId) {
         // ID로 사용자 정보 조회
@@ -93,6 +82,8 @@ public class AuthService
 
     /**
      * 계정 잠금 처리
+     *
+     * @param userId 계정을 잠글 사용자 ID
      */
     public void lockAccount(final String userId) {
         // ID로 사용자 정보 조회
@@ -105,6 +96,8 @@ public class AuthService
 
     /**
      * 로그인 성공시 최종 로그인일자 세팅 및 실패 카운트 초기화
+     *
+     * @param userId 처리할 사용자 ID
      */
     public void setLstLgnDt(final String userId) {
         // ID로 사용자 정보 조회
@@ -119,9 +112,11 @@ public class AuthService
     /**
      * 권한 정보 조회
      * TODO: 사이트 커지면 역할 분리해야 함
+     *
+     * @param authCd 조회할 권한 코드
+     * @return {@link AuthRoleEntity} -- 권한 정보 객체
      */
     public AuthRoleEntity getAuthRole(final String authCd) {
         return authRoleRepository.findById(authCd).orElse(null);
     }
-
 }

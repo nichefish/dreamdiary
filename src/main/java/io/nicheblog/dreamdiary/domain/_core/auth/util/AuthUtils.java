@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.global.auth.util;
+package io.nicheblog.dreamdiary.domain._core.auth.util;
 
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * AuthUtils
  * <pre>
- *  Spring Security:: 인증 및 권한 처리 관련 유틸리티 모듈
+ *  Spring Security:: 인증 및 권한 처리 관련 유틸리티 모듈.
  * </pre>
  *
  * @author nichefish
@@ -38,7 +39,9 @@ public class AuthUtils {
     }
 
     /**
-     * 현재 로그인 중인 사용자 정보 세션에서 조회해서 반환
+     * 현재 로그인 중인 사용자 정보를 세션에서 조회해서 반환한다.
+     *
+     * @return {@link AuthInfo} -- 현재 로그인 중인 사용자 인증정보 객체
      */
     public static AuthInfo getAuthenticatedUser() {
         if (!isAuthenticated()) return null;
@@ -46,7 +49,21 @@ public class AuthUtils {
     }
 
     /**
-     * 현재 로그인 중인 사용자 이름 반환
+     * 현재 로그인 중인 사용자 프로필 정보 번호를 조회해서 반환한다.
+     *
+     * @return {@link Integer} -- 현재 로그인 중인 사용자 프로필 정보 번호
+     */
+    public static Integer getAuthenticatedUserProflNo() {
+        if (RequestContextHolder.getRequestAttributes() == null) return null;
+        AuthInfo authInfo = getAuthenticatedUser();
+        assert authInfo != null;
+        return (authInfo.getProfl() == null) ? null : authInfo.getProfl().getUserProflNo();
+    }
+    
+    /**
+     * 현재 로그인 중인 사용자 이름을 반환한다.
+     * 
+     * @return {@link String} -- 현재 로그인 중인 사용자 이름
      */
     public static String getLgnUserNm() {
         AuthInfo AuthInfo = getAuthenticatedUser();
@@ -55,7 +72,9 @@ public class AuthUtils {
     }
 
     /**
-     * 현재 로그인 중인 사용자 아이디 반환
+     * 현재 로그인 중인 사용자 어이디를 반환한다.
+     *
+     * @return {@link String} -- 현재 로그인 중인 사용자 아이디
      */
     public static String getLgnUserId() {
         AuthInfo authInfo = getAuthenticatedUser();
@@ -64,8 +83,9 @@ public class AuthUtils {
     }
 
     /**
-     * 현재 사용자 인증여부 세션에서 조회해서 반환
-     * 익명 사용자(anynymousUser) 일 경우 false
+     * 현재 사용자의 인증 여부를 조회해서 반환한다.
+     *
+     * @return {@link Boolean} -- 인증 상태일 경우 true. 익명 사용자(anynymousUser)의 경우 false.
      */
     public static Boolean isAuthenticated() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -75,7 +95,9 @@ public class AuthUtils {
     }
 
     /**
-     * 공통 > 내 정보 여부 체크
+     * 특정 객체에 대해 내 정보 여부를 체크해서 반환한다.
+     *
+     * @return {@link Boolean} -- 내가 작성한 정보일 경우 true.
      */
     public static Boolean isMyInfo(final String paramUserId) {
         if (paramUserId == null) return false;
@@ -86,25 +108,32 @@ public class AuthUtils {
     }
 
     /**
-     * 공통 > 등록자 여부 체크
+     * 특정 객체에 대해 특정 ID의 등록자 여부를 체크해서 반환한다.
+     *
+     * @return {@link Boolean} -- 해당 ID가 등록한 정보일 경우 true.
      */
     public static Boolean isRegstr(final String regstrId) {
         if (StringUtils.isEmpty(regstrId)) return false;
         AuthInfo authInfo = getAuthenticatedUser();
         if (authInfo == null) return false;
+
         String myUserId = authInfo.getUserId();
         return regstrId.equals(myUserId);
     }
 
     /**
-     * 공통 > 수정자 여부 체크
+     * 특정 객체에 대해 특정 ID의 수정자 여부를 체크해서 반환한다.
+     *
+     * @return {@link Boolean} -- 해당 ID가 수정한 정보일 경우 true.
      */
     public static Boolean isMdfusr(final String mdfusrId) {
         return isRegstr(mdfusrId);
     }
 
     /**
-     * 공통 > 특정 권한 보유 여부
+     * 공통 > 특정 권한 보유 여부 체크
+     *
+     * @return {@link Boolean} -- 해당 권한 보유시 true.
      */
     public static Boolean hasAuthority(final String roleStr) {
         AuthInfo authInfo = getAuthenticatedUser();
@@ -116,7 +145,9 @@ public class AuthUtils {
     }
 
     /**
-     * 사용자 IP주소 조회 (헤더 조회)
+     * 사용자 IP 주소 조회 (헤더 조회)
+     *
+     * @return {@link String} -- 현재 로그인 중인 사용자가 접속 중인 IP 주소.
      */
     public static String getAcsIpAddr() {
         // request 맥락 하에서만 실행

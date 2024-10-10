@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.global.filter;
 
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogAnonActvtyEvent;
-import io.nicheblog.dreamdiary.domain._core.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -69,7 +69,7 @@ public class AjaxSessionTimeoutFilter
 
     /**
      * AJAX 요청들에 대하여 헤더에 "AJAX" 수동 설정
-     * @see commons.js
+     * @see "commons.js"
      */
     private boolean isAjaxRequest(final HttpServletRequest request) {
         return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));

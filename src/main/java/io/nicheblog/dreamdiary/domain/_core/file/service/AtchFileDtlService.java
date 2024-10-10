@@ -1,13 +1,14 @@
-package io.nicheblog.dreamdiary.global.cmm.file.service;
+package io.nicheblog.dreamdiary.domain._core.file.service;
 
-import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
-import io.nicheblog.dreamdiary.global.cmm.file.mapstruct.AtchFileDtlMapstruct;
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.repository.jpa.AtchFileDtlRepository;
-import io.nicheblog.dreamdiary.global.cmm.file.spec.AtchFileDtlSpec;
+import io.nicheblog.dreamdiary.domain._core.file.entity.AtchFileDtlEntity;
+import io.nicheblog.dreamdiary.domain._core.file.mapstruct.AtchFileDtlMapstruct;
+import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain._core.file.repository.jpa.AtchFileDtlRepository;
+import io.nicheblog.dreamdiary.domain._core.file.spec.AtchFileDtlSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import java.util.*;
 /**
  * AtchFileDtlService
  * <pre>
- *  공통 > 상세 파일 처리 서비스 모듈
+ *  공통 > 상세 파일 처리 서비스 모듈.
  * </pre>
  *
  * @author nichefish
@@ -34,25 +35,19 @@ import java.util.*;
 public class AtchFileDtlService
         implements BaseCrudService<AtchFileDtlDto, AtchFileDtlDto, Integer, AtchFileDtlEntity, AtchFileDtlRepository, AtchFileDtlSpec, AtchFileDtlMapstruct> {
 
-    private final AtchFileDtlRepository atchFileDtlRepository;
-    private final AtchFileDtlSpec atchFileDtlSpec;
-    private final AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;
-
-    @Override
-    public AtchFileDtlRepository getRepository() {
-        return this.atchFileDtlRepository;
-    }
-    @Override
-    public AtchFileDtlSpec getSpec() {
-        return this.atchFileDtlSpec;
-    }
-    @Override
-    public AtchFileDtlMapstruct getMapstruct() {
-        return this.atchFileDtlMapstruct;
-    }
+    @Getter
+    private final AtchFileDtlRepository repository;
+    @Getter
+    private final AtchFileDtlSpec spec;
+    @Getter
+    private final AtchFileDtlMapstruct mapstruct = AtchFileDtlMapstruct.INSTANCE;
 
     /**
      * 첨부파일 상세 목록 조회 (dto level)
+     *
+     * @param atchFileNo 조회할 첨부파일 묶음 번호
+     * @return {@link List} -- 첨부파일 상세 정보 목록
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public List<AtchFileDtlDto> getPageDto(final Integer atchFileNo) throws Exception {
         Map<String, Object> paramMap = new HashMap<>() {{
@@ -62,7 +57,11 @@ public class AtchFileDtlService
     }
 
     /**
-     * 메소드 분리 :: 추가된 파일에 대하여 업로드 및 정보 DB에 등록
+     * 추가된 파일에 대하여 업로드 및 정보 DB에 등록한다.
+     *
+     * @param multiRequest 요청 정보
+     * @param {@link List} --  업로드된 파일 정보 목록
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public void addFiles(
             final MultipartHttpServletRequest multiRequest,
@@ -113,7 +112,11 @@ public class AtchFileDtlService
     }
 
     /**
-     * 메소드 분리 :: 삭제된 파일에 대하여 DB 삭제 플래그 세팅
+     * 삭제된 파일에 대하여 DB 삭제 플래그를 세팅한다.
+     *
+     * @param multiRequest 요청 정보
+     * @param {@link List} --  업로드된 파일 정보 목록
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public void delFile(
             final MultipartHttpServletRequest multiRequest,
