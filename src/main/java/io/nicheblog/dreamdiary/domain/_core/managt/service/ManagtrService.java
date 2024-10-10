@@ -31,27 +31,30 @@ public class ManagtrService {
     private final ManagtrSpec managtrSpec;
 
     /**
-     * 게시물 열람자 존재여부 (기 방문여부) 체크
-     * @param key - 확인할 게시물의 키 정보
-     * @return Boolean - 사용자가 이미 방문했으면 true, 그렇지 않으면 false
+     * 게시물 조치자 존재여부 (기 방문여부) 체크.
+     *
+     * @param refKey 글 번호와 컨텐츠 타입을 포함하는 참조 복합키 객체
+     * @return {@link Boolean} -- 사용자가 이미 방문했으면 true, 그렇지 않으면 false
      */
-    public Boolean hasAlreadyVisited(final BaseClsfKey key) {
+    public Boolean hasAlreadyVisited(final BaseClsfKey refKey) {
         Map<String, Object> searchParamMap = new HashedMap<>() {{
             put("regstrId", AuthUtils.getLgnUserId());
-            put("refPostNo", key.getPostNo());
-            put("refContentType", key.getContentType());
+            put("refPostNo", refKey.getPostNo());
+            put("refContentType", refKey.getContentType());
         }};
         List<ManagtrEntity> managtrList = managtrRepository.findAll(managtrSpec.searchWith(searchParamMap));
         return CollectionUtils.isNotEmpty(managtrList);
     }
 
     /**
-     * 게시물 열람자 등록
-     * @param key - 등록할 게시물의 키 정보
+     * 게시물 조치자 등록.
+     *
+     * @param refKey 글 번호와 컨텐츠 타입을 포함하는 참조 복합키 객체
      */
-    public void addManagtr(final BaseClsfKey key) {
-        if (this.hasAlreadyVisited(key)) return;
-        ManagtrEntity managtr = new ManagtrEntity(key);
+    public void addManagtr(final BaseClsfKey refKey) {
+        if (this.hasAlreadyVisited(refKey)) return;
+        
+        ManagtrEntity managtr = new ManagtrEntity(refKey);
         managtrRepository.save(managtr);
     }
 }

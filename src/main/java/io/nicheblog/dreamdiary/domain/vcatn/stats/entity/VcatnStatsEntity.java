@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.vcatn.stats;
+package io.nicheblog.dreamdiary.domain.vcatn.stats.entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -16,7 +16,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "vcatn_stats")
-@IdClass(VcatnStatsKey.class)      // 분류코드+상세코드 복합키 적용
+@IdClass(VcatnStatsKey.class)      // 분류 코드+상세 코드 복합키 적용
 @SuperBuilder(toBuilder = true)
 @Getter
 @Setter

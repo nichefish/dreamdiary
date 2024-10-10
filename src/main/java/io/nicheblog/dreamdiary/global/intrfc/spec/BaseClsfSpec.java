@@ -54,7 +54,7 @@ public interface BaseClsfSpec<Entity extends BaseClsfEntity>
     }
 
     /**
-     * default: CLSF 요소에 대해 인자별로 구체적인 검색 조건 세팅
+     * default: CLSF 요소에 대해 인자별로 구체적인 검색 조건을 세팅한다.
      * 
      * @param searchParamMap 검색 조건을 포함하는 매개변수 맵
      * @param root 엔티티의 루트 객체

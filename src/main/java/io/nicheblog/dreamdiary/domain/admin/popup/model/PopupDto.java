@@ -20,13 +20,11 @@ import javax.validation.constraints.Size;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchDto
- * @implements StateCmpstnModule
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @NoArgsConstructor
 public class PopupDto
         extends BaseAtchDto
@@ -49,6 +47,7 @@ public class PopupDto
 
     /** 게시시작일시 */
     private String popupStartDt;
+
     /** 게시종료일시 */
     private String popupEndDt;
 
@@ -58,8 +57,6 @@ public class PopupDto
     public Integer getKey() {
         return null;
     }
-
-    /* ----- */
 
     /** 위임 :: 상태 관리 모듈 */
     public StateCmpstn state;

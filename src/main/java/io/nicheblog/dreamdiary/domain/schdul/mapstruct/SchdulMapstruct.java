@@ -24,10 +24,11 @@ public interface SchdulMapstruct
     SchdulMapstruct INSTANCE = Mappers.getMapper(SchdulMapstruct.class);
 
     /**
-     * Entity -> Dto
-     * @param entity - 변환할 Entity 객체
-     * @return Dto - 변환된 Dto 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Entity -> Dto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return Dto -- 변환된 Dto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     // @Mapping(target = "prtcpnt", expression = "java(entity.getPrtcpntStr())")
@@ -37,10 +38,11 @@ public interface SchdulMapstruct
     SchdulDto toDto(final SchdulEntity entity) throws Exception;
 
     /**
-     * Dto -> Entity
-     * @param dto - 변환할 Dto 객체
-     * @return Entity - 변환된 Entity 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Dto -> Entity 변환
+     *
+     * @param dto 변환할 Dto 객체
+     * @return Entity -- 변환된 Entity 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Mapping(target = "bgnDt", expression = "java(DateUtils.asDate(dto.getBgnDt()))")
@@ -49,9 +51,10 @@ public interface SchdulMapstruct
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
-     * @param dto - 업데이트할 DTO 객체
-     * @param entity - 업데이트할 대상 엔티티 객체
-     * @throws Exception - 매핑 중 발생할 수 있는 예외
+     *
+     * @param dto 업데이트할 DTO 객체
+     * @param entity 업데이트할 대상 엔티티 객체
+     * @throws Exception 매핑 중 발생할 수 있는 예외
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

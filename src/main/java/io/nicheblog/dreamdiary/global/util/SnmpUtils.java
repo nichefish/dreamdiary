@@ -19,7 +19,7 @@ import java.util.Vector;
 /**
  * SnmpUtils
  * <pre>
- *  가청 경보(사이렌) 관련 SNMP Protocol 서비스 모듈
+ *  가청 경보(사이렌) 관련 SNMP Protocol 서비스 모듈.
  *  "The SNMP service acts as an internal alarm listener and *sends traps* (or notifications) to any registered SNMP trap listener."
  * </pre>
  *
@@ -43,19 +43,21 @@ public class SnmpUtils {
     // "통신하고자 하는 Server/Client에 모두 같은 Community String을 사용해야 한다."
 
     /**
-     * SNMP 메세지 발송
-     * @return Boolean - SNMP 메시지 발송 성공 여부
-     * @throws Exception - SNMP 메시지 발송 중 발생할 수 있는 예외
+     * SNMP 메세지를 발송한다.
+     *
+     * @return {@link Boolean} -- SNMP 메시지 발송 성공 여부
+     * @throws Exception SNMP 메시지 발송 중 발생할 수 있는 예외
      */
     public static Boolean sendSnmpMessage() throws Exception {
         return sendSnmpMessage(getDefaultParam());
     }
 
     /**
-     * SNMP 메세지 발송
+     * SNMP 메세지를 발송한다.
+     *
      * @param snmpApiParam : SNMP 전송 정보
-     * @return Boolean - SNMP 메시지 발송 성공 여부
-     * @throws Exception - SNMP 메시지 발송 중 발생할 수 있는 예외
+     * @return {@link Boolean} -- SNMP 메시지 발송 성공 여부
+     * @throws Exception SNMP 메시지 발송 중 발생할 수 있는 예외
      */
     public static Boolean sendSnmpMessage(final SnmpApiParam snmpApiParam) throws Exception {
         SnmpApiParam snmpSend = (snmpApiParam != null) ? snmpApiParam : getDefaultParam();
@@ -94,8 +96,9 @@ public class SnmpUtils {
     }
 
     /**
-     * 기본 SNMP API 요청 파라미터를 생성.
-     * @return SnmpApiParam - 기본 설정이 적용된 `SnmpApiParam` 객체
+     * 기본 SNMP API 요청 파라미터를 생성한다.
+     *
+     * @return {@link SnmpApiParam} -- 기본 설정이 적용된 `SnmpApiParam` 객체
      */
     public static SnmpApiParam getDefaultParam() {
         return SnmpApiParam.builder()

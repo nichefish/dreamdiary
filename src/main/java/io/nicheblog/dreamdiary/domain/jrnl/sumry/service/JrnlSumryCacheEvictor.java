@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * JrnlSumryCacheEvictor
  * <p>
- *  저널 결산 관련 캐시 evictor
+ *  저널 결산 관련 캐시 evictor.
  * </p>
  *
  * @author nichefish
@@ -19,9 +19,10 @@ public class JrnlSumryCacheEvictor
         implements CacheEvictor<Integer> {
 
     /**
-     * 관련 Cache Evict
-     * @param key - 캐시에서 삭제할 대상 키
-     * @throws Exception - 캐시 삭제 과정에서 발생할 수 있는 예외
+     * 해당 컨텐츠 타입 관련 캐시를 제거한다.
+     *
+     * @param key 캐시에서 삭제할 대상 키
+     * @throws Exception 캐시 삭제 과정에서 발생할 수 있는 예외
      */
     @Override
     public void evict(final Integer key) throws Exception {

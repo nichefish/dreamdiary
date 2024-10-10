@@ -8,9 +8,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
- * UserInfoDto
+ * UserProflDto
  * <pre>
- *  사용자(직원) 정보 Dto.
+ *  사용자 프로필 Dto.
  * </pre>
  *
  * @author nichefish
@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 public class UserProflDto
         extends BaseCrudDto {
 

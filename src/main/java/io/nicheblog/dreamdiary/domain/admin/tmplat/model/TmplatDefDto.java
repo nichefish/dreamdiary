@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @NoArgsConstructor
 public class TmplatDefDto
         extends BaseAuditDto

@@ -53,11 +53,11 @@ public class ViewerEntity
     /* ----- */
 
     /**
-     * 생성자
-     * @param key - 게시물의 고유 키를 포함하는 BaseClsfKey 객체
+     * 생성자.
+     * @param refKey 글 번호와 컨텐츠 타입을 포함하는 참조 복합키 객체
      */
-    public ViewerEntity(final BaseClsfKey key) {
-        this.refPostNo = key.getPostNo();
-        this.refContentType = key.getContentType();
+    public ViewerEntity(final BaseClsfKey refKey) {
+        this.refPostNo = refKey.getPostNo();
+        this.refContentType = refKey.getContentType();
     }
 }

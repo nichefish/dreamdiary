@@ -1,10 +1,10 @@
-package io.nicheblog.dreamdiary.web.entity.user.emplym;
+package io.nicheblog.dreamdiary.domain.user.emplym.entity;
 
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -22,7 +22,6 @@ import java.util.Date;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudEntity
  */
 @Entity
 @Table(name = "user_emplym")

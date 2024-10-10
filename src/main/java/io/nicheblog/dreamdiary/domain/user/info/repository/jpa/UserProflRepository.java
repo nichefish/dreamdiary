@@ -1,13 +1,13 @@
-package io.nicheblog.dreamdiary.web.repository.user.jpa;
+package io.nicheblog.dreamdiary.domain.user.info.repository.jpa;
 
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
-import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import org.springframework.stereotype.Repository;
 
 /**
  * UserProflRepository
  * <pre>
- *  사용자 관리 > 사용자 프로필 Repository.
+ *  사용자 관리 > 사용자 프로필 (JPA) Repository 인터페이스.
  * </pre>
  *
  * @author nichefish
@@ -16,5 +16,4 @@ import org.springframework.stereotype.Repository;
 public interface UserProflRepository
         extends BaseStreamRepository<UserProflEntity, Integer> {
     //
-
 }

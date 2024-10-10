@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.admin;
+package io.nicheblog.dreamdiary.domain.admin.menu.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
@@ -18,12 +18,10 @@ import java.util.List;
 /**
  * MenuDto
  * <pre>
- *  메뉴 목록 조회 Dto
+ *  메뉴 목록 조회 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditDto
- * @implements StateCmpstnModule
  */
 @Getter
 @Setter
@@ -75,15 +73,17 @@ public class MenuDto
 
     /** 셀프 참조 :: 상위메뉴 조회 */
     private MenuDto upperMenu;
+
     /** 셀프 참조 :: 상위메뉴명 */
     private String upperMenuNm;
+
     /** 셀프 참조 :: 하위메뉴 목록 조회 */
     private List<MenuDto> subMenuList;
 
     /* ----- */
 
     /**
-     * 상위메뉴가 메인메뉴인지 여부 반환
+     * Getter :: 상위메뉴가 메인메뉴인지 여부 반환
      */
     public boolean getIsMain() {
         MenuDto upperMenu = this.upperMenu;
@@ -92,7 +92,7 @@ public class MenuDto
     }
 
     /**
-     * 폴더(중메뉴) 여부 반환
+     * Getter :: 폴더(중메뉴) 여부 반환
      */
     public Boolean isDir() {
         return "Y".equals(this.dirYn);
@@ -100,11 +100,11 @@ public class MenuDto
 
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
-    public StateCmpstn state;
-
     @Override
     public Integer getKey() {
         return this.menuNo;
     }
+
+    /** 위임 :: 상태 관리 모듈 */
+    public StateCmpstn state;
 }

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.user;
+package io.nicheblog.dreamdiary.domain.user.info.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 /**
  * UserCttpcXlsxDto
  * <pre>
- *  사용자 연락처 목록 엑셀 다운로드 Dto
+ *  사용자 연락처 엑셀 다운로드 Dto.
  * </pre>
  *
  * @author nichefish
@@ -16,17 +16,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class UserCttpcXlsxDto {
 
     /** 이름 */
     private String userNm;
+
     /** 직급이름 */
     private String rankNm;
+
     /** 소속(팀) */
     private String teamNm;
+
     /** 연락처(전화번호) */
     private String cttpc;
+
     /** E-mail */
     private String email;
 }
