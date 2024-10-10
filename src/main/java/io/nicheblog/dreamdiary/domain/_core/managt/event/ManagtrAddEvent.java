@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.event;
+package io.nicheblog.dreamdiary.domain._core.managt.event;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import lombok.Getter;
@@ -22,11 +22,12 @@ public class ManagtrAddEvent
     /* ----- */
 
     /**
-     * 생성자
+     * 생성자.
+     *
+     * @param source 이벤트의 출처를 나타내는 객체
+     * @param clsfKey 이벤트 처리 대상 객체를 식별 가능한 복합키
      */
-    public ManagtrAddEvent(
-            final Object source,
-            final BaseClsfKey clsfKey) {
+    public ManagtrAddEvent(final Object source, final BaseClsfKey clsfKey) {
         super(source);
         this.clsfKey = clsfKey;
     }

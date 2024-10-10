@@ -25,10 +25,11 @@ public interface JrnlDreamMapstruct
     JrnlDreamMapstruct INSTANCE = Mappers.getMapper(JrnlDreamMapstruct.class);
 
     /**
-     * Entity -> Dto
-     * @param entity - 변환할 Entity 객체
-     * @return Dto - 변환된 Dto 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Entity -> Dto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return Dto -- 변환된 Dto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Named("toDto")
@@ -39,7 +40,11 @@ public interface JrnlDreamMapstruct
     JrnlDreamDto toDto(final JrnlDreamEntity entity) throws Exception;
 
     /**
-     * Entity -> ListDto
+     * Entity -> ListDto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return ListDto -- 변환된 ListDto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Named("toListDto")
@@ -50,19 +55,21 @@ public interface JrnlDreamMapstruct
     JrnlDreamDto toListDto(final JrnlDreamEntity entity) throws Exception;
 
     /**
-     * Dto -> Entity
-     * @param dto - 변환할 Dto 객체
-     * @return Entity - 변환된 Entity 객체
-     * @throws Exception - 변환 중 발생할 수 있는 예외
+     * Dto -> Entity 변환
+     *
+     * @param dto 변환할 Dto 객체
+     * @return Entity -- 변환된 Entity 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     JrnlDreamEntity toEntity(final JrnlDreamDto dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
-     * @param dto - 업데이트할 DTO 객체
-     * @param entity - 업데이트할 대상 엔티티 객체
-     * @throws Exception - 매핑 중 발생할 수 있는 예외
+     *
+     * @param dto 업데이트할 DTO 객체
+     * @param entity 업데이트할 대상 엔티티 객체
+     * @throws Exception 매핑 중 발생할 수 있는 예외
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

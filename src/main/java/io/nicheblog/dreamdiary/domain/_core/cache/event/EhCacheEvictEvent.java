@@ -25,9 +25,10 @@ public class EhCacheEvictEvent
 
     /**
      * 생성자.
-     * @param source - 이벤트가 발생한 객체
-     * @param postNo - 캐시를 제거할 게시글 번호
-     * @param contentType - 캐시를 제거할 컨텐츠 타입
+     *
+     * @param source 이벤트의 출처를 나타내는 객체
+     * @param postNo 캐시를 제거할 게시글 번호
+     * @param contentType 캐시를 제거할 컨텐츠 타입
      */
     public EhCacheEvictEvent(final Object source, final Integer postNo, final String contentType) {
         super(source);

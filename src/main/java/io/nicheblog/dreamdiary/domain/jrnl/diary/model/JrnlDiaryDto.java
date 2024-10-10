@@ -27,7 +27,7 @@ import java.util.Date;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class JrnlDiaryDto
         extends BasePostDto
@@ -67,11 +67,16 @@ public class JrnlDiaryDto
 
     /**
      * 날짜 오름차순 정렬
+     *
+     * @param other - 비교할 객체
+     * @return 양수: 현재 객체가 더 큼, 음수: 현재 객체가 더 작음, 0: 두 객체가 같음
      */
     @SneakyThrows
     @Override
     public int compareTo(JrnlDiaryDto other) {
         Date thisDate = DateUtils.asDate(this.getStdrdDt());
+        if (thisDate == null) return -1;
+
         Date otherDate = DateUtils.asDate(other.getStdrdDt());
         return thisDate.compareTo(otherDate);
     }

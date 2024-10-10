@@ -21,12 +21,12 @@ public class JandiMsgEvent
     /* ----- */
 
     /**
-     * 생성자
+     * 생성자.
+     *
+     * @param source 이벤트의 출처를 나타내는 객체
+     * @param jandiMsg 발송할 잔디 메세지를 담은 객체
      */
-    public JandiMsgEvent(
-            final Object source,
-            final JandiParam jandiMsg
-    ) {
+    public JandiMsgEvent(final Object source, final JandiParam jandiMsg) {
         super(source);
         this.jandiMsg = jandiMsg;
     }

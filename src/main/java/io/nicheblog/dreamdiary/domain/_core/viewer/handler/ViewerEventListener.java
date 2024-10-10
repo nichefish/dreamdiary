@@ -22,7 +22,8 @@ public class ViewerEventListener {
 
     /**
      * 열람자 추가 이벤트를 처리합니다.
-     * @param event - 열람자를 추가하기 위한 정보를 담고 있는 ViewerAddEvent 객체
+     *
+     * @param event 처리할 이벤트 객체
      */
     @EventListener
     public void handleViewerAddEvent(ViewerAddEvent event) {
