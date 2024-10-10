@@ -20,7 +20,6 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @implements BaseSpec
  */
 @Component
 @Log4j2

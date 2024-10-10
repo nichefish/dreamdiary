@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.handler;
+package io.nicheblog.dreamdiary.domain._core.managt.handler;
 
-import io.nicheblog.dreamdiary.web.event.ManagtrAddEvent;
-import io.nicheblog.dreamdiary.web.service.cmm.managt.ManagtrService;
+import io.nicheblog.dreamdiary.domain._core.managt.event.ManagtrAddEvent;
+import io.nicheblog.dreamdiary.domain._core.managt.service.ManagtrService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * ManagtrEventListener
  * <pre>
- *  컨탠츠 열람자 이벤트 처리 핸들러
+ *  컨탠츠 조치자 이벤트 처리 핸들러.
  * </pre>
  *
  * @author nichefish
@@ -22,6 +22,8 @@ public class ManagtrEventListener {
 
     /**
      * 조치자 추가
+     *
+     * @param event 처리할 이벤트 객체
      */
     @EventListener
     public void handleManagtrAddEvent(ManagtrAddEvent event) {

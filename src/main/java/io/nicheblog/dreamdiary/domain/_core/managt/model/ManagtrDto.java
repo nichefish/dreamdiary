@@ -43,10 +43,10 @@ public class ManagtrDto
 
     /**
      * 생성자.
-     * @param key 글 번호와 컨텐츠 타입 정보를 포함한 분류 키 객체.
+     * @param refKey 글 번호와 컨텐츠 타입을 포함하는 참조 복합키 객체
      */
-    public ManagtrDto(final BaseClsfKey key) {
-        this.refPostNo = key.getPostNo();
-        this.refContentType = key.getContentType();
+    public ManagtrDto(final BaseClsfKey refKey) {
+        this.refPostNo = refKey.getPostNo();
+        this.refContentType = refKey.getContentType();
     }
 }

@@ -1,12 +1,12 @@
-package io.nicheblog.dreamdiary.web.mapstruct.vcatn.schdul;
+package io.nicheblog.dreamdiary.domain.vcatn.papr.mapstruct;
 
+import io.nicheblog.dreamdiary.domain.vcatn.papr.entity.VcatnSchdulEntity;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnSchdulDto;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnSchdulXlsxDto;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
-import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulXlsxDto;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * VcatnSchdulMapstruct
  * <pre>
- *  휴가 일정 MapStruct 기반 Mapper 인터페이스
+ *  휴가 일정 MapStruct 기반 Mapper 인터페이스.
  * </pre>
  *
  * @author nichefish
@@ -31,7 +31,11 @@ public interface VcatnSchdulMapstruct
     VcatnSchdulMapstruct INSTANCE = Mappers.getMapper(VcatnSchdulMapstruct.class);
 
     /**
-     * Entity -> Dto
+     * Entity -> Dto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return Dto -- 변환된 Dto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Named("toDto")
@@ -40,7 +44,11 @@ public interface VcatnSchdulMapstruct
     VcatnSchdulDto toDto(final VcatnSchdulEntity entity) throws Exception;
 
     /**
-     * Entity -> Dto
+     * Entity -> Dto 변환
+     *
+     * @param entity 변환할 Entity 객체
+     * @return ListDto -- 변환된 ListDto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
     @Named("toListDto")
@@ -49,13 +57,21 @@ public interface VcatnSchdulMapstruct
     VcatnSchdulDto toListDto(final VcatnSchdulEntity entity) throws Exception;
 
     /**
-     * Dto -> DyXlsxDto
+     * Dto -> XlsxDto 변환
+     *
+     * @param dto 변환할 Dto 객체
+     * @return XlsxDto -- 변환된 XlsxDto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     // @Mapping(target = "vcatnExprDy", expression = "java(Double.toString(dto.getVcatnExprDy()))")
     VcatnSchdulXlsxDto toDyXlsxDto(final VcatnSchdulDto dto) throws Exception;
 
     /**
-     * Dto -> Entity
+     * Dto -> Entity 변환
+     *
+     * @param dto 변환할 Dto 객체
+     * @return Entity -- 변환된 Entity 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Mapping(target = "bgnDt", expression = "java(DateUtils.asDate(dto.getBgnDt()))")
     @Mapping(target = "endDt", expression = "java(DateUtils.asDate(dto.getEndDt()))")
@@ -63,6 +79,10 @@ public interface VcatnSchdulMapstruct
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
+     *
+     * @param dto 업데이트할 DTO 객체
+     * @param entity 업데이트할 대상 엔티티 객체
+     * @throws Exception 매핑 중 발생할 수 있는 예외
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

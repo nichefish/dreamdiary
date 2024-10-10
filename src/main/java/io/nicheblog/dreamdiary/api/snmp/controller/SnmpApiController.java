@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.api.snmp.controller;
 
 import io.nicheblog.dreamdiary.api.snmp.model.SnmpApiParam;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.domain._core.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -34,12 +34,13 @@ public class SnmpApiController
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.ADMIN;      // 작업 카테고리 (로그 적재용)
 
     /**
-     * API:: SNMP 내역 송신
-     * 비로그인 사용자도 외부에서 접근 가능 (인증 없음)
+     * API:: SNMP 내역을 송신한다.
+     * 비로그인 사용자도 외부에서 접근 가능. (인증 없음)
+     * 
      * @param snmpApiParam - SNMP API 파라미터 객체
-     * @param logParam - 로그 기록을 위한 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
      * @param ipAddr - 송신할 IP 주소
-     * @return ResponseEntity<AjaxResponse> - SNMP 전송 결과를 담은 ResponseEntity 객체
+     * @return {@link ResponseEntity} -- SNMP 전송 결과를 담은 ResponseEntity 객체
      */
     @PostMapping(Url.URL_API_SNMP_SEND_AJAX)
     @ResponseBody

@@ -80,9 +80,9 @@ public class TagSpec
     }
     
     /**
-     * 연관관계 없는 태그 조회 조건을 반환한다.
+     * preset된 특정 검색 조건 목록을 반환한다. (연관관계 없는 태그 조회)
      *
-     * @return {@link Specification} -- 연관관계가 없는 태그들을 검색하는 Specification 객체
+     * @return {@link Specification} -- 검색 조건에 따른 Specification 객체
      */
     public Specification<TagEntity> getNoRefTags() {
         return (root, query, builder) -> {
@@ -101,7 +101,7 @@ public class TagSpec
      * 컨텐츠 타입에 맞는 태그 목록 조회 조건을 반환한다.
      *
      * @param contentType - 조회할 컨텐츠 타입
-     * @return {@link Specification} -- 주어진 컨텐츠 타입에 맞는 태그들을 검색하는 Specification 객체
+     * @return {@link Specification} -- 검색 조건에 따른 Specification 객체
      */
     public Specification<TagEntity> getContentSpecificTag(final String contentType) {
         Map<String, Object> searchParamMap = new HashMap<>(){{

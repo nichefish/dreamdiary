@@ -1,6 +1,7 @@
-package io.nicheblog.dreamdiary.domain._core.log.model;
+package io.nicheblog.dreamdiary.domain._core.log.sys.model;
 
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.model.BaseLogParam;
 import io.nicheblog.dreamdiary.global.Constant;
 import lombok.*;
 
@@ -31,6 +32,7 @@ public class LogSysParam
 
     /**
      * 생성자.
+     *
      * @param rslt - 처리 결과 상태를 나타내는 Boolean 값
      */
     public LogSysParam(final Boolean rslt) {
@@ -39,6 +41,7 @@ public class LogSysParam
 
     /**
      * 생성자.
+     *
      * @param rslt - 처리 결과 상태를 나타내는 Boolean 값
      * @param rsltMsg 처리 결과 메시지
      */
@@ -48,6 +51,7 @@ public class LogSysParam
 
     /**
      * 생성자.
+     *
      * @param rslt 처리 결과 상태를 나타내는 Boolean 값
      * @param rsltMsg 처리 결과 메시지
      * @param actvtyCtgr 활동 카테고리를 나타내는 `ActvtyCtgr` 객체

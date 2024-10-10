@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain._core.log.sys.event;
 
-import io.nicheblog.dreamdiary.domain._core.log.model.LogSysParam;
+import io.nicheblog.dreamdiary.domain._core.log.sys.model.LogSysParam;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 

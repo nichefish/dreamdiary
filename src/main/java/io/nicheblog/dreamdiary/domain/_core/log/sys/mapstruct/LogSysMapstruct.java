@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain._core.log.sys.mapstruct;
 
-import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogSysDto;
+import io.nicheblog.dreamdiary.domain._core.log.sys.model.LogSysDto;
 import io.nicheblog.dreamdiary.domain._core.log.sys.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;

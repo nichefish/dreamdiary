@@ -15,12 +15,11 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class VcatnPaprSearchParam
         extends BasePostSearchParam {
 
     /** 컨텐츠 타입 */
-    @Builder.Default
     private String contentType = ContentType.VCATN_PAPR.key;
 }

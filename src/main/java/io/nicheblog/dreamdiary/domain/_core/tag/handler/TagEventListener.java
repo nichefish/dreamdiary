@@ -27,9 +27,10 @@ public class TagEventListener {
     private final ApplicationEventPublisher publisher;
 
     /**
-     * 태그 처리
-     * @param event - 처리할 `TagProcEvent` 객체
-     * @throws Exception - 태그 처리 또는 캐시 처리 중 발생할 수 있는 예외
+     * 태그 이벤트를 처리한다.
+     * 
+     * @param event 처리할 이벤트 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @EventListener
     public void handleTagProcEvent(final TagProcEvent event) throws Exception {

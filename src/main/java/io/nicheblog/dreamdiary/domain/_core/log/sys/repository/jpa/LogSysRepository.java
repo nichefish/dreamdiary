@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.domain._core.log.repository.jpa;
+package io.nicheblog.dreamdiary.domain._core.log.sys.repository.jpa;
 
 import io.nicheblog.dreamdiary.domain._core.log.sys.entity.LogSysEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;

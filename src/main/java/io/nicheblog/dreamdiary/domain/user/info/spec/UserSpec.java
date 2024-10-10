@@ -1,13 +1,13 @@
-package io.nicheblog.dreamdiary.web.spec.user;
+package io.nicheblog.dreamdiary.domain.user.info.spec;
 
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.domain.user.emplym.entity.UserEmplymEntity;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntity;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseCrudSpec;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
-import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,6 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @implements BaseSpec:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Component
 @Log4j2
@@ -33,8 +32,10 @@ public class UserSpec
         implements BaseCrudSpec<UserEntity> {
 
     /**
-     * 검색 조건 목록 반환
-     * ("시스템관리자" 목록 화면에서 제외 위해 override)
+     * 인자별로 preset된 특정 검색 조건 목록을 반환한다. (override)
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @return {@link Specification} -- 검색 조건에 따른 Specification 객체
      */
     @Override
     public Specification<UserEntity> searchWith(final Map<String, Object> searchParamMap) {
@@ -53,7 +54,7 @@ public class UserSpec
                 e.printStackTrace();
             }
             predicate.addAll(basePredicate);
-            // 시스템 관리자 목록에서 제외
+            // "시스템관리자"를 조회 목록에서 제외한다.
             predicate.add(builder.notEqual(root.get("userId"), Constant.SYSTEM_ACNT));
             this.postQuery(root, query, builder);
             return builder.and(predicate.toArray(new Predicate[0]));
@@ -61,7 +62,11 @@ public class UserSpec
     }
 
     /**
-     * 검색 조건 목록 반환 :: preset된 특정 모드를 반환
+     * 인자별로 preset된 특정 검색 조건 목록을 반환한다.
+     *
+     * @param startDtStr 검색할 시작 날짜 (문자열 형식)
+     * @param endDtStr 검색할 종료 날짜 (문자열 형식)
+     * @return {@link Specification} -- 검색 조건에 따른 Specification 객체
      */
     public Specification<UserEntity> searchCrdtUser(final String startDtStr, final String endDtStr) {
         return (root, query, builder) -> {
@@ -78,7 +83,9 @@ public class UserSpec
     }
 
     /**
-     * 검색 조건 목록 반환 :: preset된 특정 모드를 반환
+     * preset된 특정 검색 조건 목록을 반환한다.
+     *
+     * @return {@link Specification} -- 검색 조건에 따른 Specification 객체
      */
     public Specification<UserEntity> searchCrdtBrthdyUser() {
         return (root, query, builder) -> {
@@ -97,7 +104,13 @@ public class UserSpec
     }
 
     /**
-     * 인자별로 구체적인 검색 조건 세팅
+     * 인자별로 구체적인 검색 조건을 세팅한다. (override)
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @param root 검색할 엔티티의 Root 객체
+     * @param builder 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return {@link List} -- 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception 검색 조건 생성 중 발생할 수 있는 예외
      */
     @Override
     public List<Predicate> getPredicateWithParams(
@@ -137,7 +150,14 @@ public class UserSpec
     }
 
     /**
-     * 내부직원 검색조건 세팅
+     * preset된 특정 검색 조건 목록을 반환한다. (내부 직원 검색)
+     *
+     * @param startDtStr 검색할 시작 날짜 (문자열 형식)
+     * @param endDtStr 검색할 종료 날짜 (문자열 형식)
+     * @param root 검색할 엔티티의 Root 객체
+     * @param builder 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return {@link List} -- 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception 검색 조건 생성 중 발생할 수 있는 예외
      */
     public List<Predicate> getCrdtUser(
             final String startDtStr,
@@ -163,7 +183,14 @@ public class UserSpec
     }
 
     /**
-     * 오늘이 생일인 내부직원 검색조건 세팅
+     * preset된 특정 검색 조건 목록을 반환한다. (오늘이 생일인 내부 직원 검색)
+     *
+     * @param startDtStr 검색할 시작 날짜 (문자열 형식)
+     * @param endDtStr 검색할 종료 날짜 (문자열 형식)
+     * @param root 검색할 엔티티의 Root 객체
+     * @param builder 검색 조건을 생성하는 CriteriaBuilder 객체
+     * @return {@link Predicate} -- 설정된 검색 조건(Predicate) 리스트
+     * @throws Exception 검색 조건 생성 중 발생할 수 있는 예외
      */
     public List<Predicate> getCrdtBrthdyUser(
             final String startDtStr,
@@ -180,7 +207,11 @@ public class UserSpec
     }
 
     /**
-     * 정렬 조건 세팅 ::
+     * preset된 특정 정렬 조건 목록을 반환한다.
+     *
+     * @param root {@link Root} 엔티티 객체, 검색할 사용자 엔티티의 루트
+     * @param builder {@link CriteriaBuilder} 객체, 정렬 조건을 생성하는 빌더
+     * @return {@link Order} 정렬 조건 목록
      */
     private static List<Order> getOrderByTitleAndEcnyDt(
             final Root<UserEntity> root,

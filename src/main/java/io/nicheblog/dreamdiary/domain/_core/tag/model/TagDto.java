@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -62,6 +63,7 @@ public class TagDto
 
     /**
      * 생성자.
+     *
      * @param tagNm - 생성할 태그의 이름
      */
     public TagDto(final String tagNm) {
@@ -71,6 +73,7 @@ public class TagDto
 
     /**
      * 생성자.
+     *
      * @param tagNm - 생성할 태그의 이름
      * @param ctgr - 생성할 태그의 카테고리
      */
@@ -81,13 +84,13 @@ public class TagDto
 
     /**
      * 태그이름 오름차순 정렬
+     *
      * @param other - 비교할 `TagDto` 객체
      * @return int - 사전적으로 앞서면 음수, 같으면 0, 뒤에 있으면 양수를 반환
-     * @throws Exception - 정렬 중 발생할 수 있는 예외
      */
     @SneakyThrows
     @Override
-    public int compareTo(TagDto other) {
+    public int compareTo(final @NotNull TagDto other) {
         String thisTagNm = this.getTagNm();
         String otherTagNm = other.getTagNm();
         return thisTagNm.compareTo(otherTagNm);
@@ -97,5 +100,4 @@ public class TagDto
     public Integer getKey() {
         return this.tagNo;
     }
-
 }

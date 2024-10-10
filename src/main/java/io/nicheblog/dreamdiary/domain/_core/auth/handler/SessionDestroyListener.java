@@ -25,7 +25,8 @@ public class SessionDestroyListener
 
     /**
      * 세션 종료 이벤트(SessionDestroyedEvent)가 발생했을 때 호출되는 메서드입니다.
-     * @param event - 세션이 종료될 때 발생하는 SessionDestroyedEvent 객체
+     *
+     * @param event 세션이 종료될 때 발생하는 SessionDestroyedEvent 객체
      */
     @Override
     public void onApplicationEvent(final SessionDestroyedEvent event) {
