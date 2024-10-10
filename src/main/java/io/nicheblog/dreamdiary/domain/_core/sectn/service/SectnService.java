@@ -1,14 +1,15 @@
-package io.nicheblog.dreamdiary.web.service.cmm.sectn;
+package io.nicheblog.dreamdiary.domain._core.sectn.service;
 
+import io.nicheblog.dreamdiary.domain._core.cache.service.EhCacheEvictService;
+import io.nicheblog.dreamdiary.domain._core.sectn.entity.SectnEntity;
+import io.nicheblog.dreamdiary.domain._core.sectn.mapstruct.SectnMapstruct;
+import io.nicheblog.dreamdiary.domain._core.sectn.model.SectnDto;
+import io.nicheblog.dreamdiary.domain._core.sectn.repository.jpa.SectnRepository;
+import io.nicheblog.dreamdiary.domain._core.sectn.spec.SectnSpec;
 import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
-import io.nicheblog.dreamdiary.web.entity.cmm.sectn.SectnEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.sectn.SectnMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.sectn.SectnDto;
-import io.nicheblog.dreamdiary.web.repository.cmm.sectn.jpa.SectnRepository;
-import io.nicheblog.dreamdiary.web.service.cmm.cache.EhCacheEvictService;
-import io.nicheblog.dreamdiary.web.spec.cmm.sectn.SectnSpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,10 @@ import java.util.List;
 /**
  * SectnService
  * <pre>
- *  단락 서비스 모듈
+ *  단락 서비스 모듈.
  * </pre>
  *
  * @author nichefish
- * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("sectnService")
 @RequiredArgsConstructor
@@ -32,64 +32,68 @@ import java.util.List;
 public class SectnService
         implements BaseMultiCrudService<SectnDto, SectnDto, Integer, SectnEntity, SectnRepository, SectnSpec, SectnMapstruct> {
 
-    private final SectnRepository sectnRepository;
-    private final SectnSpec sectnSpec;
-    private final SectnMapstruct sectnMapstruct = SectnMapstruct.INSTANCE;
+    @Getter
+    private final SectnRepository repository;
+    @Getter
+    private final SectnSpec spec;
+    @Getter
+    private final SectnMapstruct mapstruct = SectnMapstruct.INSTANCE;
 
     private final EhCacheEvictService ehCacheEvictService;
 
-    @Override
-    public SectnRepository getRepository() {
-        return this.sectnRepository;
-    }
-    @Override
-    public SectnMapstruct getMapstruct() {
-        return this.sectnMapstruct;
-    }
-    @Override
-    public SectnSpec getSpec() {
-        return this.sectnSpec;
-    }
-
     /**
-     * 등록 전처리 :: override
+     * 등록 전처리. (override)
+     *
+     * @param dto 등록할 객체
      */
     @Override
-    public void preRegist(final SectnDto sectn) {
-        if (sectn.getState() == null) sectn.setState(new StateCmpstn());
+    public void preRegist(final SectnDto dto) {
+        if (dto.getState() == null) dto.setState(new StateCmpstn());
     }
 
     /**
-     * 등록 후처리 :: override
+     * 등록 후처리. (override)
+     *
+     * @param rslt - 등록된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postRegist(final SectnEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제 처리
         this.evictClsfCache(rslt);
     }
 
     /**
-     * 수정 후처리 :: override
+     * 수정 후처리. (override)
+     *
+     * @param rslt - 수정된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postModify(final SectnEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제 처리
         this.evictClsfCache(rslt);
     }
 
     /**
-     * 삭제 후처리 :: override
+     * 삭제 후처리. (override)
+     *
+     * @param rslt - 삭제된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postDelete(final SectnEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제 처리
         this.evictClsfCache(rslt);
 
         // TODO: 관련 엔티티 삭제?
     }
 
     /**
-     * 관련 캐시 처리
+     * 관련 캐시 삭제 처리.
+     *
+     * @param rslt 캐시 처리할 엔티티
+     * @throws Exception 캐시 처리 중 발생할 수 있는 예외
      */
     public void evictClsfCache(final SectnEntity rslt) throws Exception {
         String refContentType = rslt.getRefContentType();
@@ -99,7 +103,11 @@ public class SectnService
     }
 
     /**
-     * 정렬 순서 업데이트
+     * 정렬 순서 업데이트.
+     *
+     * @param sortOrdr 키 + 정렬 순서로 이루어진 목록
+     * @return {@link Boolean} -- 성공시 true 반환
+     * @throws Exception 처리 중 발생 가능한 예외
      */
     @Transactional
     public boolean sortOrdr(final List<SectnDto> sortOrdr) throws Exception {

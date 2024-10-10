@@ -98,7 +98,7 @@ public interface SiteUrl {
     String NOTICE_POPUP_LIST_AJAX = Prefix.NOTICE + "/noticePopupListAjax.do";
     String NOTICE_LIST_XLSX_DOWNLOAD = Prefix.NOTICE + "/noticeListXlsxDownload.do";
 
-    /** 일반게시판 */
+    /** 게시판 */
     String BOARD_POST_LIST = Prefix.BOARD_POST + "/boardPostList.do";
     String BOARD_POST_REG_FORM = Prefix.BOARD_POST + "/boardPostRegForm.do";
     String BOARD_POST_REG_AJAX = Prefix.BOARD_POST + "/boardPostRegAjax.do";
@@ -359,7 +359,7 @@ public interface SiteUrl {
         String SUMRY = "/sumry";
         String JRNL_SUMRY = JRNL + SUMRY;
 
-        /* 일반게시판 (board) */
+        /* 게시판 (board) */
         String BOARD = "/board";
         String POST = "/board";
         String BOARD_POST = BOARD + POST;

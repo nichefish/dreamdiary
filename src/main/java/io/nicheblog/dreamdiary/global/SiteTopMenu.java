@@ -25,7 +25,7 @@ public enum SiteTopMenu {
     MAIN("00", "0000", "메인", "", false),
     NOTICE("01", "0100", "공지사항", "notice", false),
     JRNL("02", "0200", "저널", "journal", false),
-    BOARD("03", "0300", "일반게시판", "board", false),
+    BOARD("03", "0300", "게시판", "board", false),
     SCHDUL("04", "0400", "일정", "schedule", false),
     EXPTR("05", "0500", "경비", "expenditure", false),
 

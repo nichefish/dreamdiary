@@ -92,11 +92,11 @@ public class SiteMenu
     public static SiteAcsInfo JRNL_SBJCT = SubMenu.JRNL_SBJCT;
     public static SiteAcsInfo JRNL_SUMRY = SubMenu.JRNL_SUMRY;
 
-    // 대메뉴 :: 일반게시판
+    // 대메뉴 :: 게시판
     public static SiteAcsInfo BOARD = new SiteAcsInfo(
             SiteTopMenu.BOARD,
             TOP_MENU_IDX,
-            "일반게시판",
+            "게시판",
             Url.BOARD_POST_LIST
     );
 
