@@ -1,8 +1,10 @@
-package io.nicheblog.dreamdiary.web.model.log;
+package io.nicheblog.dreamdiary.domain._core.log.stats.model;
 
 /**
  * LogStatsUserIntrfc
- * (사용자별) 로그 통계 조회용 인터페이스
+ * <pre>
+ *  (사용자별) 로그 통계 조회용 인터페이스
+ * </pre>
  *
  * @author nichefish
  */
@@ -20,7 +22,7 @@ public interface LogStatsUserIntrfc {
     /** 아이디 */
     String getRetireYn();
 
-    /** 아이디 /
+    /** 아이디 */
     String getAuthCd();
 
     /** 아이디 */

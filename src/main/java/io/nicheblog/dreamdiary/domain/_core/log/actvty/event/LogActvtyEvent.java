@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.global.cmm.log.event;
+package io.nicheblog.dreamdiary.domain._core.log.actvty.event;
 
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
@@ -21,7 +21,10 @@ public class LogActvtyEvent
     /* ----- */
 
     /**
-     * 생성자
+     * 생성자.
+     *
+     * @param source 이벤트의 출처를 나타내는 객체
+     * @param log 적제할 활동 로그 정보를 담은 객체
      */
     public LogActvtyEvent(final Object source, final LogActvtyParam log) {
         super(source);

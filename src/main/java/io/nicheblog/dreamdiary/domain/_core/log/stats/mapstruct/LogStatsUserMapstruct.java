@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.domain._core.log.stats.mapstruct;
 
-import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogStatsUserDto;
-import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogStatsUserIntrfc;
+import io.nicheblog.dreamdiary.domain._core.log.stats.model.LogStatsUserDto;
+import io.nicheblog.dreamdiary.domain._core.log.stats.model.LogStatsUserIntrfc;
 import io.nicheblog.dreamdiary.domain._core.log.stats.entity.LogStatsUserEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;

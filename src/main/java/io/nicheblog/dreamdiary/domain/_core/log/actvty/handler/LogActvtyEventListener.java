@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.global.cmm.log.handler;
+package io.nicheblog.dreamdiary.domain._core.log.actvty.handler;
 
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogAnonActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.sys.event.LogSysEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -21,13 +21,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Component
 @RequiredArgsConstructor
-public class LogEventListener {
+public class LogActvtyEventListener {
 
     private final HttpServletRequest request;
     private final LogWorker logWorker;
 
     /**
-     * 현재 인증(로그인) 상태인 등록/수정자 반환
+     * 현재 인증(로그인) 상태인 활동 로그 등록 이벤트를 처리한다.
+     *
+     * @param event 처리할 이벤트 객체
      */
     @EventListener
     @Async
@@ -37,7 +39,9 @@ public class LogEventListener {
     }
 
     /**
-     * 현재 인증(로그인) 상태인 등록/수정자 반환
+     * 현재 미인증(비로그인) 상태인 활동 로그 등록 이벤트를 처리한다.
+     *
+     * @param event 처리할 이벤트 객체
      */
     @EventListener
     @Async
@@ -47,7 +51,9 @@ public class LogEventListener {
     }
 
     /**
-     * 현재 인증(로그인) 상태인 등록/수정자 반환
+     * 시스템 로그 등록 이벤트를 처리한다.
+     *
+     * @param event 처리할 이벤트 객체
      */
     @EventListener
     @Async
