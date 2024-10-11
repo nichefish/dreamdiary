@@ -10,6 +10,7 @@ import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import java.util.Map;
 /**
  * VcatnPaprService
  * <pre>
- *  휴가계획서 서비스 모듈
+ *  휴가계획서 서비스 모듈.
  * </pre>
  *
  * @author nichefish
@@ -53,7 +54,11 @@ public class VcatnSchdulService
     }
 
 /**
- * 목록 Page<Entity>->Page<Dto> 변환
+ * 목록 Page<Entity> -> Page<Dto> 변환 (override)
+ *
+ * @param entityPage 페이징 처리된 Entity 목록
+ * @return {@link Page} -- 변환된 페이징 처리된 Dto 목록
+ * @throws Exception 처리 중 발생할 수 있는 예외
  *//*
 
     public Page<VcatnSchdulDto> pageEntityToDto(

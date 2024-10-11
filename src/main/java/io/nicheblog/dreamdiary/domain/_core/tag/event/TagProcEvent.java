@@ -27,9 +27,10 @@ public class TagProcEvent
 
     /**
      * 생성자.
-     * @param source - 이벤트가 발생한 객체
-     * @param clsfKey - 해당 이벤트에 대한 분류 키
-     * @param tag - 태그 조합 객체 (TagCmpstn)
+     *
+     * @param source 이벤트의 출처를 나타내는 객체
+     * @param clsfKey 해당 이벤트에 대한 분류 키
+     * @param tag 태그 조합 객체 (TagCmpstn)
      */
     public TagProcEvent(final Object source,  final BaseClsfKey clsfKey, final TagCmpstn tag) {
         super(source);
@@ -39,7 +40,7 @@ public class TagProcEvent
 
     /**
      * 생성자.
-     * @param source 이벤트가 발생한 객체
+     * @param source 이벤트의 출처를 나타내는 객체
      * @param clsfKey 해당 이벤트에 대한 분류 키
      */
     public TagProcEvent(final Object source, final BaseClsfKey clsfKey) {

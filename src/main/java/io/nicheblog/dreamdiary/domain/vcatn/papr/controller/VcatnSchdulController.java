@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain.vcatn.papr.controller;
 
-import io.nicheblog.dreamdiary.domain._core.cd.service.CdService;
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
@@ -58,16 +58,16 @@ public class VcatnSchdulController
     private final VcatnStatsYyService vcatnStatsYyService;
     private final VcatnSchdulService vcatnSchdulService;
     private final UserService userService;
-    private final CdService cdService;
+    private final DtlCdService dtlCdService;
 
     /**
      * 휴가관리 > 휴가사용일자 > 휴가사용일자 목록 화면 조회
      * (관리자MNGR만 접근 가능.)
      *
      * @param yyStrParam 년도 파라미터
-     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 전달할 데이터를 저장하는 ModelMap 객체
-     * @return view -- 뷰 이름을 나타내는 문자열
+     * @return {@link String} -- 뷰 이름을 나타내는 문자열
      */
     @GetMapping(Url.VCATN_SCHDUL_LIST)
     @Secured(Constant.ROLE_MNGR)
@@ -99,7 +99,7 @@ public class VcatnSchdulController
             model.addAttribute("crtdUserList", crtdUserList);
             // 일반 휴가(날짜범위)를 하루하루로 다 쪼개야 한다.
             model.addAttribute("vcatnSchdulList", vcatnSchdulService.getListDto(statsYy));
-            cdService.setModelCdData(Constant.VCATN_CD, model);
+            dtlCdService.setCdListToModel(Constant.VCATN_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -123,8 +123,8 @@ public class VcatnSchdulController
      *
      * @param vcatnSchdul 등록/수정할 객체
      * @param key 식별자
-     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
-     * @return view -- 뷰 이름을 나타내는 문자열
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link String} -- 뷰 이름을 나타내는 문자열
      */
     @PostMapping(value = {Url.VCATN_SCHDUL_REG_AJAX, Url.VCATN_SCHDUL_MDF_AJAX})
     @Secured(Constant.ROLE_MNGR)
@@ -169,8 +169,8 @@ public class VcatnSchdulController
      * (관리자MNGR만 접근 가능.)
      *
      * @param key 식별자
-     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
-     * @return view -- 뷰 이름을 나타내는 문자열
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link String} -- 뷰 이름을 나타내는 문자열
      */
     @PostMapping(value = Url.VCATN_SCHDUL_DTL_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -212,8 +212,8 @@ public class VcatnSchdulController
      * (관리자MNGR만 접근 가능.)
      *
      * @param key 식별자
-     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
-     * @return view -- 뷰 이름을 나타내는 문자열
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link String} -- 뷰 이름을 나타내는 문자열
      */
     @PostMapping(Url.VCATN_SCHDUL_DEL_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -228,7 +228,7 @@ public class VcatnSchdulController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 삭제 처리
+            // 삭제
             isSuccess = vcatnSchdulService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -246,42 +246,4 @@ public class VcatnSchdulController
                 .status(HttpStatus.OK)
                 .body(ajaxResponse);
     }
-
-    /**
-     * 휴가 관리 > 휴가사용일자 > 휴가사용일자 엑셀 다운로드
-     * (관리자MNGR만 접근 가능.)
-     *//*
-    // @GetMapping(Url.VCATN_SCHDUL_XLSX_DOWNLOAD)
-    // @Secured(Constant.ROLE_MNGR)
-    // public void vcatnSchdulXlsxDownload(
-    //         final LogActvtyParam logParam,
-    //         final @RequestParam("yy") @Nullable String yyStr
-    // ) throws Exception {
-//
-    //     boolean isSuccess = false;
-    //     String rsltMsg = "";
-    //     try {
-    //         VcatnStatsYyDto statsYy = vcatnStatsYyService.getVcatnYyDtDto(yyStr);
-    //         // 일반 휴가(날짜범위)를 하루하루로 다 쪼개야 한다.
-    //         Page<VcatnSchdulDto> vcatnSchdulList = vcatnSchdulService.getVcatnSchdulList(statsYy);
-    //         List<Object> statsObjList = new ArrayList<>();
-    //         for (VcatnSchdulDto dy : vcatnSchdulList) {
-    //             statsObjList.add(vcatnSchdulMapstruct.toDyXlsxDto(dy));
-    //         }
-    //         xlsxUtils.listXlxsDownload(Constant.VCATN_SCHDUL, statsObjList);
-    //         isSuccess = true;
-    //         rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-    //     } catch (Exception e) {
-    //         isSuccess = false;
-    //         rsltMsg = MessageUtils.getExceptionMsg(e);
-    //         logParam.setExceptionInfo(e);
-    //         MessageUtils.alertMessage(rsltMsg, Url.VCATN_SCHDUL_LIST);
-    //     } finally {
-    //         // 로그 관련 처리
-    //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-    //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
-    //     }
-    // }
-
-*/
 }

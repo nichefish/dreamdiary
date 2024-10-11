@@ -31,9 +31,9 @@ public class MainController
     /**
      * 메인 화면 :: 사용자
      *
-     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 전달할 데이터를 저장하는 ModelMap 객체
-     * @return view -- 뷰 이름을 나타내는 문자열
+     * @return {@link String} -- 뷰 이름을 나타내는 문자열
      */
     @GetMapping(value = {Url.ROOT, Url.MAIN})
     public String mainPage(
@@ -54,9 +54,9 @@ public class MainController
     /**
      * 메인 화면 :: 관리자
      *
-     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 전달할 데이터를 저장하는 ModelMap 객체
-     * @return view -- 뷰 이름을 나타내는 문자열
+     * @return {@link String} -- 뷰 이름을 나타내는 문자열
      */
     @GetMapping(value = {Url.ADMIN_MAIN})
     public String adminMainPage(

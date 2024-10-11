@@ -1,111 +1,68 @@
-package io.nicheblog.dreamdiary.domain.jrnl.day.controller;
+package io.nicheblog.dreamdiary.domain._core.sectn.controller;
 
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.domain._core.tag.event.TagProcEvent;
-import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
-import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDaySearchParam;
-import io.nicheblog.dreamdiary.domain.jrnl.day.service.JrnlDayService;
+import io.nicheblog.dreamdiary.domain._core.sectn.model.SectnDto;
+import io.nicheblog.dreamdiary.domain._core.sectn.model.SectnParam;
+import io.nicheblog.dreamdiary.domain._core.sectn.model.SectnSearchParam;
+import io.nicheblog.dreamdiary.domain._core.sectn.service.SectnService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.swagger.v3.oas.annotations.Operation;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import java.util.List;
+import java.security.InvalidParameterException;
+import java.util.Optional;
 
 /**
- * JrnlDayController
+ * SectnController
  * <pre>
- *  저널 일자 Controller.
+ *  단락 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
 @Controller
 @RequiredArgsConstructor
-public class JrnlDayController
+@Log4j2
+public class SectnController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = Url.JRNL_DAY_PAGE;             // 기본 URL
-    @Getter
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.DEFAULT;      // 작업 카테고리 (로그 적재용)
 
-    private final JrnlDayService jrnlDayService;
+    private final SectnService sectnService;
 
     /**
-     * 저널 일자 화면 조회
-     * (사용자USER, 관리자MNGR만 접근 가능.)
-     *
-     * @param searchParam 검색 조건을 담은 파라미터 객체
-     * @param logParam 로그 기록을 위한 파라미터 객체
-     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
-     * @return {@link String} -- 화면 뷰 경로
-     * @throws Exception 처리 중 발생할 수 있는 예외
-     */
-    @GetMapping(Url.JRNL_DAY_PAGE)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String jrnlDayPage(
-            @ModelAttribute("searchParam") JrnlDaySearchParam searchParam,
-            final LogActvtyParam logParam,
-            final ModelMap model
-    ) throws Exception {
-
-        /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_DAY.setAcsPageInfo(Constant.PAGE_LIST));
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 년도 추가
-            model.addAttribute("yy", null);
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
-        } finally {
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return "/view/jrnl/day/jrnl_day_page";
-    }
-
-    /**
-     * 저널 일자 목록 조회 (Ajax)
+     * 단락 목록 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능.)
      *
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
-    @GetMapping(value = {Url.JRNL_DAY_LIST_AJAX})
+    @GetMapping(Url.SECTN_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayListAjax(
-            final JrnlDaySearchParam searchParam,
+    public ResponseEntity<AjaxResponse> sectnListAjax(
+            @ModelAttribute("searchParam") SectnSearchParam searchParam,
             final LogActvtyParam logParam
     ) {
 
@@ -114,12 +71,19 @@ public class JrnlDayController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
+            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
+            Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
+            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
             // 목록 조회 및 응답에 추가
-            List<JrnlDayDto> jrnlDayList = jrnlDayService.getListDtoWithCache(searchParam);
-            ajaxResponse.setRsltList(jrnlDayList);
+            Page<SectnDto> sectnList = sectnService.getPageDto(searchParam, pageRequest);
+            ajaxResponse.setRsltList(sectnList.getContent());
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (NumberFormatException e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(new InvalidParameterException("파라미터 형식이 맞지 않습니다."));
+            logParam.setExceptionInfo(e);
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
@@ -127,7 +91,8 @@ public class JrnlDayController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            ActvtyCtgr actvty = Optional.ofNullable(searchParam.getActvtyCtgrCd()).map(ActvtyCtgr::valueOf).orElse(null);
+            logParam.setResult(isSuccess, rsltMsg, actvty);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -137,27 +102,25 @@ public class JrnlDayController
     }
 
     /**
-     * 저널 일자 등록/수정 (Ajax)
+     * 단락 등록/수정 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능.)
      *
-     * @param jrnlDay 등록/수정 처리할 객체
+     * @param sectn 등록/수정 처리할 객체
      * @param key 식별자
+     * @param param 등록 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param request - Multipart 요청
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
-    @Operation(
-            summary = "저널 일자 등록/수정",
-            description = "저널 일자 정보를 등록/수정한다."
-    )
-    @PostMapping(value = {Url.JRNL_DAY_REG_AJAX, Url.JRNL_DAY_MDF_AJAX})
+    @PostMapping(value = {Url.SECTN_REG_AJAX, Url.SECTN_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayRegAjax(
-            final @Valid JrnlDayDto jrnlDay,
+    public ResponseEntity<AjaxResponse> sectnRegAjax(
+            final @Valid SectnDto sectn,
             final @RequestParam("postNo") @Nullable Integer key,
-            final LogActvtyParam logParam,
-            final MultipartHttpServletRequest request
+            final SectnParam param,
+            final MultipartHttpServletRequest request,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -165,24 +128,13 @@ public class JrnlDayController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 등록 및 수정 처리 (중복체크)
-            boolean isReg = key == null;
-            if (isReg) {
-                boolean isDup = jrnlDayService.dupChck(jrnlDay);
-                if (isDup) {
-                    jrnlDay.setPostNo(jrnlDayService.getDupKey(jrnlDay));
-                    isReg = false;
-                }
-            }
-            JrnlDayDto result = isReg ? jrnlDayService.regist(jrnlDay, request) : jrnlDayService.modify(jrnlDay, request);
+            // 등록 및 수정 처리
+            boolean isReg = (key == null);
+            SectnDto result = isReg ? sectnService.regist(sectn, request) : sectnService.modify(sectn, request);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            if (isSuccess) {
-                // 태그 처리 :: 메인 로직과 분리
-                publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), jrnlDay.tag));
-            }
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
@@ -190,8 +142,7 @@ public class JrnlDayController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setCn(jrnlDay.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
@@ -200,64 +151,22 @@ public class JrnlDayController
                 .body(ajaxResponse);
     }
 
-    /**
-     * 저널 일자 상세 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능.)
-     *
-     * @param key 식별자
-     * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 처리 결과와 메시지
-     * @throws Exception 처리 중 발생할 수 있는 예외
-     */
-    @GetMapping(value = {Url.JRNL_DAY_DTL_AJAX})
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayDtlAjax(
-            final @RequestParam("postNo") Integer key,
-            final LogActvtyParam logParam
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 모델에 추가
-            JrnlDayDto rslt = jrnlDayService.getDtlDtoWithCache(key);
-            ajaxResponse.setRsltObj(rslt);
-
-            isSuccess = (rslt.getPostNo() != null);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ajaxResponse);
-    }
 
     /**
-     * 저널 일자 삭제 (Ajax)
+     * 단락 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능.)
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
-    @PostMapping(value = {Url.JRNL_DAY_DEL_AJAX})
+    @GetMapping(Url.SECTN_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayDelAjax(
-            final @RequestParam("postNo") Integer key,
-            final LogActvtyParam logParam
+    public ResponseEntity<AjaxResponse> sectnDtlAjax(
+            final LogActvtyParam logParam,
+            final SectnParam param,
+            final @RequestParam("postNo") Integer key
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -266,12 +175,11 @@ public class JrnlDayController
         String rsltMsg = "";
         try {
             // 삭제
-            isSuccess = jrnlDayService.delete(key);
+            SectnDto rsDto = sectnService.getDtlDto(key);
+            ajaxResponse.setRsltObj(rsDto);
+
+            isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            if (isSuccess) {
-                // 태그 처리 :: 메인 로직과 분리
-                publisher.publishEvent(new TagProcEvent(this, new BaseClsfKey(key, ContentType.JRNL_DAY)));
-            }
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
@@ -279,6 +187,87 @@ public class JrnlDayController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
+            logParam.setCn("key: " + key);
+            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
+    }
+    
+    /**
+     * 단락 삭제 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param param 조회 파라미터
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     */
+    @PostMapping(Url.SECTN_DEL_AJAX)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> sectnDelAjax(
+            final LogActvtyParam logParam,
+            final SectnParam param,
+            final @RequestParam("postNo") Integer key
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 삭제
+            isSuccess = sectnService.delete(key);
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setCn("key: " + key);
+            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
+    }
+
+    /**
+     * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     *
+     * @param sectnParam 키+정렬 순서 목록을 담은 파라미터
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     */
+    @PostMapping(Url.SECTN_SORT_ORDR_AJAX)
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> sectnSortOrdrAjax(
+            @RequestBody SectnParam sectnParam,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = null;
+        try {
+            // 메뉴 정렬 순서 저장
+            isSuccess = sectnService.sortOrdr(sectnParam.getSortOrdr());
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // logParam.setCn("key: " + menuNo);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

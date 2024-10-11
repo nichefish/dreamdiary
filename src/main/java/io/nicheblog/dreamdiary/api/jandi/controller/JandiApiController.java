@@ -3,10 +3,10 @@ package io.nicheblog.dreamdiary.api.jandi.controller;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiApiRespnsDto;
 import io.nicheblog.dreamdiary.api.jandi.model.JandiParam;
 import io.nicheblog.dreamdiary.api.jandi.service.JandiApiService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,11 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * JandiApiController
  * <pre>
- *  API:: JANDI (incoming/outgoing) webhook 컨트롤러
+ *  API:: JANDI (incoming/outgoing) webhook 컨트롤러.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
@@ -44,6 +43,10 @@ public class JandiApiController
 
     /**
      * JANDI :: 잔디 메신저로 웹훅 메세지 전송
+     *
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param jandiParam 잔디 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @Operation(
             summary = "잔디 메신저로 웹훅 메세지 전송",

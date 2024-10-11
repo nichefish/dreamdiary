@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.domain._core.auth.handler;
 
 import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.domain._core.auth.service.DupIdLgnManager;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.core.Authentication;

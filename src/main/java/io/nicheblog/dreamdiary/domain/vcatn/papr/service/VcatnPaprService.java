@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain.vcatn.papr.service;
 
-import io.nicheblog.dreamdiary.domain._core.cd.service.CdService;
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.entity.VcatnPaprEntity;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.entity.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.mapstruct.VcatnPaprMapstruct;
@@ -46,7 +46,7 @@ public class VcatnPaprService
 
     private final VcatnSchdulService vcatnSchdulService;
     private final VcatnStatsYyService vcatnStatsYyService;
-    private final CdService cmmCdService;
+    private final DtlCdService dtlCdService;
 
     /**
      * 등록 전처리. (override)
@@ -81,7 +81,7 @@ public class VcatnPaprService
         return schdulList.stream()
                 .map(vcatn -> {
                     String vcatnCd = vcatn.getVcatnCd();
-                    String vcatnNm = cmmCdService.getDtlCdNm(Constant.VCATN_CD, vcatnCd);
+                    String vcatnNm = dtlCdService.getDtlCdNm(Constant.VCATN_CD, vcatnCd);
                     String period = vcatn.getBgnDt();
                     String endDt = vcatn.getEndDt();
                     try {
@@ -117,7 +117,7 @@ public class VcatnPaprService
      */
     @Override
     public void preDelete(final VcatnPaprEntity entity) {
-        // 휴가계획서 상세항목 삭제 처리
+        // 휴가계획서 상세항목 삭제
         List<VcatnSchdulEntity> vcatnSchdulList = entity.getSchdulList();
         vcatnSchdulService.deleteAll(vcatnSchdulList);
     }

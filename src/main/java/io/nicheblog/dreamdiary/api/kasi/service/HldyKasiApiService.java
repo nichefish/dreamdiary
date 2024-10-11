@@ -3,10 +3,10 @@ package io.nicheblog.dreamdiary.api.kasi.service;
 import io.nicheblog.dreamdiary.api.kasi.mapstruct.HldyKasiApiMapstruct;
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.api.kasi.model.HldyKasiApiRespDto;
+import io.nicheblog.dreamdiary.domain.schdul.entity.SchdulEntity;
+import io.nicheblog.dreamdiary.domain.schdul.service.SchdulService;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
-import io.nicheblog.dreamdiary.web.service.schdul.SchdulService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -46,6 +46,10 @@ public class HldyKasiApiService {
 
     /**
      * API:: 한국천문연구원(KASI):: 휴일 정보 조회
+     *
+     * @param yyParam 조회할 연도 (String), 비어 있을 경우 현재 연도로 설정
+     * @return {@link List} -- 휴일 정보 리스트
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     public List<HldyKasiApiItemDto> getHldyList(final String yyParam) throws Exception {
         String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYyStr();
@@ -66,7 +70,10 @@ public class HldyKasiApiService {
 
     /**
      * API:: 한국천문연구원(KASI):: 휴일 정보 받아와서 DB 저장
-     * Clears Cache : hldyEntityList, isHldy, isHldyOrWeekend
+     *
+     * @param hldyApiList 휴일 정보 리스트
+     * @return {@link Boolean} -- 성공적으로 저장된 경우 true
+     * @throws Exception 저장 중 발생할 수 있는 예외
      */
     @CacheEvict(value = {"hldyEntityList", "isHldy", "isHldyOrWeekend"}, allEntries = true)
     public Boolean regHldyList(final List<HldyKasiApiItemDto> hldyApiList) throws Exception {
@@ -88,9 +95,10 @@ public class HldyKasiApiService {
 
     /**
      * API:: 한국천문연구원(KASI):: API 조회 휴일 정보 DB 삭제
-     * Clears Cache : hldyEntityList, isHldy, isHldyOrWeekend
+     *
+     * @param yyStr 삭제할 연도 (String)
+     * @throws Exception 삭제 중 발생할 수 있는 예외
      */
-
     @CacheEvict(value = {"hldyEntityList", "isHldy", "isHldyOrWeekend"}, allEntries = true)
     public void delHldyList(final String yyStr) throws Exception {
         Map<String, Object> searchParamMap = new HashMap() {{

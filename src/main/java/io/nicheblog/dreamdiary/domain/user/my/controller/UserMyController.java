@@ -1,81 +1,114 @@
-package io.nicheblog.dreamdiary.domain.jrnl.day.controller;
+package io.nicheblog.dreamdiary.domain.user.my.controller;
 
+import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.domain._core.tag.event.TagProcEvent;
-import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
-import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDaySearchParam;
-import io.nicheblog.dreamdiary.domain.jrnl.day.service.JrnlDayService;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
+import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
+import io.nicheblog.dreamdiary.domain.user.my.service.UserMyService;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnPaprDto;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.service.VcatnPaprService;
+import io.nicheblog.dreamdiary.domain.vcatn.stats.model.VcatnStatsYyDto;
+import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsService;
+import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
-import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * JrnlDayController
+ * UserMyController
  * <pre>
- *  저널 일자 Controller.
+ *  내 정보 관리 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
 @Controller
 @RequiredArgsConstructor
-public class JrnlDayController
+@Log4j2
+public class UserMyController
         extends BaseControllerImpl {
 
     @Getter
-    private final String baseUrl = Url.JRNL_DAY_PAGE;             // 기본 URL
+    private final String baseUrl = Url.USER_MY_DTL;
     @Getter
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER_MY;     // 작업 카테고리 (로그 적재용)
 
-    private final JrnlDayService jrnlDayService;
+    private final UserService userService;
+    private final UserMyService userMyService;
+    private final VcatnStatsService vcatnStatsService;
+    private final VcatnStatsYyService vcatnStatsYyService;
+    private final VcatnPaprService vcatnPaprService;
 
     /**
-     * 저널 일자 화면 조회
+     * 내 정보 (상세) 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능.)
-     *
-     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * 
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
      * @return {@link String} -- 화면 뷰 경로
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
-    @GetMapping(Url.JRNL_DAY_PAGE)
+    @GetMapping(Url.USER_MY_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String jrnlDayPage(
-            @ModelAttribute("searchParam") JrnlDaySearchParam searchParam,
+    public String myInfoDtl(
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
         /* 사이트 메뉴 설정 */
-        model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_DAY.setAcsPageInfo(Constant.PAGE_LIST));
+        model.addAttribute(Constant.SITE_MENU, SiteMenu.MAIN_PORTAL.setAcsPageInfo("내 정보"));
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 년도 추가
-            model.addAttribute("yy", null);
+            // 내 정보 조회 및 모델에 추가
+            String lgnUserId = AuthUtils.getLgnUserId();
+            UserDto lgnUserDto = userService.getDtlDto(lgnUserId);
+            model.addAttribute("user", lgnUserDto);
+
+            // 휴가계획서 년도 정보 조회 (시작일자~종료일자)
+            try {
+                //if (AuthService.hasEcnyDt()) {
+                VcatnStatsYyDto statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
+                model.addAttribute("vcatnYy", statsYy);
+                String userId = AuthUtils.getLgnUserId();
+                // VcatnStatsDto vcatnStatsDtl = vcatnStatsService.getVcatnStatsDtl(statsYy, userId);
+               //  model.addAttribute("vcatnStats", vcatnStatsDtl);
+                // 올해 사용 휴가 목록 조회
+                Map<String, Object> searchParamMap = new HashMap<>() {{
+                    put("searchStartDt", statsYy.getBgnDt());
+                    put("searchEndDt", statsYy.getEndDt());
+                    put("regstrId", lgnUserId);
+                }};
+                List<VcatnPaprDto.LIST> vcatnPaprList = vcatnPaprService.getListDto(searchParamMap);
+                model.addAttribute("vcatnPaprList", vcatnPaprList);
+                // }
+            } catch (Exception e) {
+                log.info("휴가계획서 정보를 조회하지 못했습니다.");
+            }
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -83,79 +116,27 @@ public class JrnlDayController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
+            MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
             // 로그 관련 처리
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/day/jrnl_day_page";
+        return "/view/user/my/user_my_dtl";
     }
 
     /**
-     * 저널 일자 목록 조회 (Ajax)
+     * 프로필 이미지 등록 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능.)
-     *
-     * @param searchParam 검색 조건을 담은 파라미터 객체
-     * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 처리 결과와 메시지
-     */
-    @GetMapping(value = {Url.JRNL_DAY_LIST_AJAX})
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayListAjax(
-            final JrnlDaySearchParam searchParam,
-            final LogActvtyParam logParam
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 목록 조회 및 응답에 추가
-            List<JrnlDayDto> jrnlDayList = jrnlDayService.getListDtoWithCache(searchParam);
-            ajaxResponse.setRsltList(jrnlDayList);
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ajaxResponse);
-    }
-
-    /**
-     * 저널 일자 등록/수정 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능.)
-     *
-     * @param jrnlDay 등록/수정 처리할 객체
-     * @param key 식별자
+     * 
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param request - Multipart 요청
-     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
-    @Operation(
-            summary = "저널 일자 등록/수정",
-            description = "저널 일자 정보를 등록/수정한다."
-    )
-    @PostMapping(value = {Url.JRNL_DAY_REG_AJAX, Url.JRNL_DAY_MDF_AJAX})
+    @PostMapping(Url.USER_MY_UPLOAD_PROFL_IMG_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayRegAjax(
-            final @Valid JrnlDayDto jrnlDay,
-            final @RequestParam("postNo") @Nullable Integer key,
+    public ResponseEntity<AjaxResponse> uploadProflImgAjax(
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request
     ) {
@@ -165,69 +146,9 @@ public class JrnlDayController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 등록 및 수정 처리 (중복체크)
-            boolean isReg = key == null;
-            if (isReg) {
-                boolean isDup = jrnlDayService.dupChck(jrnlDay);
-                if (isDup) {
-                    jrnlDay.setPostNo(jrnlDayService.getDupKey(jrnlDay));
-                    isReg = false;
-                }
-            }
-            JrnlDayDto result = isReg ? jrnlDayService.regist(jrnlDay, request) : jrnlDayService.modify(jrnlDay, request);
-            ajaxResponse.setRsltObj(result);
-
-            isSuccess = (result.getPostNo() != null);
+            // 이미지 파일 업로드 처리
+            isSuccess = userMyService.uploadProflImg(request);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            if (isSuccess) {
-                // 태그 처리 :: 메인 로직과 분리
-                publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), jrnlDay.tag));
-            }
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn(jrnlDay.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ajaxResponse);
-    }
-
-    /**
-     * 저널 일자 상세 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능.)
-     *
-     * @param key 식별자
-     * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 처리 결과와 메시지
-     * @throws Exception 처리 중 발생할 수 있는 예외
-     */
-    @GetMapping(value = {Url.JRNL_DAY_DTL_AJAX})
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayDtlAjax(
-            final @RequestParam("postNo") Integer key,
-            final LogActvtyParam logParam
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 모델에 추가
-            JrnlDayDto rslt = jrnlDayService.getDtlDtoWithCache(key);
-            ajaxResponse.setRsltObj(rslt);
-
-            isSuccess = (rslt.getPostNo() != null);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
@@ -245,18 +166,16 @@ public class JrnlDayController
     }
 
     /**
-     * 저널 일자 삭제 (Ajax)
+     * 프로필 이미지 제거 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능.)
-     *
-     * @param key 식별자
+     * 
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
-    @PostMapping(value = {Url.JRNL_DAY_DEL_AJAX})
+    @PostMapping(Url.USER_MY_REMOVE_PROFL_IMG_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> jrnlDayDelAjax(
-            final @RequestParam("postNo") Integer key,
+    public ResponseEntity<AjaxResponse> removeProflImgAjax(
             final LogActvtyParam logParam
     ) {
 
@@ -265,13 +184,92 @@ public class JrnlDayController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 삭제
-            isSuccess = jrnlDayService.delete(key);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            if (isSuccess) {
-                // 태그 처리 :: 메인 로직과 분리
-                publisher.publishEvent(new TagProcEvent(this, new BaseClsfKey(key, ContentType.JRNL_DAY)));
-            }
+            // 이미지 파일 삭제
+            isSuccess = userMyService.removeProflImg();
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
+    }
+
+    /**
+     * 내 비밀번호 확인 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param currPw 현재 비밀번호
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     */
+    @PostMapping(Url.USER_MY_PW_CF_AJAX)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> myPwChkAjax(
+            final @RequestParam("currPw") @Nullable String currPw,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 확인 처리
+            String lgnUserId = AuthUtils.getLgnUserId();
+            isSuccess = userMyService.myPwCf(lgnUserId, currPw);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
+    }
+
+    /**
+     * 내 비밀번호 변경 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param currPw 현재 비밀번호
+     * @param currPw 새 비밀번호
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     */
+    @PostMapping(Url.USER_MY_PW_CHG_AJAX)
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> myPwChgAjax(
+            final @RequestParam("currPw") @Nullable String currPw,
+            final @RequestParam("newPw") @Nullable String newPw,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 비밀번호 변경 처리
+            isSuccess = userMyService.myPwChg(AuthUtils.getLgnUserId(), currPw, newPw);
+            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);

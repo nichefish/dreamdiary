@@ -1,10 +1,14 @@
-package io.nicheblog.dreamdiary.domain._core.tag.controller;
+package io.nicheblog.dreamdiary.domain.jrnl.diary.controller;
 
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.domain._core.tag.model.TagPropertyDto;
-import io.nicheblog.dreamdiary.domain._core.tag.service.TagPropertyService;
+import io.nicheblog.dreamdiary.domain._core.tag.model.TagDto;
+import io.nicheblog.dreamdiary.domain._core.tag.model.TagSearchParam;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiarySearchParam;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.service.JrnlDiaryService;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.service.JrnlDiaryTagService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
@@ -12,51 +16,52 @@ import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.Valid;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
- * TagPropertyController
+ * JrnlDiaryTagController
  * <pre>
- *  태그 속성 관리 컨트롤러.
+ *  저널 일기 태그 Controller
  * </pre>
  *
  * @author nichefish
  */
 @Controller
 @RequiredArgsConstructor
-@Log4j2
-public class TagPropertyController
+public class JrnlDiaryTagController
         extends BaseControllerImpl {
 
     @Getter
-    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.TAG;           // 작업 카테고리 (로그 적재용)
+    private final String baseUrl = Url.JRNL_DAY_PAGE;             // 기본 URL
+    @Getter
+    private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.JRNL;        // 작업 카테고리 (로그 적재용)
 
-    private final TagPropertyService tagPropertyService;
+    private final JrnlDiaryService jrnlDiaryService;
+    private final JrnlDiaryTagService jrnlDiaryTagService;
 
     /**
-     * 태그 속성 등록/수정 (Ajax)
-     * (관리자MNGR만 접근 가능.)
+     * 저널 일기 태그 전체 목록 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
      *
-     * @param tagProperty 등록/수정 처리할 객체
-     * @param key 식별자
+     * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
-    @GetMapping(value = {Url.TAG_PROPERTY_REG_AJAX, Url.TAG_PROPERTY_MDF_AJAX})
+    @GetMapping(Url.JRNL_DIARY_TAG_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> TagPropertyRegAjax(
-            final @Valid TagPropertyDto tagProperty,
-            final @RequestParam("tagPropertyNo") Integer key,
+    public ResponseEntity<AjaxResponse> tagListAjax(
+            @ModelAttribute("searchParam") TagSearchParam searchParam,
             final LogActvtyParam logParam
     ) {
 
@@ -65,55 +70,9 @@ public class TagPropertyController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 태그 상세 조회 (관련글 목록 포함)
-            boolean isReg = key == null;
-            TagPropertyDto result = isReg ? tagPropertyService.regist(tagProperty) : tagPropertyService.modify(tagProperty);
-            ajaxResponse.setRsltObj(result);
-
-            isSuccess = true;
-            isSuccess = (result.getTagPropertyNo() != null);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ajaxResponse);
-    }
-
-    /**
-     * 태그 속성 상세 조회 (Ajax)
-     * (관리자MNGR만 접근 가능.)
-     *
-     * @param key 식별자
-     * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 처리 결과와 메시지
-     */
-    @GetMapping(Url.TAG_PROPERTY_DTL_AJAX)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> TagDtlAjax(
-            final LogActvtyParam logParam,
-            final @RequestParam("tagPropertyNo") Integer key
-    ) {
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 태그 속성 상세 조회 (관련글 목록 포함)
-            TagPropertyDto tagDto = tagPropertyService.getDtlDto(key);
-            ajaxResponse.setRsltObj(tagDto);
+            // 전체 태그 목록 조회 (태그클라우드)
+            List<TagDto> tagList = jrnlDiaryTagService.getDiarySizedListDto(searchParam.getYy(), searchParam.getMnth());
+            ajaxResponse.setRsltList(tagList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -124,7 +83,6 @@ public class TagPropertyController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -135,20 +93,19 @@ public class TagPropertyController
     }
 
     /**
-     * 태그 속성 삭제 (Ajax)
-     * (관리자MNGR만 접근 가능.)
+     * 저널 일기 태그 전체 목록 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
      *
-     * @param key 식별자
+     * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
-    @GetMapping(Url.TAG_PROPERTY_DEL_AJAX)
+    @GetMapping(Url.JRNL_DIARY_TAG_GROUP_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
-    public ResponseEntity<AjaxResponse> TagPropertyDelAjax(
-            final @RequestParam("tagPropertyNo") Integer key,
+    public ResponseEntity<AjaxResponse> tagGroupListAjax(
+            @ModelAttribute("searchParam") TagSearchParam searchParam,
             final LogActvtyParam logParam
-
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -156,9 +113,9 @@ public class TagPropertyController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 태그 상세 조회 (관련글 목록 포함)
-            TagPropertyDto tagDto = tagPropertyService.getDtlDto(key);
-            ajaxResponse.setRsltObj(tagDto);
+            // 전체 태그 목록 조회 (태그클라우드)
+            Map<String, List<TagDto>> tagGroupMap = jrnlDiaryTagService.getDiarySizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
+            ajaxResponse.setRsltMap(tagGroupMap);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -169,7 +126,6 @@ public class TagPropertyController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -179,4 +135,47 @@ public class TagPropertyController
                 .body(ajaxResponse);
     }
 
+    /**
+     * 저널 일기 태그 상세 (해당 태그 꿈 목록) 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     */
+    @GetMapping(value = {Url.JRNL_DIARY_TAG_DTL_AJAX})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> jrnlDayListAjax(
+            JrnlDiarySearchParam searchParam,
+            final LogActvtyParam logParam
+    ) {
+
+        AjaxResponse ajaxResponse = new AjaxResponse();
+
+        boolean isSuccess = false;
+        String rsltMsg = "";
+        try {
+            // 목록 조회 및 응답에 추가
+            List<JrnlDiaryDto> jrnlDiaryList = jrnlDiaryService.jrnlDiaryTagDtl(searchParam);
+            Collections.sort(jrnlDiaryList);
+            ajaxResponse.setRsltList(jrnlDiaryList);
+
+            isSuccess = true;
+            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        } catch (Exception e) {
+            isSuccess = false;
+            rsltMsg = MessageUtils.getExceptionMsg(e);
+            logParam.setExceptionInfo(e);
+        } finally {
+            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+            // 로그 관련 처리
+            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
+    }
 }
