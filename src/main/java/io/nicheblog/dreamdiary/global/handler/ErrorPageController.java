@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.global.handler;
 
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain.admin.menu.model.AcsPageNm;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.web.AcsPageNm;
-import io.nicheblog.dreamdiary.web.SiteMenu;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -20,12 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * ErrorPageController
  * <pre>
- *  에러 화면 조회 컨트롤러
+ *  에러 화면 조회 컨트롤러.
  *  (스프링 기본 제공 ErrorController 구현 : WhiteLabel 에러페이지 override)
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @Log4j2
@@ -40,24 +39,37 @@ public class ErrorPageController
 
     /**
      * 기본 에러 화면(/error) :: 에러 코드에 따라 반환 페이지 분기
+     *
+     * @param request 요청 객체
+     * @return {@link String} -- 에러 상태 코드에 따라 반환할 뷰 경로
      */
     @GetMapping(Url.ERROR)
     public String handleError(HttpServletRequest request) {
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        Object statusObj = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
         // 응답 코드에 따른 페이지 분기
-        if (status != null) {
-            int statusCode = Integer.parseInt(status.toString());
-            if (statusCode == HttpStatus.BAD_REQUEST.value()) return "/view/error/error_bad_request";
-            if (statusCode == HttpStatus.FORBIDDEN.value()) return "/view/error/error_access_denied";
-            if (statusCode == HttpStatus.NOT_FOUND.value()) return "/view/error/error_not_found";
+        if (statusObj == null) return "/view/error/error_page";
+
+        int statusCode = Integer.parseInt(statusObj.toString());
+        HttpStatus status = HttpStatus.resolve(statusCode);
+        switch (status) {
+            case BAD_REQUEST:
+                return "/view/error/error_bad_request";
+            case FORBIDDEN:
+                return "/view/error/error_access_denied";
+            case NOT_FOUND:
+                return "/view/error/error_not_found";
+            default:
+                return "/view/error/error_page";
         }
-        return "/view/error/error_page";
     }
 
     /**
-     * 에러 화면 (404 NOT FOUND)
-     * 비로그인 사용자도 외부에서 접근 가능
+     * 에러 화면 (404 NOT FOUND).
+     * (비로그인 사용자도 외부에서 접근 가능.)
+     *
+     * @param model ModelMap 객체
+     * @return {@link String} -- 에러 화면 뷰 경로
      */
     @GetMapping(Url.ERROR_NOT_FOUND)
     public String errorNotFound(
@@ -72,8 +84,11 @@ public class ErrorPageController
     }
 
     /**
-     * 에러 화면 (비인가 접근)
-     * 비로그인 사용자도 외부에서 접근 가능
+     * 에러 화면 (비인가 접근).
+     * (비로그인 사용자도 외부에서 접근 가능.) (인증 없음)
+     *
+     * @param model ModelMap 객체
+     * @return {@link String} -- 에러 화면 뷰 경로
      */
     @GetMapping(Url.ERROR_ACCESS_DENIED)
     public String errorAccessDenied(
@@ -88,8 +103,11 @@ public class ErrorPageController
     }
 
     /**
-     * 에러 화면 (공통)
-     * 비로그인 사용자도 외부에서 접근 가능
+     * 에러 화면 (공통).
+     * (비로그인 사용자도 외부에서 접근 가능.) (인증 없음)
+     *
+     * @param model ModelMap 객체
+     * @return {@link String} -- 에러 화면 뷰 경로
      */
     @GetMapping(Url.ERROR_PAGE)
     public String errorPage(

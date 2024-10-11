@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.auth.handler;
+package io.nicheblog.dreamdiary.domain._core.auth.service;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -19,19 +19,25 @@ import java.util.List;
 public class DupIdLgnManager
         implements HttpSessionListener {
 
-    /** lgnIdList */
+    /** 로그인 아이디 목록을 담을 배열. */
     private static final List<String> lgnIdList = new ArrayList<>();
 
     /* ----- */
 
-    /** 중복 로그인 여부 체크
+    /**
+     * 중복 로그인 여부를 체크합니다.
+     *
+     * @param compareId 중복 여부를 확인할 사용자 ID (String)
+     * @return {@link Boolean} -- 중복 로그인인 경우 true, 그렇지 않으면 false
      */
     public synchronized static boolean isDupIdLgn(final String compareId) {
         return lgnIdList.contains(compareId);
     }
 
     /**
-     * lgnIdList에 id 추가
+     * 사용자 ID를 중복 로그인 리스트(lgnIdList)에 추가합니다.
+     *
+     * @param lgnId 추가할 사용자 ID (String)
      */
     public synchronized static void addKey(final String lgnId) {
         lgnIdList.add(lgnId);
@@ -39,7 +45,9 @@ public class DupIdLgnManager
     }
 
     /**
-     * lgnIdList에서 id 제거
+     * 사용자 ID를 중복 로그인 리스트(lgnIdList)에서 제거합니다.
+     *
+     * @param compareId 제거할 사용자 ID (String)
      */
     public synchronized static void removeKey(final String compareId) {
         lgnIdList.remove(compareId);

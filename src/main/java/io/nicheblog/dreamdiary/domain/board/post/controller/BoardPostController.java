@@ -63,7 +63,7 @@ public class BoardPostController
 
 
     /**
-     * 게시판 게시물 목록 조회
+     * 게시판 게시물 목록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능.)
      *
      * @param searchParam 검색 조건을 담은 파라미터 객체
@@ -159,8 +159,8 @@ public class BoardPostController
             model.addAttribute(Constant.IS_REG, true);           // 등록/수정 화면 플래그 세팅
             // 코드 정보 모델에 추가
             model.addAttribute(Constant.POST_CTGR_CD, dtlCdService.getCdDtoListByClCd(boardDef.getCtgrClCd()));
-            dtlCdService.setModelCdData(Constant.MDFABLE_CD, model);
-            dtlCdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
+            dtlCdService.setCdListToModel(Constant.MDFABLE_CD, model);
+            dtlCdService.setCdListToModel(Constant.JANDI_TOPIC_CD, model);
             // CmmUtils.setModelFlsysPath(model);
 
             isSuccess = true;
@@ -188,7 +188,6 @@ public class BoardPostController
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
      * @return String - 화면의 뷰 이름
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.BOARD_POST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -426,8 +425,8 @@ public class BoardPostController
             model.addAttribute(Constant.IS_MDF, true);
             // 코드 정보 모델에 추가
             model.addAttribute(Constant.POST_CTGR_CD, dtlCdService.getCdDtoListByClCd(boardDef.getCtgrClCd()));
-            dtlCdService.setModelCdData(Constant.MDFABLE_CD, model);
-            dtlCdService.setModelCdData(Constant.JANDI_TOPIC_CD, model);
+            dtlCdService.setCdListToModel(Constant.MDFABLE_CD, model);
+            dtlCdService.setCdListToModel(Constant.JANDI_TOPIC_CD, model);
             // CmmUtils.setModelFlsysPath(model);
 
             isSuccess = rsDto.getPostNo() != null;

@@ -4,8 +4,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 import io.nicheblog.dreamdiary.domain._core.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.domain._core.auth.service.AuthService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.domain._core.log.model.LogSysParam;
 import io.nicheblog.dreamdiary.domain._core.log.sys.event.LogSysEvent;
+import io.nicheblog.dreamdiary.domain._core.log.sys.model.LogSysParam;
 import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.model.LgnPolicyDto;
 import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.service.LgnPolicyService;
 import io.nicheblog.dreamdiary.domain.user.info.model.UserAuthRoleDto;
@@ -48,7 +48,8 @@ public class DreamdiaryInitializer
     public String SYSTEM_INIT_TEMP_PW;
 
     /**
-     * 프로그램 최초 구동시 수행할 로직
+     * 프로그램 최초 구동시 수행할 로직.
+     *
      * @param args - 명령줄에서 전달된 인수
      */
     @Override
@@ -57,9 +58,9 @@ public class DreamdiaryInitializer
         log.info("DreamdiaryApplication init... activeProfile: {}", activeProfile.getActive());
 
         // 시스템 계정 부재시 등록 :: 메소드 분리
-        this.chkSystemAcnt();
+        this.regSystemAcntIfEmpty();
         // 로그인 정책 부재시 등록 :: 메소드 분리
-        this.chkLgnPolicy();
+        this.regLgnPolicyIfEmpty();
         // 프로필에 따른 .env 로드 :: 메소드 분리
         this.loadDotEnvProperties();
 
@@ -71,9 +72,9 @@ public class DreamdiaryInitializer
     }
 
     /**
-     * 최초 실행시 사용자가 공백이므로 관리자 계정 자동 등록 (PW 암호화)
+     * 최초 실행시 사용자가 공백이므로 관리자 계정 자동 등록. (PW 암호화)
      */
-    public void chkSystemAcnt() {
+    public void regSystemAcntIfEmpty() {
 
         LogSysParam logParam = new LogSysParam();
 
@@ -86,7 +87,7 @@ public class DreamdiaryInitializer
                 authService.loadUserByUsername(Constant.SYSTEM_ACNT);
                 systemAcntExists = true;
             } catch (UsernameNotFoundException e) {
-                // 시스템계정 부재시 등록:: 메소드 분리
+                // 시스템 계정 부재시 등록:: 메소드 분리
                 isSuccess = this.regSystemAcnt();
                 rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
             }
@@ -104,7 +105,7 @@ public class DreamdiaryInitializer
     }
 
     /**
-     * 시스템 계정 등록:: 메소드 분리
+     * 시스템 계정 등록.
      * 임의의 고정 패스워드로 생성되었으므로 최초설치 후 직접 비밀번호를 변경해 주어야 한다.
      */
     public boolean regSystemAcnt() throws Exception {
@@ -129,9 +130,9 @@ public class DreamdiaryInitializer
     }
 
     /**
-     * 최초 실행시 로그인 정책이 공백이므로 기본값 자동 등록 (PW 암호화)
+     * 최초 실행시 로그인 정책이 공백이므로 기본값 자동 등록. (PW 암호화)
      */
-    public void chkLgnPolicy() {
+    public void regLgnPolicyIfEmpty() {
 
         LogSysParam logParam = new LogSysParam();
 
@@ -162,7 +163,7 @@ public class DreamdiaryInitializer
     }
 
     /**
-     * 로그인 정책 등록:: 메소드 분리
+     * 로그인 정책 등록.
      * 임의의 고정 패스워드로 생성되었으므로 최초설치 후 직접 비밀번호를 변경해 주어야 한다.
      */
     public boolean regLgnPolicy() throws Exception {
@@ -178,7 +179,7 @@ public class DreamdiaryInitializer
     }
 
     /**
-     * 프로필에 따른 dotEnv 설정 :: 메소드 분리
+     * 프로필에 따라 dotEnv 설정 로드.
      */
     private void loadDotEnvProperties() {
         try {

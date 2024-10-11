@@ -32,18 +32,18 @@ import java.util.HashMap;
 /**
  * DataSourceConfig
  * <pre>
- *  멀티 데이터소스 설정시 Primary Config
+ *  멀티 데이터소스 설정시 Primary Config.
  * </pre>
  *
  * @author nichefish
  */
 @Configuration
 @EnableJpaRepositories(
-        basePackages = { "io.nicheblog.dreamdiary.**.repository.**.jpa", "io.nicheblog.dreamdiary.**.repository.**.querydsl" },
+        basePackages = {"io.nicheblog.dreamdiary.domain.**.repository.jpa", "io.nicheblog.dreamdiary.**.repository.querydsl" },
         repositoryBaseClass = BaseRepositoryImpl.class
 )
 @MapperScan(
-        basePackages = { "io.nicheblog.dreamdiary.**.repository.**.mybatis" },
+        basePackages = { "io.nicheblog.dreamdiary.**.repository.mybatis" },
         sqlSessionTemplateRef = "sqlSessionTemplate"
 )
 public class DataSourceConfig
@@ -52,6 +52,11 @@ public class DataSourceConfig
     @Resource
     private Environment env;
 
+    /**
+     * 빈 등록 :: primaryDataSource
+     *
+     * @return {@link DataSource} -- DataSource 객체
+     */
     @Primary
     @Bean(name = "primaryDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.primary")    // application.properties에서 사용한 이름
@@ -60,7 +65,10 @@ public class DataSourceConfig
     }
 
     /**
-     * JPA Entity
+     * 빈 등록 :: (JPA) EntityManagerFactory
+     *
+     * @param dataSource 주 데이터 소스 (primaryDataSource)
+     * @return {@link EntityManagerFactory} -- EntityManagerFactory 객체
      */
     @Primary
     @Bean
@@ -81,7 +89,10 @@ public class DataSourceConfig
     }
 
     /**
-     * JPA TransactionManager
+     * 빈 등록 :: (JPA) TransactionManager (JPA 트랜잭션 관리)
+     *
+     * @param entityManagerFactory JPA EntityManagerFactory 객체
+     * @return PlatformTransactionManager 객체
      */
     @Primary
     @Bean
@@ -92,7 +103,12 @@ public class DataSourceConfig
     }
 
     /**
-     * MyBatis
+     * 빈 등록 :: (MyBatis) sessionFactory
+     *
+     * @param dataSource 주 데이터 소스 (primaryDataSource)
+     * @param applicationContext 애플리케이션 컨텍스트 (ApplicationContext), MyBatis 매퍼 파일의 위치를 가져오기 위해 사용
+     * @return {@link SqlSessionFactory} -- SqlSessionFactory 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Primary
     @Bean
@@ -102,19 +118,30 @@ public class DataSourceConfig
     ) throws Exception {
 
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setMapperLocations(applicationContext.getResources("classpath*:**/repository/**/mybatis/*Mapper.xml"));
+        bean.setMapperLocations(applicationContext.getResources("classpath*:**/repository/mybatis/*Mapper.xml"));
         bean.setDataSource(dataSource);
         bean.setVfs(SpringBootVFS.class);
         bean.setTypeAliasesPackage("io.nicheblog.dreamdiary.**.model");
         return bean.getObject();
     }
 
+    /**
+     * 빈 등록 :: (MyBatis) sqlSessionTemplate
+     *
+     * @param sqlSessionFactory MyBatis의 SqlSessionFactory 객체
+     * @return {@link SqlSessionTemplate} -- SqlSessionTemplate 객체
+     */
     @Primary
     @Bean
     public SqlSessionTemplate sqlSessionTemplate(final SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
+    /**
+     * 환경 설정을 주입합니다. (환경 변수에 직접 접근하느 클래스)
+     *
+     * @param environment Spring의 Environment 객체, 애플리케이션의 환경 설정 정보를 포함
+     */
     @Override
     public void setEnvironment(final @NotNull Environment environment) {
         env = environment;

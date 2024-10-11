@@ -90,7 +90,7 @@ public class ClCdController
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
             // 코드 데이터 모델에 추가
-            dtlCdService.setModelCdData(Constant.CL_CTGR_CD, model);
+            dtlCdService.setCdListToModel(Constant.CL_CTGR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -183,7 +183,7 @@ public class ClCdController
             ClCdDto cmmClCd = clCdService.getDtlDto(key);
             model.addAttribute("clCd", cmmClCd);
             // 코드 데이터 모델에 추가
-            dtlCdService.setModelCdData(Constant.CL_CTGR_CD, model);
+            dtlCdService.setCdListToModel(Constant.CL_CTGR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

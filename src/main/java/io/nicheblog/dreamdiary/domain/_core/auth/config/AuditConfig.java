@@ -25,7 +25,9 @@ import java.util.Optional;
 public class AuditConfig {
 
     /**
-     * auditorRef 빈 등록 : 현재 작업자 감지
+     * 빈 등록 :: auditorRef. (현재 작업자 감지)
+     *
+     * @return {@link AuditAwareImpl} -- AuditAwareImpl 객체
      */
     @Bean
     public AuditAwareImpl auditorRef() {
@@ -53,10 +55,12 @@ public class AuditConfig {
             SecurityContext securityContext = SecurityContextHolder.getContext();
             Authentication authentication = securityContext.getAuthentication();
             if (authentication == null || !authentication.isAuthenticated()) return Optional.empty();
+
             // 비로그인시 시스템 계정(system)으로 자동 처리
             Object principal = authentication.getPrincipal();
             boolean isNotLgn = (principal instanceof String);
             if (isNotLgn) return Optional.of(Constant.SYSTEM_ACNT);
+
             // 로그인 사용자 ID 반환
             AuthInfo authInfo = (AuthInfo) authentication.getPrincipal();
             return Optional.of(authInfo.getUserId());

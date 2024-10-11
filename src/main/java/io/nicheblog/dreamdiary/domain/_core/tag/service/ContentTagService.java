@@ -1,17 +1,18 @@
-package io.nicheblog.dreamdiary.web.service.cmm.tag;
+package io.nicheblog.dreamdiary.domain._core.tag.service;
 
+import io.nicheblog.dreamdiary.domain._core.tag.entity.ContentTagEntity;
+import io.nicheblog.dreamdiary.domain._core.tag.entity.TagEntity;
+import io.nicheblog.dreamdiary.domain._core.tag.mapstruct.ContentTagMapstruct;
+import io.nicheblog.dreamdiary.domain._core.tag.model.ContentTagDto;
+import io.nicheblog.dreamdiary.domain._core.tag.model.TagDto;
+import io.nicheblog.dreamdiary.domain._core.tag.repository.jpa.ContentTagRepository;
+import io.nicheblog.dreamdiary.domain._core.tag.spec.ContentTagSpec;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.ContentTagEntity;
-import io.nicheblog.dreamdiary.web.entity.cmm.tag.TagEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.cmm.tag.ContentTagMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.ContentTagDto;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
-import io.nicheblog.dreamdiary.web.repository.cmm.tag.jpa.ContentTagRepository;
-import io.nicheblog.dreamdiary.web.spec.cmm.tag.ContentTagSpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,6 @@ import java.util.stream.Collectors;
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("contentTagService")
 @RequiredArgsConstructor
@@ -38,32 +38,25 @@ import java.util.stream.Collectors;
 public class ContentTagService
         implements BaseCrudService<ContentTagDto, ContentTagDto, Integer, ContentTagEntity, ContentTagRepository, ContentTagSpec, ContentTagMapstruct> {
 
-    private final ContentTagRepository contentTagRepository;
-    private final ContentTagSpec contentTagSpec;
-    private final ContentTagMapstruct tagMapstruct = ContentTagMapstruct.INSTANCE;
-
-    @Override
-    public ContentTagRepository getRepository() {
-        return this.contentTagRepository;
-    }
-    @Override
-    public ContentTagSpec getSpec() {
-        return this.contentTagSpec;
-    }
-    @Override
-    public ContentTagMapstruct getMapstruct() {
-        return this.tagMapstruct;
-    }
+    @Getter
+    private final ContentTagRepository repository;
+    @Getter
+    private final ContentTagSpec spec;
+    @Getter
+    private final ContentTagMapstruct mapstruct = ContentTagMapstruct.INSTANCE;
 
     /**
-     * 특정 게시물에 대한 컨텐츠 태그 목록 조회 
+     * 특정 게시물에 대한 콘텐츠 태그 목록을 조회합니다.
+     *
+     * @param clsfKey 참조 복합키 정보 (BaseClsfKey)
+     * @return {@link List} -- 태그 목록
      */
     public List<TagDto> getTagStrListByClsfKey(final BaseClsfKey clsfKey) {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("refPostNo", clsfKey.getPostNo());
             put("refContentType", clsfKey.getContentType());
         }};
-        List<ContentTagEntity> entityList = contentTagRepository.findAll(contentTagSpec.searchWith(searchParamMap));
+        List<ContentTagEntity> entityList = repository.findAll(spec.searchWith(searchParamMap));
         if (CollectionUtils.isEmpty(entityList)) return new ArrayList<>();
         return entityList.stream()
                 .map(tag -> new TagDto(tag.getTagNm(), tag.getCtgr()))
@@ -71,18 +64,27 @@ public class ContentTagService
     }
 
     /**
-     * obsolete된 기존 컨텐츠 태그 삭제:: 메소드 분리
+     * 특정 게시물에 대해 태그 정보와 연결되지 않는 컨텐츠 태그 삭제.
+     *
+     * @param clsfKey 참조 복합키 정보 (BaseClsfKey)
+     * @param obsoleteTagList 삭제할 태그 목록
+     * @throws Exception 처리 중 발생할 수 있는 예외
+     *
      */
     public void delObsoleteContentTags(final BaseClsfKey clsfKey, final List<TagDto> obsoleteTagList) throws Exception {
         obsoleteTagList.forEach(tag -> {
-            contentTagRepository.deleteObsoleteContentTags(clsfKey.getPostNo(), clsfKey.getContentType(), tag.getTagNm(), tag.getCtgr());
+            repository.deleteObsoleteContentTags(clsfKey.getPostNo(), clsfKey.getContentType(), tag.getTagNm(), tag.getCtgr());
         });
     }
 
     /**
-     * 컨텐츠 태그 처리
+     * 특정 게시물에 대해 컨텐츠 태그 목록 추가.
+     *
+     * @param clsfKey 참조 복합키 정보 (BaseClsfKey)
+     * @param rsList 처리할 태그 엔티티 목록 (List<TagEntity>)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
-    public void procContentTags(final BaseClsfKey clsfKey, final List<TagEntity> rsList) throws Exception {
+    public void addContentTags(final BaseClsfKey clsfKey, final List<TagEntity> rsList) throws Exception {
         List<ContentTagEntity> contentTagList = rsList.stream()
                 .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
                 .collect(Collectors.toList());
@@ -90,7 +92,9 @@ public class ContentTagService
     }
 
     /**
-     * 컨텐츠 태그 전처리::
+     * 컨텐츠 태그 bulk 등록 후처리. (override)
+     *
+     * @param entityList 등록된 콘텐츠 태그 엔티티 목록
      */
     @Override
     public void postRegistAll(final List<ContentTagEntity> entityList) {
@@ -103,9 +107,12 @@ public class ContentTagService
             this.evictCacheForPeriod(cacheName, tagNo);
         });
     }
-    
+
     /**
-     * 기존 컨텐츠 태그 전부 삭제:: 메소드 분리
+     * 특정 게시물에 대해 기존 콘텐츠 태그를 모두 삭제합니다.
+     *
+     * @param clsfKey 참조 복합키 정보 (BaseClsfKey)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public void delExistingContentTags(final BaseClsfKey clsfKey) throws Exception {
         // 2. 글번호 + 태그번호를 받아와서 기존 태그 목록 조회
@@ -127,6 +134,9 @@ public class ContentTagService
 
     /**
      * 콘텐츠 타입에 따른 캐시 이름 반환 :: 메소드 분리
+     *
+     * @param contentType 콘텐츠 유형 (String)
+     * @return {@link String} -- 해당 콘텐츠 유형에 맞는 캐시 이름.
      */
     private String getCacheNameByContentType(final String contentType) {
         if (ContentType.JRNL_DAY.key.equals(contentType)) {
@@ -141,6 +151,10 @@ public class ContentTagService
 
     /**
      * 기간에 따른 컨텐츠 태그 캐시 삭제 :: 메소드 분리
+     *
+     * @param cacheName 캐시 이름
+     * @param tagNo 태그 번호 (key)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     private void evictCacheForPeriod(final String cacheName, final Integer tagNo) {
         try {

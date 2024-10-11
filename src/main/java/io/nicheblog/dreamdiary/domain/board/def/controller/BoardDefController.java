@@ -55,7 +55,7 @@ public class BoardDefController
     private final DtlCdService dtlCdService;
 
     /**
-     * 게시판 정의 목록 조회
+     * 게시판 정의 목록 화면 조회
      * (관리자MNGR만 접근 가능.)
      *
      * @param searchParam 검색 조건을 담은 파라미터 객체
@@ -88,11 +88,11 @@ public class BoardDefController
             model.addAttribute("boardDefMngList", boardDefMngList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(boardDefMngList));
             // 코드 정보 모델에 추가
-            dtlCdService.setModelCdData(Constant.BOARD_DEF_RSRVD_CD, model);
+            dtlCdService.setCdListToModel(Constant.BOARD_DEF_RSRVD_CD, model);
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
             // 코드 정보 모델에 추가
-            dtlCdService.setModelCdData(Constant.NOTICE_CTGR_CD, model);
+            dtlCdService.setCdListToModel(Constant.NOTICE_CTGR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

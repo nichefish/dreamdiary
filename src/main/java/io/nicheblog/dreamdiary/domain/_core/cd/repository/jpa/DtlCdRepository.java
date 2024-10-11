@@ -3,7 +3,10 @@ package io.nicheblog.dreamdiary.domain._core.cd.repository.jpa;
 import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdKey;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * DtlCdRepository
@@ -17,5 +20,31 @@ import org.springframework.stereotype.Repository;
 @Repository("dtlCdRepository")
 public interface DtlCdRepository
         extends BaseStreamRepository<DtlCdEntity, DtlCdKey> {
-    //
+
+    /**
+     * 분류 코드로 상세 코드 목록 검색.
+     *
+     * @param clCd 검색할 분류 코드
+     * @return {@link Boolean} -- 분류 코드에 해당하는 상세 코드 목록 (List<DtlCdEntity>)
+     */
+    List<DtlCdEntity> findByClCd(final String clCd);
+
+    /**
+     * 분류 코드로 '사용 중'인 상세 코드 목록 검색.
+     *
+     * @param clCd 분류 코드
+     * @param useYn 사용 여부 (Y/N)
+     * @param sort 정렬 기준
+     * @return {@link List} -- 상세 코드 목록
+     */
+    List<DtlCdEntity> findByClCdAndStateUseYn(final String clCd, String useYn, final Sort sort);
+
+    /**
+     * 공통코드, 상세 코드로 상세 코드명 조회.
+     *
+     * @param clCd 공통 코드
+     * @param dtlCd 상세 코드
+     * @return {@link DtlCdEntity} -- 상세 코드
+     */
+    DtlCdEntity findByClCdAndDtlCd(final String clCd, final String dtlCd);
 }

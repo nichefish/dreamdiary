@@ -1,13 +1,14 @@
-package io.nicheblog.dreamdiary.global.auth.handler;
+package io.nicheblog.dreamdiary.domain._core.auth.provider;
 
-import io.nicheblog.dreamdiary.global.auth.exception.*;
-import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
-import io.nicheblog.dreamdiary.global.auth.service.AuthService;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain._core.auth.exception.*;
+import io.nicheblog.dreamdiary.domain._core.auth.service.DupIdLgnManager;
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.domain._core.auth.service.AuthService;
+import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.entity.LgnPolicyEntity;
+import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.service.LgnPolicyService;
+import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
-import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
-import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +30,7 @@ import java.util.List;
 /**
  * DreamdiaryAuthenticationProvider
  * <pre>
- *  로그인 및 인증 처리
+ *  Spring Security :: 로그인 및 인증 처리.
  *  비밀번호 체크 + 접속IP + 비밀번호 변경기간 체크기능 추가하여 구현
  * </pre>
  *
@@ -47,7 +48,11 @@ public class DreamdiaryAuthenticationProvider
     private final PasswordEncoder passwordEncoder;
 
     /**
-     * 사용자 인증 과정
+     * Spring Security :: 사용자 인증 과정
+     *
+     * @param authentication 인증 정보를 담고 있는 Authentication 객체
+     * @return {@link Authentication} -- 인증된 사용자의 Authentication 객체
+     * @throws AuthenticationException 처리 중 발생할 수 있는 예외
      */
     @SneakyThrows
     @Override
@@ -92,10 +97,14 @@ public class DreamdiaryAuthenticationProvider
     }
 
     /**
-     * 중복 로그인 후 재접속 여부 :: 메소드 분리
+     * 중복 로그인 후 confirm 눌러 재접속 여부 :: 메소드 분리
+     *
+     * @param username 확인할 사용자 이름 (String)
+     * @return {@link Boolean} -- 중복 로그인 후 재접근이 확인된 경우 true, 그렇지 않으면 false
      */
     public Boolean isDupLgnConfirmed(final String username) {
         if (StringUtils.isEmpty(username)) return false;
+
         ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = servletRequestAttribute.getRequest().getSession(false);
         if (session == null) return false;
@@ -106,6 +115,9 @@ public class DreamdiaryAuthenticationProvider
 
     /**
      * 접속 IP 체크 :: 메소드 분리
+     *
+     * @param authInfo 사용자 인증 정보 (AuthInfo)
+     * @return {@link Boolean} -- 접속 IP가 유효한 경우 true
      */
     public Boolean isAcsIpValid(final AuthInfo authInfo) {
         if (!"Y".equals(authInfo.getUseAcsIpYn())) return true; 
@@ -135,6 +147,10 @@ public class DreamdiaryAuthenticationProvider
 
     /**
      * 비밀번호 만료 여부 체크 :: 메소드 분리
+     *
+     * @param authInfo 사용자 인증 정보 (AuthInfo)
+     * @return {@link Boolean} -- 비밀번호가 만료되지 않은 경우 true
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public Boolean isPwExpryValid(AuthInfo authInfo) throws Exception {
         LgnPolicyEntity lgnPolicy = lgnPolicyService.getDtlEntity();
@@ -144,8 +160,15 @@ public class DreamdiaryAuthenticationProvider
         return !isPwExprd;
     }
 
+    /**
+     * 인증 제공자가 특정 인증 클래스 타입을 지원하는지 여부를 확인합니다.
+     * -> UsernamePasswordAuthenticationToken만 처리합니다.
+     *
+     * @param authentication 검사할 인증 클래스 타입
+     * @return {@link Boolean} -- 인증 제공자가 해당 인증 클래스 타입을 지원하는 경우 true
+     */
     @Override
     public boolean supports(final Class<?> authentication) {
-        return true;
+        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }
