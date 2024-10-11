@@ -22,7 +22,6 @@ import java.util.stream.Stream;
  * </pre>
  *
  * @author nichefish
- * @implements BasePostService - 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("noticeService")
 @RequiredArgsConstructor
@@ -40,7 +39,7 @@ public class NoticeService
     /**
      * 엑셀 다운로드 스트림 조회.
      *
-     * @param searchParam - 검색 파라미터 객체
+     * @param searchParam 검색 파라미터 객체
      * @return {@link Stream} -- 변환된 Dto 스트림
      * @throws Exception 변환 중 발생할 수 있는 예외
      */
