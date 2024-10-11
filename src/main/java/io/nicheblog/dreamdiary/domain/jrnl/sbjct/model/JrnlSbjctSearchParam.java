@@ -6,7 +6,7 @@ import lombok.*;
 /**
  * JrnlSbjctSearchParam
  * <pre>
- *  저널 주제 게시물 검색 파라미터.
+ *  저널 주제 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish

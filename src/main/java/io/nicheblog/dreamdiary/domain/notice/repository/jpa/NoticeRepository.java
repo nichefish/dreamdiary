@@ -11,11 +11,9 @@ import org.springframework.stereotype.Repository;
  * </pre>
  *
  * @author nichefish
- * @extends BaseStreamRepository
  */
 @Repository("noticeRepository")
 public interface NoticeRepository
         extends BaseStreamRepository<NoticeEntity, Integer> {
-
     //
 }

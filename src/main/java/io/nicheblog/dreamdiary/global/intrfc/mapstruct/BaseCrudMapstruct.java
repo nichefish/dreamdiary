@@ -57,6 +57,45 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
                 .collect(Collectors.toList());
     }
 
+    /**
+     * ListDto -> Dto 변환
+     * @param listDto 변환할 ListDto 객체
+     * @return {@link Dto} -- 변환된 Dto 객체
+     */
+    Dto convert(final ListDto listDto) throws Exception;
+
+    /**
+     * ListDto -> Entity 변환 (dto 변환 후 toEntity)
+     *
+     * @param listDto 변환할 ListDto 객체
+     * @return {@link Entity} -- 변환된 Entity 객체
+     */
+    @Named("convertToEntity")
+    default Entity toEntity(final ListDto listDto) throws Exception {
+        Dto dto = this.convert(listDto);
+        return this.toEntity(dto);
+    }
+
+    /**
+     * DtoList to EntityList
+     *
+     * @param dtoList 변환할 ListDto 목록
+     * @return {@link List} -- 변환된 Dto 목록
+     */
+    default List<Entity> toEntityList(final List<ListDto> dtoList) {
+        if (CollectionUtils.isEmpty(dtoList)) return null;
+        AtomicLong i = new AtomicLong(1);
+        return dtoList.stream()
+                .map(dto -> {
+                    try {
+                        return this.toEntity(dto);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
     /* ----- */
 
     /**

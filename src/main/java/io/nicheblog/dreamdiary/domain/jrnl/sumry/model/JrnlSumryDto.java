@@ -1,9 +1,14 @@
 package io.nicheblog.dreamdiary.domain.jrnl.sumry.model;
 
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.sectn.model.cmpstn.SectnCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.sectn.model.cmpstn.SectnCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstnModule;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -22,7 +27,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 public class JrnlSumryDto
         extends BasePostDto
@@ -43,10 +48,13 @@ public class JrnlSumryDto
 
     /** 결산 년도 */
     private Integer yy;
+
     /** 꿈 일수 */
     private Integer dreamDayCnt;
+
     /** 꿈 갯수 */
     private Integer dreamCnt;
+
     /** 일기 일수 */
     private Integer diaryDayCnt;
 
@@ -56,23 +64,31 @@ public class JrnlSumryDto
     @Pattern(regexp = "^[YN]$")
     private String dreamComptYn = "N";
 
+    /**
+     * 저널 결산 상세 (DTL) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode
     @ToString(callSuper = true)
-    public static class DTL extends JrnlSumryDto {
+    public static class DTL
+            extends JrnlSumryDto {
         //
     }
 
+    /**
+     * 저널 결산 목록 조회 (LIST) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode
     @ToString(callSuper = true)
-    public static class LIST extends JrnlSumryDto {
+    public static class LIST
+            extends JrnlSumryDto {
         //
     }
 
@@ -82,6 +98,7 @@ public class JrnlSumryDto
     public Integer getKey() {
         return this.postNo;
     }
+
     /** 위임 :: 댓글 정보 모듈 */
     public CommentCmpstn comment;
     /** 단락 정보 모듈 (위임) */

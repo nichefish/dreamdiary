@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.domain.admin.popup.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +18,10 @@ import java.util.Date;
 /**
  * PopupEntity
  * <pre>
- *  팝업 정보 관리 Entity
+ *  팝업 정보 관리 Entity.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchEntity
- * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "POPUP")

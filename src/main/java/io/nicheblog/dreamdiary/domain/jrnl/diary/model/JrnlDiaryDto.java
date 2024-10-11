@@ -3,13 +3,14 @@ package io.nicheblog.dreamdiary.domain.jrnl.diary.model;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.CommentCmpstnModule;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstnModule;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -73,7 +74,7 @@ public class JrnlDiaryDto
      */
     @SneakyThrows
     @Override
-    public int compareTo(JrnlDiaryDto other) {
+    public int compareTo(final @NotNull JrnlDiaryDto other) {
         Date thisDate = DateUtils.asDate(this.getStdrdDt());
         if (thisDate == null) return -1;
 

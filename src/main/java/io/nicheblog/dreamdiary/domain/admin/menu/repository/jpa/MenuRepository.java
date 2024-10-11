@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
  * </pre>
  *
  * @author nichefish
- * @extends BaseStreamRepository
  */
 @Repository("menuRepository")
 public interface MenuRepository

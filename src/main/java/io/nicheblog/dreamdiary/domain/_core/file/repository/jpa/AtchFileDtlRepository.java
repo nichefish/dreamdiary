@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
  * </pre>
  *
  * @author nichefish
- * @extends BaseStreamRepository
  */
 @Repository("atchFileDtlRepository")
 public interface AtchFileDtlRepository

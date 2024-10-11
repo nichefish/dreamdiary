@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * MenuParam
  * <pre>
- *  메뉴 검색 파라미터.
+ *  메뉴 인자 파라미터.
  * </pre>
  *
  * @author nichefish

@@ -1,9 +1,18 @@
 package io.nicheblog.dreamdiary.domain.notice.entity;
 
+import io.nicheblog.dreamdiary.domain._clsf.comment.entity.embed.CommentEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.comment.entity.embed.CommentEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.managt.entity.embed.ManagtEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.managt.entity.embed.ManagtEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.sectn.entity.embed.SectnEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.sectn.entity.embed.SectnEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.tag.entity.embed.TagEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.tag.entity.embed.TagEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.entity.embed.ViewerEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.entity.embed.ViewerEmbedModule;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -70,17 +79,6 @@ public class NoticeEntity
     @Column(name = "popup_yn", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
     @Comment("팝업 노출여부")
     private String popupYn = "N";
-
-    /** 파일시스템 참조 목록 */
-    // @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    // @JoinColumnsOrFormulas({
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "post_no", referencedColumnName = "post_no")),
-    //         @JoinColumnOrFormula(column = @JoinColumn(name = "content_type", referencedColumnName = "content_type"))
-    // })
-    // @Fetch(FetchMode.SELECT)
-    // @NotFound(action = NotFoundAction.IGNORE)
-    // @Comment("파일시스템 참조 목록")
-    // private List<FlsysRefEntity> flsysRefList;
 
     /* ----- */
 

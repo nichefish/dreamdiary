@@ -1,16 +1,21 @@
 package io.nicheblog.dreamdiary.domain.jrnl.sbjct.model;
 
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.sectn.model.cmpstn.SectnCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.sectn.model.cmpstn.SectnCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstnModule;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
  * JrnlSbjctDto
  * <pre>
- *  일반게시판 게시물 Dto.
+ *  저널 주제 Dto.
  * </pre>
  *
  * @author nichefish
@@ -19,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 public class JrnlSbjctDto
         extends BasePostDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, SectnCmpstnModule {
@@ -48,22 +53,27 @@ public class JrnlSbjctDto
 
     /* ----- */
 
+    /**
+     * 저널 주제 상세 (DTL) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode
     public static class DTL
             extends JrnlSbjctDto {
-
         //
     }
 
+    /**
+     * 저널 주제 목록 조회 (LIST) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode
     public static class LIST
             extends JrnlSbjctDto {
         //
