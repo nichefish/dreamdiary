@@ -1,18 +1,18 @@
-package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.papr;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.controller;
 
+import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain._core.file.utils.FileUtils;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model.ExptrPrsnlPaprDto;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service.ExptrPrsnlItemService;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
-import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlItemService;
-import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,12 +29,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 /**
  * ExptrPrsnlItemController
  * <pre>
- *  경비 관리 > 경비지출항목 관리 컨트롤러
+ *  경비 관리 > 경비지출항목 관리 컨트롤러.
  *  ※경비지출항목(exptr_prsnl_item) = 경비지출서(exptr_prsnl_papr)에 N:1로 귀속된다.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -49,8 +48,12 @@ public class ExptrPrsnlItemController
     private final ExptrPrsnlItemService exptrPrsnlItemService;
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출내역 목록 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 경비 관리 > 경비지출서 > 경비지출내역 목록 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 경비지출서 번호
+     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(Url.EXPTR_PRSNL_ITEM_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -90,15 +93,20 @@ public class ExptrPrsnlItemController
 
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 개별항목 영수증 업로드 및 업데이트
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 경비 관리 > 경비지출서 > 경비지출서 개별항목 영수증 업로드 및 업데이트 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 경비지출항목 번호
+     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @param request - Multipart 요청
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(value = Url.EXPTR_PRSNL_ITEM_RCIPT_UPLOAD_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlItemRciptUploadAjax(
+            final @RequestParam("exptrPrsnlItemNo") Integer key,
             final LogActvtyParam logParam,
-            final @RequestParam("exptrPrsnlItemNo") Integer exptrPrsnlItemNo,
             final MultipartHttpServletRequest request
     ) {
 
@@ -113,7 +121,7 @@ public class ExptrPrsnlItemController
 
             isSuccess = (atchFileDtlNo != null);
             if (isSuccess) {
-                isSuccess = exptrPrsnlItemService.updateRciptFile(exptrPrsnlItemNo, atchFileDtlNo);
+                isSuccess = exptrPrsnlItemService.updateRciptFile(key, atchFileDtlNo);
             }
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -123,7 +131,7 @@ public class ExptrPrsnlItemController
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             // 로그 관련 처리
-            logParam.setCn("key: " + exptrPrsnlItemNo);
+            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -134,17 +142,23 @@ public class ExptrPrsnlItemController
     }
 
     /**
-     * 경비 관리 > 경비지출누적집계 > 경비지출서 해당 지출내역에 대하여 영수증 원본 제출여부 업데이트
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 경비 관리 > 경비지출누적집계 > 경비지출서 해당 지출내역에 대하여 영수증 원본 제출여부 업데이트 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 경비지출서 번호
+     * @param exptrPrsnlItemNo 경비지출항목 번호
+     * @param orgnlRciptYn - 영수증 제출 여부 (Y/N)
+     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlItemOrgnlRcipt(
-            final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
             final @RequestParam("exptrPrsnlItemNo") Integer exptrPrsnlItemNo,
-            final @RequestParam("orgnlRciptYn") String orgnlRciptYn
+            final @RequestParam("orgnlRciptYn") String orgnlRciptYn,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -173,18 +187,25 @@ public class ExptrPrsnlItemController
     }
 
     /**
-     * 경비 관리 > 경비지출누적집계 > 경비지출서 해당 지출내역 반려 처리 (관리자)
-     * 관리자MNGR만 접근 가능
+     * 경비 관리 > 경비지출누적집계 > 경비지출서 해당 지출내역 반려 처리 (관리자) (Ajax)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param key 경비지출서 번호
+     * @param exptrPrsnlItemNo 경비지출항목 번호
+     * @param rjectYn - 반려 여부 (Y/N)
+     * @param rjectResn - 반려 사유
+     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.EXPTR_PRSNL_ITEM_RJECT_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlItemRject(
-            final LogActvtyParam logParam,
             final @RequestParam("postNo") Integer key,
             final @RequestParam("exptrPrsnlItemNo") Integer exptrPrsnlItemNo,
             final @RequestParam("rjectYn") String rjectYn,
-            final @RequestParam("rjectResn") String rjectResn
+            final @RequestParam("rjectResn") String rjectResn,
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();

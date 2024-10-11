@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service;
 
-import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
-import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
-import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.jpa.ExptrPrsnlPaprRepository;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlItemEntity;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlPaprEntity;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.repository.jpa.ExptrPrsnlPaprRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,6 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("exptrPrsnlItemService")
 @RequiredArgsConstructor
@@ -30,27 +29,29 @@ public class ExptrPrsnlItemService {
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 첨부파일 업데이트
+     *
+     * @param exptrPrsnlItemNo 경비지출항목 번호 (Integer)
+     * @param atchFileDtlNo 첨부파일 상세 번호 (Integer)
+     * @return {@link Boolean} -- 업데이트 성공 여부
      */
-    public Boolean updateRciptFile(
-            final Integer exptrPrsnlItemNo,
-            final Integer atchFileDtlNo
-    ) {
+    public Boolean updateRciptFile(final Integer exptrPrsnlItemNo, final Integer atchFileDtlNo) {
         exptrPrsnlPaprRepository.updateRciptFile(exptrPrsnlItemNo, atchFileDtlNo);
         return true;
     }
 
     /**
      * 경비 관리 > 경비지출서 > 해당 지출내역에 대하여 영수증 원본 제출여부 업데이트
+     *
+     * @param key 경비지출서 번호
+     * @param exptrPrsnlItemNo 경비지출항목 번호
+     * @param orgnlRciptYn 영수증 원본 제출 여부 (Y/N)
+     * @return {@link Boolean} -- 업데이트 성공 여부
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
-    public Boolean updtOrgnlRciptYn(
-            final Integer key,
-            final Integer exptrPrsnlItemNo,
-            String orgnlRciptYn
-    ) throws Exception {
+    public Boolean updtOrgnlRciptYn(final Integer key, final Integer exptrPrsnlItemNo, final String orgnlRciptYn) throws Exception {
         // Entity 레벨 조회
         ExptrPrsnlPaprEntity exptrEntity = exptrPrsnlPaprService.getDtlEntity(key);
         List<ExptrPrsnlItemEntity> itemList = exptrEntity.getItemList();
-
         if (CollectionUtils.isEmpty(itemList)) return false;
 
         for (ExptrPrsnlItemEntity item : itemList) {
@@ -68,13 +69,15 @@ public class ExptrPrsnlItemService {
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 해당 지출내역 반려 처리 (관리자)
+     *
+     * @param key 경비지출서 번호
+     * @param exptrPrsnlItemNo 경비지출항목 번호
+     * @param rjectYn 반려 여부 (Y/N)
+     * @param rjectResn 반려 사유
+     * @return {@link Boolean} -- 처리 성공 여부
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
-    public Boolean exptrPrsnlItemRject(
-            final Integer key,
-            final Integer exptrPrsnlItemNo,
-            final String rjectYn,
-            final String rjectResn
-    ) throws Exception {
+    public Boolean exptrPrsnlItemRject(final Integer key, final Integer exptrPrsnlItemNo, final String rjectYn, final String rjectResn) throws Exception {
         // Entity 레벨 조회
         ExptrPrsnlPaprEntity exptrEntity = exptrPrsnlPaprService.getDtlEntity(key);
         List<ExptrPrsnlItemEntity> itemList = exptrEntity.getItemList();

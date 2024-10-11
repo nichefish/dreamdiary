@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.entity.exptr.prsnl;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity;
 
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.domain._core.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -124,8 +124,8 @@ public class ExptrPrsnlItemEntity
     @Comment("반려 여부")
     private String rjectYn = "N";
 
-    /** 반려사유 */
+    /** 반려 사유 */
     @Column(name = "rject_resn")
-    @Comment("반려사유")
+    @Comment("반려 사유")
     private String rjectResn;
 }

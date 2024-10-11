@@ -47,7 +47,7 @@ public class EhCacheController
      * (관리자MNGR만 접근 가능.)
      * 
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(Url.CACHE_ACTIVE_LIST_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -90,7 +90,7 @@ public class EhCacheController
      * @param cacheName 삭제할 캐시의 이름
      * @param key 삭제할 캐시 항목의 키 (전체 삭제 시 "-" 입력)
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.CACHE_EVICT_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -143,7 +143,7 @@ public class EhCacheController
      * (관리자MNGR만 접근 가능.)
      *
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.CACHE_CLEAR_AJAX)
     @Secured(Constant.ROLE_MNGR)

@@ -55,7 +55,7 @@ public class CommentController
      * 
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(Url.COMMENT_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -104,10 +104,10 @@ public class CommentController
      * 
      * @param comment 등록/수정 처리할 객체
      * @param key 식별자
-     * @param param 조회 파라미터
+     * @param param 등록 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param request - Multipart 요청
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(value = {Url.COMMENT_REG_AJAX, Url.COMMENT_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -155,7 +155,7 @@ public class CommentController
      * @param key 식별자
      * @param param 조회 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(Url.COMMENT_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -201,7 +201,7 @@ public class CommentController
      * @param key 식별자
      * @param param 조회 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.COMMENT_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

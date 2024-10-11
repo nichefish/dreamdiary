@@ -1,17 +1,16 @@
-package io.nicheblog.dreamdiary.web.controller.cmm.flsys;
+package io.nicheblog.dreamdiary.domain.flsys.controller;
 
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain.flsys.model.FlsysMetaDto;
+import io.nicheblog.dreamdiary.domain.flsys.service.FlsysMetaService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
-import io.nicheblog.dreamdiary.web.service.cmm.flsys.FlsysMetaService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,12 +28,11 @@ import javax.validation.Valid;
 /**
  * FlsysMetaController
  * <pre>
- *  파일시스템 메타 관리 컨트롤러
+ *  파일시스템 메타 관리 컨트롤러.
  * </pre>
  * TODO: 보완 예정
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -51,7 +49,12 @@ public class FlsysMetaController
 
     /**
      * 파일시스템 메타 정보 등록/수정 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param flsysMeta 등록/수정 처리할 객체
+     * @param key 식별자
+     * @param logParam 로그 활동 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(value = {Url.FLSYS_META_REG_AJAX, Url.FLSYS_META_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -59,8 +62,7 @@ public class FlsysMetaController
     public ResponseEntity<AjaxResponse> flsysMetaRegAjax(
             final @Valid FlsysMetaDto flsysMeta,
             final BaseClsfKey key,
-            final LogActvtyParam logParam,
-            final BaseParam param
+            final LogActvtyParam logParam
     ) {
 
         AjaxResponse ajaxResponse = new AjaxResponse();
@@ -93,7 +95,11 @@ public class FlsysMetaController
 
     /**
      * 파일시스템 메타 정보 상세 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(Url.FLSYS_META_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -133,7 +139,11 @@ public class FlsysMetaController
 
     /**
      * 파일시스템 메타 정보 삭제 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.FLSYS_META_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

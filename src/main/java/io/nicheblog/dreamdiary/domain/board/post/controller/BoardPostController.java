@@ -69,7 +69,7 @@ public class BoardPostController
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
-     * @return String - 화면의 뷰 이름
+     * @return {@link String} -- 화면 뷰 경로
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.BOARD_POST_LIST)
@@ -131,7 +131,7 @@ public class BoardPostController
      * @param boardCd 게시판 코드
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
-     * @return String - 화면의 뷰 이름
+     * @return {@link String} -- 화면 뷰 경로
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.BOARD_POST_REG_FORM)
@@ -187,7 +187,7 @@ public class BoardPostController
      * @param boardCd 게시판 코드
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
-     * @return String - 화면의 뷰 이름
+     * @return {@link String} -- 화면 뷰 경로
      */
     @PostMapping(Url.BOARD_POST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -231,7 +231,7 @@ public class BoardPostController
      * @param postKey 복합키 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param request - Multipart 요청
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(value = {Url.BOARD_POST_REG_AJAX, Url.BOARD_POST_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -293,7 +293,7 @@ public class BoardPostController
      * @param boardCd 게시판 코드
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(value = Url.BOARD_POST_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -345,7 +345,7 @@ public class BoardPostController
      *
      * @param postKey 복합키 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(Url.BOARD_POST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -395,7 +395,7 @@ public class BoardPostController
      * @param boardCd 게시판 코드
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
-     * @return String - 화면의 뷰 이름
+     * @return {@link String} -- 화면 뷰 경로
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(value = Url.BOARD_POST_MDF_FORM)

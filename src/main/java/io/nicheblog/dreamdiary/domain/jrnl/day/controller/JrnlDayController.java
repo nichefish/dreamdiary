@@ -1,20 +1,20 @@
-package io.nicheblog.dreamdiary.web.controller.jrnl.day;
+package io.nicheblog.dreamdiary.domain.jrnl.day.controller;
 
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain._core.tag.event.TagProcEvent;
+import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
+import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDaySearchParam;
+import io.nicheblog.dreamdiary.domain.jrnl.day.service.JrnlDayService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.event.TagProcEvent;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
-import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDaySearchParam;
-import io.nicheblog.dreamdiary.web.service.jrnl.day.JrnlDayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,6 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -53,7 +52,13 @@ public class JrnlDayController
 
     /**
      * 저널 일자 화면 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.JRNL_DAY_PAGE)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -90,13 +95,17 @@ public class JrnlDayController
 
     /**
      * 저널 일자 목록 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(value = {Url.JRNL_DAY_LIST_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlDayListAjax(
-            JrnlDaySearchParam searchParam,
+            final JrnlDaySearchParam searchParam,
             final LogActvtyParam logParam
     ) {
 
@@ -128,8 +137,14 @@ public class JrnlDayController
     }
 
     /**
-     * 저널 일자 등록/수정 처리 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 저널 일자 등록/수정 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param jrnlDay 등록/수정 처리할 객체
+     * @param key 식별자
+     * @param logParam 로그 활동 기록을 위한 파라미터 객체
+     * @param request - Multipart 요청
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @Operation(
             summary = "저널 일자 등록/수정",
@@ -187,13 +202,17 @@ public class JrnlDayController
 
     /**
      * 저널 일자 상세 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(value = {Url.JRNL_DAY_DTL_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlDayDtlAjax(
-            JrnlDaySearchParam searchParam,
             final @RequestParam("postNo") Integer key,
             final LogActvtyParam logParam
     ) {
@@ -227,7 +246,11 @@ public class JrnlDayController
 
     /**
      * 저널 일자 삭제 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(value = {Url.JRNL_DAY_DEL_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -242,7 +265,7 @@ public class JrnlDayController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 삭제 처리
+            // 삭제
             isSuccess = jrnlDayService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             if (isSuccess) {

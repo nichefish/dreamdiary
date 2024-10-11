@@ -3,15 +3,15 @@ package io.nicheblog.dreamdiary.api.jrnl.day.controller;
 import io.nicheblog.dreamdiary.api.jrnl.day.model.JrnlDayApiDto;
 import io.nicheblog.dreamdiary.api.jrnl.day.model.JrnlDayApiSearchParam;
 import io.nicheblog.dreamdiary.api.jrnl.day.service.JrnlDayApiService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
@@ -34,8 +34,6 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
- * TODO: 외부 호출시 토큰 인증 추가하기
  */
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")   // CORS 에러 해결 위한 조치
@@ -52,7 +50,11 @@ public class JrnlDayApiController
 
     /**
      * API:: 저널 일자 목록 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @Operation(
             summary = "저널 일자 목록 조회",
@@ -62,7 +64,7 @@ public class JrnlDayApiController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlDayListAjax(
-            JrnlDayApiSearchParam searchParam,
+            final JrnlDayApiSearchParam searchParam,
             final LogActvtyParam logParam
     ) {
 
@@ -96,7 +98,12 @@ public class JrnlDayApiController
 
     /**
      * API:: 저널 일자 상세 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Operation(
             summary = "저널 일자 목록 조회",

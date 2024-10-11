@@ -1,28 +1,28 @@
-package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.papr;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.controller;
 
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
+import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain._core.tag.service.TagService;
+import io.nicheblog.dreamdiary.domain._core.viewer.event.ViewerAddEvent;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model.ExptrPrsnlPaprDto;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model.ExptrPrsnlPaprSearchParam;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
+import io.nicheblog.dreamdiary.global.model.PaginationInfo;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.PdfBoxUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.event.ViewerAddEvent;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprSearchParam;
-import io.nicheblog.dreamdiary.web.service.cmm.tag.TagService;
-import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -40,19 +40,17 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * ExptrPrsnlPaprController
  * <pre>
- *  경비 관리 > 경비지출서 관리 컨트롤러
+ *  경비 관리 > 경비지출서 관리 컨트롤러.
  *  ※ 경비지출서(exptr_prsnl_papr) = 경비지출서. 경비지출항목(exptr_prsnl_item)을 1:N으로 관리한다.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -66,12 +64,18 @@ public class ExptrPrsnlPaprController
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.EXPTR_PRSNL_PAPR;        // 작업 카테고리 (로그 적재용)
 
     private final ExptrPrsnlPaprService exptrPrsnlPaprService;
-    private final CdService cdService;
+    private final DtlCdService dtlCdService;
     private final TagService tagService;
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 목록 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 경비 관리 > 경비지출서 > 경비지출서 목록 화면 조회
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.EXPTR_PRSNL_PAPR_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -102,8 +106,8 @@ public class ExptrPrsnlPaprController
             // 컨텐츠 타입에 맞는 태그 목록 조회
             model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.EXPTR_PRSNL_PAPR));
             // 코드 정보 모델에 추가
-            cdService.setModelCdData(Constant.YY_CD, model);
-            cdService.setModelCdData(Constant.MNTH_CD, model);
+            dtlCdService.setCdListToModel(Constant.YY_CD, model);
+            dtlCdService.setCdListToModel(Constant.MNTH_CD, model);
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
@@ -125,8 +129,11 @@ public class ExptrPrsnlPaprController
     }
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 기존 작성중인 정보 존재여부 체크
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 경비 관리 > 경비지출서 > 경비지출서 기존 작성중인 정보 존재여부 체크 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(value = Url.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -142,7 +149,7 @@ public class ExptrPrsnlPaprController
         try {
             // 존재여부 체크 및 응답에 추가
             Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
-            ajaxResponse.setRsltMap((HashMap<String, Object>) resultMap);
+            ajaxResponse.setRsltMap(resultMap);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -163,15 +170,20 @@ public class ExptrPrsnlPaprController
     }
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 년도/월에 기존 작성중인 정보 있는지 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 경비 관리 > 경비지출서 > 경비지출서 년도/월에 기존 작성중인 정보 있는지 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param yy 년도
+     * @param mnth 월
+     * @param logParam 활동 로그를 기록하기 위한 로그 파라미터
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(value = Url.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlYyMnthChckAjax(
-            final @RequestParam("yy") String yyStr,
-            final @RequestParam("mnth") String mnthStr,
+            final @RequestParam("yy") Integer yy,
+            final @RequestParam("mnth") Integer mnth,
             final LogActvtyParam logParam
     ) {
 
@@ -181,8 +193,6 @@ public class ExptrPrsnlPaprController
         String rsltMsg = "";
         try {
             // 상태여부 체크 및 응답에 추가
-            Integer yy = Integer.parseInt(yyStr);
-            Integer mnth = Integer.parseInt(mnthStr);
             BasePostDto rsltObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
             ajaxResponse.setRsltObj(rsltObj);
 
@@ -206,7 +216,13 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 등록 화면 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     * 
+     * @param prevYn 이전 월 등록화면 여부 (Y/N)
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.EXPTR_PRSNL_PAPR_REG_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -236,7 +252,7 @@ public class ExptrPrsnlPaprController
             model.addAttribute("prevMnth", prevYyMnth[1]);
             model.addAttribute("currMnth", currYyMnth[1]);
             // 코드 정보 모델에 추가
-            cdService.setModelCdData(Constant.EXPTR_CD, model);
+            dtlCdService.setCdListToModel(Constant.EXPTR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -256,7 +272,13 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 등록/수정 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param exptrPrsnlPapr 등록/수정 처리할 객체
+     * @param key 식별자
+     * @param logParam 로그 활동 기록을 위한 파라미터 객체
+     * @param request - Multipart 요청
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(value = {Url.EXPTR_PRSNL_PAPR_REG_AJAX, Url.EXPTR_PRSNL_PAPR_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -303,7 +325,13 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 상세 화면 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.EXPTR_PRSNL_PAPR_DTL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -345,8 +373,13 @@ public class ExptrPrsnlPaprController
     }
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 출력 팝업 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * 경비 관리 > 경비지출서 > 경비지출서 출력용 팝업 조회
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
      */
     @GetMapping(Url.EXPTR_PRSNL_PAPR_PDF_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -386,7 +419,14 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 수정 화면 조회
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param mngrYn 관리자 여부 (Y/N)
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.EXPTR_PRSNL_PAPR_MDF_FORM)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -418,7 +458,7 @@ public class ExptrPrsnlPaprController
             model.addAttribute("prevMnth", prevYyMnth[1] + 1);
             model.addAttribute("currMnth", currYyMnth[1] + 1);
             // 코드 정보 모델에 추가
-            cdService.setModelCdData(Constant.EXPTR_CD, model);
+            dtlCdService.setCdListToModel(Constant.EXPTR_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -439,7 +479,11 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 삭제 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.EXPTR_PRSNL_PAPR_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -454,7 +498,7 @@ public class ExptrPrsnlPaprController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            // 삭제 처리
+            // 삭제
             isSuccess = exptrPrsnlPaprService.delete(key);
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
         } catch (Exception e) {
@@ -476,13 +520,16 @@ public class ExptrPrsnlPaprController
 
     /**
      * 경비 관리 > 경비지출서 > 영수증 이미지파일 묶음 PDF 다운로드
-     * (사용자USER, 관리자MNGR만 접근 가능)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
      */
     @GetMapping(Url.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public void exptrPrsnlStatsRciptPdfDownload(
-            final LogActvtyParam logParam,
-            final @RequestParam("postNo") Integer key
+            final @RequestParam("postNo") Integer key,
+            final LogActvtyParam logParam
     ) throws Exception {
 
         boolean isSuccess = false;

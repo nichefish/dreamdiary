@@ -36,6 +36,9 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
 
     /**
      * EntityList to DtoList
+     *
+     * @param entityList 변환할 Entity 목록
+     * @return {@link List} -- 변환된 Dto 목록
      */
     default List<ListDto> toDtoList(final List<Entity> entityList) {
         if (CollectionUtils.isEmpty(entityList)) return null;

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.entity.cmm.flsys;
+package io.nicheblog.dreamdiary.domain.flsys.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,16 +44,12 @@ public class FlsysRefEntity
     @Comment("글 번호")
     private Integer refPostNo;
 
-    /**
-     * 게시판 분류코드
-     */
+    /** 게시판 분류 코드 */
     @Column(name = "ref_content_type")
-    @Comment("게시판 분류코드")
+    @Comment("게시판 분류 코드")
     private String refContentType;
 
-    /**
-     * 파일절대경로
-     */
+    /** 파일 절대경로 */
     @Column(name = "file_path", length = 500)
     @Comment("파일절대경로")
     private String filePath;

@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
@@ -24,29 +24,33 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class ExptrPrsnlItemDto
         extends BaseAuditDto {
 
-    /** 개인 경비 취합 정보 고유 ID (PK) */
+    /** 경비지출서 번호 (PK) */
     @Positive
     private Integer exptrPrsnlItemNo;
 
-    /**
-     * 개인경비 취합 정보 정보 ID
-     */
+    /** 경비지출서 번호 (FK) */
     private String postNo;
+
     /** 지출일자 */
     private String exptrDt;
+
     /** 지출구분코드 */
     private String exptrCd;
+
     /** 지출구분코드명 */
     private String exptrTyNm;
+
     /** 지출내용 */
     private String exptrCn;
+
     /** 지출금액 */
     @Builder.Default
     private Integer exptrAmt = 0;
+
     /** 비고 */
     private String exptrRm;
 
@@ -71,14 +75,16 @@ public class ExptrPrsnlItemDto
     /* ----- */
 
     /**
-     * 공백여부 판단하여 반환 (날짜 및 항목)
+     * 공백 여부를 판단하여 반환합니다 (날짜 및 항목).
+     *
+     * @return {@link Boolean} -- 항목이 비어 있으면 true, 그렇지 않으면 false
      */
     public Boolean isEmpty() {
         return (this.exptrDt == null) && StringUtils.isEmpty(this.exptrCn);
     }
 
     /**
-     * 영수증 제출여부 class
+     * Getter :: 영수증 제출여부 표시 css class
      */
     public String getOrgnlRciptClass() {
         if ("Y".equals(this.orgnlRciptYn)) return Constant.BS_SUCCESS;

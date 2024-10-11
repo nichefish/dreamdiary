@@ -116,7 +116,7 @@ public class BoardDefController
      *
      * @param boardDef 등록 처리할 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.BOARD_DEF_REG_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -160,7 +160,7 @@ public class BoardDefController
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.BOARD_DEF_DTL_AJAX)
@@ -204,7 +204,7 @@ public class BoardDefController
      *
      * @param boardDef 수정 처리할 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.BOARD_DEF_MDF_ITEM_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -247,7 +247,7 @@ public class BoardDefController
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.BOARD_DEF_USE_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -288,7 +288,7 @@ public class BoardDefController
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.BOARD_DEF_UNUSE_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -329,7 +329,7 @@ public class BoardDefController
      *
      * @param boardDefParam 키+정렬 순서 목록을 담은 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.BOARD_DEF_SORT_ORDR_AJAX)
     @ResponseBody
@@ -367,7 +367,7 @@ public class BoardDefController
      * 
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.BOARD_DEF_DEL_AJAX)
     @Secured({Constant.ROLE_MNGR})
