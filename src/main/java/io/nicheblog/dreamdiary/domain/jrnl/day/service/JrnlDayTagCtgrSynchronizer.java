@@ -1,12 +1,11 @@
-package io.nicheblog.dreamdiary.web.service.jrnl.day;
+package io.nicheblog.dreamdiary.domain.jrnl.day.service;
 
-import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayTagEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDayTagEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDayTagCtgrSynchronizer")
 @RequiredArgsConstructor
@@ -32,7 +30,6 @@ public class JrnlDayTagCtgrSynchronizer {
     /**
      * 태그 조회해서 파일 생성
      */
-    @Transactional
     public void tagSync() throws Exception {
 
         List<JrnlDayTagEntity> tagList = jrnlDreamTagService.getListEntity(new HashMap<>());
@@ -54,7 +51,10 @@ public class JrnlDayTagCtgrSynchronizer {
     }
 
     /**
-     * 파일 생성 (메소드 분리)
+     * 태그 카테고리 데이터를 기반으로 파일을 생성합니다.
+     *
+     * @param tagCtgrMap 태그 이름과 그에 해당하는 카테고리 목록을 담은 맵
+     * @throws Exception 파일 생성 중 발생할 수 있는 예외
      */
     private void writeToFile(final Map<String, List<String>> tagCtgrMap) throws Exception {
         String FILE_PATH = "templates/view/jrnl/day/tag/_jrnl_day_tag_ctgr_map.ftlh";
