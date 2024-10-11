@@ -1,11 +1,14 @@
-package io.nicheblog.dreamdiary.web.service.jrnl.diary;
+package io.nicheblog.dreamdiary.domain.jrnl.diary.service;
 
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.TagDto;
+import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDaySearchParam;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.entity.JrnlDiaryTagEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.mapstruct.JrnlDiaryTagMapstruct;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiarySearchParam;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.repository.jpa.JrnlDiaryTagRepository;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.spec.JrnlDiaryTagSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
-import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryTagEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.jrnl.diary.JrnlDiaryTagMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.diary.jpa.JrnlDiaryTagRepository;
-import io.nicheblog.dreamdiary.web.spec.jrnl.diary.JrnlDiaryTagSpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +24,10 @@ import java.util.stream.Collectors;
 /**
  * JrnlDiaryTagService
  * <pre>
- *  저널 일기 태그 서비스 모듈
+ *  저널 일기 태그 서비스 모듈.
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDiaryTagService")
 @RequiredArgsConstructor
@@ -33,41 +35,35 @@ import java.util.stream.Collectors;
 public class JrnlDiaryTagService
         implements BaseReadonlyService<TagDto, TagDto, Integer, JrnlDiaryTagEntity, JrnlDiaryTagRepository, JrnlDiaryTagSpec, JrnlDiaryTagMapstruct> {
 
-    private final JrnlDiaryTagRepository jrnlDiaryTagRepository;
-    private final JrnlDiaryTagSpec jrnlDiaryTagSpec;
-    private final JrnlDiaryTagMapstruct tagMapstruct = JrnlDiaryTagMapstruct.INSTANCE;
+    @Getter
+    private final JrnlDiaryTagRepository repository;
+    @Getter
+    private final JrnlDiaryTagSpec spec;
+    @Getter
+    private final JrnlDiaryTagMapstruct mapstruct = JrnlDiaryTagMapstruct.INSTANCE;
 
-    @Autowired
-    private ApplicationContext context;
+    private final ApplicationContext context;
 
     private JrnlDiaryTagService getSelf() {
         return context.getBean(JrnlDiaryTagService.class);
     }
 
-    @Override
-    public JrnlDiaryTagRepository getRepository() {
-        return this.jrnlDiaryTagRepository;
-    }
-    @Override
-    public JrnlDiaryTagSpec getSpec() {
-        return this.jrnlDiaryTagSpec;
-    }
-    @Override
-    public JrnlDiaryTagMapstruct getMapstruct() {
-        return this.tagMapstruct;
-    }
-
+    /**
+     * 지정된 연도와 월을 기준으로 태그 목록을 캐시 처리하여 반환합니다.
+     *
+     * @param yy 조회할 연도
+     * @param mnth 조회할 월
+     * @return {@link List} -- 태그 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
+     */
     @Cacheable(value="jrnlDiaryTagList", key="#yy + \"_\" + #mnth")
     public List<TagDto> getListDtoWithCache(final Integer yy, final Integer mnth) throws Exception {
-        Map<String, Object> searchParamMap = new HashMap<>() {{
-            put("yy", yy);
-            put("mnth", mnth);
-        }};
-        return this.getSelf().getListDto(searchParamMap);
+        JrnlDiarySearchParam searchParam = JrnlDiarySearchParam.builder().yy(yy).mnth(mnth).build();
+        return this.getSelf().getListDto(searchParam);
     }
 
     /**
-     * css 사이즈 계산한 태그 목록 조회
+     * css 사이즈 계산한 일기 태그 목록 조회
      * 태그 1개 = 1. 그 외엔 2~9
      */
     @Cacheable(value="jrnlDiarySizedTagList", key="#yy + \"_\" + #mnth")
@@ -94,7 +90,12 @@ public class JrnlDiaryTagService
     }
 
     /**
-     * 최대 사용빈도 계산한 꿈 태그 목록 조회
+     * 최대 사용빈도 계산한 일기 태그 목록 조회
+     *
+     * @param tagList 태그 목록 (List<TagDto>)
+     * @param yy 조회할 년도
+     * @param mnth 조회할 월
+     * @return {@link Integer} -- 태그 목록에서 계산된 최대 사용 빈도 (Integer)
      */
     public Integer calcMaxSize(final List<TagDto> tagList, Integer yy, Integer mnth) {
         int maxFrequency = 0;
@@ -112,7 +113,7 @@ public class JrnlDiaryTagService
      */
     @Cacheable(value="countDiarySize", key="#tagNo + \"_\" + #yy + \"_\" + #mnth")
     public Integer countDiarySize(final Integer tagNo, final Integer yy, final Integer mnth) {
-        return jrnlDiaryTagRepository.countDiarySize(tagNo, yy, mnth);
+        return repository.countDiarySize(tagNo, yy, mnth);
     }
 
     public Map<String, List<TagDto>> getDiarySizedGroupListDto(final Integer yy, final Integer mnth) throws Exception {

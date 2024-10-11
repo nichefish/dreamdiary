@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * JrnlDiaryTagController
  * <pre>
- *  저널 일기 태그 Controller
+ *  저널 일기 태그 Controller.
  * </pre>
  *
  * @author nichefish
@@ -65,13 +65,13 @@ public class JrnlDiaryTagController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 전체 태그 목록 조회 (태그클라우드)
-            List<TagDto> tagList = jrnlDiaryTagService.getDiarySizedListDto(searchParam.getYy(), searchParam.getMnth());
+            final List<TagDto> tagList = jrnlDiaryTagService.getDiarySizedListDto(searchParam.getYy(), searchParam.getMnth());
             ajaxResponse.setRsltList(tagList);
 
             isSuccess = true;
@@ -108,13 +108,13 @@ public class JrnlDiaryTagController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 전체 태그 목록 조회 (태그클라우드)
-            Map<String, List<TagDto>> tagGroupMap = jrnlDiaryTagService.getDiarySizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
+            final Map<String, List<TagDto>> tagGroupMap = jrnlDiaryTagService.getDiarySizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
             ajaxResponse.setRsltMap(tagGroupMap);
 
             isSuccess = true;
@@ -151,13 +151,13 @@ public class JrnlDiaryTagController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 목록 조회 및 응답에 추가
-            List<JrnlDiaryDto> jrnlDiaryList = jrnlDiaryService.jrnlDiaryTagDtl(searchParam);
+            final List<JrnlDiaryDto> jrnlDiaryList = jrnlDiaryService.jrnlDiaryTagDtl(searchParam);
             Collections.sort(jrnlDiaryList);
             ajaxResponse.setRsltList(jrnlDiaryList);
 

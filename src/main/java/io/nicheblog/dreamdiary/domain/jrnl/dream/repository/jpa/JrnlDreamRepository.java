@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.repository.jrnl.dream.jpa;
+package io.nicheblog.dreamdiary.domain.jrnl.dream.repository.jpa;
 
+import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 /**
  * JrnlDreamRepository
  * <pre>
- *  저널 꿈 Repository 인터페이스.
+ *  저널 꿈 (JPA) Repository 인터페이스.
  * </pre>
  *
  * @author nichefish
@@ -28,28 +28,36 @@ import java.util.stream.Stream;
 public interface JrnlDreamRepository
         extends BaseStreamRepository<JrnlDreamEntity, Integer> {
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDreamEntity.withAll")
     Optional<JrnlDreamEntity> findById(Integer key);
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDreamEntity.withAll")
     Page<JrnlDreamEntity> findAll(@Nullable Specification<JrnlDreamEntity> spec, Pageable pageable);
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDreamEntity.withAll")
     List<JrnlDreamEntity> findAll(@Nullable Specification<JrnlDreamEntity> spec);
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDreamEntity.withAll")
     List<JrnlDreamEntity> findAll(@Nullable Specification<JrnlDreamEntity> spec, Sort sort);
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDreamEntity.withAll")
     Stream<JrnlDreamEntity> streamAllBy(@Nullable Specification<JrnlDreamEntity> spec);
 
     /**
      * 해당 일자에서 꿈 마지막 인덱스 조회
+     *
+     * @param jrnlDayNo 조회할 일자 번호
+     * @return {@link Optional} -- 해당 일자에서 꿈의 마지막 인덱스
      */
     @Query("SELECT MAX(dream.idx) " +
             "FROM JrnlDreamEntity dream " +
