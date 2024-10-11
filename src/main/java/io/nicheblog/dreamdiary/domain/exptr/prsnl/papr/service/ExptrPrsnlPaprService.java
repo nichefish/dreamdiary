@@ -1,19 +1,20 @@
-package io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service;
 
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
-import io.nicheblog.dreamdiary.global.cmm.file.entity.AtchFileDtlEntity;
-import io.nicheblog.dreamdiary.global.cmm.file.mapstruct.AtchFileDtlMapstruct;
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain._core.file.entity.AtchFileDtlEntity;
+import io.nicheblog.dreamdiary.domain._core.file.mapstruct.AtchFileDtlMapstruct;
+import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlItemEntity;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlPaprEntity;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.mapstruct.ExptrPrsnlPaprMapstruct;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model.ExptrPrsnlPaprDto;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.repository.jpa.ExptrPrsnlPaprRepository;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.spec.ExptrPrsnlPaprSpec;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
-import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlPaprMapstruct;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.papr.ExptrPrsnlPaprDto;
-import io.nicheblog.dreamdiary.web.repository.exptr.prsnl.jpa.ExptrPrsnlPaprRepository;
-import io.nicheblog.dreamdiary.web.spec.exptr.prsnl.ExptrPrsnlPaprSpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -26,12 +27,12 @@ import java.util.*;
 /**
  * ExptrPrsnlPaprService
  * <pre>
- *  경비 관리 > 경비지출서 관리 서비스 모듈
+ *  경비 관리 > 경비지출서 관리 서비스 모듈.
  *  ※ 경비지출서(exptr_prsnl_papr) = 경비지출서. 경비지출항목(exptr_prsnl_item)을 1:N으로 관리한다.
  * </pre>
  *
  * @author nichefish
- * @implements BasePostService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
+ * @implements BasePostService
  */
 @Service
 @RequiredArgsConstructor
@@ -39,36 +40,28 @@ import java.util.*;
 public class ExptrPrsnlPaprService
         implements BasePostService<ExptrPrsnlPaprDto.DTL, ExptrPrsnlPaprDto.LIST, Integer, ExptrPrsnlPaprEntity, ExptrPrsnlPaprRepository, ExptrPrsnlPaprSpec, ExptrPrsnlPaprMapstruct> {
 
-    private final ExptrPrsnlPaprRepository exptrPrsnlPaprRepository;
-    private final ExptrPrsnlPaprSpec exptrPrsnlPaprSpec;
-    private final ExptrPrsnlPaprMapstruct exptrPrsnlPaprMapstruct = ExptrPrsnlPaprMapstruct.INSTANCE;
+    @Getter
+    private final ExptrPrsnlPaprRepository repository;
+    @Getter
+    private final ExptrPrsnlPaprSpec spec;
+    @Getter
+    private final ExptrPrsnlPaprMapstruct mapstruct = ExptrPrsnlPaprMapstruct.INSTANCE;
 
     private final AtchFileDtlMapstruct atchFileDtlMapstruct = AtchFileDtlMapstruct.INSTANCE;
 
-    @Override
-    public ExptrPrsnlPaprRepository getRepository() {
-        return this.exptrPrsnlPaprRepository;
-    }
-
-    @Override
-    public ExptrPrsnlPaprSpec getSpec() {
-        return this.exptrPrsnlPaprSpec;
-    }
-
-    @Override
-    public ExptrPrsnlPaprMapstruct getMapstruct() {
-        return this.exptrPrsnlPaprMapstruct;
-    }
-
     /**
-     * 공지사항 > 공지사항 목록 Page<Entity>->Page<Dto> 변환
+     * 목록 Page<Entity> -> Page<Dto> 변환 (override)
+     *
+     * @param entityPage 페이징 처리된 Entity 목록
+     * @return {@link Page} -- 변환된 페이징 처리된 Dto 목록
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public Page<ExptrPrsnlPaprDto.LIST> pageEntityToDto(final Page<ExptrPrsnlPaprEntity> entityPage) throws Exception {
         List<ExptrPrsnlPaprDto.LIST> dtoList = new ArrayList<>();
         int i = 0;
         for (ExptrPrsnlPaprEntity entity : entityPage.getContent()) {
-            ExptrPrsnlPaprDto.LIST listDto = exptrPrsnlPaprMapstruct.toListDto(entity);
+            ExptrPrsnlPaprDto.LIST listDto = mapstruct.toListDto(entity);
             List<ExptrPrsnlItemEntity> itemList = entity.getItemList();
             listDto.setRnum(CmmUtils.getPageRnum(entityPage, i));
             dtoList.add(listDto);
@@ -78,35 +71,40 @@ public class ExptrPrsnlPaprService
     }
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 기존(이전달, 이번달) 정보 존재여부 조회
+     * 경비지출서 기존(이전달, 이번달) 정보 존재여부를 맵에 담아 반환
+     * 
+     * @return {@link Map} -- 결과 맵
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     public Map<String, Object> exptrPrsnlExistingChck() throws Exception {
         String userId = Objects.requireNonNull(AuthUtils.getAuthenticatedUser())
                                .getUserId();
         Map<String, Object> resultMap = new HashMap<>();
         // 이전달 것 조회
-        List<ExptrPrsnlPaprEntity> entityList = exptrPrsnlPaprRepository.findAll(exptrPrsnlPaprSpec.searchWith(userId, DateUtils.getPrevYyMnth()));
+        List<ExptrPrsnlPaprEntity> entityList = repository.findAll(spec.searchWith(userId, DateUtils.getPrevYyMnth()));
         boolean hasPrevMnth = !CollectionUtils.isEmpty(entityList);
-        if (hasPrevMnth) resultMap.put("prevMnth", exptrPrsnlPaprMapstruct.toDto(entityList.get(0)));
+        if (hasPrevMnth) resultMap.put("prevMnth", mapstruct.toDto(entityList.get(0)));
         // 이번달 것 조회
-        entityList = exptrPrsnlPaprRepository.findAll(exptrPrsnlPaprSpec.searchWith(userId, DateUtils.getCurrYyMnth()));
+        entityList = repository.findAll(spec.searchWith(userId, DateUtils.getCurrYyMnth()));
         boolean hasCurrMnth = !CollectionUtils.isEmpty(entityList);
-        if (hasCurrMnth) resultMap.put("currMnth", exptrPrsnlPaprMapstruct.toDto(entityList.get(0)));
+        if (hasCurrMnth) resultMap.put("currMnth", mapstruct.toDto(entityList.get(0)));
         // 구체적인 로직은 뷰단에서 처리
         return resultMap;
     }
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 기존(이전달, 이번달) 정보 존재여부 조회
+     * 경비지출서 기존(이전달, 이번달) 정보 존재여부 조회
+     *
+     * @param yy 조회할 연도 (Integer)
+     * @param mnth 조회할 월 (Integer)
+     * @return {@link ExptrPrsnlPaprDto} -- 경비지출서 정보 조회
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
-    public BasePostDto exptrPrsnlYyMnthChck(
-            final Integer yy,
-            final Integer mnth
-    ) throws Exception {
+    public ExptrPrsnlPaprDto exptrPrsnlYyMnthChck(final Integer yy, final Integer mnth) throws Exception {
         String userId = Objects.requireNonNull(AuthUtils.getAuthenticatedUser())
                                .getUserId();
         // 해당 년, 월 것 조회
-        List<ExptrPrsnlPaprEntity> entityList = exptrPrsnlPaprRepository.findAll(exptrPrsnlPaprSpec.searchWith(userId, new Integer[]{yy, mnth}));
+        List<ExptrPrsnlPaprEntity> entityList = repository.findAll(spec.searchWith(userId, new Integer[]{yy, mnth}));
         if (CollectionUtils.isEmpty(entityList)) return null;
         ExptrPrsnlPaprEntity entity = entityList.get(0);
         if ("Y".equals(entity.getCfYn())) {
@@ -116,28 +114,35 @@ public class ExptrPrsnlPaprService
     }
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 등록 전처리 :: override
+     * 등록 전처리. (override)
+     *
+     * @param dto 등록할 객체
      */
     @Override
-    public void preRegist(final ExptrPrsnlPaprDto.DTL exptrPrsnlPaprDto) {
+    public void preRegist(final ExptrPrsnlPaprDto.DTL dto) {
         // 빈 지출항목 걸러내기
-        exptrPrsnlPaprDto.filterEmptyItems();
+        dto.filterEmptyItems();
     }
 
     /**
-     * 경비 관리 > 경비지출서 > 경비지출서 수정 전처리
+     * 수정 전처리. (override)
+     *
+     * @param exptrPrsnlPapr 수정할 객체
      */
     @Override
-    public void preModify(final ExptrPrsnlPaprDto.DTL exptrPrsnlPaprDto) {
+    public void preModify(final ExptrPrsnlPaprDto.DTL exptrPrsnlPapr) {
         // 빈 지출항목 걸러내기
-        exptrPrsnlPaprDto.filterEmptyItems();
+        exptrPrsnlPapr.filterEmptyItems();
     }
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서가 존재하는 년도 조회 (distinct 처리)
+     *
+     * @return {@link List} -- 경비지출서가 존재하는 연도 목록 (List<String>)
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     public List<String> getExptrPrsnlYyList() throws Exception {
-        String minYyStr = exptrPrsnlPaprRepository.selectMinYy();
+        String minYyStr = repository.selectMinYy();
         int minYy = (minYyStr != null) ? Integer.parseInt(minYyStr) : DateUtils.getCurrYy();
         List<String> yyList = new ArrayList<>();
         int currYy = DateUtils.getCurrYy();
@@ -149,10 +154,14 @@ public class ExptrPrsnlPaprService
 
     /**
      * 경비 관리 > 경비지출서 > 경비지출서 영수증 이미지 파일 목록 조회
+     *
+     * @param key 경비지출서 번호
+     * @return {@link List} -- 경비지출서 영수증 이미지 파일 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
-    public List<AtchFileDtlDto> getExptrPrsnlRciptList(final Integer postKey) throws Exception {
+    public List<AtchFileDtlDto> getExptrPrsnlRciptList(final Integer key) throws Exception {
         // Entity 레벨 조회
-        ExptrPrsnlPaprEntity exptrEntity = this.getDtlEntity(postKey);
+        ExptrPrsnlPaprEntity exptrEntity = this.getDtlEntity(key);
         List<ExptrPrsnlItemEntity> itemList = exptrEntity.getItemList();
         List<AtchFileDtlDto> atchFileDtoList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(itemList)) {

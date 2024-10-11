@@ -1,18 +1,18 @@
-package io.nicheblog.dreamdiary.web.service.exptr.prsnl.rpt;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlItemEntity;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlPaprEntity;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.mapstruct.ExptrPrsnlItemMapstruct;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service.ExptrPrsnlPaprService;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptItemDto;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptItemXlsxDto;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptSmDtlDto;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptSmDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
+import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlItemEntity;
-import io.nicheblog.dreamdiary.web.entity.exptr.prsnl.ExptrPrsnlPaprEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.exptr.prsnl.ExptrPrsnlItemMapstruct;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptItemDto;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptItemXlsxDto;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptSmDtlDto;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptSmDto;
-import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
-import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MapUtils;
@@ -28,7 +28,7 @@ import java.util.*;
 /**
  * ExptrPrsnlRptService
  * <pre>
- *  경비 관리 > 경비지출서 월간지출내역 (보고용) 취합 서비스 모듈
+ *  경비 관리 > 경비지출서 월간지출내역 (보고용) 취합 서비스 모듈.
  * </pre>
  *
  * @author nichefish
@@ -40,11 +40,16 @@ public class ExptrPrsnlRptService {
 
     private final ExptrPrsnlPaprService exptrPrsnlPaprService;
     private final ExptrPrsnlItemMapstruct exptrPrsnlItemMapstruct = ExptrPrsnlItemMapstruct.INSTANCE;
-    private final CdService cmmCdService;
+    private final DtlCdService dtlCdService;
     private final UserService userService;
 
     /**
      * 경비지출서 월간지출내역 (보고용) 개별 목록 조회
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @param pageable 페이지네이션 정보 (Pageable)
+     * @return {@link Page} -- 경비지출항목 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     public Page<ExptrPrsnlRptItemDto> getExptrPrsnlRptItemList(
             final Map<String, Object> searchParamMap,
@@ -78,6 +83,11 @@ public class ExptrPrsnlRptService {
 
     /**
      * 경비지출서 월간지출내역 (보고용) 집계 목록 조회
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @param pageable 페이지네이션 정보 (Pageable)
+     * @return {@link Page} -- 월간지출내역 집계 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     public Page<ExptrPrsnlRptSmDto> getExptrPrsnlRptSmList(
             final Map<String, Object> searchParamMap,
@@ -112,6 +122,9 @@ public class ExptrPrsnlRptService {
 
     /**
      * 경비지출서 월간지출내역 (보고용) 개인-계정과목별 총액 합산 (메소드 분리)
+     *
+     * @param itemList 경비지출항목 목록
+     * @return {@link Map} -- 계정과목별 총액을 담은 맵
      */
     public Map<String, Integer> getExptrTySmMap(final List<ExptrPrsnlItemEntity> itemList) {
         if (CollectionUtils.isEmpty(itemList)) return null;
@@ -130,11 +143,14 @@ public class ExptrPrsnlRptService {
 
     /**
      * 경비지출서 월간지출내역 (보고용) 개인-계정과목별 총액 목록 생성 (메소드 분리)
+     *
+     * @param exptrAmtMap 계정과목별 총액을 담은 맵
+     * @return {@link List} -- 계정과목별 총액을 담은 DTO 목록
      */
     private List<ExptrPrsnlRptSmDtlDto> getExptrSmDtlList(final Map<String, Integer> exptrAmtMap) {
         List<ExptrPrsnlRptSmDtlDto> exptrTySmList = new ArrayList<>();
         for (String key : exptrAmtMap.keySet()) {
-            String exptrTyNm = cmmCdService.getDtlCdNm(Constant.EXPTR_CD, key);
+            String exptrTyNm = dtlCdService.getDtlCdNm(Constant.EXPTR_CD, key);
             ExptrPrsnlRptSmDtlDto item = new ExptrPrsnlRptSmDtlDto(key, exptrTyNm, exptrAmtMap.get(key));
             exptrTySmList.add(item);
         }
@@ -143,10 +159,14 @@ public class ExptrPrsnlRptService {
 
     /**
      * 경비지출서 월간지출내역 (보고용) 개인-계정과목별 계정과목 목록 생성 (메소드 분리)
+     *
+     * @param exptrSmList 경비지출내역 집계 목록
+     * @return {@link List} -- 개인별 소배 계정과목이름 목록
      */
     public List<String> getExptrTyList(final Page<ExptrPrsnlRptSmDto> exptrSmList) {
         List<String> exptrTyList = new ArrayList<>();
         if (exptrSmList == null) return exptrTyList;
+
         List<ExptrPrsnlRptSmDto> smList = exptrSmList.getContent();
         if (CollectionUtils.isEmpty(smList)) return exptrTyList;
 
@@ -155,7 +175,7 @@ public class ExptrPrsnlRptService {
             if (CollectionUtils.isEmpty(itemList)) continue;
             for (ExptrPrsnlRptSmDtlDto item : itemList) {
                 String exptrCd = item.getExptrCd();
-                String exptrTyNm = cmmCdService.getDtlCdNm(Constant.EXPTR_CD, exptrCd);
+                String exptrTyNm = dtlCdService.getDtlCdNm(Constant.EXPTR_CD, exptrCd);
                 if (!exptrTyList.contains(exptrTyNm)) exptrTyList.add(exptrTyNm);
             }
         }
@@ -190,6 +210,10 @@ public class ExptrPrsnlRptService {
     /**
      * 경비지출서 월간지출내역 (보고용) 집계 엑셀 다운로드 목록 조회
      * 가로 행이 가변적이기 때문에 기존처럼 Dto를 이용하는 대신 Map을 이용하여 전달한다.
+     *
+     * @param searchParamMap 검색 파라미터 맵
+     * @return {@link List} -- 개별 항목의 엑셀 다운로드 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     public List<Object> getExptrPrsnlRptSmXlsxList(
             final Map<String, Object> searchParamMap,
@@ -274,6 +298,9 @@ public class ExptrPrsnlRptService {
 
     /**
      * 경비지출서 월간지출내역 (보고용) 개별 목록 합산값 조회
+     *
+     * @param exptrItemList 경비지출항목 목록
+     * @return {@link Integer} -- 개별 항목 금액의 합산값
      */
     public Integer getExptrRptItemSm(final Page<ExptrPrsnlRptItemDto> exptrItemList) {
         if (exptrItemList == null || CollectionUtils.isEmpty(exptrItemList.getContent())) return null;
@@ -292,21 +319,25 @@ public class ExptrPrsnlRptService {
 
     /**
      * 경비지출서 월간지출내역 (보고용) 집계 목록 (항목별) 합산값 조회
+     *
+     * @param exptrSmList 경비지출서 집계 목록
+     * @param exptrTyList 조회할 항목 이름 목록
+     * @return {@link Integer} -- 항목별 합산값을 담은 맵
      */
     public Map<String, Integer> getExptrRptTySmMap(
             final Page<ExptrPrsnlRptSmDto> exptrSmList,
             final List<String> exptrTyList
     ) {
         if (exptrSmList == null || CollectionUtils.isEmpty(exptrSmList.getContent())) return null;
-        Integer totSm = 0;
+        int totSm = 0;
         Map<String, Integer> exptrTySmMap = new HashMap<>();     // 개별 항목별 합산은 Map에 저장
         for (ExptrPrsnlRptSmDto exptr : exptrSmList) {
-            Integer exptrAmtStr = exptr.getTotAmt() != null ? exptr.getTotAmt() : 0;
-            totSm += exptrAmtStr;
+            int exptrAmt = exptr.getTotAmt() != null ? exptr.getTotAmt() : 0;
+            totSm += exptrAmt;
             List<ExptrPrsnlRptSmDtlDto> itemList = exptr.getItemList();
             if (CollectionUtils.isEmpty(itemList)) continue;
             for (String key : exptrTyList) {
-                if (exptrTySmMap.get(key) == null) exptrTySmMap.put(key, 0);
+                exptrTySmMap.putIfAbsent(key, 0);
                 for (ExptrPrsnlRptSmDtlDto item : itemList) {
                     String exptrTyNm = item.getExptrTyNm();
                     if (key.equals(exptrTyNm)) {

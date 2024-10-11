@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.web.repository.jrnl.diary.jpa;
+package io.nicheblog.dreamdiary.domain.jrnl.diary.repository.jpa;
 
+import io.nicheblog.dreamdiary.domain.jrnl.diary.entity.JrnlDiaryEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
-import io.nicheblog.dreamdiary.web.entity.jrnl.diary.JrnlDiaryEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 /**
  * JrnlDiaryRepository
  * <pre>
- *  저널 일기 Repository 인터페이스.
+ *  저널 일기 (JPA) Repository 인터페이스.
  * </pre>
  *
  * @author nichefish
@@ -28,28 +28,36 @@ import java.util.stream.Stream;
 public interface JrnlDiaryRepository
         extends BaseStreamRepository<JrnlDiaryEntity, Integer> {
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDiaryEntity.withAll")
     Optional<JrnlDiaryEntity> findById(Integer key);
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDiaryEntity.withAll")
     Page<JrnlDiaryEntity> findAll(@Nullable Specification<JrnlDiaryEntity> spec, Pageable pageable);
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDiaryEntity.withAll")
     List<JrnlDiaryEntity> findAll(@Nullable Specification<JrnlDiaryEntity> spec);
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDiaryEntity.withAll")
     List<JrnlDiaryEntity> findAll(@Nullable Specification<JrnlDiaryEntity> spec, Sort sort);
 
+    /** entityGraph */
     @Override
     @EntityGraph(value = "JrnlDiaryEntity.withAll")
     Stream<JrnlDiaryEntity> streamAllBy(@Nullable Specification<JrnlDiaryEntity> spec);
 
     /**
-     * 해당 일자에서 일기 마지막 인덱스 조회 
+     * 해당 일자에서 일기 마지막 인덱스 조회
+     *
+     * @param jrnlDayNo 조회할 일자 번호
+     * @return {@link Optional} -- 해당 일자에서 일기의 마지막 인덱스
      */
     @Query("SELECT MAX(diary.idx) " +
             "FROM JrnlDiaryEntity diary " +

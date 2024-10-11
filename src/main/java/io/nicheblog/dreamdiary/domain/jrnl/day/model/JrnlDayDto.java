@@ -12,6 +12,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -115,7 +116,7 @@ public class JrnlDayDto
      */
     @SneakyThrows
     @Override
-    public int compareTo(JrnlDayDto other) {
+    public int compareTo(final @NotNull JrnlDayDto other) {
         Date thisDate = DateUtils.asDate(this.getStdrdDt());
         if (thisDate == null) return -1;
 
