@@ -68,15 +68,15 @@ public class JrnlDayApiController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-            Sort sort = Sort.by(Sort.Direction.ASC, "jrnlDt");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
-            Page<JrnlDayApiDto> jrnlDayList = jrnlDayApiService.getPageDto(searchParamMap, pageRequest);
+            final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+            final Sort sort = Sort.by(Sort.Direction.ASC, "jrnlDt");
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
+            final Page<JrnlDayApiDto> jrnlDayList = jrnlDayApiService.getPageDto(searchParamMap, pageRequest);
             ajaxResponse.setRsltList(jrnlDayList.getContent());
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -117,13 +117,13 @@ public class JrnlDayApiController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            JrnlDayApiDto rslt = jrnlDayApiService.getDtlDto(key);
+            final JrnlDayApiDto rslt = jrnlDayApiService.getDtlDto(key);
             ajaxResponse.setRsltObj(rslt);
 
             isSuccess = (rslt.getPostNo() != null);

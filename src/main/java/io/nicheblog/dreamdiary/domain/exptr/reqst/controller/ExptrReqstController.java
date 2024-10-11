@@ -87,9 +87,9 @@ public class ExptrReqstController
             // 상단 고정 목록 조회
             model.addAttribute("exptrReqstFxdList", exptrReqstService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
             // 목록 조회
-            Page<ExptrReqstDto.LIST> exptrReqstList = exptrReqstService.getPageDto(searchParam, pageRequest);
+            final Page<ExptrReqstDto.LIST> exptrReqstList = exptrReqstService.getPageDto(searchParam, pageRequest);
             if (exptrReqstList != null) model.addAttribute("exptrReqstList", exptrReqstList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrReqstList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
@@ -228,14 +228,14 @@ public class ExptrReqstController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = key == null;
-            ExptrReqstDto result = isReg ? exptrReqstService.regist(exptrReqst, request) : exptrReqstService.modify(exptrReqst, request);
+            final boolean isReg = key == null;
+            final ExptrReqstDto result = isReg ? exptrReqstService.regist(exptrReqst, request) : exptrReqstService.modify(exptrReqst, request);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
@@ -291,7 +291,7 @@ public class ExptrReqstController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
+            final ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
             model.addAttribute("post", rsDto);
             
             isSuccess = true;
@@ -331,13 +331,13 @@ public class ExptrReqstController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
+            final ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
             
             isSuccess = true;
@@ -388,7 +388,7 @@ public class ExptrReqstController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
+            final ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
             model.addAttribute("post", rsDto);
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_MDF, key);
@@ -430,7 +430,7 @@ public class ExptrReqstController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -471,13 +471,13 @@ public class ExptrReqstController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 상태 변경 처리
-            ExptrReqstDto result = exptrReqstService.cf(key);
+            final ExptrReqstDto result = exptrReqstService.cf(key);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -514,13 +514,13 @@ public class ExptrReqstController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 상태 변경 처리
-            ExptrReqstDto result = exptrReqstService.dismiss(key);
+            final ExptrReqstDto result = exptrReqstService.dismiss(key);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);

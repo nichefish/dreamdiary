@@ -1,15 +1,16 @@
 package io.nicheblog.dreamdiary.domain._core.cd.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 /**
- * DtlCdParam
+ * DtlCdSearchParam
  * <pre>
- *  상세 코드 파라미터.
+ *  상세 코드 목록 검색 파라미터.
  * </pre>
  *
  * @author nichefish
@@ -20,9 +21,9 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString(callSuper = true)
-public class DtlCdParam
-        extends BaseParam {
+public class DtlCdSearchParam
+        extends BaseSearchParam {
 
-    /** 정렬순서 배열 */
-    private List<DtlCdDto> sortOrdr;
+    /** 분류 코드 */
+    private String clCd;
 }

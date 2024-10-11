@@ -45,13 +45,14 @@ public class ErrorPageController
      */
     @GetMapping(Url.ERROR)
     public String handleError(HttpServletRequest request) {
-        Object statusObj = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        final Object statusObj = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
         // 응답 코드에 따른 페이지 분기
         if (statusObj == null) return "/view/error/error_page";
 
-        int statusCode = Integer.parseInt(statusObj.toString());
-        HttpStatus status = HttpStatus.resolve(statusCode);
+        final int statusCode = Integer.parseInt(statusObj.toString());
+        final HttpStatus status = HttpStatus.resolve(statusCode);
+        if (status == null) return "/view/error/error_page";
         switch (status) {
             case BAD_REQUEST:
                 return "/view/error/error_bad_request";

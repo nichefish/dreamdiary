@@ -63,13 +63,13 @@ public class ExptrPrsnlItemController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 항목 조회 및 응답에 추가
-            ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             ajaxResponse.setRsltList(rsDto.getItemList());
 
             isSuccess = true;
@@ -110,14 +110,14 @@ public class ExptrPrsnlItemController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 파일 영역 처리 후, 성공시 업로드 정보 받아서 반환
-            AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
-            Integer atchFileDtlNo = atchfileDtl.getAtchFileDtlNo();
+            final AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
+            final Integer atchFileDtlNo = (atchfileDtl != null) ? atchfileDtl.getAtchFileDtlNo() : null;
 
             isSuccess = (atchFileDtlNo != null);
             if (isSuccess) {
@@ -161,7 +161,7 @@ public class ExptrPrsnlItemController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -208,7 +208,7 @@ public class ExptrPrsnlItemController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

@@ -62,7 +62,7 @@ public class FlsysController
     @GetMapping(Url.FLSYS_HOME)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     public String flsysList(
-            @ModelAttribute("searchParam") FlsysSearchParam searchParam,
+            final @ModelAttribute("searchParam") FlsysSearchParam searchParam,
             final @RequestParam("filePath") @Nullable String filePathParam,
             final LogActvtyParam logParam,
             final ModelMap model
@@ -74,8 +74,8 @@ public class FlsysController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            String filePath = !StringUtils.isEmpty(filePathParam) ? filePathParam : Constant.HOME_FLSYS;
-            FlsysDto flsys = flsysService.getFlsysByPath(filePath);
+            final String filePath = !StringUtils.isEmpty(filePathParam) ? filePathParam : Constant.HOME_FLSYS;
+            final FlsysDto flsys = flsysService.getFlsysByPath(filePath);
             model.addAttribute("file", flsys);
 
             isSuccess = true;
@@ -110,14 +110,14 @@ public class FlsysController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 해당하는 경로의 파일시스템 정보 조회
             if (!filePath.startsWith(Constant.HOME_FLSYS)) throw new IllegalArgumentException("허용되지 않은 경로입니다.");
-            FlsysDto file = flsysService.getFlsysByPath(filePath);
+            final FlsysDto file = flsysService.getFlsysByPath(filePath);
             ajaxResponse.setRsltObj(file);
 
             isSuccess = true;
@@ -157,7 +157,7 @@ public class FlsysController
         try {
             if (!filePath.startsWith(Constant.HOME_FLSYS)) throw new IllegalArgumentException("허용되지 않은 경로입니다.");
 
-            FlsysDto file = flsysService.getFlsysByPath(filePath);
+            final FlsysDto file = flsysService.getFlsysByPath(filePath);
             // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
             CookieUtils.setFileDownloadSuccessCookie();
             FileUtils.downloadFile(file.getFile());

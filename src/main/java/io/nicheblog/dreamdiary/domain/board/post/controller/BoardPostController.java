@@ -61,7 +61,6 @@ public class BoardPostController
     private final DtlCdService dtlCdService;
     private final TagService tagService;
 
-
     /**
      * 게시판 게시물 목록 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능.)
@@ -80,12 +79,12 @@ public class BoardPostController
             final ModelMap model
     ) throws Exception {
 
-        String boardCd = searchParam.getBoardCd();
+        final String boardCd = searchParam.getBoardCd();
         model.addAttribute("boardCd", boardCd);
 
         /* 사이트 메뉴 설정 */
-        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        final BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
+        final SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
         model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo(Constant.PAGE_LIST));
 
         boolean isSuccess = false;
@@ -96,9 +95,9 @@ public class BoardPostController
             // 상단 고정 목록 조회
             model.addAttribute("postFxdList", boardPostService.getFxdList(boardCd));
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
             // 목록 조회
-            Page<BoardPostDto.LIST> postList = boardPostService.getPageDto(searchParam, pageRequest);
+            final Page<BoardPostDto.LIST> postList = boardPostService.getPageDto(searchParam, pageRequest);
             model.addAttribute("postList", postList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(postList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
@@ -146,8 +145,8 @@ public class BoardPostController
         model.addAttribute("boardCd", boardCd);
 
         /* 사이트 메뉴 설정 */
-        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        final BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
+        final SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
         model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo(Constant.PAGE_REG));
 
         boolean isSuccess = false;
@@ -245,14 +244,14 @@ public class BoardPostController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = postKey.getPostNo() == null;
-            BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPost, request) : boardPostService.modify(boardPost, request);
+            final boolean isReg = postKey.getPostNo() == null;
+            final BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPost, request) : boardPostService.modify(boardPost, request);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
@@ -308,14 +307,14 @@ public class BoardPostController
         model.addAttribute("boardCd", boardCd);
 
         /* 사이트 메뉴 설정 */
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        final SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
         model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo(Constant.PAGE_DTL));
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
+            final BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
             model.addAttribute("post", rsDto);
 
             isSuccess = true;
@@ -355,13 +354,13 @@ public class BoardPostController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
+            final BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
@@ -411,15 +410,15 @@ public class BoardPostController
         model.addAttribute("boardCd", boardCd);
 
         /* 사이트 메뉴 설정 */
-        BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
-        SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
+        final BoardDefDto boardDef = boardDefService.getDtlDto(boardCd);
+        final SiteAcsInfo boardMenu = boardDefService.getBoardMenu(boardCd);
         model.addAttribute(Constant.SITE_MENU, boardMenu.setAcsPageInfo(Constant.PAGE_MDF));
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
+            final BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
             model.addAttribute("post", rsDto);
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_MDF, true);
@@ -461,7 +460,7 @@ public class BoardPostController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

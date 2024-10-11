@@ -56,14 +56,14 @@ public class EhCacheController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 현재 활성 중인 캐시(name) 목록 조회 :: 성공시 처리완료목록으로 출력
-            Map<String, Object> activeCacheList = EhCacheUtils.getActiveCacheMap();
-            ajaxResponse.setRsltMap((HashMap<String, Object>) activeCacheList);
+            final Map<String, Object> activeCacheList = EhCacheUtils.getActiveCacheMap();
+            ajaxResponse.setRsltMap(activeCacheList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -101,7 +101,7 @@ public class EhCacheController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -112,8 +112,7 @@ public class EhCacheController
             } else {
                 // 숫자 형태의 키인 경우 Integer로 변환하여 처리할 수 있음
                 if (key.matches("\\d+")) {
-                    Integer intKey = Integer.valueOf(key);
-                    EhCacheUtils.evictCache(cacheName, intKey);
+                    EhCacheUtils.evictCache(cacheName, Integer.valueOf(key));
                 } else {
                     // 문자열 키 처리
                     EhCacheUtils.evictCache(cacheName, key);
@@ -152,13 +151,13 @@ public class EhCacheController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 목록 조회 및 초기화
-            List<String> activeCacheList = EhCacheUtils.chckActiveCacheNm();
+            final List<String> activeCacheList = EhCacheUtils.chckActiveCacheNm();
             ajaxResponse.setRsltList(activeCacheList);
             
             isSuccess = EhCacheUtils.clearAllCaches();

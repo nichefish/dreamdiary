@@ -109,13 +109,13 @@ public class JrnlDayController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 목록 조회 및 응답에 추가
-            List<JrnlDayDto> jrnlDayList = jrnlDayService.getListDtoWithCache(searchParam);
+            final List<JrnlDayDto> jrnlDayList = jrnlDayService.getListDtoWithCache(searchParam);
             ajaxResponse.setRsltList(jrnlDayList);
 
             isSuccess = true;
@@ -160,7 +160,7 @@ public class JrnlDayController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -171,10 +171,10 @@ public class JrnlDayController
                 boolean isDup = jrnlDayService.dupChck(jrnlDay);
                 if (isDup) {
                     jrnlDay.setPostNo(jrnlDayService.getDupKey(jrnlDay));
-                    isReg = false;
+                    isReg = false;      // 등록 대신 기존 데이터 수정
                 }
             }
-            JrnlDayDto result = isReg ? jrnlDayService.regist(jrnlDay, request) : jrnlDayService.modify(jrnlDay, request);
+            final JrnlDayDto result = isReg ? jrnlDayService.regist(jrnlDay, request) : jrnlDayService.modify(jrnlDay, request);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
@@ -217,13 +217,13 @@ public class JrnlDayController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            JrnlDayDto rslt = jrnlDayService.getDtlDtoWithCache(key);
+            final JrnlDayDto rslt = jrnlDayService.getDtlDtoWithCache(key);
             ajaxResponse.setRsltObj(rslt);
 
             isSuccess = (rslt.getPostNo() != null);
@@ -260,7 +260,7 @@ public class JrnlDayController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

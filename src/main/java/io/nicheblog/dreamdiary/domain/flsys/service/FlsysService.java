@@ -1,9 +1,9 @@
-package io.nicheblog.dreamdiary.web.service.cmm.flsys;
+package io.nicheblog.dreamdiary.domain.flsys.service;
 
-import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysDirDto;
-import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysDto;
-import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysFileDto;
-import io.nicheblog.dreamdiary.web.model.cmm.flsys.FlsysMetaDto;
+import io.nicheblog.dreamdiary.domain.flsys.model.FlsysDirDto;
+import io.nicheblog.dreamdiary.domain.flsys.model.FlsysDto;
+import io.nicheblog.dreamdiary.domain.flsys.model.FlsysFileDto;
+import io.nicheblog.dreamdiary.domain.flsys.model.FlsysMetaDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -32,24 +32,24 @@ public class FlsysService {
      * 경로를 받아서 파일 정보 조회
      */
     public FlsysDto getFlsysByPath(final String filePath) throws Exception {
-        Path path = Paths.get(filePath);
-        File file = path.toFile();
-        FlsysDto flsys = new FlsysDto(file);
+        final Path path = Paths.get(filePath);
+        final File file = path.toFile();
+        final FlsysDto flsys = new FlsysDto(file);
 
 
         // TODO: 메타정보 조회
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("upperFilePath", filePath);
         }};
-        List<FlsysMetaDto> metaList = flsysMetaService.getListDto(searchParamMap);
+        final List<FlsysMetaDto> metaList = flsysMetaService.getListDto(searchParamMap);
 
-        File[] files = file.listFiles();
+        final File[] files = file.listFiles();
         if (files == null) return flsys;
         Arrays.sort(files, Comparator.comparing(File::getName));
-        List<FlsysDirDto> dirList = new ArrayList<>();
+        final List<FlsysDirDto> dirList = new ArrayList<>();
         for (File f : files) {
             if (!f.isDirectory()) continue;
-            FlsysDirDto flsysDir = new FlsysDirDto(f);
+            final FlsysDirDto flsysDir = new FlsysDirDto(f);
             metaList.stream()
                     .filter(e -> e.getFilePath()
                                   .equals(f.getPath()
@@ -61,10 +61,10 @@ public class FlsysService {
         flsys.setDirList(dirList);
 
         // 하위경로
-        List<FlsysFileDto> fileList = new ArrayList<>();
-        for (File f : files) {
+        final List<FlsysFileDto> fileList = new ArrayList<>();
+        for (final File f : files) {
             if (f.isDirectory()) continue;
-            FlsysFileDto flsysFile = new FlsysFileDto(f);
+            final FlsysFileDto flsysFile = new FlsysFileDto(f);
             metaList.stream()
                     .filter(e -> e.getFilePath()
                                   .equals((f.getPath()

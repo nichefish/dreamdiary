@@ -79,7 +79,7 @@ public class ExptrPrsnlStatsController
         String rsltMsg = "";
         try {
             // 초기 년도검색 파라미터 세팅
-            String yyStr = !StringUtils.isEmpty(yyStrParam) ? yyStrParam : DateUtils.getCurrYyStr();
+            final String yyStr = !StringUtils.isEmpty(yyStrParam) ? yyStrParam : DateUtils.getCurrYyStr();
             // 경비지출서 최저년도~올해년도 목록 조회
             model.addAttribute("yyList", exptrPrsnlPaprService.getExptrPrsnlYyList());
             // 올해년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
@@ -127,7 +127,7 @@ public class ExptrPrsnlStatsController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
             isSuccess = true;
@@ -167,7 +167,7 @@ public class ExptrPrsnlStatsController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

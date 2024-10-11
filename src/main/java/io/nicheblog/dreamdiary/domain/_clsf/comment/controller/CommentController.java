@@ -65,16 +65,16 @@ public class CommentController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
+            final Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
             // 목록 조회 및 응답에 추가
-            Page<CommentDto> commentList = commentService.getPageDto(searchParam, pageRequest);
+            final Page<CommentDto> commentList = commentService.getPageDto(searchParam, pageRequest);
             ajaxResponse.setRsltList(commentList.getContent());
 
             isSuccess = true;
@@ -120,14 +120,14 @@ public class CommentController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록 및 수정 처리
-            boolean isReg = (key == null);
-            CommentDto result = isReg ? commentService.regist(comment, request) : commentService.modify(comment, request);
+            final boolean isReg = (key == null);
+            final CommentDto result = isReg ? commentService.regist(comment, request) : commentService.modify(comment, request);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
@@ -166,13 +166,13 @@ public class CommentController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 삭제
-            CommentDto rsDto = commentService.getDtlDto(key);
+            final CommentDto rsDto = commentService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
@@ -212,7 +212,7 @@ public class CommentController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

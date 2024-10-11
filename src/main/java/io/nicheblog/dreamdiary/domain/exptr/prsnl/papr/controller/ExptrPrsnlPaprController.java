@@ -94,13 +94,13 @@ public class ExptrPrsnlPaprController
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (ExptrPrsnlPaprSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            Sort sort = Sort.by(Sort.Direction.DESC, "yy")
+            final Sort sort = Sort.by(Sort.Direction.DESC, "yy")
                             .and(Sort.by(Sort.Direction.DESC, "mnth"))
                             .and(Sort.by(Sort.Direction.ASC, "cfYn"))
                             .and(Sort.by(Sort.Direction.DESC, "managt.managtDt"));
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회
-            Page<ExptrPrsnlPaprDto.LIST> exptrPrsnlList = exptrPrsnlPaprService.getPageDto(searchParam, pageRequest);
+            final Page<ExptrPrsnlPaprDto.LIST> exptrPrsnlList = exptrPrsnlPaprService.getPageDto(searchParam, pageRequest);
             if (exptrPrsnlList != null) model.addAttribute("exptrPrsnlList", exptrPrsnlList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrPrsnlList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
@@ -142,13 +142,13 @@ public class ExptrPrsnlPaprController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 존재여부 체크 및 응답에 추가
-            Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
+            final Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
             ajaxResponse.setRsltMap(resultMap);
 
             isSuccess = true;
@@ -187,13 +187,13 @@ public class ExptrPrsnlPaprController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 상태여부 체크 및 응답에 추가
-            BasePostDto rsltObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
+            final BasePostDto rsltObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
             ajaxResponse.setRsltObj(rsltObj);
 
             isSuccess = true;
@@ -290,14 +290,14 @@ public class ExptrPrsnlPaprController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = key == null;
-            ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPapr, request) : exptrPrsnlPaprService.modify(exptrPrsnlPapr, request);
+            final boolean isReg = key == null;
+            final ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPapr, request) : exptrPrsnlPaprService.modify(exptrPrsnlPapr, request);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
@@ -348,7 +348,7 @@ public class ExptrPrsnlPaprController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
             isSuccess = true;
@@ -397,7 +397,7 @@ public class ExptrPrsnlPaprController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
             isSuccess = true;
@@ -444,7 +444,7 @@ public class ExptrPrsnlPaprController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_MDF, true);
@@ -493,7 +493,7 @@ public class ExptrPrsnlPaprController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -536,7 +536,7 @@ public class ExptrPrsnlPaprController
         String rsltMsg = "";
         try {
             // 첨부파일 목록 조회
-            ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
             List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
             // PDF 파일 생성 및 다운로드
             String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";

@@ -81,10 +81,10 @@ public class BoardDefController
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (BoardDefSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            final Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회
-            Page<BoardDefDto> boardDefMngList = boardDefService.getPageDto(searchParam, pageRequest);
+            final Page<BoardDefDto> boardDefMngList = boardDefService.getPageDto(searchParam, pageRequest);
             model.addAttribute("boardDefMngList", boardDefMngList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(boardDefMngList));
             // 코드 정보 모델에 추가
@@ -126,13 +126,13 @@ public class BoardDefController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            BoardDefDto result = boardDefService.regist(boardDef);
+            final BoardDefDto result = boardDefService.regist(boardDef);
             ajaxResponse.setRsltObj(result);
             
             isSuccess = (result.getBoardCd() != null);
@@ -170,13 +170,13 @@ public class BoardDefController
             final LogActvtyParam logParam
     ) throws Exception {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            BoardDefDto boardDef = boardDefService.getDtlDto(key);
+            final BoardDefDto boardDef = boardDefService.getDtlDto(key);
             ajaxResponse.setRsltObj(boardDef);
 
             isSuccess = true;
@@ -214,13 +214,13 @@ public class BoardDefController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 항목 수정 처리
-            BoardDefDto result = boardDefService.modify(boardDef);
+            final BoardDefDto result = boardDefService.modify(boardDef);
 
             isSuccess = (result.getBoardCd() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -257,7 +257,7 @@ public class BoardDefController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -298,7 +298,7 @@ public class BoardDefController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -338,7 +338,7 @@ public class BoardDefController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = null;
@@ -377,7 +377,7 @@ public class BoardDefController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

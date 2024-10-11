@@ -41,7 +41,7 @@ public class BaseExceptionlHandler {
      * @param request 확인할 웹 요청
      * @return {@link Boolean} -- 요청이 AJAX 요청일 경우 true, 그렇지 않으면 false
      */
-    private boolean isAjaxRequest(WebRequest request) {
+    private boolean isAjaxRequest(final WebRequest request) {
         return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 
@@ -54,7 +54,7 @@ public class BaseExceptionlHandler {
      * @param status 반환할 HTTP 상태 코드
      * @return Ajax 요청의 경우 {@link ResponseEntity}, 페이지 요청의 경우 {@link ModelAndView} 객체
      */
-    private Object handleException(Exception e, WebRequest request, HttpStatus status) {
+    private Object handleException(final Exception e, final WebRequest request, final HttpStatus status) {
         return handleException(e, request, status, "/view/error/error_page");
     }
 
@@ -68,12 +68,12 @@ public class BaseExceptionlHandler {
      * @param view 예외 발생 시 렌더링할 뷰 이름 (AJAX 요청이 아닐 때 사용)
      * @return Ajax 요청의 경우 {@link ResponseEntity}, 페이지 요청의 경우 {@link ModelAndView} 객체
      */
-    private Object handleException(Exception e, WebRequest request, HttpStatus status, String view) {
-        String errorMsg = MessageUtils.getExceptionMsg(e);
+    private Object handleException(final Exception e, final WebRequest request, final HttpStatus status, final String view) {
+        final String errorMsg = MessageUtils.getExceptionMsg(e);
         log.warn("Exception handled: ", e);
 
         // 로그 처리
-        LogActvtyParam logParam = new LogActvtyParam(false, errorMsg);
+        final LogActvtyParam logParam = new LogActvtyParam(false, errorMsg);
         publisher.publishEvent(new LogActvtyEvent(this, logParam));
 
         // Ajax 요청인 경우
@@ -84,8 +84,7 @@ public class BaseExceptionlHandler {
                     .body(ajaxResponse);
         }
         // 페이지 요청인 경우
-        ModelAndView modelAndView = new ModelAndView(view);
-        modelAndView.addObject("errorMsg", errorMsg);
+        final ModelAndView modelAndView = new ModelAndView(view).addObject("errorMsg", errorMsg);
         return modelAndView;
     }
 
@@ -98,8 +97,8 @@ public class BaseExceptionlHandler {
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public Object handleNoHandlerFoundException(
-            NoHandlerFoundException e,
-            WebRequest request
+            final NoHandlerFoundException e,
+            final WebRequest request
     ) {
         return handleException(e, request, HttpStatus.NOT_FOUND, "/view/error/error_not_found");
     }
@@ -114,8 +113,8 @@ public class BaseExceptionlHandler {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseBody
     public Object accessDenied(
-            AccessDeniedException e,
-            WebRequest request
+            final AccessDeniedException e,
+            final WebRequest request
     ) {
         return handleException(e, request, HttpStatus.FORBIDDEN, "/view/error/error_access_denied");
     }
@@ -129,8 +128,8 @@ public class BaseExceptionlHandler {
      */
     @ExceptionHandler(BindException.class)
     public Object handleBingdingException(
-            BindException e,
-            WebRequest request
+            final BindException e,
+            final WebRequest request
     ) {
         return handleException(e, request, HttpStatus.BAD_REQUEST);
     }
@@ -144,8 +143,8 @@ public class BaseExceptionlHandler {
      */
     @ExceptionHandler(Exception.class)
     public Object generalException(
-            Exception e,
-            WebRequest request
+            final Exception e,
+            final WebRequest request
     ) {
         return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR);
     }

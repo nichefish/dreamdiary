@@ -1,18 +1,19 @@
-package io.nicheblog.dreamdiary.web.service.jrnl.day;
+package io.nicheblog.dreamdiary.domain.jrnl.day.service;
 
+import io.nicheblog.dreamdiary.domain._core.cache.event.EhCacheEvictEvent;
+import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDayEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.day.mapstruct.JrnlDayMapstruct;
+import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
+import io.nicheblog.dreamdiary.domain.jrnl.day.repository.jpa.JrnlDayRepository;
+import io.nicheblog.dreamdiary.domain.jrnl.day.repository.mybatis.JrnlDayMapper;
+import io.nicheblog.dreamdiary.domain.jrnl.day.spec.JrnlDaySpec;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.jrnl.day.JrnlDayEntity;
-import io.nicheblog.dreamdiary.web.event.EhCacheEvictEvent;
-import io.nicheblog.dreamdiary.web.mapstruct.jrnl.day.JrnlDayMapstruct;
-import io.nicheblog.dreamdiary.web.model.jrnl.day.JrnlDayDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.day.jpa.JrnlDayRepository;
-import io.nicheblog.dreamdiary.web.repository.jrnl.day.mybatis.JrnlDayMapper;
-import io.nicheblog.dreamdiary.web.spec.jrnl.day.JrnlDaySpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,7 +31,6 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDayService")
 @RequiredArgsConstructor
@@ -38,27 +38,17 @@ import java.util.Map;
 public class JrnlDayService
         implements BaseMultiCrudService<JrnlDayDto, JrnlDayDto, Integer, JrnlDayEntity, JrnlDayRepository, JrnlDaySpec, JrnlDayMapstruct> {
 
-    private final JrnlDayMapstruct jrnlDayMapstruct = JrnlDayMapstruct.INSTANCE;
-    private final JrnlDayRepository jrnlDayRepository;
-    private final JrnlDaySpec jrnlDaySpec;
+    @Getter
+    private final JrnlDayRepository repository;
+    @Getter
+    private final JrnlDaySpec spec;
+    @Getter
+    private final JrnlDayMapstruct mapstruct = JrnlDayMapstruct.INSTANCE;
 
     private final JrnlDayMapper jrnlDayMapper;
     private final ApplicationEventPublisher publisher;
 
     private final String JRNL_DAY = ContentType.JRNL_DAY.key;
-
-    @Override
-    public JrnlDayRepository getRepository() {
-        return this.jrnlDayRepository;
-    }
-    @Override
-    public JrnlDayMapstruct getMapstruct() {
-        return this.jrnlDayMapstruct;
-    }
-    @Override
-    public JrnlDaySpec getSpec() {
-        return this.jrnlDaySpec;
-    }
 
     /**
      * 목록 조회 (dto level) :: 캐시 처리
@@ -72,10 +62,11 @@ public class JrnlDayService
      * 중복 체크 (정상시 true / 중복시 false)
      */
     public boolean dupChck(JrnlDayDto jrnlDay) throws Exception {
-        boolean isDtUnknown = "Y".equals(jrnlDay.getDtUnknownYn());
+        final boolean isDtUnknown = "Y".equals(jrnlDay.getDtUnknownYn());
         if (isDtUnknown) return false;
-        Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
-        Integer isDup = jrnlDayRepository.countByJrnlDt(jrnlDt);
+
+        final Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
+        final Integer isDup = repository.countByJrnlDt(jrnlDt);
         return isDup > 0;
     }
 
@@ -83,8 +74,8 @@ public class JrnlDayService
      * 중복시 해당하는 키값 반환
      */
     public Integer getDupKey(JrnlDayDto jrnlDay) throws Exception {
-        Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
-        JrnlDayEntity existingEntity = jrnlDayRepository.findByJrnlDt(jrnlDt);
+        final Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
+        final JrnlDayEntity existingEntity = repository.findByJrnlDt(jrnlDt);
         return existingEntity.getPostNo();
     }
 
@@ -93,12 +84,14 @@ public class JrnlDayService
      */
     @Cacheable(value="jrnlDayTagDtl", key="#searchParam.hashCode()")
     public List<JrnlDayDto> jrnlDayTagDtl(final BaseSearchParam searchParam) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         return this.getListDto(searchParamMap);
     }
 
     /**
-     * 등록 전처리 :: override
+     * 등록 전처리. (override)
+     *
+     * @param dto 등록할 객체
      */
     @Override
     public void preRegist(final JrnlDayDto jrnlDay) throws Exception {
@@ -107,11 +100,14 @@ public class JrnlDayService
     }
 
     /**
-     * 등록 후처리 :: override
+     * 등록 후처리. (override)
+     *
+     * @param rslt - 등록된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postRegist(final JrnlDayEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DAY));
     }
 
@@ -124,7 +120,9 @@ public class JrnlDayService
     }
 
     /**
-     * 수정 전처리 :: override
+     * 수정 전처리. (override)
+     *
+     * @param jrnlDay 수정할 객체
      */
     @Override
     public void preModify(final JrnlDayDto jrnlDay) throws Exception {
@@ -136,11 +134,14 @@ public class JrnlDayService
     }
 
     /**
-     * 수정 후처리 :: override
+     * 수정 후처리. (override)
+     *
+     * @param rslt - 수정된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postModify(final JrnlDayEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DAY));
     }
 
@@ -162,11 +163,14 @@ public class JrnlDayService
     }
 
     /**
-     * 삭제 후처리 :: override
+     * 삭제 후처리. (override)
+     *
+     * @param rslt - 삭제된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postDelete(final JrnlDayEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DAY));
         // TODO: 관련 엔티티 삭제?
     }

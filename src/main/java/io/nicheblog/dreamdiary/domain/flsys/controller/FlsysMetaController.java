@@ -65,13 +65,13 @@ public class FlsysMetaController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            boolean isReg = key.getPostNo() == null;
-            FlsysMetaDto result = isReg ? flsysMetaService.regist(flsysMeta) : flsysMetaService.modify(flsysMeta);
+            final boolean isReg = key.getPostNo() == null;
+            final FlsysMetaDto result = isReg ? flsysMetaService.regist(flsysMeta) : flsysMetaService.modify(flsysMeta);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
@@ -109,13 +109,13 @@ public class FlsysMetaController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 정보 조회 및 응답에 세팅
-            FlsysMetaDto rsDto = flsysMetaService.getDtlDto(key);
+            final FlsysMetaDto rsDto = flsysMetaService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
@@ -154,7 +154,7 @@ public class FlsysMetaController
 
         ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

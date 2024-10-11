@@ -126,14 +126,14 @@ public class ClCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = "Y".equals(regYn);
-            ClCdDto result = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd);
+            final boolean isReg = "Y".equals(regYn);
+            final ClCdDto result = isReg ? clCdService.regist(clCd) : clCdService.modify(clCd);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getClCd() != null);
@@ -180,7 +180,7 @@ public class ClCdController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            ClCdDto cmmClCd = clCdService.getDtlDto(key);
+            final ClCdDto cmmClCd = clCdService.getDtlDto(key);
             model.addAttribute("clCd", cmmClCd);
             // 코드 데이터 모델에 추가
             dtlCdService.setCdListToModel(Constant.CL_CTGR_CD, model);
@@ -218,13 +218,13 @@ public class ClCdController
             final LogActvtyParam logParam
     ) throws Exception {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            ClCdDto cmmClCd = clCdService.getDtlDto(key);
+            final ClCdDto cmmClCd = clCdService.getDtlDto(key);
             ajaxResponse.setRsltObj(cmmClCd);
 
             isSuccess = true;
@@ -262,7 +262,7 @@ public class ClCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -302,7 +302,7 @@ public class ClCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -341,7 +341,7 @@ public class ClCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -379,7 +379,7 @@ public class ClCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = null;

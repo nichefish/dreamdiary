@@ -1,8 +1,11 @@
 package io.nicheblog.dreamdiary.domain._core.cd.controller;
 
 import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdKey;
+import io.nicheblog.dreamdiary.domain._core.cd.model.ClCdSearchParam;
 import io.nicheblog.dreamdiary.domain._core.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.domain._core.cd.model.DtlCdParam;
+import io.nicheblog.dreamdiary.domain._core.cd.model.DtlCdSearchParam;
+import io.nicheblog.dreamdiary.domain._core.cd.service.ClCdService;
 import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
@@ -64,15 +67,14 @@ public class DtlCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 목록 조회
-            Map<String, Object> searchParam = new HashMap<String, Object>();
-            searchParam.put("clCd", clCd);
-            List<DtlCdDto> dtlCdList = dtlCdService.getListDto(searchParam);
+            final DtlCdSearchParam searchParam = DtlCdSearchParam.builder().clCd(clCd).build();
+            final List<DtlCdDto> dtlCdList = dtlCdService.getListDto(searchParam);
             ajaxResponse.setRsltList(dtlCdList);
 
             isSuccess = true;
@@ -111,14 +113,14 @@ public class DtlCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = "Y".equals(regYn);
-            DtlCdDto result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd);
+            final boolean isReg = "Y".equals(regYn);
+            final DtlCdDto result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getDtlCd() != null);
@@ -156,13 +158,13 @@ public class DtlCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            DtlCdDto dtlCdDto = dtlCdService.getDtlDto(key);
+            final DtlCdDto dtlCdDto = dtlCdService.getDtlDto(key);
             ajaxResponse.setRsltObj(dtlCdDto);
 
             isSuccess = true;
@@ -201,7 +203,7 @@ public class DtlCdController
 
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -241,7 +243,7 @@ public class DtlCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -281,7 +283,7 @@ public class DtlCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -319,7 +321,7 @@ public class DtlCdController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = null;

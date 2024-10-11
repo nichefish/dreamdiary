@@ -50,7 +50,7 @@ public class DreamdiaryInitializer
     /**
      * 프로그램 최초 구동시 수행할 로직.
      *
-     * @param args - 명령줄에서 전달된 인수
+     * @param args 명령줄에서 전달된 인수
      */
     @Override
     public void run(final String... args) throws Exception {
@@ -66,7 +66,7 @@ public class DreamdiaryInitializer
 
         // 시스템 재기동 로그 적재:: 운영 환경 이외에는 적재하지 않음
         if (activeProfile.isProd()) {
-            LogSysParam logParam = new LogSysParam(true, "시스템이 정상적으로 재기동되었습니다.", ActvtyCtgr.SYSTEM);
+            final LogSysParam logParam = new LogSysParam(true, "시스템이 정상적으로 재기동되었습니다.", ActvtyCtgr.SYSTEM);
             publisher.publishEvent(new LogSysEvent(this, logParam));
         }
     }
@@ -76,7 +76,7 @@ public class DreamdiaryInitializer
      */
     public void regSystemAcntIfEmpty() {
 
-        LogSysParam logParam = new LogSysParam();
+        final LogSysParam logParam = new LogSysParam();
 
         boolean isSuccess = false;
         boolean systemAcntExists = false;
@@ -125,7 +125,7 @@ public class DreamdiaryInitializer
                 .regstrId(Constant.SYSTEM_ACNT)
                 .build();
 
-        UserDto rslt = userService.regist(systemAcnt);
+        final UserDto rslt = userService.regist(systemAcnt);
         return (rslt.getUserNo() != null);
     }
 
@@ -134,14 +134,14 @@ public class DreamdiaryInitializer
      */
     public void regLgnPolicyIfEmpty() {
 
-        LogSysParam logParam = new LogSysParam();
+        final LogSysParam logParam = new LogSysParam();
 
         boolean isSuccess = false;
         boolean lgnPolicyExists = false;
         String rsltMsg = "";
         try {
             // 로그인 정책 존재여부 체크
-            LgnPolicyDto rsLgnPolicy = lgnPolicyService.getDtlDto();
+            final LgnPolicyDto rsLgnPolicy = lgnPolicyService.getDtlDto();
             if (rsLgnPolicy != null) {
                 lgnPolicyExists = true;
                 return;
@@ -184,7 +184,7 @@ public class DreamdiaryInitializer
     private void loadDotEnvProperties() {
         try {
             // 프로필 기반 .env.${profile} 프로퍼티 로드 (속성 없을시:: 기본값 local)
-            String profile = System.getProperty("spring.profiles.active", "local");
+            final String profile = System.getProperty("spring.profiles.active", "local");
             this.setDotEnvPropertiesByFileNm(".env");
             this.setDotEnvPropertiesByFileNm(".env." + profile);
         } catch (Exception e) {
@@ -197,7 +197,7 @@ public class DreamdiaryInitializer
      * @param fileName - 로드할 .env 파일의 이름
      */
     private void setDotEnvPropertiesByFileNm(final String fileName) {
-        Dotenv dotenv = Dotenv.configure().filename(fileName).load();
+        final Dotenv dotenv = Dotenv.configure().filename(fileName).load();
         dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
         log.info("Loaded {} file successfully.", fileName);
     }
