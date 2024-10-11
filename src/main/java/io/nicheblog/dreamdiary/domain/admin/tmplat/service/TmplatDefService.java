@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.domain.admin.tmplat.mapstruct.TmplatDefMapstruct;
 import io.nicheblog.dreamdiary.domain.admin.tmplat.model.TmplatDefDto;
 import io.nicheblog.dreamdiary.domain.admin.tmplat.repository.jpa.TmplatDefRepository;
 import io.nicheblog.dreamdiary.domain.admin.tmplat.spec.TmplatDefSpec;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import lombok.Getter;

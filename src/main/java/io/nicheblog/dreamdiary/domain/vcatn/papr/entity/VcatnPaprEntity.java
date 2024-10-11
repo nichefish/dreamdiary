@@ -1,9 +1,16 @@
 package io.nicheblog.dreamdiary.domain.vcatn.papr.entity;
 
+import io.nicheblog.dreamdiary.domain._clsf.tag.entity.embed.TagEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.tag.entity.embed.TagEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.entity.embed.ViewerEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.entity.embed.ViewerEmbedModule;
 import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.domain._clsf.comment.entity.embed.CommentEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.comment.entity.embed.CommentEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.managt.entity.embed.ManagtEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.managt.entity.embed.ManagtEmbedModule;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -88,7 +95,9 @@ public class VcatnPaprEntity
 
     /**
      * 서브엔티티 List 처리를 위한 Setter Override
-     * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
+     * 한 번 Entity가 생성된 이후부터는 새 List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
+     *
+     * @param itemList - 설정할 객체 리스트
      */
     public void setSchdulList(final List<VcatnSchdulEntity> itemList) {
         if (CollectionUtils.isEmpty(itemList)) return;

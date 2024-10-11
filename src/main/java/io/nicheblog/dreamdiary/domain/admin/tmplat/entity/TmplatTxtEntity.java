@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.domain.admin.tmplat.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
@@ -14,12 +14,10 @@ import javax.persistence.*;
 /**
  * TmplatTxtEntity
  * <pre>
- *  TEXTAREA (또는 텍스트에디터) 사전입력 템플릿 정의 Entity
+ *  TEXTAREA (또는 텍스트에디터) 사전입력 템플릿 정의 Entity.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchEntity
- * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "tmplat_txt")
