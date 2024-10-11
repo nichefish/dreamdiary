@@ -80,10 +80,10 @@ public class DtlCdService
         if (StringUtils.isEmpty(clCd)) return null;
 
         // 코드 목록 조회 (entity level)
-        List<DtlCdEntity> rsDtlCdList = this.getCdEntityListByClCd(clCd);
+        final List<DtlCdEntity> rsDtlCdList = this.getCdEntityListByClCd(clCd);
         // Entity -> Dto 변환
-        List<DtlCdDto> rsDtlCdDtoList = new ArrayList<>();
-        for (DtlCdEntity dtlCdEntity : rsDtlCdList) {
+        final List<DtlCdDto> rsDtlCdDtoList = new ArrayList<>();
+        for (final DtlCdEntity dtlCdEntity : rsDtlCdList) {
             rsDtlCdDtoList.add(mapstruct.toDto(dtlCdEntity));
         }
         return rsDtlCdDtoList;
@@ -98,7 +98,7 @@ public class DtlCdService
      */
     public String getDtlCdNm(final String clCd, final String dtlCd) {
         if (StringUtils.isEmpty(clCd) || StringUtils.isEmpty(dtlCd)) return null;
-        DtlCdEntity rsDtlCd = repository.findByClCdAndDtlCd(clCd, dtlCd);
+        final DtlCdEntity rsDtlCd = repository.findByClCdAndDtlCd(clCd, dtlCd);
         if (rsDtlCd == null) return null;
         return rsDtlCd.getDtlCdNm();
     }
@@ -173,7 +173,7 @@ public class DtlCdService
         if (CollectionUtils.isEmpty(sortOrdr)) return true;
         sortOrdr.forEach(dto -> {
             try {
-                DtlCdEntity e = this.getDtlEntity(dto.getKey());
+                final DtlCdEntity e = this.getDtlEntity(dto.getKey());
                 e.getState().setSortOrdr(dto.getState().getSortOrdr());
                 this.updt(e);
             } catch (Exception ex) {

@@ -58,10 +58,10 @@ public class ContentTagSpec
             final CriteriaBuilder builder
     ) {
 
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
 
         // 파라미터 비교
-        for (String key : searchParamMap.keySet()) {
+        for (final String key : searchParamMap.keySet()) {
             switch (key) {
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색

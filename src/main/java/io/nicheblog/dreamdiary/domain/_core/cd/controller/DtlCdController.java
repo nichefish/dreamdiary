@@ -1,11 +1,9 @@
 package io.nicheblog.dreamdiary.domain._core.cd.controller;
 
 import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdKey;
-import io.nicheblog.dreamdiary.domain._core.cd.model.ClCdSearchParam;
 import io.nicheblog.dreamdiary.domain._core.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.domain._core.cd.model.DtlCdParam;
 import io.nicheblog.dreamdiary.domain._core.cd.model.DtlCdSearchParam;
-import io.nicheblog.dreamdiary.domain._core.cd.service.ClCdService;
 import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
@@ -25,9 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * DtlCdController
@@ -309,15 +305,17 @@ public class DtlCdController
 
     /**
      * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     * (관리자MNGR만 접근 가능.)
      *
      * @param dtlCdParam 키+정렬 순서 목록을 담은 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.DTL_CD_SORT_ORDR_AJAX)
+    @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> dtlCdSortOrdrAjax(
-            @RequestBody DtlCdParam dtlCdParam,
+            final @RequestBody DtlCdParam dtlCdParam,
             final LogActvtyParam logParam
     ) {
 

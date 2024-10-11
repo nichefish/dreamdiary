@@ -81,10 +81,10 @@ public class ClCdController
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (ClCdSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            final Sort sort = Sort.by(Sort.Direction.ASC, "state.sortOrdr");
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회
-            Page<ClCdDto> clCdList = clCdService.getPageDto(searchParam, pageRequest);
+            final Page<ClCdDto> clCdList = clCdService.getPageDto(searchParam, pageRequest);
             model.addAttribute("clCdList", clCdList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(clCdList));
             // 목록 검색 URL + 파라미터 모델에 추가
@@ -367,15 +367,17 @@ public class ClCdController
 
     /**
      * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     * (관리자MNGR만 접근 가능.)
      *
      * @param clCdParam 키+정렬 순서 목록을 담은 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.CL_CD_SORT_ORDR_AJAX)
+    @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> clCdSortOrdrAjax(
-            @RequestBody ClCdParam clCdParam,
+            final @RequestBody ClCdParam clCdParam,
             final LogActvtyParam logParam
     ) {
 

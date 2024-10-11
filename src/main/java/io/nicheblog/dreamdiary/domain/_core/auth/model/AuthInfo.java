@@ -132,7 +132,7 @@ public class AuthInfo
      * @return {@link Boolean} -- 해당 권한 보유시 true, 아니면 false
      */
     public boolean hasAuthority(final String roleStr) {
-        for (GrantedAuthority grantedAuthority : this.getAuthorities()) {
+        for (final GrantedAuthority grantedAuthority : this.getAuthorities()) {
             if (roleStr.equals(grantedAuthority.getAuthority())) return true;
         }
         return false;

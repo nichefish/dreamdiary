@@ -57,9 +57,9 @@ public class DreamdiaryAuthenticationProvider
     @SneakyThrows
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
-        String password = (String) authentication.getCredentials();
-        AuthInfo authInfo = authService.loadUserByUsername(username);
+        final String username = authentication.getName();
+        final String password = (String) authentication.getCredentials();
+        final AuthInfo authInfo = authService.loadUserByUsername(username);
 
         // 계정 존재여부 체크
         if (authInfo == null) throw new InternalAuthenticationServiceException("internalAuthenticationServiceException");
@@ -86,11 +86,11 @@ public class DreamdiaryAuthenticationProvider
         if (!this.isPwExpryValid(authInfo)) throw new CredentialsExpiredException("CredentialsExpiredException");
 
         // 비밀번호 변경 필요 여부 체크
-        boolean needsPwReset = "Y".equals(authInfo.getNeedsPwReset());
+        final boolean needsPwReset = "Y".equals(authInfo.getNeedsPwReset());
         if (needsPwReset) throw new AcntNeedsPwResetException("AcntNeedsPwResetException");
 
         // 중복 로그인 체크 :: 세션 attribute 훑어서 "lgnId" 비교
-        boolean isDupLgn = DupIdLgnManager.isDupIdLgn(username);
+        final boolean isDupLgn = DupIdLgnManager.isDupIdLgn(username);
         if (isDupLgn) throw new DupIdLgnException("DupLgnException");
 
         return new UsernamePasswordAuthenticationToken(authInfo, null, authInfo.getAuthorities());
@@ -105,10 +105,10 @@ public class DreamdiaryAuthenticationProvider
     public Boolean isDupLgnConfirmed(final String username) {
         if (StringUtils.isEmpty(username)) return false;
 
-        ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = servletRequestAttribute.getRequest().getSession(false);
+        final ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        final HttpSession session = servletRequestAttribute.getRequest().getSession(false);
         if (session == null) return false;
-        Object isDupIdLgn = session.getAttribute("isDupIdLgn");
+        final Object isDupIdLgn = session.getAttribute("isDupIdLgn");
         session.removeAttribute("isDupIdLgn");
         return isDupIdLgn instanceof String && username.equals(isDupIdLgn);
     }
@@ -120,25 +120,25 @@ public class DreamdiaryAuthenticationProvider
      * @return {@link Boolean} -- 접속 IP가 유효한 경우 true
      */
     public Boolean isAcsIpValid(final AuthInfo authInfo) {
-        if (!"Y".equals(authInfo.getUseAcsIpYn())) return true; 
+        if (!"Y".equals(authInfo.getUseAcsIpYn())) return true;
 
-        List<String> acsIpStrList = authInfo.getAcsIpStrList();
+        final List<String> acsIpStrList = authInfo.getAcsIpStrList();
         if (CollectionUtils.isEmpty(acsIpStrList)) return true;
 
         String remoteAddr = AuthUtils.getAcsIpAddr();
         log.info("logged in remoteAddr: {}", remoteAddr);
 
         // 순회하며 IP 체크
-        for (String acsIp : acsIpStrList) {
+        for (final String acsIp : acsIpStrList) {
             log.info("comparing remoteIP {} to access-allowed-IP {}...", remoteAddr, acsIp);
-            boolean isCidr = acsIp.contains("/");
+            final boolean isCidr = acsIp.contains("/");
             if (!isCidr) {
                 // 단순 IP일 경우: 정확히 일치여부 확인
                 if (acsIp.equals(remoteAddr)) return true;
             } else {
                 // CIDR일 경우: 범위 체크
-                SubnetUtils subnetUtils = new SubnetUtils(acsIp);
-                boolean isIpAddrWithinValid = subnetUtils.getInfo().isInRange(remoteAddr);
+                final SubnetUtils subnetUtils = new SubnetUtils(acsIp);
+                final boolean isIpAddrWithinValid = subnetUtils.getInfo().isInRange(remoteAddr);
                 if (isIpAddrWithinValid) return true;
             }
         }
@@ -153,10 +153,10 @@ public class DreamdiaryAuthenticationProvider
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public Boolean isPwExpryValid(AuthInfo authInfo) throws Exception {
-        LgnPolicyEntity lgnPolicy = lgnPolicyService.getDtlEntity();
-        Integer pwChgDy = lgnPolicy.getPwChgDy();
-        Date pwExprDt = DateUtils.getDateAddDay(authInfo.getPwChgDt(), pwChgDy);
-        boolean isPwExprd = (pwExprDt == null || pwExprDt.compareTo(DateUtils.getCurrDate()) < 0);
+        final LgnPolicyEntity lgnPolicy = lgnPolicyService.getDtlEntity();
+        final Integer pwChgDy = lgnPolicy.getPwChgDy();
+        final Date pwExprDt = DateUtils.getDateAddDay(authInfo.getPwChgDt(), pwChgDy);
+        final boolean isPwExprd = (pwExprDt == null || pwExprDt.compareTo(DateUtils.getCurrDate()) < 0);
         return !isPwExprd;
     }
 

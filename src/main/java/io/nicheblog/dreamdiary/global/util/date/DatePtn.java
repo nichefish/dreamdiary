@@ -26,7 +26,8 @@ public enum DatePtn {
     DATETIMES("yyyy-MM-dd HH:mm:ss.S", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S")),
     SDATE("yyyy/MM/dd", new SimpleDateFormat("yyyy/MM/dd")),
     SDATETIME("yyyy/MM/dd HH:mm:ss", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")),
-    BRTHDY("MM월 dd일", new SimpleDateFormat("MM월 dd일"));
+    BRTHDY("MM월 dd일", new SimpleDateFormat("MM월 dd일")),
+    TIME("HH:mm:ss", new SimpleDateFormat("HH:mm:ss"));
 
     public final String pattern;
     public final SimpleDateFormat df;

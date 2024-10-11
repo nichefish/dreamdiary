@@ -55,7 +55,7 @@ public class AuthUtils {
      */
     public static Integer getAuthenticatedUserProflNo() {
         if (RequestContextHolder.getRequestAttributes() == null) return null;
-        AuthInfo authInfo = getAuthenticatedUser();
+        final AuthInfo authInfo = getAuthenticatedUser();
         assert authInfo != null;
         return (authInfo.getProfl() == null) ? null : authInfo.getProfl().getUserProflNo();
     }
@@ -66,7 +66,7 @@ public class AuthUtils {
      * @return {@link String} -- 현재 로그인 중인 사용자 이름
      */
     public static String getLgnUserNm() {
-        AuthInfo AuthInfo = getAuthenticatedUser();
+        final AuthInfo AuthInfo = getAuthenticatedUser();
         assert AuthInfo != null;
         return AuthInfo.getNickNm();
     }
@@ -77,7 +77,7 @@ public class AuthUtils {
      * @return {@link String} -- 현재 로그인 중인 사용자 아이디
      */
     public static String getLgnUserId() {
-        AuthInfo authInfo = getAuthenticatedUser();
+        final AuthInfo authInfo = getAuthenticatedUser();
         assert authInfo != null;
         return authInfo.getUserId();
     }
@@ -88,8 +88,8 @@ public class AuthUtils {
      * @return {@link Boolean} -- 인증 상태일 경우 true. 익명 사용자(anynymousUser)의 경우 false.
      */
     public static Boolean isAuthenticated() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAuthenticated = auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken);
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final boolean isAuthenticated = auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken);
         if (!isAuthenticated) log.info("isAuthenticated: {}", isAuthenticated);
         return isAuthenticated;
     }
@@ -101,9 +101,9 @@ public class AuthUtils {
      */
     public static Boolean isMyInfo(final String paramUserId) {
         if (paramUserId == null) return false;
-        AuthInfo authInfo = getAuthenticatedUser();
+        final AuthInfo authInfo = getAuthenticatedUser();
         assert authInfo != null;
-        String myUserId = authInfo.getUserId();
+        final String myUserId = authInfo.getUserId();
         return paramUserId.equals(myUserId);
     }
 
@@ -114,10 +114,10 @@ public class AuthUtils {
      */
     public static Boolean isRegstr(final String regstrId) {
         if (StringUtils.isEmpty(regstrId)) return false;
-        AuthInfo authInfo = getAuthenticatedUser();
+        final AuthInfo authInfo = getAuthenticatedUser();
         if (authInfo == null) return false;
 
-        String myUserId = authInfo.getUserId();
+        final String myUserId = authInfo.getUserId();
         return regstrId.equals(myUserId);
     }
 
@@ -136,9 +136,9 @@ public class AuthUtils {
      * @return {@link Boolean} -- 해당 권한 보유시 true.
      */
     public static Boolean hasAuthority(final String roleStr) {
-        AuthInfo authInfo = getAuthenticatedUser();
+        final AuthInfo authInfo = getAuthenticatedUser();
         assert authInfo != null;
-        for (GrantedAuthority grantedAuthority : authInfo.getAuthorities()) {
+        for (final GrantedAuthority grantedAuthority : authInfo.getAuthorities()) {
             if (roleStr.equals(grantedAuthority.getAuthority())) return true;
         }
         return false;
@@ -154,7 +154,7 @@ public class AuthUtils {
         if (request == null) return null;
         String ipType = "";
         String ipAddr = "";
-        for (String s : Constant.IP_HEADERS) {
+        for (final String s : Constant.IP_HEADERS) {
             ipType = s;
             ipAddr = request.getHeader(ipType);
             if (ipAddr != null) break;
