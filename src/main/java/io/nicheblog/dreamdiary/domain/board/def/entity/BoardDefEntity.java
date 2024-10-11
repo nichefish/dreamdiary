@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.domain.board.def.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +16,11 @@ import javax.persistence.*;
 /**
  * BoardDefEntity
  * <pre>
- *  게시판 정의 정보 Entity
+ *  게시판 정의 정보 Entity.
  *  ※게시판 정의(board_def) = 게시판 분류. 게시판 게시물(board_post)을 1:N으로 관리한다.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditEntity
- * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "board_def")

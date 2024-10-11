@@ -6,7 +6,7 @@ import io.nicheblog.dreamdiary.domain._core.cd.mapstruct.DtlCdMapstruct;
 import io.nicheblog.dreamdiary.domain._core.cd.model.DtlCdDto;
 import io.nicheblog.dreamdiary.domain._core.cd.repository.jpa.DtlCdRepository;
 import io.nicheblog.dreamdiary.domain._core.cd.spec.DtlCdSpec;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
@@ -153,7 +153,6 @@ public class DtlCdService
      * 관련 캐시 삭제.
      *
      * @param rslt 캐시 처리할 엔티티
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public void evictRelatedCache(final DtlCdEntity rslt) {
         EhCacheUtils.evictCache("cdEntityListByClCd", rslt.getClCd());

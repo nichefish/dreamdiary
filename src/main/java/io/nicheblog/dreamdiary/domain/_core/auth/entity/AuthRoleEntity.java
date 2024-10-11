@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.domain._core.auth.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +23,6 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditEntity
- * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "auth_role")

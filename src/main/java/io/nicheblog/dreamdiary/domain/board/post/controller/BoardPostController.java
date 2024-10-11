@@ -4,9 +4,9 @@ import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.domain._core.tag.event.TagProcEvent;
-import io.nicheblog.dreamdiary.domain._core.tag.service.TagService;
-import io.nicheblog.dreamdiary.domain._core.viewer.event.ViewerAddEvent;
+import io.nicheblog.dreamdiary.domain._clsf.tag.event.TagProcEvent;
+import io.nicheblog.dreamdiary.domain._clsf.tag.service.TagService;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefDto;
 import io.nicheblog.dreamdiary.domain.board.def.service.BoardDefService;
 import io.nicheblog.dreamdiary.domain.board.post.model.BoardPostDto;
@@ -452,7 +452,6 @@ public class BoardPostController
      *
      * @param postKey 복합키 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.BOARD_POST_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

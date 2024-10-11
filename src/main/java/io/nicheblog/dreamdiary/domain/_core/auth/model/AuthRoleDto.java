@@ -2,7 +2,7 @@ package io.nicheblog.dreamdiary.domain._core.auth.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

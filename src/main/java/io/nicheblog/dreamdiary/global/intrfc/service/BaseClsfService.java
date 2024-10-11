@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.ManagtEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.managt.entity.embed.ManagtEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.managt.entity.embed.ManagtEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.ManagtCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.managt.model.cmpstn.ManagtCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 
@@ -77,7 +77,7 @@ public interface BaseClsfService<Dto extends BaseClsfDto & Identifiable<Key>, Li
         if (this.isManagtModule(dto, entity)) {
             // (수정시) 조치일자 변경하지 않음 처리
             boolean isManagtDtNull = ((ManagtEmbedModule) entity).getManagt() == null || ((ManagtEmbedModule) entity).getManagt().getManagtDt() == null;
-            boolean updtManagtDt = isManagtDtNull || "Y".equals(dto.getManagtDtUpdtYn());
+            boolean updtManagtDt = isManagtDtNull || "Y".equals(((ManagtCmpstnModule) dto).getManagt().getManagtDtUpdtYn());
             ((ManagtEmbedModule) entity).setManagt(new ManagtEmbed(updtManagtDt));
         }
 

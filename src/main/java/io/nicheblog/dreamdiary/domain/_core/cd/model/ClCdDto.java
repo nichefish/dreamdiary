@@ -2,8 +2,8 @@ package io.nicheblog.dreamdiary.domain._core.cd.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

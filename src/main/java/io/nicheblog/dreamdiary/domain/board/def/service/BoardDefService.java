@@ -6,7 +6,7 @@ import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefDto;
 import io.nicheblog.dreamdiary.domain.board.def.repository.jpa.BoardDefRepository;
 import io.nicheblog.dreamdiary.domain.board.def.spec.BoardDefSpec;
 import io.nicheblog.dreamdiary.global.SiteMenu;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.global.model.SiteAcsInfo;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 /**
  * BoardDefService
  * <pre>
- *  게시판 정의 서비스 모듈
+ *  게시판 정의 서비스 모듈.
  *  ※게시판 정의(board_def) = 게시판 분류. 게시판 게시물(board_post)을 1:N으로 관리한다.
  * </pre>
  *

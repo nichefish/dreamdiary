@@ -1,10 +1,17 @@
 package io.nicheblog.dreamdiary.domain.board.post.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.managt.model.cmpstn.ManagtCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.managt.model.cmpstn.ManagtCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.model.cmpstn.ViewerCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.model.cmpstn.ViewerCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +44,9 @@ public class BoardPostDto
 
     /* ----- */
 
+    /**
+     * 게시판 게시물 상세 조회 (DTL) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
@@ -51,6 +61,9 @@ public class BoardPostDto
         // private List<FlsysRefDto> flsysRefList;
     }
 
+    /**
+     * 게시판 게시물 목록 조회 (DTL) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)

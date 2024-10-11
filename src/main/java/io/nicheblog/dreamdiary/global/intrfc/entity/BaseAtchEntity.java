@@ -22,7 +22,6 @@ import javax.persistence.OneToOne;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditEntity
  */
 @MappedSuperclass
 @Getter

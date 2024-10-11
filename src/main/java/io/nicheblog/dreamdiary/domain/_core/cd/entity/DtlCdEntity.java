@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.domain._core.cd.entity;
 
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

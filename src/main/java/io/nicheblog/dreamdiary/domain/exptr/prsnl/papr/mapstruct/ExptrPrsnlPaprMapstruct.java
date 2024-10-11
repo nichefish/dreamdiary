@@ -75,7 +75,7 @@ public interface ExptrPrsnlPaprMapstruct
      * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
-    @Mapping(target = "itemList", expression = "java(dto.getItemEntityList())")
+    @Mapping(target = "itemList", expression = "java(ExptrPrsnlItemMapstruct.INSTANCE.toEntityList(dto.getItemList()))")
     ExptrPrsnlPaprEntity toEntity(final ExptrPrsnlPaprDto.DTL dto) throws Exception;
 
     /**
@@ -87,6 +87,6 @@ public interface ExptrPrsnlPaprMapstruct
      */
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "itemList", expression = "java(dto.getItemEntityList())")
+    @Mapping(target = "itemList", expression = "java(ExptrPrsnlItemMapstruct.INSTANCE.toEntityList(dto.getItemList()))")
     void updateFromDto(final ExptrPrsnlPaprDto.DTL dto, final @MappingTarget ExptrPrsnlPaprEntity entity) throws Exception;
 }

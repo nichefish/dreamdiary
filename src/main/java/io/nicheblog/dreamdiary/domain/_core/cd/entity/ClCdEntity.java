@@ -2,8 +2,8 @@ package io.nicheblog.dreamdiary.domain._core.cd.entity;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cache;
@@ -96,7 +96,8 @@ public class ClCdEntity
     /**
      * 서브엔티티 List 처리를 위한 Setter
      * 한 번 Entity가 생성된 이후부터는 새 List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
-     * @param dtlCdList - 설정할 `DtlCdEntity` 객체들의 리스트
+     *
+     * @param dtlCdList - 설정할 객체 리스트
      */
     public void setDtlCdList(final List<DtlCdEntity> dtlCdList) {
         if (CollectionUtils.isEmpty(dtlCdList)) return;

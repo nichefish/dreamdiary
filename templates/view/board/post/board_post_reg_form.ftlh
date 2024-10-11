@@ -105,7 +105,7 @@
                         </label>
                     </div>
                     <div class="col-lg-2 col-9 d-flex align-items-center">
-                        <@component.checkbox post "managtDtUpdtYn" "변경//미변경", "blue//gray", "defaultOn" />
+                        <@component.checkbox post "managt.managtDtUpdtYn" "변경//미변경", "blue//gray", "defaultOn" />
                     </div>
                 </div>
             </#if>

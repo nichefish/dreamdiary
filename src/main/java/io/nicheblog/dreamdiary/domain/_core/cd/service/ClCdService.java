@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.domain._core.cd.mapstruct.ClCdMapstruct;
 import io.nicheblog.dreamdiary.domain._core.cd.model.ClCdDto;
 import io.nicheblog.dreamdiary.domain._core.cd.repository.jpa.ClCdRepository;
 import io.nicheblog.dreamdiary.domain._core.cd.spec.ClCdSpec;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
