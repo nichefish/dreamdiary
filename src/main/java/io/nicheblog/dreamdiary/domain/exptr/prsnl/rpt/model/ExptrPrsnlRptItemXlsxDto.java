@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,43 +16,33 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class ExptrPrsnlRptItemXlsxDto {
 
-    /**
-     * 지출일자
-     */
+    /** 지출일자 */
     private String exptrDt;
-    /**
-     * 소속
-     */
+
+    /** 소속 */
     private String cmpyNm;
-    /**
-     * 이름
-     */
+
+    /** 이름 */
     private String userNm;
-    /**
-     * 지출구분코드명
-     */
+
+    /** 지출구분코드명 */
     private String exptrTyNm;
-    /**
-     * 지출내용
-     */
+
+    /** 지출내용 */
     private String exptrCn;
-    /**
-     * 지출금액
-     */
+
+    /** 지출금액 */
     private Integer exptrAmt;
-    /**
-     * 비고
-     */
+
+    /** 비고 */
     private String exptrRm;
-    /**
-     * 첨부파일(상세) 번호
-     */
+
+    /** 첨부파일(상세) 번호 */
     private String atchFileAt;
-    /**
-     * 영수증실물여부
-     */
+
+    /** 영수증실물여부 */
     private String orgnlRciptAt;
 }

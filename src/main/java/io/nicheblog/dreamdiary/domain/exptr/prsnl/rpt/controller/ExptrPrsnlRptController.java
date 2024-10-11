@@ -1,18 +1,18 @@
-package io.nicheblog.dreamdiary.web.controller.exptr.prsnl.rpt;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.controller;
 
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service.ExptrPrsnlPaprService;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptItemDto;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptSmDto;
+import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.service.ExptrPrsnlRptService;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptItemDto;
-import io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt.ExptrPrsnlRptSmDto;
-import io.nicheblog.dreamdiary.web.service.exptr.prsnl.papr.ExptrPrsnlPaprService;
-import io.nicheblog.dreamdiary.web.service.exptr.prsnl.rpt.ExptrPrsnlRptService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -32,11 +32,10 @@ import java.util.Map;
 /**
  * ExptrPrsnlRptController
  * <pre>
- *  경비 관리 > 월간지출내역 컨트롤러
+ *  경비 관리 > 월간지출내역 컨트롤러.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -53,15 +52,15 @@ public class ExptrPrsnlRptController
     private final ExptrPrsnlRptService exptrPrsnlRptService;
 
     /**
-     * 경비 관리 > 월간지출내역 > 년도별 경비지출 누적집계 화면
-     * 관리자MNGR만 접근 가능
+     * 경비 관리 > 월간지출내역 > 년도별 경비지출 누적집계 화면 조회
+     * (관리자MNGR만 접근 가능.)
      */
     @GetMapping(Url.EXPTR_PRSNL_RPT_ITEMS)
     @Secured(Constant.ROLE_MNGR)
     public String exptrPrsnlRpt(
-            final LogActvtyParam logParam,
             final @RequestParam("statsYy") @Nullable String yyStr,
             final @RequestParam("statsMnth") @Nullable String mnthStr,
+            final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
 
@@ -120,7 +119,7 @@ public class ExptrPrsnlRptController
 
     /**
      * 경비 관리 > 경비지출누적집계 > 년도별 경비 지출 엑셀 다운로드
-     * 관리자MNGR만 접근 가능
+     * (관리자MNGR만 접근 가능.)
      */
     // @GetMapping(Url.EXPTR_PRSNL_RPT_XLSX_DOWNLOAD)
     // @Secured(Constant.ROLE_MNGR)

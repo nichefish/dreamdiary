@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.domain.jrnl.day.controller;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.domain._core.tag.event.TagProcEvent;
+import io.nicheblog.dreamdiary.domain._clsf.tag.event.TagProcEvent;
 import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
 import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDaySearchParam;
 import io.nicheblog.dreamdiary.domain.jrnl.day.service.JrnlDayService;

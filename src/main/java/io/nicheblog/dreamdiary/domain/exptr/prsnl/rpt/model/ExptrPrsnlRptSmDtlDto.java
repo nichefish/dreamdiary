@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model;
 
 import lombok.*;
 
@@ -14,7 +14,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class ExptrPrsnlRptSmDtlDto {
 
     /** 계정과목 코드 */

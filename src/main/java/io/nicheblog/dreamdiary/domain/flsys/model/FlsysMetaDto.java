@@ -1,12 +1,17 @@
 package io.nicheblog.dreamdiary.domain.flsys.model;
 
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.managt.model.cmpstn.ManagtCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.managt.model.cmpstn.ManagtCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.model.cmpstn.ViewerCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.model.cmpstn.ViewerCmpstnModule;
+import io.nicheblog.dreamdiary.domain.exptr.reqst.model.ExptrReqstDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Positive;
@@ -28,35 +33,52 @@ public class FlsysMetaDto
         extends BasePostDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule {
 
-    /** 글번호 */
+    /** 글 번호 */
     @Positive
     private Integer postNo;
 
     /** 파일절대경로 */
     private String filePath;
+
     /** 상위파일절대경로 */
     private String upperFilePath;
 
     /* ----- */
 
     /**
-     * 생성자
+     * 생성자.
+     *
+     * @param filePath 파일 경로 (String)
      */
     public FlsysMetaDto(final String filePath) {
         this.filePath = filePath;
     }
 
-    public String getBoardCd() {
-        return "flsysMeta";
-    }
-
     /* ----- */
-
-    public static class DTL extends FlsysMetaDto {
-        // private List<FlsysRefDto> flsysRefList;
+    /**
+     * 파일시스템 메타 상세 (DTL) Dto.
+     */
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode
+    public static class DTL
+            extends ExptrReqstDto {
+        //
     }
 
-    public static class LIST extends FlsysMetaDto {
+    /**
+     * 파일시스템 메타 목록 조회 (LIST) Dto.
+     */
+    @Getter
+    @Setter
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @EqualsAndHashCode
+    @ToString
+    public static class LIST
+            extends FlsysMetaDto {
         //
     }
 

@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * ExptrPrsnlDto
  * <pre>
- *  경비 관리 > 경비지출서 > 경비지출서 Dto
+ *  경비 관리 > 경비지출서 > 경비지출서 Dto.
  *  ※ 경비지출서(exptr_prsnl_papr) = 경비지출서. 경비지출항목(exptr_prsnl_item)을 1:N으로 관리한다.
  * </pre>
  *
@@ -79,7 +79,7 @@ public class ExptrPrsnlPaprDto
     }
 
     /**
-     * 빈 지출항목 걸러내기
+     * 빈 지출항목 걸러내기.
      */
     public void filterEmptyItems() {
         List<ExptrPrsnlItemDto> itemList = this.getItemList();
@@ -96,7 +96,7 @@ public class ExptrPrsnlPaprDto
     /* ----- */
 
     /**
-     *  경비 관리 > 경비지출서 > 경비지출서 상세 (DTL) Dto
+     * 경비 관리 > 경비지출서 > 경비지출서 상세 (DTL) Dto
      */
     @Getter
     @Setter
@@ -108,14 +108,15 @@ public class ExptrPrsnlPaprDto
     }
 
     /**
-     *  경비 관리 > 경비지출서 > 경비지출서 목록 (LIST) Dto
+     * 경비 관리 > 경비지출서 > 경비지출서 목록 조회 (LIST) Dto
      */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
     @EqualsAndHashCode
-    public static class LIST extends ExptrPrsnlPaprDto {
+    public static class LIST
+            extends ExptrPrsnlPaprDto {
         /** 항목 건수 */
         @Builder.Default
         private Integer itemCnt = 0;

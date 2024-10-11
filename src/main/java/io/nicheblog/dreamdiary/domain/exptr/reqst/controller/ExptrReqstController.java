@@ -5,8 +5,8 @@ import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.domain._core.tag.service.TagService;
-import io.nicheblog.dreamdiary.domain._core.viewer.event.ViewerAddEvent;
+import io.nicheblog.dreamdiary.domain._clsf.tag.service.TagService;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.domain.exptr.reqst.model.ExptrReqstDto;
 import io.nicheblog.dreamdiary.domain.exptr.reqst.model.ExptrReqstSearchParam;
 import io.nicheblog.dreamdiary.domain.exptr.reqst.service.ExptrReqstService;
@@ -67,7 +67,6 @@ public class ExptrReqstController
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
      * @return {@link String} -- 화면 뷰 경로
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.EXPTR_REQST_LIST)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -174,7 +173,6 @@ public class ExptrReqstController
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
      * @return {@link String} -- 화면 뷰 경로
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.EXPTR_REQST_REG_PREVIEW_POP)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})

@@ -45,7 +45,7 @@ public class BoardPostDto
     /* ----- */
 
     /**
-     * 게시판 게시물 상세 조회 (DTL) Dto.
+     * 게시판 게시물 상세 (DTL) Dto.
      */
     @Getter
     @Setter
@@ -62,7 +62,7 @@ public class BoardPostDto
     }
 
     /**
-     * 게시판 게시물 목록 조회 (DTL) Dto.
+     * 게시판 게시물 목록 조회 (LIST) Dto.
      */
     @Getter
     @Setter

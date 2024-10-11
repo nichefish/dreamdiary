@@ -53,7 +53,7 @@ public class FlsysMetaController
      *
      * @param flsysMeta 등록/수정 처리할 객체
      * @param key 식별자
-     * @param logParam 로그 활동 기록을 위한 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(value = {Url.FLSYS_META_REG_AJAX, Url.FLSYS_META_MDF_AJAX})

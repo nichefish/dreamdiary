@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.domain.jrnl.day.mapstruct;
 
-import io.nicheblog.dreamdiary.domain._core.tag.mapstruct.ContentTagMapstruct;
-import io.nicheblog.dreamdiary.domain._core.tag.model.TagDto;
+import io.nicheblog.dreamdiary.domain._clsf.tag.mapstruct.ContentTagMapstruct;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.TagDto;
 import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDayTagEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import org.mapstruct.*;

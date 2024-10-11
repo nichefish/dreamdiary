@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.domain.jrnl.day.spec;
 
-import io.nicheblog.dreamdiary.domain._core.tag.entity.ContentTagEntity;
+import io.nicheblog.dreamdiary.domain._clsf.tag.entity.ContentTagEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDayEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.TagEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.tag.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseClsfSpec;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.extern.log4j.Log4j2;

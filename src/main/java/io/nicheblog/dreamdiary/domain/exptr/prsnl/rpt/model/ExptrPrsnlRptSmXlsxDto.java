@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.web.model.exptr.prsnl.rpt;
+package io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model;
 
-import io.nicheblog.dreamdiary.web.model.cmm.CmmStus;
+import io.nicheblog.dreamdiary.global.model.CmmStus;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class ExptrPrsnlRptSmXlsxDto {
 
     /** 개별 계정항목별 총합 */

@@ -1,9 +1,16 @@
 package io.nicheblog.dreamdiary.domain.exptr.reqst.model;
 
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.managt.model.cmpstn.ManagtCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.managt.model.cmpstn.ManagtCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.model.cmpstn.ViewerCmpstn;
+import io.nicheblog.dreamdiary.domain._clsf.viewer.model.cmpstn.ViewerCmpstnModule;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.global.intrfc.model.cmpstn.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -61,23 +68,31 @@ public class ExptrReqstDto
 
     /* ----- */
 
+    /**
+     * 경비 관리 > 물품구매/경조사비 신청 상세 (DTL) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
     @EqualsAndHashCode
-    public static class DTL extends ExptrReqstDto {
-
+    public static class DTL
+            extends ExptrReqstDto {
+        //
     }
 
+    /**
+     * 경비 관리 > 물품구매/경조사비 신청 목록 조회 (LIST) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
     @EqualsAndHashCode
     @ToString
-    public static class LIST extends ExptrReqstDto {
-
+    public static class LIST
+            extends ExptrReqstDto {
+        //
     }
 
     /* ----- */
