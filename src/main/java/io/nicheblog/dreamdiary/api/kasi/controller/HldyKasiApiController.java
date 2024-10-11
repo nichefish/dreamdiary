@@ -67,7 +67,7 @@ public class HldyKasiApiController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         log.info("requestUrl: {}", request.getRequestURL() + "?" + request.getQueryString());
 
@@ -77,7 +77,7 @@ public class HldyKasiApiController
             String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYyStr();
             // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
             hldyKasiApiService.delHldyList(yyStr);
-            List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);
+            final List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);
             ajaxResponse.setRsltList(hldyApiList);
 
             isSuccess = hldyKasiApiService.regHldyList(hldyApiList);

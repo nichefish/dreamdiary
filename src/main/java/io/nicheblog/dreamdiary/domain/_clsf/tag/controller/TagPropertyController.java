@@ -60,14 +60,14 @@ public class TagPropertyController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 태그 상세 조회 (관련글 목록 포함)
-            boolean isReg = key == null;
-            TagPropertyDto result = isReg ? tagPropertyService.regist(tagProperty) : tagPropertyService.modify(tagProperty);
+            final boolean isReg = key == null;
+            final TagPropertyDto result = isReg ? tagPropertyService.regist(tagProperty) : tagPropertyService.modify(tagProperty);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = true;
@@ -106,13 +106,13 @@ public class TagPropertyController
             final @RequestParam("tagPropertyNo") Integer key
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 태그 속성 상세 조회 (관련글 목록 포함)
-            TagPropertyDto tagDto = tagPropertyService.getDtlDto(key);
+            final TagPropertyDto tagDto = tagPropertyService.getDtlDto(key);
             ajaxResponse.setRsltObj(tagDto);
 
             isSuccess = true;
@@ -151,13 +151,13 @@ public class TagPropertyController
 
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 태그 상세 조회 (관련글 목록 포함)
-            TagPropertyDto tagDto = tagPropertyService.getDtlDto(key);
+            final TagPropertyDto tagDto = tagPropertyService.getDtlDto(key);
             ajaxResponse.setRsltObj(tagDto);
 
             isSuccess = true;

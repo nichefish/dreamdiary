@@ -16,6 +16,7 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.Getter;
@@ -85,25 +86,25 @@ public class UserMyController
         String rsltMsg = "";
         try {
             // 내 정보 조회 및 모델에 추가
-            String lgnUserId = AuthUtils.getLgnUserId();
-            UserDto lgnUserDto = userService.getDtlDto(lgnUserId);
+            final String lgnUserId = AuthUtils.getLgnUserId();
+            final UserDto lgnUserDto = userService.getDtlDto(lgnUserId);
             model.addAttribute("user", lgnUserDto);
 
             // 휴가계획서 년도 정보 조회 (시작일자~종료일자)
             try {
                 //if (AuthService.hasEcnyDt()) {
-                VcatnStatsYyDto statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
+                final VcatnStatsYyDto statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
                 model.addAttribute("vcatnYy", statsYy);
-                String userId = AuthUtils.getLgnUserId();
+                final String userId = AuthUtils.getLgnUserId();
                 // VcatnStatsDto vcatnStatsDtl = vcatnStatsService.getVcatnStatsDtl(statsYy, userId);
                //  model.addAttribute("vcatnStats", vcatnStatsDtl);
                 // 올해 사용 휴가 목록 조회
-                Map<String, Object> searchParamMap = new HashMap<>() {{
-                    put("searchStartDt", statsYy.getBgnDt());
-                    put("searchEndDt", statsYy.getEndDt());
-                    put("regstrId", lgnUserId);
-                }};
-                List<VcatnPaprDto.LIST> vcatnPaprList = vcatnPaprService.getListDto(searchParamMap);
+                final BaseSearchParam param = BaseSearchParam.builder()
+                        .regstrId(lgnUserId)
+                        .searchStartDt(statsYy.getBgnDt())
+                        .searchEndDt(statsYy.getEndDt())
+                        .build();
+                final List<VcatnPaprDto.LIST> vcatnPaprList = vcatnPaprService.getListDto(param);
                 model.addAttribute("vcatnPaprList", vcatnPaprList);
                 // }
             } catch (Exception e) {
@@ -141,7 +142,7 @@ public class UserMyController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -179,7 +180,7 @@ public class UserMyController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -219,13 +220,13 @@ public class UserMyController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 확인 처리
-            String lgnUserId = AuthUtils.getLgnUserId();
+            final String lgnUserId = AuthUtils.getLgnUserId();
             isSuccess = userMyService.myPwCf(lgnUserId, currPw);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
@@ -249,7 +250,7 @@ public class UserMyController
      * (사용자USER, 관리자MNGR만 접근 가능.)
      *
      * @param currPw 현재 비밀번호
-     * @param currPw 새 비밀번호
+     * @param newPw 새 비밀번호
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
@@ -262,7 +263,7 @@ public class UserMyController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

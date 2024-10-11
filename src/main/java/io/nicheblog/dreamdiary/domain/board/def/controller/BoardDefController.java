@@ -325,13 +325,15 @@ public class BoardDefController
 
 
     /**
-     * 관리자 > 메뉴 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     * 관리자 > 게시판 정의 관리 > 정렬 순서 저장 (드래그앤드랍 결과 반영) (Ajax)
+     * (관리자MNGR만 접근 가능.)
      *
      * @param boardDefParam 키+정렬 순서 목록을 담은 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.BOARD_DEF_SORT_ORDR_AJAX)
+    @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardDefSortOrdrAjax(
             final @RequestBody BoardDefParam boardDefParam,

@@ -78,7 +78,7 @@ public class SchdulCalController
         String rsltMsg = "";
         try {
             // 재직자 목록 조회 및 모델에 추가 :: (일정 등록 참가자용)
-            List<UserDto.LIST> crtdUserList = userService.getCrdtUserList(DateUtils.getCurrDateAddDayStr(-40), DateUtils.getCurrDateAddDayStr(40));
+            final List<UserDto.LIST> crtdUserList = userService.getCrdtUserList(DateUtils.getCurrDateAddDayStr(-40), DateUtils.getCurrDateAddDayStr(40));
             model.addAttribute("crtdUserList", crtdUserList);
             // 코드 데이터 모델에 추가
             dtlCdService.setCdListToModel(Constant.SCHDUL_CD, model);
@@ -115,13 +115,13 @@ public class SchdulCalController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 목록 조회 및 응답에 추가
-            List<SchdulCalDto> schdulCalList = schdulCalService.getSchdulTotalCalList(searchParam);
+            final List<SchdulCalDto> schdulCalList = schdulCalService.getSchdulTotalCalList(searchParam);
             ajaxResponse.setRsltList(schdulCalList);
 
             isSuccess = true;

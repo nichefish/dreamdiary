@@ -78,9 +78,9 @@ public class LogSysController
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (LogSysSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
             // 목록 조회
-            Page<LogSysDto.LIST> logSysList = logSysService.getPageDto(searchParam, pageRequest);
+            final Page<LogSysDto.LIST> logSysList = logSysService.getPageDto(searchParam, pageRequest);
             model.addAttribute("logSysList", logSysList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(logSysList));
             // 목록 검색 URL + 파라미터 모델에 추가
@@ -105,27 +105,27 @@ public class LogSysController
 
     /**
      * 시스템 로그 상세 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능.)
+     * (관리자MNGR만 접근 가능.)
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(Url.LOG_SYS_DTL_AJAX)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> logActvtyDtlAjax(
             final @RequestParam("logSysNo") Integer key,
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 세팅
-            LogSysDto.DTL rsDto = logSysService.getDtlDto(key);
+            final LogSysDto.DTL rsDto = logSysService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;

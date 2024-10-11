@@ -1,15 +1,16 @@
-package io.nicheblog.dreamdiary.web.service.user;
+package io.nicheblog.dreamdiary.domain.user.my.service;
 
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.global.cmm.file.utils.FileUtils;
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain._core.file.utils.FileUtils;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserPwChgParam;
+import io.nicheblog.dreamdiary.domain.user.info.repository.jpa.UserRepository;
+import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.model.user.UserPwChgParam;
-import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,31 +35,37 @@ public class UserMyService {
 
     /**
      * 비밀번호 만료시 비밀번호 변경 (미로그인 상태)
+     *
+     * @return 비밀번호 변경 성공 여부 (boolean)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public Boolean lgnPwChg(final UserPwChgParam param) throws Exception {
         final String userId = param.getUserId();
         final String currPw = param.getCurrPw();
         final String newPw = param.getNewPw();
 
-        UserEntity userEntity = userService.getDtlEntity(userId);
+        final UserEntity userEntity = userService.getDtlEntity(userId);
 
         // password 일치여부 체크
         if (!passwordEncoder.matches(currPw, userEntity.getPassword())) throw new BadCredentialsException(MessageUtils.PW_MISMATCH);
         userEntity.setPassword(passwordEncoder.encode(newPw));
         userEntity.acntStus.setNeedsPwReset("N");
         userEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
-        Integer rsId = userRepository.saveAndFlush(userEntity)
+        final Integer rsId = userRepository.saveAndFlush(userEntity)
                                      .getUserNo();
         return (rsId != null);
     }
 
     /**
      * 사용자 관리 > 내 비밀번호 확인
+     *
+     * @return 내 비밀번호 확인 성공 여부 (boolean)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public Boolean myPwCf(final String lgnUserId, final String currPw) throws Exception {
 
         // Entity 레벨 조회
-        UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
+        final UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
         if (rsUserEntity == null) return false;
         // 1. 내 비밀번호가 맞는지부터 확인
         if (!passwordEncoder.matches(currPw, rsUserEntity.getPassword())) {
@@ -69,10 +76,13 @@ public class UserMyService {
 
     /**
      * 사용자 관리 > 내 비밀번호 변경
+     *
+     * @return 내 비밀번호 변경 성공 여부 (boolean)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public Boolean myPwChg(final String lgnUserId, final String currPw, final String newPw) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
+        final UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
         if (rsUserEntity == null) return false;
         // 1. 내 비밀번호가 맞는지부터 확인
         if (!passwordEncoder.matches(currPw, rsUserEntity.getPassword())) {
@@ -89,19 +99,24 @@ public class UserMyService {
 
     /**
      * 사용자 관리 > 내 프로필 이미지 업로드
+     *
+     * @return 프로필 이미지 업로드 성공 여부 (boolean)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public boolean uploadProflImg(final MultipartHttpServletRequest request) throws Exception {
         // 파일 영역 처리 후 업로드 정보 받아서 반환
-        AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
+        final AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
+        if (atchfileDtl == null) return false;
+
         // 프로필 url 업데이트
-        String url = atchfileDtl.getUrl();
-        String lgnUserId = AuthUtils.getLgnUserId();
-        UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
+        final String url = atchfileDtl.getUrl();
+        final String lgnUserId = AuthUtils.getLgnUserId();
+        final UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
         rsUserEntity.setProflImgUrl(url);
-        Integer rsId = userRepository.saveAndFlush(rsUserEntity)
+        final Integer rsId = userRepository.saveAndFlush(rsUserEntity)
                                      .getUserNo();
 
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         EhCacheUtils.clearL2Cache(AuditorInfo.class);
 
         return (rsId != null);
@@ -109,16 +124,19 @@ public class UserMyService {
 
     /**
      * 사용자 관리 > 내 프로필 이미지 삭제
+     *
+     * @return 프로필 이미지 삭제 성공 여부 (boolean)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public boolean removeProflImg() throws Exception {
         // 프로필 url 삭제
-        String lgnUserId = AuthUtils.getLgnUserId();
-        UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
+        final String lgnUserId = AuthUtils.getLgnUserId();
+        final UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
         rsUserEntity.setProflImgUrl(null);
-        Integer rsId = userRepository.saveAndFlush(rsUserEntity)
+        final Integer rsId = userRepository.saveAndFlush(rsUserEntity)
                                      .getUserNo();
 
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         EhCacheUtils.clearL2Cache(AuditorInfo.class);
 
         return (rsId != null);

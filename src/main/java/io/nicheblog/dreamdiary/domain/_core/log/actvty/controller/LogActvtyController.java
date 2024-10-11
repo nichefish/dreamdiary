@@ -76,12 +76,11 @@ public class LogActvtyController
         String rsltMsg = "";
         try {
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            String baseUrl = Url.LOG_ACTVTY_LIST;
             searchParam = (LogActvtySearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "logDt", model);
             // 목록 조회
-            Page<LogActvtyDto.LIST> logActvtyList = logActvtyService.getPageDto(searchParam, pageRequest);
+            final Page<LogActvtyDto.LIST> logActvtyList = logActvtyService.getPageDto(searchParam, pageRequest);
             model.addAttribute("logActvtyList", logActvtyList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(logActvtyList));
             // 목록 검색 URL + 파라미터 모델에 추가
@@ -105,27 +104,27 @@ public class LogActvtyController
 
     /**
      * 활동 로그 상세 조회 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능.)
+     * (관리자MNGR만 접근 가능.)
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @GetMapping(Url.LOG_ACTVTY_DTL_AJAX)
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> logActvtyDtlAjax(
             final @RequestParam("logActvtyNo") Integer key,
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 상세 조회 및 응답에 추가
-            LogActvtyDto.DTL rsDto = logActvtyService.getDtlDto(key);
+            final LogActvtyDto.DTL rsDto = logActvtyService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;

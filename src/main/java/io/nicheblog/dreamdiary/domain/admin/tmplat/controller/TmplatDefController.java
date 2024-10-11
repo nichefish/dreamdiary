@@ -80,9 +80,9 @@ public class TmplatDefController
             // 상세/수정 화면에서 목록 화면 복귀시 :: 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (TmplatDefSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "regDt", model);
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "regDt", model);
             // 목록 조회
-            Page<TmplatDefDto> tmplatList = tmplatDefService.getPageDto(searchParam, pageRequest);
+            final Page<TmplatDefDto> tmplatList = tmplatDefService.getPageDto(searchParam, pageRequest);
             model.addAttribute("tmplatList", tmplatList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(tmplatList));
             // 목록 검색 URL + 파라미터 모델에 추가
@@ -122,14 +122,14 @@ public class TmplatDefController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = key == null;
-            TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDef) : tmplatDefService.modify(tmplatDef);
+            final boolean isReg = key == null;
+            final TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDef) : tmplatDefService.modify(tmplatDef);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getTmplatDefNo() != null);

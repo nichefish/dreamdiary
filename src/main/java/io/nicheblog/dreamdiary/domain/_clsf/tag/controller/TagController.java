@@ -108,15 +108,15 @@ public class TagController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            Sort sort = Sort.by(Sort.Direction.ASC, "tagNm");
+            final Sort sort = Sort.by(Sort.Direction.ASC, "tagNm");
             // 전체 태그 목록 조회 (태그클라우드)
-            List<TagDto> tagList = tagService.getOverallSizedTagList(searchParam);
+            final List<TagDto> tagList = tagService.getOverallSizedTagList(searchParam);
             ajaxResponse.setRsltList(tagList);
 
             isSuccess = true;
@@ -149,13 +149,13 @@ public class TagController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 태그 상세 조회 (관련글 목록 포함)
-            TagDto tagDto = tagService.getDtlDto(tagNo);
+            final TagDto tagDto = tagService.getDtlDto(tagNo);
             ajaxResponse.setRsltObj(tagDto);
 
             isSuccess = true;

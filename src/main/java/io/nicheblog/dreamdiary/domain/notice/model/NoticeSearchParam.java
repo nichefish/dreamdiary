@@ -6,6 +6,8 @@ import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * NoticeSearchParam
  * <pre>
@@ -26,4 +28,11 @@ public class NoticeSearchParam
 
     /** 컨텐츠 타입 */
     private String contentType = ContentType.NOTICE.key;
+    
+    /** 팝업 여부 */
+    @Builder.Default
+    private String popupYn = "N";
+
+    /** 시작일자 */
+    private Date managtStartDt;
 }

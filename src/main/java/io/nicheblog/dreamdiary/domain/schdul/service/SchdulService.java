@@ -1,15 +1,16 @@
-package io.nicheblog.dreamdiary.web.service.schdul;
+package io.nicheblog.dreamdiary.domain.schdul.service;
 
+import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain.schdul.entity.SchdulEntity;
+import io.nicheblog.dreamdiary.domain.schdul.mapstruct.SchdulMapstruct;
+import io.nicheblog.dreamdiary.domain.schdul.model.SchdulDto;
+import io.nicheblog.dreamdiary.domain.schdul.model.SchdulPrtcpntDto;
+import io.nicheblog.dreamdiary.domain.schdul.repository.jpa.SchdulRepository;
+import io.nicheblog.dreamdiary.domain.schdul.spec.SchdulSpec;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.schdul.SchdulEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.schdul.SchdulMapstruct;
-import io.nicheblog.dreamdiary.web.model.schdul.SchdulDto;
-import io.nicheblog.dreamdiary.web.model.schdul.SchdulPrtcpntDto;
-import io.nicheblog.dreamdiary.web.repository.schdul.jpa.SchdulRepository;
-import io.nicheblog.dreamdiary.web.spec.schdul.SchdulSpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
@@ -27,7 +28,6 @@ import java.util.*;
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("schdulService")
 @RequiredArgsConstructor
@@ -35,28 +35,17 @@ import java.util.*;
 public class SchdulService
         implements BaseClsfService<SchdulDto, SchdulDto, Integer, SchdulEntity, SchdulRepository, SchdulSpec, SchdulMapstruct> {
 
-    private final SchdulRepository schdulRepository;
-    private final SchdulSpec schdulSpec;
-    private final SchdulMapstruct schdulMapstruct = SchdulMapstruct.INSTANCE;
-
-    @Override
-    public SchdulRepository getRepository() {
-        return this.schdulRepository;
-    }
-
-    @Override
-    public SchdulSpec getSpec() {
-        return this.schdulSpec;
-    }
-
-    @Override
-    public SchdulMapstruct getMapstruct() {
-        return this.schdulMapstruct;
-    }
+    @Getter
+    private final SchdulRepository repository;
+    @Getter
+    private final SchdulSpec spec;
+    @Getter
+    private final SchdulMapstruct mapstruct = SchdulMapstruct.INSTANCE;
 
     /**
-     * 일정관리 > 일정 등록 전처리
-     * Clears Cache : hldyEntityList, isHldy, isHldyOrWeekend
+     * 등록 전처리. (override)
+     *
+     * @param schdulDto 등록할 객체
      */
     @Override
     @CacheEvict(value = {"hldyEntityList", "isHldy", "isHldyOrWeekend"}, allEntries = true)
@@ -69,7 +58,9 @@ public class SchdulService
     }
 
     /**
-     * 일정관리 > 일정 수정 전처리
+     * 수정 전처리. (override)
+     *
+     * @param schdulDto 수정할 객체
      */
     @Override
     public void preModify(final SchdulDto schdulDto) throws Exception {
@@ -82,12 +73,14 @@ public class SchdulService
 
     /**
      * 스케줄에 '나' 포함시키기 :: 메소드 분리
+     *
+     * @param schdulDto 적용할 객체
      */
     public void setMeToSchdul(final SchdulDto schdulDto) {
         List<SchdulPrtcpntDto> prtcpntList = schdulDto.getPrtcpntList();
         if (CollectionUtils.isEmpty(prtcpntList)) prtcpntList = new ArrayList<>();
         // 내이름 있는지 체크
-        SchdulPrtcpntDto isMe = new SchdulPrtcpntDto(AuthUtils.getLgnUserId());
+        final SchdulPrtcpntDto isMe = new SchdulPrtcpntDto(AuthUtils.getLgnUserId());
         if (!prtcpntList.contains(isMe)) prtcpntList.add(isMe);
         schdulDto.setPrtcpntList(prtcpntList);
     }
@@ -102,15 +95,15 @@ public class SchdulService
         // 수정 전처리
         this.preModify(schdulDto);
 
-        SchdulEntity schdulEntity = this.getDtlEntity(schdulDto);       // Entity 레벨 조회
-        boolean wasSingleDate = DateUtils.isSameDay(schdulEntity.getBgnDt(), schdulEntity.getEndDt());
-        boolean isInvalidEndDate = schdulDto.getBgnDt()
+        final SchdulEntity schdulEntity = this.getDtlEntity(schdulDto);       // Entity 레벨 조회
+        final boolean wasSingleDate = DateUtils.isSameDay(schdulEntity.getBgnDt(), schdulEntity.getEndDt());
+        final boolean isInvalidEndDate = schdulDto.getBgnDt()
                                             .compareTo(schdulDto.getEndDt()) > 0;
         if (wasSingleDate || isInvalidEndDate) schdulDto.setEndDt(schdulDto.getBgnDt());
-        schdulMapstruct.updateFromDto(schdulDto, schdulEntity);
+        mapstruct.updateFromDto(schdulDto, schdulEntity);
         // update
-        SchdulEntity rsltEntity = this.updt(schdulEntity);
-        SchdulDto rsltDto = schdulMapstruct.toDto(rsltEntity);
+        final SchdulEntity rsltEntity = this.updt(schdulEntity);
+        final SchdulDto rsltDto = mapstruct.toDto(rsltEntity);
         rsltDto.setIsSuccess(rsltEntity.getPostNo() != null);
         return rsltDto;
     }
@@ -132,9 +125,9 @@ public class SchdulService
     @Cacheable(cacheNames = "isHldy", key = "#date")
     public Boolean isHldy(final Object date) throws Exception {
         // 공휴일 여부 체크
-        Date asDate = DateUtils.asDate(date);
-        Date sDate = DateUtils.Parser.sDateParse(asDate);
-        Optional<SchdulEntity> schdulDtlWrapper = schdulRepository.findBySchdulCdAndBgnDt(Constant.SCHDUL_HLDY, sDate);
+        final Date asDate = DateUtils.asDate(date);
+        final Date sDate = DateUtils.Parser.sDateParse(asDate);
+        final Optional<SchdulEntity> schdulDtlWrapper = repository.findBySchdulCdAndBgnDt(Constant.SCHDUL_HLDY, sDate);
         return schdulDtlWrapper.isPresent();
     }
 
@@ -161,8 +154,8 @@ public class SchdulService
      * 이번달의 첫 번째 평일 여부 반환
      */
     public boolean isFirstBsnsDayInCurrMnth() throws Exception {
-        Date firstBsnsDayInCurrMnth = getFirstBsnsDayInCurrMnth();
-        Date today = DateUtils.getCurrDate();
+        final Date firstBsnsDayInCurrMnth = getFirstBsnsDayInCurrMnth();
+        final Date today = DateUtils.getCurrDate();
         return DateUtils.isSameDay(firstBsnsDayInCurrMnth, today);
     }
 }

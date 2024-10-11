@@ -1,10 +1,10 @@
-package io.nicheblog.dreamdiary.web.model.user;
+package io.nicheblog.dreamdiary.domain.user.info.model;
 
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain.user.info.model.emplym.UserEmplymDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.profl.UserProflDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -18,17 +18,16 @@ import java.util.stream.Collectors;
 /**
  * UserDto
  * <pre>
- *  사용자(계정) 정보 Dto
+ *  사용자(계정) 정보 Dto.
  * </pre>
  *
  * @author nichefish
- * @extends BaseAtchDto
  */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class UserDto
         extends BaseAtchDto
         implements Identifiable<Integer> {
@@ -87,24 +86,23 @@ public class UserDto
     
     /* ----- */
 
-    /** 잠금여부 채크 */
+    /** Getter :: 잠금여부 채크 */
     public Boolean getIsLocked() {
         return "Y".equals(this.lockedYn);
     }
 
-    @Override
-    public Integer getKey() {
-        return this.userNo;
-    }
-
     /* ----- */
 
+    /**
+     * 사용자(계정) 정보 상세 (DTL) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    public static class DTL extends UserDto {
+    @EqualsAndHashCode
+    public static class DTL
+            extends UserDto {
         /** 비밀번호 */
         private String password;
 
@@ -147,11 +145,16 @@ public class UserDto
         }
     }
 
+    /**
+     * 사용자(계정) 정보 목록 조회 (LIST) Dto.
+     */
     @Getter
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    public static class LIST extends UserDto {
+    public static class LIST
+            extends UserDto {
+
         /** 입사일 */
         private String ecnyDt;
         /** 이름 */
@@ -163,5 +166,10 @@ public class UserDto
         public Boolean getIsMe() {
             return (AuthUtils.isRegstr(this.getUserId()));       // 인자로 넘긴 ID와 세션의 사용자 ID 비교
         }
+    }
+
+    @Override
+    public Integer getKey() {
+        return this.userNo;
     }
 }

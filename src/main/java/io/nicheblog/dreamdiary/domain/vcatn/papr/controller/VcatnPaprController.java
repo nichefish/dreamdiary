@@ -87,7 +87,7 @@ public class VcatnPaprController
             // 상단 고정 목록 조회
             model.addAttribute("vcatnPaprFxdList", vcatnPaprService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
             // 목록 조회
             Page<VcatnPaprDto.LIST> vcatnPaprList = vcatnPaprService.getPageDto(searchParam, pageRequest);
             model.addAttribute("vcatnPaprList", vcatnPaprList.getContent());
@@ -179,14 +179,14 @@ public class VcatnPaprController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = key == null;
-            VcatnPaprDto result = isReg ? vcatnPaprService.regist(vcatnPapr, request) : vcatnPaprService.modify(vcatnPapr, request);
+            final boolean isReg = key == null;
+            final VcatnPaprDto result = isReg ? vcatnPaprService.regist(vcatnPapr, request) : vcatnPaprService.modify(vcatnPapr, request);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
@@ -223,9 +223,7 @@ public class VcatnPaprController
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
      * @return {@link String} -- 화면 뷰 경로
-     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.VCATN_PAPR_CF_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -235,13 +233,13 @@ public class VcatnPaprController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 상태 변경 처리
-            VcatnPaprDto result = vcatnPaprService.cf(key);
+            final VcatnPaprDto result = vcatnPaprService.cf(key);
 
             isSuccess = (result.getPostNo() != null);
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
@@ -286,7 +284,7 @@ public class VcatnPaprController
         String rsltMsg = "";
         try {
             // 상세 조회 및 모델에 추가
-            VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
+            final VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_MDF, true);
@@ -335,7 +333,7 @@ public class VcatnPaprController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            VcatnPaprDto.DTL rsDto = vcatnPaprService.getDtlDto(key);
+            final VcatnPaprDto.DTL rsDto = vcatnPaprService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
             isSuccess = true;
@@ -374,12 +372,12 @@ public class VcatnPaprController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
+            final VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
@@ -420,7 +418,7 @@ public class VcatnPaprController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

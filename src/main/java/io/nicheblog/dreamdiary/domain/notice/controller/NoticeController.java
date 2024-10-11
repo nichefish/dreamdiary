@@ -1,14 +1,14 @@
 package io.nicheblog.dreamdiary.domain.notice.controller;
 
 import io.nicheblog.dreamdiary.api.jandi.model.JandiParam;
-import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
-import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.domain._clsf.managt.event.ManagtrAddEvent;
 import io.nicheblog.dreamdiary.domain._clsf.tag.event.TagProcEvent;
 import io.nicheblog.dreamdiary.domain._clsf.tag.service.TagService;
 import io.nicheblog.dreamdiary.domain._clsf.viewer.event.ViewerAddEvent;
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.domain._core.xlsx.XlsxType;
 import io.nicheblog.dreamdiary.domain._core.xlsx.util.XlsxUtils;
 import io.nicheblog.dreamdiary.domain.notice.model.NoticeDto;
@@ -42,9 +42,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 /**
@@ -99,9 +97,9 @@ public class NoticeController
             // 상단 고정 목록 조회
             model.addAttribute("noticeFxdList", noticeService.getFxdList());
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
             // 목록 조회 및 모델에 추가
-            Page<NoticeDto.LIST> noticeList = noticeService.getPageDto(searchParam, pageRequest);
+            final Page<NoticeDto.LIST> noticeList = noticeService.getPageDto(searchParam, pageRequest);
             model.addAttribute("noticeList", noticeList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
             // 컨텐츠 타입에 맞는 태그 목록 조회
@@ -239,14 +237,14 @@ public class NoticeController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = (key == null);
-            NoticeDto result = isReg ? noticeService.regist(notice, request) : noticeService.modify(notice, request);
+            final boolean isReg = (key == null);
+            final NoticeDto result = isReg ? noticeService.regist(notice, request) : noticeService.modify(notice, request);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
@@ -304,7 +302,7 @@ public class NoticeController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            NoticeDto rsDto = noticeService.getDtlDto(key);
+            final NoticeDto rsDto = noticeService.getDtlDto(key);
             model.addAttribute("post", rsDto);
 
             isSuccess = true;
@@ -344,13 +342,13 @@ public class NoticeController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            NoticeDto rsDto = noticeService.getDtlDto(key);
+            final NoticeDto rsDto = noticeService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
@@ -401,7 +399,7 @@ public class NoticeController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            NoticeDto rsDto = noticeService.getDtlDto(key);
+            final NoticeDto rsDto = noticeService.getDtlDto(key);
             model.addAttribute("post", rsDto);
             // 등록/수정 화면 플래그 세팅
             model.addAttribute(Constant.IS_MDF, true);
@@ -444,7 +442,7 @@ public class NoticeController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -485,18 +483,16 @@ public class NoticeController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 팝업공지 목록 조회
-            Map<String, Object> searchParamMap = new HashMap<>() {{
-                put("popupYn", "Y");
-                put("managtStartDt", DateUtils.getCurrDateAddDay(-7));
-            }};
-            Sort sort = Sort.by(Sort.Direction.ASC, "managt.managtDt");
-            List<NoticeDto.LIST> noticeList = noticeService.getListDto(searchParamMap, sort);
+            searchParam.setPopupYn("Y");
+            searchParam.setManagtStartDt(DateUtils.getCurrDateAddDay(-7));
+            final Sort sort = Sort.by(Sort.Direction.ASC, "managt.managtDt");
+            final List<NoticeDto.LIST> noticeList = noticeService.getListDto(searchParam, sort);
             ajaxResponse.setRsltList(noticeList);
 
             isSuccess = true;
@@ -531,7 +527,7 @@ public class NoticeController
         String rsltMsg = "";
         try {
             // 접근방식 1. stream 객체 전달
-            Stream<NoticeXlsxDto> xlsxStream = noticeService.getStreamXlsxDto(searchParam);
+            final Stream<NoticeXlsxDto> xlsxStream = noticeService.getStreamXlsxDto(searchParam);
             XlsxUtils.listXlxsDownload(XlsxType.NOTICE, xlsxStream);
             // 접근방식 2. ???
 

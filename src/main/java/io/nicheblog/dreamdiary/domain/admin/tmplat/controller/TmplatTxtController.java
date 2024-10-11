@@ -64,14 +64,14 @@ public class TmplatTxtController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = key == null;
-            TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDto) : tmplatDefService.modify(tmplatDto);
+            final boolean isReg = key == null;
+            final TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDto) : tmplatDefService.modify(tmplatDto);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getTmplatDefNo() != null);

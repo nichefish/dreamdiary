@@ -50,12 +50,12 @@ public class SnmpApiController
             final @RequestParam("ipAddr") String ipAddr
         ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            SnmpApiParam snmpSendInfo = new SnmpApiParam(ipAddr);
+            final SnmpApiParam snmpSendInfo = new SnmpApiParam(ipAddr);
             snmpSendInfo.setIpAddr(ipAddr);
             SnmpUtils.sendSnmpMessage(snmpSendInfo);
             isSuccess = true;

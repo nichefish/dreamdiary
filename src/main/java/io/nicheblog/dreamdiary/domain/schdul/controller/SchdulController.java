@@ -67,14 +67,14 @@ public class SchdulController
             final JandiParam jandiParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = key == null;
-            SchdulDto result = isReg ? schdulService.regist(schdul) : schdulService.modify(schdul);
+            final boolean isReg = key == null;
+            final SchdulDto result = isReg ? schdulService.regist(schdul) : schdulService.modify(schdul);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getPostNo() != null);
@@ -117,13 +117,13 @@ public class SchdulController
             final @RequestParam("postNo") Integer key
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            SchdulDto rsDto = schdulService.getDtlDto(key);
+            final SchdulDto rsDto = schdulService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = (rsDto.getPostNo() != null);
@@ -161,7 +161,7 @@ public class SchdulController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
