@@ -1,17 +1,17 @@
-package io.nicheblog.dreamdiary.web.controller;
+package io.nicheblog.dreamdiary.domain._core.auth.controller;
 
+import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserPwChgParam;
+import io.nicheblog.dreamdiary.domain.user.my.service.UserMyService;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.user.UserPwChgParam;
-import io.nicheblog.dreamdiary.web.service.user.UserMyService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,11 +33,10 @@ import javax.validation.Valid;
 /**
  * LgnController
  * <pre>
- *  로그인 컨트롤러
+ *  로그인 컨트롤러.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -57,11 +56,15 @@ public class LgnController
 
     /**
      * 로그인 화면 조회
+     *
+     * @param dupLgnAt 중복 로그인 여부를 나타내는 파라미터 (nullable)
+     * @param model 뷰에 데이터를 전달하는 ModelMap 객체
+     * @return {@link String} -- 로그인 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.AUTH_LGN_FORM)
     @PermitAll
     public String lgnForm(
-            final LogActvtyParam logParam,
             final @RequestParam("dupLgnAt") @Nullable String dupLgnAt,
             final ModelMap model
     ) throws Exception {
@@ -94,16 +97,20 @@ public class LgnController
     /**
      * 비밀번호 강제 변경 처리 (장기간 비밀번호 미변경시, 또는 비밀번호 리셋시)
      * (비로그인 사용자도 외부에서 접근 가능)
+     *
+     * @param userPwChgParam 비밀번호 변경을 위한 파라미터 객체 (유효성 검사 적용)
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.AUTH_LGN_PW_CHG_AJAX)
     @PermitAll
     @ResponseBody
     public ResponseEntity<AjaxResponse> lgnPwChgAjax(
-            final LogActvtyParam logParam,
-            final @Valid UserPwChgParam userPwChgParam
+            final @Valid UserPwChgParam userPwChgParam,
+            final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -127,6 +134,8 @@ public class LgnController
 
     /**
      * 세션 강제 만료 처리 (중복 로그인 '기존 아이디 끊기'에서 취소 선택시)
+     *
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.AUTH_EXPIRE_SESSION_AJAX)
     @PermitAll
@@ -135,10 +144,10 @@ public class LgnController
             //
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         // 세션 만료 처리
-        HttpSession session = request.getSession(false);
+        final HttpSession session = request.getSession(false);
         if (session != null) session.invalidate();
 
         ajaxResponse.setAjaxResult(true, MessageUtils.RSLT_SUCCESS);

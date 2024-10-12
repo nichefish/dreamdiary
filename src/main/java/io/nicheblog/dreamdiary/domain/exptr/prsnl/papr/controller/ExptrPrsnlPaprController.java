@@ -245,8 +245,8 @@ public class ExptrPrsnlPaprController
             // 목록화면에서 체크 후 이전달 등록화면으로 보낼 떄 쓰는 플래그 세팅
             if (StringUtils.isNotEmpty(prevYn)) model.addAttribute("prevYn", prevYn);
             // 전년도/전월 값 세팅
-            Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
-            Integer[] currYyMnth = DateUtils.getCurrYyMnth();
+            final Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
+            final Integer[] currYyMnth = DateUtils.getCurrYyMnth();
             model.addAttribute("prevYy", prevYyMnth[0]);
             model.addAttribute("currYy", currYyMnth[0]);
             model.addAttribute("prevMnth", prevYyMnth[1]);
@@ -451,8 +451,8 @@ public class ExptrPrsnlPaprController
             // 관리자 경비관리 화면에서 넘어왔는지 여부 세팅
             model.addAttribute("mngrYn", mngrYn);            
             // 전년도/전월 값 세팅
-            Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
-            Integer[] currYyMnth = DateUtils.getCurrYyMnth();
+            final Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
+            final Integer[] currYyMnth = DateUtils.getCurrYyMnth();
             model.addAttribute("prevYy", prevYyMnth[0]);
             model.addAttribute("currYy", currYyMnth[0]);
             model.addAttribute("prevMnth", prevYyMnth[1] + 1);
@@ -537,10 +537,10 @@ public class ExptrPrsnlPaprController
         try {
             // 첨부파일 목록 조회
             final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
+            final List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
             // PDF 파일 생성 및 다운로드
-            String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";
-            PdfBoxUtils.imgCmbnPdfDonwload(fileNm, fileList);
+            final String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";
+            PdfBoxUtils.imgCmbnPdfDownload(fileNm, fileList);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

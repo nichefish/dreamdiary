@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.domain._core.log.sys.mapstruct;
 
 import io.nicheblog.dreamdiary.domain._core.log.sys.model.LogSysDto;
 import io.nicheblog.dreamdiary.domain._core.log.sys.entity.LogSysEntity;
+import io.nicheblog.dreamdiary.domain._core.log.sys.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
@@ -46,4 +47,14 @@ public interface LogSysMapstruct
     @Named("toListDto")
     @Mapping(target = "logDt", expression = "java(DateUtils.asStr(entity.getLogDt(), DatePtn.DATETIME))")
     LogSysDto.LIST toListDto(final LogSysEntity entity) throws Exception;
+
+    /**
+     * Param -> Entity 변환
+     *
+     * @param param 변환할 LogSysParam 객체
+     * @return {@link LogSysEntity} -- 변환된 LogSysEntity 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
+     */
+    @Mapping(target = "actvtyCtgrCd", expression = "java(param.getActvtyCtgr() != null ? param.getActvtyCtgr().name() : null)")
+    LogSysEntity paramToEntity(final LogSysParam param) throws Exception;
 }

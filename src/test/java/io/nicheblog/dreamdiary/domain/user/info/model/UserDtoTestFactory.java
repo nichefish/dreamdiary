@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.model.user;
+package io.nicheblog.dreamdiary.domain.user.info.model;
 
+import io.nicheblog.dreamdiary.domain.user.info.model.emplym.UserEmplymDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.profl.UserProflDto;
 import io.nicheblog.dreamdiary.global.TestConstant;
-import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -19,6 +19,9 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 public class UserDtoTestFactory {
 
+    /**
+     * 테스트용 사용자 Dto (상세) 생성
+     */
     public static UserDto.DTL createUserDtlDto() {
         // 갹체 생성
         return UserDto.DTL.builder()
@@ -31,18 +34,30 @@ public class UserDtoTestFactory {
                 .cn("test_cn")
                 .build();
     }
+
+    /**
+     * 테스트용 사용자 Dto (상세) 생성
+     */
     public static UserDto.DTL createUserDtlDto(UserProflDto profl) {
         // 갹체 생성
         UserDto.DTL dto = createUserDtlDto();
         dto.setProfl(profl);
         return dto;
     }
+
+    /**
+     * 테스트용 사용자 Dto (상세) 생성
+     */
     public static UserDto.DTL createUserDtlDto(UserEmplymDto emplym) {
         // 갹체 생성
         UserDto.DTL dto = createUserDtlDto();
         dto.setEmplym(emplym);
         return dto;
     }
+
+    /**
+     * 테스트용 사용자 Dto (상세) 생성
+     */
     public static UserDto.DTL createUserDtlDto(UserProflDto profl, UserEmplymDto emplym) {
         // 갹체 생성
         UserDto.DTL dto = createUserDtlDto();
