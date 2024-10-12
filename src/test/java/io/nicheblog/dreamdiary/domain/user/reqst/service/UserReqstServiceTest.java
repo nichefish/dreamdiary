@@ -1,14 +1,14 @@
-package io.nicheblog.dreamdiary.web.service.user.reqst;
+package io.nicheblog.dreamdiary.domain.user.reqst.service;
 
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.user.reqst.UserReqstMapstruct;
-import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
-import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDtoTestFactory;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDtoTestFactory;
-import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
-import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDtoTestFactory;
-import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
+import io.nicheblog.dreamdiary.domain.user.emplym.model.UserEmplymDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
+import io.nicheblog.dreamdiary.domain.user.info.model.emplym.UserEmplymDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.profl.UserProflDto;
+import io.nicheblog.dreamdiary.domain.user.info.repository.jpa.UserRepository;
+import io.nicheblog.dreamdiary.domain.user.profl.model.UserProflDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.user.reqst.mapstruct.UserReqstMapstruct;
+import io.nicheblog.dreamdiary.domain.user.reqst.model.UserReqstDto;
+import io.nicheblog.dreamdiary.domain.user.reqst.model.UserReqstDtoTestFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;

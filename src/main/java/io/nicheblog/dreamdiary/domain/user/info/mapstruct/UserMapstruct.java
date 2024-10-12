@@ -66,6 +66,15 @@ public interface UserMapstruct
     UserDto.LIST toListDto(final UserEntity entity) throws Exception;
 
     /**
+     * Dto -> ListDto 변환
+     *
+     * @param dtl 변환할 Dto 객체
+     * @return ListDto -- 변환된 ListDto 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
+     */
+    UserDto.LIST dtlToList(final UserDto.DTL dtl) throws Exception;
+
+    /**
      * Dto -> Entity 변환
      *
      * @param dto 변환할 Dto 객체

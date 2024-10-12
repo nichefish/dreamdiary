@@ -1,10 +1,11 @@
-package io.nicheblog.dreamdiary.web.mapstruct.user.profl;
+package io.nicheblog.dreamdiary.domain.user.profl.mapstuct;
 
+import io.nicheblog.dreamdiary.domain.user.info.model.profl.UserProflDto;
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntity;
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntityTestFactory;
+import io.nicheblog.dreamdiary.domain.user.profl.mapstruct.UserProflMapstruct;
+import io.nicheblog.dreamdiary.domain.user.profl.model.UserProflDtoTestFactory;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
-import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntityTestFactory;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDtoTestFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -46,7 +47,7 @@ class UserProflMapstructTest {
     /* ----- */
 
     /**
-     * dto -> entity 검증
+     * dto -> entity 변환 검증
      */
     @Test
     void testToEntity_checkBasic() throws Exception {

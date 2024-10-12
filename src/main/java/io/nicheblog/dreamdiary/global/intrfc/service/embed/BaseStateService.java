@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.service.embed;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.entity.MenuEntity;
+import io.nicheblog.dreamdiary.domain.admin.menu.model.MenuDto;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
@@ -9,8 +11,11 @@ import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstnModule
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
+import org.springframework.util.CollectionUtils;
 
+import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * BaseStateService
@@ -30,6 +35,7 @@ public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule &
      * @return Boolean - 상태 변경 성공시 true
      * @throws Exception 상태 변경 중 발생할 수 있는 예외
      */
+    @Transactional
     default Boolean setStateUse(final Key key) throws Exception {
         Entity e = this.getDtlEntity(key);
         e.getState().setUseYn("Y");
@@ -47,6 +53,7 @@ public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule &
      * @return Boolean - 상태 변경 성공시 true
      * @throws Exception 상태 변경 중 발생할 수 있는 예외
      */
+    @Transactional
     default Boolean setStateUnuse(final Key key) throws Exception {
         Entity e = this.getDtlEntity(key);
         e.getState().setUseYn("N");
@@ -64,5 +71,29 @@ public interface BaseStateService<Dto extends BaseAuditDto & StateCmpstnModule &
      */
     default void postSetState() throws Exception {
         // 변경 후처리:: 기본 공백, 필요시 각 함수에서 Override
+    }
+
+    /**
+     * 정렬 순서 업데이트.
+     *
+     * @param sortOrdr 키 + 정렬 순서로 이루어진 목록
+     * @return {@link Boolean} -- 성공시 true 반환
+     * @throws Exception 처리 중 발생할 수 있는 예외
+     */
+    @Transactional
+    default Boolean sortOrdr(final List<Dto> sortOrdr) throws Exception {
+        if (CollectionUtils.isEmpty(sortOrdr)) return true;
+        sortOrdr.forEach(dto -> {
+            try {
+                final Entity e = this.getDtlEntity(dto.getKey());
+                e.getState().setSortOrdr(dto.getState().getSortOrdr());
+                this.updt(e);
+            } catch (Exception ex) {
+                ex.getStackTrace();
+                // 로그 기록, 예외 처리 등
+                throw new RuntimeException(ex);
+            }
+        });
+        return true;
     }
 }

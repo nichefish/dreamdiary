@@ -1,15 +1,16 @@
-package io.nicheblog.dreamdiary.web.mapstruct.user.reqst;
+package io.nicheblog.dreamdiary.domain.user.reqst.mapstuct;
 
+import io.nicheblog.dreamdiary.domain.user.emplym.entity.UserEmplymEntity;
+import io.nicheblog.dreamdiary.domain.user.emplym.model.UserEmplymDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
+import io.nicheblog.dreamdiary.domain.user.info.model.emplym.UserEmplymDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.profl.UserProflDto;
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntity;
+import io.nicheblog.dreamdiary.domain.user.profl.model.UserProflDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.user.reqst.mapstruct.UserReqstMapstruct;
+import io.nicheblog.dreamdiary.domain.user.reqst.model.UserReqstDto;
+import io.nicheblog.dreamdiary.domain.user.reqst.model.UserReqstDtoTestFactory;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
-import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
-import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
-import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDtoTestFactory;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDtoTestFactory;
-import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
-import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDtoTestFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -31,7 +32,7 @@ class UserReqstMapstructTest {
     private final UserReqstMapstruct userReqstMapstruct = UserReqstMapstruct.INSTANCE;
 
     /**
-     * dto -> entity 검증 :: 기본 체크
+     * dto -> entity 변환 검증 :: 기본 체크
      */
     @Test
     void testToEntity_checkBasic() throws Exception {
@@ -49,7 +50,7 @@ class UserReqstMapstructTest {
     }
 
     /**
-     * dto -> entity 검증 :: 접속 IP 관련
+     * dto -> entity 변환 검증 :: 접속 IP 관련
      */
     @Test
     void testToEntity_checkAcsIp() throws Exception {
@@ -72,7 +73,7 @@ class UserReqstMapstructTest {
     }
 
     /** 
-     * dto -> entity 검증 :: 사용자 프로필 정보 관련
+     * dto -> entity 변환 검증 :: 사용자 프로필 정보 관련
      */
     @Test
     void testToEntity_checkProfl() throws Exception {
@@ -93,7 +94,7 @@ class UserReqstMapstructTest {
     }
 
     /**
-     * dto -> entity 검증 :: 사용자 인사정보 관련
+     * dto -> entity 변환 검증 :: 사용자 인사정보 관련
      */
     @Test
     void testToEntity_checkEmplym() throws Exception {

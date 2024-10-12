@@ -1,18 +1,19 @@
-package io.nicheblog.dreamdiary.web.service.user;
+package io.nicheblog.dreamdiary.domain.user.info.service;
 
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.entity.LgnPolicyEntity;
+import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.service.LgnPolicyService;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserStusEmbed;
+import io.nicheblog.dreamdiary.domain.user.info.mapstruct.UserMapstruct;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
+import io.nicheblog.dreamdiary.domain.user.info.repository.jpa.UserRepository;
+import io.nicheblog.dreamdiary.domain.user.info.spec.UserSpec;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.admin.LgnPolicyEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserStusEmbed;
-import io.nicheblog.dreamdiary.web.mapstruct.user.UserMapstruct;
-import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
-import io.nicheblog.dreamdiary.web.service.admin.LgnPolicyService;
-import io.nicheblog.dreamdiary.web.spec.user.UserSpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,51 +27,49 @@ import java.util.Optional;
 /**
  * UserService
  * <pre>
- *  사용자 관리 > 계정 및 권한 관리 서비스 모듈
+ *  사용자 관리 > 계정 및 권한 관리 서비스 모듈.
  * </pre>
  *
  * @author nichefish
- * @implements BaseMultiCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("userService")
 @RequiredArgsConstructor
 public class UserService
         implements BaseMultiCrudService<UserDto.DTL, UserDto.LIST, Integer, UserEntity, UserRepository, UserSpec, UserMapstruct> {
 
-    private final UserRepository userRepository;
-    private final UserSpec userSpec;
-    private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
+    @Getter
+    private final UserRepository repository;
+    @Getter
+    private final UserSpec spec;
+    @Getter
+    private final UserMapstruct mapstruct = UserMapstruct.INSTANCE;
 
     private final LgnPolicyService lgnPolicyService;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserRepository getRepository() {
-        return this.userRepository;
-    }
-    @Override
-    public UserSpec getSpec() {
-        return this.userSpec;
-    }
-    @Override
-    public UserMapstruct getMapstruct() {
-        return this.userMapstruct;
-    }
-
     /**
-     * 사용자 관리 > 사용자 단일 조회 (Dto Level) (Long userId / String userId)
+     * 사용자 관리 > 사용자 단일 조회 (Dto Level) (Long userNo와 별도로 String userId)
+     *
+     * @param userId 조회할 사용자의 ID (문자열)
+     * @return {@link UserDto.DTL} -- 사용자 정보가 담긴 DTO 객체
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     public UserDto.DTL getDtlDto(final String userId) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsUserEntity = this.getDtlEntity(userId);
-        return userMapstruct.toDto(rsUserEntity);
+        final UserEntity rsUserEntity = this.getDtlEntity(userId);
+        return mapstruct.toDto(rsUserEntity);
     }
 
     /**
-     * 사용자 관리 > 사용자 단일 조회 (Entity Level) (Long userNo / String userId)
+     * 사용자 관리 > 사용자 단일 조회 (Entity Level) (Long userNo와 별도로 String userId)
+     *
+     * @param userId 조회할 사용자의 ID (문자열 형식)
+     * @return {@link UserEntity} -- 사용자 정보를
+     * @throws NullPointerException 사용자 정보가 존재하지 않을 경우 발생
+     * @throws Exception 조회 중 발생할 수 있는 기타 예외
      */
     public UserEntity getDtlEntity(final String userId) throws Exception {
-        Optional<UserEntity> rsUserEntityWrapper = userRepository.findByUserId(userId);
+        Optional<UserEntity> rsUserEntityWrapper = repository.findByUserId(userId);
         return Objects.requireNonNull(rsUserEntityWrapper.orElseThrow(() -> new NullPointerException("사용자 정보가 존재하지 않습니다.")));
     }
 
@@ -78,54 +77,63 @@ public class UserService
 
     /**
      * 사용자 관리 > 사용자 ID 중복 체크
+     *
+     * @param userId 중복을 확인할 사용자 ID (문자열 형식)
+     * @return {@link Boolean} -- 중복 여부
      */
     public Boolean userIdDupChck(final String userId) {
-        return userRepository.findByUserId(userId).isPresent();
+        return repository.findByUserId(userId).isPresent();
     }
 
+    /**
+     * 등록 전처리. (override)
+     *
+     * @param dto 등록할 객체
+     */
     @Override
-    public void preRegist(final UserDto.DTL userDto) throws Exception {
+    public void preRegist(final UserDto.DTL dto) throws Exception {
         // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
-        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) {
-            userDto.setUseAcsIpYn("N");
-            userDto.setAcsIpListStr(null);
+        if (StringUtils.isEmpty(dto.getAcsIpListStr())) {
+            dto.setUseAcsIpYn("N");
+            dto.setAcsIpListStr(null);
         }
     }
 
     /**
-     * 수정 후처리 :: override
+     * 등록 중간처리. (override)
+     *
+     * @param entity 등록 전 entity 객체
+     */
+    @Override
+    public void midRegist(final UserEntity entity) throws Exception {
+        // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        entity.setAcntStus(UserStusEmbed.getRegistStus());
+        entity.cascade();
+    }
+
+    /**
+     * 수정 후처리. (override)
+     *
+     * @param rslt - 수정된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postModify(final UserEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         EhCacheUtils.clearL2Cache(AuditorInfo.class);
     }
 
     /**
-     * 삭제 후처리 :: override
+     * 삭제 후처리. (override)
+     *
+     * @param rslt - 삭제된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postDelete(final UserEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         EhCacheUtils.clearL2Cache(AuditorInfo.class);
-    }
-
-    /**
-     * 사용자 관리 > 사용자 등록
-     */
-    @Override
-    public UserDto.DTL regist(final UserDto.DTL userDto) throws Exception {
-        // Dto -> Entity
-        // 사용자 정보userInfo 먼저 처리 후 user에 키값 세팅 (필드 위임)
-        UserEntity userEntity = userMapstruct.toEntity(userDto);
-        userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        userEntity.setAcntStus(UserStusEmbed.getRegistStus());
-        userEntity.cascade();
-        // insert
-        UserEntity rsltEntity = userRepository.save(userEntity);
-        UserDto.DTL rsltDto = userMapstruct.toDto(rsltEntity);
-        rsltDto.setIsSuccess((rsltEntity.getUserNo() != null));
-        return rsltDto;
     }
 
     /**
@@ -133,26 +141,31 @@ public class UserService
      */
     public Boolean passwordReset(final Integer userNo) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsUserEntity = this.getDtlEntity(userNo);
+        final UserEntity rsUserEntity = this.getDtlEntity(userNo);
         if (rsUserEntity == null) return false;
         // 로그인 설정 조회 (cachable)
-        LgnPolicyEntity rsLgnPolicyEntity = lgnPolicyService.getDtlEntity();
-        String pwForReset = rsLgnPolicyEntity.getPwForReset();
+        final LgnPolicyEntity rsLgnPolicyEntity = lgnPolicyService.getDtlEntity();
+        final String pwForReset = rsLgnPolicyEntity.getPwForReset();
         // update
         rsUserEntity.setPassword(pwForReset);
         rsUserEntity.acntStus.setNeedsPwReset("Y");
         rsUserEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
-        Integer rsId = userRepository.saveAndFlush(rsUserEntity)
+        final Integer rsId = repository.saveAndFlush(rsUserEntity)
                                      .getUserNo();
         return (rsId != null);
     }
 
+    /**
+     * 수정 전처리. (override)
+     *
+     * @param user 수정할 객체
+     */
     @Override
-    public void preModify(final UserDto.DTL userDto) throws Exception {
+    public void preModify(final UserDto.DTL user) throws Exception {
         // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
-        if (StringUtils.isEmpty(userDto.getAcsIpListStr())) {
-            userDto.setUseAcsIpYn("N");
-            userDto.setAcsIpListStr(null);
+        if (StringUtils.isEmpty(user.getAcsIpListStr())) {
+            user.setUseAcsIpYn("N");
+            user.setAcsIpListStr(null);
         }
     }
 
@@ -161,12 +174,12 @@ public class UserService
      */
     @Override
     public UserDto.DTL modify(final UserDto.DTL userDto) throws Exception {
-        UserEntity userEntity = this.getDtlEntity(userDto);
-        userMapstruct.updateFromDto(userDto, userEntity);
+        final UserEntity userEntity = this.getDtlEntity(userDto);
+        mapstruct.updateFromDto(userDto, userEntity);
 
         // update
-        UserEntity rsltEntity = this.updt(userEntity);
-        UserDto.DTL rsltDto = userMapstruct.toDto(rsltEntity);
+        final UserEntity rsltEntity = this.updt(userEntity);
+        final UserDto.DTL rsltDto = mapstruct.toDto(rsltEntity);
         rsltDto.setIsSuccess((rsltEntity.getUserNo() != null));
         return rsltDto;
     }
@@ -195,8 +208,8 @@ public class UserService
         if (StringUtils.isEmpty(userId)) return false;
         if (Constant.SYSTEM_ACNT.equals(userId) || Constant.DEV_ACNT.equals(userId)) return false;
 
-        LgnPolicyEntity rsEntity = lgnPolicyService.getDtlEntity();
-        Integer lgnLockDy = rsEntity.getLgnLockDy();
+        final LgnPolicyEntity rsEntity = lgnPolicyService.getDtlEntity();
+        final Integer lgnLockDy = rsEntity.getLgnLockDy();
 
         UserEntity user = this.getDtlEntity(userId);
         Date lastLgnDt = user.acntStus.getLstLgnDt();
@@ -214,8 +227,8 @@ public class UserService
         if (rsEntity == null) return false;
         // lockedYn 플래그 업데이트
         rsEntity.acntStus.setLockedYn("Y");
-        Integer rsId = userRepository.saveAndFlush(rsEntity)
-                                     .getUserNo();
+        Integer rsId = repository.saveAndFlush(rsEntity)
+                                 .getUserNo();
         return (rsId != null);
     }
 
@@ -231,7 +244,7 @@ public class UserService
         rsEntity.acntStus.setLockedYn("N");
         // rsEntity.setDormantYn("N");
         rsEntity.acntStus.setLstLgnDt(DateUtils.getCurrDate());
-        Integer rsId = userRepository.saveAndFlush(rsEntity)
+        Integer rsId = repository.saveAndFlush(rsEntity)
                                      .getUserNo();
         return (rsId != null);
     }
@@ -260,7 +273,7 @@ public class UserService
             final String endDtStr
     ) throws Exception {
         // 목록 검색
-        List<UserEntity> userEntityList = userRepository.findAll(userSpec.searchCrdtUser(startDtStr, endDtStr));
+        List<UserEntity> userEntityList = repository.findAll(spec.searchCrdtUser(startDtStr, endDtStr));
 
         // List<Entity> -> List<ListDto>
         return this.listEntityToDto(userEntityList);

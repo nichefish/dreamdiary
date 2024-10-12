@@ -160,28 +160,4 @@ public class DtlCdService
         // 연관된 모든 엔티티의 캐시 클리어
         EhCacheUtils.clearL2Cache();
     }
-
-    /**
-     * 정렬 순서 업데이트.
-     *
-     * @param sortOrdr 키 + 정렬 순서로 이루어진 목록
-     * @return {@link Boolean} -- 성공시 true 반환
-     * @throws Exception 처리 중 발생할 수 있는 예외
-     */
-    @Transactional
-    public boolean sortOrdr(final List<DtlCdDto> sortOrdr) throws Exception {
-        if (CollectionUtils.isEmpty(sortOrdr)) return true;
-        sortOrdr.forEach(dto -> {
-            try {
-                final DtlCdEntity e = this.getDtlEntity(dto.getKey());
-                e.getState().setSortOrdr(dto.getState().getSortOrdr());
-                this.updt(e);
-            } catch (Exception ex) {
-                ex.getStackTrace();
-                // 로그 기록, 예외 처리 등
-                throw new RuntimeException(ex);
-            }
-        });
-        return true;
-    }
 }

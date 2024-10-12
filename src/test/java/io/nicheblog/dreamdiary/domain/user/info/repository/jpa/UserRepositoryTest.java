@@ -1,15 +1,14 @@
-package io.nicheblog.dreamdiary.web.repository.user;
+package io.nicheblog.dreamdiary.domain.user.info.repository.jpa;
 
+import io.nicheblog.dreamdiary.domain.user.emplym.entity.UserEmplymEntity;
+import io.nicheblog.dreamdiary.domain.user.emplym.entity.UserEmplymEntityTestFactory;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntityTestFactory;
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntity;
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntityTestFactory;
 import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntityTestFactory;
-import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
-import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntityTestFactory;
-import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
-import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntityTestFactory;
-import io.nicheblog.dreamdiary.web.repository.user.jpa.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

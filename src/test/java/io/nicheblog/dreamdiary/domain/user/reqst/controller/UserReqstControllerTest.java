@@ -1,11 +1,11 @@
-package io.nicheblog.dreamdiary.web.controller.user.reqst;
+package io.nicheblog.dreamdiary.domain.user.reqst.controller;
 
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
+import io.nicheblog.dreamdiary.domain.user.reqst.model.UserReqstDto;
+import io.nicheblog.dreamdiary.domain.user.reqst.model.UserReqstDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.user.reqst.service.UserReqstService;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.web.controller.BaseControllerTestHelper;
-import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDto;
-import io.nicheblog.dreamdiary.web.model.user.reqst.UserReqstDtoTestFactory;
-import io.nicheblog.dreamdiary.web.service.user.reqst.UserReqstService;
+import io.nicheblog.dreamdiary.global.intrfc.controller.BaseControllerTestHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +47,8 @@ class UserReqstControllerTest {
     private MockMvc mockMvc;
     @MockBean(name = "userReqstService")
     private UserReqstService userReqstService;
-    @MockBean(name = "cdService")
-    private CdService cdService;
+    @MockBean(name = "dtlCdService")
+    private DtlCdService dtlCdService;
 
     @BeforeEach
     public void setup(WebApplicationContext webApplicationContext) {
@@ -67,7 +67,7 @@ class UserReqstControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        verify(cdService, times(5)).setModelCdData(anyString(), any());
+        verify(dtlCdService, times(5)).setCdListToModel(anyString(), any());
 
         // then::
         String viewName = Objects.requireNonNull(result.getModelAndView()).getViewName();

@@ -1,10 +1,11 @@
-package io.nicheblog.dreamdiary.web.mapstruct.vcatn.papr;
+package io.nicheblog.dreamdiary.domain.vcatn.papr.mapstuct;
 
-import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnPaprEntity;
-import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.papr.VcatnPaprDtoTestFactory;
-import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDto;
-import io.nicheblog.dreamdiary.web.model.vcatn.schdul.VcatnSchdulDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.entity.VcatnPaprEntity;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.mapstruct.VcatnPaprMapstruct;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnPaprDto;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnPaprDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnSchdulDto;
+import io.nicheblog.dreamdiary.domain.vcatn.schdul.model.VcatnSchdulDtoTestFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * VcatnPaprMapstructTest
  * <pre>
- *  휴가계획서 Mapstruct 매핑 테스트 모듈
+ *  휴가계획서 Mapstruct 매핑 테스트 모듈.
  * </pre>
  *
  * @author nichefish
@@ -26,7 +27,7 @@ class VcatnPaprMapstructTest {
     private final VcatnPaprMapstruct vcatnPaprMapstruct = VcatnPaprMapstruct.INSTANCE;
 
     /**
-     * dto -> entity 검증
+     * dto -> entity 변환 검증
      */
     @Test
     void testToEntity_checkBasic() throws Exception {
@@ -42,7 +43,7 @@ class VcatnPaprMapstructTest {
     }
 
     /**
-     * dto -> entity 검증 :: 하위 엔티티
+     * dto -> entity 변환 검증 :: 하위 엔티티
      */
     @Test
     void testToEntity_checkSchdulList() throws Exception {

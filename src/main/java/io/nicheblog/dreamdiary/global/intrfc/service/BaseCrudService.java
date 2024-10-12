@@ -35,6 +35,16 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
     }
 
     /**
+     * default: 게시물 등록 중간처리
+     *
+     * @param entity 등록 전 entity 객체
+     * @throws Exception 후처리 중 발생할 수 있는 예외
+     */
+    default void midRegist(final Entity entity) throws Exception {
+        // 등록 중간처리:: 기본 공백, 필요시 각 함수에서 Override
+    }
+
+    /**
      * default: 게시물 등록 후처리 (entity level, entity 변환 후 처리)
      *
      * @param rslt - 등록된 엔티티 객체
@@ -59,6 +69,9 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
         // Dto -> Entity 변환
         Mapstruct mapstruct = this.getMapstruct();
         Entity entity = mapstruct.toEntity(dto);
+
+        // 등록 중간처리
+        this.midRegist(entity);
 
         // insert
         Entity rslt = this.updt(entity);
@@ -190,6 +203,7 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
      * @return Boolean - 삭제 성공시 true, 실패 시 false
      * @throws Exception 삭제 중 발생할 수 있는 예외
      */
+    @Transactional
     default Boolean delete(final Dto dto) throws Exception {
         return this.delete(dto.getKey());
     }

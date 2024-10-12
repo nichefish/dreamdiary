@@ -39,6 +39,9 @@ public interface BaseClsfService<Dto extends BaseClsfDto & Identifiable<Key>, Li
         Mapstruct mapstruct = this.getMapstruct();
         Entity entity = mapstruct.toEntity(dto);
 
+        // 등록 중간처리
+        this.midRegist(entity);
+
         // managt 처리
         if (dto instanceof ManagtCmpstnModule && entity instanceof ManagtEmbedModule) {
             ((ManagtEmbedModule) entity).setManagt(new ManagtEmbed(true));

@@ -1,19 +1,20 @@
-package io.nicheblog.dreamdiary.web.mapstruct.user;
+package io.nicheblog.dreamdiary.domain.user.info.mapstuct;
 
+import io.nicheblog.dreamdiary.domain._core.auth.Auth;
+import io.nicheblog.dreamdiary.domain.user.emplym.entity.UserEmplymEntity;
+import io.nicheblog.dreamdiary.domain.user.emplym.model.UserEmplymDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
+import io.nicheblog.dreamdiary.domain.user.info.mapstruct.UserMapstruct;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserAuthRoleDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserAuthRoleDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.user.info.model.emplym.UserEmplymDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.profl.UserProflDto;
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntity;
+import io.nicheblog.dreamdiary.domain.user.profl.model.UserProflDtoTestFactory;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.Auth;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.user.UserEntity;
-import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
-import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
-import io.nicheblog.dreamdiary.web.model.UserAuthRoleDtoTestFactory;
-import io.nicheblog.dreamdiary.web.model.user.UserAuthRoleDto;
-import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.model.user.UserDtoTestFactory;
-import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
-import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDtoTestFactory;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDtoTestFactory;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -39,7 +40,7 @@ class UserMapstructToEntityTest {
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
 
     /**
-     * dto -> entity 검증
+     * dto -> entity 변환 검증
      */
     @Test
     void testToEntity_checkBasic() throws Exception {
@@ -57,7 +58,7 @@ class UserMapstructToEntityTest {
     }
 
     /**
-     * dto -> entity 검증:: 권한
+     * dto -> entity 변환 검증:: 권한
      */
     @Test
     void testToEntity_checkAuth() throws Exception {
@@ -82,7 +83,7 @@ class UserMapstructToEntityTest {
     }
 
     /**
-     * dto -> entity 검증:: 접속 IP
+     * dto -> entity 변환 검증:: 접속 IP
      */
     @Test
     void testToEntity_checkAcsIp() throws Exception {
@@ -105,7 +106,7 @@ class UserMapstructToEntityTest {
     }
 
     /**
-     * dto -> entity 검증:: 사용자 프로필 정보
+     * dto -> entity 변환 검증:: 사용자 프로필 정보
      */
     @Test
     void testToEntity_checkProfl() throws Exception {
@@ -126,7 +127,7 @@ class UserMapstructToEntityTest {
     }
 
     /**
-     * dto -> entity 검증:: 사용자 인사정보
+     * dto -> entity 변환 검증:: 사용자 인사정보
      */
     @Test
     void testToEntity_checkEmplym() throws Exception {
