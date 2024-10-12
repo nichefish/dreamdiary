@@ -15,6 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository("viewerRepository")
 public interface ViewerRepository
         extends BaseStreamRepository<ViewerEntity, Integer> {
-
     //
 }

@@ -12,11 +12,9 @@ import java.io.Serializable;
  * </pre>
  *
  * @author nichefish
- * @extends ElasticsearchRepository
  */
 @NoRepositoryBean
 public interface BaseElasticRepository<T, ID extends Serializable>
         extends ElasticsearchRepository<T, ID> {
-
     //
 }

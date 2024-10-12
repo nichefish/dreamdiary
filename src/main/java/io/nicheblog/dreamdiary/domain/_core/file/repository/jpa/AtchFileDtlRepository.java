@@ -16,6 +16,5 @@ import org.springframework.stereotype.Repository;
 @Repository("atchFileDtlRepository")
 public interface AtchFileDtlRepository
         extends BaseStreamRepository<AtchFileDtlEntity, Integer> {
-
     //
 }

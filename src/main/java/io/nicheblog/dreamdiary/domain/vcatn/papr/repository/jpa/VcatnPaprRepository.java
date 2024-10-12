@@ -3,7 +3,10 @@ package io.nicheblog.dreamdiary.domain.vcatn.papr.repository.jpa;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.entity.VcatnPaprEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.QueryHint;
 
 /**
  * VcatnPaprRepository
@@ -22,6 +25,8 @@ public interface VcatnPaprRepository
      *
      * @return {@link String} -- 가장 오래된 휴가계획서의 등록년도 (문자열 형식)
      */
-    @Query(value = "SELECT function('date_format', min(t.regDt), '%Y') FROM VcatnPaprEntity t")
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
+    @Query("SELECT function('date_format', min(t.regDt), '%Y') " +
+            "FROM VcatnPaprEntity t")
     String selectMinYy();
 }

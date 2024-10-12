@@ -4,8 +4,10 @@ import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdKey;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.QueryHint;
 import java.util.List;
 
 /**
@@ -37,6 +39,7 @@ public interface DtlCdRepository
      * @param sort 정렬 기준
      * @return {@link List} -- 상세 코드 목록
      */
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<DtlCdEntity> findByClCdAndStateUseYn(final String clCd, String useYn, final Sort sort);
 
     /**

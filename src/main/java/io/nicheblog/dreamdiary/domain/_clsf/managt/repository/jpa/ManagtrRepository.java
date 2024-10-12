@@ -15,6 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository("managtrRepository")
 public interface ManagtrRepository
         extends BaseStreamRepository<ManagtrEntity, Integer> {
-
     //
 }

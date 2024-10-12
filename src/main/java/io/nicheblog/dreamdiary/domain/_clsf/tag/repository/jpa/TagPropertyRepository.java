@@ -15,5 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository("tagPropertyRepository")
 public interface TagPropertyRepository
         extends BaseStreamRepository<TagPropertyEntity, Integer> {
-
+    //
 }
