@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @AllArgsConstructor
 public class MenuSearchParam

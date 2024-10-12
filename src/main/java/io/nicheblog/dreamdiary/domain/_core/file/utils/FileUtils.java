@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.domain._core.file.entity.AtchFileEntity;
 import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.domain._core.file.service.AtchFileDtlService;
 import io.nicheblog.dreamdiary.domain._core.file.service.AtchFileService;
+import io.nicheblog.dreamdiary.global.util.CookieUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -213,7 +213,7 @@ public class FileUtils {
      * @throws Exception 파일 처리 중 발생할 수 있는 예외
      */
     public static void downloadFile(final File file, final String fileNm) throws Exception {
-        FileUtils.setRespnsHeader(fileNm);       // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
+        FileUtils.setRespnsHeaderAndSuccessCookie(fileNm);       // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
         response.setHeader("Content-Length", String.valueOf(file.length()));        // 파일 크기 설정
 
         // try-with-resources를 사용하여 스트림을 자동으로 닫음
@@ -266,7 +266,14 @@ public class FileUtils {
         }
     }
 
-    private static String encodeFileNameForNonIE(final String fileNm) throws UnsupportedEncodingException {
-        return new String(fileNm.getBytes("euc-kr"), StandardCharsets.ISO_8859_1);
+    /**
+     * 응답 헤더 설정 및 한글 파일명 처리 + 다운로드 성공 쿠키 추가 (메소드 분리)
+     *
+     * @param fileNm 다운로드 시 클라이언트에게 전달할 파일 이름
+     * @throws Exception 처리 중 발생할 수 있는 예외
+     */
+    public static void setRespnsHeaderAndSuccessCookie(final String fileNm) throws Exception {
+        setRespnsHeader(fileNm);
+        CookieUtils.setFileDownloadSuccessCookie();
     }
 }

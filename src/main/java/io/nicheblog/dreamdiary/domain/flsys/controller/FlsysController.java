@@ -12,7 +12,6 @@ import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
-import io.nicheblog.dreamdiary.global.util.CookieUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -159,7 +158,6 @@ public class FlsysController
 
             final FlsysDto file = flsysService.getFlsysByPath(filePath);
             // 응답 헤더 설정 및 한글 파일명 처리 (메소드 분리)
-            CookieUtils.setFileDownloadSuccessCookie();
             FileUtils.downloadFile(file.getFile());
 
             isSuccess = true;

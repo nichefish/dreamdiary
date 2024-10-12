@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.util;
 
 import io.nicheblog.dreamdiary.api.snmp.model.SnmpApiParam;
+import lombok.extern.log4j.Log4j2;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
@@ -11,6 +12,7 @@ import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
@@ -27,12 +29,13 @@ import java.util.Vector;
  * @author nichefish
  */
 @Component
+@Log4j2
 public class SnmpUtils {
 
     /** 기본 oid */
-    static String defaultOID = "1";      // 사이렌의 OID값
+    static final String defaultOID = "1";      // 사이렌의 OID값
     /** 기본 SNMP port */
-    static int defaultPort = 162;
+    static final int defaultPort = 162;
     /** 기본 IP */
     static final String defaultIp = "127.0.0.1";
     /** 기본 community */
@@ -65,32 +68,30 @@ public class SnmpUtils {
 
         //1. Make Protocol Data Unit
         // "Each SNMP message contains a protocol data unit (PDU)"
-        PDU pdu = new PDU();
+        final PDU pdu = new PDU();
         pdu.add(new VariableBinding(new OID(defaultOID), new OctetString(snmpSend.getMessage())));
         pdu.setType(PDU.SET);
 
         //2. Make target
-        CommunityTarget target = new CommunityTarget();
-        UdpAddress targetAddress = new UdpAddress(InetAddress.getByName(snmpSend.getIpAddr()), snmpSend.getPort());
+        final CommunityTarget target = new CommunityTarget();
+        final UdpAddress targetAddress = new UdpAddress(InetAddress.getByName(snmpSend.getIpAddr()), snmpSend.getPort());
         target.setAddress(targetAddress);
         target.setCommunity(new OctetString(snmpSend.getCommunity()));
         target.setVersion(SnmpConstants.version1);         // snmp version? 확인해야 한다.
 
         //3. Make SNMP Message. Simple!
-        Snmp snmp = new Snmp(new DefaultUdpTransportMapping());
-        snmp.listen();
+        try (Snmp snmp = new Snmp(new DefaultUdpTransportMapping())) {
+            snmp.listen();
 
-        //4. Send Message and Recieve Response
-        ResponseEvent response = snmp.send(pdu, target);
-        if (response.getResponse() == null) {
-            System.out.println("Error: There is some problems.");
-        } else {
-            Vector variableBindings = (Vector) response.getResponse().getVariableBindings();
+            //4. Send Message and Recieve Response
+            final ResponseEvent response = snmp.send(pdu, target);
+            final boolean isSuccess = response.getResponse() != null;
+            if (!isSuccess) log.error("Error: There is some problems.");
+            final Vector<?> variableBindings = (Vector) response.getResponse().getVariableBindings();
             for (Object variableBinding : variableBindings) {
-                System.out.println(variableBinding);
+                log.info(variableBinding);
             }
         }
-        snmp.close();
 
         return true;
     }
