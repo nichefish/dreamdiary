@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.api.cmm.controller;
+package io.nicheblog.dreamdiary.api.proxy.controller;
 
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.JsonRestTemplate;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global.config.HttpClientConfig;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,11 +25,10 @@ import java.util.Enumeration;
 /**
  * DataProxyController
  * <pre>
- *  CORS 회피용 API 프록시 호출 컨트롤러
+ *  CORS 회피용 API 프록시 호출 컨트롤러.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  * @not-in-use 미사용중
  * TODO: 한참 손봐야된다.
  */
@@ -54,20 +53,20 @@ public class DataProxyController
             final @RequestBody(required = false) byte[] body
     ) throws Exception {
 
-        String reqURL = request.getRequestURI();
+        final String reqURL = request.getRequestURI();
 
         String orgnLProtocol = request.getHeader("x-origin-protocol");
-        boolean isOrgnlProtocolEmpty = StringUtils.isEmpty(orgnLProtocol);
+        final boolean isOrgnlProtocolEmpty = StringUtils.isEmpty(orgnLProtocol);
         orgnLProtocol = isOrgnlProtocolEmpty ? "https" : orgnLProtocol.toLowerCase();
 
-        String originReqURL = reqURL.replaceAll("/api/proxy/", "");
-        String originQueryString = request.getQueryString();
-        String urlStr = orgnLProtocol + "://" + originReqURL + (StringUtils.isEmpty(originQueryString) ? "" : "?" + originQueryString);
+        final String originReqURL = reqURL.replaceAll("/api/proxy/", "");
+        final String originQueryString = request.getQueryString();
+        final String urlStr = orgnLProtocol + "://" + originReqURL + (StringUtils.isEmpty(originQueryString) ? "" : "?" + originQueryString);
         URI url = new URI(urlStr);
 
         // method
         HttpMethod method;
-        String originMethod = request.getHeader("x-origin-method");
+        final String originMethod = request.getHeader("x-origin-method");
         if (StringUtils.isNotEmpty(originMethod)) {
             method = HttpMethod.valueOf(originMethod.toUpperCase());
         } else {
@@ -76,10 +75,10 @@ public class DataProxyController
         }
 
         // header
-        boolean excludeHost = "true".equalsIgnoreCase(request.getHeader("x-exclude-host"));
+        final boolean excludeHost = "true".equalsIgnoreCase(request.getHeader("x-exclude-host"));
         Enumeration<String> headerNames = request.getHeaderNames();
 
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         while (headerNames.hasMoreElements()) {
             String headerName = headerNames.nextElement();
 
@@ -98,9 +97,9 @@ public class DataProxyController
         headers.set("Authorization", "secret_whxACnuVTRxMtB1p19pOrlXSQUvUqscD1Zl9U0gh5Sv");
 
         // http entity (body, header)
-        HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
+        final HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
 
-        JsonRestTemplate restTemplate = new JsonRestTemplate(HttpClientConfig.trustRequestFactory(), Constant.URL_ENC_FALSE);
+        final JsonRestTemplate restTemplate = new JsonRestTemplate(HttpClientConfig.trustRequestFactory(), Constant.URL_ENC_FALSE);
 
         return restTemplate.exchange(url, method, httpEntity, Object.class);
     }
