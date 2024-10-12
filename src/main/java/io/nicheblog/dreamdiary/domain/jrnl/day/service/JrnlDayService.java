@@ -7,6 +7,8 @@ import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
 import io.nicheblog.dreamdiary.domain.jrnl.day.repository.jpa.JrnlDayRepository;
 import io.nicheblog.dreamdiary.domain.jrnl.day.repository.mybatis.JrnlDayMapper;
 import io.nicheblog.dreamdiary.domain.jrnl.day.spec.JrnlDaySpec;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamDto;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
@@ -52,6 +54,10 @@ public class JrnlDayService
 
     /**
      * 목록 조회 (dto level) :: 캐시 처리
+     *
+     * @param searchParam 검색 조건이 담긴 파라미터 객체
+     * @return {@link List} -- 조회된 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     @Cacheable(value="jrnlDayList", key="#searchParam.getYy() + \"_\" + #searchParam.getMnth()")
     public List<JrnlDayDto> getListDtoWithCache(final BaseSearchParam searchParam) throws Exception {
@@ -60,6 +66,10 @@ public class JrnlDayService
 
     /**
      * 중복 체크 (정상시 true / 중복시 false)
+     *
+     * @param jrnlDay {@link JrnlDayDto} -- 중복 여부를 확인할 {@link JrnlDayDto} 객체
+     * @return {@link boolean} -- 정상 시 true, 중복 시 false 반환
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public boolean dupChck(JrnlDayDto jrnlDay) throws Exception {
         final boolean isDtUnknown = "Y".equals(jrnlDay.getDtUnknownYn());
@@ -71,7 +81,11 @@ public class JrnlDayService
     }
 
     /**
-     * 중복시 해당하는 키값 반환
+     * 날짜 기준으로 중복(해당 데이터 존재)시 해당 키값 반환
+     *
+     * @param jrnlDay {@link JrnlDayDto} -- 중복 여부를 확인할 {@link JrnlDayDto} 객체
+     * @return {@link Integer} -- 중복되는 경우 해당하는 키값 (게시글 번호)
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public Integer getDupKey(JrnlDayDto jrnlDay) throws Exception {
         final Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
@@ -80,7 +94,11 @@ public class JrnlDayService
     }
 
     /**
-     * 특정 태그의 관련 꿈 목록 조회
+     * 특정 태그의 관련 일자 목록 조회
+     *
+     * @param searchParam 검색 조건이 담긴 파라미터 객체
+     * @return {@link List} -- 검색 결과 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     @Cacheable(value="jrnlDayTagDtl", key="#searchParam.hashCode()")
     public List<JrnlDayDto> jrnlDayTagDtl(final BaseSearchParam searchParam) throws Exception {
@@ -94,9 +112,9 @@ public class JrnlDayService
      * @param dto 등록할 객체
      */
     @Override
-    public void preRegist(final JrnlDayDto jrnlDay) throws Exception {
+    public void preRegist(final JrnlDayDto dto) throws Exception {
         // 년도/월 세팅:: 메소드 분리
-        this.setYyMnth(jrnlDay);
+        this.setYyMnth(dto);
     }
 
     /**
@@ -113,6 +131,10 @@ public class JrnlDayService
 
     /**
      * 상세 조회 (dto level) :: 캐시 처리
+     *
+     * @param key 식별자
+     * @return {@link JrnlDiaryDto} -- 조회된 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Cacheable(value="jrnlDayDtlDto", key="#key")
     public JrnlDayDto getDtlDtoWithCache(final Integer key) throws Exception {
@@ -146,7 +168,10 @@ public class JrnlDayService
     }
 
     /**
-     * 년도/월 세팅 :: 메소드 분리
+     * 날짜 기반으로 년도/월 항목 세팅 :: 메소드 분리
+     *
+     * @param jrnlDay 날짜 기반으로 년도와 월을 설정할 {@link JrnlDayDto} 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public void setYyMnth(final JrnlDayDto jrnlDay) throws Exception {
         // 날짜미상여부 N시 대략일자 무효화
@@ -177,6 +202,10 @@ public class JrnlDayService
 
     /**
      * 삭제 데이터 조회
+     *
+     * @param postNo 삭제된 데이터의 키
+     * @return {@link JrnlDayDto} -- 삭제된 데이터 DTO
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public JrnlDayDto getDeletedDtlDto(final Integer postNo) throws Exception {
         return jrnlDayMapper.getDeletedByPostNo(postNo);

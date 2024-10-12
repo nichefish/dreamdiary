@@ -35,4 +35,7 @@ public class JrnlDreamSearchParam
 
     /** 태그 번호 */
     private Integer tagNo;
+
+    /** 중요 여부 **/
+    private String imprtcYn;
 }

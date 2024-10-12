@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.mail.model;
+package io.nicheblog.dreamdiary.api.mail.model;
 
 import io.nicheblog.dreamdiary.global.Constant;
 import lombok.AllArgsConstructor;
@@ -31,6 +31,12 @@ public class MailAddress {
 
     /* ----- */
 
+    /**
+     * 사용자의 이메일과 이름을 기반으로 {@link InternetAddress} 객체를 반환합니다.
+     *
+     * @return {@link InternetAddress} -- 이메일과 이름이 설정된 {@link InternetAddress} 객체
+     * @throws UnsupportedEncodingException 이메일 또는 이름의 인코딩 처리 중 발생할 수 있는 예외
+     */
     public InternetAddress getInternetAddress() throws UnsupportedEncodingException {
         return new InternetAddress(email, name, Constant.CHARSET_UTF_8);
     }

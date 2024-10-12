@@ -1,9 +1,9 @@
-package io.nicheblog.dreamdiary.web.entity.admin;
+package io.nicheblog.dreamdiary.domain.admin.menu.entity;
 
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.entity.embed.StateEmbedModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +18,11 @@ import javax.persistence.*;
 /**
  * MenuUpperEntity
  * <pre>
- *  메뉴 관리 간소화 Entity
- *  순환참조 방지 위해 ㅎ상위메뉴 entity에 대해서 하위메뉴 목록 참조 삭제
+ *  상위 메뉴용 매뉴 관리 간소화 Entity.
+ *  (순환참조 방지 위해 상위메뉴 entity에 대해서 하위메뉴 목록 참조 삭제)
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditEntity
- * @implements StateEmbedModule
  */
 @Entity
 @Table(name = "menu")
@@ -90,11 +88,9 @@ public class MenuUpperEntity
     @Comment("상위메뉴 조회")
     private MenuUpperEntity upperMenu;
 
-    /** 순환참조 방지 위해 하위메뉴 목록 조회하지 않음 */
-
     /* ----- */
 
-    /** 상태 관리 모듈 (위임) */
+    /** 위임 :: 상태 관리 모듈 */
     @Embedded
     public StateEmbed state;
 }

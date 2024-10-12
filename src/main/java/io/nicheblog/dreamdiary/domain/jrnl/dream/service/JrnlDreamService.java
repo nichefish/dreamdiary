@@ -1,16 +1,19 @@
-package io.nicheblog.dreamdiary.web.service.jrnl.dream;
+package io.nicheblog.dreamdiary.domain.jrnl.dream.service;
 
+import io.nicheblog.dreamdiary.domain._core.cache.event.EhCacheEvictEvent;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.mapstruct.JrnlDreamMapstruct;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamDto;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamSearchParam;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.repository.jpa.JrnlDreamRepository;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.repository.mybatis.JrnlDreamMapper;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.spec.JrnlDreamSpec;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamEntity;
-import io.nicheblog.dreamdiary.web.event.EhCacheEvictEvent;
-import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamMapstruct;
-import io.nicheblog.dreamdiary.web.model.jrnl.dream.JrnlDreamDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.dream.jpa.JrnlDreamRepository;
-import io.nicheblog.dreamdiary.web.repository.jrnl.dream.mybatis.JrnlDreamMapper;
-import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamSpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,11 +28,10 @@ import java.util.Map;
 /**
  * JrnlDreamService
  * <pre>
- *  저널 꿈 관리 서비스 모듈
+ *  저널 꿈 관리 서비스 모듈.
  * </pre>
  *
  * @author nichefish
- * @implements BaseClsfService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDreamService")
 @RequiredArgsConstructor
@@ -37,30 +39,24 @@ import java.util.Map;
 public class JrnlDreamService
         implements BaseClsfService<JrnlDreamDto, JrnlDreamDto, Integer, JrnlDreamEntity, JrnlDreamRepository, JrnlDreamSpec, JrnlDreamMapstruct> {
 
-    private final JrnlDreamRepository jrnlDreamRepository;
-    private final JrnlDreamSpec jrnlDreamSpec;
-    private final JrnlDreamMapstruct jrnlDreamMapstruct = JrnlDreamMapstruct.INSTANCE;
+    @Getter
+    private final JrnlDreamRepository repository;
+    @Getter
+    private final JrnlDreamSpec spec;
+    @Getter
+    private final JrnlDreamMapstruct mapstruct = JrnlDreamMapstruct.INSTANCE;
 
     private final JrnlDreamMapper jrnlDreamMapper;
     private final ApplicationEventPublisher publisher;
 
     private final String JRNL_DREAM = ContentType.JRNL_DREAM.key;
 
-    @Override
-    public JrnlDreamRepository getRepository() {
-        return this.jrnlDreamRepository;
-    }
-    @Override
-    public JrnlDreamMapstruct getMapstruct() {
-        return this.jrnlDreamMapstruct;
-    }
-    @Override
-    public JrnlDreamSpec getSpec() {
-        return this.jrnlDreamSpec;
-    }
-
     /**
      * 목록 조회 (dto level) :: 캐시 처리
+     *
+     * @param searchParam 검색 조건이 담긴 파라미터 객체
+     * @return {@link List} -- 조회된 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     @Cacheable(value="jrnlDreamList", key="#searchParam.hashCode()")
     public List<JrnlDreamDto> getListDtoWithCache(final BaseSearchParam searchParam) throws Exception {
@@ -68,21 +64,26 @@ public class JrnlDreamService
     }
 
     /**
-     * 특정 년도의 중요 꿈 목록 조회
+     * 특정 년도의 중요 꿈 목록 조회 :: 캐시 처리
+     *
+     * @param yy 조회할 년도
+     * @return {@link List} -- 해당 년도의 중요 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     @Cacheable(value="imprtcDreamList", key="#yy")
     public List<JrnlDreamDto> getImprtcDreamList(final Integer yy) throws Exception {
-        Map<String, Object> searchParamMap = new HashMap<>() {{
-            put("yy", yy);
-            put("imprtcYn", "Y");
-        }};
-        List<JrnlDreamDto> imprtcDreamList = this.getListDto(searchParamMap);
+        JrnlDreamSearchParam searchParam = JrnlDreamSearchParam.builder().yy(yy).imprtcYn("Y").build();
+        List<JrnlDreamDto> imprtcDreamList = this.getListDto(searchParam);
         Collections.sort(imprtcDreamList);
         return imprtcDreamList;
     }
 
     /**
-     * 특정 태그의 관련 꿈 목록 조회
+     * 특정 태그의 관련 꿈 목록 조회 :: 캐시 처리
+     *
+     * @param searchParam 검색 조건이 담긴 파라미터 객체
+     * @return {@link List} -- 검색 결과 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     @Cacheable(value="jrnlDreamTagDtl", key="#searchParam.hashCode()")
     public List<JrnlDreamDto> jrnlDreamTagDtl(final BaseSearchParam searchParam) throws Exception {
@@ -91,28 +92,37 @@ public class JrnlDreamService
     }
 
     /**
-     * 등록 전처리 :: override
+     * 등록 전처리. (override)
+     *
+     * @param dto 등록할 객체
      */
     @Override
-    public void preRegist(final JrnlDreamDto jrnlDream) {
-        if (!"Y".equals(jrnlDream.getElseDreamYn())) {
+    public void preRegist(final JrnlDreamDto dto) {
+        if (!"Y".equals(dto.getElseDreamYn())) {
             // 인덱스(정렬순서) 처리
-            Integer lastIndex = jrnlDreamRepository.findLastIndexByJrnlDay(jrnlDream.getJrnlDayNo()).orElse(0);
-            jrnlDream.setIdx(lastIndex + 1);
+            Integer lastIndex = repository.findLastIndexByJrnlDay(dto.getJrnlDayNo()).orElse(0);
+            dto.setIdx(lastIndex + 1);
         }
     }
 
     /**
-     * 등록 후처리 :: override
+     * 등록 후처리. (override)
+     *
+     * @param rslt - 등록된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postRegist(final JrnlDreamEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DREAM));
     }
 
     /**
      * 상세 조회 (dto level) :: 캐시 처리
+     *
+     * @param key 식별자
+     * @return {@link JrnlDreamDto} -- 조회된 객체
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Cacheable(value="jrnlDreamDtlDto", key="#key")
     public JrnlDreamDto getDtlDtoWithCache(final Integer key) throws Exception {
@@ -120,26 +130,36 @@ public class JrnlDreamService
     }
 
     /**
-     * 수정 후처리 :: override
+     * 수정 후처리. (override)
+     *
+     * @param rslt - 수정된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postModify(final JrnlDreamEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DREAM));
     }
 
     /**
-     * 삭제 후처리 :: override
+     * 삭제 후처리. (override)
+     *
+     * @param rslt - 삭제된 엔티티
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
     public void postDelete(final JrnlDreamEntity rslt) throws Exception {
-        // 관련 캐시 처리
+        // 관련 캐시 삭제
         publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DREAM));
         // TODO: 관련 엔티티 삭제?
     }
 
     /**
      * 삭제 데이터 조회
+     *
+     * @param postNo 삭제된 데이터의 키
+     * @return {@link JrnlDreamDto} -- 삭제된 데이터 DTO
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public JrnlDreamDto getDeletedDtlDto(final Integer postNo) throws Exception {
         return jrnlDreamMapper.getDeletedByPostNo(postNo);
