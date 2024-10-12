@@ -1,0 +1,22 @@
+<#--
+ * 게시판 > 태그 상세 Template
+ -->
+
+<script type="text/x-handlebars-template" id="tag_dtl_template">
+    <#--begin::Head-->
+    <div class="d-flex align-items-center justify-content-between">
+        <h1 class="fs-2x fw-bolder text-gray-900 mb-0 me-1">
+            <span class="vertical-middle">
+                "<u class="border-bottom">{{tagNm}}</u>" : 총 <u>{{size}}</u>개의 글이 있습니다.
+             </span>
+        </h1>
+        <h5 class="modal-title">
+            <div class="btn btn-sm bg-secondary btn-light-primary"
+                 onclick="Tag.listAjax();"
+                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="전체 태그 목록 팝업을&#10;호출합니다.">
+                <span class="border-bottom">전체 태그 목록 조회</span>
+            </div>
+        </h5>
+    </div>
+    <!--end::Head-->
+</script>

@@ -1,0 +1,30 @@
+#log4j2 설정 파일 : 로컬(local)
+
+Configutation:
+    status: info
+
+    Properties:
+        Property:
+          - name: log-path
+            value: "log"
+          - name: log-format
+            value: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}.%M(%L) - %msg%n"
+
+    Appenders:
+        Console:
+          name: Console_Appender
+          target: SYSTEM_OUT
+          PatternLayout:
+              pattern: ${log-format}
+
+    Loggers:
+        Root:
+            level: info
+            AppenderRef:
+              - ref: Console_Appender
+        Logger:
+          - name: dreamdiary.nicheblog.io
+            additivity: false
+            level: info
+            AppenderRef:
+              - ref: Console_Appender

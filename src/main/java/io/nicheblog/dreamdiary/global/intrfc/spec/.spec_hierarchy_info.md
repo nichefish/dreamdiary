@@ -1,0 +1,14 @@
+# Specification 상속 구조
+
+#### ↓ BaseSpec
+    -> 기본 검색인자 세팅
+
+#### ↓ BaseCrudSpec
+    -> Base 요소 (audit..) 선 세팅 후 나머지로 검색인자 세팅
+
+#### ↓ BaseClsfSpec
+    -> CLSF 요소 (댓글, 태그, 열람, 처리..) 선 세팅 후 나머지로 검색인자 세팅
+
+#### ↓ BasePostSpec
+    -> POST 요소 (제목, 태그...) 관련 선 세팅 후 나머지로 검색인자 세팅
+

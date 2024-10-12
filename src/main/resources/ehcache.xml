@@ -1,0 +1,80 @@
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xmlns='http://www.ehcache.org/v3'
+        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
+        xsi:schemaLocation="http://www.ehcache.org/v3
+                            http://www.ehcache.org/schema/ehcache-core-3.7.xsd
+                            http://www.ehcache.org/v3/jsr107
+                            http://www.ehcache.org/schema/ehcache-107-ext-3.7.xsd
+                            http://www.ehcache.org/schema/ehcache-107-ext-3.7.xsd">
+
+    <cache-template name="defaultTemplate">
+        <!-- 캐시 만료기간 설정 -->
+        <expiry>
+            <!-- unit : nanos, micros, millis, seconds, minutes, hours, days -->
+            <ttl unit="days">1</ttl>
+        </expiry>
+        <resources>
+            <!-- 캐시에 최대 몇개 까지 유지할지 -->
+            <heap unit="entries">500</heap>
+        </resources>
+    </cache-template>
+
+    <!-- alias 는 @Cacheable(value = "codes", key="#codeGrp") 여기에서 썻던 value 값으로 사용 -->
+
+    <cache alias="defaultCache">
+        <expiry>
+            <ttl unit="seconds">3600</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">1000</heap>
+        </resources>
+    </cache>
+
+    <!-- ex) 인자를 이용한 공격 정의 목록 조회 (key:: {#attackType, #attackName, #detectEquip}) -->
+    <!-- 로그인 정책 관리 -->
+    <cache alias="lgnPolicy" uses-template="defaultTemplate" />
+    <cache alias="lgnPolicyEntity" uses-template="defaultTemplate" />
+
+    <!-- 코드 관리 -->
+    <cache alias="cdEntityListByClCd" uses-template="defaultTemplate" />
+    <cache alias="cdDtoListByClCd" uses-template="defaultTemplate" />
+
+    <!-- 저널 일자 -->
+    <cache alias="jrnlDayList" uses-template="defaultTemplate" />
+    <cache alias="jrnlDayDtlDto" uses-template="defaultTemplate" />
+    <cache alias="jrnlDayTagList" uses-template="defaultTemplate" />
+    <cache alias="jrnlDaySizedTagList" uses-template="defaultTemplate" />
+    <cache alias="countDaySize" uses-template="defaultTemplate" />
+    <cache alias="jrnlDayTagDtl" uses-template="defaultTemplate" />
+
+    <!-- 저널 일기 -->
+    <cache alias="jrnlDiaryList" uses-template="defaultTemplate" />
+    <cache alias="jrnlDiaryDtlDto" uses-template="defaultTemplate" />
+    <cache alias="jrnlDiaryTagList" uses-template="defaultTemplate" />
+    <cache alias="jrnlDiarySizedTagList" uses-template="defaultTemplate" />
+    <cache alias="countDiarySize" uses-template="defaultTemplate" />
+    <cache alias="jrnlDiaryTagDtl" uses-template="defaultTemplate" />
+    <cache alias="imprtcDiaryList" uses-template="defaultTemplate" />
+
+    <!-- 저널 꿈 -->
+    <cache alias="jrnlDreamList" uses-template="defaultTemplate" />
+    <cache alias="jrnlDreamDtlDto" uses-template="defaultTemplate" />
+    <cache alias="jrnlDreamTagList" uses-template="defaultTemplate" />
+    <cache alias="jrnlDreamSizedTagList" uses-template="defaultTemplate" />
+    <cache alias="countDreamSize" uses-template="defaultTemplate" />
+    <cache alias="jrnlDreamTagDtl" uses-template="defaultTemplate" />
+    <cache alias="imprtcDreamList" uses-template="defaultTemplate" />
+
+    <!-- 저널 결산 -->
+    <cache alias="jrnlTotalSumry" uses-template="defaultTemplate" />
+    <cache alias="jrnlSumryList" uses-template="defaultTemplate" />
+    <cache alias="jrnlSumryDtl" uses-template="defaultTemplate" />
+    <cache alias="jrnlSumryDtlByYy" uses-template="defaultTemplate" />
+    <cache alias="jrnlSumryCnDtlDto" uses-template="defaultTemplate" />
+
+    <!-- 휴일 정보 -->
+    <cache alias="hldyEntityList" uses-template="defaultTemplate" />
+    <cache alias="isHldy" uses-template="defaultTemplate" />
+    <cache alias="isHldyOrWeekend" uses-template="defaultTemplate" />
+</config>
+

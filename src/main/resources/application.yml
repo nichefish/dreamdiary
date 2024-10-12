@@ -1,0 +1,122 @@
+#application.yml
+#공용 설정 파일
+
+spring:
+    main:
+        allow-bean-definition-overriding: true
+
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 500MB
+            max-request-size: 500MB
+
+    mvc:
+        throw-exception-if-no-handler-found: true
+
+    freemarker:
+        template-loader-path: file:templates/
+        suffix: .ftlh
+        content-type: text/html; charset=utf-8
+        request-context-attribute: rc
+        expose-request-attributes: true
+        expose-session-attributes: true
+
+    mustache:
+        check-template-location: false
+
+    jpa:
+        properties:
+            hibernate:
+                database: mysql
+                database-platform: org.hibernate.dialect.MariaDBDialect
+                jdbc:
+                    batch_size: 1000
+                    batch_versioned_data: true
+                    order_inserts: true
+                    order_updates: true
+                legacy_limit_handler: true
+                default_batch_fetch_size: 1000
+                enable_lazy_load_no_trans: true
+        open-in-view: true
+
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: Asia/Seoul
+        serialization:
+            fail-on-empty-beans: false
+
+    messages:
+        basename: messages/messages
+        encoding: UTF-8
+        use-code-as-default-message: true
+        fallback-to-system-locale: true
+
+    mail:
+        default-encoding: UTF-8
+        host: ${MAIL_HOST}
+        username: ${MAIL_USERNAME}
+        password: ${MAIL_PASSWORD}
+        port: ${MAIL_PORT}
+        protocol: ${MAIL_PROTOCOL}
+        test-connection: false
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enabled: true
+                    ssl:
+                        trust: smtp.gmail.com
+
+system:
+    init-temp-pw: ${SYSTEM_INIT_TEMP_PW}
+
+server:
+    error:
+        path: /error
+        whitelabel:
+            enabled: false
+    servlet:
+        context-path: /
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+        session:
+            timeout: 1h
+
+#AES128 secret key; 16 chars
+aes128:
+    secret-key: ${AES128_SECRET_KEY}
+
+#key used for remember-me library
+remember-me:
+    param: ${REMEMBER_ME_PARAM}
+    key: ${REMEMBER_ME_KEY}
+
+#OpenAPI Swagger config
+springdoc:
+    paths-to-match:
+        - /api/**
+    default-produces-media-type: application/json
+    show-actuator: true
+    cache:
+        disabled: true
+
+    swagger-ui:
+        path: /api-docs.html
+        disable-swagger-default-url: true
+        display-request-duration: true
+        operations-sorter: alpha
+        tags-sorter: alpha
+
+    api-docs:
+        path: /api-docs
+        #groups:
+        #    enabled: true
+
+api:
+    kasi:
+        serviceKey: ${API_KASI_SERVICE_KEY}
+        api-url: ${API_KASI_URL}

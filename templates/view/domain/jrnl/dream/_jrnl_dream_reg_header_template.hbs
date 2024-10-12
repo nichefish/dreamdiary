@@ -1,0 +1,124 @@
+<#--
+ * 저널 꿈(jrnl_dream) > 등록/수정 Template
+ * @included_in : _jrnl_dream_reg_modal.ftlh
+ -->
+
+<script type="text/x-handlebars-template" id="jrnl_dream_reg_header_template">
+    <input type="hidden" name="postNo" value="{{postNo}}">
+    <input type="hidden" name="jrnlDayNo" value="{{jrnlDayNo}}">
+
+    <#--begin::Row-->
+    <div class="row d-flex mb-8">
+        <div class="col-2">
+            <label class="d-flex align-items-center mb-2" for="title">
+                <span class="text-gray-700 fs-6 fw-bolder">저널 일자</span>
+            </label>
+        </div>
+        <div class="col-2 fs-6">
+            <i class="bi bi-calendar3"></i> {{stdrdDt}}
+        </div>
+    </div>
+    <#--begin::Row-->
+    <div class="row d-flex mb-8">
+        <div class="col-12">
+            <label class="d-flex align-items-center mb-2" for="title">
+                <span class="text-gray-700 fs-6 fw-bolder">제목</span>
+                <span class="text-gray-500 fs-9">(최대 50자)</span>
+            </label>
+        </div>
+        <div class="col-lg-2">
+            <select name="ctgrCd" id="ctgrCd" class="form-select form-select-solid">
+                <option value="">--글분류--</option>
+            </select>
+        </div>
+        <div class="col-lg-{{#if (exists postNo)}}9{{else}}10{{/if}}">
+            <input type="text" name="title" id="title" class="form-control"
+                   value="{{title}}" placeholder="제목" maxlength="100" />
+            <div id="title_validate_span"></div>
+        </div>
+        {{#if (exists postNo)}}
+            {{^ifYn elseDreamYn}}
+                <div class="col-1 d-flex ps-0">
+                    <div class="d-flex-center p-2 fw-bold fs-5 text-gray-600">#</div>
+                    <input type="number" class="form-control form-control-sm" name="idx" id="idx" min="1" max="99"
+                           maxlength='2' value="{{idx}}" placeholder="인덱스"
+                           data-bs-toggle="tooltip" data-bs-placement="top" title="일자 내에서의 정렬 인덱스입니다.">
+                </div>
+            {{/ifYn}}
+        {{/if}}
+    </div>
+    <#--begin::Row-->
+    <div class="row d-flex mb-8">
+        <div class="col-2 d-flex align-items-center">
+            <div>
+                <label class="text-gray-700 fs-6 fw-bolder cursor-help"
+                       data-bs-toggle="tooltip" data-bs-placement="top" title="해당 글은 굵은 글씨, 아이콘 및 눈에 띄는 색상으로 강조됩니다.">
+                    중요 여부
+                    <i class="bi bi-question-circle"></i>
+                </label>
+                <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
+                    <input type="checkbox" name="imprtcYn" id="imprtcYn" class="form-check-input"
+                           value="Y" {{checkedYn imprtcYn}} />
+                    <label class="form-check-label fw-bold fs-6 ms-3" for="imprtcYn" id="imprtcYnLabel" {{{checkedYnStyle imprtcYn "color" "red//gray"}}}>
+                        {{#ifYn imprtcYn}}중요{{else}}해당없음{{/ifYn}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+            <div>
+                <label class="text-gray-700 fs-6 fw-bolder cursor-help"
+                       data-bs-toggle="tooltip" data-bs-placement="top" title="악몽입니다.">
+                    악몽 여부
+                    <i class="bi bi-question-circle"></i>
+                </label>
+                <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
+                    <input type="checkbox" name="nhtmrYn" id="nhtmrYn" class="form-check-input"
+                           value="Y" {{checkedYn nhtmrYn}} />
+                    <label class="form-check-label fw-bold fs-6 ms-3" for="nhtmrYn" id="nhtmrYnLabel" {{{checkedYnStyle nhtmrYn "color" "red//gray"}}}>
+                        {{#ifYn hallucYn}}악몽{{else}}해당없음{{/ifYn}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+            <div>
+                <label class="text-gray-700 fs-6 fw-bolder cursor-help"
+                       data-bs-toggle="tooltip" data-bs-placement="top" title="입면환각입니다.">
+                    입면환각 여부
+                    <i class="bi bi-question-circle"></i>
+                </label>
+                <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
+                    <input type="checkbox" name="hallucYn" id="hallucYn" class="form-check-input"
+                           value="Y" {{checkedYn hallucYn}} />
+                    <label class="form-check-label fw-bold fs-6 ms-3" for="hallucYn" id="hallucYnLabel" {{{checkedYnStyle hallucYn "color" "blue//gray"}}}>
+                        {{#ifYn hallucYn}}입면환각{{else}}해당없음{{/ifYn}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+            <div>
+                <label class="text-gray-700 fs-6 fw-bolder cursor-help"
+                       data-bs-toggle="tooltip" data-bs-placement="top" title="다른 사람이 꾼 꿈을 기록합니다.">
+                    타인 꿈 여부
+                    <i class="bi bi-question-circle"></i>
+                </label>
+                <div class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
+                    <input type="checkbox" name="elseDreamYn" id="elseDreamYn" class="form-check-input"
+                           value="Y" {{checkedYn elseDreamYn}} />
+                    <label class="form-check-label fw-bold fs-6 ms-3" for="elseDreamYn" id="elseDreamYnLabel" {{{checkedYnStyle elseDreamYn "color" "purple//gray"}}}>
+                        {{#ifYn elseDreamYn}}해당{{else}}해당없음{{/ifYn}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 d-flex align-items-center {{^ifYn elseDreamYn}}d-none{{/ifYn}}" id="elseDreamerNmDiv">
+            <div class="col">
+                <input type="text" name="elseDreamerNm" id="elseDreamerNm" class="form-control form-control-solid w-150px required"
+                       value="{{elseDreamerNm}}" placeholder="꿈꾼 사람" maxlength="30" />
+            </div>
+            <div class="col" id="elseDreamerNm_validate_span"></div>
+        </div>
+    </div>
+</script>

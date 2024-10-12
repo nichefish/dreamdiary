@@ -1,0 +1,48 @@
+<#--
+ -- 메뉴(menu) > 카드 Template
+ -- @included_in : menu_page.ftlh
+ -->
+
+<script type="text/x-handlebars-template" id="menu_main_card_template">
+    <li class="col-4 list-unstyled p-5 sortable-item draggable-main" style="{{borderColor}}"
+         id="{{menuNo}}" data-type="{{menuTyCd}}" upper-menu-no="{{upperMenuNo}}">
+        <div class="card shadow">
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <div class="draggable-handle-main cursor-move pt-2"
+                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="드래그하여&#10;항목을 이동합니다.">
+                        <i class="ki-duotone ki-abstract-14 fs-2x">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                    <!-- ↓의도된것 -->
+                    <i class="{{icon}} text-info fs-3 ms-8"></i>
+                    <h2 class="mx-2 mb-0 text-info cursor-pointer text-underline-dotted" onclick="Menu.mdfModal('{{menuNo}}');"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="수정 팝업을 호출합니다.">
+                        <span class="title {{#ifYn state.useYn}}strikethrough{{/ifYn}}">
+                            {{menuNm}}  // {{#if (exists sortOrdr)}}{{sortOrdr}}{{else}}@{{@index}}{{/if}} //   {{sortOrdr}}_{{@index}}
+                        </span>
+                    </h2>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="w-80px">
+                        <div class="btn btn-sm btn-icon btn-light-primary btn-outlined cursor-pointer"
+                             onclick="Menu.regModal('${Constant.MENU_TY_SUB!}', '{{menuNo}}', '{{menuNm}}');"
+                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="하위메뉴 추가 팝업을&#10;호출합니다.">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="btn btn-sm btn-icon btn-light-danger cursor-pointer" onclick="Menu.delAjax({{menuNo}});"
+                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click" title="이 메인메뉴를 삭제합니다.">
+                            <i class="bi bi-trash d-flex-center opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul id="menu_sub_{{menuNo}}" class="card-body ps-15 sub-menu-list custom-scroll draggable-zone-sub">
+                <!-- sub-menu area -->
+            </ul>
+        </div>
+    </li>
+</script>

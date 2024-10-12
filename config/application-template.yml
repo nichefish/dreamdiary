@@ -1,0 +1,15 @@
+#config/application.yml
+#common config located outside .jar
+
+#release date. should be changed manually for each deployment
+release-date: 20241020
+
+spring:
+    #( local // dev // stg // prod // test )
+    profiles:
+        active: dev
+
+logging:
+    level:
+        web: INFO
+        org.springframework: INFO

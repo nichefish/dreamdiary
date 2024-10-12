@@ -1,0 +1,88 @@
+#application-local.yml
+#로컬(local) 프로필용 설정 파일
+
+server:
+    port: ${SERVER_PORT:18081}
+
+logging:
+    config: classpath:log4j2-local.yml
+
+spring:
+    servlet:
+        multipart:
+            location: ${FILE_UPLOAD_LOCATION}
+    freemarker:
+        cache: ${FREEMARKER_CACHE:true}
+    datasource:
+        primary:
+            driver-class-name: org.mariadb.jdbc.Driver
+            jdbc-url: ${JDBC_URL}
+            username: ${JDBC_USERNAME}
+            password: ${JDBC_PASSWORD}
+    devtools:
+        add-properties: true
+        livereload:
+            enabled: true
+            port: 18089
+        remote:
+            restart:
+                enabled: false
+        restart:
+            enabled: true
+
+    jwt:
+        secret: ${JWT_SECRET}
+
+    jpa:
+        database: mysql
+        database-platform: org.hibernate.dialect.MariaDBDialect
+        show-sql: true
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MariaDBDialect
+                generate-ddl: true
+                show_sql: true
+                format_sql: true
+                use_sql_comments: true
+
+    sql:
+        init:
+            # mode: always / embedded / never
+            mode: never
+            platform: mariadb
+            continue-on-error: true
+
+    data:
+        redis:
+            host: ${REDIS_HOST}
+            port: ${REDIS_PORT}
+
+    kafka:
+        bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
+        consumer:
+            group-id: dreamdiary
+            auto-offset-reset: earliest
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        producer:
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+    elasticsearch:
+        username: ${ELASTIC_USERNAME}
+        password: ${ELASTIC_PASSWORD}
+        uris: ${ELASTIC_URIS}
+
+#jandi messenger properties
+api:
+    jandi:
+        teamId: ${JANDI_TEAM_ID}
+        topics:
+            - name: NOTICE
+              id:  ${JANDI_TOPIC_NOTICE}
+            - name: SCHDUL
+              id: ${JANDI_TOPIC_SCHDUL}
+            - name: TEST
+              id: ${TEST}

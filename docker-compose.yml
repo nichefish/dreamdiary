@@ -1,0 +1,68 @@
+# "Don’t use environment variables to pass sensitive information, such as passwords, in to your containers. Use secrets instead."
+# PowerShell(+IntelliJ) 터미널에서 실행시 한 줄씩 환경변수를 먹이고 docker-compose를 띄운다.
+# 예:
+#   $env:ZOOKEEPER_PORT=2181
+#   $env:KAFKA_PORT=9092
+#   $env:KAFKA_HOST="localhost"
+#   $env:REDIS_PORT=6379
+#   $env:REDIS_PASSWORD="your_redis_password"
+#   docker-compose up -d
+version: '3'
+services:
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    env_file: .env.local
+    ports:
+      - '${ZOOKEEPER_PORT}:${ZOOKEEPER_PORT}'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - dreamdiary_network
+    restart: always
+
+  kafka:
+    image: bitnami/kafka:latest
+    env_file: .env.local
+    ports:
+      - '${KAFKA_PORT}:${KAFKA_PORT}'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:${ZOOKEEPER_PORT}
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:${KAFKA_PORT}
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://${KAFKA_HOST}:${KAFKA_PORT}
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    networks:
+      - dreamdiary_network
+    restart: always
+
+  redis:
+    image: bitnami/redis:latest
+    env_file: .env.local
+    ports:
+      - '${REDIS_PORT}:${REDIS_PORT}'
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    networks:
+      - dreamdiary_network
+    restart: always
+
+  elasticsearch:
+    image: bitnami/elasticsearch:latest
+    env_file: .env.local
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    networks:
+      - dreamdiary_network
+    restart: always
+
+networks:
+  default:
+    driver: bridge
