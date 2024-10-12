@@ -1,12 +1,14 @@
-package io.nicheblog.dreamdiary.global.auth.handler;
+package io.nicheblog.dreamdiary.domain._core.auth.handler;
 
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.domain._core.auth.service.AuthService;
+import io.nicheblog.dreamdiary.domain._core.auth.service.DupIdLgnManager;
+import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
-import io.nicheblog.dreamdiary.global.auth.service.AuthService;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.util.HttpUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -42,6 +44,16 @@ public class LgnSuccessHandler
     private final ApplicationEventPublisher publisher;
     private final HttpSession session;
 
+    /**
+     * 인증 성공 시 처리하는 메소드.
+     * 로그인 성공 후 세션 초기화 및 로그인 기록을 남기고 이전 페이지로 리다이렉트합니다.
+     *
+     * @param request 로그인 요청 객체
+     * @param response 응답을  객체
+     * @param authentication 인증된 사용자 정보를 담은 {@link Authentication} 객체
+     * @throws IOException 입출력 예외 발생 시
+     * @throws ServletException 서블릿 예외 발생 시
+     */
     @Override
     public void onAuthenticationSuccess(
             final HttpServletRequest request,
@@ -71,9 +83,7 @@ public class LgnSuccessHandler
         publisher.publishEvent(new LogActvtyEvent(this, logParam));
 
         // 로그인 성공시 브라우저 캐시 초기화 처리
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Expires", "0");
+        HttpUtils.setInvalidateBrowserCacheHeader(response);
 
         // 이전 페이지 :: 부재시 메인 페이지로 리다이렉트
         // 상속받은 상위 SavedRequestAwareAuthenticationSuccessHandler의 메소드 call
