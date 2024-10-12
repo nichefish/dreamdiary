@@ -27,7 +27,6 @@ import java.util.stream.Stream;
  *
  * @author nichefish
  */
-
 @Repository("jrnlDiaryTagRepository")
 public interface JrnlDiaryTagRepository
         extends BaseStreamRepository<JrnlDiaryTagEntity, Integer> {
