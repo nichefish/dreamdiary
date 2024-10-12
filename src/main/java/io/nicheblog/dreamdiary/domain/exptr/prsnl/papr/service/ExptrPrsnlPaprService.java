@@ -32,7 +32,7 @@ import java.util.*;
  * </pre>
  *
  * @author nichefish
- * @implements BasePostService
+ * @implements BasePstService
  */
 @Service
 @RequiredArgsConstructor

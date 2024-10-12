@@ -8,10 +8,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.QueryHint;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -59,6 +62,8 @@ public interface JrnlDreamRepository
      * @param jrnlDayNo 조회할 일자 번호
      * @return {@link Optional} -- 해당 일자에서 꿈의 마지막 인덱스
      */
+    @Transactional(readOnly = true)
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     @Query("SELECT MAX(dream.idx) " +
             "FROM JrnlDreamEntity dream " +
             "INNER JOIN FETCH JrnlDayEntity day ON dream.jrnlDayNo = day.postNo " +

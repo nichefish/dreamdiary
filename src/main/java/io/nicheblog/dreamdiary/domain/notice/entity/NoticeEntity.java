@@ -28,8 +28,6 @@ import javax.persistence.*;
  * </pre>
  *
  * @author nichefish
- * @extends BasePostEntity
- * @implements CommentEmbedModule, SectnEmbedModule, TagEmbedModule, ManagtEmbedModule, ViewerEmbedModule
  */
 @Entity
 @Table(name = "notice")

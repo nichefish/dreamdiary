@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.domain.admin.tmplat.entity.TmplatTxtEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.QueryHint;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public interface TmplatTxtRepository
      * @param defaultYn 기본 템플릿 여부 ("Y" 또는 "N")
      * @return {@link Optional} - 결과를 담은 Optional 객체
      */
+    @Transactional(readOnly = true)
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<TmplatTxtEntity> findByTmplatDefCdAndCtgrCdAndDefaultYn(
             final String tmplatDefCd,

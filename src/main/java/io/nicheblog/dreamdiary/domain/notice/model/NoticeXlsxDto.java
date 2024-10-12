@@ -13,7 +13,6 @@ import lombok.experimental.SuperBuilder;
  * </pre>
  *
  * @author nichefish
- * @extends BasePostDto
  */
 @Getter
 @Setter

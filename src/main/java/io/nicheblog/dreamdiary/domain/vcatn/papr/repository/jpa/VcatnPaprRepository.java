@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.QueryHint;
 
@@ -25,6 +26,7 @@ public interface VcatnPaprRepository
      *
      * @return {@link String} -- 가장 오래된 휴가계획서의 등록년도 (문자열 형식)
      */
+    @Transactional(readOnly = true)
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     @Query("SELECT function('date_format', min(t.regDt), '%Y') " +
             "FROM VcatnPaprEntity t")

@@ -19,7 +19,6 @@ import javax.persistence.*;
  * </pre>
  *
  * @author nichefish
- * @extends BasePostEntity
  */
 @Entity
 @Table(name = "notice")

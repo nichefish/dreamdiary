@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.QueryHint;
 import java.util.Date;
@@ -28,6 +29,7 @@ public interface JrnlDayRepository
      * @param jrnlDt 중복 체크를 위한 날짜
      * @return {@link Integer} -- 주어진 날짜에 대한 중복된 항목의 수
      */
+    @Transactional(readOnly = true)
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     @Query("SELECT COUNT(day.jrnlDt) " +
             "FROM JrnlDayEntity day " +

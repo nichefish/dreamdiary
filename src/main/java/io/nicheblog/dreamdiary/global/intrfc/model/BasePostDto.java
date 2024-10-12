@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
  * </pre>
  *
  * @author nichefish
- * @extends BaseClsfDto
  */
 @Getter
 @Setter

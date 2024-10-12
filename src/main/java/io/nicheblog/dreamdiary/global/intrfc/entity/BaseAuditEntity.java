@@ -24,7 +24,6 @@ import java.util.Date;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditRegEntity
  */
 @MappedSuperclass
 @Getter

@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.QueryHint;
 import java.util.List;
@@ -39,6 +40,7 @@ public interface DtlCdRepository
      * @param sort 정렬 기준
      * @return {@link List} -- 상세 코드 목록
      */
+    @Transactional(readOnly = true)
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     List<DtlCdEntity> findByClCdAndStateUseYn(final String clCd, String useYn, final Sort sort);
 

@@ -16,7 +16,6 @@ import java.io.Serializable;
  * </pre>
  *
  * @author nichefish
- * @extends FlsysCmmDto
  */
 @Getter
 @Setter

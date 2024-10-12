@@ -11,6 +11,5 @@ package io.nicheblog.dreamdiary.api;
  * @author nichefish
  */
 public interface ApiConstant {
-
     //
 }

@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
  * </pre>
  *
  * @author nichefish
- * @implements BaseController
  */
 public abstract class BaseControllerImpl
         implements BaseController {

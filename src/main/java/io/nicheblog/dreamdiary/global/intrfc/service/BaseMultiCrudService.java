@@ -16,7 +16,7 @@ import java.io.Serializable;
 /**
  * BaseMultiCrudInterface
  * <pre>
- *  (공통/상속) MultipartRequest(파일업로드)를 사용하는 CRUD 공통 서비스 인터페이스.
+ *  (공통/상속) MultipartRequest(파일 업로드)를 사용하는 CRUD 공통 서비스 인터페이스.
  * </pre>
  *
  * @author nichefish

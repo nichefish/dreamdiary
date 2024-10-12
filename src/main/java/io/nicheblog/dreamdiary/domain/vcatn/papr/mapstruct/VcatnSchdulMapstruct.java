@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
  * </pre>
  *
  * @author nichefish
- * @extends BaseCrudMapstruct:: 기본 변환 매핑 로직 상속
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class})
 public interface VcatnSchdulMapstruct

@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
  * </pre>
  *
  * @author nichefish
- * @extends BaseUserEntity
  */
 @Entity
 @Table(name = "user")

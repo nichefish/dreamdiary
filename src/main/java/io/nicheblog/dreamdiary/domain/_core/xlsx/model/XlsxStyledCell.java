@@ -11,7 +11,6 @@ import org.apache.poi.ss.usermodel.CellStyle;
  * </pre>
  *
  * @author nichefish
- * @extends XlsxCell
  */
 @Getter
 @Setter

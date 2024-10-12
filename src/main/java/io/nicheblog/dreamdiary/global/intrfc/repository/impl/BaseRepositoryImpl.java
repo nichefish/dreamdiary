@@ -28,7 +28,6 @@ import java.util.stream.Stream;
  * </pre>
  *
  * @author nichefish
- * @implements BaseRepository
  */
 @NoRepositoryBean
 public class BaseRepositoryImpl<T, ID extends Serializable>
@@ -67,6 +66,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 
     /** Stream 조회 (readonly) */
     @Override
+    @Transactional(readOnly = true)
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     public Stream<T> streamAllBy(Specification searchWith) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -78,6 +78,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 
     /** Stream 조회 (readonly) */
     @Override
+    @Transactional(readOnly = true)
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     public Stream<T> streamAllBy(Specification searchWith, Sort sort) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -105,6 +106,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 
 
     /** (전파) 모니터링 대시보드 프로시저 돌리기 ( 등록,삭제:1번 / 수정:2번 ) */
+    // @Transactional(readOnly = true)
     // @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     // @Query(value=" CALL INFR_IOC_STATS_ATTACK_TYPE(DATE_FORMAT(:today, '%Y-%m-%d'));" +
     //         " CALL INFR_IOC_STATS_IOC_CNT(DATE_FORMAT(:today, '%Y-%m-%d'));" +

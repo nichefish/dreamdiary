@@ -18,7 +18,6 @@ import javax.validation.constraints.Size;
  * </pre>
  *
  * @author nichefish
- * @implements BaseAuditDto
  */
 @Getter
 @Setter

@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.QueryHint;
 import java.util.List;
@@ -63,6 +64,7 @@ public interface JrnlDreamTagRepository
      * @param mnth - 조회할 월
      * @return {@link Integer} -- 태그 번호와 년도, 월에 해당하는 태그 개수
      */
+    @Transactional(readOnly = true)
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     @Query("SELECT COUNT(contentTag.contentTagNo) " +
             "FROM JrnlDreamContentTagEntity contentTag " +

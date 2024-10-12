@@ -4,6 +4,7 @@ import io.nicheblog.dreamdiary.domain.schdul.entity.SchdulEntity;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.QueryHint;
 import java.util.Date;
@@ -28,6 +29,7 @@ public interface SchdulRepository
      * @param date - 조회할 시작 날짜
      * @return Optional<SchdulEntity> - 휴일에 해당하는 일정 정보가 포함된 `SchdulEntity` 객체의 Optional
      */
+    @Transactional(readOnly = true)
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Optional<SchdulEntity> findBySchdulCdAndBgnDt(final String groupId, final Date date);
 }

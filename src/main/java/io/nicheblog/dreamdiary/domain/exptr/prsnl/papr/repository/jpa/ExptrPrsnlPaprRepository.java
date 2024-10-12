@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.QueryHint;
 import java.util.List;
@@ -62,6 +63,7 @@ public interface ExptrPrsnlPaprRepository
      *
      * @return {@link String} -- 최저 년도 (String)
      */
+    @Transactional(readOnly = true)
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     @Query("SELECT min(t.yy) " +
             "FROM ExptrPrsnlPaprEntity t")

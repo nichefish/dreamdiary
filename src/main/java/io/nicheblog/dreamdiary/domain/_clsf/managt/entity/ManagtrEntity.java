@@ -20,7 +20,6 @@ import javax.persistence.*;
  * </pre>
  *
  * @author nichefish
- * @extends BaseAuditRegEntity
  */
 @Entity
 @Table(name = "managtr")

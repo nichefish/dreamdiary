@@ -23,7 +23,6 @@ import java.util.Map;
  * </pre>
  *
  * @author nichefish
- * @implements BasePostSpec
  */
 @Component
 @Log4j2

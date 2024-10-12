@@ -21,7 +21,6 @@ import java.util.List;
  * </pre>
  *
  * @author nichefish
- * @extends RestTemplate
  */
 public class JsonRestTemplate
         extends RestTemplate {

@@ -25,7 +25,6 @@ import javax.validation.constraints.Size;
  * </pre>
  *
  * @author nichefish
- * @extends BasePostDto
  */
 @Getter
 @Setter

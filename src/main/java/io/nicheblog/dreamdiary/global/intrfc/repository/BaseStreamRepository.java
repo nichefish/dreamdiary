@@ -18,7 +18,6 @@ import java.util.stream.Stream;
  * </pre>
  *
  * @author nichefish
- * @extends BaseRepository, JpaSpecificationExcecutor
  */
 @NoRepositoryBean
 public interface BaseStreamRepository<T, ID extends Serializable>

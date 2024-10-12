@@ -17,7 +17,6 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  *
  * @author nichefish
- * @extends BaseClsfMapstruct
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, CmmUtils.class}, builder = @Builder(disableBuilder = true))
 public interface NoticeMapstruct
