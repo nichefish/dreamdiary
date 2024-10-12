@@ -24,22 +24,22 @@ import java.util.Map;
 public class MailSendParam {
     
     /** 제목 */
-    public String subject;
+    private String subject;
 
     /** 본문 템플릿 */
-    public String tmplat;
+    private String tmplat;
 
     /** 발신자 (홍길동<test@gmail.com>) */
-    public MailAddress sender;
+    private MailAddress sender;
 
     /** 수신자 Array(홍길동<test@gmail.com>) */
-    public List<MailAddress> recipientList;
+    private List<MailAddress> recipientList;
 
     /** 첨부파일 목록 */
-    public List<AtchFileDtlDto> atchFileList;
+    private List<AtchFileDtlDto> atchFileList;
 
     /** 데이터:: freemarker 템플릿 처리 */
-    public Map<String, Object> dataMap;
+    private Map<String, Object> dataMap;
 
     /* ----- */
 

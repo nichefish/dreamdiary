@@ -1,8 +1,9 @@
-package io.nicheblog.dreamdiary.web.controller;
+package io.nicheblog.dreamdiary.domain.main.controller;
 
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfoTestFactory;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.auth.model.AuthInfo;
-import io.nicheblog.dreamdiary.global.auth.model.AuthInfoTestFactory;
+import io.nicheblog.dreamdiary.global.intrfc.controller.BaseControllerTestHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
