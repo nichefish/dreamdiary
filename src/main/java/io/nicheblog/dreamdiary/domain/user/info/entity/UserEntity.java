@@ -1,13 +1,13 @@
-package io.nicheblog.dreamdiary.web.entity.user;
+package io.nicheblog.dreamdiary.domain.user.info.entity;
 
+import io.nicheblog.dreamdiary.domain.user.emplym.entity.UserEmplymEntity;
+import io.nicheblog.dreamdiary.domain.user.emplym.mapstruct.UserEmplymMapstruct;
+import io.nicheblog.dreamdiary.domain.user.info.model.emplym.UserEmplymDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.profl.UserProflDto;
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntity;
+import io.nicheblog.dreamdiary.domain.user.profl.mapstruct.UserProflMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.entity.user.emplym.UserEmplymEntity;
-import io.nicheblog.dreamdiary.web.entity.user.profl.UserProflEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.user.emplym.UserEmplymMapstruct;
-import io.nicheblog.dreamdiary.web.mapstruct.user.profl.UserProflMapstruct;
-import io.nicheblog.dreamdiary.web.model.user.emplym.UserEmplymDto;
-import io.nicheblog.dreamdiary.web.model.user.profl.UserProflDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
@@ -145,11 +145,13 @@ public class UserEntity
 
     /**
      * tagify 문자열로부터 List<useAcsIpEntity> 세팅
+     *
+     * @param authStr 쉼표(,)로 구분된 권한 정보 문자열
      */
     public void setAuthList(final String authStr) {
         if (StringUtils.isEmpty(authStr)) return;
         // 권한 정보 문자열에서 권한 목록 생성
-        List<String> authStrList = List.of(authStr.split(","));
+        final List<String> authStrList = List.of(authStr.split(","));
         this.setAuthList(authStrList.stream()
                 .map(UserAuthRoleEntity::new)
                 .collect(Collectors.toList()));
@@ -157,9 +159,11 @@ public class UserEntity
 
     /**
      * tagify 문자열로부터 List<useAcsIpEntity> 세팅
+     *
+     * @param tagifyStr tagify 형식으로 전달된 IP 주소 문자열
      */
     public void setAcsIpList(final String tagifyStr) {
-        List<String> acsIpStrList = CmmUtils.parseTagify(tagifyStr);
+        final List<String> acsIpStrList = CmmUtils.parseTagify(tagifyStr);
         this.setAcsIpList(acsIpStrList.stream()
                 .map(UserAcsIpEntity::new)
                 .collect(Collectors.toList()));
@@ -167,38 +171,50 @@ public class UserEntity
 
     /**
      * 서브엔티티 List 처리를 위한 Setter Override
-     * 한 번 Entity가 생성된 이후부터는 new List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
+     * 한 번 Entity가 생성된 이후부터는 새 List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
+     *
+     * @param acsIpList - 설정할 객체 리스트
      */
     public void setAcsIpList(final List<UserAcsIpEntity> acsIpList) {
-        if (CollectionUtils.isEmpty(acsIpList)) return;
-        if (this.acsIpList == null) {
-            this.acsIpList = acsIpList;
-        } else {
-            this.acsIpList.clear();
-            this.acsIpList.addAll(acsIpList);
-        }
-    }
-    public void setAuthList(final List<UserAuthRoleEntity> authList) {
-        if (CollectionUtils.isEmpty(authList)) return;
-        if (this.authList == null) {
-            this.authList = authList;
-        } else {
-            this.authList.clear();
-            this.authList.addAll(authList);
-        }
+        this.updtList(this.acsIpList, acsIpList);
     }
 
+    /**
+     * 서브엔티티 List 처리를 위한 Setter Override
+     * 한 번 Entity가 생성된 이후부터는 새 List를 할당하면 안 되고 계속 JPA 이력이 추적되어야 한다.
+     *
+     * @param authList - 설정할 객체 리스트
+     */
+    public void setAuthList(final List<UserAuthRoleEntity> authList) {
+        this.updtList(this.authList, authList);
+    }
+
+    /**
+     * 사용자 프로필 정보를 업데이트하여 반환합니다.
+     *
+     * @param dto 업데이트할 사용자 프로필 정보가 담긴 DTO
+     * @return {@link UserProflEntity} -- 업데이트된 사용자 프로필 엔티티
+     * @throws Exception 업데이트 과정에서 발생할 수 있는 예외
+     */
     public UserProflEntity getProflUpdt(UserProflDto dto) throws Exception {
         UserProflMapstruct.INSTANCE.updateFromDto(dto, this.profl);
         return this.profl;
     }
+
+    /**
+     * 사용자 직원정보를 업데이트하여 반환합니다.
+     *
+     * @param dto 업데이트할 사용자 고용 정보가 담긴 DTO
+     * @return {@link UserEmplymEntity} -- 업데이트된 사용자 고용 엔티티
+     * @throws Exception 업데이트 과정에서 발생할 수 있는 예외
+     */
     public UserEmplymEntity getEmplymUpdt(UserEmplymDto dto) throws Exception {
         UserEmplymMapstruct.INSTANCE.updateFromDto(dto, this.emplym);
         return this.emplym;
     }
 
     /**
-     * 등록시 cascade
+     * 등록 시 계층적으로 연관된 엔티티를 cascade.
      */
     public void cascade() {
         if (this.profl != null) this.profl.setUser(this);

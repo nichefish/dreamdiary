@@ -60,13 +60,7 @@ public class AtchFileEntity
      * @param atchFileList - 할당할 첨부 파일 세부 엔티티 리스트
      */
     public void setAtchFileList(final List<AtchFileDtlEntity> atchFileList) {
-        if (CollectionUtils.isEmpty(atchFileList)) return;
-        if (this.atchFileList == null) {
-            this.atchFileList = atchFileList;
-        } else {
-            this.atchFileList.clear();
-            this.atchFileList.addAll(atchFileList);
-        }
+        this.updtList(this.atchFileList, atchFileList);
     }
 
     /**

@@ -100,13 +100,7 @@ public class ClCdEntity
      * @param dtlCdList - 설정할 객체 리스트
      */
     public void setDtlCdList(final List<DtlCdEntity> dtlCdList) {
-        if (CollectionUtils.isEmpty(dtlCdList)) return;
-        if (this.dtlCdList == null) {
-            this.dtlCdList = dtlCdList;
-        } else {
-            this.dtlCdList.clear();
-            this.dtlCdList.addAll(dtlCdList);
-        }
+        this.updtList(this.dtlCdList, dtlCdList);
     }
 
     /* ----- */

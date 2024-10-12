@@ -1,19 +1,19 @@
-package io.nicheblog.dreamdiary.web.service.jrnl.dream;
+package io.nicheblog.dreamdiary.domain.jrnl.dream.service;
 
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.TagDto;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamTagEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.mapstruct.JrnlDreamTagMapstruct;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamSearchParam;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.repository.jpa.JrnlDreamTagRepository;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.spec.JrnlDreamTagSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseReadonlyService;
-import io.nicheblog.dreamdiary.web.entity.jrnl.dream.JrnlDreamTagEntity;
-import io.nicheblog.dreamdiary.web.mapstruct.jrnl.dream.JrnlDreamTagMapstruct;
-import io.nicheblog.dreamdiary.web.model.cmm.tag.TagDto;
-import io.nicheblog.dreamdiary.web.repository.jrnl.dream.jpa.JrnlDreamTagRepository;
-import io.nicheblog.dreamdiary.web.spec.jrnl.dream.JrnlDreamTagSpec;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,11 +21,10 @@ import java.util.stream.Collectors;
 /**
  * JrnlDreamTagService
  * <pre>
- *  저널 꿈 태그 서비스 모듈
+ *  저널 꿈 태그 서비스 모듈.
  * </pre>
  *
  * @author nichefish
- * @implements BaseCrudService:: 세부내용 변경시 해당 default 메소드 재정의(@Override)
  */
 @Service("jrnlDreamTagService")
 @RequiredArgsConstructor
@@ -33,49 +32,48 @@ import java.util.stream.Collectors;
 public class JrnlDreamTagService
         implements BaseReadonlyService<TagDto, TagDto, Integer, JrnlDreamTagEntity, JrnlDreamTagRepository, JrnlDreamTagSpec, JrnlDreamTagMapstruct> {
 
-    private final JrnlDreamTagRepository jrnlDreamTagRepository;
-    private final JrnlDreamTagSpec jrnlDreamTagSpec;
-    private final JrnlDreamTagMapstruct tagMapstruct = JrnlDreamTagMapstruct.INSTANCE;
+    @Getter
+    private final JrnlDreamTagRepository repository;
+    @Getter
+    private final JrnlDreamTagSpec spec;
+    @Getter
+    private final JrnlDreamTagMapstruct mapstruct = JrnlDreamTagMapstruct.INSTANCE;
 
-    @Autowired
-    private ApplicationContext context;
+    private final ApplicationContext context;
 
     private JrnlDreamTagService getSelf() {
         return context.getBean(JrnlDreamTagService.class);
     }
 
-    @Override
-    public JrnlDreamTagRepository getRepository() {
-        return this.jrnlDreamTagRepository;
-    }
-    @Override
-    public JrnlDreamTagSpec getSpec() {
-        return this.jrnlDreamTagSpec;
-    }
-    @Override
-    public JrnlDreamTagMapstruct getMapstruct() {
-        return this.tagMapstruct;
-    }
-
+    /**
+     * 지정된 연도와 월을 기준으로 태그 목록을 캐시 처리하여 반환합니다.
+     *
+     * @param yy 조회할 연도
+     * @param mnth 조회할 월
+     * @return {@link List} -- 태그 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
+     */
     @Cacheable(value="jrnlDreamTagList", key="#yy + \"_\" + #mnth")
     public List<TagDto> getListDtoWithCache(final Integer yy, final Integer mnth) throws Exception {
-        Map<String, Object> searchParamMap = new HashMap<>() {{
-            put("yy", yy);
-            put("mnth", mnth);
-        }};
-        return this.getSelf().getListDto(searchParamMap);
+        final JrnlDreamSearchParam searchParam = JrnlDreamSearchParam.builder().yy(yy).mnth(mnth).build();
+        return this.getSelf().getListDto(searchParam);
     }
 
     /**
      * css 사이즈 계산한 태그 목록 조회
      * 태그 1개 = 1. 그 외엔 2~9
+     *
+     * @param yy 조회할 연도
+     * @param mnth 조회할 월
+     * @return {@link List} -- CSS 사이즈가 적용된 태그 목록
+     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     @Cacheable(value="jrnlDreamSizedTagList", key="#yy + \"_\" + #mnth")
     public List<TagDto> getDreamSizedListDto(final Integer yy, final Integer mnth) throws Exception {
         // 저널 꿈 태그 DTO 목록 조회
-        List<TagDto> tagList = this.getSelf().getListDtoWithCache(yy, mnth);
+        final List<TagDto> tagList = this.getSelf().getListDtoWithCache(yy, mnth);
 
-        int maxSize = this.calcMaxSize(tagList, yy, mnth);
+        final int maxSize = this.calcMaxSize(tagList, yy, mnth);
         final int MIN_SIZE = 2; // 최소 크기
         final int MAX_SIZE = 9; // 최대 크기
         return tagList.stream()
@@ -95,12 +93,17 @@ public class JrnlDreamTagService
 
     /**
      * 최대 사용빈도 계산한 꿈 태그 목록 조회
+     *
+     * @param tagList 태그 목록 (List<TagDto>)
+     * @param yy 조회할 년도
+     * @param mnth 조회할 월
+     * @return {@link Integer} -- 태그 목록에서 계산된 최대 사용 빈도 (Integer)
      */
     public Integer calcMaxSize(final List<TagDto> tagList, Integer yy, Integer mnth) {
         int maxFrequency = 0;
         for (TagDto tag : tagList) {
             // 캐싱 처리 위해 셀프 프록시
-            Integer dreamSize = this.getSelf().countDreamSize(tag.getTagNo(), yy, mnth);
+            final Integer dreamSize = this.getSelf().countDreamSize(tag.getTagNo(), yy, mnth);
             tag.setContentSize(dreamSize);
             maxFrequency = Math.max(maxFrequency, dreamSize);
         }
@@ -109,10 +112,14 @@ public class JrnlDreamTagService
 
     /**
      * 꿈 태그별 크기 조회
+     *
+     * @param yy 조회할 년도
+     * @param mnth 조회할 월
+     * @return {@link Map} -- 카테고리별 태그 목록을 담은 Map
      */
     @Cacheable(value="countDreamSize", key="#tagNo + \"_\" + #yy + \"_\" + #mnth")
     public Integer countDreamSize(final Integer tagNo, final Integer yy, final Integer mnth) {
-        return jrnlDreamTagRepository.countDreamSize(tagNo, yy, mnth);
+        return repository.countDreamSize(tagNo, yy, mnth);
     }
 
     public Map<String, List<TagDto>> getDreamSizedGroupListDto(final Integer yy, final Integer mnth) throws Exception {

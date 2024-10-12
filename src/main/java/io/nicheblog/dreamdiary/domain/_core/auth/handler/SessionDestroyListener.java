@@ -31,11 +31,11 @@ public class SessionDestroyListener
      */
     @Override
     public void onApplicationEvent(final SessionDestroyedEvent event) {
-        List<SecurityContext> lstSecurityContext = event.getSecurityContexts();
-        for (SecurityContext securityContext : lstSecurityContext) {
+        final List<SecurityContext> lstSecurityContext = event.getSecurityContexts();
+        for (final SecurityContext securityContext : lstSecurityContext) {
             // 중복 로그인 관리용 arrayList에서 로그인 아이디 제거
-            Authentication authentication = securityContext.getAuthentication();
-            String userId = ((AuthInfo) authentication.getPrincipal()).getUserId();
+            final Authentication authentication = securityContext.getAuthentication();
+            final String userId = ((AuthInfo) authentication.getPrincipal()).getUserId();
             DupIdLgnManager.removeKey(userId);
         }
     }

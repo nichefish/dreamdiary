@@ -216,13 +216,7 @@ public class ExptrPrsnlPaprEntity
      * @param itemList - 설정할 객체 리스트
      */
     public void setItemList(final List<ExptrPrsnlItemEntity> itemList) {
-        if (CollectionUtils.isEmpty(itemList)) return;
-        if (this.itemList == null) {
-            this.itemList = itemList;
-        } else {
-            this.itemList.clear();
-            this.itemList.addAll(itemList);
-        }
+        this.updtList(this.itemList, itemList);
     }
 
     /* ----- */

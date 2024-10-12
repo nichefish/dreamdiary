@@ -55,7 +55,7 @@ public class JrnlDayTagService
      */
     @Cacheable(value="jrnlDayTagList", key="#yy + \"_\" + #mnth")
     public List<TagDto> getListDtoWithCache(final Integer yy, final Integer mnth) throws Exception {
-        JrnlDaySearchParam searchParam = JrnlDaySearchParam.builder().yy(yy).mnth(mnth).build();
+        final JrnlDaySearchParam searchParam = JrnlDaySearchParam.builder().yy(yy).mnth(mnth).build();
         return this.getSelf().getListDto(searchParam);
     }
 
@@ -116,7 +116,6 @@ public class JrnlDayTagService
      * @param yy 조회할 년도
      * @param mnth 조회할 월
      * @return {@link Map} -- 카테고리별 태그 목록을 담은 Map
-     * @throws Exception 조회 중 발생할 수 있는 예외
      */
     @Cacheable(value="countDaySize", key="#tagNo + \"_\" + #yy + \"_\" + #mnth")
     public Integer countDaySize(final Integer tagNo, final Integer yy, final Integer mnth) {
