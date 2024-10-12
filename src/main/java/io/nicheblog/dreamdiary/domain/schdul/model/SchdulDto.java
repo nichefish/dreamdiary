@@ -1,14 +1,12 @@
 package io.nicheblog.dreamdiary.domain.schdul.model;
 
-import io.nicheblog.dreamdiary.domain.schdul.entity.SchdulPrtcpntEntity;
-import io.nicheblog.dreamdiary.domain.schdul.mapstruct.SchdulPrtcpntMapstruct;
-import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +14,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +29,7 @@ import java.util.stream.Collectors;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class SchdulDto
         extends BasePostDto
         implements Identifiable<Integer>, CommentCmpstnModule, TagCmpstnModule {

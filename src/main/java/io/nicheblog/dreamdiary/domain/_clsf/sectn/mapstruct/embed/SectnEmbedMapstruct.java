@@ -2,8 +2,8 @@ package io.nicheblog.dreamdiary.domain._clsf.sectn.mapstruct.embed;
 
 import io.nicheblog.dreamdiary.domain._clsf.sectn.entity.embed.SectnEmbed;
 import io.nicheblog.dreamdiary.domain._clsf.sectn.mapstruct.SectnMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.domain._clsf.sectn.model.cmpstn.SectnCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -40,6 +40,7 @@ public interface SectnEmbedMapstruct
      * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
+    @Mapping(target = "list", expression = "java(SectnMapstruct.INSTANCE.toEntityList(dto.getList()))")
     SectnEmbed toEntity(final SectnCmpstn dto) throws Exception;
 
     /**

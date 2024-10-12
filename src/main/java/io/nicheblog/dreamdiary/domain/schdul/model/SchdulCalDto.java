@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.model.BaseCalDto;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -22,7 +23,7 @@ import lombok.extern.log4j.Log4j2;
  */
 @Getter
 @Setter
-@Builder
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)

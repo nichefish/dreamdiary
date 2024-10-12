@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString(callSuper = true)

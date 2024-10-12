@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.domain._clsf.comment.mapstruct.embed;
 
-import io.nicheblog.dreamdiary.domain._clsf.comment.mapstruct.CommentMapstruct;
 import io.nicheblog.dreamdiary.domain._clsf.comment.entity.embed.CommentEmbed;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
+import io.nicheblog.dreamdiary.domain._clsf.comment.mapstruct.CommentMapstruct;
 import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -40,6 +40,7 @@ public interface CommentEmbedMapstruct
      * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
+    @Mapping(target = "list", expression = "java(CommentMapstruct.INSTANCE.toEntityList(dto.getList()))")
     CommentEmbed toEntity(final CommentCmpstn dto) throws Exception;
 
     /**

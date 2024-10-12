@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class ContentTagDto
         extends BaseCrudDto
         implements Identifiable<Integer>, Comparable<ContentTagDto> {

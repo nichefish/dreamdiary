@@ -39,7 +39,7 @@ import java.util.HashMap;
  */
 @Configuration
 @EnableJpaRepositories(
-        basePackages = {"io.nicheblog.dreamdiary.domain.**.repository.jpa", "io.nicheblog.dreamdiary.**.repository.querydsl" },
+        basePackages = {"io.nicheblog.dreamdiary.**.repository.jpa", "io.nicheblog.dreamdiary.**.repository.querydsl" },
         repositoryBaseClass = BaseRepositoryImpl.class
 )
 @MapperScan(
