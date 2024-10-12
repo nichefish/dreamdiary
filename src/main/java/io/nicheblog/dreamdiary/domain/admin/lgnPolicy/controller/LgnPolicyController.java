@@ -69,7 +69,7 @@ public class LgnPolicyController
         String rsltMsg = "";
         try {
             // 항목 조회 및 모델에 추가 :: 현재는 항상 고정 ID(1L)로 조회한다.
-            LgnPolicyDto rsUserLgnPolicDto = lgnPolicyService.getDtlDto();
+            final LgnPolicyDto rsUserLgnPolicDto = lgnPolicyService.getDtlDto();
             model.addAttribute("lgnPolicy", rsUserLgnPolicDto);
 
             isSuccess = (rsUserLgnPolicDto != null);
@@ -104,7 +104,7 @@ public class LgnPolicyController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

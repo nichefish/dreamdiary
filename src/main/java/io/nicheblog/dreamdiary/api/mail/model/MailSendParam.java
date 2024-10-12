@@ -1,6 +1,6 @@
-package io.nicheblog.dreamdiary.global.cmm.mail.model;
+package io.nicheblog.dreamdiary.api.mail.model;
 
-import io.nicheblog.dreamdiary.global.cmm.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * MailSendParam
  * <pre>
- *  메일 발송 파라미터
+ *  메일 발송 파라미터.
  * </pre>
  *
  * @author nichefish
@@ -43,10 +43,21 @@ public class MailSendParam {
 
     /* ----- */
 
-    /** 생성자 */
+    /**
+     * 생성자.
+     *
+     * @param tmplat 메일 템플릿을 나타내는 문자열
+     */
     public MailSendParam(final String tmplat) {
         this.tmplat = tmplat;
     }
+
+    /**
+     * 생성자.
+     *
+     * @param tmplat 메일 템플릿을 나타내는 문자열
+     * @param sender 메일 발신자 정보
+     */
     public MailSendParam(final String tmplat, final MailAddress sender) {
         this(tmplat);
         this.sender = sender;

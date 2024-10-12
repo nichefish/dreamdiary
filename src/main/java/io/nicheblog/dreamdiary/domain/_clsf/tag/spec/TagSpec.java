@@ -50,7 +50,6 @@ public class TagSpec
      * @param root 검색할 엔티티의 Root 객체
      * @param builder 검색 조건을 생성하는 CriteriaBuilder 객체
      * @return {@link List} -- 설정된 검색 조건(Predicate) 리스트
-     * @throws Exception 검색 조건 생성 중 발생할 수 있는 예외
      */
     @Override
     public List<Predicate> getPredicateWithParams(
@@ -59,13 +58,13 @@ public class TagSpec
             final CriteriaBuilder builder
     ) {
 
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
 
         // 파라미터 비교
-        for (String key : searchParamMap.keySet()) {
+        for (final String key : searchParamMap.keySet()) {
             switch (key) {
                 case "contentType":
-                    Join<TagEntity, ContentTagEntity> contentTagJoin = root.join("contentTagList", JoinType.INNER);
+                    final Join<TagEntity, ContentTagEntity> contentTagJoin = root.join("contentTagList", JoinType.INNER);
                     predicate.add(builder.equal(contentTagJoin.get("refContentType"), searchParamMap.get(key)));
                 default:
                     // default :: 조건 파라미터에 대해 equal 검색
@@ -88,7 +87,7 @@ public class TagSpec
         return (root, query, builder) -> {
             List<Predicate> predicate = new ArrayList<>();
             try {
-                Join<TagEntity, ContentTagEntity> contentTagJoin = root.join("contentTagList", JoinType.LEFT);
+                final Join<TagEntity, ContentTagEntity> contentTagJoin = root.join("contentTagList", JoinType.LEFT);
                 predicate.add(builder.isNull(contentTagJoin));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -104,7 +103,7 @@ public class TagSpec
      * @return {@link Specification} -- 검색 조건에 따른 Specification 객체
      */
     public Specification<TagEntity> getContentSpecificTag(final String contentType) {
-        Map<String, Object> searchParamMap = new HashMap<>(){{
+        final Map<String, Object> searchParamMap = new HashMap<>(){{
             put("contentType", contentType);
         }};
         return this.searchWith(searchParamMap);

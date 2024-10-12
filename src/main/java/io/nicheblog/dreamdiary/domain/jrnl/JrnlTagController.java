@@ -60,7 +60,7 @@ public class JrnlTagController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
