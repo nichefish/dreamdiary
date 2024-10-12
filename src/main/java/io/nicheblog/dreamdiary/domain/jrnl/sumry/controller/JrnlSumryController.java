@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.domain.jrnl.sumry.controller;
 
+import io.nicheblog.dreamdiary.domain._clsf.tag.event.TagProcEvent;
+import io.nicheblog.dreamdiary.domain._clsf.tag.model.TagDto;
 import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.domain._clsf.tag.event.TagProcEvent;
-import io.nicheblog.dreamdiary.domain._clsf.tag.model.TagDto;
 import io.nicheblog.dreamdiary.domain.jrnl.day.service.JrnlDayTagService;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.service.JrnlDiaryService;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.service.JrnlDiaryTagService;
@@ -85,7 +85,7 @@ public class JrnlSumryController
         String rsltMsg = "";
         try {
             // 전체 통계 조회
-            JrnlSumryDto totalSumry = jrnlSumryService.getTotalSumry();
+            final JrnlSumryDto totalSumry = jrnlSumryService.getTotalSumry();
             model.addAttribute("totalSumry", totalSumry);
             // 목록 조회 및 모델에 추가
             List<JrnlSumryDto.LIST> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
@@ -123,13 +123,13 @@ public class JrnlSumryController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 목록 조회 및 응답에 추가
-            List<JrnlSumryDto.LIST> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
+            final List<JrnlSumryDto.LIST> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
             ajaxResponse.setRsltList(jrnlSumryList);
 
             isSuccess = true;
@@ -176,23 +176,23 @@ public class JrnlSumryController
         String rsltMsg = "";
         try {
             // 객체 조회 및 모델에 추가
-            JrnlSumryDto rsltDto = key != null ? jrnlSumryService.getSumryDtl(key) : yyParam != null ? jrnlSumryService.getDtlDtoByYy(yyParam) : null;
+            final JrnlSumryDto rsltDto = key != null ? jrnlSumryService.getSumryDtl(key) : yyParam != null ? jrnlSumryService.getDtlDtoByYy(yyParam) : null;
             model.addAttribute("post", rsltDto);
             if (rsltDto != null) {
-                Integer yy = rsltDto.getYy();
+                final Integer yy = rsltDto.getYy();
                 // 중요 일기 목록 조회
                 model.addAttribute("imprtcDiaryList", jrnlDiaryService.getImprtcDiaryList(yy));
                 // 중요 꿈 목록 조회
                 model.addAttribute("imprtcDreamList", jrnlDreamService.getImprtcDreamList(yy));
 
                 // 일자 태그 목록 조회
-                List<TagDto> jrnlDayTagList = jrnlDayTagService.getDaySizedListDto(yy, 99);
+                final List<TagDto> jrnlDayTagList = jrnlDayTagService.getDaySizedListDto(yy, 99);
                 model.addAttribute("dayTagList", jrnlDayTagList);
                 // 일기 태그 목록 조회
-                List<TagDto> jrnlDiaryTagList = jrnlDiaryTagService.getDiarySizedListDto(yy, 99);
+                final List<TagDto> jrnlDiaryTagList = jrnlDiaryTagService.getDiarySizedListDto(yy, 99);
                 model.addAttribute("diaryTagList", jrnlDiaryTagList);
                 // 꿈 태그 목록 조회
-                List<TagDto> jrnlDreamTagList = jrnlDreamTagService.getDreamSizedListDto(yy, 99);
+                final List<TagDto> jrnlDreamTagList = jrnlDreamTagService.getDreamSizedListDto(yy, 99);
                 model.addAttribute("dreamTagList", jrnlDreamTagList);
             }
             // 코드 데이터 모델에 추가
@@ -231,13 +231,13 @@ public class JrnlSumryController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 추가
-            JrnlSumryDto.DTL rslt = jrnlSumryService.getSumryDtl(key);
+            final JrnlSumryDto.DTL rslt = jrnlSumryService.getSumryDtl(key);
             ajaxResponse.setRsltObj(rslt);
 
             isSuccess = (rslt.getPostNo() != null);
@@ -274,7 +274,7 @@ public class JrnlSumryController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -312,7 +312,7 @@ public class JrnlSumryController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -344,11 +344,11 @@ public class JrnlSumryController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlSumryDreamComptAjax(
-            @RequestParam("postNo") Integer key,
+            final @RequestParam("postNo") Integer key,
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -389,12 +389,12 @@ public class JrnlSumryController
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            JrnlSumryDto result = jrnlSumryService.modify(jrnlSumry, request);
+            final JrnlSumryDto result = jrnlSumryService.modify(jrnlSumry, request);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = true;

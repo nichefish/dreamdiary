@@ -110,7 +110,7 @@ public class LogActvtyDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class DTL
             extends LogActvtyDto {
         //
@@ -124,7 +124,7 @@ public class LogActvtyDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class LIST
             extends LogActvtyDto {
         //

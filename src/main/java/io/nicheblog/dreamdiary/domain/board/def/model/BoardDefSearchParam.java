@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.domain.board.def.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * BoardDefSearchParam
@@ -14,6 +15,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString(callSuper = true)

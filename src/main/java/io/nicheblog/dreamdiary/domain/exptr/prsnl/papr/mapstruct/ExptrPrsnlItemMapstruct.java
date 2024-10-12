@@ -4,16 +4,12 @@ import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlItemEnti
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model.ExptrPrsnlItemDto;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptItemDto;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptItemXlsxDto;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * ExptrPrsnlItemMapstruct
@@ -26,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, DatePtn.class, StringUtils.class})
 public interface ExptrPrsnlItemMapstruct
-        extends BaseMapstruct<ExptrPrsnlItemDto, ExptrPrsnlItemEntity> {
+        extends BaseCrudMapstruct<ExptrPrsnlItemDto, ExptrPrsnlItemDto, ExptrPrsnlItemEntity> {
 
     ExptrPrsnlItemMapstruct INSTANCE = Mappers.getMapper(ExptrPrsnlItemMapstruct.class);
 
@@ -61,25 +57,6 @@ public interface ExptrPrsnlItemMapstruct
     @Mapping(target = "atchFileAt", expression = "java(StringUtils.isNotEmpty(dto.getAtchFileDtlNo()) ? \"Y\" : \"N\")")
     @Mapping(target = "orgnlRciptAt", source = "orgnlRciptYn")
     ExptrPrsnlRptItemXlsxDto toRptItemXlsxDto(final ExptrPrsnlRptItemDto dto) throws Exception;
-
-    /**
-     * EntityList to DtoList
-     *
-     * @param entityList 변환할 Entity 목록
-     * @return {@link List} -- 변환된 Dto 목록
-     */
-    default List<ExptrPrsnlItemDto> toDtoList(final List<ExptrPrsnlItemEntity> entityList) {
-        if (CollectionUtils.isEmpty(entityList)) return null;
-        return entityList.stream()
-                .map(entity -> {
-                    try {
-                        return this.toDto(entity);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
 
     /**
      * Dto -> Entity 변환

@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class FlsysDirDto
         extends FlsysDto
         implements Serializable {

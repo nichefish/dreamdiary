@@ -70,10 +70,11 @@ public class NoticeDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static class DTL
             extends NoticeDto {
+
         /** 팝업공지 여부 (Y/N) */
         @Builder.Default
         @Size(min = 1, max = 1)
@@ -91,7 +92,7 @@ public class NoticeDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static class LIST
             extends NoticeDto {

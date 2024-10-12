@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.global.cmm.log.entity;
+package io.nicheblog.dreamdiary.domain._core.log.actvty.entity;
 
+import io.nicheblog.dreamdiary.domain._core.auth.entity.AuditorInfo;
+import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.auth.entity.AuditorInfo;
-import io.nicheblog.dreamdiary.global.cmm.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,8 +22,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * LogActvtyEntity
@@ -79,7 +77,7 @@ public class LogActvtyEntity
     @Comment("작업일시")
     private Date logDt;
 
-    /** 작업 구분 코드 (ex. 일반게시판, 공지사항, ...) (기능/모듈 단위) */
+    /** 작업 구분 코드 (ex. 게시판, 공지사항, ...) (기능/모듈 단위) */
     @Column(name = "actvty_ctgr_cd", length = 400)
     @Comment("작업 구분 코드")
     private String actvtyCtgrCd;
@@ -173,24 +171,29 @@ public class LogActvtyEntity
 
     /**
      * 파라미터를 파라미터 맵으로 변환
+     *
+     * @return {@link HashMap} -- 변환된 파라미터 맵 (key: 파라미터 이름, value: 파라미터 값)
      */
     public HashMap<String, String> getParamMap() {
-        String paramStr = this.getParam();
-        HashMap<String, String> paramMap = new HashMap<>();
-        if (StringUtils.isEmpty(param)) return paramMap;
+        final HashMap<String, String> paramMap = new HashMap<>();
 
-        String[] paramArray = param.split("&");
-        for (String param : paramArray) {
-            String[] keyValue = param.split("=");
-            if (keyValue.length == 2) {
-                String key = URLDecoder.decode(keyValue[0], StandardCharsets.UTF_8);
-                String value = URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8);
-                if ("isMngr".equals(key)) continue;
-                if ("isMngrMode".equals(key)) continue;
-                if ("isDev".equals(key)) continue;
-                paramMap.put(key, value);
-            }
-        }
+        // 제외할 파라미터들 Set으로 관리
+        final Set<String> excludedParams = Set.of("isMngr", "isMngrMode", "isDev");
+
+        Optional.ofNullable(this.getParam())
+                .filter(param -> !param.isEmpty())
+                .ifPresent(paramStr ->
+                        Arrays.stream(paramStr.split("&"))
+                                .map(param -> param.split("="))
+                                .filter(keyValue -> keyValue.length == 2)
+                                .forEach(keyValue -> {
+                                    String key = URLDecoder.decode(keyValue[0], StandardCharsets.UTF_8);
+                                    if (!excludedParams.contains(key)) {
+                                        String value = URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8);
+                                        paramMap.put(key, value);
+                                    }
+                                })
+                );
 
         return paramMap;
     }

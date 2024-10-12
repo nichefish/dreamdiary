@@ -2,8 +2,8 @@ package io.nicheblog.dreamdiary.domain._clsf.viewer.mapstruct.embed;
 
 import io.nicheblog.dreamdiary.domain._clsf.viewer.entity.embed.ViewerEmbed;
 import io.nicheblog.dreamdiary.domain._clsf.viewer.mapstruct.ViewerMapstruct;
-import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.domain._clsf.viewer.model.cmpstn.ViewerCmpstn;
+import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseMapstruct;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
@@ -42,7 +42,7 @@ public interface ViewerEmbedMapstruct
      * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
-    @Mapping(target = "list", expression = "java(ViewerMapstruct.INSTANCE.toDtoList(dto.getList()))")
+    @Mapping(target = "list", expression = "java(ViewerMapstruct.INSTANCE.toEntityList(dto.getList()))")
     ViewerEmbed toEntity(final ViewerCmpstn dto) throws Exception;
 
     /**

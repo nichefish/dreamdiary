@@ -1,22 +1,22 @@
-package io.nicheblog.dreamdiary.web.controller.user;
+ package io.nicheblog.dreamdiary.domain.user.info.controller;
 
+import io.nicheblog.dreamdiary.domain._core.auth.service.AuthRoleService;
+import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
+import io.nicheblog.dreamdiary.domain.user.info.model.UserSearchParam;
+import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.auth.service.AuthRoleService;
-import io.nicheblog.dreamdiary.global.auth.util.AuthUtils;
-import io.nicheblog.dreamdiary.global.cmm.cd.service.CdService;
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
+import io.nicheblog.dreamdiary.global.model.AjaxResponse;
+import io.nicheblog.dreamdiary.global.model.PaginationInfo;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
-import io.nicheblog.dreamdiary.web.SiteMenu;
-import io.nicheblog.dreamdiary.web.model.cmm.AjaxResponse;
-import io.nicheblog.dreamdiary.web.model.cmm.PaginationInfo;
-import io.nicheblog.dreamdiary.web.model.user.UserDto;
-import io.nicheblog.dreamdiary.web.model.user.UserSearchParam;
-import io.nicheblog.dreamdiary.web.service.user.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -31,6 +31,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,11 +39,10 @@ import java.util.Map;
 /**
  * UserInfoController
  * <pre>
- *  사용자 관리 > 계정 및 권한 관리 컨트롤러
+ *  사용자 관리 > 계정 및 권한 관리 컨트롤러.
  * </pre>
  *
  * @author nichefish
- * @extends BaseControllerImpl
  */
 @Controller
 @RequiredArgsConstructor
@@ -57,11 +57,17 @@ public class UserController
 
     private final UserService userService;
     private final AuthRoleService authRoleService;
-    private final CdService cdService;
+    private final DtlCdService dtlCdService;
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 목록 화면 조회
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.USER_LIST)
     @Secured(Constant.ROLE_MNGR)
@@ -80,19 +86,19 @@ public class UserController
             // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
             searchParam = (UserSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
             // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            Sort sort = Sort.by(Sort.Direction.ASC, "acntStus.cfYn")
+            final Sort sort = Sort.by(Sort.Direction.ASC, "acntStus.cfYn")
                             .and(Sort.by(Sort.Direction.ASC, "acntStus.lockedYn"))
                             .and(Sort.by(Sort.Direction.DESC, "regDt"));
-            PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
             // 목록 조회
-            Page<UserDto.LIST> userList = userService.getPageDto(searchParam, pageRequest);
+            final Page<UserDto.LIST> userList = userService.getPageDto(searchParam, pageRequest);
             model.addAttribute("userList", userList.getContent());
             model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(userList));
             // 코드 정보 모델에 추가
-            cdService.setModelCdData(Constant.AUTH_CD, model);
-            cdService.setModelCdData(Constant.TEAM_CD, model);
-            cdService.setModelCdData(Constant.EMPLYM_CD, model);
-            cdService.setModelCdData(Constant.RANK_CD, model);
+            dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
+            dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
+            dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
+            dtlCdService.setCdListToModel(Constant.RANK_CD, model);
             // 목록 검색 URL + 파라미터 모델에 추가
             CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
@@ -114,7 +120,11 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 등록 화면 조회
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.USER_REG_FORM)
     @Secured(Constant.ROLE_MNGR)
@@ -139,10 +149,10 @@ public class UserController
             }};
             model.addAttribute("authRoleList", authRoleService.getListDto(searchParamMap));
             // 코드 정보 모델에 추가
-            cdService.setModelCdData(Constant.AUTH_CD, model);
-            cdService.setModelCdData(Constant.TEAM_CD, model);
-            cdService.setModelCdData(Constant.EMPLYM_CD, model);
-            cdService.setModelCdData(Constant.RANK_CD, model);
+            dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
+            dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
+            dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
+            dtlCdService.setCdListToModel(Constant.RANK_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -171,7 +181,7 @@ public class UserController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -199,24 +209,30 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 등록/수정 (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param user 등록/수정 처리할 객체
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(value = {Url.USER_REG_AJAX, Url.USER_MDF_AJAX})
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userRegAjax(
             final @Valid UserDto.DTL user,
+            final @RequestParam("userNo") @Nullable Integer key,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = user.getUserNo() == null;
+            boolean isReg = key == null;
             UserDto result = isReg ? userService.regist(user, request) : userService.modify(user, request);
             ajaxResponse.setRsltObj(result);
 
@@ -241,12 +257,18 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 상세 화면 조회
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.USER_DTL)
     @Secured(Constant.ROLE_MNGR)
     public String userDtl(
-            final @RequestParam("userNo") Integer userNo,
+            final @RequestParam("userNo") Integer key,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
@@ -258,7 +280,7 @@ public class UserController
         String rsltMsg = "";
         try {
             // 상세 조회 및 모델에 추가
-            UserDto rsDto = userService.getDtlDto(userNo);
+            UserDto rsDto = userService.getDtlDto(key);
             model.addAttribute("user", rsDto);
 
             isSuccess = true;
@@ -270,7 +292,7 @@ public class UserController
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setCn("key: " + userNo);
+            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -280,12 +302,18 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 수정 화면 조회
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
+     * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.USER_MDF_FORM)
     @Secured(Constant.ROLE_MNGR)
     public String userMdfForm(
-            final @RequestParam("userNo") Integer userNo,
+            final @RequestParam("userNo") Integer key,
             final LogActvtyParam logParam,
             final ModelMap model
     ) throws Exception {
@@ -297,7 +325,7 @@ public class UserController
         String rsltMsg = "";
         try {
             // 상세 조회 및 모델에 추가
-            UserDto rsDto = userService.getDtlDto(userNo);
+            UserDto rsDto = userService.getDtlDto(key);
             model.addAttribute("user", rsDto);
             // 등록/수정 화면 플래그
             model.addAttribute(Constant.IS_MDF, true);
@@ -307,10 +335,10 @@ public class UserController
             }};
             model.addAttribute("authRoleList", authRoleService.getListDto(searchParamMap));
             // 코드 정보 모델에 추가
-            cdService.setModelCdData(Constant.AUTH_CD, model);
-            cdService.setModelCdData(Constant.TEAM_CD, model);
-            cdService.setModelCdData(Constant.EMPLYM_CD, model);
-            cdService.setModelCdData(Constant.RANK_CD, model);
+            dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
+            dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
+            dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
+            dtlCdService.setCdListToModel(Constant.RANK_CD, model);
 
             isSuccess = true;
             rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -322,7 +350,7 @@ public class UserController
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
             // 로그 관련 처리
-            logParam.setCn("key: " + userNo);
+            logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -332,7 +360,7 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 패스워드 초기화
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
      */
     @PostMapping(Url.USER_PW_RESET_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -342,7 +370,7 @@ public class UserController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
@@ -368,28 +396,32 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 삭제 (Ajax)
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     *
+     * @param key 식별자
+     * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      */
     @PostMapping(Url.USER_DEL_AJAX)
     @Secured(Constant.ROLE_MNGR)
     @ResponseBody
     public ResponseEntity<AjaxResponse> userDelAjax(
-            final @RequestParam("userNo") Integer userNo,
+            final @RequestParam("userNo") Integer key,
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            UserDto rsUserDto = userService.getDtlDto(userNo);
+            UserDto rsUserDto = userService.getDtlDto(key);
             // 내 정보인지 비교 :: "내 정보는 삭제할 수 없습니다."
             if (AuthUtils.isMyInfo(rsUserDto.getUserId())) {
                 rsltMsg = MessageUtils.NOT_DELABLE_OWN_ID;
             } else {
-                // 삭제 처리
-                isSuccess = userService.delete(userNo);
+                // 삭제
+                isSuccess = userService.delete(key);
                 rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
             }
         } catch (Exception e) {
@@ -410,7 +442,9 @@ public class UserController
 
     /**
      * 사용자 관리 > 계정 및 권한 관리 > 사용자 목록 엑셀 다운로드
-     * (관리자MNGR만 접근 가능)
+     * (관리자MNGR만 접근 가능.)
+     * @param searchParam 검색 조건을 담은 파라미터 객체
+     * @param logParam 로그 기록을 위한 파라미터 객체
      */
     @GetMapping(Url.USER_LIST_XLSX_DOWNLOAD)
     @Secured(Constant.ROLE_MNGR)

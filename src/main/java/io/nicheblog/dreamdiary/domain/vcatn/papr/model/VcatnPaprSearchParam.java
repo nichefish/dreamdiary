@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.domain.vcatn.papr.model;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * VcatnPaprSearchParam
@@ -14,8 +15,9 @@ import lombok.*;
  */
 @Getter
 @Setter
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class VcatnPaprSearchParam
         extends BasePostSearchParam {

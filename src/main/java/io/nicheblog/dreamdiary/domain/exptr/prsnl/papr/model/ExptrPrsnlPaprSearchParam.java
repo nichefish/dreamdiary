@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * ExptrPrsnlPaprSearchParam
@@ -15,8 +16,9 @@ import lombok.*;
  */
 @Getter
 @Setter
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class ExptrPrsnlPaprSearchParam
         extends BasePostSearchParam {

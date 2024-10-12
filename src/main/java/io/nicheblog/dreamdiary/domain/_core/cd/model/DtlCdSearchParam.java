@@ -1,11 +1,8 @@
 package io.nicheblog.dreamdiary.domain._core.cd.model;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 /**
  * DtlCdSearchParam
@@ -17,7 +14,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString(callSuper = true)

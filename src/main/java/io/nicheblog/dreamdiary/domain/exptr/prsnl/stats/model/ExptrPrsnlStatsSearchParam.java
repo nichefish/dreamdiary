@@ -2,6 +2,7 @@ package io.nicheblog.dreamdiary.domain.exptr.prsnl.stats.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * ExptrPrsnlStatsSearchParam
@@ -13,10 +14,10 @@ import lombok.*;
  */
 @Getter
 @Setter
-@Builder
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class ExptrPrsnlStatsSearchParam
         extends BaseSearchParam {
 

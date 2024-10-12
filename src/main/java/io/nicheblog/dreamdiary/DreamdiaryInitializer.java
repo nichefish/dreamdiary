@@ -61,8 +61,6 @@ public class DreamdiaryInitializer
         this.regSystemAcntIfEmpty();
         // 로그인 정책 부재시 등록 :: 메소드 분리
         this.regLgnPolicyIfEmpty();
-        // 프로필에 따른 .env 로드 :: 메소드 분리
-        this.loadDotEnvProperties();
 
         // 시스템 재기동 로그 적재:: 운영 환경 이외에는 적재하지 않음
         if (activeProfile.isProd()) {
@@ -176,29 +174,5 @@ public class DreamdiaryInitializer
                 .build();
 
         return lgnPolicyService.regist(lgnPolicy);
-    }
-
-    /**
-     * 프로필에 따라 dotEnv 설정 로드.
-     */
-    private void loadDotEnvProperties() {
-        try {
-            // 프로필 기반 .env.${profile} 프로퍼티 로드 (속성 없을시:: 기본값 local)
-            final String profile = System.getProperty("spring.profiles.active", "local");
-            this.setDotEnvPropertiesByFileNm(".env");
-            this.setDotEnvPropertiesByFileNm(".env." + profile);
-        } catch (Exception e) {
-            log.error("Failed to load .env file for profile '{}'", System.getProperty("spring.profiles.active"), e);
-        }
-    }
-
-    /**
-     * 지정된 프로퍼티 파일을 읽어 시스템 환경 변수에 추가합니다.
-     * @param fileName - 로드할 .env 파일의 이름
-     */
-    private void setDotEnvPropertiesByFileNm(final String fileName) {
-        final Dotenv dotenv = Dotenv.configure().filename(fileName).load();
-        dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
-        log.info("Loaded {} file successfully.", fileName);
     }
 }
