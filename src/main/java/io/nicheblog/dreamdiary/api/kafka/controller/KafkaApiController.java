@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.api.kafka;
+package io.nicheblog.dreamdiary.api.kafka.controller;
 
 import io.nicheblog.dreamdiary.global.util.KafkaUtils;
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class KafkaApiController {
 
+    /**
+     * 카프카 메세지 발송 테스트 (Ajax)
+     *
+     * @param message
+     * @return {@link String} -- 응답 메세지
+     */
     @PostMapping(value = "/kafka")
     @ResponseBody
     public String sendMessage(
