@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.spec;
 
+import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
+import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import org.apache.commons.net.util.SubnetUtils;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -20,6 +22,17 @@ import java.util.Map;
  * @author nichefish
  */
 public interface BaseSpec<Entity> {
+
+    /**
+     * default: 인자별로 구체적인 검색 조건을 설정하여 목록을 반환한다.
+     *
+     * @param searchParam 검색 파라미터
+     * @return {@link Specification} -- 검색 조건에 맞는 Specification 객체
+     */
+    default Specification<Entity> searchWith(final BaseSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        return this.searchWith(searchParamMap);
+    }
 
     /**
      * default: 인자별로 구체적인 검색 조건을 설정하여 목록을 반환한다.

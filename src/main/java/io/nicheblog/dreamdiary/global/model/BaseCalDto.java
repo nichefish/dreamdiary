@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.global.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Log4j2
 public class BaseCalDto
+        extends BaseCrudDto
         implements Comparable<BaseCalDto> {
 
     // overlap: false,

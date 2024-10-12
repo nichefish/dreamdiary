@@ -79,7 +79,7 @@ public class TagSpec
     }
     
     /**
-     * preset된 특정 검색 조건 목록을 반환한다. (연관관계 없는 태그 조회)
+     * preset된 특정 검색 조건 목록을 반환한다. (컨텐츠-태그와 연관관계 없는 태그 조회)
      *
      * @return {@link Specification} -- 검색 조건에 따른 Specification 객체
      */

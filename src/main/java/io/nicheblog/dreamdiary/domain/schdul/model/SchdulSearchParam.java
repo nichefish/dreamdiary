@@ -59,4 +59,8 @@ public class SchdulSearchParam
     @Size(min = 1, max = 1)
     @Pattern(regexp = "^[YN]$")
     private String prvtChked;
+
+    /** 개인 일정만 조회할지 여부 */
+    @Builder.Default
+    private Boolean prevOnly = false;
 }
