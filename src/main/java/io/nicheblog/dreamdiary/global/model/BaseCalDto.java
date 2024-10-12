@@ -9,11 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * BaseCalDto
@@ -26,6 +26,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)

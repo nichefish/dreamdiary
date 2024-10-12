@@ -17,9 +17,9 @@ import java.util.List;
  */
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class BoardDefParam
         extends BaseParam {

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -15,8 +16,9 @@ import javax.validation.constraints.Size;
  */
 @Getter
 @Setter
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class BasePostSearchParam
         extends BaseClsfSearchParam {

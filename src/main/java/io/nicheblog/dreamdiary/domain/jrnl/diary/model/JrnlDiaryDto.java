@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.domain.jrnl.diary.model;
 
-import io.nicheblog.dreamdiary.global.ContentType;
-import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.domain._clsf.comment.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -28,7 +28,7 @@ import java.util.Date;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class JrnlDiaryDto
         extends BasePostDto

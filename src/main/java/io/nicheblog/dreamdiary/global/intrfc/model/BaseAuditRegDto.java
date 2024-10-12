@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class BaseAuditRegDto
         extends BaseCrudDto {
@@ -46,6 +46,9 @@ public class BaseAuditRegDto
 
     /**
      * 마스킹 처리한 사용자ID 반환
+     *
+     * @return {@link String} -- 마스킹 처리된 사용자 ID
+     * @throws Exception 마스킹 처리 중 발생할 수 있는 예외
      */
     public String getMaskedRegstrId() throws Exception {
         return CryptoUtils.Mask.nameMasking(this.getRegstrId());

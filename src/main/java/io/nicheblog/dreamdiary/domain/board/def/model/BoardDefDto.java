@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.domain.board.def.model;
 
-import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
-import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstnModule;
+import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class BoardDefDto
         extends BaseAuditDto
         implements Identifiable<String>, StateCmpstnModule {

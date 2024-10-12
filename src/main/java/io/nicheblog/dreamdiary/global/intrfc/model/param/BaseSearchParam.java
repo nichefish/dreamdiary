@@ -16,9 +16,9 @@ import javax.validation.constraints.Size;
  */
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class BaseSearchParam
         extends BaseParam {
 
