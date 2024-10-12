@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain._core.log.sys.handler;
 
-import io.nicheblog.dreamdiary.domain._core.log.actvty.handler.LogWorker;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.handler.LogActvtyWorker;
 import io.nicheblog.dreamdiary.domain._core.log.sys.event.LogSysEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LogSysEventListener {
 
-    private final LogWorker logWorker;
+    private final LogActvtyWorker logActvtyWorker;
 
     /**
      * 시스템 로그 등록 이벤트를 처리한다.
@@ -31,6 +31,6 @@ public class LogSysEventListener {
     @Async
     public void handleLogSysEvent(LogSysEvent event) {
         // 큐에 전달하기 전에 request 관련 속성들을 미리 바인딩해야 한다. (권장)
-        logWorker.offer(event);
+        logActvtyWorker.offer(event);
     }
 }

@@ -1,9 +1,10 @@
-package io.nicheblog.dreamdiary.global.cmm.log.handler;
+package io.nicheblog.dreamdiary.domain._core.log.actvty.handler;
 
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogAnonActvtyEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.service.LogService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogAnonActvtyEvent;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.service.LogActvtyService;
+import io.nicheblog.dreamdiary.domain._core.log.sys.event.LogSysEvent;
+import io.nicheblog.dreamdiary.domain._core.log.sys.service.LogSysService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * LogWorker
  * <pre>
- *  로그 처리 Worker :: Runnable 구현 (Queue 처리)
+ *  활동 로그 처리 Worker :: Runnable 구현 (Queue 처리)
+ *  메일 큐에서 LogActvtyEvent를 가져와 활동 로그를 등록합니다.
  * </pre>
  *
  * @author nichefish
@@ -23,10 +25,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Component
 @RequiredArgsConstructor
 @Log4j2
-public class LogWorker
+public class LogActvtyWorker
         implements Runnable {
 
-    private final LogService logService;
+    private final LogActvtyService logActvtyService;
 
     /** 로그 queue */
     private static final BlockingQueue<Object> logQueue = new LinkedBlockingQueue<>();
@@ -37,8 +39,8 @@ public class LogWorker
         workerThread.start();
     }
 
-    /** 
-     * 로깅 수행 로직
+    /**
+     * 로그 큐에서 LogActvtyEvent / LogAnonActvtyEvent를 가져와 등록합니다.
      */
     @Override
     public void run() {
@@ -49,13 +51,10 @@ public class LogWorker
 
                 if (logEvent instanceof LogActvtyEvent) {
                     // 활동 로그 (로그인) 로깅 처리
-                    logService.regLogActvty(((LogActvtyEvent) logEvent).getLog());
+                    logActvtyService.regLogActvty(((LogActvtyEvent) logEvent).getLog());
                 } else if (logEvent instanceof LogAnonActvtyEvent) {
                     // 활동 로그 (비로그인) 로깅 처리
-                    logService.regLogAnonActvty(((LogAnonActvtyEvent) logEvent).getLog());
-                } else if (logEvent instanceof LogSysEvent) {
-                    // 시스템 로그 로깅 처리
-                    logService.regSysActvty(((LogSysEvent) logEvent).getLog());
+                    logActvtyService.regLogAnonActvty(((LogAnonActvtyEvent) logEvent).getLog());
                 }
             }
         } catch (InterruptedException e) {
@@ -66,7 +65,12 @@ public class LogWorker
         }
     }
 
-    public void offer(Object o) {
-        logQueue.offer(o);
+    /**
+     * 활동 로그 이벤트를 큐에 추가합니다.
+     *
+     * @param event 큐에 추가할 LogActvtyEvent / LogAnonActvtyEvent 객체
+     */
+    public void offer(Object event) {
+        logQueue.offer(event);
     }
 }

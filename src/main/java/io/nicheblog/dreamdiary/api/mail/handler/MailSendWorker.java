@@ -1,11 +1,11 @@
-package io.nicheblog.dreamdiary.global.cmm.mail.handler;
+package io.nicheblog.dreamdiary.api.mail.handler;
 
-import io.nicheblog.dreamdiary.global.cmm.log.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global.cmm.log.event.LogSysEvent;
-import io.nicheblog.dreamdiary.global.cmm.log.model.LogSysParam;
-import io.nicheblog.dreamdiary.global.cmm.mail.event.MailSendEvent;
-import io.nicheblog.dreamdiary.global.cmm.mail.model.MailSendParam;
-import io.nicheblog.dreamdiary.global.cmm.mail.service.MailService;
+import io.nicheblog.dreamdiary.api.mail.event.MailSendEvent;
+import io.nicheblog.dreamdiary.api.mail.model.MailSendParam;
+import io.nicheblog.dreamdiary.api.mail.service.MailService;
+import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.domain._core.log.sys.event.LogSysEvent;
+import io.nicheblog.dreamdiary.domain._core.log.sys.model.LogSysParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
@@ -16,9 +16,10 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * MailWorker
+ * MailSendWorker
  * <pre>
- *  메일 처리 Worker :: Runnable 구현 (Queue 처리)
+ *  메일 발송 처리 Worker :: Runnable 구현 (Queue 처리)
+ *  메일 큐에서 MailSendEvent를 가져와 메일을 발송합니다.
  * </pre>
  *
  * @author nichefish
@@ -26,7 +27,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Component
 @RequiredArgsConstructor
 @Log4j2
-public class MailWorker implements Runnable {
+public class MailSendWorker implements Runnable {
 
 	private final MailService mailService;
 	private final ApplicationEventPublisher publisher;
@@ -40,6 +41,9 @@ public class MailWorker implements Runnable {
 		workerThread.start();
 	}
 
+	/**
+ 	 * 메일 큐에서 MailSendEvent를 가져와 메일을 발송합니다.
+	 */
 	@Override
 	public void run() {
 		while (true) {
@@ -64,6 +68,11 @@ public class MailWorker implements Runnable {
 		}
 	}
 
+	/**
+	 * 메일 발송 이벤트를 큐에 추가합니다.
+	 *
+	 * @param event 큐에 추가할 MailSendEvent 객체
+	 */
 	public void offer(MailSendEvent event) {
 		boolean isSuccess = mailQueue.offer(event);
 		if (!isSuccess) log.warn("queue offer failed... {}", event.toString());

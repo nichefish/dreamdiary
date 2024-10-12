@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MailEventListener {
 
-    private final MailWorker MailWorker;
+    private final MailSendWorker MailSendWorker;
 
     /**
      * 메일 발송 이벤트를 처리한다.
@@ -29,6 +29,6 @@ public class MailEventListener {
     @Async
     public void handleMailEvent(MailSendEvent event) {
         // 큐에 전달하기 전에 request 관련 속성들을 미리 바인딩해야 한다. (권장)
-        MailWorker.offer(event);
+        MailSendWorker.offer(event);
     }
 }
