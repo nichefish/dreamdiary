@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.cmm.xlsx.util;
+package io.nicheblog.dreamdiary.domain._core.xlsx.util;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
@@ -19,19 +19,25 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 public class XlsxStyleUtils {
 
     /**
-     * 기본 스타일
+     * 기본 셀 스타일을 생성하여 반환합니다.
+     *
+     * @param workbook 셀 스타일을 생성할 SXSSFWorkbook 객체
+     * @return 생성된 기본 셀 스타일
      */
     public static CellStyle getDefaultStyle(final SXSSFWorkbook workbook) {
         return workbook.createCellStyle();
     }
 
     /**
-     * 기본 + 테두리
+     * 기본 스타일에 테두리를 추가한 제목 스타일을 생성하여 반환합니다.
+     *
+     * @param workbook 셀 스타일을 생성할 SXSSFWorkbook 객체
+     * @return 생성된 제목 셀 스타일
      */
     public static CellStyle getTitleStyle(final SXSSFWorkbook workbook) {
-        CellStyle style = workbook.createCellStyle();
+        final CellStyle style = workbook.createCellStyle();
         // 폰트
-        Font titleFont = workbook.createFont();
+        final Font titleFont = workbook.createFont();
         titleFont.setBold(true);
         titleFont.setFontHeightInPoints((short) 16);
         style.setFont(titleFont);
@@ -47,12 +53,15 @@ public class XlsxStyleUtils {
     }
 
     /**
-     * 기본 + 테두리
+     * 헤더 스타일(기본 스타일에 테두리 추가)을 생성하여 반환합니다.
+     *
+     * @param workbook 셀 스타일을 생성할 SXSSFWorkbook 객체
+     * @return 생성된 헤더 셀 스타일
      */
     public static CellStyle getHeaderStyle(final SXSSFWorkbook workbook) {
-        CellStyle style = workbook.createCellStyle();
+        final CellStyle style = workbook.createCellStyle();
         // 폰트
-        Font font = workbook.createFont();
+        final Font font = workbook.createFont();
         font.setBold(true);
         font.setFontHeightInPoints((short) 12);
         style.setFont(font);
@@ -68,10 +77,13 @@ public class XlsxStyleUtils {
     }
 
     /**
-     * 기본 + 테두리
+     * 데이터 스타일(기본 스타일에 테두리를 추가하지 않음)을 생성하여 반환합니다.
+     *
+     * @param workbook 셀 스타일을 생성할 SXSSFWorkbook 객체
+     * @return 생성된 데이터 셀 스타일
      */
     public static CellStyle getDataStyle(final SXSSFWorkbook workbook) {
-        CellStyle style = workbook.createCellStyle();
+        final CellStyle style = workbook.createCellStyle();
         style.setAlignment(HorizontalAlignment.LEFT);
         // 자동줄바꿈
         style.setWrapText(true);
@@ -81,10 +93,13 @@ public class XlsxStyleUtils {
     /* ----- */
 
     /**
-     * 테두리
+     * 테두리 스타일을 생성하여 반환합니다.
+     *
+     * @param workbook 셀 스타일을 생성할 SXSSFWorkbook 객체
+     * @return 생성된 테두리 셀 스타일
      */
     public static CellStyle getBorderStyle(final SXSSFWorkbook workbook) {
-        CellStyle style = workbook.createCellStyle();
+        final CellStyle style = workbook.createCellStyle();
         // 테두리
         style.setBorderRight(BorderStyle.THIN);
         style.setBorderLeft(BorderStyle.THIN);
@@ -96,10 +111,13 @@ public class XlsxStyleUtils {
     }
 
     /**
-     * LABEL:: 가운데 정렬 및 테두리
+     * 라벨lABEL(가운데 정렬 및 테두리를 가짐) 스타일일을 생성하여 반환합니다.
+     *
+     * @param workbook 셀 스타일을 생성할 SXSSFWorkbook 객체
+     * @return 생성된 레이블 셀 스타일
      */
     public static CellStyle getLabelStyle(final SXSSFWorkbook workbook) {
-        CellStyle style = workbook.createCellStyle();
+        final CellStyle style = workbook.createCellStyle();
         // 가운데 정렬
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -115,24 +133,30 @@ public class XlsxStyleUtils {
     }
 
     /**
-     * RED_LABEL:: 가운데 정렬 및 테두리 + 빨간글씨
+     * 뻘건 라벨LABEL(가운데 정렬 및 테두리를 갖고, 빨간 글씨 추가) 스타일을 생성하여 반환합니다.
+     *
+     * @param workbook 셀 스타일을 생성할 SXSSFWorkbook 객체
+     * @return 생성된 빨간 레이블 셀 스타일
      */
     public static CellStyle getRedLabelStyle(final SXSSFWorkbook workbook) {
-        CellStyle style = getLabelStyle(workbook);
+        final CellStyle style = getLabelStyle(workbook);
         // 빨간글씨
-        Font font = workbook.createFont();
+        final Font font = workbook.createFont();
         font.setColor(HSSFColor.HSSFColorPredefined.RED.getIndex());
         style.setFont(font);
         return style;
     }
 
     /**
-     * COVER_TITLE:: 가운데 정렬 및 테두리, 크고 굵은 글씨
+     * 커버 타이틀COVER_TITLE(가운데 정렬 및 테두리를 갖고, 크고 굵은 글씨 추가) 스타일을 생성하여 반환합니다.
+     *
+     * @param workbook 셀 스타일을 생성할 SXSSFWorkbook 객체
+     * @return 생성된 커버 셀 스타일
      */
     public static CellStyle getCoverStyle(final SXSSFWorkbook workbook) {
-        CellStyle style = getLabelStyle(workbook);
+        final CellStyle style = getLabelStyle(workbook);
         // 크고굵은글씨
-        Font font = workbook.createFont();
+        final Font font = workbook.createFont();
         font.setFontHeightInPoints((short) 24);
         font.setBold(true);
         style.setFont(font);

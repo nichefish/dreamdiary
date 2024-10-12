@@ -26,11 +26,9 @@ public class XlsxTemplateLoader {
      * @throws IOException 파일을 읽는 도중 발생할 수 있는 예외
      */
     public static XSSFWorkbook loadTemplateAsXssf(final String templatePath) throws IOException {
-        FileInputStream fis = new FileInputStream(templatePath);
-        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fis);
-        // XSSFWorkbook을 SXSSFWorkbook으로 변환
-        fis.close();
-        return xssfWorkbook;
+        try (final FileInputStream fis = new FileInputStream(templatePath)) {
+            return new XSSFWorkbook(fis);
+        }
     }
 
     /**
@@ -41,7 +39,7 @@ public class XlsxTemplateLoader {
      * @throws IOException 파일을 읽는 도중 발생할 수 있는 예외
      */
     public static SXSSFWorkbook loadTemplateAsSxssf(final String templatePath) throws IOException {
-        XSSFWorkbook xssfWorkbook = loadTemplateAsXssf(templatePath);
+        final XSSFWorkbook xssfWorkbook = loadTemplateAsXssf(templatePath);
         // XSSFWorkbook을 SXSSFWorkbook으로 변환
         return new SXSSFWorkbook(xssfWorkbook);
     }

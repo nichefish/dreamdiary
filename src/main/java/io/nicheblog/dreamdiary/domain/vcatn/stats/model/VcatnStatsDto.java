@@ -72,7 +72,17 @@ public class VcatnStatsDto {
     /* ----- */
 
     /**
+     * Getter :: 사용자 Id
+     *
+     * @return String - 사용자 정보에서 조회한 ID
+     */
+    public String getUserId() {
+        return this.getUser().getUserId();
+    }
+
+    /**
      * Getter :: 총 연차
+     *
      * @return double - 계산된 총 연차
      */
     public double getTotYryc() {
@@ -81,6 +91,7 @@ public class VcatnStatsDto {
 
     /**
      * Getter :: 잔여 연차 (소진연차를 입력받음)
+     *
      * @param exhsYryc - 소진된 연차
      * @return double - 계산된 잔여 연차
      */
@@ -91,6 +102,7 @@ public class VcatnStatsDto {
 
     /**
      * Getter :: 잔여 연차 (소진연차를 입력받지 않고 자체 정보로 계산)
+     *
      * @return double - 계산된 잔여 연차
      */
     public double getRemndrYryc() {

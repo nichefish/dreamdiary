@@ -1,11 +1,11 @@
-package io.nicheblog.dreamdiary.global.auth.config;
+package io.nicheblog.dreamdiary.domain._core.auth.config;
 
+import io.nicheblog.dreamdiary.domain._core.auth.handler.AjaxAwareAuthenticationEntryPoint;
+import io.nicheblog.dreamdiary.domain._core.auth.handler.LgnFailureHandler;
+import io.nicheblog.dreamdiary.domain._core.auth.handler.LgnSuccessHandler;
+import io.nicheblog.dreamdiary.domain._core.auth.handler.LgoutHandler;
+import io.nicheblog.dreamdiary.domain._core.auth.service.AuthService;
 import io.nicheblog.dreamdiary.global.Url;
-import io.nicheblog.dreamdiary.global.auth.handler.AjaxAwareAuthenticationEntryPoint;
-import io.nicheblog.dreamdiary.global.auth.handler.LgnFailureHandler;
-import io.nicheblog.dreamdiary.global.auth.handler.LgnSuccessHandler;
-import io.nicheblog.dreamdiary.global.auth.handler.LgoutHandler;
-import io.nicheblog.dreamdiary.global.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,19 +53,25 @@ public class WebSecurityConfig {
     @Value("${remember-me.param}")
     private String REMEMBER_ME_PARAM;
 
-    /** 로그인시 사용할 암호화 로직 */
+    /**
+     * 빈 생성 :: 패스워드 암호화
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /** 중복 로그인 방지:: logout 후 login 처리시 정상작동을 위함 */
+    /**
+     * 빈 생성 ::중복 로그인 방지:: logout 후 login 처리시 정상작동을 위함
+     */
     @Bean
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
     }
 
-    /** 중복 로그인 방지:: WAS가 여러 개 있을 때 처리 (session clustering) */
+    /**
+     * 빈 생성 :: 중복 로그인 방지:: WAS가 여러 개 있을 때 처리 (session clustering)
+     */
     @Bean
     public static ServletListenerRegistrationBean httpSessionEventPublisher() {
         return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
@@ -77,6 +83,12 @@ public class WebSecurityConfig {
     @Configuration
     public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 
+        /**
+         * Spring Security의 WebSecurity 설정을 구성합니다.
+         *
+         * @param web WebSecurity 객체로, 웹 관련 보안 설정을 구성하는 데 사용됩니다
+         * @throws Exception 보안 구성 중 발생할 수 있는 예외
+         */
         @Override
         public void configure(WebSecurity web) throws Exception {
 
@@ -96,6 +108,12 @@ public class WebSecurityConfig {
                     .antMatchers(Url.USER_ID_DUP_CHK_AJAX);
         }
 
+        /**
+         * HTTP 보안 설정을 구성합니다.
+         *
+         * @param http HttpSecurity 객체로, HTTP 보안 관련 설정을 구성하는 데 사용됩니다
+         * @throws Exception 보안 구성 중 발생할 수 있는 예외
+         */
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             // 페이지 권한 설정
@@ -117,6 +135,7 @@ public class WebSecurityConfig {
             // .anyRequest().hasRole("MNGR");
 
             // 시큐리티에서 post 전송시 뭐시기..
+            // TODO : 나중에 추가하기. 일단은 우선순위 낮음
             http.csrf()
                     .disable();
 
