@@ -135,14 +135,14 @@ public class VcatnSchdulController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 등록/수정 처리
-            boolean isReg = (key == null);
-            VcatnSchdulDto result = isReg ? vcatnSchdulService.regist(vcatnSchdul) : vcatnSchdulService.modify(vcatnSchdul);
+            final boolean isReg = (key == null);
+            final VcatnSchdulDto result = isReg ? vcatnSchdulService.regist(vcatnSchdul) : vcatnSchdulService.modify(vcatnSchdul);
             ajaxResponse.setRsltObj(result);
 
             isSuccess = (result.getVcatnSchdulNo() != null);
@@ -180,13 +180,13 @@ public class VcatnSchdulController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
             // 객체 조회 및 응답에 세팅
-            VcatnSchdulDto rsDto = vcatnSchdulService.getDtlDto(key);
+            final VcatnSchdulDto rsDto = vcatnSchdulService.getDtlDto(key);
             ajaxResponse.setRsltObj(rsDto);
 
             isSuccess = true;
@@ -223,7 +223,7 @@ public class VcatnSchdulController
             final LogActvtyParam logParam
     ) {
 
-        AjaxResponse ajaxResponse = new AjaxResponse();
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
         boolean isSuccess = false;
         String rsltMsg = "";

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.domain._core.tag.entity;
 
+import io.nicheblog.dreamdiary.domain._clsf.tag.entity.TagEntity;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class ContentTagEntityTestFactory {
 
     /**
-     * 테스트용 컨텐트 태그 Entity 생성
+     * 테스트용 컨텐츠 태그 Entity 생성
      */
     public static TagEntity createTag() throws Exception {
         return TagEntity.builder()

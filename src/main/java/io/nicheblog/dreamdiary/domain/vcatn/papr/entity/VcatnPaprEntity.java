@@ -100,13 +100,7 @@ public class VcatnPaprEntity
      * @param itemList - 설정할 객체 리스트
      */
     public void setSchdulList(final List<VcatnSchdulEntity> itemList) {
-        if (CollectionUtils.isEmpty(itemList)) return;
-        if (this.schdulList == null) {
-            this.schdulList = itemList;
-        } else {
-            this.schdulList.clear();
-            this.schdulList.addAll(itemList);
-        }
+        this.updtList(this.schdulList, itemList);
     }
 
     /* ----- */
