@@ -1,5 +1,6 @@
-package io.nicheblog.dreamdiary.web.model.vcatn.schdul;
+package io.nicheblog.dreamdiary.domain.vcatn.schdul.model;
 
+import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnSchdulDto;
 import io.nicheblog.dreamdiary.global.Constant;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 public class VcatnSchdulDtoTestFactory {
 
     /**
-     * 휴가 일정 Dto 생성
+     * 테스트용 휴가 일정 Dto 생성
      */
     public static VcatnSchdulDto createVcatnSchdulDtlDto() throws Exception {
         return VcatnSchdulDto.builder()

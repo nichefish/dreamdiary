@@ -1,8 +1,8 @@
-package io.nicheblog.dreamdiary.web.entity.vcatn.schdul;
+package io.nicheblog.dreamdiary.domain.vcatn.schdul.entity;
 
+import io.nicheblog.dreamdiary.domain.vcatn.papr.entity.VcatnSchdulEntity;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.web.entity.vcatn.papr.VcatnSchdulEntity;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -19,7 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 public class VcatnSchdulEntityTestFactory {
 
     /**
-     * 휴가 일정 Entity 생성
+     * 테스트용 휴가 일정 Entity 생성
      */
     public static VcatnSchdulEntity createVcatnSchdul() throws Exception {
         return VcatnSchdulEntity.builder()
