@@ -105,7 +105,7 @@ public class ClCdController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/admin/cd/cl_cd_list";
+        return "/view/domain/admin/cd/cl_cd_list";
     }
 
     /**
@@ -198,7 +198,7 @@ public class ClCdController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/admin/cd/cl_cd_dtl";
+        return "/view/domain/admin/cd/cl_cd_dtl";
     }
 
     /**

@@ -114,6 +114,6 @@ public class UserMyPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/my/user_my_dtl";
+        return "/view/domain/user/my/user_my_dtl";
     }
 }

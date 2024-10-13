@@ -99,7 +99,7 @@ public class LogSysController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/log/sys/log_sys_list";
+        return "/view/global/_common/log/sys/log_sys_list";
     }
 
 

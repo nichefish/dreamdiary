@@ -109,7 +109,7 @@ public class JrnlSbjctPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/sbjct/jrnl_sbjct_list";
+        return "/view/domain/jrnl/sbjct/jrnl_sbjct_list";
     }
 
     /**
@@ -156,7 +156,7 @@ public class JrnlSbjctPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/sbjct/jrnl_sbjct_reg_form";
+        return "/view/domain/jrnl/sbjct/jrnl_sbjct_reg_form";
     }
 
     /**
@@ -199,7 +199,7 @@ public class JrnlSbjctPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/sbjct/jrnl_sbjct_preview_pop";
+        return "/view/domain/jrnl/sbjct/jrnl_sbjct_preview_pop";
     }
 
     /**
@@ -248,7 +248,7 @@ public class JrnlSbjctPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/sbjct/jrnl_sbjct_dtl";
+        return "/view/domain/jrnl/sbjct/jrnl_sbjct_dtl";
     }
 
     /**
@@ -300,6 +300,6 @@ public class JrnlSbjctPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/sbjct/jrnl_sbjct_reg_form";
+        return "/view/domain/jrnl/sbjct/jrnl_sbjct_reg_form";
     }
 }

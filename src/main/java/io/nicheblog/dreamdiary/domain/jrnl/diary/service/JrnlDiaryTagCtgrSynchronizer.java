@@ -57,7 +57,7 @@ public class JrnlDiaryTagCtgrSynchronizer {
      * @throws Exception 파일 생성 중 발생할 수 있는 예외
      */
     private void writeToFile(final Map<String, List<String>> tagCtgrMap) throws Exception {
-        String FILE_PATH = "templates/view/jrnl/diary/tag/_jrnl_diary_tag_ctgr_map.ftlh";
+        String FILE_PATH = "templates/view/domain/jrnl/diary/tag/_jrnl_diary_tag_ctgr_map.ftlh";
         String MAP_NM = "jrnlDiary";
 
         try (FileWriter fileWriter = new FileWriter(FILE_PATH)) {

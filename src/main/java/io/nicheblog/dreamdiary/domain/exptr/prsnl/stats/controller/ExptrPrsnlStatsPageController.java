@@ -95,7 +95,7 @@ public class ExptrPrsnlStatsPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/prsnl/stats/exptr_prsnl_stats_page";
+        return "/view/domain/exptr/prsnl/stats/exptr_prsnl_stats_page";
     }
 
     /**
@@ -143,6 +143,6 @@ public class ExptrPrsnlStatsPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/prsnl/stats/exptr_prsnl_stats_dtl";
+        return "/view/domain/exptr/prsnl/stats/exptr_prsnl_stats_dtl";
     }
 }

@@ -107,7 +107,7 @@ public class NoticePageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/notice/notice_list";
+        return "/view/domain/notice/notice_list";
     }
 
     /**
@@ -155,7 +155,7 @@ public class NoticePageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/notice/notice_reg_form";
+        return "/view/domain/notice/notice_reg_form";
     }
 
     /**
@@ -197,7 +197,7 @@ public class NoticePageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/notice/notice_preview_pop";
+        return "/view/domain/notice/notice_preview_pop";
     }
 
     /**
@@ -246,7 +246,7 @@ public class NoticePageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/notice/notice_dtl";
+        return "/view/domain/notice/notice_dtl";
     }
 
     /**
@@ -298,6 +298,6 @@ public class NoticePageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/notice/notice_reg_form";
+        return "/view/domain/notice/notice_reg_form";
     }
 }

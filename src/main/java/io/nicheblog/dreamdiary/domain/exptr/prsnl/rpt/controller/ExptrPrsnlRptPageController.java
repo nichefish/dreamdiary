@@ -114,6 +114,6 @@ public class ExptrPrsnlRptPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/prsnl/rpt/exptr_prsnl_rpt";
+        return "/view/domain/exptr/prsnl/rpt/exptr_prsnl_rpt";
     }
 }

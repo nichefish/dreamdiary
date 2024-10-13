@@ -86,6 +86,6 @@ public class UserReqstPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/reqst/user_reqst_form";
+        return "/view/domain/user/reqst/user_reqst_form";
     }
 }

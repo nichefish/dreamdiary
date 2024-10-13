@@ -107,6 +107,6 @@ public class VcatnSchdulPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/vcatn/schdul/vcatn_schdul_list";
+        return "/view/domain/vcatn/schdul/vcatn_schdul_list";
     }
 }

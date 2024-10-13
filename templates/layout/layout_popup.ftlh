@@ -80,7 +80,7 @@
         <!--begin::Modals (include modals here)-->
 
         <#--include:: Tag Module-->
-        <#include "/view/_component/tag/_tag_scripts.ftlh">
+        <#include "/view/global/_common/_clsf/tag/_tag_scripts.ftlh">
 
         <!--layout scripts-->
         <#include "/layout/_layout_scripts.ftlh">

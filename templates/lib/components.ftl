@@ -6,22 +6,22 @@
  -->
 
 <!--include::page elements-->
-<#include "/view/_component/_page_elements.ftlh">
+<#include "/view/global/_page_elements.ftlh">
 
 <!-- list-table items -->
-<#include "/view/_component/_list_elements.ftlh">
+<#include "/view/global/_list_elements.ftlh">
 
 <!-- buttons -->
-<#include "/view/_component/_page_buttons.ftlh">
+<#include "/view/global/_page_buttons.ftlh">
 
 <!-- modal_elements -->
-<#include "/view/_component/_modal_elements.ftlh">
+<#include "/view/global/_modal_elements.ftlh">
 
 <!-- header_elements -->
-<#include "/view/_component/_header_elements.ftlh">
+<#include "/view/global/_header_elements.ftlh">
 
 <!-- in progress... -->
-<#include "/view/_component/_page_post_module.ftlh">
+<#include "/view/global/_page_post_module.ftlh">
 
 <!-- in progress... -->
-<#include "/view/_component/_page_clsf_module.ftlh">
+<#include "/view/global/_page_clsf_module.ftlh">

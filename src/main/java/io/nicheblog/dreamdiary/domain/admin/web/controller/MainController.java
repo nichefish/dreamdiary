@@ -48,7 +48,6 @@ public class MainController
 
         // 메인 화면 꾸밀때까지 공지사항 목록 화면으로 리다이렉트
         return "redirect:" + Url.NOTICE_LIST;
-        // return "/view/main/main_page";
     }
 
     /**
@@ -71,6 +70,5 @@ public class MainController
 
         // 메인 화면 꾸밀때까지 사이트 관리 화면으로 리다이렉트
         return "redirect:" + Url.ADMIN_PAGE;
-        // return "/view/main/main_page";
     }
 }

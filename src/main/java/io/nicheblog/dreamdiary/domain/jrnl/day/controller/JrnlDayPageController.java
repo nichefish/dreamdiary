@@ -75,6 +75,6 @@ public class JrnlDayPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/day/jrnl_day_page";
+        return "/view/domain/jrnl/day/jrnl_day_page";
     }
 }

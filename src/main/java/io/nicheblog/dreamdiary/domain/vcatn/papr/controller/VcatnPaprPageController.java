@@ -103,7 +103,7 @@ public class VcatnPaprPageController
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
-        return "/view/vcatn/papr/vcatn_papr_list";
+        return "/view/domain/vcatn/papr/vcatn_papr_list";
     }
 
     /**
@@ -149,7 +149,7 @@ public class VcatnPaprPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/vcatn/papr/vcatn_papr_reg_form";
+        return "/view/domain/vcatn/papr/vcatn_papr_reg_form";
     }
 
     /**
@@ -198,7 +198,7 @@ public class VcatnPaprPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/vcatn/papr/vcatn_papr_reg_form";
+        return "/view/domain/vcatn/papr/vcatn_papr_reg_form";
     }
 
     /**
@@ -246,6 +246,6 @@ public class VcatnPaprPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/vcatn/papr/vcatn_papr_dtl";
+        return "/view/domain/vcatn/papr/vcatn_papr_dtl";
     }
 }

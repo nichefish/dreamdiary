@@ -108,7 +108,7 @@ public class ExptrReqstPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/reqst/exptr_reqst_list";
+        return "/view/domain/exptr/reqst/exptr_reqst_list";
     }
 
     /**
@@ -158,7 +158,7 @@ public class ExptrReqstPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/reqst/exptr_reqst_reg_form";
+        return "/view/domain/exptr/reqst/exptr_reqst_reg_form";
     }
 
     /**
@@ -199,7 +199,7 @@ public class ExptrReqstPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/reqst/exptr_reqst_preview_pop";
+        return "/view/domain/exptr/reqst/exptr_reqst_preview_pop";
     }
 
     /**
@@ -248,7 +248,7 @@ public class ExptrReqstPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/reqst/exptr_reqst_dtl";
+        return "/view/domain/exptr/reqst/exptr_reqst_dtl";
     }
 
     /**
@@ -299,6 +299,6 @@ public class ExptrReqstPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/exptr/reqst/exptr_reqst_reg_form";
+        return "/view/domain/exptr/reqst/exptr_reqst_reg_form";
     }
 }

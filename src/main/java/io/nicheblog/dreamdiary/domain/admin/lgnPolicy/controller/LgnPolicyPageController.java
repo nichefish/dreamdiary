@@ -78,6 +78,6 @@ public class LgnPolicyPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/admin/lgn_policy/lgn_policy_reg_form";
+        return "/view/domain/admin/lgn_policy/lgn_policy_reg_form";
     }
 }

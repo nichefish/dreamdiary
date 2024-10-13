@@ -79,7 +79,7 @@ public class AdminController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/admin/admin_page";
+        return "/view/domain/admin/admin_page";
     }
 
     /**
@@ -115,6 +115,6 @@ public class AdminController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/admin/test_page";
+        return "/view/domain/admin/test_page";
     }
 }

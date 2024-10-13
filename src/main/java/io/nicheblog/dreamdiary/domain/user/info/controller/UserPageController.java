@@ -110,7 +110,7 @@ public class UserPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/user_list";
+        return "/view/domain/user/user_list";
     }
 
     /**
@@ -162,7 +162,7 @@ public class UserPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/user_reg_form";
+        return "/view/domain/user/user_reg_form";
     }
 
     /**
@@ -207,7 +207,7 @@ public class UserPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/user_dtl";
+        return "/view/domain/user/user_dtl";
     }
 
     /**
@@ -265,6 +265,6 @@ public class UserPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/user/user_reg_form";
+        return "/view/domain/user/user_reg_form";
     }
 }

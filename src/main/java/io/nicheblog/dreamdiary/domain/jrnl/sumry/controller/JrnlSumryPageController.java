@@ -100,7 +100,7 @@ public class JrnlSumryPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/sumry/jrnl_sumry_list";
+        return "/view/domain/jrnl/sumry/jrnl_sumry_list";
     }
 
     /**
@@ -165,6 +165,6 @@ public class JrnlSumryPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/jrnl/sumry/jrnl_sumry_dtl";
+        return "/view/domain/jrnl/sumry/jrnl_sumry_dtl";
     }
 }

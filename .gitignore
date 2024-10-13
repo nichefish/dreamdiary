@@ -5,8 +5,7 @@
 /gradle/
 /src/test/resources/application-test.yml
 /src/main/resources/static/metronic/*
-!/src/main/resources/static/metronic/.metronic_v8.0.23
-!/src/main/resources/static/metronic/.metronic_v8.2.5
+!/src/main/resources/static/metronic/.metronic_v*
 /src/test/resources/*
 !/src/test/resources/.application-test.yml.md
 /flsys/*
@@ -14,13 +13,10 @@
 /log/*
 !/log/.logfile_path.md
 /upfile/*
-/upfile/public/*
-/upfile/secured/*
+!/upfile/.file_upload_path.md
 /ssh-key-2024-04-22.key
 /ssh-key-2024-04-22.key.pub
 *.env
 /.env*
-/templates/view/jrnl/day/tag/_jrnl_day_tag_ctgr_map.ftlh
-/templates/view/jrnl/diary/tag/_jrnl_diary_tag_ctgr_map.ftlh
-/templates/view/jrnl/dream/tag/_jrnl_dream_tag_ctgr_map.ftlh
 /target/*
+/templates/view/domain/*_tag_ctgr_map.ftlh

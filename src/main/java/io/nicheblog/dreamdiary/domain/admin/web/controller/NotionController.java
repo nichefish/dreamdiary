@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain.admin.web.controller;
 
-import io.nicheblog.dreamdiary.domain.flsys.model.FlsysSearchParam;
+import io.nicheblog.dreamdiary.global._common.flsys.model.FlsysSearchParam;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
@@ -85,6 +85,6 @@ public class NotionController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/notion/notion_home";
+        return "/view/domain/notion/notion_home";
     }
 }

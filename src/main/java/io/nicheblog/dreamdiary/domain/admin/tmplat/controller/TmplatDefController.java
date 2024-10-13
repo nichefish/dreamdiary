@@ -101,7 +101,7 @@ public class TmplatDefController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/admin/tmplat/def/tmplat_def_list";
+        return "/view/domain/admin/tmplat/def/tmplat_def_list";
     }
 
     /**

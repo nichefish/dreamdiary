@@ -90,6 +90,6 @@ public class SchdulCalPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/schdul/schdul_cal";
+        return "/view/domain/schdul/schdul_cal";
     }
 }

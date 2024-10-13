@@ -99,6 +99,6 @@ public class VcatnStatsYyPageController
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
-        return "/view/vcatn/stats/vcatn_stats";
+        return "/view/domain/vcatn/stats/vcatn_stats";
     }
 }

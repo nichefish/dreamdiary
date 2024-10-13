@@ -81,7 +81,7 @@ public class LgnController
         // 중복 로그인으로 인해 로그인 면으로 튕겨나왔을 경우 alert
         if ("Y".equals(dupLgnAt)) MessageUtils.alertMessage("중복 로그인 방지에 의해 로그아웃 처리되었습니다.", Url.AUTH_LGN_FORM);
 
-        return "/view/lgn_form";
+        return "/view/global/_common/auth/lgn_form";
     }
 
     /**

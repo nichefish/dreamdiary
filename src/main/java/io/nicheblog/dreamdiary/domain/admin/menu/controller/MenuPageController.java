@@ -78,6 +78,6 @@ public class MenuPageController
             log.info("isSuccess: " + isSuccess + ", rsltMsg: " + rsltMsg);
         }
 
-        return "/view/admin/menu/menu_page";
+        return "/view/domain/admin/menu/menu_page";
     }
 }
