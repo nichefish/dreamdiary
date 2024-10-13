@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.domain.board.def.service;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.board.def.entity.BoardDefEntity;
 import io.nicheblog.dreamdiary.domain.board.def.mapstruct.BoardDefMapstruct;
 import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefDto;
 import io.nicheblog.dreamdiary.domain.board.def.repository.jpa.BoardDefRepository;
 import io.nicheblog.dreamdiary.domain.board.def.spec.BoardDefSpec;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global._common._clsf.state.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;

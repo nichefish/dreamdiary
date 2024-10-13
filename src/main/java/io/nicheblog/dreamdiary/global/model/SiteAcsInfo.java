@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.model;
 
-import io.nicheblog.dreamdiary.domain.admin.menu.model.AcsPageNm;
 import io.nicheblog.dreamdiary.domain.admin.menu.SiteTopMenu;
+import io.nicheblog.dreamdiary.domain.admin.menu.model.AcsPageNm;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

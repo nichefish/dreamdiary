@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.domain.board.def.mapstruct;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteTopMenu;
 import io.nicheblog.dreamdiary.domain.board.def.entity.BoardDefEntity;
 import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefDto;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteTopMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.model.SiteAcsInfo;
