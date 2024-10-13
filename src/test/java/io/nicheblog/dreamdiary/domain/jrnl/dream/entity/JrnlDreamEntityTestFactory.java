@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain.jrnl.dream.entity;
 
-import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
 

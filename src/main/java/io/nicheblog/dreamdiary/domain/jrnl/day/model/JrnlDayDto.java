@@ -2,11 +2,11 @@ package io.nicheblog.dreamdiary.domain.jrnl.day.model;
 
 import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamDto;
-import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
+import io.nicheblog.dreamdiary.global._common._clsf.tag.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.global._common._clsf.tag.model.cmpstn.TagCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseClsfDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstn;
-import io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn.TagCmpstnModule;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -31,7 +31,7 @@ import java.util.List;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class JrnlDayDto
         extends BaseClsfDto
         implements Identifiable<Integer>, TagCmpstnModule, Comparable<JrnlDayDto>  {

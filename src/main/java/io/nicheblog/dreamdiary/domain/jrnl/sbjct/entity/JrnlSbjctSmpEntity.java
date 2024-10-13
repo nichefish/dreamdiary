@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.domain.jrnl.sbjct.entity;
 
-import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
+import io.nicheblog.dreamdiary.global._common.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

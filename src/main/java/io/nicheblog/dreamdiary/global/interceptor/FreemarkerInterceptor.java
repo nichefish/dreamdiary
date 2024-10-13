@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.global.interceptor;
 
-import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfo;
-import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global._common.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.model.SiteAcsInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

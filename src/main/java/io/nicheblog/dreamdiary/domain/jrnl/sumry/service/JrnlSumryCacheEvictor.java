@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.domain.jrnl.sumry.service;
 
-import io.nicheblog.dreamdiary.domain._core.cache.service.CacheEvictor;
 import io.nicheblog.dreamdiary.domain.jrnl.sumry.entity.JrnlSumryEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.sumry.model.JrnlSumryDto;
-import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
+import io.nicheblog.dreamdiary.global._common.cache.service.CacheEvictor;
+import io.nicheblog.dreamdiary.global._common.cache.util.EhCacheUtils;
 import org.springframework.stereotype.Component;
 
 /**

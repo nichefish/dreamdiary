@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.domain._core.auth.model;
 
+import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global._common.auth.model.AuthRoleDto;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
 

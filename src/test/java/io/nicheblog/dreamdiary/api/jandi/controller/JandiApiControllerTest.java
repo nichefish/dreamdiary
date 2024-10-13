@@ -1,8 +1,9 @@
 package io.nicheblog.dreamdiary.api.jandi.controller;
 
-import io.nicheblog.dreamdiary.api.jandi.JandiTopic;
-import io.nicheblog.dreamdiary.api.jandi.model.JandiParam;
-import io.nicheblog.dreamdiary.api.jandi.service.JandiApiService;
+import io.nicheblog.dreamdiary.adapter.jandi.JandiTopic;
+import io.nicheblog.dreamdiary.adapter.jandi.controller.JandiApiController;
+import io.nicheblog.dreamdiary.adapter.jandi.model.JandiParam;
+import io.nicheblog.dreamdiary.adapter.jandi.service.JandiApiService;
 import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImplTest;

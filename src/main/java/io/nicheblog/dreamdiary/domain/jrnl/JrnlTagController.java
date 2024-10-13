@@ -1,14 +1,14 @@
 package io.nicheblog.dreamdiary.domain.jrnl;
 
-import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.domain._clsf.tag.model.TagSearchParam;
 import io.nicheblog.dreamdiary.domain.jrnl.day.service.JrnlDayTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.service.JrnlDiaryTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.domain.jrnl.dream.service.JrnlDreamTagCtgrSynchronizer;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common._clsf.tag.model.TagSearchParam;
+import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.util.HttpUtils;
