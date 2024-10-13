@@ -31,4 +31,4 @@
     </div>
 </#if>
 
-<#include "/view/domain/notion/notion_page_modal.ftlh">
+<#include "/global/common/notion/notion_page_modal.ftlh">
