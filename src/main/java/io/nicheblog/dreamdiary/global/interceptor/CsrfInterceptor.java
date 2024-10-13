@@ -34,9 +34,9 @@ public class CsrfInterceptor
             final @NotNull Object handler
     ) {
 
-        String domain = request.getServerName();
-        String refererValue = request.getHeader(Constant.REFERER);
-        boolean hasReferer = StringUtils.isNotEmpty(refererValue);
+        final String domain = request.getServerName();
+        final String refererValue = request.getHeader(Constant.REFERER);
+        final boolean hasReferer = StringUtils.isNotEmpty(refererValue);
         if (hasReferer) return refererValue.contains(domain);
 
         return true;

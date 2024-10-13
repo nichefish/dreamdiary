@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.domain.jrnl.diary.service;
 
 import io.nicheblog.dreamdiary.domain._core.cache.event.EhCacheEvictEvent;
-import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.entity.JrnlDiaryEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.mapstruct.JrnlDiaryMapstruct;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
@@ -9,7 +8,6 @@ import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiarySearchParam;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.repository.jpa.JrnlDiaryRepository;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.repository.mybatis.JrnlDiaryMapper;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.spec.JrnlDiarySpec;
-import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamSearchParam;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseClsfService;
@@ -20,9 +18,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -160,6 +158,7 @@ public class JrnlDiaryService
      * @return {@link JrnlDiaryDto} -- 삭제된 데이터 DTO
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public JrnlDiaryDto getDeletedDtlDto(final Integer postNo) throws Exception {
         return jrnlDiaryMapper.getDeletedByPostNo(postNo);
     }

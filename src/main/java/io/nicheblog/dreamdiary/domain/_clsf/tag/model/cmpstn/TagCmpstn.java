@@ -1,14 +1,11 @@
 package io.nicheblog.dreamdiary.domain._clsf.tag.model.cmpstn;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.nicheblog.dreamdiary.domain._clsf.tag.entity.ContentTagEntity;
-import io.nicheblog.dreamdiary.domain._clsf.tag.mapstruct.ContentTagMapstruct;
 import io.nicheblog.dreamdiary.domain._clsf.tag.model.ContentTagDto;
 import io.nicheblog.dreamdiary.domain._clsf.tag.model.TagDto;
-import io.nicheblog.dreamdiary.global.model.BaseTagifyDataDto;
-import io.nicheblog.dreamdiary.global.model.BaseTagifyDto;
+import io.nicheblog.dreamdiary.global.model.tagify.BaseTagifyDataDto;
+import io.nicheblog.dreamdiary.global.model.tagify.BaseTagifyDto;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;

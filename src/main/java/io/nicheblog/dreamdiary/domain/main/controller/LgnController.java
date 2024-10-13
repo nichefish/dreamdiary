@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.domain._core.auth.controller;
+package io.nicheblog.dreamdiary.domain.main.controller;
 
 import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;

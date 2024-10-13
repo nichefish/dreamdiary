@@ -38,13 +38,13 @@ public class CookieInterceptor
             final ModelAndView mav
     ) {
 
-        String requestURI = request.getRequestURI();
+        final String requestURI = request.getRequestURI();
         if (Url.AUTH_LGN_FORM.equals(requestURI) || Url.AUTH_LGN_PROC.equals(requestURI)) return;
 
         /* 사이드바 접기 쿠키 설정 */
         if (mav != null) {
-            String sidebarMinimizeState = CookieUtils.getCookie(Constant.KT_SIDEBAR_MINIMIZE_STATE);
-            boolean isSidebarMinimized = "on".equals(sidebarMinimizeState);
+            final String sidebarMinimizeState = CookieUtils.getCookie(Constant.KT_SIDEBAR_MINIMIZE_STATE);
+            final boolean isSidebarMinimized = "on".equals(sidebarMinimizeState);
             mav.addObject("isSidebarMinimized", isSidebarMinimized);
         }
 

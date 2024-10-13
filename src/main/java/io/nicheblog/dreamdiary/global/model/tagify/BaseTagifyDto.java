@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.global.model;
+package io.nicheblog.dreamdiary.global.model.tagify;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

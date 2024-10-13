@@ -8,7 +8,6 @@ import io.nicheblog.dreamdiary.domain.jrnl.day.repository.jpa.JrnlDayRepository;
 import io.nicheblog.dreamdiary.domain.jrnl.day.repository.mybatis.JrnlDayMapper;
 import io.nicheblog.dreamdiary.domain.jrnl.day.spec.JrnlDaySpec;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
-import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamDto;
 import io.nicheblog.dreamdiary.global.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseSearchParam;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
@@ -21,6 +20,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -207,6 +207,7 @@ public class JrnlDayService
      * @return {@link JrnlDayDto} -- 삭제된 데이터 DTO
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public JrnlDayDto getDeletedDtlDto(final Integer postNo) throws Exception {
         return jrnlDayMapper.getDeletedByPostNo(postNo);
     }

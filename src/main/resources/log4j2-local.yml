@@ -17,15 +17,14 @@ Configutation:
           PatternLayout:
               pattern: ${log-format}
 
-
     Loggers:
         Root:
             level: info
             AppenderRef:
               - ref: Console_Appender
         Logger:
-            - name: dreamdiary.nicheblog.io
-              additivity: false
-              level: debug
-              AppenderRef:
-                  - ref: Console_Appender
+          - name: dreamdiary.nicheblog.io
+            additivity: false
+            level: debug
+            AppenderRef:
+              - ref: Console_Appender

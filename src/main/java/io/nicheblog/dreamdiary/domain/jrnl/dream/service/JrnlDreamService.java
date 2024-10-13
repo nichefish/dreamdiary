@@ -1,7 +1,6 @@
 package io.nicheblog.dreamdiary.domain.jrnl.dream.service;
 
 import io.nicheblog.dreamdiary.domain._core.cache.event.EhCacheEvictEvent;
-import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.dream.mapstruct.JrnlDreamMapstruct;
 import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamDto;
@@ -19,9 +18,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -161,6 +160,7 @@ public class JrnlDreamService
      * @return {@link JrnlDreamDto} -- 삭제된 데이터 DTO
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public JrnlDreamDto getDeletedDtlDto(final Integer postNo) throws Exception {
         return jrnlDreamMapper.getDeletedByPostNo(postNo);
     }

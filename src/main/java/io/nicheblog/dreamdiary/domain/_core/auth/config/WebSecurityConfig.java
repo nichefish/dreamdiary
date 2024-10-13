@@ -5,6 +5,7 @@ import io.nicheblog.dreamdiary.domain._core.auth.handler.LgnFailureHandler;
 import io.nicheblog.dreamdiary.domain._core.auth.handler.LgnSuccessHandler;
 import io.nicheblog.dreamdiary.domain._core.auth.handler.LgoutHandler;
 import io.nicheblog.dreamdiary.domain._core.auth.service.AuthService;
+import io.nicheblog.dreamdiary.global.ActiveProfile;
 import io.nicheblog.dreamdiary.global.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -45,6 +46,8 @@ public class WebSecurityConfig {
     private final LgnSuccessHandler lgnSuccessHandler;
     private final AjaxAwareAuthenticationEntryPoint ajaxAwareAuthenticationEntryPoint;
     private final LgoutHandler lgoutHandler;
+
+    private final ActiveProfile activeProfile;
 
     @Value("${springdoc.api-docs.path:}")
     private String API_DOCS_PATH;
@@ -92,7 +95,13 @@ public class WebSecurityConfig {
         @Override
         public void configure(WebSecurity web) throws Exception {
 
+            // 운영 환경이 아닐 시 디버그 모드 활성화
+            if (!activeProfile.isProd()) {
+                web.debug(true);  // 디버그 모드 활성화
+            }
+
             web.ignoring()
+                    .antMatchers("/**")
                     // 세션 만료 처리 URL
                     .antMatchers(Url.AUTH_EXPIRE_SESSION_AJAX)
                     // static 디렉터리의 하위 파일 목록은 인증 무시(=항상 통과 )
@@ -116,6 +125,7 @@ public class WebSecurityConfig {
          */
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+
             // 페이지 권한 설정
             http.authorizeRequests()
                     // formLogin 설정만으로 로그인 페이지는 접근이 허용된다.

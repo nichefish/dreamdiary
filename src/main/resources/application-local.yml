@@ -6,6 +6,9 @@ server:
 
 logging:
     config: classpath:log4j2-local.yml
+    level:
+        web: DEBUG
+        org.springframework: DEBUG
 
 spring:
     servlet:

@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.domain._clsf.sectn.spec.SectnSpec;
 import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
 import io.nicheblog.dreamdiary.domain._core.cache.service.EhCacheEvictService;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import io.nicheblog.dreamdiary.global.intrfc.service.embed.BaseStateService;
 import io.nicheblog.dreamdiary.global.util.EhCacheUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Log4j2
 public class SectnService
-        implements BaseMultiCrudService<SectnDto, SectnDto, Integer, SectnEntity, SectnRepository, SectnSpec, SectnMapstruct> {
+        implements BaseMultiCrudService<SectnDto, SectnDto, Integer, SectnEntity, SectnRepository, SectnSpec, SectnMapstruct>,
+                   BaseStateService<SectnDto, SectnDto, Integer, SectnEntity, SectnRepository, SectnSpec, SectnMapstruct> {
 
     @Getter
     private final SectnRepository repository;
