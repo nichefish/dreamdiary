@@ -18,11 +18,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
@@ -31,12 +27,12 @@ import javax.validation.Valid;
 /**
  * ExptrReqstController
  * <pre>
- *  경비 관리 > 물품구매/경조사비 신청 컨트롤러.
+ *  경비 관리 > 물품구매/경조사비 신청 API 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Log4j2
 public class ExptrReqstApiController

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.domain.jrnl.sumry.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.jrnl.day.service.JrnlDayTagService;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.service.JrnlDiaryService;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.service.JrnlDiaryTagService;
@@ -9,7 +10,6 @@ import io.nicheblog.dreamdiary.domain.jrnl.sumry.model.JrnlSumryDto;
 import io.nicheblog.dreamdiary.domain.jrnl.sumry.model.JrnlSumrySearchParam;
 import io.nicheblog.dreamdiary.domain.jrnl.sumry.service.JrnlSumryService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.model.TagDto;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
@@ -31,9 +31,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * JrnlSumryController
+ * JrnlSumryPageController
  * <pre>
- *  저널 결산 Controller
+ *  저널 결산 페이지 Controller.
  * </pre>
  *
  * @author nichefish

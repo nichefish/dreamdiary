@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
- * LogActvtyController
+ * LogActvtyPageController
  * <pre>
- *  로그 관리 > 활동 로그 관리 컨트롤러.
+ *  로그 관리 > 활동 로그 관리 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

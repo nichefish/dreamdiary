@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global._common._clsf.tag.controller;
 
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.model.TagSearchParam;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.service.TagService;
@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
- * TagController
+ * TagApiController
  * <pre>
- *  태그 관리 컨트롤러.
+ *  태그 관리 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

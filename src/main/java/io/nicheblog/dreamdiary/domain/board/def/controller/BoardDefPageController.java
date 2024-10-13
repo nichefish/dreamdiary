@@ -1,10 +1,10 @@
 package io.nicheblog.dreamdiary.domain.board.def.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefDto;
 import io.nicheblog.dreamdiary.domain.board.def.model.BoardDefSearchParam;
 import io.nicheblog.dreamdiary.domain.board.def.service.BoardDefService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
- * BoardDefController
+ * BoardDefPageController
  * <pre>
- *  게시판 정의 관리 컨트롤러.
+ *  게시판 정의 관리 페이지 컨트롤러.
  *  ※게시판 정의(board_def) = 게시판 분류. 게시판 게시물(board_post)을 1:N으로 관리한다.
  * </pre>
  *

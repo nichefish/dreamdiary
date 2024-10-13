@@ -2,10 +2,12 @@ package io.nicheblog.dreamdiary.global._common.auth.config;
 
 import io.nicheblog.dreamdiary.global.ActiveProfile;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common.auth.filter.JwtAuthenticationFilter;
 import io.nicheblog.dreamdiary.global._common.auth.handler.AjaxAwareAuthenticationEntryPoint;
 import io.nicheblog.dreamdiary.global._common.auth.handler.LgnFailureHandler;
 import io.nicheblog.dreamdiary.global._common.auth.handler.LgnSuccessHandler;
 import io.nicheblog.dreamdiary.global._common.auth.handler.LgoutHandler;
+import io.nicheblog.dreamdiary.global._common.auth.provider.JwtTokenProvider;
 import io.nicheblog.dreamdiary.global._common.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +25,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -46,6 +49,9 @@ public class WebSecurityConfig {
     private final LgnSuccessHandler lgnSuccessHandler;
     private final AjaxAwareAuthenticationEntryPoint ajaxAwareAuthenticationEntryPoint;
     private final LgoutHandler lgoutHandler;
+
+    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private final ActiveProfile activeProfile;
 
@@ -88,6 +94,7 @@ public class WebSecurityConfig {
 
         /**
          * Spring Security의 WebSecurity 설정을 구성합니다.
+         * "HttpSecurity 앞단에 적용되며, 전체적으로 스프링 시큐리티의 영향권 밖에 있습니다."
          *
          * @param web WebSecurity 객체로, 웹 관련 보안 설정을 구성하는 데 사용됩니다
          * @throws Exception 보안 구성 중 발생할 수 있는 예외
@@ -124,6 +131,9 @@ public class WebSecurityConfig {
          */
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+
+            // JWT 필터 추가
+            http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
             // 페이지 권한 설정
             http.authorizeRequests()

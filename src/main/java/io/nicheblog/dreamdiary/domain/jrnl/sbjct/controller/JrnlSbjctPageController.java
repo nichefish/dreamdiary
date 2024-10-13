@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.domain.jrnl.sbjct.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.jrnl.sbjct.model.JrnlSbjctDto;
 import io.nicheblog.dreamdiary.domain.jrnl.sbjct.model.JrnlSbjctSearchParam;
 import io.nicheblog.dreamdiary.domain.jrnl.sbjct.service.JrnlSbjctService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.service.TagService;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
@@ -33,9 +33,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 
 /**
- * JrnlSbjctController
+ * JrnlSbjctPageController
  * <pre>
- *  저널 주제 컨트롤러.
+ *  저널 주제 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

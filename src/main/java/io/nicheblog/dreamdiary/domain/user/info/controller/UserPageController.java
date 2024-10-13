@@ -1,10 +1,10 @@
  package io.nicheblog.dreamdiary.domain.user.info.controller;
 
+ import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
  import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
  import io.nicheblog.dreamdiary.domain.user.info.model.UserSearchParam;
  import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
  import io.nicheblog.dreamdiary.global.Constant;
- import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
  import io.nicheblog.dreamdiary.global.Url;
  import io.nicheblog.dreamdiary.global._common.auth.service.AuthRoleService;
  import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
@@ -32,9 +32,9 @@
  import java.util.Map;
 
 /**
- * UserInfoController
+ * UserPageController
  * <pre>
- *  사용자 관리 > 계정 및 권한 관리 컨트롤러.
+ *  사용자 관리 > 계정 및 권한 관리 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

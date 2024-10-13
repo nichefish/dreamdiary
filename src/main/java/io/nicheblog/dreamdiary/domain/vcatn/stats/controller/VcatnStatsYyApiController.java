@@ -18,19 +18,19 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * VcatnStatsController
+ * VcatnStatsYyApiController
  * <pre>
- *  휴가관리 > 년도별 휴가관리 컨트롤러.
+ *  휴가관리 > 년도별 휴가관리 API 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Log4j2
 public class VcatnStatsYyApiController

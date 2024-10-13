@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.domain.schdul.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.schdul.model.SchdulSearchParam;
 import io.nicheblog.dreamdiary.domain.schdul.service.SchdulCalService;
 import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
 import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
 
 /**
- * SchdulCalController
+ * SchdulCalPageController
  * <pre>
- *  일정 달력 컨트롤러.
+ *  일정 달력 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

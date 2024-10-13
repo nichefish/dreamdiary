@@ -31,7 +31,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 @RequiredArgsConstructor
 @Log4j2
-public class BaseExceptionlHandler {
+public class BaseExceptionHandler {
 
     private final ApplicationEventPublisher publisher;
 
@@ -84,8 +84,7 @@ public class BaseExceptionlHandler {
                     .body(ajaxResponse);
         }
         // 페이지 요청인 경우
-        final ModelAndView modelAndView = new ModelAndView(view).addObject("errorMsg", errorMsg);
-        return modelAndView;
+        return new ModelAndView(view).addObject("errorMsg", errorMsg);
     }
 
     /**

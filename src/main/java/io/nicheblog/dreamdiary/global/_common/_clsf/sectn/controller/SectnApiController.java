@@ -22,7 +22,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -32,14 +31,14 @@ import java.security.InvalidParameterException;
 import java.util.Optional;
 
 /**
- * SectnController
+ * SectnApiController
  * <pre>
- *  단락 컨트롤러.
+ *  단락 API 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Log4j2
 public class SectnApiController

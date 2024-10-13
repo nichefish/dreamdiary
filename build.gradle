@@ -122,6 +122,8 @@ dependencies {
     implementation 'jakarta.json:jakarta.json-api:2.0.1'
     implementation 'org.glassfish:jakarta.json:2.0.1'
 
+    implementation "io.jsonwebtoken:jjwt:0.9.1"
+
     /* DotEnv */
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
 

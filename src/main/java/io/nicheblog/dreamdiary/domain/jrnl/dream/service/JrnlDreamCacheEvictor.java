@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.domain.jrnl.dream.service;
 
 import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamContentTagEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.dream.entity.JrnlDreamTagEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.dream.model.JrnlDreamDto;
 import io.nicheblog.dreamdiary.global._common.cache.service.CacheEvictor;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * JrnlDreamCacheEvictor
  * <p>
- *  저널 꿈 관련 캐시 evictor
+ *  저널 꿈 관련 캐시 evictor.
  * </p>
  *
  * @author nichefish
@@ -53,10 +54,10 @@ public class JrnlDreamCacheEvictor
         EhCacheUtils.evictCache("jrnlDayDtlDto", jrnlDream.getJrnlDayNo());
         this.evictCacheForPeriod("jrnlDayList", yy, mnth);
         // jrnl_dream_tag
-        EhCacheUtils.evictCacheAll("jrnlDreamList");
         this.evictCacheForPeriod("jrnlDreamTagList", yy, mnth);
         this.evictCacheForPeriod("jrnlDreamSizedTagList", yy, mnth);
         // L2캐시 처리
+        EhCacheUtils.clearL2Cache(JrnlDreamEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDreamTagEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDreamContentTagEntity.class);
     }

@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.domain.user.reqst.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
 import io.nicheblog.dreamdiary.domain.user.reqst.service.UserReqstService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
@@ -19,9 +19,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * UserReqstController
+ * UserReqstPageController
  * <pre>
- *  사용자 계정 신청 컨트롤러.
+ *  사용자 계정 신청 페이지 컨트롤러.
  * </pre>
  * TODO: 기능추가 예정
  *

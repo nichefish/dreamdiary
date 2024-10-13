@@ -20,7 +20,6 @@
  import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
  import org.springframework.security.access.annotation.Secured;
- import org.springframework.stereotype.Controller;
  import org.springframework.web.bind.annotation.*;
  import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -28,14 +27,14 @@
  import javax.validation.Valid;
 
  /**
-  * UserInfoController
+  * UserApiController
   * <pre>
-  *  사용자 관리 > 계정 및 권한 관리 컨트롤러.
+  *  사용자 관리 > 계정 및 권한 관리 API 컨트롤러.
   * </pre>
   *
   * @author nichefish
   */
- @Controller
+ @RestController
  @RequiredArgsConstructor
  @Log4j2
  public class UserApiController

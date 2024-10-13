@@ -19,25 +19,24 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 /**
- * DtlCdController
+ * DtlCdApiController
  * <pre>
- *  상세 코드(dtlCd) 정보 관리 컨트롤러.
+ *  상세 코드(dtlCd) 정보 관리 API 컨트롤러.
  *  ※상세 코드(dtl_cd) = 분류 코드 하위의 상세 코드. 분류 코드(cl_cd)에 N:1로 귀속된다.
  * </pre>
  *
  * @author nichefish
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Log4j2
-public class DtlCdController
+public class DtlCdApiController
         extends BaseControllerImpl {
 
     @Getter

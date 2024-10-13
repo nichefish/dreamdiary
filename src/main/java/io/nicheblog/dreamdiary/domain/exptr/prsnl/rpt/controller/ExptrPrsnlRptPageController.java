@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptItemDto;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.model.ExptrPrsnlRptSmDto;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.rpt.service.ExptrPrsnlRptService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ExptrPrsnlRptController
+ * ExptrPrsnlRptPageController
  * <pre>
- *  경비 관리 > 월간지출내역 컨트롤러.
+ *  경비 관리 > 월간지출내역 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

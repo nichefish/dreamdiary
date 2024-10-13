@@ -25,7 +25,7 @@ import java.util.Enumeration;
 /**
  * DataProxyController
  * <pre>
- *  CORS 회피용 API 프록시 호출 컨트롤러.
+ *  (CORS 회피용) API 프록시 호출 컨트롤러.
  * </pre>
  *
  * @author nichefish

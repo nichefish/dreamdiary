@@ -6,8 +6,8 @@ import io.nicheblog.dreamdiary.domain.notice.model.NoticeSearchParam;
 import io.nicheblog.dreamdiary.domain.notice.model.NoticeXlsxDto;
 import io.nicheblog.dreamdiary.domain.notice.service.NoticeService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global._common._clsf.managt.event.ManagtrAddEvent;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.event.TagProcEvent;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.service.TagService;
@@ -30,11 +30,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
@@ -43,14 +39,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * NoticeController
+ * NoticeApiController
  * <pre>
- *  공지사항 컨트롤러.
+ *  공지사항 API 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Log4j2
 public class NoticeApiController

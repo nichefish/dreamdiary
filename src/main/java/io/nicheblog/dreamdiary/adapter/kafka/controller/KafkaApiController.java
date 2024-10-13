@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * KafkaApiController
  * <pre>
- *  Kafka 관련 테스트 및 수동 처리 컨트롤러.
+ *  Kafka:: 테스트 및 수동 처리 API 컨트롤러.
  * </pre>
  *
  * @author nichefish

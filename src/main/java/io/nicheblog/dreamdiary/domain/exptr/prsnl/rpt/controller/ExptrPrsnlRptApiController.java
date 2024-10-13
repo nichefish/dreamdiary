@@ -6,17 +6,17 @@ import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * ExptrPrsnlRptController
+ * ExptrPrsnlRptApiController
  * <pre>
- *  경비 관리 > 월간지출내역 컨트롤러.
+ *  경비 관리 > 월간지출내역 API 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Log4j2
 public class ExptrPrsnlRptApiController

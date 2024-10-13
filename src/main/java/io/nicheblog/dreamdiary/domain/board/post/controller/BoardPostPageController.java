@@ -34,9 +34,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * BoardPostController
+ * BoardPostPageController
  * <pre>
- *  게시판 게시물 컨트롤러.
+ *  게시판 게시물 페이지 컨트롤러.
  *  화면단에선 boardCd, 어플리케이션 단에선 contentType으로 사용
  * </pre>
  *

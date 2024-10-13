@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * JandiApiController
  * <pre>
- *  API:: JANDI (incoming/outgoing) webhook 컨트롤러.
+ *  JANDI:: (incoming/outgoing) webhook API 컨트롤러.
  * </pre>
  *
  * @author nichefish

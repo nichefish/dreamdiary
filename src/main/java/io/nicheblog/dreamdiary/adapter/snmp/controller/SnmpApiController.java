@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * SnmpApiController
  * <pre>
- *  API:: Snmp 수동 송신 관련 Controller.
+ *  Snmp 수동 송신 관련 API 컨트롤러.
  * </pre>
  *
  * @author nichefish

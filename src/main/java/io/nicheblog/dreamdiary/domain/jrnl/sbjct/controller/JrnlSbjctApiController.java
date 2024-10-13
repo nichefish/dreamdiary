@@ -3,8 +3,8 @@ package io.nicheblog.dreamdiary.domain.jrnl.sbjct.controller;
 import io.nicheblog.dreamdiary.domain.jrnl.sbjct.model.JrnlSbjctDto;
 import io.nicheblog.dreamdiary.domain.jrnl.sbjct.service.JrnlSbjctService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global._common._clsf.managt.event.ManagtrAddEvent;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.event.TagProcEvent;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
@@ -21,25 +21,21 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 
 /**
- * JrnlSbjctController
+ * JrnlSbjctApiController
  * <pre>
- *  저널 주제 컨트롤러.
+ *  저널 주제 API 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Log4j2
 public class JrnlSbjctApiController

@@ -28,7 +28,7 @@ import java.io.IOException;
 public class AjaxSessionTimeoutFilter
         implements Filter {
 
-    public FilterConfig filterConfig;
+    private FilterConfig filterConfig;
 
     protected final ApplicationEventPublisher publisher;
 

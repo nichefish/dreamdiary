@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.domain.vcatn.papr.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnPaprDto;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.model.VcatnPaprSearchParam;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.service.VcatnPaprService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.service.TagService;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
@@ -30,9 +30,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * VcatnPaprController
+ * VcatnPaprPageController
  * <pre>
- *  휴가계획서 컨트롤러.
+ *  휴가계획서 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

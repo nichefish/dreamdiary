@@ -195,8 +195,8 @@ public class TagService
         final Set<TagDto> newTagSet = new HashSet<>(newTagList);
         existingTagList.forEach(newTagSet::remove);
         final List<TagEntity> rsList = CollectionUtils.isNotEmpty(newTagSet)
-                ? new ArrayList<>()
-                : this.addMasterTag(new ArrayList<>(newTagSet), clsfKey);
+                ? this.addMasterTag(new ArrayList<>(newTagSet), clsfKey)
+                : new ArrayList<>();
 
         // 2. 삭제해야 할 태그 삭제
         // 기존 태그 목록에서 새로운 태그 목록을 빼면 삭제해야 할 태그들이 나옴
@@ -217,7 +217,6 @@ public class TagService
      */
     public List<TagEntity> addMasterTag(final List<TagDto> tagList, final BaseClsfKey clsfKey) {
 
-        final String contentType = clsfKey.getContentType();
         final List<TagEntity> tagEntityList = tagList.stream()
                 .distinct() // 중복된 태그 문자열 제거
                 .map(tag -> repository.findByTagNmAndCtgr(tag.getTagNm(), tag.getCtgr())

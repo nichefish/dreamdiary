@@ -2,8 +2,8 @@ package io.nicheblog.dreamdiary.domain.admin.lgnPolicy.controller;
 
 import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.model.LgnPolicyDto;
 import io.nicheblog.dreamdiary.domain.admin.lgnPolicy.service.LgnPolicyService;
-import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
+import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
@@ -19,9 +19,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * LgnPolicyController
+ * LgnPolicyPageController
  * <pre>
- *  로그인 정책 관리 컨트롤러.
+ *  로그인 정책 관리 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

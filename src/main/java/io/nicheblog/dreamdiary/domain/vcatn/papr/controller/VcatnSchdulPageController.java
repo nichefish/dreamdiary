@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.domain.vcatn.papr.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
 import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.service.VcatnPaprService;
@@ -7,7 +8,6 @@ import io.nicheblog.dreamdiary.domain.vcatn.papr.service.VcatnSchdulService;
 import io.nicheblog.dreamdiary.domain.vcatn.stats.model.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
@@ -29,9 +29,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * VcatnSchdulController
+ * VcatnSchdulPageController
  * <pre>
- *  휴가관리 > 휴가사용일자 컨트롤러.
+ *  휴가관리 > 휴가사용일자 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * HldyKasiApiController
  * <pre>
- *  API:: 한국천문연구원(KASI):: 특일 정보 API 컨트롤러.
+ *  한국천문연구원(KASI):: 특일 정보 API 컨트롤러.
  * </pre>
  *
  * @author nichefish

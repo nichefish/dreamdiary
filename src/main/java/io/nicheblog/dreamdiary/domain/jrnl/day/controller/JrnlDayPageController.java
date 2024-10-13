@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.domain.jrnl.day.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDaySearchParam;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
- * JrnlDayController
+ * JrnlDayPageController
  * <pre>
- *  저널 일자 Controller.
+ *  저널 일자 페이지 Controller.
  * </pre>
  *
  * @author nichefish

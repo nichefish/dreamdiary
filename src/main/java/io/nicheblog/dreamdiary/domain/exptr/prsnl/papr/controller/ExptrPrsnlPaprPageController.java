@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model.ExptrPrsnlPaprDto;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model.ExptrPrsnlPaprSearchParam;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service.ExptrPrsnlPaprService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.service.TagService;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
@@ -35,9 +35,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Nullable;
 
 /**
- * ExptrPrsnlPaprController
+ * ExptrPrsnlPaprPageController
  * <pre>
- *  경비 관리 > 경비지출서 관리 컨트롤러.
+ *  경비 관리 > 경비지출서 관리 페이지 컨트롤러.
  *  ※ 경비지출서(exptr_prsnl_papr) = 경비지출서. 경비지출항목(exptr_prsnl_item)을 1:N으로 관리한다.
  * </pre>
  *

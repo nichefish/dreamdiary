@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.domain.exptr.reqst.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.exptr.reqst.model.ExptrReqstDto;
 import io.nicheblog.dreamdiary.domain.exptr.reqst.model.ExptrReqstSearchParam;
 import io.nicheblog.dreamdiary.domain.exptr.reqst.service.ExptrReqstService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.service.TagService;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
@@ -33,9 +33,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 
 /**
- * ExptrReqstController
+ * ExptrReqstPageController
  * <pre>
- *  경비 관리 > 물품구매/경조사비 신청 컨트롤러.
+ *  경비 관리 > 물품구매/경조사비 신청 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

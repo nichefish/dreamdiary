@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
 
 /**
- * LogStatsUserController
+ * LogStatsPageController
  * <pre>
- *  로그 관리 > 로그 통계 관리 컨트롤러.
+ *  로그 관리 > 로그 통계 관리 페이지 컨트롤러.
  * </pre>
  * TODO: 통계 고도화 예정
  *
@@ -35,7 +35,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Log4j2
-public class LogStatsController
+public class LogStatsPageController
         extends BaseControllerImpl {
 
     @Getter

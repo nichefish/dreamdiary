@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.domain.jrnl.diary.service;
 
 import io.nicheblog.dreamdiary.domain.jrnl.diary.entity.JrnlDiaryContentTagEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.entity.JrnlDiaryEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.entity.JrnlDiaryTagEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
 import io.nicheblog.dreamdiary.global._common.cache.service.CacheEvictor;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * JrnlDiaryCacheEvictor
  * <p>
- *  저널 일기 관련 캐시 evictor
+ *  저널 일기 관련 캐시 evictor.
  * </p>
  *
  * @author nichefish
@@ -56,6 +57,7 @@ public class JrnlDiaryCacheEvictor
         this.evictCacheForPeriod("jrnlDiaryTagList", yy, mnth);
         this.evictCacheForPeriod("jrnlDiarySizedTagList", yy, mnth);
         // L2캐시 처리
+        EhCacheUtils.clearL2Cache(JrnlDiaryEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDiaryTagEntity.class);
         EhCacheUtils.clearL2Cache(JrnlDiaryContentTagEntity.class);
     }

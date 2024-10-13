@@ -1,12 +1,12 @@
 package io.nicheblog.dreamdiary.domain.notice.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.notice.model.NoticeDto;
 import io.nicheblog.dreamdiary.domain.notice.model.NoticeSearchParam;
 import io.nicheblog.dreamdiary.domain.notice.service.NoticeService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.service.TagService;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
@@ -31,9 +31,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * NoticeController
+ * NoticePageController
  * <pre>
- *  공지사항 컨트롤러.
+ *  공지사항 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

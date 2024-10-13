@@ -17,7 +17,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -26,17 +25,17 @@ import java.io.File;
 import java.util.List;
 
 /**
- * AtchFileController
+ * AtchFileApiController
  * <pre>
- *  파일 처리 컨트롤러.
+ *  파일 처리 API 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Log4j2
-public class AtchFileController
+public class AtchFileApiController
         extends BaseControllerImpl {
 
     @Getter

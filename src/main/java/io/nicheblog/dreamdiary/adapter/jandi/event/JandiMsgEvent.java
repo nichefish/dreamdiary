@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationEvent;
 /**
  * JandiMsgEvent
  * <pre>
- *  잔디 메세지 발송 이벤트
+ *  잔디 메세지 발송 이벤트.
  * </pre>
  *
  * @author nichefish

@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.domain.user.my.controller;
 
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
 import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
 import io.nicheblog.dreamdiary.domain.user.my.service.UserMyService;
@@ -9,7 +10,6 @@ import io.nicheblog.dreamdiary.domain.vcatn.stats.model.VcatnStatsYyDto;
 import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsService;
 import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
@@ -29,9 +29,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 /**
- * UserMyController
+ * UserPageController
  * <pre>
- *  내 정보 관리 컨트롤러.
+ *  내 정보 관리 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish
