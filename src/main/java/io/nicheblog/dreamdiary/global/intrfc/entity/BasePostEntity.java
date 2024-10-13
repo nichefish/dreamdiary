@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
-import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global._common.cd.entity.DtlCdEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;

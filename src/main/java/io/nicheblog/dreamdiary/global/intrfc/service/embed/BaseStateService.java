@@ -1,13 +1,11 @@
 package io.nicheblog.dreamdiary.global.intrfc.service.embed;
 
-import io.nicheblog.dreamdiary.domain.admin.menu.entity.MenuEntity;
-import io.nicheblog.dreamdiary.domain.admin.menu.model.MenuDto;
+import io.nicheblog.dreamdiary.global._common._clsf.state.entity.embed.StateEmbedModule;
+import io.nicheblog.dreamdiary.global._common._clsf.state.model.cmpstn.StateCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
-import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;

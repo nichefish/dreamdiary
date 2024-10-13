@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
-import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;

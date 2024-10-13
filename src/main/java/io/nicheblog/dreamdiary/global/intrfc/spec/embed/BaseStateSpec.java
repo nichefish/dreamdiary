@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.spec.embed;
 
+import io.nicheblog.dreamdiary.global._common._clsf.state.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAuditEntity;
-import io.nicheblog.dreamdiary.domain._clsf.state.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 
 import javax.persistence.criteria.CriteriaBuilder;

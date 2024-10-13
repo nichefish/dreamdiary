@@ -3,8 +3,11 @@ package io.nicheblog.dreamdiary.global;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * ActiveProfile
@@ -19,6 +22,12 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 public class ActiveProfile {
+
+    @PostConstruct
+    public void init() throws Exception {
+        if (StringUtils.isEmpty(this.active)) throw new Exception("profile이 유효하지 않습니다.");
+        this.profile = Profile.valueOf(this.active.toUpperCase());
+    }
 
     /**
      * 프로필 Enum

@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.global.intrfc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
-import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDto;
+import io.nicheblog.dreamdiary.global._common.file.model.AtchFileDtlDto;
+import io.nicheblog.dreamdiary.global._common.file.model.AtchFileDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

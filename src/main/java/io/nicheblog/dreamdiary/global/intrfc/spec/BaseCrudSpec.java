@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.spec;
 
-import io.nicheblog.dreamdiary.domain._core.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlPaprEntity;
+import io.nicheblog.dreamdiary.global._common.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import org.springframework.data.jpa.domain.Specification;
 
