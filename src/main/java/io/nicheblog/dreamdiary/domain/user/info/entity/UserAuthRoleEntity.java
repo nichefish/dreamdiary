@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain.user.info.entity;
 
-import io.nicheblog.dreamdiary.domain._core.auth.entity.AuthRoleEntity;
+import io.nicheblog.dreamdiary.global._common.auth.entity.AuthRoleEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

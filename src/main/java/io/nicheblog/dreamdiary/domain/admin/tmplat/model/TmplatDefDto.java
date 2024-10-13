@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.domain.admin.tmplat.model;
 
+import io.nicheblog.dreamdiary.global._common._clsf.state.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.global._common._clsf.state.model.cmpstn.StateCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAuditDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
-import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstnModule;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class TmplatDefDto
         extends BaseAuditDto

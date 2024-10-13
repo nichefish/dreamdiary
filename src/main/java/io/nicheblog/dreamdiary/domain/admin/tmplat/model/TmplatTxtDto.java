@@ -1,9 +1,9 @@
 package io.nicheblog.dreamdiary.domain.admin.tmplat.model;
 
+import io.nicheblog.dreamdiary.global._common._clsf.state.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.global._common._clsf.state.model.cmpstn.StateCmpstnModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseAtchDto;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
-import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstn;
-import io.nicheblog.dreamdiary.domain._clsf.state.model.cmpstn.StateCmpstnModule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class TmplatTxtDto
         extends BaseAtchDto
         implements Identifiable<Integer>, StateCmpstnModule {

@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.global.model;
 
 import io.nicheblog.dreamdiary.domain.admin.menu.model.AcsPageNm;
-import io.nicheblog.dreamdiary.global.SiteTopMenu;
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteTopMenu;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
-import static io.nicheblog.dreamdiary.global.SiteTopMenu.NO_ASIDE;
+import static io.nicheblog.dreamdiary.domain.admin.menu.SiteTopMenu.NO_ASIDE;
 
 /**
  * SiteAcsInfo

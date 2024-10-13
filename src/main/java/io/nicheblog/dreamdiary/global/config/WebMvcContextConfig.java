@@ -1,8 +1,9 @@
 package io.nicheblog.dreamdiary.global.config;
 
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common.auth.interceptor.CsrfInterceptor;
+import io.nicheblog.dreamdiary.global._common.cookie.interceptor.CookieInterceptor;
 import io.nicheblog.dreamdiary.global.handler.UTF8DecodeResourceResolver;
-import io.nicheblog.dreamdiary.global.interceptor.CookieInterceptor;
 import io.nicheblog.dreamdiary.global.interceptor.FreemarkerInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,7 @@ public class WebMvcContextConfig
 
     private final FreemarkerInterceptor freemarkerInterceptor;
     private final CookieInterceptor cookieInterceptor;
+    private final CsrfInterceptor csrfInterceptor;
 
     private static final List<String> STATIC_RESOURCES_URL_PATTERN = List.of("/css/**", "/js/**", "/media/**", "/font/**", "/lib/**", "/metronic/**", "/react/**", "/content/**", "/upfile/**");
 
@@ -109,6 +111,14 @@ public class WebMvcContextConfig
 
         // 쿠키 관련 인터셉터 수동 추가
         registry.addInterceptor(cookieInterceptor)
+                /* 페이지 접근에 대해서만 처리 */
+                .addPathPatterns("/")
+                .addPathPatterns("/**/*.do")
+                /* 스태틱 자원 경로의 경우 처리하지 않음 */
+                .excludePathPatterns(STATIC_RESOURCES_URL_PATTERN);
+
+        // CSRF 관련 인터셉터 수동 추가
+        registry.addInterceptor(csrfInterceptor)
                 /* 페이지 접근에 대해서만 처리 */
                 .addPathPatterns("/")
                 .addPathPatterns("/**/*.do")

@@ -1,14 +1,14 @@
 package io.nicheblog.dreamdiary.domain.admin.tmplat.controller;
 
-import io.nicheblog.dreamdiary.domain._core.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.domain._core.log.actvty.event.LogActvtyEvent;
-import io.nicheblog.dreamdiary.domain._core.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.domain.admin.tmplat.model.TmplatDefDto;
 import io.nicheblog.dreamdiary.domain.admin.tmplat.model.TmplatDefSearchParam;
 import io.nicheblog.dreamdiary.domain.admin.tmplat.service.TmplatDefService;
 import io.nicheblog.dreamdiary.global.Constant;
-import io.nicheblog.dreamdiary.global.SiteMenu;
+import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
+import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
+import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.model.PaginationInfo;

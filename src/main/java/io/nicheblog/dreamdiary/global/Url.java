@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.global;
 
-import io.nicheblog.dreamdiary.api.ApiUrl;
+import io.nicheblog.dreamdiary.adapter.AdapterUrl;
 
 /**
  * Url
@@ -11,7 +11,7 @@ import io.nicheblog.dreamdiary.api.ApiUrl;
  * @author nichefish
  */
 public class Url
-    implements SiteUrl, ApiUrl {
+    implements SiteUrl, AdapterUrl {
 
     /** 도메인 */
     public static final String DOMAIN = "dreamdiary.nicheblog.io";
