@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.domain._core.cd.entity;
 
 import io.nicheblog.dreamdiary.global.TestConstant;
+import io.nicheblog.dreamdiary.global._common.cd.entity.ClCdEntity;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
 

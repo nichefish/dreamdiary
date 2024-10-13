@@ -1,7 +1,8 @@
 package io.nicheblog.dreamdiary.global;
 
-import io.nicheblog.dreamdiary.api.ApiConstant;
-import io.nicheblog.dreamdiary.domain._core.auth.AuthConstant;
+import io.nicheblog.dreamdiary.adapter.AdapterConstant;
+import io.nicheblog.dreamdiary.global._common.auth.AuthConstant;
+import io.nicheblog.dreamdiary.global._common.cd.CdConstant;
 
 import java.util.Locale;
 import java.util.TimeZone;
@@ -15,7 +16,7 @@ import java.util.TimeZone;
  * @author nichefish
  */
 public final class Constant
-        implements AuthConstant, CdConstant, ApiConstant {
+        implements AuthConstant, CdConstant, AdapterConstant {
 
     /**
      * TimeZone

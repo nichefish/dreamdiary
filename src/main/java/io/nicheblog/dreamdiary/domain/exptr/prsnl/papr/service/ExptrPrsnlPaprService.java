@@ -1,16 +1,15 @@
 package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.service;
 
-import io.nicheblog.dreamdiary.domain._core.auth.util.AuthUtils;
-import io.nicheblog.dreamdiary.domain._core.file.entity.AtchFileDtlEntity;
-import io.nicheblog.dreamdiary.domain._core.file.mapstruct.AtchFileDtlMapstruct;
-import io.nicheblog.dreamdiary.domain._core.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlItemEntity;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.mapstruct.ExptrPrsnlPaprMapstruct;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model.ExptrPrsnlPaprDto;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.repository.jpa.ExptrPrsnlPaprRepository;
 import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.spec.ExptrPrsnlPaprSpec;
-import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
+import io.nicheblog.dreamdiary.global._common.auth.util.AuthUtils;
+import io.nicheblog.dreamdiary.global._common.file.entity.AtchFileDtlEntity;
+import io.nicheblog.dreamdiary.global._common.file.mapstruct.AtchFileDtlMapstruct;
+import io.nicheblog.dreamdiary.global._common.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;

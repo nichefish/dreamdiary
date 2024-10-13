@@ -1,8 +1,8 @@
 package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity;
 
-import io.nicheblog.dreamdiary.domain._core.cd.entity.DtlCdEntity;
-import io.nicheblog.dreamdiary.domain._core.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global._common.cd.entity.DtlCdEntity;
+import io.nicheblog.dreamdiary.global._common.file.entity.AtchFileDtlEntity;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

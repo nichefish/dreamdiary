@@ -1,11 +1,11 @@
 package io.nicheblog.dreamdiary.domain.board.post.service;
 
-import io.nicheblog.dreamdiary.domain._core.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.domain.board.post.entity.BoardPostEntity;
 import io.nicheblog.dreamdiary.domain.board.post.mapstruct.BoardPostMapstruct;
 import io.nicheblog.dreamdiary.domain.board.post.model.BoardPostDto;
 import io.nicheblog.dreamdiary.domain.board.post.repository.jpa.BoardPostRepository;
 import io.nicheblog.dreamdiary.domain.board.post.spec.BoardPostSpec;
+import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseClsfKey;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;

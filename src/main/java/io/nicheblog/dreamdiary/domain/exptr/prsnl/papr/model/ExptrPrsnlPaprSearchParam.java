@@ -1,6 +1,6 @@
 package io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.model;
 
-import io.nicheblog.dreamdiary.global.ContentType;
+import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BasePostSearchParam;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,5 +24,6 @@ public class ExptrPrsnlPaprSearchParam
         extends BasePostSearchParam {
 
     /** 컨텐츠 타입 */
+    @Builder.Default
     private String contentType = ContentType.EXPTR_PRSNL_PAPR.key;
 }
