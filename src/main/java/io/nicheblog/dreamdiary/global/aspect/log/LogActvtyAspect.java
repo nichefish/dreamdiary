@@ -70,7 +70,7 @@ public class LogActvtyAspect {
         LogActvtyParam logParam = extractLogParam(joinPoint);
         // 실패 여부, 에러 메시지, 활동 카테고리 설정
         logParam.setResult(false, ex.getMessage(), ActvtyCtgr.DEFAULT);
-        logParam.setExceptionInfo((Exception) ex);
+        logParam.setExceptionInfo(ex);
         // logParam.setMethodName(joinPoint.getSignature().getName());
 
         // 로그 이벤트 발행

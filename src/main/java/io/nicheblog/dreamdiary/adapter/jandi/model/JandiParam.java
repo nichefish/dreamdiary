@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * JandiParam
  * <pre>
- *  API:: JANDI:: JANDI API 호출 파라미터 Dto
+ *  API:: JANDI:: JANDI API 호출 파라미터.
  * </pre>
  *
  * @author nichefish

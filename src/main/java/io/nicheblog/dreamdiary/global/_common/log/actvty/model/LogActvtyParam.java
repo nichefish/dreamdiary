@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * LogActvtyParam
  * <pre>
- *  활동 로그 파라미터 Dto
+ *  활동 로그 파라미터.
  *  (화면에서 넘어오는 인자 정리 위한 클래스)
  * </pre>
  *
@@ -192,7 +192,7 @@ public class LogActvtyParam
     /**
      * Exception 정보를 객체에 세팅한다.
      *
-     * @param e - 예외 정보 객체
+     * @param e - 예외(exception, error) 정보 객체
      */
     public void setExceptionInfo(final Throwable e) {
         this.exceptionNm = MessageUtils.getExceptionNm(e);
