@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.io.IOException;
 
 /**
- * MenuController
+ * MenuPageController
  * <pre>
- *  메뉴 관리 컨트롤러.
+ *  메뉴 관리 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish

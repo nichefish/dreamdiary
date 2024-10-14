@@ -122,7 +122,7 @@ public class LgnController
             isSuccess = false;
             rsltMsg = MessageUtils.getExceptionMsg(e);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.model.TagSearchParam;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -52,6 +51,7 @@ public class JrnlTagController
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.JRNL_TAG_CTGR_SYNC_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -59,35 +59,27 @@ public class JrnlTagController
     public ResponseEntity<AjaxResponse> tagCtgrSyncAjax(
             @ModelAttribute("searchParam") TagSearchParam searchParam,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 저널 일자 태그 동기화
-            jrnlDayTagCtgrSynchronizer.tagSync();
-            // 저널 일기 태그 동기화
-            jrnlDiaryTagCtgrSynchronizer.tagSync();
-            // 저널 꿈 태그 동기화
-            jrnlDreamTagCtgrSynchronizer.tagSync();
+        // 저널 일자 태그 동기화
+        jrnlDayTagCtgrSynchronizer.tagSync();
+        // 저널 일기 태그 동기화
+        jrnlDiaryTagCtgrSynchronizer.tagSync();
+        // 저널 꿈 태그 동기화
+        jrnlDreamTagCtgrSynchronizer.tagSync();
 
-            // 브라우저 캐시 초기화 처리
-            HttpUtils.setInvalidateBrowserCacheHeader(response);
+        // 브라우저 캐시 초기화 처리
+        HttpUtils.setInvalidateBrowserCacheHeader(response);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        boolean isSuccess = true;
+        String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

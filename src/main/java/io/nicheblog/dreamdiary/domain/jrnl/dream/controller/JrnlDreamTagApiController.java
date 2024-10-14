@@ -9,7 +9,6 @@ import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.model.TagDto;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.model.TagSearchParam;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -56,36 +55,27 @@ public class JrnlDreamTagApiController
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.JRNL_DREAM_TAG_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> tagListAjax(
-            @ModelAttribute("searchParam") TagSearchParam searchParam,
+            final @ModelAttribute("searchParam") TagSearchParam searchParam,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 전체 태그 목록 조회 (태그클라우드)
-            List<TagDto> tagList = jrnlDreamTagService.getDreamSizedListDto(searchParam.getYy(), searchParam.getMnth());
-            ajaxResponse.setRsltList(tagList);
+        List<TagDto> tagList = jrnlDreamTagService.getDreamSizedListDto(searchParam.getYy(), searchParam.getMnth());
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltList(tagList);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -99,36 +89,27 @@ public class JrnlDreamTagApiController
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.JRNL_DREAM_TAG_GROUP_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> tagGroupListAjax(
-            @ModelAttribute("searchParam") TagSearchParam searchParam,
+            final @ModelAttribute("searchParam") TagSearchParam searchParam,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 전체 태그 목록 조회 (태그클라우드)
-            Map<String, List<TagDto>> tagGroupMap = jrnlDreamTagService.getDreamSizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
-            ajaxResponse.setRsltMap(tagGroupMap);
+        Map<String, List<TagDto>> tagGroupMap = jrnlDreamTagService.getDreamSizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltMap(tagGroupMap);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -142,6 +123,7 @@ public class JrnlDreamTagApiController
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(value = {Url.JRNL_DREAM_TAG_DTL_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -149,30 +131,20 @@ public class JrnlDreamTagApiController
     public ResponseEntity<AjaxResponse> jrnlDayListAjax(
             JrnlDreamSearchParam searchParam,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 목록 조회 및 응답에 추가
-            List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.jrnlDreamTagDtl(searchParam);
-            Collections.sort(jrnlDreamList);
-            ajaxResponse.setRsltList(jrnlDreamList);
+        List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.jrnlDreamTagDtl(searchParam);
+        Collections.sort(jrnlDreamList);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltList(jrnlDreamList);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

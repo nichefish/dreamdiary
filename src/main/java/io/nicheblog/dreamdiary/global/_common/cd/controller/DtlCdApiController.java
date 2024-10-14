@@ -8,7 +8,6 @@ import io.nicheblog.dreamdiary.global._common.cd.model.DtlCdParam;
 import io.nicheblog.dreamdiary.global._common.cd.model.DtlCdSearchParam;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -53,6 +52,7 @@ public class DtlCdApiController
      * @param clCd: 구분 코드 (대분류)
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.DTL_CD_LIST_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -60,30 +60,20 @@ public class DtlCdApiController
     public ResponseEntity<AjaxResponse> dtlCdListAjax(
             final @RequestParam("clCd") String clCd,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 목록 조회
-            final DtlCdSearchParam searchParam = DtlCdSearchParam.builder().clCd(clCd).build();
-            final List<DtlCdDto> dtlCdList = dtlCdService.getListDto(searchParam);
-            ajaxResponse.setRsltList(dtlCdList);
+        final DtlCdSearchParam searchParam = DtlCdSearchParam.builder().clCd(clCd).build();
+        final List<DtlCdDto> dtlCdList = dtlCdService.getListDto(searchParam);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltList(dtlCdList);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -98,6 +88,7 @@ public class DtlCdApiController
      * @param regYn 등록 여부 (Y/N)
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(value = {Url.DTL_CD_REG_AJAX, Url.DTL_CD_MDF_AJAX})
     @Secured({Constant.ROLE_MNGR})
@@ -106,31 +97,20 @@ public class DtlCdApiController
             final @Valid DtlCdDto dtlCd,
             final @RequestParam("regYn") String regYn,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 등록/수정 처리
-            final boolean isReg = "Y".equals(regYn);
-            final DtlCdDto result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd);
-            ajaxResponse.setRsltObj(result);
+        final boolean isReg = "Y".equals(regYn);
+        final DtlCdDto result = isReg ? dtlCdService.regist(dtlCd) : dtlCdService.modify(dtlCd);
+        final boolean isSuccess = (result.getDtlCd() != null);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
-            isSuccess = (result.getDtlCd() != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn(dtlCd.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(result);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -144,6 +124,7 @@ public class DtlCdApiController
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.DTL_CD_DTL_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -151,35 +132,24 @@ public class DtlCdApiController
     public ResponseEntity<AjaxResponse> dtlCdDtlAjax(
             final DtlCdKey key,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 응답에 추가
-            final DtlCdDto dtlCdDto = dtlCdService.getDtlDto(key);
-            ajaxResponse.setRsltObj(dtlCdDto);
+        final DtlCdDto dtlCdDto = dtlCdService.getDtlDto(key);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(dtlCdDto);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ajaxResponse);
     }
-
 
     /**
      * 상세 코드 관리(useYn=N 포함) '사용'으로 변경 (Ajax)
@@ -188,6 +158,7 @@ public class DtlCdApiController
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.DTL_CD_USE_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -195,27 +166,17 @@ public class DtlCdApiController
     public ResponseEntity<AjaxResponse> dtlCdUseAjax(
             final DtlCdKey key,
             final LogActvtyParam logParam
-
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 상태 변경 처리
-            isSuccess = dtlCdService.setStateUse(key);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = dtlCdService.setStateUse(key);
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -229,6 +190,7 @@ public class DtlCdApiController
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.DTL_CD_UNUSE_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -236,26 +198,17 @@ public class DtlCdApiController
     public ResponseEntity<AjaxResponse> dtlCdUnuseAjax(
             final DtlCdKey key,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 상태 변경 처리
-            isSuccess = dtlCdService.setStateUnuse(key);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = dtlCdService.setStateUnuse(key);;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -269,6 +222,7 @@ public class DtlCdApiController
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.DTL_CD_DEL_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -276,26 +230,17 @@ public class DtlCdApiController
     public ResponseEntity<AjaxResponse> dtlCdDelAjax(
             final DtlCdKey key,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 삭제
-            isSuccess = dtlCdService.delete(key);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = dtlCdService.delete(key);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -309,6 +254,7 @@ public class DtlCdApiController
      * @param dtlCdParam 키+정렬 순서 목록을 담은 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.DTL_CD_SORT_ORDR_AJAX)
     @Secured({Constant.ROLE_MNGR})
@@ -316,25 +262,17 @@ public class DtlCdApiController
     public ResponseEntity<AjaxResponse> dtlCdSortOrdrAjax(
             final @RequestBody DtlCdParam dtlCdParam,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = null;
-        try {
-            // 메뉴 정렬 순서 저장
-            isSuccess = dtlCdService.sortOrdr(dtlCdParam.getSortOrdr());
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // logParam.setCn("key: " + menuNo);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = dtlCdService.sortOrdr(dtlCdParam.getSortOrdr());
+        String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // logParam.setCn("key: " + menuNo);
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

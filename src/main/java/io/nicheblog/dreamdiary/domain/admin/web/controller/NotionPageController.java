@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 /**
  * NotionPageController
  * <pre>
- *  노션 페이지 관련 컨트롤러.
+ *  노션 페이지 컨트롤러.
  * </pre>
  * TODO: 보완 예정
  *
@@ -32,7 +32,7 @@ import javax.annotation.Nullable;
  */
 @Controller
 @Log4j2
-public class NotionController
+public class NotionPageController
         extends BaseControllerImpl {
 
     @Getter
@@ -45,6 +45,8 @@ public class NotionController
     /**
      * 노션 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능.)
+     * 
+     * TODO: 정리
      *
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param notionPageIdParam 노션 페이지 ID
@@ -68,7 +70,6 @@ public class NotionController
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            String notionPageId = !StringUtils.isEmpty(notionPageIdParam) ? notionPageIdParam : NOTION_PUBLIC;
             // NotionRetriever notionRetriever = new NotionRetriever(notionPageId);
             // String notionPage = notionRetriever.render();
             // model.addAttribute("notionPage", notionPage);
@@ -80,7 +81,7 @@ public class NotionController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

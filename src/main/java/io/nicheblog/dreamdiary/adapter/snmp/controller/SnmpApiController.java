@@ -40,7 +40,8 @@ public class SnmpApiController
      * @param snmpApiParam - SNMP API 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param ipAddr - 송신할 IP 주소
-     * @return {@link ResponseEntity} -- SNMP 전송 결과를 담은 ResponseEntity 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.URL_API_SNMP_SEND_AJAX)
     @ResponseBody
@@ -48,27 +49,20 @@ public class SnmpApiController
             final SnmpApiParam snmpApiParam,
             final LogActvtyParam logParam,
             final @RequestParam("ipAddr") String ipAddr
-        ) {
+        ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            final SnmpApiParam snmpSendInfo = new SnmpApiParam(ipAddr);
-            snmpSendInfo.setIpAddr(ipAddr);
-            SnmpUtils.sendSnmpMessage(snmpSendInfo);
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            log.info("{} / isSuccess: {}, rsltMsg: {}", request.getRequestURI(), isSuccess, rsltMsg);
-            // TODO: 로그 관련 처리
-        }
+        final SnmpApiParam snmpSendInfo = new SnmpApiParam(ipAddr);
+        snmpSendInfo.setIpAddr(ipAddr);
+        SnmpUtils.sendSnmpMessage(snmpSendInfo);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

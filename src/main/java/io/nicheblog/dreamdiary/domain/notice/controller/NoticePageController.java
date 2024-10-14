@@ -102,7 +102,7 @@ public class NoticePageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -150,7 +150,7 @@ public class NoticePageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -191,7 +191,7 @@ public class NoticePageController
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn(notice.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
@@ -240,7 +240,7 @@ public class NoticePageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
@@ -292,7 +292,7 @@ public class NoticePageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));

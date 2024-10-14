@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.adapter.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.adapter.kasi.service.HldyKasiApiService;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -56,6 +55,7 @@ public class HldyKasiApiController
      * @param yyParam - 조회할 연도의 문자열 (nullable, 지정되지 않을 경우 현재 연도를 사용)
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Operation(
             summary = "휴일 정보 조회 및 DB 저장",
@@ -65,33 +65,24 @@ public class HldyKasiApiController
     public ResponseEntity<AjaxResponse> getHldyInfo(
             final @RequestParam("yy") @Nullable String yyParam,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         log.info("requestUrl: {}", request.getRequestURL() + "?" + request.getQueryString());
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYyStr();
-            // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
-            hldyKasiApiService.delHldyList(yyStr);
-            final List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);
-            ajaxResponse.setRsltList(hldyApiList);
+        final String yyStr = !StringUtils.isEmpty(yyParam) ? yyParam : DateUtils.getCurrYyStr();
+        // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
+        hldyKasiApiService.delHldyList(yyStr);
+        final List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);
+        final boolean isSuccess = hldyKasiApiService.regHldyList(hldyApiList);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
-            isSuccess = hldyKasiApiService.regHldyList(hldyApiList);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltList(hldyApiList);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * AdminController
+ * AdminPageController
  * <pre>
- *  사이트 관리 > 사이트 관리 컨트롤러.
+ *  사이트 관리 > 사이트 관리 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish
@@ -32,7 +32,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Log4j2
-public class AdminController
+public class AdminPageController
         extends BaseControllerImpl {
 
     @Getter
@@ -74,7 +74,7 @@ public class AdminController
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -110,7 +110,7 @@ public class AdminController
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

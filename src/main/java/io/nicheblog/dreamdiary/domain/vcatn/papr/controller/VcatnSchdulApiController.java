@@ -5,7 +5,6 @@ import io.nicheblog.dreamdiary.domain.vcatn.papr.service.VcatnSchdulService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -52,6 +51,7 @@ public class VcatnSchdulApiController
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link String} -- 뷰 이름을 나타내는 문자열
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(value = {Url.VCATN_SCHDUL_REG_AJAX, Url.VCATN_SCHDUL_MDF_AJAX})
     @Secured(Constant.ROLE_MNGR)
@@ -60,31 +60,20 @@ public class VcatnSchdulApiController
             final @Valid VcatnSchdulDto vcatnSchdul,
             final Integer key,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 등록/수정 처리
-            final boolean isReg = (key == null);
-            final VcatnSchdulDto result = isReg ? vcatnSchdulService.regist(vcatnSchdul) : vcatnSchdulService.modify(vcatnSchdul);
-            ajaxResponse.setRsltObj(result);
+        final boolean isReg = (key == null);
+        final VcatnSchdulDto result = isReg ? vcatnSchdulService.regist(vcatnSchdul) : vcatnSchdulService.modify(vcatnSchdul);
+        final boolean isSuccess = (result.getVcatnSchdulNo() != null);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
-            isSuccess = (result.getVcatnSchdulNo() != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn(vcatnSchdul.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(result);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -97,7 +86,8 @@ public class VcatnSchdulApiController
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link String} -- 뷰 이름을 나타내는 문자열
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(value = Url.VCATN_SCHDUL_DTL_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -105,29 +95,19 @@ public class VcatnSchdulApiController
     public ResponseEntity<AjaxResponse> vcatnSchdulDtlAjax(
             final @RequestParam("vcatnSchdulNo") Integer key,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 응답에 세팅
-            final VcatnSchdulDto rsDto = vcatnSchdulService.getDtlDto(key);
-            ajaxResponse.setRsltObj(rsDto);
+        final VcatnSchdulDto rsDto = vcatnSchdulService.getDtlDto(key);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(rsDto);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -140,7 +120,8 @@ public class VcatnSchdulApiController
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link String} -- 뷰 이름을 나타내는 문자열
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.VCATN_SCHDUL_DEL_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -148,26 +129,17 @@ public class VcatnSchdulApiController
     public ResponseEntity<AjaxResponse> vcatnSchdulDelAjax(
             final @RequestParam("vcatnSchdulNo") Integer key,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 삭제
-            isSuccess = vcatnSchdulService.delete(key);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = vcatnSchdulService.delete(key);;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

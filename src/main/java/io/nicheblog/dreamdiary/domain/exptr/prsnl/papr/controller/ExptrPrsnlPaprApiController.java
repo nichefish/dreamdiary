@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.global._common.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.intrfc.model.BasePostDto;
@@ -58,35 +57,26 @@ public class ExptrPrsnlPaprApiController
      *
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(value = Url.EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> exptrPrsnlExistingChckAjax(
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 존재여부 체크 및 응답에 추가
-            final Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
-            ajaxResponse.setRsltMap(resultMap);
+        final Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
+        final boolean isSuccess = true;
+        String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltMap(resultMap);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -101,6 +91,7 @@ public class ExptrPrsnlPaprApiController
      * @param mnth 월
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(value = Url.EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -109,29 +100,19 @@ public class ExptrPrsnlPaprApiController
             final @RequestParam("yy") Integer yy,
             final @RequestParam("mnth") Integer mnth,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 상태여부 체크 및 응답에 추가
-            final BasePostDto rsltObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
-            ajaxResponse.setRsltObj(rsltObj);
+        final BasePostDto rsltObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(rsltObj);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -147,6 +128,7 @@ public class ExptrPrsnlPaprApiController
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param request - Multipart 요청
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(value = {Url.EXPTR_PRSNL_PAPR_REG_AJAX, Url.EXPTR_PRSNL_PAPR_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -156,35 +138,26 @@ public class ExptrPrsnlPaprApiController
             final @RequestParam("postNo") @Nullable Integer key,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 등록/수정 처리
-            final boolean isReg = key == null;
-            final ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPapr, request) : exptrPrsnlPaprService.modify(exptrPrsnlPapr, request);
-            ajaxResponse.setRsltObj(result);
+        final boolean isReg = key == null;
+        final ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPapr, request) : exptrPrsnlPaprService.modify(exptrPrsnlPapr, request);
+        final boolean isSuccess = (result.getPostNo() != null);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
-            isSuccess = (result.getPostNo() != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            if (isSuccess) {
-                // 조치자 추가 :: 메인 로직과 분리
-                publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
-            }
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn(exptrPrsnlPapr.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        // TODO: AOP로 빼기
+        if (isSuccess) {
+            // 조치자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
         }
+
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(result);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -198,6 +171,7 @@ public class ExptrPrsnlPaprApiController
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.EXPTR_PRSNL_PAPR_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -205,27 +179,17 @@ public class ExptrPrsnlPaprApiController
     public ResponseEntity<AjaxResponse> exptrPrsnlDelAjax(
             final @RequestParam("postNo") Integer key,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 삭제
-            isSuccess = exptrPrsnlPaprService.delete(key);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = exptrPrsnlPaprService.delete(key);
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -238,36 +202,35 @@ public class ExptrPrsnlPaprApiController
      *
      * @param key 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public void exptrPrsnlStatsRciptPdfDownload(
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> exptrPrsnlStatsRciptPdfDownload(
             final @RequestParam("postNo") Integer key,
             final LogActvtyParam logParam
     ) throws Exception {
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 첨부파일 목록 조회
-            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            final List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
-            // PDF 파일 생성 및 다운로드
-            final String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";
-            PdfBoxUtils.imgCmbnPdfDownload(fileNm, fileList);
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.EXPTR_PRSNL_STATS_PAGE);
-        } finally {
-            // 로그 관련 처리
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 첨부파일 목록 조회
+        final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+        final List<AtchFileDtlDto> fileList = exptrPrsnlPaprService.getExptrPrsnlRciptList(key);
+        // PDF 파일 생성 및 다운로드
+        final String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";
+        PdfBoxUtils.imgCmbnPdfDownload(fileNm, fileList);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 }

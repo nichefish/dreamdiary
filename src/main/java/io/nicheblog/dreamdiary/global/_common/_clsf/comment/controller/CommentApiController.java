@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global._common._clsf.comment.model.CommentParam;
 import io.nicheblog.dreamdiary.global._common._clsf.comment.model.CommentSearchParam;
 import io.nicheblog.dreamdiary.global._common._clsf.comment.service.CommentService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -27,7 +26,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 
 /**
  * CommentApiController
@@ -55,43 +53,30 @@ public class CommentApiController
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.COMMENT_LIST_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> commentListAjax(
-            @ModelAttribute("searchParam") CommentSearchParam searchParam,
+            final @ModelAttribute("searchParam") CommentSearchParam searchParam,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            final Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
-            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
-            // 목록 조회 및 응답에 추가
-            final Page<CommentDto> commentList = commentService.getPageDto(searchParam, pageRequest);
-            ajaxResponse.setRsltList(commentList.getContent());
+        final Sort sort = Sort.by(Sort.Direction.ASC, "regDt");
+        final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort);
+        final Page<CommentDto> commentList = commentService.getPageDto(searchParam, pageRequest);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (NumberFormatException e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(new InvalidParameterException("파라미터 형식이 맞지 않습니다."));
-            logParam.setExceptionInfo(e);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgrCd()));
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltList(commentList.getContent());
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, ActvtyCtgr.valueOf(searchParam.getActvtyCtgrCd()));
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ajaxResponse);
@@ -107,6 +92,7 @@ public class CommentApiController
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param request - Multipart 요청
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(value = {Url.COMMENT_REG_AJAX, Url.COMMENT_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -117,30 +103,20 @@ public class CommentApiController
             final CommentParam param,
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 등록 및 수정 처리
-            final boolean isReg = (key == null);
-            final CommentDto result = isReg ? commentService.regist(comment, request) : commentService.modify(comment, request);
-            ajaxResponse.setRsltObj(result);
+        final boolean isReg = (key == null);
+        final CommentDto result = isReg ? commentService.regist(comment, request) : commentService.modify(comment, request);
+        final boolean isSuccess =  (result.getPostNo() != null);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
-            isSuccess = (result.getPostNo() != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(result);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -155,6 +131,7 @@ public class CommentApiController
      * @param param 조회 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.COMMENT_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -163,30 +140,19 @@ public class CommentApiController
             final @RequestParam("postNo") Integer key,
             final CommentParam param,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 삭제
-            final CommentDto rsDto = commentService.getDtlDto(key);
-            ajaxResponse.setRsltObj(rsDto);
+        final CommentDto rsDto = commentService.getDtlDto(key);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(rsDto);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -201,6 +167,7 @@ public class CommentApiController
      * @param param 조회 파라미터
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.COMMENT_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -209,27 +176,17 @@ public class CommentApiController
             final @RequestParam("postNo") Integer key,
             final CommentParam param,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 삭제
-            isSuccess = commentService.delete(key);
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = commentService.delete(key);;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, param.getActvtyCtgr());
 
         return ResponseEntity
                 .status(HttpStatus.OK)

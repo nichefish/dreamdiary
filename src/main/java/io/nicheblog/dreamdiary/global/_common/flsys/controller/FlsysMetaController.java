@@ -82,7 +82,7 @@ public class FlsysMetaController
             logParam.setExceptionInfo(e);
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn(flsysMeta.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
@@ -126,7 +126,7 @@ public class FlsysMetaController
             logParam.setExceptionInfo(e);
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
@@ -168,7 +168,7 @@ public class FlsysMetaController
             logParam.setExceptionInfo(e);
         } finally {
             ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn("key: " + key.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));

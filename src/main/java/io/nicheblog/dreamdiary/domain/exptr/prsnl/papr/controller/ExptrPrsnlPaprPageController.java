@@ -111,7 +111,7 @@ public class ExptrPrsnlPaprPageController
             MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
             logParam.setResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -167,7 +167,7 @@ public class ExptrPrsnlPaprPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -215,7 +215,7 @@ public class ExptrPrsnlPaprPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
@@ -260,7 +260,7 @@ public class ExptrPrsnlPaprPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
@@ -320,7 +320,7 @@ public class ExptrPrsnlPaprPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn("key: " + key);
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));

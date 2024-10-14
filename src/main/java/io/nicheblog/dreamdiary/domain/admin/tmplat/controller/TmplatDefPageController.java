@@ -10,7 +10,6 @@ import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
-import io.nicheblog.dreamdiary.global.model.AjaxResponse;
 import io.nicheblog.dreamdiary.global.model.PaginationInfo;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
@@ -19,23 +18,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Nullable;
-import javax.validation.Valid;
 
 /**
- * TmplatDefController
+ * TmplatDefPageController
  * <pre>
- *  템플릿 정의 관리 컨트롤러.
+ *  템플릿 정의 관리 페이지 컨트롤러.
  * </pre>
  * TODO: 신규개발 예정
  *
@@ -44,7 +36,7 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 @Log4j2
-public class TmplatDefController
+public class TmplatDefPageController
         extends BaseControllerImpl {
 
     @Getter
@@ -96,58 +88,11 @@ public class TmplatDefController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 
         return "/view/domain/admin/tmplat/def/tmplat_def_list";
-    }
-
-    /**
-     * 템플릿 정의 등록/수정 (Ajax)
-     * (사용자USER, 관리자MNGR만 접근 가능.)
-     *
-     * @param tmplatDef 등록/수정 처리할 객체
-     * @param key 식별자
-     * @param logParam 로그 기록을 위한 파라미터 객체
-     * @return {@link ResponseEntity} -- 처리 결과와 메시지
-     */
-    @PostMapping(value = {Url.TMPLAT_DEF_REG_AJAX, Url.TMPLAT_DEF_MDF_AJAX})
-    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    @ResponseBody
-    public ResponseEntity<AjaxResponse> tmplatDefRegAjax(
-            final @Valid TmplatDefDto tmplatDef,
-            final @Nullable Integer key,
-            final LogActvtyParam logParam
-    ) {
-
-        final AjaxResponse ajaxResponse = new AjaxResponse();
-
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 등록/수정 처리
-            final boolean isReg = key == null;
-            final TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDef) : tmplatDefService.modify(tmplatDef);
-            ajaxResponse.setRsltObj(result);
-
-            isSuccess = (result.getTmplatDefNo() != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn(tmplatDef.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ajaxResponse);
     }
 }

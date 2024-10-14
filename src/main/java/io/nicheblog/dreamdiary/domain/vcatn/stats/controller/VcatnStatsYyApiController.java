@@ -1,13 +1,10 @@
 package io.nicheblog.dreamdiary.domain.vcatn.stats.controller;
 
-import io.nicheblog.dreamdiary.domain.vcatn.papr.service.VcatnPaprService;
 import io.nicheblog.dreamdiary.domain.vcatn.stats.model.VcatnStatsTotalDto;
 import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsService;
-import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -41,13 +38,15 @@ public class VcatnStatsYyApiController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_STATS;      // 작업 카테고리 (로그 적재용)
 
-    private final VcatnPaprService vcatnPaprService;
     private final VcatnStatsService vcatnStatsService;
-    private final VcatnStatsYyService vcatnStatsYyService;
 
     /**
      * 휴가관리 > 년도별 휴가관리 > 업데이트 (Ajax)
      * (관리자MNGR만 접근 가능.)
+     *
+     * @param vcatnStatsTotal - 등록할 전체 휴가관리
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.VCATN_STATS_YY_UPDT_AJAX)
     @Secured(Constant.ROLE_MNGR)
@@ -55,27 +54,18 @@ public class VcatnStatsYyApiController
     public ResponseEntity<AjaxResponse> vcatnStatsUpdtAjax(
             final VcatnStatsTotalDto vcatnStatsTotal,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 휴가사용현황 정보 저장
-            isSuccess = vcatnStatsService.regStatsTotal(vcatnStatsTotal);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn(vcatnStatsTotal.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = vcatnStatsService.regStatsTotal(vcatnStatsTotal);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ajaxResponse);
@@ -92,8 +82,8 @@ public class VcatnStatsYyApiController
     //         final @RequestParam("statsYy") String yyStr
     // ) throws Exception {
 //
-    //     boolean isSuccess = false;
-    //     String rsltMsg = "";
+    //     final boolean isSuccess = false;
+    //     final String rsltMsg = "";
     //     try {
     //         VcatnStatsYyDto statsYy = StringUtils.isNotEmpty(yyStr) ? vcatnStatsYyService.getVcatnYyDtDto(yyStr) : vcatnStatsYyService.getCurrVcatnYyDt();
     //         // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
@@ -107,7 +97,7 @@ public class VcatnStatsYyApiController
     //         logParam.setExceptionInfo(e);
     //         MessageUtils.alertMessage(rsltMsg, Url.VCATN_STATS_YY);
     //     } finally {
-    //         // 로그 관련 처리
+    //         // 로그 관련 세팅
     //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
     //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     //     }

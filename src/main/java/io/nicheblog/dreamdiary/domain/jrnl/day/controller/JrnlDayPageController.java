@@ -70,7 +70,7 @@ public class JrnlDayPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }

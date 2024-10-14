@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.cache.util.EhCacheUtils;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -53,25 +52,16 @@ public class EhCacheApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 현재 활성 중인 캐시(name) 목록 조회 :: 성공시 처리완료목록으로 출력
-            final Map<String, Object> activeCacheList = EhCacheUtils.getActiveCacheMap();
-            ajaxResponse.setRsltMap(activeCacheList);
+        // 현재 활성 중인 캐시(name) 목록 조회 :: 성공시 처리완료목록으로 출력
+        final Map<String, Object> activeCacheList = EhCacheUtils.getActiveCacheMap();
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltMap(activeCacheList);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -98,34 +88,25 @@ public class EhCacheApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 캐시 evict
-            if ("-".equals(key)) {
-                EhCacheUtils.evictCacheAll(cacheName);
+        // 캐시 evict
+        if ("-".equals(key)) {
+            EhCacheUtils.evictCacheAll(cacheName);
+        } else {
+            // 숫자 형태의 키인 경우 Integer로 변환하여 처리할 수 있음
+            if (key.matches("\\d+")) {
+                EhCacheUtils.evictCache(cacheName, Integer.valueOf(key));
             } else {
-                // 숫자 형태의 키인 경우 Integer로 변환하여 처리할 수 있음
-                if (key.matches("\\d+")) {
-                    EhCacheUtils.evictCache(cacheName, Integer.valueOf(key));
-                } else {
-                    // 문자열 키 처리
-                    EhCacheUtils.evictCache(cacheName, key);
-                }
+                // 문자열 키 처리
+                EhCacheUtils.evictCache(cacheName, key);
             }
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -148,25 +129,15 @@ public class EhCacheApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 목록 조회 및 초기화
-            final List<String> activeCacheList = EhCacheUtils.chckActiveCacheNm();
-            ajaxResponse.setRsltList(activeCacheList);
-            
-            isSuccess = EhCacheUtils.clearAllCaches();
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final List<String> activeCacheList = EhCacheUtils.chckActiveCacheNm();
+        final boolean isSuccess = EhCacheUtils.clearAllCaches();
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+
+        // 응답 결과 세팅
+        ajaxResponse.setRsltList(activeCacheList);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

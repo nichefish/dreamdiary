@@ -112,7 +112,7 @@ public class BoardPostPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -167,7 +167,7 @@ public class BoardPostPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -211,7 +211,7 @@ public class BoardPostPageController
             rsltMsg = MessageUtils.getExceptionMsg(e);
             logParam.setExceptionInfo(e);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
@@ -264,7 +264,7 @@ public class BoardPostPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn("key: " + postKey.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
@@ -323,7 +323,7 @@ public class BoardPostPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, baseUrl + "?boardCd=" + boardCd);
         } finally {
-            // 로그 관련 처리
+            // 로그 관련 세팅
             logParam.setCn("key: " + postKey.toString());
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));

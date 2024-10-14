@@ -8,7 +8,6 @@ import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.event.TagProcEvent;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -58,6 +57,7 @@ public class BoardPostApiController
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param request - Multipart 요청
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(value = {Url.BOARD_POST_REG_AJAX, Url.BOARD_POST_MDF_AJAX})
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -69,42 +69,33 @@ public class BoardPostApiController
             // final @RequestParam("jandiYn") @Nullable String jandiYn,
             // final @RequestParam("trgetTopic") @Nullable String trgetTopic,
             final MultipartHttpServletRequest request
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 등록/수정 처리
-            final boolean isReg = postKey.getPostNo() == null;
-            final BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPost, request) : boardPostService.modify(boardPost, request);
-            ajaxResponse.setRsltObj(result);
+        final boolean isReg = postKey.getPostNo() == null;
+        final BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPost, request) : boardPostService.modify(boardPost, request);
+        final boolean isSuccess = (result.getPostNo() != null);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
-            isSuccess = (result.getPostNo() != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-            if (isSuccess) {
-                // 태그 처리 :: 메인 로직과 분리
-                publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), boardPost.tag));
-                // 조치자 추가 :: 메인 로직과 분리
-                publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
-                // 잔디 메세지 발송 :: 메인 로직과 분리
-                // if ("Y".equals(jandiYn)) {
-                //     String jandiRsltMsg = notifyService.notifyBoardPostReg(trgetTopic, result, logParam);
-                //     rsltMsg = rsltMsg + "\n" + jandiRsltMsg;
-                // }
-            }
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn(boardPost.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        // TODO: AOP로 분리하기
+        if (isSuccess) {
+            // 태그 처리 :: 메인 로직과 분리
+            publisher.publishEvent(new TagProcEvent(this, result.getClsfKey(), boardPost.tag));
+            // 조치자 추가 :: 메인 로직과 분리
+            publisher.publishEvent(new ViewerAddEvent(this, result.getClsfKey()));
+            // 잔디 메세지 발송 :: 메인 로직과 분리
+            // if ("Y".equals(jandiYn)) {
+            //     String jandiRsltMsg = notifyService.notifyBoardPostReg(trgetTopic, result, logParam);
+            //     rsltMsg = rsltMsg + "\n" + jandiRsltMsg;
+            // }
         }
+
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(result);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -118,6 +109,7 @@ public class BoardPostApiController
      * @param postKey 복합키 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.BOARD_POST_DTL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -125,34 +117,26 @@ public class BoardPostApiController
     public ResponseEntity<AjaxResponse> boardPostDtlAjax(
             final BoardPostKey postKey,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 응답에 추가
-            final BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
-            ajaxResponse.setRsltObj(rsDto);
+        final BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 조회수 카운트 추가
-            boardPostService.hitCntUp(postKey.getClsfKey());
-            // 열람자 추가 :: 메인 로직과 분리
-            publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn("key: " + postKey.toString());
+        // 조회수 카운트 추가
+        // TODO: AOP로 분리
+        boardPostService.hitCntUp(postKey.getClsfKey());
+        // 열람자 추가 :: 메인 로직과 분리
+        // TODO: AOP로 분리
+        publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
+
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(rsDto);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -165,6 +149,8 @@ public class BoardPostApiController
      *
      * @param postKey 복합키 식별자
      * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @PostMapping(Url.BOARD_POST_DEL_AJAX)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -172,31 +158,23 @@ public class BoardPostApiController
     public ResponseEntity<AjaxResponse> boardPostDelAjax(
             final BoardPostKey postKey,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 삭제
-            isSuccess = boardPostService.delete(postKey.getClsfKey());
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            if (isSuccess) {
-                // 태그 처리 :: 메인 로직과 분리
-                publisher.publishEvent(new TagProcEvent(this, postKey.getClsfKey()));
-            }
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn("key: " + postKey.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        final boolean isSuccess = boardPostService.delete(postKey.getClsfKey());
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // TODO: AOP로 분리하기
+        if (isSuccess) {
+            // 태그 처리 :: 메인 로직과 분리
+            publisher.publishEvent(new TagProcEvent(this, postKey.getClsfKey()));
         }
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

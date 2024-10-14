@@ -12,15 +12,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * MainController
+ * MainPageController
  * <pre>
- *  메인 화면 컨트롤러.
+ *  메인 화면 페이지 컨트롤러.
  * </pre>
  *
  * @author nichefish
  */
 @Controller
-public class MainController
+public class MainPageController
         extends BaseControllerImpl {
 
     @Getter

@@ -4,7 +4,7 @@ import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfoTestFactory;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.BaseControllerTestHelper;
-import io.nicheblog.dreamdiary.domain.admin.web.controller.MainController;
+import io.nicheblog.dreamdiary.domain.admin.web.controller.MainPageController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -30,10 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author nichefish
  */
-@WebMvcTest(MainController.class)
+@WebMvcTest(MainPageController.class)
 @ActiveProfiles("test")
 @AutoConfigureRestDocs(outputDir = "target/snippets")
-public class MainControllerTest {
+public class MainPageControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

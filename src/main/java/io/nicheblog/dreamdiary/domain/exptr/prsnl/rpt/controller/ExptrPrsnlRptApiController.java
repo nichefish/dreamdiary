@@ -39,8 +39,8 @@ public class ExptrPrsnlRptApiController
     //         final @RequestParam("statsMnth") String mnthStr
     // ) throws Exception {
 //
-    //     boolean isSuccess = false;
-    //     String rsltMsg = "";
+    //     final boolean isSuccess = false;
+    //     final String rsltMsg = "";
     //     try {
     //         // 년도, 월 담긴 HashMap 생성
     //         Map<String, Object> searchParamMap = cmmService.getYyMhtnMap(yyStr, mnthStr);
@@ -63,7 +63,7 @@ public class ExptrPrsnlRptApiController
     //         logParam.setExceptionInfo(e);
     //         MessageUtils.alertMessage(rsltMsg, Url.EXPTR_PRSNL_RPT_ITEMS);
     //     } finally {
-    //         // 로그 관련 처리
+    //         // 로그 관련 세팅
     //         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
     //         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     //     }
