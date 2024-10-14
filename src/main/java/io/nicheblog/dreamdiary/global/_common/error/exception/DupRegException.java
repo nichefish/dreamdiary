@@ -11,13 +11,21 @@ package io.nicheblog.dreamdiary.global._common.error.exception;
 public class DupRegException
         extends RuntimeException {
 
-    public DupRegException(
-            final String msg,
-            final Throwable cause
-    ) {
+    /**
+     * 생성자.
+     *
+     * @param msg
+     * @param cause
+     */
+    public DupRegException(final String msg, final Throwable cause) {
         super(msg, cause);
     }
 
+    /**
+     * 생성자.
+     *
+     * @param msg
+     */
     public DupRegException(final String msg) {
         super(msg);
     }

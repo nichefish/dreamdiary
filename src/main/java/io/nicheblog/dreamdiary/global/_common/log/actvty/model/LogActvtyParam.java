@@ -194,7 +194,7 @@ public class LogActvtyParam
      *
      * @param e - 예외 정보 객체
      */
-    public void setExceptionInfo(final Exception e) {
+    public void setExceptionInfo(final Throwable e) {
         this.exceptionNm = MessageUtils.getExceptionNm(e);
         this.exceptionMsg = MessageUtils.getExceptionMsg(e);
     }

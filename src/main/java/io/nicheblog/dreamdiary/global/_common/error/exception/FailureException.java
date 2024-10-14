@@ -11,13 +11,21 @@ package io.nicheblog.dreamdiary.global._common.error.exception;
 public class FailureException
         extends RuntimeException {
 
-    public FailureException(
-            final String msg,
-            final Throwable cause
-    ) {
+    /**
+     * 생성자.
+     *
+     * @param msg
+     * @param cause
+     */
+    public FailureException(final String msg, final Throwable cause) {
         super(msg, cause);
     }
 
+    /**
+     * 생성자.
+     *
+     * @param msg
+     */
     public FailureException(final String msg) {
         super(msg);
     }

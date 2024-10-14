@@ -14,8 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -48,15 +49,15 @@ public class DreamdiaryAuthenticationProvider
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         final String username = authentication.getName();
-        final String password = (String) authentication.getCredentials();
         final AuthInfo authInfo = authService.loadUserByUsername(username);
 
         // 인증 객체 생성
         UsernamePasswordAuthenticationToken generatedAuthToken = authenticationHelper.doAuth(authentication, authInfo);
         // 인증 객체를 기반으로 JWT 생성, 임시로 세션에 저장
         String jwt = this.authenticateAndGenerateJwt(generatedAuthToken);
-        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
-        session.setAttribute("JWT", jwt);
+        // HttpServletResponse 응답 헤더에 JWT 세팅
+        HttpServletResponse response = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
+        if (response != null) response.setHeader("Authorization", "Bearer " + jwt);
 
         return generatedAuthToken;
     }

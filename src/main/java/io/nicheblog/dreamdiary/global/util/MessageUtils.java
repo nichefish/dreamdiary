@@ -115,7 +115,7 @@ public class MessageUtils
      * 공통 > Exception 클래스를 받아서 해당 message를 세팅해서 반환
      * messageBundle에 exception 클래스명으로 설정시 해당 에러메세지를 반환한다.
      */
-    public static String getExceptionMsg(final Exception e) {
+    public static String getExceptionMsg(final Throwable e) {
         if (StringUtils.isNotEmpty(e.getMessage())) return e.getMessage();
         String exceptionNm = getExceptionNm(e);
         String rsltMsg = getMessage(RSLT_EXCEPTION + "." + exceptionNm);
@@ -123,7 +123,7 @@ public class MessageUtils
         return rsltMsg;
     }
 
-    public static String getExceptionNm(final Exception e) {
+    public static String getExceptionNm(final Throwable e) {
         String exceptionNm = e.getClass()
                               .toString();
         return exceptionNm.substring(exceptionNm.lastIndexOf('.') + 1);
