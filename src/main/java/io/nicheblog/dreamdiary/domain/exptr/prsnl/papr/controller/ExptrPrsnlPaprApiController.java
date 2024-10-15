@@ -69,6 +69,7 @@ public class ExptrPrsnlPaprApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final Map<String, Object> resultMap = exptrPrsnlPaprService.exptrPrsnlExistingChck();
+
         final boolean isSuccess = true;
         String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -105,6 +106,7 @@ public class ExptrPrsnlPaprApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final BasePostDto rsltObj = exptrPrsnlPaprService.exptrPrsnlYyMnthChck(yy, mnth);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -144,6 +146,7 @@ public class ExptrPrsnlPaprApiController
 
         final boolean isReg = key == null;
         final ExptrPrsnlPaprDto result = isReg ? exptrPrsnlPaprService.regist(exptrPrsnlPapr, request) : exptrPrsnlPaprService.modify(exptrPrsnlPapr, request);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -221,6 +224,7 @@ public class ExptrPrsnlPaprApiController
         // PDF 파일 생성 및 다운로드
         final String fileNm = rsDto.getRegstrNm() + "_" + rsDto.getTitle() + "_" + DateUtils.getCurrDateStr(DatePtn.PDATETIME) + ".pdf";
         PdfBoxUtils.imgCmbnPdfDownload(fileNm, fileList);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

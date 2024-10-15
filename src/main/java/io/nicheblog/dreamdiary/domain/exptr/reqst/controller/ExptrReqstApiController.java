@@ -71,6 +71,7 @@ public class ExptrReqstApiController
 
         final boolean isReg = key == null;
         final ExptrReqstDto result = isReg ? exptrReqstService.regist(exptrReqst, request) : exptrReqstService.modify(exptrReqst, request);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         
@@ -116,6 +117,7 @@ public class ExptrReqstApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final ExptrReqstDto rsDto = exptrReqstService.getDtlDto(key);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -189,6 +191,7 @@ public class ExptrReqstApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final ExptrReqstDto result = exptrReqstService.cf(key);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -222,6 +225,7 @@ public class ExptrReqstApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final ExptrReqstDto result = exptrReqstService.dismiss(key);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 

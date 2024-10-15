@@ -56,6 +56,7 @@ public class SnmpApiController
         final SnmpApiParam snmpSendInfo = new SnmpApiParam(ipAddr);
         snmpSendInfo.setIpAddr(ipAddr);
         SnmpUtils.sendSnmpMessage(snmpSendInfo);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

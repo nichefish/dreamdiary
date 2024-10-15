@@ -66,6 +66,7 @@ public class VcatnSchdulApiController
 
         final boolean isReg = (key == null);
         final VcatnSchdulDto result = isReg ? vcatnSchdulService.regist(vcatnSchdul) : vcatnSchdulService.modify(vcatnSchdul);
+
         final boolean isSuccess = (result.getVcatnSchdulNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -100,6 +101,7 @@ public class VcatnSchdulApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final VcatnSchdulDto rsDto = vcatnSchdulService.getDtlDto(key);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

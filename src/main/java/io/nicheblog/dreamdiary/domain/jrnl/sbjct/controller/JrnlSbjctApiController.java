@@ -72,6 +72,7 @@ public class JrnlSbjctApiController
 
         final boolean isReg = (key == null);
         final JrnlSbjctDto result = isReg ? jrnlSbjctService.regist(jrnlSbjct, request) : jrnlSbjctService.modify(jrnlSbjct, request);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -119,6 +120,7 @@ public class JrnlSbjctApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final JrnlSbjctDto rsDto = jrnlSbjctService.getDtlDto(key);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

@@ -84,6 +84,7 @@ public class NoticeApiController
 
         final boolean isReg = (key == null);
         final NoticeDto result = isReg ? noticeService.regist(notice, request) : noticeService.modify(notice, request);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -131,6 +132,7 @@ public class NoticeApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final NoticeDto rsDto = noticeService.getDtlDto(key);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

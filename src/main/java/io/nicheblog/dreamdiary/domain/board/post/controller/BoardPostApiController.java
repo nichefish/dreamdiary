@@ -75,6 +75,7 @@ public class BoardPostApiController
 
         final boolean isReg = postKey.getPostNo() == null;
         final BoardPostDto.DTL result = isReg ? boardPostService.regist(boardPost, request) : boardPostService.modify(boardPost, request);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -122,6 +123,7 @@ public class BoardPostApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

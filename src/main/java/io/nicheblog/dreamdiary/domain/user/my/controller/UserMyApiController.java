@@ -126,6 +126,7 @@ public class UserMyApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final String lgnUserId = AuthUtils.getLgnUserId();
+
         final boolean isSuccess = userMyService.myPwCf(lgnUserId, currPw);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 

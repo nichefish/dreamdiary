@@ -70,6 +70,7 @@ public class VcatnPaprApiController
 
         final boolean isReg = key == null;
         final VcatnPaprDto result = isReg ? vcatnPaprService.regist(vcatnPapr, request) : vcatnPaprService.modify(vcatnPapr, request);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -115,6 +116,7 @@ public class VcatnPaprApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final VcatnPaprDto result = vcatnPaprService.cf(key);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -148,6 +150,7 @@ public class VcatnPaprApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final VcatnPaprDto rsDto = vcatnPaprService.getDtlDto(key);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

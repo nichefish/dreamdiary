@@ -66,6 +66,7 @@ public class JrnlDiaryApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final List<JrnlDiaryDto> jrnlDiaryList = jrnlDiaryService.getListDtoWithCache(searchParam);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -109,6 +110,7 @@ public class JrnlDiaryApiController
 
         final boolean isReg = key == null;
         final JrnlDiaryDto result = isReg ? jrnlDiaryService.regist(jrnlDiary, request) : jrnlDiaryService.modify(jrnlDiary, request);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -148,6 +150,7 @@ public class JrnlDiaryApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final JrnlDiaryDto rslt = jrnlDiaryService.getDtlDtoWithCache(key);
+
         final boolean isSuccess = (rslt.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

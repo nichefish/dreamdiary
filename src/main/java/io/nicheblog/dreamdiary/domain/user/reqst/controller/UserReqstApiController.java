@@ -63,9 +63,9 @@ public class UserReqstApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final UserReqstDto result = userReqstService.regist(userReqst);
+
         final boolean isSuccess = (result.getUserNo() != null);
-        // TODO: 메세지 변수로 빼기
-        final String rsltMsg = isSuccess ? "신규계정이 성공적으로 신청되었습니다." : "신규계정 신청에 실패했습니다.";
+        final String rsltMsg = isSuccess ? "신규계정이 성공적으로 신청되었습니다." : "신규계정 신청에 실패했습니다.";     // TODO: 메세지 변수로 빼기
 
         // 응답 결과 세팅
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);

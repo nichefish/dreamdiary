@@ -71,6 +71,7 @@ public class SchdulApiController
 
         final boolean isReg = key == null;
         final SchdulDto result = isReg ? schdulService.regist(schdul) : schdulService.modify(schdul);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -115,6 +116,7 @@ public class SchdulApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final SchdulDto rsDto = schdulService.getDtlDto(key);
+
         final boolean isSuccess = (rsDto.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

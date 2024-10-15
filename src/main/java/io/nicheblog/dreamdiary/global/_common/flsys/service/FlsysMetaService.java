@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global._common.flsys.model.FlsysMetaDto;
 import io.nicheblog.dreamdiary.global._common.flsys.repository.jpa.FlsysMetaRepository;
 import io.nicheblog.dreamdiary.global._common.flsys.spec.FlsysMetaSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +23,10 @@ import org.springframework.stereotype.Service;
 public class FlsysMetaService
         implements BaseMultiCrudService<FlsysMetaDto, FlsysMetaDto, Integer, FlsysMetaEntity, FlsysMetaRepository, FlsysMetaSpec, FlsysMetaMapstruct> {
 
-    private final FlsysMetaRepository flsysMetaRepository;
-    private final FlsysMetaSpec flsysMetaSpec;
-    private final FlsysMetaMapstruct flsysMetaMapstruct = FlsysMetaMapstruct.INSTANCE;
-
-    @Override
-    public FlsysMetaRepository getRepository() {
-        return this.flsysMetaRepository;
-    }
-
-    @Override
-    public FlsysMetaSpec getSpec() {
-        return this.flsysMetaSpec;
-    }
-
-    @Override
-    public FlsysMetaMapstruct getMapstruct() {
-        return this.flsysMetaMapstruct;
-    }
+    @Getter
+    private final FlsysMetaRepository repository;
+    @Getter
+    private final FlsysMetaSpec spec;
+    @Getter
+    private final FlsysMetaMapstruct mapstruct = FlsysMetaMapstruct.INSTANCE;
 }

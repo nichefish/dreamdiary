@@ -61,7 +61,6 @@ public class LgnPolicyApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        // 등록/수정 처리
         final boolean isSuccess = lgnPolicyService.regist(lgnPolicy);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 

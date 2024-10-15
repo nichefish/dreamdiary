@@ -62,7 +62,8 @@ public class UserApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        Boolean isUserIdDup = userService.userIdDupChck(userId);
+        final Boolean isUserIdDup = userService.userIdDupChck(userId);
+
         final boolean isSuccess = !isUserIdDup;;
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_USER_ID_NOT_DUP : MessageUtils.RSLT_USER_ID_DUP);
 
@@ -100,6 +101,7 @@ public class UserApiController
 
         boolean isReg = key == null;
         final UserDto result = isReg ? userService.regist(user, request) : userService.modify(user, request);
+
         final boolean isSuccess = (result.getUserNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -168,6 +170,7 @@ public class UserApiController
         final UserDto rsUserDto = userService.getDtlDto(key);
         // 내 정보인지 비교 :: "내 정보는 삭제할 수 없습니다."
         final boolean isMyInfo = AuthUtils.isMyInfo(rsUserDto.getUserId());
+
         final boolean isSuccess = !isMyInfo && userService.delete(key);
         final String rsltMsg = isMyInfo ? MessageUtils.NOT_DELABLE_OWN_ID : MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

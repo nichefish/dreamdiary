@@ -62,6 +62,7 @@ public class JrnlSumryApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final List<JrnlSumryDto.LIST> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -96,6 +97,7 @@ public class JrnlSumryApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final JrnlSumryDto.DTL rslt = jrnlSumryService.getSumryDtl(key);
+
         final boolean isSuccess = (rslt.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -224,6 +226,7 @@ public class JrnlSumryApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final JrnlSumryDto result = jrnlSumryService.modify(jrnlSumry, request);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

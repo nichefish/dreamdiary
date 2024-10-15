@@ -66,6 +66,7 @@ public class JrnlDayApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final List<JrnlDayDto> jrnlDayList = jrnlDayService.getListDtoWithCache(searchParam);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -116,6 +117,7 @@ public class JrnlDayApiController
             }
         }
         final JrnlDayDto result = isReg ? jrnlDayService.regist(jrnlDay, request) : jrnlDayService.modify(jrnlDay, request);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -156,6 +158,7 @@ public class JrnlDayApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final JrnlDayDto rslt = jrnlDayService.getDtlDtoWithCache(key);
+
         final boolean isSuccess = (rslt.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

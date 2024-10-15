@@ -65,7 +65,8 @@ public class JrnlDreamApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.getListDtoWithCache(searchParam);
+        final List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.getListDtoWithCache(searchParam);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -107,8 +108,9 @@ public class JrnlDreamApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isReg = key == null;
-        JrnlDreamDto result = isReg ? jrnlDreamService.regist(jrnlDream, request) : jrnlDreamService.modify(jrnlDream, request);
+        final boolean isReg = key == null;
+        final JrnlDreamDto result = isReg ? jrnlDreamService.regist(jrnlDream, request) : jrnlDreamService.modify(jrnlDream, request);
+
         final boolean isSuccess = (result.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -148,7 +150,8 @@ public class JrnlDreamApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        JrnlDreamDto rslt = jrnlDreamService.getDtlDtoWithCache(key);
+        final JrnlDreamDto rslt = jrnlDreamService.getDtlDtoWithCache(key);
+
         final boolean isSuccess = (rslt.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

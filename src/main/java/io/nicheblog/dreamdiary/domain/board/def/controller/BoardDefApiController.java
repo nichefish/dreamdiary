@@ -62,6 +62,7 @@ public class BoardDefApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final BoardDefDto result = boardDefService.regist(boardDef);
+
         final boolean isSuccess = (result.getBoardCd() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -95,6 +96,7 @@ public class BoardDefApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final BoardDefDto boardDef = boardDefService.getDtlDto(key);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -129,6 +131,7 @@ public class BoardDefApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final BoardDefDto result = boardDefService.modify(boardDef);
+
         final boolean isSuccess = (result.getBoardCd() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 

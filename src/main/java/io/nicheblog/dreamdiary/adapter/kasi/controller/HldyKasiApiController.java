@@ -75,6 +75,7 @@ public class HldyKasiApiController
         // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
         hldyKasiApiService.delHldyList(yyStr);
         final List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);
+
         final boolean isSuccess = hldyKasiApiService.regHldyList(hldyApiList);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 

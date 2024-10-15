@@ -67,6 +67,7 @@ public class TmplatDefApiController
 
         final boolean isReg = (key == null);
         final TmplatDefDto result = isReg ? tmplatDefService.regist(tmplatDef) : tmplatDefService.modify(tmplatDef);
+
         final boolean isSuccess = (result.getTmplatDefNo() != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 

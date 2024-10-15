@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
  * BaseParam
  * <pre>
  *  (공통/상속) 파라미터.
+ *  "All classes in the hierarchy must be annotated with @SuperBuilder."
  * </pre>
  *
  * @author nichefish

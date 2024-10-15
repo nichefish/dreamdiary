@@ -103,6 +103,7 @@ public class JrnlDiaryTagApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final Map<String, List<TagDto>> tagGroupMap = jrnlDiaryTagService.getDiarySizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -138,6 +139,7 @@ public class JrnlDiaryTagApiController
 
         final List<JrnlDiaryDto> jrnlDiaryList = jrnlDiaryService.jrnlDiaryTagDtl(searchParam);
         Collections.sort(jrnlDiaryList);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

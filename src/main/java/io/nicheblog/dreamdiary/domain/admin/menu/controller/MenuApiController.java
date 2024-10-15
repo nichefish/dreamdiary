@@ -71,6 +71,7 @@ public class MenuApiController
 
         final boolean isReg = key == null;
         final MenuDto result = isReg ? menuService.regist(menu) : menuService.modify(menu);
+
         final boolean isSuccess = result.getMenuNo() != null;
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
@@ -105,6 +106,7 @@ public class MenuApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final MenuDto rsDto = menuService.getDtlDto(key);
+
         final boolean isSuccess = false;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

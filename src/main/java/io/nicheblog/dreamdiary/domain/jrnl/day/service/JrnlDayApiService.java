@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayApiDto;
 import io.nicheblog.dreamdiary.domain.jrnl.day.repository.jpa.JrnlDayRepository;
 import io.nicheblog.dreamdiary.domain.jrnl.day.spec.JrnlDaySpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseMultiCrudService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +23,10 @@ import org.springframework.stereotype.Service;
 public class JrnlDayApiService
         implements BaseMultiCrudService<JrnlDayApiDto, JrnlDayApiDto, Integer, JrnlDayEntity, JrnlDayRepository, JrnlDaySpec, JrnlDayApiMapstruct> {
 
-    private final JrnlDayRepository jrnlDayRepository;
-    private final JrnlDaySpec jrnlDaySpec;
-    private final JrnlDayApiMapstruct jrnlDayMapstruct = JrnlDayApiMapstruct.INSTANCE;
-
-    @Override
-    public JrnlDayRepository getRepository() {
-        return this.jrnlDayRepository;
-    }
-
-    @Override
-    public JrnlDayApiMapstruct getMapstruct() {
-        return this.jrnlDayMapstruct;
-    }
-
-    @Override
-    public JrnlDaySpec getSpec() {
-        return this.jrnlDaySpec;
-    }
+    @Getter
+    private final JrnlDayRepository repository;
+    @Getter
+    private final JrnlDaySpec spec;
+    @Getter
+    private final JrnlDayApiMapstruct mapstruct = JrnlDayApiMapstruct.INSTANCE;
 }

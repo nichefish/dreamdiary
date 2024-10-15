@@ -70,6 +70,7 @@ public class JrnlDayTagApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final List<TagDto> tagList = jrnlDayTagService.getDaySizedListDto(searchParam.getYy(), searchParam.getMnth());
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -104,6 +105,7 @@ public class JrnlDayTagApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final Map<String, List<TagDto>> tagGroupMap = jrnlDayTagService.getDaySizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -139,6 +141,7 @@ public class JrnlDayTagApiController
 
         final List<JrnlDayDto> jrnlDayList = jrnlDayService.jrnlDayTagDtl(searchParam);
         Collections.sort(jrnlDayList);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 

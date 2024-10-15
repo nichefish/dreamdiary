@@ -62,6 +62,7 @@ public class ExptrPrsnlItemApiController
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
         final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
