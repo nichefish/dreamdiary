@@ -91,7 +91,7 @@ public class LogActvtyDto
     /**
      * Getter :: 작업자 여부
      */
-    public Boolean getIsJobUser() {
+    public Boolean getIsActvtyUser() {
         return (AuthUtils.isRegstr(this.userId));
     }
 

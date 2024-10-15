@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class BoardDefDto
         extends BaseAuditDto
         implements Identifiable<String>, StateCmpstnModule {
