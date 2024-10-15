@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.model.param;
 
-import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -22,14 +21,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class BaseParam {
-
-    /** 작업 카테고리 코드 */
-    @Size(max = 50)
-    protected String actvtyCtgrCd;
-    
-    /** 작업 카테고리 */
-    @Size(max = 50)
-    protected ActvtyCtgr actvtyCtgr;
 
     /** 액션구분 코드 */
     @Size(max = 50)
@@ -67,15 +58,5 @@ public class BaseParam {
 
     /* ----- */
 
-    /**
-     * Getter :: 작업 카테고리 조회
-     *
-     * @return {@link ActvtyCtgr} -- 작업 카테고리 (기본값: ActvtyCtgr.DEFAULT)
-     */
-    public ActvtyCtgr getActvtyCtgr() {
-        if (this.actvtyCtgr != null) return this.actvtyCtgr;
-        if (StringUtils.isEmpty(this.actvtyCtgrCd)) return ActvtyCtgr.DEFAULT;
-        return ActvtyCtgr.valueOf(this.actvtyCtgrCd.toUpperCase());
-    }
 
 }

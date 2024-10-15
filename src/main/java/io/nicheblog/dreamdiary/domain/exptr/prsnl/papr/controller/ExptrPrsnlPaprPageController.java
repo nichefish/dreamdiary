@@ -110,7 +110,6 @@ public class ExptrPrsnlPaprPageController
             logParam.setExceptionInfo(e);
             MessageUtils.alertMessage(rsltMsg, Url.MAIN);
         } finally {
-            logParam.setResult(isSuccess, rsltMsg);
             // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));

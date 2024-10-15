@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.domain.jrnl.sbjct.model.JrnlSbjctDto;
 import io.nicheblog.dreamdiary.domain.jrnl.sbjct.repository.jpa.JrnlSbjctRepository;
 import io.nicheblog.dreamdiary.domain.jrnl.sbjct.spec.JrnlSbjctSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BasePostService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +23,10 @@ import org.springframework.stereotype.Service;
 public class JrnlSbjctService
         implements BasePostService<JrnlSbjctDto.DTL, JrnlSbjctDto.LIST, Integer, JrnlSbjctEntity, JrnlSbjctRepository, JrnlSbjctSpec, JrnlSbjctMapstruct> {
 
-    private final JrnlSbjctRepository jrnlSbjctRepository;
-    private final JrnlSbjctSpec jrnlSbjctSpec;
-    private final JrnlSbjctMapstruct jrnlSbjctMapstruct = JrnlSbjctMapstruct.INSTANCE;
-
-    @Override
-    public JrnlSbjctRepository getRepository() {
-        return this.jrnlSbjctRepository;
-    }
-
-    @Override
-    public JrnlSbjctSpec getSpec() {
-        return this.jrnlSbjctSpec;
-    }
-
-    @Override
-    public JrnlSbjctMapstruct getMapstruct() {
-        return this.jrnlSbjctMapstruct;
-    }
+    @Getter
+    private final JrnlSbjctRepository repository;
+    @Getter
+    private final JrnlSbjctSpec spec;
+    @Getter
+    private final JrnlSbjctMapstruct mapstruct = JrnlSbjctMapstruct.INSTANCE;
 }

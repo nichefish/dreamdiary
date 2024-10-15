@@ -15,6 +15,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Size;
 
 /**
  * LogActvtyParam
@@ -66,7 +67,12 @@ public class LogActvtyParam
     private String cn;
 
     /** 작업 카테고리 코드 */
-    private ActvtyCtgr actvtyCtgr;
+    @Size(max = 50)
+    protected String actvtyCtgrCd;
+
+    /** 작업 카테고리 */
+    @Size(max = 50)
+    protected ActvtyCtgr actvtyCtgr;
 
     /** 작업자 이름 */
     private String userNm;
@@ -201,4 +207,14 @@ public class LogActvtyParam
         this.exceptionMsg = MessageUtils.getExceptionMsg(e);
     }
 
+    /**
+     * Getter :: 작업 카테고리 조회
+     *
+     * @return {@link ActvtyCtgr} -- 작업 카테고리 (기본값: ActvtyCtgr.DEFAULT)
+     */
+    public ActvtyCtgr getActvtyCtgr() {
+        if (this.actvtyCtgr != null) return this.actvtyCtgr;
+        if (StringUtils.isEmpty(this.actvtyCtgrCd)) return ActvtyCtgr.DEFAULT;
+        return ActvtyCtgr.valueOf(this.actvtyCtgrCd.toUpperCase());
+    }
 }
