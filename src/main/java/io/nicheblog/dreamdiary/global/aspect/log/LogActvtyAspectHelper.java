@@ -1,28 +1,22 @@
-package io.nicheblog.dreamdiary.global.aspect.util;
+package io.nicheblog.dreamdiary.global.aspect.log;
 
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
 /**
  * LogActvtyAspectUtils
  * <pre>
- *  로그 공통 처리용 유틸리티 모듈.
+ *  로그 공통 처리 Aspect용 공통 로직 분리.
  * </pre>
  *
  * @author nichefish
  */
-@Aspect
-@Component
-@RequiredArgsConstructor
 @Log4j2
-public class LogActvtyAspectUtils {
+public class LogActvtyAspectHelper {
 
     /**
      * 컨트롤러 메소드에서 LogActvtyParam를 추출합니다.
@@ -36,7 +30,7 @@ public class LogActvtyAspectUtils {
             if (arg instanceof LogActvtyParam) {
                 LogActvtyParam logParam = (LogActvtyParam) arg;
                 // actvtyCtgr 값 자동 할당
-                if (logParam.getActvtyCtgr() == null) logParam.setActvtyCtgr(LogActvtyAspectUtils.getActvtyCtgr(joinPoint.getTarget()));
+                if (logParam.getActvtyCtgr() == null) logParam.setActvtyCtgr(LogActvtyAspectHelper.getActvtyCtgr(joinPoint.getTarget()));
                 return logParam;
             }
         }
