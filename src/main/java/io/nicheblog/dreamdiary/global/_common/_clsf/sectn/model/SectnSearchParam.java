@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class SectnSearchParam
         extends BaseSearchParam {

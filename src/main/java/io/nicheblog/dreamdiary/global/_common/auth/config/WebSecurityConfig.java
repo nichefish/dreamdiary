@@ -7,7 +7,6 @@ import io.nicheblog.dreamdiary.global._common.auth.handler.AjaxAwareAuthenticati
 import io.nicheblog.dreamdiary.global._common.auth.handler.LgnFailureHandler;
 import io.nicheblog.dreamdiary.global._common.auth.handler.LgnSuccessHandler;
 import io.nicheblog.dreamdiary.global._common.auth.handler.LgoutHandler;
-import io.nicheblog.dreamdiary.global._common.auth.provider.JwtTokenProvider;
 import io.nicheblog.dreamdiary.global._common.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,8 +22,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -34,7 +31,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  * <pre>
  *  Spring Security 설정
  * </pre>
- * TODO: deprecated된것 바꾸기
+ * TODO: deprecated된 요소들 바꾸기.
  *
  * @author nichefish
  */
@@ -50,7 +47,6 @@ public class WebSecurityConfig {
     private final AjaxAwareAuthenticationEntryPoint ajaxAwareAuthenticationEntryPoint;
     private final LgoutHandler lgoutHandler;
 
-    private final JwtTokenProvider jwtTokenProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private final ActiveProfile activeProfile;
@@ -61,14 +57,6 @@ public class WebSecurityConfig {
     private String REMEMBER_ME_KEY;
     @Value("${remember-me.param}")
     private String REMEMBER_ME_PARAM;
-
-    /**
-     * 빈 생성 :: 패스워드 암호화
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     /**
      * 빈 생성 ::중복 로그인 방지:: logout 후 login 처리시 정상작동을 위함

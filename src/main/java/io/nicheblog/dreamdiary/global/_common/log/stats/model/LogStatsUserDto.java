@@ -1,10 +1,7 @@
 package io.nicheblog.dreamdiary.global._common.log.stats.model;
 
 import io.nicheblog.dreamdiary.global.intrfc.model.BaseCrudDto;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.SneakyThrows;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class LogStatsUserDto
         extends BaseCrudDto
         implements Comparable<LogStatsUserDto> {

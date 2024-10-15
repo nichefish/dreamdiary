@@ -20,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class LogSysDto
         extends BaseCrudDto
         implements Identifiable<Integer> {

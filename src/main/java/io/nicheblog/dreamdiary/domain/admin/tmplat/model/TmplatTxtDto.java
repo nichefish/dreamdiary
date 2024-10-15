@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class TmplatTxtDto
         extends BaseAtchDto
         implements Identifiable<Integer>, StateCmpstnModule {

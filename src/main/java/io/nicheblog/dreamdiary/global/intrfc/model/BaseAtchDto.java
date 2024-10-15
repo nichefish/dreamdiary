@@ -22,7 +22,7 @@ import java.util.List;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class BaseAtchDto
         extends BaseAuditDto {

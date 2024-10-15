@@ -13,16 +13,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
-import java.util.Optional;
 
 /**
- * LogAspect
+ * LogActvtyRestControllerAspect
  * <pre>
- *  로그 공통 처리 Aspect.
+ *  RestController에서의 로그 공통 처리 Aspect.
  *  TODO: 페이지 컨트롤러 / 서비스 로깅 추가하기.
  * </pre>
  *
@@ -32,7 +30,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Log4j2
-public class LogActvtyAspect {
+public class LogActvtyRestControllerAspect {
 
     private final ApplicationEventPublisher publisher;
 

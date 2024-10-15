@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class UserDto
         extends BaseAtchDto
         implements Identifiable<Integer> {

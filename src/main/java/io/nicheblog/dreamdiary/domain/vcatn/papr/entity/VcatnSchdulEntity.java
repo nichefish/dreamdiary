@@ -28,6 +28,7 @@ import java.util.Date;
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @ToString(exclude = "vcatnPapr", callSuper = true)
 @Where(clause = "del_yn='N'")
 @SQLDelete(sql = "UPDATE vcatn_schdul SET del_yn = 'Y' WHERE vcatn_schdul_no = ?")

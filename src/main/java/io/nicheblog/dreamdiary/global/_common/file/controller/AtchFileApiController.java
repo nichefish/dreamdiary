@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.global._common.file.model.AtchFileDtlDto;
 import io.nicheblog.dreamdiary.global._common.file.service.AtchFileDtlService;
 import io.nicheblog.dreamdiary.global._common.file.utils.FileUtils;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.AjaxResponse;
@@ -61,23 +60,15 @@ public class AtchFileApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 체크 로직 처리
-            isSuccess = FileUtils.fileChck(fileId);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            // 반복적으로 호출되므로 실패시 외에는 로그 적재하지 않음
-            logParam.setCn("key: " + fileId);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-        }
+        final boolean isSuccess = FileUtils.fileChck(fileId);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+
+        // TODO: 실패시에만 로그 적용하도록
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -90,37 +81,27 @@ public class AtchFileApiController
      *
      * @param atchFileNo - 파일 번호. 조회할 파일의 고유 식별자
      * @param logParam 로그 관련 파라미터. 처리 과정에서 필요한 로그 정보를 포함
-     * @return ResponseEntity -- 응답 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 다운로드 중 발생할 수 있는 예외
      */
     @GetMapping(Url.FILE_INFO_LIST_AJAX)
     @ResponseBody
     public ResponseEntity<AjaxResponse> getFileList(
             final @RequestParam("atchFileNo") @Nullable Integer atchFileNo,
             final LogActvtyParam logParam
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 목록 조회 및 응답에 세팅
-            List<AtchFileDtlDto> fileList = atchFileDtlService.getPageDto(atchFileNo);
-            ajaxResponse.setRsltList(fileList);
+        final List<AtchFileDtlDto> fileList = atchFileDtlService.getPageDto(atchFileNo);
+        final boolean isSuccess = (fileList != null);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
-            isSuccess = (fileList != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setCn("key: " + atchFileNo);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 응답 결과 세팅
+        ajaxResponse.setRsltList(fileList);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -134,38 +115,37 @@ public class AtchFileApiController
      *
      * @param atchFileDtlNo 파일 상세 번호. 다운로드할 파일의 고유 식별자
      * @param logParam 로그 관련 파라미터. 처리 과정에서 필요한 로그 정보를 포함
-     * @throws Exception 다운로드 과정에서 발생할 수 있는 예외
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     * @throws Exception 다운로드 중 발생할 수 있는 예외
      */
     @GetMapping(Url.FILE_DOWNLOAD)
     @PreAuthorize("isAuthenticated()")
-    public void fileDownload(
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> fileDownload(
             final @RequestParam("atchFileDtlNo") @Nullable Integer atchFileDtlNo,
             final LogActvtyParam logParam
     ) throws Exception {
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 파일 정보 조회
-            AtchFileDtlEntity atchFileDtl = atchFileDtlService.getDtlEntity(atchFileDtlNo);
-            String orgnFileNm = atchFileDtl.getOrgnFileNm();
-            // 파일 다운로드 처리
-            File file = new File(atchFileDtl.getFileStrePath(), atchFileDtl.getStreFileNm());
-            FileUtils.downloadFile(file, orgnFileNm);
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg);
-        } finally {
-            // 로그 관련 처리
-            logParam.setCn("key: " + atchFileDtlNo);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 파일 정보 조회
+        final AtchFileDtlEntity atchFileDtl = atchFileDtlService.getDtlEntity(atchFileDtlNo);
+        final String orgnFileNm = atchFileDtl.getOrgnFileNm();
+        // 파일 다운로드 처리
+        final File file = new File(atchFileDtl.getFileStrePath(), atchFileDtl.getStreFileNm());
+        FileUtils.downloadFile(file, orgnFileNm);
+
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -176,38 +156,33 @@ public class AtchFileApiController
      * @param dirName 다운로드할 파일이 위치한 폴더명
      * @param fileName 다운로드할 파일명
      * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      * @throws Exception 다운로드 중 발생할 수 있는 예외
      */
     @GetMapping("/file/vod/{dir}/{fileName}")
     @PreAuthorize("isAuthenticated()")
-    public void staticVodFileDownload(
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> staticVodFileDownload(
             final @PathVariable String dirName,
             final @PathVariable String fileName,
             final LogActvtyParam logParam
     ) throws Exception {
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        String dir = "";
-        try {
-            if ("ceremony".equals(dirName)) dir = "시무식";
-            File file = new File("vod-storage/" + dir + "/" + fileName);
-            log.debug("file: {}", file);
-            FileUtils.downloadFile(file, fileName);
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg);
-        } finally {
-            // 로그 관련 처리
-            logParam.setCn("key: " + dirName + "/" + fileName);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final File file = new File("vod-storage/" + dirName + "/" + fileName);
+        FileUtils.downloadFile(file, fileName);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -217,33 +192,31 @@ public class AtchFileApiController
      *
      * @param fileName 다운로드할 파일명
      * @param logParam 로그 기록을 위한 파라미터 객체
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
      * @throws Exception 다운로드 중 발생할 수 있는 예외
      */
     @GetMapping("/file/{fileName}")
-    public void staticFileDownload(
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> staticFileDownload(
             final @PathVariable String fileName,
             final LogActvtyParam logParam
     ) throws Exception {
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            File file = new File("content/" + fileName);
-            FileUtils.downloadFile(file, fileName);
+        final AjaxResponse ajaxResponse = new AjaxResponse();
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg);
-        } finally {
-            // 로그 관련 처리
-            logParam.setCn("key: " + fileName);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final File file = new File("content/" + fileName);
+        FileUtils.downloadFile(file, fileName);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 응답 결과 세팅
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ajaxResponse);
     }
 
     /**
@@ -251,7 +224,7 @@ public class AtchFileApiController
      * (로그인 사용자만 접근 가능.)
      *
      * @param logParam 로그 기록을 위한 파라미터 객체
-     * @param request Multipar 요청
+     * @param request Multipart 요청
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
      * @throws Exception 파일 업로드 중 발생할 수 있는 예외
      */
@@ -260,31 +233,22 @@ public class AtchFileApiController
     public ResponseEntity<AjaxResponse> uploadFileAjax(
             final LogActvtyParam logParam,
             final MultipartHttpServletRequest request
-    ) {
+    ) throws Exception {
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 파일 영역 처리 후 업로드 정보 받아서 반환
-            AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
-            ajaxResponse.setRsltObj(atchfileDtl);
+        // 파일 영역 처리 후 업로드 정보 받아서 반환
+        AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
+        assert atchfileDtl != null;
+        final boolean isSuccess = (atchfileDtl.getAtchFileDtlNo() != null);
+        final String rsltMsg =  MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
-            assert atchfileDtl != null;
-            isSuccess = (atchfileDtl.getAtchFileDtlNo() != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+        // 응답 결과 세팅
+        ajaxResponse.setRsltObj(atchfileDtl);
+        ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
 
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
-            // 로그 관련 처리
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ajaxResponse);

@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global._common.log.sys.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.intrfc.model.param.BaseParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
 public class LogActvtyParam
         extends BaseParam {
 

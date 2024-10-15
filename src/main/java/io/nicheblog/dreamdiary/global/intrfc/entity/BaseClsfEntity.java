@@ -1,9 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.MappedSuperclass;
@@ -24,6 +21,7 @@ import javax.persistence.Transient;
 @SuperBuilder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class BaseClsfEntity
         extends BaseAtchEntity {
 

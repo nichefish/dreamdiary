@@ -26,6 +26,7 @@ import java.util.List;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class BaseCrudEntity
         implements Serializable {
 

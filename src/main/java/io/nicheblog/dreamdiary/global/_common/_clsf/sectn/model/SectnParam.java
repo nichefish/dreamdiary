@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class SectnParam
         extends BaseParam {

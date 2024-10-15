@@ -24,8 +24,8 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@EqualsAndHashCode
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class PopupDto
         extends BaseAtchDto
         implements Identifiable<Integer>, StateCmpstnModule {
