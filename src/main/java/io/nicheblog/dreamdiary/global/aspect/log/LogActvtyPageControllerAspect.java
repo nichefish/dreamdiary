@@ -2,7 +2,6 @@ package io.nicheblog.dreamdiary.global.aspect.log;
 
 import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
-import io.nicheblog.dreamdiary.global.aspect.util.LogActvtyAspectUtils;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -48,7 +47,7 @@ public class LogActvtyPageControllerAspect {
         // API 요청에 대한 결과값 로그 남기기
         log.info("Page Method {} completed. Result: {}", joinPoint.getSignature().getName(), result);
 
-        final LogActvtyParam logParam = LogActvtyAspectUtils.extractLogParam(joinPoint);
+        final LogActvtyParam logParam = LogActvtyAspectHelper.extractLogParam(joinPoint);
         if (logParam == null) return;
         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     }
@@ -64,7 +63,7 @@ public class LogActvtyPageControllerAspect {
     public void logAfterThrowing(JoinPoint joinPoint, Throwable ex) {
         log.error("Page Method {} threw an exception: {}", joinPoint.getSignature().getName(), ex.getMessage());
 
-        LogActvtyParam logParam = LogActvtyAspectUtils.extractLogParam(joinPoint);
+        LogActvtyParam logParam = LogActvtyAspectHelper.extractLogParam(joinPoint);
         if (logParam == null) logParam = new LogActvtyParam();
         // 실패 여부, 에러 메시지, 활동 카테고리 설정
         logParam.setResult(false, MessageUtils.getExceptionMsg(ex));
