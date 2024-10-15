@@ -105,7 +105,7 @@ public class NoticeApiController
         ajaxResponse.setRsltObj(result);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -147,7 +147,7 @@ public class NoticeApiController
         ajaxResponse.setRsltObj(rsDto);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -185,7 +185,7 @@ public class NoticeApiController
         // 응답 결과 세팅
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -224,7 +224,7 @@ public class NoticeApiController
         ajaxResponse.setRsltList(noticeList);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         // TODO: 반복적으로 호출되므로 실패(Exception)시 외에는 로그 적재하지 않아야 함
 
@@ -267,7 +267,7 @@ public class NoticeApiController
             MessageUtils.alertMessage(rsltMsg, Url.VCATN_SCHDUL_LIST);
         } finally {
             // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+            logParam.setResult(isSuccess, rsltMsg);
             publisher.publishEvent(new LogActvtyEvent(this, logParam));
         }
 

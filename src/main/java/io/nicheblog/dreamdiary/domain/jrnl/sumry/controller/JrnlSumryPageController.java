@@ -14,7 +14,6 @@ import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.model.TagDto;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -77,28 +76,18 @@ public class JrnlSumryPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_SUMRY.setAcsPageInfo(Constant.PAGE_LIST));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 전체 통계 조회
-            final JrnlSumryDto totalSumry = jrnlSumryService.getTotalSumry();
-            model.addAttribute("totalSumry", totalSumry);
-            // 목록 조회 및 모델에 추가
-            List<JrnlSumryDto.LIST> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
-            model.addAttribute("jrnlSumryList", jrnlSumryList);
+        // 전체 통계 조회
+        final JrnlSumryDto totalSumry = jrnlSumryService.getTotalSumry();
+        model.addAttribute("totalSumry", totalSumry);
+        // 목록 조회 및 모델에 추가
+        final List<JrnlSumryDto.LIST> jrnlSumryList = jrnlSumryService.getListDto(searchParam);
+        model.addAttribute("jrnlSumryList", jrnlSumryList);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/jrnl/sumry/jrnl_sumry_list";
     }
@@ -125,45 +114,33 @@ public class JrnlSumryPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_SUMRY.setAcsPageInfo(Constant.PAGE_DTL));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 모델에 추가
-            final JrnlSumryDto rsltDto = key != null ? jrnlSumryService.getSumryDtl(key) : yyParam != null ? jrnlSumryService.getDtlDtoByYy(yyParam) : null;
-            model.addAttribute("post", rsltDto);
-            if (rsltDto != null) {
-                final Integer yy = rsltDto.getYy();
-                // 중요 일기 목록 조회
-                model.addAttribute("imprtcDiaryList", jrnlDiaryService.getImprtcDiaryList(yy));
-                // 중요 꿈 목록 조회
-                model.addAttribute("imprtcDreamList", jrnlDreamService.getImprtcDreamList(yy));
+        // 객체 조회 및 모델에 추가
+        final JrnlSumryDto rsltDto = key != null ? jrnlSumryService.getSumryDtl(key) : yyParam != null ? jrnlSumryService.getDtlDtoByYy(yyParam) : null;
+        model.addAttribute("post", rsltDto);
+        assert rsltDto != null;
+        final Integer yy = rsltDto.getYy();
+        // 중요 일기 목록 조회
+        model.addAttribute("imprtcDiaryList", jrnlDiaryService.getImprtcDiaryList(yy));
+        // 중요 꿈 목록 조회
+        model.addAttribute("imprtcDreamList", jrnlDreamService.getImprtcDreamList(yy));
 
-                // 일자 태그 목록 조회
-                final List<TagDto> jrnlDayTagList = jrnlDayTagService.getDaySizedListDto(yy, 99);
-                model.addAttribute("dayTagList", jrnlDayTagList);
-                // 일기 태그 목록 조회
-                final List<TagDto> jrnlDiaryTagList = jrnlDiaryTagService.getDiarySizedListDto(yy, 99);
-                model.addAttribute("diaryTagList", jrnlDiaryTagList);
-                // 꿈 태그 목록 조회
-                final List<TagDto> jrnlDreamTagList = jrnlDreamTagService.getDreamSizedListDto(yy, 99);
-                model.addAttribute("dreamTagList", jrnlDreamTagList);
-            }
-            // 코드 데이터 모델에 추가
-            dtlCdService.setCdListToModel(Constant.JRNL_SUMRY_TY_CD, model);
+        // 일자 태그 목록 조회
+        final List<TagDto> jrnlDayTagList = jrnlDayTagService.getDaySizedListDto(yy, 99);
+        model.addAttribute("dayTagList", jrnlDayTagList);
+        // 일기 태그 목록 조회
+        final List<TagDto> jrnlDiaryTagList = jrnlDiaryTagService.getDiarySizedListDto(yy, 99);
+        model.addAttribute("diaryTagList", jrnlDiaryTagList);
+        // 꿈 태그 목록 조회
+        final List<TagDto> jrnlDreamTagList = jrnlDreamTagService.getDreamSizedListDto(yy, 99);
+        model.addAttribute("dreamTagList", jrnlDreamTagList);
+        // 코드 데이터 모델에 추가
+        dtlCdService.setCdListToModel(Constant.JRNL_SUMRY_TY_CD, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setCn("key: " + (key != null ? key.toString() : yyParam));
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/jrnl/sumry/jrnl_sumry_dtl";
     }

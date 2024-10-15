@@ -75,7 +75,7 @@ public class TmplatTxtApiController
         ajaxResponse.setRsltObj(result);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

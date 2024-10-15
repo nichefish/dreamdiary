@@ -11,7 +11,6 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -73,39 +72,29 @@ public class VcatnSchdulPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.VCATN_SCHDUL.setAcsPageInfo(Constant.PAGE_CAL));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 휴가계획서 년도 정보 조회 (시작일자~종료일자 세팅 정보)
-            VcatnStatsYyDto statsYy = null;
-            String yyStr = yyStrParam;
-            if (StringUtils.isEmpty(yyStrParam)) {
-                statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
-                yyStr = statsYy.getStatsYy();
-            }
-            if (statsYy == null) statsYy = vcatnStatsYyService.getVcatnYyDtDto(yyStr);
-            model.addAttribute("vcatnYy", statsYy);
-            // 휴가계획서 최저년도~올해 년도(year) 목록 조회
-            model.addAttribute("yyList", vcatnPaprService.getVcatnYyList());
-            // 직원 목록 조회 (등록에 쓰임)
-            List<UserDto.LIST> crtdUserList = userService.getCrdtUserList(statsYy.getBgnDt(), statsYy.getEndDt());
-            model.addAttribute("crtdUserList", crtdUserList);
-            // 일반 휴가(날짜범위)를 하루하루로 다 쪼개야 한다.
-            model.addAttribute("vcatnSchdulList", vcatnSchdulService.getListDto(statsYy));
-            dtlCdService.setCdListToModel(Constant.VCATN_CD, model);
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        // 휴가계획서 년도 정보 조회 (시작일자~종료일자 세팅 정보)
+        VcatnStatsYyDto statsYy = null;
+        String yyStr = yyStrParam;
+        if (StringUtils.isEmpty(yyStrParam)) {
+            statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
+            yyStr = statsYy.getStatsYy();
         }
+        if (statsYy == null) statsYy = vcatnStatsYyService.getVcatnYyDtDto(yyStr);
+        model.addAttribute("vcatnYy", statsYy);
+        // 휴가계획서 최저년도~올해 년도(year) 목록 조회
+        model.addAttribute("yyList", vcatnPaprService.getVcatnYyList());
+        // 직원 목록 조회 (등록에 쓰임)
+        final List<UserDto.LIST> crtdUserList = userService.getCrdtUserList(statsYy.getBgnDt(), statsYy.getEndDt());
+        model.addAttribute("crtdUserList", crtdUserList);
+        // 일반 휴가(날짜범위)를 하루하루로 다 쪼개야 한다.
+        model.addAttribute("vcatnSchdulList", vcatnSchdulService.getListDto(statsYy));
+        dtlCdService.setCdListToModel(Constant.VCATN_CD, model);
+
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/vcatn/schdul/vcatn_schdul_list";
     }

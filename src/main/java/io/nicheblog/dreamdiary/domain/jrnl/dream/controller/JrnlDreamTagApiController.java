@@ -67,7 +67,8 @@ public class JrnlDreamTagApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        List<TagDto> tagList = jrnlDreamTagService.getDreamSizedListDto(searchParam.getYy(), searchParam.getMnth());
+        final List<TagDto> tagList = jrnlDreamTagService.getDreamSizedListDto(searchParam.getYy(), searchParam.getMnth());
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -75,7 +76,7 @@ public class JrnlDreamTagApiController
         ajaxResponse.setRsltList(tagList);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -101,7 +102,8 @@ public class JrnlDreamTagApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        Map<String, List<TagDto>> tagGroupMap = jrnlDreamTagService.getDreamSizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
+        final Map<String, List<TagDto>> tagGroupMap = jrnlDreamTagService.getDreamSizedGroupListDto(searchParam.getYy(), searchParam.getMnth());
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -109,7 +111,7 @@ public class JrnlDreamTagApiController
         ajaxResponse.setRsltMap(tagGroupMap);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -135,8 +137,9 @@ public class JrnlDreamTagApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.jrnlDreamTagDtl(searchParam);
+        final List<JrnlDreamDto> jrnlDreamList = jrnlDreamService.jrnlDreamTagDtl(searchParam);
         Collections.sort(jrnlDreamList);
+
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
@@ -144,7 +147,7 @@ public class JrnlDreamTagApiController
         ajaxResponse.setRsltList(jrnlDreamList);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

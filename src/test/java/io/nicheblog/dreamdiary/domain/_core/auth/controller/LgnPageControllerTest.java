@@ -3,7 +3,7 @@ package io.nicheblog.dreamdiary.domain._core.auth.controller;
 import io.nicheblog.dreamdiary.domain._core.auth.config.TestWebSecurityConfig;
 import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfoTestFactory;
-import io.nicheblog.dreamdiary.domain.admin.web.controller.LgnController;
+import io.nicheblog.dreamdiary.domain.admin.web.controller.LgnPageController;
 import io.nicheblog.dreamdiary.domain.user.my.service.UserMyService;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.BaseControllerTestHelper;
@@ -35,11 +35,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author nichefish
  */
-@WebMvcTest(LgnController.class)
+@WebMvcTest(LgnPageController.class)
 @ActiveProfiles("test")
 @AutoConfigureRestDocs(outputDir = "target/snippets")
 @Import(TestWebSecurityConfig.class)
-class LgnControllerTest {
+class LgnPageControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

@@ -9,7 +9,6 @@
  import io.nicheblog.dreamdiary.global._common.auth.service.AuthRoleService;
  import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
  import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
- import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
  import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
  import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
  import io.nicheblog.dreamdiary.global.model.PaginationInfo;
@@ -75,40 +74,30 @@ public class UserPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_INFO.setAcsPageInfo(Constant.PAGE_LIST));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            searchParam = (UserSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            final Sort sort = Sort.by(Sort.Direction.ASC, "acntStus.cfYn")
-                            .and(Sort.by(Sort.Direction.ASC, "acntStus.lockedYn"))
-                            .and(Sort.by(Sort.Direction.DESC, "regDt"));
-            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            // 목록 조회
-            final Page<UserDto.LIST> userList = userService.getPageDto(searchParam, pageRequest);
-            model.addAttribute("userList", userList.getContent());
-            model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(userList));
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
-            dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
-            dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
-            dtlCdService.setCdListToModel(Constant.RANK_CD, model);
-            // 목록 검색 URL + 파라미터 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+        // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
+        searchParam = (UserSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
+        // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
+        final Sort sort = Sort.by(Sort.Direction.ASC, "acntStus.cfYn")
+                .and(Sort.by(Sort.Direction.ASC, "acntStus.lockedYn"))
+                .and(Sort.by(Sort.Direction.DESC, "regDt"));
+        final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+        // 목록 조회
+        final Page<UserDto.LIST> userList = userService.getPageDto(searchParam, pageRequest);
+        model.addAttribute("userList", userList.getContent());
+        model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(userList));
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
+        dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
+        dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
+        dtlCdService.setCdListToModel(Constant.RANK_CD, model);
+        // 목록 검색 URL + 파라미터 모델에 추가
+        CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/user/user_list";
     }
@@ -131,36 +120,26 @@ public class UserPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_INFO.setAcsPageInfo("사용자 등록"));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 빈 객체 주입 (freemarker error prevention)
-            model.addAttribute("user", new UserDto.DTL());
-            // 등록/수정 화면 플래그 세팅
-            model.addAttribute(Constant.IS_REG, true);
-            // 권한 정보 모델에 추가
-            Map<String, Object> searchParamMap = new HashMap<>() {{
-                put("useYn", "Y");
-            }};
-            model.addAttribute("authRoleList", authRoleService.getListDto(searchParamMap));
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
-            dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
-            dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
-            dtlCdService.setCdListToModel(Constant.RANK_CD, model);
+        // 빈 객체 주입 (freemarker error prevention)
+        model.addAttribute("user", new UserDto.DTL());
+        // 등록/수정 화면 플래그 세팅
+        model.addAttribute(Constant.IS_REG, true);
+        // 권한 정보 모델에 추가
+        final Map<String, Object> searchParamMap = new HashMap<>() {{
+            put("useYn", "Y");
+        }};
+        model.addAttribute("authRoleList", authRoleService.getListDto(searchParamMap));
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
+        dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
+        dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
+        dtlCdService.setCdListToModel(Constant.RANK_CD, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/user/user_reg_form";
     }
@@ -186,26 +165,15 @@ public class UserPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_INFO.setAcsPageInfo("사용자 상세 조회"));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 상세 조회 및 모델에 추가
-            UserDto rsDto = userService.getDtlDto(key);
-            model.addAttribute("user", rsDto);
+        // 상세 조회 및 모델에 추가
+        final UserDto rsDto = userService.getDtlDto(key);
+        model.addAttribute("user", rsDto);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/user/user_dtl";
     }
@@ -231,39 +199,27 @@ public class UserPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_INFO.setAcsPageInfo("사용자 수정"));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 상세 조회 및 모델에 추가
-            UserDto rsDto = userService.getDtlDto(key);
-            model.addAttribute("user", rsDto);
-            // 등록/수정 화면 플래그
-            model.addAttribute(Constant.IS_MDF, true);
-            // 권한 정보 모델에 추가
-            Map<String, Object> searchParamMap = new HashMap<>() {{
-                put("useYn", "Y");
-            }};
-            model.addAttribute("authRoleList", authRoleService.getListDto(searchParamMap));
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
-            dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
-            dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
-            dtlCdService.setCdListToModel(Constant.RANK_CD, model);
+        // 상세 조회 및 모델에 추가
+        final UserDto rsDto = userService.getDtlDto(key);
+        model.addAttribute("user", rsDto);
+        // 등록/수정 화면 플래그
+        model.addAttribute(Constant.IS_MDF, true);
+        // 권한 정보 모델에 추가
+        final Map<String, Object> searchParamMap = new HashMap<>() {{
+            put("useYn", "Y");
+        }};
+        model.addAttribute("authRoleList", authRoleService.getListDto(searchParamMap));
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
+        dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
+        dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
+        dtlCdService.setCdListToModel(Constant.RANK_CD, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/user/user_reg_form";
     }

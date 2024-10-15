@@ -5,13 +5,11 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.flsys.model.FlsysSearchParam;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -46,8 +44,6 @@ public class NotionPageController
      * 노션 화면 조회
      * (사용자USER, 관리자MNGR만 접근 가능.)
      * 
-     * TODO: 정리
-     *
      * @param searchParam 검색 조건을 담은 파라미터 객체
      * @param notionPageIdParam 노션 페이지 ID
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
@@ -56,7 +52,7 @@ public class NotionPageController
      */
     @GetMapping(Url.NOTION_HOME)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
-    public String flsysList(
+    public String notionPage(
             @ModelAttribute("searchParam") FlsysSearchParam searchParam,
             final @RequestParam("notionPageId") @Nullable String notionPageIdParam,
             final LogActvtyParam logParam,
@@ -66,25 +62,15 @@ public class NotionPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.LGN_POLICY.setAcsPageInfo("노션 연동"));
 
-        // 활동 로그 목록 조회
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // NotionRetriever notionRetriever = new NotionRetriever(notionPageId);
-            // String notionPage = notionRetriever.render();
-            // model.addAttribute("notionPage", notionPage);
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // NotionRetriever notionRetriever = new NotionRetriever(notionPageId);
+        // String notionPage = notionRetriever.render();
+        // model.addAttribute("notionPage", notionPage);
+
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/global/_common/notion/notion_home";
     }

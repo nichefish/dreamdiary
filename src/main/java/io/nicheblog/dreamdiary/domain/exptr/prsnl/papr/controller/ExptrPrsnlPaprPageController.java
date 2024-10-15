@@ -11,7 +11,6 @@ import io.nicheblog.dreamdiary.global._common._clsf.tag.service.TagService;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.PaginationInfo;
@@ -79,41 +78,31 @@ public class ExptrPrsnlPaprPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_PAPR.setAcsPageInfo(Constant.PAGE_LIST));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            searchParam = (ExptrPrsnlPaprSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            final Sort sort = Sort.by(Sort.Direction.DESC, "yy")
-                            .and(Sort.by(Sort.Direction.DESC, "mnth"))
-                            .and(Sort.by(Sort.Direction.ASC, "cfYn"))
-                            .and(Sort.by(Sort.Direction.DESC, "managt.managtDt"));
-            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
-            // 목록 조회
-            final Page<ExptrPrsnlPaprDto.LIST> exptrPrsnlList = exptrPrsnlPaprService.getPageDto(searchParam, pageRequest);
-            if (exptrPrsnlList != null) model.addAttribute("exptrPrsnlList", exptrPrsnlList.getContent());
-            model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrPrsnlList));
-            // 컨텐츠 타입에 맞는 태그 목록 조회
-            model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.EXPTR_PRSNL_PAPR));
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.YY_CD, model);
-            dtlCdService.setCdListToModel(Constant.MNTH_CD, model);
-            // 목록 검색 URL + 파라미터 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+        // 상세/수정 화면에서 목록 화면 복귀시 세션에 목록 검색 인자 저장해둔 거 있는지 체크
+        searchParam = (ExptrPrsnlPaprSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
+        // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
+        final Sort sort = Sort.by(Sort.Direction.DESC, "yy")
+                .and(Sort.by(Sort.Direction.DESC, "mnth"))
+                .and(Sort.by(Sort.Direction.ASC, "cfYn"))
+                .and(Sort.by(Sort.Direction.DESC, "managt.managtDt"));
+        final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, sort, model);
+        // 목록 조회
+        final Page<ExptrPrsnlPaprDto.LIST> exptrPrsnlList = exptrPrsnlPaprService.getPageDto(searchParam, pageRequest);
+        if (exptrPrsnlList != null) model.addAttribute("exptrPrsnlList", exptrPrsnlList.getContent());
+        model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(exptrPrsnlList));
+        // 컨텐츠 타입에 맞는 태그 목록 조회
+        model.addAttribute("tagList", tagService.getContentSpecificTagList(ContentType.EXPTR_PRSNL_PAPR));
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.YY_CD, model);
+        dtlCdService.setCdListToModel(Constant.MNTH_CD, model);
+        // 목록 검색 URL + 파라미터 모델에 추가
+        CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.MAIN);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/exptr/prsnl/papr/exptr_prsnl_papr_list";
     }
@@ -139,37 +128,27 @@ public class ExptrPrsnlPaprPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_PAPR.setAcsPageInfo(Constant.PAGE_REG));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 빈 객체 주입 (freemarker error prevention)
-            model.addAttribute("post", new ExptrPrsnlPaprDto());
-            // 등록/수정 화면 플래그 세팅
-            model.addAttribute(Constant.IS_REG, true);
-            // 목록화면에서 체크 후 이전달 등록화면으로 보낼 떄 쓰는 플래그 세팅
-            if (StringUtils.isNotEmpty(prevYn)) model.addAttribute("prevYn", prevYn);
-            // 전년도/전월 값 세팅
-            final Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
-            final Integer[] currYyMnth = DateUtils.getCurrYyMnth();
-            model.addAttribute("prevYy", prevYyMnth[0]);
-            model.addAttribute("currYy", currYyMnth[0]);
-            model.addAttribute("prevMnth", prevYyMnth[1]);
-            model.addAttribute("currMnth", currYyMnth[1]);
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.EXPTR_CD, model);
+        // 빈 객체 주입 (freemarker error prevention)
+        model.addAttribute("post", new ExptrPrsnlPaprDto());
+        // 등록/수정 화면 플래그 세팅
+        model.addAttribute(Constant.IS_REG, true);
+        // 목록화면에서 체크 후 이전달 등록화면으로 보낼 떄 쓰는 플래그 세팅
+        if (StringUtils.isNotEmpty(prevYn)) model.addAttribute("prevYn", prevYn);
+        // 전년도/전월 값 세팅
+        final Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
+        final Integer[] currYyMnth = DateUtils.getCurrYyMnth();
+        model.addAttribute("prevYy", prevYyMnth[0]);
+        model.addAttribute("currYy", currYyMnth[0]);
+        model.addAttribute("prevMnth", prevYyMnth[1]);
+        model.addAttribute("currMnth", currYyMnth[1]);
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.EXPTR_CD, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = false;
+        final String rsltMsg = "";
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/exptr/prsnl/papr/exptr_prsnl_papr_reg_form";
     }
@@ -195,30 +174,22 @@ public class ExptrPrsnlPaprPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_PAPR.setAcsPageInfo(Constant.PAGE_DTL));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 모델에 추가
-            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            model.addAttribute("post", rsDto);
+        // 객체 조회 및 모델에 추가
+        final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+        model.addAttribute("post", rsDto);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 조회수 카운트 추가
-            exptrPrsnlPaprService.hitCntUp(key);
-            // 열람자 추가 :: 메인 로직과 분리
-            publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 조회수 카운트 추가
+        // TODO: AOP로 분리하기
+        exptrPrsnlPaprService.hitCntUp(key);
+        // 열람자 추가 :: 메인 로직과 분리
+        // TODO: AOP로 분리하기
+        publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/exptr/prsnl/papr/exptr_prsnl_papr_dtl";
     }
@@ -244,26 +215,15 @@ public class ExptrPrsnlPaprPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_PAPR.setAcsPageInfo(Constant.PAGE_POP));
         model.addAttribute("isPdf", true);      // 관련 세팅 위해 필요 TODO: 레이아웃 자체에 두기...
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 모델에 추가
-            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            model.addAttribute("post", rsDto);
+        // 객체 조회 및 모델에 추가
+        final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+        model.addAttribute("post", rsDto);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/exptr/prsnl/papr/exptr_prsnl_papr_dtl_pdf_pop";
     }
@@ -291,39 +251,28 @@ public class ExptrPrsnlPaprPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.EXPTR_PRSNL_PAPR.setAcsPageInfo(Constant.PAGE_MDF));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 모델에 추가
-            final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
-            model.addAttribute("post", rsDto);
-            // 등록/수정 화면 플래그 세팅
-            model.addAttribute(Constant.IS_MDF, true);
-            // 관리자 경비관리 화면에서 넘어왔는지 여부 세팅
-            model.addAttribute("mngrYn", mngrYn);            
-            // 전년도/전월 값 세팅
-            final Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
-            final Integer[] currYyMnth = DateUtils.getCurrYyMnth();
-            model.addAttribute("prevYy", prevYyMnth[0]);
-            model.addAttribute("currYy", currYyMnth[0]);
-            model.addAttribute("prevMnth", prevYyMnth[1] + 1);
-            model.addAttribute("currMnth", currYyMnth[1] + 1);
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.EXPTR_CD, model);
+        // 객체 조회 및 모델에 추가
+        final ExptrPrsnlPaprDto rsDto = exptrPrsnlPaprService.getDtlDto(key);
+        model.addAttribute("post", rsDto);
+        // 등록/수정 화면 플래그 세팅
+        model.addAttribute(Constant.IS_MDF, true);
+        // 관리자 경비관리 화면에서 넘어왔는지 여부 세팅
+        model.addAttribute("mngrYn", mngrYn);
+        // 전년도/전월 값 세팅
+        final Integer[] prevYyMnth = DateUtils.getPrevYyMnth();
+        final Integer[] currYyMnth = DateUtils.getCurrYyMnth();
+        model.addAttribute("prevYy", prevYyMnth[0]);
+        model.addAttribute("currYy", currYyMnth[0]);
+        model.addAttribute("prevMnth", prevYyMnth[1] + 1);
+        model.addAttribute("currMnth", currYyMnth[1] + 1);
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.EXPTR_CD, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setCn("key: " + key);
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = false;
+        final String rsltMsg = "";
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/exptr/prsnl/papr/exptr_prsnl_papr_reg_form";
     }

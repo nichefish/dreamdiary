@@ -11,7 +11,6 @@ import io.nicheblog.dreamdiary.global._common._clsf.tag.service.TagService;
 import io.nicheblog.dreamdiary.global._common._clsf.viewer.event.ViewerAddEvent;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.model.PaginationInfo;
@@ -74,38 +73,28 @@ public class NoticePageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo(Constant.PAGE_LIST));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 상세/수정 화면에서 목록 화면 복귀시 :: 세션에 목록 검색 인자 저장해둔 거 있는지 체크
-            searchParam = (NoticeSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
-            // 상단 고정 목록 조회
-            model.addAttribute("noticeFxdList", noticeService.getFxdList());
-            // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
-            final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
-            // 목록 조회 및 모델에 추가
-            final Page<NoticeDto.LIST> noticeList = noticeService.getPageDto(searchParam, pageRequest);
-            model.addAttribute("noticeList", noticeList.getContent());
-            model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
-            // 컨텐츠 타입에 맞는 태그 목록 조회
-            model.addAttribute("tagList", tagService.getContentSpecificSizedTagList(ContentType.NOTICE));
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.NOTICE_CTGR_CD, model);
-            // 목록 검색 URL + 파라미터 모델에 추가
-            CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
+        // 상세/수정 화면에서 목록 화면 복귀시 :: 세션에 목록 검색 인자 저장해둔 거 있는지 체크
+        searchParam = (NoticeSearchParam) CmmUtils.Param.checkPrevSearchParam(baseUrl, searchParam);
+        // 상단 고정 목록 조회
+        model.addAttribute("noticeFxdList", noticeService.getFxdList());
+        // 페이징 정보 생성:: 공백시 pageSize=10, pageNo=1
+        final PageRequest pageRequest = CmmUtils.Param.getPageRequest(searchParam, "managt.managtDt", model);
+        // 목록 조회 및 모델에 추가
+        final Page<NoticeDto.LIST> noticeList = noticeService.getPageDto(searchParam, pageRequest);
+        model.addAttribute("noticeList", noticeList.getContent());
+        model.addAttribute(Constant.PAGINATION_INFO, new PaginationInfo(noticeList));
+        // 컨텐츠 타입에 맞는 태그 목록 조회
+        model.addAttribute("tagList", tagService.getContentSpecificSizedTagList(ContentType.NOTICE));
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.NOTICE_CTGR_CD, model);
+        // 목록 검색 URL + 파라미터 모델에 추가
+        CmmUtils.Param.setModelAttrMap(searchParam, baseUrl, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.MAIN);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        boolean isSuccess = true;
+        String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/notice/notice_list";
     }
@@ -129,31 +118,21 @@ public class NoticePageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo(Constant.PAGE_REG));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 빈 객체 주입 (freemarker error prevention)
-            model.addAttribute("post", new NoticeDto());
-            // 등록/수정 화면 플래그 세팅
-            model.addAttribute(Constant.IS_REG, true);
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.NOTICE_CTGR_CD, model);
-            dtlCdService.setCdListToModel(Constant.MDFABLE_CD, model);
-            dtlCdService.setCdListToModel(Constant.JANDI_TOPIC_CD, model);
-            // cmmService.setModelFlsysPath(model);
-            
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        // 빈 객체 주입 (freemarker error prevention)
+        model.addAttribute("post", new NoticeDto());
+        // 등록/수정 화면 플래그 세팅
+        model.addAttribute(Constant.IS_REG, true);
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.NOTICE_CTGR_CD, model);
+        dtlCdService.setCdListToModel(Constant.MDFABLE_CD, model);
+        dtlCdService.setCdListToModel(Constant.JANDI_TOPIC_CD, model);
+        // cmmService.setModelFlsysPath(model);
+
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/notice/notice_reg_form";
     }
@@ -177,25 +156,15 @@ public class NoticePageController
 
         model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo("공지사항 미리보기"));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 정보 모델에 추가
-            notice.setMarkdownCn(CmmUtils.markdown(notice.getCn()));
-            model.addAttribute("post", notice);
+        // 객체 정보 모델에 추가
+        notice.setMarkdownCn(CmmUtils.markdown(notice.getCn()));
+        model.addAttribute("post", notice);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setCn(notice.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/notice/notice_preview_pop";
     }
@@ -221,30 +190,22 @@ public class NoticePageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo(Constant.PAGE_DTL));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 모델에 추가
-            final NoticeDto rsDto = noticeService.getDtlDto(key);
-            model.addAttribute("post", rsDto);
+        // 객체 조회 및 모델에 추가
+        final NoticeDto rsDto = noticeService.getDtlDto(key);
+        model.addAttribute("post", rsDto);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-            // 조회수 카운트 추가
-            noticeService.hitCntUp(key);
-            // 열람자 추가 :: 메인 로직과 분리
-            publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setCn("key: " + key.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 조회수 카운트 추가
+        // TODO: AOP로 분리
+        noticeService.hitCntUp(key);
+        // 열람자 추가 :: 메인 로직과 분리
+        // TODO: AOP로 분리
+        publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/notice/notice_dtl";
     }
@@ -270,33 +231,22 @@ public class NoticePageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo(Constant.PAGE_MDF));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 객체 조회 및 모델에 추가
-            final NoticeDto rsDto = noticeService.getDtlDto(key);
-            model.addAttribute("post", rsDto);
-            // 등록/수정 화면 플래그 세팅
-            model.addAttribute(Constant.IS_MDF, true);
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.NOTICE_CTGR_CD, model);
-            dtlCdService.setCdListToModel(Constant.MDFABLE_CD, model);
-            dtlCdService.setCdListToModel(Constant.JANDI_TOPIC_CD, model);
-            // cmmService.setModelFlsysPath(model);
+        // 객체 조회 및 모델에 추가
+        final NoticeDto rsDto = noticeService.getDtlDto(key);
+        model.addAttribute("post", rsDto);
+        // 등록/수정 화면 플래그 세팅
+        model.addAttribute(Constant.IS_MDF, true);
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.NOTICE_CTGR_CD, model);
+        dtlCdService.setCdListToModel(Constant.MDFABLE_CD, model);
+        dtlCdService.setCdListToModel(Constant.JANDI_TOPIC_CD, model);
+        // cmmService.setModelFlsysPath(model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setCn("key: " + key.toString());
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/notice/notice_reg_form";
     }

@@ -76,7 +76,7 @@ public class JrnlDiaryTagApiController
         ajaxResponse.setRsltList(tagList);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -111,7 +111,7 @@ public class JrnlDiaryTagApiController
         ajaxResponse.setRsltMap(tagGroupMap);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -147,7 +147,7 @@ public class JrnlDiaryTagApiController
         ajaxResponse.setRsltList(jrnlDiaryList);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

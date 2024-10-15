@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.auth.model.AuthRoleDto;
 import io.nicheblog.dreamdiary.global._common.auth.service.AuthRoleService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -49,35 +48,27 @@ public class AdminPageController
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 전달할 데이터를 저장하는 ModelMap 객체
      * @return {@link String} -- 뷰 이름을 나타내는 문자열
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.ADMIN_PAGE)
     @Secured(Constant.ROLE_MNGR)
     public String adminPage(
             final LogActvtyParam logParam,
             final ModelMap model
-    ) {
+    ) throws Exception {
 
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.ADMIN_PAGE.setAcsPageInfo("사이트 관리"));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 권한 정보 조회
-            List<AuthRoleDto> authRoleList = authRoleService.getListDto(new HashMap<>());
-            model.addAttribute("authRoleList", authRoleList);
+        // 권한 정보 조회
+        List<AuthRoleDto> authRoleList = authRoleService.getListDto(new HashMap<>());
+        model.addAttribute("authRoleList", authRoleList);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/admin/admin_page";
     }
@@ -100,20 +91,11 @@ public class AdminPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.ADMIN.setAcsPageInfo("테스트 화면"));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/admin/test_page";
     }

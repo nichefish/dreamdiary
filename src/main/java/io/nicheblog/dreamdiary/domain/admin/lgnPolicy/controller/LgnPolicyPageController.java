@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -58,25 +57,15 @@ public class LgnPolicyPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.LGN_POLICY.setAcsPageInfo("로그인 정책 관리"));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 항목 조회 및 모델에 추가 :: 현재는 항상 고정 ID(1L)로 조회한다.
-            final LgnPolicyDto rsUserLgnPolicDto = lgnPolicyService.getDtlDto();
-            model.addAttribute("lgnPolicy", rsUserLgnPolicDto);
+        // 항목 조회 및 모델에 추가 :: 현재는 항상 고정 ID(1L)로 조회한다.
+        final LgnPolicyDto rsUserLgnPolicDto = lgnPolicyService.getDtlDto();
+        model.addAttribute("lgnPolicy", rsUserLgnPolicDto);
 
-            isSuccess = (rsUserLgnPolicDto != null);
-            rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = (rsUserLgnPolicDto != null);
+        final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/admin/lgn_policy/lgn_policy_reg_form";
     }

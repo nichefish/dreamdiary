@@ -2,12 +2,13 @@ package io.nicheblog.dreamdiary.domain.admin.web.controller;
 
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
+import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * ReactController
+ * ReactPageController
  * <pre>
  *  React 페이지 컨트롤러.
  * </pre>
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 @Log4j2
-public class ReactController {
+public class ReactPageController {
 
     /**
      * 리액트React 메인
@@ -30,6 +31,12 @@ public class ReactController {
     ) {
 
         // TODO:
+
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "redirect:/static/react/index.html";
     }

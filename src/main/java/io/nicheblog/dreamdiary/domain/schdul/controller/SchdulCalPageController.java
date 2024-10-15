@@ -9,7 +9,6 @@ import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -56,6 +55,7 @@ public class SchdulCalPageController
      * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 데이터를 전달하기 위한 ModelMap 객체
      * @return {@link String} -- 화면 뷰 경로
+     * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @GetMapping(Url.SCHDUL_CAL)
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
@@ -63,32 +63,23 @@ public class SchdulCalPageController
             @ModelAttribute("searchParam") SchdulSearchParam searchParam,
             final LogActvtyParam logParam,
             final ModelMap model
-    ) {
+    ) throws Exception {
 
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.SCHDUL_CAL.setAcsPageInfo(Constant.PAGE_CAL));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 재직자 목록 조회 및 모델에 추가 :: (일정 등록 참가자용)
-            final List<UserDto.LIST> crtdUserList = userService.getCrdtUserList(DateUtils.getCurrDateAddDayStr(-40), DateUtils.getCurrDateAddDayStr(40));
-            model.addAttribute("crtdUserList", crtdUserList);
-            // 코드 데이터 모델에 추가
-            dtlCdService.setCdListToModel(Constant.SCHDUL_CD, model);
-            dtlCdService.setCdListToModel(Constant.JANDI_TOPIC_CD, model);
+        // 재직자 목록 조회 및 모델에 추가 :: (일정 등록 참가자용)
+        final List<UserDto.LIST> crtdUserList = userService.getCrdtUserList(DateUtils.getCurrDateAddDayStr(-40), DateUtils.getCurrDateAddDayStr(40));
+        model.addAttribute("crtdUserList", crtdUserList);
+        // 코드 데이터 모델에 추가
+        dtlCdService.setCdListToModel(Constant.SCHDUL_CD, model);
+        dtlCdService.setCdListToModel(Constant.JANDI_TOPIC_CD, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/schdul/schdul_cal";
     }

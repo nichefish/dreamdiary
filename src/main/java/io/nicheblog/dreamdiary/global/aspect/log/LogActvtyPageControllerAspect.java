@@ -12,14 +12,12 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 /**
- * LogActvtyRestControllerAspect
+ * LogActvtyPageControllerAspect
  * <pre>
- *  RestController에서의 로그 공통 처리 Aspect.
- *  TODO: 페이지 컨트롤러 / 서비스 로깅 추가하기.
+ *  페이지 조회 Controller에서의 로그 공통 처리 Aspect.
  * </pre>
  *
  * @author nichefish
@@ -28,45 +26,43 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Log4j2
-public class LogActvtyRestControllerAspect {
+public class LogActvtyPageControllerAspect {
 
     private final ApplicationEventPublisher publisher;
 
     /**
      * Pointcut :: RestController(API)를 대상으로 지정합니다.
      */
-    @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
-    public void apiControllerMethods() { }
+    @Pointcut("within(@org.springframework.stereotype.Controller *)")
+    public void pageControllerMethods() { }
 
     /**
-     * RestController (API) 메소드 성공시 응답 객체를 기반으로 로그를 기록합니다.
+     * Controller (Page) 메소드 성공시 응답 객체를 기반으로 로그를 기록합니다.
      *
      * @param joinPoint 메소드 이름, 파라미터, 호출된 클래스, 타겟 객체 등의 메타 정보를 담은 객체
-     * @param result 사용자에게 반환된 {@link ResponseEntity} 객체
+     * @param result 사용자에게 반환된 view 경로 객체
      * TODO: 추가적인 인자들을 전달받아야 한다.
      */
-    // @Around("apiControllerMethods()")
-    @AfterReturning(pointcut = "apiControllerMethods()", returning = "result")
+    @AfterReturning(pointcut = "pageControllerMethods()", returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
         // API 요청에 대한 결과값 로그 남기기
-        log.info("API Method {} completed. Result: {}", joinPoint.getSignature().getName(), result);
+        log.info("Page Method {} completed. Result: {}", joinPoint.getSignature().getName(), result);
 
         final LogActvtyParam logParam = LogActvtyAspectUtils.extractLogParam(joinPoint);
         if (logParam == null) return;
-
         publisher.publishEvent(new LogActvtyEvent(this, logParam));
     }
 
     /**
-     * RestController (API) 메소드 실행 중 예외 발생시 에러를 기반으로 로그를 기록합니다.
+     * Controller (Page) 메소드 실행 중 예외 발생시 에러를 기반으로 로그를 기록합니다.
      *
      * @param joinPoint 메소드 이름, 파라미터, 호출된 클래스, 타겟 객체 등의 메타 정보를 담은 객체
      * @param ex 익셉션 또는 에러
      * TODO: 추가적인 인자들을 전달받아야 한다.
      */
-    @AfterThrowing(pointcut = "apiControllerMethods()", throwing = "ex")
+    @AfterThrowing(pointcut = "pageControllerMethods()", throwing = "ex")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable ex) {
-        log.error("API Method {} threw an exception: {}", joinPoint.getSignature().getName(), ex.getMessage());
+        log.error("Page Method {} threw an exception: {}", joinPoint.getSignature().getName(), ex.getMessage());
 
         LogActvtyParam logParam = LogActvtyAspectUtils.extractLogParam(joinPoint);
         if (logParam == null) logParam = new LogActvtyParam();

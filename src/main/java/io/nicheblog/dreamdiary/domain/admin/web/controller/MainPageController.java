@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
@@ -31,13 +30,11 @@ public class MainPageController
     /**
      * 메인 화면 :: 사용자
      *
-     * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 전달할 데이터를 저장하는 ModelMap 객체
      * @return {@link String} -- 뷰 이름을 나타내는 문자열
      */
     @GetMapping(value = {Url.ROOT, Url.MAIN})
     public String mainPage(
-            final LogActvtyParam logParam,
             final ModelMap model
     ) {
 
@@ -53,13 +50,11 @@ public class MainPageController
     /**
      * 메인 화면 :: 관리자
      *
-     * @param logParam 로그 기록을 위한 파라미터 객체
      * @param model 뷰에 전달할 데이터를 저장하는 ModelMap 객체
      * @return {@link String} -- 뷰 이름을 나타내는 문자열
      */
     @GetMapping(value = {Url.ADMIN_MAIN})
     public String adminMainPage(
-            final LogActvtyParam logParam,
             final ModelMap model
     ) {
 

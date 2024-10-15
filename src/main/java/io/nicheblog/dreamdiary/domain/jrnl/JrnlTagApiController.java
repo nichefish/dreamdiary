@@ -17,22 +17,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * JrnlTagController
+ * JrnlTagApiController
  * <pre>
- *  저널 태그 Controller.
+ *  저널 태그 API Controller.
  * </pre>
  *
  * @author nichefish
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
-public class JrnlTagController
+public class JrnlTagApiController
         extends BaseControllerImpl {
 
     @Getter
@@ -57,7 +57,7 @@ public class JrnlTagController
     @Secured({Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> tagCtgrSyncAjax(
-            @ModelAttribute("searchParam") TagSearchParam searchParam,
+            final @ModelAttribute("searchParam") TagSearchParam searchParam,
             final LogActvtyParam logParam
     ) throws Exception {
 
@@ -79,7 +79,7 @@ public class JrnlTagController
         // 응답 결과 세팅
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
-        logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
+        logParam.setResult(isSuccess, rsltMsg);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

@@ -2,12 +2,10 @@ package io.nicheblog.dreamdiary.domain.user.reqst.controller;
 
 import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
-import io.nicheblog.dreamdiary.domain.user.reqst.service.UserReqstService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.cd.service.DtlCdService;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
  * <pre>
  *  사용자 계정 신청 페이지 컨트롤러.
  * </pre>
- * TODO: 기능추가 예정
  *
  * @author nichefish
  */
@@ -38,7 +35,6 @@ public class UserReqstPageController
     @Getter
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.USER_REQST;      // 작업 카테고리 (로그 적재용)
 
-    private final UserReqstService userReqstService;
     private final DtlCdService dtlCdService;
 
     /**
@@ -59,32 +55,22 @@ public class UserReqstPageController
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_REQST.setAcsPageInfo(Constant.PAGE_REG));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 빈 객체 주입 (freemarker error prevention)
-            model.addAttribute("user", new UserDto());
-            // 등록/수정 화면 플래그 세팅
-            model.addAttribute(Constant.IS_REG, true);
-            // 코드 정보 모델에 추가
-            dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
-            dtlCdService.setCdListToModel(Constant.CMPY_CD, model);
-            dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
-            dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
-            dtlCdService.setCdListToModel(Constant.RANK_CD, model);
+        // 빈 객체 주입 (freemarker error prevention)
+        model.addAttribute("user", new UserDto());
+        // 등록/수정 화면 플래그 세팅
+        model.addAttribute(Constant.IS_REG, true);
+        // 코드 정보 모델에 추가
+        dtlCdService.setCdListToModel(Constant.AUTH_CD, model);
+        dtlCdService.setCdListToModel(Constant.CMPY_CD, model);
+        dtlCdService.setCdListToModel(Constant.TEAM_CD, model);
+        dtlCdService.setCdListToModel(Constant.EMPLYM_CD, model);
+        dtlCdService.setCdListToModel(Constant.RANK_CD, model);
 
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, baseUrl);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
-        }
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/user/reqst/user_reqst_form";
     }

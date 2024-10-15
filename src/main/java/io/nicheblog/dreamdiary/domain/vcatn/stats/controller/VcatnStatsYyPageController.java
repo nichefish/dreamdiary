@@ -3,12 +3,10 @@ package io.nicheblog.dreamdiary.domain.vcatn.stats.controller;
 import io.nicheblog.dreamdiary.domain.admin.menu.SiteMenu;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.service.VcatnPaprService;
 import io.nicheblog.dreamdiary.domain.vcatn.stats.model.VcatnStatsYyDto;
-import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsService;
 import io.nicheblog.dreamdiary.domain.vcatn.stats.service.VcatnStatsYyService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
-import io.nicheblog.dreamdiary.global._common.log.actvty.event.LogActvtyEvent;
 import io.nicheblog.dreamdiary.global._common.log.actvty.model.LogActvtyParam;
 import io.nicheblog.dreamdiary.global.intrfc.controller.impl.BaseControllerImpl;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
 
 /**
  * VcatnStatsYyPageController
@@ -45,7 +42,6 @@ public class VcatnStatsYyPageController
     private final ActvtyCtgr actvtyCtgr = ActvtyCtgr.VCATN_STATS;      // 작업 카테고리 (로그 적재용)
 
     private final VcatnPaprService vcatnPaprService;
-    private final VcatnStatsService vcatnStatsService;
     private final VcatnStatsYyService vcatnStatsYyService;
 
     /**
@@ -63,41 +59,31 @@ public class VcatnStatsYyPageController
             final @RequestParam("statsYy") @Nullable String yyStrParam,
             final LogActvtyParam logParam,
             final ModelMap model
-    ) throws IOException {
+    ) throws Exception {
 
         /* 사이트 메뉴 설정 */
         model.addAttribute(Constant.SITE_MENU, SiteMenu.VCATN_STATS.setAcsPageInfo(Constant.PAGE_CAL));
 
-        boolean isSuccess = false;
-        String rsltMsg = "";
-        try {
-            // 휴가계획서 년도 정보 조회 (시작일자~종료일자 정보)
-            VcatnStatsYyDto statsYy = null;
-            String yyStr = yyStrParam;
-            if (StringUtils.isEmpty(yyStrParam)) {
-                statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
-                yyStr = statsYy.getStatsYy();
-            }
-            if (statsYy == null) statsYy = vcatnStatsYyService.getVcatnYyDtDto(yyStr);
-            model.addAttribute("vcatnYy", statsYy);
-            // 휴가계획서 최저년도~올해 년도 (year) 목록 조회
-            model.addAttribute("yyList", vcatnPaprService.getVcatnYyList());
-            // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
-            // List<VcatnStatsDto> statsList = vcatnStatsServicea.getVcatnStatsList(statsYy);
-            // model.addAttribute("statsList", statsList);
-
-            isSuccess = true;
-            rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
-        } catch (Exception e) {
-            isSuccess = false;
-            rsltMsg = MessageUtils.getExceptionMsg(e);
-            logParam.setExceptionInfo(e);
-            MessageUtils.alertMessage(rsltMsg, Url.ADMIN_MAIN);
-        } finally {
-            // 로그 관련 세팅
-            logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);
-            publisher.publishEvent(new LogActvtyEvent(this, logParam));
+        // 휴가계획서 년도 정보 조회 (시작일자~종료일자 정보)
+        VcatnStatsYyDto statsYy = null;
+        String yyStr = yyStrParam;
+        if (StringUtils.isEmpty(yyStrParam)) {
+            statsYy = vcatnStatsYyService.getCurrVcatnYyDt();
+            yyStr = statsYy.getStatsYy();
         }
+        if (statsYy == null) statsYy = vcatnStatsYyService.getVcatnYyDtDto(yyStr);
+        model.addAttribute("vcatnYy", statsYy);
+        // 휴가계획서 최저년도~올해 년도 (year) 목록 조회
+        model.addAttribute("yyList", vcatnPaprService.getVcatnYyList());
+        // 해당년도에 근무이력이 있는(중도퇴사 포함) 모든 직원(재직+프리랜서) 전원에 대하여 산정
+        // List<VcatnStatsDto> statsList = vcatnStatsServicea.getVcatnStatsList(statsYy);
+        // model.addAttribute("statsList", statsList);
+
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+
+        // 로그 관련 세팅
+        logParam.setResult(isSuccess, rsltMsg);
 
         return "/view/domain/vcatn/stats/vcatn_stats";
     }
