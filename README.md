@@ -17,8 +17,10 @@
 * Java 11
   * Spring Boot (2.7.18) 
   * Spring Security
+  * Spring AOP
   * Lombok
   * Mapstruct
+  * EhCache
 * Gradle
 * MariaDB
 * Spring Data JPA / MyBatis (혼용)
@@ -36,7 +38,6 @@
 - 태그, 단락, 열람자 등의 공통 기능 모듈화 및 인터페이스, 합성(composition)을 통한 손쉬운 기능 확장
 - AOP를 이용한 비즈니스 로직과 공통 처리 로직 분리
 - 즉각 응답이 필요하지 않은 요소들에 대한 이벤트 기반 처리, Queue 기반 순차적 처리
-- 노출식 모듈 패턴을 활용한 자바스크립트 함수 모듈화
 - 메모리 캐시 적용을 통한 데이터 조회 성능 향상
 #### 3. 프론트엔드 개발
 - Javascript, FreeMarker, handlebars.js, CSS를 이용한 사용자 인터페이스 구현 (서버사이드 렌더링)
