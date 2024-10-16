@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class UserReqstDto
         extends UserDto {
 
