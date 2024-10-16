@@ -19,9 +19,12 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * ExptrPrsnlPaprService
@@ -61,7 +64,6 @@ public class ExptrPrsnlPaprService
         int i = 0;
         for (ExptrPrsnlPaprEntity entity : entityPage.getContent()) {
             ExptrPrsnlPaprDto.LIST listDto = mapstruct.toListDto(entity);
-            List<ExptrPrsnlItemEntity> itemList = entity.getItemList();
             listDto.setRnum(CmmUtils.getPageRnum(entityPage, i));
             dtoList.add(listDto);
             i++;
@@ -75,6 +77,7 @@ public class ExptrPrsnlPaprService
      * @return {@link Map} -- 결과 맵
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public Map<String, Object> exptrPrsnlExistingChck() throws Exception {
         String userId = Objects.requireNonNull(AuthUtils.getAuthenticatedUser())
                                .getUserId();
@@ -99,6 +102,7 @@ public class ExptrPrsnlPaprService
      * @return {@link ExptrPrsnlPaprDto} -- 경비지출서 정보 조회
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public ExptrPrsnlPaprDto exptrPrsnlYyMnthChck(final Integer yy, final Integer mnth) throws Exception {
         String userId = Objects.requireNonNull(AuthUtils.getAuthenticatedUser())
                                .getUserId();
@@ -140,14 +144,13 @@ public class ExptrPrsnlPaprService
      * @return {@link List} -- 경비지출서가 존재하는 연도 목록 (List<String>)
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public List<String> getExptrPrsnlYyList() throws Exception {
         String minYyStr = repository.selectMinYy();
         int minYy = (minYyStr != null) ? Integer.parseInt(minYyStr) : DateUtils.getCurrYy();
-        List<String> yyList = new ArrayList<>();
-        int currYy = DateUtils.getCurrYy();
-        for (int yy = minYy - 1; yy <= currYy; yy++) {     // 최저년도~현재년도. 현재년도는 항상 들어가도록
-            yyList.add(Integer.toString(yy));
-        }
+        List<String> yyList = IntStream.rangeClosed(minYy, DateUtils.getCurrYy())
+                .mapToObj(String::valueOf)
+                .collect(Collectors.toList());
         return yyList;
     }
 
@@ -158,6 +161,7 @@ public class ExptrPrsnlPaprService
      * @return {@link List} -- 경비지출서 영수증 이미지 파일 목록
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public List<AtchFileDtlDto> getExptrPrsnlRciptList(final Integer key) throws Exception {
         // Entity 레벨 조회
         ExptrPrsnlPaprEntity exptrEntity = this.getDtlEntity(key);

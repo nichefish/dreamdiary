@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -139,6 +140,7 @@ public class UserService
     /**
      * 사용자 관리 > 사용자 비밀번호 초기화
      */
+    @Transactional
     public Boolean passwordReset(final Integer userNo) throws Exception {
         // Entity 레벨 조회
         final UserEntity rsUserEntity = this.getDtlEntity(userNo);
@@ -173,6 +175,7 @@ public class UserService
      * 사용자 관리 > 사용자 수정
      */
     @Override
+    @Transactional
     public UserDto.DTL modify(final UserDto.DTL userDto) throws Exception {
         final UserEntity userEntity = this.getDtlEntity(userDto);
         mapstruct.updateFromDto(userDto, userEntity);
@@ -221,6 +224,7 @@ public class UserService
     /**
      * 사용자 정보 잠금
      */
+    @Transactional
     public Boolean userLock(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
         UserEntity rsEntity = this.getDtlEntity(userProflNo);
@@ -235,6 +239,7 @@ public class UserService
     /**
      * 사용자 정보 잠금 해제
      */
+    @Transactional
     public Boolean userUnlock(final Integer userProflNo) throws Exception {
         // Entity 레벨 조회
         UserEntity rsEntity = this.getDtlEntity(userProflNo);

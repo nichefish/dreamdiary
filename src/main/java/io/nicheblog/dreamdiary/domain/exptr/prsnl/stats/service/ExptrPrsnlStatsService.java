@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -80,6 +81,7 @@ public class ExptrPrsnlStatsService {
      * @return {@link Boolean} -- 처리 성공 여부
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public Boolean exptrPrsnlStatsCompt(final Integer key) throws Exception {
         // Entity 레벨 조회
         ExptrPrsnlPaprEntity exptrEntity = exptrPrsnlPaprService.getDtlEntity(key);

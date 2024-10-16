@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileWriter;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ public class TagCtgrSynchronizer {
     /**
      * 태그 조회해서 파일 생성
      */
+    @Transactional(readOnly = true)
     public void tagSync() throws Exception {
 
         List<TagEntity> tagList = tagService.getListEntity(new HashMap<>());

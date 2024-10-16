@@ -15,8 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -65,9 +65,18 @@ public class TagService
      * @param contentType 조회할 컨텐츠 타입
      * @return {@link List} -- 컨텐츠 타입에 해당하는 태그 목록
      */
+    @Transactional(readOnly = true)
     public List<TagDto> getContentSpecificTagList(final ContentType contentType) {
         return this.getContentSpecificTagList(contentType.key);
     }
+    
+    /**
+     * 컨텐츠 타입에 해당하는 태그만 INNER-JOIN으로 조회
+     *
+     * @param contentType 조회할 컨텐츠 타입
+     * @return {@link List} -- 컨텐츠 타입에 해당하는 태그 목록
+     */
+    @Transactional(readOnly = true)
     public List<TagDto> getContentSpecificTagList(final String contentType) {
         final List<TagEntity> contentSpeficitTagList = repository.findAll(spec.getContentSpecificTag(contentType));
         return contentSpeficitTagList.stream()
@@ -88,6 +97,7 @@ public class TagService
      * @param contentType 조회할 컨텐츠 타입
      * @return {@link List} -- 컨텐츠 타입에 해당하는 태그 목록
      */
+    @Transactional(readOnly = true)
     public List<TagDto> getContentSpecificSizedTagList(final ContentType contentType) {
         final List<TagDto> tagList = this.getContentSpecificTagList(contentType);
 
@@ -116,6 +126,7 @@ public class TagService
      * @param searchParam 검색 파라미터
      * @return {@link List} -- 컨텐츠 타입에 해당하는 태그 목록
      */
+    @Transactional(readOnly = true)
     public List<TagDto> getOverallSizedTagList(TagSearchParam searchParam) throws Exception {
         final List<TagDto> tagList = this.getListDto(searchParam);
         final String refContentType = searchParam.getContentType();
@@ -156,6 +167,7 @@ public class TagService
      * @param contentType 조회할 컨텐츠 타입 (ContentType)
      * @return {@link Integer} -- 태그 목록에서 계산된 최대 사용 빈도 (Integer)
      */
+    @Transactional(readOnly = true)
     public Integer calcMaxSize(final List<TagDto> tagList, final String contentType) {
         int maxFrequency = 0;
         for (final TagDto tag : tagList) {
@@ -167,6 +179,14 @@ public class TagService
         return maxFrequency;
     }
 
+    /**
+     * 최대 사용빈도 계산한 태그 목록 조회
+     *
+     * @param tagNo 태그 번호
+     * @param contentType 조회할 컨텐츠 타입 (ContentType)
+     * @return {@link Integer} -- 태그 목록에서 계산된 최대 사용 빈도 (Integer)
+     */
+    @Transactional(readOnly = true)
     public Integer countTagSize(final Integer tagNo, final String contentType) {
         return repository.countTagSize(tagNo, contentType);
     }
@@ -215,6 +235,7 @@ public class TagService
      * @param clsfKey 복합키 정보
      * @return {@link List<TagEntity>} -- 저장된 태그 엔티티 목록
      */
+    @Transactional
     public List<TagEntity> addMasterTag(final List<TagDto> tagList, final BaseClsfKey clsfKey) {
 
         final List<TagEntity> tagEntityList = tagList.stream()
@@ -229,6 +250,7 @@ public class TagService
     /**
      * 컨텐츠-태그와 연관관계 없는 마스터 태그 삭제
      */
+    @Transactional
     public void deleteNoRefTags() {
         final List<TagEntity> entity = repository.findAll(spec.getNoRefTags());
         repository.deleteAll(entity);

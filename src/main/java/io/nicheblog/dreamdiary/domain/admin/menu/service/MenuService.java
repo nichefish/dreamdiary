@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +65,7 @@ public class MenuService
      * @return {@link Page} 메인 메뉴 목록
      * @throws Exception 목록 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public Page<MenuDto> getMainMenuList(
             final BaseSearchParam searchParam,
             final PageRequest pageRequest
@@ -82,6 +84,7 @@ public class MenuService
      * @return {@link List} 사용 가능한 포털 사이드바 메뉴 목록
      * @throws Exception 목록 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public List<MenuDto> getUserMenuList() throws Exception {
         final Map<String, Object> searchParamMap = CmmUtils.convertToMap(MenuSearchParam.builder()
                 .menuTyCd(Constant.MENU_TY_MAIN)
@@ -97,6 +100,7 @@ public class MenuService
      * @return {@link Page} 관리자 메인 메뉴 목록을 담고 있는 페이지 객체
      * @throws Exception 목록 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public Page<MenuDto> getMngrMenuList() throws Exception {
         final Map<String, Object> searchParamMap = new HashMap<>() {{
             put("menuTyCd", "main");

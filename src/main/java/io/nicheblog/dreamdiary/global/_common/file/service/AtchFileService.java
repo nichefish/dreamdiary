@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.global._common.file.model.AtchFileDto;
 import io.nicheblog.dreamdiary.global._common.file.repository.jpa.AtchFileRepository;
 import io.nicheblog.dreamdiary.global._common.file.spec.AtchFileSpec;
 import io.nicheblog.dreamdiary.global.intrfc.service.BaseCrudService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,20 +23,10 @@ import org.springframework.stereotype.Service;
 public class AtchFileService
         implements BaseCrudService<AtchFileDto, AtchFileDto, Integer, AtchFileEntity, AtchFileRepository, AtchFileSpec, AtchFileMapstruct> {
 
-    private final AtchFileRepository atchFileRepository;
-    private final AtchFileSpec atchFileSpec;
-    private final AtchFileMapstruct atchFileMapstruct = AtchFileMapstruct.INSTANCE;
-
-    @Override
-    public AtchFileRepository getRepository() {
-        return this.atchFileRepository;
-    }
-    @Override
-    public AtchFileSpec getSpec() {
-        return this.atchFileSpec;
-    }
-    @Override
-    public AtchFileMapstruct getMapstruct() {
-        return this.atchFileMapstruct;
-    }
+    @Getter
+    private final AtchFileRepository repository;
+    @Getter
+    private final AtchFileSpec spec;
+    @Getter
+    private final AtchFileMapstruct mapstruct = AtchFileMapstruct.INSTANCE;
 }

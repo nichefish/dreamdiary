@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ public class ManagtrService {
      * @param refKey 글 번호와 컨텐츠 타입을 포함하는 참조 복합키 객체
      * @return {@link Boolean} -- 사용자가 이미 방문했으면 true, 그렇지 않으면 false
      */
+    @Transactional(readOnly = true)
     public Boolean hasAlreadyVisited(final BaseClsfKey refKey) {
         Map<String, Object> searchParamMap = new HashedMap<>() {{
             put("regstrId", AuthUtils.getLgnUserId());
@@ -51,6 +53,7 @@ public class ManagtrService {
      *
      * @param refKey 글 번호와 컨텐츠 타입을 포함하는 참조 복합키 객체
      */
+    @Transactional
     public void addManagtr(final BaseClsfKey refKey) {
         if (this.hasAlreadyVisited(refKey)) return;
         

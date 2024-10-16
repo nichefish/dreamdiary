@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,6 +97,7 @@ public class BoardPostService
      * @param key 글 번호와 컨텐츠 타입을 포함하는 복합키 객체
      */
     @Override
+    @Transactional(readOnly = true)
     public BoardPostDto.DTL getDtlDto(final BaseClsfKey key) throws Exception {
         BoardPostEntity rsEntity = this.getDtlEntity(key);       // Entity 레벨 조회
         BoardPostDto.DTL rsDto = mapstruct.toDto(rsEntity);

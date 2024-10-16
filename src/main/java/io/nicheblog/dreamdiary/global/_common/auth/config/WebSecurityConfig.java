@@ -90,11 +90,6 @@ public class WebSecurityConfig {
         @Override
         public void configure(WebSecurity web) throws Exception {
 
-            // 운영 환경이 아닐 시 디버그 모드 활성화
-            if (!activeProfile.isProd()) {
-                web.debug(true);  // 디버그 모드 활성화
-            }
-
             web.ignoring()
                     // 세션 만료 처리 URL
                     .antMatchers(Url.AUTH_EXPIRE_SESSION_AJAX)

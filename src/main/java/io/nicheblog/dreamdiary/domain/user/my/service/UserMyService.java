@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
@@ -39,6 +40,7 @@ public class UserMyService {
      * @return 비밀번호 변경 성공 여부 (boolean)
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public Boolean lgnPwChg(final UserPwChgParam param) throws Exception {
         final String userId = param.getUserId();
         final String currPw = param.getCurrPw();
@@ -80,6 +82,7 @@ public class UserMyService {
      * @return 내 비밀번호 변경 성공 여부 (boolean)
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public Boolean myPwChg(final String lgnUserId, final String currPw, final String newPw) throws Exception {
         // Entity 레벨 조회
         final UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
@@ -103,6 +106,7 @@ public class UserMyService {
      * @return 프로필 이미지 업로드 성공 여부 (boolean)
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public boolean uploadProflImg(final MultipartHttpServletRequest request) throws Exception {
         // 파일 영역 처리 후 업로드 정보 받아서 반환
         final AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
@@ -128,6 +132,7 @@ public class UserMyService {
      * @return 프로필 이미지 삭제 성공 여부 (boolean)
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public boolean removeProflImg() throws Exception {
         // 프로필 url 삭제
         final String lgnUserId = AuthUtils.getLgnUserId();

@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -90,6 +91,7 @@ public class SchdulService
      * Clears Cache : hldyEntityList, isHldy, isHldyOrWeekend
      */
     @Override
+    @Transactional
     @CacheEvict(value = {"hldyEntityList", "isHldy", "isHldyOrWeekend"}, allEntries = true)
     public SchdulDto modify(final SchdulDto schdulDto) throws Exception {
         // 수정 전처리

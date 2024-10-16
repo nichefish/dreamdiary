@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -100,6 +101,7 @@ public class VcatnPaprService
     /**
      * 일정 > 휴가계획서 > 휴가계획서 상세보기 > 확인 여부 변경
      */
+    @Transactional
     public VcatnPaprDto cf(final Integer key) throws Exception {
         VcatnPaprEntity vcatnPaprEntity = this.getDtlEntity(key);
         vcatnPaprEntity.setCfYn("Y");

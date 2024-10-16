@@ -6,6 +6,7 @@ import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.repository.jpa.ExptrPrsnl
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class ExptrPrsnlItemService {
      * @param atchFileDtlNo 첨부파일 상세 번호 (Integer)
      * @return {@link Boolean} -- 업데이트 성공 여부
      */
+    @Transactional
     public Boolean updateRciptFile(final Integer exptrPrsnlItemNo, final Integer atchFileDtlNo) {
         exptrPrsnlPaprRepository.updateRciptFile(exptrPrsnlItemNo, atchFileDtlNo);
         return true;
@@ -48,6 +50,7 @@ public class ExptrPrsnlItemService {
      * @return {@link Boolean} -- 업데이트 성공 여부
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public Boolean updtOrgnlRciptYn(final Integer key, final Integer exptrPrsnlItemNo, final String orgnlRciptYn) throws Exception {
         // Entity 레벨 조회
         ExptrPrsnlPaprEntity exptrEntity = exptrPrsnlPaprService.getDtlEntity(key);
@@ -77,6 +80,7 @@ public class ExptrPrsnlItemService {
      * @return {@link Boolean} -- 처리 성공 여부
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public Boolean exptrPrsnlItemRject(final Integer key, final Integer exptrPrsnlItemNo, final String rjectYn, final String rjectResn) throws Exception {
         // Entity 레벨 조회
         ExptrPrsnlPaprEntity exptrEntity = exptrPrsnlPaprService.getDtlEntity(key);

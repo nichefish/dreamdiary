@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class ContentTagService
      * @param clsfKey 참조 복합키 정보 (BaseClsfKey)
      * @return {@link List} -- 태그 목록
      */
+    @Transactional(readOnly = true)
     public List<TagDto> getTagStrListByClsfKey(final BaseClsfKey clsfKey) {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("refPostNo", clsfKey.getPostNo());
@@ -69,8 +71,8 @@ public class ContentTagService
      * @param clsfKey 참조 복합키 정보 (BaseClsfKey)
      * @param obsoleteTagList 삭제할 태그 목록
      * @throws Exception 처리 중 발생할 수 있는 예외
-     *
      */
+    @Transactional
     public void delObsoleteContentTags(final BaseClsfKey clsfKey, final List<TagDto> obsoleteTagList) throws Exception {
         obsoleteTagList.forEach(tag -> {
             repository.deleteObsoleteContentTags(clsfKey.getPostNo(), clsfKey.getContentType(), tag.getTagNm(), tag.getCtgr());
@@ -84,6 +86,7 @@ public class ContentTagService
      * @param rsList 처리할 태그 엔티티 목록 (List<TagEntity>)
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public void addContentTags(final BaseClsfKey clsfKey, final List<TagEntity> rsList) throws Exception {
         List<ContentTagEntity> contentTagList = rsList.stream()
                 .map(tag -> new ContentTagEntity(tag.getTagNo(), clsfKey))
@@ -114,6 +117,7 @@ public class ContentTagService
      * @param clsfKey 참조 복합키 정보 (BaseClsfKey)
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public void delExistingContentTags(final BaseClsfKey clsfKey) throws Exception {
         // 2. 글번호 + 태그번호를 받아와서 기존 태그 목록 조회
         Map<String, Object> searchParamMap = new HashMap(){{

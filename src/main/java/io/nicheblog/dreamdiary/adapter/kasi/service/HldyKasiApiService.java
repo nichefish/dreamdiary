@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,6 +44,26 @@ public class HldyKasiApiService {
     private String serviceKey;
     @Value("${api.kasi.api-url}")
     private String serviceUrl;
+
+    /**
+     * API로 받아온 휴일 정보를 DB에서 삭제 후 재등록
+     * <pre>
+         * 1. 기존 데이터 삭제
+         * 2. 새로운 휴일 정보를 API에서 조회
+         * 3. 조회된 데이터를 DB에 저장
+     * </pre>
+     *
+     * @param yyStr 조회 및 처리할 연도 (String) - 없으면 현재 연도를 사용
+     * @return {@link Boolean} -- 성공적으로 처리된 경우 true
+     * @throws Exception 처리 중 발생할 수 있는 예외
+     */
+    @Transactional
+    public Boolean procHldyList(final String yyStr) throws Exception {
+        // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
+        this.delHldyList(yyStr);
+        List<HldyKasiApiItemDto> hldyApiList = this.getHldyList(yyStr);
+        return this.regHldyList(hldyApiList);
+    }
 
     /**
      * API:: 한국천문연구원(KASI):: 휴일 정보 조회

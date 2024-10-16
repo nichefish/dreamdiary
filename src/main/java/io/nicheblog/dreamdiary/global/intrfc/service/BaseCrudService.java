@@ -67,14 +67,14 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
         this.preRegist(dto);
 
         // Dto -> Entity 변환
-        Mapstruct mapstruct = this.getMapstruct();
-        Entity entity = mapstruct.toEntity(dto);
+        final Mapstruct mapstruct = this.getMapstruct();
+        final Entity entity = mapstruct.toEntity(dto);
 
         // 등록 중간처리
         this.midRegist(entity);
 
         // insert
-        Entity rslt = this.updt(entity);
+        final Entity rslt = this.updt(entity);
 
         // 등록 후처리
         this.postRegist(rslt);
@@ -90,8 +90,8 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
      */
     @Transactional
     default boolean registAll(final List<Entity> entityList) {
-        Repository repository = this.getRepository();
-        List<Entity> rsEntityList = repository.saveAllAndFlush(entityList);
+        final Repository repository = this.getRepository();
+        final List<Entity> rsEntityList = repository.saveAllAndFlush(entityList);
 
         // 벌크 등록 후처리
         this.postRegistAll(rsEntityList);
@@ -150,16 +150,16 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
         this.preModify(dto);
 
         // Entity 레벨 조회
-        Mapstruct mapstruct = this.getMapstruct();
-        Entity entity = this.getDtlEntity(dto);
+        final Mapstruct mapstruct = this.getMapstruct();
+        final Entity entity = this.getDtlEntity(dto);
         mapstruct.updateFromDto(dto, entity);
 
         // 수정 중간처리
         this.midModify(entity);
 
         // update
-        Repository repository = this.getRepository();
-        Entity rslt = repository.saveAndFlush(entity);
+        final Repository repository = this.getRepository();
+        final Entity rslt = repository.saveAndFlush(entity);
 
         // 수정 후처리
         this.postModify(rslt);
@@ -175,8 +175,8 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
      */
     @Transactional
     default Entity updt(final Entity e) {
-        Repository repository = this.getRepository();
-        Entity rslt = repository.saveAndFlush(e);
+        final Repository repository = this.getRepository();
+        final Entity rslt = repository.saveAndFlush(e);
         try {
             repository.refresh(rslt);
         } catch (EntityNotFoundException ex) {
@@ -215,9 +215,10 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
      * @return Boolean - 삭제 성공시 true, 실패 시 false
      * @throws Exception 삭제 중 발생할 수 있는 예외
      */
+    @Transactional
     default Boolean delete(final Key key) throws Exception {
-        Repository repository = this.getRepository();
-        Entity e = this.getDtlEntity(key);
+        final Repository repository = this.getRepository();
+        final Entity e = this.getDtlEntity(key);
         if (e == null) return false;
 
         this.preDelete(e);
@@ -245,8 +246,9 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
      * @param entityList - 삭제할 엔티티 리스트
      * @return Boolean - 삭제 성공시 true
      */
+    @Transactional
     default boolean deleteAll(final List<Entity> entityList) {
-        Repository repository = this.getRepository();
+        final Repository repository = this.getRepository();
         repository.deleteAll(entityList);
         return true;
     }
@@ -258,9 +260,10 @@ public interface BaseCrudService<Dto extends BaseCrudDto & Identifiable<Key>, Li
      * @return Boolean - 삭제 성공시 true
      * @throws Exception 삭제 중 발생할 수 있는 예외
      */
+    @Transactional
     default boolean deleteAll(final Map<String, Object> searchParamMap) throws Exception {
-        List<Entity> entityList = this.getListEntity(searchParamMap);
-        Repository repository = this.getRepository();
+        final List<Entity> entityList = this.getListEntity(searchParamMap);
+        final Repository repository = this.getRepository();
         repository.deleteAll(entityList);
 
         // 벌크 삭제 후처리

@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -39,6 +40,7 @@ public class VcatnStatsYyService {
      * @return {@link Boolean} -- 등록 성공 여부
      * @throws Exception 등록 중 발생할 수 있는 예외
      */
+    @Transactional
     public Boolean regVcatnYyDt() throws Exception {
         // 매년 1월1일에 다음단위(0301~0228)것 등록
         final String yyStr = DateUtils.getCurrYyStr();
@@ -71,6 +73,7 @@ public class VcatnStatsYyService {
      * @return {@link VcatnStatsYyDto} -- 휴가 기준 년도 객체
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public VcatnStatsYyDto getVcatnYyDtDto(final String yyStr) throws Exception {
         if (StringUtils.isEmpty(yyStr)) return this.getCurrVcatnYyDt();
         return VcatnStatsYyMapstruct.INSTANCE.toDto(this.getVcatnYyDtEntity(yyStr));
@@ -97,6 +100,7 @@ public class VcatnStatsYyService {
      * @return {@link VcatnStatsYyDto} -- 오늘 날짜가 속한 VcatnStatsYyDto 객체
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public VcatnStatsYyDto getCurrVcatnYyDt() throws Exception {
         final Map<String, Object> searchParamMap = new HashMap<>() {{
             put("today", DateUtils.getCurrDate());

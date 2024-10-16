@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Optional;
@@ -43,6 +44,7 @@ public class AuthService
      */
     @SneakyThrows
     @Override
+    @Transactional(readOnly = true)
     public AuthInfo loadUserByUsername(final String userId) throws UsernameNotFoundException {
         Optional<UserEntity> rsWrapper = userRepository.findByUserId(userId);
         if (rsWrapper.isEmpty()) throw new UsernameNotFoundException("사용자 정보를 찾을 수 없습니다.");
@@ -64,6 +66,7 @@ public class AuthService
      * @param userId 로그인 실패한 사용자 ID
      * @return {@link Integer} -- 업데이트된 로그인 실패 횟수
      */
+    @Transactional
     public Integer applyLgnFailCnt(final String userId) {
         // ID로 사용자 정보 조회
         Optional<UserEntity> userEntityWrapper = userRepository.findByUserId(userId);
@@ -83,6 +86,7 @@ public class AuthService
      *
      * @param userId 계정을 잠글 사용자 ID
      */
+    @Transactional
     public void lockAccount(final String userId) {
         // ID로 사용자 정보 조회
         Optional<UserEntity> userEntityWrapper = userRepository.findByUserId(userId);
@@ -97,6 +101,7 @@ public class AuthService
      *
      * @param userId 처리할 사용자 ID
      */
+    @Transactional
     public void setLstLgnDt(final String userId) {
         // ID로 사용자 정보 조회
         Optional<UserEntity> userEntityWrapper = userRepository.findByUserId(userId);

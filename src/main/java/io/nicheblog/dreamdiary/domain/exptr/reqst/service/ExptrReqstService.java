@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * ExptrReqstService
@@ -39,6 +40,7 @@ public class ExptrReqstService
      * @return {@link ExptrReqstDto.DTL} -- 처리 결과
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public ExptrReqstDto.DTL cf(final Integer key) throws Exception {
         // Entity 레벨 조회
         ExptrReqstEntity entity = this.getDtlEntity(key);
@@ -57,6 +59,7 @@ public class ExptrReqstService
      * @return {@link ExptrReqstDto.DTL} -- 처리 결과
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public ExptrReqstDto.DTL dismiss(final Integer key) throws Exception {
         // Entity 레벨 조회
         ExptrReqstEntity entity = this.getDtlEntity(key);

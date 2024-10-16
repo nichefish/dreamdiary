@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
+import io.nicheblog.dreamdiary.global._common.file.exception.AtchFileUploadException;
 import io.nicheblog.dreamdiary.global._common.file.utils.FileUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseAtchEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseCrudMapstruct;
@@ -33,9 +34,13 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
      */
     @Transactional
     default Dto regist(final Dto dto, final MultipartHttpServletRequest request) throws Exception {
-        // 파일 영역 처리
-        Integer atchFileNo = dto.getAtchFileNo();
-        dto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
+        try {
+            // 파일 영역 처리
+            final Integer atchFileNo = dto.getAtchFileNo();
+            dto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
+        } catch (Exception e) {
+            throw new AtchFileUploadException("파일 업로드 중 오류가 발생했습니다.", e);
+        }
         // 나머지 처리
         return this.regist(dto);
     }
@@ -50,9 +55,13 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
      */
     @Transactional
     default Dto modify(final Dto dto, final MultipartHttpServletRequest request) throws Exception {
-        // 파일 영역 처리
-        Integer atchFileNo = dto.getAtchFileNo();
-        dto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
+        try {
+            // 파일 영역 처리
+            final Integer atchFileNo = dto.getAtchFileNo();
+            dto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
+        } catch (Exception e) {
+            throw new AtchFileUploadException("파일 업로드 중 오류가 발생했습니다.", e);
+        }
         // 나머지 처리
         return this.modify(dto);
     }

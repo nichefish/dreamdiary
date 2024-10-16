@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.global.intrfc.service;
 
+import io.nicheblog.dreamdiary.domain.board.post.entity.BoardPostEntity;
+import io.nicheblog.dreamdiary.domain.board.post.model.BoardPostDto;
 import io.nicheblog.dreamdiary.global._common.auth.util.AuthUtils;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BasePostEntity;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseClsfMapstruct;
@@ -8,8 +10,10 @@ import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import io.nicheblog.dreamdiary.global.intrfc.repository.BaseStreamRepository;
 import io.nicheblog.dreamdiary.global.intrfc.spec.BaseSpec;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +35,7 @@ public interface BasePostService<Dto extends BasePostDto & Identifiable<Key>, Li
      * @return List<ListDto> -- 상단 고정 항목 목록
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     default List<ListDto> getFxdList() throws Exception {
         Map<String, Object> searchParamMap = new HashMap<>() {{
             put("fxdYn", "Y");
@@ -44,6 +49,7 @@ public interface BasePostService<Dto extends BasePostDto & Identifiable<Key>, Li
      * @param key 조회수를 증가시킬 항목의 키
      * @throws Exception 조회수 증가 중 발생할 수 있는 예외
      */
+    @Transactional
     default void hitCntUp(final Key key) throws Exception {
         Entity e = this.getDtlEntity(key);
         String lgnUserId = AuthUtils.getLgnUserId();

@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class DtlCdService
      * @param clCd 분류 코드
      * @return {@link List} -- 상세 코드 목록 (entity level)
      */
+    @Transactional(readOnly = true)
     @Cacheable(cacheNames = "cdEntityListByClCd", key = "#clCd", condition = "#clCd!=null")
     public List<DtlCdEntity> getCdEntityListByClCd(final String clCd) throws Exception {
         if (StringUtils.isEmpty(clCd)) return null;
@@ -73,6 +75,7 @@ public class DtlCdService
      * @return {@link List} -- 상세 코드 목록 (dto level)
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     @Cacheable(cacheNames = "cdDtoListByClCd", key = "#clCd", condition = "#clCd!=null")
     public List<DtlCdDto> getCdDtoListByClCd(final String clCd) throws Exception {
         if (StringUtils.isEmpty(clCd)) return null;
@@ -94,6 +97,7 @@ public class DtlCdService
      * @param dtlCd 상세 코드 (String)
      * @return {@link String} -- 상세 코드명
      */
+    @Transactional(readOnly = true)
     public String getDtlCdNm(final String clCd, final String dtlCd) {
         if (StringUtils.isEmpty(clCd) || StringUtils.isEmpty(dtlCd)) return null;
         final DtlCdEntity rsDtlCd = repository.findByClCdAndDtlCd(clCd, dtlCd);

@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -37,6 +38,7 @@ public class LogStatsUserService {
      * @return {@link List} -- 조회된 로그 통계 목록
      * @throws Exception 검색 및 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public List<LogStatsUserIntrfc> getStatsUserIntrfcList(
             final Map<String, Object> searchParamMap,
             final Pageable pageable
@@ -56,6 +58,7 @@ public class LogStatsUserService {
      * @return {@link List} -- 조회된 활동 로그 목록
      * @throws Exception 검색 및 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public List<LogStatsUserDto> logStatsUserDtoList(
             final BaseSearchParam searchParam,
             final Pageable pageable
@@ -83,6 +86,7 @@ public class LogStatsUserService {
      * @return {@link List<LogStatsUserIntrfc>} 검색된 통계 목록
      * @throws Exception 검색 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public List<LogStatsUserIntrfc> getStatsNotUserIntrfcList(final Map<String, Object> searchParamMap, final Pageable pageable) throws Exception {
         // 목록 검색 (기본 조건 :: 당일 시작 ~ 당일 끝)
         if (!searchParamMap.containsKey("searchStartDt")) searchParamMap.put("searchStartDt", DateUtils.getCurrDateStr(DatePtn.DATE));
@@ -99,6 +103,7 @@ public class LogStatsUserService {
      * @return {@link List<LogStatsUserIntrfc>} 검색된 통계 목록
      * @throws Exception 검색 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     public List<LogStatsUserDto> logStatsNotUserDtoList(final BaseSearchParam searchParam, final Pageable pageable) throws Exception {
         final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
         final List<LogStatsUserIntrfc> intrfcList = this.getStatsNotUserIntrfcList(searchParamMap, pageable);

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class ViewerService {
      * @param refKey 글 번호와 컨텐츠 타입을 포함하는 참조 복합키 객체
      * @return 이미 방문한 경우 true, 그렇지 않은 경우 false
      */
+    @Transactional(readOnly = true)
     public Boolean hasAlreadyVisited(final BaseClsfKey refKey) {
         Map<String, Object> searchParamMap = new HashedMap<>() {{
             put("regstrId", AuthUtils.getLgnUserId());
@@ -49,6 +51,7 @@ public class ViewerService {
      * 
      * @param refKey 글 번호와 컨텐츠 타입을 포함하는 참조 복합키 객체
      */
+    @Transactional
     public void addViewer(final BaseClsfKey refKey) {
         if (this.hasAlreadyVisited(refKey)) return;
         

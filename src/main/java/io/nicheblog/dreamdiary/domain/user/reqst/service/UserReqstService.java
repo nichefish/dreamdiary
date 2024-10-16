@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class UserReqstService {
      * @return {@link UserReqstDto} -- 성공 결과 객체
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public UserReqstDto regist(final UserReqstDto userReqstDto) throws Exception {
         // 전처리 (메소드 분리)
         this.preRegist(userReqstDto);
@@ -77,6 +79,7 @@ public class UserReqstService {
      * @return {@link Boolean} 처리 성공 여부
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public Boolean cf(final Integer userNo) throws Exception {
         // Entity 레벨 조회
         UserEntity rsEntity = userService.getDtlEntity(userNo);
@@ -96,6 +99,7 @@ public class UserReqstService {
      * @return {@link Boolean} 처리 성공 여부
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public Boolean uncf(final Integer userNo) throws Exception {
         // Entity 레벨 조회
         UserEntity rsEntity = userService.getDtlEntity(userNo);

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class LgnPolicyService {
      * @return {@link LgnPolicyDto} -- 로그인 설정 정보
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
+    @Transactional(readOnly = true)
     @Cacheable(value = "lgnPolicy")   // 항목이 한 개 고정일 경우 Cache의 key는 불필요하다.
     public LgnPolicyDto getDtlDto() throws Exception {
         // entity level
@@ -48,6 +50,7 @@ public class LgnPolicyService {
      * @return {@link LgnPolicyEntity} -- 로그인 설정 엔티티
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
+    @Transactional
     @Cacheable(value = "lgnPolicyEntity")   // 항목이 한 개 고정일 경우 Cache의 key는 불필요하다.
     public LgnPolicyEntity getDtlEntity() throws Exception {
         final Optional<LgnPolicyEntity> rsWrapper = repository.findById(1);
@@ -66,6 +69,7 @@ public class LgnPolicyService {
      * @return {@link Boolean} -- 성공 여부를 나타내는 Boolean 값
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     @CacheEvict(value = {"lgnPolicyEntity", "lgnPolicy"}, allEntries = true)
     public Boolean regist(final LgnPolicyDto LgnPolicyDto) throws Exception {
         // Dto -> Entity 변환

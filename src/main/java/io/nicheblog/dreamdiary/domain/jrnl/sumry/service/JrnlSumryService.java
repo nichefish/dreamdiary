@@ -19,6 +19,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,7 @@ public class JrnlSumryService
      * @return {@link Boolean} -- 결산 생성 성공 여부 (항상 true 반환)
      * @throws Exception 결산 생성 중 발생할 수 있는 예외
      */
+    @Transactional
     @Caching(evict = {
             @CacheEvict(value={"jrnlTotalSumry", "jrnlSumryList"}, allEntries = true),
             @CacheEvict(value="jrnlSumryDtlByYy", key="#rslt.getYy()")
@@ -98,6 +100,7 @@ public class JrnlSumryService
      * @return {@link Boolean} -- 결산 생성 성공 여부 (항상 true 반환)
      * @throws Exception 결산 생성 중 발생할 수 있는 예외
      */
+    @Transactional
     @CacheEvict(value={"jrnlTotalSumry", "jrnlSumryList", "jrnlSumryDtl"}, allEntries = true)
     public Boolean makeTotalYySumry() throws Exception {
         final int currYy = DateUtils.getCurrYy();
@@ -167,6 +170,7 @@ public class JrnlSumryService
      * @return {@link boolean} -- 처리 성공 여부
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
+    @Transactional
     public boolean dreamCompt(final Integer key) throws Exception {
         final JrnlSumryEntity entity = this.getDtlEntity(key);
         entity.setDreamComptYn("Y");

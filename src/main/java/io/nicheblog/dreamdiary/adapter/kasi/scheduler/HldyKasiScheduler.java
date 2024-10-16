@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.adapter.kasi.scheduler;
 
-import io.nicheblog.dreamdiary.adapter.kasi.model.HldyKasiApiItemDto;
 import io.nicheblog.dreamdiary.adapter.kasi.service.HldyKasiApiService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
@@ -13,8 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * HldyKasiScheduler
@@ -37,6 +35,7 @@ public class HldyKasiScheduler {
      * 매년 1월 1일 00시 30분 실행
      */
     @Scheduled(cron = "0 30 0 1 1 *", zone = Constant.LOC_SEOUL)         // second min hour day month weekday
+    @Transactional
     public void hldyKasiScheduler() {
 
         log.info("hldyKasiSchedule...");
@@ -45,11 +44,8 @@ public class HldyKasiScheduler {
         boolean isSuccess = false;
         String rsltMsg = "";
         try {
-            String yyStr = DateUtils.getCurrYyStr();
             // 기존 정보 (API로 받아온 휴일) 삭제 후 재등록
-            hldyKasiApiService.delHldyList(yyStr);
-            List<HldyKasiApiItemDto> hldyApiList = hldyKasiApiService.getHldyList(yyStr);
-            isSuccess = hldyKasiApiService.regHldyList(hldyApiList);
+            isSuccess = hldyKasiApiService.procHldyList(DateUtils.getCurrYyStr());
             rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
         } catch (Exception e) {
             isSuccess = false;
