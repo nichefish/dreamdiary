@@ -85,7 +85,7 @@ public class LogSysDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class DTL
             extends LogSysDto {
         //
@@ -98,7 +98,7 @@ public class LogSysDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class LIST
             extends LogSysDto {
         //

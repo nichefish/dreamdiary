@@ -71,7 +71,7 @@ public class JrnlSumryDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static class DTL
             extends JrnlSumryDto {
@@ -85,7 +85,7 @@ public class JrnlSumryDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static class LIST
             extends JrnlSumryDto {

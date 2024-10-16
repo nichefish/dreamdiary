@@ -74,7 +74,7 @@ public class ExptrReqstDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class DTL
             extends ExptrReqstDto {
         //
@@ -87,7 +87,7 @@ public class ExptrReqstDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     @ToString
     public static class LIST
             extends ExptrReqstDto {

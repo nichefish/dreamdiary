@@ -60,7 +60,7 @@ public class JrnlSbjctDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class DTL
             extends JrnlSbjctDto {
         //
@@ -73,7 +73,7 @@ public class JrnlSbjctDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class LIST
             extends JrnlSbjctDto {
         //

@@ -28,7 +28,7 @@ import java.util.List;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class VcatnPaprDto
         extends BasePostDto
@@ -60,7 +60,7 @@ public class VcatnPaprDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     @ToString
     public static class DTL
             extends VcatnPaprDto {
@@ -74,7 +74,7 @@ public class VcatnPaprDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     @ToString
     public static class LIST
             extends VcatnPaprDto {

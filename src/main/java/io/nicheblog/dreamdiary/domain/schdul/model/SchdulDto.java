@@ -78,7 +78,7 @@ public class SchdulDto
     }
 
     /**
-     * userId가 빈 객체를 제외한 참가자 목록을 반환한다.
+     * Getter :: userId가 빈 객체를 제외한 참가자 목록을 반환한다.
      *
      * @return {@link List} -- 참가자 목록
      */

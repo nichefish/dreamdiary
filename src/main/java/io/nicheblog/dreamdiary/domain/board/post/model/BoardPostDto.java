@@ -51,7 +51,7 @@ public class BoardPostDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class DTL
             extends BoardPostDto {
         /** 노션 페이지 참조 ID :: UUID */
@@ -68,7 +68,7 @@ public class BoardPostDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class LIST
             extends BoardPostDto {
         //

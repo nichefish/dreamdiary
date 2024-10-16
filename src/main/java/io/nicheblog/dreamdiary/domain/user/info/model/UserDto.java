@@ -100,7 +100,7 @@ public class UserDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class DTL
             extends UserDto {
         /** 비밀번호 */
@@ -152,6 +152,7 @@ public class UserDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
+    @EqualsAndHashCode(callSuper = true)
     public static class LIST
             extends UserDto {
 

@@ -32,7 +32,7 @@ import java.util.List;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class ExptrPrsnlPaprDto
         extends BasePostDto
         implements CommentCmpstnModule, TagCmpstnModule, ManagtCmpstnModule, ViewerCmpstnModule, Identifiable<Integer> {
@@ -102,7 +102,7 @@ public class ExptrPrsnlPaprDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class DTL extends ExptrPrsnlPaprDto {
         //
     }
@@ -114,7 +114,7 @@ public class ExptrPrsnlPaprDto
     @Setter
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     public static class LIST
             extends ExptrPrsnlPaprDto {
         /** 항목 건수 */
