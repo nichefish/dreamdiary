@@ -106,7 +106,7 @@ public class BoardPostPageController
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg);
 
-        return "/view/board/post/board_post_list";
+        return "/view/domain/board/post/board_post_list";
     }
 
     /**
@@ -151,7 +151,7 @@ public class BoardPostPageController
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg);
 
-        return "/view/board/post/board_post_reg_form";
+        return "/view/domain/board/post/board_post_reg_form";
     }
 
     /**
@@ -232,7 +232,7 @@ public class BoardPostPageController
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg);
 
-        return "/view/board/post/board_post_dtl";
+        return "/view/domain/board/post/board_post_dtl";
     }
 
     /**
@@ -281,6 +281,6 @@ public class BoardPostPageController
         logParam.setCn("key: " + postKey.toString());
         logParam.setResult(isSuccess, rsltMsg);
 
-        return "/view/board/post/board_post_reg_form";
+        return "/view/domain/board/post/board_post_reg_form";
     }
 }

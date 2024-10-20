@@ -42,7 +42,7 @@ public class VcatnSchdulSpec
             final CriteriaBuilder builder
     ) throws Exception {
         List<Predicate> predicate = new ArrayList<>();
-        Join<VcatnSchdulEntity, VcatnPaprEntity> vcatnPaprJoin = root.join("vctnPapr", JoinType.LEFT);
+        Join<VcatnSchdulEntity, VcatnPaprEntity> vcatnPaprJoin = root.join("vcatnPapr", JoinType.LEFT);
 
         // expressions
         Expression<Date> endDtExp = root.get("endDt");

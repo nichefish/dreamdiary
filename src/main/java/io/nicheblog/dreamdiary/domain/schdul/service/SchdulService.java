@@ -124,6 +124,7 @@ public class SchdulService
     /**
      * 공휴일여부 반환
      */
+    @Transactional(readOnly = true)
     @Cacheable(cacheNames = "isHldy", key = "#date")
     public Boolean isHldy(final Object date) throws Exception {
         // 공휴일 여부 체크

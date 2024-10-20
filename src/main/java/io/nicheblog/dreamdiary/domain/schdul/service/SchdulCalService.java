@@ -6,9 +6,7 @@ import io.nicheblog.dreamdiary.domain.schdul.model.SchdulCalDto;
 import io.nicheblog.dreamdiary.domain.schdul.model.SchdulSearchParam;
 import io.nicheblog.dreamdiary.domain.schdul.repository.jpa.SchdulRepository;
 import io.nicheblog.dreamdiary.domain.schdul.spec.SchdulSpec;
-import io.nicheblog.dreamdiary.domain.user.info.service.UserService;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.entity.VcatnSchdulEntity;
-import io.nicheblog.dreamdiary.domain.vcatn.papr.mapstruct.VcatnSchdulMapstruct;
 import io.nicheblog.dreamdiary.domain.vcatn.papr.service.VcatnSchdulService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.util.cmm.CmmUtils;
@@ -39,9 +37,7 @@ public class SchdulCalService {
     private final SchdulService schdulService;
     private final VcatnSchdulService vcatnSchdulService;
     private final SchdulCalMapstruct schdulCalMapstruct = SchdulCalMapstruct.INSTANCE;
-    private final VcatnSchdulMapstruct vcatnSchdulMapstruct = VcatnSchdulMapstruct.INSTANCE;
     private final SchdulSpec schdulSpec;
-    private final UserService userService;
     private final SchdulRepository schdulRepository;
 
     /**
@@ -100,6 +96,8 @@ public class SchdulCalService {
 
         // 휴가 목록 검색
         List<VcatnSchdulEntity> vcatnEntityList = vcatnSchdulService.getListEntity(searchParamMap);
+        if (vcatnEntityList.isEmpty()) return Collections.emptyList();
+        // entity -> calDto
         List<SchdulCalDto> vcatnCalList = new ArrayList<>();
         for (VcatnSchdulEntity vcatn : vcatnEntityList) {
             // 각 휴가에 대해서 달력 일정 조회
@@ -187,34 +185,6 @@ public class SchdulCalService {
     }
 
     /**
-     * 일정 > 생일 달력 조회
-     */
-    //private List<SchdulCalDto> getBrthdyCalList(final SchdulSearchParam searchParam) throws Exception {
-    //    List<SchdulCalDto> brthdyCalList = new ArrayList<>();
-    //    // 생일인 직원 목록 조회
-    //    List<UserDto.LIST> brthdyUserList = userService.getCrdtUserList(searchParam.getBgnDt(), searchParam.getEndDt());
-    //    if (CollectionUtils.isEmpty(brthdyUserList)) return new ArrayList<>();
-    //    for (UserDto.LIST user : brthdyUserList) {
-    //        if ("Y".equals(user.getRetireYn())) continue;
-    //        String brthdyStr = user.getBrthdy();
-    //        if (StringUtils.isEmpty(brthdyStr)) continue;
-    //        String thisBrthdyStr = DateUtils.getCurrYyStr() + brthdyStr.substring(4);
-    //        // 음력 / 양력 구분해서 적용
-    //        if ("Y".equals(user.getLunarYn())) {
-    //            // 음력일 경우 = 1) 올해의 음력 생일 날짜 구해서 양력으로 변환
-    //            thisBrthdyStr = DateUtils.ChineseCal.lunToSolStr(thisBrthdyStr, DateUtils.PTN_DATE);
-    //        }
-    //        String schdulNm = "\uD83C\uDF89" + user.getUserNm() + " 생일";
-    //        if ("Y".equals(user.getLunarYn())) {
-    //            schdulNm += " (음력)";
-    //        }
-    //        SchdulCalDto calDto = new SchdulCalDto(schdulNm, thisBrthdyStr, Constant.SCHDUL_BRTHDY);
-    //        brthdyCalList.add(calDto);
-    //    }
-    //     return brthdyCalList;
-    // }
-
-    /**
      * 일정(공휴일, 행사) 달력 목록 검색
      *
      * @param searchParam 일정 검색 파라미터
@@ -230,6 +200,8 @@ public class SchdulCalService {
 
         // 일정 목록 검색
         List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(searchParamMap));
+        if (schdulEntityList.isEmpty()) return Collections.emptyList();
+        // entity -> dto
         return schdulEntityList.stream()
                 .map(entity -> {
                     try {
@@ -253,6 +225,8 @@ public class SchdulCalService {
         Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
         // 일정 목록 검색
         List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(filteredSearchKey));
+        if (schdulEntityList.isEmpty()) return Collections.emptyList();
+        // entity -> dto
         return SchdulCalMapstruct.INSTANCE.toDtoList(schdulEntityList);
     }
 
@@ -268,6 +242,8 @@ public class SchdulCalService {
         searchParam.setPrevOnly(true);
         // 일정 목록 검색
         List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(searchParam));
+        if (schdulEntityList.isEmpty()) return Collections.emptyList();
+        // entity -> dto
         return SchdulCalMapstruct.INSTANCE.toDtoList(schdulEntityList);
     }
 
