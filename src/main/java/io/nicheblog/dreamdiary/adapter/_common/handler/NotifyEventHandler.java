@@ -3,7 +3,6 @@ package io.nicheblog.dreamdiary.adapter._common.handler;
 import io.nicheblog.dreamdiary.adapter.jandi.JandiTopic;
 import io.nicheblog.dreamdiary.adapter.jandi.service.JandiApiService;
 import io.nicheblog.dreamdiary.domain.board.post.model.BoardPostDto;
-import io.nicheblog.dreamdiary.domain.exptr.reqst.model.ExptrReqstDto;
 import io.nicheblog.dreamdiary.domain.notice.model.NoticeDto;
 import io.nicheblog.dreamdiary.domain.schdul.model.SchdulDto;
 import io.nicheblog.dreamdiary.domain.schdul.service.SchdulService;
@@ -17,7 +16,6 @@ import io.nicheblog.dreamdiary.global._common.log.actvty.ActvtyCtgr;
 import io.nicheblog.dreamdiary.global._common.log.sys.event.LogSysEvent;
 import io.nicheblog.dreamdiary.global._common.log.sys.model.LogSysParam;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
-import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -164,34 +162,6 @@ public class NotifyEventHandler {
     }
 
     /**
-     * 물품구매/경조사비 신청 등록 잔디 알림 메시지 발송
-     */
-    public String notifyExptrReqstReg(
-            final JandiTopic trgetTopic,
-            final ExptrReqstDto result,
-            final LogSysParam logParam
-    ) {
-        String jandiRsltMsg;
-        try {
-            // title
-            String title = result.getFullTitle();
-            // msg
-            String msg = "새로운 요청이 등록되었습니다.";
-            // url
-            final String param = "postNo=" + result.getPostNo() + "&boardCd=" + result.getContentType() + "&" + Constant.UTM_SOURCE + "=jandi";
-            final String fullUrl = Url.DOMAIN + Url.EXPTR_REQST_DTL + "?" + param;
-            // 메세지 발송
-            jandiApiService.sendMsg(trgetTopic, msg, title, fullUrl);
-            jandiRsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_JANDI_SUCCESS);
-        } catch (Exception e) {
-            jandiRsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_JANDI_FAILURE);
-            logParam.setResult(false, MessageUtils.getExceptionMsg(e), ActvtyCtgr.JANDI);
-            publisher.publishEvent(new LogSysEvent(this, logParam));
-        }
-        return jandiRsltMsg;
-    }
-
-    /**
      * 일정 > 생일인 현재 직원에 대하여 알림 발송
      */
     // public Boolean notifyCrdtUserBrthdy(
@@ -227,38 +197,5 @@ public class NotifyEventHandler {
     //     log.info("{}", jandiRsltMsg);
     //     return isSuccess;
     // }
-
-    /**
-     * 일정 > 매월 첫번째 평일에 경비지출서 작성 알림 발송
-     */
-    public boolean remindExptrPrsnl(
-            final LogSysParam logParam
-    ) {
-        String jandiRsltMsg = "";
-        boolean isSuccess = false;
-        try {
-            boolean isFirstBsnsInCurrMnth = schdulService.isFirstBsnsDayInCurrMnth();
-            if (!isFirstBsnsInCurrMnth) return false;
-            JandiTopic trgetTopic = JandiTopic.SCHDUL;
-            // title
-            Integer prevMnth = DateUtils.getPrevMnth();
-            String title = "[" + prevMnth + "월 경비지출서 작성 요망]";
-            // msg
-            String msg = prevMnth + "월이 지났습니다. " + prevMnth + "월분 경비지출서를 작성 마무리해 주세요.";
-            // url
-            String url = Url.DOMAIN + Url.EXPTR_PRSNL_PAPR_LIST;
-            String param = Constant.UTM_SOURCE + "=jandi";
-            String fullUrl = url + "?" + param;
-            // 메세지 발송
-            isSuccess = jandiApiService.sendMsg(trgetTopic, msg, title, fullUrl);
-            jandiRsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_JANDI_SUCCESS : MessageUtils.RSLT_JANDI_FAILURE);
-        } catch (Exception e) {
-            jandiRsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_JANDI_FAILURE);
-            logParam.setResult(false, MessageUtils.getExceptionMsg(e), ActvtyCtgr.JANDI);
-            publisher.publishEvent(new LogSysEvent(this, logParam));
-        }
-        log.info("{}", jandiRsltMsg);
-        return isSuccess;
-    }
 
 }

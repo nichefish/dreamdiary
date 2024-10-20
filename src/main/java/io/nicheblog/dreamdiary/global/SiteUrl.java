@@ -256,44 +256,6 @@ public interface SiteUrl {
 
     /* ---------- */
 
-    /** 경비지출서 */
-    String EXPTR_PRSNL_PAPR_LIST = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprList.do";
-    String EXPTR_PRSNL_PAPR_EXISTING_CHCK_AJAX = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprExistingChckAjax.do";
-    String EXPTR_PRSNL_PAPR_REG_FORM = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprRegForm.do";
-    String EXPTR_PRSNL_PAPR_YY_MNTH_CHCK_AJAX = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprYyMnthChckAjax.do";
-    String EXPTR_PRSNL_PAPR_REG_AJAX = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprRegAjax.do";
-    String EXPTR_PRSNL_PAPR_DTL = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprDtl.do";
-    String EXPTR_PRSNL_PAPR_PDF_POP = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprPdfPop.do";
-    String EXPTR_PRSNL_PAPR_MDF_FORM = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprMdfForm.do";
-    String EXPTR_PRSNL_PAPR_MDF_AJAX = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprMdfAjax.do";
-    String EXPTR_PRSNL_PAPR_DEL_AJAX = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprDelAjax.do";
-    String EXPTR_PRSNL_PAPR_RCIPT_PDF_DOWNLOAD = Prefix.EXPTR_PRSNL_PAPR + "/exptrPrsnlPaprRciptPdfDownload.do";
-
-    String EXPTR_PRSNL_ITEM_LIST_AJAX = Prefix.EXPTR_PRSNL_ITEM + "/exptrPrsnlItemListAjax.do";
-    String EXPTR_PRSNL_ITEM_RCIPT_UPLOAD_AJAX = Prefix.EXPTR_PRSNL_ITEM + "/exptrPrsnlItemRciptUploadAjax.do";
-    String EXPTR_PRSNL_ITEM_ORGNL_RCIPT_AJAX = Prefix.EXPTR_PRSNL_ITEM + "/exptrPrsnlItemOrgnlRciptAjax.do";
-    String EXPTR_PRSNL_ITEM_RJECT_AJAX = Prefix.EXPTR_PRSNL_ITEM + "/exptrPrsnlItemRejectAjax.do";
-
-    String EXPTR_PRSNL_RPT_ITEMS = Prefix.EXPTR_PRSNL_RPT + "/exptrPrsnlRptItems.do";
-    String EXPTR_PRSNL_RPT_XLSX_DOWNLOAD = Prefix.EXPTR_PRSNL_RPT + "/exptrPrsnlRptXlsxDownload.do";
-
-    String EXPTR_PRSNL_STATS_PAGE = Prefix.EXPTR_PRSNL_STATS + "/exptrPrsnlStatsPage.do";
-    String EXPTR_PRSNL_STATS_DTL = Prefix.EXPTR_PRSNL_STATS + "/exptrPrsnlStatsDtl.do";
-    String EXPTR_PRSNL_STATS_CF_AJAX = Prefix.EXPTR_PRSNL_STATS + "/exptrPrsnlStatsCfAjax.do";
-    String EXPTR_PRSNL_STATS_XLSX_DOWNLOAD = Prefix.EXPTR_PRSNL_STATS + "/exptrPrsnlStatsXlsxDownload.do";
-
-    String EXPTR_REQST_LIST = Prefix.EXPTR_REQST + "/exptrReqstList.do";
-    String EXPTR_REQST_REG_FORM = Prefix.EXPTR_REQST + "/exptrReqstRegForm.do";
-    String EXPTR_REQST_REG_PREVIEW_POP = Prefix.EXPTR_REQST + "/exptrReqstRegPreviewPop.do";
-    String EXPTR_REQST_REG_AJAX = Prefix.EXPTR_REQST + "/exptrReqstRegAjax.do";
-    String EXPTR_REQST_DTL = Prefix.EXPTR_REQST + "/exptrReqstDtl.do";
-    String EXPTR_REQST_DTL_AJAX = Prefix.EXPTR_REQST + "/exptrReqstDtlAjax.do";
-    String EXPTR_REQST_MDF_FORM = Prefix.EXPTR_REQST + "/exptrReqstMdfForm.do";
-    String EXPTR_REQST_MDF_AJAX = Prefix.EXPTR_REQST + "/exptrReqstMdfAjax.do";
-    String EXPTR_REQST_DEL_AJAX = Prefix.EXPTR_REQST + "/exptrReqstDelAjax.do";
-    String EXPTR_REQST_CF_AJAX = Prefix.EXPTR_REQST + "/exptrReqstCfAjax.do";
-    String EXPTR_REQST_DISMISS_AJAX = Prefix.EXPTR_REQST + "/exptrReqstDismissAjax.do";
-
     String SCHDUL_CAL = Prefix.SCHDUL + "/schdulCal.do";
     String SCHDUL_CAL_LIST_AJAX = Prefix.SCHDUL + "/schdulCalListAjax.do";
     String SCHDUL_REG_AJAX = Prefix.SCHDUL + "/schdulCalRegAjax.do";
@@ -373,20 +335,6 @@ public interface SiteUrl {
         String PAPR = "/papr";
         String VCATN_PAPR = VCATN + PAPR;
 
-        /* 경비 (exptr) */
-        String EXPTR = "/exptr";
-        String PRSNL = "/prsnl";
-        String EXPTR_PRSNL = EXPTR + PRSNL;
-        String EXPTR_PRSNL_PAPR = EXPTR_PRSNL + PAPR;
-        String ITEM = "/item";
-        String EXPTR_PRSNL_ITEM = EXPTR_PRSNL + ITEM;
-        String RPT = "/rpt";
-        String EXPTR_PRSNL_RPT = EXPTR_PRSNL + RPT;
-        String STATS = "/stats";
-        String EXPTR_PRSNL_STATS = EXPTR_PRSNL + STATS;
-        String REQST = "/reqst";
-        String EXPTR_REQST = EXPTR + REQST;
-
         String COMMENT = "/comment";
         String SECTN = "/sectn";
         String TAG = "/tag";
@@ -404,10 +352,12 @@ public interface SiteUrl {
         String LOG_ACTVTY = LOG + ACTVTY;
         String SYS = "/sys";
         String LOG_SYS = LOG + SYS;
+        String STATS = "/stats";
         String LOG_STATS = LOG + STATS;
 
         /* 사용자 (user) */
         String USER = "/user";
+        String REQST = "/reqst";
         String MY = "/my";
         String USER_MY = USER + MY;
         String USER_REQST = USER + REQST;

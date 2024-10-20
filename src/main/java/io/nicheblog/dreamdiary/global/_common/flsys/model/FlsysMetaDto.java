@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global._common.flsys.model;
 
-import io.nicheblog.dreamdiary.domain.exptr.reqst.model.ExptrReqstDto;
 import io.nicheblog.dreamdiary.global._common._clsf.comment.model.cmpstn.CommentCmpstn;
 import io.nicheblog.dreamdiary.global._common._clsf.comment.model.cmpstn.CommentCmpstnModule;
 import io.nicheblog.dreamdiary.global._common._clsf.managt.model.cmpstn.ManagtCmpstn;
@@ -64,7 +63,7 @@ public class FlsysMetaDto
     @NoArgsConstructor
     @EqualsAndHashCode(callSuper = true)
     public static class DTL
-            extends ExptrReqstDto {
+            extends FlsysMetaDto {
         //
     }
 

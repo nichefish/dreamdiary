@@ -28,43 +28,6 @@ public interface XlsxHeader {
             new XlsxCell("등록자", 10),
             new XlsxCell("등록일자", 10)
     );
-    
-    /**
-     * 경비지출서
-     */
-    List<XlsxCell> EXPTR_PRSNL_STATS = List.of(
-            new XlsxCell("구분", 10),
-            new XlsxCell("소속", 10),
-            new XlsxCell("이름", 10),
-            new XlsxCell("1월", 10),
-            new XlsxCell("2월", 10),
-            new XlsxCell("3월", 10),
-            new XlsxCell("4월", 10),
-            new XlsxCell("5월", 10),
-            new XlsxCell("6월", 10),
-            new XlsxCell("7월", 10),
-            new XlsxCell("8월", 10),
-            new XlsxCell("9월", 10),
-            new XlsxCell("10월", 10),
-            new XlsxCell("11월", 10),
-            new XlsxCell("이름", 10),
-            new XlsxCell("12월", 10)
-    );
-
-    /**
-     * 경비지출서
-     */
-    List<XlsxCell> EXPTR_PRSNL_RPT = List.of(
-            new XlsxCell("지출일", 10),
-            new XlsxCell("소속", 10),
-            new XlsxCell("이름", 10),
-            new XlsxCell("항목", 10),
-            new XlsxCell("상세", 10),
-            new XlsxCell("금액", 10),
-            new XlsxCell("비고", 10),
-            new XlsxCell("스캔본", 10),
-            new XlsxCell("원본", 10)
-    );
 
     /**
      * 휴가

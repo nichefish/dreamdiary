@@ -112,17 +112,6 @@ public class SiteMenu
     public static SiteAcsInfo SCHDUL_CAL = SubMenu.SCHDUL_CAL;
     public static SiteAcsInfo VCATN_PAPR = SubMenu.VCATN_PAPR;
 
-    // 대메뉴 :: 경비
-    public static SiteAcsInfo EXPTR = new SiteAcsInfo(
-            SiteTopMenu.EXPTR,
-            TOP_MENU_IDX,
-            "경비",
-            Url.EXPTR_PRSNL_PAPR_LIST,
-            List.of(SubMenu.EXPTR_PRSNL_PAPR, SubMenu.EXPTR_REQST)
-    );
-    public static SiteAcsInfo EXPTR_PRSNL_PAPR = SubMenu.EXPTR_PRSNL_PAPR;
-    public static SiteAcsInfo EXPTR_REQST = SubMenu.EXPTR_REQST;
-
     /**
      * 서브메뉴 정보
      */
@@ -156,21 +145,6 @@ public class SiteMenu
                 "03",
                 "저널 결산",
                 Url.JRNL_SUMRY_LIST
-        );
-
-        // 소메뉴 :: 경비지출서
-        SiteAcsInfo EXPTR_PRSNL_PAPR = new SiteAcsInfo(
-                SiteTopMenu.EXPTR,
-                "01",
-                "경비지출서",
-                Url.EXPTR_PRSNL_PAPR_LIST
-        );
-        // 소메뉴 :: 물품구매/경조사비 신청
-        SiteAcsInfo EXPTR_REQST = new SiteAcsInfo(
-                SiteTopMenu.EXPTR,
-                "02",
-                "물품구매/경조사비 신청",
-                Url.EXPTR_REQST_LIST
         );
 
         // 소메뉴 :: 일정

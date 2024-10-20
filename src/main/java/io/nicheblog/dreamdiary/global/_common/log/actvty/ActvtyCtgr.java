@@ -40,11 +40,6 @@ public enum ActvtyCtgr {
     VCATN_SCHDUL("휴가사용일자"),
     VCATN_STATS("년도별 휴가관리"),
 
-    EXPTR_PRSNL_PAPR("경비지출서"),
-    EXPTR_PRSNL_RPT("월간지출내역"),
-    EXPTR_PRSNL_STATS("경비지출누적집계"),
-    EXPTR_REQST("물품구매/경조사비 신청"),
-    
     TAG("태그"),
 
     // USER

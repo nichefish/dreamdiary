@@ -1,6 +1,5 @@
 package io.nicheblog.dreamdiary.global.intrfc.spec;
 
-import io.nicheblog.dreamdiary.domain.exptr.prsnl.papr.entity.ExptrPrsnlPaprEntity;
 import io.nicheblog.dreamdiary.global._common.auth.entity.AuditorInfo;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseCrudEntity;
 import org.springframework.data.jpa.domain.Specification;
@@ -74,7 +73,7 @@ public interface BaseCrudSpec<Entity extends BaseCrudEntity>
                     continue;
                 case "nickNm":
                     // 작성자 이름 = 조인 후 LIKE 검색
-                    Join<ExptrPrsnlPaprEntity, AuditorInfo> regstrJoin = root.join("regstrInfo", JoinType.LEFT);
+                    Join<Entity, AuditorInfo> regstrJoin = root.join("regstrInfo", JoinType.LEFT);
                     Expression<String> nickNmExp = regstrJoin.get("nickNm");
                     predicate.add(builder.like(nickNmExp, "%" + searchParamMap.get(key) + "%"));
                     keysToRemove.add(key);      // 처리된 키 저장

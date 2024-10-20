@@ -78,9 +78,6 @@ public final class Constant
     public static final String CRDT_USER_CTTPC = "crdtUserCttpc";   // 직원 연락처
     public static final String LOG_ACTVTY = "logActvty";            // 활동 로그 관리
     public static final String LOG_SYS = "logSys";                  // 활동 로그 관리
-    public static final String EXPTR_PRSNL_PAPR = "exptrPrsnl";          // 개인경비지출서
-    public static final String EXPTR_PRSNL_RPT = "exptrPrsnlRpt";
-    public static final String EXPTR_PRSNL_RPT_ITEM = "exptrPrsnlRptItem";
     public static final String VCATN_STATS = "vcatnStats";          // 휴가계획서
     public static final String VCATN_SCHDUL = "vcatnSchdul";                // 휴가사용일자
 

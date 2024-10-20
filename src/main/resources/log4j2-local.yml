@@ -19,12 +19,12 @@ Configutation:
 
     Loggers:
         Root:
-            level: INFO
+            level: info
             AppenderRef:
               - ref: Console_Appender
         Logger:
           - name: dreamdiary.nicheblog.io
             additivity: false
-            level: debug
+            level: info
             AppenderRef:
               - ref: Console_Appender

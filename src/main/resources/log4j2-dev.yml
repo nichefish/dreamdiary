@@ -63,7 +63,7 @@ Configutation:
         Logger:
             - name: dreamdiary.nicheblog.io
               additivity: false
-              level: debug
+              level: info
               AppenderRef:
                   - ref: Console_Appender
                   - ref: File_Info_Appender

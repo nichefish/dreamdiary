@@ -72,17 +72,6 @@ public interface SiteAdminMenu {
     SiteAcsInfo VCATN_STATS = SubMenu.VCATN_STATS;
     SiteAcsInfo VCATN_SCHDUL = SubMenu.VCATN_SCHDUL;
 
-    // 대메뉴 :: 경비 관리
-    SiteAcsInfo EXPTR_ADMIN = new SiteAcsInfo(
-            SiteTopMenu.EXPTR_ADMIN,
-            TOP_MENU_IDX,
-            "경비",
-            Url.EXPTR_PRSNL_PAPR_LIST,
-            List.of(SubMenu.EXPTR_PRSNL_RPT, SubMenu.EXPTR_PRSNL_STATS)
-    );
-    SiteAcsInfo EXPTR_PRSNL_RPT = SubMenu.EXPTR_PRSNL_RPT;
-    SiteAcsInfo EXPTR_PRSNL_STATS = SubMenu.EXPTR_PRSNL_STATS;
-
     // 대메뉴 :: 로그 관리
     SiteAcsInfo LOG = new SiteAcsInfo(
             SiteTopMenu.ADMIN,
@@ -122,22 +111,6 @@ public interface SiteAdminMenu {
                 "02",
                 "휴가사용일자",
                 Url.VCATN_SCHDUL_LIST
-        );
-
-        /* 경비 관리 */
-        // 소메뉴 :: 월간지출내역
-        SiteAcsInfo EXPTR_PRSNL_RPT = new SiteAcsInfo(
-                SiteTopMenu.EXPTR_ADMIN,
-                "01",
-                "월간지출내역",
-                Url.EXPTR_PRSNL_RPT_ITEMS
-        );
-        // 소메뉴 :: 경비지출누적집계
-        SiteAcsInfo EXPTR_PRSNL_STATS = new SiteAcsInfo(
-                SiteTopMenu.EXPTR_ADMIN,
-                "02",
-                "경비지출누적집계",
-                Url.EXPTR_PRSNL_STATS_PAGE
         );
 
         /* 사이트 관리 */

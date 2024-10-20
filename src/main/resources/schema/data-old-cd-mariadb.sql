@@ -17,10 +17,3 @@ REPLACE INTO cmm_dtl_cd (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES 
 REPLACE INTO cmm_dtl_cd (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('VCATN_CD', 'UNPAID', '무급휴가', '무급휴가', '7');
 
 -- -----------------------
-
--- (구) 필수 :: 지출 분류 코드 추가
-REPLACE INTO cmm_cl_cd (CL_CD, CL_CD_NM, CL_CD_DC) VALUES ('EXPTR_CD', '휴가', '휴가');
--- (구) 필수 :: 지출 상세 코드 추가
-REPLACE INTO cmm_dtl_cd (CL_CD, DTL_CD, DTL_CD_NM, DTL_CD_DC, SORT_ORDR) VALUES ('EXPTR_CD', 'TRVL', '여비교통비', '여비교통비', '1');
-
--- -----------------------

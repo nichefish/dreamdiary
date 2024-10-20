@@ -108,41 +108,12 @@
                     <!-- 일정 > 휴가계획서 -->
                     <div class="menu-item">
                         <a class="menu-link" href="${SiteMenu.MENU_VCATN_PAPR[3]!}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
                             <span class="menu-title">${SiteMenu.MENU_VCATN_PAPR[2]!}</span>
                         </a>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <div class="btn btn-icon btn-active-light-primary position-relative w-30px h-30px w-md-40px h-md-40px">
-                                    <span class="svg-icon svg-icon-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calculator-fill" viewBox="0 0 16 16">
-                                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5zm0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z"></path>
-                                        </svg>
-                                    </span>
-                        </div>
-                        <div>
-                            경비
-                        </div>
-                    </div>
-                    <!-- 경비 > 경비지출서 -->
-                    <div class="menu-item">
-                        <a id="100000" class="menu-link" href="${SiteMenu.MENU_EXPTR_PRSNL_PAPR_PAPR[3]!}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                            <span class="menu-title">${SiteMenu.MENU_EXPTR_PRSNL_PAPR[2]!}</span>
-                        </a>
-                    </div>
-                    <!-- 경비 > 물품구매/경조사비 신청 -->
-                    <div class="menu-item">
-                        <a class="menu-link" href="${SiteMenu.MENU_EXPTR_REQST[3]!}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                            <span class="menu-title">${SiteMenu.MENU_EXPTR_REQST[2]!}</span>
-                        </a>
                     </div>
                 </div>
                 <!-- 관리자 -->
@@ -192,37 +163,9 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="btn btn-icon btn-active-light-primary position-relative w-30px h-30px w-md-40px h-md-40px">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calculator-fill" viewBox="0 0 16 16">
-                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5zm0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            경비관리
-                        </div>
-                    </div>
-                    <!-- 경비관리 > 경비지출누적집계 -->
-                    <div class="menu-item">
-                        <a class="menu-link" href="${SiteMenu.MENU_EXPTR_PRSNL_STATS[3]!}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                            <span class="menu-title">${SiteMenu.MENU_EXPTR_PRSNL_STATS[2]!}</span>
-                        </a>
-                    </div>
-                    <!-- 경비관리 > 월간지출내역 -->
-                    <div class="menu-item">
-                        <a class="menu-link" href="${SiteMenu.MENU_EXPTR_PRSNL_RPT[3]!}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                            <span class="menu-title">${SiteMenu.MENU_EXPTR_PRSNL_RPT[2]!}</span>
-                        </a>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="btn btn-icon btn-active-light-primary position-relative w-30px h-30px w-md-40px h-md-40px">
-                                    <span class="svg-icon svg-icon-3">
-                                        <i class="fas fa-globe text-gray-600 fs-3"></i>
-                                    </span>
+                            <span class="svg-icon svg-icon-3">
+                                <i class="fas fa-globe text-gray-600 fs-3"></i>
+                            </span>
                         </div>
                         <div>
                             사이트 관리

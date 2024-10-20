@@ -2,53 +2,14 @@
 #common config located outside .jar
 
 #release date. should be changed manually for each deployment
-release-date: 20240215
+release-date: 20241020
 
 spring:
-  #( local // dev // stg // prod // test )
-  profiles:
-      active: dev
-  mail:
-      host: smtp.example.com
-      port: 587
-      username: user@example.com
-      password: password
-      protocol: smtp
-      properties:
-        smtp:
-            auth: true
-            starttls:
-                enable: true
-      default-encoding: UTF-8
-
-#AES128 secret key; 16 chars
-aes128:
-    secret-key: "0000000000000000"
-#key used for remember-me library
-remember-me:
-    param: "remember-me"
-    key: "dreamdiary.nicheblog.io"
-
-external-path:
-  -
-
-#jandi messenger properties
-api:
-    jandi:
-        teamId: "00000000"
-        topics:
-          - name: NOTICE
-            id: "00000000000000000000000000000000"
-          - name: SCHDUL
-            id: "00000000000000000000000000000000"
-          - name: TEST
-            id: "00000000000000000000000000000000"
-    kasi:
-        serviceKey: "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-        api-url : "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo"
+    #( local // dev // stg // prod // test )
+    profiles:
+        active: dev
 
 logging:
     level:
-        #web: INFO
-        org.hibernate.SQL: debug
-        org.hibernate.type.descriptor.sql: trace
+        web: INFO
+        org.springframework: INFO

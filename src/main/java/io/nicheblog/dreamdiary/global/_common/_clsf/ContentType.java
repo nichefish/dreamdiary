@@ -28,9 +28,6 @@ public enum ContentType {
     // 일정
     VCATN_PAPR("VCATN_PAPR", "휴가계획서"),
     SCHDUL("SCHDUL", "일정"),
-    // 경비
-    EXPTR_PRSNL_PAPR("EXPTR_PRSNL_PAPR", "경비지출서"),
-    EXPTR_REQST("EXPTR_REQST", "물품구매/경조사비 신청"),
 
     //
     SECTN("SECTN", "단락"),

@@ -95,9 +95,6 @@
                 <!-- VCATN -->
                 <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.VCATN_ADMIN />
 
-                <!-- EXPTR -->
-                <@menu.withSubMenu topMenuNo=topMenuNo siteMenu=SiteMenu.EXPTR_ADMIN />
-
             </div>
             <!--end::Menu-->
         </div>
