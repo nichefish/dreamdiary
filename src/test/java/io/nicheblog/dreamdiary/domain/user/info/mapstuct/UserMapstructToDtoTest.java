@@ -12,6 +12,7 @@ import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global._common.auth.Auth;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseEntityTestFactoryHelper;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,6 +21,8 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * UserMapstructToDtoTest
@@ -60,8 +63,18 @@ class UserMapstructToDtoTest {
         // Then::
         assertNotNull(userDto, "변환된 사용자 상세 Dto는 null일 수 없습니다.");
         // 이메일 변환 로직 검증
-        assertEquals(userEntity.getEmail().split("@")[0], userDto.getEmailId(), "이메일이 올바르게 매핑되지 않았습니다.");
-        assertEquals(userEntity.getEmail().split("@")[1], userDto.getEmailDomain(), "이메일이 올바르게 매핑되지 않았습니다.");
+        String email = userEntity.getEmail();
+        if (StringUtils.isNotEmpty(email)) {
+            assertTrue(email.contains("@"), "이메일 형식이 올바르지 않습니다.");
+            String[] emailParts = email.split("@");
+            String expectedEmailId = emailParts[0];
+            String expectedEmailDomain = emailParts.length > 1 ? emailParts[1] : null;
+            assertEquals(expectedEmailId, userDto.getEmailId(), "이메일 정보가 제대로 매핑되지 않았습니다.");
+            assertEquals(expectedEmailDomain, userDto.getEmailDomain(), "이메일 정보가 제대로 매핑되지 않았습니다.");
+        } else {
+            assertNull(userDto.getEmailId(), "이메일 ID가 null이어야 합니다.");
+            assertNull(userDto.getEmailDomain(), "이메일 도메인이 null이어야 합니다.");
+        }
     }
 
     /**
@@ -174,8 +187,18 @@ class UserMapstructToDtoTest {
         assertEquals("2000-01-01", userDto.getEmplym().getEcnyDt(), "사용자 직원정보 입사일 정보가 제대로 매핑되지 않았습니다.");
         assertEquals("2000-01-01", userDto.getEmplym().getRetireDt(), "사용자 직원정보 퇴사일 정보가 제대로 매핑되지 않았습니다.");
         // 이메일 변환 로직
-        assertEquals(userEntity.getEmail().split("@")[0], userDto.getEmplym().getEmplymEmailId(), "이메일이 올바르게 매핑되지 않았습니다.");
-        assertEquals(userEntity.getEmail().split("@")[1], userDto.getEmplym().getEmplymEmailDomain(), "이메일이 올바르게 매핑되지 않았습니다.");
+        String email = userEmplymEntity.getEmplymEmail();
+        if (StringUtils.isNotEmpty(email)) {
+            assertTrue(email.contains("@"), "이메일 형식이 올바르지 않습니다.");
+            String[] emailParts = email.split("@");
+            String expectedEmailId = emailParts[0];
+            String expectedEmailDomain = emailParts.length > 1 ? emailParts[1] : null;
+            assertEquals(expectedEmailId, userDto.getEmplym().getEmplymEmailId(), "이메일 정보가 제대로 매핑되지 않았습니다.");
+            assertEquals(expectedEmailDomain, userDto.getEmplym().getEmplymEmailDomain(), "이메일 정보가 제대로 매핑되지 않았습니다.");
+        } else {
+            assertNull(userDto.getEmplym().getEmplymEmailId(), "이메일 ID가 null이어야 합니다.");
+            assertNull(userDto.getEmplym().getEmplymEmailDomain(), "이메일 도메인이 null이어야 합니다.");
+        }
     }
 
     /* ----- */
@@ -193,8 +216,19 @@ class UserMapstructToDtoTest {
         // Then::
         assertNotNull(userDto, "변환된 사용자 목록 Dto는 null일 수 없습니다.");
         // 이메일 변환 로직 검증
-        assertEquals(userEntity.getEmail().split("@")[0], userDto.getEmailId(), "이메일이 올바르게 매핑되지 않았습니다.");
-        assertEquals(userEntity.getEmail().split("@")[1], userDto.getEmailDomain(), "이메일이 올바르게 매핑되지 않았습니다.");
+        // 이메일 변환 로직 검증
+        String email = userEntity.getEmail();
+        if (StringUtils.isNotEmpty(email)) {
+            assertTrue(email.contains("@"), "이메일 형식이 올바르지 않습니다.");
+            String[] emailParts = email.split("@");
+            String expectedEmailId = emailParts[0];
+            String expectedEmailDomain = emailParts.length > 1 ? emailParts[1] : null;
+            assertEquals(expectedEmailId, userDto.getEmailId(), "이메일 정보가 제대로 매핑되지 않았습니다.");
+            assertEquals(expectedEmailDomain, userDto.getEmailDomain(), "이메일 정보가 제대로 매핑되지 않았습니다.");
+        } else {
+            assertNull(userDto.getEmailId(), "이메일 ID가 null이어야 합니다.");
+            assertNull(userDto.getEmailDomain(), "이메일 도메인이 null이어야 합니다.");
+        }
     }
 
     /* ----- */

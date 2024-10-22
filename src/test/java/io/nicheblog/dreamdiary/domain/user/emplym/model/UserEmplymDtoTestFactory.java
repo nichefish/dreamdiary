@@ -20,7 +20,7 @@ public class UserEmplymDtoTestFactory {
      * 테스트용 사용자 신청 인사정보 Dto 객체 생성 :: 메소드 분리
      */
     public static UserEmplymDto create() {
-        // 갹체 생성
+        // 객체 생성
         return UserEmplymDto.builder()
                 .userNm("1987-03-11")
                 .cmpyCd("test_cmpy_cd")

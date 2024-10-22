@@ -23,7 +23,7 @@ public class AuthInfoTestFactory {
      * 테스트용 인증정보 Dto 객체 생성 :: 메소드 분리
      */
     public static AuthInfo createAuthInfo() {
-        // 갹체 생성
+        // 객체 생성
         return AuthInfo.builder()
                 .authList(List.of(AuthRoleDto.builder().build()))
                 .build();
