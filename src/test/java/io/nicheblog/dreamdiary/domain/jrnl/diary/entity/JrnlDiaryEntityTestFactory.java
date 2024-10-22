@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.domain.jrnl.diary.entity;
 
+import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDayEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDaySmpEntity;
 import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
@@ -19,10 +20,25 @@ import org.springframework.test.context.ActiveProfiles;
 public class JrnlDiaryEntityTestFactory {
 
     /**
-     * 테스트용 저널 일기Entity 생성
+     * 테스트용 저널 일기 Entity 생성
      * @param jrnlDtStr 저널 일자 날짜 문자열
      */
-    public static JrnlDiaryEntity createJrnlDiaryWithJrnlDt(String jrnlDtStr) throws Exception {
+    public static JrnlDiaryEntity createWithJrnlDay(JrnlDayEntity jrnlDayEntity) throws Exception {
+        return JrnlDiaryEntity.builder()
+                .postNo(0)
+                .contentType(ContentType.JRNL_DIARY.key)
+                .title("test_title")
+                .cn("test_cn")
+                .ctgrCd("test_ctgr_cd")
+                .jrnlDay(JrnlDaySmpEntity.from(jrnlDayEntity))
+                .build();
+    }
+
+    /**
+     * 테스트용 저널 일기 Entity 생성
+     * @param jrnlDtStr 저널 일자 날짜 문자열
+     */
+    public static JrnlDiaryEntity createWithJrnlDt(String jrnlDtStr) throws Exception {
         return JrnlDiaryEntity.builder()
                 .postNo(0)
                 .contentType(ContentType.JRNL_DIARY.key)
@@ -36,8 +52,8 @@ public class JrnlDiaryEntityTestFactory {
     /**
      * 테스트용 저널 일기 Entity 생성
      */
-    public static JrnlDiaryEntity createJrnlDiary() throws Exception {
+    public static JrnlDiaryEntity create() throws Exception {
         String tempJrnlDtStr = "2000-01-01";
-        return createJrnlDiaryWithJrnlDt(tempJrnlDtStr);
+        return createWithJrnlDt(tempJrnlDtStr);
     }
 }

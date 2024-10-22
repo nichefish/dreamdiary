@@ -38,7 +38,7 @@ class JrnlDayToEntityMapstructTest {
     @BeforeEach
     void setUp() throws Exception {
         // 공통적으로 사용할 JrnlDayDto 초기화
-        jrnlDayDto = JrnlDayDtoTestFactory.createJrnlDayDtlDto();
+        jrnlDayDto = JrnlDayDtoTestFactory.create();
         jrnlDayDto.setJrnlDt("2000-01-01");
     }
 

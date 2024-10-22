@@ -51,7 +51,7 @@ class UserRepositoryTest {
     @Test
     public void testRegist() throws Exception {
         // Given::
-        UserEntity user = UserEntityTestFactory.createUser();
+        UserEntity user = UserEntityTestFactory.create();
 
         // When::
         Integer rsltId = userRepository.save(user).getUserNo();
@@ -71,8 +71,8 @@ class UserRepositoryTest {
     @Test
     public void testRegist_proflCascade() throws Exception {
         // Given::
-        UserProflEntity userProfl = UserProflEntityTestFactory.createUserProflEntity();
-        UserEntity user = UserEntityTestFactory.createUser(userProfl);
+        UserProflEntity userProfl = UserProflEntityTestFactory.create();
+        UserEntity user = UserEntityTestFactory.create(userProfl);
         // cascade
         user.cascade();
 
@@ -94,8 +94,8 @@ class UserRepositoryTest {
     @Test
     public void testRegist_emplymCascade() throws Exception {
         // Given::
-        UserEmplymEntity userEmplym = UserEmplymEntityTestFactory.createUserEmplymEntity();
-        UserEntity user = UserEntityTestFactory.createUser(userEmplym);
+        UserEmplymEntity userEmplym = UserEmplymEntityTestFactory.create();
+        UserEntity user = UserEntityTestFactory.create(userEmplym);
 
         // When::
         Integer rsltId = userRepository.save(user).getUserNo();

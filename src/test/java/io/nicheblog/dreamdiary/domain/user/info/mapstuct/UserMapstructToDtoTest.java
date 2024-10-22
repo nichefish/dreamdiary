@@ -45,7 +45,7 @@ class UserMapstructToDtoTest {
     @Test
     void testToDto_checkBasic() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
 
         // When::
         UserDto.DTL dto = userMapstruct.toDto(userEntity);
@@ -64,7 +64,7 @@ class UserMapstructToDtoTest {
     @Test
     void testToDto_checkAuditor() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
         // 등록자
         BaseEntityTestFactoryHelper.setRegstrInfo(userEntity);
         // 수정자
@@ -91,10 +91,10 @@ class UserMapstructToDtoTest {
     @Test
     void testToDto_checkAuth() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
         // AUTH
-        UserAuthRoleEntity aa = UserAuthRoleEntityTestFactory.getUserAuthRoleEntity(Auth.USER);
-        UserAuthRoleEntity bb = UserAuthRoleEntityTestFactory.getUserAuthRoleEntity(Auth.MNGR);
+        UserAuthRoleEntity aa = UserAuthRoleEntityTestFactory.create(Auth.USER);
+        UserAuthRoleEntity bb = UserAuthRoleEntityTestFactory.create(Auth.MNGR);
         userEntity.setAuthList(List.of(aa, bb));
 
         // When::
@@ -116,10 +116,10 @@ class UserMapstructToDtoTest {
     @Test
     void testToDto_checkAcsIp() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
         userEntity.setUseAcsIpYn("Y");
-        UserAcsIpEntity aa = UserAcsIpEntityTestFactory.createUserAcsIpEntity("1.1.1.1");
-        UserAcsIpEntity bb = UserAcsIpEntityTestFactory.createUserAcsIpEntity("2.2.2.2");
+        UserAcsIpEntity aa = UserAcsIpEntityTestFactory.create("1.1.1.1");
+        UserAcsIpEntity bb = UserAcsIpEntityTestFactory.create("2.2.2.2");
         userEntity.setAcsIpList(List.of(aa, bb));
 
         // When::
@@ -142,8 +142,8 @@ class UserMapstructToDtoTest {
     @Test
     void testToDto_checkProfl() throws Exception {
         // Given::
-        UserProflEntity userProflEntity = UserProflEntityTestFactory.createUserProflEntity();
-        UserEntity userEntity = UserEntityTestFactory.createUser(userProflEntity);
+        UserProflEntity userProflEntity = UserProflEntityTestFactory.create();
+        UserEntity userEntity = UserEntityTestFactory.create(userProflEntity);
 
         // When::
         UserDto dto = userMapstruct.toDto(userEntity);
@@ -163,8 +163,8 @@ class UserMapstructToDtoTest {
     @Test
     void testToDto_checkEmplym() throws Exception {
         // Given::
-        UserEmplymEntity userEmplymEntity = UserEmplymEntityTestFactory.createUserEmplymEntity();
-        UserEntity userEntity = UserEntityTestFactory.createUser(userEmplymEntity);
+        UserEmplymEntity userEmplymEntity = UserEmplymEntityTestFactory.create();
+        UserEntity userEntity = UserEntityTestFactory.create(userEmplymEntity);
 
         // When::
         UserDto dto = userMapstruct.toDto(userEntity);
@@ -189,7 +189,7 @@ class UserMapstructToDtoTest {
     @Test
     void testToListDto_checkBasic() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
 
         // When::
         UserDto.LIST dto = userMapstruct.toListDto(userEntity);
@@ -208,7 +208,7 @@ class UserMapstructToDtoTest {
     @Test
     void testToListDto_checkAuditor() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
         // 등록자
         BaseEntityTestFactoryHelper.setRegstrInfo(userEntity);
         // 수정자

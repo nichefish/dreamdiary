@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.domain.jrnl.day.mapstruct;
 
 import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDayEntity;
+import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDaySmpEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
 import io.nicheblog.dreamdiary.domain.jrnl.diary.mapstruct.JrnlDiaryMapstruct;
 import io.nicheblog.dreamdiary.domain.jrnl.dream.mapstruct.JrnlDreamMapstruct;
@@ -75,6 +76,14 @@ public interface JrnlDayMapstruct
     @Mapping(target = "jrnlDt", expression = "java(DateUtils.asDate(dto.getJrnlDt()))")
     @Mapping(target = "aprxmtDt", expression = "java(DateUtils.asDate(dto.getAprxmtDt()))")
     JrnlDayEntity toEntity(final JrnlDayDto dto) throws Exception;
+
+    /**
+     * 일반 엔티티를 간소화 엔티티로 변환
+     * @param entity 변환할 entity 객체
+     * @return SmpEntity -- 변환된 간소화 객체
+     * @throws Exception 변환 중 발생할 수 있는 예외
+     */
+    JrnlDaySmpEntity asSmp(final JrnlDayEntity entity) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)

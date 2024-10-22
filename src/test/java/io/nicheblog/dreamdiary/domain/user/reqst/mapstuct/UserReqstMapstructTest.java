@@ -37,7 +37,7 @@ class UserReqstMapstructTest {
     @Test
     void testToEntity_checkBasic() throws Exception {
         // Given::
-        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst();
+`        UserReqstDto userReqstDto = UserReqstDtoTestFactory.create();
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
@@ -55,7 +55,7 @@ class UserReqstMapstructTest {
     @Test
     void testToEntity_checkAcsIp() throws Exception {
         // Given::
-        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst();
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.create();
         // 접속 IP 세팅
         userReqstDto.setUseAcsIpYn("Y");
         userReqstDto.setAcsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]");
@@ -78,8 +78,8 @@ class UserReqstMapstructTest {
     @Test
     void testToEntity_checkProfl() throws Exception {
         // Given::
-        UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
-        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(userProflDto);
+        UserProflDto userProflDto = UserProflDtoTestFactory.create();
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.create(userProflDto);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);
@@ -99,8 +99,8 @@ class UserReqstMapstructTest {
     @Test
     void testToEntity_checkEmplym() throws Exception {
         // Given::
-        UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
-        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(userEmplymDto);
+        UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.create();
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.create(userEmplymDto);
 
         // When::
         UserEntity entity = userReqstMapstruct.toEntity(userReqstDto);

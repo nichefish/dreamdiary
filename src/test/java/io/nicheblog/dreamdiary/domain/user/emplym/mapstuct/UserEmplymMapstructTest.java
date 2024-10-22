@@ -32,7 +32,7 @@ class UserEmplymMapstructTest {
     void testToDto_checkEmplym() throws Exception {
 
         // Given::
-        UserEmplymEntity userEmplymEntity = UserEmplymEntityTestFactory.createUserEmplymEntity();
+        UserEmplymEntity userEmplymEntity = UserEmplymEntityTestFactory.create();
 
         // When::
         UserEmplymDto userEmplymDto = userEmplymMapstruct.toDto(userEmplymEntity);
@@ -55,7 +55,7 @@ class UserEmplymMapstructTest {
     @Test
     void testToEntity_checkBasic() throws Exception {
         // Given::
-        UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
+        UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.create();
 
         // When::
         UserEmplymEntity userEmplymEntity = userEmplymMapstruct.toEntity(userEmplymDto);

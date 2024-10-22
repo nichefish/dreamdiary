@@ -32,7 +32,7 @@ class NoticeMapstructTest {
     @Test
     void testToDto_checkAuditor() throws Exception {
         // Given::
-        NoticeEntity noticeEntity = NoticeEntityTestFactory.createNotice();
+        NoticeEntity noticeEntity = NoticeEntityTestFactory.create();
         // 등록자
         BaseEntityTestFactoryHelper.setRegstrInfo(noticeEntity);
         // 수정자
@@ -61,7 +61,7 @@ class NoticeMapstructTest {
     @Test
     void testToEntity_checkBasic() throws Exception {
         // Given::
-        NoticeDto.DTL noticeDto = NoticeDtoTestFactory.createNoticeDtlDto();
+        NoticeDto.DTL noticeDto = NoticeDtoTestFactory.create();
 
         // When::
         NoticeEntity noticeEntity = noticeMapstruct.toEntity(noticeDto);

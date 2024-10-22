@@ -22,7 +22,7 @@ public class UserEntityTestFactory {
     /**
      * 테스트용 사용자 정보 Entity 객체 생성
      */
-    public static UserEntity createUser() throws Exception {
+    public static UserEntity create() throws Exception {
         // 갹체 생성
         return UserEntity.builder()
                 .userId(TestConstant.TEST_USER)
@@ -38,9 +38,9 @@ public class UserEntityTestFactory {
     /**
      * 테스트용 사용자 정보 Entity 객체 생성
      */
-    public static UserEntity createUser(UserProflEntity profl) throws Exception {
+    public static UserEntity create(UserProflEntity profl) throws Exception {
         // 갹체 생성
-        UserEntity entity = createUser();
+        UserEntity entity = create();
         entity.setProfl(profl);
         return entity;
     }
@@ -48,9 +48,9 @@ public class UserEntityTestFactory {
     /**
      * 테스트용 사용자 정보 Entity 객체 생성
      */
-    public static UserEntity createUser(UserEmplymEntity emplym) throws Exception {
+    public static UserEntity create(UserEmplymEntity emplym) throws Exception {
         // 갹체 생성
-        UserEntity entity = createUser();
+        UserEntity entity = create();
         entity.setEmplym(emplym);
         return entity;
     }
@@ -58,9 +58,9 @@ public class UserEntityTestFactory {
     /**
      * 테스트용 사용자 정보 Entity 객체 생성
      */
-    public static UserEntity createUser(UserProflEntity profl, UserEmplymEntity emplym) throws Exception {
+    public static UserEntity create(UserProflEntity profl, UserEmplymEntity emplym) throws Exception {
         // 갹체 생성
-        UserEntity entity = createUser();
+        UserEntity entity = create();
         entity.setProfl(profl);
         entity.setEmplym(emplym);
         return entity;

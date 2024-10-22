@@ -19,7 +19,7 @@ public class UserProflEntityTestFactory {
     /**
      * 테스트용 사용자 프로필 정보 Entity 객체 생성
      */
-    public static UserProflEntity createUserProflEntity() throws Exception {
+    public static UserProflEntity create() throws Exception {
         // 갹체 생성
         return UserProflEntity.builder()
                 .brthdy(DateUtils.asDate("2000-01-01"))

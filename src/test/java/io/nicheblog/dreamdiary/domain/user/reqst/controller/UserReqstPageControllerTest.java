@@ -82,12 +82,12 @@ class UserReqstPageControllerTest {
     public void testUserReqstRegAjax() throws Exception {
         // given::
         // 요청 객체 생성
-        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst();
-        String userReqstJsonContent = UserReqstDtoTestFactory.createUserReqstJson();
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.create();
+        String userReqstJsonContent = UserReqstDtoTestFactory.createJson();
         // Multipart 요청을 위한 MockMultipartFile 객체 생성
         MockMultipartFile jsonFile = new MockMultipartFile("userReqst", "", "application/json", userReqstJsonContent.getBytes());
         // 응답 객체 설정
-        UserReqstDto rsltDto = UserReqstDtoTestFactory.createUserReqst();
+        UserReqstDto rsltDto = UserReqstDtoTestFactory.create();
         rsltDto.setUserNo(0);
         when(userReqstService.regist(any(UserReqstDto.class))).thenReturn(rsltDto);
 

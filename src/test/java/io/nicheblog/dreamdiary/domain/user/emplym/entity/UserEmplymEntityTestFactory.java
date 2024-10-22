@@ -20,7 +20,7 @@ public class UserEmplymEntityTestFactory {
     /**
      * 테스트용 사용자 인사정보 Entity 객체 생성
      */
-    public static UserEmplymEntity createUserEmplymEntity() throws Exception {
+    public static UserEmplymEntity create() throws Exception {
         // 갹체 생성
         return UserEmplymEntity.builder()
                 .userNm(TestConstant.TEST_USER)

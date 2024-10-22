@@ -32,7 +32,7 @@ class UserProflMapstructTest {
     void testToDto_checkProfl() throws Exception {
 
         // Given::
-        UserProflEntity userProflEntity = UserProflEntityTestFactory.createUserProflEntity();
+        UserProflEntity userProflEntity = UserProflEntityTestFactory.create();
 
         // When::
         UserProflDto userProflDto = userProflMapstruct.toDto(userProflEntity);
@@ -52,7 +52,7 @@ class UserProflMapstructTest {
     @Test
     void testToEntity_checkBasic() throws Exception {
         // Given::
-        UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
+        UserProflDto userProflDto = UserProflDtoTestFactory.create();
 
         // When::
         UserProflEntity userProflEntity = userProflMapstruct.toEntity(userProflDto);

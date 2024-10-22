@@ -18,7 +18,7 @@ public class UserAcsIpEntityTestFactory {
     /**
      * 테스트용 사용자 접속 IP Entity 생성
      */
-    public static UserAcsIpEntity createUserAcsIpEntity(final String acsIp) {
+    public static UserAcsIpEntity create(final String acsIp) {
         return UserAcsIpEntity.builder()
                 .acsIp(acsIp)
                 .build();

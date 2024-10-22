@@ -35,10 +35,10 @@ class JrnlDreamMapstructTest {
     @Test
     void testToDto_checkBasic() throws Exception {
         // Given::
-        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDaySmp();
+        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createSmp();
         jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));
 
-        JrnlDreamEntity jrnlDreamEntity = JrnlDreamEntityTestFactory.createJrnlDream();
+        JrnlDreamEntity jrnlDreamEntity = JrnlDreamEntityTestFactory.create();
         jrnlDreamEntity.setJrnlDay(jrnlDayEntity);
 
         // When::
@@ -56,9 +56,9 @@ class JrnlDreamMapstructTest {
     @Test
     void testToDto_checkAuditor() throws Exception {
         // Given::
-        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDaySmp();
+        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createSmp();
         jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));
-        JrnlDreamEntity jrnlDreamEntity = JrnlDreamEntityTestFactory.createJrnlDream();
+        JrnlDreamEntity jrnlDreamEntity = JrnlDreamEntityTestFactory.create();
         jrnlDreamEntity.setJrnlDay(jrnlDayEntity);
         // 등록자
         BaseEntityTestFactoryHelper.setRegstrInfo(jrnlDreamEntity);

@@ -44,12 +44,12 @@ class AuthInfoMapstructTest {
     @Test
     void testToDto_checkBasic() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
         userEntity.setProflImgUrl("test_url");
         // 접속IP : Entity 로딩시 AcsIpList -> AcsIpStrList 변환됨. (@Transient)
         userEntity.setUseAcsIpYn("Y");
-        UserAcsIpEntity aa = UserAcsIpEntityTestFactory.createUserAcsIpEntity("1.1.1.1");
-        UserAcsIpEntity bb = UserAcsIpEntityTestFactory.createUserAcsIpEntity("2.2.2.2");
+        UserAcsIpEntity aa = UserAcsIpEntityTestFactory.create("1.1.1.1");
+        UserAcsIpEntity bb = UserAcsIpEntityTestFactory.create("2.2.2.2");
         userEntity.setAcsIpList(List.of(aa, bb));
         userEntity.setAcsIpStrList(userEntity.getAcsIpList().stream()
                 .map(UserAcsIpEntity::getAcsIp)
@@ -77,10 +77,10 @@ class AuthInfoMapstructTest {
     @Test
     void testToDto_checkMapping() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
         // authList
-        UserAuthRoleEntity aa = UserAuthRoleEntityTestFactory.getUserAuthRoleEntity(Auth.USER);
-        UserAuthRoleEntity bb = UserAuthRoleEntityTestFactory.getUserAuthRoleEntity(Auth.MNGR);
+        UserAuthRoleEntity aa = UserAuthRoleEntityTestFactory.create(Auth.USER);
+        UserAuthRoleEntity bb = UserAuthRoleEntityTestFactory.create(Auth.MNGR);
         userEntity.setAuthList(List.of(aa, bb));
         // acntStus
         UserStusEmbed acntStus = UserStusEmbed.builder()
@@ -113,7 +113,7 @@ class AuthInfoMapstructTest {
     @Test
     void testToDto_checkMapping_stusDtNotNull() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
         // acntStus - lstLgnDt, pwChgDt = null
         UserStusEmbed acntStus = UserStusEmbed.builder()
                 .lstLgnDt(DateUtils.asDate("2000-01-11"))
@@ -138,7 +138,7 @@ class AuthInfoMapstructTest {
     @Test
     void testToDto_checkMapping_stusDtNull() throws Exception {
         // Given::
-        UserEntity userEntity = UserEntityTestFactory.createUser();
+        UserEntity userEntity = UserEntityTestFactory.create();
         // acntStus - lstLgnDt, pwChgDt = null
         UserStusEmbed acntStus = UserStusEmbed.builder()
                 .lstLgnDt(null)
@@ -163,9 +163,9 @@ class AuthInfoMapstructTest {
     @Test
     void testToDto_checkMapping_userProfl() throws Exception {
         // Given::
-        UserProflEntity userProflEntity = UserProflEntityTestFactory.createUserProflEntity();
+        UserProflEntity userProflEntity = UserProflEntityTestFactory.create();
         userProflEntity.setUserProflNo(1);
-        UserEntity userEntity = UserEntityTestFactory.createUser(userProflEntity);
+        UserEntity userEntity = UserEntityTestFactory.create(userProflEntity);
 
         // When::
         AuthInfo dto = authInfoMapstruct.toDto(userEntity);

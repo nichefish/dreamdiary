@@ -47,7 +47,7 @@ class JrnlDiaryRepositoryTest {
     @Test
     public void testRegist() throws Exception {
         // Given::
-        JrnlDiaryEntity jrnlDiary = JrnlDiaryEntityTestFactory.createJrnlDiary();
+        JrnlDiaryEntity jrnlDiary = JrnlDiaryEntityTestFactory.create();
 
         // When::
         Integer rsltId = jrnlDiaryRepository.save(jrnlDiary).getPostNo();

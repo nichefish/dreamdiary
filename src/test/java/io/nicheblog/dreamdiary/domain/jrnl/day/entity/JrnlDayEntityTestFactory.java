@@ -19,7 +19,7 @@ public class JrnlDayEntityTestFactory {
     /**
      * 테스트용 저널 일자 Entity 생성
      */
-    public static JrnlDayEntity createJrnlDay() throws Exception {
+    public static JrnlDayEntity create() throws Exception {
         return JrnlDayEntity.builder()
                 .postNo(0)
                 .contentType(ContentType.JRNL_DAY.key)
@@ -29,7 +29,7 @@ public class JrnlDayEntityTestFactory {
     /**
      * 테스트용 저널 일자 Entity (simple) 생성
      */
-    public static JrnlDaySmpEntity createJrnlDaySmp() throws Exception {
+    public static JrnlDaySmpEntity createSmp() throws Exception {
         return JrnlDaySmpEntity.builder()
                 .postNo(0)
                 .contentType(ContentType.JRNL_DAY.key)

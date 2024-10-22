@@ -46,7 +46,7 @@ class JrnlDayToDtoMapstructTest {
     @BeforeEach
     void setUp() throws Exception {
         // 공통적으로 사용할 JrnlDayEntity 초기화
-        jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDay();
+        jrnlDayEntity = JrnlDayEntityTestFactory.create();
         jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));        // 2000년 1월 1일, 툐요일.
     }
 
@@ -121,8 +121,8 @@ class JrnlDayToDtoMapstructTest {
     @Test
     void testToDto_checkDiaryList() throws Exception {
         // Given::
-        JrnlDiaryEntity aa = JrnlDiaryEntityTestFactory.createJrnlDiary();
-        JrnlDiaryEntity bb = JrnlDiaryEntityTestFactory.createJrnlDiary();
+        JrnlDiaryEntity aa = JrnlDiaryEntityTestFactory.createWithJrnlDay(jrnlDayEntity);
+        JrnlDiaryEntity bb = JrnlDiaryEntityTestFactory.createWithJrnlDay(jrnlDayEntity);
         jrnlDayEntity.setJrnlDiaryList(List.of(aa, bb));
 
         // When::
@@ -139,8 +139,8 @@ class JrnlDayToDtoMapstructTest {
     @Test
     void testToDto_checkDreamList() throws Exception {
         // Given::
-        JrnlDreamEntity aa = JrnlDreamEntityTestFactory.createJrnlDream();
-        JrnlDreamEntity bb = JrnlDreamEntityTestFactory.createJrnlDream();
+        JrnlDreamEntity aa = JrnlDreamEntityTestFactory.createWithJrnlDay(jrnlDayEntity);
+        JrnlDreamEntity bb = JrnlDreamEntityTestFactory.createWithJrnlDay(jrnlDayEntity);
         jrnlDayEntity.setJrnlDreamList(List.of(aa, bb));
 
         // When::
@@ -157,8 +157,8 @@ class JrnlDayToDtoMapstructTest {
     @Test
     void testToDto_checkElseDreamList() throws Exception {
         // Given::
-        JrnlDreamEntity aa = JrnlDreamEntityTestFactory.createJrnlDream();
-        JrnlDreamEntity bb = JrnlDreamEntityTestFactory.createJrnlDream();
+        JrnlDreamEntity aa = JrnlDreamEntityTestFactory.createWithJrnlDay(jrnlDayEntity);
+        JrnlDreamEntity bb = JrnlDreamEntityTestFactory.createWithJrnlDay(jrnlDayEntity);
         jrnlDayEntity.setJrnlElseDreamList(List.of(aa, bb));
 
         // When::

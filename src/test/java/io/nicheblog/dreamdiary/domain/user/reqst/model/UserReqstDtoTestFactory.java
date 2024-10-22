@@ -30,7 +30,7 @@ public class UserReqstDtoTestFactory {
     /**
      * 테스트용 사용자 신청 정보 Dto 객체 생성
      */
-    public static UserReqstDto createUserReqst() {
+    public static UserReqstDto create() {
         // 갹체 생성
         return UserReqstDto.builder()
                 .userId(TestConstant.TEST_USER)
@@ -48,9 +48,9 @@ public class UserReqstDtoTestFactory {
     /**
      * 테스트용 사용자 신청 정보 Dto 객체 생성
      */
-    public static UserReqstDto createUserReqst(UserProflDto profl) {
+    public static UserReqstDto create(UserProflDto profl) {
         // 갹체 생성
-        UserReqstDto dto = createUserReqst();
+        UserReqstDto dto = create();
         dto.setProfl(profl);
         return dto;
     }
@@ -58,9 +58,9 @@ public class UserReqstDtoTestFactory {
     /**
      * 테스트용 사용자 신청 정보 Dto 객체 생성
      */
-    public static UserReqstDto createUserReqst(UserEmplymDto emplym) {
+    public static UserReqstDto create(UserEmplymDto emplym) {
         // 갹체 생성
-        UserReqstDto dto = createUserReqst();
+        UserReqstDto dto = create();
         dto.setEmplym(emplym);
         return dto;
     }
@@ -68,9 +68,9 @@ public class UserReqstDtoTestFactory {
     /**
      * 테스트용 사용자 신청 정보 Dto 객체 생성
      */
-    public static UserReqstDto createUserReqst(UserProflDto profl, UserEmplymDto emplym) {
+    public static UserReqstDto create(UserProflDto profl, UserEmplymDto emplym) {
         // 갹체 생성
-        UserReqstDto dto = createUserReqst();
+        UserReqstDto dto = create();
         dto.setProfl(profl);
         dto.setEmplym(emplym);
         return dto;
@@ -79,8 +79,8 @@ public class UserReqstDtoTestFactory {
     /**
      * 사용자 계정 신청 JSON 문자열 생성
      */
-    public static String createUserReqstJson() throws JsonProcessingException {
-        UserReqstDto userReqstDto = createUserReqst();
+    public static String createJson() throws JsonProcessingException {
+        UserReqstDto userReqstDto = create();
         return objectMapper.writeValueAsString(userReqstDto);
     }
 }

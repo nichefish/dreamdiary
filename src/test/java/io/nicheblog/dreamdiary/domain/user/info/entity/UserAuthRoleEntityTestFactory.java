@@ -19,7 +19,7 @@ public class UserAuthRoleEntityTestFactory {
     /**
      * 테스트용 사용자 권한 Entity 생성
      */
-    public static UserAuthRoleEntity getUserAuthRoleEntity(Auth auth) {
+    public static UserAuthRoleEntity create(Auth auth) {
         return UserAuthRoleEntity.builder()
                 .authCd(auth.name())
                 .build();

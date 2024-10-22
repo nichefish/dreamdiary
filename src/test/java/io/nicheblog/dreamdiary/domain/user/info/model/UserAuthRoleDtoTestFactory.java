@@ -19,7 +19,7 @@ public class UserAuthRoleDtoTestFactory {
     /**
      * 테스트용 사용자 권한 Dto 생성
      */
-    public static UserAuthRoleDto getUserAuthRoleDto(Auth auth) {
+    public static UserAuthRoleDto create(Auth auth) {
         return UserAuthRoleDto.builder()
                 .authCd(auth.name())
                 .build();

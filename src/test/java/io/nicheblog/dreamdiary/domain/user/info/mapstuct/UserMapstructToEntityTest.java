@@ -45,7 +45,7 @@ class UserMapstructToEntityTest {
     @Test
     void testToEntity_checkBasic() throws Exception {
         // Given::
-        UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
+        UserDto.DTL userDto = UserDtoTestFactory.create();
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);
@@ -63,10 +63,10 @@ class UserMapstructToEntityTest {
     @Test
     void testToEntity_checkAuth() throws Exception {
         // Given::
-        UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
+        UserDto.DTL userDto = UserDtoTestFactory.create();
         // AUTH
-        UserAuthRoleDto aa = UserAuthRoleDtoTestFactory.getUserAuthRoleDto(Auth.USER);
-        UserAuthRoleDto bb = UserAuthRoleDtoTestFactory.getUserAuthRoleDto(Auth.MNGR);
+        UserAuthRoleDto aa = UserAuthRoleDtoTestFactory.create(Auth.USER);
+        UserAuthRoleDto bb = UserAuthRoleDtoTestFactory.create(Auth.MNGR);
         userDto.setAuthList(List.of(aa, bb));
 
         // When::
@@ -88,7 +88,7 @@ class UserMapstructToEntityTest {
     @Test
     void testToEntity_checkAcsIp() throws Exception {
         // Given::
-        UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto();
+        UserDto.DTL userDto = UserDtoTestFactory.create();
         // ACS_IP
         userDto.setUseAcsIpYn("Y");
         userDto.setAcsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]");
@@ -111,8 +111,8 @@ class UserMapstructToEntityTest {
     @Test
     void testToEntity_checkProfl() throws Exception {
         // Given::
-        UserProflDto userProflDto = UserProflDtoTestFactory.createUserProfl();
-        UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto(userProflDto);
+        UserProflDto userProflDto = UserProflDtoTestFactory.create();
+        UserDto.DTL userDto = UserDtoTestFactory.create(userProflDto);
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);
@@ -132,8 +132,8 @@ class UserMapstructToEntityTest {
     @Test
     void testToEntity_checkEmplym() throws Exception {
         // Given::
-        UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.createUserEmplym();
-        UserDto.DTL userDto = UserDtoTestFactory.createUserDtlDto(userEmplymDto);
+        UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.create();
+        UserDto.DTL userDto = UserDtoTestFactory.create(userEmplymDto);
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);

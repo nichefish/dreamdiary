@@ -46,9 +46,9 @@ class UserReqstServiceTest {
     @Test
     void regist() throws Exception {
         // Given::
-        UserProflDto profl = UserProflDtoTestFactory.createUserProfl();
-        UserEmplymDto emplym = UserEmplymDtoTestFactory.createUserEmplym();
-        UserReqstDto userReqstDto = UserReqstDtoTestFactory.createUserReqst(profl, emplym);
+        UserProflDto profl = UserProflDtoTestFactory.create();
+        UserEmplymDto emplym = UserEmplymDtoTestFactory.create();
+        UserReqstDto userReqstDto = UserReqstDtoTestFactory.create(profl, emplym);
 
         // userReqstService.regist() 내에서 호출될 MockBean들에 대해 행동 방침을 정해준다.
         when(passwordEncoder.encode(anyString())).thenReturn("encoded_password");

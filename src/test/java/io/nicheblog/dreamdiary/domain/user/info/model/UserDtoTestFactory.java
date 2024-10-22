@@ -22,7 +22,7 @@ public class UserDtoTestFactory {
     /**
      * 테스트용 사용자 Dto (상세) 생성
      */
-    public static UserDto.DTL createUserDtlDto() {
+    public static UserDto.DTL create() {
         // 갹체 생성
         return UserDto.DTL.builder()
                 .userId(TestConstant.TEST_USER)
@@ -38,9 +38,9 @@ public class UserDtoTestFactory {
     /**
      * 테스트용 사용자 Dto (상세) 생성
      */
-    public static UserDto.DTL createUserDtlDto(UserProflDto profl) {
+    public static UserDto.DTL create(UserProflDto profl) {
         // 갹체 생성
-        UserDto.DTL dto = createUserDtlDto();
+        UserDto.DTL dto = create();
         dto.setProfl(profl);
         return dto;
     }
@@ -48,9 +48,9 @@ public class UserDtoTestFactory {
     /**
      * 테스트용 사용자 Dto (상세) 생성
      */
-    public static UserDto.DTL createUserDtlDto(UserEmplymDto emplym) {
+    public static UserDto.DTL create(UserEmplymDto emplym) {
         // 갹체 생성
-        UserDto.DTL dto = createUserDtlDto();
+        UserDto.DTL dto = create();
         dto.setEmplym(emplym);
         return dto;
     }
@@ -58,9 +58,9 @@ public class UserDtoTestFactory {
     /**
      * 테스트용 사용자 Dto (상세) 생성
      */
-    public static UserDto.DTL createUserDtlDto(UserProflDto profl, UserEmplymDto emplym) {
+    public static UserDto.DTL create(UserProflDto profl, UserEmplymDto emplym) {
         // 갹체 생성
-        UserDto.DTL dto = createUserDtlDto();
+        UserDto.DTL dto = create();
         dto.setProfl(profl);
         dto.setEmplym(emplym);
         return dto;

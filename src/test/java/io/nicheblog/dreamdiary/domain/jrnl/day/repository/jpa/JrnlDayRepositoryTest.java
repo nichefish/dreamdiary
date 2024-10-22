@@ -60,7 +60,7 @@ class JrnlDayRepositoryTest {
     @Test
     public void testRegist() throws Exception {
         // Given::
-        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.createJrnlDay();
+        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.create();
         jrnlDay.setJrnlDt(DateUtils.asDate("2000-01-01"));
 
         // When::
@@ -84,14 +84,14 @@ class JrnlDayRepositoryTest {
     @Transactional
     public void testGetDreamList() throws Exception {
         // Given::
-        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.createJrnlDay();
+        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.create();
         jrnlDay.setJrnlDt(DateUtils.asDate("2000-01-01"));
         JrnlDayEntity rslt = jrnlDayRepository.saveAndFlush(jrnlDay);
         Integer rsltId = rslt.getPostNo();
 
         // When::
         // 저널 꿈 regist
-        JrnlDreamEntity jrnlDream = JrnlDreamEntityTestFactory.createJrnlDream();
+        JrnlDreamEntity jrnlDream = JrnlDreamEntityTestFactory.create();
         jrnlDream.setJrnlDayNo(rsltId);
         jrnlDreamRepository.saveAndFlush(jrnlDream);
         jrnlDayRepository.refresh(rslt);
@@ -111,14 +111,14 @@ class JrnlDayRepositoryTest {
     @Transactional
     public void testGetDiaryList() throws Exception {
         // Given::
-        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.createJrnlDay();
+        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.create();
         jrnlDay.setJrnlDt(DateUtils.asDate("2000-01-01"));
         JrnlDayEntity rslt = jrnlDayRepository.saveAndFlush(jrnlDay);
         Integer rsltId = rslt.getPostNo();
 
         // When::
         // 저널 꿈 regist
-        JrnlDiaryEntity jrnlDiary = JrnlDiaryEntityTestFactory.createJrnlDiary();
+        JrnlDiaryEntity jrnlDiary = JrnlDiaryEntityTestFactory.create();
         jrnlDiary.setJrnlDayNo(rsltId);
         jrnlDiaryRepository.saveAndFlush(jrnlDiary);
         jrnlDayRepository.refresh(rslt);

@@ -35,10 +35,10 @@ class JrnlDiaryMapstructTest {
     @Test
     void testToDto_checkBasic() throws Exception {
         // Given::
-        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDaySmp();
+        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createSmp();
         jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));
 
-        JrnlDiaryEntity jrnlDiaryEntity = JrnlDiaryEntityTestFactory.createJrnlDiary();
+        JrnlDiaryEntity jrnlDiaryEntity = JrnlDiaryEntityTestFactory.create();
         jrnlDiaryEntity.setJrnlDay(jrnlDayEntity);
 
         // When::
@@ -56,8 +56,8 @@ class JrnlDiaryMapstructTest {
     @Test
     void testToDto_checkAuditor() throws Exception {
         // Given::
-        JrnlDiaryEntity jrnlDiaryEntity = JrnlDiaryEntityTestFactory.createJrnlDiary();
-        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createJrnlDaySmp();
+        JrnlDiaryEntity jrnlDiaryEntity = JrnlDiaryEntityTestFactory.create();
+        JrnlDaySmpEntity jrnlDayEntity = JrnlDayEntityTestFactory.createSmp();
         jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));
         jrnlDiaryEntity.setJrnlDay(jrnlDayEntity);
         // 등록자

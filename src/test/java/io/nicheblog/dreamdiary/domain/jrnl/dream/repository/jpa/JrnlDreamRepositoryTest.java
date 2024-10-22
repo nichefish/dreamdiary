@@ -47,7 +47,7 @@ class JrnlDreamRepositoryTest {
     @Test
     public void testRegist() throws Exception {
         // Given::
-        JrnlDreamEntity jrnlDream = JrnlDreamEntityTestFactory.createJrnlDream();
+        JrnlDreamEntity jrnlDream = JrnlDreamEntityTestFactory.create();
 
         // When::
         Integer rsltId = jrnlDreamRepository.save(jrnlDream).getPostNo();
