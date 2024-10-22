@@ -71,6 +71,7 @@ public interface JrnlDayMapstruct
      * @throws Exception 변환 중 발생할 수 있는 예외
      */
     @Override
+    @Named("toEntity")
     @Mapping(target = "jrnlDt", expression = "java(DateUtils.asDate(dto.getJrnlDt()))")
     @Mapping(target = "aprxmtDt", expression = "java(DateUtils.asDate(dto.getAprxmtDt()))")
     JrnlDayEntity toEntity(final JrnlDayDto dto) throws Exception;

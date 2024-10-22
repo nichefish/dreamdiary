@@ -238,10 +238,12 @@ public class SchdulCalService {
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public List<SchdulCalDto> getPrvtCalList(final SchdulSearchParam searchParam) throws Exception {
+        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
 
         searchParam.setPrevOnly(true);
         // 일정 목록 검색
-        List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(searchParam));
+        List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(filteredSearchKey));
         if (schdulEntityList.isEmpty()) return Collections.emptyList();
         // entity -> dto
         return SchdulCalMapstruct.INSTANCE.toDtoList(schdulEntityList);

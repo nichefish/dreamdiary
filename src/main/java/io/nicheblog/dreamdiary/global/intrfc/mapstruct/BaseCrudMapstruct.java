@@ -71,7 +71,7 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
      * @return {@link Entity} -- 변환된 Entity 객체
      */
     @Named("convertToEntity")
-    default Entity toEntity(final ListDto listDto) throws Exception {
+    default Entity toEntityFromList(final ListDto listDto) throws Exception {
         Dto dto = this.convert(listDto);
         return this.toEntity(dto);
     }
@@ -88,7 +88,7 @@ public interface BaseCrudMapstruct<Dto extends BaseCrudDto, ListDto extends Base
         return dtoList.stream()
                 .map(dto -> {
                     try {
-                        return this.toEntity(dto);
+                        return this.toEntityFromList(dto);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
