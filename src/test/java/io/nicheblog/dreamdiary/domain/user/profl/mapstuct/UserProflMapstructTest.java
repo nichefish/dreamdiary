@@ -38,10 +38,9 @@ class UserProflMapstructTest {
         UserProflDto userProflDto = userProflMapstruct.toDto(userProflEntity);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(userProflDto);
+        assertNotNull(userProflDto, "변환된 프로필 정보 Dto는 null일 수 없습니다.");
         // 날짜 변환 체크
-        assertEquals(userProflDto.getBrthdy(), "2000-01-01");
+        assertEquals("2000-01-01", userProflDto.getBrthdy(), "프로필 생일 정보가 제대로 매핑되지 않았습니다.");
     }
 
     /* ----- */
@@ -58,10 +57,9 @@ class UserProflMapstructTest {
         UserProflEntity userProflEntity = userProflMapstruct.toEntity(userProflDto);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(userProflEntity);
+        assertNotNull(userProflEntity, "변환된 프로필 정보 Entity는 null일 수 없습니다.");
         // 날짜 변환 체크
-        assertEquals(userProflEntity.getBrthdy(), DateUtils.asDate("2000-01-01"));
+        assertEquals(DateUtils.asDate("2000-01-01"), userProflEntity.getBrthdy(), "프로필 생일 정보가 제대로 매핑되지 않았습니다.");
     }
 
 }

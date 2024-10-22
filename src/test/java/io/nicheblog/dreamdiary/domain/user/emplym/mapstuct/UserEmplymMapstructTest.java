@@ -41,8 +41,7 @@ class UserEmplymMapstructTest {
         UserEmplymDto userEmplymDto = userEmplymMapstruct.toDto(userEmplymEntity);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(userEmplymDto);
+        assertNotNull(userEmplymDto, "변환된 인사정보 Dto는 null일 수 없습니다.");
         // 날짜 변환 체크
         assertEquals("2000-01-01", userEmplymDto.getEcnyDt(), "직원정보 입사일이 제대로 매핑되지 않았습니다.");
         assertEquals("2000-01-01", userEmplymDto.getRetireDt(), "직원정보 퇴사일이 제대로 매핑되지 않았습니다.");
@@ -76,11 +75,10 @@ class UserEmplymMapstructTest {
         UserEmplymEntity userEmplymEntity = userEmplymMapstruct.toEntity(userEmplymDto);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(userEmplymEntity);
+        assertNotNull(userEmplymEntity, "변환된 인사정보 Entity는 null일 수 없습니다.");
         // 날짜 변환 체크
-        assertEquals(userEmplymEntity.getEcnyDt(), DateUtils.asDate("2000-01-01"));
-        assertEquals(userEmplymEntity.getRetireDt(), DateUtils.asDate("2000-01-01"));
+        assertEquals(DateUtils.asDate("2000-01-01"), userEmplymEntity.getEcnyDt(), "직원정보 입사일 정보가 제대로 매핑되지 않았습니다.");
+        assertEquals(DateUtils.asDate("2000-01-01"), userEmplymEntity.getRetireDt(), "직원정보 퇴사일 정보가 제대로 매핑되지 않았습니다.");
         // 이메일 변환 로직
         assertEquals(userEmplymEntity.getEmplymEmail(), userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain());
     }

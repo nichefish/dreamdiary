@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.domain.user.info.mapstuct;
 
+import io.nicheblog.dreamdiary.domain.user.emplym.entity.UserEmplymEntity;
 import io.nicheblog.dreamdiary.domain.user.emplym.model.UserEmplymDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.user.info.entity.UserAcsIpEntity;
 import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
 import io.nicheblog.dreamdiary.domain.user.info.mapstruct.UserMapstruct;
 import io.nicheblog.dreamdiary.domain.user.info.model.UserAuthRoleDto;
@@ -9,6 +11,7 @@ import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
 import io.nicheblog.dreamdiary.domain.user.info.model.UserDtoTestFactory;
 import io.nicheblog.dreamdiary.domain.user.info.model.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.domain.user.info.model.profl.UserProflDto;
+import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntity;
 import io.nicheblog.dreamdiary.domain.user.profl.model.UserProflDtoTestFactory;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global._common.auth.Auth;
@@ -18,11 +21,11 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * UserMapstructToEntityTest
@@ -52,7 +55,7 @@ class UserMapstructToEntityTest {
     }
 
     /**
-     * dto -> entity 변환 검증
+     * dto -> entity 변환 검증 :: 기본 속성 검증
      */
     @Test
     void testToEntity_checkBasic() throws Exception {
@@ -107,10 +110,11 @@ class UserMapstructToEntityTest {
         assertNotNull(entity, "변환된 사용자 Entity는 null일 수 없습니다.");
         // 접속 IP 관련
         assertEquals(userDto.getUseAcsIpYn(), entity.getUseAcsIpYn(), "접속 IP 사용여부가 제대로 매핑되지 않았습니다.");
-        assertNotNull(entity.getAcsIpList(), "변환된 접속 가능 IP 목록 Dto는 null일 수 없습니다.");
-        assertEquals(2, entity.getAcsIpList().size(), "접속 가능 IP 목록 크기가 일치하지 않습니다.");
-        assertEquals("1.1.1.1", entity.getAcsIpList().get(0).getAcsIp(), "접속 가능 IP 목록에서 IP 정보가 제대로 매핑되지 않았습니다.");
-        assertEquals("2.2.2.2", entity.getAcsIpList().get(1).getAcsIp(), "접속 가능 IP 목록에서 IP 정보가 제대로 매핑되지 않았습니다.");
+        List<UserAcsIpEntity> acsIpEntityList = entity.getAcsIpList();
+        assertNotNull(acsIpEntityList, "변환된 접속 가능 IP 목록 Dto는 null일 수 없습니다.");
+        assertEquals(2, acsIpEntityList.size(), "접속 가능 IP 목록 크기가 일치하지 않습니다.");
+        assertEquals("1.1.1.1", acsIpEntityList.get(0).getAcsIp(), "접속 가능 IP 목록에서 IP 정보가 제대로 매핑되지 않았습니다.");
+        assertEquals("2.2.2.2", acsIpEntityList.get(1).getAcsIp(), "접속 가능 IP 목록에서 IP 정보가 제대로 매핑되지 않았습니다.");
     }
 
     /**
@@ -127,9 +131,10 @@ class UserMapstructToEntityTest {
 
         // Then::
         assertNotNull(entity, "변환된 사용자 Entity는 null일 수 없습니다.");
-        assertNotNull(entity.getProfl(), "변환된 사용자 프로필 정보 Entity는 null일 수 없습니다.");
+        UserProflEntity userProflEntity = entity.getProfl();
+        assertNotNull(userProflEntity, "변환된 사용자 프로필 정보 Entity는 null일 수 없습니다.");
         // 날짜 변환 체크
-        assertEquals(DateUtils.asStr(entity.getProfl().getBrthdy(), DatePtn.DATE), "2000-01-01", "사용자 프로필 정보 생일 정보가 제대로 매핑되지 않았습니다.");
+        assertEquals(DateUtils.asDate("2000-01-01"), userProflEntity.getBrthdy(), "사용자 프로필 정보 생일 정보가 제대로 매핑되지 않았습니다.");
     }
 
     /**
@@ -146,12 +151,13 @@ class UserMapstructToEntityTest {
 
         // Then::
         assertNotNull(entity, "변환된 사용자 Entity는 null일 수 없습니다.");
-        assertNotNull(entity.getEmplym(), "변환된 사용자 직원정보 Entity는 null일 수 없습니다.");
+        UserEmplymEntity userEmplymEntity = entity.getEmplym();
+        assertNotNull(userEmplymEntity, "변환된 사용자 직원정보 Entity는 null일 수 없습니다.");
         // 날짜 변환 체크
-        assertEquals("2000-01-01", DateUtils.asStr(entity.getEmplym().getEcnyDt(), DatePtn.DATE), "사용자 직원정보 입사일 정보가 제대로 매핑되지 않았습니다.");
-        assertEquals("2000-01-01", DateUtils.asStr(entity.getEmplym().getRetireDt(), DatePtn.DATE), "사용자 직원정보 퇴사일 정보가 제대로 매핑되지 않았습니다.");
+        assertEquals(DateUtils.asDate("2000-01-01"), userEmplymEntity.getEcnyDt(), "사용자 직원정보 입사일 정보가 제대로 매핑되지 않았습니다.");
+        assertEquals(DateUtils.asDate("2000-01-01"), userEmplymEntity.getRetireDt(), "사용자 직원정보 퇴사일 정보가 제대로 매핑되지 않았습니다.");
         // 이메일 변환 로직
-        assertEquals(userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain(), entity.getEmplym().getEmplymEmail(), "이메일이 올바르게 매핑되지 않았습니다.");
+        assertEquals(userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain(), userEmplymEntity.getEmplymEmail(), "이메일이 올바르게 매핑되지 않았습니다.");
     }
 
     /* ----- */
