@@ -46,8 +46,7 @@ class JrnlDayToDtoMapstructTest {
     @BeforeEach
     void setUp() throws Exception {
         // 공통적으로 사용할 JrnlDayEntity 초기화
-        jrnlDayEntity = JrnlDayEntityTestFactory.create();
-        jrnlDayEntity.setJrnlDt(DateUtils.asDate("2000-01-01"));        // 2000년 1월 1일, 툐요일.
+        jrnlDayEntity = JrnlDayEntityTestFactory.createWithJrnlDt("2000-01-01");    // 2000년 1월 1일, 툐요일.
     }
 
     /**
@@ -61,7 +60,7 @@ class JrnlDayToDtoMapstructTest {
         JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
 
         // Then::
-        assertNotNull(jrnlDayDto, "변환된 저널 일자 DTO는 null일 수 없습니다.");
+        assertNotNull(jrnlDayDto, "변환된 저널 일자 Dto는 null일 수 없습니다.");
         // 날짜.
         assertEquals(DateUtils.asDate(jrnlDayDto.getJrnlDt()), jrnlDayEntity.getJrnlDt(), "저널 일자가 제대로 매핑되지 않았습니다.");
         // 주일
@@ -71,7 +70,7 @@ class JrnlDayToDtoMapstructTest {
     }
 
     /**
-     * entity -> dto 검증 :: 등록자/수정자 정보
+     * entity -> dto 검증 :: 등록자/수정자 정보 매핑 체크
      */
     @Test
     void testToDto_checkAuditor() throws Exception {
@@ -84,7 +83,7 @@ class JrnlDayToDtoMapstructTest {
         JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
 
         // Then::
-        assertNotNull(jrnlDayDto, "변환된 저널 일자 DTO는 null일 수 없습니다.");
+        assertNotNull(jrnlDayDto, "변환된 저널 일자 Dto는 null일 수 없습니다.");
         // 등록자
         assertEquals(TestConstant.TEST_REGSTR_ID, jrnlDayDto.getRegstrId(), "등록자 ID가 제대로 매핑되지 않았습니다.");
         assertEquals(TestConstant.TEST_REGSTR_NM, jrnlDayDto.getRegstrNm(), "등록자 이름이 제대로 매핑되지 않았습니다.");
@@ -101,15 +100,16 @@ class JrnlDayToDtoMapstructTest {
     @Test
     void testToDto_checkAprxmtDt() throws Exception {
         // Given::
-        // 대략일자 세팅
+        // 대략일자 세팅 (저널 일자 무효화)
         jrnlDayEntity.setDtUnknownYn("Y");
         jrnlDayEntity.setAprxmtDt(DateUtils.asDate("2000-01-01"));
+        jrnlDayEntity.setJrnlDt(null);
 
         // When::
         JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
 
         // Then::
-        assertNotNull(jrnlDayDto, "변환된 저널 일자 DTO는 null일 수 없습니다.");
+        assertNotNull(jrnlDayDto, "변환된 저널 일자 Dto는 null일 수 없습니다.");
         assertEquals(jrnlDayEntity.getDtUnknownYn(), jrnlDayDto.getDtUnknownYn(), "날짜미상여부가 제대로 매핑되지 않았습니다.");
         assertEquals(DateUtils.asStr(jrnlDayEntity.getAprxmtDt(), DatePtn.DATE), jrnlDayDto.getAprxmtDt(), "대략일자가 예측된 값이 아닙니다.");
         assertEquals(DateUtils.asStr(jrnlDayEntity.getAprxmtDt(), DatePtn.DATE), jrnlDayDto.getStdrdDt(), "기준일자가 제대로 산정되지 않았습니다.");
@@ -129,7 +129,7 @@ class JrnlDayToDtoMapstructTest {
         JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
 
         // Then::
-        assertNotNull(jrnlDayDto, "변환된 저널 일자 DTO는 null일 수 없습니다.");
+        assertNotNull(jrnlDayDto, "변환된 저널 일자 Dto는 null일 수 없습니다.");
         assertNotNull(jrnlDayDto.getJrnlDiaryList(), "저널 일기 목록이 제대로 매핑되지 않았습니다.");
     }
 
@@ -147,7 +147,7 @@ class JrnlDayToDtoMapstructTest {
         JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
 
         // Then::
-        assertNotNull(jrnlDayDto, "변환된 저널 일자 DTO는 null일 수 없습니다.");
+        assertNotNull(jrnlDayDto, "변환된 저널 일자 Dto는 null일 수 없습니다.");
         assertNotNull(jrnlDayDto.getJrnlDreamList(), "저널 꿈 목록이 제대로 매핑되지 않았습니다.");
     }
 
@@ -165,7 +165,7 @@ class JrnlDayToDtoMapstructTest {
         JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
 
         // Then::
-        assertNotNull(jrnlDayDto, "변환된 저널 일자 DTO는 null일 수 없습니다.");
+        assertNotNull(jrnlDayDto, "변환된 저널 일자 Dto는 null일 수 없습니다.");
         assertNotNull(jrnlDayDto.getJrnlElseDreamList(), "타인 꿈 목록이 제대로 매핑되지 않았습니다.");
     }
 
@@ -182,7 +182,7 @@ class JrnlDayToDtoMapstructTest {
         JrnlDayDto jrnlDayDto = jrnlDayMapstruct.toDto(jrnlDayEntity);
 
         // Then::
-        assertNotNull(jrnlDayDto, "변환된 저널 일자 DTO는 null일 수 없습니다.");
+        assertNotNull(jrnlDayDto, "변환된 저널 일자 Dto는 null일 수 없습니다.");
         assertNotNull(jrnlDayDto.getTag(), "태그 모듈이 제대로 매핑되지 않았습니다.");
     }
 }

@@ -1,6 +1,7 @@
 package io.nicheblog.dreamdiary.domain.jrnl.day.entity;
 
 import io.nicheblog.dreamdiary.global._common._clsf.ContentType;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -15,6 +16,18 @@ import org.springframework.test.context.ActiveProfiles;
 @UtilityClass
 @ActiveProfiles("test")
 public class JrnlDayEntityTestFactory {
+
+    /**
+     * 테스트용 저널 일자 Entity 생성
+     * @param jrnlDtStr 저널 일자 문자열
+     */
+    public static JrnlDayEntity createWithJrnlDt(String jrnlDtStr) throws Exception {
+        return JrnlDayEntity.builder()
+                .postNo(0)
+                .contentType(ContentType.JRNL_DAY.key)
+                .jrnlDt(DateUtils.asDate(jrnlDtStr))
+                .build();
+    }
 
     /**
      * 테스트용 저널 일자 Entity 생성

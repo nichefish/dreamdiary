@@ -1,7 +1,5 @@
 package io.nicheblog.dreamdiary.domain.user.info.mapstuct;
 
-import io.nicheblog.dreamdiary.global._common.auth.Auth;
-import io.nicheblog.dreamdiary.domain.user.emplym.entity.UserEmplymEntity;
 import io.nicheblog.dreamdiary.domain.user.emplym.model.UserEmplymDtoTestFactory;
 import io.nicheblog.dreamdiary.domain.user.info.entity.UserEntity;
 import io.nicheblog.dreamdiary.domain.user.info.mapstruct.UserMapstruct;
@@ -11,11 +9,13 @@ import io.nicheblog.dreamdiary.domain.user.info.model.UserDto;
 import io.nicheblog.dreamdiary.domain.user.info.model.UserDtoTestFactory;
 import io.nicheblog.dreamdiary.domain.user.info.model.emplym.UserEmplymDto;
 import io.nicheblog.dreamdiary.domain.user.info.model.profl.UserProflDto;
-import io.nicheblog.dreamdiary.domain.user.profl.entity.UserProflEntity;
 import io.nicheblog.dreamdiary.domain.user.profl.model.UserProflDtoTestFactory;
 import io.nicheblog.dreamdiary.global.Constant;
+import io.nicheblog.dreamdiary.global._common.auth.Auth;
+import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
@@ -39,22 +39,32 @@ class UserMapstructToEntityTest {
 
     private final UserMapstruct userMapstruct = UserMapstruct.INSTANCE;
 
+    private UserDto.DTL userDto;
+
+    /**
+     * 각 테스트 시작 전 세팅 초기화.
+     * @throws Exception 발생할 수 있는 예외.
+     */
+    @BeforeEach
+    void setUp() throws Exception {
+        // 공통적으로 사용할 UserDto 초기화
+        userDto = UserDtoTestFactory.create();
+    }
+
     /**
      * dto -> entity 변환 검증
      */
     @Test
     void testToEntity_checkBasic() throws Exception {
         // Given::
-        UserDto.DTL userDto = UserDtoTestFactory.create();
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(entity);
+        assertNotNull(entity, "변환된 사용자 Entity는 null일 수 없습니다.");
         // 이메일 변환 로직
-        assertEquals(entity.getEmail(), userDto.getEmailId() + "@" + userDto.getEmailDomain());
+        assertEquals(userDto.getEmailId() + "@" + userDto.getEmailDomain(), entity.getEmail(), "이메일이 올바르게 매핑되지 않았습니다.");
     }
 
     /**
@@ -63,7 +73,6 @@ class UserMapstructToEntityTest {
     @Test
     void testToEntity_checkAuth() throws Exception {
         // Given::
-        UserDto.DTL userDto = UserDtoTestFactory.create();
         // AUTH
         UserAuthRoleDto aa = UserAuthRoleDtoTestFactory.create(Auth.USER);
         UserAuthRoleDto bb = UserAuthRoleDtoTestFactory.create(Auth.MNGR);
@@ -73,13 +82,12 @@ class UserMapstructToEntityTest {
         UserEntity entity = userMapstruct.toEntity(userDto);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(entity);
+        assertNotNull(entity, "변환된 사용자 Entity는 null일 수 없습니다.");
         // 권한 관련 매핑 검증
-        assertFalse(CollectionUtils.isEmpty(entity.getAuthList()));
-        assertEquals(entity.getAuthList().size(), 2);
-        assertEquals(entity.getAuthList().get(0).getAuthCd(), Constant.AUTH_USER);
-        assertEquals(entity.getAuthList().get(1).getAuthCd(), Constant.AUTH_MNGR);
+        assertNotNull(entity.getAuthList(), "변환된 사용자 권한 목록은 null일 수 없습니다.");
+        assertEquals(2, entity.getAuthList().size(), "사용자 권한 목록 크기가 일치하지 않습니다.");
+        assertEquals(Constant.AUTH_USER, entity.getAuthList().get(0).getAuthCd(), "사용자 권한 목록에서 권한 정보가 제대로 매핑되지 않았습니다.");
+        assertEquals(Constant.AUTH_MNGR, entity.getAuthList().get(1).getAuthCd(), "사용자 권한 목록에서 권한 정보가 제대로 매핑되지 않았습니다.");
     }
 
     /**
@@ -88,7 +96,6 @@ class UserMapstructToEntityTest {
     @Test
     void testToEntity_checkAcsIp() throws Exception {
         // Given::
-        UserDto.DTL userDto = UserDtoTestFactory.create();
         // ACS_IP
         userDto.setUseAcsIpYn("Y");
         userDto.setAcsIpListStr("[{\"value\":\"1.1.1.1\"},{\"value\":\"2.2.2.2\"}]");
@@ -97,12 +104,13 @@ class UserMapstructToEntityTest {
         UserEntity entity = userMapstruct.toEntity(userDto);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(entity);
+        assertNotNull(entity, "변환된 사용자 Entity는 null일 수 없습니다.");
         // 접속 IP 관련
-        assertEquals(entity.getUseAcsIpYn(), userDto.getUseAcsIpYn());
-        assertEquals(entity.getAcsIpList().get(0).getAcsIp(), "1.1.1.1");
-        assertEquals(entity.getAcsIpList().get(1).getAcsIp(), "2.2.2.2");
+        assertEquals(userDto.getUseAcsIpYn(), entity.getUseAcsIpYn(), "접속 IP 사용여부가 제대로 매핑되지 않았습니다.");
+        assertNotNull(entity.getAcsIpList(), "변환된 접속 가능 IP 목록 Dto는 null일 수 없습니다.");
+        assertEquals(2, entity.getAcsIpList().size(), "접속 가능 IP 목록 크기가 일치하지 않습니다.");
+        assertEquals("1.1.1.1", entity.getAcsIpList().get(0).getAcsIp(), "접속 가능 IP 목록에서 IP 정보가 제대로 매핑되지 않았습니다.");
+        assertEquals("2.2.2.2", entity.getAcsIpList().get(1).getAcsIp(), "접속 가능 IP 목록에서 IP 정보가 제대로 매핑되지 않았습니다.");
     }
 
     /**
@@ -112,18 +120,16 @@ class UserMapstructToEntityTest {
     void testToEntity_checkProfl() throws Exception {
         // Given::
         UserProflDto userProflDto = UserProflDtoTestFactory.create();
-        UserDto.DTL userDto = UserDtoTestFactory.create(userProflDto);
+        userDto.setProfl(userProflDto);
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(entity);
-        UserProflEntity userProflEntity = entity.getProfl();
-        assertNotNull(userProflEntity);
+        assertNotNull(entity, "변환된 사용자 Entity는 null일 수 없습니다.");
+        assertNotNull(entity.getProfl(), "변환된 사용자 프로필 정보 Entity는 null일 수 없습니다.");
         // 날짜 변환 체크
-        assertEquals(userProflEntity.getBrthdy(), DateUtils.asDate("2000-01-01"));
+        assertEquals(DateUtils.asStr(entity.getProfl().getBrthdy(), DatePtn.DATE), "2000-01-01", "사용자 프로필 정보 생일 정보가 제대로 매핑되지 않았습니다.");
     }
 
     /**
@@ -133,21 +139,19 @@ class UserMapstructToEntityTest {
     void testToEntity_checkEmplym() throws Exception {
         // Given::
         UserEmplymDto userEmplymDto = UserEmplymDtoTestFactory.create();
-        UserDto.DTL userDto = UserDtoTestFactory.create(userEmplymDto);
+        userDto.setEmplym(userEmplymDto);
 
         // When::
         UserEntity entity = userMapstruct.toEntity(userDto);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(entity);
-        UserEmplymEntity userEmplymEntity = entity.getEmplym();
-        assertNotNull(userEmplymEntity);
+        assertNotNull(entity, "변환된 사용자 Entity는 null일 수 없습니다.");
+        assertNotNull(entity.getEmplym(), "변환된 사용자 직원정보 Entity는 null일 수 없습니다.");
         // 날짜 변환 체크
-        assertEquals(userEmplymEntity.getEcnyDt(), DateUtils.asDate("2000-01-01"));
-        assertEquals(userEmplymEntity.getRetireDt(), DateUtils.asDate("2000-01-01"));
+        assertEquals("2000-01-01", DateUtils.asStr(entity.getEmplym().getEcnyDt(), DatePtn.DATE), "사용자 직원정보 입사일 정보가 제대로 매핑되지 않았습니다.");
+        assertEquals("2000-01-01", DateUtils.asStr(entity.getEmplym().getRetireDt(), DatePtn.DATE), "사용자 직원정보 퇴사일 정보가 제대로 매핑되지 않았습니다.");
         // 이메일 변환 로직
-        assertEquals(userEmplymEntity.getEmplymEmail(), userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain());
+        assertEquals(userEmplymDto.getEmplymEmailId() + "@" + userEmplymDto.getEmplymEmailDomain(), entity.getEmplym().getEmplymEmail(), "이메일이 올바르게 매핑되지 않았습니다.");
     }
 
     /* ----- */

@@ -33,24 +33,23 @@ class NoticeMapstructTest {
     void testToDto_checkAuditor() throws Exception {
         // Given::
         NoticeEntity noticeEntity = NoticeEntityTestFactory.create();
-        // 등록자
+        // 등록자 / 수정자
         BaseEntityTestFactoryHelper.setRegstrInfo(noticeEntity);
-        // 수정자
         BaseEntityTestFactoryHelper.setMdfusrInfo(noticeEntity);
 
         // When::
-        NoticeDto dto = noticeMapstruct.toDto(noticeEntity);
+        NoticeDto noticeDto = noticeMapstruct.toDto(noticeEntity);
 
         // Then::
-        assertNotNull(dto);
+        assertNotNull(noticeDto, "변환된 공지사항 Dto는 null일 수 없습니다.");
         // 등록자
-        assertEquals(dto.getRegstrId(), TestConstant.TEST_REGSTR_ID);
-        assertEquals(dto.getRegstrNm(), TestConstant.TEST_REGSTR_NM);
-        assertEquals(dto.getRegDt(), "2000-01-01 00:00:00");
+        assertEquals(TestConstant.TEST_REGSTR_ID, noticeDto.getRegstrId(), "등록자 ID가 제대로 매핑되지 않았습니다.");
+        assertEquals(TestConstant.TEST_REGSTR_NM, noticeDto.getRegstrNm(), "등록자 이름이 제대로 매핑되지 않았습니다.");
+        assertEquals("2000-01-01 00:00:00", noticeDto.getRegDt(), "등록일시가 제대로 매핑되지 않았습니다.");
         // 수정자
-        assertEquals(dto.getMdfusrId(), TestConstant.TEST_MDFUSR_ID);
-        assertEquals(dto.getMdfusrNm(), TestConstant.TEST_MDFUSR_NM);
-        assertEquals(dto.getMdfDt(), "2000-01-01 00:00:00");
+        assertEquals(TestConstant.TEST_MDFUSR_ID, noticeDto.getMdfusrId(), "수정자 ID가 제대로 매핑되지 않았습니다.");
+        assertEquals(TestConstant.TEST_MDFUSR_NM, noticeDto.getMdfusrNm(), "수정자 이름이 제대로 매핑되지 않았습니다.");
+        assertEquals("2000-01-01 00:00:00", noticeDto.getMdfDt(), "수정일시가 제대로 매핑되지 않았습니다.");
     }
 
     /* ----- */
@@ -67,8 +66,7 @@ class NoticeMapstructTest {
         NoticeEntity noticeEntity = noticeMapstruct.toEntity(noticeDto);
 
         // Then::
-        // 일반 필드는 검증할 필요 없음. 로직이 들어가는 부분에 대하여 테스트 진행
-        assertNotNull(noticeEntity);
+        assertNotNull(noticeEntity, "변환된 공지사항 Entity는 null일 수 없습니다.");
     }
 
     /* ----- */

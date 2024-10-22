@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
  * LogActvtyRestControllerAspect
  * <pre>
  *  RestController에서의 로그 공통 처리 Aspect.
- *  TODO: 페이지 컨트롤러 / 서비스 로깅 추가하기.
  * </pre>
  *
  * @author nichefish
@@ -32,13 +31,13 @@ public class LogActvtyRestControllerAspect {
     private final ApplicationEventPublisher publisher;
 
     /**
-     * Pointcut :: RestController(API)를 대상으로 지정합니다.
+     * Pointcut :: RestController(API) 중 *Ajax로 끝나는 메소드를 대상으로 지정한다.
      */
-    @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
+    @Pointcut("within(@org.springframework.web.bind.annotation.RestController *) && execution(* *Ajax(..))")
     public void apiControllerMethods() { }
 
     /**
-     * RestController (API) 메소드 성공시 응답 객체를 기반으로 로그를 기록합니다.
+     * RestController (API) *Ajax 메소드 성공시 응답 객체를 기반으로 로그를 기록합니다.
      *
      * @param joinPoint 메소드 이름, 파라미터, 호출된 클래스, 타겟 객체 등의 메타 정보를 담은 객체
      * @param result 사용자에게 반환된 {@link ResponseEntity} 객체
@@ -57,7 +56,7 @@ public class LogActvtyRestControllerAspect {
     }
 
     /**
-     * RestController (API) 메소드 실행 중 예외 발생시 에러를 기반으로 로그를 기록합니다.
+     * RestController (API) *Ajax 메소드 실행 중 예외 발생시 에러를 기반으로 로그를 기록합니다.
      *
      * @param joinPoint 메소드 이름, 파라미터, 호출된 클래스, 타겟 객체 등의 메타 정보를 담은 객체
      * @param ex 익셉션 또는 에러

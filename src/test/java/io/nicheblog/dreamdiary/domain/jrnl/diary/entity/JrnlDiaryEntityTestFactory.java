@@ -21,7 +21,7 @@ public class JrnlDiaryEntityTestFactory {
 
     /**
      * 테스트용 저널 일기 Entity 생성
-     * @param jrnlDtStr 저널 일자 날짜 문자열
+     * @param jrnlDayEntity 저널 일자 Entity 객체
      */
     public static JrnlDiaryEntity createWithJrnlDay(JrnlDayEntity jrnlDayEntity) throws Exception {
         return JrnlDiaryEntity.builder()

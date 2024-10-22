@@ -46,7 +46,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Log4j2
 class JrnlDayPageControllerTest {
 
-
     @Autowired
     private MockMvc mockMvc;
     @MockBean(name = "jrnlDayService")
