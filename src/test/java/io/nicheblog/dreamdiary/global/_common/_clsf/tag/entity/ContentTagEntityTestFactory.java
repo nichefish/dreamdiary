@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.domain._core.tag.entity;
+package io.nicheblog.dreamdiary.global._common._clsf.tag.entity;
 
 import io.nicheblog.dreamdiary.global._common._clsf.tag.entity.TagEntity;
 import lombok.experimental.UtilityClass;

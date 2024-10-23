@@ -4,7 +4,6 @@ import io.nicheblog.dreamdiary.domain.jrnl.day.entity.JrnlDayEntity;
 import io.nicheblog.dreamdiary.domain.jrnl.day.mapstruct.JrnlDayMapstruct;
 import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
 import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDtoTestFactory;
-import io.nicheblog.dreamdiary.global._common._clsf.tag.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.global._common._clsf.tag.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
