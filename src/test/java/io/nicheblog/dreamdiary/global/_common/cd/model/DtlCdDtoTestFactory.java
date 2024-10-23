@@ -1,27 +1,26 @@
-package io.nicheblog.dreamdiary.domain._core.cd.entity;
+package io.nicheblog.dreamdiary.global._common.cd.model;
 
 import io.nicheblog.dreamdiary.global.TestConstant;
-import io.nicheblog.dreamdiary.global._common.cd.entity.DtlCdEntity;
 import lombok.experimental.UtilityClass;
 import org.springframework.test.context.ActiveProfiles;
 
 /**
- * DtlCdEntityTestFactory
+ * DtlCdDtoTestFactory
  * <pre>
- *  상세 코드 테스트 Entity 생성 팩토리 모듈
+ *  상세 코드 테스트 Dto 생성 팩토리 모듈
  * </pre>
  *
  * @author nichefish 
  */
 @UtilityClass
 @ActiveProfiles("test")
-public class DtlCdEntityTestFactory {
+public class DtlCdDtoTestFactory {
 
     /**
-     * 상세 코드 Entity 생성
+     * 상세 코드 상세 Dto 생성
      */
-    public static DtlCdEntity createDtlCd() throws Exception {
-        return DtlCdEntity.builder()
+    public static DtlCdDto createDtlCdDtlDto() throws Exception {
+        return DtlCdDto.builder()
                 .clCd(TestConstant.TEST_CL_CD)
                 .dtlCd(TestConstant.TEST_DTL_CD)
                 .dtlCdNm(TestConstant.TEST_DTL_CD_NM)

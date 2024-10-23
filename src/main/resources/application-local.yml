@@ -2,13 +2,10 @@
 #로컬(local) 프로필용 설정 파일
 
 server:
-    port: ${SERVER_PORT:8080}
+    port: ${SERVER_PORT:18081}
 
 logging:
     config: classpath:log4j2-local.yml
-    level:
-        web: DEBUG
-        org.springframework: DEBUG
 
 spring:
     servlet:
@@ -77,3 +74,15 @@ spring:
         username: ${ELASTIC_USERNAME}
         password: ${ELASTIC_PASSWORD}
         uris: ${ELASTIC_URIS}
+
+#jandi messenger properties
+api:
+    jandi:
+        teamId: ${JANDI_TEAM_ID}
+        topics:
+            - name: NOTICE
+              id:  ${JANDI_TOPIC_NOTICE}
+            - name: SCHDUL
+              id: ${JANDI_TOPIC_SCHDUL}
+            - name: TEST
+              id: ${TEST}

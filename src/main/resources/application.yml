@@ -86,6 +86,15 @@ server:
         session:
             timeout: 1h
 
+#AES128 secret key; 16 chars
+aes128:
+    secret-key: ${AES128_SECRET_KEY}
+
+#key used for remember-me library
+remember-me:
+    param: ${REMEMBER_ME_PARAM}
+    key: ${REMEMBER_ME_KEY}
+
 #OpenAPI Swagger config
 springdoc:
     paths-to-match:
@@ -106,3 +115,8 @@ springdoc:
         path: /api-docs
         #groups:
         #    enabled: true
+
+api:
+    kasi:
+        serviceKey: ${API_KASI_SERVICE_KEY}
+        api-url: ${API_KASI_URL}

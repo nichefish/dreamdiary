@@ -63,3 +63,14 @@ spring:
         username: ${ELASTIC_USERNAME}
         password: ${ELASTIC_PASSWORD}
         uris: ${ELASTIC_URIS}
+
+api:
+    jandi:
+        teamId: ${JANDI_TEAM_ID}
+        topics:
+            - name: NOTICE
+              id:  ${JANDI_TOPIC_NOTICE}
+            - name: SCHDUL
+              id: ${JANDI_TOPIC_SCHDUL}
+            - name: TEST
+              id: ${TEST}

@@ -22,7 +22,19 @@ public class JrnlDayDtoTestFactory {
     public static JrnlDayDto create() throws Exception {
         return JrnlDayDto.builder()
                 .postNo(0)
-                .contentType(ContentType.NOTICE.key)
+                .contentType(ContentType.JRNL_DAY.key)
                 .build();
     }
+
+    /**
+     * 테스트용 저널 일자 Dto 생성
+     */
+    public static JrnlDayDto createWithJrnlDt(final String jrnlDtStr) throws Exception {
+        return JrnlDayDto.builder()
+                .postNo(0)
+                .contentType(ContentType.JRNL_DAY.key)
+                .jrnlDt(jrnlDtStr)
+                .build();
+    }
+
 }

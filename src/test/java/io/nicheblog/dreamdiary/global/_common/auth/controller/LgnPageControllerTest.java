@@ -1,11 +1,10 @@
-package io.nicheblog.dreamdiary.domain._core.auth.controller;
+package io.nicheblog.dreamdiary.global._common.auth.controller;
 
-import io.nicheblog.dreamdiary.domain._core.auth.config.TestWebSecurityConfig;
-import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfo;
-import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfoTestFactory;
 import io.nicheblog.dreamdiary.domain.admin.web.controller.LgnPageController;
 import io.nicheblog.dreamdiary.domain.user.my.service.UserMyService;
 import io.nicheblog.dreamdiary.global.Url;
+import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfo;
+import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfoTestFactory;
 import io.nicheblog.dreamdiary.global.intrfc.controller.BaseControllerTestHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(LgnPageController.class)
 @ActiveProfiles("test")
 @AutoConfigureRestDocs(outputDir = "target/snippets")
-@Import(TestWebSecurityConfig.class)
 class LgnPageControllerTest {
 
     @Autowired

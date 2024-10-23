@@ -1,10 +1,9 @@
-package io.nicheblog.dreamdiary.domain._core.cd.mapstruct;
+package io.nicheblog.dreamdiary.global._common.cd.mapstruct;
 
 import io.nicheblog.dreamdiary.global._common.cd.entity.ClCdEntity;
-import io.nicheblog.dreamdiary.domain._core.cd.entity.ClCdEntityTestFactory;
-import io.nicheblog.dreamdiary.global._common.cd.mapstruct.ClCdMapstruct;
+import io.nicheblog.dreamdiary.global._common.cd.entity.ClCdEntityTestFactory;
 import io.nicheblog.dreamdiary.global._common.cd.model.ClCdDto;
-import io.nicheblog.dreamdiary.domain._core.cd.model.ClCdDtoTestFactory;
+import io.nicheblog.dreamdiary.global._common.cd.model.ClCdDtoTestFactory;
 import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.intrfc.entity.BaseEntityTestFactoryHelper;
 import lombok.extern.log4j.Log4j2;

@@ -1,14 +1,12 @@
 #application-dev.yml
 #개발(dev) 프로필용 설정 파일
 
-#로컬 포트=8080
+#개발 포트=18081
 server:
-    port: ${SERVER_PORT:8080}
+    port: ${SERVER_PORT:18081}
 
 logging:
     config: classpath:log4j2-dev.yml
-    level:
-        org.springframework.cache: DEBUG
 
 spring:
     servlet:
@@ -68,3 +66,13 @@ spring:
         password: ${ELASTIC_PASSWORD}
         uris: ${ELASTIC_URIS}
 
+api:
+    jandi:
+        teamId: ${JANDI_TEAM_ID}
+        topics:
+            - name: NOTICE
+              id:  ${JANDI_TOPIC_NOTICE}
+            - name: SCHDUL
+              id: ${JANDI_TOPIC_SCHDUL}
+            - name: TEST
+              id: ${TEST}

@@ -1,7 +1,6 @@
-package io.nicheblog.dreamdiary.domain._core.auth.mapstruct;
+package io.nicheblog.dreamdiary.global._common.auth.mapstruct;
 
 import io.nicheblog.dreamdiary.global._common.auth.Auth;
-import io.nicheblog.dreamdiary.global._common.auth.mapstruct.AuthInfoMapstruct;
 import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfo;
 import io.nicheblog.dreamdiary.domain.user.info.entity.*;
 import io.nicheblog.dreamdiary.domain.user.info.entity.UserAcsIpEntity;

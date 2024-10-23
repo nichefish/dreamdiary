@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import java.util.*;
@@ -22,6 +23,7 @@ import java.util.*;
  * @author nichefish
  */
 @Configuration
+@Profile("test")
 public class TestFreemarkerConfig
         implements BeanPostProcessor {
 

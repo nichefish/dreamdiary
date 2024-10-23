@@ -1,4 +1,4 @@
-package io.nicheblog.dreamdiary.domain._core.comment;
+package io.nicheblog.dreamdiary.global._common._clsf.comment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.nicheblog.dreamdiary.global._common._clsf.comment.controller.CommentApiController;

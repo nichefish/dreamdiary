@@ -1,7 +1,7 @@
 package io.nicheblog.dreamdiary.domain.main.controller;
 
 import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfo;
-import io.nicheblog.dreamdiary.domain._core.auth.model.AuthInfoTestFactory;
+import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfoTestFactory;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.intrfc.controller.BaseControllerTestHelper;
 import io.nicheblog.dreamdiary.domain.admin.web.controller.MainPageController;
