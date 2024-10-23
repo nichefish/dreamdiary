@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 public class JrnlSumryEntityTestFactory {
 
     /**
-     * 테스트용 저널 일기 Entity 생성
+     * 테스트용 저널 결산 Entity 생성
      */
     public static JrnlSumryEntity create() throws Exception {
         return JrnlSumryEntity.builder()

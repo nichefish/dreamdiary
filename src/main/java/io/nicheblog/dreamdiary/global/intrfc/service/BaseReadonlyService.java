@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -337,7 +338,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
         // 의존성 주입
         final Repository repository = this.getRepository();
         final Optional<Entity> entityWrapper = repository.findById(key);
-        return Objects.requireNonNull(entityWrapper.orElseThrow(() -> new NullPointerException("해당 정보가 존재하지 않습니다.")));
+        return Objects.requireNonNull(entityWrapper.orElseThrow(() -> new EntityNotFoundException("해당 정보가 존재하지 않습니다.")));
     }
 
     /**

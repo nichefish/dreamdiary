@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -88,10 +89,13 @@ class JrnlDiaryServiceTest {
 
         // When::
         Boolean isDeleted = jrnlDiaryService.delete(key);
-        JrnlDiaryDto rsDto = jrnlDiaryService.getDtlDto(key);
 
         // Then::
         assertTrue(isDeleted, "삭제가 정상적으로 이루어지지 않았습니다.");
-        assertNull(rsDto, "삭제가 정상적으로 이루어지지 않았습니다.");
+        // 삭제된 엔티티 조회
+        assertThrows(EntityNotFoundException.class,
+                () -> jrnlDiaryService.getDtlDto(key),
+                "삭제된 엔티티를 조회하려고 했으나 예외가 발생하지 않았습니다."
+        );
     }
 }
