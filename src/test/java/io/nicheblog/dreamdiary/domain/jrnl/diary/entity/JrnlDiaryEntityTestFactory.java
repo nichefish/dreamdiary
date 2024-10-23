@@ -25,7 +25,6 @@ public class JrnlDiaryEntityTestFactory {
      */
     public static JrnlDiaryEntity createWithJrnlDay(JrnlDayEntity jrnlDayEntity) throws Exception {
         return JrnlDiaryEntity.builder()
-                .postNo(0)
                 .contentType(ContentType.JRNL_DIARY.key)
                 .title("test_title")
                 .cn("test_cn")
@@ -40,7 +39,6 @@ public class JrnlDiaryEntityTestFactory {
      */
     public static JrnlDiaryEntity createWithJrnlDt(String jrnlDtStr) throws Exception {
         return JrnlDiaryEntity.builder()
-                .postNo(0)
                 .contentType(ContentType.JRNL_DIARY.key)
                 .title("test_title")
                 .cn("test_cn")

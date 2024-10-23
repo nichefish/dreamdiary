@@ -25,7 +25,6 @@ public class JrnlDreamEntityTestFactory {
      */
     public static JrnlDreamEntity createWithJrnlDay(JrnlDayEntity jrnlDayEntity) throws Exception {
         return JrnlDreamEntity.builder()
-                .postNo(0)
                 .contentType(ContentType.JRNL_DREAM.key)
                 .title("test_title")
                 .cn("test_cn")
@@ -40,7 +39,6 @@ public class JrnlDreamEntityTestFactory {
      */
     public static JrnlDreamEntity createWithJrnlDt(String jrnlDtStr) throws Exception {
         return JrnlDreamEntity.builder()
-                .postNo(0)
                 .contentType(ContentType.JRNL_DREAM.key)
                 .title("test_title")
                 .cn("test_cn")
