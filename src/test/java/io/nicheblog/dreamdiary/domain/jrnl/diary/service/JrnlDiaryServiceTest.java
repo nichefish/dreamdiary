@@ -1,7 +1,7 @@
-package io.nicheblog.dreamdiary.domain.jrnl.day.service;
+package io.nicheblog.dreamdiary.domain.jrnl.diary.service;
 
-import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDto;
-import io.nicheblog.dreamdiary.domain.jrnl.day.model.JrnlDayDtoTestFactory;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDto;
+import io.nicheblog.dreamdiary.domain.jrnl.diary.model.JrnlDiaryDtoTestFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,23 +13,23 @@ import javax.annotation.Resource;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * JrnlDayServiceTest
+ * JrnlDiaryServiceTest
  * <pre>
- *  저널 일자 관리 서비스 테스트 모듈
+ *  저널 일기 서비스 테스트 모듈
  *  "@Transactional 어노테이션 적용시 테스트 이후 트랜잭션이 롤백된다."
  * </pre>
- *
- * @author nichefish
+ * 
+ * @author nichefish 
  */
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-class JrnlDayServiceTest {
-
+class JrnlDiaryServiceTest {
+    
     @Resource
-    private JrnlDayService jrnlDayService;
+    private JrnlDiaryService jrnlDiaryService;
 
-    private JrnlDayDto jrnlDay;
+    private JrnlDiaryDto jrnlDiary;
 
     /**
      * 각 테스트 시작 전 세팅 초기화.
@@ -37,12 +37,12 @@ class JrnlDayServiceTest {
      */
     @BeforeEach
     void setUp() throws Exception {
-        // 공통적으로 사용할 JrnlDayDto 초기화
-        jrnlDay = JrnlDayDtoTestFactory.createWithJrnlDt("2000-01-01");
+        // 공통적으로 사용할 JrnlDiaryDto 초기화
+        jrnlDiary = JrnlDiaryDtoTestFactory.create();
     }
 
     /**
-     * 저널 일자 등록
+     * 저널 일기 등록
      * @throws Exception 등록 중 발생할 수 있는 예외
      */
     @Test
@@ -50,45 +50,45 @@ class JrnlDayServiceTest {
         // Given::
 
         // When::
-        JrnlDayDto result = jrnlDayService.regist(jrnlDay);
+        JrnlDiaryDto result = jrnlDiaryService.regist(jrnlDiary);
 
         // Then::
         assertNotNull(result.getPostNo(), "등록이 정상적으로 이루어지지 않았습니다.");
     }
 
     /**
-     * 저널 일자 수정
+     * 저널 일기 수정
      * @throws Exception 등록 중 발생할 수 있는 예외
      */
     @Test
     void modify() throws Exception {
         // Given::
-        JrnlDayDto base = jrnlDayService.regist(jrnlDay);
+        JrnlDiaryDto base = jrnlDiaryService.regist(jrnlDiary);
         Integer key = base.getKey();
 
         // When::
-        JrnlDayDto toModify = JrnlDayDtoTestFactory.createWithKey(key);
-        toModify.setJrnlDt("2020-01-01");
-        JrnlDayDto result = jrnlDayService.modify(toModify);
+        JrnlDiaryDto toModify = JrnlDiaryDtoTestFactory.createWithKey(key);
+        toModify.setCn("test");
+        JrnlDiaryDto result = jrnlDiaryService.modify(toModify);
 
         // Then::
         assertNotNull(result.getPostNo(), "수정이 정상적으로 이루어지지 않았습니다.");
-        assertEquals("2020-01-01", result.getJrnlDt(), "수정이 정상적으로 이루어지지 않았습니다.");
+        assertEquals("test", result.getCn(), "수정이 정상적으로 이루어지지 않았습니다.");
     }
 
     /**
-     * 저널 일자 삭제
+     * 저널 일기 삭제
      * @throws Exception 등록 중 발생할 수 있는 예외
      */
     @Test
     void delete() throws Exception {
         // Given::
-        JrnlDayDto base = jrnlDayService.regist(jrnlDay);
+        JrnlDiaryDto base = jrnlDiaryService.regist(jrnlDiary);
         Integer key = base.getKey();
 
         // When::
-        Boolean isDeleted = jrnlDayService.delete(key);
-        JrnlDayDto rsDto = jrnlDayService.getDtlDto(key);
+        Boolean isDeleted = jrnlDiaryService.delete(key);
+        JrnlDiaryDto rsDto = jrnlDiaryService.getDtlDto(key);
 
         // Then::
         assertTrue(isDeleted, "삭제가 정상적으로 이루어지지 않았습니다.");
