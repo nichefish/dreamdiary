@@ -71,9 +71,10 @@ public class JrnlDreamService
      */
     @Cacheable(value="imprtcDreamList", key="#yy")
     public List<JrnlDreamDto> getImprtcDreamList(final Integer yy) throws Exception {
-        JrnlDreamSearchParam searchParam = JrnlDreamSearchParam.builder().yy(yy).imprtcYn("Y").build();
-        List<JrnlDreamDto> imprtcDreamList = this.getListDto(searchParam);
+        final JrnlDreamSearchParam searchParam = JrnlDreamSearchParam.builder().yy(yy).imprtcYn("Y").build();
+        final List<JrnlDreamDto> imprtcDreamList = this.getListDto(searchParam);
         Collections.sort(imprtcDreamList);
+
         return imprtcDreamList;
     }
 
@@ -86,34 +87,35 @@ public class JrnlDreamService
      */
     @Cacheable(value="jrnlDreamTagDtl", key="#searchParam.hashCode()")
     public List<JrnlDreamDto> jrnlDreamTagDtl(final BaseSearchParam searchParam) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
         return this.getListDto(searchParamMap);
     }
 
     /**
      * 등록 전처리. (override)
      *
-     * @param dto 등록할 객체
+     * @param registDto 등록할 객체
      */
     @Override
-    public void preRegist(final JrnlDreamDto dto) {
-        if (!"Y".equals(dto.getElseDreamYn())) {
+    public void preRegist(final JrnlDreamDto registDto) {
+        if (!"Y".equals(registDto.getElseDreamYn())) {
             // 인덱스(정렬순서) 처리
-            Integer lastIndex = repository.findLastIndexByJrnlDay(dto.getJrnlDayNo()).orElse(0);
-            dto.setIdx(lastIndex + 1);
+            final Integer lastIndex = repository.findLastIndexByJrnlDay(registDto.getJrnlDayNo()).orElse(0);
+            registDto.setIdx(lastIndex + 1);
         }
     }
 
     /**
      * 등록 후처리. (override)
      *
-     * @param rslt - 등록된 엔티티
+     * @param updatedEntity - 등록된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postRegist(final JrnlDreamEntity rslt) throws Exception {
+    public void postRegist(final JrnlDreamEntity updatedEntity) throws Exception {
         // 관련 캐시 삭제
-        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DREAM));
+        publisher.publishEvent(new EhCacheEvictEvent(this, updatedEntity.getPostNo(), JRNL_DREAM));
     }
 
     /**
@@ -131,37 +133,37 @@ public class JrnlDreamService
     /**
      * 수정 후처리. (override)
      *
-     * @param rslt - 수정된 엔티티
+     * @param updatedEntity - 수정된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postModify(final JrnlDreamEntity rslt) throws Exception {
+    public void postModify(final JrnlDreamEntity updatedEntity) throws Exception {
         // 관련 캐시 삭제
-        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DREAM));
+        publisher.publishEvent(new EhCacheEvictEvent(this, updatedEntity.getPostNo(), JRNL_DREAM));
     }
 
     /**
      * 삭제 후처리. (override)
      *
-     * @param rslt - 삭제된 엔티티
+     * @param deletedEntity - 삭제된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postDelete(final JrnlDreamEntity rslt) throws Exception {
+    public void postDelete(final JrnlDreamEntity deletedEntity) throws Exception {
         // 관련 캐시 삭제
-        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DREAM));
+        publisher.publishEvent(new EhCacheEvictEvent(this, deletedEntity.getPostNo(), JRNL_DREAM));
         // TODO: 관련 엔티티 삭제?
     }
 
     /**
      * 삭제 데이터 조회
      *
-     * @param postNo 삭제된 데이터의 키
+     * @param key 삭제된 데이터의 키
      * @return {@link JrnlDreamDto} -- 삭제된 데이터 DTO
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Transactional(readOnly = true)
-    public JrnlDreamDto getDeletedDtlDto(final Integer postNo) throws Exception {
-        return jrnlDreamMapper.getDeletedByPostNo(postNo);
+    public JrnlDreamDto getDeletedDtlDto(final Integer key) throws Exception {
+        return jrnlDreamMapper.getDeletedByPostNo(key);
     }
 }

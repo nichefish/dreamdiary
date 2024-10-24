@@ -40,11 +40,12 @@ public class UserProflSpec
             List<Predicate> predicate = new ArrayList<>();
             try {
                 predicate = getCrdtUser(searchMode, yyStr, root, builder);
-                List<Order> order = getOrderByTitleAndEcnyDt(root, builder);
+                final List<Order> order = getOrderByTitleAndEcnyDt(root, builder);
                 query.orderBy(order);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             return builder.and(predicate.toArray(new Predicate[0]));
         };
     }
@@ -64,7 +65,7 @@ public class UserProflSpec
             final CriteriaBuilder builder
     ) {
 
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -80,6 +81,7 @@ public class UserProflSpec
                     }
             }
         }
+
         return predicate;
     }
 
@@ -99,19 +101,20 @@ public class UserProflSpec
             final Root<UserProflEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
         if (StringUtils.isEmpty(searchMode)) return predicate;
 
         if ("crdtUser".equals(searchMode)) {
-            Expression<String> cmpyCdExp = root.get("cmpyCd");
-            Expression<Date> retireDtExp = root.get("retireDt");
+            final Expression<String> cmpyCdExp = root.get("cmpyCd");
+            final Expression<Date> retireDtExp = root.get("retireDt");
             // 2. 기간조건 :: 해당 년도 내에 근무내역이 있음 (입사일은 당연히 있다고 간주, 퇴사일만 체크)
-            Date firstDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(yyStr + "0101"));
-            Predicate notRetired = builder.isNull(retireDtExp);
-            Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(retireDtExp, firstDay);
+            final Date firstDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(yyStr + "0101"));
+            final Predicate notRetired = builder.isNull(retireDtExp);
+            final Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(retireDtExp, firstDay);
             predicate.add(builder.or(notRetired, retiredAfterFirstDay));
             return predicate;
         }
+
         return predicate;
     }
 
@@ -126,10 +129,11 @@ public class UserProflSpec
             final Root<UserProflEntity> root,
             final CriteriaBuilder builder
     ) {
-        List<Order> order = new ArrayList<>();
-        Join<UserProflEntity, DtlCdEntity> rankCdJoin = root.join("rankCdInfo", JoinType.LEFT);
+        final List<Order> order = new ArrayList<>();
+        final Join<UserProflEntity, DtlCdEntity> rankCdJoin = root.join("rankCdInfo", JoinType.LEFT);
         order.add(builder.desc(rankCdJoin.get("state").get("sortOrdr")));
         order.add(builder.asc(root.get("ecnyDt")));
+
         return order;
     }
 }

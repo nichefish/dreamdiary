@@ -41,20 +41,20 @@ public class VcatnSchdulSpec
             final Root<VcatnSchdulEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
-        List<Predicate> predicate = new ArrayList<>();
-        Join<VcatnSchdulEntity, VcatnPaprEntity> vcatnPaprJoin = root.join("vcatnPapr", JoinType.LEFT);
+        final List<Predicate> predicate = new ArrayList<>();
+        final Join<VcatnSchdulEntity, VcatnPaprEntity> vcatnPaprJoin = root.join("vcatnPapr", JoinType.LEFT);
 
         // expressions
-        Expression<Date> endDtExp = root.get("endDt");
-        Expression<Date> bgnDtExp = root.get("bgnDt");
+        final Expression<Date> endDtExp = root.get("endDt");
+        final Expression<Date> bgnDtExp = root.get("bgnDt");
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
             switch (key) {
                 // 휴가계획서 등록자 혹은 수동등록대상자
                 case "userId":
-                    Predicate papr = builder.equal(vcatnPaprJoin.get("regstrId"), searchParamMap.get(key));
-                    Predicate manual = builder.equal(root.get("userId"), searchParamMap.get(key));
+                    final Predicate papr = builder.equal(vcatnPaprJoin.get("regstrId"), searchParamMap.get(key));
+                    final Predicate manual = builder.equal(root.get("userId"), searchParamMap.get(key));
                     predicate.add(builder.or(papr, manual));
                     continue;
                     // 휴가시작일이 검색종료일보다 이전이(거나 같)고. 휴가종료일이 검색시작일보다 이후(거나 같)인 것
@@ -74,6 +74,7 @@ public class VcatnSchdulSpec
                     }
             }
         }
+
         return predicate;
     }
 }

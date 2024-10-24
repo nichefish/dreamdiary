@@ -11,6 +11,7 @@ import io.nicheblog.dreamdiary.domain.jrnl.dream.repository.jpa.JrnlDreamReposit
 import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * JrnlDayRepositoryTest
@@ -84,13 +86,46 @@ class JrnlDayRepositoryTest {
         JrnlDayEntity rslt = jrnlDayRepository.findById(rsltId).orElse(null);
 
         // Then::
-        assertNotNull(rslt);
-        assertNotNull(rslt.getPostNo());
+        assertNotNull(rslt, "저장한 데이터를 조회할 수 없습니다.");
+        assertNotNull(rslt.getPostNo(), "저장된 엔티티의 key 값이 없습니다.");
         // audit
-        assertNotNull(rslt.getRegDt());
-        assertNotNull(rslt.getRegstrId());
-        assertEquals(rslt.getRegstrId(), TestConstant.TEST_AUDITOR);
+        assertNotNull(rslt.getRegDt(), "등록일자 audit 처리가 되지 않았습니다.");
+        assertNotNull(rslt.getRegstrId(),  "등록자 audit 처리가 되지 않았습니다.");
+        assertEquals(rslt.getRegstrId(), TestConstant.TEST_AUDITOR, "등록자가 예상 값과 일치하지 않습니다.");
     }
+
+    /**
+     * 해당 날짜 중복 체크(countByJrnlDt) 테스트
+     */
+    @Test
+    public void testCountByJrnlDt() throws Exception {
+        // Given::
+        jrnlDayRepository.save(jrnlDayEntity);
+
+        // When::
+        Integer count = jrnlDayRepository.countByJrnlDt(DateUtils.asDate("2000-01-01"));
+
+        // Then::
+        assertNotNull(count, "중복 체크 메소드가 제대로 실행되지 않았습니다.");
+        assertTrue(count >= 1, "해당 날짜에 대한 중복 체크가 실패하였습니다. 저장된 데이터가 1개 이상이어야 합니다.");
+    }
+
+    /**
+     * 날짜로 저널 일자 조회 테스트
+     */
+    @Test
+    public void testFindByJrnlDt() throws Exception {
+        // Given::
+        JrnlDayEntity result = jrnlDayRepository.save(jrnlDayEntity);
+
+        // When::
+        JrnlDayEntity retrieved = jrnlDayRepository.findByJrnlDt(DateUtils.asDate("2000-01-01"));
+
+        // Then::
+        assertNotNull(retrieved, "메소드가 제대로 실행되지 않았습니다.");
+        assertEquals(result.getPostNo(), retrieved.getPostNo(), "날짜를 이용한 조회에 실패했습니다.");
+    }
+
 
     /**
      * jrnlDream subentity select 테스트
@@ -99,8 +134,8 @@ class JrnlDayRepositoryTest {
     @Test
     public void testGetDreamList() throws Exception {
         // Given::
-        JrnlDayEntity rslt = jrnlDayRepository.save(jrnlDayEntity);
-        Integer jrnlDayNo = rslt.getPostNo();
+        JrnlDayEntity registered = jrnlDayRepository.save(jrnlDayEntity);
+        Integer jrnlDayNo = registered.getPostNo();
 
         testEntityManager.clear();
 
@@ -110,14 +145,14 @@ class JrnlDayRepositoryTest {
         jrnlDream.setJrnlDayNo(jrnlDayNo);
         jrnlDreamRepository.save(jrnlDream);
 
-        JrnlDayEntity refreshedJrnlDay = jrnlDayRepository.findById(jrnlDayNo).orElseThrow(() -> new EntityNotFoundException("저널 일자를 찾을 수 없습니다."));
-        List<JrnlDreamEntity> dreamList = refreshedJrnlDay.getJrnlDreamList();
+        JrnlDayEntity retrieved = jrnlDayRepository.findById(jrnlDayNo).orElseThrow(() -> new EntityNotFoundException("저널 일자를 찾을 수 없습니다."));
+        List<JrnlDreamEntity> dreamList = retrieved.getJrnlDreamList();
 
         // Then::
-        assertNotNull(refreshedJrnlDay);
+        assertNotNull(retrieved);
         assertNotNull(jrnlDayNo);
         // jrnlDream
-        assertNotNull(refreshedJrnlDay.getJrnlDreamList());
+        assertNotNull(retrieved.getJrnlDreamList());
     }
 
     /**
@@ -127,8 +162,8 @@ class JrnlDayRepositoryTest {
     @Test
     public void testGetDiaryList() throws Exception {
         // Given::
-        JrnlDayEntity rslt = jrnlDayRepository.save(jrnlDayEntity);
-        Integer jrnlDayNo = rslt.getPostNo();
+        JrnlDayEntity registered = jrnlDayRepository.save(jrnlDayEntity);
+        Integer jrnlDayNo = registered.getPostNo();
 
         testEntityManager.clear();
 
@@ -138,10 +173,13 @@ class JrnlDayRepositoryTest {
         jrnlDiary.setJrnlDayNo(jrnlDayNo);
         jrnlDiaryRepository.save(jrnlDiary);
 
+        JrnlDayEntity retrieved = jrnlDayRepository.findById(jrnlDayNo).orElseThrow(() -> new EntityNotFoundException("저널 일자를 찾을 수 없습니다."));
+        List<JrnlDreamEntity> dreamList = retrieved.getJrnlDreamList();
+
         // Then::
-        assertNotNull(rslt);
+        assertNotNull(retrieved);
         assertNotNull(jrnlDayNo);
         // jrnlDiary
-        assertNotNull(rslt.getJrnlDiaryList());
+        assertNotNull(retrieved.getJrnlDiaryList());
     }
 }

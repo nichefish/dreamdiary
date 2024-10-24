@@ -46,16 +46,19 @@ public class UserMyService {
         final String currPw = param.getCurrPw();
         final String newPw = param.getNewPw();
 
-        final UserEntity userEntity = userService.getDtlEntity(userId);
+        final UserEntity retrievedEntity = userService.getDtlEntity(userId);
+        if (retrievedEntity == null) return false;
 
         // password 일치여부 체크
-        if (!passwordEncoder.matches(currPw, userEntity.getPassword())) throw new BadCredentialsException(MessageUtils.PW_MISMATCH);
-        userEntity.setPassword(passwordEncoder.encode(newPw));
-        userEntity.acntStus.setNeedsPwReset("N");
-        userEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
-        final Integer rsId = userRepository.saveAndFlush(userEntity)
-                                     .getUserNo();
-        return (rsId != null);
+        if (!passwordEncoder.matches(currPw, retrievedEntity.getPassword())) {
+            throw new BadCredentialsException(MessageUtils.PW_MISMATCH);
+        }
+        retrievedEntity.setPassword(passwordEncoder.encode(newPw));
+        retrievedEntity.acntStus.setNeedsPwReset("N");
+        retrievedEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
+        final UserEntity modified = userRepository.saveAndFlush(retrievedEntity);
+
+        return modified.getUserNo() != null;
     }
 
     /**
@@ -65,14 +68,15 @@ public class UserMyService {
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public Boolean myPwCf(final String lgnUserId, final String currPw) throws Exception {
-
         // Entity 레벨 조회
-        final UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
-        if (rsUserEntity == null) return false;
+        final UserEntity retrievedEntity = userService.getDtlEntity(lgnUserId);
+        if (retrievedEntity == null) return false;
+
         // 1. 내 비밀번호가 맞는지부터 확인
-        if (!passwordEncoder.matches(currPw, rsUserEntity.getPassword())) {
+        if (!passwordEncoder.matches(currPw, retrievedEntity.getPassword())) {
             throw new BadCredentialsException(MessageUtils.PW_MISMATCH);
         }
+
         return true;
     }
 
@@ -85,19 +89,20 @@ public class UserMyService {
     @Transactional
     public Boolean myPwChg(final String lgnUserId, final String currPw, final String newPw) throws Exception {
         // Entity 레벨 조회
-        final UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
-        if (rsUserEntity == null) return false;
+        final UserEntity retrievedEntity = userService.getDtlEntity(lgnUserId);
+        if (retrievedEntity == null) return false;
+
         // 1. 내 비밀번호가 맞는지부터 확인
-        if (!passwordEncoder.matches(currPw, rsUserEntity.getPassword())) {
+        if (!passwordEncoder.matches(currPw, retrievedEntity.getPassword())) {
             throw new BadCredentialsException(MessageUtils.PW_MISMATCH);
         }
         // 2. 맞으면 비밀번호 업데이트
-        rsUserEntity.setPassword(passwordEncoder.encode(newPw));
-        rsUserEntity.acntStus.setNeedsPwReset("N");
-        rsUserEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
-        Integer rsId = userRepository.saveAndFlush(rsUserEntity)
-                                     .getUserNo();
-        return (rsId != null);
+        retrievedEntity.setPassword(passwordEncoder.encode(newPw));
+        retrievedEntity.acntStus.setNeedsPwReset("N");
+        retrievedEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
+        final UserEntity modified = userRepository.saveAndFlush(retrievedEntity);
+
+        return modified.getUserNo() != null;
     }
 
     /**
@@ -109,21 +114,20 @@ public class UserMyService {
     @Transactional
     public boolean uploadProflImg(final MultipartHttpServletRequest request) throws Exception {
         // 파일 영역 처리 후 업로드 정보 받아서 반환
-        final AtchFileDtlDto atchfileDtl = FileUtils.uploadDtlFile(request);
-        if (atchfileDtl == null) return false;
+        final AtchFileDtlDto uploaded = FileUtils.uploadDtlFile(request);
+        if (uploaded == null) return false;
 
         // 프로필 url 업데이트
-        final String url = atchfileDtl.getUrl();
+        final String url = uploaded.getUrl();
         final String lgnUserId = AuthUtils.getLgnUserId();
-        final UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
-        rsUserEntity.setProflImgUrl(url);
-        final Integer rsId = userRepository.saveAndFlush(rsUserEntity)
-                                     .getUserNo();
+        final UserEntity retrievedEntity = userService.getDtlEntity(lgnUserId);
+        retrievedEntity.setProflImgUrl(url);
+        final UserEntity modified = userRepository.saveAndFlush(retrievedEntity);
 
         // 관련 캐시 삭제
         EhCacheUtils.clearL2Cache(AuditorInfo.class);
 
-        return (rsId != null);
+        return modified.getUserNo() != null;
     }
 
     /**
@@ -136,14 +140,13 @@ public class UserMyService {
     public boolean removeProflImg() throws Exception {
         // 프로필 url 삭제
         final String lgnUserId = AuthUtils.getLgnUserId();
-        final UserEntity rsUserEntity = userService.getDtlEntity(lgnUserId);
-        rsUserEntity.setProflImgUrl(null);
-        final Integer rsId = userRepository.saveAndFlush(rsUserEntity)
-                                     .getUserNo();
+        final UserEntity retrievedEntity = userService.getDtlEntity(lgnUserId);
+        retrievedEntity.setProflImgUrl(null);
+        final UserEntity updatedEntity = userRepository.saveAndFlush(retrievedEntity);
 
         // 관련 캐시 삭제
         EhCacheUtils.clearL2Cache(AuditorInfo.class);
 
-        return (rsId != null);
+        return updatedEntity.getUserNo() != null;
     }
 }

@@ -96,13 +96,13 @@ public class JrnlSumryApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        final JrnlSumryDto.DTL rslt = jrnlSumryService.getSumryDtl(key);
+        final JrnlSumryDto.DTL retrievedDto = jrnlSumryService.getSumryDtl(key);
 
-        final boolean isSuccess = (rslt.getPostNo() != null);
+        final boolean isSuccess = (retrievedDto.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
         // 응답 결과 세팅
-        ajaxResponse.setRsltObj(rslt);
+        ajaxResponse.setRsltObj(retrievedDto);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg);

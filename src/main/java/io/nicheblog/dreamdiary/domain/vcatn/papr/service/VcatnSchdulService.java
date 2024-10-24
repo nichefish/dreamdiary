@@ -46,7 +46,7 @@ public class VcatnSchdulService
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public List<VcatnSchdulDto> getListDto(VcatnStatsYyDto statsYy) throws Exception {
-        Map<String, Object> searchParamMap = new HashMap(){{
+        final Map<String, Object> searchParamMap = new HashMap(){{
             put("statsYy", statsYy.getStatsYy());
             put("statsYy", statsYy.getStatsYy());
         }};

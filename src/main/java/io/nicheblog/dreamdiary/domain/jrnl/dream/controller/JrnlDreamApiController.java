@@ -150,13 +150,13 @@ public class JrnlDreamApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        final JrnlDreamDto rslt = jrnlDreamService.getDtlDtoWithCache(key);
+        final JrnlDreamDto retrievedDto = jrnlDreamService.getDtlDtoWithCache(key);
 
-        final boolean isSuccess = (rslt.getPostNo() != null);
+        final boolean isSuccess = (retrievedDto.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
         // 응답 결과 세팅
-        ajaxResponse.setRsltObj(rslt);
+        ajaxResponse.setRsltObj(retrievedDto);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg);

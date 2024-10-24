@@ -63,13 +63,13 @@ public class JrnlDreamTagSpec
             final CriteriaBuilder builder
     ) throws Exception {
 
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
 
         // 태그 조인
-        Join<TagEntity, JrnlDreamContentTagEntity> jrnlDreamTagJoin = root.join("jrnlDreamTagList", JoinType.INNER);
-        Join<JrnlDreamContentTagEntity, JrnlDreamSmpEntity> jrnlDreamJoin = jrnlDreamTagJoin.join("jrnlDream", JoinType.INNER);
-        Join<JrnlDreamSmpEntity, JrnlDaySmpEntity> jrnlDayJoin = jrnlDreamJoin.join("jrnlDay", JoinType.INNER);
-        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
+        final Join<TagEntity, JrnlDreamContentTagEntity> jrnlDreamTagJoin = root.join("jrnlDreamTagList", JoinType.INNER);
+        final Join<JrnlDreamContentTagEntity, JrnlDreamSmpEntity> jrnlDreamJoin = jrnlDreamTagJoin.join("jrnlDream", JoinType.INNER);
+        final Join<JrnlDreamSmpEntity, JrnlDaySmpEntity> jrnlDayJoin = jrnlDreamJoin.join("jrnlDay", JoinType.INNER);
+        final Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
 
         predicate.add(builder.equal(jrnlDreamTagJoin.get("refContentType"), ContentType.JRNL_DREAM.key));
         // 파라미터 비교
@@ -85,15 +85,16 @@ public class JrnlDreamTagSpec
                     continue;
                 case "yy":
                     // 9999 = 모든 년
-                    Integer yy = (Integer) searchParamMap.get(key);
+                    final Integer yy = (Integer) searchParamMap.get(key);
                     if (yy != 9999) predicate.add(builder.equal(jrnlDayJoin.get(key), yy));
                     continue;
                 case "mnth":
                     // 99 = 모든 월
-                    Integer mnth = (Integer) searchParamMap.get(key);
+                    final Integer mnth = (Integer) searchParamMap.get(key);
                     if (mnth != 99) predicate.add(builder.equal(jrnlDayJoin.get(key), mnth));
             }
         }
+
         return predicate;
     }
 }

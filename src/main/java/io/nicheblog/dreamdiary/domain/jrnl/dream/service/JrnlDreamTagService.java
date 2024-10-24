@@ -56,6 +56,7 @@ public class JrnlDreamTagService
     @Cacheable(value="jrnlDreamTagList", key="#yy + \"_\" + #mnth")
     public List<TagDto> getListDtoWithCache(final Integer yy, final Integer mnth) throws Exception {
         final JrnlDreamSearchParam searchParam = JrnlDreamSearchParam.builder().yy(yy).mnth(mnth).build();
+
         return this.getSelf().getListDto(searchParam);
     }
 
@@ -82,8 +83,8 @@ public class JrnlDreamTagService
                     if (size == 1) {
                         dto.setTagClass("ts-1");
                     } else {
-                        double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
-                        int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
+                        final double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
+                        final int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
                         dto.setTagClass("ts-"+tagSize);
                     }
                 })
@@ -107,6 +108,7 @@ public class JrnlDreamTagService
             tag.setContentSize(dreamSize);
             maxFrequency = Math.max(maxFrequency, dreamSize);
         }
+
         return maxFrequency;
     }
 
@@ -123,8 +125,7 @@ public class JrnlDreamTagService
     }
 
     public Map<String, List<TagDto>> getDreamSizedGroupListDto(final Integer yy, final Integer mnth) throws Exception {
-
-        List<TagDto> tagList = this.getDreamSizedListDto(yy, mnth);
+        final List<TagDto> tagList = this.getDreamSizedListDto(yy, mnth);
 
         // 태그를 카테고리별로 그룹화하여 맵으로 반환
         return tagList.stream()

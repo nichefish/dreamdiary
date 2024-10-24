@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +59,7 @@ public class UserService
     public UserDto.DTL getDtlDto(final String userId) throws Exception {
         // Entity 레벨 조회
         final UserEntity rsUserEntity = this.getDtlEntity(userId);
+
         return mapstruct.toDto(rsUserEntity);
     }
 
@@ -70,8 +72,9 @@ public class UserService
      * @throws Exception 조회 중 발생할 수 있는 기타 예외
      */
     public UserEntity getDtlEntity(final String userId) throws Exception {
-        Optional<UserEntity> rsUserEntityWrapper = repository.findByUserId(userId);
-        return Objects.requireNonNull(rsUserEntityWrapper.orElseThrow(() -> new NullPointerException("사용자 정보가 존재하지 않습니다.")));
+        final Optional<UserEntity> retrievedWrapper = repository.findByUserId(userId);
+
+        return Objects.requireNonNull(retrievedWrapper.orElseThrow(() -> new EntityNotFoundException("사용자 정보가 존재하지 않습니다.")));
     }
 
     /* ----- */
@@ -89,38 +92,38 @@ public class UserService
     /**
      * 등록 전처리. (override)
      *
-     * @param dto 등록할 객체
+     * @param registDto 등록할 객체
      */
     @Override
-    public void preRegist(final UserDto.DTL dto) throws Exception {
+    public void preRegist(final UserDto.DTL registDto) throws Exception {
         // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
-        if (StringUtils.isEmpty(dto.getAcsIpListStr())) {
-            dto.setUseAcsIpYn("N");
-            dto.setAcsIpListStr(null);
+        if (StringUtils.isEmpty(registDto.getAcsIpListStr())) {
+            registDto.setUseAcsIpYn("N");
+            registDto.setAcsIpListStr(null);
         }
     }
 
     /**
      * 등록 중간처리. (override)
      *
-     * @param entity 등록 전 entity 객체
+     * @param registEntity 등록 전 entity 객체
      */
     @Override
-    public void midRegist(final UserEntity entity) throws Exception {
+    public void midRegist(final UserEntity registEntity) throws Exception {
         // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
-        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-        entity.setAcntStus(UserStusEmbed.getRegistStus());
-        entity.cascade();
+        registEntity.setPassword(passwordEncoder.encode(registEntity.getPassword()));
+        registEntity.setAcntStus(UserStusEmbed.getRegistStus());
+        registEntity.cascade();
     }
 
     /**
      * 수정 후처리. (override)
      *
-     * @param rslt - 수정된 엔티티
+     * @param updatedEntity 수정된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postModify(final UserEntity rslt) throws Exception {
+    public void postModify(final UserEntity updatedEntity) throws Exception {
         // 관련 캐시 삭제
         EhCacheUtils.clearL2Cache(AuditorInfo.class);
     }
@@ -128,63 +131,68 @@ public class UserService
     /**
      * 삭제 후처리. (override)
      *
-     * @param rslt - 삭제된 엔티티
+     * @param deletedEntity - 삭제된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postDelete(final UserEntity rslt) throws Exception {
+    public void postDelete(final UserEntity deletedEntity) throws Exception {
         // 관련 캐시 삭제
         EhCacheUtils.clearL2Cache(AuditorInfo.class);
     }
 
     /**
      * 사용자 관리 > 사용자 비밀번호 초기화
+     * @param key 식별자
      */
     @Transactional
-    public Boolean passwordReset(final Integer userNo) throws Exception {
+    public Boolean passwordReset(final Integer key) throws Exception {
         // Entity 레벨 조회
-        final UserEntity rsUserEntity = this.getDtlEntity(userNo);
-        if (rsUserEntity == null) return false;
+        final UserEntity retrievedEntity = this.getDtlEntity(key);
+        if (retrievedEntity == null) return false;
+
         // 로그인 설정 조회 (cachable)
-        final LgnPolicyEntity rsLgnPolicyEntity = lgnPolicyService.getDtlEntity();
-        final String pwForReset = rsLgnPolicyEntity.getPwForReset();
+        final LgnPolicyEntity lgnPolicy = lgnPolicyService.getDtlEntity();
+        final String pwForReset = lgnPolicy.getPwForReset();
         // update
-        rsUserEntity.setPassword(pwForReset);
-        rsUserEntity.acntStus.setNeedsPwReset("Y");
-        rsUserEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
-        final Integer rsId = repository.saveAndFlush(rsUserEntity)
-                                     .getUserNo();
-        return (rsId != null);
+        retrievedEntity.setPassword(pwForReset);
+        retrievedEntity.acntStus.setNeedsPwReset("Y");
+        retrievedEntity.acntStus.setPwChgDt(DateUtils.getCurrDate());
+        final UserEntity updatedEntity = repository.saveAndFlush(retrievedEntity);
+
+        return (updatedEntity.getUserNo() != null);
     }
 
     /**
      * 수정 전처리. (override)
      *
-     * @param user 수정할 객체
+     * @param modifyDto 수정할 객체
      */
     @Override
-    public void preModify(final UserDto.DTL user) throws Exception {
+    public void preModify(final UserDto.DTL modifyDto) throws Exception {
         // 접속 IP 정보 없을시 사용으로 찍었더라도 미사용으로 변경
-        if (StringUtils.isEmpty(user.getAcsIpListStr())) {
-            user.setUseAcsIpYn("N");
-            user.setAcsIpListStr(null);
+        if (StringUtils.isEmpty(modifyDto.getAcsIpListStr())) {
+            modifyDto.setUseAcsIpYn("N");
+            modifyDto.setAcsIpListStr(null);
         }
     }
 
     /**
      * 사용자 관리 > 사용자 수정
+     *
+     * @param modifyDto 수정할 객체
      */
     @Override
     @Transactional
-    public UserDto.DTL modify(final UserDto.DTL userDto) throws Exception {
-        final UserEntity userEntity = this.getDtlEntity(userDto);
-        mapstruct.updateFromDto(userDto, userEntity);
+    public UserDto.DTL modify(final UserDto.DTL modifyDto) throws Exception {
+        final UserEntity modifyEntity = this.getDtlEntity(modifyDto);
+        mapstruct.updateFromDto(modifyDto, modifyEntity);
 
         // update
-        final UserEntity rsltEntity = this.updt(userEntity);
-        final UserDto.DTL rsltDto = mapstruct.toDto(rsltEntity);
-        rsltDto.setIsSuccess((rsltEntity.getUserNo() != null));
-        return rsltDto;
+        final UserEntity updatedEntity = this.updt(modifyEntity);
+        final UserDto.DTL updatedDto = mapstruct.toDto(updatedEntity);
+        updatedDto.setIsSuccess((updatedEntity.getUserNo() != null));
+
+        return updatedDto;
     }
 
     /**
@@ -211,13 +219,14 @@ public class UserService
         if (StringUtils.isEmpty(userId)) return false;
         if (Constant.SYSTEM_ACNT.equals(userId) || Constant.DEV_ACNT.equals(userId)) return false;
 
-        final LgnPolicyEntity rsEntity = lgnPolicyService.getDtlEntity();
-        final Integer lgnLockDy = rsEntity.getLgnLockDy();
+        final LgnPolicyEntity lgnPolicy = lgnPolicyService.getDtlEntity();
+        final Integer lgnLockDy = lgnPolicy.getLgnLockDy();
 
-        UserEntity user = this.getDtlEntity(userId);
+        final UserEntity user = this.getDtlEntity(userId);
         Date lastLgnDt = user.acntStus.getLstLgnDt();
         if (lastLgnDt == null) lastLgnDt = user.getRegDt();
-        Date dormantDt = DateUtils.getDateAddDay(lastLgnDt, lgnLockDy);
+        final Date dormantDt = DateUtils.getDateAddDay(lastLgnDt, lgnLockDy);
+
         return (dormantDt == null || dormantDt.compareTo(DateUtils.getCurrDate()) < 0);
     }
 
@@ -225,33 +234,33 @@ public class UserService
      * 사용자 정보 잠금
      */
     @Transactional
-    public Boolean userLock(final Integer userProflNo) throws Exception {
+    public Boolean userLock(final Integer key) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsEntity = this.getDtlEntity(userProflNo);
-        if (rsEntity == null) return false;
+        final UserEntity retrievedEntity = this.getDtlEntity(key);
+        if (retrievedEntity == null) return false;
+
         // lockedYn 플래그 업데이트
-        rsEntity.acntStus.setLockedYn("Y");
-        Integer rsId = repository.saveAndFlush(rsEntity)
-                                 .getUserNo();
-        return (rsId != null);
+        retrievedEntity.acntStus.setLockedYn("Y");
+        final UserEntity updatedEntity = repository.saveAndFlush(retrievedEntity);
+
+        return updatedEntity.getUserNo() != null;
     }
 
     /**
      * 사용자 정보 잠금 해제
      */
     @Transactional
-    public Boolean userUnlock(final Integer userProflNo) throws Exception {
+    public Boolean userUnlock(final Integer key) throws Exception {
         // Entity 레벨 조회
-        UserEntity rsEntity = this.getDtlEntity(userProflNo);
-        if (rsEntity == null) return false;
+        final UserEntity retrievedEntity = this.getDtlEntity(key);
+        if (retrievedEntity == null) return false;
+
         // lockedYn 플래그 + 최종접속일 업데이트
-        // TODO: 최종접속일 이거 어찌할꼬...
-        rsEntity.acntStus.setLockedYn("N");
-        // rsEntity.setDormantYn("N");
-        rsEntity.acntStus.setLstLgnDt(DateUtils.getCurrDate());
-        Integer rsId = repository.saveAndFlush(rsEntity)
-                                     .getUserNo();
-        return (rsId != null);
+        retrievedEntity.acntStus.setLockedYn("N");
+        retrievedEntity.acntStus.setLstLgnDt(DateUtils.getCurrDate());
+        final UserEntity updatedEntity = repository.saveAndFlush(retrievedEntity);
+
+        return updatedEntity.getUserNo() != null;
     }
 
     /**
@@ -264,6 +273,7 @@ public class UserService
         // 목록 검색
         String startDtStr = yyStr + "-01-01";
         String endDtStr = yyStr + "-12-31";
+
         return this.getCrdtUserList(startDtStr, endDtStr);
     }
 
@@ -273,10 +283,7 @@ public class UserService
      * @param startDtStr : 시작일자yyyy-MM-dd
      * @param endDtStr : 종료일자yyyy-MM-dd
      */
-    public List<UserDto.LIST> getCrdtUserList(
-            final String startDtStr,
-            final String endDtStr
-    ) throws Exception {
+    public List<UserDto.LIST> getCrdtUserList(final String startDtStr, final String endDtStr) throws Exception {
         // 목록 검색
         List<UserEntity> userEntityList = repository.findAll(spec.searchCrdtUser(startDtStr, endDtStr));
 

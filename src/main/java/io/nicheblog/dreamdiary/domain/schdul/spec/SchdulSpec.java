@@ -42,7 +42,7 @@ public class SchdulSpec
             final CriteriaBuilder builder
     ) {
         // 정렬 순서 변경
-        List<Order> order = new ArrayList<>();
+        final List<Order> order = new ArrayList<>();
         order.add(builder.desc(root.get("bgnDt")));
         query.orderBy(order);
     }
@@ -63,13 +63,13 @@ public class SchdulSpec
             final CriteriaBuilder builder
     ) throws Exception {
 
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
         Join<SchdulEntity, SchdulPrtcpntEntity> prtcpntJoin;
         // expressions
-        Expression<Date> endDtExp = root.get("endDt");
-        Expression<Date> bgnDtExp = root.get("bgnDt");
-        Expression<String> prvtYnExp = root.get("prvtYn");
-        Expression<String> schdulCdExp = root.get("schdulCd");
+        final Expression<Date> endDtExp = root.get("endDt");
+        final Expression<Date> bgnDtExp = root.get("bgnDt");
+        final Expression<String> prvtYnExp = root.get("prvtYn");
+        final Expression<String> schdulCdExp = root.get("schdulCd");
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -129,9 +129,9 @@ public class SchdulSpec
                 //     continue;
                 case "searchKeyword":
                     // 입력 키워드 검색
-                    String keyword = (String) searchParamMap.get(key);
-                    Predicate schdulNm = builder.like(root.get("title"), "%" + keyword + "%");
-                    Predicate schdulResn = builder.like(root.get("cn"), "%" + keyword + "%");
+                    final String keyword = (String) searchParamMap.get(key);
+                    final Predicate schdulNm = builder.like(root.get("title"), "%" + keyword + "%");
+                    final Predicate schdulResn = builder.like(root.get("cn"), "%" + keyword + "%");
                     predicate.add(builder.or(schdulNm, schdulResn));
                     continue;
                 default:

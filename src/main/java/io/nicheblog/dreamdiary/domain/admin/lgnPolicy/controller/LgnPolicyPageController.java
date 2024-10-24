@@ -58,10 +58,10 @@ public class LgnPolicyPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.LGN_POLICY.setAcsPageInfo("로그인 정책 관리"));
 
         // 항목 조회 및 모델에 추가 :: 현재는 항상 고정 ID(1L)로 조회한다.
-        final LgnPolicyDto rsUserLgnPolicDto = lgnPolicyService.getDtlDto();
-        model.addAttribute("lgnPolicy", rsUserLgnPolicDto);
+        final LgnPolicyDto lgnPolicy = lgnPolicyService.getDtlDto();
+        model.addAttribute("lgnPolicy", lgnPolicy);
 
-        final boolean isSuccess = (rsUserLgnPolicDto != null);
+        final boolean isSuccess = (lgnPolicy != null);
         final String rsltMsg = MessageUtils.getMessage(isSuccess ? MessageUtils.RSLT_SUCCESS : MessageUtils.RSLT_FAILURE);
 
         // 로그 관련 세팅

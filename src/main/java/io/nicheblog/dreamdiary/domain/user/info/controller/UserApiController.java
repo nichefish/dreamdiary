@@ -167,9 +167,9 @@ public class UserApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        final UserDto rsUserDto = userService.getDtlDto(key);
+        final UserDto user = userService.getDtlDto(key);
         // 내 정보인지 비교 :: "내 정보는 삭제할 수 없습니다."
-        final boolean isMyInfo = AuthUtils.isMyInfo(rsUserDto.getUserId());
+        final boolean isMyInfo = AuthUtils.isMyInfo(user.getUserId());
 
         final boolean isSuccess = !isMyInfo && userService.delete(key);
         final String rsltMsg = isMyInfo ? MessageUtils.NOT_DELABLE_OWN_ID : MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

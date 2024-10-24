@@ -73,8 +73,8 @@ public class JrnlTagApiController
         // 브라우저 캐시 초기화 처리
         HttpUtils.setInvalidateBrowserCacheHeader(response);
 
-        boolean isSuccess = true;
-        String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
         // 응답 결과 세팅
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);

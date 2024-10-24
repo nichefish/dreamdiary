@@ -31,10 +31,9 @@ public class JrnlDiaryTagCtgrSynchronizer {
      * 태그 조회해서 파일 생성
      */
     public void tagSync() throws Exception {
+        final List<JrnlDiaryTagEntity> tagList = jrnlDreamTagService.getListEntity(new HashMap<>());
 
-        List<JrnlDiaryTagEntity> tagList = jrnlDreamTagService.getListEntity(new HashMap<>());
-
-        Map<String, List<String>> tagCtgrMap = tagList.stream()
+        final Map<String, List<String>> tagCtgrMap = tagList.stream()
                 .collect(Collectors.groupingBy(
                         JrnlDiaryTagEntity::getTagNm,
                         Collectors.mapping(tag -> {
@@ -57,8 +56,8 @@ public class JrnlDiaryTagCtgrSynchronizer {
      * @throws Exception 파일 생성 중 발생할 수 있는 예외
      */
     private void writeToFile(final Map<String, List<String>> tagCtgrMap) throws Exception {
-        String FILE_PATH = "templates/view/domain/jrnl/diary/tag/_jrnl_diary_tag_ctgr_map.ftlh";
-        String MAP_NM = "jrnlDiary";
+        final String FILE_PATH = "templates/view/domain/jrnl/diary/tag/_jrnl_diary_tag_ctgr_map.ftlh";
+        final String MAP_NM = "jrnlDiary";
 
         try (FileWriter fileWriter = new FileWriter(FILE_PATH)) {
             fileWriter.write("<script>\n");
@@ -70,9 +69,9 @@ public class JrnlDiaryTagCtgrSynchronizer {
                 fileWriter.write("\t\t // tag list is empty. \n");
             } else {
                 for (Map.Entry<String, List<String>> entry : tagCtgrMap.entrySet()) {
-                    String tagName = entry.getKey();
-                    List<String> ctgrList = entry.getValue();
-                    String formattedCategories = ctgrList.stream()
+                    final String tagName = entry.getKey();
+                    final List<String> ctgrList = entry.getValue();
+                    final String formattedCategories = ctgrList.stream()
                             .map(category -> "\"" + category + "\"")
                             .collect(Collectors.joining(", "));
                     fileWriter.write(String.format("\t\t\t\"%s\": [%s],\n", tagName, formattedCategories));

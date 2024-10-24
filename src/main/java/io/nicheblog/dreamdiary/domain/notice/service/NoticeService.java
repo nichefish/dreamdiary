@@ -44,7 +44,8 @@ public class NoticeService
      * @throws Exception 변환 중 발생할 수 있는 예외
      */
     public Stream<NoticeXlsxDto> getStreamXlsxDto(NoticeSearchParam searchParam) throws Exception {
-        Stream<NoticeEntity> entityStream = this.getStreamEntity(searchParam);
+        final Stream<NoticeEntity> entityStream = this.getStreamEntity(searchParam);
+
         return entityStream.map(e -> {
             try {
                 return mapstruct.toXlsxDto(e);

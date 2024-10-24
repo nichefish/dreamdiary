@@ -105,13 +105,13 @@ public class MenuApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        final MenuDto rsDto = menuService.getDtlDto(key);
+        final MenuDto retrievedDto = menuService.getDtlDto(key);
 
         final boolean isSuccess = false;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
         // 응답 결과 세팅
-        ajaxResponse.setRsltObj(rsDto);
+        ajaxResponse.setRsltObj(retrievedDto);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);

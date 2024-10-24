@@ -69,8 +69,8 @@ public class UserMyPageController
 
         // 내 정보 조회 및 모델에 추가
         final String lgnUserId = AuthUtils.getLgnUserId();
-        final UserDto lgnUserDto = userService.getDtlDto(lgnUserId);
-        model.addAttribute("user", lgnUserDto);
+        final UserDto retrievedDto = userService.getDtlDto(lgnUserId);
+        model.addAttribute("user", retrievedDto);
 
         // 휴가계획서 년도 정보 조회 (시작일자~종료일자)
         try {

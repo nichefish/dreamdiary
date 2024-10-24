@@ -43,10 +43,10 @@ public class VcatnStatsYySpec
             final CriteriaBuilder builder
     ) throws Exception {
 
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
         // expressions
-        Expression<Date> endDtExp = root.get("endDt");
-        Expression<Date> bgnDtExp = root.get("bgnDt");
+        final Expression<Date> endDtExp = root.get("endDt");
+        final Expression<Date> bgnDtExp = root.get("bgnDt");
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -65,6 +65,7 @@ public class VcatnStatsYySpec
                     }
             }
         }
+
         return predicate;
     }
 }

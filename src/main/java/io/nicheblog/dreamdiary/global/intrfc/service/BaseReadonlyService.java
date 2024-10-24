@@ -116,7 +116,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
         final List<ListDto> dtoList = entityPage.stream()
                 .map(entity -> {
                     try {
-                        ListDto listDto = mapstruct.toListDto(entity);
+                        final ListDto listDto = mapstruct.toListDto(entity);
                         listDto.setRnum(CmmUtils.getPageRnum(entityPage, counter.getAndIncrement()));
                         return listDto;
                     } catch (Exception e) {
@@ -124,6 +124,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
                     }
                 })
                 .collect(Collectors.toList());
+
         return new PageImpl<>(dtoList, entityPage.getPageable(), entityPage.getTotalElements());
     }
 
@@ -254,6 +255,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
      */
     default List<ListDto> listEntityToDto(final List<Entity> entityList) throws Exception {
         final Mapstruct mapstruct = this.getMapstruct();
+
         return entityList.stream()
                 .map(entity -> {
                     try {
@@ -277,6 +279,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     @Transactional(readOnly = true)
     default Stream<Entity> getStreamEntity(final BaseSearchParam searchParam) throws Exception {
         final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
         return this.getStreamEntity(searchParamMap);
     }
 
@@ -292,6 +295,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
         final Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
         final Repository repository = this.getRepository();
         final Spec spec = this.getSpec();
+
         return repository.streamAllBy(spec.searchWith(filteredSearchKey));
     }
 
@@ -306,6 +310,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     @Transactional(readOnly = true)
     default Stream<Entity> getStreamEntity(final BaseSearchParam searchParam, Sort sort) throws Exception {
         final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
         return this.getStreamEntity(searchParamMap, sort);
     }
 
@@ -322,6 +327,7 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
         final Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
         final Repository repository = this.getRepository();
         final Spec spec = this.getSpec();
+
         return repository.streamAllBy(spec.searchWith(filteredSearchKey), sort);
     }
 
@@ -337,8 +343,9 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
     default Entity getDtlEntity(final Key key) throws Exception {
         // 의존성 주입
         final Repository repository = this.getRepository();
-        final Optional<Entity> entityWrapper = repository.findById(key);
-        return Objects.requireNonNull(entityWrapper.orElseThrow(() -> new EntityNotFoundException("해당 정보가 존재하지 않습니다.")));
+        final Optional<Entity> retrievedWrapper = repository.findById(key);
+
+        return Objects.requireNonNull(retrievedWrapper.orElseThrow(() -> new EntityNotFoundException("해당 정보가 존재하지 않습니다.")));
     }
 
     /**
@@ -360,8 +367,9 @@ public interface BaseReadonlyService<Dto extends BaseCrudDto & Identifiable<Key>
      */
     @Transactional(readOnly = true)
     default Dto getDtlDto(final Key key) throws Exception {
-        final Entity entity = this.getDtlEntity(key);
+        final Entity retrievedEntity = this.getDtlEntity(key);
         final Mapstruct mapstruct = this.getMapstruct();
-        return mapstruct.toDto(entity);
+
+        return mapstruct.toDto(retrievedEntity);
     }
 }

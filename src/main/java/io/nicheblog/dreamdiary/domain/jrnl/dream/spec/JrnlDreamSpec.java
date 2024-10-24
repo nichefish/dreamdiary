@@ -42,8 +42,8 @@ public class JrnlDreamSpec
             final CriteriaBuilder builder
     ) {
         // 정렬 순서 변경
-        List<Order> order = new ArrayList<>();
-        Join<JrnlDreamEntity, JrnlDaySmpEntity> jrnlDayJoin = root.join("jrnlDay", JoinType.INNER);
+        final List<Order> order = new ArrayList<>();
+        final Join<JrnlDreamEntity, JrnlDaySmpEntity> jrnlDayJoin = root.join("jrnlDay", JoinType.INNER);
         order.add(builder.desc(builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"))));
         query.orderBy(order);
         // distinct
@@ -66,11 +66,11 @@ public class JrnlDreamSpec
             final CriteriaBuilder builder
     ) throws Exception {
 
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
 
         // expressions
-        Join<JrnlDreamEntity, JrnlDaySmpEntity> jrnlDayJoin = root.join("jrnlDay", JoinType.INNER);
-        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
+        final Join<JrnlDreamEntity, JrnlDaySmpEntity> jrnlDayJoin = root.join("jrnlDay", JoinType.INNER);
+        final Expression<Date> effectiveDtExp = builder.coalesce(jrnlDayJoin.get("jrnlDt"), jrnlDayJoin.get("aprxmtDt"));
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -85,12 +85,12 @@ public class JrnlDreamSpec
                     continue;
                 case "yy":
                     // 9999 = 모든 년
-                    Integer yy = (Integer) searchParamMap.get(key);
+                    final Integer yy = (Integer) searchParamMap.get(key);
                     if (yy != 9999) predicate.add(builder.equal(jrnlDayJoin.get(key), yy));
                     continue;
                 case "mnth":
                     // 99 = 모든 월
-                    Integer mnth = (Integer) searchParamMap.get(key);
+                    final Integer mnth = (Integer) searchParamMap.get(key);
                     if (mnth != 99) predicate.add(builder.equal(jrnlDayJoin.get(key), mnth));
                     continue;
                 case "dreamKeyword":
@@ -99,8 +99,8 @@ public class JrnlDreamSpec
                     continue;
                 case "tagNo":
                     // 특정 태그된 꿈만 조회
-                    Join<JrnlDreamEntity, TagEmbed> tagJoin = root.join("tag", JoinType.INNER);
-                    Join<TagEmbed, ContentTagEntity> contentTagJoin = tagJoin.join("list", JoinType.INNER);
+                    final Join<JrnlDreamEntity, TagEmbed> tagJoin = root.join("tag", JoinType.INNER);
+                    final Join<TagEmbed, ContentTagEntity> contentTagJoin = tagJoin.join("list", JoinType.INNER);
                     predicate.add(builder.equal(contentTagJoin.get("refTagNo"), searchParamMap.get(key)));
                     continue;
                 default:
@@ -112,6 +112,7 @@ public class JrnlDreamSpec
                     }
             }
         }
+
         return predicate;
     }
 }

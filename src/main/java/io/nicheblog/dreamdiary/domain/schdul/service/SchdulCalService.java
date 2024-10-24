@@ -48,7 +48,7 @@ public class SchdulCalService {
      * @throws Exception 조회 및 처리 중 발생할 수 있는 예외
      */
     public List<SchdulCalDto> getSchdulTotalCalList(final SchdulSearchParam searchParam) throws Exception {
-        List<SchdulCalDto> totalSchdulCalList = new ArrayList<>();
+        final List<SchdulCalDto> totalSchdulCalList = new ArrayList<>();
 
         // 휴가 달력 목록 검색
         final String vcatnChk = searchParam.getVcatnChked();
@@ -77,6 +77,7 @@ public class SchdulCalService {
         }
 
         totalSchdulCalList.sort(Comparator.naturalOrder());
+
         return totalSchdulCalList;
     }
 
@@ -89,20 +90,21 @@ public class SchdulCalService {
      */
     public List<SchdulCalDto> getVcatnCalList(final SchdulSearchParam searchParam) throws Exception {
         // 시작일, 종료일만 파라미터 추출
-        Map<String, Object> searchParamMap = new HashMap<>() {{
+        final Map<String, Object> searchParamMap = new HashMap<>() {{
             put("searchStartDt", searchParam.getBgnDt());
             put("searchEndDt", searchParam.getEndDt());
         }};
 
         // 휴가 목록 검색
-        List<VcatnSchdulEntity> vcatnEntityList = vcatnSchdulService.getListEntity(searchParamMap);
+        final List<VcatnSchdulEntity> vcatnEntityList = vcatnSchdulService.getListEntity(searchParamMap);
         if (vcatnEntityList.isEmpty()) return Collections.emptyList();
         // entity -> calDto
-        List<SchdulCalDto> vcatnCalList = new ArrayList<>();
+        final List<SchdulCalDto> vcatnCalList = new ArrayList<>();
         for (VcatnSchdulEntity vcatn : vcatnEntityList) {
             // 각 휴가에 대해서 달력 일정 조회
             this.procVcatnCal(vcatn, vcatnCalList);
         }
+
         return vcatnCalList;
     }
 
@@ -114,7 +116,7 @@ public class SchdulCalService {
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     private void procVcatnCal(VcatnSchdulEntity vcatn, List<SchdulCalDto> vcatnCalList) throws Exception {
-        Date vcatnEndDt = DateUtils.Parser.sDateParse(vcatn.getEndDt());
+        final Date vcatnEndDt = DateUtils.Parser.sDateParse(vcatn.getEndDt());
 
         // 로직 :: 날짜 훑으면서 각 일자별로 쪼갬. 공휴일 또는 주말여부 체크
         Date keyDt = DateUtils.Parser.sDateParse(vcatn.getBgnDt());
@@ -163,7 +165,7 @@ public class SchdulCalService {
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     private SchdulCalDto initNewCalDto(final VcatnSchdulEntity vcatn, final Date keyDt) throws Exception {
-        SchdulCalDto calDto = schdulCalMapstruct.toCalDto(vcatn);
+        final SchdulCalDto calDto = schdulCalMapstruct.toCalDto(vcatn);
         calDto.setBgnDt(DateUtils.asStr(keyDt, DatePtn.DATE));
         if (StringUtils.isEmpty(calDto.getSchdulCd())) calDto.setSchdulCd(Constant.SCHDUL_VCATN);
         if (StringUtils.isEmpty(calDto.getClassName())) calDto.setClassName("cursor-pointer fc-event-danger fc-event-solid-warning");
@@ -180,7 +182,7 @@ public class SchdulCalService {
     private void finNewCalDto(final SchdulCalDto calDto, final Date keyDt) throws Exception {
         calDto.setEndDt(DateUtils.Parser.eDateParseStr(keyDt));
         // 1일짜리 일정일 경우 : allday=true로 줘야 제대로 나온다.
-        boolean isSameDay = DateUtils.isSameDay(calDto.getBgnDt(), calDto.getEndDt());
+        final boolean isSameDay = DateUtils.isSameDay(calDto.getBgnDt(), calDto.getEndDt());
         if (isSameDay) calDto.setAllDay(true);
     }
 
@@ -192,15 +194,16 @@ public class SchdulCalService {
      * @throws Exception 검색 중 발생할 수 있는 예외
      */
     private List<SchdulCalDto> getHldyCalList(final SchdulSearchParam searchParam) throws Exception {
-        Map<String, Object> searchParamMap = new HashMap<>() {{
+        final Map<String, Object> searchParamMap = new HashMap<>() {{
             put("searchStartDt", searchParam.getBgnDt());
             put("searchEndDt", searchParam.getEndDt());
             put("getHldyCeremonyOnly", true);
         }};
 
         // 일정 목록 검색
-        List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(searchParamMap));
+        final List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(searchParamMap));
         if (schdulEntityList.isEmpty()) return Collections.emptyList();
+
         // entity -> dto
         return schdulEntityList.stream()
                 .map(entity -> {
@@ -221,12 +224,12 @@ public class SchdulCalService {
      * @throws Exception 검색 중 발생할 수 있는 예외
      */
     public List<SchdulCalDto> getSchdulCalList(final SchdulSearchParam searchParam) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-        Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
+        final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        final Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
         // 일정 목록 검색
-        List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(filteredSearchKey));
+        final List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(filteredSearchKey));
         if (schdulEntityList.isEmpty()) return Collections.emptyList();
-        // entity -> dto
+
         return SchdulCalMapstruct.INSTANCE.toDtoList(schdulEntityList);
     }
 
@@ -238,14 +241,14 @@ public class SchdulCalService {
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public List<SchdulCalDto> getPrvtCalList(final SchdulSearchParam searchParam) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
-        Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
+        final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        final Map<String, Object> filteredSearchKey = CmmUtils.Param.filterParamMap(searchParamMap);
 
         searchParam.setPrevOnly(true);
         // 일정 목록 검색
-        List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(filteredSearchKey));
+        final List<SchdulEntity> schdulEntityList = schdulRepository.findAll(schdulSpec.searchWith(filteredSearchKey));
         if (schdulEntityList.isEmpty()) return Collections.emptyList();
-        // entity -> dto
+
         return SchdulCalMapstruct.INSTANCE.toDtoList(schdulEntityList);
     }
 

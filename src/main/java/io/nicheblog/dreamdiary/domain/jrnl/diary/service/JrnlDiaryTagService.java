@@ -56,6 +56,7 @@ public class JrnlDiaryTagService
     @Cacheable(value="jrnlDiaryTagList", key="#yy + \"_\" + #mnth")
     public List<TagDto> getListDtoWithCache(final Integer yy, final Integer mnth) throws Exception {
         final JrnlDiarySearchParam searchParam = JrnlDiarySearchParam.builder().yy(yy).mnth(mnth).build();
+
         return this.getSelf().getListDto(searchParam);
     }
 
@@ -76,14 +77,15 @@ public class JrnlDiaryTagService
         final int maxSize = this.calcMaxSize(tagList, yy, mnth);
         final int MIN_SIZE = 2; // 최소 크기
         final int MAX_SIZE = 9; // 최대 크기
+
         return tagList.stream()
                 .peek(dto -> {
                     int size = dto.getContentSize();
                     if (size == 1) {
                         dto.setTagClass("ts-1");
                     } else {
-                        double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
-                        int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
+                        final double ratio = (double) size / maxSize; // 사용 빈도의 비율 계산
+                        final int tagSize = (int) (MIN_SIZE + (MAX_SIZE - MIN_SIZE) * ratio);
                         dto.setTagClass("ts-"+tagSize);
                     }
                 })
@@ -107,6 +109,7 @@ public class JrnlDiaryTagService
             tag.setContentSize(diarySize);
             maxFrequency = Math.max(maxFrequency, diarySize);
         }
+
         return maxFrequency;
     }
 
@@ -123,7 +126,6 @@ public class JrnlDiaryTagService
     }
 
     public Map<String, List<TagDto>> getDiarySizedGroupListDto(final Integer yy, final Integer mnth) throws Exception {
-
         final List<TagDto> tagList = this.getDiarySizedListDto(yy, mnth);
 
         // 태그를 카테고리별로 그룹화하여 맵으로 반환

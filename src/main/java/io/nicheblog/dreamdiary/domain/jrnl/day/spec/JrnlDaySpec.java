@@ -43,8 +43,8 @@ public class JrnlDaySpec
             final Map<String, Object> searchParamMap
     ) {
         // 정렬 순서 변경 :: 날짜 오름차순 정렬, jrnlDt 부재시 aprxmtDt 사용
-        List<Order> order = new ArrayList<>();
-        String sortStr = (String) searchParamMap.get("sort");
+        final List<Order> order = new ArrayList<>();
+        final String sortStr = (String) searchParamMap.get("sort");
         if (StringUtils.isNotEmpty(sortStr) && "DESC".equals(sortStr)) {
             order.add(builder.desc(builder.coalesce(root.get("jrnlDt"), root.get("aprxmtDt"))));
         } else {
@@ -72,9 +72,9 @@ public class JrnlDaySpec
         List<Predicate> predicate = new ArrayList<>();
 
         // Use jrnlDt if available, otherwise aprxmtDt
-        Expression<Date> jrnlDtExp = root.get("jrnlDt");
-        Expression<Date> aprxmtDtExp = root.get("aprxmtDt");
-        Expression<Date> effectiveDtExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
+        final Expression<Date> jrnlDtExp = root.get("jrnlDt");
+        final Expression<Date> aprxmtDtExp = root.get("aprxmtDt");
+        final Expression<Date> effectiveDtExp = builder.coalesce(jrnlDtExp, aprxmtDtExp);
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -111,6 +111,7 @@ public class JrnlDaySpec
                     }
             }
         }
+
         return predicate;
     }
 }

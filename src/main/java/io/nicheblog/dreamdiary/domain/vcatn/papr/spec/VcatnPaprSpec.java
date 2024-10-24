@@ -44,9 +44,9 @@ public class VcatnPaprSpec
             final CriteriaBuilder builder
     ) throws Exception {
 
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
         // expressions
-        Expression<Date> regDtExp = root.get("regDt");
+        final Expression<Date> regDtExp = root.get("regDt");
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -68,6 +68,7 @@ public class VcatnPaprSpec
                     }
             }
         }
+
         return predicate;
     }
 }

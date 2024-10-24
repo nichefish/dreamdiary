@@ -48,8 +48,8 @@ public class JrnlDreamCacheEvictor
         EhCacheUtils.evictCacheAll("jrnlDreamList");
         EhCacheUtils.evictCache("jrnlDreamDtlDto", key);
         // 년도-월에 따른 캐시 삭제
-        Integer yy = jrnlDream.getYy();
-        Integer mnth = jrnlDream.getMnth();
+        final Integer yy = jrnlDream.getYy();
+        final Integer mnth = jrnlDream.getMnth();
         // jrnl_day
         EhCacheUtils.evictCache("jrnlDayDtlDto", jrnlDream.getJrnlDayNo());
         this.evictCacheForPeriod("jrnlDayList", yy, mnth);

@@ -193,8 +193,8 @@ public class VcatnPaprPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.VCATN_PAPR.setAcsPageInfo(Constant.PAGE_DTL));
 
         // 객체 조회 및 모델에 추가
-        final VcatnPaprDto.DTL rsDto = vcatnPaprService.getDtlDto(key);
-        model.addAttribute("post", rsDto);
+        final VcatnPaprDto.DTL retrievedDto = vcatnPaprService.getDtlDto(key);
+        model.addAttribute("post", retrievedDto);
 
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -204,7 +204,7 @@ public class VcatnPaprPageController
         vcatnPaprService.hitCntUp(key);
         // 열람자 추가 :: 메인 로직과 분리
         // TODO: AOP로 분리
-        publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
+        publisher.publishEvent(new ViewerAddEvent(this, retrievedDto.getClsfKey()));
 
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg);

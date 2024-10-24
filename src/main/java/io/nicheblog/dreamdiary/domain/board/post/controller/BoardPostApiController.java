@@ -122,7 +122,7 @@ public class BoardPostApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        final BoardPostDto rsDto = boardPostService.getDtlDto(postKey.getClsfKey());
+        final BoardPostDto retrievedDto = boardPostService.getDtlDto(postKey.getClsfKey());
 
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -132,10 +132,10 @@ public class BoardPostApiController
         boardPostService.hitCntUp(postKey.getClsfKey());
         // 열람자 추가 :: 메인 로직과 분리
         // TODO: AOP로 분리
-        publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
+        publisher.publishEvent(new ViewerAddEvent(this, retrievedDto.getClsfKey()));
 
         // 응답 결과 세팅
-        ajaxResponse.setRsltObj(rsDto);
+        ajaxResponse.setRsltObj(retrievedDto);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
             logParam.setResult(isSuccess, rsltMsg, actvtyCtgr);

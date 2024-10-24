@@ -71,9 +71,10 @@ public class JrnlDiaryService
      */
     @Cacheable(value="imprtcDiaryList", key="#yy")
     public List<JrnlDiaryDto> getImprtcDiaryList(final Integer yy) throws Exception {
-        JrnlDiarySearchParam searchParam = JrnlDiarySearchParam.builder().yy(yy).imprtcYn("Y").build();
-        List<JrnlDiaryDto> imprtcDiaryList = this.getListDto(searchParam);
+        final JrnlDiarySearchParam searchParam = JrnlDiarySearchParam.builder().yy(yy).imprtcYn("Y").build();
+        final List<JrnlDiaryDto> imprtcDiaryList = this.getListDto(searchParam);
         Collections.sort(imprtcDiaryList);
+
         return imprtcDiaryList;
     }
 
@@ -86,7 +87,8 @@ public class JrnlDiaryService
      */
     @Cacheable(value="jrnlDiaryTagDtl", key="#searchParam.hashCode()")
     public List<JrnlDiaryDto> jrnlDiaryTagDtl(final BaseSearchParam searchParam) throws Exception {
-        Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+        final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
         return this.getListDto(searchParamMap);
     }
 
@@ -98,20 +100,20 @@ public class JrnlDiaryService
     @Override
     public void preRegist(final JrnlDiaryDto dto) {
         // 인덱스(정렬순서) 처리
-        Integer lastIndex = repository.findLastIndexByJrnlDay(dto.getJrnlDayNo()).orElse(0);
+        final Integer lastIndex = repository.findLastIndexByJrnlDay(dto.getJrnlDayNo()).orElse(0);
         dto.setIdx(lastIndex + 1);
     }
 
     /**
      * 등록 후처리. (override)
      *
-     * @param rslt - 등록된 엔티티
+     * @param updatedEntity - 등록된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postRegist(final JrnlDiaryEntity rslt) throws Exception {
+    public void postRegist(final JrnlDiaryEntity updatedEntity) throws Exception {
         // 관련 캐시 삭제
-        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DIARY));
+        publisher.publishEvent(new EhCacheEvictEvent(this, updatedEntity.getPostNo(), JRNL_DIARY));
     }
 
     /**
@@ -129,37 +131,37 @@ public class JrnlDiaryService
     /**
      * 수정 후처리. (override)
      *
-     * @param rslt - 수정된 엔티티
+     * @param updatedEntity - 수정된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postModify(final JrnlDiaryEntity rslt) throws Exception {
+    public void postModify(final JrnlDiaryEntity updatedEntity) throws Exception {
         // 관련 캐시 삭제
-        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DIARY));
+        publisher.publishEvent(new EhCacheEvictEvent(this, updatedEntity.getPostNo(), JRNL_DIARY));
     }
 
     /**
      * 삭제 후처리. (override)
      *
-     * @param rslt - 삭제된 엔티티
+     * @param deletedEntity - 삭제된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postDelete(final JrnlDiaryEntity rslt) throws Exception {
+    public void postDelete(final JrnlDiaryEntity deletedEntity) throws Exception {
         // 관련 캐시 삭제
-        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DIARY));
+        publisher.publishEvent(new EhCacheEvictEvent(this, deletedEntity.getPostNo(), JRNL_DIARY));
         // TODO: 관련 엔티티 삭제?
     }
 
     /**
      * 삭제 데이터 조회
      *
-     * @param postNo 삭제된 데이터의 키
+     * @param key 삭제된 데이터의 키
      * @return {@link JrnlDiaryDto} -- 삭제된 데이터 DTO
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Transactional(readOnly = true)
-    public JrnlDiaryDto getDeletedDtlDto(final Integer postNo) throws Exception {
-        return jrnlDiaryMapper.getDeletedByPostNo(postNo);
+    public JrnlDiaryDto getDeletedDtlDto(final Integer key) throws Exception {
+        return jrnlDiaryMapper.getDeletedByPostNo(key);
     }
 }

@@ -115,13 +115,13 @@ public class SchdulApiController
 
         final AjaxResponse ajaxResponse = new AjaxResponse();
 
-        final SchdulDto rsDto = schdulService.getDtlDto(key);
+        final SchdulDto retrievedDto = schdulService.getDtlDto(key);
 
-        final boolean isSuccess = (rsDto.getPostNo() != null);
+        final boolean isSuccess = (retrievedDto.getPostNo() != null);
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
 
         // 응답 결과 세팅
-        ajaxResponse.setRsltObj(rsDto);
+        ajaxResponse.setRsltObj(retrievedDto);
         ajaxResponse.setAjaxResult(isSuccess, rsltMsg);
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg);

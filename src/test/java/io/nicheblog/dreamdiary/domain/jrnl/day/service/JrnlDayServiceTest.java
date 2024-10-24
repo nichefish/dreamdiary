@@ -51,10 +51,10 @@ class JrnlDayServiceTest {
         // Given::
 
         // When::
-        JrnlDayDto result = jrnlDayService.regist(jrnlDay);
+        JrnlDayDto registered = jrnlDayService.regist(jrnlDay);
 
         // Then::
-        assertNotNull(result.getPostNo(), "등록이 정상적으로 이루어지지 않았습니다.");
+        assertNotNull(registered.getPostNo(), "등록이 정상적으로 이루어지지 않았습니다.");
     }
 
     /**
@@ -64,17 +64,17 @@ class JrnlDayServiceTest {
     @Test
     void modify() throws Exception {
         // Given::
-        JrnlDayDto base = jrnlDayService.regist(jrnlDay);
-        Integer key = base.getKey();
+        JrnlDayDto registered = jrnlDayService.regist(jrnlDay);
+        Integer key = registered.getKey();
 
         // When::
         JrnlDayDto toModify = JrnlDayDtoTestFactory.createWithKey(key);
         toModify.setJrnlDt("2020-01-01");
-        JrnlDayDto result = jrnlDayService.modify(toModify);
+        JrnlDayDto updated = jrnlDayService.modify(toModify);
 
         // Then::
-        assertNotNull(result.getPostNo(), "수정이 정상적으로 이루어지지 않았습니다.");
-        assertEquals("2020-01-01", result.getJrnlDt(), "수정이 정상적으로 이루어지지 않았습니다.");
+        assertNotNull(updated.getPostNo(), "수정이 정상적으로 이루어지지 않았습니다.");
+        assertEquals("2020-01-01", updated.getJrnlDt(), "수정이 정상적으로 이루어지지 않았습니다.");
     }
 
     /**
@@ -84,8 +84,8 @@ class JrnlDayServiceTest {
     @Test
     void delete() throws Exception {
         // Given::
-        JrnlDayDto base = jrnlDayService.regist(jrnlDay);
-        Integer key = base.getKey();
+        JrnlDayDto registered = jrnlDayService.regist(jrnlDay);
+        Integer key = registered.getKey();
 
         // When::
         Boolean isDeleted = jrnlDayService.delete(key);

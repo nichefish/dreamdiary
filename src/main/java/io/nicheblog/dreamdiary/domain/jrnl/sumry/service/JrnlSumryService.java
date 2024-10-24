@@ -61,6 +61,7 @@ public class JrnlSumryService
     @Cacheable(value="jrnlSumryList")
     public List<JrnlSumryDto.LIST> getListDto(final BaseSearchParam searchParam) throws Exception {
         final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
         return this.getListDto(searchParamMap);
     }
 
@@ -158,9 +159,10 @@ public class JrnlSumryService
      */
     @Cacheable(value="jrnlSumryDtlByYy", key="#yy")
     public JrnlSumryDto getDtlDtoByYy(final Integer yy) throws Exception {
-        final Optional<JrnlSumryEntity> entityWrapper = repository.findByYy(yy);
-        if (entityWrapper.isEmpty()) return null;
-        return mapstruct.toDto(entityWrapper.get());
+        final Optional<JrnlSumryEntity> retrievedWrapper = repository.findByYy(yy);
+        if (retrievedWrapper.isEmpty()) return null;
+
+        return mapstruct.toDto(retrievedWrapper.get());
     }
 
     /**
@@ -172,11 +174,13 @@ public class JrnlSumryService
      */
     @Transactional
     public boolean dreamCompt(final Integer key) throws Exception {
-        final JrnlSumryEntity entity = this.getDtlEntity(key);
-        entity.setDreamComptYn("Y");
-        repository.save(entity);
+        final JrnlSumryEntity retrievedEntity = this.getDtlEntity(key);
+        retrievedEntity.setDreamComptYn("Y");
+        repository.save(retrievedEntity);
+        
         // 캐시 초기화
         publisher.publishEvent(new EhCacheEvictEvent(this, key, JRNL_SUMRY));
+
         return true;
     }
 }

@@ -71,12 +71,13 @@ public class JrnlDayService
      * @return {@link boolean} -- 정상 시 true, 중복 시 false 반환
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
-    public boolean dupChck(JrnlDayDto jrnlDay) throws Exception {
+    public boolean dupChck(final JrnlDayDto jrnlDay) throws Exception {
         final boolean isDtUnknown = "Y".equals(jrnlDay.getDtUnknownYn());
         if (isDtUnknown) return false;
 
         final Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
         final Integer isDup = repository.countByJrnlDt(jrnlDt);
+
         return isDup > 0;
     }
 
@@ -87,9 +88,10 @@ public class JrnlDayService
      * @return {@link Integer} -- 중복되는 경우 해당하는 키값 (게시글 번호)
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
-    public Integer getDupKey(JrnlDayDto jrnlDay) throws Exception {
+    public Integer getDupKey(final JrnlDayDto jrnlDay) throws Exception {
         final Date jrnlDt = DateUtils.asDate(jrnlDay.getJrnlDt());
         final JrnlDayEntity existingEntity = repository.findByJrnlDt(jrnlDt);
+
         return existingEntity.getPostNo();
     }
 
@@ -103,30 +105,31 @@ public class JrnlDayService
     @Cacheable(value="jrnlDayTagDtl", key="#searchParam.hashCode()")
     public List<JrnlDayDto> jrnlDayTagDtl(final BaseSearchParam searchParam) throws Exception {
         final Map<String, Object> searchParamMap = CmmUtils.convertToMap(searchParam);
+
         return this.getListDto(searchParamMap);
     }
 
     /**
      * 등록 전처리. (override)
      *
-     * @param dto 등록할 객체
+     * @param registDto 등록할 객체
      */
     @Override
-    public void preRegist(final JrnlDayDto dto) throws Exception {
+    public void preRegist(final JrnlDayDto registDto) throws Exception {
         // 년도/월 세팅:: 메소드 분리
-        this.setYyMnth(dto);
+        this.setYyMnth(registDto);
     }
 
     /**
      * 등록 후처리. (override)
      *
-     * @param rslt - 등록된 엔티티
+     * @param updatedEntity - 등록된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postRegist(final JrnlDayEntity rslt) throws Exception {
+    public void postRegist(final JrnlDayEntity updatedEntity) throws Exception {
         // 관련 캐시 삭제
-        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DAY));
+        publisher.publishEvent(new EhCacheEvictEvent(this, updatedEntity.getPostNo(), JRNL_DAY));
     }
 
     /**
@@ -144,27 +147,27 @@ public class JrnlDayService
     /**
      * 수정 전처리. (override)
      *
-     * @param jrnlDay 수정할 객체
+     * @param modifyDto 수정할 객체
      */
     @Override
-    public void preModify(final JrnlDayDto jrnlDay) throws Exception {
+    public void preModify(final JrnlDayDto modifyDto) throws Exception {
         // 년도/월 세팅:: 메소드 분리
-        this.setYyMnth(jrnlDay);
+        this.setYyMnth(modifyDto);
         // 수정 전 정보 캐시 삭제
-        EhCacheUtils.evictCache("jrnlDayList", jrnlDay.getYy() + "_" + jrnlDay.getMnth());
-        EhCacheUtils.evictCache("jrnlDayList", jrnlDay.getYy() + "_99");
+        EhCacheUtils.evictCache("jrnlDayList", modifyDto.getYy() + "_" + modifyDto.getMnth());
+        EhCacheUtils.evictCache("jrnlDayList", modifyDto.getYy() + "_99");
     }
 
     /**
      * 수정 후처리. (override)
      *
-     * @param rslt - 수정된 엔티티
+     * @param updatedEntity - 수정된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postModify(final JrnlDayEntity rslt) throws Exception {
+    public void postModify(final JrnlDayEntity updatedEntity) throws Exception {
         // 관련 캐시 삭제
-        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DAY));
+        publisher.publishEvent(new EhCacheEvictEvent(this, updatedEntity.getPostNo(), JRNL_DAY));
     }
 
     /**
@@ -190,25 +193,25 @@ public class JrnlDayService
     /**
      * 삭제 후처리. (override)
      *
-     * @param rslt - 삭제된 엔티티
+     * @param deletedEntity - 삭제된 엔티티
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Override
-    public void postDelete(final JrnlDayEntity rslt) throws Exception {
+    public void postDelete(final JrnlDayEntity deletedEntity) throws Exception {
         // 관련 캐시 삭제
-        publisher.publishEvent(new EhCacheEvictEvent(this, rslt.getPostNo(), JRNL_DAY));
+        publisher.publishEvent(new EhCacheEvictEvent(this, deletedEntity.getPostNo(), JRNL_DAY));
         // TODO: 관련 엔티티 삭제?
     }
 
     /**
      * 삭제 데이터 조회
      *
-     * @param postNo 삭제된 데이터의 키
+     * @param key 삭제된 데이터의 키
      * @return {@link JrnlDayDto} -- 삭제된 데이터 DTO
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Transactional(readOnly = true)
-    public JrnlDayDto getDeletedDtlDto(final Integer postNo) throws Exception {
-        return jrnlDayMapper.getDeletedByPostNo(postNo);
+    public JrnlDayDto getDeletedDtlDto(final Integer key) throws Exception {
+        return jrnlDayMapper.getDeletedByPostNo(key);
     }
 }

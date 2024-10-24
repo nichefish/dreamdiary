@@ -54,6 +54,7 @@ public class BoardDefService
             put("useYn", "Y");
         }};
         List<BoardDefEntity> boardDefPage = this.getListEntity(searchParamMap);
+
         return boardDefPage.stream()
                 .map(entity -> {
                     try {
@@ -72,18 +73,21 @@ public class BoardDefService
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public SiteAcsInfo getBoardMenu(final String boardCd) throws Exception {
-        BoardDefEntity boardDef = this.getDtlEntity(boardCd);
-        return mapstruct.toMenu(boardDef);
+        final BoardDefEntity retrievedEntity = this.getDtlEntity(boardCd);
+
+        return mapstruct.toMenu(retrievedEntity);
     }
 
     /**
      * 등록 전처리. (override)
      *
-     * @param dto 등록할 객체
+     * @param registDto 등록할 객체
      */
     @Override
-    public void preRegist(final BoardDefDto dto) {
-        if (dto.getState() == null) dto.setState(new StateCmpstn());
+    public void preRegist(final BoardDefDto registDto) {
+        if (registDto.getState() == null) {
+            registDto.setState(new StateCmpstn());
+        }
     }
 
     /**

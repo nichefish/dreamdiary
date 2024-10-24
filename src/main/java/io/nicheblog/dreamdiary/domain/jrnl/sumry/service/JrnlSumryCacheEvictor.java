@@ -31,7 +31,7 @@ public class JrnlSumryCacheEvictor
         EhCacheUtils.evictCacheAll("jrnlTotalSumry");
         // 상세 캐시 초기화
         EhCacheUtils.evictCache("jrnlSumryDtl", key);
-        JrnlSumryDto jrnlSumry = (JrnlSumryDto) EhCacheUtils.getObjectFromCache("jrnlSumryDtl", key);
+        final JrnlSumryDto jrnlSumry = (JrnlSumryDto) EhCacheUtils.getObjectFromCache("jrnlSumryDtl", key);
         if (jrnlSumry != null) EhCacheUtils.evictCache("jrnlSumryDtlByYy", jrnlSumry.getYy());
         // L2캐시 처리
         EhCacheUtils.clearL2Cache(JrnlSumryEntity.class);

@@ -52,23 +52,23 @@ public class VcatnPaprService
     /**
      * 등록 전처리. (override)
      * 
-     * @param vcatnPaprDto 등록할 객체
+     * @param registDto 등록할 객체
      */
     @Override
-    public void preRegist(final VcatnPaprDto.DTL vcatnPaprDto) {
+    public void preRegist(final VcatnPaprDto.DTL registDto) {
         // 제목 자동 처리
-        vcatnPaprDto.setTitle(this.initTitle(vcatnPaprDto));
+        registDto.setTitle(this.initTitle(registDto));
     }
 
     /**
      * 수정 전처리. (override)
      *
-     * @param vcatnPaprDto 수정할 객체
+     * @param modifyDto 수정할 객체
      */
     @Override
-    public void preModify(final VcatnPaprDto.DTL vcatnPaprDto) {
+    public void preModify(final VcatnPaprDto.DTL modifyDto) {
         // 제목 자동 처리
-        vcatnPaprDto.setTitle(this.initTitle(vcatnPaprDto));
+        modifyDto.setTitle(this.initTitle(modifyDto));
     }
 
     /**
@@ -77,22 +77,24 @@ public class VcatnPaprService
      * @param vcatnPaprDto 처리할 객체
      */
     public String initTitle(final VcatnPaprDto vcatnPaprDto) {
-        List<VcatnSchdulDto> schdulList = vcatnPaprDto.getSchdulList();
+        final List<VcatnSchdulDto> schdulList = vcatnPaprDto.getSchdulList();
         if (CollectionUtils.isEmpty(schdulList)) return "휴가계획서 (날짜없음)";
+
         return schdulList.stream()
                 .map(vcatn -> {
-                    String vcatnCd = vcatn.getVcatnCd();
-                    String vcatnNm = dtlCdService.getDtlCdNm(Constant.VCATN_CD, vcatnCd);
+                    final String vcatnCd = vcatn.getVcatnCd();
+                    final String vcatnNm = dtlCdService.getDtlCdNm(Constant.VCATN_CD, vcatnCd);
+                    final String endDt = vcatn.getEndDt();
                     String period = vcatn.getBgnDt();
-                    String endDt = vcatn.getEndDt();
                     try {
-                        boolean isSameDay = DateUtils.isSameDay(period, endDt) || (endDt == null);
+                        final boolean isSameDay = DateUtils.isSameDay(period, endDt) || (endDt == null);
                         if (!isSameDay) {
                             period += "~" + endDt;
                         }
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
+
                     return "(" + vcatnNm + ")" + period;
                 })
                 .collect(Collectors.joining(", "));
@@ -103,24 +105,25 @@ public class VcatnPaprService
      */
     @Transactional
     public VcatnPaprDto cf(final Integer key) throws Exception {
-        VcatnPaprEntity vcatnPaprEntity = this.getDtlEntity(key);
+        final VcatnPaprEntity vcatnPaprEntity = this.getDtlEntity(key);
         vcatnPaprEntity.setCfYn("Y");
         // update
-        VcatnPaprEntity rsltEntity = this.updt(vcatnPaprEntity);
-        VcatnPaprDto rsltDto = mapstruct.toDto(rsltEntity);
-        rsltDto.setIsSuccess(rsltEntity.getPostNo() != null);
-        return rsltDto;
+        final VcatnPaprEntity updatedEntity = this.updt(vcatnPaprEntity);
+        VcatnPaprDto updatedDto = mapstruct.toDto(updatedEntity);
+        updatedDto.setIsSuccess(updatedEntity.getPostNo() != null);
+
+        return updatedDto;
     }
 
     /**
      * 삭제 전처리. (override)
      *
-     * @param entity - 삭제할 엔티티
+     * @param deleteEntity - 삭제할 엔티티
      */
     @Override
-    public void preDelete(final VcatnPaprEntity entity) {
+    public void preDelete(final VcatnPaprEntity deleteEntity) {
         // 휴가계획서 상세항목 삭제
-        List<VcatnSchdulEntity> vcatnSchdulList = entity.getSchdulList();
+        List<VcatnSchdulEntity> vcatnSchdulList = deleteEntity.getSchdulList();
         vcatnSchdulService.deleteAll(vcatnSchdulList);
     }
 
@@ -131,13 +134,14 @@ public class VcatnPaprService
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     public List<VcatnStatsYyDto> getVcatnYyList() throws Exception {
-        String minYyStr = repository.selectMinYy();
-        int minYy = (minYyStr != null) ? Integer.parseInt(minYyStr) : DateUtils.getCurrYy();
-        List<VcatnStatsYyDto> yyList = new ArrayList<>();
-        int currYy = DateUtils.getCurrYy();
+        final String minYyStr = repository.selectMinYy();
+        final int minYy = (minYyStr != null) ? Integer.parseInt(minYyStr) : DateUtils.getCurrYy();
+        final List<VcatnStatsYyDto> yyList = new ArrayList<>();
+        final int currYy = DateUtils.getCurrYy();
         for (int yy = minYy; yy <= currYy; yy++) {     // 최저년도~현재년도. 현재년도는 항상 들어가도록
             yyList.add(vcatnStatsYyService.getVcatnYyDtDto(Integer.toString(yy)));
         }
+
         return yyList;
     }
 }

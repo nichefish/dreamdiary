@@ -133,7 +133,7 @@ public class JrnlDayTagApiController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> jrnlDayTagDtlAjax(
-            JrnlDaySearchParam searchParam,
+            final JrnlDaySearchParam searchParam,
             final LogActvtyParam logParam
     ) throws Exception {
 

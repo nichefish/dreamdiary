@@ -115,10 +115,10 @@ public class JrnlSumryPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_SUMRY.setAcsPageInfo(Constant.PAGE_DTL));
 
         // 객체 조회 및 모델에 추가
-        final JrnlSumryDto rsltDto = key != null ? jrnlSumryService.getSumryDtl(key) : yyParam != null ? jrnlSumryService.getDtlDtoByYy(yyParam) : null;
-        model.addAttribute("post", rsltDto);
-        assert rsltDto != null;
-        final Integer yy = rsltDto.getYy();
+        final JrnlSumryDto retrievedDto = key != null ? jrnlSumryService.getSumryDtl(key) : yyParam != null ? jrnlSumryService.getDtlDtoByYy(yyParam) : null;
+        model.addAttribute("post", retrievedDto);
+        assert retrievedDto != null;
+        final Integer yy = retrievedDto.getYy();
         // 중요 일기 목록 조회
         model.addAttribute("imprtcDiaryList", jrnlDiaryService.getImprtcDiaryList(yy));
         // 중요 꿈 목록 조회

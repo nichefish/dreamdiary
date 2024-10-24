@@ -191,8 +191,8 @@ public class NoticePageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.NOTICE.setAcsPageInfo(Constant.PAGE_DTL));
 
         // 객체 조회 및 모델에 추가
-        final NoticeDto rsDto = noticeService.getDtlDto(key);
-        model.addAttribute("post", rsDto);
+        final NoticeDto retrievedDto = noticeService.getDtlDto(key);
+        model.addAttribute("post", retrievedDto);
 
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -202,7 +202,7 @@ public class NoticePageController
         noticeService.hitCntUp(key);
         // 열람자 추가 :: 메인 로직과 분리
         // TODO: AOP로 분리
-        publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
+        publisher.publishEvent(new ViewerAddEvent(this, retrievedDto.getClsfKey()));
 
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg);

@@ -36,12 +36,12 @@ public class LgnPolicyService {
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
     @Transactional(readOnly = true)
-    @Cacheable(value = "lgnPolicy")   // 항목이 한 개 고정일 경우 Cache의 key는 불필요하다.
+    @Cacheable(value = "lgnPolicy", unless = "#result == null")   // 항목이 한 개 고정일 경우 Cache의 key는 불필요하다.
     public LgnPolicyDto getDtlDto() throws Exception {
         // entity level
-        final LgnPolicyEntity rsLgnPolicyEntity = this.getDtlEntity();
-        // Entity -> Dto 변환
-        return (rsLgnPolicyEntity != null) ? mapstruct.toDto(rsLgnPolicyEntity) : null;
+        final LgnPolicyEntity retrievedEntity = this.getDtlEntity();
+
+        return mapstruct.toDto(retrievedEntity);
     }
 
     /**
@@ -51,31 +51,33 @@ public class LgnPolicyService {
      * @throws Exception 조회 중 발생할 수 있는 예외
      */
     @Transactional
-    @Cacheable(value = "lgnPolicyEntity")   // 항목이 한 개 고정일 경우 Cache의 key는 불필요하다.
+    @Cacheable(value = "lgnPolicyEntity", unless = "#result == null")   // 항목이 한 개 고정일 경우 Cache의 key는 불필요하다.
     public LgnPolicyEntity getDtlEntity() throws Exception {
-        final Optional<LgnPolicyEntity> rsWrapper = repository.findById(1);
-        if (rsWrapper.isEmpty()) {
+        final Optional<LgnPolicyEntity> retrievedWrapper = repository.findById(1);
+        if (retrievedWrapper.isEmpty()) {
             final List<LgnPolicyEntity> scrapAll = repository.findAll();
             if (CollectionUtils.isEmpty(scrapAll)) return null;
             return scrapAll.get(0);
         }
-        return rsWrapper.orElse(null);
+
+        return retrievedWrapper.orElse(null);
     }
 
     /**
      * 사용자 관리 > 로그인 설정 정보 등록/수정
      *
-     * @param LgnPolicyDto 로그인 정책 정보 Dto
+     * @param registDto 로그인 정책 정보 Dto
      * @return {@link Boolean} -- 성공 여부를 나타내는 Boolean 값
      * @throws Exception 처리 중 발생할 수 있는 예외
      */
     @Transactional
     @CacheEvict(value = {"lgnPolicyEntity", "lgnPolicy"}, allEntries = true)
-    public Boolean regist(final LgnPolicyDto LgnPolicyDto) throws Exception {
+    public Boolean regist(final LgnPolicyDto registDto) throws Exception {
         // Dto -> Entity 변환
-        final LgnPolicyEntity lgnPolicy = mapstruct.toEntity(LgnPolicyDto);
+        final LgnPolicyEntity retrievedEntity = mapstruct.toEntity(registDto);
         // insert/update
-        final Integer rsId = repository.save(lgnPolicy).getLgnPolicyNo();
-        return (rsId != null);
+        final LgnPolicyEntity updated = repository.save(retrievedEntity);
+
+        return (updated.getLgnPolicyNo() != null);
     }
 }

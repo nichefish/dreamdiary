@@ -57,6 +57,7 @@ public class UserSpec
             // "시스템관리자"를 조회 목록에서 제외한다.
             predicate.add(builder.notEqual(root.get("userId"), Constant.SYSTEM_ACNT));
             this.postQuery(root, query, builder);
+
             return builder.and(predicate.toArray(new Predicate[0]));
         };
     }
@@ -73,11 +74,12 @@ public class UserSpec
             List<Predicate> predicate = new ArrayList<>();
             try {
                 predicate = getCrdtUser(startDtStr, endDtStr, root, builder);
-                List<Order> order = getOrderByTitleAndEcnyDt(root, builder);
+                final List<Order> order = getOrderByTitleAndEcnyDt(root, builder);
                 query.orderBy(order);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             return builder.and(predicate.toArray(new Predicate[0]));
         };
     }
@@ -91,14 +93,15 @@ public class UserSpec
         return (root, query, builder) -> {
             List<Predicate> predicate = new ArrayList<>();
             try {
-                String startDtStr = DateUtils.getCurrDateStr(DatePtn.DATE);
-                String endDtStr = DateUtils.getNextDateStr(DatePtn.DATE);
+                final String startDtStr = DateUtils.getCurrDateStr(DatePtn.DATE);
+                final String endDtStr = DateUtils.getNextDateStr(DatePtn.DATE);
                 predicate = getCrdtBrthdyUser(startDtStr, endDtStr, root, builder);
-                List<Order> order = getOrderByTitleAndEcnyDt(root, builder);
+                final List<Order> order = getOrderByTitleAndEcnyDt(root, builder);
                 query.orderBy(order);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             return builder.and(predicate.toArray(new Predicate[0]));
         };
     }
@@ -119,8 +122,8 @@ public class UserSpec
             final CriteriaBuilder builder
     ) {
 
-        List<Predicate> predicate = new ArrayList<>();
-        Join<UserEntity, UserProflEntity> proflJoin = root.join("profl", JoinType.LEFT);
+        final List<Predicate> predicate = new ArrayList<>();
+        final Join<UserEntity, UserProflEntity> proflJoin = root.join("profl", JoinType.LEFT);
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {
@@ -146,6 +149,7 @@ public class UserSpec
                     }
             }
         }
+
         return predicate;
     }
 
@@ -165,20 +169,21 @@ public class UserSpec
             final Root<UserEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
         // JOIN 조건 세팅
-        Join<UserEntity, UserEmplymEntity> emplymJoin = root.join("emplym", JoinType.INNER);
+        final Join<UserEntity, UserEmplymEntity> emplymJoin = root.join("emplym", JoinType.INNER);
         // 2. 기간조건 :: 해당 년도 내에 근무내역이 있음 (입사일 // 퇴사일)
         // 퇴사일 :: 퇴사 안했거나 or 비교일 내에 퇴사했거나
-        Date startDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(startDtStr));
-        Predicate notRetired = builder.isNull(emplymJoin.get("retireDt"));
-        Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(emplymJoin.get("retireDt"), startDay);
+        final Date startDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(startDtStr));
+        final Predicate notRetired = builder.isNull(emplymJoin.get("retireDt"));
+        final Predicate retiredAfterFirstDay = builder.greaterThanOrEqualTo(emplymJoin.get("retireDt"), startDay);
         predicate.add(builder.or(notRetired, retiredAfterFirstDay));
         // 입사일 :: 비교일보다 전에 입사
-        Date endDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(endDtStr));
-        Predicate hasEcnyDt = builder.isNotNull(emplymJoin.get("ecnyDt"));
-        Predicate enteredBeforeEndDay = builder.lessThanOrEqualTo(emplymJoin.get("ecnyDt"), endDay);
+        final Date endDay = DateUtils.Parser.bfDateParse(DateUtils.asDate(endDtStr));
+        final Predicate hasEcnyDt = builder.isNotNull(emplymJoin.get("ecnyDt"));
+        final Predicate enteredBeforeEndDay = builder.lessThanOrEqualTo(emplymJoin.get("ecnyDt"), endDay);
         predicate.add(builder.and(hasEcnyDt, enteredBeforeEndDay));
+
         return predicate;
     }
 
@@ -198,11 +203,12 @@ public class UserSpec
             final Root<UserEntity> root,
             final CriteriaBuilder builder
     ) throws Exception {
-        List<Predicate> predicate = getCrdtUser(startDtStr, endDtStr, root, builder);
+        final List<Predicate> predicate = getCrdtUser(startDtStr, endDtStr, root, builder);
         // JOIN 조건 세팅
-        Join<UserEntity, UserEmplymEntity> emplymJoin = root.join("emplym", JoinType.INNER);
-        Join<UserEntity, UserProflEntity> proflJoin = root.join("profl", JoinType.INNER);
+        final Join<UserEntity, UserEmplymEntity> emplymJoin = root.join("emplym", JoinType.INNER);
+        final Join<UserEntity, UserProflEntity> proflJoin = root.join("profl", JoinType.INNER);
         predicate.add(builder.equal(proflJoin.get("brthdy"), DateUtils.asDate(startDtStr)));
+
         return predicate;
     }
 
@@ -217,11 +223,12 @@ public class UserSpec
             final Root<UserEntity> root,
             final CriteriaBuilder builder
     ) {
-        List<Order> order = new ArrayList<>();
-        Join<UserEntity, UserEmplymEntity> emplymJoin = root.join("emplym", JoinType.INNER);
-        Join<UserEmplymEntity, DtlCdEntity> rankCdJoin = emplymJoin.join("rankCdInfo", JoinType.INNER);
+        final List<Order> order = new ArrayList<>();
+        final Join<UserEntity, UserEmplymEntity> emplymJoin = root.join("emplym", JoinType.INNER);
+        final Join<UserEmplymEntity, DtlCdEntity> rankCdJoin = emplymJoin.join("rankCdInfo", JoinType.INNER);
         order.add(builder.desc(rankCdJoin.get("state").get("sortOrdr")));
         order.add(builder.asc(emplymJoin.get("ecnyDt")));
+
         return order;
     }
 }

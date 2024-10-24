@@ -67,6 +67,7 @@ public class VcatnStatsService {
             final VcatnStatsDto vcantStats = this.getVcatnStats(user, statsYy);
             stats.add(vcantStats);
         }
+
         return stats;
     }
 
@@ -86,6 +87,7 @@ public class VcatnStatsService {
         final UserDto.DTL user = userService.getDtlDto(userId);
         final UserDto.LIST userDtl = userMapstruct.dtlToList(user);
         if (StringUtils.isEmpty(userDtl.getEcnyDt())) throw new NullPointerException("입사일 정보가 존재하지 않습니다.");
+
         return this.getCalcVcatnStats(userDtl, statsYy);
     }
 
@@ -197,6 +199,7 @@ public class VcatnStatsService {
                 keyDt = DateUtils.getDateAddDay(keyDt, 1);
             }
         }
+
         return totVcatnDy;
     }
 
@@ -240,6 +243,7 @@ public class VcatnStatsService {
             statsEntityList.add(rsEntity);
         }
         vcatnStatsRepository.saveAll(statsEntityList);
+
         return true;
     }
 
@@ -257,6 +261,7 @@ public class VcatnStatsService {
         for (final VcatnStatsDto stats : statsList) {
             statsObjList.add(vcatnStatsMapstruct.toListXlsxDto(stats));
         }
+
         return statsObjList;
     }
 }

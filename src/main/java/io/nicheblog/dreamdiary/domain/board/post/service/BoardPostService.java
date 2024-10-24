@@ -54,16 +54,17 @@ public class BoardPostService
      */
     @Override
     public Page<BoardPostDto.LIST> pageEntityToDto(final Page<BoardPostEntity> entityPage) throws Exception {
-        List<BoardPostDto.LIST> dtoList = new ArrayList<>();
+        final List<BoardPostDto.LIST> dtoList = new ArrayList<>();
         int i = 0;
         for (BoardPostEntity entity : entityPage.getContent()) {
-            BoardPostDto.LIST listDto = mapstruct.toListDto(entity);
+            final BoardPostDto.LIST listDto = mapstruct.toListDto(entity);
             listDto.setRnum(CmmUtils.getPageRnum(entityPage, i));
-            String ctgrNm = dtlCdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
+            final String ctgrNm = dtlCdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
             listDto.setCtgrNm(ctgrNm);
             dtoList.add(listDto);
             i++;
         }
+
         return new PageImpl<>(dtoList, entityPage.getPageable(), entityPage.getTotalElements());
     }
 
@@ -80,14 +81,15 @@ public class BoardPostService
             put("fxdYn", "Y");
         }};
 
-        List<BoardPostEntity> entityList = this.getListEntity(searchParamMap);
-        List<BoardPostDto.LIST> dtoList = new ArrayList<>();
+        final List<BoardPostEntity> entityList = this.getListEntity(searchParamMap);
+        final List<BoardPostDto.LIST> dtoList = new ArrayList<>();
         for (BoardPostEntity entity : entityList) {
-            BoardPostDto.LIST listDto = mapstruct.toListDto(entity);
-            String ctgrNm = dtlCdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
+            final BoardPostDto.LIST listDto = mapstruct.toListDto(entity);
+            final String ctgrNm = dtlCdService.getDtlCdNm(listDto.getCtgrClCd(), listDto.getCtgrCd());
             listDto.setCtgrNm(ctgrNm);
             dtoList.add(listDto);
         }
+
         return dtoList;
     }
 
@@ -99,10 +101,11 @@ public class BoardPostService
     @Override
     @Transactional(readOnly = true)
     public BoardPostDto.DTL getDtlDto(final BaseClsfKey key) throws Exception {
-        BoardPostEntity rsEntity = this.getDtlEntity(key);       // Entity 레벨 조회
-        BoardPostDto.DTL rsDto = mapstruct.toDto(rsEntity);
-        String ctgrNm = dtlCdService.getDtlCdNm(rsDto.getCtgrClCd(), rsDto.getCtgrCd());
-        rsDto.setCtgrNm(ctgrNm);
-        return rsDto;
+        final BoardPostEntity retrievedEntity = this.getDtlEntity(key);       // Entity 레벨 조회
+        final BoardPostDto.DTL retrievedDto = mapstruct.toDto(retrievedEntity);
+        final String ctgrNm = dtlCdService.getDtlCdNm(retrievedDto.getCtgrClCd(), retrievedDto.getCtgrCd());
+        retrievedDto.setCtgrNm(ctgrNm);
+
+        return retrievedDto;
     }
 }

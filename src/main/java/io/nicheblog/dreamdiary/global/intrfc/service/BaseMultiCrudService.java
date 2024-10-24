@@ -27,42 +27,42 @@ public interface BaseMultiCrudService<Dto extends BaseAtchDto & Identifiable<Key
     /**
      * default: 게시물 등록 (Multipart)
      *
-     * @param dto 등록할 DTO 객체
+     * @param registDto 등록할 DTO 객체
      * @param request - Multipart 요청
      * @return {@link Dto} -- 처리된 DTO 객체
      * @throws Exception 파일 업로드 또는 등록 중 예외 발생 시
      */
     @Transactional
-    default Dto regist(final Dto dto, final MultipartHttpServletRequest request) throws Exception {
+    default Dto regist(final Dto registDto, final MultipartHttpServletRequest request) throws Exception {
         try {
             // 파일 영역 처리
-            final Integer atchFileNo = dto.getAtchFileNo();
-            dto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
+            final Integer atchFileNo = registDto.getAtchFileNo();
+            registDto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
         } catch (Exception e) {
             throw new AtchFileUploadException("파일 업로드 중 오류가 발생했습니다.", e);
         }
         // 나머지 처리
-        return this.regist(dto);
+        return this.regist(registDto);
     }
 
     /**
      * default: 게시물 수정 (Multipart)
      *
-     * @param dto 수정할 DTO 객체
+     * @param modifyDto 수정할 DTO 객체
      * @param request - Multipart 요청
      * @return {@link Dto} -- 처리된 DTO 객체
      * @throws Exception 파일 업로드 또는 수정 중 예외 발생 시
      */
     @Transactional
-    default Dto modify(final Dto dto, final MultipartHttpServletRequest request) throws Exception {
+    default Dto modify(final Dto modifyDto, final MultipartHttpServletRequest request) throws Exception {
         try {
             // 파일 영역 처리
-            final Integer atchFileNo = dto.getAtchFileNo();
-            dto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
+            final Integer atchFileNo = modifyDto.getAtchFileNo();
+            modifyDto.setAtchFileNo(FileUtils.uploadFile(request, atchFileNo));    // 등록된 파일 마스터ID를 가져온다.
         } catch (Exception e) {
             throw new AtchFileUploadException("파일 업로드 중 오류가 발생했습니다.", e);
         }
         // 나머지 처리
-        return this.modify(dto);
+        return this.modify(modifyDto);
     }
 }

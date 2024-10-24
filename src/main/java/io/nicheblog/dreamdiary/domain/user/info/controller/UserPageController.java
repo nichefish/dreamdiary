@@ -166,8 +166,8 @@ public class UserPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.USER_INFO.setAcsPageInfo("사용자 상세 조회"));
 
         // 상세 조회 및 모델에 추가
-        final UserDto rsDto = userService.getDtlDto(key);
-        model.addAttribute("user", rsDto);
+        final UserDto retrievedDto = userService.getDtlDto(key);
+        model.addAttribute("user", retrievedDto);
 
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);

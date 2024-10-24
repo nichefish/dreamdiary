@@ -192,8 +192,8 @@ public class JrnlSbjctPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_SBJCT.setAcsPageInfo(Constant.PAGE_DTL));
 
         // 객체 조회 및 모델에 추가
-        final JrnlSbjctDto rsDto = jrnlSbjctService.getDtlDto(key);
-        model.addAttribute("post", rsDto);
+        final JrnlSbjctDto retrievedDto = jrnlSbjctService.getDtlDto(key);
+        model.addAttribute("post", retrievedDto);
 
         final boolean isSuccess = true;
         final String rsltMsg = MessageUtils.getMessage(MessageUtils.RSLT_SUCCESS);
@@ -203,7 +203,7 @@ public class JrnlSbjctPageController
         jrnlSbjctService.hitCntUp(key);
         // 열람자 추가 :: 메인 로직과 분리
         // TODO: AOP로 분리
-        publisher.publishEvent(new ViewerAddEvent(this, rsDto.getClsfKey()));
+        publisher.publishEvent(new ViewerAddEvent(this, retrievedDto.getClsfKey()));
 
         // 로그 관련 세팅
         logParam.setResult(isSuccess, rsltMsg);
@@ -233,8 +233,8 @@ public class JrnlSbjctPageController
         model.addAttribute(Constant.SITE_MENU, SiteMenu.JRNL_SBJCT.setAcsPageInfo(Constant.PAGE_MDF));
 
         // 객체 조회 및 모델에 추가
-        final JrnlSbjctDto rsDto = jrnlSbjctService.getDtlDto(key);
-        model.addAttribute("post", rsDto);
+        final JrnlSbjctDto retrievedDto = jrnlSbjctService.getDtlDto(key);
+        model.addAttribute("post", retrievedDto);
         // 등록/수정 화면 플래그 세팅
         model.addAttribute(Constant.IS_MDF, true);
         // 코드 정보 모델에 추가

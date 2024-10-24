@@ -46,30 +46,30 @@ public class SchdulService
     /**
      * 등록 전처리. (override)
      *
-     * @param schdulDto 등록할 객체
+     * @param registDto 등록할 객체
      */
     @Override
     @CacheEvict(value = {"hldyEntityList", "isHldy", "isHldyOrWeekend"}, allEntries = true)
-    public void preRegist(final SchdulDto schdulDto) throws Exception {
+    public void preRegist(final SchdulDto registDto) throws Exception {
         // 종료일자 없을시 자동으로 시작일자와 같게 처리
-        if (StringUtils.isEmpty(schdulDto.getEndDt())) schdulDto.setEndDt(schdulDto.getBgnDt());
+        if (StringUtils.isEmpty(registDto.getEndDt())) registDto.setEndDt(registDto.getBgnDt());
 
         // 개인 일정시 = '나' 자동으로 넣어줌 :: 메소드 분리
-        if (schdulDto.getIsPrvt()) this.setMeToSchdul(schdulDto);
+        if (registDto.getIsPrvt()) this.setMeToSchdul(registDto);
     }
 
     /**
      * 수정 전처리. (override)
      *
-     * @param schdulDto 수정할 객체
+     * @param modifyDto 수정할 객체
      */
     @Override
-    public void preModify(final SchdulDto schdulDto) throws Exception {
+    public void preModify(final SchdulDto modifyDto) throws Exception {
         // 종료일자 없을시 자동으로 시작일자와 같게 처리
-        if (StringUtils.isEmpty(schdulDto.getEndDt())) schdulDto.setEndDt(schdulDto.getBgnDt());
+        if (StringUtils.isEmpty(modifyDto.getEndDt())) modifyDto.setEndDt(modifyDto.getBgnDt());
 
         // 개인 일정시 = '나' 자동으로 넣어줌 :: 메소드 분리
-        if (schdulDto.getIsPrvt()) this.setMeToSchdul(schdulDto);
+        if (modifyDto.getIsPrvt()) this.setMeToSchdul(modifyDto);
     }
 
     /**
@@ -93,21 +93,22 @@ public class SchdulService
     @Override
     @Transactional
     @CacheEvict(value = {"hldyEntityList", "isHldy", "isHldyOrWeekend"}, allEntries = true)
-    public SchdulDto modify(final SchdulDto schdulDto) throws Exception {
+    public SchdulDto modify(final SchdulDto modifyDto) throws Exception {
         // 수정 전처리
-        this.preModify(schdulDto);
+        this.preModify(modifyDto);
 
-        final SchdulEntity schdulEntity = this.getDtlEntity(schdulDto);       // Entity 레벨 조회
-        final boolean wasSingleDate = DateUtils.isSameDay(schdulEntity.getBgnDt(), schdulEntity.getEndDt());
-        final boolean isInvalidEndDate = schdulDto.getBgnDt()
-                                            .compareTo(schdulDto.getEndDt()) > 0;
-        if (wasSingleDate || isInvalidEndDate) schdulDto.setEndDt(schdulDto.getBgnDt());
-        mapstruct.updateFromDto(schdulDto, schdulEntity);
+        final SchdulEntity modifyEntity = this.getDtlEntity(modifyDto);       // Entity 레벨 조회
+        final boolean wasSingleDate = DateUtils.isSameDay(modifyEntity.getBgnDt(), modifyEntity.getEndDt());
+        final boolean isInvalidEndDate = modifyDto.getBgnDt()
+                                            .compareTo(modifyDto.getEndDt()) > 0;
+        if (wasSingleDate || isInvalidEndDate) modifyDto.setEndDt(modifyDto.getBgnDt());
+        mapstruct.updateFromDto(modifyDto, modifyEntity);
         // update
-        final SchdulEntity rsltEntity = this.updt(schdulEntity);
-        final SchdulDto rsltDto = mapstruct.toDto(rsltEntity);
-        rsltDto.setIsSuccess(rsltEntity.getPostNo() != null);
-        return rsltDto;
+        final SchdulEntity updatedEntity = this.updt(modifyEntity);
+        final SchdulDto updatedDto = mapstruct.toDto(updatedEntity);
+        updatedDto.setIsSuccess(updatedEntity.getPostNo() != null);
+
+        return updatedDto;
     }
 
     /**
@@ -115,9 +116,10 @@ public class SchdulService
      */
     @Cacheable(cacheNames = "hldyEntityList")
     public List<SchdulEntity> getHldyEntityList() throws Exception {
-        Map<String, Object> searchParamMap = new HashMap<>() {{
+        final Map<String, Object> searchParamMap = new HashMap<>() {{
             put("schdulCd", Constant.SCHDUL_HLDY);
         }};
+
         return this.getListEntity(searchParamMap);
     }
 
@@ -131,6 +133,7 @@ public class SchdulService
         final Date asDate = DateUtils.asDate(date);
         final Date sDate = DateUtils.Parser.sDateParse(asDate);
         final Optional<SchdulEntity> schdulDtlWrapper = repository.findBySchdulCdAndBgnDt(Constant.SCHDUL_HLDY, sDate);
+
         return schdulDtlWrapper.isPresent();
     }
 
@@ -159,6 +162,7 @@ public class SchdulService
     public boolean isFirstBsnsDayInCurrMnth() throws Exception {
         final Date firstBsnsDayInCurrMnth = getFirstBsnsDayInCurrMnth();
         final Date today = DateUtils.getCurrDate();
+
         return DateUtils.isSameDay(firstBsnsDayInCurrMnth, today);
     }
 }

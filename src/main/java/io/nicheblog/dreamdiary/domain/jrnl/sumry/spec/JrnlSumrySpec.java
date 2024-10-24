@@ -39,7 +39,7 @@ public class JrnlSumrySpec
             final CriteriaBuilder builder
     ) {
         // 정렬 순서 변경
-        List<Order> order = new ArrayList<>();
+        final List<Order> order = new ArrayList<>();
         order.add(builder.desc(root.get("yy")));
         query.orderBy(order);
     }
@@ -60,10 +60,10 @@ public class JrnlSumrySpec
             final CriteriaBuilder builder
     ) throws Exception {
 
-        List<Predicate> predicate = new ArrayList<>();
+        final List<Predicate> predicate = new ArrayList<>();
 
         // expressions
-        Expression<Date> regDtExp = root.get("regDt");
+        final Expression<Date> regDtExp = root.get("regDt");
 
         // 파라미터 비교
         for (String key : searchParamMap.keySet()) {

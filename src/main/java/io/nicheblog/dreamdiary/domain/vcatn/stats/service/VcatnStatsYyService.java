@@ -49,6 +49,7 @@ public class VcatnStatsYyService {
         final Date endDt = DateUtils.getDateAddDay(DateUtils.asDate(nextYyStr + "0301"), -1);
         final VcatnStatsYyEntity entity = new VcatnStatsYyEntity(yyStr, startDt, endDt);
         vcatnStatsYyRepository.save(entity);
+
         return true;
     }
 
@@ -62,6 +63,7 @@ public class VcatnStatsYyService {
      */
     public VcatnStatsYyEntity getVcatnYyDtEntity(final String yyStr) throws Exception {
         final Optional<VcatnStatsYyEntity> statsYyWrapper = vcatnStatsYyRepository.findById(yyStr);
+
         return statsYyWrapper.orElse(new VcatnStatsYyEntity(yyStr));
     }
 
@@ -76,6 +78,7 @@ public class VcatnStatsYyService {
     @Transactional(readOnly = true)
     public VcatnStatsYyDto getVcatnYyDtDto(final String yyStr) throws Exception {
         if (StringUtils.isEmpty(yyStr)) return this.getCurrVcatnYyDt();
+
         return VcatnStatsYyMapstruct.INSTANCE.toDto(this.getVcatnYyDtEntity(yyStr));
     }
 
@@ -88,6 +91,7 @@ public class VcatnStatsYyService {
      */
     public Map<String, Object> getVcatnYyDtMap(final VcatnStatsYyDto statsYy) throws Exception {
         if (statsYy == null) return null;
+
         return new HashMap<>() {{
             put("searchStartDt", DateUtils.asDate(statsYy.getBgnDt()));
             put("searchEndDt", DateUtils.asDate(statsYy.getEndDt()));
@@ -109,6 +113,7 @@ public class VcatnStatsYyService {
         final List<VcatnStatsYyEntity> statsYyList = statsYyPage.getContent();
         if (CollectionUtils.isEmpty(statsYyList)) return null;
         final VcatnStatsYyEntity statsYy = statsYyList.get(0);
+
         return VcatnStatsYyMapstruct.INSTANCE.toDto(statsYy);
     }
 }
