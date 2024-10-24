@@ -33,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="/css/font.css?${releaseDate!}" />
 
     <!--Javascript:: Global Javascript Bundle(used by all pages)-->
+    <script type="text/javascript" src="/js/vue.global.<#if activeProfile == "prod">prod.</#if>min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/handlebars.min.js?${releaseDate!}"></script>
     <script type="text/javascript" src="/js/moment.min.js?${releaseDate!}"></script>
     <!--Metronic:: Global Javascript Bundle(used by all pages)-->

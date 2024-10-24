@@ -11,8 +11,8 @@ import io.nicheblog.dreamdiary.domain.jrnl.dream.repository.jpa.JrnlDreamReposit
 import io.nicheblog.dreamdiary.global.TestConstant;
 import io.nicheblog.dreamdiary.global.config.DataSourceConfig;
 import io.nicheblog.dreamdiary.global.config.TestAuditConfig;
-import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -23,7 +23,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -32,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * JrnlDayRepositoryTest
  * <pre>
  *  JrnlDayRepository 테스트 모듈
+ *  "@Transactional 환경에서는 flush가 의도한 대로 작동하지 않을 수 있다."
  * </pre>
  *
  * @author nichefish
@@ -43,10 +46,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Import(TestAuditConfig.class)
 @ActiveProfiles("test")
 @Log4j2
+@Transactional
 class JrnlDayRepositoryTest {
 
     @Autowired
     private TestEntityManager testEntityManager;
+
     @Autowired
     private JrnlDayRepository jrnlDayRepository;
     @Autowired
@@ -54,17 +59,28 @@ class JrnlDayRepositoryTest {
     @Autowired
     private JrnlDiaryRepository jrnlDiaryRepository;
 
+    private JrnlDayEntity jrnlDayEntity;
+
+    /**
+     * 각 테스트 시작 전 세팅 초기화.
+     * @throws Exception 발생할 수 있는 예외.
+     */
+    @BeforeEach
+    void setUp() throws Exception {
+        // 공통적으로 사용할 JrnlDayDto 초기화
+        jrnlDayEntity = JrnlDayEntityTestFactory.createWithJrnlDt("2000-01-01");
+    }
+
     /**
      * regist 테스트
      */
     @Test
     public void testRegist() throws Exception {
         // Given::
-        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.create();
-        jrnlDay.setJrnlDt(DateUtils.asDate("2000-01-01"));
+        JrnlDayEntity saved = jrnlDayRepository.save(jrnlDayEntity);
+        Integer rsltId = saved.getPostNo();
 
         // When::
-        Integer rsltId = jrnlDayRepository.save(jrnlDay).getPostNo();
         JrnlDayEntity rslt = jrnlDayRepository.findById(rsltId).orElse(null);
 
         // Then::
@@ -81,26 +97,27 @@ class JrnlDayRepositoryTest {
      * 1. 메인엔티티 등록, 2. 서브엔티티 등록 후 3. 메인엔티티 재조회
      */
     @Test
-    @Transactional
     public void testGetDreamList() throws Exception {
         // Given::
-        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.create();
-        jrnlDay.setJrnlDt(DateUtils.asDate("2000-01-01"));
-        JrnlDayEntity rslt = jrnlDayRepository.saveAndFlush(jrnlDay);
-        Integer rsltId = rslt.getPostNo();
+        JrnlDayEntity rslt = jrnlDayRepository.save(jrnlDayEntity);
+        Integer jrnlDayNo = rslt.getPostNo();
+
+        testEntityManager.clear();
 
         // When::
         // 저널 꿈 regist
         JrnlDreamEntity jrnlDream = JrnlDreamEntityTestFactory.create();
-        jrnlDream.setJrnlDayNo(rsltId);
-        jrnlDreamRepository.saveAndFlush(jrnlDream);
-        jrnlDayRepository.refresh(rslt);
+        jrnlDream.setJrnlDayNo(jrnlDayNo);
+        jrnlDreamRepository.save(jrnlDream);
+
+        JrnlDayEntity refreshedJrnlDay = jrnlDayRepository.findById(jrnlDayNo).orElseThrow(() -> new EntityNotFoundException("저널 일자를 찾을 수 없습니다."));
+        List<JrnlDreamEntity> dreamList = refreshedJrnlDay.getJrnlDreamList();
 
         // Then::
-        assertNotNull(rslt);
-        assertNotNull(rsltId);
+        assertNotNull(refreshedJrnlDay);
+        assertNotNull(jrnlDayNo);
         // jrnlDream
-        assertNotNull(rslt.getJrnlDreamList());
+        assertNotNull(refreshedJrnlDay.getJrnlDreamList());
     }
 
     /**
@@ -108,24 +125,22 @@ class JrnlDayRepositoryTest {
      * 1. 메인엔티티 등록, 2. 서브엔티티 등록 후 3. 메인엔티티 재조회
      */
     @Test
-    @Transactional
     public void testGetDiaryList() throws Exception {
         // Given::
-        JrnlDayEntity jrnlDay = JrnlDayEntityTestFactory.create();
-        jrnlDay.setJrnlDt(DateUtils.asDate("2000-01-01"));
-        JrnlDayEntity rslt = jrnlDayRepository.saveAndFlush(jrnlDay);
-        Integer rsltId = rslt.getPostNo();
+        JrnlDayEntity rslt = jrnlDayRepository.save(jrnlDayEntity);
+        Integer jrnlDayNo = rslt.getPostNo();
+
+        testEntityManager.clear();
 
         // When::
         // 저널 꿈 regist
         JrnlDiaryEntity jrnlDiary = JrnlDiaryEntityTestFactory.create();
-        jrnlDiary.setJrnlDayNo(rsltId);
-        jrnlDiaryRepository.saveAndFlush(jrnlDiary);
-        jrnlDayRepository.refresh(rslt);
+        jrnlDiary.setJrnlDayNo(jrnlDayNo);
+        jrnlDiaryRepository.save(jrnlDiary);
 
         // Then::
         assertNotNull(rslt);
-        assertNotNull(rsltId);
+        assertNotNull(jrnlDayNo);
         // jrnlDiary
         assertNotNull(rslt.getJrnlDiaryList());
     }

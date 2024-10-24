@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.global.interceptor;
 
+import io.nicheblog.dreamdiary.global.ActiveProfile;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global._common.auth.model.AuthInfo;
@@ -34,7 +35,8 @@ public class FreemarkerInterceptor
         implements HandlerInterceptor {
 
     private final HttpSession session;
-    // private final MenuService menuService;
+
+    private final ActiveProfile activeProfile;
 
     @Value("${release-date:20000101}")
     private String releaseDate;
@@ -53,11 +55,13 @@ public class FreemarkerInterceptor
         /* model 정보 없을시 처리하지 않음 */
         if (mav == null) return;
 
-        final String requestURI = request.getRequestURI();
-        if (Url.AUTH_LGN_FORM.equals(requestURI) || Url.AUTH_LGN_PROC.equals(requestURI)) return;
-
+        // 모든 페이지에 activeProfile 추가
+        mav.addObject("activeProfile", activeProfile.getActive());
         // static 자원들에 releaseDate 세팅
         mav.addObject("releaseDate", releaseDate);
+
+        final String requestURI = request.getRequestURI();
+        if (Url.AUTH_LGN_FORM.equals(requestURI) || Url.AUTH_LGN_PROC.equals(requestURI)) return;
 
         /* 모바일 여부 체크 추가 (TODO: 현재 미사용중) */
         final Boolean isMobile = DeviceUtils.getCurrentDevice(request).isMobile();
