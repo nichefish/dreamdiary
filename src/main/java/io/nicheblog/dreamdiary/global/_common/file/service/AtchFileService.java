@@ -18,15 +18,7 @@ import org.springframework.stereotype.Service;
  *
  * @author nichefish
  */
-@Service("atchFileService")
-@RequiredArgsConstructor
-public class AtchFileService
-        implements BaseCrudService<AtchFileDto, AtchFileDto, Integer, AtchFileEntity, AtchFileRepository, AtchFileSpec, AtchFileMapstruct> {
-
-    @Getter
-    private final AtchFileRepository repository;
-    @Getter
-    private final AtchFileSpec spec;
-    @Getter
-    private final AtchFileMapstruct mapstruct = AtchFileMapstruct.INSTANCE;
+public interface AtchFileService
+        extends BaseCrudService<AtchFileDto, AtchFileDto, Integer, AtchFileEntity, AtchFileRepository, AtchFileSpec, AtchFileMapstruct> {
+    //
 }
