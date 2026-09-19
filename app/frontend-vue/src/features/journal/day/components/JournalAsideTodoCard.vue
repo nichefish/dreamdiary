@@ -76,7 +76,7 @@ import { onMounted } from "vue";
 import axios from "axios";
 import { swalAlert, swalConfirm, swalRequestError, swalAjaxResult } from "@/shared/utils/swal";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
-import { useJournalStore, type JournalTodoItem } from "@/features/journal/stores/journal";
+import { useJournalStore, type JournalTodoItem, type JournalPrefixDto } from "@/features/journal/stores/journal";
 import { useJournalModalStore } from "@/features/journal/stores/journalModal";
 
 const store = useJournalStore();
@@ -103,10 +103,13 @@ async function openTodoEdit(id: number): Promise<void> {
       id?: number;
       yy?: number;
       mnth?: number;
-      categoryCode?: string;
       title?: string;
       sortOrder?: number;
       content?: string;
+      location?: string;
+      dateText?: string;
+      prefixId?: number | null;
+      prefix?: JournalPrefixDto | null;
       tag?: { tagListStrWithCtgr?: string };
     } | undefined;
     if (res.data?.rslt !== true || dto?.id == null) {
@@ -117,10 +120,13 @@ async function openTodoEdit(id: number): Promise<void> {
       id: dto.id,
       yy: dto.yy,
       mnth: dto.mnth,
-      categoryCode: dto.categoryCode,
       title: dto.title,
       sortOrder: dto.sortOrder,
       content: dto.content,
+      prefixId: dto.prefixId ?? null,
+      prefix: dto.prefix ?? null,
+      location: dto.location ?? "",
+      dateText: dto.dateText ?? "",
       tag: { tagListStrWithCtgr: dto.tag?.tagListStrWithCtgr ?? "" },
     });
   } catch (e: unknown) {

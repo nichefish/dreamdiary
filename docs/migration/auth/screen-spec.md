@@ -82,7 +82,7 @@
 | 내 정보 | `/my/profile` | `UserMyProfileTab.vue` | 개인 연락처·프로필은 조회·수정하고 재직 정보는 조회 전용으로 표시한다. |
 | 보안 | `/my/security` | `UserMySecurityTab.vue` | 허용 IP를 표시하고 비밀번호 변경 모달을 연다. |
 | 저널 설정 | `/my/journal` | `UserMyJournalTab.vue` | 저널 일자 공통 진입점에서 사용할 일간·주간·월간 기본 보기를 조회·저장한다. |
-| 말머리 관리 | `/my/prefixes` | `UserMyPrefixesTab.vue` | 초기 화면의 작은 `저널` 도메인 헤더 아래 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 고정 대상 6행을 표시하고, 행을 누르면 해당 개인 Prefix 목록의 생성·수정·정렬·색상·활성 상태를 관리하는 모달을 연다. |
+| 말머리 관리 | `/my/prefixes` | `UserMyPrefixesTab.vue` | 초기 화면의 작은 `저널` 도메인 헤더 아래 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 고정 대상 6행, 이어서 `Keep` 도메인 헤더 아래 `Keep 항목`(content_type `JOURNAL_TODO`) 1행을 표시하고, 행을 누르면 해당 개인 Prefix 목록의 생성·수정·정렬·색상·활성 상태를 관리하는 모달을 연다. |
 
 - 탭은 로컬 상태가 아니라 Vue Router 하위 route로 유지하므로 새로고침·직접 URL 진입·브라우저 앞뒤 이동 시 같은 탭을 복원한다.
 - 공통 헤더의 보안 버튼은 `/my/security`로 이동하며 비밀번호 모달을 직접 열지 않는다.

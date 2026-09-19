@@ -1,13 +1,14 @@
 package io.nicheblog.dreamdiary.feature.journal.todo.mapstruct;
 
 import io.nicheblog.dreamdiary.feature.attachable._shared.mapstruct.BaseAttachableMapstruct;
+import io.nicheblog.dreamdiary.feature.attachable.prefix.entity.PrefixEntity;
+import io.nicheblog.dreamdiary.feature.attachable.prefix.model.PrefixDto;
 import io.nicheblog.dreamdiary.feature.journal.todo.entity.JournalTodoEntity;
 import io.nicheblog.dreamdiary.feature.journal.todo.model.JournalTodoDto;
 import io.nicheblog.dreamdiary.global.intrfc.mapstruct.BaseWriteMapstruct;
 import io.nicheblog.dreamdiary.global.util.MarkdownUtils;
 import io.nicheblog.dreamdiary.global.util.date.DatePtn;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
-import io.nicheblog.dreamdiary.infrastructure.code.utils.CodeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -20,7 +21,7 @@ import org.mapstruct.factory.Mappers;
  *
  * @author nichefish
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class, MarkdownUtils.class, CodeUtils.class}, builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {DateUtils.class, StringUtils.class, DatePtn.class, MarkdownUtils.class}, builder = @Builder(disableBuilder = true))
 public interface JournalTodoMapstruct
         extends BaseWriteMapstruct<JournalTodoDto, JournalTodoEntity>, BaseAttachableMapstruct<JournalTodoDto, JournalTodoEntity> {
 
@@ -34,9 +35,27 @@ public interface JournalTodoMapstruct
      */
     @Override
     @Named("toDto")
-    @Mapping(target = "ctgrNm", expression = "java(CodeUtils.getCodeName(\"JOURNAL_TODO_CTGR_CD\", entity.getCategoryCode()))")
     @Mapping(target = "markdownContent", expression = "java(StringUtils.isEmpty(entity.getContent()) ? \"-\" : MarkdownUtils.markdown(entity.getContent()))")
+    @Mapping(target = "prefix", expression = "java(selectedPrefixToDto(entity.getSelectedPrefix()))")
+    @Mapping(target = "prefixId", expression = "java(entity.getSelectedPrefixId())")
     JournalTodoDto toDto(final JournalTodoEntity entity) throws Exception;
+
+    /**
+     * prefix_content 연결에서 조립된 선택 말머리를 표시용 DTO로 변환한다.
+     *
+     * @param prefix 선택된 말머리 엔티티
+     * @return 표시용 말머리 DTO. 선택이 없으면 null.
+     */
+    default PrefixDto selectedPrefixToDto(final PrefixEntity prefix) {
+        if (prefix == null) return null;
+        return PrefixDto.builder()
+                .id(prefix.getId())
+                .name(prefix.getName())
+                .color(prefix.getColor())
+                .sortOrder(prefix.getSortOrder())
+                .activeYn(prefix.getActiveYn())
+                .build();
+    }
 
     /**
      * Dto -> Entity 변환
@@ -46,6 +65,7 @@ public interface JournalTodoMapstruct
      */
     @Override
     @Mapping(target = "content", expression = "java(MarkdownUtils.normalize(dto.getContent()))")
+    @Mapping(target = "prefix", ignore = true)
     JournalTodoEntity toEntity(final JournalTodoDto dto) throws Exception;
 
     /**
@@ -57,5 +77,6 @@ public interface JournalTodoMapstruct
     @Override
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "content", expression = "java(MarkdownUtils.normalize(dto.getContent()))")
+    @Mapping(target = "prefix", ignore = true)
     void updateFromDto(final JournalTodoDto dto, final @MappingTarget JournalTodoEntity entity) throws Exception;
 }

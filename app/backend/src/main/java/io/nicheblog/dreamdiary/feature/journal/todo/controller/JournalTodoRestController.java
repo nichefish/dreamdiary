@@ -3,6 +3,8 @@ package io.nicheblog.dreamdiary.feature.journal.todo.controller;
 import io.nicheblog.dreamdiary.feature.journal.todo.model.JournalTodoDto;
 import io.nicheblog.dreamdiary.feature.journal.todo.model.JournalTodoSearchParam;
 import io.nicheblog.dreamdiary.feature.journal.todo.service.JournalTodoService;
+import io.nicheblog.dreamdiary.feature.attachable._shared.type.ContentType;
+import io.nicheblog.dreamdiary.feature.attachable.tag.service.TagService;
 import io.nicheblog.dreamdiary.feature.journal.todo.service.my.MyJournalTodoService;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * JournalTodoRestController
@@ -41,6 +44,30 @@ public class JournalTodoRestController
 
     private final JournalTodoService journalTodoService;
     private final MyJournalTodoService myJournalTodoService;
+    private final TagService tagService;
+
+    /**
+     * 저널 할일 태그 카테고리 맵 조회 (Ajax)
+     * (사용자USER, 관리자MNGR만 접근 가능.)
+     * <pre>
+     *  등록/수정 모달의 Tagify 카테고리 자동완성이 사용한다.
+     * </pre>
+     *
+     * @return {@link ResponseEntity} -- 처리 결과와 메시지
+     */
+    @GetMapping(value = {Url.JOURNAL_TODO_TAG_CATEGORIES})
+    @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
+    @ResponseBody
+    public ResponseEntity<AjaxResponse> journalTodoTagCategoryMapAjax(
+            //
+    ) throws Exception {
+
+        final Map<String, List<String>> tagCategoryMap = tagService.getMyTagCategoryMap(ContentType.JOURNAL_TODO.key);
+        final boolean isSuccess = true;
+        final String rsltMsg = MessageUtils.getMessage("common.result.success");
+
+        return ResponseEntity.ok(AjaxResponse.withAjaxResult(isSuccess, rsltMsg).withMap(tagCategoryMap));
+    }
 
     /**
      * 저널 할일 목록 조회 (Ajax)

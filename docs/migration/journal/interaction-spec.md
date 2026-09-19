@@ -825,6 +825,8 @@ assistant 메시지 `metadataJson.ragSources` 행을 클릭하면 `useJournalMod
 
 **아사이드 TODO 카드 라이프사이클 인터랙션**: 각 할일 행은 왼쪽 체크박스로 완료(`RESOLVED` 전이, `PUT /api/lifecycles`, contentType `JOURNAL_TODO`)하고, kebab(⋯) 드롭다운으로 보류(`PENDING`)·보류 해제(`OPEN`)·삭제(하드 `DELETE`, `journal.todo.delete.confirm` 확인)를 수행한다. `PENDING` 행은 제목 앞 「보류」 배지(`lifecycle.pending`)로 표시한다. 전이·삭제 성공 시 `store.fetchTodos()` 로 재조회하며 `RESOLVED` 는 활성 목록에서 빠진다. 완료는 별도 확인 없이 즉시 처리하고(데이터는 삭제가 아니라 `RESOLVED` 로 보존), 실패 시 서버 `message` 를 알림으로 표시한다. 목록은 월 무관 cross-month 활성 집합이라 년/월 이동에도 재조회하지 않는다. **제목 클릭 시 수정**: 각 할일의 제목(`cursor-pointer`)을 클릭하면 상세(`GET /api/journal/todo/:id`)를 조회해 기존 데이터로 등록/수정 모달을 modify 모드(`id` 포함)로 연다 — 등록(+ 버튼)과 같은 모달을 공유하며, 저장 성공 시 모달 submit 이 `fetchTodos()` 로 카드를 갱신한다.
 
+**Keep 목록 행 액션**: 관리 영역은 저널 스레드·엔트리 목록과 동일한 Metronic `data-kt-menu` 컨텍스트 메뉴다(목록 조회 후 `reinitMetronicAfterDom()` 재바인딩). 메뉴는 수정 → 구분선 → 라이프사이클 서브메뉴 → 구분선 → 삭제 순으로 구성한다. 라이프사이클 서브메뉴는 전이 단축 항목이 아니라 `OPEN`·`PENDING`·`RESOLVED` 단계 라디오를 모두 노출하고 현재 단계를 체크로 표시하며, 선택 시 `PUT /api/lifecycles { id, contentType: "JOURNAL_TODO", lifecycleKey }` 를 호출한 뒤 전 범위 목록을 재조회한다. 라이프사이클 행이 없는 항목은 `OPEN` 으로 본다. 삭제는 `journal.todo.delete.confirm` 확인 후 `DELETE /api/journal/todo/:id` 를 호출한다(아사이드 TODO 카드와 같은 계약). 행 왼쪽 체크박스의 즉시 완료(`RESOLVED`)는 메뉴와 별도로 유지한다.
+
 저널 해석 등록·수정 모달의 확인·결과 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. 해석 제목은 선택값으로 유지하고, 저장 API의 서버 `message`가 있으면 우선 표시하며, 성공 시 모달을 닫은 뒤 성공 알림 확인 후 `refreshJournalEntryHostForRoute()`로 현재 표시 호스트를 갱신한다. 스레드 상세에서는 열린 상세·집계 태그·소속 엔트리를 재조회하고, 그 밖의 route에서는 기존 저널 목록 갱신을 유지한다.
 
 저널 해석 아이템의 라이프사이클·상태 변경 실패, 클립보드 복사 성공·실패, 삭제 확인·성공·실패 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. API 응답의 `message`를 우선 표시한다. 변경·삭제 성공 후 스레드 상세에서는 열린 상세·집계 태그·소속 엔트리를 재조회하고 스크롤하지 않으며, 그 밖의 route에서는 현재 일자를 재조회한 뒤 기존 스크롤 동작을 유지한다.

@@ -18,9 +18,11 @@ export function createJournalModalTodo() {
   async function openTodoRegist(payload?: JournalTodoRegistModel) {
     if (!await assertAuthenticatedBeforeModal()) return;
     todoRegistModel.value = {
-      categoryCode: "",
+      prefixId: null,
       title: "",
       content: "",
+      location: "",
+      dateText: "",
       tag: { tagListStrWithCtgr: "" },
       ...payload,
     };

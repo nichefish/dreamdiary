@@ -146,7 +146,9 @@ CREATE TABLE IF NOT EXISTS journal_todo (
     -- POST
     title VARCHAR(200) COMMENT '제목',
     content LONGTEXT COMMENT '내용',
-    category_code VARCHAR(50) COMMENT '글 분류 코드',
+    location VARCHAR(200) COMMENT '위치',
+    date_text VARCHAR(200) COMMENT '일시(자유 텍스트 원문)',
+    -- 말머리 선택은 journal_todo 컬럼이 아니라 prefix_content(ref_id, ref_content_type) 연결로 보유한다.
     -- FILE_GROUP
     file_group_id INT COMMENT '첨부파일 번호',
     -- AUDIT

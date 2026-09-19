@@ -3,6 +3,7 @@ package io.nicheblog.dreamdiary.feature.journal.todo.model;
 import io.nicheblog.dreamdiary.feature.attachable._shared.model.BaseAttachableDto;
 import io.nicheblog.dreamdiary.feature.attachable._shared.type.ContentType;
 import io.nicheblog.dreamdiary.feature.attachable.lifecycle.model.cmpstn.LifecycleCmpstn;
+import io.nicheblog.dreamdiary.feature.attachable.prefix.model.PrefixDto;
 import io.nicheblog.dreamdiary.feature.attachable.lifecycle.model.cmpstn.LifecycleCmpstnModule;
 import io.nicheblog.dreamdiary.feature.attachable.tag.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.feature.attachable.tag.model.cmpstn.TagCmpstnModule;
@@ -34,10 +35,6 @@ public class JournalTodoDto
     /** 필수: 컨텐츠 타입 */
     @Builder.Default
     private static final ContentType CONTENT_TYPE = ContentType.JOURNAL_TODO;
-    /** 필수(Override): 글분류 코드 */
-    @Builder.Default
-    private static final String CTGR_CL_CD = CONTENT_TYPE.name() + "_CTGR_CD";
-
     /** 컨텐츠 타입 */
     @Builder.Default
     private String contentType = CONTENT_TYPE.key;
@@ -51,21 +48,25 @@ public class JournalTodoDto
     /** 마크다운 처리된 내용 */
     private String markdownContent;
 
-    /** 글분류 코드 */
-    @Size(max = 50)
-    private String ctgrClCd;
+    /** 위치 */
+    @Size(max = 200)
+    private String location;
 
-    /** 글분류 코드 */
-    @Size(max = 50)
-    private String categoryCode;
+    /**
+     * 일시(자유 텍스트 원문).
+     * <pre>
+     *  단일일·연속 범위·불연속 다회차·시각을 사용자가 쓴 표현 그대로 한 문자열로 보존한다.
+     *  서버는 이 값을 해석하지 않고 원문 그대로 저장·반환한다.
+     * </pre>
+     */
+    @Size(max = 200)
+    private String dateText;
 
-    /** 글분류 코드 이름 */
-    @Size(max = 50)
-    private String ctgrNm;
+    /** 선택된 말머리(표시용). prefix_content 연결에서 조립한다. */
+    private PrefixDto prefix;
 
-    /** 글분류 존재 여부 */
-    @Builder.Default
-    private Boolean hasCtgrNm = false;
+    /** 선택한 말머리 ID (0..1, null 이면 선택 해제) */
+    private Integer prefixId;
 
     /* ----- */
 

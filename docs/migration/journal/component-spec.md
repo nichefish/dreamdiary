@@ -451,7 +451,7 @@ interface TodoRow {
 
 **Vue 구현**: `app/frontend-vue/src/features/journal/todo/modals/JournalTodoRegistModal.vue`
 
-**데이터·동작**: `useJournalModalStore.todoRegistModel`의 대상 년월·카테고리·제목·순서·본문·태그를 편집한다. 신규는 `POST /api/journal/todos`, 수정은 `POST /api/journal/todo/{id}`로 multipart form data를 전송한다. 성공 시 모달을 닫고 성공 알림 확인 후 `refreshJournalDaysForRoute()`로 현재 route 기준 저널 목록을 갱신한다.
+**데이터·동작**: `useJournalModalStore.todoRegistModel`의 대상 년월·말머리·제목·순서·위치·일시·본문·태그를 편집한다. 태그는 `TagifyEditor` 로 입력하며 `GET /api/journal/todo/tag/categories` 의 `JOURNAL_TODO` categoryMap 으로 카테고리를 자동완성한다. 저널 사이드바와 Keep 이 이 맵 하나를 공유한다. 말머리는 content_type `JOURNAL_TODO` 개인 목록의 활성 선택지를 쓰며, 선택지가 하나도 없으면 필드를 표시하지 않는다. 저장된 비활성 말머리는 disabled 옵션으로 표시해 같은 선택 유지 저장만 허용한다. 연결은 `prefix_content`에 저장한다. 위치(`location`)와 일시(`dateText`)는 각각 200자 자유 텍스트다. 일시는 단일일·연속 범위·불연속 다회차·시각을 사용자가 쓴 표현 그대로 한 문자열로 보존하며, 서버·클라이언트 모두 이 값을 날짜로 해석하지 않는다. 신규는 `POST /api/journal/todos`, 수정은 `POST /api/journal/todo/{id}`로 multipart form data를 전송한다. 성공 시 모달을 닫고 성공 알림 확인 후 `refreshJournalDaysForRoute()`로 현재 route 기준 저널 목록을 갱신한다.
 
 **i18n**: 모달 제목·대상 년월·필드·placeholder·안내·저장·닫기·제목 필수 검증·확인·결과 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. API 응답에 `message`가 있으면 서버 메시지를 우선 표시한다.
 

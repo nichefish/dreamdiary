@@ -37,7 +37,7 @@
             </div>
             <!--end::날짜-->
 
-            <!--begin::제목 (카테고리 + 제목 + 순서)-->
+            <!--begin::제목 (말머리 + 제목 + 순서)-->
             <div class="row d-flex mb-8">
               <div class="col-12">
                 <label class="d-flex align-items-center mb-2">
@@ -45,14 +45,27 @@
                   <span class="text-gray-500 fs-9 ms-2">{{ t('journal.field.title-max-50') }}</span>
                 </label>
               </div>
-              <div class="col-lg-2">
-                <!--begin::카테고리 (dead UI 보존)-->
-                <select name="categoryCode" id="categoryCode" class="form-select form-select-solid" v-model="model.categoryCode">
-                  <option value="">{{ t('journal.todo.category.placeholder') }}</option>
+              <!--begin::말머리 (개인 말머리 목록이 비어 있으면 표시하지 않는다)-->
+              <div v-if="showPrefixField" class="col-lg-2">
+                <select
+                  name="prefixId"
+                  id="prefixId"
+                  class="form-select form-select-solid"
+                  v-model="model.prefixId"
+                >
+                  <option :value="null">{{ t('journal.todo.prefix.select') }}</option>
+                  <option v-if="currentInactivePrefix" :value="currentInactivePrefix.id" disabled>
+                    [{{ currentInactivePrefix.name }}] ({{ t('status.unuse') }})
+                  </option>
+                  <option
+                    v-for="prefix in prefixOptions"
+                    :key="prefix.id"
+                    :value="prefix.id"
+                  >[{{ prefix.name }}]</option>
                 </select>
-                <!--end::카테고리-->
               </div>
-              <div :class="isModify ? 'col-lg-9' : 'col-lg-10'">
+              <!--end::말머리-->
+              <div :class="titleColumnClass">
                 <input
                   type="text"
                   name="title"
@@ -77,6 +90,40 @@
             </div>
             <!--end::제목-->
 
+            <!--begin::위치 / 일시-->
+            <div class="row d-flex mb-8">
+              <div class="col-lg-6">
+                <label class="d-flex align-items-center mb-2" for="location">
+                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('journal.todo.field.location') }}</span>
+                </label>
+                <input
+                  type="text"
+                  name="location"
+                  id="location"
+                  class="form-control form-control-solid"
+                  v-model="model.location"
+                  :placeholder="t('journal.todo.location.placeholder')"
+                  maxlength="200"
+                />
+              </div>
+              <div class="col-lg-6">
+                <label class="d-flex align-items-center mb-2" for="dateText">
+                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('journal.todo.field.date-text') }}</span>
+                  <span class="text-gray-500 fs-9 ms-2">{{ t('journal.todo.date-text.format-guide') }}</span>
+                </label>
+                <input
+                  type="text"
+                  name="dateText"
+                  id="dateText"
+                  class="form-control form-control-solid"
+                  v-model="model.dateText"
+                  :placeholder="t('journal.todo.date-text.placeholder')"
+                  maxlength="200"
+                />
+              </div>
+            </div>
+            <!--end::위치 / 일시-->
+
             <!--begin::내용-->
             <div class="row mb-4">
               <div class="col-12">
@@ -95,19 +142,10 @@
               <div>
                 <label for="tagListStr" class="mb-2">
                   <span class="text-gray-700 fs-6 fw-bolder">{{ t('common.tag') }}</span>
-                  <span class="text-gray-500 fs-9 mx-2">{{ t('journal.todo.tag.format-guide') }}</span>
                 </label>
               </div>
               <div class="col-xl-12">
-                <input
-                  name="tag.tagListStr"
-                  id="tagListStr"
-                  class="form-control form-control-solid"
-                  autocomplete="off"
-                  maxlength="500"
-                  v-model="tagListStrWithCtgr"
-                  :placeholder="t('journal.todo.tag.placeholder')"
-                />
+                <TagifyEditor v-model="tagListStrWithCtgr" :category-map="todoCategoryMap" />
               </div>
             </div>
             <!--end::태그-->
@@ -150,9 +188,16 @@ import { swalConfirm, swalAlert, swalRequestError, swalAjaxResult } from "@/shar
 import { useSafeModalClose } from "@/shared/utils/safeModalClose";
 import { ref, computed, watch, onMounted } from "vue";
 import RichEditor from "@/shared/ui/editor/RichEditor.vue";
+import TagifyEditor from "@/shared/ui/tag/TagifyEditor.vue";
 import { Modal } from "bootstrap";
 import axios from "axios";
 import { useJournalModalStore } from "@/features/journal/stores/journalModal";
+import { usePersonalPrefixOptionsStore } from "@/features/attachable/stores/personalPrefixOptions";
+import {
+  useJournalCategoryMapStore,
+  CATEGORY_MAP_URL_TODO_TAG,
+} from "@/features/journal/stores/journalCategoryMaps";
+import { resolveJournalPrefixField } from "@/features/journal/utils/journalPrefixField";
 import { useJournalStore } from "@/features/journal/stores/journal";
 import { useRoute } from "vue-router";
 import { refreshJournalDaysForRoute } from "@/features/journal/utils/journalDayRefresh";
@@ -160,6 +205,8 @@ import { useLocaleStore } from "@/shared/i18n/stores/locale";
 
 const modalStore = useJournalModalStore();
 const journalStore = useJournalStore();
+const personalPrefixOptionsStore = usePersonalPrefixOptionsStore();
+const categoryMapStore = useJournalCategoryMapStore();
 const { t } = useLocaleStore();
 const route = useRoute();
 
@@ -172,6 +219,39 @@ const { closeArmed, requestSafeClose, resetSafeClose } = useSafeModalClose(() =>
 
 const model = computed(() => modalStore.todoRegistModel);
 const isModify = computed(() => !!model.value?.id);
+
+/**
+ * 할일 말머리 Scope content_type.
+ * attachable 정체성 키와 같은 JOURNAL_TODO 목록 하나를 저널 사이드바·Keep 이 공유한다.
+ */
+const PREFIX_CONTENT_TYPE = "JOURNAL_TODO";
+
+/** 할일 태그 Tagify 카테고리 자동완성 맵 (JOURNAL_TODO 단일 맵). */
+const todoCategoryMap = computed(() => categoryMapStore.todoTagCategoryMap);
+
+/** 활성 개인 말머리 선택지. */
+const prefixOptions = computed(() => personalPrefixOptionsStore.optionsFor(PREFIX_CONTENT_TYPE));
+
+/** 활성 목록과 비활성 과거 선택을 합산한 말머리 필드 표시 상태. */
+const prefixFieldPresentation = computed(() => resolveJournalPrefixField(
+  prefixOptions.value,
+  model.value?.prefix,
+));
+
+/** 기존 비활성 말머리는 수정 화면에 표시하고 같은 선택 유지 저장만 허용한다. */
+const currentInactivePrefix = computed(() => prefixFieldPresentation.value.inactivePrefix);
+
+/** 선택 가능한 말머리가 있을 때만 말머리 영역을 표시한다. */
+const showPrefixField = computed(() => prefixFieldPresentation.value.visible);
+
+/**
+ * 말머리(2열)·순서(1열, 수정 시에만) 표시 여부에 맞춰 제목 입력이 남은 열을 모두 사용한다.
+ * 한 행의 합이 항상 12열이 되도록 계산한다.
+ */
+const titleColumnClass = computed(() => {
+  if (showPrefixField.value) return isModify.value ? "col-lg-9" : "col-lg-10";
+  return isModify.value ? "col-lg-11" : "col-lg-12";
+});
 
 /** 태그 문자열 바인딩 */
 const tagListStrWithCtgr = computed({
@@ -194,6 +274,8 @@ watch(
   (isOpen) => {
     if (isOpen) {
       resetSafeClose();
+      void personalPrefixOptionsStore.fetchOptions(PREFIX_CONTENT_TYPE);
+      void categoryMapStore.ensure(CATEGORY_MAP_URL_TODO_TAG);
       bsModal?.show();
     } else bsModal?.hide();
   }
@@ -228,9 +310,11 @@ async function submit() {
     if (isModify.value) formData.append("id", String(model.value.id));
     formData.append("yy", String(model.value.yy ?? ""));
     formData.append("mnth", String(model.value.mnth ?? ""));
-    formData.append("categoryCode", model.value.categoryCode ?? "");
     formData.append("title", model.value.title ?? "");
     if (model.value.sortOrder != null) formData.append("sortOrder", String(model.value.sortOrder));
+    formData.append("prefixId", model.value.prefixId == null ? "" : String(model.value.prefixId));
+    formData.append("location", model.value.location ?? "");
+    formData.append("dateText", model.value.dateText ?? "");
     formData.append("content", model.value.content ?? "");
     formData.append("tag.tagListStr", tagListStrWithCtgr.value);
 

@@ -76,10 +76,20 @@ export interface JournalTodoRegistModel {
   id?: number;
   yy?: number | string;
   mnth?: number | string;
-  categoryCode?: string;
   title?: string;
   sortOrder?: number;
   content?: string;
+  /** 선택한 개인 말머리 ID (0..1, null 이면 선택 해제) */
+  prefixId?: number | null;
+  /** 저장된 말머리(표시용). 비활성 과거 선택 표시 판단에 쓴다. */
+  prefix?: JournalPrefixDto | null;
+  /** 위치 (자유 텍스트) */
+  location?: string;
+  /**
+   * 일시 (자유 텍스트 원문).
+   * 단일일·연속 범위·불연속 다회차·시각을 사용자가 쓴 표현 그대로 보존한다.
+   */
+  dateText?: string;
   /** 태그 컴포지션 */
   tag?: { tagListStrWithCtgr?: string };
 }

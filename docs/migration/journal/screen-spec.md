@@ -43,7 +43,7 @@
 | 스레드 수정 | `/thread/:id/edit` | `JournalThreadEditPage.vue` | ✓ |
 | 내 설정 | `/my/profile`, `/my/security`, `/my/journal`, `/my/prefixes` | `UserMyPage.vue` + `UserMy*Tab.vue` | ✓ |
 | 일정 | `/schedule` | `ScheduleCalendar.vue` | ✓ |
-| Keep 전수관리 | `/keep` | `KeepPage.vue` | ✓ 전 범위 journal_todo(scope=all) 조회·미해결/완료 그룹·제목/본문 검색·추가(현재 년월 발생지 기본)·제목 클릭 수정·완료/보류/되돌리기. 사이드바는 활성 projection으로 유지. 대메뉴 노출은 DB 메뉴 레코드 몫(코드 fallback 에는 등록). |
+| Keep 전수관리 | `/keep` | `KeepPage.vue` | ✓ 전 범위 journal_todo(scope=all) 조회·미해결/완료 그룹·상단 태그클라우드·말머리/태그 필터·제목/본문 검색·추가(현재 년월 발생지 기본)·제목 클릭 수정·체크박스 즉시 완료·⋯ 컨텍스트 메뉴(수정/라이프사이클 단계/삭제). 위치·일시는 공용 등록/수정 모달에서 입력한다. 말머리를 선택한 항목은 미해결·완료 두 그룹 모두에서 제목 앞에 말머리 색상으로 `[말머리명]`을 표시한다. 항목에 부착된 태그는 제목 뒤에 `[카테고리]#태그명`으로 표시한다. 카드 본문 최상단 태그클라우드는 `GET /api/tags?contentType=JOURNAL_TODO`로 조회하며, 태그 버튼 클릭은 해당 태그로 목록을 거르고 같은 태그를 다시 누르면 해제한다. 표시는 저널 태그클라우드(`JournalTagCloudHeader`)와 같다 — 라벨 열(6.25rem) + `btn btn-link` 태그 버튼, 빈도별 `tagClass`·프로필 `textClass`, `[카테고리]`는 `fs-7 text-noti`, 이름에 `em_<태그명>` 클래스, 건수는 `fs-9 text-noti`, 빈 목록은 `-`. 저널에 없는 선택 상태만 글자 스타일을 건드리지 않고 배경 pill 로 표시한다. 말머리 필터는 활성 개인 말머리 선택지가 있을 때만 표시한다. 말머리·태그·검색어 세 필터는 모두 받아 둔 전 범위 목록에서 클라이언트가 AND로 투영하므로 재조회가 없다. 등록/수정 모달이 닫히면 목록과 태그클라우드를 함께 재조회한다. 사이드바는 활성 projection으로 유지. 대메뉴 노출은 DB 메뉴 레코드 몫(코드 fallback 에는 등록). |
 
 ### 저널 달력 (`JournalDayCalendar.vue`)
 
@@ -873,6 +873,8 @@ type TodoRow = {
 - Bootstrap modal: `modal-xl`, id=`journal_todo_regist`
 - 폼: `#journalTodoRegistForm` (multipart/form-data)
 - 본문 textarea: `#tinymce_journalTodoCn` (TinyMCE 에디터)
+- 말머리(`#prefixId`): content_type `JOURNAL_TODO` 개인 말머리 목록의 활성 선택지. 선택지가 없으면 필드를 표시하지 않는다.
+- 위치(`#location`)·일시(`#dateText`): 각 200자 자유 텍스트 입력. 일시는 날짜 위젯이 아니라 원문 문자열이며 불연속 다회차·시각 표기를 그대로 담는다.
 - Vue SPA: `journalModalStore.openTodoRegist()` → 모달 open, `JournalTodoRegistModal.vue` 처리 — 등록 성공 시 `journalStore.fetchTodos()` 재호출
 - 모달 제목·대상 년월·필드·placeholder·안내·검증·확인·결과 fallback은 현재 locale의 클라이언트 카탈로그를 사용하고, 저장 API의 서버 `message`가 있으면 우선 표시한다.
 

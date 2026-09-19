@@ -2,8 +2,12 @@ package io.nicheblog.dreamdiary.feature.journal.todo.service;
 
 import io.nicheblog.dreamdiary.auth.security.exception.NotAuthorizedException;
 import io.nicheblog.dreamdiary.auth.security.util.AuthUtils;
+import io.nicheblog.dreamdiary.feature.attachable._shared.entity.BaseAttachableKey;
 import io.nicheblog.dreamdiary.feature.attachable._shared.service.BaseAttachableService;
 import io.nicheblog.dreamdiary.feature.attachable._shared.type.ContentType;
+import io.nicheblog.dreamdiary.feature.attachable.prefix.entity.PrefixEntity;
+import io.nicheblog.dreamdiary.feature.attachable.prefix.model.PrefixDto;
+import io.nicheblog.dreamdiary.feature.attachable.prefix.service.PrefixContentService;
 import io.nicheblog.dreamdiary.feature.journal._shared.handler.JournalCacheEvictWorker;
 import io.nicheblog.dreamdiary.feature.journal._shared.model.JournalCacheEvictParam;
 import io.nicheblog.dreamdiary.feature.journal.todo.entity.JournalTodoEntity;
@@ -15,6 +19,7 @@ import io.nicheblog.dreamdiary.feature.attachable.lifecycle.LifecycleKey;
 import io.nicheblog.dreamdiary.feature.attachable.lifecycle.service.LifecycleService;
 import io.nicheblog.dreamdiary.feature.journal._shared.lifecycle.JournalLifecycleViewHelper;
 import io.nicheblog.dreamdiary.feature.journal.todo.spec.JournalTodoSpec;
+import io.nicheblog.dreamdiary.global.model.ServiceResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +27,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -57,6 +63,7 @@ public class JournalTodoService
 
     private final JournalCacheEvictWorker journalCacheEvictWorker;
     private final LifecycleService lifecycleService;
+    private final PrefixContentService prefixContentService;
 
     private final ApplicationContext context;
     private JournalTodoService getSelf() {
@@ -103,6 +110,62 @@ public class JournalTodoService
         final List<JournalTodoDto> listDto = this.getSelf().getListDto(searchParam);
         this.applyTodoLifecycles(listDto);
         return listDto;
+    }
+
+    /**
+     * 할일 본문과 개인 말머리 선택을 같은 트랜잭션에서 등록한다.
+     *
+     * @param registDto 등록할 객체
+     * @return {@link ServiceResponse} -- 등록 결과 객체
+     */
+    @Override
+    @Transactional
+    public ServiceResponse regist(final JournalTodoDto registDto) throws Exception {
+        final ServiceResponse response = BaseAttachableService.super.regist(registDto);
+        final JournalTodoDto updatedDto = (JournalTodoDto) response.getRsltObj();
+        this.applyPrefixSelection(updatedDto, registDto.getPrefixId());
+        return response;
+    }
+
+    /**
+     * 할일 본문과 개인 말머리 선택을 같은 트랜잭션에서 수정한다.
+     *
+     * @param modifyDto 수정할 객체
+     * @return {@link ServiceResponse} -- 수정 결과 객체
+     */
+    @Override
+    @Transactional
+    public ServiceResponse modify(final JournalTodoDto modifyDto) throws Exception {
+        final ServiceResponse response = BaseAttachableService.super.modify(modifyDto);
+        final JournalTodoDto updatedDto = (JournalTodoDto) response.getRsltObj();
+        this.applyPrefixSelection(updatedDto, modifyDto.getPrefixId());
+        return response;
+    }
+
+    /**
+     * 선택한 말머리의 소유·활성 상태를 검증하고 prefix_content 연결을 반영한다.
+     * <p>
+     * attachable 정체성 키와 말머리 목록 Scope 모두 {@code JOURNAL_TODO} 를 쓴다.
+     * 소유 검증은 등록·수정 전처리(createdBy)가 이미 끝낸 상태다.
+     * </p>
+     *
+     * @param dto 저장된 할일 DTO
+     * @param requestedPrefixId 요청한 말머리 ID (null 이면 선택 해제)
+     */
+    private void applyPrefixSelection(final JournalTodoDto dto, final Integer requestedPrefixId) {
+        final PrefixEntity prefix = prefixContentService.applySelection(
+                new BaseAttachableKey(dto.getId(), ContentType.JOURNAL_TODO.key),
+                ContentType.JOURNAL_TODO.key,
+                requestedPrefixId
+        );
+        dto.setPrefix(prefix == null ? null : PrefixDto.builder()
+                .id(prefix.getId())
+                .name(prefix.getName())
+                .color(prefix.getColor())
+                .sortOrder(prefix.getSortOrder())
+                .activeYn(prefix.getActiveYn())
+                .build());
+        dto.setPrefixId(requestedPrefixId);
     }
 
     /**

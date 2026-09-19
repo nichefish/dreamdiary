@@ -152,7 +152,8 @@ type PersonalPrefixContentType =
   | "JOURNAL_CHAPTER_NOTE"
   | "JOURNAL_DIARY"
   | "JOURNAL_DREAM"
-  | "JOURNAL_NOTE";
+  | "JOURNAL_NOTE"
+  | "JOURNAL_TODO";
 
 interface PersonalPrefixTarget {
   contentType: PersonalPrefixContentType;
@@ -167,7 +168,7 @@ interface PersonalPrefixTargetGroup {
 
 /**
  * 개인 말머리 관리 대상 그룹.
- * 현재는 저널 도메인의 개인 말머리 content_type 여섯 종류를 정해진 순서로 노출한다.
+ * 저널 도메인의 개인 말머리 content_type 여섯 종류와 Keep 항목 말머리를 정해진 순서로 노출한다.
  * 챕터 말머리는 일기 챕터(JOURNAL_CHAPTER_DIARY)와 노트 챕터(JOURNAL_CHAPTER_NOTE)로 각각 분리 관리한다.
  * 다른 도메인을 지원할 때는 영속 구조를 바꾸지 않고 이 화면 카탈로그에 그룹을 추가한다.
  * Prefix Scope가 아직 없어도 대상 행은 표시하며 첫 Prefix 등록 시 서버가 Scope를 lazy 생성한다.
@@ -204,6 +205,16 @@ const prefixTargetGroups: readonly PersonalPrefixTargetGroup[] = [{
       contentType: "JOURNAL_THREAD",
       labelKey: "user.my.prefixes.target.thread",
       descriptionKey: "user.my.prefixes.target.thread.description",
+    },
+  ],
+}, {
+  labelKey: "user.my.prefixes.domain.keep",
+  targets: [
+    {
+      // Keep 항목의 영속 content_type 이 JOURNAL_TODO 이며 말머리 Scope 도 같은 값을 쓴다.
+      contentType: "JOURNAL_TODO",
+      labelKey: "user.my.prefixes.target.keep",
+      descriptionKey: "user.my.prefixes.target.keep.description",
     },
   ],
 }];
