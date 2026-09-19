@@ -23,3 +23,18 @@ logging:
         org.hibernate.type.descriptor.type: OFF
         com.p6spy: INFO
         org.flywaydb: DEBUG
+        # Actuator 기본 Redis 헬스 인디케이터는 폴링마다 연결 실패 예외 전체를 WARN 으로 찍는다.
+        # Redis 연결 실패는 RedisConnChecker 가 한 줄로 보고하고 CustomCacheResolver 가 메모리 캐시로
+        # 전환하는 처리된 경로라, 같은 사실을 스택트레이스로 중복 보고하지 않는다.
+        # /actuator/health 의 redis 상태(DOWN)는 그대로 유지된다.
+        org.springframework.boot.actuate.redis.RedisHealthIndicator: ERROR
+
+# Elasticsearch 는 현재 소비 경로가 없다 -- ElasticConfig 는 주석 처리 상태이고 elastic repository 를
+# 호출하는 서비스가 없다. 그런데 spring.elasticsearch.uris 만으로 Actuator 헬스 인디케이터가 붙어
+# 헬스 폴링마다 연결 실패 예외 전체를 WARN 으로 찍는다. 쓰지 않는 인프라를 헬스 대상에서 뺀다.
+# (Redis 와 달리 대체할 자체 보고 경로가 없으므로 로거만 낮추지 않고 인디케이터를 끈다.)
+# 저널 검색은 MariaDB(JournalEntrySpec)와 임베딩 벡터 경로가 담당한다.
+management:
+    health:
+        elasticsearch:
+            enabled: false

@@ -1,6 +1,8 @@
 package io.nicheblog.dreamdiary.infrastructure.cache.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,21 @@ public class RedisConnChecker {
     private boolean prevStatus = true;
 
     private static final long CHECK_INTERVAL = 30000; // 30초마다 Redis 연결 체크
+
+    /**
+     * 기동 완료 시점에 Redis 연결 상태를 한 번 확인한다.
+     * <pre>
+     *  평소 확인은 캐시 해석 경로({@code CustomCacheResolver})에서 일어나므로, 기동 직후 캐시 사용이
+     *  한 번도 없으면 연결 상태가 로그에 나타나지 않는다. 기동 로그만으로 Redis 가용 여부를 알 수 있도록
+     *  여기서 한 번 호출한다. 확인·로그·상태 전이는 {@link #checkRedisConnection()} 단일 경로를 그대로 쓴다.
+     * </pre>
+     *
+     * @param event 애플리케이션 기동 완료 이벤트
+     */
+    @EventListener
+    public void checkOnStartup(final ApplicationReadyEvent event) {
+        this.checkRedisConnection();
+    }
 
     /**
      * Redis 연결을 확인하는 메소드
