@@ -85,7 +85,7 @@ const { t } = useLocaleStore();
 
 /** 할일 등록 모달 열기. 등록은 현재 년/월을 새 할일의 발생지(provenance)로 전달한다. */
 function openTodoRegist(): void {
-  modalStore.openTodoRegist({ yy: store.yy, mnth: store.mnth });
+  modalStore.openTodoRegist({});
 }
 
 /**
@@ -101,13 +101,12 @@ async function openTodoEdit(id: number): Promise<void> {
     const res = await axios.get(`/api/journal/todo/${id}`);
     const dto = (res.data?.rsltObj ?? res.data?.obj) as {
       id?: number;
-      yy?: number;
-      mnth?: number;
       title?: string;
       sortOrder?: number;
       content?: string;
       location?: string;
       dateText?: string;
+      expireDt?: string;
       prefixId?: number | null;
       prefix?: JournalPrefixDto | null;
       tag?: { tagListStrWithCtgr?: string };
@@ -118,8 +117,6 @@ async function openTodoEdit(id: number): Promise<void> {
     }
     modalStore.openTodoRegist({
       id: dto.id,
-      yy: dto.yy,
-      mnth: dto.mnth,
       title: dto.title,
       sortOrder: dto.sortOrder,
       content: dto.content,
@@ -127,6 +124,7 @@ async function openTodoEdit(id: number): Promise<void> {
       prefix: dto.prefix ?? null,
       location: dto.location ?? "",
       dateText: dto.dateText ?? "",
+      expireDt: dto.expireDt ?? "",
       tag: { tagListStrWithCtgr: dto.tag?.tagListStrWithCtgr ?? "" },
     });
   } catch (e: unknown) {

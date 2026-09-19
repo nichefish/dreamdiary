@@ -24,8 +24,6 @@ public class JournalTodoEntityTestFactory {
                 .contentType(ContentType.JOURNAL_TODO.key)
                 .title("test_title")
                 .content("test_cn")
-                .yy(2000)
-                .mnth(1)
                 .sortOrder(1)
                 .build();
     }

@@ -23,7 +23,14 @@ public enum StateKey {
     /** 저널 꿈 전용 의미 상태: 악몽 */
     NHTMR("NHTMR", "악몽"),
     /** 저널 꿈 전용 의미 상태: 입면 환각 */
-    HALLUC("HALLUC", "입면 환각");
+    HALLUC("HALLUC", "입면 환각"),
+    /**
+     * Keep 전용 의미 상태: 요구.
+     * 내가 담아둔 것과, 외부에서 요구받아 담긴 것을 가른다.
+     * 진행 단계가 아니라 성격이므로 lifecycle 이 아닌 state 축에 둔다
+     * (요구받은 채로 보류일 수도, 요구받은 것을 완료했을 수도 있다).
+     */
+    DEMANDED("DEMANDED", "요구");
 
     /** DB 및 API에 사용되는 문자열 키 */
     public final String key;

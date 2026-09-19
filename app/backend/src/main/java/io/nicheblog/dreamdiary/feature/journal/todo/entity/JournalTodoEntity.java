@@ -4,15 +4,20 @@ import io.nicheblog.dreamdiary.feature.attachable._shared.entity.BaseAttachableE
 import io.nicheblog.dreamdiary.feature.attachable._shared.type.ContentType;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.entity.embed.PrefixEmbed;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.entity.embed.PrefixEmbedModule;
+import io.nicheblog.dreamdiary.feature.attachable.state.entity.embed.StateEmbed;
+import io.nicheblog.dreamdiary.feature.attachable.state.entity.embed.StateEmbedModule;
 import io.nicheblog.dreamdiary.feature.attachable.tag.entity.embed.TagEmbed;
 import io.nicheblog.dreamdiary.feature.attachable.tag.entity.embed.TagEmbedModule;
+import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 /**
  * JournalTodoEntity
@@ -34,7 +39,7 @@ import javax.persistence.*;
 @SQLDelete(sql = "UPDATE journal_todo SET deleted_at = NOW() WHERE id = ?")
 public class JournalTodoEntity
         extends BaseAttachableEntity
-        implements TagEmbedModule, PrefixEmbedModule {
+        implements TagEmbedModule, PrefixEmbedModule, StateEmbedModule {
 
     /** 필수: 컨텐츠 타입 */
     @Builder.Default
@@ -78,17 +83,22 @@ public class JournalTodoEntity
     @Comment("일시(자유 텍스트 원문)")
     private String dateText;
 
+    /**
+     * 유효 기한.
+     * <pre>
+     *  「이 날이 지나면 더는 할 수 없다」는 단일 날짜. 시각은 갖지 않는다.
+     *  {@code dateText} 가 사람이 읽을 일시 원문(다회차·범위)을 보존하는 표시용인 데 반해,
+     *  이 컬럼은 정렬·임박 판정에 쓰는 기계용 축이다. 다회차 항목은 마지막 회차 하루만 담는다.
+     *  기한이 지나도 라이프사이클은 자동 전이되지 않는다 -- 놓친 것이 FAILED 인지 EXPIRED 인지는
+     *  시스템이 가릴 수 없으므로 전이는 사용자가 결정한다.
+     * </pre>
+     */
+    @Column(name = "expire_dt")
+    @DateTimeFormat(pattern = DateUtils.PTN_DATE)
+    @Comment("유효 기한")
+    private LocalDate expireDt;
+
     /* ----- */
-
-    /** 년도 */
-    @Column(name = "yy")
-    @Comment("년도")
-    private Integer yy;
-
-    /** 월 */
-    @Column(name = "mnth")
-    @Comment("월")
-    private Integer mnth;
 
     /** 순번 */
     @Column(name = "sort_order", columnDefinition = "INT DEFAULT 1")
@@ -102,6 +112,13 @@ public class JournalTodoEntity
      */
     @Embedded
     public PrefixEmbed prefix;
+
+    /**
+     * 위임 :: 상태 모듈.
+     * Keep 항목은 요구(DEMANDED) 여부를 다중 속성으로 보유한다. 진행 단계(lifecycle)와 별개 축이다.
+     */
+    @Embedded
+    public StateEmbed state;
 
     /** 위임 :: 태그 정보 모듈 */
     @Embedded

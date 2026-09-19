@@ -21,12 +21,6 @@ import lombok.experimental.SuperBuilder;
 public class JournalTodoSearchParam
         extends BaseSearchParam {
 
-    /** 년도 */
-    private Integer yy;
-
-    /** 월 */
-    private Integer mnth;
-
     /** 컨텐츠 타입 */
     private String contentType;
 

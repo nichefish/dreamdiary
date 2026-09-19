@@ -24,8 +24,6 @@ public class JournalTodoDtoTestFactory {
                 .contentType(ContentType.JOURNAL_TODO.key)
                 .title("test_title")
                 .content("test_cn")
-                .yy(2000)
-                .mnth(1)
                 .build();
     }
 
@@ -40,8 +38,6 @@ public class JournalTodoDtoTestFactory {
                 .contentType(ContentType.JOURNAL_TODO.key)
                 .title("test_title")
                 .content("test_cn")
-                .yy(2000)
-                .mnth(1)
                 .build();
     }
 }

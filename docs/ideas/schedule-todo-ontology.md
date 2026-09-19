@@ -8,7 +8,7 @@
 ## 배경 — 현재 두 도메인은 따로 서 있다
 
 - **일정(`schedule`)**: `ScheduleEntity`(`schedule` 테이블) = `title`/`content` + `bgnDt`/`endDt`(시작~종료 시간 span) + `scheduleCd`(분류; 휴가 `VCATN` 등) + `privateYn` + 참여자(`SchedulePrtcpntEntity`). `BaseAttachableEntity` 상속 + `TagEmbedModule`/`CommentEmbedModule`. 공휴일은 외부 소스(KASI)에서 적재한다. **완료 상태를 갖지 않고, 반복 규칙도 없다.** 시간 위에 놓이는 span 앵커가 본질이다.
-- **TODO(`journal_todo`)**: `JournalTodoEntity` = `BaseAttachableEntity` + `TagEmbedModule`, `yy/mnth`(발생지), lifecycle(`OPEN`/`PENDING`/`RESOLVED`; [journal-todo-evolution](journal-todo-evolution.md) 참조). **시간 앵커(마감·발생 시각)를 갖지 않는다** — `yy/mnth`는 마감이 아니라 "이 무렵 발생했다"는 불변 origin이다.
+- **TODO(`journal_todo`)**: `JournalTodoEntity` = `BaseAttachableEntity` + `TagEmbedModule`, lifecycle(`OPEN`/`PENDING` + 종결 `RESOLVED`/`FAILED`/`EXPIRED`/`DROPPED`; [journal-todo-evolution](journal-todo-evolution.md) 참조). 발생 시점은 감사 컬럼 `created_at` 이 갖는다. 마감 앵커로는 `expire_dt`(유효 기한) 하나를 가지며, 시각은 갖지 않는다.
 
 즉 두 저장소가 이미 분리돼 있고, "엄마 생신마다 전화한다" 같은 항목은 **어느 쪽에도 온전히 담기지 않는다**. 이것이 이중관리 불안의 구체적 실체다.
 
@@ -261,6 +261,6 @@ F1 + Source 연쇄 소멸 금지에서 필연적으로 따라오는, 구현 진�
 
 ## 관련
 
-- [journal-todo-evolution](journal-todo-evolution.md) — 완료 축(lifecycle)·발생지(provenance)·회고 투영(as-of)의 존재론. 이 노트의 완료 축 서술은 그 문서를 SSOT로 참조한다.
-- [thread-organization](thread-organization.md) — "불변 발생지 + lifecycle 흐름 + 시점 투영" 템플릿의 동형 문제. 시간 축을 공통화하면 이 계열과 같은 축을 공유한다.
+- [journal-todo-evolution](journal-todo-evolution.md) — 완료 축(lifecycle)·시간 축·회고 투영(as-of)의 존재론. 이 노트의 완료 축 서술은 그 문서를 SSOT로 참조한다.
+- [thread-organization](thread-organization.md) — "발생 시점 + lifecycle 흐름 + 시점 투영" 템플릿의 동형 문제. 시간 축을 공통화하면 이 계열과 같은 축을 공유한다.
 - 현재 코드 계약: `feature/calendar/schedule/**`(일정), `feature/journal/todo/**`(TODO), `feature/attachable/**`(공통축).

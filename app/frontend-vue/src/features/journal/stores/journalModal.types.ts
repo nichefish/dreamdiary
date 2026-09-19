@@ -74,8 +74,6 @@ export interface JournalDayFilterPayload {
 /** 저널 할일 등록/수정 폼 모델 */
 export interface JournalTodoRegistModel {
   id?: number;
-  yy?: number | string;
-  mnth?: number | string;
   title?: string;
   sortOrder?: number;
   content?: string;
@@ -90,6 +88,11 @@ export interface JournalTodoRegistModel {
    * 단일일·연속 범위·불연속 다회차·시각을 사용자가 쓴 표현 그대로 보존한다.
    */
   dateText?: string;
+  /**
+   * 유효 기한 (ISO `yyyy-MM-dd`, 빈 문자열이면 기한 없음).
+   * 입력란의 축약 표기가 아니라 해석이 끝난 절대 날짜만 담는다.
+   */
+  expireDt?: string;
   /** 태그 컴포지션 */
   tag?: { tagListStrWithCtgr?: string };
 }

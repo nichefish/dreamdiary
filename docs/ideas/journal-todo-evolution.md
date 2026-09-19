@@ -24,14 +24,15 @@
 
 ## 네 개의 축 분리
 
-todo 를 하나의 덩어리로 보지 않고 축을 분리한다. `yy/mnth` 가 현재 구현에 있다는 이유만으로 관리 단위로 받아들이지 않는다(lifecycle 공통화 때와 같은 규율).
+todo 를 하나의 덩어리로 보지 않고 축을 분리한다. 어떤 컬럼이 구현에 있다는 이유만으로 관리 단위로 받아들이지 않는다(lifecycle 공통화 때와 같은 규율).
 
 | 축 | 확정 계약 |
 |---|---|
 | **존재 단위** | `journal_todo` 하나. 월에 종속되지 않고 독립적으로 존재하며 지속·누적된다. |
 | **상태 축** | `lifecycle` (`OPEN` / `PENDING` / `RESOLVED`). todo 자체 컬럼이 아니라 attachable 공통 관심사. 현재값 하나만 저장(`OPEN` = row 부재). **완료 = `RESOLVED` 전이**이며, delete-as-done 은 폐기한다. |
 | **이력 축** | `history` (lifecycle 전이 로그). attachable 공통, append-only, 키는 lifecycle 과 동일하게 `ref_content_type + ref_id`. `lifecycle : history = state : event` 쌍. 회고 충실성(as-of 재구성) 전용. |
-| **시간 축** | `yy/mnth` = **불변 발생지(provenance)**. "이 todo 가 속한 달"(소유)도 "배치 위치"도 아니라 "이 todo 가 발생한 저널 맥락"이다. 제거하지 않는다 — 저널 타임라인 노출과 "이 무렵 무엇을 하려 했나" 질의의 앵커 값이 있다. 이동 가능한 버킷이 아니라 불변 origin 마커로 계약을 못박는다. |
+| **시간 축** | 발생 시점은 감사 컬럼 `created_at` 하나가 갖는다. 별도 발생지 컬럼을 두지 않는다. 목록의 `2026.09` 표기도 여기서 뽑는다. |
+| **기한 축** | `expire_dt` = 「이 날이 지나면 더는 할 수 없다」. 일시 원문(`date_text`)에서 가장 늦은 날짜를 뽑은 파생값이며, 발생 시점과 반대 방향(앞)을 가리킨다. |
 
 `OPEN = row 부재`의 의미는 lifecycle 참여 여부까지 row 존재성으로 표현한다는 뜻이 아니며, 참여 여부는 `AttachableContentLifecyclePolicy`가 결정한다. 참여 대상으로 확정된 content에 한해서 row 부재를 OPEN으로 해석한다.
 
@@ -79,5 +80,5 @@ todo 를 하나의 덩어리로 보지 않고 축을 분리한다. `yy/mnth` 가
 ## 관련
 
 - 상위 존재론: [일정·TODO 존재론](schedule-todo-ontology.md) — 완료 축(이 문서)과 시간 축(일정)을 facet 으로 묶는 수렴 방향. 이 문서는 그 완료 축의 SSOT다.
-- 동형 문제: [스레드 상위 조직화](thread-organization.md) — 관리 단위(Arc/Collection/Tag) 문제와 같은 계열이다. "불변 발생지 + lifecycle 흐름 + 시점 투영" 템플릿이 확정되면 thread 에도 재사용 가능하다.
+- 동형 문제: [스레드 상위 조직화](thread-organization.md) — 관리 단위(Arc/Collection/Tag) 문제와 같은 계열이다. "발생 시점 + lifecycle 흐름 + 시점 투영" 템플릿이 확정되면 thread 에도 재사용 가능하다.
 - 현재 lifecycle 계약: `feature/attachable/lifecycle/**` (`LifecycleKey`, `LifecycleEntity`, `AttachableContentLifecyclePolicy`).

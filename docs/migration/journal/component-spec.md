@@ -251,9 +251,9 @@ HTML 요소:
 
 **현재 Vue 동등**: ✓ `JournalAsideTodoCard.vue` — 카드 헤더·활성 집합(OPEN·PENDING) 목록 조회(월 무관 cross-month)·완료(체크)·보류·삭제·등록 모달 호출 구현
 
-현재 구현된 카드 제목과 할일 등록 버튼 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록은 월에 종속되지 않고 사용자의 활성 집합을 조회하므로 대상 년월과 무관하며, 등록 모달은 새 할일의 발생지(provenance) 년월만 대상 년월로 전달한다. locale 변경은 이 발생지 년월을 변경하지 않는다.
+현재 구현된 카드 제목과 할일 등록 버튼 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록은 월에 종속되지 않고 사용자의 활성 집합을 조회하므로 대상 년월과 무관하며, 등록 모달도 대상 년월을 전달하지 않고 빈 폼으로 연다.
 
-**라이프사이클 참여 (✓)**: `JOURNAL_TODO` 는 `AttachableContentLifecyclePolicy` 에 `OPEN`/`PENDING`/`RESOLVED` 로 등록되며, 목록 조회 시 `JournalLifecycleViewHelper` 가 부착 테이블에서 `JournalTodoDto.lifecycle` 를 채운다(행 부재 = `OPEN`). 목록은 월 무관 **활성 집합(OPEN·PENDING) cross-month 투영**이며 `RESOLVED` 는 인메모리로 제외한다. 리스트 캐시(`journalTodoListByUser`)는 제거해 매 조회 신선하게 부착하고, `sortOrder` 는 사용자 전역 순번이다. `yy/mnth` 는 발생지(provenance)로 보존되나 조회·정렬 축이 아니다. 카드는 행별로 왼쪽 체크박스로 **완료(`RESOLVED` 전이, `PUT /api/lifecycles`)**, kebab(⋯) 메뉴로 **보류(`PENDING`)/보류 해제(`OPEN`)·삭제(하드 `DELETE`)**를 제공한다. `PENDING` 은 제목 앞 「보류」 배지(`lifecycle.pending`, `badge-light-warning`)로 표시한다. 전이·삭제 성공 시 `fetchTodos()` 로 재조회하며 `RESOLVED` 는 활성 목록에서 자연히 빠진다. 리스트 캐시가 없어 전이는 `cacheContext` 없이 호출한다(서버 lifecycle updater 는 `JOURNAL_TODO` 미등록이라 no-op). 완료된 todo 는 삭제가 아니라 `RESOLVED` 로 보존된다.
+**라이프사이클 참여 (✓)**: `JOURNAL_TODO` 는 `AttachableContentLifecyclePolicy` 에 `OPEN`/`PENDING`/`RESOLVED` 로 등록되며, 목록 조회 시 `JournalLifecycleViewHelper` 가 부착 테이블에서 `JournalTodoDto.lifecycle` 를 채운다(행 부재 = `OPEN`). 목록은 월 무관 **활성 집합(OPEN·PENDING) cross-month 투영**이며 `RESOLVED` 는 인메모리로 제외한다. 리스트 캐시(`journalTodoListByUser`)는 제거해 매 조회 신선하게 부착하고, `sortOrder` 는 사용자 전역 순번이다. 발생 시점은 감사 컬럼 `created_at` 이 가지며 별도 발생지 컬럼을 두지 않는다. 카드는 행별로 왼쪽 체크박스로 **완료(`RESOLVED` 전이, `PUT /api/lifecycles`)**, kebab(⋯) 메뉴로 **보류(`PENDING`)/보류 해제(`OPEN`)·삭제(하드 `DELETE`)**를 제공한다. `PENDING` 은 제목 앞 「보류」 배지(`lifecycle.pending`, `badge-light-warning`)로 표시한다. 전이·삭제 성공 시 `fetchTodos()` 로 재조회하며 `RESOLVED` 는 활성 목록에서 자연히 빠진다. 리스트 캐시가 없어 전이는 `cacheContext` 없이 호출한다(서버 lifecycle updater 는 `JOURNAL_TODO` 미등록이라 no-op). 완료된 todo 는 삭제가 아니라 `RESOLVED` 로 보존된다.
 
 **API**:
 | 작업 | 엔드포인트 | 응답 |
@@ -451,7 +451,7 @@ interface TodoRow {
 
 **Vue 구현**: `app/frontend-vue/src/features/journal/todo/modals/JournalTodoRegistModal.vue`
 
-**데이터·동작**: `useJournalModalStore.todoRegistModel`의 대상 년월·말머리·제목·순서·위치·일시·본문·태그를 편집한다. 태그는 `TagifyEditor` 로 입력하며 `GET /api/journal/todo/tag/categories` 의 `JOURNAL_TODO` categoryMap 으로 카테고리를 자동완성한다. 저널 사이드바와 Keep 이 이 맵 하나를 공유한다. 말머리는 content_type `JOURNAL_TODO` 개인 목록의 활성 선택지를 쓰며, 선택지가 하나도 없으면 필드를 표시하지 않는다. 저장된 비활성 말머리는 disabled 옵션으로 표시해 같은 선택 유지 저장만 허용한다. 연결은 `prefix_content`에 저장한다. 위치(`location`)와 일시(`dateText`)는 각각 200자 자유 텍스트다. 일시는 단일일·연속 범위·불연속 다회차·시각을 사용자가 쓴 표현 그대로 한 문자열로 보존하며, 서버·클라이언트 모두 이 값을 날짜로 해석하지 않는다. 신규는 `POST /api/journal/todos`, 수정은 `POST /api/journal/todo/{id}`로 multipart form data를 전송한다. 성공 시 모달을 닫고 성공 알림 확인 후 `refreshJournalDaysForRoute()`로 현재 route 기준 저널 목록을 갱신한다.
+**데이터·동작**: `useJournalModalStore.todoRegistModel`의 말머리·제목·순서·일시·유효 기한·위치·본문·태그를 편집한다. 태그는 `TagifyEditor` 로 입력하며 `GET /api/journal/todo/tag/categories` 의 `JOURNAL_TODO` categoryMap 으로 카테고리를 자동완성한다. 저널 사이드바와 Keep 이 이 맵 하나를 공유한다. 말머리는 content_type `JOURNAL_TODO` 개인 목록의 활성 선택지를 쓰며, 선택지가 하나도 없으면 필드를 표시하지 않는다. 저장된 비활성 말머리는 disabled 옵션으로 표시해 같은 선택 유지 저장만 허용한다. 연결은 `prefix_content`에 저장한다. 위치(`location`)와 일시(`dateText`)는 각각 200자 자유 텍스트다. 일시는 단일일·연속 범위·불연속 다회차·시각을 사용자가 쓴 표현 그대로 한 문자열로 보존하며, 서버는 이 값을 날짜로 해석하지 않고 기계가 되쓰지도 않는다. 유효 기한(`expireDt`)은 그 원문에서 가장 늦은 날짜 하나를 뽑은 파생값으로, 정렬·임박 판정에 쓰는 기계용 축이다. 클라이언트가 파생을 수행해 확정된 절대 날짜(`yyyy-MM-dd`)만 전송하고, 빈 문자열은 기한 해제로 서버에서 `null` 이 된다. 파생 규칙의 정본은 `features/journal/todo/utils/expireDt.ts` 이며 모달은 결과를 표시·전송만 한다. 신규는 `POST /api/journal/todos`, 수정은 `POST /api/journal/todo/{id}`로 multipart form data를 전송한다. 성공 시 모달을 닫고 성공 알림 확인 후 `refreshJournalDaysForRoute()`로 현재 route 기준 저널 목록을 갱신한다.
 
 **i18n**: 모달 제목·대상 년월·필드·placeholder·안내·저장·닫기·제목 필수 검증·확인·결과 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. API 응답에 `message`가 있으면 서버 메시지를 우선 표시한다.
 

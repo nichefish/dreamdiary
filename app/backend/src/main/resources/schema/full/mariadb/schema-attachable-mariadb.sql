@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS lifecycle (
     --
     lifecycle_key VARCHAR(32) NOT NULL COMMENT 'lifecycle key',
     deleted_at DATETIME COMMENT 'deleted at',
-    CONSTRAINT ck_lifecycle_persisted_key CHECK (lifecycle_key IN ('PENDING', 'RESOLVED')),
+    CONSTRAINT ck_lifecycle_persisted_key CHECK (lifecycle_key IN ('PENDING', 'RESOLVED', 'FAILED', 'EXPIRED', 'DROPPED')),
     UNIQUE KEY uk_lifecycle (ref_content_type, ref_id),
     INDEX idx_lifecycle_key (lifecycle_key),
     INDEX idx_lifecycle_ref (ref_id, ref_content_type)

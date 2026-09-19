@@ -13,7 +13,7 @@ export function createJournalModalTodo() {
 
   /**
    * 할일 등록/수정 모달을 연다.
-   * @param payload - 수정 시 기존 데이터, 신규 시 yy/mnth 등 초기값
+   * @param payload - 수정 시 기존 데이터. 신규는 빈 객체로 연다.
    */
   async function openTodoRegist(payload?: JournalTodoRegistModel) {
     if (!await assertAuthenticatedBeforeModal()) return;
@@ -23,6 +23,7 @@ export function createJournalModalTodo() {
       content: "",
       location: "",
       dateText: "",
+      expireDt: "",
       tag: { tagListStrWithCtgr: "" },
       ...payload,
     };

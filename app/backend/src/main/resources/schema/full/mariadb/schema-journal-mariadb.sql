@@ -141,13 +141,12 @@ CREATE TABLE IF NOT EXISTS journal_todo (
     content_type VARCHAR(32) DEFAULT 'JOURNAL_TODO' COMMENT '컨텐츠 타입',
     --
     sort_order INT DEFAULT 1 COMMENT '저널 일기 인덱스',
-    yy INT UNIQUE COMMENT '결산 년도',
-    mnth INT COMMENT '월',
     -- POST
     title VARCHAR(200) COMMENT '제목',
     content LONGTEXT COMMENT '내용',
     location VARCHAR(200) COMMENT '위치',
     date_text VARCHAR(200) COMMENT '일시(자유 텍스트 원문)',
+    expire_dt DATE COMMENT '유효 기한',
     -- 말머리 선택은 journal_todo 컬럼이 아니라 prefix_content(ref_id, ref_content_type) 연결로 보유한다.
     -- FILE_GROUP
     file_group_id INT COMMENT '첨부파일 번호',

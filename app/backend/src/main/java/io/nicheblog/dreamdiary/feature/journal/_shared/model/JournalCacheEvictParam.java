@@ -202,8 +202,6 @@ public class JournalCacheEvictParam {
         return JournalCacheEvictParam.builder()
                 .createdBy(dto.getCreatedBy())
                 .id(dto.getId())
-                .yy(dto.getYy())
-                .mnth(dto.getMnth())
                 .build();
     }
 

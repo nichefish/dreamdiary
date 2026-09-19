@@ -18,15 +18,24 @@
               {{ prefix.name }}
             </option>
           </select>
+          <button
+            type="button"
+            class="btn btn-sm"
+            :class="filterOverdue ? 'btn-warning' : 'btn-light'"
+            :title="t('journal.todo.filter.overdue.tooltip')"
+            @click.prevent="filterOverdue = !filterOverdue"
+          >
+            <i class="bi bi-hourglass-bottom fs-6 pe-1"></i>{{ t("journal.todo.filter.overdue") }}
+          </button>
           <input
             v-model="keyword"
             type="text"
             class="form-control form-control-sm"
             style="width: 220px;"
-            placeholder="검색"
+            :placeholder="t('common.search')"
           />
           <button type="button" class="btn btn-sm btn-primary" @click.prevent="openAdd">
-            <i class="bi bi-plus fs-3 pe-0"></i> 추가
+            <i class="bi bi-plus fs-3 pe-0"></i> {{ t("common.add") }}
           </button>
         </div>
       </div>
@@ -51,11 +60,11 @@
         </div>
         <!--end::태그 클라우드-->
 
-        <!-- 미해결 (OPEN·PENDING) -->
+        <!-- 진행 (OPEN·PENDING) -->
         <h4 class="fw-bold fs-5 text-gray-800 mb-3">
-          미해결 <span class="text-muted fs-7 ms-1">{{ openItems.length }}</span>
+          {{ t("journal.todo.group.active") }} <span class="text-muted fs-7 ms-1">{{ openItems.length }}</span>
         </h4>
-        <div v-if="openItems.length === 0" class="text-muted fs-7 mb-8">미해결 항목이 없습니다.</div>
+        <div v-if="openItems.length === 0" class="text-muted fs-7 mb-8">{{ t("journal.todo.group.active.empty") }}</div>
         <div v-else class="mb-8">
           <div
             v-for="item in openItems"
@@ -74,6 +83,7 @@
               @click.prevent="openTodoEdit(item.id)"
             >
               <span v-if="isPending(item)" class="badge badge-light-warning fs-9 me-1">{{ t("lifecycle.pending") }}</span>
+              <span v-if="hasState(item, 'DEMANDED')" class="badge badge-light-danger fs-9 me-1">{{ t("state.demanded") }}</span>
               <span
                 v-if="item.prefix"
                 class="fw-bold me-1"
@@ -86,8 +96,11 @@
                 class="fs-8"
                 :name="tag.name ?? ''"
                 :ctgr="tag.ctgr"
+                clickable
+                @click="openRowTagMenu($event, tag)"
               />
-              <span v-if="item.yy" class="text-muted fs-8 ms-2">{{ item.yy }}.{{ padMonth(item.mnth) }}</span>
+              <span v-if="item.expireDt" class="fs-8 ms-2" :class="expireLabelClass(item)">{{ expireLabel(item) }}</span>
+              <span v-if="registeredMonth(item)" class="text-muted fs-8 ms-2">{{ registeredMonth(item) }}</span>
             </div>
             <!--begin::컨텍스트 메뉴
               SSOT: 저널 스레드·엔트리 목록과 동일 Metronic data-kt-menu.
@@ -123,7 +136,10 @@
                     <span class="menu-arrow"></span>
                   </a>
                   <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                    <div v-for="lc in lifecycleOptions" :key="'keep-open-lc-' + item.id + '-' + lc.key" class="menu-item px-3">
+                    <template v-for="lc in lifecycleOptions" :key="'keep-open-lc-' + item.id + '-' + lc.key">
+                      <!--진행 2개와 종결 3개 사이 구분선-->
+                      <div v-if="lc.key === 'RESOLVED'" class="separator my-2"></div>
+                      <div class="menu-item px-3">
                       <div class="menu-content px-3">
                         <label class="form-check form-check-custom form-check-solid cursor-pointer">
                           <input
@@ -140,10 +156,38 @@
                           >{{ lc.label }}</span>
                         </label>
                       </div>
-                    </div>
+                      </div>
+                    </template>
                   </div>
                 </div>
                 <!--end::라이프사이클 서브메뉴-->
+                <div class="separator my-2"></div>
+                <!--begin::상태 서브메뉴 (다중 속성 -- lifecycle 과 별개 축)-->
+                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start">
+                  <a href="#" class="menu-link px-3" @click.prevent>
+                    <span class="menu-title">{{ t("common.status") }}</span>
+                    <span class="menu-arrow"></span>
+                  </a>
+                  <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                    <div v-for="st in stateOptions" :key="'keep-open-st-' + item.id + '-' + st.key" class="menu-item px-3">
+                      <div class="menu-content px-3">
+                        <label class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
+                          <input
+                            class="form-check-input w-30px h-20px cursor-pointer"
+                            type="checkbox"
+                            :checked="hasState(item, st.key)"
+                            @click="toggleState(item.id, st.key)"
+                          />
+                          <span
+                            class="form-check-label fs-7"
+                            :class="hasState(item, st.key) ? st.activeClass : 'text-muted'"
+                          >{{ st.label }}</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--end::상태 서브메뉴-->
                 <div class="separator my-2"></div>
                 <div class="menu-item px-3 my-1">
                   <div class="menu-link flex-stack px-3 text-danger" @click="deleteTodo(item.id)">
@@ -157,18 +201,21 @@
           </div>
         </div>
 
-        <!-- 완료 (RESOLVED) -->
+        <!--begin::종결 (RESOLVED·FAILED·EXPIRED·DROPPED)
+          「기한 지남」 필터는 미종결만 남기므로 종결 섹션이 항상 비게 된다.
+          빈 섹션과 「종결된 항목이 없습니다」를 띄우는 대신 섹션째 감춘다. -->
+        <template v-if="!filterOverdue">
         <h4 class="fw-bold fs-5 text-gray-500 mb-3">
-          완료 <span class="text-muted fs-7 ms-1">{{ resolvedItems.length }}</span>
+          {{ t("journal.todo.group.terminal") }} <span class="text-muted fs-7 ms-1">{{ resolvedItems.length }}</span>
         </h4>
-        <div v-if="resolvedItems.length === 0" class="text-muted fs-7">완료된 항목이 없습니다.</div>
+        <div v-if="resolvedItems.length === 0" class="text-muted fs-7">{{ t("journal.todo.group.terminal.empty") }}</div>
         <div v-else>
           <div
             v-for="item in resolvedItems"
             :key="'keep-done-' + item.id"
             class="d-flex align-items-center py-2 border-bottom border-gray-200 text-muted"
           >
-            <i class="bi bi-check2 text-success fs-4 me-3"></i>
+            <i class="bi fs-4 me-3" :class="terminalIconClass(item)"></i>
             <div
               class="flex-grow-1 text-truncate cursor-pointer text-decoration-line-through"
               :title="item.title"
@@ -179,6 +226,11 @@
                 class="fw-bold me-1"
                 :class="item.prefix.textClass" :style="{ color: '#287D94' }"
               >[{{ item.prefix.name }}]</span>
+              <span
+                v-if="terminalBadge(item)"
+                class="badge fs-9 me-1"
+                :class="terminalBadge(item)!.badgeClass"
+              >{{ terminalBadge(item)!.label }}</span>
               {{ item.title }}
               <TagChip
                 v-for="tag in item.tag?.list"
@@ -186,7 +238,10 @@
                 class="fs-8"
                 :name="tag.name ?? ''"
                 :ctgr="tag.ctgr"
+                clickable
+                @click="openRowTagMenu($event, tag)"
               />
+              <span v-if="item.expireDt" class="fs-8 ms-2" :class="expireLabelClass(item)">{{ expireLabel(item) }}</span>
             </div>
             <!--begin::컨텍스트 메뉴
               SSOT: 저널 스레드·엔트리 목록과 동일 Metronic data-kt-menu.
@@ -222,7 +277,10 @@
                     <span class="menu-arrow"></span>
                   </a>
                   <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                    <div v-for="lc in lifecycleOptions" :key="'keep-done-lc-' + item.id + '-' + lc.key" class="menu-item px-3">
+                    <template v-for="lc in lifecycleOptions" :key="'keep-done-lc-' + item.id + '-' + lc.key">
+                      <!--진행 2개와 종결 3개 사이 구분선-->
+                      <div v-if="lc.key === 'RESOLVED'" class="separator my-2"></div>
+                      <div class="menu-item px-3">
                       <div class="menu-content px-3">
                         <label class="form-check form-check-custom form-check-solid cursor-pointer">
                           <input
@@ -239,10 +297,38 @@
                           >{{ lc.label }}</span>
                         </label>
                       </div>
-                    </div>
+                      </div>
+                    </template>
                   </div>
                 </div>
                 <!--end::라이프사이클 서브메뉴-->
+                <div class="separator my-2"></div>
+                <!--begin::상태 서브메뉴 (다중 속성 -- lifecycle 과 별개 축)-->
+                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start">
+                  <a href="#" class="menu-link px-3" @click.prevent>
+                    <span class="menu-title">{{ t("common.status") }}</span>
+                    <span class="menu-arrow"></span>
+                  </a>
+                  <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                    <div v-for="st in stateOptions" :key="'keep-done-st-' + item.id + '-' + st.key" class="menu-item px-3">
+                      <div class="menu-content px-3">
+                        <label class="form-check form-switch form-check-custom form-check-solid cursor-pointer">
+                          <input
+                            class="form-check-input w-30px h-20px cursor-pointer"
+                            type="checkbox"
+                            :checked="hasState(item, st.key)"
+                            @click="toggleState(item.id, st.key)"
+                          />
+                          <span
+                            class="form-check-label fs-7"
+                            :class="hasState(item, st.key) ? st.activeClass : 'text-muted'"
+                          >{{ st.label }}</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--end::상태 서브메뉴-->
                 <div class="separator my-2"></div>
                 <div class="menu-item px-3 my-1">
                   <div class="menu-link flex-stack px-3 text-danger" @click="deleteTodo(item.id)">
@@ -255,6 +341,8 @@
             <!--end::컨텍스트 메뉴-->
           </div>
         </div>
+        </template>
+        <!--end::종결-->
       </div>
     </div>
   </div>
@@ -276,6 +364,7 @@ import { usePersonalPrefixOptionsStore } from "@/features/attachable/stores/pers
 import TagCloud, { type TagCloudTag } from "@/shared/ui/tag/TagCloud.vue";
 import TagChip from "@/shared/ui/tag/TagChip.vue";
 import JournalTodoRegistModal from "@/features/journal/todo/modals/JournalTodoRegistModal.vue";
+import { daysUntilExpire, formatExpireDt } from "@/features/journal/todo/utils/expireDt";
 import TagContextMenu from "@/shared/ui/tag/TagContextMenu.vue";
 import TagProfileModal from "@/features/attachable/TagProfileModal.vue";
 import { useTagContextMenuStore } from "@/shared/ui/tag/tagContextMenu";
@@ -286,14 +375,18 @@ interface KeepItem {
   id: number;
   title?: string;
   content?: string;
-  yy?: number;
-  mnth?: number;
+  /** 등록 일시 (`yyyy-MM-dd HH:mm:ss`). 목록의 시점 표기에 쓴다. */
+  createdAt?: string;
   /** 선택된 개인 말머리(표시용). 선택이 없으면 null. */
   prefix?: JournalPrefixDto | null;
   /** 부착된 태그(표시·필터용). `tag_content` 연결에서 조립된다. */
   tag?: { list?: Array<{ tagId?: number; name?: string; ctgr?: string | null }> } | null;
+  /** 부착된 상태(다중). 진행 단계(lifecycle)와 별개 축이다. */
+  state?: { list?: Array<{ stateKey?: string }> } | null;
   /** 라이프사이클 현재값(백엔드 enrich). 부재 시 OPEN. */
   lifecycle?: { lifecycleKey?: string | null } | null;
+  /** 유효 기한 (ISO `yyyy-MM-dd`). 일시 원문에서 파생한 값이며 없을 수 있다. */
+  expireDt?: string | null;
 }
 
 const { t } = useLocaleStore();
@@ -323,6 +416,12 @@ const tagCloudLoading = ref(false);
 const tagCloudError = ref("");
 /** 태그 필터 (클라이언트 필터). null 이면 전체. */
 const filterTagId = ref<number | null>(null);
+/**
+ * 기한 지남 필터 (클라이언트 필터).
+ * 켜면 「유효 기한이 지났는데 아직 종결되지 않은」 항목만 남긴다 -- 처리하지 않고 쌓인 것을 모아 본다.
+ * 종결된 항목은 이미 처리가 끝났으므로 기한이 지났어도 대상이 아니다.
+ */
+const filterOverdue = ref(false);
 
 /**
  * 말머리·태그·검색어로 거른 목록.
@@ -336,15 +435,75 @@ const filtered = computed<KeepItem[]>(() => {
   return list.value.filter((it) => {
     if (prefixId != null && it.prefix?.id !== prefixId) return false;
     if (tagId != null && !(it.tag?.list ?? []).some((tag) => tag.tagId === tagId)) return false;
+    if (filterOverdue.value && !isOverdueOpen(it)) return false;
     if (!k) return true;
     return (it.title ?? "").toLowerCase().includes(k)
       || (it.content ?? "").toLowerCase().includes(k);
   });
 });
-/** 미해결 투영 = OPEN·PENDING (RESOLVED 제외) */
-const openItems = computed<KeepItem[]>(() => filtered.value.filter((it) => it.lifecycle?.lifecycleKey !== "RESOLVED"));
-/** 완료 투영 = RESOLVED */
-const resolvedItems = computed<KeepItem[]>(() => filtered.value.filter((it) => it.lifecycle?.lifecycleKey === "RESOLVED"));
+/**
+ * 기한 오름차순 비교자. 기한이 없는 항목은 뒤로 보낸다.
+ * ISO `yyyy-MM-dd` 는 사전순이 곧 날짜순이라 문자열 비교로 충분하다.
+ */
+function byExpireDtAsc(a: KeepItem, b: KeepItem): number {
+  const left = a.expireDt ?? "";
+  const right = b.expireDt ?? "";
+  if (left === right) return 0;
+  if (!left) return 1;
+  if (!right) return -1;
+  return left < right ? -1 : 1;
+}
+
+/**
+ * 진행 투영 = OPEN·PENDING (종결 4종 제외). 임박한 것이 위로 오도록 기한 오름차순으로 정렬한다.
+ *
+ * 기한이 없는 항목은 맨 아래에 모으고, 그 안에서는 서버가 준 순서(sortOrder → id)를 그대로 둔다.
+ * `Array.prototype.sort` 가 안정 정렬이라 기한이 같은 항목들의 상대 순서도 보존된다.
+ * 즉 사용자가 손으로 맞춰 둔 순번은 기한이 붙지 않은 항목 사이에서 그대로 유지되고,
+ * 기한이 붙은 항목만 그 위로 끌어올려진다. 지난 기한이 가장 이른 날짜라 자연히 맨 위에 선다.
+ */
+const openItems = computed<KeepItem[]>(() =>
+  filtered.value
+    .filter((it) => !TERMINAL_KEYS.includes(lifecycleKeyOf(it)))
+    .slice()
+    .sort(byExpireDtAsc)
+);
+/** 종결 투영 = RESOLVED·FAILED·EXPIRED·DROPPED. 끝난 이유는 행 배지로 구분한다. */
+const resolvedItems = computed<KeepItem[]>(() =>
+  filtered.value.filter((it) => TERMINAL_KEYS.includes(lifecycleKeyOf(it)))
+);
+
+/**
+ * 기한이 지났는데 아직 종결되지 않은 항목인지 여부.
+ * 종결 어휘가 붙은 항목은 이미 처리가 끝났으므로 기한이 지났어도 제외한다.
+ */
+function isOverdueOpen(item: KeepItem): boolean {
+  if (!item.expireDt) return false;
+  if (TERMINAL_KEYS.includes(lifecycleKeyOf(item))) return false;
+  return daysUntilExpire(item.expireDt) < 0;
+}
+
+/**
+ * 목록 행에 붙일 유효 기한 표기.
+ *
+ * 진행 행에서는 지난 기한에 남은 일수를 덧붙여 눈에 띄게 한다.
+ * 종결 행에서는 날짜만 보인다 -- 끝난 이유가 EXPIRED 인지 DROPPED 인지는 기한을 근거로 갈리므로,
+ * 나중에 그 판단을 다시 읽으려면 기한 자체는 남아 있어야 한다.
+ */
+function expireLabel(item: KeepItem): string {
+  if (!item.expireDt) return "";
+  const short = formatExpireDt(item.expireDt);
+  // 종결 항목에는 남은 일수를 붙이지 않는다 -- 이미 끝나 행동을 재촉할 값이 아니다.
+  if (TERMINAL_KEYS.includes(lifecycleKeyOf(item))) return short;
+  const days = daysUntilExpire(item.expireDt);
+  if (Number.isNaN(days) || days >= 0) return short;
+  return `${short} · ${t("journal.todo.expire-dt.relative.past").replace("{0}", String(-days))}`;
+}
+
+/** 기한 표기 색. 미종결인 채 지난 기한만 경고색으로 가른다. */
+function expireLabelClass(item: KeepItem): string {
+  return isOverdueOpen(item) ? "text-warning fw-bold" : "text-muted";
+}
 
 /** 현재 보류(PENDING) 상태 여부. */
 function isPending(item: KeepItem): boolean {
@@ -357,18 +516,81 @@ function lifecycleKeyOf(item: KeepItem): string {
 }
 
 /**
- * 라이프사이클 단계 (OPEN/PENDING/RESOLVED).
- * 저널 엔트리·스레드 컨텍스트 메뉴와 같은 단계 집합·라벨을 쓴다.
+ * 라이프사이클 단계.
+ * <pre>
+ *  Keep 은 저널과 종결 어휘가 다르다. 저널 기록은 시간이 지나도 사라지지 않지만 Keep 항목은
+ *  기회가 만료되고(EXPIRED), 의미를 잃어 내려놓기도 한다(DROPPED). 메뉴에서 진행 2개와 종결
+ *  3개를 구분선으로 가른다.
+ * </pre>
  */
 const lifecycleOptions = computed(() => [
-  { key: "OPEN", label: t("journal.entry.lifecycle.open"), activeClass: "text-gray-800" },
-  { key: "PENDING", label: t("lifecycle.pending"), activeClass: "text-gray-600" },
-  { key: "RESOLVED", label: t("status.completed"), activeClass: "text-success" },
+  { key: "OPEN", label: t("journal.entry.lifecycle.open"), activeClass: "text-gray-800", terminal: false },
+  { key: "PENDING", label: t("lifecycle.pending"), activeClass: "text-gray-600", terminal: false },
+  { key: "RESOLVED", label: t("status.completed"), activeClass: "text-success", terminal: true },
+  { key: "FAILED", label: t("lifecycle.failed"), activeClass: "text-danger", terminal: true },
+  { key: "EXPIRED", label: t("lifecycle.expired"), activeClass: "text-warning", terminal: true },
+  { key: "DROPPED", label: t("lifecycle.dropped"), activeClass: "text-muted", terminal: true },
 ]);
 
-/** 월 2자리 표기(발생지 표시용). 값이 없으면 빈 문자열. */
-function padMonth(mnth?: number): string {
-  return mnth != null ? String(mnth).padStart(2, "0") : "";
+/** 종결(RESOLVED·FAILED·EXPIRED·DROPPED) 키 집합. 진행 투영은 이들을 제외한다. */
+const TERMINAL_KEYS = ["RESOLVED", "FAILED", "EXPIRED", "DROPPED"];
+
+/**
+ * Keep 상태 옵션 (다중 속성).
+ * lifecycle 이 「어디까지 왔나」라면 state 는 「어떤 성격인가」다.
+ * 요구(DEMANDED)는 내가 담아둔 것과 외부에서 요구받아 담긴 것을 가른다.
+ */
+const stateOptions = computed(() => [
+  { key: "DEMANDED", label: t("state.demanded"), activeClass: "text-danger" },
+]);
+
+/** 항목이 해당 상태를 갖고 있는지. */
+function hasState(item: KeepItem, stateKey: string): boolean {
+  return (item.state?.list ?? []).some((st) => st.stateKey === stateKey);
+}
+
+/**
+ * 상태 토글 (POST /api/states). 성공 시 목록을 재조회한다.
+ * 저널 엔트리와 같은 계약이며 Keep 은 캐시 문맥이 없어 contentType 만 보낸다.
+ */
+async function toggleState(id: number, stateKey: string): Promise<void> {
+  try {
+    const res = await axios.post("/api/states", { id, contentType: "JOURNAL_TODO", stateKey });
+    if (res.data?.rslt === true) {
+      void fetchList();
+    } else {
+      void swalAlert(res.data?.message ?? t("common.result.failure"));
+    }
+  } catch (e: unknown) {
+    void swalRequestError(e);
+  }
+}
+
+/** 종결 항목의 좌측 아이콘. 끝난 이유를 한눈에 가른다. */
+function terminalIconClass(item: KeepItem): string {
+  const key = lifecycleKeyOf(item);
+  if (key === "FAILED") return "bi-x-circle text-danger";
+  if (key === "EXPIRED") return "bi-hourglass-bottom text-warning";
+  if (key === "DROPPED") return "bi-slash-circle text-muted";
+  return "bi-check2 text-success";
+}
+
+/** 종결 항목의 배지 표시 정보. 끝난 이유가 서로 달라 목록에서 구분해야 한다. */
+function terminalBadge(item: KeepItem): { label: string; badgeClass: string } | null {
+  const key = lifecycleKeyOf(item);
+  if (key === "FAILED") return { label: t("lifecycle.failed"), badgeClass: "badge-light-danger" };
+  if (key === "EXPIRED") return { label: t("lifecycle.expired"), badgeClass: "badge-light-warning" };
+  if (key === "DROPPED") return { label: t("lifecycle.dropped"), badgeClass: "badge-light" };
+  return null;
+}
+
+/**
+ * 목록 행 우측의 시점 표기. 등록일(`createdAt`)의 년월을 `2026.09` 로 줄인다.
+ * 값이 없거나 형식이 다르면 빈 문자열이라 표기 자체를 숨긴다.
+ */
+function registeredMonth(item: KeepItem): string {
+  const m = /^(\d{4})-(\d{2})/.exec(item.createdAt ?? "");
+  return m ? `${m[1]}.${m[2]}` : "";
 }
 
 /**
@@ -423,10 +645,9 @@ function toggleTagFilter(tagId: number): void {
  *  목록 필터 토글을 끼운다. 「태그 설정」(프로필)은 저널과 동일하게 동작한다.
  * </pre>
  */
-function openTagContextMenu(tag: TagCloudTag, event: MouseEvent): void {
-  const tagId = Number(tag.id);
+function openTagMenu(event: MouseEvent, tagId: number, name: string, ctgr: string | null): void {
   const on = filterTagId.value === tagId;
-  const payload = { tagId, name: tag.name, ctgr: tag.ctgr ?? "", contentType: "JOURNAL_TODO" };
+  const payload = { tagId, name, ctgr: ctgr ?? "", contentType: "JOURNAL_TODO" };
   tagContextMenuStore.open(event, payload, [
     {
       label: on ? t("tag.filter.off") : t("tag.filter.on"),
@@ -436,6 +657,21 @@ function openTagContextMenu(tag: TagCloudTag, event: MouseEvent): void {
     },
     tagProfileAction(payload, t("journal.aside.todo.title")),
   ]);
+}
+
+/** 태그클라우드 버튼 클릭. */
+function openTagContextMenu(tag: TagCloudTag, event: MouseEvent): void {
+  openTagMenu(event, Number(tag.id), tag.name, tag.ctgr ?? null);
+}
+
+/**
+ * 목록 행에 붙은 태그 클릭. 태그클라우드와 같은 메뉴를 연다.
+ * 두 자리의 태그가 같은 대상을 가리키므로 조작도 같아야 한다.
+ * 태그 ID 가 없는 표시 전용 항목은 메뉴를 열지 않는다.
+ */
+function openRowTagMenu(event: MouseEvent, tag: { tagId?: number; name?: string; ctgr?: string | null }): void {
+  if (tag.tagId == null) return;
+  openTagMenu(event, tag.tagId, tag.name ?? "", tag.ctgr ?? null);
 }
 
 /**
@@ -475,14 +711,9 @@ async function deleteTodo(id: number): Promise<void> {
   }
 }
 
-/**
- * 신규 추가 모달 열기.
- * keep 에서 만든 항목은 저널 맥락이 없어, 발생지(yy/mnth)로 현재 년/월을 기본 전달한다.
- * (발생지 의미의 재정의는 별도 결정 대상이다.)
- */
+/** 신규 추가 모달 열기. 초기값 없이 빈 폼으로 연다. */
 function openAdd(): void {
-  const now = new Date();
-  modalStore.openTodoRegist({ yy: now.getFullYear(), mnth: now.getMonth() + 1 });
+  modalStore.openTodoRegist({});
 }
 
 /**
@@ -494,13 +725,12 @@ async function openTodoEdit(id: number): Promise<void> {
     const res = await axios.get(`/api/journal/todo/${id}`);
     const dto = (res.data?.rsltObj ?? res.data?.obj) as {
       id?: number;
-      yy?: number;
-      mnth?: number;
       title?: string;
       sortOrder?: number;
       content?: string;
       location?: string;
       dateText?: string;
+      expireDt?: string;
       prefixId?: number | null;
       prefix?: JournalPrefixDto | null;
       tag?: { tagListStrWithCtgr?: string };
@@ -511,8 +741,6 @@ async function openTodoEdit(id: number): Promise<void> {
     }
     modalStore.openTodoRegist({
       id: dto.id,
-      yy: dto.yy,
-      mnth: dto.mnth,
       title: dto.title,
       sortOrder: dto.sortOrder,
       content: dto.content,
@@ -520,6 +748,7 @@ async function openTodoEdit(id: number): Promise<void> {
       prefix: dto.prefix ?? null,
       location: dto.location ?? "",
       dateText: dto.dateText ?? "",
+      expireDt: dto.expireDt ?? "",
       tag: { tagListStrWithCtgr: dto.tag?.tagListStrWithCtgr ?? "" },
     });
   } catch (e: unknown) {

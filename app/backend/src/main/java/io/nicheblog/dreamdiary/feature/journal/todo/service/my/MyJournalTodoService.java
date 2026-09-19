@@ -28,7 +28,7 @@ public class MyJournalTodoService {
     /**
      * 활성 할일 목록 조회 (dto level).
      *
-     * @param searchParam 검색조건을 담고 있는 파라미터 객체 (yy/mnth 는 무시)
+     * @param searchParam 검색조건을 담고 있는 파라미터 객체
      * @return {@link List} -- 활성 할일 목록
      */
     public List<JournalTodoDto> getMyActiveList(final JournalTodoSearchParam searchParam) throws Exception {
@@ -43,7 +43,7 @@ public class MyJournalTodoService {
      *  사용자의 모든 할일을 발생지 무관하게 반환한다.
      * </pre>
      *
-     * @param searchParam 검색조건을 담고 있는 파라미터 객체 (yy/mnth 는 무시)
+     * @param searchParam 검색조건을 담고 있는 파라미터 객체
      * @return {@link List} -- 사용자 전 범위 할일 목록
      */
     public List<JournalTodoDto> getMyList(final JournalTodoSearchParam searchParam) throws Exception {

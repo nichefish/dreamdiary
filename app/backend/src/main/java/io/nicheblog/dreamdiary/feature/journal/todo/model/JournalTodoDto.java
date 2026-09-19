@@ -4,14 +4,16 @@ import io.nicheblog.dreamdiary.feature.attachable._shared.model.BaseAttachableDt
 import io.nicheblog.dreamdiary.feature.attachable._shared.type.ContentType;
 import io.nicheblog.dreamdiary.feature.attachable.lifecycle.model.cmpstn.LifecycleCmpstn;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.model.PrefixDto;
+import io.nicheblog.dreamdiary.feature.attachable.state.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.feature.attachable.state.model.cmpstn.StateCmpstnModule;
 import io.nicheblog.dreamdiary.feature.attachable.lifecycle.model.cmpstn.LifecycleCmpstnModule;
 import io.nicheblog.dreamdiary.feature.attachable.tag.model.cmpstn.TagCmpstn;
 import io.nicheblog.dreamdiary.feature.attachable.tag.model.cmpstn.TagCmpstnModule;
-import io.nicheblog.dreamdiary.feature.journal._shared.model.JournalPeriodModule;
 import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -30,7 +32,8 @@ import javax.validation.constraints.Size;
 @ToString(callSuper = true)
 public class JournalTodoDto
         extends BaseAttachableDto
-        implements Identifiable<Integer>, TagCmpstnModule, JournalPeriodModule, LifecycleCmpstnModule {
+        implements Identifiable<Integer>, TagCmpstnModule, LifecycleCmpstnModule,
+                   StateCmpstnModule {
 
     /** 필수: 컨텐츠 타입 */
     @Builder.Default
@@ -62,6 +65,18 @@ public class JournalTodoDto
     @Size(max = 200)
     private String dateText;
 
+    /**
+     * 유효 기한 (ISO {@code yyyy-MM-dd} 또는 빈 문자열).
+     * <pre>
+     *  「이 날이 지나면 더는 할 수 없다」는 단일 날짜. 시각은 갖지 않는다.
+     *  클라이언트가 「~12/31」 같은 축약 입력을 해석해 확정한 절대 날짜만 보낸다 --
+     *  서버는 축약 표기를 해석하지 않으므로, 년도 생략 입력이 여기 도달하는 일은 없다.
+     *  빈 문자열은 기한 해제를 뜻하며 null 로 변환되어 저장된다.
+     * </pre>
+     */
+    @Pattern(regexp = "^$|^\\d{4}-\\d{2}-\\d{2}$", message = "{journal.todo.expire-dt.invalid}")
+    private String expireDt;
+
     /** 선택된 말머리(표시용). prefix_content 연결에서 조립한다. */
     private PrefixDto prefix;
 
@@ -70,10 +85,6 @@ public class JournalTodoDto
 
     /* ----- */
 
-    /** 년도 */
-    private Integer yy;
-    /** 월 */
-    private Integer mnth;
     /** 순번 */
     private Integer sortOrder;
 
@@ -86,6 +97,9 @@ public class JournalTodoDto
 
     /** 위임 :: 라이프사이클 모듈. 목록·상세 enrich 가 부착 테이블에서 채운다. 없으면 OPEN. */
     public LifecycleCmpstn lifecycle;
+
+    /** 위임 :: 상태 모듈. 목록·상세 enrich 가 부착 테이블에서 채운다. */
+    public StateCmpstn state;
 
     /** 위임 :: 태그 정보 모듈 */
     public TagCmpstn tag;

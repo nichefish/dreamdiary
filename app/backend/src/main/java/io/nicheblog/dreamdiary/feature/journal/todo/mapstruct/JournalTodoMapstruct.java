@@ -38,6 +38,7 @@ public interface JournalTodoMapstruct
     @Mapping(target = "markdownContent", expression = "java(StringUtils.isEmpty(entity.getContent()) ? \"-\" : MarkdownUtils.markdown(entity.getContent()))")
     @Mapping(target = "prefix", expression = "java(selectedPrefixToDto(entity.getSelectedPrefix()))")
     @Mapping(target = "prefixId", expression = "java(entity.getSelectedPrefixId())")
+    @Mapping(target = "expireDt", expression = "java(DateUtils.asStr(entity.getExpireDt(), DatePtn.DATE))")
     JournalTodoDto toDto(final JournalTodoEntity entity) throws Exception;
 
     /**
@@ -66,10 +67,15 @@ public interface JournalTodoMapstruct
     @Override
     @Mapping(target = "content", expression = "java(MarkdownUtils.normalize(dto.getContent()))")
     @Mapping(target = "prefix", ignore = true)
+    @Mapping(target = "expireDt", expression = "java(DateUtils.asLocalDate(dto.getExpireDt()))")
     JournalTodoEntity toEntity(final JournalTodoDto dto) throws Exception;
 
     /**
      * update Entity from Dto (Dto에서 null이 아닌 값만 Entity로 매핑)
+     * <p>
+     * {@code expireDt} 는 expression 매핑이라 이 null 무시 규칙에서 벗어나 항상 반영된다.
+     * 빈 문자열이 null 로 변환되어 그대로 기록되므로 기한 해제가 성립한다.
+     * </p>
      *
      * @param dto 업데이트할 Dto 객체
      * @param entity 업데이트할 대상 Entity 객체
@@ -78,5 +84,6 @@ public interface JournalTodoMapstruct
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "content", expression = "java(MarkdownUtils.normalize(dto.getContent()))")
     @Mapping(target = "prefix", ignore = true)
+    @Mapping(target = "expireDt", expression = "java(DateUtils.asLocalDate(dto.getExpireDt()))")
     void updateFromDto(final JournalTodoDto dto, final @MappingTarget JournalTodoEntity entity) throws Exception;
 }

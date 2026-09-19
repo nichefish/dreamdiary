@@ -20,22 +20,6 @@
         <div class="modal-body modal-mbl-body my-5">
           <form v-if="model" id="journalTodoRegistForm" class="form" @submit.prevent>
             <input type="hidden" name="id" :value="model.id ?? ''" />
-            <input type="hidden" name="yy" :value="model.yy ?? ''" />
-            <input type="hidden" name="mnth" :value="model.mnth ?? ''" />
-
-            <!--begin::날짜-->
-            <div class="row d-flex mb-8">
-              <div class="col-2">
-                <label class="d-flex align-items-center mb-2">
-                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('journal.day.field.date') }}</span>
-                </label>
-              </div>
-              <div class="col-4 fs-6">
-                <i class="bi bi-calendar3"></i>
-                {{ formatTodoMonth(model.yy, model.mnth) }}
-              </div>
-            </div>
-            <!--end::날짜-->
 
             <!--begin::제목 (말머리 + 제목 + 순서)-->
             <div class="row d-flex mb-8">
@@ -90,22 +74,8 @@
             </div>
             <!--end::제목-->
 
-            <!--begin::위치 / 일시-->
+            <!--begin::일시 / 유효 기한-->
             <div class="row d-flex mb-8">
-              <div class="col-lg-6">
-                <label class="d-flex align-items-center mb-2" for="location">
-                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('journal.todo.field.location') }}</span>
-                </label>
-                <input
-                  type="text"
-                  name="location"
-                  id="location"
-                  class="form-control form-control-solid"
-                  v-model="model.location"
-                  :placeholder="t('journal.todo.location.placeholder')"
-                  maxlength="200"
-                />
-              </div>
               <div class="col-lg-6">
                 <label class="d-flex align-items-center mb-2" for="dateText">
                   <span class="text-gray-700 fs-6 fw-bolder">{{ t('journal.todo.field.date-text') }}</span>
@@ -121,8 +91,60 @@
                   maxlength="200"
                 />
               </div>
+              <div class="col-lg-6">
+                <label class="d-flex align-items-center mb-2" for="expireDt">
+                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('journal.todo.field.expire-dt') }}</span>
+                  <span class="text-gray-500 fs-9 ms-2">{{ t('journal.todo.expire-dt.rule') }}</span>
+                </label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="expireDt"
+                    id="expireDt"
+                    ref="expireDtInputRef"
+                    class="form-control form-control-solid"
+                    v-model="expireDt"
+                    :placeholder="t('journal.todo.expire-dt.placeholder')"
+                    autocomplete="off"
+                    readonly
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-icon btn-light"
+                    :title="t('journal.todo.expire-dt.pick')"
+                    @click="openExpireDtPicker"
+                  ><i class="bi bi-calendar3"></i></button>
+                  <button
+                    type="button"
+                    class="btn btn-light"
+                    :disabled="!canExtractExpireDt"
+                    :title="t('journal.todo.expire-dt.extract.tooltip')"
+                    @click="extractExpireDt"
+                  >{{ t('journal.todo.expire-dt.extract') }}</button>
+                </div>
+                <div class="fs-8 mt-2" :class="expireDtHintClass">{{ expireDtHint }}</div>
+              </div>
             </div>
-            <!--end::위치 / 일시-->
+            <!--end::일시 / 유효 기한-->
+
+            <!--begin::위치-->
+            <div class="row d-flex mb-8">
+              <div class="col-lg-6">
+                <label class="d-flex align-items-center mb-2" for="location">
+                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('journal.todo.field.location') }}</span>
+                </label>
+                <input
+                  type="text"
+                  name="location"
+                  id="location"
+                  class="form-control form-control-solid"
+                  v-model="model.location"
+                  :placeholder="t('journal.todo.location.placeholder')"
+                  maxlength="200"
+                />
+              </div>
+            </div>
+            <!--end::위치-->
 
             <!--begin::내용-->
             <div class="row mb-4">
@@ -186,7 +208,7 @@
 <script setup lang="ts">
 import { swalConfirm, swalAlert, swalRequestError, swalAjaxResult } from "@/shared/utils/swal";
 import { useSafeModalClose } from "@/shared/utils/safeModalClose";
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
 import RichEditor from "@/shared/ui/editor/RichEditor.vue";
 import TagifyEditor from "@/shared/ui/tag/TagifyEditor.vue";
 import { Modal } from "bootstrap";
@@ -198,6 +220,12 @@ import {
   CATEGORY_MAP_URL_TODO_TAG,
 } from "@/features/journal/stores/journalCategoryMaps";
 import { resolveJournalPrefixField } from "@/features/journal/utils/journalPrefixField";
+import {
+  daysUntilExpire,
+  scanLastDate,
+} from "@/features/journal/todo/utils/expireDt";
+import { bindSingleDatePicker, destroySingleDatePicker } from "@/shared/utils/flatpickrSingleDate";
+import type { Instance as FlatpickrInstance } from "flatpickr/dist/types/instance";
 import { useJournalStore } from "@/features/journal/stores/journal";
 import { useRoute } from "vue-router";
 import { refreshJournalDaysForRoute } from "@/features/journal/utils/journalDayRefresh";
@@ -253,10 +281,103 @@ const titleColumnClass = computed(() => {
   return isModify.value ? "col-lg-11" : "col-lg-12";
 });
 
+/**
+ * 유효 기한 (ISO `yyyy-MM-dd`, 빈 문자열이면 기한 없음).
+ * 일시 원문에서 파생하거나 사용자가 달력으로 직접 고른 값이며, 이 값이 그대로 저장된다.
+ */
+const expireDt = ref("");
+
+/** 유효 기한 달력 인스턴스. 모달을 닫을 때 destroy 한다. */
+const expireDtInputRef = ref<HTMLInputElement | null>(null);
+let expireDtFp: FlatpickrInstance | null = null;
+
+/** 일시 원문에서 찾아낸 날짜들. 「기한 추출」 가능 여부와 안내 문구가 이 결과를 쓴다. */
+const dateTextScan = computed(() => scanLastDate(model.value?.dateText));
+
+/** 일시에서 뽑을 날짜가 실제로 있을 때만 추출 버튼을 연다. */
+const canExtractExpireDt = computed(() => dateTextScan.value.last !== null);
+
+/**
+ * 유효 기한 아래 안내 문구.
+ *
+ * 기한이 있으면 남은 일수를, 없으면 일시에서 무엇을 뽑을 수 있는지 보여 준다.
+ * 뽑을 수 있는 날짜를 모두 나열해 「왜 그 날이 마지막인지」가 눈에 보이게 한다.
+ */
+const expireDtHint = computed(() => {
+  if (expireDt.value) {
+    const days = daysUntilExpire(expireDt.value);
+    if (Number.isNaN(days)) return "";
+    if (days === 0) return t("journal.todo.expire-dt.relative.today");
+    return days > 0
+      ? t("journal.todo.expire-dt.relative.left").replace("{0}", String(days))
+      : t("journal.todo.expire-dt.relative.past").replace("{0}", String(-days));
+  }
+  const scan = dateTextScan.value;
+  if (scan.last === null) return t("journal.todo.expire-dt.hint.empty");
+  return t("journal.todo.expire-dt.hint.candidates")
+    .replace("{0}", scan.found.join(", "))
+    .replace("{1}", scan.last);
+});
+
+/** 안내 문구 색. 이미 지난 기한을 눈에 띄게 가른다. */
+const expireDtHintClass = computed(() => {
+  if (!expireDt.value) return "text-gray-500";
+  return daysUntilExpire(expireDt.value) < 0 ? "text-warning" : "text-gray-600";
+});
+
+/**
+ * 일시 원문에서 가장 늦은 날짜를 뽑아 유효 기한에 넣는다.
+ * 뽑을 날짜가 없으면 기존 값을 건드리지 않는다.
+ */
+function extractExpireDt(): void {
+  const last = dateTextScan.value.last;
+  if (last === null) return;
+  expireDt.value = last;
+  expireDtFp?.setDate(last, false);
+}
+
+/**
+ * 일시를 고치면 유효 기한을 자동으로 채운다 -- 단 **기한이 비어 있을 때만**.
+ *
+ * 일시는 사용자가 쓴 원문이라 기계가 되쓸 수 없으므로, 달력으로 교정한 기한과
+ * 원문을 일치시킬 방법이 없다. 값이 있는데도 자동으로 덮으면 사용자가 내린 판단이
+ * 일시의 오타 수정 한 번에 조용히 사라진다. 이미 값이 있으면 「기한 추출」 버튼으로만 다시 뽑는다.
+ */
+watch(
+  () => model.value?.dateText,
+  () => { if (!expireDt.value) extractExpireDt(); }
+);
+
+/** 유효 기한 달력을 연다. 읽기 전용 입력이라 달력이 유일한 직접 수정 경로다. */
+function openExpireDtPicker(): void {
+  if (!expireDtFp) attachExpireDtPicker();
+  expireDtFp?.open();
+}
+
+/** 유효 기한 달력을 현재 값으로 바인딩한다. */
+function attachExpireDtPicker(): void {
+  destroyExpireDtPicker();
+  const input = expireDtInputRef.value;
+  if (!input) return;
+  expireDtFp = bindSingleDatePicker(input, {
+    initial: expireDt.value,
+    onValue: (dateStr) => { expireDt.value = dateStr; },
+  });
+}
+
+function destroyExpireDtPicker(): void {
+  destroySingleDatePicker(expireDtFp);
+  expireDtFp = null;
+}
+
 /** 태그 문자열 바인딩 */
 const tagListStrWithCtgr = computed({
   get: () => model.value?.tag?.tagListStrWithCtgr ?? "",
   set: (v) => { if (model.value?.tag) model.value.tag.tagListStrWithCtgr = v; },
+});
+
+onBeforeUnmount(() => {
+  destroyExpireDtPicker();
 });
 
 onMounted(() => {
@@ -274,23 +395,21 @@ watch(
   (isOpen) => {
     if (isOpen) {
       resetSafeClose();
+      expireDt.value = model.value?.expireDt ?? "";
       void personalPrefixOptionsStore.fetchOptions(PREFIX_CONTENT_TYPE);
       void categoryMapStore.ensure(CATEGORY_MAP_URL_TODO_TAG);
       bsModal?.show();
-    } else bsModal?.hide();
+      void nextTick(() => attachExpireDtPicker());
+    } else {
+      destroyExpireDtPicker();
+      bsModal?.hide();
+    }
   }
 );
 
 function close() {
   resetSafeClose();
   modalStore.closeTodoRegist();
-}
-
-/** 현재 locale의 년월 표시 형식으로 할일 대상 월을 조립한다. */
-function formatTodoMonth(yy?: number | string, mnth?: number | string): string {
-  return t("journal.todo.date.format")
-    .replace("{0}", String(yy ?? ""))
-    .replace("{1}", String(mnth ?? ""));
 }
 
 /** 등록/수정 처리 */
@@ -308,13 +427,13 @@ async function submit() {
   try {
     const formData = new FormData();
     if (isModify.value) formData.append("id", String(model.value.id));
-    formData.append("yy", String(model.value.yy ?? ""));
-    formData.append("mnth", String(model.value.mnth ?? ""));
     formData.append("title", model.value.title ?? "");
     if (model.value.sortOrder != null) formData.append("sortOrder", String(model.value.sortOrder));
     formData.append("prefixId", model.value.prefixId == null ? "" : String(model.value.prefixId));
     formData.append("location", model.value.location ?? "");
     formData.append("dateText", model.value.dateText ?? "");
+    // 확정된 절대 날짜만 보낸다. 서버는 일시 원문을 해석하지 않는다.
+    formData.append("expireDt", expireDt.value);
     formData.append("content", model.value.content ?? "");
     formData.append("tag.tagListStr", tagListStrWithCtgr.value);
 

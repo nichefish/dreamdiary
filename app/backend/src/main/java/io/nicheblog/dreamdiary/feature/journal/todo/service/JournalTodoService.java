@@ -73,39 +73,36 @@ public class JournalTodoService
     /**
      * 활성 할일 목록 조회 (dto level).
      * <p>
-     * 월(yy/mnth)에 종속되지 않고 사용자의 활성 집합(OPEN·PENDING)을 발생지 무관하게 투영한다.
-     * RESOLVED 는 활성 투영에서 제외한다. yy/mnth 는 발생지(provenance)로 보존되며 조회 축이 아니라
-     * 여기서 무시한다. 소규모 개인 데이터라 리스트 캐시 없이 매 조회 신선하게 lifecycle 을 부착한다.
+     * 월에 종속되지 않고 사용자의 활성 집합(OPEN·PENDING)을 시점 무관하게 투영한다.
+     * RESOLVED 는 활성 투영에서 제외한다. 소규모 개인 데이터라 리스트 캐시 없이 매 조회
+     * 신선하게 lifecycle 을 부착한다.
      * (RESOLVED 제외는 인메모리 필터다. 카디널리티가 커지면 lifecycle 조인으로 쿼리 단계로 내린다.)
      * </p>
      *
      * @param username 사용자 계정명
-     * @param searchParam 검색 조건이 담긴 파라미터 객체 (yy/mnth 는 무시)
+     * @param searchParam 검색 조건이 담긴 파라미터 객체
      * @return {@link List} -- 활성 할일 목록
      */
     public List<JournalTodoDto> getActiveListDtoByUser(final String username, final JournalTodoSearchParam searchParam) throws Exception {
         return this.getListDtoWithLifecycleByUser(username, searchParam).stream()
-                .filter(dto -> dto.getLifecycle() == null || !dto.getLifecycle().is(LifecycleKey.RESOLVED))
+                .filter(dto -> !isTerminal(dto))
                 .collect(Collectors.toList());
     }
 
     /**
      * 사용자 전 범위 할일 목록 조회 (dto level).
      * <p>
-     * 발생지(yy/mnth) 무관하게 사용자의 모든 할일을 lifecycle 부착해 반환한다. 활성 집합과 달리
+     * 시점 무관하게 사용자의 모든 할일을 lifecycle 부착해 반환한다. 활성 집합과 달리
      * RESOLVED 를 제외하지 않는다 -- 전수관리(keep) 화면이 완료·미해결을 함께 투영하기 위함이다.
-     * yy/mnth 는 발생지(provenance)로 보존되며 조회 축이 아니라 여기서 무시한다. 소규모 개인
-     * 데이터라 리스트 캐시 없이 매 조회 신선하게 lifecycle 을 부착한다.
+     * 소규모 개인 데이터라 리스트 캐시 없이 매 조회 신선하게 lifecycle 을 부착한다.
      * </p>
      *
      * @param username 사용자 계정명
-     * @param searchParam 검색 조건이 담긴 파라미터 객체 (yy/mnth 는 무시)
+     * @param searchParam 검색 조건이 담긴 파라미터 객체
      * @return {@link List} -- 사용자 전 범위 할일 목록 (lifecycle 부착)
      */
     public List<JournalTodoDto> getListDtoWithLifecycleByUser(final String username, final JournalTodoSearchParam searchParam) throws Exception {
         searchParam.setCreatedBy(AuthUtils.requireUsername(username));
-        searchParam.setYy(null);
-        searchParam.setMnth(null);
 
         final List<JournalTodoDto> listDto = this.getSelf().getListDto(searchParam);
         this.applyTodoLifecycles(listDto);
@@ -252,6 +249,19 @@ public class JournalTodoService
     public void postDelete(final JournalTodoDto deletedDto) throws Exception {
         // 관련 캐시 삭제
         journalCacheEvictWorker.evictAfterCommit(JournalCacheEvictParam.of(deletedDto), ContentType.JOURNAL_TODO);
+    }
+
+    /**
+     * 종결(RESOLVED·EXPIRED·DROPPED) 상태인지 판정한다.
+     * 라이프사이클 행이 없으면 OPEN 이므로 진행으로 본다.
+     *
+     * @param dto 대상 할일 DTO
+     * @return 종결이면 true
+     */
+    private boolean isTerminal(final JournalTodoDto dto) {
+        if (dto.getLifecycle() == null) return false;
+        final LifecycleKey key = LifecycleKey.getByKey(dto.getLifecycle().getLifecycleKey());
+        return key != null && key.isTerminal();
     }
 
     /**
