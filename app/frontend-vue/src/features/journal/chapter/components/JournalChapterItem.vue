@@ -32,7 +32,7 @@
             <span style="color:#287D94;">{{ t("journal.chapter.summary") }}</span>
           </template>
           <template v-else-if="chapter.prefix">
-            <span :style="{ color: chapter.prefix.color || '#287D94' }">{{ chapter.prefix.name }}</span>
+            <span :class="chapter.prefix.textClass" :style="{ color: '#287D94' }">{{ chapter.prefix.name }}</span>
           </template>
           <!--begin::챕터 제목 (분류 뒤 인라인 강조, 접힘·펼침 무관 항상) — 같은 분류 챕터 구분용 -->
           <span v-if="chapter.title" class="ms-1 text-gray-700">· {{ chapter.title }}</span>
@@ -222,12 +222,14 @@
       </div>
       <!--begin::접힘 시 태그 요약 (챕터 접힌 상태에서만 표시)-->
       <div v-if="tagList.length > 0 && isCollapsed" class="journal-chapter-tags d-flex flex-wrap gap-1 ps-5 py-1">
-        <span
+        <TagChip
           v-for="tag in tagList"
           :key="tag.tagId"
-          class="text-muted cursor-pointer pe-1"
-          @click.stop="openTagContextMenu($event, tag)"
-        >#<span class="border-bottom text-primary fw-lighter opacity-hover"><span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>{{ tag.name }}</span></span>
+          :name="tag.name"
+          :ctgr="tag.ctgr"
+          clickable
+          @click="openTagContextMenu($event, tag)"
+        />
       </div>
       <!--end::접힘 시 태그 요약-->
       <!--begin::접힘 시 소속 스레드 요약 (하위 엔트리의 스레드를 중복 없이 표시)-->
@@ -259,7 +261,7 @@ import { swalConfirm, swalAlert, swalRequestError, swalFire, swalAjaxResult } fr
 import { computed, ref, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
-import { useTagContextMenuStore } from "@/features/journal/stores/tagContextMenu";
+import { useJournalTagMenu } from "@/features/journal/shared/composables/useJournalTagMenu";
 import { useJournalModalStore } from "@/features/journal/stores/journalModal";
 import { useJournalStore } from "@/features/journal/stores/journal";
 import { useJournalThreadStore } from "@/features/journal/stores/journalThread";
@@ -279,6 +281,7 @@ import {
   resolveChapterCollapsed,
 } from "@/features/journal/utils/journalLifecycleCollapse";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import JournalEntryItem from "../../entry/components/JournalEntryItem.vue";
 import { useJournalDayResolved } from "@/features/journal/utils/journalDayResolved";
 
@@ -292,7 +295,7 @@ const props = withDefaults(defineProps<{
 const modalStore = useJournalModalStore();
 const journalStore = useJournalStore();
 const threadStore = useJournalThreadStore();
-const tagContextMenuStore = useTagContextMenuStore();
+const { openJournalTagMenu } = useJournalTagMenu();
 const { t } = useLocaleStore();
 const route = useRoute();
 
@@ -468,7 +471,7 @@ function openTagContextMenu(event: MouseEvent, tag: { tagId: number | string; na
     : isNoteChapter.value
       ? "JOURNAL_NOTE"
       : "JOURNAL_DIARY";
-  tagContextMenuStore.open(event, {
+  openJournalTagMenu(event, {
     tagId: tag.tagId,
     name: tag.name,
     ctgr: tag.ctgr ?? "",

@@ -3,15 +3,15 @@
     <div
       v-if="store.visible"
       ref="menuEl"
-      class="journal-tag-context-menu"
+      class="ctx-menu"
       :style="{ left: store.x + 'px', top: store.y + 'px' }"
       @click.stop
     >
-      <button type="button" class="journal-tag-ctx-btn journal-tag-ctx-btn--search" @click="onSearch">
+      <button type="button" class="ctx-menu-btn ctx-menu-btn--search" @click="onSearch">
         <i class="bi bi-search"></i>
         <span>{{ t("common.search") }}</span>
       </button>
-      <button type="button" class="journal-tag-ctx-btn journal-tag-ctx-btn--copy" @click="onCopy">
+      <button type="button" class="ctx-menu-btn ctx-menu-btn--copy" @click="onCopy">
         <i class="bi bi-copy"></i>
         <span>{{ t("common.copy") }}</span>
       </button>

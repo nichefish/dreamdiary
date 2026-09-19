@@ -75,7 +75,7 @@ describe("quickAddPrefix", () => {
     const store = makeStore();
     // 편집 모델을 열어두어 prefixId 반영 경로를 탄다
     await store.openRegist();
-    const created: ThreadPrefix = { id: 42, name: "회고", color: null, sortOrder: 0 } as ThreadPrefix;
+    const created: ThreadPrefix = { id: 42, name: "회고", textClassCd: "DEFAULT", textClass: "", sortOrder: 0 } as ThreadPrefix;
     mockedPost.mockResolvedValueOnce(ok({ rsltObj: created }));
 
     const result = await store.quickAddPrefix("  회고  ");

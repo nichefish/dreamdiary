@@ -53,7 +53,7 @@ Import alias: `@/features/...`, `@/shared/...`, `@/app/...`, `@metronic/...`(→
 `useAttachableModalStore` (`features/attachable/stores/attachableModal.ts`) 주요 API: `openCommentRegist`, `openCommentModify`, `openCommentList`, `openHistory`, `openRelated`, `openTagList`, `openTagProfile`, `openFileList`.
 `RelatedContentAddModal.vue`의 제목·필드·옵션·검색 상태·검증·결과 메시지는 현재 locale의 클라이언트 카탈로그를 사용하며, 저장 API가 서버 `message`를 반환하면 그 값을 우선 표시한다. 연결 대상 검색은 선택 유형을 `DIARY|DREAM`으로 변환해 통합 `GET /api/journal/entries`를 호출하고 제목 또는 본문 일치 결과를 최신순 최대 8건 표시한다. 요청 실패는 오류 메시지로 표시해 정상 0건과 구분한다. `openRelated`는 일반 관련글(RELATED) 전용이다.
 현재 `RelatedContentAddModal.vue`와 `/api/related` API는 일기·꿈 사이의 직접 관련글 1단계 연결을 구현한다. 엔트리 관련글 행의 직접 관계 해제도 **구현 완료(✓)**다.
-`JournalTagProfileModal.vue`의 제목·필드·선택지·버튼·확인·결과 메시지는 현재 locale의 클라이언트 카탈로그를 사용하며, 저장·삭제 API가 서버 `message`를 반환하면 그 값을 우선 표시한다. 크기 고정(`cloudSizeLock`)은 태그클라우드에서 MAX면 `ts-9`, MIN이면 `ts-1`로 고정하며(AUTO는 빈도 산출) 엔트리 본문 태그줄에는 적용하지 않는다.
+`TagProfileModal.vue`의 제목·필드·선택지·버튼·확인·결과 메시지는 현재 locale의 클라이언트 카탈로그를 사용하며, 저장·삭제 API가 서버 `message`를 반환하면 그 값을 우선 표시한다. 크기 고정(`cloudSizeLock`)은 태그클라우드에서 MAX면 `ts-9`, MIN이면 `ts-1`로 고정하며(AUTO는 빈도 산출) 엔트리 본문 태그줄에는 적용하지 않는다.
 `JournalTagListModal.vue`의 제목·빈 상태·분류·버튼·태그별 일자 목록 툴팁은 현재 locale의 클라이언트 카탈로그를 사용한다.
 `CommentRegistModal.vue`의 제목·필드·버튼·검증·확인·결과 메시지는 현재 locale의 클라이언트 카탈로그를 사용하며, 등록·수정 API가 서버 `message`를 반환하면 그 값을 우선 표시한다.
 
@@ -81,6 +81,80 @@ Vue SPA는 빌드가 성공했더라도 라우팅, 동적 import, 렌더링, 전
 - `app/frontend-vue/src/app/router/index.ts`
 - `app/frontend-vue/src/shared/components/system/AppRuntimeStatus.vue`
 - `app/frontend-vue/src/shared/utils/appRuntimeStatus.ts`
+
+---
+
+### 태그 빈도 스케일 색 토큰
+
+`ts-1`(최저 빈도) ~ `ts-9`(최고 빈도)는 서버가 태그 사용 빈도로 확정해 내려주는 클래스이며, 화면은 해석 없이 그대로 적용한다. 정의 위치는 `app/frontend-vue/src/styles/components/tag.scss`다.
+
+크기는 9단계지만 색은 다섯 갈래를 공유하므로 색 토큰도 다섯 개만 둔다. `.ts-N` 규칙은 색 리터럴을 직접 쓰지 않고 토큰만 참조한다.
+
+| 토큰 | 값 | 적용 단계 |
+|---|---|---|
+| `--tag-scale-color-1` | `#9ca5ad` | `ts-1` |
+| `--tag-scale-color-2` | `#7c858d` | `ts-2` |
+| `--tag-scale-color-3` | `#5c75ad` | `ts-3` |
+| `--tag-scale-color-4` | `$color-map`의 `dialog` | `ts-4`~`ts-6` |
+| `--tag-scale-color-5` | `#0d6efd` | `ts-7`~`ts-9` |
+
+`--tag-scale-color-4`는 팔레트의 `dialog` 색과 같은 값이라 리터럴을 중복하지 않고 `$color-map`을 참조한다. `--tag-scale-color-5`는 Metronic `$primary`(`#1B84FF`)와 다른 값이므로 `--bs-primary`로 대체하지 않는다.
+
+---
+
+### `TagContextMenu` (태그 컨텍스트 메뉴)
+
+**Vue 구현**: `app/frontend-vue/src/shared/ui/tag/TagContextMenu.vue` · 상태는 `shared/ui/tag/tagContextMenu.ts`
+
+**책임 경계**: 좌표에 항목 목록을 띄우는 표시 전용이다. **어떤 항목이 있어야 하는지 알지 않고** store 에 실려 온 `actions`(`{ label, icon, variant?, run }`)를 순서대로 그린다. 바깥 클릭·ESC·스크롤·리사이즈에 닫히고, 항목 실행 전에 먼저 닫는다. 화면당 하나만 마운트한다.
+
+**항목 구성은 여는 화면이 정한다.**
+
+| 화면 | 항목 |
+|---|---|
+| 저널 (`useJournalTagMenu`) | 검색 → (검색 팝업 안에서만) 검색에 추가 → 태그 설정 |
+| Keep (`KeepPage`) | 목록 필터 토글 → 태그 설정 |
+| 게시판 (`BoardPostList`) | 목록 필터 토글 → 태그 설정 |
+
+저널 전용 동작(엔트리 검색 팝업·일자 필터 모달·다중 태그 추가)은 `features/journal/shared/composables/useJournalTagMenu.ts` 가 소유한다. 도메인 공용인 「태그 설정」은 `features/attachable/composables/useTagProfileAction.ts` 가 제공하며 세 화면이 같은 것을 쓴다 — 프로필 조회 실패 시에도 모달은 열고 빈 프로필로 시작한다(프로필이 아직 없는 태그가 정상 경로).
+
+게시판은 태그·프로필의 `contentType` 으로 `boardKey` 를 쓴다(태그 조회와 같은 규약).
+
+**스타일**: `.ctx-menu` / `.ctx-menu-btn`(`styles/components/ctx-menu.scss`). 태그·메타·선택 세 메뉴가 공유하는 프리미티브라 저널 스타일시트가 아니라 공용에 둔다.
+
+**현재 Vue 동등**: ✓ 구현 완료
+
+---
+
+### `TagChip` (인라인 태그)
+
+**Vue 구현**: `app/frontend-vue/src/shared/ui/tag/TagChip.vue`
+
+**사용 화면**: 저널 엔트리·챕터·일자 카드·일자 상세 모달·엔트리 뷰(페이지/모달)·일자 메타 모달, 연간 목록·연간 상세(요약/리뷰/엔트리), 스레드 목록·스레드 상세, 게시판 글 상세 모달, Keep 목록.
+
+**표시 계약**: 표기는 `#[카테고리]태그명` 하나로 고정한다. `#`은 밑줄 밖에 두고, 카테고리(`fs-7 text-noti`)와 이름은 `border-bottom text-primary fw-lighter` 밑줄 안에 둔다. 카테고리가 없으면 대괄호 부분을 그리지 않는다. 빈도별 크기(`ts-N`)와 건수를 갖는 `TagCloud`와 달리 고정 크기이며 건수가 없다.
+
+**책임 경계**: `clickable`이 참일 때만 `cursor-pointer`·`opacity-hover`를 붙이고 `click`을 내보낸다 — 클릭이 태그 컨텍스트 메뉴인지 필터 추가인지는 호출부가 결정한다. 글자 크기 등 문맥별 조정은 호출부가 넘긴 class가 root로 병합되어 적용된다(예: Keep 목록 행은 `fs-8`).
+
+**Props**: `name`(필수) · `ctgr` · `clickable`.
+
+**현재 Vue 동등**: ✓ 구현 완료
+
+---
+
+### `TagCloud` (태그 클라우드 한 행)
+
+**Vue 구현**: `app/frontend-vue/src/shared/ui/tag/TagCloud.vue`
+
+**사용 화면**: `JournalTagCloudHeader`(일자/일기/꿈 3행), `JournalAnnualDetail`(연간 태그 헤더), `KeepPage`, `BoardPostList`.
+
+**표시 계약**: 라벨 열(`6.25rem`, `d-none d-md-flex`, `me-6`) + 태그 열 한 행이다. 여러 섹션을 쌓는 화면은 이 컴포넌트를 행마다 반복하고 구분선은 호출부가 둔다. 태그는 `btn btn-link px-0` 링크 버튼이며 `[카테고리]`는 `fs-7 text-noti`, 이름은 서버가 확정한 크기(`tagClass` = `ts-1`~`ts-9`)와 색(`textClass`)을 그대로 적용하고, 건수는 `fs-9 text-noti`에 좌측 `0.2em` 여백을 둔다. 이름 앞에 `#`을 붙이지 않는다. 정상 빈 목록은 기본 `-`로 표시하며 조회 실패 문구(`errorMessage`)와 구분한다.
+
+**책임 경계**: 이 컴포넌트는 표시와 선택 상태만 책임진다. 클릭이 무엇을 하는지는 `tag-click` 이벤트로 호출부가 결정한다 — 저널·연간은 태그 컨텍스트 메뉴를 열고, Keep·게시판은 목록 필터를 토글한다. 필터형 호출부는 `selectedTagId`를 넘기며, 선택 표시는 글자 스타일(`tagClass`/`textClass`)을 덮지 않고 배경(`--bs-light-primary`)으로만 구분한다.
+
+**Props**: `tags`(필수) · `label`(null이면 라벨 열 없음) · `loading` · `loadingText`(기본 `common.loading`) · `errorMessage` · `emptyText`(기본 `-`) · `tagTitle` · `selectedTagId` · `keyPrefix`.
+
+**현재 Vue 동등**: ✓ 구현 완료
 
 ---
 
@@ -231,7 +305,7 @@ Vue SPA는 빌드가 성공했더라도 라우팅, 동적 import, 렌더링, 전
 | 이력 | `openHistory` + `HistoryModal.vue`. 각 이력 카드에 텍스트 복사 버튼 구현 완료 |
 | 관련글 추가 | `openRelated` + `RelatedContentAddModal.vue` — RELATED 직접 연결 ✓ |
 | 태그 목록 | `openTagList` + `JournalTagListModal.vue` |
-| 태그 프로필 | `openTagProfile` + `JournalTagProfileModal.vue` |
+| 태그 프로필 | `openTagProfile` + `features/attachable/TagProfileModal.vue` (저널·Keep·게시판 공용. 저장 성공은 `@success(contentType)` 로만 알리고 화면 갱신은 마운트한 화면이 한다) |
 | 파일 그룹 | `FileGroup` 계열 컴포넌트로 흡수한다. FTLH가 owner인 상태를 최종 상태로 보지 않는다. |
 
 ### Prefix 기반축
@@ -240,9 +314,9 @@ Vue SPA는 빌드가 성공했더라도 라우팅, 동적 import, 렌더링, 전
 |------|-----------|------|
 | Prefix 영속 모델 | ✓ | `prefix_scope.scope_type`은 `PERSONAL/GLOBAL`이며 개인은 `(user_id, content_type)`, 게시판은 `(GLOBAL, boardKey)`가 목록 경계의 SSOT다. `created_by`는 감사 정보로만 쓰며 삭제 대신 `active_yn=N`으로 비활성화한다. |
 | 콘텐츠 연결 모델 | ✓ | 개인 저널과 게시글은 `prefix_content(ref_id, ref_content_type, prefix_id)` attachable 연결로 콘텐츠당 활성 Prefix 0..1을 표현한다. 게시글의 `ref_content_type`은 동적 boardKey이며 Prefix 선택은 공통 연결 모델에서 관리한다. |
-| Prefix 관리 서비스 | ✓ | 개인·게시판이 참조하는 PrefixScope 공통 경계에서 비활성 포함 이름 중복 금지, `sort_order,id` 정렬, `#RRGGBB` 색상과 Scope 소속을 서버에서 검증한다. 개인 API는 `/api/my/prefixes`, 게시판 관리자 API는 `/api/board/groups/{id}/prefixes`다. |
+| Prefix 관리 서비스 | ✓ | 개인·게시판이 참조하는 PrefixScope 공통 경계에서 비활성 포함 이름 중복 금지, `sort_order,id` 정렬, 색 의미 코드와 Scope 소속을 서버에서 검증한다. 색은 hex 가 아니라 태그 프로필과 같은 `TEXT_CLASS_CD` 어휘(`prefix.text_class_cd`)로 저장하며, 렌더 클래스는 `TextClass.toCssClass()`(`text-<소문자 코드>`)가 해석해 `PrefixDto.textClass` 로 내려간다. 어휘를 공유하므로 말머리도 태그와 같은 테마 색을 따른다. 개인 API는 `/api/my/prefixes`, 게시판 관리자 API는 `/api/board/groups/{id}/prefixes`다. |
 | 게시판 GLOBAL Scope | ✓ | 게시판 ID로 boardKey를 확정하고 첫 Prefix 등록 시 `GLOBAL + boardKey` Scope를 lazy 생성한다. 게시판별 목록은 독립적이며 다른 게시판에 변경을 전파하지 않는다. |
-| 개인 Prefix 관리 UI | ✓ | 내 설정 `/my/prefixes` 초기 화면의 작은 `저널` 도메인 헤더 아래 Scope 존재 여부와 무관한 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 고정 6행을 표시한다. 화면 카탈로그는 도메인 그룹별 대상 배열로 구성해 다른 도메인을 같은 형식으로 아래에 추가할 수 있고, 영속 Prefix 구조는 바꾸지 않는다. 행을 누르면 실제 `JOURNAL_CHAPTER_DIARY / JOURNAL_CHAPTER_NOTE / JOURNAL_DIARY / JOURNAL_DREAM / JOURNAL_NOTE / JOURNAL_THREAD`별 관리 모달을 열어 이름·색상·정렬·활성 상태를 관리하며 서버 응답을 store SSOT로 사용한다. 초기 화면은 목록과 말머리 미리보기를 조회하지 않고, 모달 종료 시 목록과 진행 중 조회를 비우며 늦은 이전 응답을 폐기한다. 관리 등록·수정·활성 변경 성공 시 해당 `contentType`의 공통 활성 선택지 캐시만 무효화하고, 다음 소비 화면 진입이 서버 확정 목록을 다시 조회한다. 챕터의 attachable 정체성은 `JOURNAL_CHAPTER`를 유지하되 일기 챕터와 노트 챕터는 서로 다른 개인 Scope를 사용한다. 시스템 요약(`summaryYn=Y`)과 DREAM 챕터는 Prefix를 갖지 않는다. 일기·꿈·노트 엔트리도 각각의 개인 Prefix 목록을 등록·수정·조회·표시에 사용한다. NOTE 엔트리는 공통 `journal_entry`의 실제 연결 타입 `JOURNAL_DIARY`를 유지하되 선택 Scope만 소속 NOTE 챕터에서 `JOURNAL_NOTE`로 확정한다. |
+| 개인 Prefix 관리 UI | ✓ | 내 설정 `/my/prefixes` 초기 화면의 작은 `저널` 도메인 헤더 아래 Scope 존재 여부와 무관한 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 고정 6행을 표시한다. 화면 카탈로그는 도메인 그룹별 대상 배열로 구성해 다른 도메인을 같은 형식으로 아래에 추가할 수 있고, 영속 Prefix 구조는 바꾸지 않는다. 행을 누르면 실제 `JOURNAL_CHAPTER_DIARY / JOURNAL_CHAPTER_NOTE / JOURNAL_DIARY / JOURNAL_DREAM / JOURNAL_NOTE / JOURNAL_THREAD`별 관리 모달을 열어 이름·색·정렬·활성 상태를 관리하며(색은 태그 프로필 모달과 같은 `TEXT_CLASS_CD` select 로 고르고 자유 hex 입력은 두지 않는다. 선택지는 `/api/code/items?groupCode=TEXT_CLASS_CD` 를 쓰는 `attachableStore.tagProfileTextClassOptions` 를 공유하며, 각 option 과 select 자체에 해당 색 클래스를 입혀 현재 색이 보이게 한다) 서버 응답을 store SSOT로 사용한다. 초기 화면은 목록과 말머리 미리보기를 조회하지 않고, 모달 종료 시 목록과 진행 중 조회를 비우며 늦은 이전 응답을 폐기한다. 관리 등록·수정·활성 변경 성공 시 해당 `contentType`의 공통 활성 선택지 캐시만 무효화하고, 다음 소비 화면 진입이 서버 확정 목록을 다시 조회한다. 챕터의 attachable 정체성은 `JOURNAL_CHAPTER`를 유지하되 일기 챕터와 노트 챕터는 서로 다른 개인 Scope를 사용한다. 시스템 요약(`summaryYn=Y`)과 DREAM 챕터는 Prefix를 갖지 않는다. 일기·꿈·노트 엔트리도 각각의 개인 Prefix 목록을 등록·수정·조회·표시에 사용한다. NOTE 엔트리는 공통 `journal_entry`의 실제 연결 타입 `JOURNAL_DIARY`를 유지하되 선택 Scope만 소속 NOTE 챕터에서 `JOURNAL_NOTE`로 확정한다. |
 | 게시판 Prefix 관리 UI | ✓ | `BoardPrefixManagementModal.vue`와 `stores/boardPrefixes.ts`가 게시판 관리 행 문맥에서 boardKey별 비활성 포함 Prefix를 관리한다. Scope ID·공유·연결 변경 UI는 노출하지 않는다. |
 | 스레드 소비 | ✓ | DTO·저장·목록·후보·상세·내보내기·Vue 편집/필터/표시는 단일 `prefix`/`prefixId` 계약을 사용한다. 쓰기 MapStruct는 읽기용 중첩 `prefix`를 무시하고 서버가 검증한 `prefixId`만 FK에 반영한다. 비활성 과거 Prefix는 표시를 유지하고 신규 선택은 거부한다. |
 | 게시판 소비 | ✓ | 게시글 DTO·저장·목록·상세·Vue 편집/필터/표시는 `GLOBAL + boardKey` Scope의 단일 `prefix`/`prefixId` 계약을 사용한다. 선택은 `prefix_content`에 저장하고 `PrefixEmbed`로 조립하며 검색도 같은 연결을 사용한다. 활성 선택지만 신규 선택하고 비활성 과거 Prefix는 표시·동일 선택 유지를 허용한다. |

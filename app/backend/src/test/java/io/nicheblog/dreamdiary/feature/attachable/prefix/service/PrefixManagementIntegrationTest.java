@@ -183,7 +183,7 @@ class PrefixManagementIntegrationTest {
     private PrefixDto createPrefix(final String contentType, final String name, final Integer sortOrder) {
         return prefixService.create(contentType, PrefixDto.builder()
                 .name(name)
-                .color("#6B7280")
+                .textClassCd("MUTED")
                 .sortOrder(sortOrder)
                 .build());
     }

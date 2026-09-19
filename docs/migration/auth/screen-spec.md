@@ -82,7 +82,7 @@
 | 내 정보 | `/my/profile` | `UserMyProfileTab.vue` | 개인 연락처·프로필은 조회·수정하고 재직 정보는 조회 전용으로 표시한다. |
 | 보안 | `/my/security` | `UserMySecurityTab.vue` | 허용 IP를 표시하고 비밀번호 변경 모달을 연다. |
 | 저널 설정 | `/my/journal` | `UserMyJournalTab.vue` | 저널 일자 공통 진입점에서 사용할 일간·주간·월간 기본 보기를 조회·저장한다. |
-| 말머리 관리 | `/my/prefixes` | `UserMyPrefixesTab.vue` | 초기 화면의 작은 `저널` 도메인 헤더 아래 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 고정 대상 6행, 이어서 `Keep` 도메인 헤더 아래 `Keep 항목`(content_type `JOURNAL_TODO`) 1행을 표시하고, 행을 누르면 해당 개인 Prefix 목록의 생성·수정·정렬·색상·활성 상태를 관리하는 모달을 연다. |
+| 말머리 관리 | `/my/prefixes` | `UserMyPrefixesTab.vue` | 초기 화면의 작은 `저널` 도메인 헤더 아래 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 고정 대상 6행, 이어서 `Keep` 도메인 헤더 아래 `Keep 항목`(content_type `JOURNAL_TODO`) 1행을 표시하고, 행을 누르면 해당 개인 Prefix 목록의 생성·수정·정렬·색·활성 상태를 관리하는 모달을 연다. 색은 태그 프로필 모달과 같은 `TEXT_CLASS_CD` select 로 고르며 선택지·표시 규약을 그대로 공유한다. |
 
 - 탭은 로컬 상태가 아니라 Vue Router 하위 route로 유지하므로 새로고침·직접 URL 진입·브라우저 앞뒤 이동 시 같은 탭을 복원한다.
 - 공통 헤더의 보안 버튼은 `/my/security`로 이동하며 비밀번호 모달을 직접 열지 않는다.
@@ -95,7 +95,7 @@
 - 말머리는 콘텐츠당 0개 또는 1개다. 관리 화면은 `(user, content_type)`별 개인 Scope를 `JOURNAL_CHAPTER_DIARY`, `JOURNAL_CHAPTER_NOTE`, `JOURNAL_DIARY`, `JOURNAL_DREAM`, `JOURNAL_NOTE`, `JOURNAL_THREAD`로 분리한다. 챕터 말머리는 일기 챕터·노트 챕터로 나뉘며, 챕터의 attachable 정체성(`prefix_content.ref_content_type`)은 `JOURNAL_CHAPTER`로 유지한다.
 - 대상 6행은 Scope 존재 여부와 무관하게 `저널` 도메인 그룹 안에 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 순으로 항상 표시한다. 초기 화면에서는 각 목록을 미리 조회하거나 말머리 미리보기를 표시하지 않고, 행을 눌러 관리 모달을 열 때 해당 `contentType` 목록만 조회한다. Prefix가 하나도 없는 모달은 빈 상태와 추가 버튼을 표시하며 최초 등록 시 서버가 Scope를 lazy 생성한다.
 - 이번 화면 SAVEPOINT는 여섯 목록 관리까지만 포함하고 실제 챕터·일기·꿈·노트 등록·수정 소비 연결은 후속 범위다.
-- Prefix는 해당 Scope의 평면 목록이며 이름·색상·정렬·활성 상태를 관리한다. 비활성화는 기존 콘텐츠 선택을 보존한다.
+- Prefix는 해당 Scope의 평면 목록이며 이름·색 의미 코드·정렬·활성 상태를 관리한다. 비활성화는 기존 콘텐츠 선택을 보존한다.
 
 ### Layout Structure
 

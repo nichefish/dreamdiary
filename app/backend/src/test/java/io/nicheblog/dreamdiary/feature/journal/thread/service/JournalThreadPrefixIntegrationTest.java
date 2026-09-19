@@ -178,7 +178,7 @@ class JournalThreadPrefixIntegrationTest {
     private PrefixDto createPrefix(final String name) {
         return prefixService.create(ContentType.JOURNAL_THREAD.key, PrefixDto.builder()
                 .name(name)
-                .color("#6B7280")
+                .textClassCd("MUTED")
                 .sortOrder(1)
                 .build());
     }

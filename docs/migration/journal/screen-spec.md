@@ -43,7 +43,7 @@
 | 스레드 수정 | `/thread/:id/edit` | `JournalThreadEditPage.vue` | ✓ |
 | 내 설정 | `/my/profile`, `/my/security`, `/my/journal`, `/my/prefixes` | `UserMyPage.vue` + `UserMy*Tab.vue` | ✓ |
 | 일정 | `/schedule` | `ScheduleCalendar.vue` | ✓ |
-| Keep 전수관리 | `/keep` | `KeepPage.vue` | ✓ 전 범위 journal_todo(scope=all) 조회·미해결/완료 그룹·상단 태그클라우드·말머리/태그 필터·제목/본문 검색·추가(현재 년월 발생지 기본)·제목 클릭 수정·체크박스 즉시 완료·⋯ 컨텍스트 메뉴(수정/라이프사이클 단계/삭제). 위치·일시는 공용 등록/수정 모달에서 입력한다. 말머리를 선택한 항목은 미해결·완료 두 그룹 모두에서 제목 앞에 말머리 색상으로 `[말머리명]`을 표시한다. 항목에 부착된 태그는 제목 뒤에 `[카테고리]#태그명`으로 표시한다. 카드 본문 최상단 태그클라우드는 `GET /api/tags?contentType=JOURNAL_TODO`로 조회하며, 태그 버튼 클릭은 해당 태그로 목록을 거르고 같은 태그를 다시 누르면 해제한다. 표시는 저널 태그클라우드(`JournalTagCloudHeader`)와 같다 — 라벨 열(6.25rem) + `btn btn-link` 태그 버튼, 빈도별 `tagClass`·프로필 `textClass`, `[카테고리]`는 `fs-7 text-noti`, 이름에 `em_<태그명>` 클래스, 건수는 `fs-9 text-noti`, 빈 목록은 `-`. 저널에 없는 선택 상태만 글자 스타일을 건드리지 않고 배경 pill 로 표시한다. 말머리 필터는 활성 개인 말머리 선택지가 있을 때만 표시한다. 말머리·태그·검색어 세 필터는 모두 받아 둔 전 범위 목록에서 클라이언트가 AND로 투영하므로 재조회가 없다. 등록/수정 모달이 닫히면 목록과 태그클라우드를 함께 재조회한다. 사이드바는 활성 projection으로 유지. 대메뉴 노출은 DB 메뉴 레코드 몫(코드 fallback 에는 등록). |
+| Keep 전수관리 | `/keep` | `KeepPage.vue` | ✓ 전 범위 journal_todo(scope=all) 조회·미해결/완료 그룹·상단 태그클라우드·말머리/태그 필터·제목/본문 검색·추가(현재 년월 발생지 기본)·제목 클릭 수정·체크박스 즉시 완료·⋯ 컨텍스트 메뉴(수정/라이프사이클 단계/삭제). 위치·일시는 공용 등록/수정 모달에서 입력한다. 말머리를 선택한 항목은 미해결·완료 두 그룹 모두에서 제목 앞에 말머리 색상으로 `[말머리명]`을 표시한다. 항목에 부착된 태그는 제목 뒤에 `[카테고리]#태그명`으로 표시한다. 카드 본문 최상단 태그클라우드는 `GET /api/tags?contentType=JOURNAL_TODO`로 조회한다. 태그 버튼 클릭은 저널 태그클라우드와 같은 `TagContextMenu`를 연다 — 첫 항목은 저널의 「검색」 자리에 이 화면의 주 동작인 목록 필터 토글(거르기/해제)이 들어가고, 둘째 항목 「태그 설정」은 저널과 동일하게 `contentType=JOURNAL_TODO` 태그 프로필 모달을 연다. 같은 태그를 다시 눌러 거르기를 해제한다. 표시는 공통 `TagCloud`(`shared/ui/tag/TagCloud.vue`)를 쓰며 저널·연간·게시판과 같다. Keep 은 필터형이라 `selectedTagId` 로 선택 상태를 넘긴다. 말머리 필터는 활성 개인 말머리 선택지가 있을 때만 표시한다. 말머리·태그·검색어 세 필터는 모두 받아 둔 전 범위 목록에서 클라이언트가 AND로 투영하므로 재조회가 없다. 등록/수정 모달이 닫히면 목록과 태그클라우드를 함께 재조회한다. 사이드바는 활성 projection으로 유지. 대메뉴 노출은 DB 메뉴 레코드 몫(코드 fallback 에는 등록). |
 
 ### 저널 달력 (`JournalDayCalendar.vue`)
 
@@ -228,7 +228,7 @@
 | 저널 일자 태그 상세 | `JournalDayMetaModal.vue` | 태그 클릭(`openDayFilterModal`) |
 | 저널 일자 메타 | `JournalDayMetaModal.vue` | 메타 버튼 클릭 |
 | 태그 목록 | `JournalTagListModal.vue` | 태그 관련 팝업 |
-| 태그 프로필 | `JournalTagProfileModal.vue` | 태그 프로필 클릭 |
+| 태그 프로필 | `TagProfileModal.vue` | 태그 프로필 클릭 |
 | 이력 | `HistoryModal.vue` | 이력 버튼 클릭 |
 | 댓글 등록 | `CommentRegistModal.vue` | 댓글 등록 버튼 클릭 |
 | 관련 글 추가 | `RelatedContentAddModal.vue` | 엔트리 ⋯ 메뉴의 「관련 글 추가」 클릭. 선택한 일기/꿈 유형에서 제목·본문 키워드로 최신 8건을 검색하며 실패와 정상 0건을 구분 |
@@ -435,7 +435,7 @@
 - 결산 상세의 SUMMARY·REVIEWS·로딩·태그 메뉴 tooltip·IMPORTANT·REFERENCE와 상세/목록 aside의 FILTER·TAGCLOUD·ENTRY FILTER·SUMMARY FILTER·키워드 레이블은 현재 locale의 클라이언트 카탈로그를 사용한다. 영어는 기존 대문자 표기를 유지하며 locale 변경은 선택 연도·활성 탭·필터값·토글 상태를 변경하지 않는다. DIARY/DREAM 엔트리 목록 조회 실패(`store.entriesError` / `journal.annual.entries.load.failure`)는 정상 빈 목록과 구분하며, 실패 시 직전 성공 목록을 유지한다.
 - Vue SPA의 상세 aside는 연도 이동·태그클라우드·엔트리 필터 전용 영역이며 결산 등록 액션을 두지 않는다. 신규 결산 등록은 목록 화면 총 집계 카드 우측 액션 영역에서 수행한다.
 - 결산 상세의 SUMMARY 본문과 DIARY/DREAM 엔트리 본문은 저널 일자 엔트리와 같은 `journal-content p-2` 타이포그래피 계약을 따른다. 상세 엔트리 제목도 일자 엔트리와 맞춰 `fs-5 fw-bold` 크기로 표시한다(변경 전 `fs-7`). 선택된 Prefix는 같은 행의 제목 앞 색상 배지로 표시하고 제목이 없어도 배지만 남긴다. 본문(`.journal-content`)은 fs 클래스 없이 base 1rem 을 상속하므로, 제목은 본문보다 한 단계 위 크기가 된다. 상세 엔트리 목록은 행 왼쪽 날짜 칼럼을 반복하지 않고, 저널 일자 카드처럼 `journal-day-header` 날짜 헤더 아래에 해당 날짜의 엔트리 본문을 배치한다. DIARY/DREAM 엔트리 태그는 일자 `JournalEntryItem` 과 동일하게 밑줄 primary `#이름`(ctgr·클릭 메뉴 포함, `bi-tag` 없음)으로 표시한다(변경 전: `bi-tag` + 단순 `#name`).
-- Vue SPA `JournalAnnualLayout`은 태그 컨텍스트 메뉴와 짝으로 `JournalTagProfileModal`·`JournalDayMetaModal`을 마운트하고, 기간별 스레드 요약에서 연 문맥형 상세를 위해 `HistoryModal`도 마운트한다. 일자(`JOURNAL_DAY`) 태그 검색은 `openDayFilterModal` → `JournalDayMetaModal`이며, 짝 모달 미마운트 시 무반응처럼 보였다.
+- Vue SPA `JournalAnnualLayout`은 태그 컨텍스트 메뉴와 짝으로 `TagProfileModal`·`JournalDayMetaModal`을 마운트하고, 기간별 스레드 요약에서 연 문맥형 상세를 위해 `HistoryModal`도 마운트한다. 일자(`JOURNAL_DAY`) 태그 검색은 `openDayFilterModal` → `JournalDayMetaModal`이며, 짝 모달 미마운트 시 무반응처럼 보였다.
 - Vue SPA의 결산 상세 날짜 요일·리뷰 등록 모달 표시 문구, 툴팁, 확인창은 `useLocaleStore.t()`를 사용하며 `journal.annual.*`와 공통 i18n 키를 한국어/영어 카탈로그에서 동일하게 제공한다.
 - 리뷰 등록·수정 결과와 삭제 확인·결과 fallback은 현재 locale의 카탈로그를 사용하며, API 응답의 `message`를 우선 표시한다.
 
@@ -541,7 +541,7 @@
 | 리플렉션 등록·수정 | `JournalReflectionRegistModal.vue` | 소속 엔트리 대상 리플렉션 등록·수정 |
 | 이력 | `HistoryModal.vue` | 스레드 자체 또는 소속 엔트리의 본문 이력 조회·복원·삭제 |
 | 관련글 추가 | `RelatedContentAddModal.vue` | 소속 엔트리 관련글 추가 |
-| 태그 프로필 | `JournalTagProfileModal.vue` | 소속 엔트리 태그 설정 |
+| 태그 프로필 | `TagProfileModal.vue` | 소속 엔트리 태그 설정 |
 
 스레드 상세의 소속 엔트리·연관 스레드 조회 실패(`detailEntriesError` / `journal.thread.entries.load.failure`, `detailRelatedError` / `journal.thread.related.load.failure`)와 연관 스레드 피커 검색 실패(`pickerSearchError` / `journal.thread.related.picker.load.failure`)는 각각 정상 빈 목록·검색 0건과 구분하며, 실패 시 직전 성공 목록을 유지한다.
 
@@ -945,11 +945,11 @@ type TodoRow = {
 
 ### Behavioral Contract
 
-- 태그 클릭 자체는 검색을 실행하지 않고 `JournalTagContextMenu`를 연다.
+- 태그 클릭 자체는 검색을 실행하지 않고 `TagContextMenu`를 연다.
 - 태그 컨텍스트 메뉴의 액션과 태그 프로필 콘텐츠 유형 레이블은 현재 locale의 클라이언트 카탈로그를 사용한다.
 - 일기/꿈 태그의 `검색` 액션은 현재 월간/주간 목록 필터를 변경하지 않고 새 창 검색 화면으로 이동한다.
 - 검색 팝업 내부에서 일기/꿈 태그의 `검색` 액션을 누르면 새 팝업을 열지 않고 같은 창의 URL query를 바꿔 결과를 재조회한다.
-- 검색 팝업 내부의 `태그 설정` 액션은 `JournalTagProfileModal`을 같은 창에서 연다. 저장·삭제 성공 후 `success` 이벤트로 검색 결과(`loadEntries`)를 재조회한다.
+- 검색 팝업 내부의 `태그 설정` 액션은 `TagProfileModal`을 같은 창에서 연다. 저장·삭제 성공 후 `success` 이벤트로 검색 결과(`loadEntries`)를 재조회한다.
 - 스레드 소속 추가·해제·상태/라이프사이클 등 엔트리 액션 성공 후 `refreshJournalEntryHostForRoute`가 등록된 검색 호스트(`loadEntries`)로 로컬 결과를 갱신한다. 스레드 상세가 열려 있으면 전경 상세와 검색 결과를 함께 재조회한다.
 - 검색 팝업 내부 검색 결과에 리플렉션이 표시되면, 수정 액션은 `JournalReflectionRegistModal`을 같은 창에서 열어야 한다.
 - 각 검색 결과는 수정/삭제가 가능하다. 수정 저장 성공 시 성공 알림 표시 전에 현재 검색 조건 목록 또는 수정 대상 DOM을 준비하고, 성공 알림 OK 이후 저장한 결과 위치로 스크롤하며, 삭제 성공 시 결과 목록에서 제거한다.

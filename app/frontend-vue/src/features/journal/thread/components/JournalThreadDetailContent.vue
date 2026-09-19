@@ -3,7 +3,7 @@
     <!--begin::헤더 (제목 + 작성자/일시)-->
     <div class="mb-0">
       <div class="d-flex align-items-center flex-wrap gap-2 mb-2">
-        <span v-if="store.detailModel?.prefix" class="ctgr-span" :style="{ borderColor: store.detailModel.prefix.color || '', color: store.detailModel.prefix.color || '' }">{{ store.detailModel.prefix.name }}</span>
+        <span v-if="store.detailModel?.prefix" class="ctgr-span" :class="store.detailModel.prefix.textClass" :style="{ borderColor: 'currentColor' }">{{ store.detailModel.prefix.name }}</span>
         <span
           v-if="detailLifecycleKey"
           class="badge fs-8"
@@ -71,14 +71,12 @@
     <div v-if="hasDetailTags" class="mt-4">
       <i class="bi bi-tags me-1 text-gray-700"></i>
       <span class="fs-8 fw-semibold text-gray-600 me-2">{{ t("journal.thread.entry-tags.title") }}</span>
-      <span
+      <TagChip
         v-for="tag in store.detailModel.tag?.list"
         :key="'thread-dtl-tag-' + String(tag.tagId)"
-        class="text-muted pe-1"
-      >
-        <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-        #<span class="border-bottom text-primary fw-lighter opacity-hover">{{ tag.name }}</span>
-      </span>
+        :name="tag.name"
+        :ctgr="tag.ctgr"
+      />
     </div>
     <!--end::소속 엔트리 태그-->
 
@@ -233,6 +231,7 @@ import { getWeekDayStr } from "@/features/journal/utils/journalDate";
 import { formatThreadMembershipPeriod } from "@/features/journal/utils/threadMembershipPeriod";
 import { reinitMetronicAfterDom } from "@/shared/utils/metronicReinit";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import JournalThreadPickerModal from "../modals/JournalThreadPickerModal.vue";
 
 const store = useJournalThreadStore();

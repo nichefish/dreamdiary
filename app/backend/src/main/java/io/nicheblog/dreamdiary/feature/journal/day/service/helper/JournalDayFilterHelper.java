@@ -137,7 +137,7 @@ public final class JournalDayFilterHelper {
             hiddenMap.put(prefixId, JournalChapterPrefixHintDto.builder()
                     .prefixId(prefixId)
                     .prefixName(chapter.getPrefix().getName())
-                    .prefixColor(chapter.getPrefix().getColor())
+                    .prefixTextClass(chapter.getPrefix().getTextClass())
                     .build());
         }
 

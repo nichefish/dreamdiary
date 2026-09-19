@@ -24,7 +24,7 @@
               <span
                 v-if="entry.prefix"
                 class="badge me-2 fs-8"
-                :style="{ borderColor: entry.prefix.color || '', color: entry.prefix.color || '' }"
+                :class="entry.prefix.textClass" :style="{ borderColor: 'currentColor' }"
               >{{ entry.prefix.name }}</span>
               <span v-if="entry.title">{{ entry.title }}</span>
             </div>
@@ -57,11 +57,7 @@
           </div>
 
           <div v-if="tagList.length > 0" class="d-flex flex-wrap gap-1 mt-1 px-2">
-            <span v-for="tag in tagList" :key="tag.tagId" class="text-muted pe-1">
-              #<span class="border-bottom text-primary fw-lighter">
-                <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>{{ tag.name }}
-              </span>
-            </span>
+            <TagChip v-for="tag in tagList" :key="tag.tagId" :name="tag.name" :ctgr="tag.ctgr" />
           </div>
         </template>
       </div>
@@ -88,6 +84,7 @@ import { useRoute } from "vue-router";
 import type { JournalEntryDto } from "@/features/journal/stores/journal";
 import { getWeekDayStr } from "@/features/journal/utils/journalDate";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 
 const route = useRoute();
 const { t } = useLocaleStore();

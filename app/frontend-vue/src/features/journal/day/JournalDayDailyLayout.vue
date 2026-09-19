@@ -15,10 +15,10 @@
     <CommentListModal />
     <HistoryModal @success="onHistorySuccess" />
     <RelatedContentAddModal />
-    <JournalTagProfileModal />
+    <TagProfileModal @success="refreshAfterTagProfileChange" />
     <!--end::저널 모달 컨테이너-->
     <!--begin::태그 컨텍스트 메뉴 (전역 단일 인스턴스)-->
-    <JournalTagContextMenu />
+    <TagContextMenu />
     <!--end::태그 컨텍스트 메뉴-->
   </div>
   <!--end::저널 일간 레이아웃-->
@@ -40,8 +40,11 @@ import CommentRegistModal from "../shared/modals/CommentRegistModal.vue";
 import CommentListModal from "@/features/attachable/CommentListModal.vue";
 import HistoryModal from "@/features/attachable/HistoryModal.vue";
 import RelatedContentAddModal from "../shared/modals/RelatedContentAddModal.vue";
-import JournalTagProfileModal from "../shared/modals/JournalTagProfileModal.vue";
-import JournalTagContextMenu from "../shared/components/JournalTagContextMenu.vue";
+import TagProfileModal from "@/features/attachable/TagProfileModal.vue";
+import { useJournalTagProfileRefresh } from "@/features/journal/shared/composables/useJournalTagProfileRefresh";
+import TagContextMenu from "@/shared/ui/tag/TagContextMenu.vue";
+
+const { refreshAfterTagProfileChange } = useJournalTagProfileRefresh();
 
 const journalStore = useJournalStore();
 const threadStore = useJournalThreadStore();

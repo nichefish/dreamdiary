@@ -1,31 +1,16 @@
 <template>
   <div id="journal_tag_header" class="mb-6 ms-4 w-100">
     <template v-for="row in rows" :key="row.id">
-      <div :id="row.id" class="row align-items-center mb-4 ms-4 min-h-42px">
-        <div class="journal-tag-header__label col-auto d-none d-md-flex ms-4 me-6 text-center fs-6">
-          <b>{{ row.label }} :</b>
-        </div>
-        <div class="col flex-grow-1">
-          <span v-if="store.tagCloudLoading" class="text-muted fs-7">{{ t("common.loading") }}...</span>
-          <span v-else-if="store.tagCloudSectionError[row.section]" class="text-danger fs-7">{{ store.tagCloudSectionError[row.section] }}</span>
-          <span v-else-if="row.tags.length === 0" class="text-muted fs-7">-</span>
-          <span v-else class="d-flex flex-wrap align-items-center">
-            <button
-              v-for="tag in row.tags"
-              :key="`${row.id}-${String(tag.id)}`"
-              type="button"
-              class="btn btn-link py-2 me-3 px-0 cursor-pointer opacity-hover text-decoration-none d-inline-flex align-items-center"
-              :title="row.tooltip"
-              @click.stop="openTagContextMenu($event, tag, row.contentType)"
-            >
-              <span :class="[tag.tagClass, tag.textClass]" class="d-inline-flex align-items-center">
-                <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                <span :class="`em_${tag.name}`">{{ tag.name }}</span>
-              </span>
-              <span class="fs-9 text-noti fw-normal tag-count">{{ tag.contentSize }}</span>
-            </button>
-          </span>
-        </div>
+      <div :id="row.id" class="mb-4 ms-8">
+        <TagCloud
+          :tags="row.tags"
+          :label="row.label"
+          :loading="store.tagCloudLoading"
+          :error-message="store.tagCloudSectionError[row.section] ?? null"
+          :tag-title="row.tooltip"
+          :key-prefix="`${row.id}-`"
+          @tag-click="(tag, event) => openTagContextMenu(event, tag as TagCloudItem, row.contentType)"
+        />
       </div>
       <div v-if="row.hasSeparator" class="separator"></div>
     </template>
@@ -36,13 +21,14 @@
 <script setup lang="ts">
 import { computed, watch } from "vue";
 import JournalPeriodThreadSummary from "./JournalPeriodThreadSummary.vue";
+import TagCloud from "@/shared/ui/tag/TagCloud.vue";
 import { useJournalStore } from "@/features/journal/stores/journal";
-import { useTagContextMenuStore } from "@/features/journal/stores/tagContextMenu";
+import { useJournalTagMenu } from "@/features/journal/shared/composables/useJournalTagMenu";
 import type { TagCloudItem } from "@/features/journal/stores/journal";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 
 const store = useJournalStore();
-const tagContextMenuStore = useTagContextMenuStore();
+const { openJournalTagMenu } = useJournalTagMenu();
 const { t } = useLocaleStore();
 
 const rows = computed(() => [
@@ -80,7 +66,7 @@ watch([() => store.yy, () => store.mnth, () => store.weekStartDt, () => store.da
 });
 
 function openTagContextMenu(event: MouseEvent, tag: TagCloudItem, contentType: string) {
-  tagContextMenuStore.open(event, {
+  openJournalTagMenu(event, {
     tagId: tag.id,
     name: tag.name,
     ctgr: tag.ctgr ?? "",
@@ -88,14 +74,3 @@ function openTagContextMenu(event: MouseEvent, tag: TagCloudItem, contentType: s
   });
 }
 </script>
-
-<style scoped>
-.journal-tag-header__label {
-  width: 6.25rem;
-  justify-content: center;
-}
-
-.tag-count {
-  margin-left: 0.2em;
-}
-</style>

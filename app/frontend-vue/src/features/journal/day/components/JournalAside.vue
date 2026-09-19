@@ -263,7 +263,7 @@
                     :checked="isChapterPrefixSelected(prefix.id)"
                     @change="toggleChapterPrefix(prefix.id)"
                   />
-                  <span class="form-check-label fs-8" :style="{ color: prefix.color || 'var(--bs-gray-600)' }">[{{ prefix.name }}]</span>
+                  <span class="form-check-label fs-8" :class="prefix.textClass" :style="{ color: 'var(--bs-gray-600)' }">[{{ prefix.name }}]</span>
                 </label>
               </div>
             </div>

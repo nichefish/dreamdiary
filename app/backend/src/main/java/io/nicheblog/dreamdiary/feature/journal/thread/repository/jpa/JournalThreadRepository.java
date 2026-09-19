@@ -46,7 +46,7 @@ public interface JournalThreadRepository
      */
     @Query(value = "SELECT jt.id AS id, " +
             "       jt.title AS title, " +
-            "       p.id AS prefixId, p.name AS prefixName, p.color AS prefixColor, p.active_yn AS prefixActiveYn, " +
+            "       p.id AS prefixId, p.name AS prefixName, p.text_class_cd AS prefixTextClassCd, p.active_yn AS prefixActiveYn, " +
             "       COALESCE(( " +
             "           SELECT lc.lifecycle_key " +
             "           FROM lifecycle lc " +

@@ -150,7 +150,10 @@ export interface JournalEntryDto {
 export interface JournalPrefixDto {
   id: number;
   name: string;
-  color?: string | null;
+  /** 색 의미 코드 (TEXT_CLASS_CD 어휘). 태그 프로필과 같은 값 집합. */
+  textClassCd?: string | null;
+  /** 렌더용 CSS 클래스 (서버 해석). 미지정이면 빈 문자열. */
+  textClass?: string | null;
   sortOrder?: number;
   activeYn?: "Y" | "N";
 }
@@ -219,7 +222,7 @@ export interface MetaDto {
 export interface JournalChapterPrefixHintDto {
   prefixId?: number;
   prefixName?: string;
-  prefixColor?: string;
+  prefixTextClass?: string;
 }
 
 /** 저널 일자에 투영된 현재 사용자 휴가의 시간 범위 상태 */

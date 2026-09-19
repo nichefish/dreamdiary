@@ -9,7 +9,7 @@
 | 인터랙션 | `features/journal/stores/journal.ts` / UI | 상태 |
 |----------|---------------------------|------|
 | 정렬 토글 | `sortOrder` + `toggleSort` + localStorage 유지 + 프론트 역순 | ✓ |
-| 태그 클릭 컨텍스트 메뉴 | `tagContextMenu.ts` + `JournalTagContextMenu.vue` — 메뉴 액션과 태그 프로필 콘텐츠 유형 레이블은 현재 locale 카탈로그 사용 | ✓ |
+| 태그 클릭 컨텍스트 메뉴 | `tagContextMenu.ts` + `TagContextMenu.vue` — 메뉴 액션과 태그 프로필 콘텐츠 유형 레이블은 현재 locale 카탈로그 사용 | ✓ |
 | 일자 카드 ⋯ 컨텍스트 메뉴 | `JournalDayCard.vue` — Metronic dropdown | ✓ |
 | 메타 버튼 드롭다운 | `JournalDayCard.vue` — `bi-bar-chart` 버튼 클릭 시 Bootstrap `dropup` 메뉴; 해당 일자 메타 항목 1개씩 나열; 항목 클릭 → `JournalDayMetaModal` 오픈; `width: max-content`로 내용 폭에 맞게 auto-size | ✓코드 |
 | 일자 필터 모달 (메타+태그 다중 AND) | `JournalDayMetaModal.vue` — 메타 또는 태그를 시드로 열림(`openDayFilterModal`); 상단 칩에 선택 메타(파랑)·태그(초록) 혼합 표시; 최초 시드 칩도 × 클릭으로 자유 제거(제한 없음)되며 같은 seed 의 payload 재조회로 다시 주입하지 않는다; 모든 필터 제거 시 빈 결과 반환(payload.list 전체 노출 방지); AND 필터(모든 선택 메타+태그 보유 날짜만); 행에서 비선택 메타 뱃지 클릭 → 메타 필터 추가, 비선택 태그 클릭 → 태그 필터 추가, 선택된 태그 클릭 → 태그 필터 제거; 각 행의 선택 메타 값은 `selectedMetas` 배열 순서(선택 순)대로 표시하여 행마다 순서 일관성 유지; 연도 변경 시 필터 유지(재조회만), 신규 오픈 시 시드 1개로 초기화; 각 일자는 카드형(날짜 → 메타·태그 → SUMMARY)으로 표시하고, SUMMARY 첫 non-empty 엔트리 본문(`summaryEntryHtmlOf`, SEARCH `journalChapterList` 파생)을 `collapse-3`/`expand-btn`으로 최대 3줄 미리보기한 뒤 클릭·더보기로 전체를 펼친다(접힘 중 빈 문단·여백 축소, 펼침 시 원문 유지); `JournalDayTagDetailModal` 제거하여 단일 모달로 수렴; 태그 입력 검색 — 컨트롤 행의 태그 입력(모달 내 datalist 미표시 대응: 인라인 typeahead 미리보기; 모달 오픈·포커스 시 `journalModalStore.dayTagCategoryMap`(SSOT)과 `/api/journal/day/tags` 를 병합해 최초 1회 로드)으로 기존 태그만 AND 필터에 추가(엔트리 검색과 동일 `findKnownTagName`·categoryMap 매칭); 카탈로그에 없는 이름은 Swal 대신 인라인 안내(모달 유지), 동명 태그(다중 카테고리)는 카테고리 선택 버튼으로 분기; 모달 닫힘 시 입력·힌트·카테고리 선택 상태 초기화(카탈로그 캐시는 유지) | ✓코드 |
@@ -346,7 +346,7 @@ const weekRangeLabel = computed(() => {
 - 일기/꿈 엔트리 태그: `JournalEntryItem.vue`
 - 결산 상세 태그클라우드·DIARY/DREAM 엔트리 태그: `JournalAnnualDetail.vue` (`JournalAnnualLayout`에 메뉴·짝 모달 마운트)
 
-**컨텍스트 메뉴**: `JournalTagContextMenu.vue`
+**컨텍스트 메뉴**: `TagContextMenu.vue`
 - 버튼: `검색`, `태그 설정`
 - 위치: 클릭 좌표 기준, viewport 안쪽으로 clamp
 - 닫기: 외부 클릭, ESC, scroll/resize
@@ -369,7 +369,7 @@ const weekRangeLabel = computed(() => {
 - 일기/꿈 태그 검색은 현재 목록의 `diaryKeyword` / `dreamKeyword` 필터로 대체하지 않는다.
 - 검색은 URL 기반 새 창으로 열어야 하며, 검색 조건은 주소로 재현 가능해야 한다.
 - 새 창 검색은 앱 내 탐색 화면이 아니므로 기본 메뉴와 저널 aside를 붙이지 않는다. route는 `SystemLayout.vue` 하위 auth route로 둔다.
-- 검색 팝업 내부 태그 클릭도 동일 컨텍스트 메뉴(`JournalTagContextMenu`)를 사용하며, `태그 설정`은 팝업 안에서 `JournalTagProfileModal`을 열 수 있어야 한다.
+- 검색 팝업 내부 태그 클릭도 동일 컨텍스트 메뉴(`TagContextMenu`)를 사용하며, `태그 설정`은 팝업 안에서 `TagProfileModal`을 열 수 있어야 한다.
 
 ---
 
@@ -709,7 +709,7 @@ target 리플렉션 본문 평문 (full·no-pending 모드에서만, 리플렉�
 
 **확정 전 입력 안내**: 키워드/태그 입력칸에 값이 남아 있으면 `hasPendingSearchInputs` 기준으로 고급 필터 영역에 검색 실행 시 현재 입력값도 조건에 포함된다는 locale 안내를 표시한다. 안내는 URL query, 검색 실행 순서, 입력값 확정 규칙을 변경하지 않는다.
 
-**태그 컨텍스트 메뉴에서 태그 추가** (`JournalTagContextMenu.vue`):
+**태그 컨텍스트 메뉴에서 태그 추가** (`TagContextMenu.vue`):
 - 팝업 외부: 새 창 열기 (`tagIds` 파라미터)
 - 팝업 내부 (`route.name === "journal-entry-search"`): 기존 `tagIds` 배열에 APPEND (중복 무시) → `router.replace()`
 

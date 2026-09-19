@@ -20,7 +20,7 @@ public interface JournalThreadCandidateProjection {
 
     String getPrefixName();
 
-    String getPrefixColor();
+    String getPrefixTextClassCd();
 
     String getPrefixActiveYn();
 

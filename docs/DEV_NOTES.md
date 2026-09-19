@@ -393,7 +393,7 @@ Java 컴파일 검증 폴백 (2026-08-14 실증): 이 셸에서는 `./gradlew co
 | `static/vue/global` | 공통 전역은 `src/stores`, `src/utils`, `src/services`, `src/styles`로 재배치한다. 임시 참조가 남으면 migration spec에 제거 기준을 남긴다. |
 | 폰트 | legacy `font.css`를 `/css/font.css`로 로드하고 `/font/**` 파일은 Spring Boot static 경로를 사용한다. Vite dev server는 `/css`, `/font` proxy를 둔다. |
 | 저널 태그클라우드 | day/diary/dream tag row를 Vue에서 표시한다. "1개짜리 태그 숨김"과 "해당년도 태그 다 보기" 기능은 제거 요구에 따라 복원하지 않는다. |
-| 태그 클릭 | 태그 클릭은 즉시 검색이 아니다. `JournalTagContextMenu`를 열고, 검색 액션에서 일자 태그는 상세 모달, 일기/꿈 태그는 새 창 검색으로 간다. |
+| 태그 클릭 | 태그 클릭은 즉시 검색이 아니다. `TagContextMenu`를 열고, 검색 액션에서 일자 태그는 상세 모달, 일기/꿈 태그는 새 창 검색으로 간다. |
 | 엔트리 검색 새 창 | `/vue-app/journal/entry/search`는 legacy `journal_entry_search.ftlh`의 replacement다. 새 창이므로 메뉴/aside 없는 `SystemLayout` auth route로 둔다. 현재 구현은 목록/태그/키워드 조회와 결과 전체/개별 복사를 포함하며, export/sort/고급 다중 입력은 남은 검수 대상이다. |
 
 문서 위치:

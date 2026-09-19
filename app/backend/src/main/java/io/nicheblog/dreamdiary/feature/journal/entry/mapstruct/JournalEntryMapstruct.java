@@ -74,13 +74,13 @@ public abstract class JournalEntryMapstruct
     protected PrefixDto selectedPrefixToDto(final JournalEntryEntity entity) {
         final PrefixEntity prefix = entity.getSelectedPrefix();
         if (prefix == null) return null;
-        return PrefixDto.builder()
-                .id(prefix.getId())
-                .name(prefix.getName())
-                .color(prefix.getColor())
-                .sortOrder(prefix.getSortOrder())
-                .activeYn(prefix.getActiveYn())
-                .build();
+        return PrefixDto.displayOf(
+                    prefix.getId(),
+                    prefix.getName(),
+                    prefix.getTextClass(),
+                    prefix.getSortOrder(),
+                    prefix.getActiveYn()
+                );
     }
 
     /**

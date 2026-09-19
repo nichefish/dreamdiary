@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.feature.journal.thread.service;
 
+import io.nicheblog.dreamdiary.global.type.TextClass;
 import io.nicheblog.dreamdiary.auth.security.exception.NotAuthorizedException;
 import io.nicheblog.dreamdiary.auth.security.util.AuthUtils;
 import io.nicheblog.dreamdiary.feature.journal.entry.entity.JournalEntryEntity;
@@ -213,7 +214,7 @@ class JournalThreadEntryServiceTest {
                 periodSummary(11, "첫 번째 스레드", 1, LocalDate.of(2026, 7, 6));
         when(firstSummary.getPrefixId()).thenReturn(101);
         when(firstSummary.getPrefixName()).thenReturn("가상 말머리");
-        when(firstSummary.getPrefixColor()).thenReturn("#336699");
+        when(firstSummary.getPrefixTextClass()).thenReturn(TextClass.NOTI);
         when(firstSummary.getPrefixActiveYn()).thenReturn("N");
         final List<JournalThreadPeriodSummaryProjection> summaries = List.of(
                 periodSummary(12, "두 번째 스레드", 3, LocalDate.of(2026, 7, 8)),
@@ -232,7 +233,7 @@ class JournalThreadEntryServiceTest {
                 .toList());
         assertEquals(101, result.get(0).getPrefix().getId());
         assertEquals("가상 말머리", result.get(0).getPrefix().getName());
-        assertEquals("#336699", result.get(0).getPrefix().getColor());
+        assertEquals("text-noti", result.get(0).getPrefix().getTextClass());
         assertEquals("N", result.get(0).getPrefix().getActiveYn());
         verify(repository).findPeriodSummaryByWeekStartDt(FIXTURE_USERNAME, weekStartDt);
     }

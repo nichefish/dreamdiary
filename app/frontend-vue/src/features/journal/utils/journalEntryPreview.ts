@@ -23,7 +23,7 @@ export interface JournalEntryPreviewDraft {
   sortOrder?: number | null;
   content?: string | null;
   prefixName?: string | null;
-  prefixColor?: string | null;
+  prefixTextClass?: string | null;
 }
 
 /** 미리보기 창이 렌더하는 확정 페이로드. */

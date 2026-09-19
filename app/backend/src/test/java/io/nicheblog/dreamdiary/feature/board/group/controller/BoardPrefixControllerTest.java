@@ -215,7 +215,7 @@ class BoardPrefixControllerTest {
     private PrefixDto prefixRequest() {
         return PrefixDto.builder()
                 .name(FIXTURE_PREFIX_NAME)
-                .color("#6B7280")
+                .textClassCd("MUTED")
                 .sortOrder(0)
                 .build();
     }
@@ -224,7 +224,7 @@ class BoardPrefixControllerTest {
         return PrefixDto.builder()
                 .id(FIXTURE_PREFIX_ID)
                 .name(FIXTURE_PREFIX_NAME)
-                .color("#6B7280")
+                .textClassCd("MUTED")
                 .sortOrder(0)
                 .activeYn("Y")
                 .build();

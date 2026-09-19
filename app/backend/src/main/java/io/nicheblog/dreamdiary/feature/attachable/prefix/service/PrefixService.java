@@ -8,6 +8,7 @@ import io.nicheblog.dreamdiary.feature.attachable.prefix.model.PrefixDto;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.repository.jpa.PrefixRepository;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.repository.jpa.PrefixScopeRepository;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.type.PrefixScopeType;
+import io.nicheblog.dreamdiary.global.type.TextClass;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -133,7 +134,7 @@ public class PrefixService {
         final PrefixEntity saved = repository.save(PrefixEntity.builder()
                 .scope(scope)
                 .name(name)
-                .color(normalizeColor(request.getColor()))
+                .textClass(TextClass.fromCode(request.getTextClassCd()))
                 .sortOrder(normalizeSortOrder(request.getSortOrder()))
                 .activeYn("Y")
                 .build());
@@ -174,7 +175,7 @@ public class PrefixService {
         final String name = normalizeRequiredName(request.getName());
         validateNameDuplicate(scopeId, name, prefixId);
         prefix.setName(name);
-        prefix.setColor(normalizeColor(request.getColor()));
+        prefix.setTextClass(TextClass.fromCode(request.getTextClassCd()));
         prefix.setSortOrder(normalizeSortOrder(request.getSortOrder()));
         final PrefixEntity saved = repository.save(prefix);
         log.info("[Prefix] 수정. prefixId={}, scopeId={}, context={}", prefixId, scopeId, scopeContext);
@@ -392,15 +393,6 @@ public class PrefixService {
         return name;
     }
 
-    private String normalizeColor(final String rawColor) {
-        final String color = StringUtils.trimToNull(rawColor);
-        if (color == null) return null;
-        if (!color.matches("^#[0-9A-Fa-f]{6}$")) {
-            throw new IllegalArgumentException("Prefix color must be #RRGGBB.");
-        }
-        return color.toUpperCase(Locale.ROOT);
-    }
-
     private Integer normalizeSortOrder(final Integer sortOrder) {
         return sortOrder == null ? 0 : Math.max(sortOrder, 0);
     }
@@ -409,7 +401,8 @@ public class PrefixService {
         return PrefixDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
-                .color(entity.getColor())
+                .textClassCd(TextClass.getOrDefault(entity.getTextClass()).getKey())
+                .textClass(TextClass.getOrDefault(entity.getTextClass()).toCssClass())
                 .sortOrder(entity.getSortOrder())
                 .activeYn(entity.getActiveYn())
                 .build();

@@ -89,14 +89,14 @@ describe("userPrefixes store 개인 목록 분리", () => {
 
     await store.savePrefix("JOURNAL_NOTE", {
       name: "가상 말머리",
-      color: "#009EF7",
+      textClassCd: "PRIMARY",
       sortOrder: 0,
     });
     await store.setPrefixActive("JOURNAL_NOTE", 21, false);
 
     expect(mockedPost).toHaveBeenCalledWith("/api/my/prefixes", {
       name: "가상 말머리",
-      color: "#009EF7",
+      textClassCd: "PRIMARY",
       sortOrder: 0,
     }, {
       params: { contentType: "JOURNAL_NOTE" },
@@ -127,7 +127,7 @@ describe("userPrefixes store 개인 목록 분리", () => {
     await managementStore.savePrefix("JOURNAL_THREAD", {
       id: 31,
       name: "수정된 말머리",
-      color: "#009EF7",
+      textClassCd: "PRIMARY",
       sortOrder: 0,
     });
 

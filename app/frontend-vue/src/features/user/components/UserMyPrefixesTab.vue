@@ -69,13 +69,25 @@
 
               <form v-if="editing" class="border rounded p-4 mb-5 bg-light" @submit.prevent="submitPrefix">
                 <div class="row g-3 align-items-end">
-                  <div class="col-md-6">
+                  <div class="col-md-5">
                     <label class="form-label required">{{ t("common.name") }}</label>
                     <input v-model.trim="form.name" class="form-control form-control-sm" maxlength="100" />
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-3">
                     <label class="form-label">{{ t("user.my.prefixes.color") }}</label>
-                    <input v-model="form.color" type="color" class="form-control form-control-sm form-control-color w-100" />
+                    <select
+                      v-model="form.textClassCd"
+                      class="form-select form-select-sm"
+                      :class="colorSelectClass"
+                    >
+                      <option value="">{{ t("prefix.color.default") }}</option>
+                      <option
+                        v-for="option in attachableStore.tagProfileTextClassOptions"
+                        :key="option.code"
+                        :value="option.code"
+                        :class="option.description"
+                      >{{ option.codeName }}</option>
+                    </select>
                   </div>
                   <div class="col-md-2">
                     <label class="form-label">{{ t("common.sort-order") }}</label>
@@ -95,7 +107,7 @@
                 {{ t("user.my.prefixes.empty") }}
               </div>
               <div v-for="prefix in store.prefixes" v-else :key="prefix.id" class="d-flex align-items-center border-bottom py-3">
-                <span class="prefix-color me-3" :style="{ backgroundColor: prefix.color || '#A1A5B7' }"></span>
+                <span class="prefix-color me-3" :class="prefix.textClass" :style="{ backgroundColor: prefix.textClass ? 'currentColor' : '#A1A5B7' }"></span>
                 <div class="flex-grow-1">
                   <span :class="{ 'text-muted text-decoration-line-through': prefix.activeYn === 'N' }">{{ prefix.name }}</span>
                   <span class="text-muted fs-8 ms-2">{{ t("common.sort-order") }} {{ prefix.sortOrder }}</span>
@@ -139,12 +151,22 @@ import axios from "axios";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { swalConfirm } from "@/shared/utils/swal";
 import { useUserPrefixesStore, type UserPrefix } from "@/features/user/stores/userPrefixes";
+import { useAttachableModalStore } from "@/features/attachable/stores/attachableModal";
 
 const store = useUserPrefixesStore();
+const attachableStore = useAttachableModalStore();
 const { t } = useLocaleStore();
 const errorMessage = ref("");
+/**
+ * 선택한 색 의미 코드의 CSS 클래스.
+ * 태그 프로필 모달과 같은 규약으로, select 자체에 선택 색을 입혀 현재 색이 바로 보이게 한다.
+ */
+const colorSelectClass = computed(() =>
+  attachableStore.tagProfileTextClassOptions.find((o) => o.code === form.textClassCd)?.description ?? ""
+);
+
 const editing = ref(false);
-const form = reactive<UserPrefix>({ name: "", color: "#009EF7", sortOrder: 0 });
+const form = reactive<UserPrefix>({ name: "", textClassCd: "", sortOrder: 0 });
 
 type PersonalPrefixContentType =
   | "JOURNAL_THREAD"
@@ -234,7 +256,7 @@ function report(error: unknown) {
 }
 
 function resetForm() {
-  Object.assign(form, { id: undefined, name: "", color: "#009EF7", sortOrder: 0 });
+  Object.assign(form, { id: undefined, name: "", textClassCd: "", sortOrder: 0 });
 }
 
 function beginNewPrefix() {
@@ -242,7 +264,7 @@ function beginNewPrefix() {
   editing.value = true;
 }
 function beginEditPrefix(prefix: UserPrefix) {
-  Object.assign(form, { ...prefix, color: prefix.color || "#009EF7" });
+  Object.assign(form, { ...prefix, textClassCd: prefix.textClassCd === "DEFAULT" ? "" : (prefix.textClassCd ?? "") });
   editing.value = true;
 }
 
@@ -313,7 +335,10 @@ async function closeModal() {
   store.clearPrefixes();
 }
 
-onMounted(() => store.clearPrefixes());
+onMounted(() => {
+  store.clearPrefixes();
+  void attachableStore.loadTagProfileTextClassOptions();
+});
 </script>
 
 <style scoped>

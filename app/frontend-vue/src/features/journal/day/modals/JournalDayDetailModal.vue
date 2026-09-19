@@ -48,16 +48,12 @@
             <!--begin::태그-->
             <div v-if="tagList.length > 0" class="mb-3 ms-2">
               <i class="bi bi-tag"></i>
-              <span
+              <TagChip
                 v-for="tag in tagList"
                 :key="tag.tagId + ':' + tag.name"
-                class="text-muted pe-1"
-              >
-                #<span class="border-bottom text-primary fw-lighter">
-                  <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                  {{ tag.name }}
-                </span>
-              </span>
+                :name="tag.name"
+                :ctgr="tag.ctgr"
+              />
             </div>
             <!--end::태그-->
 
@@ -113,6 +109,7 @@ import { ref, computed, watch, onMounted } from "vue";
 import { Modal } from "bootstrap";
 import { useJournalModalStore } from "@/features/journal/stores/journalModal";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import { getWeekDayStr } from "@/features/journal/utils/journalDate";
 import JournalChapterItem from "../../chapter/components/JournalChapterItem.vue";
 import JournalDreamVirtualSection from "../../dream/components/JournalDreamVirtualSection.vue";

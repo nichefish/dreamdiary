@@ -34,7 +34,7 @@ const FIXTURE_MANAGEMENT = {
   boardKey: FIXTURE_BOARD.boardKey,
   boardName: FIXTURE_BOARD.boardName,
   prefixes: [
-    { id: 21, name: "가상 말머리", color: "#009EF7", sortOrder: 0, activeYn: "Y" },
+    { id: 21, name: "가상 말머리", textClassCd: "PRIMARY", textClass: "text-primary", sortOrder: 0, activeYn: "Y" },
   ],
 };
 
@@ -69,7 +69,7 @@ describe("boardPrefixes store 게시판별 GLOBAL Scope 관리", () => {
     const store = useBoardPrefixesStore();
     await store.open(FIXTURE_BOARD);
 
-    const payload = { name: "신규 가상 말머리", color: "#A1B2C3", sortOrder: 1 };
+    const payload = { name: "신규 가상 말머리", textClassCd: "DIALOG", sortOrder: 1 };
     await store.savePrefix(payload);
 
     expect(mockedPost).toHaveBeenCalledWith("/api/board/groups/11/prefixes", payload);

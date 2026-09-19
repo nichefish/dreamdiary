@@ -36,33 +36,18 @@
         <!--begin::태그 클라우드
           할일 태그는 tag_content.ref_content_type = JOURNAL_TODO 로 저장되므로
           게시판 목록과 같은 /api/tags?contentType=... 계약으로 조회한다.
-          같은 태그를 다시 누르면 필터가 해제된다. -->
-        <div class="row align-items-center pb-3 mb-5 border-bottom border-gray-200 min-h-42px">
-          <div class="keep-tag-cloud__label col-auto d-none d-md-flex text-center fs-6">
-            <b>{{ t("common.tag") }} :</b>
-          </div>
-          <div class="col flex-grow-1">
-            <span v-if="tagCloudLoading" class="text-muted fs-7">{{ t("common.loading") }}...</span>
-            <span v-else-if="tagCloudError" class="text-danger fs-7">{{ tagCloudError }}</span>
-            <span v-else-if="!tagCloud.length" class="text-muted fs-7">-</span>
-            <span v-else class="d-flex flex-wrap align-items-center">
-              <button
-                v-for="tag in tagCloud"
-                :key="'keep-tc-' + tag.id"
-                type="button"
-                class="btn btn-link py-2 me-3 px-0 cursor-pointer opacity-hover text-decoration-none d-inline-flex align-items-center"
-                :class="{ 'keep-tag-cloud__btn--on': filterTagId === tag.id }"
-                :title="t('journal.todo.tag-cloud.filter.tooltip')"
-                @click="toggleTagFilter(tag.id)"
-              >
-                <span :class="[tag.tagClass, tag.textClass]" class="d-inline-flex align-items-center">
-                  <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                  <span :class="`em_${tag.name}`">{{ tag.name }}</span>
-                </span>
-                <span class="fs-9 text-noti fw-normal tag-count">{{ tag.contentSize }}</span>
-              </button>
-            </span>
-          </div>
+          태그 클릭은 저널 태그클라우드와 같은 컨텍스트 메뉴를 연다. -->
+        <div class="pb-3 mb-5 border-bottom border-gray-200">
+          <TagCloud
+            :tags="tagCloud"
+            :label="t('common.tag')"
+            :loading="tagCloudLoading"
+            :error-message="tagCloudError || null"
+            :tag-title="t('journal.tag-cloud.menu.tooltip')"
+            :selected-tag-id="filterTagId"
+            key-prefix="keep-tc-"
+            @tag-click="openTagContextMenu"
+          />
         </div>
         <!--end::태그 클라우드-->
 
@@ -92,16 +77,16 @@
               <span
                 v-if="item.prefix"
                 class="fw-bold me-1"
-                :style="{ color: item.prefix.color || '#287D94' }"
+                :class="item.prefix.textClass" :style="{ color: '#287D94' }"
               >[{{ item.prefix.name }}]</span>
               {{ item.title }}
-              <span
+              <TagChip
                 v-for="tag in item.tag?.list"
                 :key="'keep-open-tag-' + item.id + '-' + tag.tagId"
-                class="text-muted fs-8 ps-1"
-              >
-                <span v-if="tag.ctgr" class="text-noti">[{{ tag.ctgr }}]</span>#{{ tag.name }}
-              </span>
+                class="fs-8"
+                :name="tag.name ?? ''"
+                :ctgr="tag.ctgr"
+              />
               <span v-if="item.yy" class="text-muted fs-8 ms-2">{{ item.yy }}.{{ padMonth(item.mnth) }}</span>
             </div>
             <!--begin::컨텍스트 메뉴
@@ -192,16 +177,16 @@
               <span
                 v-if="item.prefix"
                 class="fw-bold me-1"
-                :style="{ color: item.prefix.color || '#287D94' }"
+                :class="item.prefix.textClass" :style="{ color: '#287D94' }"
               >[{{ item.prefix.name }}]</span>
               {{ item.title }}
-              <span
+              <TagChip
                 v-for="tag in item.tag?.list"
                 :key="'keep-done-tag-' + item.id + '-' + tag.tagId"
-                class="text-muted fs-8 ps-1"
-              >
-                <span v-if="tag.ctgr" class="text-noti">[{{ tag.ctgr }}]</span>#{{ tag.name }}
-              </span>
+                class="fs-8"
+                :name="tag.name ?? ''"
+                :ctgr="tag.ctgr"
+              />
             </div>
             <!--begin::컨텍스트 메뉴
               SSOT: 저널 스레드·엔트리 목록과 동일 Metronic data-kt-menu.
@@ -274,6 +259,8 @@
     </div>
   </div>
   <JournalTodoRegistModal />
+  <TagContextMenu />
+  <TagProfileModal @success="fetchTagCloud" />
   <!--end::Keep 전수관리 화면-->
 </template>
 
@@ -286,7 +273,13 @@ import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { useJournalModalStore } from "@/features/journal/stores/journalModal";
 import type { JournalPrefixDto } from "@/features/journal/stores/journal";
 import { usePersonalPrefixOptionsStore } from "@/features/attachable/stores/personalPrefixOptions";
+import TagCloud, { type TagCloudTag } from "@/shared/ui/tag/TagCloud.vue";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import JournalTodoRegistModal from "@/features/journal/todo/modals/JournalTodoRegistModal.vue";
+import TagContextMenu from "@/shared/ui/tag/TagContextMenu.vue";
+import TagProfileModal from "@/features/attachable/TagProfileModal.vue";
+import { useTagContextMenuStore } from "@/shared/ui/tag/tagContextMenu";
+import { useTagProfileAction } from "@/features/attachable/composables/useTagProfileAction";
 
 /** Keep 전 범위 항목 — 백엔드 JournalTodoDto 직렬화(scope=all) 중 화면 표시·검색분. */
 interface KeepItem {
@@ -306,6 +299,8 @@ interface KeepItem {
 const { t } = useLocaleStore();
 const modalStore = useJournalModalStore();
 const personalPrefixOptionsStore = usePersonalPrefixOptionsStore();
+const tagContextMenuStore = useTagContextMenuStore();
+const { tagProfileAction } = useTagProfileAction();
 
 /** 할일 말머리 Scope content_type. 등록/수정 모달과 같은 목록을 쓴다. */
 const PREFIX_CONTENT_TYPE = "JOURNAL_TODO";
@@ -322,17 +317,8 @@ const keyword = ref("");
 /** 말머리 필터 (클라이언트 필터). null 이면 전체. */
 const filterPrefixId = ref<number | null>(null);
 
-/** 태그클라우드 항목 — 백엔드 TagDto 직렬화 중 화면 표시분. */
-interface KeepTagCloudItem {
-  id: number;
-  name?: string;
-  ctgr?: string | null;
-  tagClass?: string;
-  textClass?: string;
-  contentSize?: number;
-}
-/** 태그클라우드 (JOURNAL_TODO 전체 태그) */
-const tagCloud = ref<KeepTagCloudItem[]>([]);
+/** 태그클라우드 (JOURNAL_TODO 전체 태그). 표시 계약은 공통 `TagCloud` 를 따른다. */
+const tagCloud = ref<TagCloudTag[]>([]);
 const tagCloudLoading = ref(false);
 const tagCloudError = ref("");
 /** 태그 필터 (클라이언트 필터). null 이면 전체. */
@@ -425,9 +411,31 @@ async function fetchTagCloud(): Promise<void> {
   }
 }
 
-/** 태그클라우드 클릭 — 같은 태그를 다시 누르면 해제한다. 목록은 클라이언트 투영이라 재조회하지 않는다. */
+/** 태그 필터 토글 — 같은 태그를 다시 누르면 해제한다. 목록은 클라이언트 투영이라 재조회하지 않는다. */
 function toggleTagFilter(tagId: number): void {
   filterTagId.value = filterTagId.value === tagId ? null : tagId;
+}
+
+/**
+ * 태그 컨텍스트 메뉴를 연다 (저널 태그클라우드와 같은 메뉴·버튼 모양).
+ * <pre>
+ *  Keep 에는 저널 엔트리 검색 문맥이 없으므로 첫 항목 자리에 이 화면의 주 동작인
+ *  목록 필터 토글을 끼운다. 「태그 설정」(프로필)은 저널과 동일하게 동작한다.
+ * </pre>
+ */
+function openTagContextMenu(tag: TagCloudTag, event: MouseEvent): void {
+  const tagId = Number(tag.id);
+  const on = filterTagId.value === tagId;
+  const payload = { tagId, name: tag.name, ctgr: tag.ctgr ?? "", contentType: "JOURNAL_TODO" };
+  tagContextMenuStore.open(event, payload, [
+    {
+      label: on ? t("tag.filter.off") : t("tag.filter.on"),
+      icon: on ? "bi-funnel" : "bi-funnel-fill",
+      variant: "search",
+      run: () => toggleTagFilter(tagId),
+    },
+    tagProfileAction(payload, t("journal.aside.todo.title")),
+  ]);
 }
 
 /**
@@ -538,24 +546,3 @@ onMounted(() => {
   void fetchList();
 });
 </script>
-
-<style scoped>
-/* 저널 태그클라우드(JournalTagCloudHeader)와 같은 라벨 폭·카운트 간격을 쓴다. */
-.keep-tag-cloud__label {
-  width: 6.25rem;
-  justify-content: center;
-}
-
-.tag-count {
-  margin-left: 0.2em;
-}
-
-/* 저널 태그클라우드에 없는 축 -- Keep 태그는 목록 필터라 선택 상태를 표시해야 한다.
-   글자 스타일(tagClass/textClass)은 건드리지 않고 배경 pill 로만 구분한다. */
-.keep-tag-cloud__btn--on {
-  background-color: var(--bs-light-primary);
-  border-radius: 0.475rem;
-  padding-left: 0.5rem !important;
-  padding-right: 0.5rem !important;
-}
-</style>

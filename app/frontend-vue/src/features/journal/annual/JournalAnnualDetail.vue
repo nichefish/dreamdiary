@@ -57,16 +57,12 @@
             <!-- TODO: 태그 클릭 → JournalDayTagService 연동 미구현 (Sub-2 범위 외) -->
             <div v-if="hasSummaryTags" class="mt-2 ms-5 mt-3">
               <i class="bi bi-tag"></i>
-              <span
+              <TagChip
                 v-for="tag in store.annualDetail.tag?.list"
                 :key="String(tag.tagId) + ':' + tag.name"
-                class="text-muted pe-1"
-              >
-                #<span class="border-bottom text-primary fw-lighter opacity-hover">
-                  <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                  {{ tag.name }}
-                </span>
-              </span>
+                :name="tag.name"
+                :ctgr="tag.ctgr"
+              />
             </div>
             <!--end::요약 태그-->
           </div>
@@ -98,16 +94,12 @@
                   <!--begin::리뷰 태그-->
                   <div v-if="hasReviewTags(rev)" class="tags ms-2 mt-3">
                     <i class="bi bi-tag"></i>
-                    <span
+                    <TagChip
                       v-for="tag in rev.tag?.list"
                       :key="String(tag.tagId) + ':' + tag.name"
-                      class="text-muted pe-1"
-                    >
-                      #<span class="border-bottom text-primary fw-lighter opacity-hover">
-                        <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                        {{ tag.name }}
-                      </span>
-                    </span>
+                      :name="tag.name"
+                      :ctgr="tag.ctgr"
+                    />
                   </div>
                   <!--end::리뷰 태그-->
                 </div>
@@ -174,30 +166,16 @@
       <div v-if="store.showTagCloud" class="card-header">
         <div id="journal_tag_header" class="mb-6 ms-4 w-100">
           <template v-for="row in tagCloudRows" :key="row.id">
-            <div class="row align-items-center mb-4 ms-4 min-h-42px">
-              <div class="col-auto d-none d-md-flex ms-4 me-6 text-center fs-6">
-                <b>{{ row.label }} :</b>
-              </div>
-              <div class="col flex-grow-1">
-                <span v-if="store.entriesLoading" class="text-muted fs-7">{{ t("journal.annual.detail.loading") }}</span>
-                <span v-else-if="row.tags.length === 0" class="text-muted fs-7">-</span>
-                <span v-else class="d-flex flex-wrap align-items-center">
-                  <button
-                    v-for="tag in row.tags"
-                    :key="`${row.id}-${String(tag.id ?? tag.tagId)}-${tag.name}`"
-                    type="button"
-                    class="btn btn-link py-2 me-3 px-0 cursor-pointer opacity-hover text-decoration-none d-inline-flex align-items-center"
-                    :title="t('journal.annual.tag.menu.tooltip')"
-                    @click.stop="openTagContextMenu($event, tag, row.contentType)"
-                  >
-                    <span :class="[tag.tagClass, tag.textClass]" class="d-inline-flex align-items-center">
-                      <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                      <span>{{ tag.name }}</span>
-                    </span>
-                    <span class="fs-9 text-noti fw-normal tag-count">{{ tag.contentSize ?? 0 }}</span>
-                  </button>
-                </span>
-              </div>
+            <div class="mb-4 ms-8">
+              <TagCloud
+                :tags="row.tags.map((tg) => ({ ...tg, id: tg.id ?? tg.tagId }))"
+                :label="row.label"
+                :loading="store.entriesLoading"
+                :loading-text="t('journal.annual.detail.loading')"
+                :tag-title="t('journal.annual.tag.menu.tooltip')"
+                :key-prefix="`${row.id}-`"
+                @tag-click="(tag, event) => openTagContextMenu(event, tag, row.contentType)"
+              />
             </div>
             <div v-if="row.hasSeparator" class="separator"></div>
           </template>
@@ -290,7 +268,7 @@
                     <span
                       v-if="entry.prefix"
                       class="badge me-2 fs-8"
-                      :style="{ borderColor: entry.prefix.color || '', color: entry.prefix.color || '' }"
+                      :class="entry.prefix.textClass" :style="{ borderColor: 'currentColor' }"
                     >{{ entry.prefix.name }}</span>
                     <span v-if="entry.title">{{ entry.title }}</span>
                   </div>
@@ -300,16 +278,14 @@
                   ></div>
                   <!--begin::엔트리 태그 — 저널 일자 JournalEntryItem 과 동일(밑줄 primary, bi-tag 없음, 클릭 메뉴)-->
                   <div v-if="hasEntryTags(entry)" class="d-flex flex-wrap gap-1 mt-1 ps-2">
-                    <span
+                    <TagChip
                       v-for="tag in entry.tag?.list"
                       :key="String(tag.tagId)"
-                      class="text-muted cursor-pointer pe-1"
-                      @click.stop="openTagContextMenu($event, tag, 'JOURNAL_DIARY')"
-                    >
-                      #<span class="border-bottom text-primary fw-lighter opacity-hover">
-                        <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>{{ tag.name }}
-                      </span>
-                    </span>
+                      :name="tag.name"
+                      :ctgr="tag.ctgr"
+                      clickable
+                      @click="openTagContextMenu($event, tag, 'JOURNAL_DIARY')"
+                    />
                   </div>
                   <!--end::엔트리 태그-->
                 </div>
@@ -359,7 +335,7 @@
                     <span
                       v-if="entry.prefix"
                       class="badge me-2 fs-8"
-                      :style="{ borderColor: entry.prefix.color || '', color: entry.prefix.color || '' }"
+                      :class="entry.prefix.textClass" :style="{ borderColor: 'currentColor' }"
                     >{{ entry.prefix.name }}</span>
                     <span v-if="entry.title">{{ entry.title }}</span>
                   </div>
@@ -369,16 +345,14 @@
                   ></div>
                   <!--begin::엔트리 태그 — 저널 일자 JournalEntryItem 과 동일(밑줄 primary, bi-tag 없음, 클릭 메뉴)-->
                   <div v-if="hasEntryTags(entry)" class="d-flex flex-wrap gap-1 mt-1 ps-2">
-                    <span
+                    <TagChip
                       v-for="tag in entry.tag?.list"
                       :key="String(tag.tagId)"
-                      class="text-muted cursor-pointer pe-1"
-                      @click.stop="openTagContextMenu($event, tag, 'JOURNAL_DREAM')"
-                    >
-                      #<span class="border-bottom text-primary fw-lighter opacity-hover">
-                        <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>{{ tag.name }}
-                      </span>
-                    </span>
+                      :name="tag.name"
+                      :ctgr="tag.ctgr"
+                      clickable
+                      @click="openTagContextMenu($event, tag, 'JOURNAL_DREAM')"
+                    />
                   </div>
                   <!--end::엔트리 태그-->
                 </div>
@@ -408,17 +382,19 @@
 import { computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useJournalAnnualStore } from "@/features/journal/stores/journalAnnual";
-import { useTagContextMenuStore } from "@/features/journal/stores/tagContextMenu";
+import { useJournalTagMenu } from "@/features/journal/shared/composables/useJournalTagMenu";
 import type { AnnualSection, AnnualEntryDto, AnnualTagItem, JournalAnnualReviewDto } from "@/features/journal/stores/journalAnnual";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import { getWeekDayStr } from "@/features/journal/utils/journalDate";
 import { hasDreamerName } from "@/features/journal/utils/journalDream";
 import JournalPeriodThreadSummary from "@/features/journal/day/components/JournalPeriodThreadSummary.vue";
+import TagCloud from "@/shared/ui/tag/TagCloud.vue";
 
 const route = useRoute();
 const store = useJournalAnnualStore();
 const { t } = useLocaleStore();
-const tagContextMenuStore = useTagContextMenuStore();
+const { openJournalTagMenu } = useJournalTagMenu();
 
 const yy = computed(() => Number(route.params.yy));
 
@@ -551,9 +527,18 @@ function deleteReview(id: number) {
   void store.deleteReview(id, yy.value);
 }
 
-function openTagContextMenu(event: MouseEvent, tag: AnnualTagItem, contentType: string) {
-  tagContextMenuStore.open(event, {
-    tagId: tag.id ?? tag.tagId,
+/**
+ * 태그 컨텍스트 메뉴를 연다.
+ * 태그 클라우드(공통 `TagCloud`)와 본문 인라인 태그(`AnnualTagItem`)가 함께 호출하므로
+ * 두 형태를 모두 받는 구조 타입으로 받고, 식별자는 `id` -> `tagId` 순으로 확정한다.
+ */
+function openTagContextMenu(
+  event: MouseEvent,
+  tag: { id?: number | string; tagId?: number | string; name: string; ctgr?: string | null },
+  contentType: string,
+) {
+  openJournalTagMenu(event, {
+    tagId: tag.id ?? tag.tagId ?? "",
     name: tag.name,
     ctgr: tag.ctgr ?? "",
     contentType,

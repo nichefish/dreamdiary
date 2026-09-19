@@ -598,9 +598,9 @@ interface TodoRow {
 
 ---
 
-### 23-3. `JournalTagContextMenu` (태그 클릭 컨텍스트 메뉴)
+### 23-3. `TagContextMenu` (태그 클릭 컨텍스트 메뉴)
 
-**Vue 구현**: `app/frontend-vue/src/features/journal/shared/components/JournalTagContextMenu.vue`
+**Vue 구현**: `app/frontend-vue/src/features/journal/shared/components/TagContextMenu.vue`
 
 **Pinia 스토어**: `app/frontend-vue/src/features/journal/stores/tagContextMenu.ts`
 
@@ -616,14 +616,14 @@ interface TodoRow {
 
 **검색 팝업 안 단일/다중 분기**: 위 표의 `검색`은 팝업 밖(저널 뷰·결산) 기준이며, **엔트리 검색 팝업 안**(`route.name === "journal-entry-search"`)에서는 태그 컨텍스트 메뉴가 두 검색 액션을 함께 제공한다. `검색`(단일)은 `tagIds`를 클릭한 태그 하나로 **교체**해 새 단일태그 검색을 하고, `검색에 추가`(다중)는 기존 `tagIds`에 **추가**한다(AND, 중복 무시). 두 경우 모두 `type`·`sort`·`searchKeywords` 등 다른 검색 축은 유지한다. `검색에 추가` 버튼은 검색 팝업 안에서만 노출한다(밖에서는 `검색`이 곧 새 팝업이라 무의미). 라벨 i18n 은 `common.search` / `journal.tag.search-add`.
 
-**태그 프로필·일자 필터 모달 마운트 계약**: `JournalTagContextMenu` 의 `프로필`은 `attachableStore.openTagProfile()` 로, `JOURNAL_DAY` `검색`은 `journalModalStore.openDayFilterModal(...)` 로 **상태만** 켠다. 따라서 그 상태를 구독해 실제로 렌더하는 `JournalTagProfileModal`·`JournalDayMetaModal` 이 **같은 화면에 함께 마운트돼 있어야** 화면이 열린다. 컨텍스트 메뉴를 마운트하는 화면은 짝 모달도 반드시 마운트한다 — `JournalDayLayout`·`JournalDayDailyLayout`은 둘 다, `JournalEntrySearchPage`는 프로필만(일자 태그 검색 없음), `JournalAnnualLayout`은 둘 다. 결산에서 프로필·일자 태그 검색이 무반응처럼 보이던 원인은 각각 짝 모달 미마운트였다.
+**태그 프로필·일자 필터 모달 마운트 계약**: `TagContextMenu` 의 `프로필`은 `attachableStore.openTagProfile()` 로, `JOURNAL_DAY` `검색`은 `journalModalStore.openDayFilterModal(...)` 로 **상태만** 켠다. 따라서 그 상태를 구독해 실제로 렌더하는 `TagProfileModal`·`JournalDayMetaModal` 이 **같은 화면에 함께 마운트돼 있어야** 화면이 열린다. 컨텍스트 메뉴를 마운트하는 화면은 짝 모달도 반드시 마운트한다 — `JournalDayLayout`·`JournalDayDailyLayout`은 둘 다, `JournalEntrySearchPage`는 프로필만(일자 태그 검색 없음), `JournalAnnualLayout`은 둘 다. 결산에서 프로필·일자 태그 검색이 무반응처럼 보이던 원인은 각각 짝 모달 미마운트였다.
 
 **태그 프로필 cloudSizeLock**: 모달 세그먼트 컨트롤에서 MAX 선택 시 sized 태그클라우드 크기를 `ts-9`, MIN이면 `ts-1`로 고정한다(AUTO는 빈도 산출). 저장·삭제 후 클라우드 재조회로 반영. 엔트리 본문 태그줄에는 적용하지 않는다.
 
 
 **태그 프로필 본문(상징 해석)**: 모달의 프로필 본문(`content`, `LONGTEXT`)은 태그의 자유서술 자리다. 컨텐츠타입이 `JOURNAL_DREAM`이면 라벨·플레이스홀더를 "상징 해석"으로 노출해(`attachable.tag.profile.dream-interpretation` / `.dream-interpretation-placeholder`), 이 태그 상징이 반복해서 나타날 때의 의미·변주를 기록하는 계약이다. `JOURNAL_DAY`·`JOURNAL_DIARY`는 범용 "프로필" 라벨(`attachable.tag.profile.profile`)을 유지한다. 저장 데이터·API(`POST /api/tags/{tagId}/profile`)는 컨텐츠타입과 무관하게 동일하며, 개별 꿈 Reflection(엔트리 기준면)과 태그 상징 해석(태그 기준면)은 서로 다른 축이라 같은 슬롯을 다투지 않는다.
 
-**태그 프로필 저장·삭제 후 갱신** (`JournalTagProfileModal`): 월간/주간/일간 등은 성공 알림 확인 후 `refreshJournalDaysForRoute` + contentType 대응 `fetchTagCloud`(day/diary/dream). 결산 상세(`annual-detail`)는 일자 `fetchTagCloud`가 아니라 `useJournalAnnualStore.fetchTagRows(yy, activeSection)`로 태그클라우드 행을 재조회한다(SSOT: `/api/journal/annual/{yy}/tags`). 검색 팝업은 일자/클라우드 재조회 없이 `@success` → `loadEntries()`. 스레드 상세가 열려 있으면 route와 무관하게 소속 엔트리 태그 집계의 SSOT인 `JournalThreadStore.refreshOpenDetail()`을 먼저 수행하고, 이어서 검색·결산·일자 배경의 기존 갱신 경로도 수행한다.
+**태그 프로필 저장·삭제 후 갱신** (`useJournalTagProfileRefresh`): 공용 `TagProfileModal` 은 어느 화면을 갱신할지 알지 않고 `@success(contentType)` 만 쏜다. 저널 레이아웃들이 이 composable 로 자기 화면을 갱신한다. 월간/주간/일간 등은 성공 알림 확인 후 `refreshJournalDaysForRoute` + contentType 대응 `fetchTagCloud`(day/diary/dream). 결산 상세(`annual-detail`)는 일자 `fetchTagCloud`가 아니라 `useJournalAnnualStore.fetchTagRows(yy, activeSection)`로 태그클라우드 행을 재조회한다(SSOT: `/api/journal/annual/{yy}/tags`). 검색 팝업은 일자/클라우드 재조회 없이 `@success` → `loadEntries()`. 스레드 상세가 열려 있으면 route와 무관하게 소속 엔트리 태그 집계의 SSOT인 `JournalThreadStore.refreshOpenDetail()`을 먼저 수행하고, 이어서 검색·결산·일자 배경의 기존 갱신 경로도 수행한다.
 
 **검색 팝업 내부 동작**: 현재 route가 `journal-entry-search`이면 `검색` 액션은 새 창을 열지 않고 같은 창에서 `router.replace({ name: "journal-entry-search", query })`를 호출한다. `JournalEntrySearchPage`가 route 변경을 watch해 목록을 즉시 갱신한다.
 
@@ -633,7 +633,7 @@ interface TodoRow {
 - 일기/꿈 태그 검색은 현재 목록 필터가 아니라 새 창 검색 화면이다.
 - 닫기는 외부 클릭, ESC, 스크롤/리사이즈에서 동작한다.
 
-**마운트 위치**: `JournalDayLayout.vue`·`JournalDayDailyLayout.vue`·`JournalEntrySearchPage.vue`·`JournalAnnualLayout.vue` — `<JournalTagContextMenu />` (Teleport to body). 결산은 일자 태그 검색을 위해 `<JournalDayMetaModal />`도 함께 마운트한다.
+**마운트 위치**: `JournalDayLayout.vue`·`JournalDayDailyLayout.vue`·`JournalEntrySearchPage.vue`·`JournalAnnualLayout.vue` — `<TagContextMenu />` (Teleport to body). 결산은 일자 태그 검색을 위해 `<JournalDayMetaModal />`도 함께 마운트한다.
 
 ---
 
@@ -706,7 +706,7 @@ interface TodoRow {
 
 **Vue 구현**: `app/frontend-vue/src/features/journal/annual/JournalAnnualList.vue`, `JournalAnnualDetail.vue`, `JournalAnnualLayout.vue`, `components/JournalAnnualViewToolbar.vue`, `components/JournalAnnualDetailAside.vue`, `components/JournalAnnualListAside.vue`, `stores/journalAnnualAside.ts`
 
-**마운트 모달·메뉴** (`JournalAnnualLayout`): `JournalAnnualRegistModal`, `JournalAnnualReviewRegistModal`, `JournalDayMetaModal`(일자 태그 검색), `JournalTagProfileModal`, `JournalTagContextMenu`.
+**마운트 모달·메뉴** (`JournalAnnualLayout`): `JournalAnnualRegistModal`, `JournalAnnualReviewRegistModal`, `JournalDayMetaModal`(일자 태그 검색), `TagProfileModal`, `TagContextMenu`.
 
 **데이터·동작**: 전체 결산 갱신·결산 등록·aside 열기는 `JournalAnnualViewToolbar`(저널 일자 액션 행과 동형, `mt-3`; 탭용 `mt-5` 빈 여백 없음)에 둔다. 총 집계 카드는 통계만 표시하며 `margin-top: 0`으로 툴바에 붙인다. 결산 상세·리뷰·태그클라우드·중요/참조 토글과 상세/목록 필터를 `useJournalAnnualStore` 상태 및 기존 액션에 연결한다. aside 표시는 `useJournalAnnualAsideStore`가 레이아웃·툴바가 공유한다. 목록 aside와 상세 aside는 필터 전용 영역으로 유지하며, 상세 aside·상세 화면 툴바에는 결산 등록 액션을 두지 않는다(목록 route에서만 툴바에 노출). 결산 목록 카드의 Metronic 컨텍스트 메뉴는 비동기 목록 렌더, 수정 저장 후 목록 재조회 완료, 필터 DOM 갱신 후 `reinitMetronicAfterDom()`으로 재바인딩한다. locale 변경은 선택 연도·활성 탭·태그클라우드·필터값·토글 상태·API 호출을 변경하지 않는다.
 
@@ -735,7 +735,7 @@ interface TodoRow {
 - 개별 결과 복사 버튼 — `JournalEntryItem.copyEntry()` 사용
 - TXT export split 버튼 — 주 버튼 `exportTxt(true)`는 `GET /api/journal/entries/export?includeReflection=true`(해석 포함), ▾ 캐럿이 여는 `data-kt-menu` 드롭다운의 「본문만 다운로드」가 `exportTxt(false)`(해석 제외). 서버 `JournalEntryExportService.buildTxt(...,includeReflection)`가 포함 시 각 엔트리 target 리플렉션 본문을 이어 붙인다. 두 버튼 모두 `!canExportResults`면 비활성
 - 결과별 수정/삭제 버튼
-- 결과 태그 클릭 컨텍스트 메뉴(`JournalTagContextMenu`)와 태그 프로필 모달(`JournalTagProfileModal`) 마운트
+- 결과 태그 클릭 컨텍스트 메뉴(`TagContextMenu`)와 태그 프로필 모달(`TagProfileModal`) 마운트
 - 검색 팝업 내부 태그 검색은 같은 창 query 갱신으로 반영
 - 엔트리 수정 저장 성공 시 `JournalEntryRegistModal` `prepare-success` 이벤트로 현재 검색 목록/수정 대상 DOM을 먼저 준비하고, `success` 이벤트로 저장 위치 스크롤만 수행
 - 검색 결과에 포함된 리플렉션의 수정 액션은 같은 창에서 `JournalReflectionRegistModal`을 열어야 한다. 검색 팝업이 이 모달을 직접 마운트하며, 수정 모드는 `GET /api/journal/reflection/{id}` 상세 조회로 제목/본문을 채운 뒤 모달을 열어야 한다. 저장·스레드 소속·상태 등 엔트리 액션 성공 후 `refreshJournalEntryHostForRoute`가 `registerJournalEntrySearchHost`로 등록된 `loadEntries`를 호출해 검색 목록(스레드 칩 포함)을 재조회한다.
@@ -777,7 +777,7 @@ interface TodoRow {
 
 **KTMenu 재초기화**: 소속 엔트리 목록은 `JournalThreadDetailContent`가 `detailEntries`·`detailModel.id` 변화를 watch해 `reinitMetronicAfterDom()`으로 ⋯ 컨텍스트 메뉴·헤더 라이프사이클 드롭다운(Metronic KTMenu)을 재바인딩한다(`{ immediate: true }`, 최초 로드와 `refreshOpenDetail` 재조회 모두 커버). 이 재초기화가 없으면 모달·독립 페이지의 ⋯ 메뉴가 열리지 않는다 — 검색·일자 화면이 목록 렌더 후 재초기화하는 것과 동형 계약이다.
 
-**엔트리 액션 호스트·갱신 계약**: 상세 모달을 연 현재 화면의 레이아웃은 엔트리 카드가 호출하는 `CommentRegistModal`, `CommentListModal`, `JournalReflectionRegistModal`, `HistoryModal`, `RelatedContentAddModal`, `JournalTagProfileModal`, `JournalTagContextMenu`를 마운트한다. `JournalEntryRegistModal`·`JournalEntryViewModal`은 `App.vue`의 비팝업 전역 마운트를 재사용하고 검색·일간 팝업은 자체 마운트를 유지한다. 엔트리·리플렉션의 수정/삭제, 댓글, 이력 복원, 엔트리 관련글 연결/해제, 태그 프로필, 스레드 소속, 라이프사이클·상태 변경이 성공하면 `refreshJournalEntryHostForRoute`가 route가 아니라 `detailOpen`을 전경 판단 기준으로 사용한다. 열린 상세의 본문·집계 태그·소속 엔트리를 먼저 재조회하고, 배경이 주간·월간·일간이면 `refreshJournalDaysForRoute`도 실행하되 상세 축을 반환해 배경 스크롤을 막는다. 검색 배경은 기존 로컬 결과 갱신 이벤트를 함께 수행한다. 상세 재조회 실패 시 읽던 데이터를 비우지 않고 오류를 기록·표시한다.
+**엔트리 액션 호스트·갱신 계약**: 상세 모달을 연 현재 화면의 레이아웃은 엔트리 카드가 호출하는 `CommentRegistModal`, `CommentListModal`, `JournalReflectionRegistModal`, `HistoryModal`, `RelatedContentAddModal`, `TagProfileModal`, `TagContextMenu`를 마운트한다. `JournalEntryRegistModal`·`JournalEntryViewModal`은 `App.vue`의 비팝업 전역 마운트를 재사용하고 검색·일간 팝업은 자체 마운트를 유지한다. 엔트리·리플렉션의 수정/삭제, 댓글, 이력 복원, 엔트리 관련글 연결/해제, 태그 프로필, 스레드 소속, 라이프사이클·상태 변경이 성공하면 `refreshJournalEntryHostForRoute`가 route가 아니라 `detailOpen`을 전경 판단 기준으로 사용한다. 열린 상세의 본문·집계 태그·소속 엔트리를 먼저 재조회하고, 배경이 주간·월간·일간이면 `refreshJournalDaysForRoute`도 실행하되 상세 축을 반환해 배경 스크롤을 막는다. 검색 배경은 기존 로컬 결과 갱신 이벤트를 함께 수행한다. 상세 재조회 실패 시 읽던 데이터를 비우지 않고 오류를 기록·표시한다.
 
 **도메인 메타 경계**: 스레드의 자기 설명 SSOT는 제목·본문이다. 시작·최근 시점은 소속 엔트리 일자에서 파생한다. **스레드 라이프사이클(`OPEN`/`PENDING`/`RESOLVED`)은 ✓** — 기본 상태 `OPEN`은 `lifecycle` row 부재로 표현하고, `PENDING`·`RESOLVED`만 `ref_content_type=JOURNAL_THREAD` row로 저장한다. 목록·상세 DTO enrich와 필터는 row 부재를 `OPEN`으로 해석하며, 목록 `lifecycleKey` 필터·후보 `includeResolved`·목록/상세 설정 UI(`PUT /api/lifecycles`)까지 구현한다. 일자 캐시 등록은 하지 않는다. 종결 시점·대표 엔트리(앵커)·별도 핵심 질문 필드는 현재 계약에 포함하지 않는다. 스레드 상세는 날짜순 전체 기록을 읽는 화면이며 nullable 소속 `journal_thread_entry.sort_order`를 표시 순서에 사용하지 않고 별도 소속 역할도 두지 않는다. 같은 일자의 순서는 원본 엔트리 `journal_entry.sort_order`를 따른다.
 
@@ -850,7 +850,7 @@ interface TodoRow {
 
 **Aside 열기 버튼 위치**: aside 숨김 시 데스크톱 열기 버튼(`bi-layout-sidebar-inset-reverse`)은 `JournalDayViewToolbar` 액션 행의 맨 오른쪽에서 일정 화면과 같은 구분자+아이콘 슬롯으로 표시되고, sticky 툴바와 함께 스크롤을 따라간다. 기존 본문 컨테이너의 `position-absolute; top: 4rem; right: 0` 버튼은 툴바 액션 영역이 숨겨지는 모바일(`d-md-none`)에서만 유지한다. 변경 전에는 모든 화면 크기에서 본문 우상단에 떠 있어 데스크톱 액션 행과 정렬되지 않았다.
 
-**마운트 모달·메뉴**: `JournalDayRegistModal`, `JournalDayDetailModal`, `JournalChapterRegistModal`, `JournalReflectionRegistModal`, `JournalTodoRegistModal`, `JournalDayMetaModal`, `CommentRegistModal`, `CommentListModal`, `HistoryModal`, `RelatedContentAddModal`, `JournalTagProfileModal`, `JournalMetaProfileModal`, `JournalTagContextMenu`, `JournalMetaContextMenu`. (`JournalEntryRegistModal`·`JournalEntryViewModal`은 채팅 RAG 원문 딥링크를 위해 `App.vue`에서 비팝업 전역 마운트 — 레이아웃 중복 마운트 없음. 출처 클릭은 읽기 전용 뷰, 편집은 뷰 footer에서 수정 모달로 전환.)
+**마운트 모달·메뉴**: `JournalDayRegistModal`, `JournalDayDetailModal`, `JournalChapterRegistModal`, `JournalReflectionRegistModal`, `JournalTodoRegistModal`, `JournalDayMetaModal`, `CommentRegistModal`, `CommentListModal`, `HistoryModal`, `RelatedContentAddModal`, `TagProfileModal`, `JournalMetaProfileModal`, `TagContextMenu`, `JournalMetaContextMenu`. (`JournalEntryRegistModal`·`JournalEntryViewModal`은 채팅 RAG 원문 딥링크를 위해 `App.vue`에서 비팝업 전역 마운트 — 레이아웃 중복 마운트 없음. 출처 클릭은 읽기 전용 뷰, 편집은 뷰 footer에서 수정 모달로 전환.)
 
 `JournalDayMetaModal.vue`의 제목·결과 건수·연도/전체 연도·연월 구분선·기준 날짜 요일·필터 추가/제거·일자 새 창 tooltip·빈 상태·닫기와 조회 실패 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. 각 일자는 카드형(날짜 → 메타·태그 → 시스템 요약, 구분선)으로 표시한다. 시스템 요약 챕터(`summaryYn=Y`, 없으면 첫 non-DREAM)의 첫 non-empty 엔트리 본문(`summaryEntryHtmlOf`, `journal-content`/`v-html`)은 `collapse-3`(최대 3줄)·`expand-btn`으로 미리보고 클릭·더보기로 전체를 펼친다. 접힘 중에는 빈 문단을 제거·문단 여백을 줄이고, 펼침 시 원문 HTML·간격을 그대로 둔다. 데이터는 SEARCH 목록의 `journalChapterList`를 파생하며 추가 API는 없다. locale 변경은 선택 메타/태그·AND 필터·연도·일자 목록을 변경하지 않는다. 태그 입력 검색의 placeholder·카테고리 선택·미존재 태그 알림 문구는 엔트리 검색 키(`journal.entry.search.tag.*`, `journal.entry.search.category.*`)를 재사용한다.
 

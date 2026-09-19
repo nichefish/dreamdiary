@@ -231,18 +231,15 @@
                         {{ tag.name }}
                       </span>
                     </span>
-                    <span
+                    <TagChip
                       v-for="tag in otherTagItems(day)"
                       :key="'ot-tag-' + tag.tagId"
-                      class="text-muted cursor-pointer"
+                      :name="tag.name"
+                      :ctgr="tag.ctgr"
+                      clickable
                       :title="t('journal.day.filter.add.tooltip').replace('{0}', '#' + (tag.ctgr ? '[' + tag.ctgr + '] ' : '') + tag.name)"
-                      @click.stop="addTag(String(tag.tagId), tag.name, tag.ctgr)"
-                    >
-                      #<span class="border-bottom text-primary fw-lighter opacity-hover">
-                        <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                        {{ tag.name }}
-                      </span>
-                    </span>
+                      @click="addTag(String(tag.tagId), tag.name, tag.ctgr)"
+                    />
                   </div>
                   <!--end::태그 행-->
 
@@ -304,6 +301,7 @@ import axios from "axios";
 import { useJournalModalStore } from "@/features/journal/stores/journalModal";
 import type { JournalDayDto, MetaContentItem, TagItem } from "@/features/journal/stores/journal";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import { getWeekDayStr } from "@/features/journal/utils/journalDate";
 import { joinAppBasePath } from "@/shared/utils/appPath";
 import { isJournalDayOff } from "@/features/journal/utils/journalVacation";

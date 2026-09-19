@@ -23,5 +23,5 @@ public class JournalChapterPrefixHintDto {
     /** 말머리명 */
     private String prefixName;
     /** 말머리 표시 색상 */
-    private String prefixColor;
+    private String prefixTextClass;
 }

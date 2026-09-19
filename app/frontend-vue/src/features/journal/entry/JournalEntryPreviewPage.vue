@@ -21,7 +21,7 @@
               <span
                 v-if="view.prefixName"
                 class="badge me-2 fs-8"
-                :style="{ borderColor: view.prefixColor || '', color: view.prefixColor || '' }"
+                :class="view.prefixTextClass" :style="{ borderColor: 'currentColor' }"
               >{{ view.prefixName }}</span>
               <span v-if="view.title">{{ view.title }}</span>
             </div>

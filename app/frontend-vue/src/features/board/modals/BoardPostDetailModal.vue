@@ -45,14 +45,12 @@
             <!--begin::태그-->
             <div v-if="hasDetailTags" class="mt-4">
               <i class="bi bi-tag me-1"></i>
-              <span
+              <TagChip
                 v-for="tag in store.detailModel.tag?.list"
                 :key="'board-dtl-tag-' + String(tag.tagId)"
-                class="text-muted pe-1"
-              >
-                <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                #<span class="border-bottom text-primary fw-lighter opacity-hover">{{ tag.name }}</span>
-              </span>
+                :name="tag.name"
+                :ctgr="tag.ctgr"
+              />
             </div>
             <!--end::태그-->
 
@@ -80,6 +78,7 @@
 
 <script setup lang="ts">
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import { ref, computed, watch, onMounted } from "vue";
 import { Modal } from "bootstrap";
 import { useBoardPostStore } from "@/features/board/stores/boardPost";

@@ -6,7 +6,10 @@ import axios from "axios";
 export interface PersonalPrefixOption {
   id: number;
   name: string;
-  color?: string | null;
+  /** 색 의미 코드 (TEXT_CLASS_CD 어휘). 태그 프로필과 같은 값 집합. */
+  textClassCd?: string | null;
+  /** 렌더용 CSS 클래스 (서버 해석). 미지정이면 빈 문자열. */
+  textClass?: string | null;
   sortOrder?: number;
   activeYn?: "Y" | "N";
 }

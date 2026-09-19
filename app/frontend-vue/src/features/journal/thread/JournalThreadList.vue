@@ -143,7 +143,7 @@
             >
               <td class="text-center text-gray-500 fs-7 hidden-table">{{ thread.rnum }}</td>
               <td class="ps-3">
-                <span v-if="thread.prefix" class="badge me-2 fs-9" :style="prefixBadgeStyle(thread.prefix.color)">{{ thread.prefix.name }}</span>
+                <span v-if="thread.prefix" class="badge me-2 fs-9" :class="thread.prefix.textClass" :style="prefixBadgeStyle()">{{ thread.prefix.name }}</span>
                 <span class="fs-6 fw-semibold">{{ thread.title }}</span>
                 <span
                   v-if="membershipCountOf(thread) > 0"
@@ -167,14 +167,12 @@
                 >{{ lifecycleLabel(lifecycleKeyOf(thread)) }}</span>
                 <!--begin::태그 (스레드 상세·일자 뷰와 동일 렌더: [분류] #이름 밑줄 primary, bi-tag 아이콘 제거)-->
                 <div v-if="hasThreadTags(thread)" class="mt-1">
-                  <span
+                  <TagChip
                     v-for="tag in thread.tag?.list"
                     :key="String(tag.tagId)"
-                    class="text-muted pe-1"
-                  >
-                    <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                    #<span class="border-bottom text-primary fw-lighter opacity-hover">{{ tag.name }}</span>
-                  </span>
+                    :name="tag.name"
+                    :ctgr="tag.ctgr"
+                  />
                 </div>
                 <!--end::태그-->
               </td>
@@ -295,6 +293,7 @@ import { useJournalThreadStore } from "@/features/journal/stores/journalThread";
 import { useAttachableModalStore } from "@/features/attachable/stores/attachableModal";
 import type { JournalThreadDto } from "@/features/journal/stores/journalThread";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import { formatThreadMembershipPeriod } from "@/features/journal/utils/threadMembershipPeriod";
 import { swalAlert } from "@/shared/utils/swal";
 import { isMetronicMenuEventTarget, reinitMetronicAfterDom } from "@/shared/utils/metronicReinit";
@@ -408,8 +407,12 @@ function hasThreadTags(thread: JournalThreadDto): boolean {
   return Array.isArray(thread.tag?.list) && thread.tag!.list!.length > 0;
 }
 
-function prefixBadgeStyle(color?: string | null): Record<string, string> {
-  return color ? { borderColor: color, color } : {};
+/**
+ * 말머리 배지의 테두리 색.
+ * 글자색은 말머리 색 의미 클래스(`textClass`)가 정하고, 테두리는 그 글자색을 따라가게 둔다.
+ */
+function prefixBadgeStyle(): Record<string, string> {
+  return { borderColor: "currentColor" };
 }
 
 /** 활성 소속 엔트리 수. 없거나 비정상이면 0. */
