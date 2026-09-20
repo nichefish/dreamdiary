@@ -16,6 +16,11 @@ const mockedPost = vi.mocked(axios.post);
 const mockedPut = vi.mocked(axios.put);
 const mockedPatch = vi.mocked(axios.patch);
 
+/**
+ * body 없는 `apiPost(url)` 도 `axios.post(url, undefined)` 로 2인자 호출이 된다.
+ * 따라서 본문 없는 POST 의 호출 기대에는 둘째 인자 `undefined` 를 함께 적는다.
+ */
+
 /** 성공 AjaxResponse 형태의 axios 응답. 공유 클라이언트가 `.data` 를 언랩한다. */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function ok(payload: Record<string, unknown> = {}): any {
@@ -119,7 +124,7 @@ describe("임베딩/엔티티 동작 (POST)", () => {
 
     await store.syncEmbeddingQueue();
 
-    expect(mockedPost).toHaveBeenCalledWith("/api/admin/journal-entry-embeddings/sync");
+    expect(mockedPost).toHaveBeenCalledWith("/api/admin/journal-entry-embeddings/sync", undefined);
     // 성공 후 fetchEmbeddingStats → stats get 발생
     expect(mockedGet).toHaveBeenCalledWith("/api/admin/journal-entry-embeddings/stats");
     expect(store.embeddingSyncRunning).toBe(false);
@@ -130,7 +135,7 @@ describe("임베딩/엔티티 동작 (POST)", () => {
 
     await store.syncEntityQueue();
 
-    expect(mockedPost).toHaveBeenCalledWith("/api/admin/journal-entry-entities/sync");
+    expect(mockedPost).toHaveBeenCalledWith("/api/admin/journal-entry-entities/sync", undefined);
     expect(mockedGet).toHaveBeenCalledWith("/api/admin/journal-entry-entities/stats");
     expect(store.entityQueueSyncRunning).toBe(false);
   });
@@ -141,7 +146,7 @@ describe("임베딩/엔티티 동작 (POST)", () => {
 
     await store.requeueFailedEntityQueue();
 
-    expect(mockedPost).toHaveBeenCalledWith("/api/admin/journal-entry-entities/requeue-failed");
+    expect(mockedPost).toHaveBeenCalledWith("/api/admin/journal-entry-entities/requeue-failed", undefined);
     expect(store.entityQueueError).toBe("requeue 실패");
   });
 });
@@ -154,7 +159,7 @@ describe("공휴일/Notion (throw 전파)", () => {
     const message = await store.syncHolyday("2030");
 
     const [url, body] = mockedPost.mock.calls[0];
-    expect(url).toBe("/api/holyday/get-holyday-account.do");
+    expect(url).toBe("/api/holyday/get-holyday-info.do");
     expect(body).toBeInstanceOf(FormData);
     expect((body as FormData).get("yy")).toBe("2030");
     expect(message).toBe("처리됨");

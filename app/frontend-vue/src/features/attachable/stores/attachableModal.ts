@@ -771,7 +771,7 @@ export const useAttachableModalStore = defineStore("attachableModal", () => {
     fileListLoading.value = true;
     fileList.value = [];
     try {
-      const res = await axios.get("/api/file/file-account-list", { params: { fileGroupId } });
+      const res = await axios.get("/api/file/file-info-list", { params: { fileGroupId } });
       if (!res.data?.rslt) return;
       fileList.value = Array.isArray(res.data.rsltList) ? (res.data.rsltList as FileRecord[]) : [];
     } catch (e: unknown) {

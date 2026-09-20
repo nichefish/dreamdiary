@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import {
-  getAuthAccount,
+  getAuthInfo,
   login as apiLogin,
   logout as apiLogout,
   refreshAccessToken
@@ -39,14 +39,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setAuthError(null);
     try {
       await hydrateAccessTokenFromSecureStore();
-      const data = await getAuthAccount();
+      const data = await getAuthInfo();
       if (data.rslt && data.rsltObj) {
         setUser(data.rsltObj);
         try {
           await refreshAccessToken();
         } catch {
           // refresh 실패 시 REST 쿠키만 유지 — AI 채팅 WS 는 토큰 없으면 연결 실패 가능
-          console.warn("[Auth] refreshAccessToken failed after getAuthAccount");
+          console.warn("[Auth] refreshAccessToken failed after getAuthInfo");
         }
       } else {
         setUser(null);

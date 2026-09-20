@@ -51,7 +51,7 @@
               </select>
             </div>
             <div class="col-md-4 d-flex align-items-end">
-              <button type="button" class="btn btn-light-account w-100" @click="search">{{ t("common.search") }}</button>
+              <button type="button" class="btn btn-light-info w-100" @click="search">{{ t("common.search") }}</button>
             </div>
           </div>
           <!--end::관련 유형 + 대상 유형 + 검색-->

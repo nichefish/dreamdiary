@@ -83,7 +83,7 @@ INSERT IGNORE INTO code_group (group_code, group_name, description) VALUES ('TEX
 -- text class detail codes (코드명 자체가 영문이므로 en 명칭은 추가하지 않는다)
 INSERT IGNORE INTO code_item (group_code, code, code_name, description, sort_order) VALUES ('TEXT_CLASS_CD', 'DEFAULT', 'DEFAULT', '', '1');
 INSERT IGNORE INTO code_item (group_code, code, code_name, description, sort_order) VALUES ('TEXT_CLASS_CD', 'SUCCESS', 'SUCCESS', 'text-success', '2');
-INSERT IGNORE INTO code_item (group_code, code, code_name, description, sort_order) VALUES ('TEXT_CLASS_CD', 'INFO', 'INFO', 'text-account', '3');
+INSERT IGNORE INTO code_item (group_code, code, code_name, description, sort_order) VALUES ('TEXT_CLASS_CD', 'INFO', 'INFO', 'text-info', '3');
 INSERT IGNORE INTO code_item (group_code, code, code_name, description, sort_order) VALUES ('TEXT_CLASS_CD', 'WARNING', 'WARNING', 'text-warning', '4');
 INSERT IGNORE INTO code_item (group_code, code, code_name, description, sort_order) VALUES ('TEXT_CLASS_CD', 'DANGER', 'DANGER', 'text-danger', '5');
 INSERT IGNORE INTO code_item (group_code, code, code_name, description, sort_order) VALUES ('TEXT_CLASS_CD', 'PRIMARY', 'PRIMARY', 'text-primary', '6');

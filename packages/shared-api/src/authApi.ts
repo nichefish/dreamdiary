@@ -12,8 +12,8 @@ export function createAuthApi(client: HttpClient) {
       return client.post<ApiResult>("/api/auth/logout-json", {});
     },
 
-    getAuthAccount() {
-      return client.get<ApiResult<AuthUser>>("/api/auth/get-auth-account");
+    getAuthInfo() {
+      return client.get<ApiResult<AuthUser>>("/api/auth/get-auth-info");
     }
   };
 }

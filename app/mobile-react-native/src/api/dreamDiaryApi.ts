@@ -6,8 +6,8 @@ import { normalizeDateStr } from "../utils/date";
 // ─── 인증 ─────────────────────────────────────────────
 
 /** 현재 인증 사용자 정보 조회 (JWT 쿠키 기반) */
-export function getAuthAccount() {
-  return request<AjaxResponse<AuthUser>>("/api/auth/get-auth-account");
+export function getAuthInfo() {
+  return request<AjaxResponse<AuthUser>>("/api/auth/get-auth-info");
 }
 
 /** 로그인 — POST /api/auth/login (응답 Authorization 헤더에 access JWT) */

@@ -73,7 +73,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   async verifyAuth() {
     try {
-      const { data } = await http.get("/api/auth/get-auth-account");
+      const { data } = await http.get("/api/auth/get-auth-info");
       if (data.rslt && data.rsltObj) {
         set({
           user: data.rsltObj as AuthUser,
