@@ -12,6 +12,9 @@ vi.mock("@/features/journal/stores/journalModal", () => ({
   preloadCategoryMaps: vi.fn(() => Promise.resolve()),
   useJournalModalStore: () => ({ resetCategoryMaps: vi.fn() }),
 }));
+vi.mock("@/features/prospective/keep/stores/prospectiveKeepCategoryMap", () => ({
+  useProspectiveKeepCategoryMapStore: () => ({ reset: vi.fn() }),
+}));
 vi.mock("@/shared/i18n/stores/locale", () => ({
   useLocaleStore: () => ({ t: (key: string) => key }),
 }));

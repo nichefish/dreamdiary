@@ -113,7 +113,7 @@ export function useJournalTagMenu() {
       case "JOURNAL_DAY": return t("common.date");
       case "JOURNAL_DIARY": return t("common.diary");
       case "JOURNAL_DREAM": return t("common.dream");
-      case "JOURNAL_TODO": return t("journal.aside.todo.title");
+      case "PROSPECTIVE_KEEP": return t("prospective.keep.aside.title");
       default: return contentType;
     }
   }

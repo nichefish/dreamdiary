@@ -71,32 +71,6 @@ export interface JournalDayFilterPayload {
   list: JournalDayDto[];
 }
 
-/** 저널 할일 등록/수정 폼 모델 */
-export interface JournalTodoRegistModel {
-  id?: number;
-  title?: string;
-  sortOrder?: number;
-  content?: string;
-  /** 선택한 개인 말머리 ID (0..1, null 이면 선택 해제) */
-  prefixId?: number | null;
-  /** 저장된 말머리(표시용). 비활성 과거 선택 표시 판단에 쓴다. */
-  prefix?: JournalPrefixDto | null;
-  /** 위치 (자유 텍스트) */
-  location?: string;
-  /**
-   * 일시 (자유 텍스트 원문).
-   * 단일일·연속 범위·불연속 다회차·시각을 사용자가 쓴 표현 그대로 보존한다.
-   */
-  dateText?: string;
-  /**
-   * 유효 기한 (ISO `yyyy-MM-dd`, 빈 문자열이면 기한 없음).
-   * 입력란의 축약 표기가 아니라 해석이 끝난 절대 날짜만 담는다.
-   */
-  expireDt?: string;
-  /** 태그 컴포지션 */
-  tag?: { tagListStrWithCtgr?: string };
-}
-
 /** 챕터 선택 옵션 (entry 등록 시 챕터 선택) */
 export interface JournalChapterOption {
   id: number | string;

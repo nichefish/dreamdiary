@@ -43,7 +43,6 @@
 | 스레드 수정 | `/thread/:id/edit` | `JournalThreadEditPage.vue` | ✓ |
 | 내 설정 | `/my/profile`, `/my/security`, `/my/journal`, `/my/prefixes` | `UserMyPage.vue` + `UserMy*Tab.vue` | ✓ |
 | 일정 | `/schedule` | `ScheduleCalendar.vue` | ✓ |
-| Keep 전수관리 | `/keep` | `KeepPage.vue` | ✓ 전 범위 journal_todo(scope=all) 조회·진행/종결 그룹(종결은 RESOLVED·FAILED·EXPIRED·DROPPED, 행 배지·아이콘으로 구분)·상단 태그클라우드·말머리/태그 필터·제목/본문 검색·추가·제목 클릭 수정·체크박스 즉시 완료·⋯ 컨텍스트 메뉴(수정/라이프사이클 단계/상태(요구)/삭제). 일시·위치는 공용 등록/수정 모달에서 다룬다. 유효 기한이 있는 항목은 진행·종결 두 그룹 모두에서 제목 뒤에 `~10/25` 로 표시한다. 진행 항목의 기한이 지났는데 종결되지 않았으면 `~10/25 · 3일 지남` 으로 경고색을 준다. 종결 항목에는 남은 일수를 붙이지 않고 날짜만 보인다 — 이미 끝나 행동을 재촉할 값이 아니지만, 끝난 이유가 `EXPIRED` 인지 `DROPPED` 인지가 기한을 근거로 갈리므로 그 판단을 다시 읽으려면 기한 자체는 남아야 한다. 헤더의 「기한 지남」 토글은 그 대상(기한 지남 + 미종결)만 남기는 클라이언트 필터이며, 라이프사이클을 바꾸지 않는다. 이 필터는 미종결만 남기므로 종결 그룹이 항상 비게 되어, 켜져 있는 동안 종결 섹션을 통째로 감춘다 — 놓친 것이 FAILED 인지 EXPIRED 인지는 시스템이 가릴 수 없으므로 전이는 행 메뉴에서 사용자가 결정한다. 진행 그룹은 기한 오름차순으로 정렬해 임박한 것을 위에 둔다 — 지난 기한이 가장 이른 날짜라 자연히 맨 위에 선다. 기한이 없는 항목은 맨 아래로 모으고 그 안에서는 서버 순서(`sortOrder` → `id`)를 그대로 둔다. 안정 정렬이라 사용자가 손으로 맞춘 순번은 기한 없는 항목 사이에서 보존되고, 기한이 붙은 항목만 그 위로 올라온다. 종결 그룹은 기한이 정보가 되지 않으므로 서버 순서를 유지한다. 행 우측에는 등록일(`createdAt`)의 년월을 `2026.09` 로 표시한다 — 발생지 컬럼을 두지 않으므로 시점 표기는 감사 컬럼에서 뽑는다. 말머리를 선택한 항목은 미해결·완료 두 그룹 모두에서 제목 앞에 말머리 색상으로 `[말머리명]`을 표시한다. 항목에 부착된 태그는 제목 뒤에 `[카테고리]#태그명`으로 표시한다. 카드 본문 최상단 태그클라우드는 `GET /api/tags?contentType=JOURNAL_TODO`로 조회한다. 태그클라우드 버튼과 목록 행에 붙은 태그는 같은 `TagContextMenu`를 연다(두 자리의 태그가 같은 대상을 가리키므로 조작도 같다) — 첫 항목은 저널의 「검색」 자리에 이 화면의 주 동작인 목록 필터 토글(거르기/해제)이 들어가고, 둘째 항목 「태그 설정」은 저널과 동일하게 `contentType=JOURNAL_TODO` 태그 프로필 모달을 연다. 같은 태그를 다시 눌러 거르기를 해제한다. 표시는 공통 `TagCloud`(`shared/ui/tag/TagCloud.vue`)를 쓰며 저널·연간·게시판과 같다. Keep 은 필터형이라 `selectedTagId` 로 선택 상태를 넘긴다. 말머리 필터는 활성 개인 말머리 선택지가 있을 때만 표시한다. 말머리·태그·검색어·기한 지남 네 필터는 모두 받아 둔 전 범위 목록에서 클라이언트가 AND로 투영하므로 재조회가 없다. 등록/수정 모달이 닫히면 목록과 태그클라우드를 함께 재조회한다. 사이드바는 활성 projection으로 유지. 대메뉴 노출은 DB 메뉴 레코드 몫(코드 fallback 에는 등록). |
 
 ### 저널 달력 (`JournalDayCalendar.vue`)
 
@@ -788,25 +787,25 @@ const pinnedMnth = ref<number | null>(null);
 
 `JournalDayLayout.vue`의 필터 패널 열기와 `JournalAside.vue`의 필터 패널 닫기·정렬 변경·날짜 선택·Pinpoint 저장/복귀 tooltip, 월 단위와 요일 축약명은 현재 locale의 클라이언트 카탈로그를 사용한다. locale 변경은 필터 상태·기간·선택 일자·Pinpoint 저장값·route query를 변경하지 않는다.
 
-필터 영역의 고정 영문 제목·토글·섹션명, 로딩·말머리 조회 실패, 라이프사이클 선택지, 일기·꿈 키워드 placeholder/적용 tooltip, 필터 초기화와 TODO 카드 제목·할일 등록 문구도 현재 locale의 클라이언트 카탈로그를 사용한다. TODO 목록 조회 실패(`store.todoError` / `journal.todo.list.load.failure`)는 정상 빈 목록(`journal.todo.empty`)과 구분하며, 실패 시 직전 성공 목록을 유지한다. locale 변경은 기존 필터값과 조회·초기화·모달 호출 동작을 변경하지 않는다.
+필터 영역의 고정 영문 제목·토글·섹션명, 로딩·말머리 조회 실패, 라이프사이클 선택지, 일기·꿈 키워드 placeholder/적용 tooltip, 필터 초기화와 Keep 카드 문구도 현재 locale의 클라이언트 카탈로그를 사용한다. Keep 목록 조회 실패(`store.keepError` / `prospective.keep.list.load.failure`)는 정상 빈 목록(`prospective.keep.empty`)과 구분하며, 실패 시 직전 성공 목록을 유지한다. locale 변경은 기존 필터값과 조회·초기화·모달 호출 동작을 변경하지 않는다.
 
 - 챕터 말머리 필터로 제외된 Prefix는 서버가 ID·이름·색상을 `hiddenChapterPrefixList`로 반환하고 일자 카드가 배지로 표시한다. 시스템 요약과 Prefix 미선택 챕터는 필터 선택과 무관하게 유지한다.
 
 ---
 
-### 섹션 4: TODO 카드
+### 섹션 4: Keep 카드
 
 **API**:
-- 활성 목록 조회: `GET /api/journal/todos` (`yy`·`mnth` 전달돼도 무시) → `rsltList: TodoRow[]` — 월 무관 활성 집합(OPEN·PENDING)
-- 라이프사이클 전이: `PUT /api/lifecycles` `{id, contentType:'JOURNAL_TODO', lifecycleKey}` — 완료(RESOLVED)·보류(PENDING)·해제(OPEN)
-- 삭제: `DELETE /api/journal/todo/{id}`
-- 등록: 별도 모달 (`#journal_todo_regist`) Bootstrap modal
+- 활성 목록 조회: `GET /api/prospective/keeps` → `rsltList: KeepRow[]` — 월 무관 활성 집합(OPEN·PENDING)
+- 라이프사이클 전이: `PUT /api/lifecycles` `{id, contentType:'PROSPECTIVE_KEEP', lifecycleKey}` — 완료(RESOLVED)·보류(PENDING)·해제(OPEN)
+- 삭제: `DELETE /api/prospective/keep/{id}`
+- 등록: 별도 모달 (`#prospective_keep_regist`) Bootstrap modal
 
-**TodoRow 데이터 모델**:
+**KeepRow 데이터 모델**:
 ```typescript
-type TodoRow = {
+type KeepRow = {
     id: string | number;
-    title: string;       // 할일 제목 (텍스트만, HTML 없음)
+    title: string;       // Keep 제목 (텍스트만, HTML 없음)
     // 활성 목록엔 OPEN·PENDING만 온다(RESOLVED 제외). 행 부재 = OPEN.
     lifecycle?: { lifecycleKey?: string | null } | null;
 };
@@ -816,26 +815,26 @@ type TodoRow = {
 
 ```html
 <div class="card card-reset card-p-0">
-    <!-- 카드 헤더: "TODO List" + 추가 버튼 -->
-    <div id="journal_todo_aside_header" class="card-header min-h-auto mb-5">
+    <!-- 카드 헤더: "Keep" + 추가 버튼 -->
+    <div id="prospective_keep_aside_header" class="card-header min-h-auto mb-5">
         <h3 class="card-title text-gray-900 fw-bold fs-3">
-            <i class="bi bi-list-task fs-2 me-1"></i> TODO List
+            <i class="bi bi-list-task fs-2 me-1"></i> Keep
         </h3>
         <div class="card-toolbar">
             <a href="javascript:void(0);"
                class="btn btn-sm btn-icon btn-primary"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-               title="할일 추가"
-               @click.prevent="openTodoRegist">
-                <i class="bi bi-plus fs-2 pe-0" id="journalTodoAsideRegistIcon"></i>
+               title="Keep 추가"
+               @click.prevent="openRegist">
+                <i class="bi bi-plus fs-2 pe-0" id="prospectiveKeepAsideRegistIcon"></i>
             </a>
         </div>
     </div>
-    <!-- 카드 바디: todo 목록 -->
-    <div id="journal_todo_list_div">
+    <!-- 카드 바디: Keep 목록 -->
+    <div id="prospective_keep_list_div">
         <!-- 목록이 있을 때 -->
-        <template v-if="todos.length > 0">
-            <div v-for="item in todos" :key="'todo-' + item.id"
+        <template v-if="keepList.length > 0">
+            <div v-for="item in keepList" :key="'keep-' + item.id"
                  class="row d-flex-align-center justify-content-between">
                 <!-- 제목 (overflow truncate, tooltip) -->
                 <div class="col text-truncate cursor-pointer"
@@ -857,28 +856,19 @@ type TodoRow = {
         </template>
         <!-- 목록 없을 때 -->
         <div v-else class="journal-day d-flex-center">
-            할일이 없습니다.
+            Keep이 없습니다.
         </div>
     </div>
 </div>
 ```
 
-**TODO 카드 초기화 타이밍**:
-- `onMounted`에서 `fetchTodos({ yy: store.yy, mnth: store.mnth })` 호출
-- `watch([store.yy, store.mnth])` → 연/월 변경 시 재조회
-- 등록 모달: `modalStore.openTodoRegist({ yy: store.yy, mnth: store.mnth })`
-- 삭제: `DELETE /api/journal/todo/{id}` 성공 후 목록 재조회
+**Keep 카드 초기화 타이밍**:
+- `onMounted`에서 `fetchKeeps()` 호출
+- 연/월 변경은 Keep 재조회 조건이 아니다.
+- 등록 모달: `useProspectiveKeepModalStore().openRegist()`
+- 삭제: `DELETE /api/prospective/keep/{id}` 성공 후 목록 재조회
 
-**TODO 등록 모달** (`#journal_todo_regist`):
-- Bootstrap modal: `modal-xl`, id=`journal_todo_regist`
-- 폼: `#journalTodoRegistForm` (multipart/form-data). 대상 년월을 표시하거나 전송하지 않는다 — 발생 시점은 `created_at` 이 가진다.
-- 본문 textarea: `#tinymce_journalTodoCn` (TinyMCE 에디터)
-- 말머리(`#prefixId`): content_type `JOURNAL_TODO` 개인 말머리 목록의 활성 선택지. 선택지가 없으면 필드를 표시하지 않는다.
-- 일시(`#dateText`)·유효 기한(`#expireDt`)을 제목 아래 한 행에 나란히 두고, 위치(`#location`)는 그 아래 행에 둔다.
-- 일시(`#dateText`)·위치(`#location`): 각 200자 자유 텍스트 입력. 일시는 날짜 위젯이 아니라 원문 문자열이며 불연속 다회차·시각 표기를 그대로 담는다.
-- 유효 기한(`#expireDt`): 「이 날이 지나면 더는 할 수 없다」는 단일 날짜(시각 없음). 직접 입력하는 값이 아니라 일시 원문에서 가장 늦은 날짜를 뽑은 파생값이라 입력은 `readonly` 이며, 달력 버튼(`flatpickrSingleDate`)과 「기한 추출」 버튼 둘로만 바꾼다. 기한이 비어 있을 때만 일시 수정이 자동으로 채우고, 값이 있으면 버튼으로만 다시 뽑는다. 라벨 옆에 「일시에서 자동 추출」을 상시 노출하고, 입력란 아래에 찾은 날짜 목록과 선택된 마지막 날(기한이 채워진 뒤에는 남은 일수)을 보인다. 서버에는 확정된 `yyyy-MM-dd`(또는 해제 시 빈 문자열)만 보낸다. 상세 규칙은 interaction-spec 을 따른다.
-- Vue SPA: `journalModalStore.openTodoRegist()` → 모달 open, `JournalTodoRegistModal.vue` 처리 — 등록 성공 시 `journalStore.fetchTodos()` 재호출
-- 모달 제목·대상 년월·필드·placeholder·안내·검증·확인·결과 fallback은 현재 locale의 클라이언트 카탈로그를 사용하고, 저장 API의 서버 `message`가 있으면 우선 표시한다.
+Keep 등록 모달 자체의 화면 계약은 [Prospective 화면 스펙](../prospective/screen-spec.md)을 따른다. 저널 aside는 `prospectiveKeepModalStore.openRegist()`로 이 모달을 열고 저장 성공 후 `journalStore.fetchKeeps()`로 카드를 갱신한다.
 
 ---
 
@@ -908,9 +898,9 @@ type TodoRow = {
 | 3. 엔트리 필터 | DREAMS 토글 | ✓ 구현 |
 | 3. 엔트리 필터 | 꿈 키워드 | ✓ 구현 (위치 다름) |
 | 3. 엔트리 필터 | 고급 필터 아코디언 (블록 D) | — 이식 대상 아님 — 검색 팝업 고급필터 ✓ |
-| 4. TODO 카드 | "TODO List" 카드 헤더 | ✓ `JournalAsideTodoCard.vue` (현재 locale 카탈로그 사용) |
-| 4. TODO 카드 | TODO 목록 표시 | ✓ `store.fetchTodos()` 월별 목록 표시 |
-| 4. TODO 카드 | TODO 삭제 버튼 | ✓ 삭제 API 성공 후 목록 재조회 |
+| 4. Keep 카드 | "Keep" 카드 헤더 | ✓ `JournalAsideKeepCard.vue` (현재 locale 카탈로그 사용) |
+| 4. Keep 카드 | 활성 Keep 목록 표시 | ✓ `store.fetchKeeps()` 전 범위 활성 목록 표시 |
+| 4. Keep 카드 | Keep 라이프사이클·삭제 | ✓ 전이·삭제 API 성공 후 목록 재조회 |
 
 ---
 

@@ -10,7 +10,7 @@ import io.nicheblog.dreamdiary.feature.attachable.state.StateKey;
 import io.nicheblog.dreamdiary.feature.attachable.state.entity.StateEntity;
 import io.nicheblog.dreamdiary.feature.attachable.state.repository.jpa.StateRepository;
 import io.nicheblog.dreamdiary.feature.attachable.state.service.StateService;
-import io.nicheblog.dreamdiary.feature.journal._shared.security.JournalContentOwnershipGuard;
+import io.nicheblog.dreamdiary.feature.attachable._shared.security.AttachableContentOwnershipGuard;
 import io.nicheblog.dreamdiary.feature.journal.day.service.helper.JournalDayResolvedGuard;
 import io.nicheblog.dreamdiary.feature.journal._shared.lifecycle.JournalReflectionLifecycleCascade;
 import io.nicheblog.dreamdiary.global.model.ServiceResponse;
@@ -53,7 +53,7 @@ class LifecycleServiceTest {
     @Mock
     private StateService stateService;
     @Mock
-    private JournalContentOwnershipGuard journalContentOwnershipGuard;
+    private AttachableContentOwnershipGuard attachableContentOwnershipGuard;
     @Mock
     private JournalDayResolvedGuard journalDayResolvedGuard;
     @Mock
@@ -68,7 +68,7 @@ class LifecycleServiceTest {
                 stateRepository,
                 stateService,
                 List.of(),
-                journalContentOwnershipGuard,
+                attachableContentOwnershipGuard,
                 journalDayResolvedGuard,
                 journalReflectionLifecycleCascade
         );
@@ -202,7 +202,7 @@ class LifecycleServiceTest {
     @Test
     void setRejectsUnownedContentBeforePersistence() throws Exception {
         doThrow(new NotAuthorizedException("common.result.access-not-authorized"))
-                .when(journalContentOwnershipGuard)
+                .when(attachableContentOwnershipGuard)
                 .assertOwned(FIXTURE_CONTENT_ID, FIXTURE_CONTENT_TYPE);
 
         assertThrows(NotAuthorizedException.class, () -> service.set(request(LifecycleKey.PENDING)));
@@ -226,7 +226,7 @@ class LifecycleServiceTest {
                 repository,
                 stateRepository,
                 stateService,
-                journalContentOwnershipGuard,
+                attachableContentOwnershipGuard,
                 journalDayResolvedGuard
         );
     }
@@ -246,7 +246,7 @@ class LifecycleServiceTest {
                 repository,
                 stateRepository,
                 stateService,
-                journalContentOwnershipGuard,
+                attachableContentOwnershipGuard,
                 journalDayResolvedGuard
         );
     }

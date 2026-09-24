@@ -15,7 +15,7 @@ import io.nicheblog.dreamdiary.feature.attachable.state.model.StateToggleDto;
 import io.nicheblog.dreamdiary.feature.attachable.state.repository.jpa.StateRepository;
 import io.nicheblog.dreamdiary.feature.attachable.state.service.StateService;
 import io.nicheblog.dreamdiary.feature.journal._shared.lifecycle.JournalReflectionLifecycleCascade;
-import io.nicheblog.dreamdiary.feature.journal._shared.security.JournalContentOwnershipGuard;
+import io.nicheblog.dreamdiary.feature.attachable._shared.security.AttachableContentOwnershipGuard;
 import io.nicheblog.dreamdiary.feature.journal.day.service.helper.JournalDayResolvedGuard;
 import io.nicheblog.dreamdiary.global.model.ServiceResponse;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
@@ -45,7 +45,7 @@ public class LifecycleService {
     private final StateRepository stateRepository;
     private final StateService stateService;
     private final List<LifecycleCacheUpdater> cacheUpdaters;
-    private final JournalContentOwnershipGuard journalContentOwnershipGuard;
+    private final AttachableContentOwnershipGuard attachableContentOwnershipGuard;
     private final JournalDayResolvedGuard journalDayResolvedGuard;
     private final JournalReflectionLifecycleCascade journalReflectionLifecycleCascade;
 
@@ -54,7 +54,8 @@ public class LifecycleService {
      *
      * <p>{@code PENDING}/{@code RESOLVED}는 {@code contentType + id} 기준 row 하나로 저장하고,
      * 기본 상태인 {@code OPEN}은 row를 제거해 표현한다. 새 값이 {@code RESOLVED}이면
-     * {@code COLLAPSED} state를 함께 켠다. primary 엔트리의 동일한 {@code RESOLVED} 요청은 부모
+     * 화면 접힘을 사용하는 콘텐츠에 {@code COLLAPSED} state를 함께 켠다. Project는 작업공간
+     * 노출만 바꾸므로 접힘 상태를 파생하지 않는다. primary 엔트리의 동일한 {@code RESOLVED} 요청은 부모
      * 저장·파생 상태·캐시 후처리를 반복하지 않고, 미완료 Reflection 을 수렴시키는 완료 연쇄만 다시
      * 검사한다. 저장 전에는 현재 로그인 사용자가 원본 저널 콘텐츠의 작성자인지 검증한다.</p>
      *
@@ -82,7 +83,7 @@ public class LifecycleService {
                     .build();
         }
 
-        journalContentOwnershipGuard.assertOwned(lifecycleSet.getId(), lifecycleSet.getContentType());
+        attachableContentOwnershipGuard.assertOwned(lifecycleSet.getId(), lifecycleSet.getContentType());
         journalDayResolvedGuard.assertWritableForRef(lifecycleSet.getId(), lifecycleSet.getContentType());
 
         final LifecycleEntity lifecycle = repository.findByRefIdAndRefContentType(
@@ -162,6 +163,8 @@ public class LifecycleService {
      */
     private StateToggleDto applyDerivedStates(final LifecycleSetDto lifecycleSet) {
         if (!LifecycleKey.RESOLVED.equals(lifecycleSet.getLifecycleKey())) return null;
+        // Project의 완료는 작업공간 노출만 바꾸며 접힘 표시 상태를 만들지 않는다.
+        if (ContentType.PROSPECTIVE_PROJECT.equals(lifecycleSet.getContentType())) return null;
 
         final StateToggleDto collapsedToggle = StateToggleDto.builder()
                 .id(lifecycleSet.getId())

@@ -32,10 +32,13 @@ alwaysApply: true
   - spec에 있고 변경 후에도 내용이 현실과 일치하면: **갱신 불필요** — 이때만 "spec 갱신 불필요 — 이유: [확인한 spec 항목과 현실 일치 근거]"를 명시한다.
   - 확인 없이 "갱신 불필요"를 선언하는 것은 규칙 위반이다. "버그픽스라서 불필요", "스타일 수정이라서 불필요" 같은 타입 기반 선언은 금지한다.
   - spec 대상 파일:
-    - 화면 추가·변경 → `docs/migration/journal/screen-spec.md`
-    - 인터랙션 추가·변경 → `docs/migration/journal/interaction-spec.md`
+    - 저널 화면 추가·변경 → `docs/migration/journal/screen-spec.md`
+    - 저널 인터랙션 추가·변경 → `docs/migration/journal/interaction-spec.md`
+    - Prospective 화면 추가·변경 → `docs/migration/prospective/screen-spec.md`
+    - Prospective 인터랙션 추가·변경 → `docs/migration/prospective/interaction-spec.md`
     - 공통 컴포넌트 추가·변경 → `docs/migration/common/component-spec.md`
     - 저널 전용 컴포넌트 추가·변경 → `docs/migration/journal/component-spec.md`
+    - Prospective 전용 컴포넌트 추가·변경 → `docs/migration/prospective/component-spec.md`
   - 현황 표기: MISSING → 구현 완료(✓), 부분 구현(⚠), 미구현(❌) 정확히 반영. ❌는 "아직 구현 안 됨"이 아니라 "이미 합의된 계약에 속하지만 구현이 누락됨"에만 쓴다. 계약 외부 아이디어에는 쓰지 않는다.
   - 합의된 계약의 누락 기능을 발견하면 spec에 먼저 기록한 뒤 구현한다. 실현 미정 아이디어(계약 외부)는 이 대상이 아니다 — 아이디어 노트로 보낸다.
   - SAVEPOINT(커밋) 단위로 spec도 반드시 커밋 대상에 포함

@@ -9,7 +9,7 @@
     <JournalChapterRegistModal />
     <JournalReflectionRegistModal />
     <JournalEntryRegistModal />
-    <JournalTodoRegistModal />
+    <ProspectiveKeepRegistModal />
     <JournalDayMetaModal />
     <CommentRegistModal />
     <CommentListModal />
@@ -34,7 +34,7 @@ import JournalDayDetailModal from "./modals/JournalDayDetailModal.vue";
 import JournalChapterRegistModal from "../chapter/modals/JournalChapterRegistModal.vue";
 import JournalReflectionRegistModal from "../reflection/modals/JournalReflectionRegistModal.vue";
 import JournalEntryRegistModal from "../entry/modals/JournalEntryRegistModal.vue";
-import JournalTodoRegistModal from "../todo/modals/JournalTodoRegistModal.vue";
+import ProspectiveKeepRegistModal from "@/features/prospective/keep/modals/ProspectiveKeepRegistModal.vue";
 import JournalDayMetaModal from "./modals/JournalDayMetaModal.vue";
 import CommentRegistModal from "../shared/modals/CommentRegistModal.vue";
 import CommentListModal from "@/features/attachable/CommentListModal.vue";

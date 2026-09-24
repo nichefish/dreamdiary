@@ -98,7 +98,7 @@ SystemLayout                   ← 헤더/사이드바 없는 새 창/팝업 전
 | DIARY/DREAM LIFECYCLE select 필터 | ✓ |
 | 일기/꿈 키워드 필터 input (어사이드) | ✓ |
 | 필터 초기화 버튼 | ✓ |
-| TODO List 카드 (등록 + 목록·삭제, `JournalAsideTodoCard`) | ✓ |
+| Keep 카드 (등록 + 활성 목록·라이프사이클·삭제, `JournalAsideKeepCard`) | ✓ |
 | 고급 필터 아코디언 (블록 D) | — 이식 대상 아님 — 검색 팝업 `JournalEntrySearchPage` 참고 |
 
 ---
@@ -132,14 +132,14 @@ SystemLayout                   ← 헤더/사이드바 없는 새 창/팝업 전
 | `auth.ts` | 인증 상태, 로그인/로그아웃, `verifyAuth` |
 | `menu.ts` | 사이드바 동적 메뉴 (`USER`/`MNGR` 모드) |
 | `journal.ts` | 저널 일자 목록, 태그클라우드, 메타, 필터 상태 |
-| `journalModal.ts` | 저널 모달 열기/닫기 (일자/챕터/엔트리/투두 등). categoryMap 은 `journalCategoryMaps`에 위임 |
+| `journalModal.ts` | 저널 모달 열기/닫기 (일자/챕터/엔트리 등). categoryMap 은 `journalCategoryMaps`에 위임 |
 | `journalModal.types.ts` | 저널 모달 폼·페이로드 타입 (`journalModal` 에서 re-export) |
 | `journalModalOneShot.ts` | 저장 직후 일회성 챕터 펼침·Reflection 접힘 신호 |
 | `journalModalDay.ts` | 일자 등록·상세·필터·메타 프로필 모달 surface |
 | `journalModalEntry.ts` | 엔트리 등록·수정·읽기 전용 모달 surface |
 | `journalModalChapter.ts` | 챕터 등록/수정 모달 surface |
 | `journalModalReflection.ts` | Reflection 등록/수정 모달 surface |
-| `journalModalTodo.ts` | 할일 등록/수정 모달 surface |
+| `prospective/keep/stores/prospectiveKeepModal.ts` | Keep 등록/수정 모달 surface |
 | `journalCategoryMaps.ts` | 앱 세션 태그·메타 categoryMap SSOT (preload/ensure/sync/apply) |
 | `journalAside.ts` | 어사이드 표시 제어 (`visible`, `show/hide`) |
 | `journalAnnual.ts` | 연간 결산 목록/상세 |

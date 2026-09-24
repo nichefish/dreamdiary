@@ -79,10 +79,16 @@ public interface ApiUrl {
     String JOURNAL_ENTRY_TAG_GROUP_LIST_AJAX = Prefix.API + "/journal/entry/tag/group-list";
     String JOURNAL_ENTRY_TAG_CATEGORIES = Prefix.API + "/journal/entry/tag/categories";
 
-    /** 저널 할일 */
-    String JOURNAL_TODOS = Prefix.API + "/journal/todos";
-    String JOURNAL_TODO = Prefix.API + "/journal/todo/{id}";
-    String JOURNAL_TODO_TAG_CATEGORIES = Prefix.API + "/journal/todo/tag/categories";
+    /** Prospective Keep */
+    String PROSPECTIVE_KEEPS = Prefix.API + "/prospective/keeps";
+    String PROSPECTIVE_KEEP = Prefix.API + "/prospective/keep/{id}";
+    String PROSPECTIVE_KEEP_PROJECT = Prefix.API + "/prospective/keep/{id}/project";
+    String PROSPECTIVE_KEEP_TAG_CATEGORIES = Prefix.API + "/prospective/keep/tag/categories";
+
+    /** Prospective Project */
+    String PROSPECTIVE_PROJECTS = Prefix.API + "/prospective/projects";
+    String PROSPECTIVE_PROJECT = Prefix.API + "/prospective/project/{id}";
+    String PROSPECTIVE_PROJECT_SORT_ORDERS = Prefix.API + "/prospective/projects/sort-orders";
 
     /** 저널 스레드 */
     String JOURNAL_THREAD_API_LIST = Prefix.API + "/journal/threads";

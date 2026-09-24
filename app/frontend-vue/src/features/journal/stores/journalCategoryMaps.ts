@@ -13,14 +13,12 @@ export const CATEGORY_MAP_URL_DAY_TAG = "/api/journal/day/tag/categories";
 export const CATEGORY_MAP_URL_DAY_META = "/api/journal/day/meta/categories";
 export const CATEGORY_MAP_URL_ENTRY_DIARY = "/api/journal/entry/tag/categories?type=DIARY";
 export const CATEGORY_MAP_URL_ENTRY_DREAM = "/api/journal/entry/tag/categories?type=DREAM";
-export const CATEGORY_MAP_URL_TODO_TAG = "/api/journal/todo/tag/categories";
 
 const CATEGORY_MAP_URLS = [
   CATEGORY_MAP_URL_DAY_TAG,
   CATEGORY_MAP_URL_DAY_META,
   CATEGORY_MAP_URL_ENTRY_DIARY,
   CATEGORY_MAP_URL_ENTRY_DREAM,
-  CATEGORY_MAP_URL_TODO_TAG,
 ] as const;
 
 function normalizeCategoryMap(raw: unknown): Record<string, string[]> {
@@ -89,9 +87,6 @@ export const useJournalCategoryMapStore = defineStore("journalCategoryMaps", () 
   /** 엔트리 DREAM 태그 categoryMap */
   const entryDreamCategoryMap = ref<Record<string, string[]>>({});
   const entryDreamCategoryMapLoaded = ref(false);
-  /** 할일 태그 categoryMap — 저널 사이드바·Keep 이 공유하는 JOURNAL_TODO 단일 맵 */
-  const todoTagCategoryMap = ref<Record<string, string[]>>({});
-  const todoTagCategoryMapLoaded = ref(false);
 
   /** URL별 무효화 이후 늦게 도착한 응답을 폐기하기 위한 버전. */
   const categoryMapVersions = new Map<string, number>();
@@ -104,7 +99,6 @@ export const useJournalCategoryMapStore = defineStore("journalCategoryMaps", () 
       case CATEGORY_MAP_URL_DAY_META: return dayMetaCategoryMap;
       case CATEGORY_MAP_URL_ENTRY_DIARY: return entryDiaryCategoryMap;
       case CATEGORY_MAP_URL_ENTRY_DREAM: return entryDreamCategoryMap;
-      case CATEGORY_MAP_URL_TODO_TAG: return todoTagCategoryMap;
       default: return null;
     }
   }
@@ -115,7 +109,6 @@ export const useJournalCategoryMapStore = defineStore("journalCategoryMaps", () 
       case CATEGORY_MAP_URL_DAY_META: return dayMetaCategoryMapLoaded;
       case CATEGORY_MAP_URL_ENTRY_DIARY: return entryDiaryCategoryMapLoaded;
       case CATEGORY_MAP_URL_ENTRY_DREAM: return entryDreamCategoryMapLoaded;
-      case CATEGORY_MAP_URL_TODO_TAG: return todoTagCategoryMapLoaded;
       default: return null;
     }
   }
@@ -169,7 +162,6 @@ export const useJournalCategoryMapStore = defineStore("journalCategoryMaps", () 
       ensure(CATEGORY_MAP_URL_DAY_META),
       ensure(CATEGORY_MAP_URL_ENTRY_DREAM),
       ensure(CATEGORY_MAP_URL_ENTRY_DIARY),
-      ensure(CATEGORY_MAP_URL_TODO_TAG),
     ]);
   }
 
@@ -196,8 +188,6 @@ export const useJournalCategoryMapStore = defineStore("journalCategoryMaps", () 
     entryDiaryCategoryMapLoaded.value = false;
     entryDreamCategoryMap.value = {};
     entryDreamCategoryMapLoaded.value = false;
-    todoTagCategoryMap.value = {};
-    todoTagCategoryMapLoaded.value = false;
     console.info("[journalCategoryMaps] 앱 세션 categoryMap 초기화");
   }
 
@@ -260,7 +250,6 @@ export const useJournalCategoryMapStore = defineStore("journalCategoryMaps", () 
     dayMetaCategoryMap,
     entryDiaryCategoryMap,
     entryDreamCategoryMap,
-    todoTagCategoryMap,
     ensure,
     preloadAll,
     syncAll,

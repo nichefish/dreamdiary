@@ -133,7 +133,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/keep",
         name: "keep-list",
-        component: () => import("@/features/keep/KeepPage.vue"),
+        component: () => import("@/features/prospective/keep/KeepPage.vue"),
       },
       {
         path: "/admin",

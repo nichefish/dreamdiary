@@ -6,7 +6,6 @@ import io.nicheblog.dreamdiary.feature.journal.chapter.model.JournalChapterDto;
 import io.nicheblog.dreamdiary.feature.journal.day.model.JournalDayDto;
 import io.nicheblog.dreamdiary.feature.journal.entry.model.JournalEntryDto;
 import io.nicheblog.dreamdiary.feature.journal.entry.model.JournalEntryPostDto;
-import io.nicheblog.dreamdiary.feature.journal.todo.model.JournalTodoDto;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.*;
 
@@ -189,19 +188,6 @@ public class JournalCacheEvictParam {
                 .id(dto.getId())
                 .journalAnnualId(dto.getJournalAnnualId())
                 .yy(dto.getYy())
-                .build();
-    }
-
-    /**
-     * 할일 DTO 기준 캐시 무효화 파라미터 생성.
-     *
-     * @param dto {@link JournalTodoDto}
-     * @return {@link JournalCacheEvictParam}
-     */
-    public static JournalCacheEvictParam of(final JournalTodoDto dto) {
-        return JournalCacheEvictParam.builder()
-                .createdBy(dto.getCreatedBy())
-                .id(dto.getId())
                 .build();
     }
 

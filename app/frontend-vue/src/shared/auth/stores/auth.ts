@@ -8,6 +8,7 @@ import { preloadCategoryMaps, useJournalModalStore } from "@/features/journal/st
 import { useJournalStore } from "@/features/journal/stores/journal";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { useMenuStore } from "@/shared/menu/stores/menu";
+import { useProspectiveKeepCategoryMapStore } from "@/features/prospective/keep/stores/prospectiveKeepCategoryMap";
 
 /** 라우트 이동이 서버 인증 확인 결과를 재사용하는 메모리 신선도 구간. */
 export const AUTH_VERIFICATION_FRESHNESS_MS = 15_000;
@@ -83,6 +84,7 @@ export const useAuthStore = defineStore("auth", () => {
     lastAuthVerifiedAt = 0;
     authVerificationRequest = null;
     useJournalModalStore().resetCategoryMaps();
+    useProspectiveKeepCategoryMapStore().reset();
     useJournalStore().resetTagCloudState();
     useMenuStore().resetMenu();
     isAuthenticated.value = false;

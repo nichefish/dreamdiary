@@ -270,7 +270,7 @@ categoryMap URL 매핑:
 - 일자 메타: `/api/journal/day/meta/categories`
 - 엔트리 DIARY 태그: `/api/journal/entry/tag/categories?type=DIARY`
 - 엔트리 DREAM 태그: `/api/journal/entry/tag/categories?type=DREAM`
-- 할일 태그: `/api/journal/todo/tag/categories` (`JOURNAL_TODO` 단일 맵. 저널 사이드바 TODO 카드와 Keep 이 공유한다.)
+- 할일 태그: `/api/prospective/keep/tag/categories` (`PROSPECTIVE_KEEP` 단일 맵. 저널 사이드바 TODO 카드와 Keep 이 공유한다.)
 
 `TagifyEditor` Props:
 - `categoryMap?: Record<string, string[]> | null` — null이면 ctgr 없는 단순 태그 모드
@@ -279,7 +279,7 @@ categoryMap URL 매핑:
 ### 적용 대상 화면
 
 - 엔트리 등록 모달의 DIARY·DREAM 타입에서 Tagify를 사용하고, NOTE 타입은 태그가 없다.
-- 할일 등록/수정 모달(`JournalTodoRegistModal`)에서 Tagify를 사용한다. 저널 사이드바와 Keep 이 같은 모달·같은 categoryMap 을 쓴다.
+- 할일 등록/수정 모달(`ProspectiveKeepRegistModal`)에서 Tagify를 사용한다. 저널 사이드바와 Keep 이 같은 모달·같은 categoryMap 을 쓴다.
 
 ---
 

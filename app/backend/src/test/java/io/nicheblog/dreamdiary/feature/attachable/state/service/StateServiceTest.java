@@ -6,7 +6,7 @@ import io.nicheblog.dreamdiary.feature.attachable.state.StateKey;
 import io.nicheblog.dreamdiary.feature.attachable.state.model.StateToggleDto;
 import io.nicheblog.dreamdiary.feature.attachable.state.repository.jpa.StateRepository;
 import io.nicheblog.dreamdiary.feature.attachable.state.spec.StateSpec;
-import io.nicheblog.dreamdiary.feature.journal._shared.security.JournalContentOwnershipGuard;
+import io.nicheblog.dreamdiary.feature.attachable._shared.security.AttachableContentOwnershipGuard;
 import io.nicheblog.dreamdiary.feature.journal.day.service.helper.JournalDayResolvedGuard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class StateServiceTest {
     @Mock
     private StateSpec spec;
     @Mock
-    private JournalContentOwnershipGuard journalContentOwnershipGuard;
+    private AttachableContentOwnershipGuard attachableContentOwnershipGuard;
     @Mock
     private JournalDayResolvedGuard journalDayResolvedGuard;
     @Mock
@@ -51,7 +51,7 @@ class StateServiceTest {
                 repository,
                 spec,
                 List.of(),
-                journalContentOwnershipGuard,
+                attachableContentOwnershipGuard,
                 journalDayResolvedGuard,
                 context
         );
@@ -61,7 +61,7 @@ class StateServiceTest {
     @Test
     void toggleRejectsUnownedContentBeforePersistence() {
         doThrow(new NotAuthorizedException("common.result.access-not-authorized"))
-                .when(journalContentOwnershipGuard)
+                .when(attachableContentOwnershipGuard)
                 .assertOwned(FIXTURE_CONTENT_ID, FIXTURE_CONTENT_TYPE);
 
         assertThrows(NotAuthorizedException.class, () -> service.toggle(request()));

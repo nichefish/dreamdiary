@@ -175,7 +175,7 @@ type PersonalPrefixContentType =
   | "JOURNAL_DIARY"
   | "JOURNAL_DREAM"
   | "JOURNAL_NOTE"
-  | "JOURNAL_TODO";
+  | "PROSPECTIVE_KEEP";
 
 interface PersonalPrefixTarget {
   contentType: PersonalPrefixContentType;
@@ -233,8 +233,8 @@ const prefixTargetGroups: readonly PersonalPrefixTargetGroup[] = [{
   labelKey: "user.my.prefixes.domain.keep",
   targets: [
     {
-      // Keep 항목의 영속 content_type 이 JOURNAL_TODO 이며 말머리 Scope 도 같은 값을 쓴다.
-      contentType: "JOURNAL_TODO",
+      // Keep 항목의 영속 content_type 이 PROSPECTIVE_KEEP 이며 말머리 Scope 도 같은 값을 쓴다.
+      contentType: "PROSPECTIVE_KEEP",
       labelKey: "user.my.prefixes.target.keep",
       descriptionKey: "user.my.prefixes.target.keep.description",
     },

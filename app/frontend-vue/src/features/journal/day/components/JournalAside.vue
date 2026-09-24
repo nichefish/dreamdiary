@@ -400,7 +400,7 @@
   </div>
 
   <!--begin::TODO 카드 (레거시 aside 구조 동일 — 필터 카드 밖 별도 카드. 변경 전: 카드 내 '할일 등록' 단독 버튼 → 변경 후: 레거시 TODO List 카드(등록 + 목록·삭제)로 복원)-->
-  <JournalAsideTodoCard />
+  <JournalAsideKeepCard />
   <!--end::TODO 카드-->
   <!--end::저널 사이드 패널-->
 </template>
@@ -415,7 +415,7 @@ import type { JournalPrefixDto } from "@/features/journal/stores/journal";
 import { useJournalAsideStore } from "@/features/journal/stores/journalAside";
 import { useJournalModalStore } from "@/features/journal/stores/journalModal";
 import JournalAsideMiniCalendar from "@/features/journal/day/components/JournalAsideMiniCalendar.vue";
-import JournalAsideTodoCard from "@/features/journal/day/components/JournalAsideTodoCard.vue";
+import JournalAsideKeepCard from "@/features/journal/day/components/JournalAsideKeepCard.vue";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 
 const store = useJournalStore();

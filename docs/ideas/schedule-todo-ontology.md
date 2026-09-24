@@ -1,6 +1,6 @@
 # 일정·TODO 존재론 (아이디어)
 
-> 상태: **아이디어 (계약 외부)** — `schedule`(일정)과 `journal_todo`(TODO)가 각자 독립 도메인으로 존재하는 현 상태 위에서, 둘의 관계와 그 사이에 낀 "시간에 걸린 의무"(예: 반복 기념일에 해야 할 일)를 어떻게 수렴시킬지에 대한 존재론 정리다. 아직 구현·spec 변경을 수반하지 않는다. 현재 동작 계약은 코드(`feature/calendar/schedule/**`, `feature/journal/todo/**`)를 따른다.
+> 상태: **아이디어 (계약 외부)** — `schedule`(일정)과 `prospective_keep`(Keep)가 각자 독립 도메인으로 존재하는 현 상태 위에서, 둘의 관계와 그 사이에 낀 "시간에 걸린 의무"를 어떻게 수렴시킬지에 대한 존재론 정리다. 아직 구현·spec 변경을 수반하지 않는다. 현재 동작 계약은 코드(`feature/calendar/schedule/**`, `feature/prospective/keep/**`)를 따른다.
 
 
 > 갱신(2026-09-08): 본문 존재론(직교 facet 재구성)은 유지한다. 다만 이후 탐색에서 본문 일부(2×2의 `00=공집합`, 선형 lifecycle, "완료되면 다음이 뜬다")를 정밀화하는 발견이 나왔다. 문서 하단 「탐색 SAVEPOINT — 검증 상태」를 함께 볼 것 — 그 내용은 정본으로 승격하지 않은 검증 대기 상태다.
@@ -8,7 +8,7 @@
 ## 배경 — 현재 두 도메인은 따로 서 있다
 
 - **일정(`schedule`)**: `ScheduleEntity`(`schedule` 테이블) = `title`/`content` + `bgnDt`/`endDt`(시작~종료 시간 span) + `scheduleCd`(분류; 휴가 `VCATN` 등) + `privateYn` + 참여자(`SchedulePrtcpntEntity`). `BaseAttachableEntity` 상속 + `TagEmbedModule`/`CommentEmbedModule`. 공휴일은 외부 소스(KASI)에서 적재한다. **완료 상태를 갖지 않고, 반복 규칙도 없다.** 시간 위에 놓이는 span 앵커가 본질이다.
-- **TODO(`journal_todo`)**: `JournalTodoEntity` = `BaseAttachableEntity` + `TagEmbedModule`, lifecycle(`OPEN`/`PENDING` + 종결 `RESOLVED`/`FAILED`/`EXPIRED`/`DROPPED`; [journal-todo-evolution](journal-todo-evolution.md) 참조). 발생 시점은 감사 컬럼 `created_at` 이 갖는다. 마감 앵커로는 `expire_dt`(유효 기한) 하나를 가지며, 시각은 갖지 않는다.
+- **TODO(`prospective_keep`)**: `ProspectiveKeepEntity` = `BaseAttachableEntity` + `TagEmbedModule`, lifecycle(`OPEN`/`PENDING` + 종결 `RESOLVED`/`FAILED`/`EXPIRED`/`DROPPED`; [journal-todo-evolution](prospective-keep-evolution.md) 참조). 발생 시점은 감사 컬럼 `created_at` 이 갖는다. 마감 앵커로는 `expire_dt`(유효 기한) 하나를 가지며, 시각은 갖지 않는다.
 
 즉 두 저장소가 이미 분리돼 있고, "엄마 생신마다 전화한다" 같은 항목은 **어느 쪽에도 온전히 담기지 않는다**. 이것이 이중관리 불안의 구체적 실체다.
 
@@ -26,7 +26,7 @@
 | **시간축 없음** | (공집합) | **순수 TODO** — "이력서 업데이트" |
 | **시간축 있음** | **순수 일정** — 공휴일, 남이 잡은 회의, 생신 그 자체(관망) | **시간에 걸린 의무** — "생신에 전화" |
 
-현재 `ScheduleEntity`는 좌하단(시간축만), `JournalTodoEntity`는 우상단(완료축만)에 해당한다. **우하단(시간축+완료축)이 지금 비어 있는 칸이다.**
+현재 `ScheduleEntity`는 좌하단(시간축만), `ProspectiveKeepEntity`는 우상단(완료축만)에 해당한다. **우하단(시간축+완료축)이 지금 비어 있는 칸이다.**
 
 ## 왜 서로 환원되지 않는가 (비대칭)
 
@@ -44,7 +44,7 @@
 
 ## 수렴의 기질 — 이미 `BaseAttachableEntity`가 공통축이다
 
-`ScheduleEntity`와 `JournalTodoEntity`는 둘 다 `BaseAttachableEntity`를 상속하고 tag/comment 를 임베드로 붙인다. lifecycle 은 개별 도메인 컬럼이 아니라 attachable 공통 관심사(`AttachableContentLifecyclePolicy`)로 뽑히는 방향이다([journal-todo-evolution](journal-todo-evolution.md)).
+`ScheduleEntity`와 `ProspectiveKeepEntity`는 둘 다 `BaseAttachableEntity`를 상속하고 tag/comment 를 임베드로 붙인다. lifecycle 은 개별 도메인 컬럼이 아니라 attachable 공통 관심사(`AttachableContentLifecyclePolicy`)로 뽑히는 방향이다([journal-todo-evolution](prospective-keep-evolution.md)).
 
 이 구조가 facet 존재론의 자연스러운 착지점을 준다:
 
@@ -79,8 +79,8 @@
 
 ## 미결 (구현 진입 전 결정 대상)
 
-- **시간 축의 위치**: 시간 앵커를 attachable 공통 모듈로 추출할지, 아니면 도메인별 컬럼(`schedule.bgnDt`/`endDt`)으로 유지할지. 추출 시 `journal_todo`도 시간 앵커를 옵션으로 가질 수 있게 된다.
-- **`schedule`와 `journal_todo`의 통합 범위**: 두 도메인을 하나의 attachable 항목으로 수렴시킬지, 아니면 별개 도메인을 유지하되 "시간에 걸린 의무"만 한쪽에 담고 다른 뷰에 투영할지.
+- **시간 축의 위치**: 시간 앵커를 attachable 공통 모듈로 추출할지, 아니면 도메인별 컬럼(`schedule.bgnDt`/`endDt`)으로 유지할지. 추출 시 `prospective_keep`도 시간 앵커를 옵션으로 가질 수 있게 된다.
+- **`schedule`와 `prospective_keep`의 통합 범위**: 두 도메인을 하나의 attachable 항목으로 수렴시킬지, 아니면 별개 도메인을 유지하되 "시간에 걸린 의무"만 한쪽에 담고 다른 뷰에 투영할지.
 - **반복 발생의 SSOT·실체화 시점**: 규칙만 저장하고 발생을 계산할지, 다음 발생만 실체화할지.
 - **완료된 미래 의무 ↔ 저널 엔트리** 관계: 흡수 / 링크 / 무관.
 - **관망성 순수 일정(공휴일, 남의 회의)의 취급 범위**: 이 앱이 완료축 없는 시간 항목까지 일급으로 다룰지(현재 `schedule`은 이미 다룸), "내 의무가 걸린 시간"으로 스코프를 좁힐지.
@@ -95,9 +95,9 @@
 
 ### 현재 가장 강한 상위 가설 (미검증)
 
-- **entity ontology와 view ontology의 분리.** domain primitive(`Schedule`, `JournalTodo`, `Thread`, `Entry`)는 각자의 identity·생성 provenance를 가진 채 heterogeneous하게 존속한다. `Calendar`/`Todo`는 primitive가 아니라 그 population 위에 걸리는 **의미론적 projection**(UI는 그걸 렌더할 뿐, UI 자체가 아니다)이다.
+- **entity ontology와 view ontology의 분리.** domain primitive(`Schedule`, `ProspectiveKeep`, `Thread`, `Entry`)는 각자의 identity·생성 provenance를 가진 채 heterogeneous하게 존속한다. `Calendar`/`Todo`는 primitive가 아니라 그 population 위에 걸리는 **의미론적 projection**(UI는 그걸 렌더할 뿐, UI 자체가 아니다)이다.
   - `Calendar = { x | temporal(x) }`, `Todo = { x | resolution(x) ∧ unresolved(x) }`.
-  - 따라서 `Calendar = schedules`, `Todo = journal_todos`라는 현재의 암묵적 동일시가 깨진다.
+  - 따라서 `Calendar = schedules`, `Todo = prospective_keeps`라는 현재의 암묵적 동일시가 깨진다.
   - **판별자: entity는 자기 identity + 생성 provenance로 개별화되고, view는 아무것도 소유하지 않는(질의일 뿐인) 것으로 개별화된다.** "필드 응집"보다 이 provenance 판별자가 날카롭다.
   - 확신도: primitive 존속 ~85–90%. 순수 dissolution(모든 게 facet, `ContentEntity` 만능 primitive)은 이 저장소가 `BaseAttachableEntity`(구체 서브타입) 노선으로 피해온 방향이라 낮다.
 
@@ -107,7 +107,7 @@
 2. temporal은 **앵커 모양(span/point)** 과 **축 결합(deadline = resolve-before-T / trigger = T-occurrence가 obligation을 낳음)** 의 두 층이다. 우하단을 `{temporal, resolution}=true`로만 쓰면 축의 *공존*은 표현하되 축 *사이의 의미*를 잃는다.
 3. 반복: **발생의 존재(rule이 결정, 잠재적 무한·비실체화)** 와 **materialization(lazy 정책)** 를 분리한다. rule은 a-temporal 생성기지만 각 occurrence는 시간에 강하게 걸린다 — row가 없어도 `2037-09-28`이라는 temporal identity를 가지므로, 표현은 '무시간'이 아니라 '비실체화'다(occurrence identity ≈ rule + recurrence key/time). 2025 미완료 + 2026 도래 → 동시 OPEN 가능. 2층 SSOT — 존재 SSOT = rule, 상태 SSOT = occurrence별 resolution.
 4. 시간 4종 분리: origin(provenance) / target(prospective anchor) / journal timestamp(회고 content 자체 속성) / **journalization = prospective↔retrospective content relation**. journalization은 facet 아님 — many-to-many(한 저널이 여러 obligation 회고, 한 사건을 여러 날 기록)라 `journalized=true`로 접으면 정보손실.
-5. 완료축은 이미 여러 content type을 횡단한다(`thread` lifecycle ✓, `journal_todo` 예정). temporal도 `schedule`이 담는다 → projection 재구성은 코드가 이미 표류 중인 방향(§2 계약 추정 증거).
+5. 완료축은 이미 여러 content type을 횡단한다(`thread` lifecycle ✓, `prospective_keep` 예정). temporal도 `schedule`이 담는다 → projection 재구성은 코드가 이미 표류 중인 방향(§2 계약 추정 증거).
 6. B(temporal의 persistence 공통화)는 확률 문제가 아니라 **판정 유예**. "어떤 domain이 temporal participation을 하는가"가 먼저 결정되고, 저장 표현은 그 뒤에 따라온다.
 
 ### 우하단 topology 판별자 (kill-test 통과, 2026-09-08)
@@ -138,7 +138,7 @@
 - **Prospective = projection/view.** predicate `x가 현재 나의 미래지향 attention을 점유한다`로 정의되는 heterogeneous population의 투영. "한 화면에 같이 뜬다 ≠ 같은 entity"(Calendar≠Schedule과 같은 교훈).
 - **뷰(강함)**: 북극성 = "머리에 이고 있는 것들을 시간순으로 일목요연하게 밖으로." 이건 놀랄 만큼 명확한 *view* 정의(존재 정의가 아님). 1차 축 = **시간**(사용자 확정: 머릿속에서 "언제"로 묶임). 본체 = 시간순 롤링 아젠다(오늘/내일/곧/언젠가; "언젠가" 버킷 필연) / 보조 = 캘린더(날짜 있는 부분집합 렌즈; 균일시간·무날짜 꼬리 없음이라 본체 불가) / 배치 = 저널 daily 동반(주의가 있는 곳; **소유 아니라 배치**, now가 회고↔전망 경첩).
 - **판별 규칙 6개 (이 line의 실제 자산)**: ① 시간에 걸렸나(temporal) ② resolution을 요구하나 ③ temporal referent가 독립 identity를 갖나(relation vs facet topology) ④ 반복 occurrence가 rule과 구별되는 identity를 갖나 ⑤ journalization은 속성인가 관계인가 ⑥ "같은 화면에 보인다"와 "같은 entity다"를 구별했나.
-- **`journal_todo`는 자립 primitive로 확정.** TASK-성·per-user·cross-month, SP-T1/T2a/T2b로 구현·커밋됨. 아래 흡수(D)가 유예라고 해서 journal_todo가 잠정인 것은 아니다 — 나중에 특수 케이스로 *재해석될 수* 있을 뿐이다.
+- **`prospective_keep`는 자립 primitive로 확정.** TASK-성·per-user·cross-month, SP-T1/T2a/T2b로 구현·커밋됨. 아래 흡수(D)가 유예라고 해서 prospective_keep가 잠정인 것은 아니다 — 나중에 특수 케이스로 *재해석될 수* 있을 뿐이다.
 
 ### B. topology에 대한 추가 발견 (최저 고도로)
 
@@ -159,9 +159,9 @@
   - **REFERENCE/POSSIBILITY/TASK = primitive-level enum: 미검증(35~45%).** 독립 referent 케이스에선 relation이 더 자연스러움(B).
   - **단일 openness(OPEN/PENDING/RESOLVED) = persistence primitive: 낮음(30~40%).** `fulfilled / expired / rejected / archived / dropped`가 전부 attention에서 빠진다는 이유로 RESOLVED 하나가 되면, prospective view엔 편하나 **retrospective에서 "어떻게 과거가 되었는가"가 파괴된다** — 저널 앱에선 부수 metadata가 아니라 본질(축 ⑤ journalization 재료). 서로 다른 outcome을 view에서 active/closed로 **정규화**하는 것으로 보는 편이 유력(65~75%).
 
-### D. `journal_todo` 흡수 = 판정 유예
+### D. `prospective_keep` 흡수 = 판정 유예
 
-`journal_todo → prospective_item`은 45%냐 55%냐가 아니라 **우변(prospective_item)의 존재론이 미검증**이라 확률 부여가 무의미하다(B temporal-persistence 유예와 동형). 목적지가 존재론적으로 성립한 뒤에나 판정한다.
+`prospective_keep → prospective_item`은 45%냐 55%냐가 아니라 **우변(prospective_item)의 존재론이 미검증**이라 확률 부여가 무의미하다(B temporal-persistence 유예와 동형). 목적지가 존재론적으로 성립한 뒤에나 판정한다.
 
 ### E. 아직 열린 primitive 탐색
 
@@ -232,9 +232,9 @@ P1은 F5(거짓 완료 금지)와 맞물린다: F5를 약한 버전으로 두면
 
 ### 현재 구조와의 충돌
 
-`journal_todo`만으로 floor를 충족할 수 없다는 것은 드러났다. 어떤 새 저장 구조가 정답인지는 아직 도출되지 않았다. floor에서 최소 세 가지가 도출된다:
+`prospective_keep`만으로 floor를 충족할 수 없다는 것은 드러났다. 어떤 새 저장 구조가 정답인지는 아직 도출되지 않았다. floor에서 최소 세 가지가 도출된다:
 
-- **lifecycle 삭제가 하드 삭제** — `deleteTodo`(`DELETE /api/journal/todo/{id}`)가 소멸이라 F1·F4와 충돌. 소프트 폐기 또는 폐기 이력이 필요하다.
+- **lifecycle 삭제가 하드 삭제** — `deleteTodo`(`DELETE /api/prospective/keep/{id}`)가 소멸이라 F1·F4와 충돌. 소프트 폐기 또는 폐기 이력이 필요하다.
 - **전 범위 리뷰 부재** — 월 스코프 투영이라 F2와 충돌. cross-month 활성집합으로 일부 완화됐으나 "전 범위를 빠짐없이 여는 단일 진입점"은 없다.
 - **비TODO 항목의 정직한 수용 불가** — 완료축을 강제해 참조·가능성을 못 담는다(F5 충돌). 비TODO 항목 수용 구조가 필요하다.
 
@@ -261,6 +261,6 @@ F1 + Source 연쇄 소멸 금지에서 필연적으로 따라오는, 구현 진�
 
 ## 관련
 
-- [journal-todo-evolution](journal-todo-evolution.md) — 완료 축(lifecycle)·시간 축·회고 투영(as-of)의 존재론. 이 노트의 완료 축 서술은 그 문서를 SSOT로 참조한다.
+- [journal-todo-evolution](prospective-keep-evolution.md) — 완료 축(lifecycle)·시간 축·회고 투영(as-of)의 존재론. 이 노트의 완료 축 서술은 그 문서를 SSOT로 참조한다.
 - [thread-organization](thread-organization.md) — "발생 시점 + lifecycle 흐름 + 시점 투영" 템플릿의 동형 문제. 시간 축을 공통화하면 이 계열과 같은 축을 공유한다.
-- 현재 코드 계약: `feature/calendar/schedule/**`(일정), `feature/journal/todo/**`(TODO), `feature/attachable/**`(공통축).
+- 현재 코드 계약: `feature/calendar/schedule/**`(일정), `feature/prospective/keep/**`(Keep), `feature/attachable/**`(공통축).

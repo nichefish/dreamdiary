@@ -247,24 +247,24 @@ HTML 요소:
 
 ---
 
-### 22. `JournalAsideTodoCard` (어사이드 투두 카드)
+### 22. `JournalAsideKeepCard` (어사이드 Keep 카드)
 
-**현재 Vue 동등**: ✓ `JournalAsideTodoCard.vue` — 카드 헤더·활성 집합(OPEN·PENDING) 목록 조회(월 무관 cross-month)·완료(체크)·보류·삭제·등록 모달 호출 구현
+**현재 Vue 동등**: ✓ `JournalAsideKeepCard.vue` — 카드 헤더·활성 집합(OPEN·PENDING) 목록 조회(월 무관)·완료(체크)·보류·삭제·등록 모달 호출 구현
 
-현재 구현된 카드 제목과 할일 등록 버튼 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록은 월에 종속되지 않고 사용자의 활성 집합을 조회하므로 대상 년월과 무관하며, 등록 모달도 대상 년월을 전달하지 않고 빈 폼으로 연다.
+카드 제목과 Keep 등록 버튼 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록과 등록은 저널 년월에 종속되지 않는다.
 
-**라이프사이클 참여 (✓)**: `JOURNAL_TODO` 는 `AttachableContentLifecyclePolicy` 에 `OPEN`/`PENDING`/`RESOLVED` 로 등록되며, 목록 조회 시 `JournalLifecycleViewHelper` 가 부착 테이블에서 `JournalTodoDto.lifecycle` 를 채운다(행 부재 = `OPEN`). 목록은 월 무관 **활성 집합(OPEN·PENDING) cross-month 투영**이며 `RESOLVED` 는 인메모리로 제외한다. 리스트 캐시(`journalTodoListByUser`)는 제거해 매 조회 신선하게 부착하고, `sortOrder` 는 사용자 전역 순번이다. 발생 시점은 감사 컬럼 `created_at` 이 가지며 별도 발생지 컬럼을 두지 않는다. 카드는 행별로 왼쪽 체크박스로 **완료(`RESOLVED` 전이, `PUT /api/lifecycles`)**, kebab(⋯) 메뉴로 **보류(`PENDING`)/보류 해제(`OPEN`)·삭제(하드 `DELETE`)**를 제공한다. `PENDING` 은 제목 앞 「보류」 배지(`lifecycle.pending`, `badge-light-warning`)로 표시한다. 전이·삭제 성공 시 `fetchTodos()` 로 재조회하며 `RESOLVED` 는 활성 목록에서 자연히 빠진다. 리스트 캐시가 없어 전이는 `cacheContext` 없이 호출한다(서버 lifecycle updater 는 `JOURNAL_TODO` 미등록이라 no-op). 완료된 todo 는 삭제가 아니라 `RESOLVED` 로 보존된다.
+**라이프사이클 참여 (✓)**: `PROSPECTIVE_KEEP` 는 `AttachableContentLifecyclePolicy` 에 참여한다. `ProspectiveKeepService`가 부착 테이블의 현재값을 `ProspectiveKeepDto.lifecycle`에 채우며 행 부재는 `OPEN`으로 본다. 목록은 **활성 집합(OPEN·PENDING)** 이고 종결 상태는 제외한다. `sortOrder`는 사용자 전역 순번이다. 카드는 체크박스로 `RESOLVED`, 메뉴로 `PENDING`·`OPEN` 전이와 하드 삭제를 제공한다. 전이·삭제 성공 시 `fetchKeeps()`로 다시 조회한다.
 
 **API**:
 | 작업 | 엔드포인트 | 응답 |
 |------|-----------|------|
-| 활성 목록 조회 | `GET /api/journal/todos` (`yy`·`mnth` 전달돼도 무시) | `{ rsltList: TodoRow[] }` — 사용자 활성 집합(OPEN·PENDING) |
-| 라이프사이클 전이 | `PUT /api/lifecycles` `{id, contentType:'JOURNAL_TODO', lifecycleKey}` | `{ rslt: boolean }` — 완료(RESOLVED)·보류(PENDING)·해제(OPEN) |
-| 삭제 | `DELETE /api/journal/todo/{id}` | `{ rslt: boolean }` |
+| 활성 목록 조회 | `GET /api/prospective/keeps` | `{ rsltList: KeepRow[] }` — 사용자 활성 집합(OPEN·PENDING) |
+| 라이프사이클 전이 | `PUT /api/lifecycles` `{id, contentType:'PROSPECTIVE_KEEP', lifecycleKey}` | `{ rslt: boolean }` — 완료(RESOLVED)·보류(PENDING)·해제(OPEN) |
+| 삭제 | `DELETE /api/prospective/keep/{id}` | `{ rslt: boolean }` |
 
-**TodoRow 모델**:
+**KeepRow 모델**:
 ```typescript
-interface TodoRow {
+interface KeepRow {
     id: string | number;
     title: string;
     // 활성 목록엔 OPEN·PENDING만 온다(RESOLVED 제외). 행 부재 = OPEN.
@@ -272,51 +272,12 @@ interface TodoRow {
 }
 ```
 
-**카드 구조**:
-```html
-<div class="card card-reset card-p-0">
-    <!-- 헤더: 제목 + 추가 버튼 -->
-    <div id="journal_todo_aside_header" class="card-header min-h-auto mb-5">
-        <h3 class="card-title text-gray-900 fw-bold fs-3">
-            <i class="bi bi-list-task fs-2 me-1"></i> TODO List
-        </h3>
-        <div class="card-toolbar">
-            <a class="btn btn-sm btn-icon btn-primary" title="할일 추가" @click.prevent="openTodoRegist">
-                <i class="bi bi-plus fs-2 pe-0" id="journalTodoAsideRegistIcon"></i>
-            </a>
-        </div>
-    </div>
-    <!-- 목록 -->
-    <div id="journal_todo_list_div">
-        <template v-if="todos.length > 0">
-            <div v-for="item in todos" :key="'todo-' + item.id"
-                 class="row d-flex-align-center justify-content-between">
-                <div class="col text-truncate" data-bs-toggle="tooltip" :title="item.title">
-                    {{ item.title }}
-                </div>
-                <div class="col-3 d-flex justify-content-end">
-                    <button class="btn btn-sm btn-light-danger btn-outlined py-2 px-3"
-                            title="삭제" @click.prevent="deleteTodo(item.id)">
-                        <i class="bi bi-trash p-0"></i>
-                    </button>
-                </div>
-            </div>
-        </template>
-        <div v-else class="journal-day d-flex-center">할일이 없습니다.</div>
-    </div>
-</div>
-```
-
 **초기화 및 갱신 타이밍**:
-- `onMounted` → `fetchTodos({ yy: store.yy, mnth: store.mnth })`
-- `watch([() => store.yy, () => store.mnth])` → 연/월 변경 시 재조회
-- TODO 등록/삭제 성공 후 `fetchTodos()` 재호출
+- `onMounted` → `fetchKeeps()`
+- 년/월 변경은 Keep 재조회 조건이 아니다.
+- 등록·전이·삭제 성공 후 `fetchKeeps()` 재호출
 
-**TODO 등록 모달 연결**:
-```typescript
-// modalStore.openTodoRegist({ yy: store.yy, mnth: store.mnth }) 호출
-// JournalTodoRegistModal.vue가 처리 — 등록 성공 시 journalStore.fetchTodos() 재호출
-```
+**Keep 등록 모달 연결**: `useProspectiveKeepModalStore().openRegist()`가 `ProspectiveKeepRegistModal.vue`를 열며, submit 성공 시 `journalStore.fetchKeeps()`로 카드를 갱신한다.
 
 
 
@@ -447,15 +408,7 @@ interface TodoRow {
 
 ---
 
-### 22-5. `JournalTodoRegistModal` 등록/수정 폼
-
-**Vue 구현**: `app/frontend-vue/src/features/journal/todo/modals/JournalTodoRegistModal.vue`
-
-**데이터·동작**: `useJournalModalStore.todoRegistModel`의 말머리·제목·순서·일시·유효 기한·위치·본문·태그를 편집한다. 태그는 `TagifyEditor` 로 입력하며 `GET /api/journal/todo/tag/categories` 의 `JOURNAL_TODO` categoryMap 으로 카테고리를 자동완성한다. 저널 사이드바와 Keep 이 이 맵 하나를 공유한다. 말머리는 content_type `JOURNAL_TODO` 개인 목록의 활성 선택지를 쓰며, 선택지가 하나도 없으면 필드를 표시하지 않는다. 저장된 비활성 말머리는 disabled 옵션으로 표시해 같은 선택 유지 저장만 허용한다. 연결은 `prefix_content`에 저장한다. 위치(`location`)와 일시(`dateText`)는 각각 200자 자유 텍스트다. 일시는 단일일·연속 범위·불연속 다회차·시각을 사용자가 쓴 표현 그대로 한 문자열로 보존하며, 서버는 이 값을 날짜로 해석하지 않고 기계가 되쓰지도 않는다. 유효 기한(`expireDt`)은 그 원문에서 가장 늦은 날짜 하나를 뽑은 파생값으로, 정렬·임박 판정에 쓰는 기계용 축이다. 클라이언트가 파생을 수행해 확정된 절대 날짜(`yyyy-MM-dd`)만 전송하고, 빈 문자열은 기한 해제로 서버에서 `null` 이 된다. 파생 규칙의 정본은 `features/journal/todo/utils/expireDt.ts` 이며 모달은 결과를 표시·전송만 한다. 신규는 `POST /api/journal/todos`, 수정은 `POST /api/journal/todo/{id}`로 multipart form data를 전송한다. 성공 시 모달을 닫고 성공 알림 확인 후 `refreshJournalDaysForRoute()`로 현재 route 기준 저널 목록을 갱신한다.
-
-**i18n**: 모달 제목·대상 년월·필드·placeholder·안내·저장·닫기·제목 필수 검증·확인·결과 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. API 응답에 `message`가 있으면 서버 메시지를 우선 표시한다.
-
-**현재 Vue 동등**: ✓ 구현 완료
+`ProspectiveKeepRegistModal`은 prospective 도메인 소유다. 컴포넌트 계약은 [Prospective 컴포넌트 스펙](../prospective/component-spec.md)을 따른다.
 
 ---
 
@@ -850,7 +803,7 @@ interface TodoRow {
 
 **Aside 열기 버튼 위치**: aside 숨김 시 데스크톱 열기 버튼(`bi-layout-sidebar-inset-reverse`)은 `JournalDayViewToolbar` 액션 행의 맨 오른쪽에서 일정 화면과 같은 구분자+아이콘 슬롯으로 표시되고, sticky 툴바와 함께 스크롤을 따라간다. 기존 본문 컨테이너의 `position-absolute; top: 4rem; right: 0` 버튼은 툴바 액션 영역이 숨겨지는 모바일(`d-md-none`)에서만 유지한다. 변경 전에는 모든 화면 크기에서 본문 우상단에 떠 있어 데스크톱 액션 행과 정렬되지 않았다.
 
-**마운트 모달·메뉴**: `JournalDayRegistModal`, `JournalDayDetailModal`, `JournalChapterRegistModal`, `JournalReflectionRegistModal`, `JournalTodoRegistModal`, `JournalDayMetaModal`, `CommentRegistModal`, `CommentListModal`, `HistoryModal`, `RelatedContentAddModal`, `TagProfileModal`, `JournalMetaProfileModal`, `TagContextMenu`, `JournalMetaContextMenu`. (`JournalEntryRegistModal`·`JournalEntryViewModal`은 채팅 RAG 원문 딥링크를 위해 `App.vue`에서 비팝업 전역 마운트 — 레이아웃 중복 마운트 없음. 출처 클릭은 읽기 전용 뷰, 편집은 뷰 footer에서 수정 모달로 전환.)
+**마운트 모달·메뉴**: `JournalDayRegistModal`, `JournalDayDetailModal`, `JournalChapterRegistModal`, `JournalReflectionRegistModal`, `ProspectiveKeepRegistModal`, `JournalDayMetaModal`, `CommentRegistModal`, `CommentListModal`, `HistoryModal`, `RelatedContentAddModal`, `TagProfileModal`, `JournalMetaProfileModal`, `TagContextMenu`, `JournalMetaContextMenu`. (`JournalEntryRegistModal`·`JournalEntryViewModal`은 채팅 RAG 원문 딥링크를 위해 `App.vue`에서 비팝업 전역 마운트 — 레이아웃 중복 마운트 없음. 출처 클릭은 읽기 전용 뷰, 편집은 뷰 footer에서 수정 모달로 전환.)
 
 `JournalDayMetaModal.vue`의 제목·결과 건수·연도/전체 연도·연월 구분선·기준 날짜 요일·필터 추가/제거·일자 새 창 tooltip·빈 상태·닫기와 조회 실패 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. 각 일자는 카드형(날짜 → 메타·태그 → 시스템 요약, 구분선)으로 표시한다. 시스템 요약 챕터(`summaryYn=Y`, 없으면 첫 non-DREAM)의 첫 non-empty 엔트리 본문(`summaryEntryHtmlOf`, `journal-content`/`v-html`)은 `collapse-3`(최대 3줄)·`expand-btn`으로 미리보고 클릭·더보기로 전체를 펼친다. 접힘 중에는 빈 문단을 제거·문단 여백을 줄이고, 펼침 시 원문 HTML·간격을 그대로 둔다. 데이터는 SEARCH 목록의 `journalChapterList`를 파생하며 추가 API는 없다. locale 변경은 선택 메타/태그·AND 필터·연도·일자 목록을 변경하지 않는다. 태그 입력 검색의 placeholder·카테고리 선택·미존재 태그 알림 문구는 엔트리 검색 키(`journal.entry.search.tag.*`, `journal.entry.search.category.*`)를 재사용한다.
 
@@ -870,4 +823,4 @@ interface TodoRow {
 | `JournalAsideFilterHeader` | `JournalAside.vue` (`#journal_aside_header` + 정렬 토글) |
 | `JournalAsideYyMnthSection` | `JournalAside.vue` (연/월/TODAY/Week/Pinpoint) |
 | `JournalAsideEntryFilters` | `JournalAside.vue` (블록 D 제외 — 이식 대상 아님) |
-| `JournalAsideTodoCard` | `JournalAsideTodoCard.vue` (카드 헤더·목록 API·삭제·등록 모달 호출) |
+| `JournalAsideKeepCard` | `JournalAsideKeepCard.vue` (카드 헤더·활성 목록 API·라이프사이클·삭제·등록 모달 호출) |
