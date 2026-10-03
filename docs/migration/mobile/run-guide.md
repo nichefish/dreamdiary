@@ -12,10 +12,33 @@
 | Tailscale | PC·폰 **같은 계정**으로 설치·로그인, 둘 다 **Connected** |
 | 백엔드 | Spring Boot API가 PC에서 **8080** 포트로 동작 중 |
 | `.env` | `app/mobile-react-native/.env` (`.env.example` 복사 후 수정). **git에 커밋하지 않음** |
-| Node.js | **20.19.x 이상** 권장. PATH에 `npm`이 없으면 §4 Gradle Node 참고 |
+| Node.js | **22.13.x 이상, Node 22 LTS** 권장. 선택 근거는 §1.1, PATH에 `npm`이 없으면 §4 Gradle Node 참고 |
 | 인증 | REST: 쿠키. WebSocket: login/refresh의 `Authorization: Bearer` → SecureStore (`src/auth/accessToken.ts`) |
 
 **퍼블릭 IP·포트포워딩은 필요 없습니다.**
+
+### 1.1 Node.js 버전 선택 기준
+
+모바일 개발 환경의 표준 런타임은 **Node 22 LTS**로 둡니다. 새로 설치할 때는 `22.13.x` 이상인 최신 Node 22 LTS를 선택합니다.
+
+판단 근거:
+
+- 현재 모바일 프로젝트는 Expo SDK `57.0.19`, React Native `0.86.3`을 사용합니다.
+- [Expo SDK 버전 표](https://docs.expo.dev/versions/latest/)에서 Expo SDK 57의 최소 Node.js 버전은 `22.13.x`입니다.
+- [Expo 빌드 서버 환경](https://docs.expo.dev/build-reference/infrastructure/)의 SDK 57 이미지도 Node 22 계열을 사용합니다.
+- Expo의 [프로젝트 생성 가이드](https://docs.expo.dev/get-started/create-a-project/)는 로컬 개발 환경에 Node.js LTS를 요구합니다.
+- React Native `0.86.3` 패키지는 Node `^20.19.4`, `^22.13.0`, `^24.3.0`을 허용하지만, Expo SDK 57의 최소 버전과 공식 빌드 환경을 함께 맞추면 Node 22 LTS가 가장 직접적인 선택입니다.
+
+Node 24는 React Native 허용 범위에 포함되므로 사용할 수 있지만, 이 프로젝트의 표준 버전으로 채택하지 않습니다. Expo SDK 57 공식 빌드 환경과 같은 주 버전을 사용해 로컬과 원격 빌드 사이의 차이를 줄이는 것이 우선입니다.
+
+설치 확인:
+
+```powershell
+node --version
+npm --version
+```
+
+`node --version` 결과가 `v22.13.0` 이상인지 확인합니다. 저장소의 Gradle Node 설정 `20.11.1`은 Expo SDK 57 최소 요구보다 낮으므로 모바일 실행에는 PATH의 Node 22를 우선 사용합니다. Gradle Node 버전 정합은 별도 설정 변경으로 다룹니다.
 
 ---
 

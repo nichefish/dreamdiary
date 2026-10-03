@@ -1,5 +1,7 @@
 # Confluence 로컬 적재 작업 계약
 
+이 계약의 신뢰 판정은 [로컬 적재 신뢰 판정 공통 계약](LOCAL_INGESTION_TRUST_CONTRACT.md)을 따른다.
+
 ## 1. 명령 해석
 
 사용자가 **Confluence 페이지 또는 폴더 링크와 함께 `적재해`, `로컬에 적재해`, `파일로 적재해`처럼 적재 의사를 명시하면**, 해당 요청은 아래 정형 작업 전체에 대한 실행 승인이다.
@@ -19,18 +21,41 @@
 3. 후보 페이지의 원격 `pageId`와 `version.number`를 로컬 `index.json`과 비교해 최종 변경 여부를 판정한다. 지역화된 `lastModified` 문자열만으로 본문 갱신을 확정하지 않는다.
 4. 로컬에 없는 신규 페이지와 원격 `version.number`가 더 높은 기존 페이지만 본문을 조회하여 저장한다.
 5. 새 페이지는 원격 상대 계층에 `${pageId}__${안전한 제목}.md`로 추가한다. 갱신 페이지는 제목이 바뀌어도 기존 `file` 경로를 유지한다.
-6. 대상 페이지의 현재 메타데이터, 미러 집계, 폴더 스냅샷 집계와 `collectedAt`을 동기화한다.
+6. 대상 페이지의 현재 메타데이터, 미러 집계와 `scope.folderSnapshots` 집계를 동기화한다. `collectedAt`은 신뢰 판정 근거로 사용하지 않는다.
 7. 댓글 본문과 `*.comments.json`은 사용자가 댓글 적재까지 요청한 경우에만 조회·생성·갱신한다.
 
 ### 1.2 하위 트리 적재 별칭
 
 다음 별칭은 페이지 링크 없이 지정된 컨테이너를 선택하고 1.1의 동일한 하위 트리 증분 적재 규칙을 적용하라는 명시적 실행 승인이다.
 
-- **`희승님 CSR 문서 적재해`**: `daily/text/raw/confluence/최희승/index.json`의 `folderSnapshots`에서 제목과 `relativePath`가 `CSR 현황`인 단일 항목을 찾아 대상으로 사용한다.
-- **`LES 리메이크 문서 적재해`**: `daily/text/raw/confluence/연구솔루션팀/index.json`의 `folderSnapshots`에서 `relativePath`가 `LIMS/LES 리메이크`인 단일 항목을 찾아 대상으로 사용한다.
+- **`컨플루언스 문서 적재해`**: 이 절에 등록된 모든 개별 적재 범위를 각각 선택해 순서와 무관하게 증분 동기화한다. 한 범위의 조회 실패는 다른 범위의 동기화를 막지 않으며, 완료 보고에서 범위별 성공·실패를 구분한다.
+- **`희승님 CSR 문서 적재해`**: `daily/text/raw/confluence/최희승/index.json`의 `scope.folderSnapshots`에서 제목과 `relativePath`가 `CSR 현황`인 단일 항목을 찾아 대상으로 사용한다.
+- **`LES 리메이크 문서 적재해`**: `daily/text/raw/confluence/연구솔루션팀/index.json`의 `scope.folderSnapshots`에서 `relativePath`가 `LIMS/LES 리메이크`인 단일 항목을 찾아 대상으로 사용한다.
 - **`직책자회의 문서 적재해`**: `daily/text/raw/confluence/GxP 사업부/직책자회의/index.json`의 `source.rootFolderId`와 `scope.rootSnapshot`이 가리키는 단일 루트 폴더를 대상으로 사용한다.
+- **`내 Confluence 문서 적재해`**: `daily/text/raw/confluence/nichefish/index.json`의 `source.spaceId`와 `source.spaceKey`가 가리키는 개인 스페이스의 전체 현재 페이지와 폴더를 대상으로 사용한다.
 
-별칭은 폴더 ID를 계약 문서에 고정하지 않는다. 대상 `folderSnapshots` 또는 루트 메타데이터가 없거나 여러 항목으로 갈려 하나로 확정되지 않을 때만 사용자에게 대상 위치를 질문한다.
+개별 별칭은 대상 ID를 계약 문서에 고정하지 않고 각 로컬 인덱스의 원격 식별자를 사용한다. 대상 `scope.folderSnapshots`, 루트 메타데이터 또는 스페이스 메타데이터가 없거나 여러 항목으로 갈려 하나로 확정되지 않을 때만 사용자에게 대상 위치를 질문한다.
+
+### 1.3 하위 트리 동기화의 필수 원자 명제
+
+하위 트리 동기화는 다음 명제가 모두 `TRUE`일 때만 `VERIFIED`다.
+
+```text
+scopeResolved                 = root page·folder·space identity가 하나로 확정됨
+folderPaginationExhausted     = 하위 폴더 목록 종료조건을 관측함
+pagePaginationExhausted       = 하위 페이지 목록 종료조건을 관측함
+paginationFailureCount        = 0
+duplicatePageIdCount          = 0
+requiredPageFetchFailureCount = 0
+reconciliationUnknownCount    = 0
+localInvariantFailureCount    = 0
+```
+
+댓글 적재 범위에는 댓글 목록의 페이지 종료조건 관측, 댓글 identity 중복 0건과 댓글 파일 불변식 검증을 필수 명제로 추가한다. `lastModified`, `version.number`, `scannedAt`, `collectedAt`은 개별 관측값이며 목록 완주를 대신하지 않는다.
+
+원격 목록에서 사라진 기존 페이지는 기존 파일과 인덱스 항목을 보존하고 원격 부재 상태를 기록하는 정상 reconciliation 결과다. 목록 종료조건을 관측하지 못한 실행에서는 페이지 부재를 판정하지 않으며 결과는 `UNKNOWN`이다.
+
+기존 페이지 기준선의 생성 과정에 위 원자 명제를 충족한 감사 증거가 없으면 해당 기준선은 `UNKNOWN`이다. 대상 트리의 최초 신뢰 기준선을 만들 때는 기존 `version.number`가 원격 값과 같더라도 발견한 모든 페이지의 현재 본문을 다시 조회하고 검증한다.
 
 이 정형 작업에는 `AGENTS.md`의 일반적인 수정 직전 승인 질문을 다시 적용하지 않는다. 위 실행 트리거에 해당하지 않거나 저장 위치가 여러 곳으로 갈려 결정할 수 없는 경우에만 질문한다.
 
@@ -93,3 +118,17 @@
 4. `git diff -- <대상 Markdown> <index.json>`으로 변경 범위와 한글 보존을 확인한다.
 5. `python scripts/check_encoding.py`로 UTF-8 게이트를 확인한다.
 6. 결과 보고에는 저장한 절대 경로, 원격 버전, 검증 결과만 간결하게 남긴다.
+7. 하위 트리 동기화 결과에는 폴더·페이지 목록 종료조건, 조회 페이지 수, 발견 page ID 수, 상세 조회 성공·실패 수와 reconciliation 분기별 건수를 함께 보고한다. 필수 명제 중 `UNKNOWN`이 있으면 최신 또는 완료로 보고하지 않는다.
+
+## 7. 실행 소스와 회귀 관문
+
+- Confluence 적재의 요청 구성·응답 해석·범위 해석·정합성 계산·파일 저장은 `tools/local_ingestion/`의 소스를 사용한다. 실행 절차와 커넥터 관측 경계는 [소스 실행 계약](../tools/local_ingestion/README.md)에 기술한다.
+- 정형 적재 CLI는 현재 소스의 회귀 테스트 통과 후 조회/적용을 시작한다. 회귀 통과는 실제 실행의 목록 완주·본문 조회·저장 불변식 검증과 별도 관문이다.
+- 회귀 테스트는 신규/버전 변화·동일 버전 기준선·제목/이동·원격 부재 보존·조회 실패/종료 미확인·본문 잘림/ID 불일치·댓글 보존·UTF-8·범위 밖 보존·공동 변경·저장 실패 복구를 가상 입력과 고정 기대 출력으로 확인한다.
+- CLI의 dry-run은 `PLAN_VALIDATED`로 보고하며 실제 적재 완료로 사용하지 않는다. 실행 소스 SHA-256, cursor 관측, 분기별 identity, 판정 입력과 파일 해시는 기존 미러 `index.json.ingestionAudits`에 보존한다.
+- 현재 계층 관측이 없는 응답은 `INCOMPLETE`다. 이전 인덱스 계층으로 현재 이동 여부를 추정하지 않는다. 댓글 적재는 댓글 전용 완주 검증기가 구현된 실행 경로에서 수행하며 현재 본문 실행기는 댓글 요청을 거절한다.
+
+
+댓글 미요청 실행에서 footerTopLevel·inlineTopLevel·replies·total이 모두 정수 0이고 댓글 파일이 없으면, 기존 commentsFile 참조와 파일 부재를 그대로 보존한다. 이 분기는 ZERO_COUNT_MISSING_COMMENT_PRESERVED로 기록하고 파일 해시는 null(부재)로 남긴다. 실제 댓글 파일은 내용을 보존하며, 양수·누락·상충하는 집계의 파일 부재와 본문 파일 부재는 검증 실패다. 본문 이동 시에도 부재한 댓글 참조는 유지한다. 이 판정은 원격 현재 댓글이 0건이라는 증명이 아니라 요청 범위 밖 로컬 상태의 보존이다.
+
+목록 종료는 커서 연속성, 응답 size, 중복 없는 누적 ID 수와 페이지 간 동일한 totalSize를 함께 검증한다. 각 커서 응답의 start가 0이어도 누적 고유 ID 수가 totalSize와 일치하면 종료를 확인한다. 누락·중복·합계 변동은 UNKNOWN으로 적용을 차단한다. 개인 스페이스 CQL은 기존 인덱스 source.spaceKey를 읽어 인용한 space 조건을 사용하며 키 부재는 조회 전에 중단한다.

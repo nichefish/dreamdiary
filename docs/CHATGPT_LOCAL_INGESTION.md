@@ -1,5 +1,7 @@
 # ChatGPT 대화 로컬 적재 작업 계약
 
+이 계약의 신뢰 판정은 [로컬 적재 신뢰 판정 공통 계약](LOCAL_INGESTION_TRUST_CONTRACT.md)을 따른다.
+
 ## 1. 명령 해석
 
 사용자가 **ChatGPT 대화 링크와 함께 `적재해`, `로컬에 적재해`, `파일로 적재해`처럼 적재 의사를 명시하면**, 해당 요청은 아래 정형 작업 전체에 대한 실행 승인이다.
@@ -14,6 +16,17 @@
 
 이 정형 작업에는 `AGENTS.md`의 일반적인 수정 직전 승인 질문을 다시 적용하지 않는다. 링크나 적재 의사가 없거나 대상 대화·저장 위치를 하나로 확정할 수 없는 경우에만 질문한다.
 
+## 1.1. `read_thread` 회귀 사전점검과 실행기
+
+- 모든 일반 적재·강제 갱신·목록 일괄 적재는 본문과 로컬 파일을 다루기 전에 `read_thread` pagination 회귀 사전점검을 먼저 실행한다.
+- 사전점검과 정상 적재는 저장소에 커밋된 `tools/chatgpt_ingestion/read_thread_ingest.js`와 `tools/chatgpt_ingestion/store_snapshot.py`를 사용한다. 실행 시점의 커밋에서 소스를 읽어 실행하며, 대화별 임시 수집·덮어쓰기 코드를 새로 작성하지 않는다.
+- canary는 접근 가능하고 현재 선택 흐름이 10턴을 초과한다고 독립적으로 확인된 대화 ID를 사용한다. 첫 요청은 `turnLimit=10`, `includeOutputs=false`, `maxOutputCharsPerItem=20000`으로 고정한다.
+- 첫 페이지가 10턴, `page.hasMore=true`, 비어 있지 않은 `page.nextCursor`를 반환하고, 그 cursor를 사용한 두 번째 페이지가 첫 페이지와 중복되지 않는 더 오래된 턴을 1개 이상 반환할 때만 `readThreadRegressionCheckPassed=TRUE`다.
+- canary를 확정할 수 없거나, canary가 조회되지 않거나, 위 관측값 중 하나라도 충족되지 않으면 판정은 `UNKNOWN` 또는 `FALSE`다. 이 상태에서는 대상 대화 본문을 적재하지 않고 `.txt`, `.partial.txt`, `CHATGPT_INDEX.json`, `CHATGPT_BLOCKED.md`, 첨부파일을 수정하지 않는다.
+- 개별 대화 응답의 `page.hasMore=false`와 `page.nextCursor=null`은 현재 응답의 종료조건일 뿐 과거 턴까지 모두 반환됐다는 독립 증거가 아니다.
+- 사전점검은 한 적재 실행 묶음의 첫 조회 전에 수행한다. 도구 오류, 실행 호스트 변경, Codex 재시작 또는 응답 스키마 변경을 관측하면 같은 묶음에서도 저장 전에 다시 수행한다.
+- 기존 정상 스냅샷을 갱신할 때는 새 메시지 블록 수가 기존보다 작지 않고, 기존 메시지 블록 전체가 새 스냅샷 안에 동일한 연속 구간으로 존재해야 한다. 어느 조건이든 실패하면 기존 파일과 인덱스를 보존하고 적재를 중단한다.
+- 기존 스냅샷을 비우거나 삭제한 뒤 새 응답을 쓰는 순서는 허용하지 않는다. 모든 원격 검증과 기존 내용 보존 검증을 메모리에서 마친 뒤 임시 파일과 원자적 교체를 사용한다.
 ## 2. 대화 식별과 기본 저장 위치
 
 1. URL의 `/c/{conversationId}`에서 대화 ID를 추출한다.
@@ -38,13 +51,35 @@
 - 로컬 파일과 인덱스 항목이 모두 있고 목록의 `updatedAt`이 `remoteUpdatedAt`과 같으면 해당 대화의 본문 조회를 생략한다.
 - 두 값이 다르거나 인덱스 항목·로컬 파일 중 하나가 없으면 전체 본문을 다시 조회하고, 정상 적재가 끝난 뒤 인덱스를 갱신한다.
 - 사용자가 특정 대화의 내용 변경 가능성을 알리거나 강제 갱신을 요청하면 `updatedAt` 일치 여부와 관계없이 전체 본문을 다시 조회한다.
-- 기존 로컬 파일에 최초 기준선을 도입할 때 현재 목록의 `updatedAt`을 본문 재조회 없이 등록할 수 있다. 이 기준선은 등록 이후의 값 변화만 감지하며 등록 이전의 본문 변경을 증명하지 않는다.
+- 기존 로컬 파일의 최초 기준선은 현재 선택 흐름의 마지막 페이지까지 본문을 조회하고 본문·첨부파일 검증을 완료한 경우에만 등록한다. 목록의 현재 `updatedAt`만으로 최초 기준선을 만들지 않는다.
 - 목록에 나타나지 않은 기존 로컬 파일은 인덱스 생성만을 위해 본문을 조회하지 않는다. 이후 목록에 나타나거나 사용자가 링크를 제공했을 때 기준선을 만든다.
 - `BLOCKED` 대화, `*.partial.txt` 초안과 본문 조회가 완료되지 않은 대화는 정상 적재 인덱스에 추가하거나 기존 기준선을 갱신하지 않는다.
 - 인덱스는 대화 ID 오름차순으로 정렬하고 UTF-8 BOM 없이 저장한다.
+
+### 2.2 변경 감지 기준선의 필수 원자 명제
+
+개별 대화 기준선은 다음 명제가 모두 `TRUE`일 때만 신뢰할 수 있다.
+
+```text
+readThreadRegressionCheckPassed = 검증된 canary의 첫 두 페이지가 cursor 연속성과 과거 턴 접근을 입증함
+conversationIdentityMatched     = URL·목록·본문의 conversationId가 동일함
+paginationExhausted             = 첫 페이지부터 cursor 연속성을 유지해 hasMore=false를 관측함
+duplicateTurnIdCount         = 0
+requiredMessageFieldFailures = 0
+unresolvedTruncationCount    = 0
+attachmentInvariantFailures  = 0
+contentHashMatched           = 저장 파일 SHA-256과 인덱스 contentSha256이 동일함
+```
+
+`remoteUpdatedAt`이 `0`이거나 목록에서 숫자형 `updatedAt`을 관측하지 못한 항목은 변경 감지 기준선이 `UNKNOWN`이다. 기존 인덱스 값과 목록 값의 일치는 최초 기준선의 완전성을 증명하지 않는다.
+
+대화 목록 전체 동기화를 수행할 때는 목록의 첫 페이지부터 종료조건까지 완주한 사실, 목록 pagination 실패 0건, 중복 conversation ID 0건을 별도 원자 명제로 판정한다.
+
+기존 인덱스 항목의 생성 과정에 위 원자 명제를 충족한 감사 증거가 없으면 해당 기준선은 `UNKNOWN`이다. 그 대화의 최초 신뢰 기준선을 만들 때는 `remoteUpdatedAt` 일치 여부와 관계없이 전체 본문과 기본 범위 첨부파일을 다시 조회하고 검증한다.
 ## 3. 원문 조회 계약
 
 - Codex 앱의 ChatGPT 대화 조회 경로를 사용한다.
+- 정상 적재 조회는 1.1절의 커밋된 실행기로 수행하며, `readThreadRegressionCheckPassed=TRUE`인 같은 실행 묶음 안에서만 대상 대화를 조회하고 저장한다.
 - 각 페이지를 받은 직후 차단 조건을 먼저 검사한다. 차단 조건이 없을 때만 `page.nextCursor`를 따라 다음 페이지를 조회하며, 정상 적재 후보는 `page.hasMore`가 `false`가 될 때까지 모든 페이지를 조회한다.
 - 개별 메시지의 20,000자 상한 도달, 지원되지 않는 메시지 항목·텍스트 블록처럼 원문 완전성을 보장할 수 없는 조건을 하나라도 발견하면 해당 페이지에서 즉시 조회를 종료한다. 반환된 `nextCursor`와 이후 페이지는 조회하지 않는다.
 - 응답 순서가 `newest_first`이면 전체 턴을 뒤집어 최초 턴부터 최신 턴 순서로 저장한다.
@@ -187,6 +222,8 @@ Assistant 원문
 - 누락된 시간이나 메시지 내용을 추정하여 채우지 않는다.
 
 ## 8. 완료 검증과 보고
+
+0. `readThreadRegressionCheckPassed=TRUE`와 그 근거인 canary 첫·둘째 페이지 관측값을 확인한다. `UNKNOWN` 또는 `FALSE`이면 로컬 무변경 상태로 종료하고 완료로 보고하지 않는다.
 
 1. 정상 적재는 마지막 페이지까지 조회했고 `hasMore`가 `false`인지 확인한다. `BLOCKED` 조기 종료는 최초 차단 조건이 나온 페이지 뒤로 조회하지 않았는지 확인한다. 상한 도달 메시지 부분 수동 복구는 마지막 페이지까지 조회하고 모든 상한 도달 메시지를 시간순으로 식별했는지 확인한다.
    본문 `BLOCKED` 조기 종료에는 아래 2~7의 스냅샷·첨부파일 검증을 적용하지 않는다.
