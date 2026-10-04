@@ -76,8 +76,10 @@ public class JournalThreadSpec
                     // board를 contentType으로 이용
                     predicate.add(builder.equal(root.get("contentType"), value));
                     continue;
+                case "title":
+                    // CmmUtils 가 searchType=title + searchKeyword 를 {title: 키워드} 로 변환해 넘긴다. 부분 일치로 검색.
                 case "searchKeyword":
-                    // 제목 키워드 (searchType=title 과 함께 전달). 빈 값은 무시.
+                    // 제목 키워드. 빈 값은 무시.
                     if (value == null || StringUtils.isBlank(value.toString())) continue;
                     predicate.add(builder.like(
                             builder.lower(root.get("title")),
