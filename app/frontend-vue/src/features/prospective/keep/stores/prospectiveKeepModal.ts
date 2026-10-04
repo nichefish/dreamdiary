@@ -16,6 +16,8 @@ export interface ProspectiveKeepRegistModel {
   expireDt?: string;
   projectId?: number | null;
   tag?: { tagListStrWithCtgr?: string };
+  /** 중요(IMPRTC) 상태 보유 여부. 미리보기 표시 전용이며 저장 payload 에 싣지 않는다(상태는 POST /api/states 로 토글). */
+  important?: boolean;
 }
 
 /** Prospective Keep 등록/수정 모달의 단일 상태 소유자. */

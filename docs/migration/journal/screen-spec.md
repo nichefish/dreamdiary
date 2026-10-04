@@ -31,7 +31,7 @@
 | 저널 주간 | `/journal/weekly` | `JournalDayWeekly.vue` | ✓ |
 | 저널 일간 (탭) | `/journal/daily` | `JournalDayDaily.vue` | ✓ 정식 탭(맨앞), JournalDayLayout, aside 포함, 이전/다음 네비 |
 | 저널 일간 (팝업) | `/journal/daily-popup` | `JournalDayDaily.vue` | ✓ 새 창 전용, SystemLayout, 사이드바/헤더 없음, 이전/다음 네비 |
-| 저널 작성 미리보기 (팝업) | `/journal/entry/preview-pop` | `JournalEntryPreviewPage.vue` | ✓ 새 창 전용, SystemLayout, 등록 모달 미저장 본문 |
+| 저널 작성 미리보기 (팝업) | `/journal/entry/preview-pop` | `JournalEntryPreviewPage.vue` | ✓ 새 창 전용, SystemLayout, 등록 모달 미저장 본문 (Prospective Keep 등록 모달 공용) |
 | 저장된 저널 엔트리 보기 (팝업) | `/journal/entry/view-pop?entryId={id}` | `JournalEntryViewPage.vue` | ✓ 새 창 전용, SystemLayout, 엔트리·리플렉션 단건 읽기 전용 |
 | 저널 달력 | `/journal/calendar` | `JournalDayCalendar.vue` | ✓ |
 | 저널 메타 | `/journal/meta` | `JournalDayMeta.vue` | ✓ 컨텍스트 메뉴·단일 비교 차트(최대 2시리즈)·연도 전체 |

@@ -121,7 +121,7 @@ public class ProspectiveKeepEntity
 
     /**
      * 위임 :: 상태 모듈.
-     * Keep 항목은 요구(DEMANDED) 여부를 다중 속성으로 보유한다. 진행 단계(lifecycle)와 별개 축이다.
+     * Keep 항목은 요구(DEMANDED)·중요(IMPRTC) 여부를 다중 속성으로 보유한다. 진행 단계(lifecycle)와 별개 축이다.
      */
     @Embedded
     public StateEmbed state;

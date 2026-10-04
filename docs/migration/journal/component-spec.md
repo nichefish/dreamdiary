@@ -249,7 +249,7 @@ HTML 요소:
 
 ### 22. `JournalAsideKeepCard` (어사이드 Keep 카드)
 
-**현재 Vue 동등**: ✓ `JournalAsideKeepCard.vue` — 카드 헤더·활성 집합(OPEN·PENDING) 목록 조회(월 무관)·완료(체크)·보류·삭제·등록 모달 호출 구현
+**현재 Vue 동등**: ✓ `JournalAsideKeepCard.vue` — 카드 헤더·활성 집합(OPEN·PENDING) 목록 조회(월 무관)·완료(체크)·보류·삭제·등록 모달 호출 구현. 중요(`IMPRTC`) 항목은 제목 앞 노란 별과 굵은 제목으로 표시만 한다.
 
 카드 제목과 Keep 등록 버튼 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록과 등록은 저널 년월에 종속되지 않는다.
 

@@ -323,6 +323,8 @@ export interface ProspectiveKeepItem {
   title?: string;
   /** 라이프사이클 현재값(백엔드 enrich). 활성 목록엔 OPEN·PENDING만 온다. */
   lifecycle?: { lifecycleKey?: string | null } | null;
+  /** 부착된 상태(다중). 중요(IMPRTC) 강조 표시에 쓴다. */
+  state?: { list?: Array<{ stateKey?: string }> } | null;
 }
 
 export type TagCloudSection = "day" | "diary" | "dream";

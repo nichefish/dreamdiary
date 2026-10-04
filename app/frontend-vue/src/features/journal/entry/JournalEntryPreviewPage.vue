@@ -1,5 +1,5 @@
 <template>
-  <!--begin::작성 중 저널 엔트리/리플렉션 미리보기 팝업-->
+  <!--begin::작성 중 저널 엔트리/리플렉션 미리보기 팝업 (Prospective Keep 공용)-->
   <div class="p-5">
     <div class="card post">
       <div class="card-body">
@@ -18,6 +18,7 @@
               <span v-if="view.sortOrder != null" class="text-muted fs-6"># {{ view.sortOrder }}</span>
             </div>
             <div v-if="view.prefixName || view.title" class="d-flex align-items-center flex-wrap fs-5 fw-semibold text-gray-800 mb-2">
+              <i v-if="isKeep && view.keepMeta?.important" class="bi bi-star-fill text-warning me-2" :title="t('state.important')"></i>
               <span
                 v-if="view.prefixName"
                 class="badge me-2 fs-8"
@@ -25,13 +26,32 @@
               >{{ view.prefixName }}</span>
               <span v-if="view.title">{{ view.title }}</span>
             </div>
+            <!--begin::Keep 메타 (PROSPECTIVE_KEEP 전용, 값이 있는 항목만)-->
+            <div v-if="keepMetaRows.length || keepTags.length" class="d-flex flex-column gap-1 fs-7 text-gray-700 mt-3">
+              <div v-for="row in keepMetaRows" :key="row.key">
+                <span class="fw-bold text-gray-600 me-2">{{ row.label }}</span>
+                <span>{{ row.value }}</span>
+                <span v-if="row.hint" class="fs-8 ms-2" :class="row.hintClass">{{ row.hint }}</span>
+              </div>
+              <div v-if="keepTags.length" class="d-flex flex-wrap align-items-center">
+                <span class="fw-bold text-gray-600 me-2">{{ t("common.tag") }}</span>
+                <TagChip
+                  v-for="(tag, idx) in keepTags"
+                  :key="'keep-preview-tag-' + idx"
+                  class="fs-8"
+                  :name="tag.name"
+                  :ctgr="tag.ctgr"
+                />
+              </div>
+            </div>
+            <!--end::Keep 메타-->
           </div>
 
           <div class="separator separator-dashed border-gray-300 my-8"></div>
 
           <div class="px-2 py-1 pb-4 journal-markdown-preview">
             <div :class="itemClass">
-              <div class="col-1 py-3 d-none d-md-flex border-2 border-gray-300 border-end ps-5 me-4 h-75" style="width:85px;">
+              <div v-if="!isKeep" class="col-1 py-3 d-none d-md-flex border-2 border-gray-300 border-end ps-5 me-4 h-75" style="width:85px;">
                 &nbsp;
               </div>
               <div class="col">
@@ -46,7 +66,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-1 py-3 d-none d-md-flex w-50px ps-2">&nbsp;</div>
+              <div v-if="!isKeep" class="col-1 py-3 d-none d-md-flex w-50px ps-2">&nbsp;</div>
             </div>
           </div>
         </template>
@@ -67,11 +87,15 @@
 /**
  * JournalEntryPreviewPage.vue
  * 등록/수정 모달의 작성 중 본문을 목록과 같은 journal-content로 새 창에 표시한다.
+ * Prospective Keep 등록/수정 모달의 작성 중 본문도 같은 창으로 표시한다.
+ * Keep 은 저널 목록의 좌우 여백 칸 없이 본문을 표시하고, 제목 아래에 일시·유효 기한·위치·Project·태그 메타를 둔다.
  * 페이로드는 opener가 localStorage에 쓴 뒤 storage 이벤트로 전달한다.
  */
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
+import { daysUntilExpire } from "@/features/prospective/keep/utils/expireDt";
 import {
   clearPreviewView,
   isPreviewId,
@@ -106,11 +130,64 @@ const errorText = computed(() => {
   return "";
 });
 
+/** Keep 미리보기 여부. 좌우 여백 칸 생략과 메타 블록 표시를 가른다. */
+const isKeep = computed(() => view.value?.contentType === "PROSPECTIVE_KEEP");
+
+/** Keep 메타 한 줄. hint 는 유효 기한의 남은/지난 일수다. */
+interface KeepMetaRow {
+  key: string;
+  label: string;
+  value: string;
+  hint?: string;
+  hintClass?: string;
+}
+
+/** 유효 기한 옆 상대 일수 문구. 등록 모달 안내와 같은 i18n 키를 쓴다. */
+function expireRelativeHint(expireDt: string): string {
+  const days = daysUntilExpire(expireDt);
+  if (Number.isNaN(days)) return "";
+  if (days === 0) return t("prospective.keep.expire-dt.relative.today");
+  return days > 0
+    ? t("prospective.keep.expire-dt.relative.left").replace("{0}", String(days))
+    : t("prospective.keep.expire-dt.relative.past").replace("{0}", String(-days));
+}
+
+/** 값이 있는 Keep 메타만 일시·유효 기한·위치·Project 순으로 나열한다. */
+const keepMetaRows = computed<KeepMetaRow[]>(() => {
+  const meta = isKeep.value ? view.value?.keepMeta : null;
+  if (!meta) return [];
+  const rows: KeepMetaRow[] = [];
+  if (meta.dateText?.trim()) {
+    rows.push({ key: "dateText", label: t("prospective.keep.field.date-text"), value: meta.dateText });
+  }
+  if (meta.expireDt) {
+    const overdue = daysUntilExpire(meta.expireDt) < 0;
+    rows.push({
+      key: "expireDt",
+      label: t("prospective.keep.field.expire-dt"),
+      value: meta.expireDt,
+      hint: expireRelativeHint(meta.expireDt),
+      hintClass: overdue ? "text-warning" : "text-gray-500",
+    });
+  }
+  if (meta.location?.trim()) {
+    rows.push({ key: "location", label: t("prospective.keep.field.location"), value: meta.location });
+  }
+  if (meta.projectTitle) {
+    rows.push({ key: "project", label: t("prospective.project.field"), value: meta.projectTitle });
+  }
+  return rows;
+});
+
+/** Keep 메타 태그 목록. */
+const keepTags = computed(() => (isKeep.value ? view.value?.keepMeta?.tags ?? [] : []));
+
 const typeLabel = computed(() => {
   const type = view.value?.contentType;
   if (type === "JOURNAL_DREAM") return t("common.dream");
   if (type === "JOURNAL_NOTE") return t("journal.note");
   if (type === "JOURNAL_REFLECTION") return t("journal.reflection.label");
+  if (type === "PROSPECTIVE_KEEP") return t("prospective.keep.label");
   return t("common.diary");
 });
 
@@ -119,13 +196,14 @@ const typeIconClass = computed(() => {
   if (type === "JOURNAL_DREAM") return "bi-moon-stars";
   if (type === "JOURNAL_REFLECTION") return "bi-chat-quote";
   if (type === "JOURNAL_NOTE") return "bi-journal";
+  if (type === "PROSPECTIVE_KEEP") return "bi-bookmark-check";
   return "bi-journal-text";
 });
 
 const itemClass = computed(() => {
   const type = view.value?.contentType;
   if (type === "JOURNAL_DREAM") return "journal-dream-item";
-  if (type === "JOURNAL_NOTE") return "journal-note-item";
+  if (type === "JOURNAL_NOTE" || type === "PROSPECTIVE_KEEP") return "journal-note-item";
   if (type === "JOURNAL_REFLECTION") return "journal-reflection-embed";
   return "journal-diary-item";
 });
@@ -133,7 +211,7 @@ const itemClass = computed(() => {
 const contentClass = computed(() => {
   const type = view.value?.contentType;
   if (type === "JOURNAL_DREAM") return "journal-dream-content";
-  if (type === "JOURNAL_NOTE") return "journal-note-content";
+  if (type === "JOURNAL_NOTE" || type === "PROSPECTIVE_KEEP") return "journal-note-content";
   if (type === "JOURNAL_REFLECTION") return "journal-reflection-content";
   return "journal-diary-content";
 });

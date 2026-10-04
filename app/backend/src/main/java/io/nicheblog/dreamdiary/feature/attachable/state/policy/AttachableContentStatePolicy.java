@@ -43,8 +43,9 @@ public final class AttachableContentStatePolicy {
         /*
          * Keep 항목은 「내가 담아둔 것」과 「요구받아 담긴 것」을 가른다. 진행 단계가 아니라
          * 성격이라 lifecycle 이 아닌 여기에 둔다 -- 요구받은 채 보류일 수도, 완료했을 수도 있다.
+         * 중요(IMPRTC)도 같은 이유로 성격 축에 둔다 -- 중요한 채 보류일 수도, 완료했을 수도 있다.
          */
-        ALLOWED.put(ContentType.PROSPECTIVE_KEEP, EnumSet.of(StateKey.DEMANDED));
+        ALLOWED.put(ContentType.PROSPECTIVE_KEEP, EnumSet.of(StateKey.DEMANDED, StateKey.IMPRTC));
     }
 
     private AttachableContentStatePolicy() {

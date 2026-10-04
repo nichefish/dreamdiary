@@ -27,6 +27,15 @@
           >
             <i class="bi bi-hourglass-bottom fs-6 pe-1"></i>{{ t("prospective.keep.filter.overdue") }}
           </button>
+          <button
+            type="button"
+            class="btn btn-sm"
+            :class="filterImportant ? 'btn-warning' : 'btn-light'"
+            :title="t('prospective.keep.filter.important.tooltip')"
+            @click.prevent="filterImportant = !filterImportant"
+          >
+            <i class="bi bi-star-fill fs-6 pe-1"></i>{{ t("prospective.keep.filter.important") }}
+          </button>
           <input
             v-model="keyword"
             type="text"
@@ -103,9 +112,11 @@
             />
             <div
               class="flex-grow-1 text-truncate cursor-pointer"
+              :class="{ 'fw-bold': hasState(item, 'IMPRTC') }"
               :title="item.title"
               @click.prevent="openKeepEdit(item.id)"
             >
+              <i v-if="hasState(item, 'IMPRTC')" class="bi bi-star-fill text-warning fs-7 me-1" :title="t('state.important')"></i>
               <span v-if="isPending(item)" class="badge badge-light-warning fs-9 me-1">{{ t("lifecycle.pending") }}</span>
               <span v-if="hasState(item, 'DEMANDED')" class="badge badge-light-danger fs-9 me-1">{{ t("state.demanded") }}</span>
               <span
@@ -249,6 +260,7 @@
               :title="item.title"
               @click.prevent="openKeepEdit(item.id)"
             >
+              <i v-if="hasState(item, 'IMPRTC')" class="bi bi-star-fill text-muted fs-7 me-1" :title="t('state.important')"></i>
               <span
                 v-if="item.prefix"
                 class="fw-bold me-1"
@@ -482,6 +494,12 @@ const filterTagId = ref<number | null>(null);
 const filterOverdue = ref(false);
 
 /**
+ * 중요 필터 (클라이언트 필터).
+ * 켜면 중요(IMPRTC) 상태를 가진 항목만 남긴다. 라이프사이클과 무관하므로 종결 섹션도 그대로 투영한다.
+ */
+const filterImportant = ref(false);
+
+/**
  * 말머리·태그·검색어로 거른 목록.
  * 말머리와 태그는 선택 일치(AND), 검색어는 제목·본문 부분일치다.
  * 전 범위 목록을 이미 받아 두므로 세 필터 모두 클라이언트에서 투영한다.
@@ -496,6 +514,7 @@ const filtered = computed<KeepItem[]>(() => {
     if (prefixId != null && it.prefix?.id !== prefixId) return false;
     if (tagId != null && !(it.tag?.list ?? []).some((tag) => tag.tagId === tagId)) return false;
     if (filterOverdue.value && !isOverdueOpen(it)) return false;
+    if (filterImportant.value && !hasState(it, "IMPRTC")) return false;
     if (!k) return true;
     return (it.title ?? "").toLowerCase().includes(k)
       || (it.content ?? "").toLowerCase().includes(k);
@@ -609,9 +628,11 @@ const TERMINAL_KEYS = ["RESOLVED", "FAILED", "EXPIRED", "DROPPED"];
  * Keep 상태 옵션 (다중 속성).
  * lifecycle 이 「어디까지 왔나」라면 state 는 「어떤 성격인가」다.
  * 요구(DEMANDED)는 내가 담아둔 것과 외부에서 요구받아 담긴 것을 가른다.
+ * 중요(IMPRTC)는 행 제목 앞 별 아이콘과 굵은 제목으로 강조하며 정렬은 바꾸지 않는다.
  */
 const stateOptions = computed(() => [
   { key: "DEMANDED", label: t("state.demanded"), activeClass: "text-danger" },
+  { key: "IMPRTC", label: t("state.important"), activeClass: "text-warning" },
 ]);
 
 /** 항목이 해당 상태를 갖고 있는지. */
@@ -663,6 +684,7 @@ function terminalIconClass(item: KeepItem): string {
 /** 종결 항목의 배지 표시 정보. 끝난 이유가 서로 달라 목록에서 구분해야 한다. */
 function terminalBadge(item: KeepItem): { label: string; badgeClass: string } | null {
   const key = lifecycleKeyOf(item);
+  if (key === "RESOLVED") return { label: t("status.completed"), badgeClass: "badge-light-success" };
   if (key === "FAILED") return { label: t("lifecycle.failed"), badgeClass: "badge-light-danger" };
   if (key === "EXPIRED") return { label: t("lifecycle.expired"), badgeClass: "badge-light-warning" };
   if (key === "DROPPED") return { label: t("lifecycle.dropped"), badgeClass: "badge-light" };
@@ -820,6 +842,7 @@ async function openKeepEdit(id: number): Promise<void> {
       prefixId?: number | null;
       prefix?: JournalPrefixDto | null;
       tag?: { tagListStrWithCtgr?: string };
+      state?: { list?: Array<{ stateKey?: string }> } | null;
     } | undefined;
     if (res.data?.rslt !== true || dto?.id == null) {
       void swalAlert(res.data?.message ?? t("common.result.failure"));
@@ -837,6 +860,7 @@ async function openKeepEdit(id: number): Promise<void> {
       expireDt: dto.expireDt ?? "",
       projectId: dto.projectId ?? null,
       tag: { tagListStrWithCtgr: dto.tag?.tagListStrWithCtgr ?? "" },
+      important: (dto.state?.list ?? []).some((st) => st.stateKey === "IMPRTC"),
     });
   } catch (e: unknown) {
     void swalRequestError(e);

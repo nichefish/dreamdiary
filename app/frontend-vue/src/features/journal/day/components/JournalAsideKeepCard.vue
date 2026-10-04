@@ -34,7 +34,13 @@
               @change.prevent="completeKeep(item.id)"
             />
           </div>
-          <div class="col text-truncate cursor-pointer" :title="item.title" @click.prevent="openKeepEdit(item.id)">
+          <div
+            class="col text-truncate cursor-pointer"
+            :class="{ 'fw-bold': isImportant(item) }"
+            :title="item.title"
+            @click.prevent="openKeepEdit(item.id)"
+          >
+            <i v-if="isImportant(item)" class="bi bi-star-fill text-warning fs-7 me-1" :title="t('state.important')"></i>
             <span v-if="isPending(item)" class="badge badge-light-warning fs-9 me-1">{{ t("lifecycle.pending") }}</span>
             {{ item.title }}
           </div>
@@ -110,6 +116,7 @@ async function openKeepEdit(id: number): Promise<void> {
       prefixId?: number | null;
       prefix?: JournalPrefixDto | null;
       tag?: { tagListStrWithCtgr?: string };
+      state?: { list?: Array<{ stateKey?: string }> } | null;
     } | undefined;
     if (res.data?.rslt !== true || dto?.id == null) {
       void swalAlert(res.data?.message ?? t("common.result.failure"));
@@ -126,6 +133,7 @@ async function openKeepEdit(id: number): Promise<void> {
       dateText: dto.dateText ?? "",
       expireDt: dto.expireDt ?? "",
       tag: { tagListStrWithCtgr: dto.tag?.tagListStrWithCtgr ?? "" },
+      important: (dto.state?.list ?? []).some((st) => st.stateKey === "IMPRTC"),
     });
   } catch (e: unknown) {
     void swalRequestError(e);
@@ -135,6 +143,11 @@ async function openKeepEdit(id: number): Promise<void> {
 /** 현재 보류(PENDING) 상태인지 여부. */
 function isPending(item: ProspectiveKeepItem): boolean {
   return item.lifecycle?.lifecycleKey === "PENDING";
+}
+
+/** 중요(IMPRTC) 상태 보유 여부. 별 아이콘·굵은 제목 표시만 가른다. */
+function isImportant(item: ProspectiveKeepItem): boolean {
+  return (item.state?.list ?? []).some((st) => st.stateKey === "IMPRTC");
 }
 
 /**

@@ -21,58 +21,75 @@
           <form v-if="model" id="prospectiveKeepRegistForm" class="form" @submit.prevent>
             <input type="hidden" name="id" :value="model.id ?? ''" />
 
-            <!--begin::제목 (말머리 + 제목 + 순서)-->
+            <!--begin::Project / 제목 (말머리 + 제목 + 순서)-->
             <div class="row d-flex mb-8">
-              <div class="col-12">
-                <label class="d-flex align-items-center mb-2">
-                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('common.title') }}</span>
-                  <span class="text-gray-500 fs-9 ms-2">{{ t('journal.field.title-max-50') }}</span>
+              <div class="col-lg-3 mb-3 mb-lg-0">
+                <label class="d-flex align-items-center mb-2" for="projectId">
+                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('prospective.project.field') }}</span>
                 </label>
-              </div>
-              <!--begin::말머리 (개인 말머리 목록이 비어 있으면 표시하지 않는다)-->
-              <div v-if="showPrefixField" class="col-lg-2">
-                <select
-                  name="prefixId"
-                  id="prefixId"
-                  class="form-select form-select-solid"
-                  v-model="model.prefixId"
-                >
-                  <option :value="null">{{ t('prospective.keep.prefix.select') }}</option>
-                  <option v-if="currentInactivePrefix" :value="currentInactivePrefix.id" disabled>
-                    [{{ currentInactivePrefix.name }}] ({{ t('status.unuse') }})
-                  </option>
+                <select id="projectId" name="projectId" class="form-select form-select-solid" v-model="model.projectId">
+                  <option :value="null">{{ t('prospective.project.unassigned') }}</option>
                   <option
-                    v-for="prefix in prefixOptions"
-                    :key="prefix.id"
-                    :value="prefix.id"
-                  >[{{ prefix.name }}]</option>
+                    v-for="project in projectStore.projects"
+                    :key="project.id"
+                    :value="project.id"
+                    :disabled="projectStore.lifecycleKeyOf(project) !== 'OPEN'"
+                  >{{ project.title }}</option>
                 </select>
+                <div v-if="projectLoadError" class="text-danger fs-8 mt-2">{{ projectLoadError }}</div>
               </div>
-              <!--end::말머리-->
-              <div :class="titleColumnClass">
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  class="form-control form-control-solid"
-                  v-model="model.title"
-                  :placeholder="t('prospective.keep.title.placeholder')"
-                  maxlength="50"
-                  required
-                />
-              </div>
-              <div v-if="isModify" class="col-lg-1">
-                <input
-                  type="number"
-                  name="sortOrder"
-                  id="sortOrder"
-                  class="form-control form-control-solid"
-                  v-model.number="model.sortOrder"
-                  :placeholder="t('prospective.keep.sort-order.placeholder')"
-                />
+              <div class="col-lg-9">
+                <label class="d-flex align-items-center mb-2 required" for="title">
+                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('common.title') }}</span>
+                  <span class="text-gray-500 fs-9 ms-2">{{ t('journal.field.title-max-100') }}</span>
+                </label>
+                <div class="row g-3">
+                  <!--begin::말머리 (개인 말머리 목록이 비어 있으면 표시하지 않는다)-->
+                  <div v-if="showPrefixField" class="col-lg-3">
+                    <select
+                      name="prefixId"
+                      id="prefixId"
+                      class="form-select form-select-solid"
+                      v-model="model.prefixId"
+                    >
+                      <option :value="null">{{ t('prospective.keep.prefix.select') }}</option>
+                      <option v-if="currentInactivePrefix" :value="currentInactivePrefix.id" disabled>
+                        [{{ currentInactivePrefix.name }}] ({{ t('status.unuse') }})
+                      </option>
+                      <option
+                        v-for="prefix in prefixOptions"
+                        :key="prefix.id"
+                        :value="prefix.id"
+                      >[{{ prefix.name }}]</option>
+                    </select>
+                  </div>
+                  <!--end::말머리-->
+                  <div :class="titleColumnClass">
+                    <input
+                      type="text"
+                      name="title"
+                      id="title"
+                      class="form-control form-control-solid"
+                      v-model="model.title"
+                      :placeholder="t('prospective.keep.title.placeholder')"
+                      maxlength="100"
+                      required
+                    />
+                  </div>
+                  <div v-if="isModify" class="col-lg-1">
+                    <input
+                      type="number"
+                      name="sortOrder"
+                      id="sortOrder"
+                      class="form-control form-control-solid"
+                      v-model.number="model.sortOrder"
+                      :placeholder="t('prospective.keep.sort-order.placeholder')"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-            <!--end::제목-->
+            <!--end::Project / 제목-->
 
             <!--begin::일시 / 유효 기한-->
             <div class="row d-flex mb-8">
@@ -127,9 +144,9 @@
             </div>
             <!--end::일시 / 유효 기한-->
 
-            <!--begin::위치 / Project-->
+            <!--begin::위치-->
             <div class="row d-flex mb-8">
-              <div class="col-lg-6">
+              <div class="col-12">
                 <label class="d-flex align-items-center mb-2" for="location">
                   <span class="text-gray-700 fs-6 fw-bolder">{{ t('prospective.keep.field.location') }}</span>
                 </label>
@@ -143,23 +160,8 @@
                   maxlength="200"
                 />
               </div>
-              <div class="col-lg-6">
-                <label class="d-flex align-items-center mb-2" for="projectId">
-                  <span class="text-gray-700 fs-6 fw-bolder">{{ t('prospective.project.field') }}</span>
-                </label>
-                <select id="projectId" name="projectId" class="form-select form-select-solid" v-model="model.projectId">
-                  <option :value="null">{{ t('prospective.project.unassigned') }}</option>
-                  <option
-                    v-for="project in projectStore.projects"
-                    :key="project.id"
-                    :value="project.id"
-                    :disabled="projectStore.lifecycleKeyOf(project) !== 'OPEN'"
-                  >{{ project.title }}</option>
-                </select>
-                <div v-if="projectLoadError" class="text-danger fs-8 mt-2">{{ projectLoadError }}</div>
-              </div>
             </div>
-            <!--end::위치 / Project-->
+            <!--end::위치-->
 
             <!--begin::내용-->
             <div class="row mb-4">
@@ -194,6 +196,15 @@
         <!--begin::Modal Footer-->
         <div class="modal-footer">
           <div class="d-flex justify-content-end gap-2">
+            <button
+              type="button"
+              class="btn btn-sm btn-light-primary"
+              :title="t('journal.entry.preview.tooltip')"
+              :disabled="!model || submitting"
+              @click="preview"
+            >
+              <i class="bi bi-eye"></i>{{ t('common.preview') }}
+            </button>
             <button
               type="button"
               class="btn btn-sm btn-primary"
@@ -243,6 +254,7 @@ import { useRoute } from "vue-router";
 import { refreshJournalDaysForRoute } from "@/features/journal/utils/journalDayRefresh";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { useProspectiveProjectStore } from "@/features/prospective/project/stores/prospectiveProject";
+import { openJournalEntryPreview, type KeepPreviewMeta, type KeepPreviewTag } from "@/features/journal/utils/journalEntryPreview";
 
 const modalStore = useProspectiveKeepModalStore();
 const journalStore = useJournalStore();
@@ -288,11 +300,11 @@ const currentInactivePrefix = computed(() => prefixFieldPresentation.value.inact
 const showPrefixField = computed(() => prefixFieldPresentation.value.visible);
 
 /**
- * 말머리(2열)·순서(1열, 수정 시에만) 표시 여부에 맞춰 제목 입력이 남은 열을 모두 사용한다.
- * 한 행의 합이 항상 12열이 되도록 계산한다.
+ * PC 제목 그룹 안에서 말머리(3열)·순서(1열, 수정 시에만) 표시 여부에 맞춰 제목 입력이 남은 열을 사용한다.
+ * Project 3열과 제목 그룹 9열의 바깥 배치는 고정하고, 제목 그룹 내부 합이 항상 12열이 되도록 계산한다.
  */
 const titleColumnClass = computed(() => {
-  if (showPrefixField.value) return isModify.value ? "col-lg-9" : "col-lg-10";
+  if (showPrefixField.value) return isModify.value ? "col-lg-8" : "col-lg-9";
   return isModify.value ? "col-lg-11" : "col-lg-12";
 });
 
@@ -425,6 +437,78 @@ watch(
     }
   }
 );
+
+/**
+ * 미리보기 창에 표시할 말머리.
+ * 저장된 말머리가 현재 선택과 같으면 그 표시값을, 아니면 활성 선택지·비활성 과거 선택에서 찾는다.
+ */
+function resolvePreviewPrefix(): { prefixName?: string; prefixTextClass?: string } {
+  const current = model.value;
+  if (!current?.prefixId) return {};
+  if (current.prefix && current.prefix.id === current.prefixId) {
+    return { prefixName: current.prefix.name, prefixTextClass: current.prefix.textClass ?? undefined };
+  }
+  const option = prefixOptions.value.find((p) => p.id === current.prefixId) ?? currentInactivePrefix.value;
+  return { prefixName: option?.name, prefixTextClass: option?.textClass ?? undefined };
+}
+
+/**
+ * Tagify JSON([{ value, data: { ctgr } }])을 미리보기 태그 목록으로 변환한다.
+ * 파싱에 실패하면 빈 목록을 반환하고 경고 로그를 남긴다.
+ */
+function parsePreviewTags(tagListStr: string): KeepPreviewTag[] {
+  if (!tagListStr) return [];
+  try {
+    const parsed: unknown = JSON.parse(tagListStr);
+    if (!Array.isArray(parsed)) return [];
+    return (parsed as Array<{ value?: unknown; data?: { ctgr?: unknown } }>)
+      .map((item) => ({
+        name: String(item?.value ?? "").trim(),
+        ctgr: item?.data?.ctgr ? String(item.data.ctgr) : null,
+      }))
+      .filter((tag) => tag.name);
+  } catch (error) {
+    console.warn("[ProspectiveKeepRegistModal] preview tag parse failed", error);
+    return [];
+  }
+}
+
+/** 미리보기 창 메타 블록에 표시할 작성 중 Keep 메타. */
+function resolvePreviewMeta(): KeepPreviewMeta {
+  const current = model.value;
+  const projectTitle = current?.projectId == null
+    ? null
+    : projectStore.projects.find((project) => project.id === current.projectId)?.title ?? null;
+  return {
+    dateText: current?.dateText ?? null,
+    expireDt: expireDt.value || null,
+    location: current?.location ?? null,
+    projectTitle,
+    tags: parsePreviewTags(tagListStrWithCtgr.value),
+    important: current?.important === true,
+  };
+}
+
+/** 작성 중 본문·메타를 Keep 목록 markdownContent와 같은 렌더로 새 창에 띄운다. 저장하지 않는다. */
+async function preview(): Promise<void> {
+  if (!model.value) return;
+  try {
+    const result = await openJournalEntryPreview({
+      contentType: "PROSPECTIVE_KEEP",
+      title: model.value.title,
+      sortOrder: model.value.sortOrder,
+      content: model.value.content,
+      ...resolvePreviewPrefix(),
+      keepMeta: resolvePreviewMeta(),
+    }, t("journal.entry.preview.failure"));
+    if (result === "blocked") {
+      void swalAlert(t("common.error.popup"));
+    }
+  } catch (error) {
+    console.error("[ProspectiveKeepRegistModal] preview failed", error);
+    void swalAlert(error instanceof Error ? error.message : t("journal.entry.preview.failure"));
+  }
+}
 
 function close() {
   resetSafeClose();
