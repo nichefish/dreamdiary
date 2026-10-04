@@ -120,7 +120,17 @@
                   트리거에 @click.stop 을 두면 body 위임 클릭이 막혀 메뉴가 열리지 않는다.
                   행 상세 이동은 isMetronicMenuEventTarget 가드로 막는다.
                   store.loading 종료 시 reinitMetronicAfterDom() 을 호출한다. -->
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center gap-1">
+                  <!--begin::빠른 보기 — 행 클릭은 독립 상세 페이지로 이동하고, 목록을 벗어나지 않고 보려면 모달로 연다.-->
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
+                    :title="t('board.post.list.quick-view.tooltip')"
+                    @click.stop="openQuickView(post.id!)"
+                  >
+                    <i class="bi bi-window-stack fs-5"></i>
+                  </button>
+                  <!--end::빠른 보기-->
                   <button
                     type="button"
                     class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
@@ -184,7 +194,7 @@
 <script setup lang="ts">
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useBoardPostStore } from "@/features/board/stores/boardPost";
 import { useAttachableModalStore } from "@/features/attachable/stores/attachableModal";
 import type { BoardPostDto } from "@/features/board/stores/boardPost";
@@ -197,6 +207,7 @@ import { useTagProfileAction } from "@/features/attachable/composables/useTagPro
 
 const { t } = useLocaleStore();
 const route = useRoute();
+const router = useRouter();
 const store = useBoardPostStore();
 const attachableStore = useAttachableModalStore();
 const tagContextMenuStore = useTagContextMenuStore();
@@ -245,10 +256,18 @@ watch(
   }
 );
 
-/** 게시물 행 클릭 시 컨텍스트 메뉴가 아니면 상세를 연다. */
+/**
+ * 게시물 행 클릭 시 컨텍스트 메뉴가 아니면 독립 상세 페이지로 이동한다 (저널 스레드와 동일).
+ * 목록 상태(페이지·검색 조건)는 store 에 보존되어 상세에서 돌아오면 그대로 복원된다.
+ */
 function onPostRowClick(event: MouseEvent, id: number): void {
   if (isMetronicMenuEventTarget(event.target)) return;
-  store.openDetail(id);
+  void router.push({ name: "board-post-detail", params: { boardKey: store.boardKey, id } });
+}
+
+/** 목록을 벗어나지 않고 상세를 모달로 연다 (빠른 보기). */
+function openQuickView(id: number): void {
+  void store.openDetail(id);
 }
 
 /** 검색 실행 — 조건이 바뀌었으므로 항상 첫 페이지부터 조회한다. */

@@ -78,3 +78,57 @@ describe("boardPost store 게시판 재진입 조회", () => {
     expect(store.prefixOptions).toEqual([FIXTURE_PREFIX]);
   });
 });
+
+describe("boardPost store 상세 표면", () => {
+  const mockedGet = vi.mocked(axios.get);
+
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    vi.clearAllMocks();
+  });
+
+  it("상세 조회는 경로 변수 URL을 쓰고 요청한 표면으로 연다", async () => {
+    mockedGet.mockResolvedValue({ data: { rslt: true, rsltObj: { id: 7, title: "가상 게시물" } } });
+    const store = useBoardPostStore();
+
+    expect(await store.openDetailPage(7)).toBe(true);
+
+    expect(mockedGet).toHaveBeenCalledWith("/api/board/posts/7");
+    expect(store.detailOpen).toBe(true);
+    expect(store.detailSurface).toBe("page");
+    expect(store.detailModel?.id).toBe(7);
+  });
+
+  it("상세 조회가 실패하면 상세 상태를 닫는다", async () => {
+    mockedGet.mockRejectedValue(new Error("가상 오류"));
+    const store = useBoardPostStore();
+
+    expect(await store.openDetail(7)).toBe(false);
+
+    expect(store.detailOpen).toBe(false);
+    expect(store.detailSurface).toBeNull();
+    expect(store.detailLoading).toBe(false);
+  });
+
+  it("같은 게시판에 재진입하면 보존된 페이지를 다시 조회한다", async () => {
+    const pageParams: unknown[] = [];
+    mockedGet.mockImplementation((url, config) => {
+      if (url === "/api/board/posts") {
+        const page = (config?.params as { page?: number } | undefined)?.page ?? 0;
+        pageParams.push(page);
+        return Promise.resolve({
+          data: { rslt: true, rsltObj: { content: [], totalElements: 30, totalPages: 3, number: page } },
+        });
+      }
+      return Promise.resolve({ data: { rsltList: [] } });
+    });
+    const store = useBoardPostStore();
+
+    await store.setBoard(FIXTURE_BOARD_KEY);
+    await store.fetchList(2);
+    await store.setBoard(FIXTURE_BOARD_KEY);
+
+    expect(pageParams).toEqual([0, 2, 2]);
+    expect(store.currentPage).toBe(2);
+  });
+});

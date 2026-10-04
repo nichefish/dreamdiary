@@ -245,6 +245,13 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import("@/features/board/BoardPostList.vue"),
             meta: { pageTitleKey: "route.title.board" },
           },
+          {
+            /* 게시물 독립 상세. 목록 행 클릭의 기본 이동 대상이며, 모달 보기는 목록의 빠른 보기로 남긴다. */
+            path: ":boardKey/:id(\\d+)",
+            name: "board-post-detail",
+            component: () => import("@/features/board/BoardPostDetailPage.vue"),
+            meta: { pageTitleKey: "route.title.board" },
+          },
         ],
       },
     ],

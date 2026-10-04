@@ -71,6 +71,9 @@ export interface BoardPostRegistModel {
   tag?: { tagListStrWithCtgr?: string };
 }
 
+/** 게시물 상세 렌더 표면 */
+export type BoardPostDetailSurface = "modal" | "page";
+
 // ---- 스토어 ----
 
 export const useBoardPostStore = defineStore("boardPost", () => {
@@ -123,14 +126,22 @@ export const useBoardPostStore = defineStore("boardPost", () => {
   /** 등록/수정 처리 중 여부 */
   const submitting = ref(false);
 
-  // ---- 상세 모달 ----
+  // ---- 상세 (모달·독립 페이지 공용) ----
 
-  /** 상세 모달 오픈 여부 */
+  /** 상세 오픈 여부 */
   const detailOpen = ref(false);
-  /** 상세 모달 로딩 여부 */
+  /**
+   * 상세 렌더 표면.
+   * 목록 행 클릭은 독립 상세 페이지(page), 목록의 빠른 보기는 모달(modal)로 연다.
+   * 두 표면은 같은 detailModel 을 쓰고 렌더 위치만 구분한다 (저널 스레드와 동일 규약).
+   */
+  const detailSurface = ref<BoardPostDetailSurface | null>(null);
+  /** 상세 로딩 여부 */
   const detailLoading = ref(false);
   /** 상세 DTO */
   const detailModel = ref<BoardPostDto | null>(null);
+  /** 늦게 도착한 이전 상세 응답을 버리기 위한 요청 토큰 */
+  let detailRequestToken = 0;
 
   // ---- 목록 액션 ----
 
@@ -189,8 +200,11 @@ export const useBoardPostStore = defineStore("boardPost", () => {
       tagCloud.value = [];
     }
     console.info("[boardPost] 게시판 데이터 조회", { boardKey: key, boardChanged });
-    /* 말머리 Scope·태그는 게시판별 데이터이며, 화면 재진입 시 서버의 최신 상태를 반영한다. */
-    await Promise.all([fetchList(0), fetchPrefixOptions(), fetchTagCloud()]);
+    /*
+     * 말머리 Scope·태그는 게시판별 데이터이며, 화면 재진입 시 서버의 최신 상태를 반영한다.
+     * 같은 게시판 재진입(상세 페이지 왕복)은 보존된 currentPage 를 유지하고, 게시판이 바뀌면 첫 페이지부터 조회한다.
+     */
+    await Promise.all([fetchList(boardChanged ? 0 : undefined), fetchPrefixOptions(), fetchTagCloud()]);
   }
 
   /**
@@ -326,6 +340,7 @@ export const useBoardPostStore = defineStore("boardPost", () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.data?.rslt) {
+        const savedId = registModel.value.id;
         closeRegist();
         await swalAjaxResult({
           rslt: true,
@@ -333,6 +348,10 @@ export const useBoardPostStore = defineStore("boardPost", () => {
           successFallback: t("common.result.saved"),
         });
         void fetchList(0);
+        /* 상세(모달·페이지)에서 수정한 경우 열린 상세도 최신 내용으로 다시 조회한다. */
+        if (savedId != null && detailOpen.value && detailModel.value?.id === savedId) {
+          void refreshOpenDetail();
+        }
         return true;
       }
       void swalAjaxResult({
@@ -354,11 +373,13 @@ export const useBoardPostStore = defineStore("boardPost", () => {
    * DELETE /api/board/posts/{id}
    * 변경 전에는 성공 직후 목록을 갱신했다.
    * 변경 후에는 성공 알림 OK 이후 목록을 갱신한다.
+   * 삭제한 게시물이 열린 상세라면 상세도 닫는다. 페이지 표면의 목록 복귀는 호출 화면이 결정한다.
    * @param id - 게시물 ID
+   * @return 삭제에 성공했으면 true
    */
-  async function deletePost(id: number) {
+  async function deletePost(id: number): Promise<boolean> {
     const confirmed = await swalConfirm(t("board.post.delete.confirm"));
-    if (!confirmed) return;
+    if (!confirmed) return false;
     try {
       const res = await axios.delete(`/api/board/posts/${id}`);
       if (res.data?.rslt) {
@@ -367,44 +388,91 @@ export const useBoardPostStore = defineStore("boardPost", () => {
           message: res.data?.message,
           successFallback: t("common.result.deleted"),
         });
+        if (detailOpen.value && detailModel.value?.id === id) closeDetail();
         void fetchList(0);
-      } else {
-        void swalAjaxResult({
-          rslt: false,
-          message: res.data?.message,
-          failureFallback: t("board.post.delete.failure"),
-        });
+        return true;
       }
+      void swalAjaxResult({
+        rslt: false,
+        message: res.data?.message,
+        failureFallback: t("board.post.delete.failure"),
+      });
+      return false;
     } catch (e: unknown) {
       void swalRequestError(e);
+      return false;
     }
   }
 
   // ---- 상세 액션 ----
 
   /**
-   * 게시물 상세 모달을 연다. API 에서 상세 데이터를 조회한다.
+   * 게시물 상세를 지정한 표면으로 조회한다.
+   * GET /api/board/posts/{id}
+   * 조회 실패 시 상세 상태를 닫고 오류를 알린다.
    * @param id - 게시물 ID
+   * @param surface - 상세 렌더 표면
+   * @return 현재 요청이 유효한 상세를 적용했으면 true
    */
-  async function openDetail(id: number) {
-    if (!await assertAuthenticatedBeforeModal()) return;
+  async function loadDetail(id: number, surface: BoardPostDetailSurface): Promise<boolean> {
+    if (!await assertAuthenticatedBeforeModal()) return false;
+    const requestToken = ++detailRequestToken;
     detailOpen.value = true;
+    detailSurface.value = surface;
     detailLoading.value = true;
     detailModel.value = null;
     try {
       const res = await axios.get(`/api/board/posts/${id}`);
-      detailModel.value = res.data?.rsltObj ?? null;
-    } catch {
-      detailModel.value = null;
-      detailOpen.value = false;
+      if (requestToken !== detailRequestToken) return false;
+      const loaded: BoardPostDto | null = res.data?.rslt === false ? null : (res.data?.rsltObj ?? null);
+      if (!loaded) {
+        console.warn("[boardPost] loadDetail rejected empty detail", { id, surface });
+        closeDetail();
+        void swalAlert(res.data?.message || t("board.post.detail.load.failure"));
+        return false;
+      }
+      detailModel.value = loaded;
+      return true;
+    } catch (e: unknown) {
+      console.error("[boardPost] loadDetail failed", { id, surface }, e);
+      if (requestToken === detailRequestToken) closeDetail();
+      void swalRequestError(e, t("board.post.detail.load.failure"));
+      return false;
     } finally {
-      detailLoading.value = false;
+      if (requestToken === detailRequestToken) detailLoading.value = false;
     }
   }
 
-  /** 상세 모달을 닫는다. */
+  /**
+   * 게시물 상세를 모달로 연다 (목록의 빠른 보기).
+   * @param id - 게시물 ID
+   */
+  async function openDetail(id: number): Promise<boolean> {
+    return loadDetail(id, "modal");
+  }
+
+  /**
+   * 게시물 독립 상세 페이지의 데이터를 조회한다 (route: board-post-detail).
+   * @param id - 게시물 ID
+   */
+  async function openDetailPage(id: number): Promise<boolean> {
+    return loadDetail(id, "page");
+  }
+
+  /** 열린 상세를 같은 표면에 유지한 채 다시 조회한다 (수정 저장 후). */
+  async function refreshOpenDetail(): Promise<boolean> {
+    const id = detailModel.value?.id;
+    const surface = detailSurface.value;
+    if (!detailOpen.value || id == null || !surface) return false;
+    return loadDetail(id, surface);
+  }
+
+  /** 활성 상세 표면을 닫고 진행 중인 이전 요청을 무효화한다. */
   function closeDetail() {
+    detailRequestToken += 1;
     detailOpen.value = false;
+    detailSurface.value = null;
+    detailLoading.value = false;
     detailModel.value = null;
   }
 
@@ -444,9 +512,12 @@ export const useBoardPostStore = defineStore("boardPost", () => {
     deletePost,
     // 상세
     detailOpen,
+    detailSurface,
     detailLoading,
     detailModel,
     openDetail,
+    openDetailPage,
+    refreshOpenDetail,
     closeDetail,
   };
 });
