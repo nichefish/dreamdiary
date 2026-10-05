@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createPinia, setActivePinia } from "pinia";
 import axios from "axios";
 import { useJournalThreadStore } from "./journalThread";
+import { THREAD_PREFIX_SCOPE_NONE } from "./journalThreadList";
 
 vi.mock("axios", () => ({
   default: {
@@ -327,6 +328,45 @@ describe("journalThread store 목록 태그 필터", () => {
     const params = config?.params as URLSearchParams;
     expect(params).toBeInstanceOf(URLSearchParams);
     expect(params.get("prefixId")).toBe("11");
+  });
+
+  it("말머리 없음 탭 범위는 prefixId 대신 noPrefixYn=Y 를 전송한다", async () => {
+    const store = useJournalThreadStore();
+
+    await store.selectPrefixScope(THREAD_PREFIX_SCOPE_NONE);
+
+    const [, config] = mockedGet.mock.calls[0];
+    const params = config?.params as URLSearchParams;
+    expect(params.get("noPrefixYn")).toBe("Y");
+    expect(params.has("prefixId")).toBe(false);
+    expect(params.get("page")).toBe("0");
+  });
+
+  it("resetFilters 는 말머리 탭 범위를 유지한다", async () => {
+    const store = useJournalThreadStore();
+    store.filterPrefixId = "11";
+    store.filterKeyword = "회고";
+
+    await store.resetFilters();
+
+    expect(store.filterPrefixId).toBe("11");
+    expect(store.filterKeyword).toBe("");
+  });
+
+  it("reconcilePrefixScope 는 활성 선택지에 없는 Prefix 탭을 전체로 돌린다", () => {
+    const store = useJournalThreadStore();
+    store.filterPrefixId = "999";
+
+    expect(store.reconcilePrefixScope()).toBe(true);
+    expect(store.filterPrefixId).toBe("");
+  });
+
+  it("reconcilePrefixScope 는 전체·말머리 없음 범위를 유지한다", () => {
+    const store = useJournalThreadStore();
+    store.filterPrefixId = THREAD_PREFIX_SCOPE_NONE;
+
+    expect(store.reconcilePrefixScope()).toBe(false);
+    expect(store.filterPrefixId).toBe(THREAD_PREFIX_SCOPE_NONE);
   });
 
   it("addFilterTag 는 카테고리(ctgr)를 배지용으로 캐시한다", () => {

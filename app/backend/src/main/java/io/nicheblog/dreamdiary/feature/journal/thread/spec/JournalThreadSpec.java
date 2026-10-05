@@ -107,6 +107,19 @@ public class JournalThreadSpec
                         predicate.add(builder.exists(prefixSubquery));
                     }
                     continue;
+                case "noPrefixYn":
+                    // 말머리 없음: 이 스레드를 가리키는 prefix_content 연결이 하나도 없어야 한다.
+                    if (value != null && "Y".equals(value.toString())) {
+                        final Subquery<Integer> noPrefixSubquery = query.subquery(Integer.class);
+                        final Root<PrefixContentEntity> noPrefixRoot = noPrefixSubquery.from(PrefixContentEntity.class);
+                        noPrefixSubquery.select(noPrefixRoot.get("id"));
+                        noPrefixSubquery.where(
+                                builder.equal(noPrefixRoot.get("refId"), root.get("id")),
+                                builder.equal(noPrefixRoot.get("refContentType"), ContentType.JOURNAL_THREAD.key)
+                        );
+                        predicate.add(builder.not(builder.exists(noPrefixSubquery)));
+                    }
+                    continue;
                 case "lifecycleKey":
                     // 스레드 부착 라이프사이클. OPEN은 lifecycle 행 부재로 판정한다.
                     resolveLifecycleKeyPredicate(predicate, root, query, builder, value);

@@ -62,6 +62,8 @@ export const useJournalThreadStore = defineStore("journalThread", () => {
     addFilterTag: list.addFilterTag,
     removeFilterTag: list.removeFilterTag,
     resetFilters: list.resetFilters,
+    selectPrefixScope: list.selectPrefixScope,
+    reconcilePrefixScope: list.reconcilePrefixScope,
     // 등록/수정
     registOpen: detail.registOpen,
     registSurface: detail.registSurface,

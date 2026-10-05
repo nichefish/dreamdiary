@@ -449,13 +449,13 @@
 
 - 레이아웃: `JournalThreadLayout` (사이드바 없음)
 - 메인 영역:
-  - 검색 카드: 분류·제목·멀티 태그 필터
+  - 검색 카드: 상단 말머리 탭 행 + 라이프사이클·제목·멀티 태그 필터
   - 카드: `.card.post`
     - 카드 바디: `JournalThreadList.vue` 테이블 (`store.list`)
     - 카드 푸터: 클라이언트 페이지네이션
 - 마운트 루트: `<div id="journal_thread_list_app" class="d-none">`
 
-**현재 Vue SPA 구조**: `JournalThreadLayout`이 목록 route에서 `JournalThreadViewToolbar`(등록, `pe-5 mt-3 mb-1`)를 목록 위에 두고, 그 아래 컴팩트한 검색 카드를 표시한다. ASIDE는 없다. 검색 카드는 분류·제목 검색과 검색·초기화 액션만 두며 `margin-top: 0`으로 툴바에 붙인다. **태그 클라우드 행은 2c-A 에서 제거됐다**(스레드 자체 태그 미소유, 2b). 목록 테이블 행에는 소속 집계 쿼리로 채운 엔트리 태그 집계(`tag.list`), 활성 소속 수(`membershipCount`, 제목 옆 `{n}건`, 0이면 숨김), 소속 기간(`firstEntryDate`/`lastEntryDate`, 같은 날이면 단일 일자·범위면 `{0} ~ {1}`, 유효 일자 없으면 숨김)을 표시한다. 검색 카드에서 멀티 태그 필터(AND, `tagIds`)를 제공한다. 별도 카드 제목 행은 두지 않으며 기존 목록 카드의 테이블 DOM·클래스와 페이지네이션 구조는 유지한다. `/thread/:id`는 목록을 배경으로 모달을 띄우지 않고 `JournalThreadDetailPage`를 렌더하며, 목록 이동·수정 버튼과 공용 `JournalThreadDetailContent`를 가진 독립 상세 카드가 스레드 자체를 주 문맥으로 표시한다. `/thread/:id/edit`는 같은 탭의 `JournalThreadEditPage`를 렌더하고 공용 `JournalThreadEditorForm`으로 카테고리·제목·본문을 수정한 뒤 해당 독립 상세에 복귀한다.
+**현재 Vue SPA 구조**: `JournalThreadLayout`이 목록 route에서 `JournalThreadViewToolbar`(등록, `pe-5 mt-3 mb-1`)를 목록 위에 두고, 그 아래 컴팩트한 검색 카드를 표시한다. ASIDE는 없다. 검색 카드 상단에는 Keep의 Project 탭과 같은 `nav-line-tabs` 말머리 탭 행을 두고, 그 아래 카드 바디에 라이프사이클·제목 검색과 검색·초기화 액션을 둔다. 검색 카드는 `margin-top: 0`으로 툴바에 붙인다. 말머리 탭은 `전체`(기본) → 활성 `JOURNAL_THREAD` 개인 Prefix(서버 정렬 순) → `말머리 없음` 순으로 표시하고, 탭 행 우측 `말머리 관리` 버튼이 같은 화면에서 개인 말머리 관리 모달(`PersonalPrefixManageModal`, `contentType=JOURNAL_THREAD`)을 연다. 말머리는 별도 엔티티가 아니라 스레드 목록의 선택 범위다. **태그 클라우드 행은 2c-A 에서 제거됐다**(스레드 자체 태그 미소유, 2b). 목록 테이블 행에는 소속 집계 쿼리로 채운 엔트리 태그 집계(`tag.list`), 활성 소속 수(`membershipCount`, 제목 옆 `{n}건`, 0이면 숨김), 소속 기간(`firstEntryDate`/`lastEntryDate`, 같은 날이면 단일 일자·범위면 `{0} ~ {1}`, 유효 일자 없으면 숨김)을 표시한다. 검색 카드에서 멀티 태그 필터(AND, `tagIds`)를 제공한다. 별도 카드 제목 행은 두지 않으며 기존 목록 카드의 테이블 DOM·클래스와 페이지네이션 구조는 유지한다. `/thread/:id`는 목록을 배경으로 모달을 띄우지 않고 `JournalThreadDetailPage`를 렌더하며, 목록 이동·수정 버튼과 공용 `JournalThreadDetailContent`를 가진 독립 상세 카드가 스레드 자체를 주 문맥으로 표시한다. `/thread/:id/edit`는 같은 탭의 `JournalThreadEditPage`를 렌더하고 공용 `JournalThreadEditorForm`으로 카테고리·제목·본문을 수정한 뒤 해당 독립 상세에 복귀한다.
 
 ### Key UI Elements
 
@@ -463,7 +463,9 @@
 |---------|------|----------------|-------------|-------|
 | 태그 필터 | Vue | `JournalThreadList.vue` 검색 카드 | `tagIds` | 멀티 태그 AND 필터 |
 | 뷰 툴바 | `JournalThreadViewToolbar` | Vue 신규 툴바 | Vue Router `thread-create` | 등록 버튼만. 결산·일자 액션 행과 동형(`pe-5 mt-3 mb-1`). ASIDE 없음. 탭용 `mt-5` 빈 여백 없음 |
-| Vue 검색 카드 | `.card.mb-4` + `margin-top: 0` | Vue 신규 검색 카드 | `/api/my/prefixes/options`, `prefixId`, `tagIds` | 단일 말머리·제목·멀티 태그 AND 검색. 등록은 뷰 툴바에 둔다. |
+| Vue 검색 카드 | `.card.mb-4` + `margin-top: 0` | Vue 신규 검색 카드 | `lifecycleKey`, `searchKeyword`, `tagIds` | 라이프사이클·제목·멀티 태그 AND 검색. 등록은 뷰 툴바에 둔다. |
+| 말머리 탭 행 | `.nav.nav-tabs.nav-line-tabs` | 검색 카드 상단 `border-bottom` 행 | `/api/my/prefixes/options?contentType=JOURNAL_THREAD`, `prefixId`, `noPrefixYn` | `전체`·활성 말머리·`말머리 없음` 탭. 비활성 Prefix는 탭에서 제외하고 `전체`에서만 보인다. 우측 `말머리 관리` 버튼(`btn-sm btn-light`) |
+| 말머리 관리 모달 | `PersonalPrefixManageModal` | `JournalThreadList.vue` | `/api/my/prefixes?contentType=JOURNAL_THREAD` | 내 설정 말머리 탭과 같은 모달. 생성·수정·정렬값·색·활성 상태 관리 |
 | 테이블 | `<table>` | `.table.align-middle.table-row-dashed.fs-small.gy-5.table-fixed.hoverTable.mb-3` | 서버 모델 | 고정 레이아웃, 행 hover |
 | 번호 열 | `<th>` | `.text-center.wb-keepall.w-10.hidden-table` | `post.rnum` | 모바일 숨김 |
 | 제목 열 | `<th>` | `.col-lg-9.col-9.text-center.wb-keepall` | `post.title` | `txt.title` i18n |
@@ -472,11 +474,11 @@
 | 목록 tbody | `<tbody>` | `JournalThreadList.vue` | `store.list` | 스레드 행 렌더 |
 | 페이지네이션 | Vue | `JournalThreadList.vue` | `store.totalPages` | 클라이언트 페이지네이션 |
 
-`JournalThreadList.vue`의 분류·라이프사이클 필터·제목 placeholder·태그 빈 상태와 조회 실패, 등록 버튼·테이블 헤더·빈 상태·댓글 목록·컨텍스트 메뉴(수정·이력·라이프사이클·삭제) 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록 조회 실패(`journal.thread.list.load.failure`)는 테이블에 표시하며 정상 빈 목록(`journal.thread.empty`)과 구분한다. 목록 행 선두는 카테고리 배지 몫이라, 라이프사이클(진행중 등) 배지는 제목·메타(개수·기간·댓글) 뒤=댓글 버튼 뒤·태그 줄 앞(`ms-2`)에 표시한다.
+`JournalThreadList.vue`의 말머리 탭(`전체`·`말머리 없음`)·관리 버튼·관리 모달 제목, 라이프사이클 필터·제목 placeholder·태그 빈 상태와 조회 실패, 등록 버튼·테이블 헤더·빈 상태·댓글 목록·컨텍스트 메뉴(수정·이력·라이프사이클·삭제) 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록 조회 실패(`journal.thread.list.load.failure`)는 테이블에 표시하며 정상 빈 목록(`journal.thread.empty`)과 구분한다. 목록 행 선두는 카테고리 배지 몫이라, 라이프사이클(진행중 등) 배지는 제목·메타(개수·기간·댓글) 뒤=댓글 버튼 뒤·태그 줄 앞(`ms-2`)에 표시한다.
 
-`JournalThreadLayout.vue`는 목록 검색과 등록·수정이 공유할 활성 Prefix 선택지를 콘텐츠 타입별 공통 store에서 조회한다. 내 설정의 등록·수정·활성 변경 성공 시 해당 `contentType` 캐시를 무효화하므로 스레드 화면 재진입은 서버 확정 목록을 다시 조회한다(변경 전: `journalThread` store의 최초 정상 조회가 세션 동안 고정되어 관리 변경 뒤에도 이전 옵션을 표시). 등록·수정은 단일 말머리 select와 nullable `prefixId`를 사용한다. 비활성 과거 Prefix는 옵션에서 제외하되 목록·상세 DTO의 이름·색으로 계속 표시한다. Prefix 조회 실패는 목록 검색 카드와 편집 폼에 현재 locale 오류를 표시한다. 개인 말머리 목록은 `(user, content_type)`로 분리되므로 `/api/my/prefixes` 계열(옵션 조회·빠른 추가·관리) 호출은 `contentType` 파라미터를 요구하며, 스레드 문맥은 `JOURNAL_THREAD`를 보낸다. UI의 단일 select·nullable `prefixId` 계약은 그대로이고, 저장 시 서버가 이를 attachable 연결(`prefix_content`)로 흡수한다(콘텐츠는 prefix FK를 직접 두지 않는다).
+`JournalThreadLayout.vue`는 목록 말머리 탭과 등록·수정이 공유할 활성 Prefix 선택지를 콘텐츠 타입별 공통 store에서 조회한다. 말머리 관리 모달의 등록·수정·활성 변경 성공 시 해당 `contentType` 캐시를 무효화하고 목록 화면이 즉시 선택지와 목록을 서버 확정 상태로 다시 조회한다(변경 전: `journalThread` store의 최초 정상 조회가 세션 동안 고정되어 관리 변경 뒤에도 이전 옵션을 표시). 등록·수정은 단일 말머리 select와 nullable `prefixId`를 사용한다. 비활성 과거 Prefix는 옵션에서 제외하되 목록·상세 DTO의 이름·색으로 계속 표시한다. Prefix 조회 실패는 목록 검색 카드와 편집 폼에 현재 locale 오류를 표시하며, 이때 말머리 탭 행은 `전체`·`말머리 없음`만 표시한다. 개인 말머리 목록은 `(user, content_type)`로 분리되므로 `/api/my/prefixes` 계열(옵션 조회·빠른 추가·관리) 호출은 `contentType` 파라미터를 요구하며, 스레드 문맥은 `JOURNAL_THREAD`를 보낸다. UI의 단일 select·nullable `prefixId` 계약은 그대로이고, 저장 시 서버가 이를 attachable 연결(`prefix_content`)로 흡수한다(콘텐츠는 prefix FK를 직접 두지 않는다).
 
-공용 편집 폼은 Prefix 이름 빠른 추가를 제공하고 생성 성공 시 서버 옵션 재조회와 현재 선택 반영을 마친다. 전체 관리는 「말머리 관리 탭」 링크로 `/my/prefixes`에 진입한다.
+공용 편집 폼은 Prefix 이름 빠른 추가를 제공하고 생성 성공 시 서버 옵션 재조회와 현재 선택 반영을 마친다. 전체 관리는 스레드 목록 말머리 탭 행의 `말머리 관리` 버튼이 담당하며, 내 설정 `/my/prefixes`에는 스레드 대상 행을 두지 않는다.
 
 스레드 삭제 확인·성공·실패 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. 삭제 API의 서버 `message`가 있으면 우선 표시하고, 성공 알림 확인 후 첫 페이지 목록을 다시 조회한다.
 
@@ -491,10 +493,12 @@
 | 상세 소속 엔트리 정렬 | 독립 상세 페이지 또는 문맥형 모달 조회·갱신 | `GET /api/journal/threads/{id}/entries` | 일자 → 원본 엔트리 `sortOrder` → ID 오름차순. 소속 `sort_order`는 미사용 |
 | 문맥형 상세에서 수정 | 상세 모달 헤더 「수정」 클릭 | `store.openModifyFromDetail(id)` | route·배경 스크롤과 상세 데이터를 유지하고 같은 앱의 수정 모달로 전환. 저장·취소 뒤 원래 상세 모달로 복귀하며 저장 성공 시 상세와 주간·월간·일간 배경을 갱신 |
 | 등록 모달 열기 | 뷰 툴바(`JournalThreadViewToolbar`) 등록 버튼 클릭 | `router.push({ name: "thread-create" })` | 등록 모달 오픈 + URL `/thread/new` 동기화 |
-| 말머리 검색·선택 | 스레드 영역 진입 또는 검색·편집 선택 변경 | `ensurePrefixOptions()`, `filterPrefixId`, `registModel.prefixId` | `/api/my/prefixes/options`를 조회해 목록 검색과 등록·수정이 공유 |
+| 말머리 선택지 | 스레드 영역 진입 또는 편집 선택 변경 | `ensurePrefixOptions()`, `registModel.prefixId` | `/api/my/prefixes/options`를 조회해 목록 말머리 탭과 등록·수정이 공유 |
+| 말머리 탭 선택 | 말머리 탭 클릭 | `store.selectPrefixScope(scope)` | `filterPrefixId`를 빈 값(전체)·Prefix ID·`NONE`(말머리 없음)으로 설정하고 첫 페이지 조회. Prefix 탭은 `prefixId`, 말머리 없음은 `noPrefixYn=Y`를 전송하며 다른 필터와 AND로 결합. 상세 왕복 후에도 store 값으로 선택 탭을 유지 |
+| 말머리 관리 | 탭 행 우측 `말머리 관리` 클릭 | `PersonalPrefixManageModal` (`@changed` → `fetchPrefixOptions()` → `reconcilePrefixScope()` → `fetchList`) | 같은 화면에서 관리 모달을 연다. 변경 성공 시 선택지·목록을 재조회하고, 선택 탭의 Prefix가 활성 선택지에서 빠지면 `전체`로 돌아가 첫 페이지를 조회 |
 | 태그 필터 | 검색 카드에서 태그 추가/배지 제거 | `filterTagIds` + `tagIds` 반복 파라미터로 `fetchList(0)` | 멀티 태그 AND. 배지에 `[ctgr]`(`text-noti`) + 이름 모두 `fs-7`, 세로 가운데. 소속 엔트리 태그 합집합이 선택 태그를 모두 포함하는 스레드만 |
-| 말머리·제목 검색 | 말머리 select 변경 또는 검색 버튼·Enter | `filterPrefixId`, `filterKeyword` 설정 후 `fetchList(0)` | 말머리는 단일 `prefixId`, 제목은 `searchType=title`, `searchKeyword`로 첫 페이지 조회 |
-| 검색 초기화 | 초기화 버튼 클릭 | `resetFilters()` | 태그·분류·제목 조건을 모두 비우고 첫 페이지 조회 |
+| 제목 검색 | 검색 버튼·Enter | `filterKeyword` 설정 후 `fetchList(0)` | 제목은 `searchType=title`, `searchKeyword`로 첫 페이지 조회 |
+| 검색 초기화 | 초기화 버튼 클릭 | `resetFilters()` | 태그·라이프사이클·제목 조건을 비우고 첫 페이지 조회. 말머리 탭 범위는 검색 조건이 아니므로 유지 |
 | 목록에서 수정 페이지 열기 | ⋯ 메뉴의 수정 클릭 | `router.push({ name: "thread-edit", params: { id } })` | 같은 탭의 독립 수정 페이지 `/thread/:id/edit`로 이동 |
 | 스레드 본문 이력 | 목록 ⋯ 메뉴 또는 상세 페이지·모달의 「히스토리」 클릭 | `attachableStore.openHistory("JOURNAL_THREAD", id)` | `history.historyTriggeredAt`이 있을 때 공통 이력 모달을 열어 본문 스냅샷을 조회·복원·삭제. 성공 후 열린 상세와 현재 목록을 재조회 |
 | 댓글 모달 | 댓글 수 클릭 | `attachableStore.openCommentList(id, contentType)` | 댓글 목록 모달 |

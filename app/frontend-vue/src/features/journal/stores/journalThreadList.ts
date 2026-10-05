@@ -7,6 +7,12 @@ import type {
   ThreadPrefix,
 } from "@/features/journal/stores/journalThread.types";
 
+/**
+ * 스레드 목록 말머리 탭의 `말머리 없음` 범위 값.
+ * `filterPrefixId`가 이 값이면 `prefixId` 대신 `noPrefixYn=Y`를 전송한다.
+ */
+export const THREAD_PREFIX_SCOPE_NONE = "NONE";
+
 export interface JournalThreadListDeps {
   t: (key: string) => string;
   personalPrefixOptionsStore: {
@@ -36,7 +42,11 @@ export function createJournalThreadList(deps: JournalThreadListDeps) {
   const error = ref<string | null>(null);
   /** 검색 키워드 필터 */
   const filterKeyword = ref("");
-  /** 단일 말머리 필터 */
+  /**
+   * 단일 말머리 필터.
+   * 목록 상단 말머리 탭이 설정하는 범위다. 빈 값=전체, `THREAD_PREFIX_SCOPE_NONE`=말머리 없음, 그 외=Prefix ID.
+   * 검색 조건이 아니라 목록 범위이므로 `resetFilters()`는 이 값을 유지한다.
+   */
   const filterPrefixId = ref("");
   /** 라이프사이클 필터 (OPEN/PENDING/RESOLVED, 빈 값=전체) */
   const filterLifecycleKey = ref("");
@@ -88,7 +98,8 @@ export function createJournalThreadList(deps: JournalThreadListDeps) {
         params.set("searchType", "title");
         params.set("searchKeyword", filterKeyword.value);
       }
-      if (filterPrefixId.value) params.set("prefixId", filterPrefixId.value);
+      if (filterPrefixId.value === THREAD_PREFIX_SCOPE_NONE) params.set("noPrefixYn", "Y");
+      else if (filterPrefixId.value) params.set("prefixId", filterPrefixId.value);
       if (filterLifecycleKey.value) params.set("lifecycleKey", filterLifecycleKey.value);
       // tagIds=1&tagIds=2 — Spring List<Integer> 바인딩 계약 (엔트리 검색과 동일)
       filterTagIds.value.forEach((tagId) => params.append("tagIds", tagId));
@@ -159,10 +170,32 @@ export function createJournalThreadList(deps: JournalThreadListDeps) {
     prefixError.value = loaded ? "" : t("journal.thread.prefix.load.failure");
   }
 
-  /** 검색 조건을 비우고 첫 페이지를 조회한다. */
+  /**
+   * 말머리 탭 범위를 바꾸고 첫 페이지를 조회한다.
+   * @param scope 빈 값=전체, `THREAD_PREFIX_SCOPE_NONE`=말머리 없음, 그 외=Prefix ID 문자열
+   */
+  async function selectPrefixScope(scope: string): Promise<void> {
+    filterPrefixId.value = scope;
+    await fetchList(0);
+  }
+
+  /**
+   * 선택한 Prefix 탭이 활성 선택지에서 사라졌으면(비활성화 등) 전체 범위로 돌린다.
+   * 선택지 조회가 실패한 상태에서는 판단 근거가 없으므로 범위를 유지한다.
+   * @returns 범위를 전체로 돌렸으면 true
+   */
+  function reconcilePrefixScope(): boolean {
+    const scope = filterPrefixId.value;
+    if (!scope || scope === THREAD_PREFIX_SCOPE_NONE || prefixError.value) return false;
+    if (prefixOptions.value.some((prefix) => String(prefix.id) === scope)) return false;
+    console.info("[journalThread] prefix scope reset to all: selected prefix is no longer active", { scope });
+    filterPrefixId.value = "";
+    return true;
+  }
+
+  /** 검색 조건을 비우고 첫 페이지를 조회한다. 말머리 탭 범위(`filterPrefixId`)는 유지한다. */
   async function resetFilters(): Promise<void> {
     filterKeyword.value = "";
-    filterPrefixId.value = "";
     filterLifecycleKey.value = "";
     filterTagIds.value = [];
     filterTagLabelMap.value = {};
@@ -253,5 +286,7 @@ export function createJournalThreadList(deps: JournalThreadListDeps) {
     addFilterTag,
     removeFilterTag,
     resetFilters,
+    selectPrefixScope,
+    reconcilePrefixScope,
   };
 }

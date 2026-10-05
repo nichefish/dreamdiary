@@ -78,7 +78,7 @@ export function createJournalThreadDetail(deps: JournalThreadDetailDeps) {
 
   /**
    * 스레드 편집 문맥에서 활성 말머리를 빠르게 추가하고 즉시 현재 선택에 반영한다.
-   * 관리 기능 전체는 /my/prefixes 탭에 두며 이름·정렬 검증의 SSOT는 관리 API다.
+   * 관리 기능 전체는 스레드 목록의 말머리 탭 관리 모달에 두며 이름·정렬 검증의 SSOT는 관리 API다.
    */
   async function quickAddPrefix(rawName: string): Promise<ThreadPrefix> {
     const name = rawName.trim();

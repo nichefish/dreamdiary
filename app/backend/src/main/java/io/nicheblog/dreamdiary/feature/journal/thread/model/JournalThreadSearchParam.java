@@ -29,6 +29,16 @@ public class JournalThreadSearchParam
     private Integer prefixId;
 
     /**
+     * 말머리 없음 필터 ({@code Y}).
+     * <p>
+     * {@code Y}이면 prefix_content 연결이 없는 스레드만 남긴다.
+     * 목록 화면의 `말머리 없음` 탭이 사용하며 {@link #prefixId}와 함께 보내지 않는다.
+     * </p>
+     */
+    @Size(max = 1)
+    private String noPrefixYn;
+
+    /**
      * 소속 엔트리 태그 필터 (멀티, AND).
      * <p>
      * 스레드는 자체 태그를 소유하지 않으므로, 소속 엔트리 태그 합집합이
