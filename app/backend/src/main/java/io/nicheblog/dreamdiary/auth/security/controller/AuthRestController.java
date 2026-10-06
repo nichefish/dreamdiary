@@ -13,7 +13,9 @@ import io.nicheblog.dreamdiary.auth.security.model.AuthUserDto;
 import io.nicheblog.dreamdiary.auth.security.service.AuthSessionPolicyService;
 import io.nicheblog.dreamdiary.auth.security.service.manager.DupIdLoginManager;
 import io.nicheblog.dreamdiary.auth.security.util.AuthUtils;
+import io.nicheblog.dreamdiary.auth.security.util.ClientChannelUtils;
 import io.nicheblog.dreamdiary.auth.security.service.AuthService;
+import io.nicheblog.dreamdiary.auth.type.ClientChannel;
 import io.nicheblog.dreamdiary.feature.user.account.model.UserPwChgParam;
 import io.nicheblog.dreamdiary.feature.user.my.service.UserMyService;
 import io.nicheblog.dreamdiary.global.ActiveProfile;
@@ -195,6 +197,8 @@ public class AuthRestController {
             if (session != null) {
                 authSessionPolicyService.applyToSession(session);
                 session.setAttribute("jwt", accessToken);
+                // 클라이언트 채널 정보가 없는 세션이면 요청 헤더 기준으로 보완
+                ClientChannelUtils.setToSessionIfAbsent(session, request);
             }
 
             return ResponseEntity.ok(AjaxResponse.withAjaxResult(true, MessageUtils.getMessage("common.result.success")));
@@ -320,11 +324,14 @@ public class AuthRestController {
         } catch (final DupIdLoginException e) {
             final String errorMsg = this.getLoginFailureMsg(e);
             final HttpSession session = request.getSession();
+            final ClientChannel channel = ClientChannelUtils.resolveFromHeader(request);
             session.setAttribute("isDupIdLogin", body.getUsername());
+            // 중복 로그인 확인(기존 세션 끊기)은 같은 클라이언트 채널에서만 인정
+            session.setAttribute(ClientChannel.DUP_LOGIN_SESSION_ATTR, channel.name());
             final Map<String, Object> dupLoginMap = new HashMap<>();
             dupLoginMap.put("username", body.getUsername());
             dupLoginMap.put("isDupIdLogin", true);
-            log.info("Vue login requires duplicate-login confirmation. username: {}", body.getUsername());
+            log.info("Vue login requires duplicate-login confirmation. username: {} channel: {}", body.getUsername(), channel);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(AjaxResponse.withAjaxResult(false, errorMsg).withMap(dupLoginMap));
         } catch (final BadCredentialsException e) {
@@ -416,15 +423,18 @@ public class AuthRestController {
         authSessionPolicyService.applyToSession(session);
         session.setAttribute("authInfo", authInfo);
         session.setAttribute("remoteIp", AuthUtils.getRemoteIpAddr());
+        // 클라이언트 채널(WEB/MOBILE) 세션 저장 :: 채널별 중복 로그인 비교용
+        final ClientChannel channel = ClientChannelUtils.resolveFromHeader(request);
+        ClientChannelUtils.setToSession(session, channel);
 
         final String username = authInfo.getUsername();
         authService.setLastLoginAt(username);
-        DupIdLoginManager.addKey(username);
+        DupIdLoginManager.addKey(username, channel);
 
         publisher.publishAsyncEvent(new LogEvent(this, new LogParam(true, MessageUtils.getMessage("common.result.success"), ActvtyCtgr.LGN)));
         publisher.publishAsyncEvent(new LoginSuccessCacheWarmupEvent(this, username));
         HttpUtils.setInvalidateBrowserCacheHeader(response);
-        log.info("Vue login succeeded. username: {}", username);
+        log.info("Vue login succeeded. username: {} channel: {}", username, channel);
     }
 
     /**

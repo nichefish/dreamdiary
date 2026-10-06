@@ -6,6 +6,8 @@ import io.nicheblog.dreamdiary.auth.security.service.AuthService;
 import io.nicheblog.dreamdiary.auth.security.service.AuthSessionPolicyService;
 import io.nicheblog.dreamdiary.auth.security.service.manager.DupIdLoginManager;
 import io.nicheblog.dreamdiary.auth.security.util.AuthUtils;
+import io.nicheblog.dreamdiary.auth.security.util.ClientChannelUtils;
+import io.nicheblog.dreamdiary.auth.type.ClientChannel;
 import io.nicheblog.dreamdiary.global.handler.ApplicationEventPublisherWrapper;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.infrastructure.log.event.LogEvent;
@@ -80,12 +82,15 @@ public class OAuth2AuthenticationSuccessHandler
             authSessionPolicyService.applyToSession(session);
             session.setAttribute("authInfo", authInfo);
             session.setAttribute("remoteIp", AuthUtils.getRemoteIpAddr());
+            // 클라이언트 채널(WEB/MOBILE) 세션 저장 :: 채널별 중복 로그인 비교용
+            final ClientChannel channel = ClientChannelUtils.resolveFromHeader(request);
+            ClientChannelUtils.setToSession(session, channel);
 
             // 최종 로그인 날짜 세팅 및 패스워드오류 카운트 초기화
             final String username = authInfo.getUsername();
             authService.setLastLoginAt(username);
-            // session에 loginId attribute 추가 :: 중복 로그인 방지 비교용
-            DupIdLoginManager.addKey(username);
+            // session에 loginId attribute 추가 :: 중복 로그인 방지 비교용 (채널별)
+            DupIdLoginManager.addKey(username, channel);
 
             // 로그인 로그 남기기
             final LogParam logParam = new LogParam(true, MessageUtils.getMessage("common.result.success"), ActvtyCtgr.LGN);

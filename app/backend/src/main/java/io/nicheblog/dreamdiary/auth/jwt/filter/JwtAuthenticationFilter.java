@@ -7,6 +7,7 @@ import io.nicheblog.dreamdiary.auth.security.matcher.PublicApiRequestMatcher;
 import io.nicheblog.dreamdiary.auth.security.model.AuthInfo;
 import io.nicheblog.dreamdiary.auth.security.service.AuthSessionPolicyService;
 import io.nicheblog.dreamdiary.auth.security.util.AuthUtils;
+import io.nicheblog.dreamdiary.auth.security.util.ClientChannelUtils;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.util.MessageUtils;
 import io.nicheblog.dreamdiary.infrastructure.web.util.CookieUtils;
@@ -98,6 +99,8 @@ public class JwtAuthenticationFilter
             final HttpSession session = servletRequestAttribute.getRequest().getSession();
             authSessionPolicyService.applyToSession(session);
             session.setAttribute("authInfo", authInfo);
+            // JWT로 새로 인증된 세션에 클라이언트 채널(WEB/MOBILE)이 없으면 요청 헤더 기준으로 저장
+            ClientChannelUtils.setToSessionIfAbsent(session, request);
         } catch (final AuthenticationException e) {
             log.warn("JWT authentication failed. requestUri={} message={}", requestUri, e.getMessage());
             invalidateAuthentication(request);

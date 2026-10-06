@@ -6,6 +6,8 @@ import io.nicheblog.dreamdiary.auth.security.exception.AccountDormantException;
 import io.nicheblog.dreamdiary.auth.security.exception.AccountNeedsPwResetException;
 import io.nicheblog.dreamdiary.auth.security.exception.DupIdLoginException;
 import io.nicheblog.dreamdiary.auth.security.service.AuthService;
+import io.nicheblog.dreamdiary.auth.security.util.ClientChannelUtils;
+import io.nicheblog.dreamdiary.auth.type.ClientChannel;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import io.nicheblog.dreamdiary.global.handler.ApplicationEventPublisherWrapper;
@@ -119,6 +121,8 @@ public class LoginFailureHandler
             final ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             final HttpSession session = servletRequestAttribute.getRequest().getSession();
             session.setAttribute("isDupIdLogin", username);
+            // 중복 로그인 확인(기존 세션 끊기)은 같은 클라이언트 채널에서만 인정
+            session.setAttribute(ClientChannel.DUP_LOGIN_SESSION_ATTR, ClientChannelUtils.resolveFromHeader(request).name());
         /* 패스워드 초기화 강제 */
         } else if (exception instanceof AccountNeedsPwResetException) {
             request.setAttribute("username", username);
