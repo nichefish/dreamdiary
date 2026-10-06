@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
   },
   // 웹: w-lg-500px mt-20 p-10 (상단 정렬 패널, 배경 없음)
   panel: {
-    width: "100%",
-    maxWidth: 500,
+    width: "84%",
+    maxWidth: 320,
     alignSelf: "center",
     marginTop: 56
   },
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 48
+    marginBottom: 28
   },
   domainIcon: {
     color: authColors.textSecondary,
@@ -255,8 +255,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     color: authColors.inputText,
     fontSize: 15,
-    paddingHorizontal: 18,
-    paddingVertical: 11
+    paddingHorizontal: 14,
+    paddingVertical: 8
   },
   // 웹: h-15px mt-1 mb-5 text-danger (오류 문구 자리 고정)
   fieldError: {
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     minHeight: 15,
     marginTop: 4,
-    marginBottom: 18,
+    marginBottom: 8,
     ...textShadow
   },
   fieldErrorLast: {
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     backgroundColor: authColors.primaryLight,
     borderRadius: 8,
     justifyContent: "center",
-    marginTop: 40,
+    marginTop: 16,
     minHeight: 48,
     opacity: 0.75,
     paddingHorizontal: 22,

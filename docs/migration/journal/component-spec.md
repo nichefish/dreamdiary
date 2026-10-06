@@ -327,6 +327,10 @@ interface KeepRow {
 
 **신규 등록 기본값**: `openDayRegist()` 에서 `journalDate` 비어 있으면 오늘(`formatLocalDateStr`).
 
+**직접 입력 정규화·검증 (2026-10-10)**: 입력칸은 직접 입력(`allowInput`)을 유지하고, blur 시와 submit 직전에 `normalizeJournalDateInput()`(`features/journal/utils/journalDate.ts`)으로 `2026-10-8`·`2026.10.08`·`20261008`·앞뒤 공백 등을 `YYYY-MM-DD`로 맞춘 뒤 datepicker 선택값도 동기화한다. 실제 달력에 없는 날짜(예: `2026-02-30`)는 「올바른 날짜를 입력해 주세요. (예: 2026-10-08)」(`journal.day.date.invalid`)로 submit을 막는다. 변경 전에는 입력 원문을 그대로 보내 서버 `@Pattern` 검증에서 HTTP 400과 공통 오류 문구만 보였다.
+
+**저장 실패 표시**: 서버 검증 실패(HTTP 400, `BindException`)는 응답 `message`(메시지 번들로 해석된 한국어 문구)와 `rsltList[{ field, message }]`의 필드 라벨(예: 「(날짜)」)을 함께 알린다(`swalRequestError(e, undefined, detail)`). 업무 실패(HTTP 200 + `rslt=false`, 예: 중복 일자)는 기존처럼 서버 `message`를 표시한다. 실패 시 모달은 닫지 않는다. 서버도 `JournalDayDto.setJournalDate`에서 앞뒤 공백을 trim한다.
+
 **저장 후 갱신**: `JournalDayRegistModal.vue` 는 저장 성공 시 모달을 닫고 성공 알림을 표시한 뒤, 사용자가 OK를 누르면 현재 route 기준으로 목록을 갱신한다. `/journal/weekly` 에서는 `setViewType("WEEKLY")` 후 `fetchDays({ viewType: "WEEKLY" })`, `/journal/monthly` 에서는 `setViewType("LIST")` 후 `fetchDays({ viewType: "LIST" })` 를 호출해 주간 등록 완료 후 월간 목록으로 돌아가지 않게 한다. 일자 태그 변경이 일자 태그클라우드에 반영되도록 OK 이후 `fetchTagCloud({ sections: ["day"] })`도 함께 호출한다 (2026-05-19 수정, 2026-06-02 OK 이후 갱신, 2026-06-03 부분 갱신).
 
 **수정 정보 조회 실패**: 수정용 일자 정보 조회가 실패하면 불완전한 폼을 열지 않고, 서버 메시지를 우선 표시하며 없으면 현재 locale의 fallback을 사용한다.

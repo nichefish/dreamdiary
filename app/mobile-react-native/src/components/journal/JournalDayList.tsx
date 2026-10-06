@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -82,6 +83,8 @@ export type JournalDayListProps = {
   emptyText: string;
   /** 빈 목록 보조 힌트 (선택) */
   emptyHint?: string;
+  /** 조회로 확인된 빈 상태에서 제공하는 추가 조작. 표시 조건은 호출자가 확정한다. */
+  emptyAction?: ReactNode;
   /** center 영역 paddingVertical — 탭/스택 레이아웃 차이 보정 */
   centerPaddingVertical?: number;
   /** 이 목록이 속한 일자의 태그 — 엔트리 상세로 넘겨 "일자 태그" 행으로 보여준다 */
@@ -100,6 +103,7 @@ export function JournalDayList({
   topDreams,
   emptyText,
   emptyHint,
+  emptyAction,
   centerPaddingVertical = 48,
   dayTags
 }: JournalDayListProps) {
@@ -124,6 +128,7 @@ export function JournalDayList({
       <View style={[styles.center, { paddingVertical: centerPaddingVertical }]}>
         <Text style={styles.emptyText}>{emptyText}</Text>
         {emptyHint != null && <Text style={styles.emptyHint}>{emptyHint}</Text>}
+        {emptyAction}
       </View>
     );
   }

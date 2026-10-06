@@ -58,9 +58,34 @@ export function logout() {
 
 // ─── 저널 일자 ─────────────────────────────────────────
 
+/**
+ * 선택 날짜의 저널일자를 등록한다. 소유자와 기본 요약 챕터는 서버가 확정한다.
+ * Spring MVC DTO 바인딩에 맞춰 multipart로 전송하며, HTTP 200의 업무 실패도 오류로 반환한다.
+ * @param dateStr 등록 대상 날짜 (YYYY-MM-DD)
+ * @param weather 선택 날씨 입력 (최대 100자)
+ */
+export async function registerJournalDay(dateStr: string, weather: string) {
+  const journalDate = normalizeDateStr(dateStr);
+  if (!journalDate) throw new Error("유효하지 않은 날짜 형식입니다.");
+  if (weather.length > 100) throw new Error("날씨는 100자 이내로 입력해 주세요.");
+  const body = new FormData();
+  body.append("journalDate", journalDate);
+  body.append("journalDatePrecision", "EXACT");
+  body.append("weather", weather);
+  const response = await request<AjaxResponse<JournalDay>>("/api/journal/days", {
+    method: "POST",
+    body
+  });
+  if (response.rslt !== true) {
+    throw new ApiError(response.message || "저널일자를 등록하지 못했습니다.", 200, response);
+  }
+  return response;
+}
+
 interface DailyListResponse {
   rslt: boolean;
   rsltList?: JournalDay[];
+  message?: string;
 }
 
 /**

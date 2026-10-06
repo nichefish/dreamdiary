@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -45,6 +46,8 @@ function shiftMonth(ym: string, delta: number): string {
 }
 
 export type JournalMonthlyViewProps = {
+  /** 날짜 이동 행 왼쪽에 표시하는 일·주·월 보기 선택 컨트롤. */
+  modeSelector: ReactNode;
   /** 진입 시 기준 일자 (YYYY-MM-DD). 이 날짜가 속한 달로 시작한다. */
   initialDate: string;
 };
@@ -54,7 +57,7 @@ export type JournalMonthlyViewProps = {
  * 기준 연·월을 달 단위로 이동하며, 해당 달의 저널 일자를 날짜 순서 연속 목록으로 읽는다.
  * 연·월 라벨을 누르면 연·월 피커(월 모드)가 열려 먼 달로 바로 이동할 수 있다.
  */
-export function JournalMonthlyView({ initialDate }: JournalMonthlyViewProps) {
+export function JournalMonthlyView({ initialDate, modeSelector }: JournalMonthlyViewProps) {
   const [yearMonth, setYearMonth] = useState<string>(() => toYearMonth(initialDate));
   const [pickerVisible, setPickerVisible] = useState(false);
   const { days, loading, refreshing, error, load, onRefresh } = useJournalMonth(yearMonth);
@@ -82,12 +85,9 @@ export function JournalMonthlyView({ initialDate }: JournalMonthlyViewProps) {
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.accent} />
-      }
-    >
+    <View style={styles.view}>
+      <View style={styles.controlsRow}>
+        {modeSelector}
       <View style={styles.monthNav}>
         <Pressable
           accessibilityRole="button"
@@ -126,7 +126,13 @@ export function JournalMonthlyView({ initialDate }: JournalMonthlyViewProps) {
           <Text style={[styles.monthNavArrow, atThisMonth && styles.monthNavArrowDisabled]}>›</Text>
         </Pressable>
       </View>
-
+      </View>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.accent} />
+      }
+    >
       <JournalPeriodTagCloudPanel period={{ yy: year, mnth: month }} title="이 달의 태그" />
       <JournalPeriodThreadPanel query={{ viewType: "LIST", yy: year, mnth: month }} title="이 달의 스레드" />
 
@@ -173,18 +179,23 @@ export function JournalMonthlyView({ initialDate }: JournalMonthlyViewProps) {
         onClose={() => setPickerVisible(false)}
       />
     </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, padding: 20, gap: 16, paddingBottom: 24 },
+  view: { flex: 1 },
+  controlsRow: { flexDirection: "row", alignItems: "center", paddingHorizontal: 20, paddingBottom: 12, gap: 8 },
+  container: { flexGrow: 1, padding: 20, paddingTop: 4, gap: 16, paddingBottom: 24 },
   monthNav: {
+    flex: 1,
+    minWidth: 0,
     flexDirection: "row",
     alignItems: "center",
     gap: 4
   },
   monthNavButton: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 4,
     paddingVertical: 6
   },
   monthNavButtonDisabled: {
@@ -211,7 +222,7 @@ const styles = StyleSheet.create({
   },
   monthLabel: {
     color: colors.text,
-    fontSize: 17,
+    fontSize: 14,
     fontWeight: "700"
   },
   monthLabelCaret: {

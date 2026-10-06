@@ -15,9 +15,25 @@ export function getAjaxResponseMessage(error: unknown): string | undefined {
   const data = error.response?.data;
   if (data && typeof data === "object" && "message" in data) {
     const message = (data as { message?: unknown }).message;
-    if (typeof message === "string" && message.length > 0) return message;
+    /* 해석되지 않은 검증 placeholder(예: "{msg.journal.day.date.format}")는 사용자에게 노출하지 않고 fallback 문구를 쓴다. */
+    if (typeof message === "string" && message.length > 0 && !/^\{[\w.-]+\}$/.test(message.trim())) return message;
   }
   return undefined;
+}
+
+/** 검증 실패(HTTP 400) 응답의 필드 오류 항목. 서버 BaseExceptionHandler 가 rsltList 로 내려준다. */
+export interface AjaxFieldError {
+  field: string;
+  message?: string;
+}
+
+/** Ajax 오류 응답 본문의 rsltList 에서 필드 오류({ field, message }) 목록 추출. 없으면 빈 배열. */
+export function getAjaxFieldErrors(error: unknown): AjaxFieldError[] {
+  if (!axios.isAxiosError(error)) return [];
+  const list = (error.response?.data as { rsltList?: unknown } | undefined)?.rsltList;
+  if (!Array.isArray(list)) return [];
+  return list.filter((item): item is AjaxFieldError =>
+    !!item && typeof item === "object" && typeof (item as { field?: unknown }).field === "string");
 }
 
 /** AUTH_EXPIRED 는 전역 인터셉터에서 이미 안내하므로 재표시하지 않는다. */
@@ -92,9 +108,11 @@ export async function swalAlert(text: string): Promise<void> {
 /**
  * 요청 실패 알림. 인증 만료는 전역 인터셉터에서 이미 안내하므로 일반 오류로 다시 띄우지 않는다.
  */
-export async function swalRequestError(error: unknown, text?: string): Promise<void> {
+export async function swalRequestError(error: unknown, text?: string, detail?: string): Promise<void> {
   if (isAuthExpiredError(error)) return;
   console.error("[swalRequestError] API request failed", error);
   const fallbackText = text ?? useLocaleStore().t("common.error.processing");
-  await swalFire({ icon: "error", text: getAjaxResponseMessage(error) ?? fallbackText });
+  const message = getAjaxResponseMessage(error) ?? fallbackText;
+  /* detail: 화면별 부가 설명(예: 검증 실패 필드 라벨). 서버 메시지 뒤에 덧붙인다. */
+  await swalFire({ icon: "error", text: detail ? `${message} ${detail}` : message });
 }

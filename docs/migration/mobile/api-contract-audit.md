@@ -3,7 +3,7 @@
 - 작성일: 2026-10-06 (브랜치 `dev_0.30.0`, 미커밋 작업 트리 기준)
 - 대상: `app/mobile-react-native/src/api/*.ts` 전 함수, `src/types/*.ts` 전 타입
 - 기준: `app/backend` 컨트롤러·파라미터·DTO(`global/ApiUrl.java`, `*RestController`, `*SearchParam`, `*Dto`), `app/frontend-vue` 동일 엔드포인트 호출부
-- 공통 응답 래퍼: 백엔드 `AjaxResponse extends ServiceResponse` → `rslt`, `rsltSts`, `message`, `rsltList`, `rsltPage`, `rsltMap`, `rsltVal`, `rsltObj`, `rsltStr` (`@JsonInclude(NON_NULL)`), 오류 시 `BaseExceptionHandler` (`IllegalArgumentException`/`BusinessException` → 400)
+- 공통 응답 래퍼: 백엔드 `AjaxResponse extends ServiceResponse` → `rslt`, `rsltSts`, `message`, `rsltList`, `rsltPage`, `rsltMap`, `rsltVal`, `rsltObj`, `rsltStr` (`@JsonInclude(NON_NULL)`), 오류 시 `BaseExceptionHandler` (`IllegalArgumentException`/`BusinessException` → 400). 입력 검증 실패(`BindException`/`MethodArgumentNotValidException`, 예: `POST /api/journal/days`의 `journalDate` 형식·`weather` 100자 초과)도 400이며, 2026-10-10부터 `message`에 메시지 번들로 해석된 문구(이전: `{msg.journal.day.date.format}` placeholder 원문)와 `rsltList: [{ field, message }]`를 담는다. 모바일 `registerJournalDay`는 날짜 정규화·날씨 길이 검사를 먼저 하므로 변경 불필요하며, 400 시 `ApiError` 메시지로 이 문구를 그대로 보여줄 수 있다
 
 ## 고영향(High) 요약
 

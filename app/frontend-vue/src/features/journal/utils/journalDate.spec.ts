@@ -7,6 +7,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   formatLocalDateStr,
+  normalizeJournalDateInput,
   getWeekDayStr,
   getWeekStartDateStr,
   resolveWeekStartDt,
@@ -94,5 +95,36 @@ describe("resolveWeekStartDt", () => {
   it("stdrdDt/yy/mnth 모두 없으면 오늘 기준 주 시작일을 반환한다", () => {
     expect(resolveWeekStartDt({})).toBe("2026-07-06");
     expect(resolveWeekStartDt({ yy: 2026 })).toBe("2026-07-06"); // mnth 누락 시에도 오늘 폴백
+  });
+});
+
+describe("normalizeJournalDateInput", () => {
+  it.each([
+    ["2026-10-08", "2026-10-08"],
+    ["2026-10-8", "2026-10-08"],
+    ["2026.10.08", "2026-10-08"],
+    ["2026/10/8", "2026-10-08"],
+    ["20261008", "2026-10-08"],
+    ["2026-10-08   ", "2026-10-08"],
+    ["  2026.1.5.", "2026-01-05"],
+    ["2026년 10월 8일", "2026-10-08"],
+  ])("%s → %s", (raw, expected) => {
+    expect(normalizeJournalDateInput(raw)).toBe(expected);
+  });
+
+  it("빈 값은 빈 문자열(필수 입력 안내 대상)을 반환한다", () => {
+    expect(normalizeJournalDateInput("")).toBe("");
+    expect(normalizeJournalDateInput("   ")).toBe("");
+    expect(normalizeJournalDateInput(null)).toBe("");
+  });
+
+  it.each(["2026-02-30", "2026-13-01", "2026-10-00", "2026-10", "10-08", "abcd-ef-gh", "2026108", "0999-01-01"])(
+    "%s 는 유효하지 않은 날짜로 null", (raw) => {
+      expect(normalizeJournalDateInput(raw)).toBeNull();
+    });
+
+  it("윤년 2월 29일을 구분한다", () => {
+    expect(normalizeJournalDateInput("2028-2-29")).toBe("2028-02-29");
+    expect(normalizeJournalDateInput("2026-02-29")).toBeNull();
   });
 });

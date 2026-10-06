@@ -1,5 +1,7 @@
+import type { ReactNode } from "react";
 import { useState } from "react";
 import {
+  Alert,
   Pressable,
   RefreshControl,
   ScrollView,
@@ -8,6 +10,7 @@ import {
   View
 } from "react-native";
 import { JournalDatePickerModal } from "./JournalDatePickerModal";
+import { JournalDayRegistModal } from "./JournalDayRegistModal";
 import { JournalDayList } from "./JournalDayList";
 import { JournalPeriodTagCloudPanel } from "./JournalPeriodTagCloudPanel";
 import { JournalPeriodThreadPanel } from "./JournalPeriodThreadPanel";
@@ -19,6 +22,8 @@ import { formatDateDots } from "../../utils/date";
 import { displayTagsOf } from "../../types/journalDay";
 
 export type JournalDailyViewProps = {
+  /** 날짜 이동 행 왼쪽에 표시하는 일·주·월 보기 선택 컨트롤. */
+  modeSelector: ReactNode;
   /** 조회 기준 일자 (YYYY-MM-DD) */
   selectedDate: string;
   /** 기준 일자가 오늘인지 여부 (다음 날 이동 제한·빈 문구 분기에 사용) */
@@ -37,6 +42,7 @@ export type JournalDailyViewProps = {
  * 날짜 라벨을 누르면 달력 피커가 열려 먼 날짜로 바로 이동할 수 있다.
  */
 export function JournalDailyView({
+  modeSelector,
   selectedDate,
   atToday,
   shiftDay,
@@ -44,6 +50,7 @@ export function JournalDailyView({
   setSelectedDate
 }: JournalDailyViewProps) {
   const [pickerVisible, setPickerVisible] = useState(false);
+  const [registrationDate, setRegistrationDate] = useState<string | null>(null);
   const {
     day,
     loading,
@@ -52,9 +59,25 @@ export function JournalDailyView({
     chapters,
     topDreams,
     hasAny,
+    canRegister,
     load,
     onRefresh
   } = useJournalDay(selectedDate);
+
+  function openRegistration() {
+    if (!canRegister) {
+      console.info("[JournalDailyView] registration blocked until absence confirmed", { selectedDate });
+      return;
+    }
+    console.info("[JournalDailyView] registration opened", { selectedDate });
+    setRegistrationDate(selectedDate);
+  }
+
+  async function handleRegistered() {
+    await load(true);
+    setRegistrationDate(null);
+    Alert.alert("저널일자 등록", "저널일자를 등록했습니다.");
+  }
 
   function handleGoToToday() {
     if (goToToday()) {
@@ -68,12 +91,9 @@ export function JournalDailyView({
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.accent} />
-      }
-    >
+    <View style={styles.view}>
+      <View style={styles.controlsRow}>
+        {modeSelector}
       <View style={styles.dateNav}>
         <Pressable
           accessibilityRole="button"
@@ -112,7 +132,13 @@ export function JournalDailyView({
           <Text style={[styles.dateNavArrow, atToday && styles.dateNavArrowDisabled]}>›</Text>
         </Pressable>
       </View>
-
+      </View>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.accent} />
+      }
+    >
       <JournalPeriodTagCloudPanel period={{ stdrdDt: selectedDate }} title="이 날의 태그" />
       <JournalPeriodThreadPanel query={{ viewType: "DAILY", stdrdDt: selectedDate }} title="이 날의 스레드" />
 
@@ -130,7 +156,12 @@ export function JournalDailyView({
         hasAny={hasAny}
         chapters={chapters}
         topDreams={topDreams}
-        emptyText={atToday ? "오늘은 아직 기록이 없습니다." : "이 날의 기록이 없습니다."}
+        emptyText={day == null ? "저널일자가 등록되지 않았습니다." : "아직 작성된 일기나 꿈이 없습니다."}
+        emptyAction={canRegister ? (
+          <Pressable accessibilityRole="button" onPress={openRegistration} style={styles.registerButton}>
+            <Text style={styles.registerText}>+ 저널일자 등록</Text>
+          </Pressable>
+        ) : undefined}
         dayTags={displayTagsOf(day?.tag)}
       />
 
@@ -142,18 +173,32 @@ export function JournalDailyView({
         onClose={() => setPickerVisible(false)}
       />
     </ScrollView>
+      {registrationDate != null && (
+        <JournalDayRegistModal
+          date={registrationDate}
+          onClose={() => setRegistrationDate(null)}
+          onRegistered={handleRegistered}
+        />
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, padding: 20, gap: 16, paddingBottom: 24 },
+  view: { flex: 1 },
+  registerButton: { minHeight: 44, paddingHorizontal: 18, paddingVertical: 12, borderRadius: 8, backgroundColor: colors.accent },
+  registerText: { color: colors.onAccent, fontSize: 15, fontWeight: "700" },
+  controlsRow: { flexDirection: "row", alignItems: "center", paddingHorizontal: 20, paddingBottom: 12, gap: 8 },
+  container: { flexGrow: 1, padding: 20, paddingTop: 4, gap: 16, paddingBottom: 24 },
   dateNav: {
+    flex: 1,
+    minWidth: 0,
     flexDirection: "row",
     alignItems: "center",
     gap: 4
   },
   dateNavButton: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 4,
     paddingVertical: 6
   },
   dateNavButtonDisabled: {
@@ -180,7 +225,7 @@ const styles = StyleSheet.create({
   },
   dateLabel: {
     color: colors.text,
-    fontSize: 17,
+    fontSize: 14,
     fontWeight: "700"
   },
   dateLabelCaret: {

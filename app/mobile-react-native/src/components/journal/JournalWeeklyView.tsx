@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -19,6 +20,8 @@ import { colors } from "../../theme/colors";
 import { addDays, formatDateDots, getWeekStartDateStr, toDateStr } from "../../utils/date";
 
 export type JournalWeeklyViewProps = {
+  /** 날짜 이동 행 왼쪽에 표시하는 일·주·월 보기 선택 컨트롤. */
+  modeSelector: ReactNode;
   /** 진입 시 기준 일자 (YYYY-MM-DD). 이 날짜가 속한 주로 시작한다. */
   initialDate: string;
 };
@@ -28,7 +31,7 @@ export type JournalWeeklyViewProps = {
  * 월요일 시작 7일 주를 단위로 이동하며, 해당 주의 저널 일자를 날짜 순서로 읽는다.
  * 기간 라벨을 누르면 달력 피커(주 모드)가 열려 먼 주로 바로 이동할 수 있다.
  */
-export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
+export function JournalWeeklyView({ initialDate, modeSelector }: JournalWeeklyViewProps) {
   const [weekStartDt, setWeekStartDt] = useState<string>(() => getWeekStartDateStr(initialDate));
   const [pickerVisible, setPickerVisible] = useState(false);
   const { days, loading, refreshing, error, hasAny, load, onRefresh } = useJournalWeek(weekStartDt);
@@ -53,12 +56,9 @@ export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.accent} />
-      }
-    >
+    <View style={styles.view}>
+      <View style={styles.controlsRow}>
+        {modeSelector}
       <View style={styles.weekNav}>
         <Pressable
           accessibilityRole="button"
@@ -77,7 +77,7 @@ export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
             hitSlop={6}
             style={styles.weekLabelButton}
           >
-            <Text style={styles.weekLabel}>{rangeLabel}</Text>
+            <Text style={styles.weekLabel}>{formatDateDots(weekStartDt)}{"\n"}– {weekEndDt.slice(0, 4) === weekStartDt.slice(0, 4) ? formatDateDots(weekEndDt).slice(5) : formatDateDots(weekEndDt)}</Text>
             <Text style={styles.weekLabelCaret}>▾</Text>
           </Pressable>
           {!atThisWeek && (
@@ -97,7 +97,13 @@ export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
           <Text style={[styles.weekNavArrow, atThisWeek && styles.weekNavArrowDisabled]}>›</Text>
         </Pressable>
       </View>
-
+      </View>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.accent} />
+      }
+    >
       <JournalPeriodTagCloudPanel period={{ weekStartDt }} title="이 주의 태그" />
       <JournalPeriodThreadPanel query={{ viewType: "WEEKLY", weekStartDt }} title="이 주의 스레드" />
 
@@ -144,18 +150,23 @@ export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
         onClose={() => setPickerVisible(false)}
       />
     </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, padding: 20, gap: 16, paddingBottom: 24 },
+  view: { flex: 1 },
+  controlsRow: { flexDirection: "row", alignItems: "center", paddingHorizontal: 20, paddingBottom: 12, gap: 8 },
+  container: { flexGrow: 1, padding: 20, paddingTop: 4, gap: 16, paddingBottom: 24 },
   weekNav: {
+    flex: 1,
+    minWidth: 0,
     flexDirection: "row",
     alignItems: "center",
     gap: 4
   },
   weekNavButton: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 4,
     paddingVertical: 6
   },
   weekNavButtonDisabled: {
@@ -181,8 +192,9 @@ const styles = StyleSheet.create({
     gap: 4
   },
   weekLabel: {
+    textAlign: "center",
     color: colors.text,
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: "700"
   },
   weekLabelCaret: {

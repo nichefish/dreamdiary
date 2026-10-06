@@ -46,13 +46,7 @@ export function TodayScreen() {
     }, [navigation, route.params?.date, setSelectedDate])
   );
 
-  return (
-    <SafeAreaView edges={["top", "left", "right"]} style={styles.safeArea}>
-      <View style={styles.topBar}>
-        <View style={styles.kickerRow}>
-          <AppMenuButton currentUrl={MENU_URL.JOURNAL_DAY} />
-          <Text style={styles.kicker}>DreamDiary</Text>
-        </View>
+  const modeSelector = (
         <View style={styles.segment}>
           {VIEW_MODES.map((item) => {
             const active = item.id === viewMode;
@@ -71,10 +65,20 @@ export function TodayScreen() {
             );
           })}
         </View>
+  );
+
+  return (
+    <SafeAreaView edges={["top", "left", "right"]} style={styles.safeArea}>
+      <View style={styles.topBar}>
+        <View style={styles.kickerRow}>
+          <AppMenuButton currentUrl={MENU_URL.JOURNAL_DAY} />
+          <Text style={styles.kicker}>DreamDiary</Text>
+        </View>
       </View>
 
       {viewMode === "daily" ? (
         <JournalDailyView
+          modeSelector={modeSelector}
           selectedDate={selectedDate}
           atToday={atToday}
           shiftDay={shiftDay}
@@ -82,9 +86,9 @@ export function TodayScreen() {
           setSelectedDate={setSelectedDate}
         />
       ) : viewMode === "weekly" ? (
-        <JournalWeeklyView initialDate={selectedDate} />
+        <JournalWeeklyView initialDate={selectedDate} modeSelector={modeSelector} />
       ) : (
-        <JournalMonthlyView initialDate={selectedDate} />
+        <JournalMonthlyView initialDate={selectedDate} modeSelector={modeSelector} />
       )}
     </SafeAreaView>
   );
@@ -108,20 +112,20 @@ const styles = StyleSheet.create({
   },
   segment: {
     flexDirection: "row",
-    gap: 6,
+    gap: 2,
     backgroundColor: colors.surface,
     borderRadius: 8,
-    padding: 4,
+    padding: 3,
     alignSelf: "flex-start"
   },
   segmentButton: {
-    minWidth: 56,
+    minWidth: 30,
     alignItems: "center",
     borderRadius: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 14
+    paddingVertical: 7,
+    paddingHorizontal: 6
   },
   segmentButtonActive: { backgroundColor: colors.text },
-  segmentText: { color: colors.secondaryText, fontSize: 14, fontWeight: "700" },
+  segmentText: { color: colors.secondaryText, fontSize: 12, fontWeight: "700" },
   segmentTextActive: { color: colors.onDark }
 });

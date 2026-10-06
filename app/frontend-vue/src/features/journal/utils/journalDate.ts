@@ -14,6 +14,31 @@ export function getWeekDayStr(stdrdDt: string | null | undefined, t: (key: strin
   return day ? t(`journal.weekday.${day}`) : "";
 }
 
+/**
+ * 사용자가 입력한 날짜 문자열을 YYYY-MM-DD 로 정규화한다.
+ * 허용: "2026-10-8", "2026.10.08", "2026/10/08", "2026 10 08", "20261008", "2026년 10월 8일", 앞뒤 공백.
+ * 실제 달력에 없는 날짜(2026-02-30 등)는 거절한다.
+ * (변경 전: 입력값을 그대로 전송해 서버 @Pattern 검증에서 HTTP 400.)
+ * @param raw 입력 문자열
+ * @returns 비어 있으면 "", 유효하지 않으면 null, 유효하면 YYYY-MM-DD
+ */
+export function normalizeJournalDateInput(raw: string | null | undefined): string | null {
+  const value = (raw ?? "").trim();
+  if (!value) return "";
+  const match =
+    /^(\d{4})\s*[-./\s]\s*(\d{1,2})\s*[-./\s]\s*(\d{1,2})\.?$/.exec(value) ??
+    /^(\d{4})(\d{2})(\d{2})$/.exec(value) ??
+    /^(\d{4})\s*년\s*(\d{1,2})\s*월\s*(\d{1,2})\s*일?$/.exec(value);
+  if (!match) return null;
+  const y = Number(match[1]);
+  const m = Number(match[2]);
+  const d = Number(match[3]);
+  if (y < 1000 || m < 1 || m > 12 || d < 1 || d > 31) return null;
+  const date = new Date(y, m - 1, d);
+  if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) return null;
+  return formatLocalDateStr(date);
+}
+
 /** Date → YYYY-MM-DD (로컬) */
 export function formatLocalDateStr(date: Date): string {
   const y = date.getFullYear();

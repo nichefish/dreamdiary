@@ -51,19 +51,35 @@ Configuration:
             level: info
             AppenderRef:
               - ref: Console_Appender
+              - ref: RollingFile_INFO_Appender
+                level: info
+              - ref: RollingFile_WARN_Appender
+                level: warn
         Logger:
           - name: dreamdiary.nicheblog.io
             additivity: false
             level: info
             AppenderRef:
               - ref: Console_Appender
+              - ref: RollingFile_INFO_Appender
+                level: info
+              - ref: RollingFile_WARN_Appender
+                level: warn
           - name: p6spy
             additivity: false
             level: info
             AppenderRef:
               - ref: Console_Appender
+              - ref: RollingFile_INFO_Appender
+                level: info
+              - ref: RollingFile_WARN_Appender
+                level: warn
           - name: com.p6spy
             additivity: false
             level: info
             AppenderRef:
               - ref: Console_Appender
+              - ref: RollingFile_INFO_Appender
+                level: info
+              - ref: RollingFile_WARN_Appender
+                level: warn

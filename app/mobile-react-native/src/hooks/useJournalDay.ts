@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { getDailyJournalDay } from "../api/dreamDiaryApi";
 import { isUnauthorizedError } from "../api/client";
@@ -18,6 +18,8 @@ export type UseJournalDayResult = {
   chapters: JournalChapter[];
   topDreams: JournalEntry[];
   hasAny: boolean;
+  /** 현재 선택 날짜의 조회 성공으로 일자 부재가 확인된 경우에만 true. */
+  canRegister: boolean;
   load: (isRefresh?: boolean) => Promise<void>;
   onRefresh: () => void;
 };
@@ -36,25 +38,49 @@ export function useJournalDay(
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [queriedDate, setQueriedDate] = useState<string | null>(null);
+  const [resolvedDate, setResolvedDate] = useState<string | null>(null);
+  const requestSequence = useRef(0);
+  const currentDate = useRef(dateStr);
+  currentDate.current = dateStr;
+
   const load = useCallback(async (isRefresh = false) => {
+    const sequence = ++requestSequence.current;
+    const isCurrent = () => sequence === requestSequence.current && currentDate.current === dateStr;
+    setResolvedDate(null);
     if (!isRefresh) setLoading(true);
     setError(null);
     try {
       const res = await getDailyJournalDay(dateStr);
+      if (!isCurrent()) {
+        console.info("[useJournalDay] stale response discarded", { dateStr, sequence });
+        return;
+      }
+      if (res.rslt !== true) throw new Error(res.message || "일자를 불러오지 못했습니다.");
       setDay(res.rsltList?.[0] ?? null);
+      setResolvedDate(dateStr);
+      setQueriedDate(dateStr);
     } catch (e) {
+      if (!isCurrent()) {
+        console.info("[useJournalDay] stale error discarded", { dateStr, sequence });
+        return;
+      }
       if (!isUnauthorizedError(e)) {
         console.error("[useJournalDay] daily journal load failed", { dateStr }, e);
       }
+      setQueriedDate(dateStr);
       setError(e instanceof Error ? e.message : "불러오는 중 오류가 발생했습니다.");
     } finally {
-      setLoading(false);
-      setRefreshing(false);
+      if (isCurrent()) {
+        setLoading(false);
+        setRefreshing(false);
+      }
     }
   }, [dateStr]);
 
   useEffect(() => {
     void load();
+    return () => { requestSequence.current += 1; };
   }, [load]);
 
   useFocusEffect(
@@ -75,13 +101,14 @@ export function useJournalDay(
   const hasAny = day != null && dayHasEntries(day);
 
   return {
-    day,
-    loading,
+    day: queriedDate === dateStr ? day : null,
+    loading: loading || queriedDate !== dateStr,
     refreshing,
-    error,
+    error: queriedDate === dateStr ? error : null,
     chapters,
     topDreams,
     hasAny,
+    canRegister: resolvedDate === dateStr && !loading && !refreshing && error == null && day == null,
     load,
     onRefresh
   };
