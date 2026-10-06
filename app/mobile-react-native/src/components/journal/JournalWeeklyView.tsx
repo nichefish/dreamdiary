@@ -8,7 +8,12 @@ import {
   Text,
   View
 } from "react-native";
+import { JournalDatePickerModal } from "./JournalDatePickerModal";
 import { JournalDaySection } from "./JournalDaySection";
+import { JournalPeriodTagCloudPanel } from "./JournalPeriodTagCloudPanel";
+import { JournalPeriodThreadPanel } from "./JournalPeriodThreadPanel";
+import { JournalCopyShareBar } from "./JournalCopyShareBar";
+import { buildEntriesCopyText, entriesOfDays } from "../../utils/journalCopy";
 import { useJournalWeek } from "../../hooks/useJournalWeek";
 import { colors } from "../../theme/colors";
 import { addDays, formatDateDots, getWeekStartDateStr, toDateStr } from "../../utils/date";
@@ -21,9 +26,11 @@ export type JournalWeeklyViewProps = {
 /**
  * 주별(WEEKLY) 저널 조회 뷰. Today 탭 일/주 토글의 '주' 모드 본문.
  * 월요일 시작 7일 주를 단위로 이동하며, 해당 주의 저널 일자를 날짜 순서로 읽는다.
+ * 기간 라벨을 누르면 달력 피커(주 모드)가 열려 먼 주로 바로 이동할 수 있다.
  */
 export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
   const [weekStartDt, setWeekStartDt] = useState<string>(() => getWeekStartDateStr(initialDate));
+  const [pickerVisible, setPickerVisible] = useState(false);
   const { days, loading, refreshing, error, hasAny, load, onRefresh } = useJournalWeek(weekStartDt);
 
   const thisWeekStart = getWeekStartDateStr(toDateStr(new Date()));
@@ -37,6 +44,12 @@ export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
 
   function goToThisWeek() {
     if (!atThisWeek) setWeekStartDt(thisWeekStart);
+  }
+
+  /** 피커에서 고른 주(월요일 시작)로 이동. 이번 주 이후는 이번 주로 수렴. */
+  function handlePickWeek(nextWeekStart: string) {
+    const normalized = getWeekStartDateStr(nextWeekStart);
+    setWeekStartDt(normalized > thisWeekStart ? thisWeekStart : normalized);
   }
 
   return (
@@ -56,14 +69,23 @@ export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
           <Text style={styles.weekNavArrow}>‹</Text>
         </Pressable>
 
-        <Pressable
-          accessibilityRole="button"
-          onPress={goToThisWeek}
-          style={styles.weekLabelWrap}
-        >
-          <Text style={styles.weekLabel}>{rangeLabel}</Text>
-          {!atThisWeek && <Text style={styles.weekTodayHint}>이번 주로</Text>}
-        </Pressable>
+        <View style={styles.weekLabelWrap}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`${rangeLabel}, 주 선택`}
+            onPress={() => setPickerVisible(true)}
+            hitSlop={6}
+            style={styles.weekLabelButton}
+          >
+            <Text style={styles.weekLabel}>{rangeLabel}</Text>
+            <Text style={styles.weekLabelCaret}>▾</Text>
+          </Pressable>
+          {!atThisWeek && (
+            <Pressable accessibilityRole="button" onPress={goToThisWeek} hitSlop={6}>
+              <Text style={styles.weekTodayHint}>이번 주로</Text>
+            </Pressable>
+          )}
+        </View>
 
         <Pressable
           accessibilityRole="button"
@@ -75,6 +97,17 @@ export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
           <Text style={[styles.weekNavArrow, atThisWeek && styles.weekNavArrowDisabled]}>›</Text>
         </Pressable>
       </View>
+
+      <JournalPeriodTagCloudPanel period={{ weekStartDt }} title="이 주의 태그" />
+      <JournalPeriodThreadPanel query={{ viewType: "WEEKLY", weekStartDt }} title="이 주의 스레드" />
+
+      {!loading && error == null && hasAny && (
+        <JournalCopyShareBar
+          label="이 주 기록"
+          buildText={() => buildEntriesCopyText(entriesOfDays(days))}
+          shareTitle={`${rangeLabel} 기록`}
+        />
+      )}
 
       {loading ? (
         <View style={styles.center}>
@@ -102,6 +135,14 @@ export function JournalWeeklyView({ initialDate }: JournalWeeklyViewProps) {
           ))}
         </View>
       )}
+
+      <JournalDatePickerModal
+        visible={pickerVisible}
+        mode="week"
+        value={weekStartDt}
+        onSelect={handlePickWeek}
+        onClose={() => setPickerVisible(false)}
+      />
     </ScrollView>
   );
 }
@@ -134,9 +175,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 2
   },
+  weekLabelButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4
+  },
   weekLabel: {
     color: colors.text,
     fontSize: 15,
+    fontWeight: "700"
+  },
+  weekLabelCaret: {
+    color: colors.accent,
+    fontSize: 11,
     fontWeight: "700"
   },
   weekTodayHint: {

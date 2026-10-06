@@ -34,29 +34,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
    * 기존 세션(쿠키) 유효 여부 확인 — 앱 시작 시 1회 호출.
    * SecureStore 토큰 hydrate 후 refresh 로 JWT 갱신(WebSocket·REST Authorization).
    */
-  const checkAuth = useCallback(async () => {
-    setIsLoading(true);
+  const loadAuth = useCallback(async ({ showLoading = true }: { showLoading?: boolean } = {}): Promise<boolean> => {
+    // showLoading=false: 로그인 직후 확인 — 전체 로딩 화면으로 LoginScreen 을 내리지 않아 실패 문구를 그 화면에 표시할 수 있다.
+    if (showLoading) setIsLoading(true);
     setAuthError(null);
     try {
       await hydrateAccessTokenFromSecureStore();
       const data = await getAuthInfo();
       if (data.rslt && data.rsltObj) {
-        setUser(data.rsltObj);
         try {
           await refreshAccessToken();
         } catch {
           // refresh 실패 시 REST 쿠키만 유지 — AI 채팅 WS 는 토큰 없으면 연결 실패 가능
           console.warn("[Auth] refreshAccessToken failed after getAuthInfo");
         }
+        // 토큰 갱신 후 사용자 설정 → 메인 화면 첫 요청이 갱신된 토큰을 쓰도록 (로그인 직후엔 로딩 화면이 없으므로)
+        setUser(data.rsltObj);
+        return true;
       } else {
         setUser(null);
         await clearAccessToken();
+        return false;
       }
     } catch (e) {
       setUser(null);
       if (e instanceof ApiError && e.status === 401) {
+        // 비로그인(401)은 정상 흐름 — getAuthInfo 가 오류 로그 없이 던진다.
         await clearAccessToken();
-        return;
+        return false;
       }
       const status = e instanceof ApiError ? e.status : undefined;
       setAuthError(
@@ -64,10 +69,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           ? "현재 계정으로는 인증 상태를 확인할 권한이 없습니다."
           : "인증 상태를 확인하는 중 오류가 발생했습니다."
       );
+      return false;
     } finally {
-      setIsLoading(false);
+      if (showLoading) setIsLoading(false);
     }
   }, []);
+
+  const checkAuth = useCallback(async () => {
+    await loadAuth();
+  }, [loadAuth]);
 
   useEffect(() => {
     void checkAuth();
@@ -87,9 +97,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const data = await apiLogin(username, password);
       if (!data.rslt) throw new Error(data.message ?? "로그인에 실패했습니다.");
       // 로그인 성공 → 서버가 JWT 쿠키·Authorization 헤더 발급 → 인증 상태 갱신
-      await checkAuth();
+      const authenticated = await loadAuth({ showLoading: false });
+      if (!authenticated) {
+        // 로그인 직후 인증정보 401 은 실제 실패 — 시작 시 401 과 달리 화면에 표시한다.
+        console.warn("[Auth] login succeeded but get-auth-info did not return a user");
+        throw new Error("로그인 후 인증 정보를 확인하지 못했습니다. 다시 시도해 주세요.");
+      }
     },
-    [checkAuth]
+    [loadAuth]
   );
 
   const logout = useCallback(async () => {

@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import { JournalDayList } from "./JournalDayList";
+import { JournalTagChips } from "./JournalTagChips";
 import { colors } from "../../theme/colors";
 import { formatDateDots, parseDateOnly } from "../../utils/date";
 import type { JournalDay } from "../../types/journalDay";
-import { dayHasEntries, dreamEntriesFromDay } from "../../types/journalDay";
+import { dayHasEntries, displayTagsOf, dreamEntriesFromDay } from "../../types/journalDay";
 
 /** 요일 표기 (일요일 시작 인덱스) */
 const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"] as const;
@@ -25,6 +26,7 @@ export function JournalDaySection({ day, emptyText = "기록 없음" }: JournalD
   const topDreams = dreamEntriesFromDay(day);
   const hasAny = dayHasEntries(day);
   const weekday = WEEKDAYS[parseDateOnly(day.stdrdDt).getDay()] ?? "";
+  const dayTags = displayTagsOf(day.tag);
 
   return (
     <View style={styles.daySection}>
@@ -32,6 +34,7 @@ export function JournalDaySection({ day, emptyText = "기록 없음" }: JournalD
         <Text style={styles.dayDate}>{formatDateDots(day.stdrdDt)}</Text>
         <Text style={styles.dayWeekday}>{weekday}</Text>
       </View>
+      <JournalTagChips tags={dayTags} variant="day" />
       <JournalDayList
         loading={false}
         error={null}
@@ -40,6 +43,7 @@ export function JournalDaySection({ day, emptyText = "기록 없음" }: JournalD
         topDreams={topDreams}
         emptyText={emptyText}
         centerPaddingVertical={16}
+        dayTags={dayTags}
       />
     </View>
   );

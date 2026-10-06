@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 
-const fallbackBaseUrl = "http://localhost:8080";
+const fallbackBaseUrl = "http://localhost:18081";
 
 export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? fallbackBaseUrl;
 
@@ -21,7 +21,7 @@ export function getApiBaseUrlDevHint(): string | null {
   if (!isLocalhostUrl(API_BASE_URL)) return null;
 
   if (Platform.OS === "android") {
-    return "Android 에뮬레이터: EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:8080";
+    return "Android 에뮬레이터: EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:18081";
   }
   if (Platform.OS === "ios") {
     return "iOS 시뮬레이터는 localhost 가 동작할 수 있습니다. 실기기는 PC IP 를 사용하세요.";

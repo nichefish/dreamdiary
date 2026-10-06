@@ -3,18 +3,20 @@ import {
   ActivityIndicator,
   Alert,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { useAuth } from "../context/AuthContext";
 import { getMonthlyJournalDays } from "../api/dreamDiaryApi";
 import { colors } from "../theme/colors";
 import type { JournalDay } from "../types/journalDay";
-import { dreamEntriesFromDay } from "../types/journalDay";
+import { chapterEntries, dayHasEntries, dreamEntriesFromDay } from "../types/journalDay";
+import { isUnauthorizedError } from "../api/client";
+import { AppMenuButton } from "../components/navigation/AppMenu";
 
 // ─── 통계 집계 유틸 ──────────────────────────────────────────
 
@@ -31,25 +33,23 @@ interface MonthStats {
 
 /**
  * 월별 JournalDay 목록에서 기록 일수·꿈·일기 카운트를 계산한다.
+ * 일간 화면과 동일한 기준: 꿈은 journalDreamSectionList[].entries, 일기는 챕터 journalEntryList 의 contentType.
+ * 서버가 DREAM 챕터를 journalChapterList 에서 빼고 꿈 섹션으로 옮기므로, 챕터에 남은 JOURNAL_DREAM 엔트리를
+ * 더해도 이중 집계되지 않는다.
  * @param monthDays getMonthlyJournalDays 결과 배열
  */
 function calcMonthStats(monthDays: JournalDay[]): MonthStats {
   let days = 0, dreams = 0, diaries = 0;
   for (const day of monthDays) {
     // 이 날짜에 엔트리가 하나라도 있으면 기록 일수 +1
-    const topDreams = dreamEntriesFromDay(day);
-    const chapters  = day.journalChapterList ?? [];
-    const hasAny    = topDreams.length > 0 || chapters.some(ch =>
-      (ch.journalDiaryList?.length ?? 0) > 0 ||
-      (ch.journalDreamList?.length ?? 0) > 0 ||
-      (ch.journalNoteList?.length ?? 0) > 0
-    );
-    if (!hasAny) continue;
+    if (!dayHasEntries(day)) continue;
     days++;
-    dreams  += topDreams.length;
-    for (const ch of chapters) {
-      dreams  += (ch.journalDreamList?.length ?? 0);
-      diaries += (ch.journalDiaryList?.length ?? 0);
+    dreams += dreamEntriesFromDay(day).length;
+    for (const ch of day.journalChapterList ?? []) {
+      for (const entry of chapterEntries(ch)) {
+        if (entry.contentType === "JOURNAL_DREAM") dreams++;
+        else if (entry.contentType === "JOURNAL_DIARY") diaries++;
+      }
     }
   }
   return { days, dreams, diaries };
@@ -73,7 +73,7 @@ export function ProfileScreen() {
       const res = await getMonthlyJournalDays(ym);
       setStats(calcMonthStats(res.rsltList ?? []));
     } catch (e) {
-      console.error("[ProfileScreen] monthly stats load failed", e);
+      if (!isUnauthorizedError(e)) console.error("[ProfileScreen] monthly stats load failed", e);
       setStatsError(e instanceof Error ? e.message : "이번 달 통계를 불러오지 못했습니다.");
     } finally {
       setStatsLoading(false);
@@ -109,11 +109,15 @@ export function ProfileScreen() {
   const monthLabel = `${year}년 ${Number(mo)}월`;
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView edges={["top", "left", "right"]} style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
         {/* 헤더 */}
         <View style={styles.header}>
-          <Text style={styles.kicker}>DreamDiary</Text>
+          {/* 웹 `내 정보` 메뉴는 사이드바 숨김(sidebarVisibleYn=N)이라 햄버거 메뉴에 없다 → 강조 없음 */}
+          <View style={styles.kickerRow}>
+            <AppMenuButton />
+            <Text style={styles.kicker}>DreamDiary</Text>
+          </View>
           <Text style={styles.title}>내 정보</Text>
         </View>
 
@@ -194,6 +198,7 @@ const styles = StyleSheet.create({
   container: { padding: 24, gap: 20 },
   // 헤더
   header: { gap: 2, marginBottom: 4 },
+  kickerRow: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 4 },
   kicker: {
     color: colors.accent,
     fontSize: 11,

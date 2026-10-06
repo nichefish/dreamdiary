@@ -1,6 +1,6 @@
 # 모바일 Expo SDK 업그레이드 분석
 
-> 상태: **실행됨(부분)** — SDK 57 의존성 업그레이드는 적용 완료, gradle Node 참조 갱신은 후속. 실기기 스모크 대기.
+> 상태: **실행됨(부분)** — SDK 57 의존성 업그레이드는 적용 완료, gradle Node 핀 갱신은 후속(모바일 Gradle 태스크는 PATH의 Node 22 우선, 2026-10-06). 실기기 스모크 대기.
 > 모바일 앱은 Expo SDK 57(RN 0.86, React 19.2)로 업그레이드되었다. 아래 55→57 분석은 판단 근거로 보존한다.
 > 화면 계약은 [`screen-spec.md`](./screen-spec.md), 실행·빌드는 [`run-guide.md`](./run-guide.md).
 
@@ -65,6 +65,15 @@
 - `.env.example` 에 `EXPO_PUBLIC_USE_RN_FETCH=1` 추가(쿠키 인증 보존).
 - gradle Node 참조(20.11.1→20.19.4+) 갱신은 frontend-vue 공유 툴체인이라 이 변경에서 제외하고 후속 처리한다(프론트 `buildFrontend` 검증 필요).
 - 남은 것: 실기기 스모크(§업그레이드 절차 8).
+
+### 후속 기록 (2026-10-06)
+
+- `babel-preset-expo` `~57.0.10`을 `devDependencies`에 추가했다(설치 버전 `57.0.13`). `babel.config.js`가 프리셋을 이름으로 참조하므로 직접 의존성으로 둔다.
+- Gradle `mobileAndroid`·`mobileInstall`·`mobileTypeCheck`를 configuration cache 호환을 위해 `Exec` 타입으로 바꾸고, PATH의 `npm`(Node 22)을 우선하도록 했다. `build.gradle`의 Gradle Node 핀(`20.11.1`)은 frontend-vue와 공유하므로 그대로 두었고, PATH에 `npm`이 없을 때만 대체 수단으로 쓴다. 상세는 [`run-guide.md`](./run-guide.md) §4.1.
+- Node 기준: 위 분석의 `20.19.4+`는 RN 0.85+ 하한이고, Expo SDK 57의 최소 요구는 `22.13.x`다. 로컬 표준은 [`run-guide.md`](./run-guide.md) §1.1의 Node 22 LTS를 따른다.
+- Android 에뮬레이터의 Expo Go는 `57.0.9`다. 설치·수동 설치 절차는 [`run-guide.md`](./run-guide.md) §5.1.
+- Expo CLI가 `expo` `57.0.19` → `57.0.26` 업데이트를 제안했으나 보류했다. 후속으로 `npx expo install --fix`를 실행해 SDK 57 패치 버전을 정합하고, `package.json`·lockfile 변경과 타입 검사를 함께 확인한다.
+- 남은 것: 실기기 스모크(§업그레이드 절차 8), `npx expo install --fix`, Gradle Node 핀 정합.
 
 ### 출처
 

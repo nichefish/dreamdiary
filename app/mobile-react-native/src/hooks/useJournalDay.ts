@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { getDailyJournalDay } from "../api/dreamDiaryApi";
+import { isUnauthorizedError } from "../api/client";
 import type { JournalDay, JournalChapter, JournalEntry } from "../types/journalDay";
-import { dreamEntriesFromDay } from "../types/journalDay";
+import { dayHasEntries, dreamEntriesFromDay } from "../types/journalDay";
 
 export type UseJournalDayOptions = {
   /** 포커스 시 조용한 refresh (스피너 없음). 기본 true */
@@ -42,7 +43,9 @@ export function useJournalDay(
       const res = await getDailyJournalDay(dateStr);
       setDay(res.rsltList?.[0] ?? null);
     } catch (e) {
-      console.error("[useJournalDay] daily journal load failed", { dateStr }, e);
+      if (!isUnauthorizedError(e)) {
+        console.error("[useJournalDay] daily journal load failed", { dateStr }, e);
+      }
       setError(e instanceof Error ? e.message : "불러오는 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
@@ -69,7 +72,7 @@ export function useJournalDay(
 
   const chapters = day?.journalChapterList ?? [];
   const topDreams = dreamEntriesFromDay(day);
-  const hasAny = chapters.length > 0 || topDreams.length > 0;
+  const hasAny = day != null && dayHasEntries(day);
 
   return {
     day,

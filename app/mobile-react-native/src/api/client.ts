@@ -5,6 +5,14 @@ import {
   getAccessToken
 } from "../auth/accessToken";
 
+/**
+ * 백엔드가 웹/모바일 세션을 구분하기 위한 클라이언트 채널 헤더.
+ * 모든 REST 요청에 강제로 붙인다. (향후 WebSocket/STOMP 연결 시 connect headers 에도 이 상수를 사용)
+ */
+export const CLIENT_CHANNEL_HEADER = "X-Client-Channel";
+export const CLIENT_CHANNEL = "MOBILE";
+export const CLIENT_CHANNEL_HEADERS = { [CLIENT_CHANNEL_HEADER]: CLIENT_CHANNEL } as const;
+
 // string[]/number[] 를 포함하도록 QueryValue 타입 확장
 type QueryValue = string | number | boolean | undefined | null | string[] | number[];
 
@@ -12,6 +20,11 @@ type RequestOptions = RequestInit & {
   query?: Record<string, QueryValue>;
   /** login/refresh 응답 Authorization 헤더에서 access JWT 저장 (WebSocket용) */
   captureAccessToken?: boolean;
+  /**
+   * 호출 측이 정상 흐름으로 처리하는 오류 상태 코드 (예: 로그인 전 인증정보 조회의 401).
+   * 해당 상태는 console.error(개발 빌드 LogBox 오류 토스트) 대신 console.info 로만 남긴다. 예외는 그대로 던진다.
+   */
+  expectedErrorStatuses?: readonly number[];
 };
 
 export class ApiError extends Error {
@@ -23,6 +36,15 @@ export class ApiError extends Error {
     super(message);
     this.name = "ApiError";
   }
+}
+
+/**
+ * 인증 만료·비로그인(401) 오류 여부.
+ * 401 은 client 가 자동 로그아웃으로 처리하므로 호출 측은 오류 로그·토스트를 생략한다.
+ * @param e catch 로 받은 예외
+ */
+export function isUnauthorizedError(e: unknown): boolean {
+  return e instanceof ApiError && e.status === 401;
 }
 
 // ─── 401 전역 핸들러 ──────────────────────────────────────
@@ -74,7 +96,7 @@ function getResponseErrorMessage(responseBody: unknown, status: number): string 
 }
 
 export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const { query, headers, body, captureAccessToken, ...init } = options;
+  const { query, headers, body, captureAccessToken, expectedErrorStatuses, ...init } = options;
   // FormData 전송 시 Content-Type 을 직접 지정하지 않는다.
   // fetch 가 multipart/form-data + boundary 를 자동으로 설정한다.
   const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
@@ -88,7 +110,9 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
       Accept: "application/json",
       ...(!isFormData && { "Content-Type": "application/json" }),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...headers
+      ...headers,
+      // 호출 측 headers 로 덮어쓰지 못하도록 마지막에 둔다.
+      ...CLIENT_CHANNEL_HEADERS
     }
   });
 
@@ -103,7 +127,12 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
       void clearAccessToken();
       _onUnauthorized?.();
     }
-    console.error("[API] Request failed", { path, status: response.status, responseBody });
+    // 401 은 전역 핸들러(자동 로그아웃)가 처리하는 정상 흐름이므로 오류 토스트를 띄우지 않는다.
+    if (response.status === 401 || expectedErrorStatuses?.includes(response.status)) {
+      console.info("[API] Expected error response", { path, status: response.status });
+    } else {
+      console.error("[API] Request failed", { path, status: response.status, responseBody });
+    }
     throw new ApiError(getResponseErrorMessage(responseBody, response.status), response.status, responseBody);
   }
 

@@ -6,8 +6,8 @@ React Native / Expo based mobile starter. It is intentionally independent from `
 
 ### IntelliJ / PC Android 에뮬레이터 (UI 선검증)
 
-1. Android Studio AVD 실행, 백엔드 `localhost:8080` 기동
-2. `.env`: `EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:8080`
+1. Android Studio AVD 실행, 백엔드 `localhost:18081` 기동
+2. `.env`: `EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:18081`
 3. 실행 (택 1):
    - **Gradle** (우클릭 Run): 루트 프로젝트 → Tasks → **mobile** → **mobileAndroid**
    - `app/mobile-react-native/run-android.bat` 더블클릭
@@ -38,23 +38,23 @@ npm run start
 Copy `.env.example` to `.env` and adjust the API URL when connecting to a local backend.
 
 ```bash
-EXPO_PUBLIC_API_BASE_URL=http://localhost:8080
+EXPO_PUBLIC_API_BASE_URL=http://localhost:18081
 ```
 
-Android emulators usually reach the host machine through `http://10.0.2.2:8080`. Physical devices need the PC IP address on the same network.
+Android emulators usually reach the host machine through `http://10.0.2.2:18081`. Physical devices need the PC IP address on the same network.
 
 ### API URL by Runtime
 
-- Expo Go on Android emulator (AVD): `http://10.0.2.2:8080`
-- iOS simulator: `http://localhost:8080` (host setup dependent)
-- Physical device (Android/iOS): `http://<YOUR_PC_LAN_IP>:8080`
+- Expo Go on Android emulator (AVD): `http://10.0.2.2:18081`
+- iOS simulator: `http://localhost:18081` (host setup dependent)
+- Physical device (Android/iOS): `http://<YOUR_PC_LAN_IP>:18081`
 
 Quick LAN IP examples:
 
 - Windows PowerShell: `ipconfig`
 - macOS/Linux: `ifconfig` or `ip a`
 
-If the app runs on a physical device, make sure backend port `8080` is reachable from the same Wi-Fi network.
+If the app runs on a physical device, make sure backend port `18081` is reachable from the same Wi-Fi network.
 
 ## Build Flow
 

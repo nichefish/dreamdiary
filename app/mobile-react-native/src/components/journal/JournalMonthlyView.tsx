@@ -8,7 +8,12 @@ import {
   Text,
   View
 } from "react-native";
+import { JournalDatePickerModal } from "./JournalDatePickerModal";
 import { JournalDaySection } from "./JournalDaySection";
+import { JournalPeriodTagCloudPanel } from "./JournalPeriodTagCloudPanel";
+import { JournalPeriodThreadPanel } from "./JournalPeriodThreadPanel";
+import { JournalCopyShareBar } from "./JournalCopyShareBar";
+import { buildEntriesCopyText, entriesOfDays } from "../../utils/journalCopy";
 import { useJournalMonth } from "../../hooks/useJournalMonth";
 import { colors } from "../../theme/colors";
 import { dayHasEntries } from "../../types/journalDay";
@@ -47,9 +52,11 @@ export type JournalMonthlyViewProps = {
 /**
  * 월별(MONTHLY) 저널 조회 뷰. Today 탭 일/주/월 토글의 '월' 모드 본문.
  * 기준 연·월을 달 단위로 이동하며, 해당 달의 저널 일자를 날짜 순서 연속 목록으로 읽는다.
+ * 연·월 라벨을 누르면 연·월 피커(월 모드)가 열려 먼 달로 바로 이동할 수 있다.
  */
 export function JournalMonthlyView({ initialDate }: JournalMonthlyViewProps) {
   const [yearMonth, setYearMonth] = useState<string>(() => toYearMonth(initialDate));
+  const [pickerVisible, setPickerVisible] = useState(false);
   const { days, loading, refreshing, error, load, onRefresh } = useJournalMonth(yearMonth);
 
   const atThisMonth = yearMonth >= currentYearMonth();
@@ -65,6 +72,13 @@ export function JournalMonthlyView({ initialDate }: JournalMonthlyViewProps) {
 
   function goToThisMonth() {
     if (!atThisMonth) setYearMonth(currentYearMonth());
+  }
+
+  /** 피커에서 고른 연·월("YYYY-MM")로 이동. 이번 달 이후는 이번 달로 수렴. */
+  function handlePickMonth(nextYearMonth: string) {
+    const thisMonth = currentYearMonth();
+    const normalized = toYearMonth(nextYearMonth);
+    setYearMonth(normalized > thisMonth ? thisMonth : normalized);
   }
 
   return (
@@ -84,14 +98,23 @@ export function JournalMonthlyView({ initialDate }: JournalMonthlyViewProps) {
           <Text style={styles.monthNavArrow}>‹</Text>
         </Pressable>
 
-        <Pressable
-          accessibilityRole="button"
-          onPress={goToThisMonth}
-          style={styles.monthLabelWrap}
-        >
-          <Text style={styles.monthLabel}>{monthLabel}</Text>
-          {!atThisMonth && <Text style={styles.monthTodayHint}>이번 달로</Text>}
-        </Pressable>
+        <View style={styles.monthLabelWrap}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`${monthLabel}, 연·월 선택`}
+            onPress={() => setPickerVisible(true)}
+            hitSlop={6}
+            style={styles.monthLabelButton}
+          >
+            <Text style={styles.monthLabel}>{monthLabel}</Text>
+            <Text style={styles.monthLabelCaret}>▾</Text>
+          </Pressable>
+          {!atThisMonth && (
+            <Pressable accessibilityRole="button" onPress={goToThisMonth} hitSlop={6}>
+              <Text style={styles.monthTodayHint}>이번 달로</Text>
+            </Pressable>
+          )}
+        </View>
 
         <Pressable
           accessibilityRole="button"
@@ -103,6 +126,17 @@ export function JournalMonthlyView({ initialDate }: JournalMonthlyViewProps) {
           <Text style={[styles.monthNavArrow, atThisMonth && styles.monthNavArrowDisabled]}>›</Text>
         </Pressable>
       </View>
+
+      <JournalPeriodTagCloudPanel period={{ yy: year, mnth: month }} title="이 달의 태그" />
+      <JournalPeriodThreadPanel query={{ viewType: "LIST", yy: year, mnth: month }} title="이 달의 스레드" />
+
+      {!loading && error == null && entryDays.length > 0 && (
+        <JournalCopyShareBar
+          label="이 달 기록"
+          buildText={() => buildEntriesCopyText(entriesOfDays(entryDays))}
+          shareTitle={`${monthLabel} 기록`}
+        />
+      )}
 
       {loading ? (
         <View style={styles.center}>
@@ -130,6 +164,14 @@ export function JournalMonthlyView({ initialDate }: JournalMonthlyViewProps) {
           ))}
         </View>
       )}
+
+      <JournalDatePickerModal
+        visible={pickerVisible}
+        mode="month"
+        value={yearMonth}
+        onSelect={handlePickMonth}
+        onClose={() => setPickerVisible(false)}
+      />
     </ScrollView>
   );
 }
@@ -162,9 +204,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 2
   },
+  monthLabelButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4
+  },
   monthLabel: {
     color: colors.text,
     fontSize: 17,
+    fontWeight: "700"
+  },
+  monthLabelCaret: {
+    color: colors.accent,
+    fontSize: 11,
     fontWeight: "700"
   },
   monthTodayHint: {
