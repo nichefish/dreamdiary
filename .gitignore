@@ -14,6 +14,9 @@
 # OS
 .DS_Store
 
+# Node dependencies (all packages)
+**/node_modules
+
 # Logs
 *.log
 npm-debug.log*
@@ -59,7 +62,6 @@ lerna-debug.log*
 /app/frontend-vue/public/media/
 
 # frontend-vue local/build artifacts
-/app/frontend-vue/node_modules/
 /app/frontend-vue/dist/
 /app/frontend-vue/dist-ssr/
 /app/frontend-vue/coverage/
@@ -70,7 +72,6 @@ lerna-debug.log*
 /app/frontend-vue/src/assets/css
 /app/frontend-vue/src/platform/metronic/
 
-/app/frontend-react/node_modules
 /app/frontend-react/src/platform/metronic/
 
 #private submodule
