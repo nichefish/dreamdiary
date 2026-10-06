@@ -34,8 +34,8 @@ export interface KeepLifecycle {
 
 /**
  * 백엔드 ProspectiveKeepDto (BaseAttachableDto → BaseAuditDto → BaseAuditRegDto) 중 화면이 쓰는 필드.
- * - 목록(GET /api/prospective/keeps?scope=all)은 lifecycle 을 붙여 준다.
- * - 상세(GET /api/prospective/keep/{id})는 lifecycle 을 붙이지 않는다(서비스가 applyKeepLifecycles 를 목록에서만 호출).
+ * - 목록(GET /api/prospective/keeps?scope=all)과 상세(GET /api/prospective/keep/{id}) 모두 lifecycle 을 붙여 준다
+ *   (서비스 applyKeepLifecycles, 행이 없으면 OPEN). 상세는 이전 백엔드에서 lifecycle 이 없었다 — 없으면 OPEN 으로 보인다.
  */
 export interface KeepItem {
   id: number;

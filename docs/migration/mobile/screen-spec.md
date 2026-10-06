@@ -468,7 +468,7 @@ Keep(`prospective`) 쓰기는 2단계의 첫 대상으로 따로 계획한다(§
 
 `KeepDetailScreen`(헤더 `‹ 뒤로` · `Keep` 배지 · `복사` · `공유`)은 Keep 1건을 읽기 전용으로 보여 준다.
 
-- 조회: `getKeepDetail`(`GET /api/prospective/keep/{id}`, 소유자 확인). 받기 전에는 목록에서 넘긴 항목을 그대로 보여 준다. **상세 응답에는 lifecycle이 없다**(백엔드가 목록에서만 붙임) — 라이프사이클은 목록 항목 값을 쓰고, 목록 항목 없이 열렸거나 당겨서 새로고침하면 `getKeepList`·`getKeepProjects`도 다시 받아 라이프사이클과 Project 이름을 채운다. 상태·태그가 상세에 비어 있으면 목록 값을 쓴다.
+- 조회: `getKeepDetail`(`GET /api/prospective/keep/{id}`, 소유자 확인). 받기 전에는 목록에서 넘긴 항목을 임시로 보여 주고, 받으면 상세 응답으로 바꾼다. 라이프사이클도 상세 응답 값을 그대로 쓴다 — 백엔드가 상세에도 목록과 같은 방식(`applyKeepLifecycles`, 행이 없으면 `OPEN`)으로 붙인다(2026-10-06 백엔드 수정, 그 전 백엔드에서는 상세가 `진행 중`으로 보임). Project 이름은 목록에서 넘겨받고, 목록 항목 없이 열렸거나 당겨서 새로고침하면 `getKeepProjects`를 다시 받아 찾는다.
 - 내용: 라이프사이클 배지(진행 중·보류·종결 색) + `★ 중요`·`요구` 배지 / `[말머리]` + 제목 / 필드 상자 — `기한`(없음 또는 `YYYY-MM-DD` + D-day, 지난 기한 경고색), `일시`, `위치`, `Project`(없으면 `미지정`), `말머리`, `태그`(칩, 표시 전용), `등록`(`YYYY.MM.DD HH:mm`), `수정`(등록과 다를 때) / `내용` — 마크다운을 읽기 쉬운 평문으로(제목·강조 기호 제거, 목록 `•`, 체크 `☑`/`☐`, 인용 `│`, 링크 `글 (url)`, 이미지 `[이미지: 설명]`, HTML이면 저널과 같은 HTML → 텍스트). 본문은 길게 눌러 선택할 수 있다. 본문이 없으면 `(내용 없음)`. 웹에는 별도 상세 화면이 없어(제목 클릭 = 수정 모달) 수정 모달의 필드를 읽기 형태로 보여 준다.
 - 상태: 첫 조회 중 표시, 실패 시 오류 상자 + `다시 시도`(목록에서 넘긴 항목이 있으면 그 내용은 계속 보임), 당겨서 새로고침. 다른 사용자의 ID·삭제된 Keep은 서버 오류 문구를 보여 준다.
 - 끝 안내: `읽기 전용입니다. 완료·수정은 웹 Keep 전수관리에서 합니다.` 편집·삭제·라이프사이클 버튼은 없다.
@@ -681,7 +681,7 @@ Keep(`prospective`) 쓰기는 2단계의 첫 대상으로 따로 계획한다(§
 | 저널 결산 상세 | `GET /api/journal/annual/{yy}` | `getJournalAnnual` |
 | 햄버거 메뉴 — 사용자 메뉴 (저널 외 공통 API) | `GET /api/menus?mode=USER` | `getUserMenus` |
 | Keep 목록 (저널 외, 2-0) | `GET /api/prospective/keeps?scope=all` → `rsltList: ProspectiveKeepDto[]`(lifecycle 포함, 페이지 없음) | `getKeepList` |
-| Keep 상세 (저널 외, 2-0) | `GET /api/prospective/keep/{id}` → `rsltObj`(lifecycle 없음) | `getKeepDetail` |
+| Keep 상세 (저널 외, 2-0) | `GET /api/prospective/keep/{id}` → `rsltObj: ProspectiveKeepDto`(lifecycle 포함 — 목록과 같은 값, 행이 없으면 `OPEN`) | `getKeepDetail` |
 | Keep Project 목록 (저널 외, 2-0) | `GET /api/prospective/projects` → `rsltList: ProspectiveProjectDto[]`(lifecycle 포함) | `getKeepProjects` |
 | Keep 태그 목록 (저널 외, 2-0) | `GET /api/tags?contentType=PROSPECTIVE_KEEP` → `rsltList: TagDto[]`(필터 선택지 순서) | `getKeepTags` |
 | Keep 말머리 선택지 (저널 외, 2-0) | `GET /api/my/prefixes/options?contentType=PROSPECTIVE_KEEP` → `rsltList: PrefixDto[]` | `getKeepPrefixOptions` |
@@ -866,4 +866,4 @@ Keep 읽기 5개는 HTTP 200이어도 `rslt=false`면 `message`로 `ApiError`를
 - [ ] **저널 결산**: `저널 결산`이 연도별 카드와 `총 꿈 기록`을 웹과 같은 값으로 보여 주고, 카드를 누르면 결산 상세의 요약 본문·태그·리뷰가 웹과 같다(본문 HTML/마크다운이 텍스트로 읽히는지). 에뮬레이터에서 목록과 2026년 상세 표시는 확인(§4.12).
 - [ ] **준비 중 화면**: 게시판·일정 달력이 `준비 중` 화면을 메뉴 이름과 함께 열고, 그 화면에서도 `☰`로 다른 메뉴로 갈 수 있다. 메뉴를 여러 번 오가도 뒤로 가기가 같은 화면을 반복하지 않는다(`pop: true`). 에뮬레이터에서 (당시 준비 중이던) Keep 전수관리로 확인(§4.13). Keep 전수관리는 이제 Keep 목록을 연다.
 - [ ] **Keep 목록**: `Keep 전수관리`가 Keep 목록을 열고 전체 건수(2026-10-06 DB 기준 60건)가 `진행`·`종결` 합과 맞으며, 웹 `/keep`과 같은 항목·제목·말머리·태그·Project가 보인다. `진행` 순서가 웹(기한 오름차순, 기한 없음 아래)과 같고, `기한` 묶음(지남/오늘/7일 이내/그 이후)과 D-day가 기기 날짜 기준으로 맞다(자정 전후 포함). `종결` 배지 색(완료·실패·만료·내려놓음)이 구분된다. Project 칩(`전체`·`미지정`·OPEN Project)과 필터 시트(기한 지남·중요·말머리·태그)가 웹 필터와 같은 결과를 내고, 검색은 `검색`·키보드 검색 키로만 적용된다. 태그·말머리 선택지가 서버 응답으로 채워진다(실패 안내 문구가 없어야 함). 목록 복사·공유가 현재 보기·필터 결과를 §4.8 형식으로 담고, 당겨서 새로고침·웹에서 고친 뒤 화면 복귀 시 갱신된다. 체크박스·스와이프·`+`가 없다(§4.14).
-- [ ] **Keep 상세**: 행을 누르면 상세가 열리고 라이프사이클(종결 항목은 종결 배지 — 상세 응답에 lifecycle이 없어 목록 값을 쓰는지)·중요/요구·기한·일시·위치·Project·말머리·태그·등록/수정·본문이 웹 상세와 같다. 마크다운 본문(목록·체크·링크)이 읽을 만한 평문으로 보인다. `복사`·`공유`가 동작하고 Android 토스트가 뜬다. 당겨서 새로고침 후에도 라이프사이클·Project 이름이 유지된다(§4.15).
+- [ ] **Keep 상세**: 행을 누르면 상세가 열리고 라이프사이클(종결 항목은 종결 배지 — 상세 응답의 lifecycle이 목록과 같은지, 웹에서 완료 처리한 뒤 상세를 새로고침하면 바로 바뀌는지)·중요/요구·기한·일시·위치·Project·말머리·태그·등록/수정·본문이 웹 상세와 같다. 마크다운 본문(목록·체크·링크)이 읽을 만한 평문으로 보인다. `복사`·`공유`가 동작하고 Android 토스트가 뜬다. 당겨서 새로고침 후에도 라이프사이클·Project 이름이 유지된다(§4.15).

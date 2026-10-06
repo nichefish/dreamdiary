@@ -129,6 +129,9 @@ public class ProspectiveKeepRestController
     /**
      * Prospective Keep 상세 조회 (Ajax)
      * (사용자USER, 관리자MNGR만 접근 가능.)
+     * <pre>
+     *  목록과 같은 lifecycle(행이 없으면 OPEN)을 부착해 반환한다.
+     * </pre>
      *
      * @param id 식별자
      * @return {@link ResponseEntity} -- 처리 결과와 메시지
@@ -140,7 +143,7 @@ public class ProspectiveKeepRestController
             final @PathVariable("id") Integer id
     ) throws Exception {
 
-        final ProspectiveKeepDto retrievedDto = myProspectiveKeepService.getMyDetailDtoWithCache(id);
+        final ProspectiveKeepDto retrievedDto = myProspectiveKeepService.getMyDetailDtoWithLifecycle(id);
         final boolean isSuccess = (retrievedDto.getId() != null);
         final String rsltMsg = MessageUtils.getMessage("common.result.success");
 

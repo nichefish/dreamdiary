@@ -1,6 +1,10 @@
 package io.nicheblog.dreamdiary.feature.prospective.keep.service;
 
 import io.nicheblog.dreamdiary.auth.security.config.TestAuditConfig;
+import io.nicheblog.dreamdiary.feature.attachable._shared.type.ContentType;
+import io.nicheblog.dreamdiary.feature.attachable.lifecycle.LifecycleKey;
+import io.nicheblog.dreamdiary.feature.attachable.lifecycle.model.LifecycleSetDto;
+import io.nicheblog.dreamdiary.feature.attachable.lifecycle.service.LifecycleService;
 import io.nicheblog.dreamdiary.feature.prospective.keep.model.ProspectiveKeepDto;
 import io.nicheblog.dreamdiary.feature.prospective.keep.model.ProspectiveKeepDtoTestFactory;
 import io.nicheblog.dreamdiary.feature.prospective.keep.model.ProspectiveKeepSearchParam;
@@ -19,6 +23,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.EntityNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,6 +51,13 @@ class ProspectiveKeepServiceTest {
     private ProspectiveProjectService prospectiveProjectService;
     @Resource
     private ProspectiveProjectRepository prospectiveProjectRepository;
+    @Resource
+    private LifecycleService lifecycleService;
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    /** 다른 사용자(가상) 계정명 */
+    private static final String FIXTURE_OTHER_USER = "fixture-other-user";
 
     private ProspectiveKeepDto prospectiveKeep;
 
@@ -187,6 +200,47 @@ class ProspectiveKeepServiceTest {
                 .contains(unassigned.getId()));
     }
 
+    /** 상세는 lifecycle 행이 없으면 목록과 같이 OPEN 을 부착한다. */
+    @Test
+    void detailAttachesOpenLifecycleByDefault() throws Exception {
+        final ProspectiveKeepDto registered = (ProspectiveKeepDto) prospectiveKeepService.regist(prospectiveKeep).getRsltObj();
+
+        final ProspectiveKeepDto retrieved = prospectiveKeepService.getDetailDtoWithLifecycleByUser(
+                TestConstant.TEST_AUDITOR, registered.getId());
+
+        assertNotNull(retrieved.getLifecycle(), "Detail lifecycle is null.");
+        assertEquals(LifecycleKey.OPEN.key, retrieved.getLifecycle().getLifecycleKey());
+    }
+
+    /** 상세는 저장된 lifecycle 을 목록과 같은 값으로 부착하고, 상세 캐시 뒤에 바뀐 값도 다음 조회에 반영한다. */
+    @Test
+    void detailAttachesStoredLifecycleLikeList() throws Exception {
+        final ProspectiveKeepDto registered = (ProspectiveKeepDto) prospectiveKeepService.regist(prospectiveKeep).getRsltObj();
+        // 변경 전에 상세 캐시를 채워 둔다.
+        assertEquals(LifecycleKey.OPEN.key, prospectiveKeepService.getDetailDtoWithLifecycleByUser(
+                TestConstant.TEST_AUDITOR, registered.getId()).getLifecycle().getLifecycleKey());
+
+        assertTrue(lifecycleService.set(LifecycleSetDto.builder()
+                .id(registered.getId())
+                .contentType(ContentType.PROSPECTIVE_KEEP)
+                .lifecycleKey(LifecycleKey.RESOLVED)
+                .build()).getRslt(), "Lifecycle set failed.");
+
+        final ProspectiveKeepDto retrieved = prospectiveKeepService.getDetailDtoWithLifecycleByUser(
+                TestConstant.TEST_AUDITOR, registered.getId());
+        final ProspectiveKeepDto listed = prospectiveKeepService.getListDtoWithLifecycleByUser(
+                        TestConstant.TEST_AUDITOR, ProspectiveKeepSearchParam.builder().build()).stream()
+                .filter(dto -> registered.getId().equals(dto.getId()))
+                .findFirst().orElseThrow();
+
+        assertEquals(LifecycleKey.RESOLVED.key, retrieved.getLifecycle().getLifecycleKey());
+        assertEquals(listed.getLifecycle().getLifecycleKey(), retrieved.getLifecycle().getLifecycleKey());
+        assertEquals(listed.getLifecycle().getLifecycleDesc(), retrieved.getLifecycle().getLifecycleDesc());
+        // 캐시된 본문 인스턴스에는 lifecycle 을 쓰지 않는다.
+        assertNull(prospectiveKeepService.getDetailDtoWithCacheByUser(
+                TestConstant.TEST_AUDITOR, registered.getId()).getLifecycle());
+    }
+
     /** 다른 사용자가 소유한 Project는 Keep에 연결할 수 없다. */
     @Test
     void rejectsForeignProject() {
@@ -194,12 +248,25 @@ class ProspectiveKeepServiceTest {
                 ProspectiveProjectEntity.builder()
                         .title("다른 사용자 프로젝트")
                         .sortOrder(1)
-                        .createdBy("fixture-other-user")
                         .build());
+        // 테스트 감사(@CreatedBy)가 저장 시 created_by 를 테스트 사용자로 덮어쓰므로, 저장 뒤 다른 사용자로 바꾼다.
+        stampProjectCreatedBy(foreignProject.getId(), FIXTURE_OTHER_USER);
+        assertEquals(FIXTURE_OTHER_USER, prospectiveProjectRepository.findById(foreignProject.getId())
+                .orElseThrow().getCreatedBy(), "Fixture project owner was not changed.");
         prospectiveKeep.setProjectId(foreignProject.getId());
 
         assertThrows(io.nicheblog.dreamdiary.auth.security.exception.NotAuthorizedException.class,
                 () -> prospectiveKeepService.regist(prospectiveKeep));
+    }
+
+    /** 감사 필드를 거치지 않고 Project 작성자를 바꾼 뒤 영속성 컨텍스트를 비운다(테스트 픽스처 전용). */
+    private void stampProjectCreatedBy(final Integer projectId, final String createdBy) {
+        entityManager.createNativeQuery("UPDATE prospective_project SET created_by = :createdBy WHERE id = :id")
+                .setParameter("createdBy", createdBy)
+                .setParameter("id", projectId)
+                .executeUpdate();
+        entityManager.flush();
+        entityManager.clear();
     }
 
     private ProspectiveProjectDto registProject(final String title) throws Exception {

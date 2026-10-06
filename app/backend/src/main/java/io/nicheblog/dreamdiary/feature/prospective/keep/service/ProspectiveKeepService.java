@@ -286,6 +286,26 @@ public class ProspectiveKeepService
     }
 
     /**
+     * 상세 조회 (dto level) :: lifecycle 부착.
+     * <p>
+     * 본문은 상세 캐시({@link #getDetailDtoWithCacheByUser})를 그대로 쓰고, lifecycle 은 목록과 같은
+     * {@link #applyKeepLifecycles}로 매 조회 신선하게 부착한다(행이 없으면 {@code OPEN}).
+     * lifecycle 변경은 Keep 상세 캐시를 비우지 않으므로 캐시 안에 넣지 않으며,
+     * 캐시된 인스턴스를 바꾸지 않도록 얕은 복사본에 부착한다.
+     * </p>
+     *
+     * @param username 사용자 계정명
+     * @param key 식별자
+     * @return {@link ProspectiveKeepDto} -- 조회된 객체 (lifecycle 부착)
+     */
+    public ProspectiveKeepDto getDetailDtoWithLifecycleByUser(final String username, final Integer key) throws Exception {
+        final ProspectiveKeepDto cached = this.getSelf().getDetailDtoWithCacheByUser(username, key);
+        final ProspectiveKeepDto retrieved = cached.toBuilder().build();
+        this.applyKeepLifecycles(List.of(retrieved));
+        return retrieved;
+    }
+
+    /**
      * 삭제 전처리. (override)
      *
      * @param deletedDto - 삭제된 객체

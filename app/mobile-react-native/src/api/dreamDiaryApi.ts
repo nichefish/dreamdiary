@@ -419,7 +419,7 @@ export async function getKeepList(): Promise<KeepItem[]> {
 
 /**
  * Keep 상세 — 웹 수정 모달 진입과 같은 요청(서버 캐시, 소유자 확인).
- * 주의: 상세 응답에는 lifecycle 이 붙지 않는다(서버가 목록에서만 부착) — 화면은 목록 항목의 lifecycle 을 쓴다.
+ * lifecycle 은 목록과 같은 방식으로 붙어 온다(서버 applyKeepLifecycles, 행이 없으면 OPEN — 본문 캐시와 별도로 매 조회 부착).
  * GET /api/prospective/keep/{id} → rsltObj: ProspectiveKeepDto (없으면 rslt=false)
  */
 export async function getKeepDetail(id: number): Promise<KeepItem> {

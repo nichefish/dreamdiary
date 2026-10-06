@@ -52,13 +52,16 @@ public class MyProspectiveKeepService {
     }
 
     /**
-     * 상세 조회 (dto level) :: 캐시 처리
+     * 상세 조회 (dto level) :: 본문 캐시 + lifecycle 부착
+     * <pre>
+     *  lifecycle 은 목록과 같은 방식(행이 없으면 OPEN)으로 매 조회 부착한다.
+     * </pre>
      *
      * @param key 일련번호
-     * @return {@link ProspectiveKeepDto} -- 조회된 객체
+     * @return {@link ProspectiveKeepDto} -- 조회된 객체 (lifecycle 부착)
      */
-    public ProspectiveKeepDto getMyDetailDtoWithCache(final Integer key) throws Exception {
+    public ProspectiveKeepDto getMyDetailDtoWithLifecycle(final Integer key) throws Exception {
         final String username = AuthUtils.requireLoginUsername();
-        return prospectiveKeepService.getDetailDtoWithCacheByUser(username, key);
+        return prospectiveKeepService.getDetailDtoWithLifecycleByUser(username, key);
     }
 }

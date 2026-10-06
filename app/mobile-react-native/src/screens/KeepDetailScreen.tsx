@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { getKeepDetail, getKeepList, getKeepProjects } from "../api/dreamDiaryApi";
+import { getKeepDetail, getKeepProjects } from "../api/dreamDiaryApi";
 import { isUnauthorizedError } from "../api/client";
 import type { RootStackParamList } from "../navigation/AppNavigator";
 import { colors } from "../theme/colors";
@@ -38,20 +38,6 @@ function errorMessage(e: unknown, fallback: string): string {
   return e instanceof Error && e.message ? e.message : fallback;
 }
 
-/**
- * 상세 응답 + 목록 항목 합치기.
- * 상세(GET /api/prospective/keep/{id})에는 lifecycle 이 붙지 않으므로 목록 항목의 lifecycle 을 쓴다.
- * state·tag 도 상세에 비어 오면 목록 값을 쓴다.
- */
-function mergeKeep(detail: KeepItem, listItem: KeepItem | null | undefined): KeepItem {
-  return {
-    ...detail,
-    lifecycle: detail.lifecycle?.lifecycleKey ? detail.lifecycle : listItem?.lifecycle ?? null,
-    state: Array.isArray(detail.state?.list) ? detail.state : listItem?.state ?? null,
-    tag: Array.isArray(detail.tag?.list) ? detail.tag : listItem?.tag ?? null
-  };
-}
-
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <View style={styles.field}>
@@ -63,15 +49,15 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 
 /**
  * Keep 상세 (읽기 전용) — 목록에서 연다. 웹에는 별도 상세 화면이 없어(제목 클릭 = 수정 모달) 수정 모달의 필드를 읽기 형태로 보여준다.
- * - GET /api/prospective/keep/{id} 로 다시 읽는다. 로드 전에는 목록 항목(route.params.item)을 먼저 보여준다.
- * - 라이프사이클은 상세 응답에 없어 목록 항목 값을 쓴다. 목록 항목 없이 열렸거나 당겨서 새로고침하면 목록·Project 도 함께 다시 읽는다.
+ * - GET /api/prospective/keep/{id} 로 다시 읽는다. 로드 전에는 목록 항목(route.params.item)을 임시로 보여준다.
+ * - 라이프사이클은 상세 응답 값을 그대로 쓴다(서버가 목록과 같은 방식으로 부착, 행이 없으면 OPEN).
+ * - Project 이름은 목록에서 넘겨받고, 목록 항목 없이 열렸거나 당겨서 새로고침하면 Project 목록을 다시 읽어 찾는다.
  * - 본문 마크다운은 평문으로 바꿔 보여준다(새 의존성 없음). 복사·공유는 헤더 버튼.
  * - 쓰기(완료·라이프사이클·상태·수정·삭제) 없음.
  */
 export function KeepDetailScreen({ route, navigation }: Props) {
   const { id, item: paramItem, projectTitle: paramProjectTitle } = route.params;
   const [detail, setDetail] = useState<KeepItem | null>(null);
-  const [listItem, setListItem] = useState<KeepItem | null>(paramItem ?? null);
   const [projectTitle, setProjectTitle] = useState(paramProjectTitle ?? "");
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -79,15 +65,14 @@ export function KeepDetailScreen({ route, navigation }: Props) {
   const [loadedAt, setLoadedAt] = useState<Date>(() => new Date());
   const seqRef = useRef(0);
 
-  /** full=true 면 목록(라이프사이클)·Project(이름)도 다시 읽는다 */
+  /** withProjects=true 면 Project 목록도 다시 읽어 Project 이름을 찾는다 */
   const load = useCallback(
-    async (full: boolean) => {
+    async (withProjects: boolean) => {
       const seq = ++seqRef.current;
       setError(null);
-      const [detailRes, listRes, projectRes] = await Promise.allSettled([
+      const [detailRes, projectRes] = await Promise.allSettled([
         getKeepDetail(id),
-        full ? getKeepList() : Promise.resolve(null),
-        full ? getKeepProjects() : Promise.resolve(null)
+        withProjects ? getKeepProjects() : Promise.resolve(null)
       ]);
       if (seq !== seqRef.current) return;
       if (detailRes.status === "fulfilled") {
@@ -99,12 +84,6 @@ export function KeepDetailScreen({ route, navigation }: Props) {
           console.error("[KeepDetailScreen] keep detail load failed", { id }, e);
           setError(errorMessage(e, "Keep을 불러오지 못했습니다."));
         }
-      }
-      if (listRes.status === "fulfilled" && listRes.value) {
-        const found = listRes.value.find((k) => k.id === id);
-        if (found) setListItem(found);
-      } else if (listRes.status === "rejected" && !isUnauthorizedError(listRes.reason)) {
-        console.warn("[KeepDetailScreen] keep list (lifecycle) load failed", listRes.reason);
       }
       if (projectRes.status === "fulfilled" && projectRes.value) {
         const projectId = detailRes.status === "fulfilled" ? detailRes.value.projectId : paramItem?.projectId;
@@ -123,10 +102,8 @@ export function KeepDetailScreen({ route, navigation }: Props) {
     void load(paramItem == null);
   }, [load, paramItem]);
 
-  const item = useMemo(
-    () => (detail ? mergeKeep(detail, listItem) : listItem),
-    [detail, listItem]
-  );
+  /** 상세 응답이 오면 그 값(라이프사이클 포함), 오기 전에는 목록 항목 */
+  const item = useMemo(() => detail ?? paramItem ?? null, [detail, paramItem]);
   const today = loadedAt;
 
   function onRefresh() {

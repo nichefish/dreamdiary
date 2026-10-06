@@ -49,7 +49,7 @@ export type RootStackParamList = {
   KeepHome: undefined;
   /**
    * Keep 상세 (읽기 전용). id 로 GET /api/prospective/keep/{id} 를 다시 읽는다.
-   * item = 목록 항목(로드 전 임시 표시 + 상세 응답에 없는 lifecycle 보충), projectTitle = 목록에서 해석한 Project 이름
+   * item = 목록 항목(상세 응답이 오기 전 임시 표시), projectTitle = 목록에서 해석한 Project 이름
    */
   KeepDetail: { id: number; item?: KeepItem; projectTitle?: string };
   /** 모바일에 아직 없는 사용자 메뉴의 `준비 중` 화면. url = 웹 메뉴 URL (현재 메뉴 강조용) */

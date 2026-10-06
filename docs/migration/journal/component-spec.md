@@ -253,13 +253,14 @@ HTML 요소:
 
 카드 제목과 Keep 등록 버튼 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록과 등록은 저널 년월에 종속되지 않는다.
 
-**라이프사이클 참여 (✓)**: `PROSPECTIVE_KEEP` 는 `AttachableContentLifecyclePolicy` 에 참여한다. `ProspectiveKeepService`가 부착 테이블의 현재값을 `ProspectiveKeepDto.lifecycle`에 채우며 행 부재는 `OPEN`으로 본다. 목록은 **활성 집합(OPEN·PENDING)** 이고 종결 상태는 제외한다. `sortOrder`는 사용자 전역 순번이다. 카드는 체크박스로 `RESOLVED`, 메뉴로 `PENDING`·`OPEN` 전이와 하드 삭제를 제공한다. 전이·삭제 성공 시 `fetchKeeps()`로 다시 조회한다.
+**라이프사이클 참여 (✓)**: `PROSPECTIVE_KEEP` 는 `AttachableContentLifecyclePolicy` 에 참여한다. `ProspectiveKeepService`가 부착 테이블의 현재값을 `ProspectiveKeepDto.lifecycle`에 채우며 행 부재는 `OPEN`으로 본다. 목록과 상세(`GET /api/prospective/keep/{id}`, 2026-10-06부터) 모두 같은 방식으로 채운다(상세는 본문 캐시와 별도로 매 조회 부착). 웹 수정 모달 진입은 이 값을 쓰지 않는다. 목록은 **활성 집합(OPEN·PENDING)** 이고 종결 상태는 제외한다. `sortOrder`는 사용자 전역 순번이다. 카드는 체크박스로 `RESOLVED`, 메뉴로 `PENDING`·`OPEN` 전이와 하드 삭제를 제공한다. 전이·삭제 성공 시 `fetchKeeps()`로 다시 조회한다.
 
 **API**:
 | 작업 | 엔드포인트 | 응답 |
 |------|-----------|------|
 | 활성 목록 조회 | `GET /api/prospective/keeps` | `{ rsltList: KeepRow[] }` — 사용자 활성 집합(OPEN·PENDING) |
 | 라이프사이클 전이 | `PUT /api/lifecycles` `{id, contentType:'PROSPECTIVE_KEEP', lifecycleKey}` | `{ rslt: boolean }` — 완료(RESOLVED)·보류(PENDING)·해제(OPEN) |
+| 상세 조회 (수정 모달 진입) | `GET /api/prospective/keep/{id}` | `{ rsltObj: ProspectiveKeepDto }` — `lifecycle` 포함(행 부재 `OPEN`) |
 | 삭제 | `DELETE /api/prospective/keep/{id}` | `{ rslt: boolean }` |
 
 **KeepRow 모델**:

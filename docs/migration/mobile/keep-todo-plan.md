@@ -4,6 +4,7 @@
 - 목적: 웹 `Keep 전수관리`(feature `prospective`, 경로 `/keep`)를 모바일 앱 안의 할일형 화면으로 옮기기 위한 조사와 단계별 계획
 - 범위: 조사·설계만 다룬다. 앱·백엔드 코드는 바꾸지 않는다. 백엔드 부족분은 "갭"으로만 기록하고, 모바일은 **현재 백엔드 계약 그대로** 쓰는 것을 전제로 한다.
 - 갱신: 2026-10-06 밤 — **2-0(읽기 전용 목록·상세) 구현**, 코드 확인 중 찾은 계약 사항(상세 응답에 lifecycle 없음, 태그 `contentSize` 집계 범위) 반영(§3.1, §3.5, §6.1)
+- 갱신: 2026-10-06 밤(2) — **백엔드 상세(R2)도 lifecycle 부착**(사용자 승인, Keep 상세 읽기 경로만). 모바일 상세는 응답 값을 그대로 쓰고 목록 병합·목록 재조회를 없앴다(§3.1, §3.5, §6.1)
 - 위치: 모바일 2단계(쓰기)의 첫 대상이다. 1단계(조회 전용) 범위는 `screen-spec.md` §1을 따른다.
 - 관련 문서: `screen-spec.md` (모바일 화면 계약), `tagcloud-thread-port-plan.md` (같은 형식의 선행 계획), `docs/migration/prospective/screen-spec.md`·`interaction-spec.md`·`component-spec.md` (웹 Keep 계약), `docs/spec/PROSPECTIVE_PROJECT_SPEC.md`, `docs/ideas/prospective-keep-evolution.md`
 
@@ -141,7 +142,7 @@ ProspectiveProject (prospective_project, soft delete)
 | # | 엔드포인트 | 파라미터 | 응답 | 모바일 사용 |
 |---|---|---|---|---|
 | R1 | `GET /api/prospective/keeps` | `scope=all`(전 범위) \| 생략(활성 = OPEN·PENDING, 종결은 메모리에서 제외). `ProspectiveKeepSearchParam`: `tagId`, `projectId`, `projectUnassigned` (`projectId`와 `projectUnassigned`를 같이 보내면 `IllegalArgumentException`). 페이징·서버 검색 없음, 정렬 `sortOrder`→`id` | `rsltList: ProspectiveKeepDto[]` (lifecycle·state·tag·prefix 포함, Project는 `projectId`만) | 2-0 핵심. `scope=all` 한 번 받고 클라이언트 투영 |
-| R2 | `GET /api/prospective/keep/{id}` | — | `rsltObj: ProspectiveKeepDto` (캐시, 소유 확인). **lifecycle 은 붙지 않는다** — `getDetailDtoWithCacheByUser`가 엔티티만 변환하고 `applyKeepLifecycles`는 목록에서만 호출. 없는 ID면 `rslt=false` | 상세·편집 직전 재조회. 라이프사이클은 R1 항목 값을 쓴다 |
+| R2 | `GET /api/prospective/keep/{id}` | — | `rsltObj: ProspectiveKeepDto` (본문은 캐시, 소유 확인). **lifecycle 포함** — `getDetailDtoWithLifecycleByUser`가 캐시된 본문의 복사본에 목록과 같은 `applyKeepLifecycles`로 매 조회 부착(행이 없으면 `OPEN`, 2026-10-06 백엔드 수정. 그 전에는 없었음). 없는 ID면 `rslt=false` | 상세·편집 직전 재조회. 라이프사이클도 이 응답 값을 쓴다 |
 | R3 | `GET /api/prospective/projects` | — | `rsltList` (Project + lifecycle) | Project 칩·이름 매핑 |
 | R4 | `GET /api/prospective/project/{id}` | — | `rsltObj` | (미사용) |
 | R5 | `GET /api/prospective/keep/tag/categories` | — | `rsltMap` (태그 카테고리 맵) | 태그 편집(2-5) |
@@ -209,7 +210,7 @@ ProspectiveProject (prospective_project, soft delete)
 | 서버 측 검색·기한·라이프사이클 필터, 페이징 없음 | 데이터가 커지면 부담 | 현재 60건이라 클라이언트 투영으로 충분 |
 | 반복(recurrence)·하위 할일·우선순위(중요 외) 없음 | 일반 할일 앱 기능 부족 | 도메인 철학상 의도된 범위로 보고 다루지 않음 |
 | 삭제 복구 API 없음 | 실수 삭제 복구 불가 | 확인 대화상자 |
-| 상세(R2)에 lifecycle 없음 | 상세만 받으면 종결 항목도 `진행 중`으로 보임 | 목록 항목의 lifecycle 을 합친다. 목록 없이 상세를 열면 R1을 함께 받는다(2-0 구현) |
+| ~~상세(R2)에 lifecycle 없음~~ **해결 (2026-10-06)** | (이전) 상세만 받으면 종결 항목도 `진행 중`으로 보임 | 백엔드 상세가 목록과 같은 방식으로 lifecycle 을 붙이도록 고쳤다(§3.1 R2). 모바일의 목록 병합·재조회는 없앴다. 바뀌기 전 백엔드에 붙으면 상세가 `진행 중`으로 보이므로 백엔드를 다시 띄운다 |
 
 ---
 
@@ -339,7 +340,7 @@ ProspectiveProject (prospective_project, soft delete)
 - 투영(`src/utils/keepProjection.ts`): Project 범위(기본 `전체` · `미지정` · OPEN Project) → 말머리·태그·기한 지남·중요·검색어 AND(웹 `filtered`와 같은 규칙) → 보기 `진행`(웹 정렬: 기한 오름차순, 기한 없음은 아래에 서버 순서) / `기한`(진행 중 기한 있는 것만 `지남 / 오늘 / 7일 이내 / 그 이후`) / `종결`(서버 순서). 보기 탭에 필터 적용 후 건수.
 - 검색: 제목·본문 부분 일치, `검색` 버튼·키보드 검색 키로만 적용(검색 탭과 같은 원칙). 필터는 하단 시트(`KeepFilterSheet`: 기한 지남 · 중요 · 말머리 · 태그, 같은 칩을 다시 누르면 해제). 걸린 조건은 목록 위 칩(눌러서 해제) + `초기화`. 행의 태그 칩을 누르면 태그 필터 토글.
 - 행: 중요 `★` + 굵은 제목, `[말머리]`(웹과 같은 `#287D94`), 보류·종결 배지(완료 초록 · 실패 빨강 · 만료 노랑 · 내려놓음 회색 + 아이콘), 요구 배지, `기한 ~10/24 · D-3`(진행 중 지난 기한은 경고색 `N일 지남`, 종결은 날짜만), `일시 …`, `📁 Project`(전체 범위에서만), 등록 년월, 태그 칩. 레거시 `COLLAPSED` 상태는 무시.
-- 상세 `KeepDetailScreen`: R2로 다시 읽고(로드 전에는 목록 항목 표시), 라이프사이클은 목록 항목 값(목록 없이 열거나 당겨서 새로고침하면 R1·R3도 다시 받음). 배지(라이프사이클·중요·요구), 제목, 기한(D-day)·일시·위치·Project·말머리·태그·등록·수정, 본문(마크다운 → 평문, `src/utils/markdownText.ts`, 새 의존성 없음).
+- 상세 `KeepDetailScreen`: R2로 다시 읽고(로드 전에는 목록 항목을 임시 표시), 라이프사이클은 R2 응답 값(백엔드 수정 후). Project 이름은 목록에서 넘겨받고, 목록 항목 없이 열거나 당겨서 새로고침하면 R3을 다시 받아 찾는다. 배지(라이프사이클·중요·요구), 제목, 기한(D-day)·일시·위치·Project·말머리·태그·등록·수정, 본문(마크다운 → 평문, `src/utils/markdownText.ts`, 새 의존성 없음).
 - 복사·공유: 상세 헤더 `복사`·`공유`(1건 텍스트), 목록 위 `JournalCopyShareBar`(현재 보기·필터 결과, 기한 보기는 묶음 머리 포함). 웹에 Keep 복사가 없어 1단계 저널 복사와 같은 CRLF·빈 줄 규칙으로 새로 정했다(`src/utils/keepCopy.ts`, `screen-spec.md` §4.8).
 - 파일: `src/types/prospectiveKeep.ts`, `src/utils/keepExpire.ts`(웹 `formatExpireDt`·`daysUntilExpire` 포트), `src/utils/keepProjection.ts`, `src/utils/keepCopy.ts`, `src/utils/markdownText.ts`, `src/components/keep/KeepBadges.tsx`, `src/components/keep/KeepFilterSheet.tsx`, `src/screens/KeepHomeScreen.tsx`, `src/screens/KeepDetailScreen.tsx`, 수정 `src/api/dreamDiaryApi.ts`(읽기 함수 5개), `src/types/auth.ts`(`AjaxResponse`에 `rsltList`·`rsltMap`), `src/navigation/AppNavigator.tsx`, `src/navigation/appMenu.ts`.
 - 계획(§5.3)과 다른 점: 헤더 `🔍`·`⚲` 아이콘 대신 목록 위 검색줄 + `필터` 버튼, 검색은 입력 중 즉시가 아니라 제출 시에만(사용자 결정), 오른쪽 아래 `+`·체크박스·스와이프 없음(2-0은 읽기 전용).
