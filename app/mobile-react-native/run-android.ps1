@@ -106,4 +106,12 @@ if ($adb) {
     Write-Host "[mobile] WARN: adb를 찾지 못해 reverse 생략 (ANDROID_HOME 확인)"
 }
 
+# --localhost 면 Expo가 Metro를 호스트명 localhost 로 listen 하는데, Node 22는 localhost를 ::1(IPv6)로 먼저 풀어
+# Metro가 [::1]:<포트> 에만 뜬다. adb reverse 는 PC의 127.0.0.1:<포트> 로 붙으므로 연결이 거절되고
+# Expo Go에 "Failed to download remote update"가 뜬다. IPv4 우선으로 풀게 해 127.0.0.1 에 listen 시킨다. (2026-10-11)
+$ipv4First = "--dns-result-order=ipv4first"
+if (-not $env:NODE_OPTIONS) { $env:NODE_OPTIONS = $ipv4First }
+elseif ($env:NODE_OPTIONS -notlike "*$ipv4First*") { $env:NODE_OPTIONS = "$($env:NODE_OPTIONS) $ipv4First" }
+Write-Host "[mobile] NODE_OPTIONS: $env:NODE_OPTIONS"
+
 Invoke-Npm @("run", "android", "--", "--port", "$metroPort", "--localhost")

@@ -82,9 +82,18 @@ This checks the React Native screens and API client TypeScript.
 npx expo prebuild
 ```
 
-This creates `android/` and `ios/` only when needed. In the starter phase, keep the app in Expo managed workflow and avoid committing generated native folders unless native code changes become necessary.
+This creates `android/` and `ios/` only when needed. In the starter phase, keep the app in Expo managed workflow and avoid committing generated native folders unless native code changes become necessary. Both folders are listed in `.gitignore` (CNG: native settings live in `app.json` and config plugins).
 
 ### 4. App Artifacts
+
+Local release APK for a real phone (no EAS account, Windows), recommended for device QA:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build-android-apk.ps1           # dist/dreamdiary-<version>-release.apk
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build-android-apk.ps1 -Install  # + adb install -r on the USB phone
+```
+
+The script bakes the PC Tailscale IP (`tailscale ip -4`, or `-ApiBaseUrl`) into the bundle without touching `.env`, and signs with the template debug keystore (personal sideloading only). Details: `docs/migration/mobile/run-guide.md` §5.5.
 
 With EAS Build:
 
@@ -102,7 +111,7 @@ npx expo run:ios
 
 The `preview` profile in `eas.json` is for internal Android APK testing. The `production` profile is for store-ready builds.
 
-## EAS Preview (Recommended for Device QA)
+## EAS Preview (optional, needs an EAS account)
 
 1. Install dependencies and login:
 
@@ -119,7 +128,7 @@ npx eas-cli build --platform android --profile preview
 ```
 
 3. Install APK from the EAS build link on a physical device.
-4. Set `.env` with your LAN IP based API URL, then run backend and verify:
+4. Set the API URL **before** building via `eas.json` `build.preview.env.EXPO_PUBLIC_API_BASE_URL` or EAS environment variables — `.env` is gitignored and may not be uploaded to EAS cloud builds. Then run backend and verify:
    - Login
    - Today date navigation
    - Calendar/Tag/Search to EntryDetail

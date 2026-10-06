@@ -13,6 +13,37 @@ Java 빌드 계약 (2026-07-19): Gradle wrapper를 실행한 IDE·셸 JBR과 무
 | npm install | `./gradlew npmInstall` |
 | 기타 package.json 스크립트 | `./gradlew npm_run_<script>` (`type-check` → `npm_run_type_check`) |
 
+### Windows Agent 셸의 Gradle loopback 오류 해결
+
+`Unable to establish loopback connection`과 함께 `sun.nio.ch.PipeImpl`, `UnixDomainSockets.connect0`, `SocketException: Invalid argument: connect`가 나타나면 **빌드 불가를 보고하거나 아래 폴백으로 넘어가기 전에 다음 옵션으로 Gradle을 실행한다.**
+
+Windows Agent 셸 / Microsoft JDK 17.0.19에서 `-Djdk.net.unixdomain.tmpdir=C:/Dev`를 지정해 Gradle 실행 성공을 확인했다. `C:/Dev`는 실제 존재하는 디렉터리다. 이 옵션은 JDK 내부 Unix-domain socket의 임시 경로를 지정한다. 기본 임시 경로에서 실패하고 지정 경로에서 성공한 사실은 확인했으며, 기본 경로가 실패하는 환경 내부 원인은 미확정이다. `--no-daemon`만 적용하거나 `WindowsSelectorProvider`를 지정한 실행은 같은 오류로 실패했다.
+
+PowerShell 실행 예시(옵션은 해당 실행에만 적용하고 원래 환경 변수 복원):
+
+```powershell
+$taskPreviousJavaOptions = $env:JAVA_TOOL_OPTIONS
+$taskGradleExitCode = $null
+try {
+    $env:JAVA_TOOL_OPTIONS = (($taskPreviousJavaOptions + ' -Djdk.net.unixdomain.tmpdir=C:/Dev').Trim())
+    .\gradlew.bat --no-daemon help
+    $taskGradleExitCode = $LASTEXITCODE
+} finally {
+    $env:JAVA_TOOL_OPTIONS = $taskPreviousJavaOptions
+}
+if ($taskGradleExitCode -ne 0) {
+    throw "Gradle 실패: exit code $taskGradleExitCode"
+}
+```
+
+`help`를 필요한 `buildFrontend`, `compileJava`, `test` 등으로 바꾸어 사용한다. 저장소 설정이나 사용자 전역 JVM 설정을 바꾸지 않고 실행할 수 있다. PowerShell 호출 자체의 종료 상태와 Gradle 결과를 혼동하지 않도록 `$LASTEXITCODE`와 `BUILD SUCCESSFUL` / `BUILD FAILED`를 확인한다.
+
+검증 결과(2026-10-07):
+- `help`: `BUILD SUCCESSFUL`.
+- `test --tests '*LifecycleServiceTest' --tests '*ProspectiveKeepServiceTest'`: 두 클래스 합계 20개 테스트, 실패 0개·오류 0개. 실행에 포함된 `buildFrontend` 성공.
+- 위 선별 테스트 실행 전체는 `jacocoTestCoverageVerification`에서 실패했다. LINE 8%·INSTRUCTION 7%가 하한 9%보다 낮았다. loopback 문제 해결과 테스트 통과는 확인됐지만 전체 빌드 게이트 통과를 의미하지 않는다. 커버리지 검증은 전체 테스트 실행 결과로 판단하며 기존 하한을 유지한다.
+
+아래 폴백은 위 옵션을 적용한 Gradle 실행까지 실패한 경우에 검토한다.
 gradlew 폴백 (2026-07-10): 일부 agent shell 에서는 `./gradlew` 가 데몬 loopback 연결 실패(`Unable to establish loopback connection`)로 아예 동작하지 않는다 — IntelliJ·일반 터미널에서는 정상이므로 셸 환경 한정 문제다. 이때는 Gradle 이 받아둔 `.gradle/nodejs/node-v<버전>-win-x64` 를 PATH 에 추가하고 `app/frontend-vue` 에서 `npm run build` / `npm run test` 를 직접 실행한다 — `buildFrontend` 와 동일 Node 버전·동일 스크립트라 게이트 등가.
 
 Java 컴파일 검증 폴백 (2026-08-14 실증): 이 셸에서는 `./gradlew compileJava` 도 (`--no-daemon`·샌드박스 해제 포함) 동일 loopback 으로 막힌다. 그래도 gradle 없이 `javac` 로 등가 검증이 가능하다:

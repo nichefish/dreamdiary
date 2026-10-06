@@ -11,7 +11,7 @@ PC의 **Android 에뮬레이터(AVD)** 에서 DreamDiary 모바일 앱을 띄우
 |---|---|
 | Tailscale | PC·폰 **같은 계정**으로 설치·로그인, 둘 다 **Connected** |
 | 백엔드 | Spring Boot API가 PC에서 **18081** 포트로 동작 중 (`local`·`dev` 프로필 기본값 `${SERVER_PORT:18081}`) |
-| `.env` | `app/mobile-react-native/.env`. 에뮬레이터는 `EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:18081`(§5.1, 없으면 `run-android.ps1`이 생성), LTE 실기기는 Tailscale IP(§2.2). **git에 커밋하지 않음** |
+| `.env` | `app/mobile-react-native/.env`. 에뮬레이터는 `EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:18081`(§5.1, 없으면 `run-android.ps1`이 생성), LTE 실기기 Expo Go는 Tailscale IP(§2.2). 로컬 릴리스 APK(§5.5)는 `.env`를 바꾸지 않고 빌드 스크립트가 Tailscale IP를 넣습니다. **git에 커밋하지 않음** |
 | Node.js | **22.13.x 이상, Node 22 LTS** 권장. 선택 근거는 §1.1, PATH에 `npm`이 없으면 §4 Gradle Node 참고 |
 | 인증 | REST: 쿠키. WebSocket: login/refresh의 `Authorization: Bearer` → SecureStore (`src/auth/accessToken.ts`) |
 | Expo Go (에뮬레이터) | `57.0.9` 설치됨. adb 자동 설치가 실패하면 §5.1의 수동 설치 |
@@ -197,7 +197,8 @@ npm run type-check
 
 - `babel-preset-expo`(`~57.0.10`)를 `devDependencies`에 명시했습니다. `babel.config.js`가 프리셋을 이름(`"babel-preset-expo"`)으로 참조하므로 전이 의존성에 기대지 않고 직접 설치합니다.
 - **새 의존성 `expo-clipboard`(`~57.0.2`)**: 복사 기능(엔트리 상세·이 날/주/달 `복사`)이 사용합니다. 이 변경을 pull한 뒤에는 `app/mobile-react-native`에서 `npm install`을 실행하고 Metro를 재시작합니다(실행 중인 Expo/Metro를 종료하고 §5.1 방식으로 다시 띄움). `run-android.ps1`(`mobileAndroid`)은 `node_modules`가 없을 때만 `npm install`을 실행하므로, 이미 설치된 환경에서는 새 패키지를 자동으로 받지 않습니다. Gradle에서는 `mobileInstall`을 먼저 실행해도 됩니다.
-  - Expo Go에는 `expo-clipboard` 네이티브 모듈이 포함되어 있어 Expo Go 재설치는 필요 없습니다. EAS Preview APK(§5.2)·로컬 네이티브 빌드(§5.4)는 네이티브 모듈이 추가되었으므로 새로 빌드해야 복사가 동작합니다.
+  - Expo Go에는 `expo-clipboard` 네이티브 모듈이 포함되어 있어 Expo Go 재설치는 필요 없습니다. EAS Preview APK(§5.2)·로컬 네이티브 빌드(§5.4)·로컬 릴리스 APK(§5.5)는 네이티브 모듈이 추가되었으므로 새로 빌드해야 복사가 동작합니다.
+- **새 의존성 `expo-build-properties`(`~57.0.22`, 2026-10-06)**: 빌드 설정 전용 config plugin입니다(JS 런타임 코드 없음). `app.json`에서 `android.usesCleartextTraffic: true`를 켜 릴리스 APK가 `http://<Tailscale-IP>:18081`(평문 HTTP)에 접속할 수 있게 합니다. Android는 API 28+ 릴리스 빌드에서 평문 HTTP를 기본으로 막고, Expo 템플릿은 debug 매니페스트에만 허용을 넣기 때문입니다. prebuild 때마다 매니페스트에 다시 반영되므로 `android/`를 손으로 고치지 않습니다. Expo Go 개발에는 영향이 없습니다.
   - 공유는 React Native 내장 `Share` API라 추가 패키지가 없습니다.
 - Expo CLI가 `expo` `57.0.19` → `57.0.26` 업데이트를 제안하지만 이번에는 보류했습니다. 후속 작업에서 `npx expo install --fix`로 SDK 57 기대 버전에 맞춥니다([`sdk-upgrade.md`](./sdk-upgrade.md) 후속 기록).
 
@@ -210,8 +211,10 @@ IntelliJ Gradle 창의 `mobile` 그룹에서 실행하거나 루트에서 `.\gra
 | `mobileAndroid` | Windows: `powershell -NoProfile -ExecutionPolicy Bypass -File app\mobile-react-native\run-android.ps1` (§5.1). 그 외 OS는 안내 메시지와 함께 실패 |
 | `mobileInstall` | `app/mobile-react-native`에서 `npm install` |
 | `mobileTypeCheck` | `mobileInstall` 후 `npm run type-check` (`tsc --noEmit`) |
+| `mobileApk` | Windows: `build-android-apk.ps1` — 실기기용 릴리스 APK를 `app/mobile-react-native/dist/`에 만듭니다 (§5.5) |
+| `mobileApkInstall` | Windows: `build-android-apk.ps1 -Install` — 빌드 후 USB로 연결된 폰(에뮬레이터 제외)에 `adb install -r` (§5.5) |
 
-- 세 태스크는 모두 **`Exec` 타입**입니다. 저장소가 configuration cache(`gradle.properties`의 `org.gradle.configuration-cache=true`)를 켜 두었으므로, 실행 단계에서 스크립트 메서드를 호출하던 `doLast { exec {} }` 방식 대신 경로와 명령을 구성 단계에서 계산하는 `Exec` 태스크로 바꿨습니다.
+- 모든 태스크는 **`Exec` 타입**입니다. 저장소가 configuration cache(`gradle.properties`의 `org.gradle.configuration-cache=true`)를 켜 두었으므로, 실행 단계에서 스크립트 메서드를 호출하던 `doLast { exec {} }` 방식 대신 경로와 명령을 구성 단계에서 계산하는 `Exec` 태스크로 바꿨습니다.
 - npm 선택 순서: PATH에 `npm`(Windows는 `npm.cmd`)이 있으면 `cmd /c npm …`을 쓰고, 없을 때만 `.gradle/nodejs/node-v*` 중 최신 디렉터리의 `node.exe` + `npm-cli.js`를 씁니다. Expo SDK 57은 Node `22.13.x` 이상이 필요한데, Gradle Node 핀(`build.gradle`의 `node.version = '20.11.1'`, frontend-vue와 공유)은 그보다 낮기 때문입니다.
 - `mobileInstall`·`mobileTypeCheck`의 PATH 판단은 Gradle을 실행한 프로세스의 환경 변수를 기준으로 합니다. Node를 설치하기 전에 열어 둔 IDE에서는 PATH에 `npm`이 없어 Gradle Node로 대체될 수 있으므로 IDE를 다시 시작합니다. `mobileAndroid`는 `run-android.ps1`이 레지스트리 PATH를 다시 읽으므로 영향을 덜 받습니다.
 
@@ -258,9 +261,24 @@ EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:18081
 4. `node_modules`가 없으면 `npm install`을 실행합니다. PATH의 `npm`을 먼저 쓰고, 없을 때만 Gradle Node를 씁니다(이때 Gradle Node 디렉터리를 PATH 앞에 추가).
 5. 8081부터 LISTEN 중이 아닌 첫 포트를 Metro 포트로 고릅니다(`[mobile] Metro port: …` 출력). Gradle·IDE 실행은 비대화형이라 Expo가 "다른 포트를 쓸까요?"를 물으면 그대로 멈추기 때문입니다. 8081은 다른 Java 앱이 쓰고 있을 수 있습니다.
 6. `adb`(PATH → `ANDROID_HOME` → `ANDROID_SDK_ROOT` → `%LOCALAPPDATA%\Android\Sdk\platform-tools`)를 찾아, 이미 연결된 기기마다 `adb reverse tcp:<포트> tcp:<포트>`를 겁니다(`[mobile] adb reverse …` 출력). 실행 중인 기기가 없으면 건너뛰고, Expo가 AVD를 띄워 앱을 열 때 직접 reverse합니다.
-7. `npm run android -- --port <포트> --localhost`(`expo start --android --port <포트> --localhost`)를 실행합니다. `--localhost`로 Expo Go가 `exp://127.0.0.1:<포트>`로 접속하므로, PC LAN IP가 바뀌거나 방화벽이 끼어도 Metro 연결이 끊기지 않습니다.
+7. `NODE_OPTIONS`에 `--dns-result-order=ipv4first`를 붙입니다(이미 있으면 그대로, 기존 값이 있으면 뒤에 추가). Metro가 `127.0.0.1`에 listen하게 하기 위해서입니다(아래 「Failed to download remote update」 참고).
+8. `npm run android -- --port <포트> --localhost`(`expo start --android --port <포트> --localhost`)를 실행합니다. `--localhost`로 Expo Go가 `exp://127.0.0.1:<포트>`로 접속하므로, PC LAN IP가 바뀌거나 방화벽이 끼어도 Metro 연결이 끊기지 않습니다.
 
 > **왜 localhost + adb reverse인가 (2026-10-06):** 에뮬레이터가 PC LAN IP(예: `223.x.x.x:8082`)로 Metro에 붙어 있다가 연결이 조용히 끊겨, 코드를 고쳐도 에뮬레이터에 옛 번들이 계속 보이는 문제가 있었습니다. 백엔드 주소(`.env`의 `10.0.2.2:18081`)는 그대로이며 reverse 대상이 아닙니다. 에뮬레이터를 재시작했거나 연결이 끊겼으면 스크립트를 다시 실행하거나 `adb reverse tcp:<포트> tcp:<포트>` 후 Expo Go에서 `exp://127.0.0.1:<포트>`를 다시 엽니다. LTE 실기기(Tailscale)는 USB 연결이 아니므로 이 방식 대신 §2.2를 따릅니다.
+
+> **Expo Go "Something went wrong" / `Uncaught Error: java.io.IOException: Failed to download remote update` (2026-10-11):** `exp://127.0.0.1:<포트>`를 열어도 번들을 못 받는 경우입니다.
+> - **원인:** `--localhost`면 Expo CLI가 Metro를 호스트명 `localhost`로 listen하는데, Node 22는 `localhost`를 `::1`(IPv6)로 먼저 풀어 Metro가 `[::1]:<포트>`에만 뜹니다. manifest의 번들 URL과 `adb reverse`는 PC의 `127.0.0.1:<포트>`(IPv4)로 붙으므로 연결이 거절됩니다. 번들 자체는 정상 빌드되고(PC에서 `http://localhost:<포트>/status`는 `packager-status:running`), Tailscale·LAN IP와는 무관합니다.
+> - **확인:** `Get-NetTCPConnection -LocalPort <포트> -State Listen`이 `::1`만 보이고 `curl.exe http://127.0.0.1:<포트>/status`가 `Failed to connect`이면 이 문제입니다.
+> - **해결:** `run-android.ps1`(=`mobileAndroid`)이 `NODE_OPTIONS=--dns-result-order=ipv4first`를 자동으로 넣습니다. 이 수정 전에 띄운 Metro는 Ctrl+C로 끄고 다시 실행합니다. 스크립트 없이 직접 띄울 때는 다음처럼 합니다.
+>
+> ```powershell
+> cd app\mobile-react-native
+> $env:NODE_OPTIONS = '--dns-result-order=ipv4first'
+> adb -s emulator-5554 reverse tcp:8082 tcp:8082
+> npx.cmd expo start --android --port 8082 --localhost
+> ```
+>
+> 정상이면 `Get-NetTCPConnection -LocalPort 8082 -State Listen`에 `127.0.0.1`이 보이고 `curl.exe http://127.0.0.1:8082/status`가 `packager-status:running`을 돌려줍니다.
 
 > **인코딩 주의:** `run-android.ps1`은 **UTF-8(BOM 포함)** 으로 저장합니다. Gradle과 `run-android.bat`이 호출하는 Windows PowerShell 5.1(`powershell.exe`)은 BOM 없는 스크립트를 시스템 ANSI 코드 페이지(한국어 Windows는 CP949)로 읽으므로 한글 문자열이 깨집니다. 편집기에서 다시 저장할 때 BOM이 빠지지 않게 합니다.
 
@@ -275,9 +293,9 @@ adb shell dumpsys package host.exp.exponent | Select-String versionName
 
 - 자동 설치가 실패하면 수동으로 설치합니다. [Expo Go 페이지](https://expo.dev/go)에서 SDK 57용 Android APK를 내려받아 `adb install -r <APK 경로>`로 설치한 뒤 `mobileAndroid`를 다시 실행합니다. Google Play 시스템 이미지의 Play 스토어 Expo Go는 최신 SDK만 지원하므로, SDK 57이 최신일 때만 대안이 됩니다.
 
-### 5.2 EAS Preview APK (LTE 실기기 **권장**)
+### 5.2 EAS Preview APK (선택, EAS 계정 필요)
 
-API URL이 빌드에 포함되므로 LTE에서 가장 단순합니다.
+EAS 클라우드에서 APK를 빌드합니다. EAS 계정이 없으면 §5.5 로컬 릴리스 APK를 사용합니다(현재 권장).
 
 ```bash
 cd app/mobile-react-native
@@ -286,11 +304,17 @@ npx eas-cli login
 npx eas-cli build --platform android --profile preview
 ```
 
-1. 빌드 **전** `.env`에 Tailscale IP + `:18081` 설정
+1. 빌드 **전** API URL을 EAS 쪽에 설정합니다(아래 주의).
 2. EAS 빌드 완료 → APK를 폰(LTE)에 설치
 3. 폰 Tailscale Connected + 백엔드·방화벽 준비 후 실행
 
 `eas.json`의 `preview`: Android **APK**, internal 배포.
+
+> **`.env` 주의:** `.env`는 `.gitignore` 대상이라 EAS가 클라우드로 올리는 프로젝트에 포함되지 않을 수 있습니다(EAS는 `.easignore`가 없으면 `.gitignore`를 따름). 로컬 `.env`에 Tailscale IP를 넣어도 클라우드 빌드에는 반영되지 않거나, 에뮬레이터용 `10.0.2.2`가 들어갈 수 있습니다. 다음 중 하나로 설정합니다.
+> - `eas.json`의 `build.preview.env`에 `"EXPO_PUBLIC_API_BASE_URL": "http://<PC-Tailscale-IP>:18081"` 추가(Tailscale 사설 IP라 공개 저장소가 아니면 커밋해도 위험은 낮음)
+> - 또는 EAS 환경 변수: `npx eas-cli env:create --environment preview --name EXPO_PUBLIC_API_BASE_URL --value http://<PC-Tailscale-IP>:18081 --visibility plaintext` 후 `preview` 프로필에 `"environment": "preview"` 지정
+>
+> 평문 HTTP 허용(`expo-build-properties`, §4)은 `app.json`에 있으므로 EAS 빌드에도 적용됩니다.
 
 ### 5.3 Expo Go — LTE 실기기 (선택, 설정 부담 큼)
 
@@ -303,7 +327,7 @@ npm run start
 - LTE에서는 **Metro 번들 서버(PC)** 까지 Tailscale로 접근 가능해야 함
 - `.env` 변경 후 Metro **재시작**
 
-문제가 잦으면 §5.2 APK를 사용하세요.
+문제가 잦으면 §5.5 로컬 릴리스 APK를 사용하세요.
 
 ### 5.4 로컬 네이티브 실행 (선택)
 
@@ -311,12 +335,101 @@ npm run start
 npx expo run:android
 ```
 
+`android/`가 없으면 prebuild로 만듭니다(`.gitignore` 대상, §5.5). Windows에서 C++ 빌드가 `Filename longer than 260 characters`로 실패하면 §5.5의 CMake 설정(`android/local.properties`의 `cmake.dir`)이 필요합니다. `build-android-apk.ps1`을 한 번 실행하면 설정됩니다.
+
+### 5.5 로컬 릴리스 APK + USB 설치 (LTE 실기기 **권장**, EAS 계정 불필요)
+
+PC에서 릴리스 APK를 직접 빌드해 폰에 USB로 설치합니다. JS 번들이 APK 안에 들어가므로 Metro 없이 실행되고, API 주소(PC Tailscale IP)가 빌드 시점에 박혀 LTE에서 바로 동작합니다.
+
+#### 사전 준비 (PC)
+
+| 항목 | 확인 (2026-10-06 이 PC) |
+|---|---|
+| Android SDK | `%LOCALAPPDATA%\Android\Sdk` (`ANDROID_HOME`이 없으면 스크립트가 이 경로를 씀). platform `android-36`, build-tools `36.0.0` |
+| NDK | `27.1.12297006` — 첫 빌드 때 Gradle이 자동 설치(build-tools `35.0.0`도 자동 설치됨) |
+| CMake | SDK `cmake;3.31.6`(ninja `1.12.1`) — 없으면 스크립트가 `sdkmanager`로 설치. 이유는 아래 "Windows 경로 길이" |
+| JDK | 17 이상. `JAVA_HOME`(현재 `%USERPROFILE%\.jdks\ms-17.0.19`) → `%USERPROFILE%\.jdks\*` → Android Studio `jbr` 순으로 찾고 17~24를 우선합니다(Android Studio jbr은 JDK 25) |
+| Node | 22.13+ (`C:\Program Files\nodejs`, 현재 v22.23.3) |
+| Windows 긴 경로 | `HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled = 1` (현재 1). 0이면 관리자 PowerShell: `New-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1 -PropertyType DWORD -Force` 후 재부팅 |
+| Tailscale | PC IPv4 `tailscale ip -4` (현재 `100.70.88.5`) |
+| 백엔드·방화벽 | §3 (18081 인바운드 허용) |
+
+#### 빌드
+
+```powershell
+# IntelliJ: Gradle 창 > mobile > mobileApk (설치까지: mobileApkInstall), 또는 저장소 루트에서
+.\gradlew.bat mobileApk
+
+# 스크립트 직접 실행 (app/mobile-react-native)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build-android-apk.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build-android-apk.ps1 -ApiBaseUrl http://100.70.88.5:18081   # 주소 직접 지정
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build-android-apk.ps1 -Install                                # 빌드 후 USB 폰에 설치
+```
+
+| 옵션 | 설명 |
+|---|---|
+| `-ApiBaseUrl <url>` | API 주소. 생략하면 `tailscale ip -4`로 `http://<ip>:18081`. Tailscale이 없거나 꺼져 있으면 멈추고 안내합니다(주소를 추측하지 않음) |
+| `-Install` | 빌드 후 USB로 연결된 실기기(`emulator-*` 제외)에 `adb install -r`. 한 대일 때만 자동 선택 |
+| `-Serial <serial>` | 설치 대상 지정(여러 대이거나 에뮬레이터에 설치할 때, 예: `emulator-5554`) |
+| `-Architectures <abis>` | 기본 `arm64-v8a,x86_64`(폰 + 에뮬레이터). `all`이면 4개 ABI 모두(빌드가 더 느림) |
+| `-CleanPrebuild` | `android/`를 지우고 다시 prebuild (`app.json`·플러그인·네이티브 의존성을 바꾼 뒤) |
+
+스크립트 동작:
+
+1. 출력 UTF-8, PATH 새로 읽기·Node 기본 경로 보충(`run-android.ps1`과 같음).
+2. API 주소를 정하고 **이 프로세스의 환경 변수** `EXPO_PUBLIC_API_BASE_URL`로만 넣습니다. `.env`(에뮬레이터 `10.0.2.2`)는 바꾸지 않습니다. Expo SDK 57의 `@expo/env`는 이미 있는 환경 변수를 `.env*` 값으로 덮어쓰지 않으므로(`loadEnvFiles`: "already defined and IS NOT overwritten") 프로세스 값이 이깁니다. `EXPO_PUBLIC_*`는 번들할 때 코드에 박힙니다.
+3. JDK 17+, `ANDROID_HOME`을 찾습니다.
+4. `android/gradlew.bat`이 없으면(또는 `-CleanPrebuild`) `npx expo prebuild --platform android --no-install`. prebuild가 `package.json`을 고치므로(`Updated package.json` — scripts를 `expo run:*`로 바꾸는 등), 스크립트가 prebuild 전 내용으로 되돌립니다(Expo Go 개발용 scripts 유지).
+5. SDK CMake 3.30+를 `android/local.properties`의 `cmake.dir`로 지정합니다(아래).
+6. `gradlew :app:createBundleReleaseJsAndAssets --rerun assembleRelease -PreactNativeArchitectures=…`. Gradle은 환경 변수를 입력으로 보지 않아 API 주소만 바꾸면 JS 번들이 `UP-TO-DATE`로 건너뛰어지므로 번들 태스크는 매번 다시 실행합니다(약 30초). 네이티브 부분은 증분 빌드입니다.
+7. `android/app/build/outputs/apk/release/app-release.apk`를 `dist/dreamdiary-<app.json version>-release.apk`로 복사하고, APK 안 `assets/index.android.bundle`(Hermes 바이트코드)에 API 주소 문자열이 있는지 확인합니다. 없으면 실패로 끝냅니다. `10.0.2.2:18081`이 있으면 경고합니다.
+8. `-Install`이면 adb 설치.
+
+소요 시간(이 PC): 첫 빌드 약 9분(Gradle 9.3.1·NDK 다운로드 포함, 경로 길이 문제로 한 번 실패) + 7분, 이후 재빌드 약 30~40초.
+
+> **CNG(Continuous Native Generation):** `android/`·`ios/`는 `app.json` 기준으로 prebuild가 생성하는 산출물이라 `app/mobile-react-native/.gitignore`에 넣었습니다(`/android/`, `/ios/`). 네이티브 설정은 `app.json`·config plugin으로만 바꿉니다. `dist/`도 무시 대상입니다.
+
+> **서명:** Expo prebuild 템플릿의 `release` 빌드는 `android/app/debug.keystore`(공용 Android Debug 인증서, `CN=Android Debug`)로 서명됩니다. 개인 사이드로드에는 충분하지만 스토어 배포용이 아니며, 같은 공용 키라 보안상 배포용으로 쓰지 않습니다. 템플릿 키가 같으므로 다시 prebuild해도 서명은 같아 `install -r` 업데이트가 됩니다. 다른 키로 서명된 같은 패키지(`com.dreamdiary.mobile`)가 폰에 있으면 `INSTALL_FAILED_UPDATE_INCOMPATIBLE`이 나므로 기존 앱을 삭제하고 설치합니다(로그인 정보도 지워짐).
+
+> **Windows 경로 길이:** RN 새 아키텍처는 `app` 모듈에서 자동 연결 라이브러리(react-native-screens·safe-area-context)의 C++를 CMake/ninja로 빌드합니다. 오브젝트 경로가 `…/CMakeFiles/react_codegen_safeareacontext.dir/C_/Dev/projects/dreamdiary/workspace/app/mobile-react-native/node_modules/…/X.cpp.o`처럼 260자를 넘는데, AGP 기본 CMake 3.22.1에 든 ninja 1.10.2는 `LongPathsEnabled=1`이어도 긴 경로를 거부합니다(`ninja: error: Stat(…): Filename longer than 260 characters`). ninja 1.12+는 긴 경로를 쓰므로 SDK CMake 3.31.6(ninja 1.12.1)을 `cmake.dir`로 지정해 해결했습니다. `local.properties`는 `android/` 안이라 prebuild `--clean` 뒤에도 스크립트가 다시 씁니다.
+
+#### 폰 준비 (Galaxy S10e 등)
+
+1. **개발자 옵션 켜기**: 설정 → 휴대전화 정보 → 소프트웨어 정보 → **빌드번호**를 7번 누름.
+2. **USB 디버깅 켜기**: 설정 → 개발자 옵션 → **USB 디버깅** 켬.
+3. USB 케이블로 PC에 연결 → 폰에 뜨는 **"USB 디버깅을 허용하시겠습니까?"** 에서 이 PC의 RSA 키를 **허용**(항상 허용 체크). USB 모드는 "파일 전송"이 안정적입니다.
+4. PC에서 확인: `adb devices` → `<시리얼>    device` (`unauthorized`면 3번 다시, 목록에 없으면 케이블·Samsung USB 드라이버 확인).
+5. 설치: `.\gradlew.bat mobileApkInstall` 또는 `build-android-apk.ps1 -Install`(이미 빌드했으면 `adb -s <시리얼> install -r app\mobile-react-native\dist\dreamdiary-0.1.0-release.apk`도 됨). 폰에 Play 프로텍트 경고가 뜨면 "무시하고 설치"를 고릅니다(디버그 서명 앱).
+   - USB 없이 설치하려면 APK를 폰으로 옮겨 파일 앱에서 열고 "출처를 알 수 없는 앱 설치"를 그 앱에 허용합니다.
+6. 폰 **Tailscale 앱 켜기**(PC와 같은 계정, Connected). 앱 실행 전에 폰 브라우저로 `http://<PC-Tailscale-IP>:18081`이 열리는지 확인하면 좋습니다(§2.3).
+7. PC 백엔드 실행·방화벽(§3) 확인 후 앱 **DreamDiary** 실행 → 로그인.
+
+PC Tailscale IP가 바뀌면(기기 재등록 등) 다시 빌드해 설치합니다. 백엔드만 다시 띄우는 것은 재빌드가 필요 없습니다.
+
+#### 이미 설치된 폰에 새 버전 올리기 (업데이트)
+
+새 APK를 기존 앱 위에 덮어 설치하면 **앱 데이터와 로그인이 그대로 남습니다**. 조건은 패키지(`com.dreamdiary.mobile`)와 **서명 키가 같을 것**입니다. 로그인 토큰은 `expo-secure-store`(`src/auth/accessToken.ts`)에 있어 덮어 설치로는 지워지지 않고, 앱을 삭제하면 함께 지워집니다. `versionCode`는 1로 고정이지만 같은 버전 덮어쓰기는 허용됩니다(`adb install -r`, 파일 앱 설치 모두).
+
+1. **USB로 한 번에 (권장)**: 폰에서 개발자 옵션 → **USB 디버깅**을 켜고(위 "폰 준비" 1~2) USB로 연결합니다. 처음 연결할 때 뜨는 **"USB 디버깅을 허용하시겠습니까?"** 를 허용합니다. 그다음 PC에서
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\build-android-apk.ps1 -Install                 # 빌드 + adb install -r
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\build-android-apk.ps1 -Install -Serial <시리얼>  # 기기가 여러 대일 때
+   ```
+   (또는 `.\gradlew.bat mobileApkInstall`). 스크립트는 빌드 후 `emulator-*`가 아닌 기기가 **한 대일 때만** 자동으로 고르고, 없거나 여러 대면 멈추고 안내합니다. `-Serial`을 주면 그 기기(에뮬레이터 포함)에 설치합니다.
+2. **USB 없이**: `dist\dreamdiary-<버전>-release.apk`를 폰으로 옮겨(메신저·클라우드·케이블 파일 복사) 파일 앱에서 열고 **업데이트**를 누릅니다. 처음이면 그 파일 앱에 "출처를 알 수 없는 앱 설치"를 허용합니다.
+
+**서명이 다르면 덮어 설치가 안 됩니다.** 폰에 `앱이 설치되지 않음`(adb는 `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, 스크립트는 "서명이 다른 기존 앱을 폰에서 삭제한 뒤 다시 설치하세요")이 뜨면 기존 앱을 삭제한 뒤 설치해야 하고, 이때 **로그인 정보와 앱 데이터가 지워집니다**.
+
+- 이 스크립트의 APK는 `android/app/debug.keystore`로 서명됩니다. 이 파일은 Expo 템플릿(`expo-template-bare-minimum`)에 들어 있는 **고정 파일**이라 `-CleanPrebuild`로 `android/`를 다시 만들어도 같은 파일이 복사되어 키가 바뀌지 않습니다(2026-10-06 확인: 생성된 `android/app/debug.keystore`와 템플릿 `57.0.29`의 파일 SHA-256 일치, 인증서 SHA1 `5E:8F:16:06:2E:A3:CD:2C:4A:0D:54:78:76:BA:A6:F3:8C:AB:F6:25`). 따라서 `-CleanPrebuild` 뒤에도 업데이트 설치가 됩니다.
+- 서명이 달라지는 경우: EAS로 만든 APK(§5.2, EAS가 관리하는 키)가 깔려 있는 폰에 이 APK를 올릴 때(또는 그 반대), `android/app/debug.keystore`를 다른 키로 바꾸거나 `app.json`·config plugin으로 릴리스 서명 설정을 바꾼 뒤. 서명 방식을 바꿀 계획이면 그 전에 폰의 로그인·데이터가 지워져도 되는지 먼저 확인합니다.
+
 ---
 
 ## 6. v0.1 계약 스모크 테스트 체크리스트
 
 - [ ] (에뮬레이터) `mobileAndroid` 실행 → Expo Go에서 앱 로드, Gradle 콘솔 한글 정상
 - [ ] (LTE 실기기) 폰 LTE + Tailscale Connected
+- [ ] (LTE 실기기, 로컬 릴리스 APK §5.5) Metro 없이 앱이 열리고, LTE에서 로그인·일별 조회가 됨(평문 HTTP 허용 확인)
 - [ ] 비로그인 첫 실행: 오류 토스트 없이 로그인 화면 표시 (`get-auth-info` 401은 info 로그)
 - [ ] 로그인 화면: 빈 아이디·비밀번호에서 `필수 입력 항목입니다.` 표시, 키보드가 입력란을 가리지 않음
 - [ ] 로그인 / 앱 재시작 후 세션 유지
@@ -347,7 +460,12 @@ npx expo run:android
 | PC만 되고 폰만 안 됨 | 방화벽 18081, 폰 브라우저로 `http://<Tailscale-IP>:18081` 선행 테스트 |
 | 백엔드 미기동 | PC `localhost:18081`, `netstat` 등으로 18081 리스닝 확인 |
 | AI 채팅만 실패 | 로그인·refresh 후 토큰, 앱 재시작 |
-| Expo Go만 실패 | preview APK 사용 권장 |
+| Expo Go만 실패 | 로컬 릴리스 APK(§5.5) 사용 권장 |
+| APK 빌드: `ninja: error: Stat(…): Filename longer than 260 characters` | `LongPathsEnabled=1`인지, `android/local.properties`에 SDK CMake 3.30+(`cmake.dir`)가 지정됐는지(§5.5). `build-android-apk.ps1`을 다시 실행하면 설정됨 |
+| APK 빌드: `번들에서 http://… 을 찾지 못했습니다` | 번들 태스크가 옛 결과를 썼을 수 있음. `android\app\build`를 지우고 다시 빌드 |
+| APK 설치: `INSTALL_FAILED_UPDATE_INCOMPATIBLE` | 다른 서명의 같은 패키지가 있음. 폰에서 DreamDiary 삭제 후 설치(§5.5 서명) |
+| APK 설치: `adb devices`에 폰이 없음 / `unauthorized` | USB 디버깅·허용 팝업·케이블(데이터 지원)·Samsung USB 드라이버(§5.5 폰 준비) |
+| 설치한 APK에서 네트워크 오류 | 폰 Tailscale Connected인지, 폰 브라우저로 `http://<PC-Tailscale-IP>:18081`, PC 방화벽 18081. PC Tailscale IP가 빌드 때와 같은지 |
 | 코드를 고쳐도 에뮬레이터 화면이 그대로(옛 번들) | Metro 연결 끊김. `adb reverse tcp:<포트> tcp:<포트>` 후 Expo Go에서 `exp://127.0.0.1:<포트>` 다시 열기, 또는 `run-android.ps1` 재실행(§5.1 6·7단계) |
 | Gradle·IDE 실행이 Metro 포트 질문에서 멈춤 | `run-android.ps1`이 빈 포트를 골랐는지 `[mobile] Metro port:` 로그 확인 (§5.1) |
 | Gradle 콘솔에서 한글이 깨짐 | `run-android.ps1`이 UTF-8 BOM으로 저장되어 있는지 확인 (§5.1 인코딩 주의) |
@@ -393,7 +511,10 @@ npm.cmd run android
 | `app/mobile-react-native/.env` | 로컬 API URL (커밋하지 않음) |
 | `app/mobile-react-native/run-android.ps1` | 에뮬레이터 실행 스크립트 (UTF-8 BOM) |
 | `app/mobile-react-native/run-android.bat` | `run-android.ps1` 실행 래퍼 |
-| `gradle/mobile.gradle` | Gradle `mobile` 태스크 (`mobileAndroid`·`mobileInstall`·`mobileTypeCheck`) |
+| `app/mobile-react-native/build-android-apk.ps1` | 실기기용 로컬 릴리스 APK 빌드·설치 스크립트 (UTF-8 BOM, §5.5) |
+| `app/mobile-react-native/android/` | prebuild 생성 네이티브 프로젝트 (커밋하지 않음, `local.properties`에 `cmake.dir`) |
+| `app/mobile-react-native/dist/` | 빌드한 APK (`dreamdiary-<버전>-release.apk`, 커밋하지 않음) |
+| `gradle/mobile.gradle` | Gradle `mobile` 태스크 (`mobileAndroid`·`mobileApk`·`mobileApkInstall`·`mobileInstall`·`mobileTypeCheck`) |
 | `app/mobile-react-native/README.md` | 패키지 개요 |
 | `app/mobile-react-native/eas.json` | EAS 프로필 |
 | `docs/migration/mobile/screen-spec.md` | 모바일 v0.1 제품·화면 계약과 구현 현황 |

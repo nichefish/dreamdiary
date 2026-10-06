@@ -8,6 +8,7 @@
 
 def mobileDir = file("$projectDir/app/mobile-react-native")
 def runAndroidPs1 = file("$projectDir/app/mobile-react-native/run-android.ps1")
+def buildApkPs1 = file("$projectDir/app/mobile-react-native/build-android-apk.ps1")
 def isWindows = org.apache.tools.ant.taskdefs.condition.Os.isFamily(org.apache.tools.ant.taskdefs.condition.Os.FAMILY_WINDOWS)
 
 /** .gradle/nodejs/node-v* (node-gradle plugin download) */
@@ -37,6 +38,28 @@ tasks.register('mobileAndroid', Exec) {
         commandLine 'powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', runAndroidPs1.absolutePath
     } else {
         commandLine 'sh', '-c', 'echo "mobileAndroid: Windows only (use npm run android in app/mobile-react-native)" >&2; exit 1'
+    }
+}
+
+tasks.register('mobileApk', Exec) {
+    group = 'mobile'
+    description = 'Release APK for a real phone (Tailscale IP API URL, debug-keystore signed) -> app/mobile-react-native/dist'
+    workingDir mobileDir
+    if (isWindows) {
+        commandLine 'powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', buildApkPs1.absolutePath
+    } else {
+        commandLine 'sh', '-c', 'echo "mobileApk: Windows only (see docs/migration/mobile/run-guide.md)" >&2; exit 1'
+    }
+}
+
+tasks.register('mobileApkInstall', Exec) {
+    group = 'mobile'
+    description = 'mobileApk + adb install -r on the USB-connected phone (emulators excluded)'
+    workingDir mobileDir
+    if (isWindows) {
+        commandLine 'powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', buildApkPs1.absolutePath, '-Install'
+    } else {
+        commandLine 'sh', '-c', 'echo "mobileApkInstall: Windows only" >&2; exit 1'
     }
 }
 
