@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
+  AppState,
   FlatList,
   Pressable,
   RefreshControl,
@@ -53,6 +54,7 @@ import { MenuScreenHeader } from "../components/navigation/AppMenu";
 import { JournalCopyShareBar, notifyBrief } from "../components/journal/JournalCopyShareBar";
 import { KeepLifecycleBadge, KeepPrefixText, KeepStateBadge, KeepTagChips } from "../components/keep/KeepBadges";
 import { KeepFilterSheet } from "../components/keep/KeepFilterSheet";
+import { isRecentKeep, recentKeeps, nextKeepCompletionExpiry, KEEP_RECENT_PREVIEW_SIZE } from "../utils/keepRecent";
 
 const VIEWS: { id: KeepView; label: string }[] = [
   { id: "OPEN", label: "진행" },
@@ -79,6 +81,8 @@ const OVERDUE_COLOR = "#B7791F";
 
 type Row =
   | { kind: "header"; key: string; label: string; count: number; bucket: KeepDueBucket }
+  | { kind: "section"; key: string; label: string; count: number }
+  | { kind: "recentMore"; key: string }
   | { kind: "item"; key: string; item: KeepItem };
 
 function errorMessage(e: unknown, fallback: string): string {
@@ -186,6 +190,9 @@ export function KeepHomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadedAt, setLoadedAt] = useState<Date>(() => new Date());
+  const [completionNow, setCompletionNow] = useState(Date.now);
+  const [recentOpen, setRecentOpen] = useState(false);
+  const [showAllRecent, setShowAllRecent] = useState(false);
   const [view, setView] = useState<KeepView>("OPEN");
   const [filters, setFilters] = useState<KeepFilters>(EMPTY_KEEP_FILTERS);
   const [keyword, setKeyword] = useState("");
@@ -270,18 +277,50 @@ export function KeepHomeScreen() {
 
   const filtered = useMemo(() => filterKeeps(list, filters, today), [list, filters, today]);
   const counts = useMemo(() => keepViewCounts(filtered, today), [filtered, today]);
+  const recentItems = useMemo(() => recentKeeps(filtered, completionNow), [filtered, completionNow]);
+  const visibleRecentItems = useMemo(() => showAllRecent ? recentItems : recentItems.slice(0, KEEP_RECENT_PREVIEW_SIZE), [recentItems, showAllRecent]);
+  const otherTerminalItems = useMemo(() => terminalKeeps(filtered).filter((item) => !isRecentKeep(item, completionNow)), [filtered, completionNow]);
+
+  /** 완료 경계와 앱 복귀에서 표시 시각만 갱신한다. */
+  useEffect(() => { setCompletionNow(Date.now()); }, [list]);
+  useFocusEffect(useCallback(() => { setCompletionNow(Date.now()); }, []));
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state === "active") setCompletionNow(Date.now());
+    });
+    return () => subscription.remove();
+  }, []);
+  useEffect(() => {
+    const expiry = nextKeepCompletionExpiry(filtered, completionNow);
+    if (expiry == null) return;
+    const timer = setTimeout(() => {
+      console.info("[KeepHomeScreen] recent completion expiry reached");
+      setCompletionNow(Date.now());
+    }, Math.max(1, expiry - Date.now()));
+    return () => clearTimeout(timer);
+  }, [filtered, completionNow]);
+
   const sections = useMemo((): KeepCopySection[] => {
-    if (view === "OPEN") return [{ items: openKeeps(filtered) }];
-    if (view === "TERMINAL") return [{ items: terminalKeeps(filtered) }];
-    return dueKeepGroups(filtered, today).map((g) => ({ label: g.label, items: g.items }));
-  }, [filtered, today, view]);
+    if (view === "TERMINAL") return [
+      ...(recentItems.length ? [{ label: "최근 완료", items: visibleRecentItems }] : []),
+      ...(otherTerminalItems.length ? [{ label: "종결", items: otherTerminalItems }] : [])
+    ];
+    const main = view === "OPEN" ? [{ items: openKeeps(filtered) }]
+      : dueKeepGroups(filtered, today).map((g) => ({ label: g.label, items: g.items }));
+    return recentOpen && recentItems.length ? [...main, { label: "최근 완료", items: visibleRecentItems }] : main;
+  }, [filtered, today, view, recentOpen, recentItems, visibleRecentItems, otherTerminalItems]);
   const rows = useMemo((): Row[] => {
-    if (view !== "DUE") return (sections[0]?.items ?? []).map((item) => ({ kind: "item", key: `k${item.id}`, item }));
+    if (view === "OPEN") return openKeeps(filtered).map((item) => ({ kind: "item", key: `k${item.id}`, item }));
+    if (view === "TERMINAL") return sections.flatMap((section): Row[] => [
+      { kind: "section", key: `h${section.label}`, label: section.label ?? "", count: section.label === "최근 완료" ? recentItems.length : section.items.length },
+      ...section.items.map((item): Row => ({ kind: "item", key: `k${item.id}`, item })),
+      ...(section.label === "최근 완료" && recentItems.length > KEEP_RECENT_PREVIEW_SIZE ? [{ kind: "recentMore", key: "recent-more" } as Row] : [])
+    ]);
     return dueKeepGroups(filtered, today).flatMap((g): Row[] => [
       { kind: "header", key: `h${g.bucket}`, label: g.label, count: g.items.length, bucket: g.bucket },
       ...g.items.map((item): Row => ({ kind: "item", key: `k${item.id}`, item }))
     ]);
-  }, [filtered, sections, today, view]);
+  }, [filtered, sections, today, view, recentItems]);
   const itemCount = useMemo(() => sections.reduce((sum, s) => sum + s.items.length, 0), [sections]);
 
   const tagOptions = useMemo(() => mergeKeepTagOptions(serverTags, list), [serverTags, list]);
@@ -332,6 +371,22 @@ export function KeepHomeScreen() {
     setFilters((prev) => ({ ...prev, tagId: prev.tagId === tag.tagId ? null : tag.tagId }));
   }
 
+  /** 상세 진입·태그 필터를 공유하는 Keep 표시 행. */
+  function renderKeepRow(item: KeepItem) {
+    return <KeepRow key={item.id} item={item} today={today}
+      projectTitle={filters.scope === "ALL" ? projectTitleOf(item.projectId) : ""}
+      selectedTagId={filters.tagId}
+      onPress={() => navigation.navigate("KeepDetail", { id: item.id, item, projectTitle: projectTitleOf(item.projectId) })}
+      onPressTag={toggleTag} />;
+  }
+
+  /** 최근 완료의 첫 5건과 전체 목록을 전환한다. */
+  function renderRecentMore() {
+    return <Pressable accessibilityRole="button" accessibilityState={{ expanded: showAllRecent }}
+      onPress={() => setShowAllRecent((value) => !value)} style={styles.retryButton}>
+      <Text style={styles.retryText}>{showAllRecent ? "접기" : "더 보기"}</Text>
+    </Pressable>;
+  }
   function buildCopyText(): string {
     const conditions = activeChips.map((c) => c.label);
     const header = [
@@ -504,7 +559,19 @@ export function KeepHomeScreen() {
         }
         ListFooterComponent={
           !loading && error == null ? (
-            <Text style={styles.footerNote}>모바일 Keep은 읽기 전용입니다. 등록·완료·수정은 웹 Keep 전수관리에서 합니다.</Text>
+            <View style={{ gap: 10 }}>
+              {view !== "TERMINAL" && recentItems.length > 0 ? (
+                <View style={{ gap: 10 }}>
+                  <Pressable accessibilityRole="button" accessibilityState={{ expanded: recentOpen }}
+                    onPress={() => setRecentOpen((value) => !value)}>
+                    <Text style={styles.groupHeader}>최근 완료 {recentItems.length}건 {recentOpen ? "⌃" : "⌄"}</Text>
+                  </Pressable>
+                  {recentOpen ? visibleRecentItems.map(renderKeepRow) : null}
+                  {recentOpen && recentItems.length > KEEP_RECENT_PREVIEW_SIZE ? renderRecentMore() : null}
+                </View>
+              ) : null}
+              <Text style={styles.footerNote}>모바일 Keep은 읽기 전용입니다. 등록·완료·수정은 웹 Keep 전수관리에서 합니다.</Text>
+            </View>
           ) : null
         }
         renderItem={({ item: row }) =>
@@ -512,22 +579,9 @@ export function KeepHomeScreen() {
             <Text style={[styles.groupHeader, { color: DUE_HEADER_COLOR[row.bucket] }]} accessibilityRole="header">
               {row.label} <Text style={styles.groupCount}>{row.count}</Text>
             </Text>
-          ) : (
-            <KeepRow
-              item={row.item}
-              today={today}
-              projectTitle={filters.scope === "ALL" ? projectTitleOf(row.item.projectId) : ""}
-              selectedTagId={filters.tagId}
-              onPress={() =>
-                navigation.navigate("KeepDetail", {
-                  id: row.item.id,
-                  item: row.item,
-                  projectTitle: projectTitleOf(row.item.projectId)
-                })
-              }
-              onPressTag={toggleTag}
-            />
-          )
+          ) : row.kind === "section" ? (
+            <Text style={styles.groupHeader} accessibilityRole="header">{row.label} <Text style={styles.groupCount}>{row.count}</Text></Text>
+          ) : row.kind === "recentMore" ? renderRecentMore() : renderKeepRow(row.item)
         }
       />
       <KeepFilterSheet

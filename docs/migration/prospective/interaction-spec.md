@@ -36,3 +36,11 @@
 Keep 행의 `Project로 이동`은 본문·말머리·태그·상태·라이프사이클·유효 기한을 유지하고 소속만 변경한다. 이동 대상은 미지정 또는 `OPEN` Project이며 비`OPEN` Project는 기존 소속 확인만 허용한다. Project lifecycle 전이는 연결 Keep을 변경하지 않는다. 현재 탭 밖으로 이동하거나 선택 Project가 `OPEN` 밖으로 전이되면 `Project 미지정`으로 돌아간다. Project 삭제는 연결 Keep을 미지정으로 남긴다.
 
 Project 관리 모달은 lifecycle 배지와 직접 노출한 순서 이동 버튼, 수정·lifecycle·삭제 컨텍스트 메뉴를 사용한다. 메뉴 액션은 dropdown을 닫고, 수정은 선택 행 아래에 공통 편집 폼을 연다. lifecycle 전이 후 전체 Project를 재조회하고 loading 종료 뒤 다시 생성된 메뉴 DOM을 재바인딩한다.
+
+## Keep 완료 시각
+
+✓ 서버는 Keep의 `RESOLVED` 진입 시 현재 UTC 시각을 `lifecycle.resolved_at`에 저장한다. 동일한 `RESOLVED` 요청은 저장된 시각(null 포함)을 유지한다. `PENDING`·`FAILED`·`EXPIRED`·`DROPPED` 전이는 시각을 비우고 `OPEN` 전이는 lifecycle 행을 삭제한다. 재완료는 새 완료 시각을 저장한다. 완료 시각은 클라이언트 입력을 받지 않으며 Keep 목록·상세 조회의 `lifecycle.resolvedAt`으로 UTC ISO-8601 문자열을 제공한다. 시각 미확인 완료는 null이며 수정 시각에서 추정하지 않는다. SQL `V0.30.15__add_lifecycle_resolved_at.sql`을 수동 적용한 DB가 실행 전제다.
+
+✓ 최근 완료 표시는 `RESOLVED`이며 완료 후 0 이상 1시간 미만인 항목만 사용한다. 웹과 앱 모두 시간대가 명시된 서버 완료 시각을 사용하고 시각 미확인·잘못된 시각·미래 시각은 최근 완료에서 제외한다. 첫 만료 경계에 타이머를 예약해 API 재호출 없이 그룹을 갱신하고 화면 종료 시 타이머를 해제한다. 웹은 브라우저 가시성 변경, 앱은 화면 복귀·앱 활성화·목록 응답 갱신 시 현재 시각으로 맞춘다. 최근 완료는 처음 5건이며 `더 보기`·`접기`로 전체와 미리보기를 전환한다. 렌더되는 행 ID 구성이 바뀌면 웹의 기존 Metronic 메뉴 재바인딩 경로를 사용한다.
+
+❌ 앱의 완료 조작은 가로 드래그로 완료 버튼을 노출하며 상태 메뉴로 여섯 단계를 선택한다.

@@ -357,12 +357,11 @@ public class ProspectiveKeepService
                 .distinct()
                 .collect(Collectors.toList());
         if (keepIds.isEmpty()) return;
-        final java.util.Map<Integer, String> lifecycleMap =
-                lifecycleService.getLifecycleMap(ContentType.PROSPECTIVE_KEEP, keepIds);
+        final java.util.Map<Integer, LifecycleCmpstn> lifecycleMap =
+                lifecycleService.getKeepLifecycleMap(keepIds);
         for (final ProspectiveKeepDto dto : dtoList) {
             if (dto == null || dto.getId() == null) continue;
-            final LifecycleKey key = LifecycleKey.getByKey(lifecycleMap.get(dto.getId()));
-            dto.setLifecycle(LifecycleCmpstn.of(key == null ? LifecycleKey.OPEN : key));
+            dto.setLifecycle(lifecycleMap.getOrDefault(dto.getId(), LifecycleCmpstn.open()));
         }
     }
 }

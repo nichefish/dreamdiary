@@ -25,6 +25,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import io.nicheblog.dreamdiary.feature.attachable.lifecycle.model.cmpstn.LifecycleCmpstn;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,9 +111,12 @@ public class LifecycleService {
             );
             persistenceAction = deletedCount > 0 ? "DELETE" : "NOOP";
         } else if (lifecycle == null) {
-            repository.save(LifecycleEntity.of(lifecycleSet));
+            final LifecycleEntity created = LifecycleEntity.of(lifecycleSet);
+            this.updateKeepResolvedAt(created, lifecycleSet, previousKey);
+            repository.save(created);
             persistenceAction = "INSERT";
         } else {
+            this.updateKeepResolvedAt(lifecycle, lifecycleSet, previousKey);
             lifecycle.setLifecycleKey(lifecycleSet.getLifecycleKey().key);
             repository.save(lifecycle);
             persistenceAction = "UPDATE";
@@ -152,6 +158,35 @@ public class LifecycleService {
                 .build();
     }
 
+    /**
+     * Keep의 현재 완료 전이 시각을 UTC로 관리한다.
+     *
+     * <p>RESOLVED 진입은 새 시각을 저장하고 동일 완료 요청은 기존 값(null 포함)을 유지한다.
+     * 완료 이외의 명시적 상태는 시각을 비우며 OPEN은 호출 경로에서 행을 삭제한다.</p>
+     *
+     * @param lifecycle 저장할 현재 라이프사이클 행
+     * @param request 라이프사이클 설정 요청
+     * @param previousKey 변경 전 상태
+     */
+    private void updateKeepResolvedAt(
+            final LifecycleEntity lifecycle,
+            final LifecycleSetDto request,
+            final LifecycleKey previousKey
+    ) {
+        if (request.getContentType() != ContentType.PROSPECTIVE_KEEP) return;
+        final String action;
+        if (request.getLifecycleKey() != LifecycleKey.RESOLVED) {
+            lifecycle.setResolvedAt(null);
+            action = "CLEAR";
+        } else if (previousKey == LifecycleKey.RESOLVED) {
+            action = lifecycle.getResolvedAt() == null ? "PRESERVE_UNKNOWN" : "PRESERVE";
+        } else {
+            lifecycle.setResolvedAt(LocalDateTime.now(ZoneOffset.UTC));
+            action = "STAMP";
+        }
+        log.debug("[Lifecycle.set] Keep completion timestamp. id={}, previous={}, current={}, action={}, resolvedAt={}",
+                request.getId(), previousKey, request.getLifecycleKey(), action, lifecycle.getResolvedAt());
+    }
     /**
      * 저널 UX에 남아 있는 state 파생 처리를 적용한다.
      *
@@ -270,6 +305,28 @@ public class LifecycleService {
                 ));
     }
 
+    /**
+     * Keep 목록·상세에 필요한 현재 상태와 완료 시각을 한 번의 일괄 조회로 반환한다.
+     *
+     * @param refIds 조회할 Keep ID 목록
+     * @return Keep ID별 라이프사이클 조합 객체. 행 부재는 호출자가 OPEN으로 표시한다.
+     */
+    @Transactional(readOnly = true)
+    public Map<Integer, LifecycleCmpstn> getKeepLifecycleMap(final List<Integer> refIds) {
+        if (refIds == null || refIds.isEmpty()) return Map.of();
+        return repository.findAllByRefContentTypeAndRefIdIn(ContentType.PROSPECTIVE_KEEP.key, refIds).stream()
+                .filter(lifecycle -> lifecycle.getRefId() != null && lifecycle.getLifecycleKey() != null)
+                .collect(Collectors.toMap(
+                        LifecycleEntity::getRefId,
+                        lifecycle -> {
+                            final LifecycleCmpstn result = LifecycleCmpstn.of(normalize(lifecycle.getLifecycleKey()));
+                            if (result.is(LifecycleKey.RESOLVED)) result.setResolvedAt(lifecycle.getResolvedAt());
+                            return result;
+                        },
+                        (left, right) -> right,
+                        LinkedHashMap::new
+                ));
+    }
     /**
      * 비어 있거나 알 수 없는 라이프사이클 값을 화면 기본값인 {@code OPEN}으로 정규화한다.
      *

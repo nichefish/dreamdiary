@@ -30,6 +30,8 @@ export interface KeepStateItem {
 export interface KeepLifecycle {
   lifecycleKey?: string | null;
   lifecycleDesc?: string | null;
+  /** 서버가 저장한 현재 완료 전이 시각(UTC ISO-8601). 미확인 시 null이다. */
+  resolvedAt?: string | null;
 }
 
 /**

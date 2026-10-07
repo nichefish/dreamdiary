@@ -29,3 +29,11 @@ Project 이름·설명을 편집하고 저장·취소 이벤트를 관리 모달
 Keep 행의 컨텍스트 메뉴에서 Project 미지정과 Project 목록을 단일 선택지로 표시한다. 현재 소속을 체크하고 비`OPEN` Project는 기존 소속 확인만 허용한다. `OPEN` Project 선택 시 `PATCH /api/prospective/keep/{id}/project`로 소속만 변경한다.
 
 **현재 Vue 동등**: ✓ 구현 완료
+
+## Keep lifecycle 조회 데이터
+
+✓ Keep 목록과 상세 DTO는 `lifecycleKey`·`lifecycleDesc`·`resolvedAt`을 포함한다. 상태와 완료 시각은 목록당 한 번의 lifecycle 일괄 조회로 부착하고 상세 본문 캐시와 분리한다. lifecycle 행 부재는 `OPEN`, 완료 시각은 null이다. `resolvedAt`은 UTC ISO-8601 문자열 또는 null이며 현재 `RESOLVED` 전이 시각을 나타낸다.
+
+## Keep 최근 완료 투영
+
+✓ 웹 `KeepPage.vue`는 `utils/recentCompletion.ts`로 최근 완료를 최신 완료순으로 구하고 최근 완료·나머지 종결 그룹의 행 렌더와 컨텍스트 메뉴를 공유한다. `renderedKeepRowSignature`에는 표시 중인 최근 완료 ID도 포함하여 펼침과 만료 이동 후 메뉴를 재바인딩한다. 앱은 같은 경계 계약의 `utils/keepRecent.ts`와 `KeepHomeScreen`을 사용한다. 두 클라이언트는 서버 완료 시각을 표시 목적으로 투영하며 lifecycle 저장은 서버 API가 담당한다.

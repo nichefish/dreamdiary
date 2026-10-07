@@ -330,3 +330,7 @@ Vue SPA는 빌드가 성공했더라도 라우팅, 동적 import, 렌더링, 전
 - 공통 상태는 Pinia store 또는 composable로 들어간다.
 - 공통 Ajax/URL/i18n/helper는 `src/services`, `src/utils`, `src/core` 중 하나의 명확한 경계로 들어간다.
 - 공통 전역을 임시로 참조해야 하면 남은 의존성을 기록하고 제거 기준을 둔다.
+
+## Lifecycle 조합 DTO
+
+✓ `LifecycleCmpstn`은 `lifecycleKey`·`lifecycleDesc`와 nullable `resolvedAt`을 제공한다. Keep의 현재 완료 전이 시각은 UTC ISO-8601 문자열(`yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'`)로 표시한다. 완료 시각을 제공하지 않는 콘텐츠의 값은 null이다. Keep의 저장·조회 계약은 [Prospective 인터랙션 스펙](../prospective/interaction-spec.md)의 Keep 완료 시각 항목이 소유한다.

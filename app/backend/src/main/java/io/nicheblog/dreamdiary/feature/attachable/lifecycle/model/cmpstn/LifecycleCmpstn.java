@@ -4,6 +4,8 @@ import io.nicheblog.dreamdiary.feature.attachable.lifecycle.LifecycleKey;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 화면 DTO에 포함되는 라이프사이클 조합 객체.
@@ -22,6 +24,21 @@ public class LifecycleCmpstn
     private String lifecycleKey;
 
     private String lifecycleDesc;
+
+    /** Keep의 현재 완료 전이 시각을 UTC ISO-8601 문자열로 전달한다. */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+    private LocalDateTime resolvedAt;
+
+    /**
+     * 상태 키와 표시명으로 완료 시각 없는 조합 객체를 만든다.
+     *
+     * @param lifecycleKey 현재 상태 키
+     * @param lifecycleDesc 현재 상태 표시명
+     */
+    public LifecycleCmpstn(final String lifecycleKey, final String lifecycleDesc) {
+        this.lifecycleKey = lifecycleKey;
+        this.lifecycleDesc = lifecycleDesc;
+    }
 
     /**
      * 현재 라이프사이클 값이 주어진 키와 같은지 확인한다.

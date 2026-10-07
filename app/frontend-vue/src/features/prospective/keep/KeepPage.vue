@@ -244,13 +244,14 @@
           「기한 지남」 필터는 미종결만 남기므로 종결 섹션이 항상 비게 된다.
           빈 섹션과 「종결된 항목이 없습니다」를 띄우는 대신 섹션째 감춘다. -->
         <template v-if="!filterOverdue">
+        <template v-for="group in terminalGroups" :key="group.key">
         <h4 class="fw-bold fs-5 text-gray-500 mb-3">
-          {{ t("prospective.keep.group.terminal") }} <span class="text-muted fs-7 ms-1">{{ resolvedItems.length }}</span>
+          {{ group.label }} <span class="text-muted fs-7 ms-1">{{ group.count }}</span>
         </h4>
-        <div v-if="resolvedItems.length === 0" class="text-muted fs-7">{{ t("prospective.keep.group.terminal.empty") }}</div>
+        <div v-if="group.items.length === 0" class="text-muted fs-7">{{ t("prospective.keep.group.terminal.empty") }}</div>
         <div v-else>
           <div
-            v-for="item in resolvedItems"
+            v-for="item in group.items"
             :key="'keep-done-' + item.id"
             class="d-flex align-items-center py-2 border-bottom border-gray-200 text-muted"
           >
@@ -385,6 +386,14 @@
             <!--end::컨텍스트 메뉴-->
           </div>
         </div>
+        <button
+          v-if="group.key === 'recent' && recentItems.length > KEEP_RECENT_PREVIEW_SIZE"
+          type="button"
+          class="btn btn-sm btn-light mb-5 mt-2"
+          :aria-expanded="showAllRecent"
+          @click="showAllRecent = !showAllRecent"
+        >{{ t(showAllRecent ? "prospective.keep.recent.less" : "prospective.keep.recent.more") }}</button>
+        </template>
         </template>
         <!--end::종결-->
       </div>
@@ -403,8 +412,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 import axios from "axios";
+import { isRecentKeep, recentKeeps, nextKeepCompletionExpiry, KEEP_RECENT_PREVIEW_SIZE } from "./utils/recentCompletion";
 import { swalAlert, swalConfirm, swalRequestError } from "@/shared/utils/swal";
 import { reinitMetronicAfterDom } from "@/shared/utils/metronicReinit";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
@@ -437,7 +447,7 @@ interface KeepItem {
   /** 부착된 상태(다중). 진행 단계(lifecycle)와 별개 축이다. */
   state?: { list?: Array<{ stateKey?: string }> } | null;
   /** 라이프사이클 현재값(백엔드 enrich). 부재 시 OPEN. */
-  lifecycle?: { lifecycleKey?: string | null } | null;
+  lifecycle?: { lifecycleKey?: string | null; resolvedAt?: string | null } | null;
   /** 유효 기한 (ISO `yyyy-MM-dd`). 일시 원문에서 파생한 값이며 없을 수 있다. */
   expireDt?: string | null;
   /** 선택한 Project ID. null이면 Project 미지정이다. */
@@ -547,11 +557,37 @@ const openItems = computed<KeepItem[]>(() =>
     .slice()
     .sort(byExpireDtAsc)
 );
+const completionNow = ref(Date.now());
+const showAllRecent = ref(false);
+const recentItems = computed(() => recentKeeps(filtered.value, completionNow.value));
+const visibleRecentItems = computed(() => showAllRecent.value ? recentItems.value : recentItems.value.slice(0, KEEP_RECENT_PREVIEW_SIZE));
 /** 종결 투영 = RESOLVED·FAILED·EXPIRED·DROPPED. 끝난 이유는 행 배지로 구분한다. */
 const resolvedItems = computed<KeepItem[]>(() =>
-  filtered.value.filter((it) => TERMINAL_KEYS.includes(lifecycleKeyOf(it)))
+  filtered.value.filter((it) => TERMINAL_KEYS.includes(lifecycleKeyOf(it)) && !isRecentKeep(it, completionNow.value))
 );
 
+/** 종결 행 렌더를 공유하는 최근 완료·나머지 종결 그룹. */
+const terminalGroups = computed(() => [
+  ...(recentItems.value.length ? [{ key: "recent", label: t("prospective.keep.group.recent"), count: recentItems.value.length, items: visibleRecentItems.value }] : []),
+  { key: "terminal", label: t("prospective.keep.group.terminal"), count: resolvedItems.value.length, items: resolvedItems.value },
+]);
+
+/** API 재호출 없이 첫 만료 경계에서 그룹을 갱신한다. */
+let completionTimer: ReturnType<typeof setTimeout> | undefined;
+watch(filtered, refreshCompletionClock, { flush: "sync" });
+watch([filtered, completionNow], () => {
+  if (completionTimer != null) clearTimeout(completionTimer);
+  const expiry = nextKeepCompletionExpiry(filtered.value, completionNow.value);
+  if (expiry != null) completionTimer = setTimeout(() => {
+    console.info("[KeepPage] recent completion expiry reached");
+    completionNow.value = Date.now();
+  }, Math.max(1, expiry - Date.now()));
+}, { immediate: true });
+
+/** 브라우저 백그라운드 복귀 시 현재 시각으로 그룹을 맞춘다. */
+function refreshCompletionClock(): void {
+  completionNow.value = Date.now();
+}
 /**
  * 화면에 실제 렌더되는 Keep 행 구성.
  * Project 탭·말머리·태그·검색어·기한 필터와 라이프사이클 그룹 이동이 행 DOM을 교체하므로,
@@ -559,6 +595,7 @@ const resolvedItems = computed<KeepItem[]>(() =>
  */
 const renderedKeepRowSignature = computed(() => [
   openItems.value.map((item) => item.id).join(","),
+  visibleRecentItems.value.map((item) => item.id).join(","),
   resolvedItems.value.map((item) => item.id).join(","),
 ].join("|"));
 
@@ -888,6 +925,7 @@ watch(
 );
 
 onMounted(() => {
+  document.addEventListener("visibilitychange", refreshCompletionClock);
   void personalPrefixOptionsStore.fetchOptions(PREFIX_CONTENT_TYPE);
   void fetchTagCloud();
   void fetchList();
@@ -906,4 +944,9 @@ function handleProjectsChanged(): void {
   }
   void fetchList();
 }
+
+onBeforeUnmount(() => {
+  if (completionTimer != null) clearTimeout(completionTimer);
+  document.removeEventListener("visibilitychange", refreshCompletionClock);
+});
 </script>

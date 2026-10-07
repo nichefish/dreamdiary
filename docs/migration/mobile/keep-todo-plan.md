@@ -333,6 +333,10 @@ ProspectiveProject (prospective_project, soft delete)
 | 2-0 읽기 전용 목록·상세 | `구현·미검증` | 아래 2-0 구현 내용. 타입 검사(`tsc --noEmit`) 0, `expo export --platform android` 번들 생성 확인. 에뮬레이터 확인은 남음(PC 백엔드가 꺼져 있었음, `screen-spec.md` §11) |
 | 2-1 ~ 2-5 | 예정 | 쓰기 호출 없음. 화면에 완료 체크박스·스와이프·`+` 버튼을 두지 않았다 |
 
+**최근 완료 진행(2026-10-07, 구현·실기기 미검증)**
+
+서버는 현재 완료 전이 시각을 저장·조회하고 웹·앱은 완료 후 1시간 미만을 최근 완료로 표시한다. 앱의 진행·기한 보기 하단 그룹은 기본으로 접히며 종결 보기에서는 최근 완료를 먼저 표시한다. 첫 5건·전체 펼침, 필터 적용, 화면 순서에 따른 복사와 API 호출 없는 만료 전환을 제공한다. 표시 계약은 `screen-spec.md` §4.14와 Prospective screen/interaction/component spec을 따른다. 완료 드래그와 여섯 단계 메뉴는 2-1의 다음 변경 묶음이다.
+
 **2-0 구현 내용 (2026-10-06)**
 
 - 진입: 드로어 `Keep 전수관리`(`/keep`) → `KeepHomeScreen`(루트 스택, `준비 중` 대체). `appMenu.ts` `MENU_URL.KEEP` + `resolveMenuTarget`. 하단 탭은 그대로(`오늘 · 검색 · 나`).

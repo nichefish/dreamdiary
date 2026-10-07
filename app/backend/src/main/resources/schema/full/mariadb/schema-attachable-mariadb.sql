@@ -243,6 +243,7 @@ CREATE TABLE IF NOT EXISTS lifecycle (
     ref_content_type VARCHAR(30) COMMENT 'reference content type',
     --
     lifecycle_key VARCHAR(32) NOT NULL COMMENT 'lifecycle key',
+    resolved_at DATETIME(6) NULL COMMENT 'Keep resolved transition at UTC',
     deleted_at DATETIME COMMENT 'deleted at',
     CONSTRAINT ck_lifecycle_persisted_key CHECK (lifecycle_key IN ('PENDING', 'RESOLVED', 'FAILED', 'EXPIRED', 'DROPPED')),
     UNIQUE KEY uk_lifecycle (ref_content_type, ref_id),
