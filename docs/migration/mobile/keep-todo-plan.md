@@ -189,7 +189,7 @@ ProspectiveProject (prospective_project, soft delete)
 | 부분 수정 데이터 손실 | §3.3 — 필드를 빠뜨리면 본문·기한·말머리·Project·태그가 지워짐 | 편집 화면은 R2로 받은 값으로 폼 전체를 채우고 W4는 항상 9개 필드를 모두 보냄. 태그는 `tag.list`로 Tagify JSON을 다시 만듦(상세의 `tagListStrWithCtgr` 형식은 구현 때 확인). 단위 테스트로 직렬화 고정 |
 | `rslt=false` + HTTP 200 | 라이프사이클·상태 정책 위반, 등록/수정 실패가 200으로 옴. 현재 모바일 `request()`는 2xx면 성공으로 처리 | `requestAjax()` 래퍼: `rslt !== true`면 `message`로 `ApiError` 던짐. 공용 `AjaxResponse` 타입에 `rsltList`·`rsltMap`·`rsltSts` 추가 |
 | 소유권 위반·검증 실패 | 예외 → 전역 예외 처리기의 HTTP 오류 응답 | 기존 `ApiError` 경로(서버 `message` 우선 표시) |
-| 상태 토글 비멱등 | `POST /api/states`는 토글이라 두 번 누르면 원상태 | 요청 중 버튼 잠금, 응답 `rsltSts`로 최종 값 반영, 실패 시 재조회. 자동 재시도 금지 |
+| 상태 토글 비멱등 | `POST /api/states`는 토글이라 두 번 누르면 원상태 | 요청 중 버튼 잠금, 성공·오류 모두 Keep 목록을 조회해 서버 현재 값 반영. 조회 실패 시 쓰기를 잠그고 GET만 재시도. POST 자동 재전송 금지 |
 | 라이프사이클 | `PUT`은 설정(멱등). OPEN = row 삭제 | 완료 취소(실행 취소) = 직전 키로 다시 PUT. 재시도 안전 |
 | 동시 편집 | 버전 필드·낙관적 잠금 없음 → 웹과 동시에 고치면 나중 저장이 이김 | 편집 진입 시 R2 재조회, 저장 직전 R2를 한 번 더 받아 `updatedAt`이 다르면 경고 후 선택 |
 | multipart | ModelAttribute 바인딩이라 JSON 본문은 받지 않음 | 모바일 `request()`는 이미 `FormData`를 지원(Content-Type 자동). `tag.tagListStr` 같은 점 표기 키 그대로 사용 |
@@ -316,7 +316,7 @@ ProspectiveProject (prospective_project, soft delete)
 | 단계 | 내용 | API | 선행/주의 |
 |---|---|---|---|
 | **2-0. 읽기 전용 목록·상세** | 드로어 `Keep 전수관리` → `KeepHomeScreen`(`준비 중` 교체). Project 칩, `진행 / 기한 / 종결` 보기, 검색, 필터 시트(말머리·태그·중요·기한 지남), 상세 화면. `formatExpireDt`·`daysUntilExpire` 포팅. 타입 `KeepItem`, `KeepProject`, 공용 `AjaxResponse`에 `rsltList`·`rsltMap` | R1(`scope=all`), R3, R6, R7, R2 | 서버 데이터를 바꾸지 않으므로 1단계 계약(`screen-spec.md` §8) 안. 레거시 `COLLAPSED` 무시 |
-| **2-1. 완료 토글·라이프사이클·상태** | 체크박스·오른쪽 스와이프 완료 + 실행 취소 스낵바, 액션 시트의 라이프사이클 6종(EXPIRED는 기한 있을 때만), 중요·요구 토글. `requestAjax()` 래퍼(`rslt` 검사, 요청 중 잠금, 쓰기 후 재조회). 낙관적 갱신 + 실패 시 롤백 | W1, W2 | 모바일 첫 쓰기. `screen-spec.md` §1.2·§8을 Keep 한정으로 열어 둔다는 문구 추가 |
+| **2-1. 완료·라이프사이클·상태** | 왼쪽 드래그로 완료 버튼 노출, 상태 메뉴 라이프사이클 6종(EXPIRED는 기한 있을 때만). 서버 설정 응답 확인 후 Keep 목록만 재조회, 요청 잠금, 저장 실패와 조회 실패 구분. 중요·요구 스위치는 POST 한 번 후 Keep 목록을 조회하며 오류에도 서버 현재 값을 확인 | W1, W2 | 모바일 첫 쓰기. `screen-spec.md` §4.14·§8의 Keep 한정 계약 |
 | **2-2. 빠른 추가** | `+` 버튼 → `KeepQuickAddSheet`. `parseExpireDt`·`scanLastDate`·`resolveNearestYear` 포팅 + `expireDt.spec.ts` 테스트 포팅. multipart 직렬화 함수 `toKeepFormData()`(단위 테스트). 이 시점에 하단 탭 승격 검토(§7 질문 1) | W3 (+ W2) | 제목 필수·100자 클라이언트 검증 |
 | **2-3. 편집** | `KeepEditScreen` 전체 편집. 전체 재전송, `updatedAt` 비교, 말머리 선택(R7), 기한 날짜 선택기. 태그는 재전송만 | R2, W4 | §3.3 데이터 손실 위험 → 직렬화 테스트에 "모든 필드 포함" 케이스 필수 |
 | **2-4. Project 이동·삭제** | 액션 시트 `Project 이동`(OPEN Project 목록 + 미지정), `삭제`(확인 대화상자, 복구 불가 안내) | W5, W6 | |
@@ -331,11 +331,12 @@ ProspectiveProject (prospective_project, soft delete)
 | 단계 | 상태 | 내용 |
 |---|---|---|
 | 2-0 읽기 전용 목록·상세 | `구현·미검증` | 아래 2-0 구현 내용. 타입 검사(`tsc --noEmit`) 0, `expo export --platform android` 번들 생성 확인. 에뮬레이터 확인은 남음(PC 백엔드가 꺼져 있었음, `screen-spec.md` §11) |
-| 2-1 ~ 2-5 | 예정 | 쓰기 호출 없음. 화면에 완료 체크박스·스와이프·`+` 버튼을 두지 않았다 |
+| 2-1 완료·라이프사이클·속성 | `구현·실기기 미검증` | 왼쪽 드래그 완료 버튼·여섯 단계 상태 메뉴·멱등 설정 후 Keep 목록 재조회. 중요·요구 스위치·요청 잠금·응답 유실 시 GET 확인·조회 실패 시 GET만 재시도 |
+| 2-2 ~ 2-5 | 예정 | 현재 앱 쓰기 범위는 완료·라이프사이클·중요/요구 토글이다 |
 
 **최근 완료 진행(2026-10-07, 구현·실기기 미검증)**
 
-서버는 현재 완료 전이 시각을 저장·조회하고 웹·앱은 완료 후 1시간 미만을 최근 완료로 표시한다. 앱의 진행·기한 보기 하단 그룹은 기본으로 접히며 종결 보기에서는 최근 완료를 먼저 표시한다. 첫 5건·전체 펼침, 필터 적용, 화면 순서에 따른 복사와 API 호출 없는 만료 전환을 제공한다. 표시 계약은 `screen-spec.md` §4.14와 Prospective screen/interaction/component spec을 따른다. 완료 드래그와 여섯 단계 메뉴는 2-1의 다음 변경 묶음이다.
+서버는 현재 완료 전이 시각을 저장·조회하고 웹·앱은 완료 후 1시간 미만을 최근 완료로 표시한다. 앱의 진행·기한 보기 하단 그룹은 기본으로 접히며 종결 보기에서는 최근 완료를 먼저 표시한다. 첫 5건·전체 펼침, 필터 적용, 화면 순서에 따른 복사와 API 호출 없는 만료 전환을 제공한다. 표시 계약은 `screen-spec.md` §4.14와 Prospective screen/interaction/component spec을 따른다. 완료 드래그 버튼과 여섯 단계 메뉴는 구현·실기기 미검증이며 저장 계약은 `screen-spec.md` §4.14를 따른다.
 
 **2-0 구현 내용 (2026-10-06)**
 

@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { getKeepList, getKeepPrefixOptions, getKeepProjects, getKeepTags } from "../api/dreamDiaryApi";
+import { getKeepList, getKeepPrefixOptions, getKeepProjects, getKeepTags, setKeepLifecycle, toggleKeepState } from "../api/dreamDiaryApi";
 import { isUnauthorizedError } from "../api/client";
 import type { RootStackParamList } from "../navigation/AppNavigator";
 import { MENU_URL } from "../navigation/appMenu";
@@ -28,6 +28,8 @@ import {
   keepProjectTitle,
   openKeepProjects,
   type KeepItem,
+  type KeepLifecycleKey,
+  type KeepStateKey,
   type KeepPrefixOption,
   type KeepProject,
   type KeepTagOption
@@ -54,6 +56,8 @@ import { MenuScreenHeader } from "../components/navigation/AppMenu";
 import { JournalCopyShareBar, notifyBrief } from "../components/journal/JournalCopyShareBar";
 import { KeepLifecycleBadge, KeepPrefixText, KeepStateBadge, KeepTagChips } from "../components/keep/KeepBadges";
 import { KeepFilterSheet } from "../components/keep/KeepFilterSheet";
+import { KeepSwipeRow } from "../components/keep/KeepSwipeRow";
+import { KeepLifecycleMenu } from "../components/keep/KeepLifecycleMenu";
 import { isRecentKeep, recentKeeps, nextKeepCompletionExpiry, KEEP_RECENT_PREVIEW_SIZE } from "../utils/keepRecent";
 
 const VIEWS: { id: KeepView; label: string }[] = [
@@ -97,13 +101,15 @@ type KeepRowProps = {
   selectedTagId: number | null;
   onPress: () => void;
   onPressTag: (tag: DisplayTag) => void;
+  onStatus: () => void;
+  saving: boolean;
 };
 
 /**
  * Keep 행 — 웹 KeepPage 행 표기: 중요 별·굵은 제목, 보류·요구 배지, `[말머리]`, 태그 칩, 기한(진행 행의 지난 기한은 경고색 + N일 지남), 등록 년월.
- * 읽기 전용: 완료 체크박스·스와이프 없음. 종결 행은 끝난 이유 아이콘·배지를 보인다.
+ * 진행 행은 드래그 완료 버튼과 상태 메뉴를 제공하고 종결 행은 끝난 이유 아이콘·배지와 상태 메뉴를 보인다.
  */
-function KeepRow({ item, today, projectTitle, selectedTagId, onPress, onPressTag }: KeepRowProps) {
+function KeepRow({ item, today, projectTitle, selectedTagId, onPress, onPressTag, onStatus, saving }: KeepRowProps) {
   const lifecycleKey = keepLifecycleKeyOf(item);
   const terminal = isKeepTerminal(item);
   const meta = keepLifecycleMeta(lifecycleKey);
@@ -167,17 +173,22 @@ function KeepRow({ item, today, projectTitle, selectedTagId, onPress, onPressTag
           ) : null}
           <KeepTagChips tags={tags} selectedTagId={selectedTagId} onPressTag={onPressTag} />
         </View>
+        <Pressable accessibilityRole="button" accessibilityLabel="Keep 상태 변경" disabled={saving}
+          onPress={(event) => { event.stopPropagation(); onStatus(); }} hitSlop={8} style={styles.statusButton}>
+          <Text style={styles.statusButtonText}>{saving ? "…" : "⋯"}</Text>
+        </Pressable>
       </View>
     </Pressable>
   );
 }
 
 /**
- * Keep 전수관리 (햄버거 메뉴 `Keep > Keep 전수관리`) — 웹 /keep(KeepPage.vue)의 읽기 부분. 모바일 2단계 2-0.
+ * Keep 전수관리 (햄버거 메뉴 `Keep > Keep 전수관리`) — 웹 /keep(KeepPage.vue)의 조회·라이프사이클 조작을 제공한다.
  * - GET /api/prospective/keeps?scope=all 한 번으로 전 범위를 받고, Project 범위·보기·검색·필터는 화면에서 투영한다(웹과 같음).
  * - Project 칩(전체 · 미지정 · OPEN Project), 보기(진행 · 기한 · 종결), 검색(제목·본문, 제출 시에만), 필터 시트(기한 지남 · 중요 · 말머리 · 태그)
  * - 행을 누르면 Keep 상세(읽기 전용). 행의 태그 칩은 태그 필터 토글.
- * - 읽기 전용: 완료·라이프사이클·상태·등록·수정·삭제 없음(쓰기는 2-1 이후, docs/migration/mobile/keep-todo-plan.md).
+ * - 중요·요구 토글은 성공·오류 모두 Keep 목록으로 서버 현재 값을 확인한다. 요청 중 다른 쓰기를 잠근다.
+ * - 완료·라이프사이클은 서버 저장 후 Keep 목록만 재조회한다. 쓰기 범위는 docs/migration/mobile/keep-todo-plan.md의 2-1 완료·라이프사이클 계약을 따른다.
  */
 export function KeepHomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -199,12 +210,27 @@ export function KeepHomeScreen() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const seqRef = useRef(0);
   const loadedRef = useRef(false);
+  const [lifecycleItem, setLifecycleItem] = useState<KeepItem | null>(null);
+  const [savingId, setSavingId] = useState<number | null>(null);
+  const [actionError, setActionError] = useState<{ id: number; message: string; saved: boolean } | null>(null);
+  const savingRef = useRef(false);
+  const awaitingListRef = useRef(false);
+  const mountedRef = useRef(true);
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; ++seqRef.current; };
+  }, []);
 
   /**
    * 목록 + 보조 목록(Project · 태그 · 말머리) 조회. 보조 목록 실패는 목록 표시를 막지 않는다.
    * initial: 전체 로딩 표시 / refresh: 당겨서 새로고침 / silent: 화면 복귀 시 조용히 갱신(실패해도 기존 목록 유지)
    */
   const load = useCallback(async (mode: "initial" | "refresh" | "silent") => {
+    if (savingRef.current) {
+      console.info("[KeepHomeScreen] refresh waits for lifecycle request");
+      setRefreshing(false);
+      return;
+    }
     const seq = ++seqRef.current;
     if (mode === "initial") {
       setLoading(true);
@@ -220,6 +246,8 @@ export function KeepHomeScreen() {
 
     if (listRes.status === "fulfilled") {
       setList(listRes.value);
+      awaitingListRef.current = false;
+      setActionError(null);
       setError(null);
       setLoadedAt(new Date());
       loadedRef.current = true;
@@ -256,6 +284,116 @@ export function KeepHomeScreen() {
       void load(loadedRef.current ? "silent" : "initial");
     }, [load])
   );
+
+  /** Keep만 재조회해 서버 상태·완료 시각을 표시하고 이전 목록 응답을 무효화한다. */
+  async function reloadKeepListOnly(): Promise<void> {
+    ++seqRef.current;
+    const fresh = await getKeepList();
+    if (!mountedRef.current) return;
+    awaitingListRef.current = false;
+    setActionError(null);
+    setList(fresh);
+    setLoadedAt(new Date());
+    setError(null);
+    loadedRef.current = true;
+  }
+
+  /** 서버 확정 상태를 반영한다. 저장 실패와 저장 후 조회 실패를 구분하며 전체 요청 동안 중복 쓰기를 잠근다. */
+  async function changeLifecycle(item: KeepItem, key: KeepLifecycleKey): Promise<void> {
+    if (savingRef.current || awaitingListRef.current || key === keepLifecycleKeyOf(item)) {
+      console.info("[KeepHomeScreen] lifecycle request skipped", { id: item.id, key, busy: savingRef.current });
+      return;
+    }
+    if (key === "EXPIRED" && !normalizeExpireDt(item.expireDt)) {
+      console.warn("[KeepHomeScreen] expiry requires a due date", { id: item.id });
+      return;
+    }
+    savingRef.current = true;
+    ++seqRef.current;
+    setSavingId(item.id);
+    setRefreshing(false);
+    setActionError(null);
+    let saved = false;
+    try {
+      await setKeepLifecycle(item.id, key);
+      saved = true;
+      awaitingListRef.current = true;
+      if (!mountedRef.current) return;
+      setLifecycleItem(null);
+      await reloadKeepListOnly();
+      if (mountedRef.current) console.info("[KeepHomeScreen] lifecycle saved and list refreshed", { id: item.id, key });
+    } catch (e) {
+      if (!mountedRef.current || isUnauthorizedError(e)) return;
+      console.error("[KeepHomeScreen] lifecycle action failed", { id: item.id, key, saved }, e);
+      setActionError({ id: item.id, saved, message: saved
+        ? "상태는 저장됐지만 목록을 새로 받지 못했습니다. 목록을 다시 조회하세요."
+        : errorMessage(e, "Keep 상태를 변경하지 못했습니다.") });
+    } finally {
+      savingRef.current = false;
+      if (mountedRef.current) setSavingId(null);
+    }
+  }
+
+
+  /** 비멱등 토글은 한 번 전송하고 오류에도 서버 목록을 확인한다. 조회 실패 뒤 재시도는 GET만 실행한다. */
+  async function changeState(item: KeepItem, key: KeepStateKey): Promise<void> {
+    if (savingRef.current || awaitingListRef.current) {
+      console.info("[KeepHomeScreen] state toggle skipped", { id: item.id, key });
+      return;
+    }
+    savingRef.current = true;
+    awaitingListRef.current = true;
+    ++seqRef.current;
+    setSavingId(item.id);
+    setRefreshing(false);
+    setActionError(null);
+    setLifecycleItem(null);
+    let writeError: string | null = null;
+    try {
+      try {
+        await toggleKeepState(item.id, key);
+      } catch (e) {
+        if (!mountedRef.current || isUnauthorizedError(e)) return;
+        console.error("[KeepHomeScreen] state toggle failed; checking list", { id: item.id, key }, e);
+        writeError = errorMessage(e, "Keep 속성 변경 결과를 확인하지 못했습니다.");
+      }
+      if (!mountedRef.current) return;
+      await reloadKeepListOnly();
+      if (!mountedRef.current) return;
+      if (writeError) setActionError({ id: item.id, saved: false, message: writeError });
+      console.info("[KeepHomeScreen] state toggle list checked", { id: item.id, key, writeFailed: writeError != null });
+    } catch (e) {
+      if (!mountedRef.current || isUnauthorizedError(e)) return;
+      console.error("[KeepHomeScreen] state toggle list check failed", { id: item.id, key }, e);
+      setActionError({ id: item.id, saved: true, message: writeError
+        ? `${writeError} 목록을 다시 조회해 현재 상태를 확인하세요.`
+        : "속성은 저장됐지만 목록을 새로 받지 못했습니다. 목록을 다시 조회하세요." });
+    } finally {
+      savingRef.current = false;
+      if (mountedRef.current) setSavingId(null);
+    }
+  }
+  /**
+   * 저장 성공 뒤 조회만 실패한 경우 쓰기를 재전송하지 않고 목록만 다시 받는다.
+   * 비멱등 토글의 결과가 미확인인 경우에도 같은 조회 전용 재시도를 사용한다.
+   */
+  async function retryActionRefresh(): Promise<void> {
+    if (savingRef.current) return;
+    savingRef.current = true;
+    setSavingId(actionError?.id ?? null);
+    try {
+      await reloadKeepListOnly();
+      if (mountedRef.current) setActionError(null);
+    } catch (e) {
+      if (mountedRef.current && !isUnauthorizedError(e)) {
+        console.error("[KeepHomeScreen] lifecycle list refresh retry failed", e);
+        setActionError((previous) => previous ? { ...previous, message: errorMessage(e, "목록을 다시 조회하지 못했습니다.") } : previous);
+      }
+    } finally {
+      savingRef.current = false;
+      if (mountedRef.current) setSavingId(null);
+    }
+  }
 
   const today = loadedAt;
   const openProjects = useMemo(() => openKeepProjects(projects), [projects]);
@@ -373,11 +511,19 @@ export function KeepHomeScreen() {
 
   /** 상세 진입·태그 필터를 공유하는 Keep 표시 행. */
   function renderKeepRow(item: KeepItem) {
-    return <KeepRow key={item.id} item={item} today={today}
-      projectTitle={filters.scope === "ALL" ? projectTitleOf(item.projectId) : ""}
-      selectedTagId={filters.tagId}
-      onPress={() => navigation.navigate("KeepDetail", { id: item.id, item, projectTitle: projectTitleOf(item.projectId) })}
-      onPressTag={toggleTag} />;
+    return <KeepSwipeRow key={item.id} enabled={!isKeepTerminal(item)} disabled={savingId != null || actionError?.saved === true}
+      onComplete={() => { void changeLifecycle(item, "RESOLVED"); }}>
+      <KeepRow item={item} today={today}
+        projectTitle={filters.scope === "ALL" ? projectTitleOf(item.projectId) : ""}
+        selectedTagId={filters.tagId}
+        onPress={() => navigation.navigate("KeepDetail", { id: item.id, item, projectTitle: projectTitleOf(item.projectId) })}
+        onPressTag={toggleTag} saving={savingId != null || actionError?.saved === true}
+        onStatus={() => {
+          if (savingRef.current || awaitingListRef.current) return;
+          setActionError(null);
+          setLifecycleItem(item);
+        }} />
+    </KeepSwipeRow>;
   }
 
   /** 최근 완료의 첫 5건과 전체 목록을 전환한다. */
@@ -420,6 +566,13 @@ export function KeepHomeScreen() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <View style={styles.listHeader}>
+            {actionError ? <View style={styles.stateBox}>
+              <Text style={styles.errorText}>{actionError.message}</Text>
+              {actionError.saved ? <Pressable accessibilityRole="button" disabled={savingId != null}
+                onPress={() => { void retryActionRefresh(); }} style={styles.retryButton}>
+                <Text style={styles.retryText}>목록 다시 조회</Text>
+              </Pressable> : null}
+            </View> : null}
             {/* Project 범위 (웹 Project 탭: 전체 · 미지정 · OPEN Project) */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scopeRow}>
               {scopeChips.map((chip) => {
@@ -570,7 +723,7 @@ export function KeepHomeScreen() {
                   {recentOpen && recentItems.length > KEEP_RECENT_PREVIEW_SIZE ? renderRecentMore() : null}
                 </View>
               ) : null}
-              <Text style={styles.footerNote}>모바일 Keep은 읽기 전용입니다. 등록·완료·수정은 웹 Keep 전수관리에서 합니다.</Text>
+              <Text style={styles.footerNote}>진행 중 행을 왼쪽으로 밀면 완료 버튼이 나타납니다. ⋯에서 상태를 변경합니다.</Text>
             </View>
           ) : null
         }
@@ -584,6 +737,11 @@ export function KeepHomeScreen() {
           ) : row.kind === "recentMore" ? renderRecentMore() : renderKeepRow(row.item)
         }
       />
+      <KeepLifecycleMenu item={lifecycleItem} saving={savingId != null}
+        error={actionError?.id === lifecycleItem?.id && !actionError?.saved ? actionError?.message ?? null : null}
+        onClose={() => { if (!savingRef.current) setLifecycleItem(null); }}
+        onSelect={(key) => { if (lifecycleItem) void changeLifecycle(lifecycleItem, key); }}
+        onToggleState={(key) => { if (lifecycleItem) void changeState(lifecycleItem, key); }} />
       <KeepFilterSheet
         visible={sheetOpen}
         onClose={() => setSheetOpen(false)}
@@ -600,6 +758,8 @@ export function KeepHomeScreen() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: colors.background },
+  statusButton: { paddingHorizontal: 8, paddingVertical: 2 },
+  statusButtonText: { color: colors.accent, fontSize: 23, fontWeight: "700" },
   container: { padding: 16, gap: 10, paddingBottom: 32, flexGrow: 1 },
   listHeader: { gap: 10, marginBottom: 2 },
   scopeRow: { gap: 8, paddingRight: 8 },

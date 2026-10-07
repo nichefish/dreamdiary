@@ -249,7 +249,7 @@ export function KeepDetailScreen({ route, navigation }: Props) {
               )}
             </View>
 
-            <Text style={styles.footerNote}>읽기 전용입니다. 완료·수정은 웹 Keep 전수관리에서 합니다.</Text>
+            <Text style={styles.footerNote}>상세는 읽기 전용입니다. 상태 변경은 Keep 목록에서, 수정은 웹에서 합니다.</Text>
           </>
         )}
       </ScrollView>

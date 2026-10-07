@@ -37,3 +37,9 @@ Keep 행의 컨텍스트 메뉴에서 Project 미지정과 Project 목록을 단
 ## Keep 최근 완료 투영
 
 ✓ 웹 `KeepPage.vue`는 `utils/recentCompletion.ts`로 최근 완료를 최신 완료순으로 구하고 최근 완료·나머지 종결 그룹의 행 렌더와 컨텍스트 메뉴를 공유한다. `renderedKeepRowSignature`에는 표시 중인 최근 완료 ID도 포함하여 펼침과 만료 이동 후 메뉴를 재바인딩한다. 앱은 같은 경계 계약의 `utils/keepRecent.ts`와 `KeepHomeScreen`을 사용한다. 두 클라이언트는 서버 완료 시각을 표시 목적으로 투영하며 lifecycle 저장은 서버 API가 담당한다.
+
+## 모바일 Keep 라이프사이클 컴포넌트
+
+✓ `KeepSwipeRow`는 진행 행의 가로 제스처를 판정하고 완료 버튼을 노출한다. 완료 요청은 버튼 또는 접근성 완료 액션으로 실행하며 종결 행·저장 중에는 완료 제스처를 잠근다. `KeepLifecycleMenu`는 현재 상태를 라디오로 표시하는 여섯 단계 하단 시트이며 저장 중 선택·배경 닫기·Android 뒤로 닫기를 잠근다. 두 컴포넌트는 상태 저장을 `KeepHomeScreen`에 위임하고 현재 상태·완료 시각은 서버 재조회 결과를 사용한다.
+
+✓ 모바일 `KeepLifecycleMenu`는 라이프사이클 라디오 아래 독립적인 중요·요구 스위치를 표시한다. 서버 `state.list`가 현재 값이며 선택을 `KeepHomeScreen`에 위임한다. 패널 높이는 화면의 85% 이내이고 항목 영역을 내부 스크롤로 탐색한다. 요청 중 스위치를 비활성화하며 속성 요청은 메뉴를 닫고 목록에서 진행 상태를 표시한다.

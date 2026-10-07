@@ -10,6 +10,8 @@ import type {
 import type { JournalAnnual } from "../types/journalAnnual";
 import type {
   KeepItem,
+  KeepLifecycleKey,
+  KeepStateKey,
   KeepPrefix,
   KeepPrefixOption,
   KeepProject,
@@ -443,6 +445,22 @@ export async function getKeepList(): Promise<KeepItem[]> {
 }
 
 /**
+ * Keep 현재 라이프사이클을 서버에 설정한다. 완료 시각은 서버가 관리한다.
+ * HTTP 성공이어도 rslt=false이면 서버 메시지를 오류로 전달한다.
+ *
+ * @param id 변경할 Keep ID
+ * @param lifecycleKey 현재값으로 설정할 라이프사이클 키
+ */
+export async function setKeepLifecycle(id: number, lifecycleKey: KeepLifecycleKey): Promise<void> {
+  const result = await request<AjaxResponse>("/api/lifecycles", {
+    method: "PUT", body: JSON.stringify({ id, contentType: "PROSPECTIVE_KEEP", lifecycleKey })
+  });
+  if (result?.rslt !== true) {
+    throw new ApiError(result?.message?.trim() || "Keep 상태를 변경하지 못했습니다.", 200, result);
+  }
+}
+
+/**
  * Keep 상세 — 웹 수정 모달 진입과 같은 요청(서버 캐시, 소유자 확인).
  * lifecycle 은 목록과 같은 방식으로 붙어 온다(서버 applyKeepLifecycles, 행이 없으면 OPEN — 본문 캐시와 별도로 매 조회 부착).
  * GET /api/prospective/keep/{id} → rsltObj: ProspectiveKeepDto (없으면 rslt=false)
@@ -457,6 +475,14 @@ export async function getKeepDetail(id: number): Promise<KeepItem> {
   return res.rsltObj;
 }
 
+/** Keep의 중요·요구 속성을 한 번 토글한다. 비멱등 요청이므로 호출자가 중복 전송을 잠근다. */
+export async function toggleKeepState(id: number, stateKey: KeepStateKey): Promise<void> {
+  const res = await request<AjaxResponse>("/api/states", {
+    method: "POST",
+    body: JSON.stringify({ id, contentType: "PROSPECTIVE_KEEP", stateKey })
+  });
+  if (res.rslt !== true) throw new ApiError(res.message || "Keep 속성을 변경하지 못했습니다.", 200, res);
+}
 /**
  * 내 Project 목록 (전 라이프사이클, sortOrder → id). 화면은 OPEN 만 칩으로 쓰고 나머지는 이름 표시에만 쓴다.
  * GET /api/prospective/projects → rsltList: ProspectiveProjectDto[]
