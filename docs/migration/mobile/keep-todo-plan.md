@@ -297,7 +297,7 @@ ProspectiveProject (prospective_project, soft delete)
 - 키보드가 바로 뜨고, 제목만 입력해도 엔터로 저장.
 - Project 기본값 = 현재 선택된 칩(`전체`면 미지정).
 - `★ 중요`를 켜고 저장하면 등록 응답의 ID로 `POST /api/states`(IMPRTC)를 이어서 보냄(등록 API에는 상태 필드가 없음).
-- 저장 후 시트를 닫지 않고 비워서 연속 입력, 목록은 재조회.
+- ~~저장 후 시트를 닫지 않고 비워서 연속 입력~~ → 2026-10-12 변경: 저장되면 시트를 닫고 목록(재조회됨)에서 `Keep을 등록했습니다.` 안내. 말머리 칩(활성 PROSPECTIVE_KEEP) 추가.
 - 말머리·위치·본문·태그는 편집 화면에서.
 
 ### 5.6 `KeepEditScreen` (2-3)
@@ -324,7 +324,7 @@ ProspectiveProject (prospective_project, soft delete)
 
 **가장 작은 가치 있는 첫 단계 = 2-0 + 2-1**: 읽기 API 5개와 쓰기 API 2개로, 폰에서 Keep 목록을 보고 바로 완료 처리할 수 있다. 쓰기 위험이 가장 낮은 두 API(멱등 설정 + 단순 토글)만 쓴다.
 
-### 6.1 진행 현황 (2026-10-06)
+### 6.1 진행 현황 (2026-10-12 코드 기준으로 갱신)
 
 상태 표기는 `tagcloud-thread-port-plan.md` §6.1과 같다: **완료**(실기기 확인까지), `구현·미검증`(코드 반영, 실기기 미확인), 예정.
 
@@ -332,7 +332,11 @@ ProspectiveProject (prospective_project, soft delete)
 |---|---|---|
 | 2-0 읽기 전용 목록·상세 | `구현·미검증` | 아래 2-0 구현 내용. 타입 검사(`tsc --noEmit`) 0, `expo export --platform android` 번들 생성 확인. 에뮬레이터 확인은 남음(PC 백엔드가 꺼져 있었음, `screen-spec.md` §11) |
 | 2-1 완료·라이프사이클·속성 | `구현·실기기 미검증` | 왼쪽 드래그 완료 버튼·여섯 단계 상태 메뉴·멱등 설정 후 Keep 목록 재조회. 중요·요구 스위치·요청 잠금·응답 유실 시 GET 확인·조회 실패 시 GET만 재시도 |
-| 2-2 ~ 2-5 | 예정 | 현재 앱 쓰기 범위는 완료·라이프사이클·중요/요구 토글이다 |
+| 2-2A 빠른 추가 등록 기반 | `구현` | 웹 날짜 해석 규칙, 신규 FormData 검증·직렬화, 등록 API와 새 ID 검사 (커밋 `57f8b9697`) |
+| 2-2B 빠른 추가 입력 화면 | `구현·실기기 일부 확인` | `+` 버튼 → `KeepQuickAddSheet`(제목·일시·기한 자동 추출/직접 수정·말머리·Project·중요), 등록(`prefixId` 포함) → (중요면) IMPRTC 토글 → Keep 목록 재조회 → 시트 닫고 목록에서 `Keep을 등록했습니다.` 안내(2026-10-12: 연속 입력 제거·말머리 칩 추가), 서버 오류는 시트 유지·응답 없음은 목록 확인 후 닫고 안내(`screen-spec.md` §4.14). 에뮬레이터에서 시트·기한 해석·제목 검사를 확인했고 실제 등록은 미확인. 하단 탭 승격(§7 질문 1)은 미결 |
+| 2-3 Keep 수정 (모바일) | `부분 구현·실기기 미검증` | 상세 헤더 `수정`과 목록 ⋯ `✎ 수정`(상세를 먼저 받음, 공용 `useKeepEditSheet`) → `KeepQuickAddSheet` 수정 모드(제목·일시·기한·말머리·태그·Project·중요). 웹과 같은 `POST /api/prospective/keep/{id}` 전체 재전송, 위치·본문·순번은 상세에서 보존(`toKeepEditFormData`, 보존 불가·동시 수정이면 저장 금지). 빠른 추가·수정 모두 기존 태그 선택(`/api/prospective/keep/tag/categories`, 새 태그는 웹). 말머리 색 `keepPrefixColor` 공유(2026-10-12). 계획(§5.6) 대비 남은 것: 위치·본문 편집, 기한 날짜 선택기(지금은 텍스트), 뒤로 가기 버림 확인, 동시 수정 시 `덮어쓰기/취소` 선택(지금은 저장 차단) |
+| 2-4 Project 이동·삭제 | `구현·실기기 미검증` | 이동: 목록 ⋯ `📁 Project 이동`과 상세 버튼 → `KeepProjectMoveSheet`(`미지정` + Project, OPEN 아님 비활성, 현재 표시) → `PATCH /api/prospective/keep/{id}/project` `{ projectId }` → 재조회·안내. 삭제: 상세에서만(사용자 결정 2026-10-12), 제목을 밝힌 파괴적 확인 → `DELETE /api/prospective/keep/{id}` 한 번(잠금) → 안내 후 상세를 떠남. `src/utils/keepManage.ts`, `tests/keep-manage.test.cjs` |
+| 2-5 (선택) 확장 | `일부` | 기존 태그 선택(빠른 추가·수정, `/api/prospective/keep/tag/categories`)은 앞당겨 구현. 새 태그 만들기·오늘 탭 연동·하단 탭 배지·로컬 알림은 예정. 하단 탭 승격(§7 질문 1) 미결 |
 
 **최근 완료 진행(2026-10-07, 구현·실기기 미검증)**
 
@@ -348,7 +352,7 @@ ProspectiveProject (prospective_project, soft delete)
 - 상세 `KeepDetailScreen`: R2로 다시 읽고(로드 전에는 목록 항목을 임시 표시), 라이프사이클은 R2 응답 값(백엔드 수정 후). Project 이름은 목록에서 넘겨받고, 목록 항목 없이 열거나 당겨서 새로고침하면 R3을 다시 받아 찾는다. 배지(라이프사이클·중요·요구), 제목, 기한(D-day)·일시·위치·Project·말머리·태그·등록·수정, 본문(마크다운 → 평문, `src/utils/markdownText.ts`, 새 의존성 없음).
 - 복사·공유: 상세 헤더 `복사`·`공유`(1건 텍스트), 목록 위 `JournalCopyShareBar`(현재 보기·필터 결과, 기한 보기는 묶음 머리 포함). 웹에 Keep 복사가 없어 1단계 저널 복사와 같은 CRLF·빈 줄 규칙으로 새로 정했다(`src/utils/keepCopy.ts`, `screen-spec.md` §4.8).
 - 파일: `src/types/prospectiveKeep.ts`, `src/utils/keepExpire.ts`(웹 `formatExpireDt`·`daysUntilExpire` 포트), `src/utils/keepProjection.ts`, `src/utils/keepCopy.ts`, `src/utils/markdownText.ts`, `src/components/keep/KeepBadges.tsx`, `src/components/keep/KeepFilterSheet.tsx`, `src/screens/KeepHomeScreen.tsx`, `src/screens/KeepDetailScreen.tsx`, 수정 `src/api/dreamDiaryApi.ts`(읽기 함수 5개), `src/types/auth.ts`(`AjaxResponse`에 `rsltList`·`rsltMap`), `src/navigation/AppNavigator.tsx`, `src/navigation/appMenu.ts`.
-- 계획(§5.3)과 다른 점: 헤더 `🔍`·`⚲` 아이콘 대신 목록 위 검색줄 + `필터` 버튼, 검색은 입력 중 즉시가 아니라 제출 시에만(사용자 결정), 오른쪽 아래 `+`·체크박스·스와이프 없음(2-0은 읽기 전용).
+- (2-0 당시 기록) 계획(§5.3)과 다른 점: 헤더 `🔍`·`⚲` 아이콘 대신 목록 위 검색줄 + `필터` 버튼, 검색은 입력 중 즉시가 아니라 제출 시에만(사용자 결정), 오른쪽 아래 `+`·체크박스·스와이프 없음(2-0은 읽기 전용).
 
 ---
 

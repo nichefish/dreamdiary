@@ -3,6 +3,7 @@ import { colors } from "../../theme/colors";
 import type { DisplayTag } from "../../types/journalDay";
 import {
   KEEP_PREFIX_COLOR,
+  keepPrefixColor,
   KEEP_STATE_META,
   keepLifecycleMeta,
   type KeepStateKey
@@ -35,11 +36,11 @@ export function KeepStateBadge({ stateKey }: { stateKey: KeepStateKey }) {
   );
 }
 
-/** 말머리 `[이름]` — 웹 Keep 행과 같은 굵은 청록 글자 */
-export function KeepPrefixText({ name }: { name: string | null | undefined }) {
+/** 말머리 `[이름]` — 웹 Keep 행과 같이 굵게, 색은 서버 textClass(없으면 청록 #287D94, `keepPrefixColor`) */
+export function KeepPrefixText({ name, textClass }: { name: string | null | undefined; textClass?: string | null }) {
   const label = name?.trim();
   if (!label) return null;
-  return <Text style={styles.prefix}>[{label}]</Text>;
+  return <Text style={[styles.prefix, { color: keepPrefixColor(textClass) }]}>[{label}]</Text>;
 }
 
 export type KeepTagChipsProps = {

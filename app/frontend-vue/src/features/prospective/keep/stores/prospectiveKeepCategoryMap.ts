@@ -42,6 +42,16 @@ export const useProspectiveKeepCategoryMapStore = defineStore("prospectiveKeepCa
     return request;
   }
 
+  /**
+   * 저장으로 새 태그가 생겼을 수 있으므로 캐시를 무시하고 다시 조회한다.
+   * 진행 중이던 ensure 요청은 저장 전 상태일 수 있어 기다리지 않고 새로 요청한다.
+   */
+  async function refresh(): Promise<Record<string, string[]>> {
+    loaded.value = false;
+    request = null;
+    return ensure();
+  }
+
   /** 사용자 세션 전환 시 저장된 맵을 비운다. */
   function reset(): void {
     request = null;
@@ -49,5 +59,5 @@ export const useProspectiveKeepCategoryMapStore = defineStore("prospectiveKeepCa
     loaded.value = false;
   }
 
-  return { categoryMap, ensure, reset };
+  return { categoryMap, ensure, refresh, reset };
 });

@@ -319,8 +319,15 @@ const expireDt = ref("");
 const expireDtInputRef = ref<HTMLInputElement | null>(null);
 let expireDtFp: FlatpickrInstance | null = null;
 
+/** 유효 기한 산정 디바운스 간격(ms). 입력을 멈춘 뒤에만 일시 원문을 다시 해석한다. */
+const EXPIRE_CALC_DEBOUNCE_MS = 500;
+
+/** 산정에 반영된 일시 원문. 입력 중에는 이전 값에 머물고 디바운스·flush 시점에 갱신된다. */
+const settledDateText = ref<string | null | undefined>(model.value?.dateText);
+let expireCalcTimer: ReturnType<typeof setTimeout> | null = null;
+
 /** 일시 원문에서 찾아낸 날짜들. 「기한 추출」 가능 여부와 안내 문구가 이 결과를 쓴다. */
-const dateTextScan = computed(() => scanLastDate(model.value?.dateText));
+const dateTextScan = computed(() => scanLastDate(settledDateText.value));
 
 /** 일시에서 뽑을 날짜가 실제로 있을 때만 추출 버튼을 연다. */
 const canExtractExpireDt = computed(() => dateTextScan.value.last !== null);
@@ -358,6 +365,8 @@ const expireDtHintClass = computed(() => {
  * 뽑을 날짜가 없으면 기존 값을 건드리지 않는다.
  */
 function extractExpireDt(): void {
+  // 버튼 클릭 시점의 원문을 쓰도록 대기 중인 산정을 먼저 반영한다.
+  syncSettledDateText();
   const last = dateTextScan.value.last;
   if (last === null) return;
   expireDt.value = last;
@@ -373,8 +382,33 @@ function extractExpireDt(): void {
  */
 watch(
   () => model.value?.dateText,
-  () => { if (!expireDt.value) extractExpireDt(); }
+  () => {
+    cancelExpireCalc();
+    expireCalcTimer = setTimeout(flushExpireCalc, EXPIRE_CALC_DEBOUNCE_MS);
+  }
 );
+
+/** 대기 중인 유효 기한 산정 타이머를 취소한다. */
+function cancelExpireCalc(): void {
+  if (expireCalcTimer !== null) clearTimeout(expireCalcTimer);
+  expireCalcTimer = null;
+}
+
+/** 산정 기준 원문을 현재 입력값으로 맞춘다(자동 채움 없음). */
+function syncSettledDateText(): void {
+  settledDateText.value = model.value?.dateText;
+}
+
+/**
+ * 대기 중인 산정을 즉시 실행한다. 디바운스 만료·저장·미리보기 직전에 호출해
+ * 마지막 입력 기준 기한이 반영되도록 한다. 기한이 비어 있을 때만 자동으로 채운다.
+ */
+function flushExpireCalc(): void {
+  const pending = expireCalcTimer !== null;
+  cancelExpireCalc();
+  syncSettledDateText();
+  if (pending && !expireDt.value) extractExpireDt();
+}
 
 /** 유효 기한 달력을 연다. 읽기 전용 입력이라 달력이 유일한 직접 수정 경로다. */
 function openExpireDtPicker(): void {
@@ -405,6 +439,7 @@ const tagListStrWithCtgr = computed({
 });
 
 onBeforeUnmount(() => {
+  cancelExpireCalc();
   destroyExpireDtPicker();
 });
 
@@ -424,6 +459,9 @@ watch(
     if (isOpen) {
       resetSafeClose();
       expireDt.value = model.value?.expireDt ?? "";
+      // 열 때는 저장된 기한을 그대로 두고 산정 기준만 현재 원문으로 맞춘다.
+      cancelExpireCalc();
+      syncSettledDateText();
       void personalPrefixOptionsStore.fetchOptions(PREFIX_CONTENT_TYPE);
       void categoryMapStore.ensure();
       projectLoadError.value = "";
@@ -433,6 +471,7 @@ watch(
       bsModal?.show();
       void nextTick(() => attachExpireDtPicker());
     } else {
+      cancelExpireCalc();
       destroyExpireDtPicker();
       bsModal?.hide();
     }
@@ -496,6 +535,7 @@ function resolvePreviewMeta(): KeepPreviewMeta {
 /** 작성 중 본문·메타를 Keep 목록 markdownContent와 같은 렌더로 새 창에 띄운다. 저장하지 않는다. */
 async function preview(): Promise<void> {
   if (!model.value) return;
+  flushExpireCalc();
   try {
     const result = await openJournalEntryPreview({
       contentType: "PROSPECTIVE_KEEP",
@@ -522,6 +562,8 @@ function close() {
 /** 등록/수정 처리 */
 async function submit() {
   if (!model.value) return;
+  // 디바운스 대기 중인 유효 기한 산정을 먼저 반영해 마지막 입력 기준 값으로 저장한다.
+  flushExpireCalc();
   if (!model.value.title) {
     void swalAlert(t("prospective.keep.title.required"));
     return;
@@ -561,6 +603,8 @@ async function submit() {
       });
       void refreshJournalDaysForRoute(journalStore, route);
       void journalStore.fetchKeeps();
+      // 방금 쓴 태그가 다음 자동완성에 바로 나오도록 세션 캐시를 다시 조회한다.
+      void categoryMapStore.refresh();
     } else {
       void swalAjaxResult({
         rslt: false,

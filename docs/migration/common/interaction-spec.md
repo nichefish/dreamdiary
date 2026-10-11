@@ -270,7 +270,7 @@ categoryMap URL 매핑:
 - 일자 메타: `/api/journal/day/meta/categories`
 - 엔트리 DIARY 태그: `/api/journal/entry/tag/categories?type=DIARY`
 - 엔트리 DREAM 태그: `/api/journal/entry/tag/categories?type=DREAM`
-- 할일 태그: `/api/prospective/keep/tag/categories` (`PROSPECTIVE_KEEP` 단일 맵. 저널 사이드바 TODO 카드와 Keep 이 공유한다.)
+- 할일 태그: `/api/prospective/keep/tag/categories` (`PROSPECTIVE_KEEP` 단일 맵. 저널 사이드바 TODO 카드와 Keep 이 공유한다. 저장 응답에 맵이 없으므로 등록·수정 성공 직후 `prospectiveKeepCategoryMap.refresh()`로 캐시를 무시하고 다시 조회한다.)
 
 `TagifyEditor` Props:
 - `categoryMap?: Record<string, string[]> | null` — null이면 ctgr 없는 단순 태그 모드

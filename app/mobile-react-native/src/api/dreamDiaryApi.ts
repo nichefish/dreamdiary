@@ -1,3 +1,5 @@
+import { normalizeKeepTagCategoryMap } from "../utils/keepTags";
+import { toKeepEditFormData, toKeepFormData, type KeepCreateInput, type KeepEditInput } from "../utils/keepFormData";
 import { ApiError, request } from "./client";
 import type { AjaxResponse, AuthUser } from "../types/auth";
 import type {
@@ -475,6 +477,82 @@ export async function getKeepDetail(id: number): Promise<KeepItem> {
   return res.rsltObj;
 }
 
+/**
+ * 신규 Keep을 한 번 등록하고 서버가 반환한 새 ID를 확인한다.
+ * 입력 검사 후 FormData를 보내며 비멱등 POST를 자동 재전송하지 않는다. 중요 토글·목록 조회는 호출자가 관리한다.
+ */
+export async function createKeep(input: KeepCreateInput): Promise<KeepItem> {
+  const body = toKeepFormData(input);
+  const result = await request<AjaxResponse<KeepItem | null>>("/api/prospective/keeps", { method: "POST", body });
+  if (result?.rslt !== true) {
+    console.warn("[KeepCreate] business failure");
+    throw new ApiError(result?.message?.trim() || "Keep을 등록하지 못했습니다.", 200, result);
+  }
+  const item = result.rsltObj;
+  if (!item || !Number.isSafeInteger(item.id) || item.id <= 0) {
+    console.error("[KeepCreate] successful response missing valid ID");
+    throw new ApiError("등록 결과의 Keep ID를 확인하지 못했습니다. 목록을 확인하세요.", 200, result);
+  }
+  console.info("[KeepCreate] created", { id: item.id });
+  return item;
+}
+
+/**
+ * Keep을 한 번 수정한다 — 웹 수정 모달과 같은 `POST /api/prospective/keep/{id}` multipart.
+ * 서버는 받은 필드로 덮어쓰므로 `toKeepEditFormData`가 상세 응답에서 위치·본문·태그·순번을 그대로 옮긴다
+ * (옮길 수 없으면 요청 전에 KeepEditPreserveError). 비멱등 취급: 자동 재전송하지 않는다.
+ */
+export async function modifyKeep(detail: KeepItem, edit: KeepEditInput): Promise<void> {
+  const body = toKeepEditFormData(detail, edit);
+  const result = await request<AjaxResponse<KeepItem | null>>(`/api/prospective/keep/${detail.id}`, { method: "POST", body });
+  if (result?.rslt !== true) {
+    console.warn("[KeepEdit] business failure", { id: detail.id });
+    throw new ApiError(result?.message?.trim() || "Keep을 수정하지 못했습니다.", 200, result);
+  }
+  console.info("[KeepEdit] modified", { id: detail.id });
+}
+
+/**
+ * Keep 태그 자동완성 맵 — 웹 Keep 폼(prospectiveKeepCategoryMap)과 같은 요청. 빠른 추가·수정 시트의 기존 태그 후보.
+ * GET /api/prospective/keep/tag/categories → rsltMap: { 태그명: 카테고리[] }
+ */
+export async function getKeepTagCategoryMap(): Promise<Record<string, string[]>> {
+  const res = await request<AjaxResponse<unknown> & { rsltMap?: unknown }>("/api/prospective/keep/tag/categories");
+  if (res?.rslt !== true) throw new ApiError(res?.message?.trim() || "Keep 태그 후보를 불러오지 못했습니다.", 200, res);
+  return normalizeKeepTagCategoryMap(res.rsltMap ?? (res as { rsltObj?: unknown }).rsltObj);
+}
+
+/**
+ * Keep을 삭제한다 — 웹 KeepPage `deleteKeep`과 같은 `DELETE /api/prospective/keep/{id}`(본문 없음, 서버가 소유자 확인).
+ * HTTP 200 + rslt=false 는 서버 메시지로 실패. 호출자가 확인·중복 전송 잠금을 맡는다.
+ */
+export async function deleteKeep(id: number): Promise<void> {
+  if (!Number.isSafeInteger(id) || id <= 0) throw new Error("유효하지 않은 Keep ID입니다.");
+  const result = await request<AjaxResponse>(`/api/prospective/keep/${id}`, { method: "DELETE" });
+  if (result?.rslt !== true) {
+    console.warn("[KeepDelete] business failure", { id });
+    throw new ApiError(result?.message?.trim() || "Keep을 삭제하지 못했습니다.", 200, result);
+  }
+  console.info("[KeepDelete] deleted", { id });
+}
+
+/**
+ * Keep의 Project 소속만 옮긴다 — 웹 `moveKeepProject`와 같은 `PATCH /api/prospective/keep/{id}/project`,
+ * JSON 본문 `{ projectId }`(ProspectiveKeepProjectRequest, null = 미지정). 다른 필드는 서버가 건드리지 않는다.
+ */
+export async function moveKeepProject(id: number, projectId: number | null): Promise<void> {
+  if (!Number.isSafeInteger(id) || id <= 0) throw new Error("유효하지 않은 Keep ID입니다.");
+  if (projectId != null && (!Number.isSafeInteger(projectId) || projectId <= 0)) throw new Error("유효한 Project를 선택하세요.");
+  const result = await request<AjaxResponse>(`/api/prospective/keep/${id}/project`, {
+    method: "PATCH", body: JSON.stringify({ projectId })
+  });
+  if (result?.rslt !== true) {
+    console.warn("[KeepMove] business failure", { id, projectId });
+    throw new ApiError(result?.message?.trim() || "Project를 옮기지 못했습니다.", 200, result);
+  }
+  console.info("[KeepMove] moved", { id, projectId });
+}
+
 /** Keep의 중요·요구 속성을 한 번 토글한다. 비멱등 요청이므로 호출자가 중복 전송을 잠근다. */
 export async function toggleKeepState(id: number, stateKey: KeepStateKey): Promise<void> {
   const res = await request<AjaxResponse>("/api/states", {
@@ -536,7 +614,7 @@ export async function getKeepPrefixOptions(): Promise<KeepPrefixOption[]> {
     const id = Number(p?.id);
     const name = p?.name?.trim();
     if (p == null || !Number.isFinite(id) || !name) return [];
-    return [{ id, name, sortOrder: p.sortOrder ?? index }];
+    return [{ id, name, sortOrder: p.sortOrder ?? index, textClass: p.textClass ?? null }];
   });
 }
 

@@ -143,7 +143,10 @@ function registrationApi(request) {
   const dates = loadModule("utils/date.ts", {});
   return loadModule("api/dreamDiaryApi.ts", {
     "./client": { request, ApiError },
-    "../utils/date": dates
+    "../utils/date": dates,
+    // Keep 등록 FormData 변환은 저널 일자 등록 경로에서 쓰지 않는다 (dreamDiaryApi 가 import 만 한다)
+    "../utils/keepFormData": { toKeepFormData() { throw new Error("unused in journal day registration"); }, toKeepEditFormData() { throw new Error("unused in journal day registration"); } },
+    "../utils/keepTags": { normalizeKeepTagCategoryMap: (raw) => raw ?? {} }
   }).registerJournalDay;
 }
 

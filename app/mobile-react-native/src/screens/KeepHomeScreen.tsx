@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { getKeepList, getKeepPrefixOptions, getKeepProjects, getKeepTags, setKeepLifecycle, toggleKeepState } from "../api/dreamDiaryApi";
+import { createKeep, getKeepList, moveKeepProject, getKeepTagCategoryMap, getKeepPrefixOptions, getKeepProjects, getKeepTags, setKeepLifecycle, toggleKeepState } from "../api/dreamDiaryApi";
 import { isUnauthorizedError } from "../api/client";
 import type { RootStackParamList } from "../navigation/AppNavigator";
 import { MENU_URL } from "../navigation/appMenu";
@@ -59,7 +59,12 @@ import { KeepLifecycleBadge, KeepPrefixText, KeepStateBadge, KeepTagChips } from
 import { KeepFilterSheet } from "../components/keep/KeepFilterSheet";
 import { KeepSwipeRow } from "../components/keep/KeepSwipeRow";
 import { KeepLifecycleMenu } from "../components/keep/KeepLifecycleMenu";
+import { KeepProjectMoveSheet } from "../components/keep/KeepProjectMoveSheet";
+import { useKeepEditSheet } from "../components/keep/useKeepEditSheet";
+import { keepManageFailureMessage, keepMoveNotice, keepMoveOptions, keepMoveTarget, type KeepMoveOption } from "../utils/keepManage";
+import { KeepQuickAddSheet } from "../components/keep/KeepQuickAddSheet";
 import { colorFromTextClass } from "../components/journal/journalTagStyle";
+import { quickAddDefaultProjectId, quickAddFailureMessage, type KeepQuickAddResult, type KeepQuickAddSubmit } from "../utils/keepQuickAdd";
 import { isRecentKeep, recentKeeps, nextKeepCompletionExpiry, KEEP_RECENT_PREVIEW_SIZE } from "../utils/keepRecent";
 
 const VIEWS: { id: KeepView; label: string }[] = [
@@ -149,7 +154,7 @@ function KeepRow({ item, today, projectTitle, selectedTagId, onPress, onPressTag
             {important ? <Text style={styles.star}>★ </Text> : null}
             {item.prefix?.name?.trim() ? (
               <>
-                <KeepPrefixText name={item.prefix.name} />{" "}
+                <KeepPrefixText name={item.prefix.name} textClass={item.prefix.textClass} />{" "}
               </>
             ) : null}
             {item.title?.trim() || "(제목 없음)"}
@@ -191,6 +196,7 @@ function KeepRow({ item, today, projectTitle, selectedTagId, onPress, onPressTag
  * - 행을 누르면 Keep 상세(읽기 전용). 행의 태그 칩은 태그 필터 토글.
  * - 중요·요구 토글은 성공·오류 모두 Keep 목록으로 서버 현재 값을 확인한다. 요청 중 다른 쓰기를 잠근다.
  * - 완료·라이프사이클은 서버 저장 후 Keep 목록만 재조회한다. 쓰기 범위는 docs/migration/mobile/keep-todo-plan.md의 2-1 완료·라이프사이클 계약을 따른다.
+ * - 오른쪽 아래 `+`는 빠른 추가 시트(2-2B)를 연다. 등록 POST 한 번 → (중요면) IMPRTC 토글 한 번 → Keep 목록 재조회, 자동 재전송 없음.
  */
 export function KeepHomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -210,10 +216,33 @@ export function KeepHomeScreen() {
   const [filters, setFilters] = useState<KeepFilters>(EMPTY_KEEP_FILTERS);
   const [keyword, setKeyword] = useState("");
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [quickAddOpen, setQuickAddOpen] = useState(false);
+  /** 빠른 추가 태그 후보 (웹 자동완성 맵). 시트를 열 때와 등록 성공 뒤 다시 받는다 */
+  const [tagMap, setTagMap] = useState<Record<string, string[]>>({});
+  const reloadTagMap = useCallback(() => {
+    getKeepTagCategoryMap()
+      .then((map) => { if (mountedRef.current) setTagMap(map); })
+      .catch((e: unknown) => { if (!isUnauthorizedError(e)) console.warn("[KeepHomeScreen] tag category map load failed", e); });
+  }, []);
   const seqRef = useRef(0);
   const loadedRef = useRef(false);
   const [lifecycleItem, setLifecycleItem] = useState<KeepItem | null>(null);
   const [savingId, setSavingId] = useState<number | null>(null);
+  /** Project 이동 시트 대상 (2-4) */
+  const [moveItem, setMoveItem] = useState<KeepItem | null>(null);
+  const [moveError, setMoveError] = useState<string | null>(null);
+  /** 목록 ⋯ `수정` — 상세를 먼저 받아 상세 화면과 같은 보존·동시 수정 규칙으로 저장하고 Keep 목록을 다시 받는다 */
+  const edit = useKeepEditSheet({
+    onSaved: (id) => {
+      reloadKeepListOnly().catch((e: unknown) => {
+        if (!mountedRef.current || isUnauthorizedError(e)) return;
+        console.error("[KeepHomeScreen] edit list refresh failed", { id }, e);
+        setActionError({ id, saved: true, message: "수정됐지만 목록을 새로 받지 못했습니다. 목록을 다시 조회하세요." });
+      });
+    },
+    isBusy: () => savingRef.current || awaitingListRef.current,
+    logTag: "KeepHomeScreen"
+  });
   const [actionError, setActionError] = useState<{ id: number; message: string; saved: boolean } | null>(null);
   const savingRef = useRef(false);
   const awaitingListRef = useRef(false);
@@ -375,6 +404,47 @@ export function KeepHomeScreen() {
       if (mountedRef.current) setSavingId(null);
     }
   }
+  /** Project 이동 (2-4): PATCH 한 번(요청 잠금) → 시트 닫고 Keep 목록 재조회 → 안내. 실패는 시트에 서버 메시지. */
+  async function moveToProject(item: KeepItem, option: KeepMoveOption): Promise<void> {
+    const target = keepMoveTarget(option);
+    if (target === undefined) return;
+    if (savingRef.current || awaitingListRef.current) {
+      console.info("[KeepHomeScreen] move skipped while busy", { id: item.id });
+      return;
+    }
+    savingRef.current = true;
+    ++seqRef.current;
+    setSavingId(item.id);
+    setRefreshing(false);
+    setActionError(null);
+    setMoveError(null);
+    try {
+      try {
+        await moveKeepProject(item.id, target);
+      } catch (e) {
+        if (!mountedRef.current || isUnauthorizedError(e)) return;
+        console.error("[KeepHomeScreen] move failed", { id: item.id, projectId: target }, e);
+        setMoveError(keepManageFailureMessage(e, "Project를 옮기지 못했습니다."));
+        return;
+      }
+      if (!mountedRef.current) return;
+      setMoveItem(null);
+      notifyBrief(keepMoveNotice(option));
+      awaitingListRef.current = true;
+      try {
+        await reloadKeepListOnly();
+      } catch (e) {
+        if (mountedRef.current && !isUnauthorizedError(e)) {
+          console.error("[KeepHomeScreen] move list refresh failed", { id: item.id }, e);
+          setActionError({ id: item.id, saved: true, message: "옮겼지만 목록을 새로 받지 못했습니다. 목록을 다시 조회하세요." });
+        }
+      }
+    } finally {
+      savingRef.current = false;
+      if (mountedRef.current) setSavingId(null);
+    }
+  }
+
   /**
    * 저장 성공 뒤 조회만 실패한 경우 쓰기를 재전송하지 않고 목록만 다시 받는다.
    * 비멱등 토글의 결과가 미확인인 경우에도 같은 조회 전용 재시도를 사용한다.
@@ -391,6 +461,79 @@ export function KeepHomeScreen() {
         console.error("[KeepHomeScreen] lifecycle list refresh retry failed", e);
         setActionError((previous) => previous ? { ...previous, message: errorMessage(e, "목록을 다시 조회하지 못했습니다.") } : previous);
       }
+    } finally {
+      savingRef.current = false;
+      if (mountedRef.current) setSavingId(null);
+    }
+  }
+
+  /**
+   * 빠른 추가 저장 — 등록 POST를 한 번 보내고, 중요를 켰으면 새 ID로 IMPRTC 토글을 한 번 보낸 뒤 Keep 목록만 재조회한다.
+   * 다른 쓰기와 같은 요청 잠금을 쓰며 비멱등 요청은 자동 재전송하지 않는다.
+   * 등록 실패는 시트에 메시지로 돌려주고(응답을 못 받은 전송 오류는 목록 확인 안내), 등록 후 단계의 실패는 notice로 알린다.
+   */
+  async function submitQuickAdd(input: KeepQuickAddSubmit): Promise<KeepQuickAddResult> {
+    if (savingRef.current || awaitingListRef.current) {
+      console.info("[KeepHomeScreen] quick add skipped while another request is pending");
+      return { ok: false, message: "다른 요청을 처리하는 중입니다. 잠시 후 다시 저장하세요." };
+    }
+    savingRef.current = true;
+    ++seqRef.current;
+    setSavingId(0);
+    setRefreshing(false);
+    setActionError(null);
+    try {
+      let createdId: number;
+      try {
+        createdId = (await createKeep(input)).id;
+      } catch (e) {
+        if (!mountedRef.current || isUnauthorizedError(e)) return { ok: false, message: null };
+        console.error("[KeepHomeScreen] quick add create failed", e);
+        const message = quickAddFailureMessage(e);
+        // 응답을 받지 못했으면 실제로 등록됐을 수 있으므로 목록으로 서버 상태를 확인한다(실패해도 원래 오류만 보인다).
+        if (typeof (e as { status?: unknown } | null)?.status !== "number") {
+          try { await reloadKeepListOnly(); } catch (reloadError) { console.warn("[KeepHomeScreen] quick add list check failed", reloadError); }
+          // 등록 여부를 모르므로 같은 입력으로 다시 저장해 중복되지 않게 시트를 닫고 목록에서 확인하게 한다.
+          if (!mountedRef.current) return { ok: false, message: null };
+          setQuickAddOpen(false);
+          notifyBrief(message);
+          return { ok: false, message: null };
+        }
+        // 서버가 응답한 실패는 시트를 열어 둔 채 입력을 보존하고 메시지를 보인다.
+        return { ok: false, message };
+      }
+      const notices: string[] = [];
+      if (input.important) {
+        try {
+          await toggleKeepState(createdId, "IMPRTC");
+        } catch (e) {
+          if (!mountedRef.current) return { ok: true, id: createdId, notice: null };
+          if (!isUnauthorizedError(e)) {
+            console.error("[KeepHomeScreen] quick add important toggle failed", { id: createdId }, e);
+            notices.push("Keep은 등록됐지만 중요 표시를 하지 못했습니다. 목록의 ⋯에서 다시 설정하세요.");
+          }
+        }
+      }
+      if (!mountedRef.current) return { ok: true, id: createdId, notice: null };
+      awaitingListRef.current = true;
+      try {
+        await reloadKeepListOnly();
+      } catch (e) {
+        if (mountedRef.current && !isUnauthorizedError(e)) {
+          console.error("[KeepHomeScreen] quick add list refresh failed", { id: createdId }, e);
+          setActionError({ id: createdId, saved: true, message: "Keep은 등록됐지만 목록을 새로 받지 못했습니다. 목록을 다시 조회하세요." });
+          notices.push("목록을 새로 받지 못했습니다. 시트를 닫고 목록 다시 조회를 누르세요.");
+        }
+      }
+      console.info("[KeepHomeScreen] quick add saved", { id: createdId, important: input.important });
+      const notice = notices.length ? notices.join(" ") : null;
+      // 연속 입력 없음: 등록되면(후속 단계가 실패해도) 시트를 닫고 목록에서 짧게 알린다.
+      if (mountedRef.current) {
+        setQuickAddOpen(false);
+        reloadTagMap();
+        notifyBrief(notice ? `Keep을 등록했습니다. ${notice}` : "Keep을 등록했습니다.");
+      }
+      return { ok: true, id: createdId, notice };
     } finally {
       savingRef.current = false;
       if (mountedRef.current) setSavingId(null);
@@ -746,14 +889,24 @@ export function KeepHomeScreen() {
             </Text>
           ) : row.kind === "section" ? (
             <Text style={styles.groupHeader} accessibilityRole="header">{row.label} <Text style={styles.groupCount}>{row.count}</Text></Text>
-          ) : row.kind === "recentMore" ? renderRecentMore() : renderKeepRow(row.item)
         }
       />
       <KeepLifecycleMenu item={lifecycleItem} saving={savingId != null}
         error={actionError?.id === lifecycleItem?.id && !actionError?.saved ? actionError?.message ?? null : null}
         onClose={() => { if (!savingRef.current) setLifecycleItem(null); }}
         onSelect={(key) => { if (lifecycleItem) void changeLifecycle(lifecycleItem, key); }}
-        onToggleState={(key) => { if (lifecycleItem) void changeState(lifecycleItem, key); }} />
+          onToggleState={(key) => { if (lifecycleItem) void changeState(lifecycleItem, key); }}
+        onEdit={() => { if (lifecycleItem && !savingRef.current) { const id = lifecycleItem.id; setLifecycleItem(null); void edit.openEdit(id); } }}
+        onMove={() => { if (lifecycleItem && !savingRef.current) { setMoveError(null); setMoveItem(lifecycleItem); setLifecycleItem(null); } }} />
+      <KeepQuickAddSheet {...edit.sheetProps} />
+      <KeepProjectMoveSheet
+        visible={moveItem != null}
+        title={moveItem?.title?.trim() || "(제목 없음)"}
+        options={keepMoveOptions(projects, moveItem?.projectId)}
+        saving={savingId != null}
+        error={moveError}
+        onClose={() => { if (!savingRef.current) setMoveItem(null); }}
+        onSelect={(option) => { if (moveItem) void moveToProject(moveItem, option); }} />
       <KeepFilterSheet
         visible={sheetOpen}
         onClose={() => setSheetOpen(false)}
@@ -764,6 +917,21 @@ export function KeepHomeScreen() {
         tagOptions={tagOptions}
         optionNote={optionNote}
       />
+      {!loading && error == null ? (
+        <Pressable accessibilityRole="button" accessibilityLabel="Keep 빠른 추가" onPress={() => { reloadTagMap(); setQuickAddOpen(true); }}
+          style={({ pressed }) => [styles.fab, pressed && styles.pressed]}>
+          <Text style={styles.fabText}>+</Text>
+        </Pressable>
+      ) : null}
+      <KeepQuickAddSheet
+        visible={quickAddOpen}
+        projects={openProjects}
+        prefixes={serverPrefixes ?? []}
+        tagMap={tagMap}
+        defaultProjectId={quickAddDefaultProjectId(filters.scope)}
+        onSubmit={submitQuickAdd}
+        onClose={() => setQuickAddOpen(false)}
+      />
     </SafeAreaView>
   );
 }
@@ -772,7 +940,7 @@ const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: colors.background },
   statusButton: { paddingHorizontal: 8, paddingVertical: 2 },
   statusButtonText: { color: colors.accent, fontSize: 23, fontWeight: "700" },
-  container: { padding: 16, gap: 10, paddingBottom: 32, flexGrow: 1 },
+  container: { padding: 16, gap: 10, paddingBottom: 96, flexGrow: 1 },
   listHeader: { gap: 10, marginBottom: 2 },
   scopeRow: { gap: 8, paddingRight: 8 },
   scopeChip: {
@@ -886,5 +1054,23 @@ const styles = StyleSheet.create({
     paddingVertical: 6
   },
   retryText: { color: colors.accent, fontWeight: "700" },
-  pressed: { opacity: 0.7 }
+  pressed: { opacity: 0.7 },
+  /** 빠른 추가 `+` — 오른쪽 아래 떠 있는 버튼 (목록 끝 행이 가리지 않게 container paddingBottom을 늘림) */
+  fab: {
+    position: "absolute",
+    right: 20,
+    bottom: 28,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.accent,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 }
+  },
+  fabText: { color: colors.onAccent, fontSize: 30, fontWeight: "500", lineHeight: 34 }
 });

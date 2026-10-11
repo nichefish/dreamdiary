@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "../../theme/colors";
-import { KEEP_PREFIX_COLOR, type KeepPrefixOption, type KeepTagOption } from "../../types/prospectiveKeep";
+import { keepPrefixColor, type KeepPrefixOption, type KeepTagOption } from "../../types/prospectiveKeep";
 import type { KeepFilters } from "../../utils/keepProjection";
 import { TAG_CTGR_COLOR } from "../journal/journalTagStyle";
 
@@ -89,7 +89,7 @@ export function KeepFilterSheet({
                     <Chip
                       key={p.id}
                       label={`[${p.name}]`}
-                      color={KEEP_PREFIX_COLOR}
+                      color={keepPrefixColor(p.textClass)}
                       active={filters.prefixId === p.id}
                       onPress={() => onChange({ prefixId: filters.prefixId === p.id ? null : p.id })}
                     />

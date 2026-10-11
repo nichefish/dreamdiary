@@ -10,13 +10,17 @@ const OPTIONS: readonly KeepLifecycleKey[] = ["OPEN", "PENDING", "RESOLVED", "FA
  * 현재 단계를 표시하고 여섯 라이프사이클을 단일 선택하는 하단 시트. 저장 중 닫기·중복 선택을 잠근다.
  * 중요·요구 스위치는 서버 속성을 표시하며 항목 영역은 화면 높이 85% 이내에서 스크롤한다.
  */
-export function KeepLifecycleMenu({ item, saving, error, onClose, onSelect, onToggleState }: {
+export function KeepLifecycleMenu({ item, saving, error, onClose, onSelect, onToggleState, onEdit, onMove }: {
   item: KeepItem | null;
   saving: boolean;
   error: string | null;
   onClose: () => void;
   onSelect: (key: KeepLifecycleKey) => void;
   onToggleState: (key: KeepStateKey) => void;
+  /** 수정 시트 열기 (상세를 먼저 받는다) */
+  onEdit?: () => void;
+  /** Project 이동 시트 열기 (2-4) */
+  onMove?: () => void;
 }) {
   const insets = useSafeAreaInsets();
   const close = () => { if (!saving) onClose(); };
@@ -49,6 +53,14 @@ export function KeepLifecycleMenu({ item, saving, error, onClose, onSelect, onTo
             value={keepHasState(item, key)} disabled={saving}
             onValueChange={() => { if (!saving) onToggleState(key); }} />
         </View>)}
+        {onEdit || onMove ? <View style={styles.actions}>
+          {onEdit ? <Pressable accessibilityRole="button" accessibilityLabel="Keep 수정" disabled={saving} onPress={onEdit} style={styles.option}>
+            <Text style={styles.optionText}>✎ 수정</Text>
+          </Pressable> : null}
+          {onMove ? <Pressable accessibilityRole="button" accessibilityLabel="Project 이동" disabled={saving} onPress={onMove} style={styles.option}>
+            <Text style={styles.optionText}>📁 Project 이동</Text>
+          </Pressable> : null}
+        </View> : null}
         </ScrollView>
         {saving ? <ActivityIndicator color={colors.accent} /> : null}
       </View>
@@ -66,5 +78,6 @@ const styles = StyleSheet.create({
   attribute: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingVertical: 8 },
   option: { paddingVertical: 13 },
   optionText: { fontSize: 15 },
+  actions: { marginTop: 8, borderTopWidth: 1, borderTopColor: colors.border },
   error: { color: "#C0392B", marginBottom: 8 }
 });

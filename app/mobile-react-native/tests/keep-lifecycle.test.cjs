@@ -137,6 +137,8 @@ function api(request) {
     require(name) {
       if (name === "./client") return { ApiError, request };
       if (name === "../utils/date") return { normalizeDateStr: (value) => value };
+      if (name === "../utils/keepFormData") return { toKeepFormData() { throw new Error("Unexpected create call"); }, toKeepEditFormData() { throw new Error("Unexpected edit call"); } };
+      if (name === "../utils/keepTags") return { normalizeKeepTagCategoryMap: (raw) => raw ?? {} };
       throw new Error("Unexpected API dependency: " + name);
     }
   });

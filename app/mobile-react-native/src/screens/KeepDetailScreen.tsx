@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Pressable,
   RefreshControl,
   ScrollView,
@@ -10,7 +11,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { getKeepDetail, getKeepProjects } from "../api/dreamDiaryApi";
+import { deleteKeep, moveKeepProject, getKeepDetail, getKeepProjects } from "../api/dreamDiaryApi";
+import { KeepQuickAddSheet } from "../components/keep/KeepQuickAddSheet";
+import { useKeepEditSheet } from "../components/keep/useKeepEditSheet";
+import { notifyBrief } from "../components/journal/JournalCopyShareBar";
+import { KeepProjectMoveSheet } from "../components/keep/KeepProjectMoveSheet";
+import { confirmKeepDelete, keepManageFailureMessage, keepMoveNotice, keepMoveOptions, keepMoveTarget, type KeepMoveOption } from "../utils/keepManage";
+import type { KeepProject } from "../types/prospectiveKeep";
 import { isUnauthorizedError } from "../api/client";
 import type { RootStackParamList } from "../navigation/AppNavigator";
 import { colors } from "../theme/colors";
@@ -53,7 +60,10 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
  * - 라이프사이클은 상세 응답 값을 그대로 쓴다(서버가 목록과 같은 방식으로 부착, 행이 없으면 OPEN).
  * - Project 이름은 목록에서 넘겨받고, 목록 항목 없이 열렸거나 당겨서 새로고침하면 Project 목록을 다시 읽어 찾는다.
  * - 본문 마크다운은 평문으로 바꿔 보여준다(새 의존성 없음). 복사·공유는 헤더 버튼.
- * - 쓰기(완료·라이프사이클·상태·수정·삭제) 없음.
+ * - 수정: 헤더 `수정` → 수정 시트(KeepQuickAddSheet 수정 모드). 웹 수정 모달과 같은 POST /api/prospective/keep/{id} multipart로,
+ *   태그는 시트에서 고르고(기존 태그만), 위치·본문·순번은 상세 응답에서 그대로 옮긴다(`toKeepEditFormData`, 옮길 수 없으면 저장을 막는다).
+ *   저장 직전 상세를 다시 받아 그사이 웹에서 고쳤으면(updatedAt 변화) 저장하지 않는다. 중요는 바뀐 경우에만 IMPRTC 토글.
+ * - 그 밖의 쓰기(완료·라이프사이클·상태·삭제)는 없다.
  */
 export function KeepDetailScreen({ route, navigation }: Props) {
   const { id, item: paramItem, projectTitle: paramProjectTitle } = route.params;
@@ -64,6 +74,16 @@ export function KeepDetailScreen({ route, navigation }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [loadedAt, setLoadedAt] = useState<Date>(() => new Date());
   const seqRef = useRef(0);
+  /** 수정 시트 (상세 `수정`, 목록 ⋯ `수정`과 같은 흐름) — 저장 뒤 상세를 다시 받는다 */
+  const edit = useKeepEditSheet({ onSaved: () => { void load(true); }, onConflict: (fresh) => setDetail(fresh), logTag: "KeepDetailScreen" });
+  /** 삭제·이동 (2-4) */
+  const manageBusyRef = useRef(false);
+  const [manageBusy, setManageBusy] = useState(false);
+  const [moveOpen, setMoveOpen] = useState(false);
+  const [moveOptions, setMoveOptions] = useState<KeepMoveOption[]>([]);
+  const [moveError, setMoveError] = useState<string | null>(null);
+  const mountedRef = useRef(true);
+  useEffect(() => () => { mountedRef.current = false; }, []);
 
   /** withProjects=true 면 Project 목록도 다시 읽어 Project 이름을 찾는다 */
   const load = useCallback(
@@ -106,6 +126,76 @@ export function KeepDetailScreen({ route, navigation }: Props) {
   const item = useMemo(() => detail ?? paramItem ?? null, [detail, paramItem]);
   const today = loadedAt;
 
+  /** 삭제: 제목을 밝힌 파괴적 확인 → DELETE 한 번(잠금) → 안내 후 상세를 떠난다(목록은 포커스 갱신). 실패는 서버 메시지. */
+  async function deleteThis() {
+    const target = detail ?? paramItem ?? null;
+    if (target == null || manageBusyRef.current || edit.savingRef.current) return;
+    manageBusyRef.current = true;
+    setManageBusy(true);
+    try {
+      if (!(await confirmKeepDelete(target, Alert.alert)) || !mountedRef.current) return;
+      try {
+        await deleteKeep(target.id);
+      } catch (e) {
+        if (!mountedRef.current || isUnauthorizedError(e)) return;
+        console.error("[KeepDetailScreen] delete failed", { id: target.id }, e);
+        notifyBrief(keepManageFailureMessage(e, "Keep을 삭제하지 못했습니다."));
+        return;
+      }
+      notifyBrief("Keep을 삭제했습니다.");
+      if (mountedRef.current) navigation.goBack();
+    } finally {
+      manageBusyRef.current = false;
+      if (mountedRef.current) setManageBusy(false);
+    }
+  }
+
+  /** Project 이동 시트를 연다. 선택지는 Project 목록을 새로 받아 만든다(실패하면 미지정·현재만). */
+  async function openMove() {
+    const target = detail;
+    if (target == null || manageBusyRef.current) return;
+    manageBusyRef.current = true;
+    setManageBusy(true);
+    let projects: KeepProject[] = [];
+    try {
+      projects = await getKeepProjects();
+    } catch (e) {
+      if (isUnauthorizedError(e)) return;
+      console.warn("[KeepDetailScreen] move project list failed", e);
+    } finally {
+      manageBusyRef.current = false;
+      if (mountedRef.current) setManageBusy(false);
+    }
+    if (!mountedRef.current) return;
+    setMoveError(null);
+    setMoveOptions(keepMoveOptions(projects, target.projectId));
+    setMoveOpen(true);
+  }
+
+  /** 이동: PATCH 한 번(잠금) → 시트 닫고 상세·Project 다시 받기 → 안내. 실패는 시트에 서버 메시지. */
+  async function moveTo(option: KeepMoveOption) {
+    const target = detail;
+    const projectId = keepMoveTarget(option);
+    if (target == null || projectId === undefined || manageBusyRef.current) return;
+    manageBusyRef.current = true;
+    setManageBusy(true);
+    setMoveError(null);
+    try {
+      await moveKeepProject(target.id, projectId);
+      if (!mountedRef.current) return;
+      setMoveOpen(false);
+      notifyBrief(keepMoveNotice(option));
+      void load(true);
+    } catch (e) {
+      if (!mountedRef.current || isUnauthorizedError(e)) return;
+      console.error("[KeepDetailScreen] move failed", { id: target.id, projectId }, e);
+      setMoveError(keepManageFailureMessage(e, "Project를 옮기지 못했습니다."));
+    } finally {
+      manageBusyRef.current = false;
+      if (mountedRef.current) setManageBusy(false);
+    }
+  }
+
   function onRefresh() {
     setRefreshing(true);
     void load(true);
@@ -141,6 +231,19 @@ export function KeepDetailScreen({ route, navigation }: Props) {
         </View>
         {item ? (
           <View style={styles.headerActions}>
+            {detail != null ? (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Keep 수정"
+                accessibilityState={{ disabled: edit.loading, busy: edit.loading }}
+                disabled={edit.loading}
+                onPress={() => { if (detail) void edit.openEdit(detail); }}
+                hitSlop={6}
+                style={styles.headerAction}
+              >
+                {edit.loading ? <ActivityIndicator size="small" color={colors.accent} /> : <Text style={styles.headerActionText}>수정</Text>}
+              </Pressable>
+            ) : null}
             <Pressable
               accessibilityRole="button"
               accessibilityLabel="Keep 복사"
@@ -191,7 +294,7 @@ export function KeepDetailScreen({ route, navigation }: Props) {
             <Text style={styles.title} selectable>
               {item.prefix?.name?.trim() ? (
                 <>
-                  <KeepPrefixText name={item.prefix.name} />{" "}
+                  <KeepPrefixText name={item.prefix.name} textClass={item.prefix.textClass} />{" "}
                 </>
               ) : null}
               {item.title?.trim() || "(제목 없음)"}
@@ -220,7 +323,7 @@ export function KeepDetailScreen({ route, navigation }: Props) {
               </Field>
               {item.prefix?.name?.trim() ? (
                 <Field label="말머리">
-                  <KeepPrefixText name={item.prefix.name} />
+                  <KeepPrefixText name={item.prefix.name} textClass={item.prefix.textClass} />
                 </Field>
               ) : null}
               {tags.length > 0 ? (
@@ -251,10 +354,30 @@ export function KeepDetailScreen({ route, navigation }: Props) {
               )}
             </View>
 
-            <Text style={styles.footerNote}>상세는 읽기 전용입니다. 상태 변경은 Keep 목록에서, 수정은 웹에서 합니다.</Text>
+            <View style={styles.manageRow}>
+              <Pressable accessibilityRole="button" accessibilityLabel="Project 이동" disabled={manageBusy || detail == null}
+                onPress={() => { void openMove(); }} style={[styles.manageButton, (manageBusy || detail == null) && styles.manageDisabled]}>
+                <Text style={styles.manageText}>📁 Project 이동</Text>
+              </Pressable>
+              <Pressable accessibilityRole="button" accessibilityLabel="Keep 삭제" disabled={manageBusy}
+                onPress={() => { void deleteThis(); }} style={[styles.manageButton, styles.deleteButton, manageBusy && styles.manageDisabled]}>
+                <Text style={[styles.manageText, styles.deleteText]}>삭제</Text>
+              </Pressable>
+            </View>
+            <Text style={styles.footerNote}>상태 변경은 Keep 목록에서 합니다. 삭제는 되돌릴 수 없습니다. 수정에서 위치·본문은 그대로 두며 웹에서 고칩니다.</Text>
           </>
         )}
       </ScrollView>
+      <KeepQuickAddSheet {...edit.sheetProps} />
+      <KeepProjectMoveSheet
+        visible={moveOpen}
+        title={item?.title?.trim() || "(제목 없음)"}
+        options={moveOptions}
+        saving={manageBusy}
+        error={moveError}
+        onClose={() => { if (!manageBusyRef.current) setMoveOpen(false); }}
+        onSelect={(option) => { void moveTo(option); }}
+      />
     </SafeAreaView>
   );
 }
@@ -339,5 +462,11 @@ const styles = StyleSheet.create({
   sectionLabel: { color: colors.muted, fontSize: 11.5, fontWeight: "700" },
   body: { color: colors.secondaryText, fontSize: 16, lineHeight: 26 },
   bodyEmpty: { color: colors.muted, fontSize: 14 },
+  manageRow: { flexDirection: "row", gap: 10, paddingTop: 8 },
+  manageButton: { flex: 1, alignItems: "center", borderWidth: 1, borderColor: colors.border, borderRadius: 10, paddingVertical: 10 },
+  manageDisabled: { opacity: 0.5 },
+  manageText: { color: colors.accent, fontSize: 14, fontWeight: "700" },
+  deleteButton: { borderColor: colors.danger },
+  deleteText: { color: colors.danger },
   footerNote: { color: colors.muted, fontSize: 11.5, textAlign: "center", paddingTop: 8 }
 });

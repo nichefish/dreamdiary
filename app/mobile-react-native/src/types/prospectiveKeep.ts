@@ -1,5 +1,6 @@
 import { colors } from "../theme/colors";
 import type { JournalTagCmpstn } from "./journalDay";
+import { colorFromTextClass } from "../components/journal/journalTagStyle";
 
 /**
  * Keep(전수관리, 백엔드 feature `prospective`) 읽기 전용 타입과 도메인 규칙.
@@ -97,6 +98,8 @@ export interface KeepPrefixOption {
   id: number;
   name: string;
   sortOrder: number;
+  /** 렌더용 색 클래스 (서버 PrefixDto.textClass, 예: text-primary). 없으면 기본색 */
+  textClass?: string | null;
 }
 
 // ─── 라이프사이클 ─────────────────────────────────────────
@@ -194,5 +197,16 @@ export function keepProjectTitle(project: KeepProject | null | undefined): strin
   return `${keepProjectPrefixLabel(project)}${name}`;
 }
 
-/** 웹 Keep 말머리 표기 색 (KeepPage.vue 가 textClass 대신 인라인 #287D94 로 고정) */
+/**
+ * 색 지정이 없는 Keep 말머리의 기본 색. 웹 KeepPage.vue 는 `:class="prefix.textClass"` + 인라인 `#287D94`를 함께 주는데,
+ * text-* 클래스가 `!important`라 색을 고른 말머리는 그 색으로, 고르지 않은(DEFAULT → 빈 클래스) 말머리만 #287D94 로 보인다.
+ */
 export const KEEP_PREFIX_COLOR = "#287D94";
+
+/**
+ * Keep 말머리 표시 색 — 목록·상세·빠른 추가/수정 칩·필터 칩이 함께 쓴다.
+ * 서버 PrefixDto.textClass(`text-primary`·`text-emotion` 등)를 웹과 같은 색으로 바꾸고, 없거나 모르는 클래스면 KEEP_PREFIX_COLOR.
+ */
+export function keepPrefixColor(textClass: string | null | undefined): string {
+  return colorFromTextClass(textClass) ?? KEEP_PREFIX_COLOR;
+}

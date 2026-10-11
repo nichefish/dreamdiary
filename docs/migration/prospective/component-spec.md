@@ -51,3 +51,11 @@ Keep 행의 컨텍스트 메뉴에서 Project 미지정과 Project 목록을 단
 ✓ `KeepSwipeRow`는 진행 행의 가로 제스처를 판정하고 완료 버튼을 노출한다. 완료 요청은 버튼 또는 접근성 완료 액션으로 실행하며 종결 행·저장 중에는 완료 제스처를 잠근다. `KeepLifecycleMenu`는 현재 상태를 라디오로 표시하는 여섯 단계 하단 시트이며 저장 중 선택·배경 닫기·Android 뒤로 닫기를 잠근다. 두 컴포넌트는 상태 저장을 `KeepHomeScreen`에 위임하고 현재 상태·완료 시각은 서버 재조회 결과를 사용한다.
 
 ✓ 모바일 `KeepLifecycleMenu`는 라이프사이클 라디오 아래 독립적인 중요·요구 스위치를 표시한다. 서버 `state.list`가 현재 값이며 선택을 `KeepHomeScreen`에 위임한다. 패널 높이는 화면의 85% 이내이고 항목 영역을 내부 스크롤로 탐색한다. 요청 중 스위치를 비활성화하며 속성 요청은 메뉴를 닫고 목록에서 진행 상태를 표시한다.
+
+## 모바일 Keep 신규 등록 기반
+
+✓ `utils/keepDateInput.ts`는 웹 `keep/utils/expireDt.ts`의 `parseExpireDt`·`resolveNearestYear`·`scanLastDate` 해석 규칙을 사용한다. 일시 원문에서 유효 날짜를 찾아 가장 늦은 날짜를 고르고 확정 날짜는 절대 `yyyy-MM-dd`다. 목록 날짜 표시는 `utils/keepExpire.ts`가 담당한다.
+
+✓ `utils/keepFormData.ts`의 `KeepCreateInput`과 `toKeepFormData`는 신규 등록 입력만 직렬화한다. 제목은 공백 제거 후 1~100자, 일시 원문은 최대 200자, 기한은 실제 존재하는 절대 날짜 또는 빈 값, Project는 양의 정수 ID 또는 미지정이다. 제목·일시·기한·Project와 신규 빈 말머리·위치·본문·태그의 8개 필드를 FormData로 보내며 순번은 서버가 배정한다. 기한은 호출자가 확정하고 직렬화는 일시 원문을 재해석하지 않는다.
+
+✓ `utils/keepQuickAdd.ts`는 모바일 빠른 추가 규칙을 소유한다. 기본 Project(현재 Project 칩, `전체`·`미지정`은 미지정), 일시 → 기한 추출, 기한 입력 해석과 안내 문구, 저장 전 입력 검사(`toKeepFormData`와 같은 길이·날짜 규칙, 말머리 ID 전달), 등록 실패 메시지 분류(서버 응답 실패 / 응답 없는 전송 오류)가 여기에 있다. `components/keep/KeepQuickAddSheet.tsx`는 입력 상태, 기한의 자동/직접 수정 구분, 말머리 칩(`prefixes` prop: 활성 PROSPECTIVE_KEEP 선택지, 비면 숨김, `textClass` 색), 저장 중 잠금을 관리하고 저장 자체는 `onSubmit`으로 `KeepHomeScreen`에 위임한다. 등록 성공(후속 단계 실패 포함)·응답 없는 오류 뒤 시트 닫기와 목록 안내(`notifyBrief`)는 `KeepHomeScreen`이 맡는다(연속 입력 없음). 같은 시트가 `initial` prop으로 수정 모드가 되며(`KeepDetailScreen`), `tagMap` prop(웹 자동완성 맵)으로 기존 태그 선택 칩을 그린다. `utils/keepTags.ts`는 태그 후보 펼치기·검색·토글·Tagify 직렬화·상세 태그 해석을, `utils/keepEdit.ts`는 수정 초기값·선택지(비활성 말머리·종결 Project 유지)·동시 수정 판정·실패 메시지를, `keepFormData.toKeepEditFormData`는 웹 수정 모달과 같은 전체 재전송(보존 필드 복사, 불가 시 `KeepEditPreserveError`)을 소유한다. Keep 말머리 색은 `types/prospectiveKeep.keepPrefixColor`(textClass → 색, 없으면 `#287D94`) 하나를 목록·상세·시트·필터가 공유한다.

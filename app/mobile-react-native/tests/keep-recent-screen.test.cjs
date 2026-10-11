@@ -37,7 +37,7 @@ function harness(apiOverrides = {}) {
       ScrollView: "ScrollView", Text: "Text", TextInput: "TextInput", View: "View", StyleSheet: { create: (styles) => styles } },
     "react-native-safe-area-context": { SafeAreaView: "SafeAreaView" },
     "@react-navigation/native": { useNavigation: () => ({ navigate() {} }), useFocusEffect: (callback) => { focused.push(callback); } },
-    "../api/dreamDiaryApi": { getKeepList: async () => FIXTURE_LIST, getKeepProjects: async () => [], getKeepTags: async () => [], getKeepPrefixOptions: async () => [], setKeepLifecycle: async () => {}, toggleKeepState: async () => {}, ...apiOverrides },
+    "../api/dreamDiaryApi": { getKeepList: async () => FIXTURE_LIST, getKeepProjects: async () => [], getKeepTags: async () => [], getKeepPrefixOptions: async () => [], getKeepTagCategoryMap: async () => ({}), setKeepLifecycle: async () => {}, toggleKeepState: async () => {}, ...apiOverrides },
     "../api/client": { isUnauthorizedError: (error) => error?.status === 401 },
     "../navigation/appMenu": { MENU_URL: { KEEP: "/keep" } },
     "../components/navigation/AppMenu": { MenuScreenHeader: "MenuHeader" },
@@ -45,7 +45,10 @@ function harness(apiOverrides = {}) {
     "../components/keep/KeepBadges": { KeepLifecycleBadge: "LifecycleBadge", KeepPrefixText: "Prefix", KeepStateBadge: "StateBadge", KeepTagChips: "Tags" },
     "../components/keep/KeepFilterSheet": { KeepFilterSheet: "FilterSheet" },
     "../components/keep/KeepSwipeRow": { KeepSwipeRow: "SwipeRow" },
-    "../components/keep/KeepLifecycleMenu": { KeepLifecycleMenu: "LifecycleMenu" }
+    "../components/keep/KeepLifecycleMenu": { KeepLifecycleMenu: "LifecycleMenu" },
+    "../components/keep/KeepProjectMoveSheet": { KeepProjectMoveSheet: "MoveSheet" },
+    "../components/keep/useKeepEditSheet": { useKeepEditSheet: () => ({ openEdit: async () => {}, loading: false, savingRef: { current: false }, sheetProps: { visible: false, projects: [], prefixes: [], defaultProjectId: null, initial: null, tagMap: {}, onSubmit: async () => ({ ok: false, message: null }), onClose() {} } }) },
+    "../components/keep/KeepQuickAddSheet": { KeepQuickAddSheet: "QuickAddSheet" }
   };
   const cache = new Map();
   class FixedDate extends Date {
