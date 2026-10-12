@@ -8,7 +8,9 @@ export const colors = {
   muted: "#9A8F83",
   accent: "#6E4C2F",
   onAccent: "#FFF8EF",
-  onDark: "#FFF8EF"
+  onDark: "#FFF8EF",
+  /** 위험·임박 강조 빨강 (오늘 기한 등). background(#F7F2EA) 대비 약 5.9:1 (WCAG AA) */
+  danger: "#B42318"
 } as const;
 
 /**

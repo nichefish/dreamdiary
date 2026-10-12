@@ -359,6 +359,56 @@ class LifecycleServiceTest {
         assertEquals(null, service.getKeepLifecycleMap(List.of(FIXTURE_CONTENT_ID)).get(FIXTURE_CONTENT_ID).getResolvedAt());
     }
 
+    /** Keep 을 DROPPED 로 바꾸면 상태 변경 시각을 UTC 로 새로 기록한다. */
+    @Test
+    void keepDroppedChangeStampsChangedAt() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.PENDING);
+        lifecycle.setChangedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.of(lifecycle));
+        final LocalDateTime before = LocalDateTime.now(ZoneOffset.UTC);
+        service.set(keepRequest(LifecycleKey.DROPPED));
+        final LocalDateTime after = LocalDateTime.now(ZoneOffset.UTC);
+        assertEquals(LifecycleKey.DROPPED.key, lifecycle.getLifecycleKey());
+        assertTrue(!lifecycle.getChangedAt().isBefore(before) && !lifecycle.getChangedAt().isAfter(after));
+    }
+
+    /** OPEN(행 없음)에서 처음 상태를 저장하면 컨텐츠 타입과 관계없이 변경 시각을 기록한다. */
+    @Test
+    void firstLifecycleInsertStampsChangedAt() throws Exception {
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, FIXTURE_CONTENT_TYPE.key))
+                .thenReturn(Optional.empty());
+        final LocalDateTime before = LocalDateTime.now(ZoneOffset.UTC);
+        service.set(request(LifecycleKey.PENDING));
+        verify(repository).save(argThat(entity -> entity.getChangedAt() != null && !entity.getChangedAt().isBefore(before)));
+    }
+
+    /** 같은 상태의 반복 요청은 변경 시각을 유지한다. */
+    @Test
+    void sameStateRepeatPreservesChangedAt() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.DROPPED);
+        lifecycle.setChangedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.of(lifecycle));
+        service.set(keepRequest(LifecycleKey.DROPPED));
+        assertEquals(FIXTURE_RESOLVED_AT, lifecycle.getChangedAt());
+    }
+
+    /** Keep 목록·상세 공용 일괄 조회는 종결 상태의 변경 시각을 UTC 로 노출하고, 완료가 아니면 resolvedAt 은 비운다. */
+    @Test
+    void keepMapExposesChangedAtAndSerializesUtc() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.DROPPED);
+        lifecycle.setChangedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findAllByRefContentTypeAndRefIdIn(ContentType.PROSPECTIVE_KEEP.key, List.of(FIXTURE_CONTENT_ID)))
+                .thenReturn(List.of(lifecycle));
+        final LifecycleCmpstn result = service.getKeepLifecycleMap(List.of(FIXTURE_CONTENT_ID)).get(FIXTURE_CONTENT_ID);
+        assertTrue(result.is(LifecycleKey.DROPPED));
+        assertEquals(FIXTURE_RESOLVED_AT, result.getChangedAt());
+        assertEquals(null, result.getResolvedAt());
+        final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        assertEquals("2026-01-02T03:04:05.123456Z", mapper.readTree(mapper.writeValueAsString(result)).get("changedAt").asText());
+    }
+
     /** 빈 ID 목록은 DB를 조회하지 않는다. */
     @Test
     void keepMapEmptyInputSkipsQuery() {

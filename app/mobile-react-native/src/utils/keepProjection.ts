@@ -7,6 +7,7 @@ import {
 } from "../types/prospectiveKeep";
 import { displayTagsOf } from "../types/journalDay";
 import { daysUntilExpire, normalizeExpireDt } from "./keepExpire";
+import { byTerminalRecentDesc } from "./keepTerminalSort";
 
 /**
  * Keep 목록 클라이언트 투영 — 웹 KeepPage.vue 의 filtered / openItems / resolvedItems 규칙을 옮기고 `기한` 보기를 더했다.
@@ -81,9 +82,12 @@ export function openKeeps(list: KeepItem[]): KeepItem[] {
   return list.filter((it) => !isKeepTerminal(it)).slice().sort(byExpireDtAsc);
 }
 
-/** 종결 = RESOLVED·FAILED·EXPIRED·DROPPED, 서버 순서 그대로 (웹 resolvedItems) */
+/**
+ * 종결 = RESOLVED·FAILED·EXPIRED·DROPPED, 최근 종결 순 (상태 변경 시각 changedAt → 완료 시각 resolvedAt → 수정일시 → 등록일시, 같으면 id 내림차순).
+ * 웹 resolvedItems 는 서버 순서(sortOrder → id) 그대로다 — 모바일만 최근 종결 순 (2026-10-11).
+ */
 export function terminalKeeps(list: KeepItem[]): KeepItem[] {
-  return list.filter((it) => isKeepTerminal(it));
+  return list.filter((it) => isKeepTerminal(it)).sort(byTerminalRecentDesc);
 }
 
 export type KeepDueBucket = "PAST" | "TODAY" | "WEEK" | "LATER";

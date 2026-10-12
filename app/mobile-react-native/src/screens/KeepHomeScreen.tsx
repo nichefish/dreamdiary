@@ -72,10 +72,10 @@ const EMPTY_TEXT: Record<KeepView, string> = {
   TERMINAL: "종결된 Keep이 없습니다."
 };
 
-/** 기한 묶음 머리 색 — 지남은 경고색(웹 text-warning), 오늘은 강조 */
+/** 기한 묶음 머리 색 — 지남은 경고색(웹 text-warning), 오늘은 빨강(행의 오늘 기한 글자와 같은 colors.danger) */
 const DUE_HEADER_COLOR: Record<KeepDueBucket, string> = {
   PAST: "#B7791F",
-  TODAY: colors.accent,
+  TODAY: colors.danger,
   WEEK: colors.secondaryText,
   LATER: colors.muted
 };
@@ -857,7 +857,8 @@ const styles = StyleSheet.create({
   badgeRow: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
   sub: { fontSize: 12.5, color: colors.muted, lineHeight: 18 },
   expireOverdue: { color: OVERDUE_COLOR, fontWeight: "800" },
-  expireToday: { color: colors.accent, fontWeight: "800" },
+  /** 오늘 기한 — 굵게 대신 빨강 글자 (깜빡임 없음) */
+  expireToday: { color: colors.danger },
   loader: { marginTop: 32 },
   stateBox: { alignItems: "center", gap: 10, paddingVertical: 32 },
   errorText: { color: "#C0392B", fontSize: 14, textAlign: "center" },

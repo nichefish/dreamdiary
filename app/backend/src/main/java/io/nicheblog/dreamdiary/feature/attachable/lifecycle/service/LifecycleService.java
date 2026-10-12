@@ -113,10 +113,12 @@ public class LifecycleService {
         } else if (lifecycle == null) {
             final LifecycleEntity created = LifecycleEntity.of(lifecycleSet);
             this.updateKeepResolvedAt(created, lifecycleSet, previousKey);
+            this.updateChangedAt(created, lifecycleSet, previousKey);
             repository.save(created);
             persistenceAction = "INSERT";
         } else {
             this.updateKeepResolvedAt(lifecycle, lifecycleSet, previousKey);
+            this.updateChangedAt(lifecycle, lifecycleSet, previousKey);
             lifecycle.setLifecycleKey(lifecycleSet.getLifecycleKey().key);
             repository.save(lifecycle);
             persistenceAction = "UPDATE";
@@ -187,6 +189,27 @@ public class LifecycleService {
         log.debug("[Lifecycle.set] Keep completion timestamp. id={}, previous={}, current={}, action={}, resolvedAt={}",
                 request.getId(), previousKey, request.getLifecycleKey(), action, lifecycle.getResolvedAt());
     }
+    /**
+     * 현재 상태로 바뀐 시각을 UTC로 기록한다. (모든 컨텐츠 타입 공통)
+     *
+     * <p>상태가 실제로 바뀌는 저장(신규 행 또는 다른 키로 갱신)에만 새 시각을 찍고,
+     * 같은 상태의 반복 요청은 기존 값(null 포함)을 유지한다. OPEN은 호출 경로에서 행을 삭제하므로 여기 오지 않는다.</p>
+     *
+     * @param lifecycle 저장할 현재 라이프사이클 행
+     * @param request 라이프사이클 설정 요청
+     * @param previousKey 변경 전 상태
+     */
+    private void updateChangedAt(
+            final LifecycleEntity lifecycle,
+            final LifecycleSetDto request,
+            final LifecycleKey previousKey
+    ) {
+        if (request.getLifecycleKey() == previousKey) return;
+        lifecycle.setChangedAt(LocalDateTime.now(ZoneOffset.UTC));
+        log.debug("[Lifecycle.set] state change timestamp. contentType={}, id={}, previous={}, current={}, changedAt={}",
+                request.getContentType(), request.getId(), previousKey, request.getLifecycleKey(), lifecycle.getChangedAt());
+    }
+
     /**
      * 저널 UX에 남아 있는 state 파생 처리를 적용한다.
      *
@@ -306,7 +329,7 @@ public class LifecycleService {
     }
 
     /**
-     * Keep 목록·상세에 필요한 현재 상태와 완료 시각을 한 번의 일괄 조회로 반환한다.
+     * Keep 목록·상세에 필요한 현재 상태·완료 시각·상태 변경 시각을 한 번의 일괄 조회로 반환한다.
      *
      * @param refIds 조회할 Keep ID 목록
      * @return Keep ID별 라이프사이클 조합 객체. 행 부재는 호출자가 OPEN으로 표시한다.
@@ -321,6 +344,7 @@ public class LifecycleService {
                         lifecycle -> {
                             final LifecycleCmpstn result = LifecycleCmpstn.of(normalize(lifecycle.getLifecycleKey()));
                             if (result.is(LifecycleKey.RESOLVED)) result.setResolvedAt(lifecycle.getResolvedAt());
+                            result.setChangedAt(lifecycle.getChangedAt());
                             return result;
                         },
                         (left, right) -> right,

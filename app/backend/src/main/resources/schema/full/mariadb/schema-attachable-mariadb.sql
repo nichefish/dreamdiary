@@ -244,6 +244,7 @@ CREATE TABLE IF NOT EXISTS lifecycle (
     --
     lifecycle_key VARCHAR(32) NOT NULL COMMENT 'lifecycle key',
     resolved_at DATETIME(6) NULL COMMENT 'Keep resolved transition at UTC',
+    changed_at DATETIME(6) NULL COMMENT 'lifecycle state changed at UTC',
     deleted_at DATETIME COMMENT 'deleted at',
     CONSTRAINT ck_lifecycle_persisted_key CHECK (lifecycle_key IN ('PENDING', 'RESOLVED', 'FAILED', 'EXPIRED', 'DROPPED')),
     UNIQUE KEY uk_lifecycle (ref_content_type, ref_id),

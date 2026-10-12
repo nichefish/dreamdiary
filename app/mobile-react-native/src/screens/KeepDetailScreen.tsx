@@ -116,6 +116,8 @@ export function KeepDetailScreen({ route, navigation }: Props) {
   const tags = displayTagsOf(item?.tag);
   const expire = normalizeExpireDt(item?.expireDt);
   const overdue = !!item && !!expire && !isKeepTerminal(item) && daysUntilExpire(expire, today) < 0;
+  /** 오늘 기한(미종결) — 목록과 같이 빨강 글자 */
+  const dueToday = !!item && !!expire && !isKeepTerminal(item) && daysUntilExpire(expire, today) === 0;
   const body = markdownToPlainText(item?.content);
   const resolvedProjectTitle = item?.projectId == null ? "" : projectTitle || `Project #${item.projectId}`;
   const shareTitle = `Keep ${item?.title?.trim() ?? ""}`.trim();
@@ -197,7 +199,7 @@ export function KeepDetailScreen({ route, navigation }: Props) {
 
             <View style={styles.fields}>
               <Field label="기한">
-                <Text style={[styles.fieldText, overdue && styles.fieldTextOverdue, !expire && styles.fieldTextEmpty]}>
+                <Text style={[styles.fieldText, overdue && styles.fieldTextOverdue, dueToday && styles.fieldTextToday, !expire && styles.fieldTextEmpty]}>
                   {expire ? keepExpireText(item, today, "full") : "없음"}
                 </Text>
               </Field>
@@ -326,6 +328,7 @@ const styles = StyleSheet.create({
   fieldValue: { flex: 1 },
   fieldText: { color: colors.text, fontSize: 14.5, lineHeight: 20 },
   fieldTextOverdue: { color: OVERDUE_COLOR, fontWeight: "800" },
+  fieldTextToday: { color: colors.danger },
   fieldTextEmpty: { color: colors.muted },
   bodySection: {
     gap: 8,

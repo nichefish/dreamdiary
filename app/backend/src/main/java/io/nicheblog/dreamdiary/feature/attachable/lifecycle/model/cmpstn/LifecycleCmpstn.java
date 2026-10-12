@@ -29,6 +29,10 @@ public class LifecycleCmpstn
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
     private LocalDateTime resolvedAt;
 
+    /** 현재 상태로 바뀐 시각을 UTC ISO-8601 문자열로 전달한다. 미확인(마이그레이션 이전 행)은 null이다. */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+    private LocalDateTime changedAt;
+
     /**
      * 상태 키와 표시명으로 완료 시각 없는 조합 객체를 만든다.
      *

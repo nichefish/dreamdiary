@@ -32,6 +32,8 @@ export interface KeepLifecycle {
   lifecycleDesc?: string | null;
   /** 서버가 저장한 현재 완료 전이 시각(UTC ISO-8601). 미확인 시 null이다. */
   resolvedAt?: string | null;
+  /** 현재 상태로 바뀐 시각(UTC ISO-8601, 서버 V0.30.16 lifecycle.changed_at). 마이그레이션 이전 행·구 서버는 null/없음 */
+  changedAt?: string | null;
 }
 
 /**

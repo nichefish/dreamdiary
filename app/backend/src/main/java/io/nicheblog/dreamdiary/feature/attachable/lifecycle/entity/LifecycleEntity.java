@@ -57,6 +57,11 @@ public class LifecycleEntity
     @Comment("Keep resolved transition at UTC")
     private LocalDateTime resolvedAt;
 
+    /** 현재 상태로 바뀐 시각(UTC). 상태가 실제로 바뀔 때만 갱신하며, V0.30.16 이전 행은 null(미확인)이다. */
+    @Column(name = "changed_at")
+    @Comment("lifecycle state changed at UTC")
+    private LocalDateTime changedAt;
+
     /**
      * 라이프사이클 설정 요청으로 신규 엔티티를 생성한다.
      *

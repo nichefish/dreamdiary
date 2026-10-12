@@ -39,6 +39,8 @@ Project 관리 모달은 lifecycle 배지와 직접 노출한 순서 이동 버�
 
 ## Keep 완료 시각
 
+✓ 서버는 lifecycle 상태가 실제로 바뀌는 저장(신규 행 또는 다른 키로 갱신)마다 현재 UTC 시각을 `lifecycle.changed_at`에 저장하고(모든 콘텐츠 타입, V0.30.16), 같은 상태의 반복 요청은 기존 값(null 포함)을 유지한다. `OPEN`은 행 삭제라 시각도 함께 사라진다. Keep 목록·상세는 `lifecycle.changedAt`(UTC ISO-8601 또는 null)으로 제공한다.
+
 ✓ 서버는 Keep의 `RESOLVED` 진입 시 현재 UTC 시각을 `lifecycle.resolved_at`에 저장한다. 동일한 `RESOLVED` 요청은 저장된 시각(null 포함)을 유지한다. `PENDING`·`FAILED`·`EXPIRED`·`DROPPED` 전이는 시각을 비우고 `OPEN` 전이는 lifecycle 행을 삭제한다. 재완료는 새 완료 시각을 저장한다. 완료 시각은 클라이언트 입력을 받지 않으며 Keep 목록·상세 조회의 `lifecycle.resolvedAt`으로 UTC ISO-8601 문자열을 제공한다. 시각 미확인 완료는 null이며 수정 시각에서 추정하지 않는다. SQL `V0.30.15__add_lifecycle_resolved_at.sql`을 수동 적용한 DB가 실행 전제다.
 
 ✓ 최근 완료 표시는 `RESOLVED`이며 완료 후 0 이상 1시간 미만인 항목만 사용한다. 웹과 앱 모두 시간대가 명시된 서버 완료 시각을 사용하고 시각 미확인·잘못된 시각·미래 시각은 최근 완료에서 제외한다. 첫 만료 경계에 타이머를 예약해 API 재호출 없이 그룹을 갱신하고 화면 종료 시 타이머를 해제한다. 웹은 브라우저 가시성 변경, 앱은 화면 복귀·앱 활성화·목록 응답 갱신 시 현재 시각으로 맞춘다. 최근 완료는 처음 5건이며 `더 보기`·`접기`로 전체와 미리보기를 전환한다. 렌더되는 행 ID 구성이 바뀌면 웹의 기존 Metronic 메뉴 재바인딩 경로를 사용한다.

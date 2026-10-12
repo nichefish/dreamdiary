@@ -32,7 +32,7 @@ Keep 행의 컨텍스트 메뉴에서 Project 미지정과 Project 목록을 단
 
 ## Keep lifecycle 조회 데이터
 
-✓ Keep 목록과 상세 DTO는 `lifecycleKey`·`lifecycleDesc`·`resolvedAt`을 포함한다. 상태와 완료 시각은 목록당 한 번의 lifecycle 일괄 조회로 부착하고 상세 본문 캐시와 분리한다. lifecycle 행 부재는 `OPEN`, 완료 시각은 null이다. `resolvedAt`은 UTC ISO-8601 문자열 또는 null이며 현재 `RESOLVED` 전이 시각을 나타낸다.
+✓ Keep 목록과 상세 DTO는 `lifecycleKey`·`lifecycleDesc`·`resolvedAt`을 포함한다. 상태와 완료 시각은 목록당 한 번의 lifecycle 일괄 조회로 부착하고 상세 본문 캐시와 분리한다. lifecycle 행 부재는 `OPEN`, 완료 시각은 null이다. `resolvedAt`은 UTC ISO-8601 문자열 또는 null이며 현재 `RESOLVED` 전이 시각을 나타낸다. `changedAt`(2026-10-11, V0.30.16)은 종결 4종·보류를 포함해 현재 상태로 바뀐 UTC 시각이며, 마이그레이션 이전 행은 null이다.
 
 ## Keep 최근 완료 투영
 
