@@ -77,6 +77,10 @@ export interface KeepProject {
   sortOrder?: number | null;
   /** OPEN · PENDING · RESOLVED · DROPPED. 저장 row 가 없으면 OPEN */
   lifecycle?: KeepLifecycle | null;
+  /** 선택된 개인 말머리 ID (PROSPECTIVE_PROJECT 목록). 없으면 null */
+  prefixId?: number | null;
+  /** 표시용 Project 말머리 (백엔드 PrefixDto). 웹 Project 관리 모달에서만 고른다. 비활성이어도 기존 선택이면 내려온다 */
+  prefix?: KeepPrefix | null;
 }
 
 /** 태그 필터 선택지 — 백엔드 TagDto (GET /api/tags?contentType=PROSPECTIVE_KEEP) 정규화 */
@@ -174,9 +178,20 @@ export function openKeepProjects(projects: KeepProject[]): KeepProject[] {
   return projects.filter((p) => keepProjectLifecycleKeyOf(p) === "OPEN");
 }
 
-/** 표시용 Project 이름 */
+/** Project 말머리 표기. 없으면 빈 문자열. 예: "[게임]" */
+export function keepProjectPrefixLabel(project: KeepProject | null | undefined): string {
+  const name = project?.prefix?.name?.trim();
+  return name ? `[${name}]` : "";
+}
+
+/**
+ * 표시용 Project 이름 — 말머리를 공백 없이 앞에 붙인다. 예: "[게임]왕국건설스토리" (웹 projectDisplayTitle 과 같은 규칙).
+ * 칩·필터·빠른 추가·행 📁 표기·상세·복사 텍스트가 모두 이 함수를 쓴다.
+ */
 export function keepProjectTitle(project: KeepProject | null | undefined): string {
-  return project?.title?.trim() || (project ? `Project #${project.id}` : "");
+  if (!project) return "";
+  const name = project.title?.trim() || `Project #${project.id}`;
+  return `${keepProjectPrefixLabel(project)}${name}`;
 }
 
 /** 웹 Keep 말머리 표기 색 (KeepPage.vue 가 textClass 대신 인라인 #287D94 로 고정) */

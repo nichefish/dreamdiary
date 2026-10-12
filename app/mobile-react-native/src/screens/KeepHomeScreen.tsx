@@ -25,6 +25,7 @@ import {
   keepHasState,
   keepLifecycleKeyOf,
   keepLifecycleMeta,
+  keepProjectPrefixLabel,
   keepProjectTitle,
   openKeepProjects,
   type KeepItem,
@@ -58,6 +59,7 @@ import { KeepLifecycleBadge, KeepPrefixText, KeepStateBadge, KeepTagChips } from
 import { KeepFilterSheet } from "../components/keep/KeepFilterSheet";
 import { KeepSwipeRow } from "../components/keep/KeepSwipeRow";
 import { KeepLifecycleMenu } from "../components/keep/KeepLifecycleMenu";
+import { colorFromTextClass } from "../components/journal/journalTagStyle";
 import { isRecentKeep, recentKeeps, nextKeepCompletionExpiry, KEEP_RECENT_PREVIEW_SIZE } from "../utils/keepRecent";
 
 const VIEWS: { id: KeepView; label: string }[] = [
@@ -547,10 +549,17 @@ export function KeepHomeScreen() {
     void load("refresh");
   }
 
-  const scopeChips: { key: string; label: string; scope: KeepProjectScope }[] = [
+  // Project 칩은 [말머리]이름. 말머리 부분만 서버 textClass 색으로 칠한다(모르는 클래스면 칩 글자색).
+  const scopeChips: { key: string; label: string; prefix?: string; prefixColor?: string | null; scope: KeepProjectScope }[] = [
     { key: "all", label: "전체", scope: "ALL" },
     { key: "none", label: "미지정", scope: "UNASSIGNED" },
-    ...openProjects.map((p) => ({ key: `p${p.id}`, label: keepProjectTitle(p), scope: p.id as KeepProjectScope }))
+    ...openProjects.map((p) => ({
+      key: `p${p.id}`,
+      label: keepProjectTitle(p),
+      prefix: keepProjectPrefixLabel(p),
+      prefixColor: colorFromTextClass(p.prefix?.textClass),
+      scope: p.id as KeepProjectScope
+    }))
   ];
 
   const hasConditions = activeChips.length > 0;
@@ -586,7 +595,10 @@ export function KeepHomeScreen() {
                     style={[styles.scopeChip, active && styles.scopeChipActive]}
                   >
                     <Text style={[styles.scopeChipText, active && styles.scopeChipTextActive]} numberOfLines={1}>
-                      {chip.label}
+                      {chip.prefix ? (
+                        <Text style={chip.prefixColor ? { color: chip.prefixColor } : null}>{chip.prefix}</Text>
+                      ) : null}
+                      {chip.prefix ? chip.label.slice(chip.prefix.length) : chip.label}
                     </Text>
                   </Pressable>
                 );
@@ -764,7 +776,8 @@ const styles = StyleSheet.create({
   listHeader: { gap: 10, marginBottom: 2 },
   scopeRow: { gap: 8, paddingRight: 8 },
   scopeChip: {
-    maxWidth: 180,
+    // [말머리]이름 이 들어가도 대부분 한 줄에 보이도록 180 → 220. 넘치면 꼬리 말줄임(말머리는 앞이라 남는다).
+    maxWidth: 220,
     paddingHorizontal: 13,
     paddingVertical: 6,
     borderRadius: 18,

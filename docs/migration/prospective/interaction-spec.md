@@ -37,6 +37,8 @@ Keep 행의 `Project로 이동`은 본문·말머리·태그·상태·라이프�
 
 Project 관리 모달은 lifecycle 배지와 직접 노출한 순서 이동 버튼, 수정·lifecycle·삭제 컨텍스트 메뉴를 사용한다. 메뉴 액션은 dropdown을 닫고, 수정은 선택 행 아래에 공통 편집 폼을 연다. lifecycle 전이 후 전체 Project를 재조회하고 loading 종료 뒤 다시 생성된 메뉴 DOM을 재바인딩한다.
 
+Project 말머리: 편집 폼에서 말머리를 고르고 저장하면 `prefixId`가 함께 전송된다(`말머리 없음`은 빈 값 → 해제). 모달 상단 `말머리 관리`를 누르면 Project 관리 모달은 그대로 둔 채 그 위에 개인 말머리 관리 모달(`PROSPECTIVE_PROJECT`)이 열리고 포커스가 옮겨진다. 이때 Esc는 위 모달만 닫으며(아래 모달은 inert), 위 모달의 확인창(SweetAlert)은 두 모달보다 위에 뜬다. 말머리 저장·활성 변경 직후와 닫을 때 선택지와 Project 목록을 다시 조회하므로 이름·색·비활성 변경이 탭·행·선택기에 바로 반영된다. 닫으면 포커스가 Project 관리 모달로 돌아온다. 비활성 말머리는 신규 선택지에서 빠지지만 이미 붙은 Project에는 계속 표시된다.
+
 ## Keep 완료 시각
 
 ✓ 서버는 lifecycle 상태가 실제로 바뀌는 저장(신규 행 또는 다른 키로 갱신)마다 현재 UTC 시각을 `lifecycle.changed_at`에 저장하고(모든 콘텐츠 타입, V0.30.16), 같은 상태의 반복 요청은 기존 값(null 포함)을 유지한다. `OPEN`은 행 삭제라 시각도 함께 사라진다. Keep 목록·상세는 `lifecycle.changedAt`(UTC ISO-8601 또는 null)으로 제공한다.

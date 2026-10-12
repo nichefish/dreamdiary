@@ -16,11 +16,19 @@
 
 `/keep`에서 사용자 Project 전체 목록과 lifecycle 배지를 표시한다. 위·아래 이동은 행에 직접 노출하고 수정·lifecycle 라디오 서브메뉴·삭제는 Metronic 컨텍스트 메뉴에 둔다. 메뉴 액션은 열린 dropdown을 닫는다. 추가는 목록 상단, 수정은 선택 행 바로 아래에 공통 `ProspectiveProjectEditorForm`을 열고 행을 강조한다. 목록 DOM이 바뀌거나 loading이 행을 다시 만들면 `reinitMetronicAfterDom()`으로 메뉴를 재바인딩한다. 상단 탭과 신규 Keep 배치 대상은 `OPEN` Project만 사용한다.
 
+Project 말머리(`PROSPECTIVE_PROJECT` 개인 목록): 목록 행은 `ProspectiveProjectTitle`로 `[말머리]이름`을 표시한다. 상단 `말머리 관리` 버튼(편집 폼에는 없음)은 `managePrefixes`를 emit하고, `KeepPage`가 `PersonalPrefixManageModal`을 이 모달 **형제**로 모달 스택(6100)보다 위·SweetAlert(6200)보다 아래 레이어(`MODAL_BASE_Z + MODAL_STEP*5`)에 렌더링한다. 열려 있는 동안 이 모달은 `suspended`(inert·aria-hidden, Esc 무시)이고, 닫히면 `focus()`(defineExpose)로 포커스를 돌려받는다. 말머리 저장·활성 변경·닫기 뒤 `KeepPage`가 선택지(`fetchOptions(..., true)`)와 Project 목록을 다시 조회한다. 삭제 확인 문구도 `[말머리]이름`을 쓴다.
+
 **현재 Vue 동등**: ✓ 구현 완료
 
 ## `ProspectiveProjectEditorForm`
 
-Project 이름·설명을 편집하고 저장·취소 이벤트를 관리 모달로 전달한다. 신규와 수정이 같은 필드·검증·저장 동작을 공유하며 배치 위치와 편집 대상은 관리 모달이 결정한다.
+Project 이름·말머리·설명을 편집하고 저장·취소 이벤트를 관리 모달로 전달한다. 신규와 수정이 같은 필드·검증·저장 동작을 공유하며 배치 위치와 편집 대상은 관리 모달이 결정한다. 말머리 선택기는 `말머리 없음` + 활성 개인 말머리(`[이름]`, 평문 option)이며, 수정 중 Project의 기존 비활성 말머리는 `resolveJournalPrefixField`로 계산해 disabled 옵션 `[이름] (미사용)`으로만 보존한다. 말머리 선택기는 이름 입력과 같은 행 왼쪽에 좁게(최대 10rem) 두고 이름 입력이 나머지 너비를 채우며, 라벨은 위의 `이름` 하나만 쓴다(추가·수정 폼 공통). 폼 안에는 `말머리 관리` 버튼이 없고 관리는 모달 상단 버튼으로만 연다. 저장은 `prospectiveProject.saveProject`가 `prefixId`를 빈 값(해제)까지 항상 전송한다(서버는 누락도 해제로 해석).
+
+**현재 Vue 동등**: ✓ 구현 완료
+
+## `ProspectiveProjectTitle` · `utils/projectDisplayTitle.ts`
+
+Project 표시 이름 SSOT. `projectDisplayTitle(project)` = `[말머리]이름`(공백 없음, 말머리 없으면 이름만) — `<option>`·확인 문구·미리보기 메타 같은 평문 위치에 쓴다. `ProspectiveProjectTitle` 컴포넌트는 말머리 부분만 `fw-bold` + 서버 `prefix.textClass` 색으로 칠한다. 사용처: Keep 화면 Project 탭, Project 관리 모달 행, `ProspectiveKeepProjectMoveMenu`, Keep 등록 모달 Project select·미리보기 `projectTitle`.
 
 **현재 Vue 동등**: ✓ 구현 완료
 

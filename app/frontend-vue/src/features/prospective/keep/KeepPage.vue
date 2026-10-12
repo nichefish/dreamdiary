@@ -63,7 +63,7 @@
           </li>
           <li v-for="project in projectStore.openProjects" :key="project.id" class="nav-item">
             <button type="button" class="nav-link text-nowrap" :class="{ active: selectedProjectScope === project.id }" @click="selectedProjectScope = project.id">
-              {{ project.title }}
+              <ProspectiveProjectTitle :project="project" />
             </button>
           </li>
         </ul>
@@ -404,15 +404,36 @@
   <TagProfileModal @success="fetchTagCloud" />
   <ProspectiveProjectManageModal
     v-if="projectManageOpen"
+    ref="projectManageModalRef"
     :keep-counts="projectKeepCounts"
+    :suspended="projectPrefixManageOpen"
     @close="projectManageOpen = false"
     @changed="handleProjectsChanged"
+    @manage-prefixes="openProjectPrefixManage"
   />
+  <!--
+    Project 말머리 관리: Project 관리 모달 안에 중첩하지 않고 형제로 렌더링한다.
+    레이어를 모달 스택(6100)보다 위, SweetAlert(6200)보다 아래에 두어 확인창이 가려지지 않게 한다.
+  -->
+  <div
+    v-if="projectManageOpen && projectPrefixManageOpen"
+    ref="projectPrefixLayerRef"
+    class="keep-project-prefix-layer"
+    :style="{ position: 'relative', zIndex: PROJECT_PREFIX_LAYER_Z }"
+  >
+    <PersonalPrefixManageModal
+      :content-type="PROJECT_PREFIX_CONTENT_TYPE"
+      :title="t('prospective.project.prefix.manage.title')"
+      :description="t('prospective.project.prefix.manage.description')"
+      @close="closeProjectPrefixManage"
+      @changed="handleProjectPrefixesChanged"
+    />
+  </div>
   <!--end::Keep 전수관리 화면-->
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
 import axios from "axios";
 import { isRecentKeep, recentKeeps, nextKeepCompletionExpiry, KEEP_RECENT_PREVIEW_SIZE } from "./utils/recentCompletion";
 import { swalAlert, swalConfirm, swalRequestError } from "@/shared/utils/swal";
@@ -429,8 +450,11 @@ import TagContextMenu from "@/shared/ui/tag/TagContextMenu.vue";
 import TagProfileModal from "@/features/attachable/TagProfileModal.vue";
 import { useTagContextMenuStore } from "@/shared/ui/tag/tagContextMenu";
 import { useTagProfileAction } from "@/features/attachable/composables/useTagProfileAction";
-import { useProspectiveProjectStore } from "@/features/prospective/project/stores/prospectiveProject";
+import { PROJECT_PREFIX_CONTENT_TYPE, useProspectiveProjectStore } from "@/features/prospective/project/stores/prospectiveProject";
 import ProspectiveProjectManageModal from "@/features/prospective/project/modals/ProspectiveProjectManageModal.vue";
+import ProspectiveProjectTitle from "@/features/prospective/project/components/ProspectiveProjectTitle.vue";
+import PersonalPrefixManageModal from "@/features/user/components/PersonalPrefixManageModal.vue";
+import { MODAL_BASE_Z, MODAL_STEP } from "@/shared/utils/overlayZIndex";
 import ProspectiveKeepProjectMoveMenu from "@/features/prospective/project/components/ProspectiveKeepProjectMoveMenu.vue";
 
 /** Keep 전 범위 항목 — 백엔드 ProspectiveKeepDto 직렬화(scope=all) 중 화면 표시·검색분. */
@@ -463,6 +487,12 @@ const projectStore = useProspectiveProjectStore();
 /** 기본 범위는 아직 Project에 배치하지 않은 Keep이다. */
 const selectedProjectScope = ref<"UNASSIGNED" | "ALL" | number>("UNASSIGNED");
 const projectManageOpen = ref(false);
+/** Project 말머리 관리 모달 (Project 관리 모달 위 별도 레이어). */
+const projectPrefixManageOpen = ref(false);
+const projectManageModalRef = ref<{ focus: () => void } | null>(null);
+const projectPrefixLayerRef = ref<HTMLElement | null>(null);
+/** 모달 스택 기준(6100) 위, TinyMCE 보조(6190)·SweetAlert(6200) 아래. */
+const PROJECT_PREFIX_LAYER_Z = MODAL_BASE_Z + MODAL_STEP * 5;
 
 /** Project 삭제 확인에 표시할 현재 전 범위 Keep 연결 개수. */
 const projectKeepCounts = computed<Record<number, number>>(() => {
@@ -935,6 +965,39 @@ onMounted(() => {
     projectError.value = t("prospective.project.list.failure");
   });
 });
+
+/** Project 관리 모달 위에 말머리 관리 모달을 열고 포커스를 옮긴다. 아래 모달은 suspended(inert)가 된다. */
+async function openProjectPrefixManage(): Promise<void> {
+  projectPrefixManageOpen.value = true;
+  await nextTick();
+  projectPrefixLayerRef.value?.querySelector<HTMLElement>(".modal")?.focus();
+}
+
+/** 말머리 관리 모달을 닫고 선택지·Project 목록을 서버 확정 상태로 맞춘 뒤 포커스를 Project 모달로 되돌린다. */
+async function closeProjectPrefixManage(): Promise<void> {
+  projectPrefixManageOpen.value = false;
+  await nextTick();
+  projectManageModalRef.value?.focus();
+  void refreshProjectPrefixes();
+}
+
+/** 말머리 저장·활성 변경 직후: 이름·색·활성 상태가 Project 표시와 선택지에 바로 반영되게 다시 조회한다. */
+function handleProjectPrefixesChanged(): void {
+  void refreshProjectPrefixes();
+}
+
+async function refreshProjectPrefixes(): Promise<void> {
+  try {
+    await Promise.all([
+      personalPrefixOptionsStore.fetchOptions(PROJECT_PREFIX_CONTENT_TYPE, true),
+      projectStore.fetchProjects(),
+    ]);
+    projectError.value = null;
+  } catch (error) {
+    console.error("[keep] project prefix refresh failed", error);
+    projectError.value = t("prospective.project.list.failure");
+  }
+}
 
 /** Project 변경 뒤 삭제된 선택을 전체로 되돌리고 탭 목록을 현재 store와 맞춘다. */
 function handleProjectsChanged(): void {

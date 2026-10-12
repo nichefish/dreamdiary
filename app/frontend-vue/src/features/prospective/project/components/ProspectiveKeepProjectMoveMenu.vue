@@ -19,7 +19,7 @@
           :class="{ active: projectId === project.id, disabled: lifecycleKeyOf(project) !== 'OPEN' }"
           @click.prevent="moveTo(project)"
         >
-          <i v-if="projectId === project.id" class="bi bi-check2 me-2"></i>{{ project.title }}
+          <i v-if="projectId === project.id" class="bi bi-check2 me-2"></i><ProspectiveProjectTitle :project="project" />
         </a>
       </div>
     </div>
@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import type { ProspectiveProject } from "@/features/prospective/project/stores/prospectiveProject";
+import ProspectiveProjectTitle from "@/features/prospective/project/components/ProspectiveProjectTitle.vue";
 
 defineProps<{
   projectId?: number | null;

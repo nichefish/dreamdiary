@@ -34,7 +34,7 @@
                     :key="project.id"
                     :value="project.id"
                     :disabled="projectStore.lifecycleKeyOf(project) !== 'OPEN'"
-                  >{{ project.title }}</option>
+                  >{{ projectDisplayTitle(project) }}</option>
                 </select>
                 <div v-if="projectLoadError" class="text-danger fs-8 mt-2">{{ projectLoadError }}</div>
               </div>
@@ -241,6 +241,7 @@ import { Modal } from "bootstrap";
 import axios from "axios";
 import { useProspectiveKeepModalStore } from "@/features/prospective/keep/stores/prospectiveKeepModal";
 import { usePersonalPrefixOptionsStore } from "@/features/attachable/stores/personalPrefixOptions";
+import { projectDisplayTitle } from "@/features/prospective/project/utils/projectDisplayTitle";
 import { useProspectiveKeepCategoryMapStore } from "@/features/prospective/keep/stores/prospectiveKeepCategoryMap";
 import { resolveJournalPrefixField } from "@/features/journal/utils/journalPrefixField";
 import {
@@ -478,7 +479,10 @@ function resolvePreviewMeta(): KeepPreviewMeta {
   const current = model.value;
   const projectTitle = current?.projectId == null
     ? null
-    : projectStore.projects.find((project) => project.id === current.projectId)?.title ?? null;
+    : (() => {
+      const project = projectStore.projects.find((candidate) => candidate.id === current.projectId);
+      return project ? projectDisplayTitle(project) : null;
+    })();
   return {
     dateText: current?.dateText ?? null,
     expireDt: expireDt.value || null,

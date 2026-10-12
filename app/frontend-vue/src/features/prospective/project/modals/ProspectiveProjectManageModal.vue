@@ -1,5 +1,16 @@
 <template>
-  <div class="modal fade show d-block" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="prospective-project-modal-title" @keydown.esc="emit('close')">
+  <!-- 말머리 관리 모달이 위에 열려 있으면(suspended) 이 모달은 inert로 입력·Esc·포커스를 받지 않는다. -->
+  <div
+    ref="rootEl"
+    class="modal fade show d-block"
+    tabindex="-1"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="prospective-project-modal-title"
+    :inert="suspended || undefined"
+    :aria-hidden="suspended ? 'true' : undefined"
+    @keydown.esc="onEscape"
+  >
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -11,7 +22,10 @@
         </div>
         <div class="modal-body">
           <div v-if="errorMessage" class="alert alert-danger py-3">{{ errorMessage }}</div>
-          <div class="d-flex justify-content-end mb-4">
+          <div class="d-flex justify-content-end gap-2 mb-4">
+            <button type="button" class="btn btn-sm btn-light" :disabled="store.saving" @click="requestPrefixManage">
+              <i class="bi bi-bookmark me-1"></i>{{ t("prospective.project.prefix.manage.button") }}
+            </button>
             <button type="button" class="btn btn-sm btn-primary" :disabled="store.loading || store.saving" @click="beginNew">
               <i class="bi bi-plus-lg me-1"></i>{{ t("prospective.project.add") }}
             </button>
@@ -21,8 +35,12 @@
             v-if="editing && form.id == null"
             v-model:title="form.title"
             v-model:description="form.description"
+            v-model:prefix-id="form.prefixId"
             class="mb-5"
             :saving="store.saving"
+            :prefix-options="prefixOptions"
+            :inactive-prefix="inactivePrefix"
+            :prefix-load-failed="prefixLoadFailed"
             @submit="submit"
             @cancel="cancelEdit"
           />
@@ -39,7 +57,7 @@
               >
                 <div class="flex-grow-1 overflow-hidden">
                   <div class="fw-bold text-truncate">
-                    {{ project.title }}
+                    <ProspectiveProjectTitle :project="project" />
                     <span class="badge fs-9 ms-1" :class="lifecycleBadgeClass(store.lifecycleKeyOf(project))">
                       {{ lifecycleLabel(store.lifecycleKeyOf(project)) }}
                     </span>
@@ -116,8 +134,12 @@
                 v-if="editing && form.id === project.id"
                 v-model:title="form.title"
                 v-model:description="form.description"
+                v-model:prefix-id="form.prefixId"
                 class="mt-2 mb-4 ms-4"
                 :saving="store.saving"
+                :prefix-options="prefixOptions"
+                :inactive-prefix="inactivePrefix"
+                :prefix-load-failed="prefixLoadFailed"
                 @submit="submit"
                 @cancel="cancelEdit"
               />
@@ -137,18 +159,46 @@
 import { computed, onMounted, reactive, ref, watch } from "vue";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { swalAlert, swalConfirm, swalRequestError } from "@/shared/utils/swal";
-import { useProspectiveProjectStore, type ProspectiveProject } from "@/features/prospective/project/stores/prospectiveProject";
+import {
+  PROJECT_PREFIX_CONTENT_TYPE,
+  useProspectiveProjectStore,
+  type ProspectiveProject,
+} from "@/features/prospective/project/stores/prospectiveProject";
 import { reinitMetronicAfterDom } from "@/shared/utils/metronicReinit";
 import { MenuComponent } from "@metronic/assets/ts/components";
 import ProspectiveProjectEditorForm from "@/features/prospective/project/components/ProspectiveProjectEditorForm.vue";
+import ProspectiveProjectTitle from "@/features/prospective/project/components/ProspectiveProjectTitle.vue";
+import { projectDisplayTitle } from "@/features/prospective/project/utils/projectDisplayTitle";
+import { usePersonalPrefixOptionsStore } from "@/features/attachable/stores/personalPrefixOptions";
+import { resolveJournalPrefixField } from "@/features/journal/utils/journalPrefixField";
 
-const props = defineProps<{ keepCounts: Record<number, number> }>();
-const emit = defineEmits<{ close: []; changed: [] }>();
+const props = withDefaults(defineProps<{
+  keepCounts: Record<number, number>;
+  /** 말머리 관리 모달이 위에 열려 있는 동안 true. Esc·입력을 받지 않는다. */
+  suspended?: boolean;
+}>(), { suspended: false });
+/** managePrefixes: 말머리 관리 모달을 이 모달 위 별도 레이어로 열어 달라는 요청 (KeepPage가 형제로 렌더링). */
+const emit = defineEmits<{ close: []; changed: []; managePrefixes: [] }>();
 const store = useProspectiveProjectStore();
+const personalPrefixOptionsStore = usePersonalPrefixOptionsStore();
 const { t } = useLocaleStore();
+const rootEl = ref<HTMLElement | null>(null);
 const editing = ref(false);
 const errorMessage = ref("");
-const form = reactive<{ id?: number; title: string; description: string }>({ title: "", description: "" });
+const form = reactive<{ id?: number; title: string; description: string; prefixId: number | null }>({
+  title: "",
+  description: "",
+  prefixId: null,
+});
+/** Project 말머리 활성 선택지. 관리 모달 저장 뒤 KeepPage가 강제 재조회하면 즉시 반영된다. */
+const prefixOptions = computed(() => personalPrefixOptionsStore.optionsFor(PROJECT_PREFIX_CONTENT_TYPE));
+const prefixLoadFailed = computed(() => personalPrefixOptionsStore.hasFailed(PROJECT_PREFIX_CONTENT_TYPE));
+/** 수정 중 Project의 기존 비활성 말머리. 활성 목록에 없으면 선택 유지용 옵션으로만 노출한다. */
+const inactivePrefix = computed(() => {
+  const current = form.id == null ? null : store.projects.find((project) => project.id === form.id)?.prefix ?? null;
+  const resolved = resolveJournalPrefixField(prefixOptions.value, current).inactivePrefix;
+  return resolved?.id == null ? null : { id: resolved.id, name: resolved.name ?? "" };
+});
 const lifecycleOptions = computed(() => [
   { key: "OPEN", label: t("journal.entry.lifecycle.open"), activeClass: "text-gray-800" },
   { key: "PENDING", label: t("lifecycle.pending"), activeClass: "text-warning" },
@@ -160,13 +210,18 @@ const projectRowSignature = computed(() => store.projects.map((project) => proje
 
 function beginNew(): void {
   closeProjectMenus();
-  Object.assign(form, { id: undefined, title: "", description: "" });
+  Object.assign(form, { id: undefined, title: "", description: "", prefixId: null });
   editing.value = true;
 }
 
 function beginEdit(project: ProspectiveProject): void {
   closeProjectMenus();
-  Object.assign(form, { id: project.id, title: project.title, description: project.description ?? "" });
+  Object.assign(form, {
+    id: project.id,
+    title: project.title,
+    description: project.description ?? "",
+    prefixId: project.prefixId ?? project.prefix?.id ?? null,
+  });
   editing.value = true;
 }
 
@@ -178,7 +233,7 @@ async function submit(): Promise<void> {
     return;
   }
   try {
-    await store.saveProject({ id: form.id, title: form.title, description: form.description });
+    await store.saveProject({ id: form.id, title: form.title, description: form.description, prefixId: form.prefixId });
     editing.value = false;
     errorMessage.value = "";
     emit("changed");
@@ -192,7 +247,7 @@ async function remove(project: ProspectiveProject): Promise<void> {
   closeProjectMenus();
   const count = props.keepCounts[project.id] ?? 0;
   const message = t("prospective.project.delete.confirm")
-    .replace("{0}", project.title)
+    .replace("{0}", projectDisplayTitle(project))
     .replace("{1}", String(count));
   if (!await swalConfirm(message)) return;
   try {
@@ -221,6 +276,25 @@ async function changeLifecycle(
     void swalRequestError(error);
   }
 }
+
+/** 말머리 관리는 이 모달 안에 중첩하지 않고 KeepPage가 위 레이어에 형제로 연다. */
+function requestPrefixManage(): void {
+  closeProjectMenus();
+  emit("managePrefixes");
+}
+
+/** 위에 말머리 관리 모달이 열려 있으면 Esc를 무시해 두 모달이 함께 닫히지 않게 한다. */
+function onEscape(): void {
+  if (props.suspended) return;
+  emit("close");
+}
+
+/** 말머리 관리 모달이 닫힌 뒤 포커스를 이 모달로 되돌린다. */
+function focus(): void {
+  rootEl.value?.focus();
+}
+
+defineExpose({ focus });
 
 /** 메뉴 액션이 인라인 편집·확인창 뒤에 남지 않도록 열린 Metronic dropdown을 닫는다. */
 function closeProjectMenus(): void {
@@ -262,5 +336,9 @@ watch(
   },
   { flush: "post" },
 );
-onMounted(() => { void reinitMetronicAfterDom(); });
+onMounted(() => {
+  void reinitMetronicAfterDom();
+  void personalPrefixOptionsStore.fetchOptions(PROJECT_PREFIX_CONTENT_TYPE);
+  rootEl.value?.focus();
+});
 </script>

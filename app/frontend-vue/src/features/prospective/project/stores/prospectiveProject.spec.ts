@@ -55,12 +55,26 @@ describe("prospectiveProject store", () => {
     mockedPost.mockResolvedValue({ data: { rslt: true } });
     const store = useProspectiveProjectStore();
 
-    await store.saveProject({ title: "새 프로젝트", description: "가상 설명" });
-    await store.saveProject({ id: 11, title: "수정 프로젝트", description: "가상 설명" });
+    await store.saveProject({ title: "새 프로젝트", description: "가상 설명", prefixId: 7 });
+    await store.saveProject({ id: 11, title: "수정 프로젝트", description: "가상 설명", prefixId: null });
 
     expect(mockedPost.mock.calls[0]?.[0]).toBe("/api/prospective/projects");
     expect(mockedPost.mock.calls[1]?.[0]).toBe("/api/prospective/project/11");
     expect(mockedGet).toHaveBeenCalledTimes(2);
+  });
+
+  it("말머리 선택 해제도 빈 prefixId로 항상 전송한다", async () => {
+    mockedPost.mockResolvedValue({ data: { rslt: true } });
+    const store = useProspectiveProjectStore();
+
+    await store.saveProject({ title: "말머리 선택", description: "", prefixId: 7 });
+    await store.saveProject({ id: 11, title: "말머리 해제", description: "", prefixId: null });
+
+    const selected = mockedPost.mock.calls[0]?.[1] as FormData;
+    const cleared = mockedPost.mock.calls[1]?.[1] as FormData;
+    expect(selected.get("prefixId")).toBe("7");
+    expect(cleared.has("prefixId")).toBe(true);
+    expect(cleared.get("prefixId")).toBe("");
   });
 
   it("삭제와 전체 순서 변경 뒤 목록을 다시 조회한다", async () => {

@@ -1,6 +1,10 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
+import type { ProjectPrefixLike } from "@/features/prospective/project/utils/projectDisplayTitle";
+
+/** Project 개인 말머리 목록 키 (PERSONAL + PROSPECTIVE_PROJECT Scope). Project 관리 모달에서만 관리한다. */
+export const PROJECT_PREFIX_CONTENT_TYPE = "PROSPECTIVE_PROJECT";
 
 /** Prospective Keep을 조직하는 사용자 소유 Project. */
 export interface ProspectiveProject {
@@ -9,6 +13,19 @@ export interface ProspectiveProject {
   description?: string | null;
   sortOrder?: number;
   lifecycle?: { lifecycleKey?: string | null } | null;
+  /** 현재 선택된 개인 말머리 ID. 없으면 null. */
+  prefixId?: number | null;
+  /** 표시용 개인 말머리. 비활성이어도 기존 선택이면 내려온다. */
+  prefix?: (ProjectPrefixLike & { id?: number | null }) | null;
+}
+
+/** Project 등록·수정 요청 값. */
+export interface ProspectiveProjectSavePayload {
+  id?: number;
+  title: string;
+  description?: string | null;
+  /** 선택한 말머리 ID. null이면 선택 해제. 서버는 누락도 해제로 해석하므로 항상 보낸다. */
+  prefixId: number | null;
 }
 
 /** Keep 화면과 등록 모달이 공유하는 Project 목록 상태. */
@@ -39,13 +56,14 @@ export const useProspectiveProjectStore = defineStore("prospectiveProject", () =
     }
   }
 
-  /** Project를 등록하거나 수정한 뒤 목록을 다시 조회한다. */
-  async function saveProject(payload: Pick<ProspectiveProject, "title" | "description"> & { id?: number }): Promise<void> {
+  /** Project를 등록하거나 수정한 뒤 목록을 다시 조회한다. prefixId는 빈 값(해제)이라도 항상 전송한다. */
+  async function saveProject(payload: ProspectiveProjectSavePayload): Promise<void> {
     saving.value = true;
     try {
       const formData = new FormData();
       formData.append("title", payload.title);
       formData.append("description", payload.description ?? "");
+      formData.append("prefixId", payload.prefixId == null ? "" : String(payload.prefixId));
       const url = payload.id == null ? "/api/prospective/projects" : `/api/prospective/project/${payload.id}`;
       const response = await axios.post(url, formData, { headers: { "Content-Type": "multipart/form-data" } });
       if (response.data?.rslt !== true) throw new Error(response.data?.message ?? "Project save request failed");

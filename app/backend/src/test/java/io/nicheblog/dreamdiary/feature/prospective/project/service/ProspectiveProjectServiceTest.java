@@ -20,6 +20,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
@@ -41,6 +43,10 @@ class ProspectiveProjectServiceTest {
     private LifecycleService lifecycleService;
     @Resource
     private StateRepository stateRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    private static final String FIXTURE_OTHER_USER = "fixture-other-user";
 
     /** 등록은 사용자 목록 끝 순번을 부여하고 목록은 그 순서를 유지한다. */
     @Test
@@ -138,9 +144,12 @@ class ProspectiveProjectServiceTest {
                         .title("다른 사용자 프로젝트")
                         .description("가상 설명")
                         .sortOrder(1)
-                        .createdBy("fixture-other-user")
                         .build()
         );
+        // 테스트 감사(@CreatedBy)가 저장 시 created_by 를 테스트 사용자로 덮어쓰므로, 저장 뒤 다른 사용자로 바꾼다.
+        stampProjectCreatedBy(foreignProject.getId(), FIXTURE_OTHER_USER);
+        assertEquals(FIXTURE_OTHER_USER, prospectiveProjectRepository.findById(foreignProject.getId())
+                .orElseThrow().getCreatedBy(), "Fixture project owner was not changed.");
 
         assertThrows(NotAuthorizedException.class,
                 () -> prospectiveProjectService.getMyDetail(foreignProject.getId()));
@@ -151,6 +160,43 @@ class ProspectiveProjectServiceTest {
                         .build()));
         assertThrows(NotAuthorizedException.class,
                 () -> prospectiveProjectService.delete(foreignProject.getId()));
+    }
+
+    /**
+     * 수정 요청에 감사 필드(응답 형식 문자열·다른 작성자)가 섞여 와도 무시한다.
+     * 매퍼가 createdAt 을 LocalDateTime.parse 하다 500이 나거나 작성자가 요청값으로 바뀌면 안 된다.
+     */
+    @Test
+    void modifyIgnoresAuditFieldsFromRequest() throws Exception {
+        final ProspectiveProjectDto registered = regist("감사 필드 무시");
+        final ProspectiveProjectDto request = ProspectiveProjectDto.builder()
+                .id(registered.getId())
+                .title("감사 필드 무시 수정")
+                .description("가상 설명")
+                .createdBy(FIXTURE_OTHER_USER)
+                .createdAt("2026-10-11 21:46:39")
+                .updatedBy(FIXTURE_OTHER_USER)
+                .updatedAt("2026-10-11 21:46:39")
+                .build();
+
+        final ProspectiveProjectDto modified = (ProspectiveProjectDto) prospectiveProjectService.modify(request).getRsltObj();
+        entityManager.flush();
+        entityManager.clear();
+
+        assertEquals("감사 필드 무시 수정", modified.getTitle());
+        assertEquals(TestConstant.TEST_AUDITOR, modified.getCreatedBy());
+        assertEquals(TestConstant.TEST_AUDITOR, prospectiveProjectRepository.findById(registered.getId())
+                .orElseThrow().getCreatedBy());
+    }
+
+    /** 감사 필드를 거치지 않고 Project 작성자를 바꾼 뒤 영속성 컨텍스트를 비운다(테스트 픽스처 전용). */
+    private void stampProjectCreatedBy(final Integer projectId, final String createdBy) {
+        entityManager.createNativeQuery("UPDATE prospective_project SET created_by = :createdBy WHERE id = :id")
+                .setParameter("createdBy", createdBy)
+                .setParameter("id", projectId)
+                .executeUpdate();
+        entityManager.flush();
+        entityManager.clear();
     }
 
     private ProspectiveProjectDto regist(final String title) throws Exception {
